@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+
+<generatorConfiguration>
+
+    <context id="MySQL" targetRuntime="MyBatis3">
+        <jdbcConnection driverClass="com.mysql.jdbc.Driver"
+            connectionURL="jdbc:mysql://localhost:3306/mycollab" userId="root"
+            password="esofthead321" />
+
+        <javaModelGenerator targetPackage="com.esofthead.mycollab.module.crm.domain"
+            targetProject="src/main/java">
+        </javaModelGenerator>
+
+        <sqlMapGenerator targetPackage="."
+            targetProject="src/main/resources/sqlMap/crm" />
+
+        <javaClientGenerator targetPackage="com.esofthead.mycollab.module.crm.dao"
+            type="XMLMAPPER" targetProject="src/main/java">
+            <property name="exampleMethodVisibility" value="public" />
+            <property name="rootInterface"
+                value="com.esofthead.mycollab.core.persistence.CrudGenericDAO" />
+        </javaClientGenerator>
+
+        <table schema="mycollab" tableName="m_crm_account"
+            domainObjectName="Account" />
+        <table schema="mycollab" tableName="m_crm_accounttype"
+            domainObjectName="AccountType" />
+        <table schema="mycollab" tableName="m_crm_campaign"
+            domainObjectName="Campaign" />
+        <table schema="mycollab" tableName="m_crm_case" domainObjectName="Case" />
+        <table schema="mycollab" tableName="m_crm_contact"
+            domainObjectName="Contact" />
+        <table schema="mycollab" tableName="m_crm_contract"
+            domainObjectName="Contract" />
+        <table schema="mycollab" tableName="m_crm_customer"
+            domainObjectName="Customer" />
+        <table schema="mycollab" tableName="m_crm_lead" domainObjectName="Lead" />
+        <table schema="mycollab" tableName="m_crm_opportunity"
+            domainObjectName="Opportunity" />
+        <table schema="mycollab" tableName="m_crm_note" domainObjectName="Note" />
+        <table schema="mycollab" tableName="m_crm_product"
+            domainObjectName="Product" />
+        <table schema="mycollab" tableName="m_crm_product_catalog"
+            domainObjectName="ProductCatalog" />
+        <table schema="mycollab" tableName="m_crm_quote"
+            domainObjectName="Quote" />
+        <table schema="mycollab" tableName="m_crm_quote_group_product"
+            domainObjectName="QuoteGroupProduct" />
+        <table schema="mycollab" tableName="m_crm_quote_product"
+            domainObjectName="QuoteProduct" />
+        <table schema="mycollab" tableName="m_crm_target"
+            domainObjectName="Target" />
+        <table schema="mycollab" tableName="m_crm_target_list"
+            domainObjectName="TargetGroup" />
+        <table schema="mycollab" tableName="m_crm_task" domainObjectName="Task" />
+        <table schema="mycollab" tableName="m_crm_type_relationship"
+            domainObjectName="TypeRelationship" />
+    </context>
+</generatorConfiguration>

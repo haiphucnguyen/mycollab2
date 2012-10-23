@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE configuration
+PUBLIC "-//mybatis.org//DTD Config 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-config.dtd">
+<configuration>
+
+    <typeAliases>
+
+        <typeAlias
+            alias="UserSearchCriteria"
+            type="com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria" />
+    </typeAliases>
+
+    <mappers>
+
+        <mapper resource="sqlMap/user/BillingAccountMapper.xml" />
+
+        <mapper resource="sqlMap/user/BillingAccountMapperExt.xml" />
+
+        <mapper resource="sqlMap/user/BillingPlanMapper.xml" />
+
+        <mapper resource="sqlMap/user/RoleMapper.xml" />
+
+        <mapper resource="sqlMap/user/RoleMapperExt.xml" />
+
+        <mapper resource="sqlMap/user/RolePermissionMapper.xml" />
+
+        <mapper resource="sqlMap/user/RoleUserMapper.xml" />
+
+        <mapper resource="sqlMap/user/UserMapper.xml" />
+
+        <mapper resource="sqlMap/user/UserMapperExt.xml" />
+    </mappers>
+
+</configuration>

@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esofthead.mycollab.module.crm.dao.AccountMapperExt">
+	<resultMap extends="com.esofthead.mycollab.module.crm.dao.AccountMapper.BaseResultMap"
+		id="SimpleAccountResult" type="com.esofthead.mycollab.module.crm.domain.SimpleAccount">
+		<result column="assignUserFullName" jdbcType="VARCHAR"
+			property="assignUserFullName" />
+	</resultMap>
+
+
+	<sql id="querySearchCriteria">
+		<if test="accountname != null "><![CDATA[${accountname.operation} m_crm_account.accountname LIKE '%${accountname.value}%' ]]>
+		</if>
+		<if test="assignUser != null"><![CDATA[${assignUser.operation} m_crm_account.assignUser = #{assignUser.value}]]>
+		</if>
+		<if test=" assignUserName != null "><![CDATA[${assignUserName.operation} concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) LIKE '%${assignUserName.value}%']]>
+		</if>
+		<if test="website != null">
+            <![CDATA[${website.operation} m_crm_account.website like '%${website.value}%']]>
+		</if>
+		<if test="city != null">
+            <![CDATA[${city.operation} m_crm_account.city like '%${city.value}%']]>
+		</if>
+		<if test="types != null">
+			${types.operation} m_crm_account.type IN
+			<foreach close=")" collection="types.values" item="type"
+				open="(" separator=",">
+				#{type}
+            </foreach>
+		</if>
+		<if test="industries != null">
+			${industries.operation} m_crm_account.industry IN
+			<foreach close=")" collection="industries.values" item="industry"
+				open="(" separator=",">
+				#{industry}
+            </foreach>
+		</if>
+
+		<if test="assignUsers != null">
+			${assignUsers.operation} m_crm_account.assignuser IN
+			<foreach close=")" collection="assignUsers.values" item="user"
+				open="(" separator=",">
+				#{user}
+            </foreach>
+		</if>
+
+		<if test="saccountid != null">
+            <![CDATA[${saccountid.operation} m_crm_account.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+		</if>
+	</sql>
+
+	<sql id="queryTotalCountSearchCriteria">
+		<if test="accountname != null">
+             <![CDATA[${accountname.operation} m_crm_account.accountname LIKE '%${accountname.value}%']]>
+		</if>
+		<if test="assignUser != null"><![CDATA[${assignUser.operation} m_crm_account.assignUser = #{assignUser.value}]]>
+		</if>
+		<if test="assignUserName != null"><![CDATA[${assignUserName.operation}  
+            (SELECT COUNT(*)
+            FROM s_user
+            WHERE m_crm_account.assignUser = s_user.username AND
+                  (concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) LIKE '%${assignUserName.value}%'))>0]]>
+		</if>
+		<if test="website != null"><![CDATA[${website.operation} m_crm_account.website LiKE '%${website.value}%']]>
+		</if>
+		<if test="city != null">
+            <![CDATA[${city.operation} m_crm_account.city LIKE '%${city.value}%']]>
+		</if>
+		<if test="types != null">
+			${types.operation} m_crm_account.type IN
+			<foreach close=")" collection="types.values" item="type"
+				open="(" separator=",">
+				#{type}
+            </foreach>
+		</if>
+		<if test="industries != null">
+			${industries.operation} m_crm_account.industry IN
+			<foreach close=")" collection="industries.values" item="industry"
+				open="(" separator=",">
+				#{industry}
+            </foreach>
+		</if>
+
+		<if test="assignUsers != null">
+			${assignUsers.operation} m_crm_account.assignUser IN
+			<foreach close=")" collection="assignUsers.values" item="user"
+				open="(" separator=",">
+				#{user}
+            </foreach>
+		</if>
+		<if test="saccountid != null">
+            <![CDATA[${saccountid.operation} m_crm_account.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+		</if>
+	</sql>
+
+	<sql id="selectSimpleAccount">
+        <![CDATA[
+        select m_crm_account.id, m_crm_account.accountName, m_crm_account.website, m_crm_account.phoneOffice, 
+               m_crm_account.fax, m_crm_account.alternatePhone, m_crm_account.annualRevenue, m_crm_account.billingAddress, 
+               m_crm_account.city, m_crm_account.postalCode, m_crm_account.countryId, m_crm_account.description, m_crm_account.state, 
+               m_crm_account.email, m_crm_account.ownership, m_crm_account.shippingAddress, m_crm_account.shippingCity, m_crm_account.shippingPostalCode, 
+               m_crm_account.shippingCountryId, m_crm_account.shippingState, m_crm_account.numemployees, m_crm_account.createdTime, 
+               m_crm_account.createdUser, m_crm_account.sAccountId, m_crm_account.assignUser, m_crm_account.type, m_crm_account.industry,
+               concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName
+        FROM m_crm_account
+            LEFT OUTER JOIN s_user ON m_crm_account.assignUser = s_user.username
+        ]]>
+	</sql>
+
+	<select id="findPagableList" parameterType="AccountSearchCriteria"
+		resultMap="SimpleAccountResult">
+		<include
+			refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.selectSimpleAccount" />
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include
+				refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
+
+	<select id="getTotalCount" parameterType="AccountSearchCriteria"
+		resultType="java.lang.Integer">
+		SELECT count(*) as totalCount FROM m_crm_account
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include
+				refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
+		</trim>
+	</select>
+
+	<select id="findAccountById" parameterType="java.lang.Integer"
+		resultMap="SimpleAccountResult">
+		<include
+			refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.selectSimpleAccount" />
+
+		WHERE account.id=#{accountId, javaType=INTEGER}
+	</select>
+</mapper>

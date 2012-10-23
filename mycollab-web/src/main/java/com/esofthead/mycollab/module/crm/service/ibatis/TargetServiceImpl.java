@@ -1,0 +1,71 @@
+/**
+ * Engroup - Enterprise Groupware Platform
+ * Copyright (C) 2007-2009 eSoftHead Company <engroup@esofthead.com>
+ * http://www.esofthead.com
+ *
+ *  Licensed under the GPL, Version 3.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.gnu.org/licenses/gpl.html
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+package com.esofthead.mycollab.module.crm.service.ibatis;
+
+import java.util.List;
+
+import org.apache.ibatis.session.RowBounds;
+
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.module.crm.Constants;
+import com.esofthead.mycollab.module.crm.dao.TargetMapperExt;
+import com.esofthead.mycollab.module.crm.dao.TaskMapper;
+import com.esofthead.mycollab.module.crm.domain.SimpleTarget;
+import com.esofthead.mycollab.module.crm.domain.Target;
+import com.esofthead.mycollab.module.crm.domain.TaskExample;
+import com.esofthead.mycollab.module.crm.domain.criteria.TargetSearchCriteria;
+import com.esofthead.mycollab.module.crm.service.TargetService;
+
+public class TargetServiceImpl extends DefaultCrudService<Target, Integer>
+		implements TargetService {
+	private TargetMapperExt targetExtDAO;
+
+	public void setTargetExtDAO(TargetMapperExt targetExtDAO) {
+		this.targetExtDAO = targetExtDAO;
+	}
+
+	private TaskMapper taskDAO;
+
+	public void setTaskDAO(TaskMapper taskDAO) {
+		this.taskDAO = taskDAO;
+	}
+
+	public int remove(Integer primaryKey) {
+		int result = super.remove(primaryKey);
+		TaskExample ex = new TaskExample();
+		ex.createCriteria().andTypeEqualTo(Constants.TARGET)
+				.andTypeidEqualTo(primaryKey);
+		taskDAO.deleteByExample(ex);
+		return result;
+	}
+
+	public List<SimpleTarget> findPagableListByCriteria(
+			TargetSearchCriteria criteria, int skipNum, int maxResult) {
+		return targetExtDAO.findPagableList(criteria, new RowBounds(skipNum,
+				maxResult));
+	}
+
+	public int getTotalCount(TargetSearchCriteria criteria) {
+		return targetExtDAO.getTotalCount(criteria);
+	}
+
+	public SimpleTarget findTargetById(int targetId) {
+		return targetExtDAO.findTargetById(targetId);
+	}
+
+}

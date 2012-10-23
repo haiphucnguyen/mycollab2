@@ -1,0 +1,159 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esofthead.mycollab.module.crm.dao.LeadMapperExt">
+	<resultMap extends="com.esofthead.mycollab.module.crm.dao.LeadMapper.BaseResultMap"
+		id="SimpleLeadResult" type="com.esofthead.mycollab.module.crm.domain.SimpleLead">
+		<result column="assignUserFullName" jdbcType="VARCHAR"
+			property="assignUserFullName" />
+		<result column="campaignName" jdbcType="VARCHAR" property="campaignName" />
+	</resultMap>
+
+	<sql id="querySearchCriteria">
+		<if test="campaignName != null">
+			${campaignName.operation} m_crm_campaign.campaignName like '%${campaignName.value}%'
+        </if>
+		<if test="campaignId != null">
+            <![CDATA[
+            ${campaignId.operation} m_crm_lead.campaignId = #{campaignId.value,javaType=INTEGER}
+            ]]>
+		</if>
+		<if test="referredBy != null">
+            <![CDATA[${referredBy.operation} m_crm_lead.referredBy like '%${referredBy.value}%']]>
+		</if>
+		<if test="leadName != null">
+		  ${leadName.operation}
+			(m_crm_lead.firstname like '%${leadName.value}%' OR m_crm_lead.lastname like '%${leadName.value}%')
+        </if>
+		<if test="accountName != null">
+		  ${accountName.operation} m_crm_lead.accountName like '%${accountName.value}%'
+        </if>
+		<if test="assignUserName != null">
+            <![CDATA[
+                ${assignUserName.operation} concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) like '%${assignUserName.value}%'
+            ]]>
+		</if>
+		<if test="assignUser != null">
+            <![CDATA[${assignUser.operation} m_crm_lead.assignUser = #{assignUser.value}]]>
+		</if>
+		<if test="opportunityId != null">
+            <![CDATA[
+            ${opportunityId.operation}
+              (SELECT COUNT(*) FROM m_crm_opportunity, m_crm_type_relationship
+                  WHERE m_crm_type_relationship.type=9
+                      AND m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER}
+                      AND m_crm_type_relationship.type1id=m_crm_lead.id
+                      AND m_crm_type_relationship.type2id=m_crm_opportunity.id) > 0
+          ]]>
+		</if>
+		<if test="targetListId != null">
+            <![CDATA[
+                ${targetListId.operation}
+              (SELECT COUNT(*) FROM m_crm_target_list, m_crm_type_relationship
+                  WHERE m_crm_type_relationship.type=12
+                      AND m_crm_target_list.id=#{targetListId.value,javaType=INTEGER}
+                      AND m_crm_type_relationship.type1id=m_crm_target_list.id
+                      AND m_crm_type_relationship.type2id=m_crm_lead.id) > 0
+          ]]>
+		</if>
+		<if test="saccountid != null">
+            <![CDATA[${saccountid.operation} m_crm_lead.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+		</if>
+	</sql>
+
+	<sql id="queryTotalCountSearchCriteria">
+		1=1
+		<if test="campaignName != null">
+		  ${campaignName.operation}
+			(SELECT COUNT(*)
+			FROM m_crm_campaign AS campaign
+			WHERE m_crm_lead.campaignId = campaign.id AND campaign.campaignName like '%${campaignName.value}%') > 0
+        </if>
+		<if test="campaignId != null">
+            <![CDATA[
+                ${campaignId.operation} m_crm_lead.campaignId = #{campaignId.value,javaType=INTEGER}
+                ]]>
+		</if>
+		<if test="referredBy != null">
+            <![CDATA[${referredBy.operation} m_crm_lead.referredBy like '%${referredBy.value}%']]>
+		</if>
+		<if test="leadName != null">
+            <![CDATA[${leadName.operation} (m_crm_lead.firstname like '%${leadName.value}%' OR m_crm_lead.lastname like '%${leadName.value}%')]]>
+		</if>
+		<if test="accountName != null">
+            <![CDATA[${accountName.operation} m_crm_lead.accountName like '%${accountName.value}%']]>
+		</if>
+		<if test="assignUser">
+            <![CDATA[${assignUser.operation} m_crm_lead.assignUser = #{assignUser.value}]]>
+		</if>
+		<if test="assignUserName != null">
+            <![CDATA[
+            ${assignUserName.operation}
+            (SELECT COUNT(*) 
+            FROM s_user 
+            WHERE m_crm_lead.assignedUser = s_user.username AND
+            (concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) like '%${assignUserName.value}%')) > 0
+            ]]>
+		</if>
+		<if test="opportunityId != null">
+            <![CDATA[
+            ${opportunityId.operation}
+              (SELECT COUNT(*) FROM m_crm_opportunity, m_crm_type_relationship
+                  WHERE m_crm_type_relationship.type=9
+                      AND m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER}
+                      AND m_crm_type_relationship.type1id=m_crm_lead.id
+                      AND m_crm_type_relationship.type2id=m_crm_opportunity.id) > 0
+          ]]>
+		</if>
+		<if test="targetListId != null">
+            <![CDATA[
+            ${targetListId.operation}
+              (SELECT COUNT(*) FROM m_crm_target_list, m_crm_type_relationship
+                  WHERE m_crm_type_relationship.type=12
+                      AND m_crm_target_list.id=#{targetListId.value,javaType=INTEGER}
+                      AND m_crm_type_relationship.type1id=m_crm_target_list.id
+                      AND m_crm_type_relationship.type2id=m_crm_lead.id) > 0
+          ]]>
+		</if>
+		<if test="saccountid != null">
+            <![CDATA[${saccountid.operation} m_crm_lead.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+		</if>
+	</sql>
+
+	<sql id="selectSimpleLead">
+        <![CDATA[
+        SELECT m_crm_lead.id, m_crm_lead.campaignId, m_crm_lead.leadSourceDesc, m_crm_lead.statusDesc, m_crm_lead.referredBy, m_crm_lead.prefixName, 
+               m_crm_lead.firstname, m_crm_lead.lastname, m_crm_lead.accountName, m_crm_lead.title, m_crm_lead.department, m_crm_lead.isCallable, 
+               m_crm_lead.officePhone, m_crm_lead.homePhone, m_crm_lead.mobile, m_crm_lead.otherPhone, m_crm_lead.fax, m_crm_lead.primAddress, 
+               m_crm_lead.primState, m_crm_lead.primCity, m_crm_lead.primPostalCode, m_crm_lead.primCountryId, m_crm_lead.description,
+               m_crm_lead.email, m_crm_lead.createdTime, m_crm_lead.createdUser, m_crm_lead.sAccountId, m_crm_lead.assignUser, m_crm_lead.status, 
+               m_crm_lead.source, concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS assignUserFullName, 
+               m_crm_campaign.campaignName
+
+        FROM m_crm_lead
+               LEFT OUTER JOIN s_user ON (m_crm_lead.assignUser = s_user.username) 
+               LEFT OUTER JOIN m_crm_campaign ON (m_crm_lead.campaignId = m_crm_campaign.id)
+        ]]>
+	</sql>
+
+	<select id="getTotalCount" resultType="int"
+		parameterType="LeadSearchCriteria">
+		SELECT count(*) as totalCount FROM m_crm_lead
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.queryTotalCountSearchCriteria" />
+		</trim>
+	</select>
+
+	<select id="findPagableList" resultMap="SimpleLeadResult"
+		parameterType="LeadSearchCriteria">
+		<include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
+
+	<select id="findLeadById" parameterType="int" resultMap="SimpleLeadResult">
+		<include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
+
+		WHERE m_crm_lead.id = #{leadId,javaType=INTEGER}
+	</select>
+</mapper>

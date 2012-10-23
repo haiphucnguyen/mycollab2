@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.esofthead.mycollab.module.user.dao.AccountMapperExt">
+	<insert id="insertAndReturnKey" parameterType="com.esofthead.mycollab.module.user.domain.Account"
+		useGeneratedKeys="true" keyProperty="id">
+		 insert into s_account (id, createdTime, billingPlanId
+      )
+    values (#{id,jdbcType=INTEGER}, #{createdtime,jdbcType=TIMESTAMP}, #{billingplanid,jdbcType=INTEGER}
+      )
+	</insert>
+</mapper>

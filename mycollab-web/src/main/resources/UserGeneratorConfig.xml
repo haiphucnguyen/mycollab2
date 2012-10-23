@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE generatorConfiguration
+  PUBLIC "-//mybatis.org//DTD MyBatis Generator Configuration 1.0//EN"
+  "http://mybatis.org/dtd/mybatis-generator-config_1_0.dtd">
+<generatorConfiguration>
+
+    <context
+        id="MySQL"
+        targetRuntime="MyBatis3" >
+
+        <jdbcConnection
+            connectionURL="jdbc:mysql://localhost:3306/mycollab"
+            driverClass="com.mysql.jdbc.Driver"
+            password="esofthead321"
+            userId="root" />
+
+        <javaModelGenerator
+            targetPackage="com.esofthead.mycollab.module.user.domain"
+            targetProject="src/main/java" >
+        </javaModelGenerator>
+
+        <sqlMapGenerator
+            targetPackage="."
+            targetProject="src/main/resources/sqlMap/user" />
+
+        <javaClientGenerator
+            targetPackage="com.esofthead.mycollab.module.user.dao"
+            targetProject="src/main/java"
+            type="XMLMAPPER" >
+
+            <property
+                name="exampleMethodVisibility"
+                value="public" />
+
+            <property
+                name="rootInterface"
+                value="com.esofthead.mycollab.core.persistence.CrudGenericDAO" />
+        </javaClientGenerator>
+
+        <table
+            domainObjectName="BillingAccount"
+            schema="mycollab"
+            tableName="s_account" />
+
+        <table
+            domainObjectName="BillingPlan"
+            schema="mycollab"
+            tableName="s_billing_plan" />
+
+        <table
+            domainObjectName="Role"
+            schema="mycollab"
+            tableName="s_roles" />
+
+        <table
+            domainObjectName="User"
+            schema="mycollab"
+            tableName="s_user" />
+
+        <table
+            domainObjectName="RoleUser"
+            schema="mycollab"
+            tableName="s_roleuser" />
+
+        <table
+            domainObjectName="RolePermission"
+            schema="mycollab"
+            tableName="s_role_permission" />
+    </context>
+
+</generatorConfiguration>

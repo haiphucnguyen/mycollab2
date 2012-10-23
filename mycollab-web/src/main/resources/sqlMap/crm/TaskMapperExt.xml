@@ -1,0 +1,323 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esofthead.mycollab.module.crm.dao.TaskMapperExt">
+	<resultMap extends="com.esofthead.mycollab.module.crm.dao.TaskMapper.BaseResultMap" id="SimpleTaskResult"
+		type="com.esofthead.mycollab.module.crm.domain.SimpleTask">
+		<result column="contactName" jdbcType="VARCHAR" property="contactName" />
+		<result column="relatedTo" jdbcType="VARCHAR" property="relatedTo" />
+		<result column="assignUserFullName" jdbcType="VARCHAR"
+			property="assignUserFullName" />
+	</resultMap>
+
+	<sql id="querySearchCriteria">
+		<if test="subject != null">
+            <![CDATA[${subject.operation} m_crm_task.subject like '%${subject.value}%']]>
+		</if>
+		<if test="assignUser != null">
+            <![CDATA[
+                 ${assignUser.operation} m_crm_task.assignUser = #{assignUser.value}
+            ]]>
+		</if>
+		<if test="status != null">
+            <![CDATA[
+                 ${status.operation} m_crm_task.status = #{status.value}
+            ]]>
+		</if>
+		<if test="contact != null">
+            <![CDATA[
+            ${contact.operation}
+            (SELECT COUNT(*)
+            FROM m_crm_contact 
+            WHERE m_crm_task.contactId=m_crm_contact.id 
+                AND concat(m_crm_contact.firstname, m_crm_contact.lastname) like '%${contact.value}%') > 0
+            ]]>
+		</if>
+		<if test="contactId != null">
+        <![CDATA[
+                ${contactId.operation}
+                (SELECT COUNT(*) 
+                FROM m_crm_contact 
+                WHERE m_crm_contact.id=#{contactId.value,javaType=INTEGER} 
+                    AND m_crm_task.typeid=m_crm_contact.id 
+                    AND m_crm_task.type='Contact') > 0
+                ]]>
+		</if>
+		<if test="campaignId != null">
+            <![CDATA[
+                ${campaignId.operation}
+                (SELECT COUNT(*) 
+                FROM m_crm_campaign 
+                WHERE m_crm_campaign.id=#{campaignId.value,javaType=INTEGER} 
+                    AND m_crm_task.typeid=m_crm_campaign.id AND m_crm_task.type='Campaign') > 0
+                ]]>
+		</if>
+		<if test="accountId != null">
+            <![CDATA[
+                ${accountId.operation}
+                (SELECT COUNT(*) 
+                FROM m_crm_account 
+                WHERE m_crm_account.id=#{accountId.value,javaType=INTEGER} 
+                    AND m_crm_task.typeid=m_crm_account.id 
+                    AND m_crm_task.type='Account') > 0
+                ]]>
+		</if>
+		<if test="targetId != null">
+            <![CDATA[
+                ${targetId.operation}
+                (SELECT COUNT(*) 
+                FROM m_crm_target 
+                WHERE m_crm_target.id=#{targetId.value,javaType=INTEGER} 
+                    AND m_crm_task.typeid=m_crm_target.id 
+                    AND m_crm_task.type='Target') > 0
+                ]]>
+		</if>
+		<if test="leadId != null">
+            <![CDATA[
+                ${leadId.operation}
+                (SELECT COUNT(*) 
+                FROM m_crm_lead 
+                WHERE m_crm_lead.id=#{leadId.value,javaType=INTEGER} 
+                    AND m_crm_task.typeid=m_crm_lead.id 
+                    AND m_crm_task.type='Lead') > 0
+                ]]>
+		</if>
+		<if test="opportunityId != null">
+            <![CDATA[
+                ${opportunityId.operation}
+                (SELECT COUNT(*) 
+                FROM m_crm_opportunity 
+                WHERE m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER} 
+                    AND m_crm_task.typeid=m_crm_opportunity.id 
+                    AND m_crm_task.type='Opportunity') > 0
+                ]]>
+		</if>
+		<if test="quoteId != null">
+            <![CDATA[
+            ${quoteId.operation}
+            (SELECT COUNT(*) 
+            FROM m_crm_quote 
+            WHERE m_crm_quote.id=#{quoteId.value,javaType=INTEGER} 
+                AND m_crm_task.typeid=m_crm_quote.id 
+                AND m_crm_task.type='Quote') > 0
+            ]]>
+		</if>
+		<if test="productId != null">
+            <![CDATA[
+            ${productId.operation}
+            (SELECT COUNT(*) 
+            FROM m_crm_product 
+            WHERE m_crm_product.id=#{productId.value,javaType=INTEGER} 
+                AND m_crm_task.typeid=m_crm_product.id 
+                AND m_crm_task.type='Product') > 0
+            ]]>
+		</if>
+		<if test="caseId != null">
+            <![CDATA[
+            ${caseId.operation}
+            (SELECT COUNT(*) 
+             FROM m_crm_case 
+             WHERE m_crm_case.id=#{caseId.value,javaType=INTEGER} 
+                 AND m_crm_task.typeid=m_crm_case.id 
+                 AND m_crm_task.type='Case') > 0
+            ]]>
+		</if>
+		<if test="type != null">
+            <![CDATA[${type.operation} m_crm_task.type = #{type.value}]]>
+		</if>
+		<if test="saccountid != null">
+            <![CDATA[${saccountid.operation} m_crm_task.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+		</if>
+	</sql>
+
+	<select id="getTotalCount" parameterType="TaskSearchCriteria"
+		resultType="int">
+		SELECT count(*) as totalCount FROM m_crm_task
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include
+				refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
+
+	<select id="findPagableList" parameterType="TaskSearchCriteria"
+		resultMap="SimpleTaskResult">
+        <![CDATA[
+        SELECT m_crm_task.id, m_crm_task.subject, m_crm_task.startdate, m_crm_task.duedate, m_crm_task.contactId, m_crm_task.typeid, 
+               m_crm_task.description, m_crm_task.createdTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
+               m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type,
+               concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName,
+               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               concat(contact2.prefix, ', ', contact2.firstname, ' ', contact2.lastname) as relatedTo
+               
+        FROM m_crm_task 
+            LEFT OUTER JOIN s_user ON (m_crm_task.assignUser = s_user.username) 
+            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_task.contactId) 
+            INNER JOIN m_crm_contact as contact2 ON (m_crm_task.type='Contact' AND m_crm_task.typeid=contact2.id )
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+		</trim>
+
+		UNION ALL
+
+        <![CDATA[
+        SELECT m_crm_task.id, m_crm_task.subject, m_crm_task.startdate, m_crm_task.duedate, m_crm_task.contactId, m_crm_task.typeid, 
+               m_crm_task.description, m_crm_task.createdTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
+               m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type,
+               concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName,
+               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               m_crm_account.accountName as relatedTo
+
+        FROM m_crm_task 
+            LEFT OUTER JOIN s_user ON (m_crm_task.assignUser = s_user.username) 
+            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_task.contactId) 
+            INNER JOIN m_crm_account ON (m_crm_task.type='Account' AND m_crm_task.typeid=m_crm_account.id )
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+		</trim>
+
+		UNION ALL
+        <![CDATA[
+        SELECT m_crm_task.id, m_crm_task.subject, m_crm_task.startdate, m_crm_task.duedate, m_crm_task.contactId, m_crm_task.typeid, 
+               m_crm_task.description, m_crm_task.createdTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
+               m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type,
+               concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName,
+               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               m_crm_campaign.campaignName  as relatedTo
+
+        FROM m_crm_task 
+            LEFT OUTER JOIN s_user ON (m_crm_task.assignUser = s_user.username) 
+            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_task.contactId) 
+            INNER JOIN m_crm_campaign ON (m_crm_task.type='Campaign' AND m_crm_task.typeid=m_crm_campaign.id)
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+		</trim>
+
+		UNION ALL
+        <![CDATA[
+        SELECT m_crm_task.id, m_crm_task.subject, m_crm_task.startdate, m_crm_task.duedate, m_crm_task.contactId, m_crm_task.typeid, 
+               m_crm_task.description, m_crm_task.createdTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
+               m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type,
+               concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName,
+               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               concat(m_crm_target.prefixname, ', ', m_crm_target.firstname , ' ', m_crm_target.lastname) as relatedTo
+        FROM m_crm_task 
+            LEFT OUTER JOIN s_user ON (m_crm_task.assignUser = s_user.username) 
+            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_task.contactId) 
+            INNER JOIN m_crm_target ON (m_crm_task.type='Target' AND m_crm_task.typeid=m_crm_target.id)
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+		</trim>
+
+		UNION ALL
+        <![CDATA[
+        SELECT m_crm_task.id, m_crm_task.subject, m_crm_task.startdate, m_crm_task.duedate, m_crm_task.contactId, m_crm_task.typeid, 
+               m_crm_task.description, m_crm_task.createdTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
+               m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type,
+               concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName,
+               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               concat(m_crm_lead.prefixName, ', ', m_crm_lead.firstname, ' ',   m_crm_lead.lastname) as relatedTo
+
+        FROM m_crm_task 
+            LEFT OUTER JOIN s_user ON (m_crm_task.assignUser =  s_user.username) 
+            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_task.contactId) 
+            INNER JOIN m_crm_lead ON (m_crm_task.type='Lead' AND m_crm_task.typeid=m_crm_lead.id)
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+		</trim>
+
+		UNION ALL
+        <![CDATA[
+        SELECT m_crm_task.id, m_crm_task.subject, m_crm_task.startdate, m_crm_task.duedate, m_crm_task.contactId, m_crm_task.typeid, 
+               m_crm_task.description, m_crm_task.createdTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
+               m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type,
+               concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName,
+               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               m_crm_opportunity.opportunityName as relatedTo
+
+        FROM m_crm_task 
+            LEFT OUTER JOIN s_user ON (m_crm_task.assignUser =  s_user.username) 
+            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_task.contactId) 
+            INNER JOIN m_crm_opportunity ON (m_crm_task.type = 'Opportunity' AND m_crm_task.typeid=m_crm_opportunity.id)
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+		</trim>
+
+		UNION ALL
+        <![CDATA[
+        SELECT m_crm_task.id, m_crm_task.subject, m_crm_task.startdate, m_crm_task.duedate, m_crm_task.contactId, m_crm_task.typeid, 
+               m_crm_task.description, m_crm_task.createdTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
+               m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type,
+               concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName,
+               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               m_crm_quote.subject as relatedTo
+
+        FROM m_crm_task 
+            LEFT OUTER JOIN s_user ON (m_crm_task.assignUser = s_user.username) 
+            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_task.contactId) 
+            INNER JOIN m_crm_quote ON (m_crm_task.type = 'Quote' AND m_crm_task.typeid=m_crm_quote.id)
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+		</trim>
+
+		UNION ALL
+        <![CDATA[
+        SELECT m_crm_task.id, m_crm_task.subject, m_crm_task.startdate, m_crm_task.duedate, m_crm_task.contactId, m_crm_task.typeid, 
+               m_crm_task.description, m_crm_task.createdTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
+               m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type,
+               concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName,
+               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               m_crm_product.productname as relatedTo
+
+        FROM m_crm_task 
+            LEFT OUTER JOIN s_user ON (m_crm_task.assignUser = s_user.username) 
+            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_task.contactId) 
+            INNER JOIN m_crm_product ON (m_crm_task.type = 'Product' AND m_crm_task.typeid=m_crm_product.id)
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+		</trim>
+
+		UNION ALL
+        <![CDATA[
+        SELECT m_crm_task.id, m_crm_task.subject, m_crm_task.startdate, m_crm_task.duedate, m_crm_task.contactId, m_crm_task.typeid, 
+               m_crm_task.description, m_crm_task.createdTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
+               m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type,
+               concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName,
+               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               m_crm_case.subject as relatedTo
+
+        FROM m_crm_task 
+            LEFT OUTER JOIN s_user ON (m_crm_task.assignUser = s_user.username) 
+            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_task.contactId) 
+            INNER JOIN m_crm_case ON (m_crm_task.type = 'Case' AND m_crm_task.typeid=m_crm_case.id)
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+		</trim>
+
+
+		UNION ALL
+        <![CDATA[
+        SELECT m_crm_task.id, m_crm_task.subject, m_crm_task.startdate, m_crm_task.duedate, m_crm_task.contactId, m_crm_task.typeid, 
+               m_crm_task.description, m_crm_task.createdTime, m_crm_task.createdUser, m_crm_task.sAccountId, m_crm_task.status, 
+               m_crm_task.assignUser, m_crm_task.priority, m_crm_task.type,
+               concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName,
+               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
+               '' as relatedTo
+
+        FROM m_crm_task 
+            LEFT OUTER JOIN s_user ON (m_crm_task.assignUser = s_user.username) 
+            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_task.contactId)
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+            <![CDATA[AND ((m_crm_task.type IS NULL) OR (m_crm_task.typeid IS NULL))]]>
+		</trim>
+	</select>
+</mapper>

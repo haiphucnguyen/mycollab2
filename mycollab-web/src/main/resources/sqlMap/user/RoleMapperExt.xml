@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.esofthead.mycollab.module.user.dao.RoleMapperExt">
+	<insert id="insertAndReturnKey" parameterType="com.esofthead.mycollab.module.user.domain.Role"
+		useGeneratedKeys="true" keyProperty="id">
+		insert into s_roles (id, rolename, description,
+		sAccountId)
+		values (#{id,jdbcType=INTEGER}, #{rolename,jdbcType=VARCHAR},
+		#{description,jdbcType=VARCHAR},
+		#{saccountid,jdbcType=INTEGER})
+	</insert>
+
+	<select id="findRolesOfUser" parameterType="java.lang.String"
+		resultMap="com.esofthead.mycollab.module.user.dao.RoleMapper.BaseResultMap">
+        <![CDATA[
+        select s_roles.id, s_roles.rolename, s_roles.description, s_roles.sAccountId
+        from s_roles, s_roleuser
+        where s_roles.id = s_roleuser.roleid AND s_roleuser.username = #{username}
+        ]]>
+	</select>
+</mapper>
