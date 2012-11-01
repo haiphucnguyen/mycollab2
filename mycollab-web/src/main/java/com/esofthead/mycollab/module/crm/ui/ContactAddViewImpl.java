@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.ui.components.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.ui.components.LeadSourceComboBox;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ui.Params;
@@ -100,6 +101,10 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 					LeadSourceComboBox leadSource = AppContext
 							.getSpringBean(LeadSourceComboBox.class);
 					return leadSource;
+				} else if (propertyId.equals("accountid")) {
+					AccountSelectionField accountField = AppContext
+							.getSpringBean(AccountSelectionField.class);
+					return accountField;
 				}
 
 				if (field instanceof TextField) {

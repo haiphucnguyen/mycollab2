@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.ui;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -18,7 +19,6 @@ import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ui.Params;
 import com.esofthead.mycollab.vaadin.ui.BeanTable;
 import com.esofthead.mycollab.web.AppContext;
-import com.jensjansson.pagedtable.PagedTable;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -31,12 +31,13 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
+@Scope("prototype")
 @Component
 public class AccountListViewImpl extends AbstractView implements
 		AccountListView {
 	private static final long serialVersionUID = 1L;
 
-	private PagedTable tableItem;
+	private BeanTable<SimpleAccount> tableItem;
 
 	private AccountSearchCriteria searchCriteria;
 

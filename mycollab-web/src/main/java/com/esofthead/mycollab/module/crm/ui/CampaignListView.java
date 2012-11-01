@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.crm.ui;
 
 import com.vaadin.ui.Panel;
 
-public class CampaignList extends Panel {
+public class CampaignListView extends Panel {
 	private static final long serialVersionUID = 1L;
 
 }

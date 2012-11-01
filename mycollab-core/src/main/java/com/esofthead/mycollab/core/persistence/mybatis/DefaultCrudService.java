@@ -69,14 +69,14 @@ public class DefaultCrudService<K extends Serializable, T> implements
 	@Override
 	public int updateWithSession(T record, String username) {
 		if (username == null) {
-			return daoObj.updateByPrimaryKeySelective(record);
+			return daoObj.updateByPrimaryKey(record);
 		} else {
 			return internalUpdateWithSession(record, username);
 		}
 	}
 
 	protected int internalUpdateWithSession(T record, String username) {
-		return daoObj.updateByPrimaryKeySelective(record);
+		return daoObj.updateByPrimaryKey(record);
 	}
 
 	@Override

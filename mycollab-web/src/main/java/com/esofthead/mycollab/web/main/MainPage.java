@@ -30,6 +30,7 @@ public class MainPage extends AbstractView {
 		HorizontalLayout layout = new HorizontalLayout();
 		final PopupButton serviceMenu = new PopupButton("Services");
 		VerticalLayout vLayout = new VerticalLayout();
+		vLayout.setWidth("200px");
 
 		Button crmLink = new Button("Customer Management",
 				new Button.ClickListener() {

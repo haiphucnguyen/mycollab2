@@ -5,7 +5,14 @@ import com.vaadin.ui.ComboBox;
 @SuppressWarnings("serial")
 public class ValueComboBox extends ComboBox {
 	public ValueComboBox() {
+		super();
+	}
 
+	public ValueComboBox(boolean nullIsAllowable, String[] values) {
+		super();
+		this.setNullSelectionAllowed(nullIsAllowable);
+		this.setImmediate(true);
+		this.loadData(values);
 	}
 
 	public void loadData(String[] values) {

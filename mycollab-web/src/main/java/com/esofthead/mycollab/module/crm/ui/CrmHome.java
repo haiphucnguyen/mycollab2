@@ -6,6 +6,7 @@ import org.springframework.stereotype.Component;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEventListener;
@@ -30,6 +31,8 @@ public class CrmHome extends AbstractView {
 	private static String NEW_ACCOUNT_ITEM = "New Account";
 
 	private static String CONTACT_LIST = "Contacts";
+
+	private static String NEW_CAMPAIGN_ITEM = "New Campaign";
 
 	private static String LEAD_LIST = "Leads";
 
@@ -88,6 +91,12 @@ public class CrmHome extends AbstractView {
 					addView(AppContext.getSpringBean(ContactAddViewImpl.class),
 							new Params(Params.VIEW, new Object[] { event
 									.getData() }));
+				} else if (CampaignEvent.GOTO_ADD_VIEW.equals(event.getName())) {
+					addView(AppContext.getSpringBean(CampaignAddViewImpl.class),
+							new Params(Params.ADD, null));
+				} else if (CampaignEvent.GOTO_LIST_VIEW.equals(event.getName())) {
+					addView(AppContext.getSpringBean(ContactListViewImpl.class),
+							new Params());
 				} else if (ContactEvent.GOTO_LIST_VIEW.equals(event.getName())) {
 					addView(AppContext.getSpringBean(ContactListViewImpl.class),
 							new Params());
@@ -123,6 +132,9 @@ public class CrmHome extends AbstractView {
 			} else if (ACCOUNT_LIST.equals(caption)) {
 				eventBus.fireEvent(new AccountEvent(this,
 						AccountEvent.GOTO_LIST_VIEW, null));
+			} else if (NEW_CAMPAIGN_ITEM.equals("caption")) {
+				eventBus.fireEvent(new CampaignEvent(this,
+						CampaignEvent.GOTO_ADD_VIEW));
 			} else if (CONTACT_LIST.equals(caption)) {
 				eventBus.fireEvent(new ContactEvent(this,
 						ContactEvent.GOTO_LIST_VIEW, null));
@@ -140,7 +152,7 @@ public class CrmHome extends AbstractView {
 
 		CssLayout toolbar = new CssLayout();
 		toolbar.setWidth("100%");
-		
+
 		Button accountList = new Button(ACCOUNT_LIST, listener);
 		toolbar.addComponent(accountList);
 

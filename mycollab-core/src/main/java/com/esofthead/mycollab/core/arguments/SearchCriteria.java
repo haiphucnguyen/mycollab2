@@ -17,6 +17,6 @@
  */
 package com.esofthead.mycollab.core.arguments;
 
-public class SearchCriteria {
+public abstract class SearchCriteria {
 
 }

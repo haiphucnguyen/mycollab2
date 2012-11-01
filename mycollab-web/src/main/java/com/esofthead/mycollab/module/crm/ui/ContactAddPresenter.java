@@ -44,6 +44,7 @@ public class ContactAddPresenter extends AbstractPresenter<ContactAddView> {
 
 	public void saveContact(Contact contact) {
 		contact.setSaccountid(AppContext.getAccountId());
+		System.out.println("Accountid " + contact.getAccountid());
 		if (contact.getId() == null) {
 			contactService.saveWithSession(contact, AppContext.getUsername());
 		} else {

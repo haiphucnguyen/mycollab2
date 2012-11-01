@@ -21,6 +21,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
@@ -40,7 +41,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 	protected ComponentContainer initMainLayout() {
 		VerticalLayout layout = new VerticalLayout();
 		layout.setSpacing(true);
-
+		layout.setStyleName("formView");
 		return layout;
 	}
 
@@ -81,7 +82,10 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 			Button cancelBtn = new Button(CANCEL_ACTION, formActionListener);
 
 			layout.addComponent(saveBtn);
+			layout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
+			
 			layout.addComponent(cancelBtn);
+			layout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
 			return layout;
 		}
 
@@ -222,7 +226,6 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 
 		public GenericForm() {
 			super();
-			this.setCaption("Create Account");
 
 			VerticalLayout layout = new VerticalLayout();
 			layout.setSpacing(true);

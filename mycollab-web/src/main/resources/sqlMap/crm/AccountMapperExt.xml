@@ -131,6 +131,6 @@
 		<include
 			refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.selectSimpleAccount" />
 
-		WHERE account.id=#{accountId, javaType=INTEGER}
+		WHERE m_crm_account.id=#{accountId, javaType=INTEGER}
 	</select>
 </mapper>

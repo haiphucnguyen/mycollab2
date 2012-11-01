@@ -3,3 +3,10 @@
 .v-table-cell-wrapper {
     white-space: normal;
 }
+
+.formView {
+	background: white;
+	width: 600px;
+	-moz-border-radius: 1em;
+	-webkit-border-radius: 1em;
+}
