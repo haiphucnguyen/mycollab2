@@ -1,4 +1,6 @@
 mycollab-web/bin
 mycollab-web/target
+mycollab-web/.settings
+mycollab-core/bin
 mycollab-core/target
 .metadata
