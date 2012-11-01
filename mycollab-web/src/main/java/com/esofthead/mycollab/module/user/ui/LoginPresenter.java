@@ -10,7 +10,6 @@ import com.esofthead.mycollab.vaadin.mvp.ui.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractPresenter.ViewInterface;
 import com.esofthead.mycollab.web.AppContext;
 
-@SuppressWarnings("serial")
 @Component
 @ViewInterface(LoginView.class)
 public class LoginPresenter extends AbstractPresenter<LoginView> {

@@ -23,7 +23,7 @@ import com.esofthead.mycollab.module.file.domain.ContentTransaction;
 import com.esofthead.mycollab.module.file.domain.criteria.ContentTransactionSearchCriteria;
 
 public interface ContentTransactionService extends
-        ICrudService<ContentTransaction, Integer>,
+        ICrudService<Integer, ContentTransaction>,
         IPagableService<ContentTransactionSearchCriteria> {
     
 }

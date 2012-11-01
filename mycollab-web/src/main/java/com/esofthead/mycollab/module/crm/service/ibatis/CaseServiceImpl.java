@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.esofthead.mycollab.core.PlatformManager;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.module.crm.dao.CaseMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Case;
@@ -12,7 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class CaseServiceImpl extends DefaultCrudService<Case, Integer>
+public class CaseServiceImpl extends DefaultCrudService<Integer, Case>
 		implements CaseService {
 
 	private CaseMapperExt caseExtDAO;
@@ -28,14 +27,13 @@ public class CaseServiceImpl extends DefaultCrudService<Case, Integer>
 	}
 
 	@Override
-	public int updateWithSession(Case record, String userSessionId) {
+	public int updateWithSession(Case record, String username) {
 		Case oldValue = this.findByPrimaryKey(record.getId());
 		String refid = "crm-case-" + record.getId();
 		auditLogService.saveAuditLog(
-				PlatformManager.getInstance().getSession(userSessionId)
-						.getRemoteUser(), refid, (Object) oldValue,
+				username, refid, (Object) oldValue,
 				(Object) record);
-		return super.updateWithSession(record, userSessionId);
+		return super.updateWithSession(record, username);
 	}
 
 	@Override

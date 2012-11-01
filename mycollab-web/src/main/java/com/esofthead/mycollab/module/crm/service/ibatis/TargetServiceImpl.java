@@ -31,7 +31,7 @@ import com.esofthead.mycollab.module.crm.domain.TaskExample;
 import com.esofthead.mycollab.module.crm.domain.criteria.TargetSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.TargetService;
 
-public class TargetServiceImpl extends DefaultCrudService<Target, Integer>
+public class TargetServiceImpl extends DefaultCrudService<Integer, Target>
 		implements TargetService {
 	private TargetMapperExt targetExtDAO;
 

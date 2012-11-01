@@ -21,15 +21,15 @@ public class PresenterRegistry {
 	@SuppressWarnings("rawtypes")
 	public void registerPresenter() {
 
-//		log.debug("Register presenter");
-//		
-//		Map<String, AbstractPresenter> presenterMap = context.getBeansOfType(AbstractPresenter.class, true, false);
-//		
-//		if (log.isDebugEnabled()) {
-//			
-//			for (Entry<String, AbstractPresenter> entry : presenterMap.entrySet()) {
-//				log.debug("Registered Presenter: {}, {}", entry.getKey(), entry.getValue());				
-//			}
-//		}
+		log.debug("Register presenter");
+		
+		Map<String, AbstractPresenter> presenterMap = context.getBeansOfType(AbstractPresenter.class, true, false);
+		
+		if (log.isDebugEnabled()) {
+			
+			for (Entry<String, AbstractPresenter> entry : presenterMap.entrySet()) {
+				log.debug("Registered Presenter: {}, {}", entry.getKey(), entry.getValue());				
+			}
+		}
 	}
 }

@@ -17,13 +17,12 @@
  */
 package com.esofthead.mycollab.module.crm.service;
 
-import com.esofthead.mycollab.core.persistence.ICrudService;
-import com.esofthead.mycollab.core.persistence.IPagableService;
+import com.esofthead.mycollab.core.persistence.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.SimpleTarget;
 import com.esofthead.mycollab.module.crm.domain.Target;
 import com.esofthead.mycollab.module.crm.domain.criteria.TargetSearchCriteria;
 
-public interface TargetService extends ICrudService<Target, Integer>,
-        IPagableService<TargetSearchCriteria> {
-    SimpleTarget findTargetById(int targetId);
+public interface TargetService extends
+		IDefaultService<Integer, Target, TargetSearchCriteria> {
+	SimpleTarget findTargetById(int targetId);
 }

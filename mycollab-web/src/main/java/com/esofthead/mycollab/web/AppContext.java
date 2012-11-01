@@ -20,7 +20,7 @@ public class AppContext implements TransactionListener, Serializable {
 
 	public AppContext(Application application) {
 		this.app = application;
-		
+
 		// It's usable from now on in the current request
 		instance.set(this);
 	}
@@ -48,6 +48,14 @@ public class AppContext implements TransactionListener, Serializable {
 
 	public static SimpleUser getSession() {
 		return instance.get().session;
+	}
+
+	public static Integer getAccountId() {
+		return instance.get().session.getAccountid();
+	}
+
+	public static String getUsername() {
+		return instance.get().session.getUsername();
 	}
 
 	public static Application getApplication() {

@@ -21,6 +21,8 @@ package com.esofthead.mycollab.module.crm.domain;
 public class SimpleAccount extends Account {
 
 	private String assignUserFullName;
+	
+	private String billingCountry;
 
 	public String getAssignUserFullName() {
 		return assignUserFullName;
@@ -28,5 +30,13 @@ public class SimpleAccount extends Account {
 
 	public void setAssignUserFullName(String assignUserFullName) {
 		this.assignUserFullName = assignUserFullName;
+	}
+
+	public String getBillingCountry() {
+		return billingCountry;
+	}
+
+	public void setBillingCountry(String billingCountry) {
+		this.billingCountry = billingCountry;
 	}
 }

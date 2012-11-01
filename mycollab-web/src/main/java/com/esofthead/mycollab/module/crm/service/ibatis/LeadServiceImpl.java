@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.esofthead.mycollab.core.PlatformManager;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.module.crm.Constants;
 import com.esofthead.mycollab.module.crm.dao.LeadMapperExt;
@@ -33,7 +32,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class LeadServiceImpl extends DefaultCrudService<Lead, Integer>
+public class LeadServiceImpl extends DefaultCrudService<Integer, Lead>
 		implements LeadService {
 	private LeadMapperExt leadExtDAO;
 
@@ -54,14 +53,13 @@ public class LeadServiceImpl extends DefaultCrudService<Lead, Integer>
 	}
 
 	@Override
-	public int updateWithSession(Lead record, String userSessionId) {
+	public int updateWithSession(Lead record, String username) {
 		Lead oldValue = this.findByPrimaryKey(record.getId());
 		String refid = "crm-lead-" + record.getId();
 		auditLogService.saveAuditLog(
-				PlatformManager.getInstance().getSession(userSessionId)
-						.getRemoteUser(), refid, (Object) oldValue,
+				username, refid, (Object) oldValue,
 				(Object) record);
-		return super.updateWithSession(record, userSessionId);
+		return super.updateWithSession(record, username);
 	}
 
 	public int remove(Integer primaryKey) {

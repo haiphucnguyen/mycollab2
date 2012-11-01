@@ -4,9 +4,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.core.EngroupException;
-import com.esofthead.mycollab.module.crm.ui.CrmHome;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.main.MainPage;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.terminal.UserError;
 import com.vaadin.ui.Button;
@@ -16,9 +16,6 @@ import com.vaadin.ui.Form;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
-
-import de.steinwedel.vaadin.MessageBox;
-import de.steinwedel.vaadin.MessageBox.ButtonType;
 
 @Component
 public class LoginViewImpl extends AbstractView implements LoginView {
@@ -91,6 +88,11 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 
 	@Override
 	public void loginSuccess() {
-		AppContext.getApplication().getMainWindow().setContent(new CrmHome());
+		AppContext
+				.getApplication()
+				.getMainWindow()
+				.setContent(
+						AppContext.getSpringBean(MainPage.class)
+								.createMainLayout());
 	}
 }

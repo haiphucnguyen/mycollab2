@@ -25,7 +25,7 @@ import com.esofthead.mycollab.module.user.domain.Role;
 /**
  * @author hpnguyen
  */
-public interface RoleService extends ICrudService<Role, Integer> {
+public interface RoleService extends ICrudService<Integer, Role> {
 
 	Role findByRoleName(int accountid, String rolename);
 

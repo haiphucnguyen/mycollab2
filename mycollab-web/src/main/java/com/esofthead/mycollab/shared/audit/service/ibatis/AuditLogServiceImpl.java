@@ -22,7 +22,6 @@ import javax.xml.transform.stream.StreamResult;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
-import com.esofthead.mycollab.core.EngroupException;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.shared.audit.dao.AuditLogMapper;
 import com.esofthead.mycollab.shared.audit.domain.AuditLog;
@@ -30,7 +29,7 @@ import com.esofthead.mycollab.shared.audit.domain.AuditLogExample;
 import com.esofthead.mycollab.shared.audit.domain.SimpleAuditLog;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class AuditLogServiceImpl extends DefaultCrudService<AuditLog, Integer>
+public class AuditLogServiceImpl extends DefaultCrudService<Integer, AuditLog>
 		implements AuditLogService {
 
 	@Override
@@ -53,9 +52,6 @@ public class AuditLogServiceImpl extends DefaultCrudService<AuditLog, Integer>
 		AuditLog auditLog = new AuditLog();
 		auditLog.setPosteduser(username);
 		auditLog.setRefid(refid);
-		if (!newObj.getClass().isAssignableFrom(oldObj.getClass())) {
-			throw new EngroupException("Audit Input is invalid");
-		}
 
 		auditLog.setPosteddate(new GregorianCalendar().getTime());
 		auditLog.setChangeset(AuditLogUtil.getChangeSet(oldObj, newObj));

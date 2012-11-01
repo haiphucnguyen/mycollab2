@@ -43,9 +43,6 @@ public class EngroupClassRunner extends SpringJUnit4ClassRunner {
 		return methodInvoker;
 	}
 
-
-
-
 	private void preInvokeMethod(FrameworkMethod method) {
 		testModules = new ArrayList<EngroupTestModule>();
 		DataSet dataSetAnno = method.getAnnotation(DataSet.class);

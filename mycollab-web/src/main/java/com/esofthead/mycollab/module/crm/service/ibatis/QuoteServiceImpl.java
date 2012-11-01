@@ -5,7 +5,6 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.esofthead.mycollab.core.PlatformManager;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.module.crm.dao.ProductMapper;
 import com.esofthead.mycollab.module.crm.dao.QuoteMapperExt;
@@ -19,7 +18,7 @@ import com.esofthead.mycollab.module.crm.service.QuoteGroupProductService;
 import com.esofthead.mycollab.module.crm.service.QuoteService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class QuoteServiceImpl extends DefaultCrudService<Quote, Integer>
+public class QuoteServiceImpl extends DefaultCrudService<Integer, Quote>
 		implements QuoteService {
 
 	private QuoteMapperExt quoteExtDAO;
@@ -44,14 +43,13 @@ public class QuoteServiceImpl extends DefaultCrudService<Quote, Integer>
 	}
 
 	@Override
-	public int updateWithSession(Quote record, String userSessionId) {
+	public int updateWithSession(Quote record, String username) {
 		Quote oldValue = this.findByPrimaryKey(record.getId());
 		String refid = "crm-quote-" + record.getId();
 		auditLogService.saveAuditLog(
-				PlatformManager.getInstance().getSession(userSessionId)
-						.getRemoteUser(), refid, (Object) oldValue,
+				username, refid, (Object) oldValue,
 				(Object) record);
-		return super.updateWithSession(record, userSessionId);
+		return super.updateWithSession(record, username);
 	}
 
 	

@@ -5,7 +5,7 @@ import com.esofthead.mycollab.module.user.dao.BillingAccountMapperExt;
 import com.esofthead.mycollab.module.user.domain.Account;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 
-public class BillingAccountServiceImpl extends DefaultCrudService<Account, Integer>
+public class BillingAccountServiceImpl extends DefaultCrudService<Integer, Account>
 		implements BillingAccountService {
 
 	private BillingAccountMapperExt billingAccountExtDAO;

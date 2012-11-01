@@ -27,7 +27,7 @@ import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 
-public class TaskServiceImpl extends DefaultCrudService<Task, Integer>
+public class TaskServiceImpl extends DefaultCrudService<Integer, Task>
 		implements TaskService {
 	
 	private TaskMapperExt taskExtDAO;

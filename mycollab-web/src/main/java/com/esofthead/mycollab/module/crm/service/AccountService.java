@@ -17,14 +17,12 @@
  */
 package com.esofthead.mycollab.module.crm.service;
 
-
-import com.esofthead.mycollab.core.persistence.ICrudService;
-import com.esofthead.mycollab.core.persistence.IPagableService;
+import com.esofthead.mycollab.core.persistence.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 
-public interface AccountService extends ICrudService<Account, Integer>,
-        IPagableService<AccountSearchCriteria> {
-    SimpleAccount findAccountById(int accountId);
+public interface AccountService extends
+		IDefaultService<Integer, Account, AccountSearchCriteria> {
+	SimpleAccount findAccountById(int accountId);
 }

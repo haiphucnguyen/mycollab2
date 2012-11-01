@@ -21,6 +21,6 @@ import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.module.crm.domain.Customer;
 import com.esofthead.mycollab.module.crm.service.CustomerService;
 
-public class CustomerServiceImpl extends DefaultCrudService<Customer, Integer>
+public class CustomerServiceImpl extends DefaultCrudService<Integer, Customer>
 		implements CustomerService {
 }

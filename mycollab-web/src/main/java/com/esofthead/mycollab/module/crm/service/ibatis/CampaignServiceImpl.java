@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.esofthead.mycollab.core.PlatformManager;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.module.crm.Constants;
 import com.esofthead.mycollab.module.crm.dao.CampaignMapperExt;
@@ -33,7 +32,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class CampaignServiceImpl extends DefaultCrudService<Campaign, Integer>
+public class CampaignServiceImpl extends DefaultCrudService<Integer, Campaign>
 		implements CampaignService {
 	private TaskMapper taskDAO;
 
@@ -54,14 +53,12 @@ public class CampaignServiceImpl extends DefaultCrudService<Campaign, Integer>
 	}
 
 	@Override
-	public int updateWithSession(Campaign record, String userSessionId) {
+	public int updateWithSession(Campaign record, String username) {
 		Campaign oldValue = this.findByPrimaryKey(record.getId());
 		String refid = "crm-campaign-" + record.getId();
-		auditLogService.saveAuditLog(
-				PlatformManager.getInstance().getSession(userSessionId)
-						.getRemoteUser(), refid, (Object) oldValue,
+		auditLogService.saveAuditLog(username, refid, (Object) oldValue,
 				(Object) record);
-		return super.updateWithSession(record, userSessionId);
+		return super.updateWithSession(record, username);
 	}
 
 	public void setTaskDAO(TaskMapper taskDAO) {

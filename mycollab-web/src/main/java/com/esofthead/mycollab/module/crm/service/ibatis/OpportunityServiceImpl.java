@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.esofthead.mycollab.core.PlatformManager;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.module.crm.Constants;
 import com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt;
@@ -34,7 +33,7 @@ import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
 public class OpportunityServiceImpl extends
-		DefaultCrudService<Opportunity, Integer> implements OpportunityService {
+		DefaultCrudService<Integer, Opportunity> implements OpportunityService {
 
 	private OpportunityMapperExt opportunityExtDAO;
 
@@ -55,14 +54,12 @@ public class OpportunityServiceImpl extends
 	}
 
 	@Override
-	public int updateWithSession(Opportunity record, String userSessionId) {
+	public int updateWithSession(Opportunity record, String username) {
 		Opportunity oldValue = this.findByPrimaryKey(record.getId());
 		String refid = "crm-opportunity-" + record.getId();
-		auditLogService.saveAuditLog(
-				PlatformManager.getInstance().getSession(userSessionId)
-						.getRemoteUser(), refid, (Object) oldValue,
+		auditLogService.saveAuditLog(username, refid, (Object) oldValue,
 				(Object) record);
-		return super.updateWithSession(record, userSessionId);
+		return super.updateWithSession(record, username);
 	}
 
 	public int remove(Integer primaryKey) {

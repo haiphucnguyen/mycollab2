@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.esofthead.mycollab.core.PlatformManager;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.module.crm.dao.ProductMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Product;
@@ -12,7 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.ProductSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ProductService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class ProductServiceImpl extends DefaultCrudService<Product, Integer>
+public class ProductServiceImpl extends DefaultCrudService<Integer, Product>
 		implements ProductService {
 	private ProductMapperExt productExtDAO;
 
@@ -27,14 +26,13 @@ public class ProductServiceImpl extends DefaultCrudService<Product, Integer>
 	}
 
 	@Override
-	public int updateWithSession(Product record, String userSessionId) {
+	public int updateWithSession(Product record, String username) {
 		Product oldValue = this.findByPrimaryKey(record.getId());
 		String refid = "crm-product-" + record.getId();
 		auditLogService.saveAuditLog(
-				PlatformManager.getInstance().getSession(userSessionId)
-						.getRemoteUser(), refid, (Object) oldValue,
+				username, refid, (Object) oldValue,
 				(Object) record);
-		return super.updateWithSession(record, userSessionId);
+		return super.updateWithSession(record, username);
 	}
 
 	@Override

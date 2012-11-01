@@ -10,7 +10,7 @@ import com.esofthead.mycollab.module.crm.domain.QuoteGroupProductExample;
 import com.esofthead.mycollab.module.crm.service.QuoteGroupProductService;
 
 public class QuoteGroupServiceImpl extends
-		DefaultCrudService<QuoteGroupProduct, Integer> implements
+		DefaultCrudService<Integer, QuoteGroupProduct> implements
 		QuoteGroupProductService {
 
 	private QuoteGroupProductMapperExt daoExt;

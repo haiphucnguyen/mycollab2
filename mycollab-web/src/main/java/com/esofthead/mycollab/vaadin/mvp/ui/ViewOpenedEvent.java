@@ -10,11 +10,6 @@ public class ViewOpenedEvent extends ApplicationEvent {
 		super(view);
 	}
 
-	@Override
-	public String getDescription() {
-		return "ViewOpenedEvent from " + source;
-	}
-
 	public View getView() {
 		return (View) source;
 	}

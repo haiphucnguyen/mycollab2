@@ -21,8 +21,6 @@ import java.io.Serializable;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.esofthead.mycollab.core.PlatformManager;
-import com.esofthead.mycollab.core.SessionExpireException;
 import com.esofthead.mycollab.core.persistence.CrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ICrudService;
 
@@ -33,26 +31,24 @@ import com.esofthead.mycollab.core.persistence.ICrudService;
  * @param <T>
  * @param <K>
  */
-public class DefaultCrudService<T, K extends Serializable> implements
-		ICrudService<T, K> {
+public class DefaultCrudService<K extends Serializable, T> implements
+		ICrudService<K, T> {
 
-	protected CrudGenericDAO<T, K> daoObj;
+	protected CrudGenericDAO<K, T> daoObj;
 
 	public int remove(K primaryKey) {
 		return daoObj.deleteByPrimaryKey(primaryKey);
 	}
 
-	@SuppressWarnings("unchecked")
 	public T findByPrimaryKey(K primaryKey) {
 		return (T) daoObj.selectByPrimaryKey(primaryKey);
 	}
 
 	@Override
-	public void saveWithSession(T record, String userSessionId) {
-		if (userSessionId == null) {
+	public void saveWithSession(T record, String username) {
+		if (username == null) {
 			daoObj.insert(record);
 		} else {
-			String username = getUserNameFromSession(userSessionId);
 			internalSaveWithSession(record, username);
 		}
 	}
@@ -61,21 +57,20 @@ public class DefaultCrudService<T, K extends Serializable> implements
 		daoObj.insert(record);
 	}
 
-	public CrudGenericDAO<T, K> getDaoObj() {
+	public CrudGenericDAO<K, T> getDaoObj() {
 		return daoObj;
 	}
 
 	@Autowired
-	public void setDaoObj(CrudGenericDAO<T, K> daoObj) {
+	public void setDaoObj(CrudGenericDAO<K, T> daoObj) {
 		this.daoObj = daoObj;
 	}
-	
+
 	@Override
-	public int updateWithSession(T record, String userSessionId) {
-		if (userSessionId == null) {
+	public int updateWithSession(T record, String username) {
+		if (username == null) {
 			return daoObj.updateByPrimaryKeySelective(record);
 		} else {
-			String username = getUserNameFromSession(userSessionId);
 			return internalUpdateWithSession(record, username);
 		}
 	}
@@ -85,24 +80,12 @@ public class DefaultCrudService<T, K extends Serializable> implements
 	}
 
 	@Override
-	public int removeWithSession(K primaryKey, String userSessionId) {
-		if (userSessionId == null) {
+	public int removeWithSession(K primaryKey, String username) {
+		if (username == null) {
 			return daoObj.deleteByPrimaryKey(primaryKey);
 		} else {
-			String username = getUserNameFromSession(userSessionId);
 			return internalRemoveWithSession(primaryKey, username);
 		}
-	}
-
-	protected String getUserNameFromSession(String userSessionId) {
-		String username = PlatformManager.getInstance().getUsername(
-				userSessionId);
-		if (username == null) {
-			throw new SessionExpireException("User has session "
-					+ userSessionId
-					+ " has expired session. Please relogin again.");
-		}
-		return username;
 	}
 
 	protected int internalRemoveWithSession(K primaryKey, String username) {

@@ -17,13 +17,12 @@
  */
 package com.esofthead.mycollab.module.crm.service;
 
-import com.esofthead.mycollab.core.persistence.ICrudService;
-import com.esofthead.mycollab.core.persistence.IPagableService;
+import com.esofthead.mycollab.core.persistence.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 
-public interface LeadService extends ICrudService<Lead, Integer>,
-        IPagableService<LeadSearchCriteria> {
-    SimpleLead findLeadById(int leadId);
+public interface LeadService extends
+		IDefaultService<Integer, Lead, LeadSearchCriteria> {
+	SimpleLead findLeadById(int leadId);
 }

@@ -29,7 +29,7 @@ import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 /**
  * @author hai
  */
-public interface UserService extends ICrudService<User, String>,
+public interface UserService extends ICrudService<String, User>,
 		IPagableService<UserSearchCriteria> {
 	/**
 	 * @param name

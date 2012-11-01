@@ -20,6 +20,6 @@ package com.esofthead.mycollab.module.crm.service;
 import com.esofthead.mycollab.core.persistence.ICrudService;
 import com.esofthead.mycollab.module.crm.domain.Customer;
 
-public interface CustomerService extends ICrudService<Customer, Integer> {
+public interface CustomerService extends ICrudService<Integer, Customer> {
 
 }

@@ -20,37 +20,41 @@ package com.esofthead.mycollab.core.persistence;
 import java.io.Serializable;
 
 /**
- * @author Hai Nguyen (hainguyen@esifthead.com)
+ * 
+ * @author haiphucnguyen
+ *
+ * @param <K>
+ * @param <T>
  */
-public interface CrudGenericDAO<T, K extends Serializable> {
-    /**
-     * @param record
-     */
-    void insert(T record);
+public interface CrudGenericDAO<K extends Serializable, T> {
+	/**
+	 * @param record
+	 */
+	void insert(T record);
 
-    /**
-     * @param record
-     * @return
-     */
-    int updateByPrimaryKey(T record);
-    
-    /**
-     * 
-     * @param record
-     * @return
-     */
-    int updateByPrimaryKeySelective(T record);
+	/**
+	 * @param record
+	 * @return
+	 */
+	int updateByPrimaryKey(T record);
 
-    /**
-     * @param id
-     * @return
-     */
-    T selectByPrimaryKey(K primaryKey);
+	/**
+	 * 
+	 * @param record
+	 * @return
+	 */
+	int updateByPrimaryKeySelective(T record);
 
-    /**
-     * @param id
-     * @return
-     */
-    int deleteByPrimaryKey(K primaryKey);
+	/**
+	 * @param id
+	 * @return
+	 */
+	T selectByPrimaryKey(K primaryKey);
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	int deleteByPrimaryKey(K primaryKey);
 
 }

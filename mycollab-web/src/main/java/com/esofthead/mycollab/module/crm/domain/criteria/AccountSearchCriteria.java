@@ -33,11 +33,11 @@ public class AccountSearchCriteria extends SearchCriteria {
     
     private StringSearchField website;
     
-    private SetSearchField types;
+    private SetSearchField<String> types;
     
-    private SetSearchField industries;
+    private SetSearchField<String> industries;
     
-    private SetSearchField assignUsers;
+    private SetSearchField<String> assignUsers;
     
     private NumberSearchField saccountid;
 
@@ -73,27 +73,27 @@ public class AccountSearchCriteria extends SearchCriteria {
 		this.website = website;
 	}
 
-	public SetSearchField getTypes() {
+	public SetSearchField<String> getTypes() {
 		return types;
 	}
 
-	public void setTypes(SetSearchField types) {
+	public void setTypes(SetSearchField<String> types) {
 		this.types = types;
 	}
 
-	public SetSearchField getIndustries() {
+	public SetSearchField<String> getIndustries() {
 		return industries;
 	}
 
-	public void setIndustries(SetSearchField industries) {
+	public void setIndustries(SetSearchField<String> industries) {
 		this.industries = industries;
 	}
 
-	public SetSearchField getAssignUsers() {
+	public SetSearchField<String> getAssignUsers() {
 		return assignUsers;
 	}
 
-	public void setAssignUsers(SetSearchField assignUsers) {
+	public void setAssignUsers(SetSearchField<String> assignUsers) {
 		this.assignUsers = assignUsers;
 	}
 

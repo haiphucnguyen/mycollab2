@@ -45,7 +45,6 @@
 			<groupId>javax.validation</groupId>
 			<artifactId>validation-api</artifactId>
 			<version>1.0.0.GA</version>
-			<scope>provided</scope>
 		</dependency>
 		<dependency>
 			<groupId>javax.validation</groupId>
@@ -53,6 +52,11 @@
 			<version>1.0.0.GA</version>
 			<classifier>sources</classifier>
 			<scope>provided</scope>
+		</dependency>
+		<dependency>
+			<groupId>org.hibernate</groupId>
+			<artifactId>hibernate-validator</artifactId>
+			<version>4.3.0.Final</version>
 		</dependency>
 
 		<dependency>
@@ -71,6 +75,71 @@
 			<groupId>org.vaadin.addons</groupId>
 			<artifactId>messagebox</artifactId>
 			<version>1.1.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>expandingtextarea</artifactId>
+			<version>0.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>ratingstars</artifactId>
+			<version>1.4</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>animator</artifactId>
+			<version>1.6.6</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>pagedtable</artifactId>
+			<version>0.6.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>easyuploads</artifactId>
+			<version>0.5.1</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>notifique</artifactId>
+			<version>1.0.5</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>customfield</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons.lazyquerycontainer</groupId>
+			<artifactId>vaadin-lazyquerycontainer</artifactId>
+			<version>1.2.11</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>toolbar</artifactId>
+			<version>1.0.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>contextmenu</artifactId>
+			<version>3.1.0</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>weelayout</artifactId>
+			<version>0.2.2</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>css-tools</artifactId>
+			<version>0.3</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.hene.splitbutton</groupId>
+			<artifactId>splitbutton</artifactId>
+			<version>0.9.7</version>
 		</dependency>
 
 		<dependency>
@@ -114,51 +183,18 @@
 					</dependency>
 				</dependencies>
 				<executions>
-					<execution>
-						<id>Audit Artifacts Generator</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<configuration>
-							<configurationFile>${basedir}/src/main/resources/AuditGeneratorConfig.xml</configurationFile>
-							<overwrite>true</overwrite>
-						</configuration>
-					</execution>
-					<execution>
-						<id>User Artifacts Generator</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<configuration>
-							<configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile>
-							<overwrite>true</overwrite>
-						</configuration>
-					</execution>
-					<execution>
-						<id>File Artifacts Generator</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<configuration>
-							<configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile>
-							<overwrite>true</overwrite>
-						</configuration>
-					</execution>
-
-					<execution>
-						<id>Crm Artifacts Generator</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<configuration>
-							<configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile>
-							<overwrite>true</overwrite>
-						</configuration>
-					</execution>
+					<!-- <execution> <id>Audit Artifacts Generator</id> <phase>compile</phase> 
+						<goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/AuditGeneratorConfig.xml</configurationFile> 
+						<overwrite>true</overwrite> </configuration> </execution> <execution> <id>User 
+						Artifacts Generator</id> <phase>compile</phase> <goals> <goal>generate</goal> 
+						</goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
+						<overwrite>true</overwrite> </configuration> </execution> <execution> <id>File 
+						Artifacts Generator</id> <phase>compile</phase> <goals> <goal>generate</goal> 
+						</goals> <configuration> <configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile> 
+						<overwrite>true</overwrite> </configuration> </execution> -->
+					<!-- <execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
+						<goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
+						<overwrite>true</overwrite> </configuration> </execution> -->
 				</executions>
 			</plugin>
 			<plugin>
@@ -203,6 +239,7 @@
 				<artifactId>jetty-maven-plugin</artifactId>
 				<version>8.1.5.v20120716</version>
 				<configuration>
+					<tmpDir>target/temp</tmpDir>
 					<webAppConfig>
 						<contextPath>/${project.name}</contextPath>
 					</webAppConfig>

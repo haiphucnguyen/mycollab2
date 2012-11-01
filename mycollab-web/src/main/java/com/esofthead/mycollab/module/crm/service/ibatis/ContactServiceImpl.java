@@ -21,7 +21,6 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.esofthead.mycollab.core.PlatformManager;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.module.crm.Constants;
 import com.esofthead.mycollab.module.crm.dao.ContactMapperExt;
@@ -33,7 +32,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class ContactServiceImpl extends DefaultCrudService<Contact, Integer>
+public class ContactServiceImpl extends DefaultCrudService<Integer, Contact>
 		implements ContactService {
 
 	private ContactMapperExt contactExtDAO;
@@ -64,14 +63,13 @@ public class ContactServiceImpl extends DefaultCrudService<Contact, Integer>
 	}
 
 	@Override
-	public int updateWithSession(Contact record, String userSessionId) {
+	public int updateWithSession(Contact record, String username) {
 		Contact oldValue = this.findByPrimaryKey(record.getId());
 		String refid = "crm-contact-" + record.getId();
 		auditLogService.saveAuditLog(
-				PlatformManager.getInstance().getSession(userSessionId)
-						.getRemoteUser(), refid, (Object) oldValue,
+				username, refid, (Object) oldValue,
 				(Object) record);
-		return super.updateWithSession(record, userSessionId);
+		return super.updateWithSession(record, username);
 	}
 
 	public List<SimpleContact> findPagableListByCriteria(

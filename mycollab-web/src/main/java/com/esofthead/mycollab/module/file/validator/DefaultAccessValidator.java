@@ -1,15 +1,8 @@
 package com.esofthead.mycollab.module.file.validator;
 
-import java.util.Collection;
-
-import com.esofthead.mycollab.core.PlatformManager;
 import com.esofthead.mycollab.core.Session;
 import com.esofthead.mycollab.module.file.ContentException;
 import com.esofthead.mycollab.module.file.domain.Content;
-import com.esofthead.mycollab.module.file.domain.IdentityPermission;
-import com.esofthead.mycollab.module.user.RoleConstants;
-import com.esofthead.mycollab.module.user.domain.RoleCollection;
-import com.esofthead.mycollab.module.user.domain.RolePermission;
 
 public class DefaultAccessValidator implements AccessValidator {
     protected String userSessionId;
@@ -20,7 +13,7 @@ public class DefaultAccessValidator implements AccessValidator {
 
     public DefaultAccessValidator(String userSessionId, Content content) {
         this.content = content;
-        this.session = PlatformManager.getInstance().getSession(userSessionId);
+//        this.session = PlatformManager.getInstance().getSession(userSessionId);
     }
 
     @Override

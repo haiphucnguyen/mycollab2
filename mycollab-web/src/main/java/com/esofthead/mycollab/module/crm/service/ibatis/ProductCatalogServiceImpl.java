@@ -11,7 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.ProductCatalogSearchCri
 import com.esofthead.mycollab.module.crm.service.ProductCatalogService;
 
 public class ProductCatalogServiceImpl extends
-		DefaultCrudService<ProductCatalog, Integer> implements
+		DefaultCrudService<Integer, ProductCatalog> implements
 		ProductCatalogService {
 
 	private ProductCatalogMapperExt productCatalogExtDAO;

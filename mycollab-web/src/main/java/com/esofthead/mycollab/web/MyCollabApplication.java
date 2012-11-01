@@ -5,6 +5,7 @@ import com.esofthead.mycollab.vaadin.mvp.LogoutEvent;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.ui.PresenterRegistry;
 import com.vaadin.Application;
 
 public class MyCollabApplication extends Application {
@@ -17,16 +18,16 @@ public class MyCollabApplication extends Application {
 
 	@Override
 	public void init() {
-		setTheme("chameleon-blue");
+		setTheme("mycollab");
 		this.setMainWindow(new MainWindowContainer());
 		AppContext sessionData = new AppContext(this);
 
 		// Register it as a listener in the application context
 		this.getContext().addTransactionListener(sessionData);
 
-//		PresenterRegistry presenterRegistry = AppData
-//				.getSpringBean(PresenterRegistry.class);
-//		presenterRegistry.registerPresenter();
+		PresenterRegistry presenterRegistry = AppContext
+				.getSpringBean(PresenterRegistry.class);
+		presenterRegistry.registerPresenter();
 
 		LoginViewImpl mainView = AppContext.getSpringBean(LoginViewImpl.class);
 

@@ -37,7 +37,7 @@ import com.esofthead.mycollab.module.user.domain.UserInfo;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 
-public class UserServiceDBImpl extends DefaultCrudService<User, String>
+public class UserServiceDBImpl extends DefaultCrudService<String, User>
 		implements UserService {
 
 	private UserMapperExt userExtDAO;

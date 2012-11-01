@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.file.validator.AccessValidatorFactory;
 
 public class AttachmentServiceImpl extends
-		DefaultCrudService<Attachment, Integer> implements AttachmentService {
+		DefaultCrudService<Integer, Attachment> implements AttachmentService {
 
 	private AccessValidatorFileSystemService accessValidatorFileSystemService;
 

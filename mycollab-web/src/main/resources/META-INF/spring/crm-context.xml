@@ -19,11 +19,6 @@
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.AccountMapperExt" />
     </bean>
-    
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="accountTypeDAO">
-        <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.AccountTypeMapper" />
-    </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="campaignDAO">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
@@ -187,10 +182,7 @@
         <property name="accountExtDAO" ref="accountExtDAO" />
         <property name="auditLogService" ref="auditLogService" />
     </bean>
-    <bean name="accountTypeService"
-        class="com.esofthead.mycollab.module.crm.service.ibatis.AccountTypeServiceImpl">
-        <property name="daoObj" ref="accountTypeDAO" />
-    </bean>
+    
     <bean name="campaignService"
         class="com.esofthead.mycollab.module.crm.service.ibatis.CampaignServiceImpl">
         <property name="daoObj" ref="campaignDAO" />

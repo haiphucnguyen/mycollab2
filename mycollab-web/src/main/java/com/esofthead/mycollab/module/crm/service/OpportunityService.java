@@ -17,13 +17,12 @@
  */
 package com.esofthead.mycollab.module.crm.service;
 
-import com.esofthead.mycollab.core.persistence.ICrudService;
-import com.esofthead.mycollab.core.persistence.IPagableService;
+import com.esofthead.mycollab.core.persistence.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 
-public interface OpportunityService extends ICrudService<Opportunity, Integer>,
-        IPagableService<OpportunitySearchCriteria> {
-    SimpleOpportunity findOpportunityById(int opportunityId);
+public interface OpportunityService extends
+		IDefaultService<Integer, Opportunity, OpportunitySearchCriteria> {
+	SimpleOpportunity findOpportunityById(int opportunityId);
 }

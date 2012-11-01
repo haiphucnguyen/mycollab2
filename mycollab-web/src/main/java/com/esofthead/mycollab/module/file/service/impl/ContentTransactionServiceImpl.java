@@ -28,7 +28,7 @@ import com.esofthead.mycollab.module.file.domain.criteria.ContentTransactionSear
 import com.esofthead.mycollab.module.file.service.ContentTransactionService;
 
 public class ContentTransactionServiceImpl extends
-		DefaultCrudService<ContentTransaction, Integer> implements
+		DefaultCrudService<Integer, ContentTransaction> implements
 		ContentTransactionService {
 
 	private ContentTransactionMapperExt contentTransactionExtDAO;

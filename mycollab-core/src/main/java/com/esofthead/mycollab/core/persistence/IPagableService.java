@@ -26,20 +26,22 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
  * 
  * @param <S>
  */
-public interface IPagableService<S extends SearchCriteria> extends IService {
-    /**
-     * Get the total available items base on search criteria.
-     * @param criteria
-     * @return
-     */
-    int getTotalCount(S criteria);
+public interface IPagableService<S extends SearchCriteria>
+		extends IService {
+	/**
+	 * Get the total available items base on search criteria.
+	 * 
+	 * @param criteria
+	 * @return
+	 */
+	int getTotalCount(S criteria);
 
-    /**
-     * 
-     * @param criteria
-     * @param skipNum
-     * @param maxResult
-     * @return
-     */
-    List findPagableListByCriteria(S criteria, int skipNum, int maxResult);
+	/**
+	 * 
+	 * @param criteria
+	 * @param skipNum
+	 * @param maxResult
+	 * @return
+	 */
+	List findPagableListByCriteria(S criteria, int skipNum, int maxResult);
 }

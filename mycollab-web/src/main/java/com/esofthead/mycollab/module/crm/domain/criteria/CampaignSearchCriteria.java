@@ -23,24 +23,24 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class CampaignSearchCriteria extends SearchCriteria {
-	
-    private StringSearchField campaignName;
 
-    private StringSearchField assignUserName;
-    
-    private StringSearchField assignUser;
+	private StringSearchField campaignName;
 
-    private NumberSearchField leadId;
+	private StringSearchField assignUserName;
 
-    private NumberSearchField targetListId;
-    
-    private NumberSearchField saccountid;
-    
-    private SetSearchField statuses;
-    
-    private SetSearchField types;
-    
-    private SetSearchField assignUsers;
+	private StringSearchField assignUser;
+
+	private NumberSearchField leadId;
+
+	private NumberSearchField targetListId;
+
+	private NumberSearchField saccountid;
+
+	private SetSearchField<String> statuses;
+
+	private SetSearchField<String> types;
+
+	private SetSearchField<String> assignUsers;
 
 	public StringSearchField getCampaignName() {
 		return campaignName;
@@ -82,27 +82,27 @@ public class CampaignSearchCriteria extends SearchCriteria {
 		this.saccountid = saccountid;
 	}
 
-	public SetSearchField getStatuses() {
+	public SetSearchField<String> getStatuses() {
 		return statuses;
 	}
 
-	public void setStatuses(SetSearchField statuses) {
+	public void setStatuses(SetSearchField<String> statuses) {
 		this.statuses = statuses;
 	}
 
-	public SetSearchField getTypes() {
+	public SetSearchField<String> getTypes() {
 		return types;
 	}
 
-	public void setTypes(SetSearchField types) {
+	public void setTypes(SetSearchField<String> types) {
 		this.types = types;
 	}
 
-	public SetSearchField getAssignUsers() {
+	public SetSearchField<String> getAssignUsers() {
 		return assignUsers;
 	}
 
-	public void setAssignUsers(SetSearchField assignUsers) {
+	public void setAssignUsers(SetSearchField<String> assignUsers) {
 		this.assignUsers = assignUsers;
 	}
 

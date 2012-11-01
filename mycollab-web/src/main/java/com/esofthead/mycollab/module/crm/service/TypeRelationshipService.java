@@ -4,7 +4,7 @@ import com.esofthead.mycollab.core.persistence.ICrudService;
 import com.esofthead.mycollab.module.crm.domain.TypeRelationship;
 
 public interface TypeRelationshipService extends
-        ICrudService<TypeRelationship, Integer> {
+		ICrudService<Integer, TypeRelationship> {
 
-    void deleteRelationShip(TypeRelationship typeRelationship);
+	void deleteRelationShip(TypeRelationship typeRelationship);
 }

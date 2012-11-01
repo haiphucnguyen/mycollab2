@@ -18,9 +18,8 @@
 package com.esofthead.mycollab.core.persistence;
 
 import java.io.Serializable;
-import java.util.List;
 
-public interface ICrudService<T, K extends Serializable> extends IService {
+public interface ICrudService<K extends Serializable, T> extends IService {
 
 	void saveWithSession(T record, String userSessionId);
 

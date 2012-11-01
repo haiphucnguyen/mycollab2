@@ -9,9 +9,4 @@ public class LogoutEvent extends ApplicationEvent {
 		super(source);
 	}
 
-	@Override
-	public String getDescription() {
-		return "LogoutEvent";
-	}
-
 }

@@ -26,7 +26,7 @@ import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.RoleExample;
 import com.esofthead.mycollab.module.user.service.RoleService;
 
-public class RoleServiceDBImpl extends DefaultCrudService<Role, Integer>
+public class RoleServiceDBImpl extends DefaultCrudService<Integer, Role>
 		implements RoleService {
 
 	private RoleMapperExt roleExtDAO;

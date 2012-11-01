@@ -11,7 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.TargetGroupSearchCriter
 import com.esofthead.mycollab.module.crm.service.TargetGroupService;
 
 public class TargetGroupServiceImpl extends
-		DefaultCrudService<TargetGroup, Integer> implements TargetGroupService {
+		DefaultCrudService<Integer, TargetGroup> implements TargetGroupService {
 
 	private TargetGroupMapperExt targetGroupExtDAO;
 

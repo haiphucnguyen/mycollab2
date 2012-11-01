@@ -9,7 +9,7 @@ public class CaseSearchCriteria extends SearchCriteria {
 	private StringSearchField subject;
 
 	private StringSearchField assignUser;
-	
+
 	private StringSearchField assignUserName;
 
 	private NumberSearchField accountId;
@@ -18,11 +18,11 @@ public class CaseSearchCriteria extends SearchCriteria {
 
 	private NumberSearchField contactId;
 
-	private SetSearchField statuses;
-	
-	private SetSearchField priorities;
-	
-	private SetSearchField assignUsers;
+	private SetSearchField<String> statuses;
+
+	private SetSearchField<String> priorities;
+
+	private SetSearchField<String> assignUsers;
 
 	private NumberSearchField saccountid;
 
@@ -66,27 +66,27 @@ public class CaseSearchCriteria extends SearchCriteria {
 		this.contactId = contactId;
 	}
 
-	public SetSearchField getStatuses() {
+	public SetSearchField<String> getStatuses() {
 		return statuses;
 	}
 
-	public void setStatuses(SetSearchField statuses) {
+	public void setStatuses(SetSearchField<String> statuses) {
 		this.statuses = statuses;
 	}
 
-	public SetSearchField getPriorities() {
+	public SetSearchField<String> getPriorities() {
 		return priorities;
 	}
 
-	public void setPriorities(SetSearchField priorities) {
+	public void setPriorities(SetSearchField<String> priorities) {
 		this.priorities = priorities;
 	}
 
-	public SetSearchField getAssignUsers() {
+	public SetSearchField<String> getAssignUsers() {
 		return assignUsers;
 	}
 
-	public void setAssignUsers(SetSearchField assignUsers) {
+	public void setAssignUsers(SetSearchField<String> assignUsers) {
 		this.assignUsers = assignUsers;
 	}
 

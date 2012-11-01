@@ -7,7 +7,7 @@ import com.esofthead.mycollab.module.crm.domain.TypeRelationshipExample;
 import com.esofthead.mycollab.module.crm.service.TypeRelationshipService;
 
 public class TypeRelationshipServiceImpl extends
-		DefaultCrudService<TypeRelationship, Integer> implements
+		DefaultCrudService<Integer, TypeRelationship> implements
 		TypeRelationshipService {
 	public static final int CONTACT_LEAD = 1;
 

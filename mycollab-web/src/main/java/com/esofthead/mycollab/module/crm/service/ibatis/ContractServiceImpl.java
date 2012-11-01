@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.ibatis.session.RowBounds;
 
-import com.esofthead.mycollab.core.PlatformManager;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.module.crm.dao.ContractMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Contract;
@@ -12,7 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.ContractSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContractService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class ContractServiceImpl extends DefaultCrudService<Contract, Integer>
+public class ContractServiceImpl extends DefaultCrudService<Integer, Contract>
 		implements ContractService {
 
 	private ContractMapperExt contractExtDAO;
@@ -28,14 +27,13 @@ public class ContractServiceImpl extends DefaultCrudService<Contract, Integer>
 	}
 
 	@Override
-	public int updateWithSession(Contract record, String userSessionId) {
+	public int updateWithSession(Contract record, String username) {
 		Contract oldValue = this.findByPrimaryKey(record.getId());
 		String refid = "crm-contract-" + record.getId();
 		auditLogService.saveAuditLog(
-				PlatformManager.getInstance().getSession(userSessionId)
-						.getRemoteUser(), refid, (Object) oldValue,
+				username, refid, (Object) oldValue,
 				(Object) record);
-		return super.updateWithSession(record, userSessionId);
+		return super.updateWithSession(record, username);
 	}
 
 	@Override

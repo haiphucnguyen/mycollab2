@@ -17,14 +17,13 @@
  */
 package com.esofthead.mycollab.module.crm.service;
 
-import com.esofthead.mycollab.core.persistence.ICrudService;
-import com.esofthead.mycollab.core.persistence.IPagableService;
+import com.esofthead.mycollab.core.persistence.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 
-public interface CampaignService extends ICrudService<Campaign, Integer>,
-        IPagableService<CampaignSearchCriteria> {
+public interface CampaignService extends
+		IDefaultService<Integer, Campaign, CampaignSearchCriteria> {
 
-    SimpleCampaign findCampaignById(int campaignId);
+	SimpleCampaign findCampaignById(int campaignId);
 }
