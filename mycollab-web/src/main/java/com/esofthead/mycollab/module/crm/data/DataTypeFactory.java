@@ -19,6 +19,14 @@ public class DataTypeFactory {
 			"Public Relations", "Direct Email", "Conference", "Trade Show",
 			"Website", "Word of mouth", "Email", "Campaign", "Other" };
 
+	private static String[] CAMPAIGN_STATUS_LIST = new String[] { "Planning",
+			"Active", "Inactive", "Complete", "In Queue", "Sending" };
+
+	private static String[] CAMPAIGN_TYPE_LIST = new String[] { "Conference",
+			"Webinar", "Trade Show", "Public Relations", "Partners",
+			"Referral Program", "Advertisement", "Banner Ads", "Direct Email",
+			"Mail", "Telemarketing", "Others" };
+
 	public static String[] getAccountIndustryList() {
 		return ACCOUNT_INDUSTRY_LIST;
 	}
@@ -29,5 +37,13 @@ public class DataTypeFactory {
 
 	public static String[] getLeadSourceList() {
 		return LEAD_SOURCE_LIST;
+	}
+
+	public static String[] getCampaignStatusList() {
+		return CAMPAIGN_STATUS_LIST;
+	}
+
+	public static String[] getCampaignTypeList() {
+		return CAMPAIGN_TYPE_LIST;
 	}
 }

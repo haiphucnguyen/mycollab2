@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
@@ -33,6 +34,8 @@ public class CrmHome extends AbstractView {
 	private static String NEW_ACCOUNT_ITEM = "New Account";
 
 	private static String CONTACT_LIST = "Contacts";
+
+	private static String CAMPAIGN_LIST = "Campaigns";
 
 	private static String NEW_CAMPAIGN_ITEM = "New Campaign";
 
@@ -101,6 +104,7 @@ public class CrmHome extends AbstractView {
 				AccountListViewImpl accountListView = AppContext
 						.getView(AccountListViewImpl.class);
 				addView(accountListView);
+				accountListView.doDefaultSearch();
 				addBtn.setPopupVisible(false);
 			}
 		});
@@ -133,9 +137,43 @@ public class CrmHome extends AbstractView {
 
 			@Override
 			public void handle(CampaignEvent.GotoAdd event) {
-				// addView(AppContext.getSpringBean(CampaignAddViewImpl.class),
-				// new Params(Params.ADD, null));
+				CampaignAddViewImpl view = AppContext.getView(CampaignAddViewImpl.class);
+				addView(view);
+				view.addNewItem();
 				addBtn.setPopupVisible(false);
+			}
+		});
+		
+		eventBus.addListener(new ApplicationEventListener<CampaignEvent.GotoRead>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return CampaignEvent.GotoRead.class;
+			}
+
+			@Override
+			public void handle(CampaignEvent.GotoRead event) {
+				CampaignAddViewImpl view = AppContext
+						.getView(CampaignAddViewImpl.class);
+				view.editItem((Campaign) event.getData());
+				addView((AbstractView) view);
+				addBtn.setPopupVisible(false);
+			}
+		});
+		
+		eventBus.addListener(new ApplicationEventListener<CampaignEvent.GotoEdit>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return CampaignEvent.GotoEdit.class;
+			}
+
+			@Override
+			public void handle(CampaignEvent.GotoEdit event) {
+				CampaignAddViewImpl view = AppContext
+						.getView(CampaignAddViewImpl.class);
+				view.editItem((Campaign) event.getData());
+				addView((AbstractView) view);
 			}
 		});
 
@@ -148,8 +186,10 @@ public class CrmHome extends AbstractView {
 
 			@Override
 			public void handle(CampaignEvent.GotoList event) {
-				// addView(AppContext.getSpringBean(ContactListViewImpl.class),
-				// new Params());
+				CampaignListViewImpl campaignListView = AppContext
+						.getView(CampaignListViewImpl.class);
+				addView(campaignListView);
+				campaignListView.doDefaultSearch();
 				addBtn.setPopupVisible(false);
 			}
 		});
@@ -161,7 +201,7 @@ public class CrmHome extends AbstractView {
 
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
-				return AccountEvent.GotoAdd.class;
+				return ContactEvent.GotoAdd.class;
 			}
 
 			@Override
@@ -220,6 +260,7 @@ public class CrmHome extends AbstractView {
 				ContactListViewImpl contactListView = AppContext
 						.getView(ContactListViewImpl.class);
 				addView(contactListView);
+				contactListView.doDefaultSearch();
 				addBtn.setPopupVisible(false);
 			}
 		});
@@ -243,6 +284,8 @@ public class CrmHome extends AbstractView {
 				eventBus.fireEvent(new AccountEvent.GotoList(this, null));
 			} else if (NEW_CAMPAIGN_ITEM.equals(caption)) {
 				eventBus.fireEvent(new CampaignEvent.GotoAdd(this, null));
+			} else if (CAMPAIGN_LIST.equals(caption)) {
+				eventBus.fireEvent(new CampaignEvent.GotoList(this, null));
 			} else if (CONTACT_LIST.equals(caption)) {
 				eventBus.fireEvent(new ContactEvent.GotoList(this, null));
 			}
@@ -266,8 +309,9 @@ public class CrmHome extends AbstractView {
 		Button contactList = new Button(CONTACT_LIST, listener);
 		toolbar.addComponent(contactList);
 
-		Button leadList = new Button(LEAD_LIST, listener);
-		toolbar.addComponent(leadList);
+		Button campaignList = new Button(CAMPAIGN_LIST, listener);
+		toolbar.addComponent(campaignList);
+
 		toolbar.setStyleName("sidebar-menu");
 
 		addBtn = new PopupButton("Add");

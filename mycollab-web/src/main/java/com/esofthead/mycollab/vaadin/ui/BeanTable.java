@@ -11,6 +11,6 @@ public class BeanTable<T> extends PagedTable {
 	public T getBeanByIndex(Object itemId) {
 		Container container = this.getContainerDataSource();
 		BeanItem<T> item = (BeanItem<T>) container.getItem(itemId);
-		return item.getBean();
+		return (item == null) ? null : item.getBean();
 	}
 }

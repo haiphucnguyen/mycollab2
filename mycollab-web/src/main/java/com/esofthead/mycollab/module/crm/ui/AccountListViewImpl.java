@@ -2,9 +2,10 @@ package com.esofthead.mycollab.module.crm.ui;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
@@ -16,7 +17,6 @@ import com.esofthead.mycollab.vaadin.data.MyBatisQueryFactory;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
-import com.esofthead.mycollab.vaadin.mvp.ui.Params;
 import com.esofthead.mycollab.vaadin.ui.BeanTable;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ExternalResource;
@@ -31,7 +31,6 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
-@Scope("prototype")
 @Component
 public class AccountListViewImpl extends AbstractView implements
 		AccountListView {
@@ -41,10 +40,7 @@ public class AccountListViewImpl extends AbstractView implements
 
 	private AccountSearchCriteria searchCriteria;
 
-	
-	public void handleRequest(Params params) {
-		searchCriteria = new AccountSearchCriteria();
-	}
+	private VerticalLayout accountListLayout;
 
 	@SuppressWarnings("serial")
 	@PostConstruct
@@ -59,59 +55,61 @@ public class AccountListViewImpl extends AbstractView implements
 			@Override
 			public void handle(AccountEvent.Search event) {
 				searchCriteria = (AccountSearchCriteria) event.getData();
+				AccountListViewImpl.this.doSearch(searchCriteria);
 			}
 		});
 	}
 
 	@Override
-	protected ComponentContainer initMainLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
+	public void doDefaultSearch() {
+		searchCriteria = new AccountSearchCriteria();
+		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		doSearch(searchCriteria);
+	}
 
-		AccountSearchPanel accountSearchPanel = AppContext
-				.getSpringBean(AccountSearchPanel.class);
-		layout.addComponent(accountSearchPanel);
+	@Override
+	public void doSearch(AccountSearchCriteria searchCriteria) {
 		tableItem = new BeanTable<SimpleAccount>();
 		tableItem.addStyleName("striped");
-		tableItem.setWidth("100%");
-		tableItem.setHeight("200px");
 
 		MyBatisQueryContainer<SimpleAccount> container = new MyBatisQueryContainer<SimpleAccount>(
 				new MyBatisQueryDefinition<AccountSearchCriteria>(
 						AppContext.getSpringBean(AccountService.class), false,
 						5), new MyBatisQueryFactory<AccountSearchCriteria>(
 						searchCriteria));
-
 		container.addContainerProperty("accountname", String.class, "", true,
 				true);
-		tableItem.setColumnWidth("accountname", 250);
-
 		container.addContainerProperty("city", String.class, "", true, true);
-		tableItem.setColumnWidth("city", 150);
-
 		container.addContainerProperty("billingCountry", String.class, "",
 				true, true);
-		tableItem.setColumnWidth("billingCountry", 150);
-
 		container.addContainerProperty("phoneoffice", String.class, "", true,
 				true);
 
 		container.addContainerProperty("email", String.class, "", true, true);
-		tableItem.setColumnWidth("email", 150);
-
 		container.addContainerProperty("assignuser", String.class, "", true,
 				true);
-		tableItem.setColumnWidth("assignuser", 150);
-
 		container.addContainerProperty("createdtime", String.class, "", true,
 				true);
 		container.addContainerProperty("action", Object.class, "", true, false);
-		tableItem.setColumnWidth("action", 80);
-
 		tableItem.setContainerDataSource(container);
 		tableItem.setColumnHeaders(new String[] { "Name", "City",
 				"Billing Country", "Phone Office", "Email Address",
 				"Assign User", "Created Time", "Action" });
+
+		System.out.println("View: " + container.getQueryView().size());
+
+		tableItem.setColumnWidth("accountname", 250);
+
+		tableItem.setColumnWidth("city", 150);
+
+		tableItem.setColumnWidth("billingCountry", 150);
+
+		tableItem.setColumnWidth("email", 150);
+
+		tableItem.setColumnWidth("assignuser", 150);
+
+		tableItem.setColumnWidth("action", 80);
 
 		tableItem.addGeneratedColumn("email", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -121,11 +119,16 @@ public class AccountListViewImpl extends AbstractView implements
 					Object itemId, Object columnId) {
 				SimpleAccount account = ((BeanTable<SimpleAccount>) source)
 						.getBeanByIndex(itemId);
-				Link l = new Link();
-				l.setResource(new ExternalResource("mailto:"
-						+ account.getEmail()));
-				l.setCaption(account.getEmail());
-				return l;
+				if (account != null) {
+					Link l = new Link();
+					l.setResource(new ExternalResource("mailto:"
+							+ account.getEmail()));
+					l.setCaption(account.getEmail());
+					return l;
+				} else {
+					return new Label("");
+				}
+
 			}
 		});
 
@@ -134,12 +137,18 @@ public class AccountListViewImpl extends AbstractView implements
 
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
-				Label l = new Label();
 				@SuppressWarnings("unchecked")
 				final SimpleAccount account = ((BeanTable<SimpleAccount>) source)
 						.getBeanByIndex(itemId);
-				l.setCaption(account.getCreatedtime() + "");
-				return l;
+				if (account != null) {
+					Label l = new Label();
+
+					l.setCaption(account.getCreatedtime() + "");
+					return l;
+				} else {
+					return new Label("");
+				}
+
 			}
 		});
 
@@ -151,18 +160,23 @@ public class AccountListViewImpl extends AbstractView implements
 				@SuppressWarnings("unchecked")
 				final SimpleAccount account = ((BeanTable<SimpleAccount>) source)
 						.getBeanByIndex(itemId);
-				Button b = new Button(account.getAccountname(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+				if (account != null) {
+					Button b = new Button(account.getAccountname(),
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
 
-							@Override
-							public void buttonClick(ClickEvent event) {
-								eventBus.fireEvent(new AccountEvent.GotoRead(
-										this, account));
-							}
-						});
-				b.setStyleName("link");
-				return b;
+								@Override
+								public void buttonClick(ClickEvent event) {
+									eventBus.fireEvent(new AccountEvent.GotoRead(
+											this, account));
+								}
+							});
+					b.setStyleName("link");
+					return b;
+				} else {
+					return new Label("");
+				}
+
 			}
 		});
 
@@ -174,41 +188,60 @@ public class AccountListViewImpl extends AbstractView implements
 				@SuppressWarnings("unchecked")
 				final SimpleAccount account = ((BeanTable<SimpleAccount>) source)
 						.getBeanByIndex(itemId);
-				HorizontalLayout layout = new HorizontalLayout();
-				layout.setSpacing(true);
-				Button editAccount = new Button("Edit",
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+				if (account != null) {
+					HorizontalLayout layout = new HorizontalLayout();
+					layout.setSpacing(true);
+					Button editAccount = new Button("Edit",
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
 
-							@Override
-							public void buttonClick(ClickEvent event) {
-								eventBus.fireEvent(new AccountEvent.GotoEdit(
-										this, account));
+								@Override
+								public void buttonClick(ClickEvent event) {
+									eventBus.fireEvent(new AccountEvent.GotoEdit(
+											this, account));
 
-							}
-						});
-				editAccount.setStyleName(BaseTheme.BUTTON_LINK);
-				layout.addComponent(editAccount);
+								}
+							});
+					editAccount.setStyleName(BaseTheme.BUTTON_LINK);
+					layout.addComponent(editAccount);
 
-				layout.addComponent(new Label("|"));
-				Button deleteAccount = new Button("Delete",
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+					layout.addComponent(new Label("|"));
+					Button deleteAccount = new Button("Delete",
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
 
-							@Override
-							public void buttonClick(ClickEvent event) {
-								// TODO Auto-generated method stub
+								@Override
+								public void buttonClick(ClickEvent event) {
+									// TODO Auto-generated method stub
 
-							}
-						});
-				deleteAccount.setStyleName(BaseTheme.BUTTON_LINK);
-				layout.addComponent(deleteAccount);
-				return layout;
+								}
+							});
+					deleteAccount.setStyleName(BaseTheme.BUTTON_LINK);
+					layout.addComponent(deleteAccount);
+					return layout;
+				} else {
+					return new Label("");
+				}
+
 			}
 		});
 
-		layout.addComponent(tableItem);
-		layout.addComponent(tableItem.createControls());
+		accountListLayout.removeAllComponents();
+		accountListLayout.addComponent(tableItem);
+		accountListLayout.addComponent(tableItem.createControls());
+	}
+
+	@Override
+	protected ComponentContainer initMainLayout() {
+		VerticalLayout layout = new VerticalLayout();
+		layout.setSpacing(true);
+
+		AccountSearchPanel accountSearchPanel = AppContext
+				.getSpringBean(AccountSearchPanel.class);
+		layout.addComponent(accountSearchPanel);
+
+		accountListLayout = new VerticalLayout();
+		layout.addComponent(accountListLayout);
 		return layout;
 	}
 }

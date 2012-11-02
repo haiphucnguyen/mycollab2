@@ -5,6 +5,8 @@ import javax.annotation.PostConstruct;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
@@ -16,7 +18,6 @@ import com.esofthead.mycollab.vaadin.data.MyBatisQueryFactory;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
-import com.esofthead.mycollab.vaadin.mvp.ui.Params;
 import com.esofthead.mycollab.vaadin.ui.BeanTable;
 import com.esofthead.mycollab.web.AppContext;
 import com.jensjansson.pagedtable.PagedTable;
@@ -40,39 +41,20 @@ public class ContactListViewImpl extends AbstractView implements
 
 	private ContactSearchCriteria searchCriteria;
 
-	
-	public void handleRequest(Params params) {
+	private VerticalLayout contactListLayout;
+
+	@Override
+	public void doDefaultSearch() {
 		searchCriteria = new ContactSearchCriteria();
-	}
-
-	@SuppressWarnings("serial")
-	@PostConstruct
-	private void init() {
-		eventBus.addListener(new ApplicationEventListener<ContactEvent.Search>() {
-
-			@Override
-			public Class<? extends ApplicationEvent> getEventType() {
-				return ContactEvent.Search.class;
-			}
-
-			@Override
-			public void handle(ContactEvent.Search event) {
-				searchCriteria = (ContactSearchCriteria) event.getData();
-			}
-		});
+		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		doSearch(searchCriteria);
 	}
 
 	@Override
-	protected ComponentContainer initMainLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
-
-		ContactSearchPanel searchPanel = AppContext
-				.getSpringBean(ContactSearchPanel.class);
-		layout.addComponent(searchPanel);
+	public void doSearch(ContactSearchCriteria searchCriteria) {
 		tableItem = new BeanTable<SimpleContact>();
-		tableItem.setWidth("100%");
-		tableItem.setHeight("200px");
+		tableItem.addStyleName("striped");
 
 		MyBatisQueryContainer<SimpleContact> container = new MyBatisQueryContainer<SimpleContact>(
 				new MyBatisQueryDefinition<ContactSearchCriteria>(
@@ -138,8 +120,41 @@ public class ContactListViewImpl extends AbstractView implements
 			}
 		});
 
-		layout.addComponent(tableItem);
-		layout.addComponent(tableItem.createControls());
+		contactListLayout.removeAllComponents();
+		contactListLayout.addComponent(tableItem);
+		contactListLayout.addComponent(tableItem.createControls());
+
+	}
+
+	@SuppressWarnings("serial")
+	@PostConstruct
+	private void init() {
+		eventBus.addListener(new ApplicationEventListener<ContactEvent.Search>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return ContactEvent.Search.class;
+			}
+
+			@Override
+			public void handle(ContactEvent.Search event) {
+				searchCriteria = (ContactSearchCriteria) event.getData();
+			}
+		});
+	}
+
+	@Override
+	protected ComponentContainer initMainLayout() {
+		VerticalLayout layout = new VerticalLayout();
+		layout.setSpacing(true);
+
+		ContactSearchPanel searchPanel = AppContext
+				.getSpringBean(ContactSearchPanel.class);
+		layout.addComponent(searchPanel);
+
+		contactListLayout = new VerticalLayout();
+		layout.addComponent(contactListLayout);
+
 		return layout;
 	}
 }

@@ -29,7 +29,6 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
-@Scope("prototype")
 @Component
 public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 	private static final long serialVersionUID = 1L;
