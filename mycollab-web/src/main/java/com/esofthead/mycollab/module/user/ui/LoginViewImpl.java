@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.user.ui;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.core.EngroupException;
@@ -17,6 +18,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
+@Scope("prototype")
 @Component
 public class LoginViewImpl extends AbstractView implements LoginView {
 	private static final long serialVersionUID = 1L;
@@ -92,7 +94,6 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 				.getApplication()
 				.getMainWindow()
 				.setContent(
-						AppContext.getSpringBean(MainPage.class)
-								.createMainLayout());
+						AppContext.getView(MainPage.class).getCompContainer());
 	}
 }

@@ -24,20 +24,18 @@ public class ContactAddPresenter extends AbstractPresenter<ContactAddView> {
 
 	@PostConstruct
 	private void initListeners() {
-		eventBus.addListener(new ApplicationEventListener<ContactEvent>() {
+		eventBus.addListener(new ApplicationEventListener<ContactEvent.Save>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
-				return ContactEvent.class;
+				return ContactEvent.Save.class;
 			}
 
 			@Override
-			public void handle(ContactEvent event) {
-				if (event.getName().equals(ContactEvent.SAVE)) {
-					Contact contact = (Contact) event.getData();
-					saveContact(contact);
-				}
+			public void handle(ContactEvent.Save event) {
+				Contact contact = (Contact) event.getData();
+				saveContact(contact);
 			}
 		});
 	}
@@ -51,6 +49,6 @@ public class ContactAddPresenter extends AbstractPresenter<ContactAddView> {
 			contactService.updateWithSession(contact, AppContext.getUsername());
 		}
 
-		eventBus.fireEvent(new ContactEvent(this, ContactEvent.GOTO_LIST_VIEW));
+		eventBus.fireEvent(new ContactEvent.GotoList(this, null));
 	}
 }

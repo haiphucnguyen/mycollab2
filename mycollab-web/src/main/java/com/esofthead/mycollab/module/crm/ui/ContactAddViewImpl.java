@@ -10,7 +10,6 @@ import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.ui.components.LeadSourceComboBox;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
-import com.esofthead.mycollab.vaadin.mvp.ui.Params;
 import com.esofthead.mycollab.vaadin.ui.AdvancedBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -30,6 +29,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
+@Scope("prototype")
 @Component
 public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 	private static final long serialVersionUID = 1L;
@@ -43,25 +43,26 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 	}
 
 	@Override
-	public void handleRequest(Params params) {
-		super.handleRequest(params);
-
+	public void addNewItem() {
 		compContainer.removeAllComponents();
-		Form formItem = null;
+		Form formItem = AppContext.getSpringBean(EditForm.class);
+		formItem.setItemDataSource(new BeanItem<Contact>(new Contact()));
+		compContainer.addComponent(formItem);
+	}
 
-		if (Params.EDIT.equals(params.getAction())) {
-			formItem = AppContext.getSpringBean(EditForm.class);
-			formItem.setItemDataSource(new BeanItem<Contact>((Contact) params
-					.getParameters()[0]));
-		} else if (Params.ADD.equals(params.getAction())) {
-			formItem = AppContext.getSpringBean(EditForm.class);
-			formItem.setItemDataSource(new BeanItem<Contact>(new Contact()));
-		} else if (Params.VIEW.equals(params.getAction())) {
-			formItem = AppContext.getSpringBean(ViewForm.class);
-			formItem.setItemDataSource(new BeanItem<Contact>((Contact) params
-					.getParameters()[0]));
-		}
+	@Override
+	public void editItem(Contact item) {
+		compContainer.removeAllComponents();
+		Form formItem = AppContext.getSpringBean(EditForm.class);
+		formItem.setItemDataSource(new BeanItem<Contact>(item));
+		compContainer.addComponent(formItem);
+	}
 
+	@Override
+	public void viewItem(Contact item) {
+		compContainer.removeAllComponents();
+		Form formItem = AppContext.getSpringBean(ViewForm.class);
+		formItem.setItemDataSource(new BeanItem<Contact>(item));
 		compContainer.addComponent(formItem);
 	}
 
@@ -128,16 +129,14 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 			public void buttonClick(ClickEvent event) {
 				String caption = event.getButton().getCaption();
 				@SuppressWarnings("unchecked")
-				Contact account = ((BeanItem<Contact>) EditForm.this
+				Contact contact = ((BeanItem<Contact>) EditForm.this
 						.getItemDataSource()).getBean();
 				if (caption.equals(SAVE_ACTION)) {
-					if (validateForm(account)) {
-						eventBus.fireEvent(new ContactEvent(this,
-								ContactEvent.SAVE, account));
+					if (validateForm(contact)) {
+						eventBus.fireEvent(new ContactEvent.Save(this, contact));
 					}
 				} else if (caption.equals(CANCEL_ACTION)) {
-					eventBus.fireEvent(new ContactEvent(this,
-							ContactEvent.GOTO_LIST_VIEW, account));
+					eventBus.fireEvent(new ContactEvent.GotoList(this, null));
 				}
 			}
 		}
@@ -179,11 +178,9 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 				Contact contact = ((BeanItem<Contact>) ViewForm.this
 						.getItemDataSource()).getBean();
 				if (caption.equals(EDIT_ACTION)) {
-					eventBus.fireEvent(new ContactEvent(this,
-							ContactEvent.GOTO_EDIT_VIEW, contact));
+					eventBus.fireEvent(new ContactEvent.GotoEdit(this, contact));
 				} else if (caption.equals(CANCEL_ACTION)) {
-					eventBus.fireEvent(new ContactEvent(this,
-							ContactEvent.GOTO_LIST_VIEW, contact));
+					eventBus.fireEvent(new ContactEvent.GotoList(this, null));
 				}
 			}
 		}

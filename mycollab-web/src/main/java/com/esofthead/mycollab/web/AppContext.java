@@ -2,15 +2,20 @@ package com.esofthead.mycollab.web;
 
 import java.io.Serializable;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.vaadin.mvp.ui.View;
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext.TransactionListener;
 import com.vaadin.terminal.gwt.server.WebApplicationContext;
 
 public class AppContext implements TransactionListener, Serializable {
 	private static final long serialVersionUID = 1L;
+
+	private static Logger log = LoggerFactory.getLogger(AppContext.class);
 
 	private Application app;
 
@@ -72,5 +77,12 @@ public class AppContext implements TransactionListener, Serializable {
 						.getServletContext());
 
 		return springContext.getBean(requiredType);
+	}
+
+	public static <T extends View> T getView(Class<T> viewClass) {
+		T view = getSpringBean(viewClass);
+		view.createMainLayout();
+		log.debug("Create view class {}", viewClass.getName());
+		return view;
 	}
 }

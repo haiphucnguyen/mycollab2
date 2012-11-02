@@ -29,11 +29,11 @@ public class MyCollabApplication extends Application {
 				.getSpringBean(PresenterRegistry.class);
 		presenterRegistry.registerPresenter();
 
-		LoginViewImpl mainView = AppContext.getSpringBean(LoginViewImpl.class);
+		LoginViewImpl mainView = AppContext.getView(LoginViewImpl.class);
 
 		EventBus eventBus = AppContext.getSpringBean(EventBus.class);
 		System.out.println("Main view: " + mainView);
-		getMainWindow().setContent(mainView.createMainLayout());
+		getMainWindow().setContent(mainView.getCompContainer());
 
 		eventBus.addListener(new ApplicationEventListener<LogoutEvent>() {
 			private static final long serialVersionUID = 1L;

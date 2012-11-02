@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.ui;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
@@ -29,6 +30,7 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
+@Scope("prototype")
 @Component
 public class ContactListViewImpl extends AbstractView implements
 		ContactListView {
@@ -38,7 +40,7 @@ public class ContactListViewImpl extends AbstractView implements
 
 	private ContactSearchCriteria searchCriteria;
 
-	@Override
+	
 	public void handleRequest(Params params) {
 		searchCriteria = new ContactSearchCriteria();
 	}
@@ -46,19 +48,16 @@ public class ContactListViewImpl extends AbstractView implements
 	@SuppressWarnings("serial")
 	@PostConstruct
 	private void init() {
-		eventBus.addListener(new ApplicationEventListener<ContactEvent>() {
+		eventBus.addListener(new ApplicationEventListener<ContactEvent.Search>() {
 
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
-				return ContactEvent.class;
+				return ContactEvent.Search.class;
 			}
 
 			@Override
-			public void handle(ContactEvent event) {
-				if (event.getName().equals(ContactEvent.SEARCH)) {
-					searchCriteria = (ContactSearchCriteria) event.getData();
-
-				}
+			public void handle(ContactEvent.Search event) {
+				searchCriteria = (ContactSearchCriteria) event.getData();
 			}
 		});
 	}
@@ -83,23 +82,22 @@ public class ContactListViewImpl extends AbstractView implements
 
 		container.addContainerProperty("contactName", String.class, "", true,
 				true);
-		container.addContainerProperty("title", String.class, "", true,
-				true);
+		container.addContainerProperty("title", String.class, "", true, true);
 		container.addContainerProperty("accountName", String.class, "", true,
 				true);
-		container.addContainerProperty("email", String.class, "", true,
-				true);
+		container.addContainerProperty("email", String.class, "", true, true);
 		container.addContainerProperty("officephone", String.class, "", true,
 				true);
-		
-		container.addContainerProperty("assignUserFullName", String.class, "", true,
-				true);
+
+		container.addContainerProperty("assignUserFullName", String.class, "",
+				true, true);
 
 		container.addContainerProperty("action", Object.class, "", true, false);
 		tableItem.setColumnWidth("action", 80);
 
 		tableItem.setContainerDataSource(container);
-		tableItem.setColumnHeaders(new String[] { "Name", "Title", "Account Name", "Email", "Office Phone", "User", "Action" });
+		tableItem.setColumnHeaders(new String[] { "Name", "Title",
+				"Account Name", "Email", "Office Phone", "User", "Action" });
 
 		tableItem.addGeneratedColumn("action", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -116,8 +114,7 @@ public class ContactListViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						eventBus.fireEvent(new ContactEvent(this,
-								ContactEvent.GOTO_EDIT_VIEW, item));
+						eventBus.fireEvent(new ContactEvent.GotoEdit(this, item));
 
 					}
 				});

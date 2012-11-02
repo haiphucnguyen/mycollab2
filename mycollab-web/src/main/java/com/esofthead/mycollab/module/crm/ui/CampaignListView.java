@@ -1,8 +1,7 @@
 package com.esofthead.mycollab.module.crm.ui;
 
-import com.vaadin.ui.Panel;
+import com.esofthead.mycollab.vaadin.mvp.ui.View;
 
-public class CampaignListView extends Panel {
-	private static final long serialVersionUID = 1L;
+public interface CampaignListView extends View {
 
 }

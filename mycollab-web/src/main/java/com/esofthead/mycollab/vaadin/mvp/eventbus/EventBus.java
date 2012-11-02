@@ -2,6 +2,7 @@ package com.esofthead.mycollab.vaadin.mvp.eventbus;
 
 import java.io.Serializable;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.LinkedHashSet;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -18,17 +19,18 @@ import org.springframework.stereotype.Component;
 public class EventBus implements Serializable {
 
 	private Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> map = new HashMap<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>>();
-	
+
 	private final Logger log = LoggerFactory.getLogger(EventBus.class);
-	
+
 	@PostConstruct
 	void init() {
 		log.debug("Creating new EventBus.");
 	}
-	
+
 	public void addListener(ApplicationEventListener<?> listener) {
-		
-		Set<ApplicationEventListener<?>> listenerSet = map.get(listener.getEventType());
+
+		Set<ApplicationEventListener<?>> listenerSet = map.get(listener
+				.getEventType());
 		if (listenerSet == null) {
 			listenerSet = new LinkedHashSet<ApplicationEventListener<?>>();
 			map.put(listener.getEventType(), listenerSet);
@@ -36,46 +38,50 @@ public class EventBus implements Serializable {
 
 		listenerSet.add(listener);
 
-		log.debug("Added event bus listener: {}", listener);
-		
+		log.debug("Added event bus listener: {}", listener.getClass());
+
 	}
-	
+
 	public void removeListener(ApplicationEventListener<?> listener) {
-		
-		Set<ApplicationEventListener<?>> listenerSet = map.get(listener.getEventType());
+
+		Set<ApplicationEventListener<?>> listenerSet = map.get(listener
+				.getEventType());
 		listenerSet.remove(listener);
 	}
-	
+
 	public void clear() {
 		map.clear();
 	}
-	
+
 	public void fireEvent(ApplicationEvent event) {
 
 		log.debug("Fire event: {}", event);
-		
+
 		Class<? extends ApplicationEvent> eventType = event.getClass();
-		
-		Set<ApplicationEventListener<?>> listenerSet = map.get(eventType);
-		
-        for (ApplicationEventListener<?> listener : listenerSet) {
-        	@SuppressWarnings("unchecked")
+
+		Iterator<ApplicationEventListener<?>> listenerSet = map.get(eventType).iterator();
+
+		while (listenerSet.hasNext()) {
+			ApplicationEventListener<?> listener = listenerSet.next();
+			@SuppressWarnings("unchecked")
 			ApplicationEventListener<ApplicationEvent> l = (ApplicationEventListener<ApplicationEvent>) listener;
-        	l.handle(event);
-        }
-    }
+			l.handle(event);
+		}
+	}
 
 	@Override
 	public String toString() {
-		
-		StringBuilder strb = new StringBuilder("Registered Listener on EventBus: \r\n");
-		
-		for (Entry<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> entry : map.entrySet()) {
-			strb.append(entry.getKey()).append(": ").append(entry.getValue()).append("\r\n");
+
+		StringBuilder strb = new StringBuilder(
+				"Registered Listener on EventBus: \r\n");
+
+		for (Entry<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> entry : map
+				.entrySet()) {
+			strb.append(entry.getKey()).append(": ").append(entry.getValue())
+					.append("\r\n");
 		}
-		
+
 		return strb.toString();
-	}	
-	
-	
+	}
+
 }

@@ -20,11 +20,6 @@ public abstract class AbstractView implements View, Serializable {
 	protected EventBus eventBus;
 	
 	protected ComponentContainer compContainer;
-	
-	@Override
-	public void handleRequest(Params params) {
-		
-	}
 
 	public ComponentContainer createMainLayout() {
 		compContainer = initMainLayout();

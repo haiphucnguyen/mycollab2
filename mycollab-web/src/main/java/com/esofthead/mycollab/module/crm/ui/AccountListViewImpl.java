@@ -41,7 +41,7 @@ public class AccountListViewImpl extends AbstractView implements
 
 	private AccountSearchCriteria searchCriteria;
 
-	@Override
+	
 	public void handleRequest(Params params) {
 		searchCriteria = new AccountSearchCriteria();
 	}
@@ -49,19 +49,16 @@ public class AccountListViewImpl extends AbstractView implements
 	@SuppressWarnings("serial")
 	@PostConstruct
 	private void init() {
-		eventBus.addListener(new ApplicationEventListener<AccountEvent>() {
+		eventBus.addListener(new ApplicationEventListener<AccountEvent.Search>() {
 
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
-				return AccountEvent.class;
+				return AccountEvent.Search.class;
 			}
 
 			@Override
-			public void handle(AccountEvent event) {
-				if (event.getName().equals(AccountEvent.SEARCH)) {
-					searchCriteria = (AccountSearchCriteria) event.getData();
-
-				}
+			public void handle(AccountEvent.Search event) {
+				searchCriteria = (AccountSearchCriteria) event.getData();
 			}
 		});
 	}
@@ -160,8 +157,8 @@ public class AccountListViewImpl extends AbstractView implements
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								eventBus.fireEvent(new AccountEvent(this,
-										AccountEvent.GOTO_READ_VIEW, account));
+								eventBus.fireEvent(new AccountEvent.GotoRead(
+										this, account));
 							}
 						});
 				b.setStyleName("link");
@@ -185,8 +182,8 @@ public class AccountListViewImpl extends AbstractView implements
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								eventBus.fireEvent(new AccountEvent(this,
-										AccountEvent.GOTO_EDIT_VIEW, account));
+								eventBus.fireEvent(new AccountEvent.GotoEdit(
+										this, account));
 
 							}
 						});

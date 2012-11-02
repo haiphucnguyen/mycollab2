@@ -2,17 +2,18 @@ package com.esofthead.mycollab.module.crm.ui;
 
 import javax.annotation.PostConstruct;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vaadin.hene.popupbutton.PopupButton;
 
+import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
-import com.esofthead.mycollab.vaadin.mvp.ui.Params;
-import com.esofthead.mycollab.vaadin.mvp.ui.View;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -22,6 +23,7 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
+@Scope("prototype")
 @Component
 public class CrmHome extends AbstractView {
 	private static final long serialVersionUID = 1L;
@@ -44,79 +46,188 @@ public class CrmHome extends AbstractView {
 		super();
 	}
 
-	@SuppressWarnings("serial")
 	@PostConstruct
 	private void init() {
-		eventBus.addListener(new ApplicationEventListener<AccountEvent>() {
+		registerAccountListeners();
+		registerCampaignListeners();
+		registerContactListeners();
+	}
+
+	@SuppressWarnings("serial")
+	private void registerAccountListeners() {
+		eventBus.addListener(new ApplicationEventListener<AccountEvent.GotoAdd>() {
 
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
-				return AccountEvent.class;
+				return AccountEvent.GotoAdd.class;
 			}
 
 			@Override
-			public void handle(AccountEvent event) {
-				if (AccountEvent.GOTO_ADD_VIEW.equals(event.getName())) {
-					addView(AppContext.getSpringBean(AccountAddViewImpl.class),
-							new Params(Params.ADD, null));
-				} else if (AccountEvent.GOTO_READ_VIEW.equals(event.getName())) {
-					addView(AppContext.getSpringBean(AccountAddViewImpl.class),
-							new Params(Params.VIEW, new Object[] { event
-									.getData() }));
-				} else if (AccountEvent.GOTO_LIST_VIEW.equals(event.getName())) {
-					addView(AppContext.getSpringBean(AccountListViewImpl.class),
-							new Params());
-				} else if (AccountEvent.GOTO_EDIT_VIEW.equals(event.getName())) {
-					addView(AppContext.getSpringBean(AccountAddViewImpl.class),
-							new Params(Params.EDIT, new Object[] { event
-									.getData() }));
-				}
+			public void handle(AccountEvent.GotoAdd event) {
+				AccountAddView accountAddView = AppContext
+						.getView(AccountAddViewImpl.class);
+				accountAddView.addNewItem();
+				addView((AbstractView) accountAddView);
 				addBtn.setPopupVisible(false);
 			}
 		});
 
-		eventBus.addListener(new ApplicationEventListener<ContactEvent>() {
+		eventBus.addListener(new ApplicationEventListener<AccountEvent.GotoRead>() {
 
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
-				return ContactEvent.class;
+				return AccountEvent.GotoRead.class;
 			}
 
 			@Override
-			public void handle(ContactEvent event) {
-				if (ContactEvent.GOTO_ADD_VIEW.equals(event.getName())) {
-					addView(AppContext.getSpringBean(ContactAddViewImpl.class),
-							new Params(Params.ADD, null));
-				} else if (ContactEvent.GOTO_READ_VIEW.equals(event.getName())) {
-					addView(AppContext.getSpringBean(ContactAddViewImpl.class),
-							new Params(Params.VIEW, new Object[] { event
-									.getData() }));
-				} else if (CampaignEvent.GOTO_ADD_VIEW.equals(event.getName())) {
-					addView(AppContext.getSpringBean(CampaignAddViewImpl.class),
-							new Params(Params.ADD, null));
-				} else if (CampaignEvent.GOTO_LIST_VIEW.equals(event.getName())) {
-					addView(AppContext.getSpringBean(ContactListViewImpl.class),
-							new Params());
-				} else if (ContactEvent.GOTO_LIST_VIEW.equals(event.getName())) {
-					addView(AppContext.getSpringBean(ContactListViewImpl.class),
-							new Params());
-				} else if (ContactEvent.GOTO_EDIT_VIEW.equals(event.getName())) {
-					addView(AppContext.getSpringBean(ContactAddViewImpl.class),
-							new Params(Params.EDIT, new Object[] { event
-									.getData() }));
-				}
+			public void handle(AccountEvent.GotoRead event) {
+				AccountAddView accountAddView = AppContext
+						.getView(AccountAddViewImpl.class);
+				accountAddView.editItem((Account) event.getData());
+				addView((AbstractView) accountAddView);
+				addBtn.setPopupVisible(false);
+			}
+		});
+
+		eventBus.addListener(new ApplicationEventListener<AccountEvent.GotoList>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return AccountEvent.GotoList.class;
+			}
+
+			@Override
+			public void handle(AccountEvent.GotoList event) {
+				AccountListViewImpl accountListView = AppContext
+						.getView(AccountListViewImpl.class);
+				addView(accountListView);
+				addBtn.setPopupVisible(false);
+			}
+		});
+
+		eventBus.addListener(new ApplicationEventListener<AccountEvent.GotoEdit>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return AccountEvent.GotoEdit.class;
+			}
+
+			@Override
+			public void handle(AccountEvent.GotoEdit event) {
+				AccountAddView accountView = AppContext
+						.getView(AccountAddViewImpl.class);
+				accountView.editItem((Account) event.getData());
+				addView((AbstractView) accountView);
+			}
+		});
+	}
+
+	@SuppressWarnings("serial")
+	private void registerCampaignListeners() {
+		eventBus.addListener(new ApplicationEventListener<CampaignEvent.GotoAdd>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return CampaignEvent.GotoAdd.class;
+			}
+
+			@Override
+			public void handle(CampaignEvent.GotoAdd event) {
+				// addView(AppContext.getSpringBean(CampaignAddViewImpl.class),
+				// new Params(Params.ADD, null));
+				addBtn.setPopupVisible(false);
+			}
+		});
+
+		eventBus.addListener(new ApplicationEventListener<CampaignEvent.GotoList>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return CampaignEvent.GotoList.class;
+			}
+
+			@Override
+			public void handle(CampaignEvent.GotoList event) {
+				// addView(AppContext.getSpringBean(ContactListViewImpl.class),
+				// new Params());
 				addBtn.setPopupVisible(false);
 			}
 		});
 	}
 
-	private void addView(View view, Params params) {
-		ComponentContainer component = view.createMainLayout();
+	@SuppressWarnings("serial")
+	private void registerContactListeners() {
+		eventBus.addListener(new ApplicationEventListener<ContactEvent.GotoAdd>() {
 
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return AccountEvent.GotoAdd.class;
+			}
+
+			@Override
+			public void handle(ContactEvent.GotoAdd event) {
+				ContactAddViewImpl view = AppContext
+						.getView(ContactAddViewImpl.class);
+				addView(view);
+				view.addNewItem();
+				addBtn.setPopupVisible(false);
+			}
+		});
+
+		eventBus.addListener(new ApplicationEventListener<ContactEvent.GotoRead>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return ContactEvent.GotoRead.class;
+			}
+
+			@Override
+			public void handle(ContactEvent.GotoRead event) {
+				ContactAddViewImpl view = AppContext
+						.getView(ContactAddViewImpl.class);
+				addView(view);
+				view.viewItem((Contact) event.getData());
+				addBtn.setPopupVisible(false);
+			}
+		});
+
+		eventBus.addListener(new ApplicationEventListener<ContactEvent.GotoEdit>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return ContactEvent.GotoEdit.class;
+			}
+
+			@Override
+			public void handle(ContactEvent.GotoEdit event) {
+				ContactAddViewImpl view = AppContext
+						.getView(ContactAddViewImpl.class);
+				addView(view);
+				view.editItem((Contact) event.getData());
+				addBtn.setPopupVisible(false);
+			}
+		});
+
+		eventBus.addListener(new ApplicationEventListener<ContactEvent.GotoList>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return ContactEvent.GotoList.class;
+			}
+
+			@Override
+			public void handle(ContactEvent.GotoList event) {
+				ContactListViewImpl contactListView = AppContext
+						.getView(ContactListViewImpl.class);
+				addView(contactListView);
+				addBtn.setPopupVisible(false);
+			}
+		});
+	}
+
+	private void addView(AbstractView view) {
 		currentView.removeAllComponents();
-		currentView.addComponent(component);
-
-		((View) view).handleRequest(params);
+		currentView.addComponent(view.getCompContainer());
 	}
 
 	private class NavigatorItemListener implements Button.ClickListener {
@@ -127,17 +238,13 @@ public class CrmHome extends AbstractView {
 			String caption = event.getButton().getCaption();
 
 			if (NEW_ACCOUNT_ITEM.equals(caption)) {
-				eventBus.fireEvent(new AccountEvent(this,
-						AccountEvent.GOTO_ADD_VIEW, null));
+				eventBus.fireEvent(new AccountEvent.GotoAdd(this, null));
 			} else if (ACCOUNT_LIST.equals(caption)) {
-				eventBus.fireEvent(new AccountEvent(this,
-						AccountEvent.GOTO_LIST_VIEW, null));
-			} else if (NEW_CAMPAIGN_ITEM.equals("caption")) {
-				eventBus.fireEvent(new CampaignEvent(this,
-						CampaignEvent.GOTO_ADD_VIEW));
+				eventBus.fireEvent(new AccountEvent.GotoList(this, null));
+			} else if (NEW_CAMPAIGN_ITEM.equals(caption)) {
+				eventBus.fireEvent(new CampaignEvent.GotoAdd(this, null));
 			} else if (CONTACT_LIST.equals(caption)) {
-				eventBus.fireEvent(new ContactEvent(this,
-						ContactEvent.GOTO_LIST_VIEW, null));
+				eventBus.fireEvent(new ContactEvent.GotoList(this, null));
 			}
 		}
 	}

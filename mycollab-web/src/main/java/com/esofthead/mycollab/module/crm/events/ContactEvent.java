@@ -2,27 +2,41 @@ package com.esofthead.mycollab.module.crm.events;
 
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEvent;
 
-public class ContactEvent  extends ApplicationEvent {
-	private static final long serialVersionUID = 1L;
-
-	public static String SAVE = "CRM_SAVE_CONTACT_EVENT";
-	
-	public static String SEARCH = "CRM_SEARCH_CONTACT";
-
-	public static String GOTO_LIST_VIEW = "CRM_LIST_CONTACT";
-
-	public static String GOTO_ADD_VIEW = "CRM_ADD_CONTACT";
-	
-	public static String GOTO_READ_VIEW = "CRM_VIEW_CONTACT";
-
-	public static String GOTO_EDIT_VIEW = "CRM_EDIT_CONTACT";
-	
-
-	public ContactEvent(Object source, String name) {
-		super(source, name);
+@SuppressWarnings("serial")
+public class ContactEvent {
+	public static class Save extends ApplicationEvent {
+		public Save(Object source, Object data) {
+			super(source, data);
+		}
 	}
 
-	public ContactEvent(Object source, String name, Object data) {
-		super(source, name, data);
+	public static class Search extends ApplicationEvent {
+		public Search(Object source, Object data) {
+			super(source, data);
+		}
+	}
+
+	public static class GotoList extends ApplicationEvent {
+		public GotoList(Object source, Object data) {
+			super(source, data);
+		}
+	}
+	
+	public static class GotoAdd extends ApplicationEvent {
+		public GotoAdd(Object source, Object data) {
+			super(source, data);
+		}
+	}
+	
+	public static class GotoRead extends ApplicationEvent {
+		public GotoRead(Object source, Object data) {
+			super(source, data);
+		}
+	}
+	
+	public static class GotoEdit extends ApplicationEvent {
+		public GotoEdit(Object source, Object data) {
+			super(source, data);
+		}
 	}
 }

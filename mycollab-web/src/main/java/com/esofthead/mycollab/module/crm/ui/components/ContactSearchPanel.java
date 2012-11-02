@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -29,6 +30,7 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
+@Scope("prototype")
 @Component
 public class ContactSearchPanel extends CustomComponent {
 
@@ -73,8 +75,7 @@ public class ContactSearchPanel extends CustomComponent {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						eventBus.fireEvent(new ContactEvent(this,
-								ContactEvent.GOTO_ADD_VIEW));
+						eventBus.fireEvent(new ContactEvent.GotoAdd(this, null));
 
 					}
 				});
@@ -111,9 +112,8 @@ public class ContactSearchPanel extends CustomComponent {
 							SearchField.AND, AppContext.getAccountId()));
 					searchCriteria.setContactName(new StringSearchField(
 							SearchField.AND, (String) nameField.getValue()));
-					eventBus.fireEvent(new ContactEvent(
-							ContactSearchPanel.this, ContactEvent.SEARCH,
-							searchCriteria));
+					eventBus.fireEvent(new ContactEvent.Search(
+							ContactSearchPanel.this, searchCriteria));
 				}
 			}));
 
@@ -210,9 +210,8 @@ public class ContactSearchPanel extends CustomComponent {
 											SearchField.AND,
 											(String) firstnameField.getValue()));
 
-							eventBus.fireEvent(new ContactEvent(
-									ContactSearchPanel.this,
-									ContactEvent.SEARCH, searchCriteria));
+							eventBus.fireEvent(new ContactEvent.Search(
+									ContactSearchPanel.this, searchCriteria));
 						}
 
 					}));

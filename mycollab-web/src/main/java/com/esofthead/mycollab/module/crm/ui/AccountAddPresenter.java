@@ -24,20 +24,18 @@ public class AccountAddPresenter extends AbstractPresenter<AccountAddView> {
 
 	@PostConstruct
 	private void initListeners() {
-		eventBus.addListener(new ApplicationEventListener<AccountEvent>() {
+		eventBus.addListener(new ApplicationEventListener<AccountEvent.Save>() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
-				return AccountEvent.class;
+				return AccountEvent.Save.class;
 			}
 
 			@Override
-			public void handle(AccountEvent event) {
-				if (event.getName().equals(AccountEvent.SAVE)) {
-					Account account = (Account) event.getData();
-					saveAccount(account);
-				}
+			public void handle(AccountEvent.Save event) {
+				Account account = (Account) event.getData();
+				saveAccount(account);
 			}
 		});
 	}
@@ -50,6 +48,6 @@ public class AccountAddPresenter extends AbstractPresenter<AccountAddView> {
 			accountService.updateWithSession(account, AppContext.getUsername());
 		}
 
-		eventBus.fireEvent(new AccountEvent(this, AccountEvent.GOTO_LIST_VIEW));
+		eventBus.fireEvent(new AccountEvent.GotoList(this, null));
 	}
 }

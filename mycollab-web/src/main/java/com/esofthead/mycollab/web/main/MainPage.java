@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.web.main;
 
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vaadin.hene.popupbutton.PopupButton;
 
@@ -14,6 +15,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
 @SuppressWarnings("serial")
+@Scope("prototype")
 @Component
 public class MainPage extends AbstractView {
 
@@ -38,17 +40,15 @@ public class MainPage extends AbstractView {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
-						CrmHome crmHome = AppContext
-								.getSpringBean(CrmHome.class);
+						CrmHome crmHome = AppContext.getView(CrmHome.class);
 						if (serviceComp != null) {
 							compContainer.removeComponent(serviceComp);
 						}
 
 						ComponentContainer createMainLayout = crmHome
-								.createMainLayout();
+								.getCompContainer();
 						serviceComp = new CustomComponent(createMainLayout);
-						MainPage.this.compContainer
-								.addComponent(serviceComp);
+						MainPage.this.compContainer.addComponent(serviceComp);
 					}
 				});
 		crmLink.setStyleName("link");

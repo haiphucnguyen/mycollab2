@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -28,6 +29,7 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
+@Scope("prototype")
 @Component
 public class AccountSearchPanel extends CustomComponent {
 	protected AccountSearchCriteria searchCriteria;
@@ -75,8 +77,7 @@ public class AccountSearchPanel extends CustomComponent {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						eventBus.fireEvent(new AccountEvent(this,
-								AccountEvent.GOTO_ADD_VIEW));
+						eventBus.fireEvent(new AccountEvent.GotoAdd(this, null));
 
 					}
 				});
@@ -110,9 +111,8 @@ public class AccountSearchPanel extends CustomComponent {
 							SearchField.AND, AppContext.getAccountId()));
 					searchCriteria.setAccountname(new StringSearchField(
 							SearchField.AND, (String) nameField.getValue()));
-					eventBus.fireEvent(new AccountEvent(
-							AccountSearchPanel.this,
-							AccountEvent.SEARCH, searchCriteria));
+					eventBus.fireEvent(new AccountEvent.Search(
+							AccountSearchPanel.this, searchCriteria));
 				}
 			}));
 
@@ -200,10 +200,8 @@ public class AccountSearchPanel extends CustomComponent {
 											SearchField.AND, (String) nameField
 													.getValue()));
 
-							eventBus.fireEvent(new AccountEvent(
-									AccountSearchPanel.this,
-									AccountEvent.SEARCH,
-									searchCriteria));
+							eventBus.fireEvent(new AccountEvent.Search(
+									AccountSearchPanel.this, searchCriteria));
 						}
 
 					}));

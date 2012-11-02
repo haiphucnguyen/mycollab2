@@ -12,6 +12,7 @@ import com.vaadin.ui.Label;
 public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 	private static final long serialVersionUID = 1L;
 
+	@SuppressWarnings("unchecked")
 	@Override
 	public Field createField(Item item, Object propertyId,
 			com.vaadin.ui.Component uiContext) {

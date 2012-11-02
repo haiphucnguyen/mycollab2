@@ -7,8 +7,6 @@ public interface View {
 
 	void openView();
 	
-	void handleRequest(Params params);
-	
 	ComponentContainer createMainLayout();
 	
 	ComponentContainer getCompContainer();

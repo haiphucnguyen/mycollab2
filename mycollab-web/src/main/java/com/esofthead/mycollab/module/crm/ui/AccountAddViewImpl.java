@@ -11,7 +11,6 @@ import com.esofthead.mycollab.module.crm.ui.components.AccountIndustryComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.AccountTypeComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
-import com.esofthead.mycollab.vaadin.mvp.ui.Params;
 import com.esofthead.mycollab.vaadin.ui.AdvancedBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -19,9 +18,9 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
@@ -33,6 +32,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
+@Scope("prototype")
 @Component
 public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 	private static final long serialVersionUID = 1L;
@@ -41,30 +41,30 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 	protected ComponentContainer initMainLayout() {
 		VerticalLayout layout = new VerticalLayout();
 		layout.setSpacing(true);
-		layout.setStyleName("formView");
 		return layout;
 	}
 
 	@Override
-	public void handleRequest(Params params) {
-		super.handleRequest(params);
-
+	public void addNewItem() {
 		compContainer.removeAllComponents();
-		Form formItem = null;
+		Form formItem = AppContext.getSpringBean(EditForm.class);
+		formItem.setItemDataSource(new BeanItem<Account>(new Account()));
+		compContainer.addComponent(formItem);
+	}
 
-		if (Params.EDIT.equals(params.getAction())) {
-			formItem = AppContext.getSpringBean(EditForm.class);
-			formItem.setItemDataSource(new BeanItem<Account>((Account) params
-					.getParameters()[0]));
-		} else if (Params.ADD.equals(params.getAction())) {
-			formItem = AppContext.getSpringBean(EditForm.class);
-			formItem.setItemDataSource(new BeanItem<Account>(new Account()));
-		} else if (Params.VIEW.equals(params.getAction())) {
-			formItem = AppContext.getSpringBean(ViewForm.class);
-			formItem.setItemDataSource(new BeanItem<Account>((Account) params
-					.getParameters()[0]));
-		}
+	@Override
+	public void editItem(Account account) {
+		compContainer.removeAllComponents();
+		Form formItem = AppContext.getSpringBean(EditForm.class);
+		formItem.setItemDataSource(new BeanItem<Account>(account));
+		compContainer.addComponent(formItem);
+	}
 
+	@Override
+	public void viewItem(Account item) {
+		compContainer.removeAllComponents();
+		Form formItem = AppContext.getSpringBean(ViewForm.class);
+		formItem.setItemDataSource(new BeanItem<Account>(item));
 		compContainer.addComponent(formItem);
 	}
 
@@ -83,7 +83,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 
 			layout.addComponent(saveBtn);
 			layout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
-			
+
 			layout.addComponent(cancelBtn);
 			layout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
 			return layout;
@@ -157,12 +157,10 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 						.getItemDataSource()).getBean();
 				if (caption.equals(SAVE_ACTION)) {
 					if (validateForm(account)) {
-						eventBus.fireEvent(new AccountEvent(this,
-								AccountEvent.SAVE, account));
+						eventBus.fireEvent(new AccountEvent.Save(this, account));
 					}
 				} else if (caption.equals(CANCEL_ACTION)) {
-					eventBus.fireEvent(new AccountEvent(this,
-							AccountEvent.GOTO_LIST_VIEW, account));
+					eventBus.fireEvent(new AccountEvent.GotoList(this, account));
 				}
 			}
 		}
@@ -204,11 +202,9 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 				Account account = ((BeanItem<Account>) ViewForm.this
 						.getItemDataSource()).getBean();
 				if (caption.equals(EDIT_ACTION)) {
-					eventBus.fireEvent(new AccountEvent(this,
-							AccountEvent.GOTO_EDIT_VIEW, account));
+					eventBus.fireEvent(new AccountEvent.GotoEdit(this, account));
 				} else if (caption.equals(CANCEL_ACTION)) {
-					eventBus.fireEvent(new AccountEvent(this,
-							AccountEvent.GOTO_LIST_VIEW, account));
+					eventBus.fireEvent(new AccountEvent.GotoList(this, account));
 				}
 			}
 		}
