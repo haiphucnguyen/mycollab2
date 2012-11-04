@@ -19,6 +19,8 @@ package com.esofthead.mycollab.module.user.domain;
 
 import java.util.List;
 
+import com.google.gwt.i18n.shared.FirstStrongDirectionEstimator;
+
 public class SimpleUser extends User {
 	private List<Role> roles;
 
@@ -63,5 +65,22 @@ public class SimpleUser extends User {
 
 	public void setCountry(String country) {
 		this.country = country;
+	}
+
+	@Override
+	public String getDisplayname() {
+		String displayName = super.getDisplayname();
+		if (displayName != null) {
+			return displayName;
+		} else {
+			String firstname = getFirstname();
+			String lastname = getLastname();
+
+			if (firstname != null && lastname != null) {
+				return firstname + " " + lastname;
+			} else {
+				return getUsername();
+			}
+		}
 	}
 }

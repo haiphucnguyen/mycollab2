@@ -6,13 +6,10 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
-import com.esofthead.mycollab.module.crm.ui.components.AccountSearchPanel;
 import com.esofthead.mycollab.module.crm.ui.components.CampaignSearchPanel;
 import com.esofthead.mycollab.vaadin.data.MyBatisQueryContainer;
 import com.esofthead.mycollab.vaadin.data.MyBatisQueryDefinition;
@@ -22,17 +19,8 @@ import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.BeanTable;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.ExternalResource;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.Link;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.BaseTheme;
 
 @SuppressWarnings("serial")
 @Component

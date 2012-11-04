@@ -35,11 +35,19 @@ public class CrmHome extends AbstractView {
 
 	private static String CONTACT_LIST = "Contacts";
 
+	private static String NEW_CONTACT_ITEM = "New Contact";
+
 	private static String CAMPAIGN_LIST = "Campaigns";
 
 	private static String NEW_CAMPAIGN_ITEM = "New Campaign";
 
 	private static String LEAD_LIST = "Leads";
+
+	private static String NEW_LEAD_ITEM = "New Lead";
+
+	private static String OPPORTUNITY_LIST = "Opportunities";
+
+	private static String NEW_OPPORTUNITY_ITEM = "New Opportunity";
 
 	private VerticalLayout currentView;
 
@@ -137,13 +145,14 @@ public class CrmHome extends AbstractView {
 
 			@Override
 			public void handle(CampaignEvent.GotoAdd event) {
-				CampaignAddViewImpl view = AppContext.getView(CampaignAddViewImpl.class);
+				CampaignAddViewImpl view = AppContext
+						.getView(CampaignAddViewImpl.class);
 				addView(view);
 				view.addNewItem();
 				addBtn.setPopupVisible(false);
 			}
 		});
-		
+
 		eventBus.addListener(new ApplicationEventListener<CampaignEvent.GotoRead>() {
 
 			@Override
@@ -160,7 +169,7 @@ public class CrmHome extends AbstractView {
 				addBtn.setPopupVisible(false);
 			}
 		});
-		
+
 		eventBus.addListener(new ApplicationEventListener<CampaignEvent.GotoEdit>() {
 
 			@Override

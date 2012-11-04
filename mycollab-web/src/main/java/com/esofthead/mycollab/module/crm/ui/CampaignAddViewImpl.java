@@ -7,10 +7,14 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.ui.components.CampaignStatusComboBox;
+import com.esofthead.mycollab.module.crm.ui.components.CampaignTypeComboBox;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedBeanForm;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -18,7 +22,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.HorizontalLayout;
@@ -88,15 +91,26 @@ public class CampaignAddViewImpl extends AbstractView implements
 			this.setFormFieldFactory(new EditFormFieldFactory());
 		}
 
-		private class EditFormFieldFactory extends DefaultFieldFactory {
+		private class EditFormFieldFactory extends DefaultFormEditFieldFactory {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public Field createField(Item item, Object propertyId,
+			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
-				Field field = super.createField(item, propertyId, uiContext);
 
-				return field;
+				if ("type".equals(propertyId)) {
+					CampaignTypeComboBox typeCombo = AppContext
+							.getSpringBean(CampaignTypeComboBox.class);
+					typeCombo.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+					return typeCombo;
+				} else if ("status".equals(propertyId)) {
+					CampaignStatusComboBox statusCombo = AppContext
+							.getSpringBean(CampaignStatusComboBox.class);
+					statusCombo.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+					return statusCombo;
+				}
+
+				return null;
 			}
 		}
 
@@ -228,6 +242,21 @@ public class CampaignAddViewImpl extends AbstractView implements
 					"Status", 1, 0);
 			informationLayout.addComponent(propertyId.equals("type"), field,
 					"Type", 1, 1);
+
+			campaignGoal.addComponent(propertyId.equals("currencyid"), field,
+					"Currency", 0, 0);
+			campaignGoal.addComponent(propertyId.equals("budget"), field,
+					"Budget", 1, 0);
+			campaignGoal.addComponent(propertyId.equals("expectedcost"), field,
+					"Expected Cost", 0, 1);
+			campaignGoal.addComponent(propertyId.equals("actualcost"), field,
+					"Actual Cost", 1, 1);
+			campaignGoal.addComponent(propertyId.equals("expectedrevenue"),
+					field, "Expected Revenue", 0, 2);
+
+			descriptionLayout.addComponent(propertyId.equals("description"),
+					field, "Description", 0, 0);
+
 		}
 	}
 

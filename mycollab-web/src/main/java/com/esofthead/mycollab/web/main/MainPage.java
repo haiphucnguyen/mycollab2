@@ -6,6 +6,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.module.crm.ui.CrmHome;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
@@ -31,6 +32,7 @@ public class MainPage extends AbstractView {
 	private HorizontalLayout createTopMenu() {
 		HorizontalLayout layout = new HorizontalLayout();
 		final PopupButton serviceMenu = new PopupButton("Services");
+		serviceMenu.setStyleName("link");
 		VerticalLayout vLayout = new VerticalLayout();
 		vLayout.setWidth("200px");
 
@@ -68,6 +70,25 @@ public class MainPage extends AbstractView {
 
 		serviceMenu.addComponent(vLayout);
 		layout.addComponent(serviceMenu);
+
+		PopupButton accountMenu = new PopupButton(AppContext.getSession()
+				.getDisplayname());
+		accountMenu.setStyleName("link");
+		VerticalLayout accLayout = new VerticalLayout();
+		accLayout.setWidth("150px");
+
+		Button myAccountBtn = new Button("My Account");
+		myAccountBtn.setStyleName("link");
+		accLayout.addComponent(myAccountBtn);
+
+		accLayout.addComponent(new Hr());
+
+		Button signoutBtn = new Button("Sign out");
+		signoutBtn.setStyleName("link");
+		accLayout.addComponent(signoutBtn);
+
+		accountMenu.addComponent(accLayout);
+		layout.addComponent(accountMenu);
 		return layout;
 	}
 }
