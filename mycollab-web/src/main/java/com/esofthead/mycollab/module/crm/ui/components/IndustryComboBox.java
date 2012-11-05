@@ -8,11 +8,11 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 
 @Scope("prototype")
 @Component
-public class AccountIndustryComboBox extends ValueComboBox {
+public class IndustryComboBox extends ValueComboBox {
 
 	private static final long serialVersionUID = 1L;
 
-	public AccountIndustryComboBox() {
+	public IndustryComboBox() {
 		super();
 		setCaption(null);
 		loadData(DataTypeFactory.getAccountIndustryList());

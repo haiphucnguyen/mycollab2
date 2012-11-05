@@ -168,6 +168,12 @@
 			<version>3.1-b01</version>
 			<scope>provided</scope>
 		</dependency>
+
+		<dependency>
+			<groupId>com.carbonfive</groupId>
+			<artifactId>db-migration</artifactId>
+			<version>0.9.7</version>
+		</dependency>
 	</dependencies>
 	<build>
 		<plugins>
@@ -192,19 +198,9 @@
 						Artifacts Generator</id> <phase>compile</phase> <goals> <goal>generate</goal> 
 						</goals> <configuration> <configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile> 
 						<overwrite>true</overwrite> </configuration> </execution> -->
-						
-					<execution>
-						<id>Crm Artifacts Generator</id>
-						<phase>compile</phase>
-						<goals>
-							<goal>generate</goal>
-						</goals>
-						<configuration>
-							<configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile>
-							<overwrite>true</overwrite>
-						</configuration>
-					</execution>
-					
+					<!-- <execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
+						<goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
+						<overwrite>true</overwrite> </configuration> </execution> -->
 				</executions>
 			</plugin>
 			<plugin>

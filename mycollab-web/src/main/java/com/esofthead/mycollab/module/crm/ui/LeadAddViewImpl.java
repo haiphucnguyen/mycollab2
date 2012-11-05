@@ -194,7 +194,7 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 			organizationHeader.setStyleName(Reindeer.LABEL_H2);
 			layout.addComponent(organizationHeader);
 
-			informationLayout = new GridFormLayoutHelper(2, 5);
+			informationLayout = new GridFormLayoutHelper(2, 7);
 			layout.addComponent(informationLayout.getLayout());
 
 			Label addressHeader = new Label("Address Information");
@@ -230,6 +230,8 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 					field, "Department", 0, 3);
 			informationLayout.addComponent(propertyId.equals("accountname"),
 					field, "Account Name", 0, 4);
+			informationLayout.addComponent(propertyId.equals("source"), field, "Lead Source", 0, 5);
+			
 
 			informationLayout.addComponent(propertyId.equals("officephone"),
 					field, "Office Phone", 1, 0);

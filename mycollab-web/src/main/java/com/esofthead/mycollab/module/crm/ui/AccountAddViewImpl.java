@@ -7,7 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.module.crm.ui.components.AccountIndustryComboBox;
+import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.AccountTypeComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
@@ -106,8 +106,8 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 					accountTypeBox.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 					return accountTypeBox;
 				} else if ("industry".equals(propertyId)) {
-					AccountIndustryComboBox accountIndustryBox = AppContext
-							.getSpringBean(AccountIndustryComboBox.class);
+					IndustryComboBox accountIndustryBox = AppContext
+							.getSpringBean(IndustryComboBox.class);
 					accountIndustryBox
 							.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 					return accountIndustryBox;
