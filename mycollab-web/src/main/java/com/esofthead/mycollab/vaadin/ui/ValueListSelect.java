@@ -12,5 +12,6 @@ public class ValueListSelect extends ListSelect {
 		}
 		
 		this.setRows(4);
+		this.setMultiSelect(true);
 	}
 }

@@ -33,7 +33,6 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 
 	private VerticalLayout leadListLayout;
 
-	
 	@PostConstruct
 	private void init() {
 		eventBus.addListener(new ApplicationEventListener<LeadEvent.Search>() {
@@ -69,22 +68,24 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 						AppContext.getSpringBean(LeadService.class), false, 5),
 				new MyBatisQueryFactory<LeadSearchCriteria>(searchCriteria));
 
-		container.addContainerProperty("campaignname", String.class, "", true,
-				true);
+		container
+				.addContainerProperty("leadName", String.class, "", true, true);
 		container.addContainerProperty("status", String.class, "", true, true);
-		container.addContainerProperty("type", String.class, "", true, true);
-		container.addContainerProperty("expectedrevenue", Long.class, "", true,
+		container.addContainerProperty("accountname", String.class, "", true,
+				true);
+		container.addContainerProperty("officephone", Long.class, "", true,
 				true);
 
-		container.addContainerProperty("enddate", String.class, "", true, true);
+		container.addContainerProperty("email", String.class, "", true, true);
 
 		container.addContainerProperty("assignUserFullName", String.class, "",
 				true, true);
 		container.addContainerProperty("action", Object.class, "", true, false);
 
 		tableItem.setContainerDataSource(container);
-		tableItem.setColumnHeaders(new String[] { "Campaign", "Status", "Type",
-				"Expected Revenue", "End Date", "Assign User", "Action" });
+		tableItem.setColumnHeaders(new String[] { "Name", "Status",
+				"Account Name", "Office Phone", "Email", "Assign User",
+				"Action" });
 
 		leadListLayout.removeAllComponents();
 		leadListLayout.addComponent(tableItem);

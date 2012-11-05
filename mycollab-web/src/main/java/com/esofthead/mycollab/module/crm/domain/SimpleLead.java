@@ -23,6 +23,10 @@ public class SimpleLead extends Lead {
 
 	private String campaignName;
 
+	public String getLeadName() {
+		return getFirstname() + " " + getLastname();
+	}
+
 	public String getCampaignName() {
 		return campaignName;
 	}

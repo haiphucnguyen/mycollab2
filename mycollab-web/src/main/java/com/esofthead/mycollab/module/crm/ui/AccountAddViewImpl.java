@@ -7,11 +7,12 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.AccountTypeComboBox;
+import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedBeanForm;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -22,7 +23,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.HorizontalLayout;
@@ -93,11 +93,11 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 			this.setFormFieldFactory(new EditFormFieldFactory());
 		}
 
-		private class EditFormFieldFactory extends DefaultFieldFactory {
+		private class EditFormFieldFactory extends DefaultFormEditFieldFactory {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public Field createField(Item item, Object propertyId,
+			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
 
 				if ("type".equals(propertyId)) {
@@ -123,22 +123,14 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 					return textArea;
 				}
 
-				Field field = super.createField(item, propertyId, uiContext);
-
-				if (field instanceof TextField) {
-					((TextField) field).setNullRepresentation("");
-					((TextField) field)
-							.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-					((TextField) field).setCaption(null);
-				}
-
 				if (propertyId.equals("accountname")) {
-					TextField tf = (TextField) field;
+					TextField tf = new TextField();
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter an Account Name");
+					return tf;
 				}
 
-				return field;
+				return null;
 			}
 		}
 
