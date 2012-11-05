@@ -19,6 +19,8 @@ public class DataTypeFactory {
 			"Public Relations", "Direct Email", "Conference", "Trade Show",
 			"Website", "Word of mouth", "Email", "Campaign", "Other" };
 
+	private static String[] LEAD_STATUS_LIST = new String[] { "" };
+
 	private static String[] CAMPAIGN_STATUS_LIST = new String[] { "Planning",
 			"Active", "Inactive", "Complete", "In Queue", "Sending" };
 
@@ -37,6 +39,10 @@ public class DataTypeFactory {
 
 	public static String[] getLeadSourceList() {
 		return LEAD_SOURCE_LIST;
+	}
+
+	public static String[] getLeadStatusList() {
+		return LEAD_STATUS_LIST;
 	}
 
 	public static String[] getCampaignStatusList() {

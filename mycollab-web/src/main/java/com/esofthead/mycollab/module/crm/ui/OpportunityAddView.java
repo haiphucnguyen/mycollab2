@@ -1,5 +1,5 @@
 package com.esofthead.mycollab.module.crm.ui;
 
-public class ContactList {
+public class OpportunityAddView {
 
 }

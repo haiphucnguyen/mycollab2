@@ -9,9 +9,12 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.Contact;
+import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
@@ -62,6 +65,7 @@ public class CrmHome extends AbstractView {
 		registerAccountListeners();
 		registerCampaignListeners();
 		registerContactListeners();
+		registerLeadListeners();
 	}
 
 	@SuppressWarnings("serial")
@@ -275,6 +279,75 @@ public class CrmHome extends AbstractView {
 		});
 	}
 
+	private void registerLeadListeners() {
+		eventBus.addListener(new ApplicationEventListener<LeadEvent.GotoAdd>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return LeadEvent.GotoAdd.class;
+			}
+
+			@Override
+			public void handle(LeadEvent.GotoAdd event) {
+				LeadAddView leadAddView = AppContext
+						.getView(LeadAddViewImpl.class);
+				leadAddView.addNewItem();
+				addView((AbstractView) leadAddView);
+				addBtn.setPopupVisible(false);
+			}
+		});
+
+		eventBus.addListener(new ApplicationEventListener<LeadEvent.GotoRead>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return LeadEvent.GotoRead.class;
+			}
+
+			@Override
+			public void handle(LeadEvent.GotoRead event) {
+				LeadAddView leadAddView = AppContext
+						.getView(LeadAddViewImpl.class);
+				leadAddView.editItem((Lead) event.getData());
+				addView((AbstractView) leadAddView);
+				addBtn.setPopupVisible(false);
+			}
+		});
+
+		eventBus.addListener(new ApplicationEventListener<LeadEvent.GotoList>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return LeadEvent.GotoList.class;
+			}
+
+			@Override
+			public void handle(LeadEvent.GotoList event) {
+				LeadListViewImpl accountListView = AppContext
+						.getView(LeadListViewImpl.class);
+				addView(accountListView);
+				accountListView.doDefaultSearch();
+				addBtn.setPopupVisible(false);
+			}
+		});
+
+		eventBus.addListener(new ApplicationEventListener<LeadEvent.GotoEdit>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return LeadEvent.GotoEdit.class;
+			}
+
+			@Override
+			public void handle(LeadEvent.GotoEdit event) {
+				LeadAddViewImpl leadView = AppContext
+						.getView(LeadAddViewImpl.class);
+				leadView.editItem((Lead) event.getData());
+				addView((AbstractView) leadView);
+			}
+		});
+	}
+
 	private void addView(AbstractView view) {
 		currentView.removeAllComponents();
 		currentView.addComponent(view.getCompContainer());
@@ -297,6 +370,16 @@ public class CrmHome extends AbstractView {
 				eventBus.fireEvent(new CampaignEvent.GotoList(this, null));
 			} else if (CONTACT_LIST.equals(caption)) {
 				eventBus.fireEvent(new ContactEvent.GotoList(this, null));
+			} else if (NEW_CONTACT_ITEM.equals(caption)) {
+				eventBus.fireEvent(new ContactEvent.GotoAdd(this, null));
+			} else if (NEW_LEAD_ITEM.equals(caption)) {
+				eventBus.fireEvent(new LeadEvent.GotoAdd(this, null));
+			} else if (LEAD_LIST.equals(caption)) {
+				eventBus.fireEvent(new LeadEvent.GotoList(this, null));
+			} else if (NEW_OPPORTUNITY_ITEM.equals(caption)) {
+				eventBus.fireEvent(new OpportunityEvent.GotoAdd(this, null));
+			} else if (OPPORTUNITY_LIST.equals(caption)) {
+				eventBus.fireEvent(new OpportunityEvent.GotoList(this, null));
 			}
 		}
 	}
@@ -330,20 +413,21 @@ public class CrmHome extends AbstractView {
 
 		Button newAccountBtn = new Button(NEW_ACCOUNT_ITEM, listener);
 		newAccountBtn.setStyleName(BaseTheme.BUTTON_LINK);
-
 		addBtnLayout.addComponent(newAccountBtn);
 
-		Button newCampaignBtn = new Button("New Campaign", listener);
-		newCampaignBtn.setStyleName(BaseTheme.BUTTON_LINK);
+		Button newContactBtn = new Button(NEW_CONTACT_ITEM, listener);
+		newContactBtn.setStyleName(BaseTheme.BUTTON_LINK);
+		addBtnLayout.addComponent(newContactBtn);
 
+		Button newCampaignBtn = new Button(NEW_CAMPAIGN_ITEM, listener);
+		newCampaignBtn.setStyleName(BaseTheme.BUTTON_LINK);
 		addBtnLayout.addComponent(newCampaignBtn);
 
-		Button newOpportunityBtn = new Button("New Opportunity", listener);
+		Button newOpportunityBtn = new Button(NEW_OPPORTUNITY_ITEM, listener);
 		newOpportunityBtn.setStyleName(BaseTheme.BUTTON_LINK);
-
 		addBtnLayout.addComponent(newOpportunityBtn);
 
-		Button newLeadBtn = new Button("New Lead", listener);
+		Button newLeadBtn = new Button(NEW_LEAD_ITEM, listener);
 		newLeadBtn.setStyleName(BaseTheme.BUTTON_LINK);
 		addBtnLayout.addComponent(newLeadBtn);
 

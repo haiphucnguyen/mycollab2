@@ -9,6 +9,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -20,6 +21,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CustomComponent;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -140,10 +142,37 @@ public class CampaignSearchPanel extends CustomComponent {
 
 	private class AdvancedSearchLayout extends VerticalLayout {
 
+		private TextField nameField;
+		private DateField startDateField;
+		private DateField endDateField;
+		private CampaignTypeListSelect typeField;
+		private CampaignStatusListSelect statusField;
+		private UserListSelect assignUserField;
+
 		public AdvancedSearchLayout() {
 			super();
 			this.setSpacing(true);
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3);
+
+			nameField = (TextField) gridLayout.addComponent(new TextField(),
+					"Name", 0, 0);
+			startDateField = (DateField) gridLayout.addComponent(
+					new DateField(), "Start Date", 1, 0);
+			startDateField.setDateFormat("yyyy-MM-dd");
+			
+			endDateField = (DateField) gridLayout.addComponent(new DateField(),
+					"End Date", 2, 0);
+			endDateField.setDateFormat("yyyy-MM-dd");
+
+			typeField = (CampaignTypeListSelect) gridLayout.addComponent(
+					AppContext.getSpringBean(CampaignTypeListSelect.class),
+					"Type", 0, 1);
+			statusField = (CampaignStatusListSelect) gridLayout.addComponent(
+					AppContext.getSpringBean(CampaignStatusListSelect.class),
+					"Status", 1, 1);
+			assignUserField = (UserListSelect) gridLayout.addComponent(
+					AppContext.getSpringBean(UserListSelect.class),
+					"Assign User", 2, 1);
 
 			HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
