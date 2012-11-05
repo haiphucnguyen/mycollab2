@@ -1,5 +1,5 @@
-CREATE DATABASE  IF NOT EXISTS `mycollab` /*!40100 DEFAULT CHARACTER SET utf8 */;
-USE `mycollab`;
+CREATE DATABASE  IF NOT EXISTS `mycollab_live` /*!40100 DEFAULT CHARACTER SET utf8 */;
+USE `mycollab_live`;
 -- MySQL dump 10.13  Distrib 5.5.24, for osx10.5 (i386)
 --
 -- Host: localhost    Database: mycollab

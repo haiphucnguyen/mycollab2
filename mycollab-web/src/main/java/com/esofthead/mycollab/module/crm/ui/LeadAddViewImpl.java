@@ -7,6 +7,10 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
+import com.esofthead.mycollab.module.crm.ui.components.LeadSourceComboBox;
+import com.esofthead.mycollab.module.crm.ui.components.LeadStatusComboBox;
+import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedBeanForm;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
@@ -98,6 +102,22 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 					CountryComboBox countryComboBox = AppContext
 							.getSpringBean(CountryComboBox.class);
 					return countryComboBox;
+				} else if (propertyId.equals("status")) {
+					LeadStatusComboBox statusComboBox = AppContext
+							.getSpringBean(LeadStatusComboBox.class);
+					return statusComboBox;
+				} else if (propertyId.equals("industry")) {
+					IndustryComboBox industryComboBox = AppContext
+							.getSpringBean(IndustryComboBox.class);
+					return industryComboBox;
+				} else if (propertyId.equals("assignuser")) {
+					UserComboBox userComboBox = AppContext
+							.getSpringBean(UserComboBox.class);
+					return userComboBox;
+				} else if (propertyId.equals("source")) {
+					LeadSourceComboBox statusComboBox = AppContext
+							.getSpringBean(LeadSourceComboBox.class);
+					return statusComboBox;
 				}
 
 				return null;
@@ -230,8 +250,10 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 					field, "Department", 0, 3);
 			informationLayout.addComponent(propertyId.equals("accountname"),
 					field, "Account Name", 0, 4);
-			informationLayout.addComponent(propertyId.equals("source"), field, "Lead Source", 0, 5);
-			
+			informationLayout.addComponent(propertyId.equals("source"), field,
+					"Lead Source", 0, 5);
+			informationLayout.addComponent(propertyId.equals("industry"),
+					field, "Industry", 0, 6);
 
 			informationLayout.addComponent(propertyId.equals("officephone"),
 					field, "Office Phone", 1, 0);
@@ -243,6 +265,10 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 					"Fax", 1, 3);
 			informationLayout.addComponent(propertyId.equals("website"), field,
 					"Web Site", 1, 4);
+			informationLayout.addComponent(propertyId.equals("status"), field,
+					"Status", 1, 5);
+			informationLayout.addComponent(propertyId.equals("assignuser"),
+					field, "Assigned User", 1, 6);
 
 			addressLayout.addComponent(propertyId.equals("primaddress"), field,
 					"Address", 0, 0);

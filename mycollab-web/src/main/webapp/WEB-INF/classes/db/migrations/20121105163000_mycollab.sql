@@ -1,0 +1,1 @@
+ALTER TABLE `m_crm_lead` ADD COLUMN `industry` VARCHAR(45) NULL;

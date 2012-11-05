@@ -19,7 +19,8 @@ public class DataTypeFactory {
 			"Public Relations", "Direct Email", "Conference", "Trade Show",
 			"Website", "Word of mouth", "Email", "Campaign", "Other" };
 
-	private static String[] LEAD_STATUS_LIST = new String[] { "" };
+	private static String[] LEAD_STATUS_LIST = new String[] { "New",
+			"Assigned", "In Process", "Converted", "Recycled", "Dead" };
 
 	private static String[] CAMPAIGN_STATUS_LIST = new String[] { "Planning",
 			"Active", "Inactive", "Complete", "In Queue", "Sending" };

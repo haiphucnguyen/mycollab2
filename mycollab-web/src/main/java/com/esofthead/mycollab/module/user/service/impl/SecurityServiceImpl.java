@@ -99,8 +99,8 @@ public class SecurityServiceImpl implements SecurityService {
 	public SimpleUser authentication(String username, String password) {
 		User user = findUserByUsername(username);
 
-		if (user != null) {
-			if (!user.getPassword().equals(password)) {
+		if (user != null && password != null) {
+			if (!password.equals(user.getPassword())) {
 				throw new EngroupException("Password is error");
 			}
 			List<Role> roles = roleServiceDB.findRolesOfUser(username);

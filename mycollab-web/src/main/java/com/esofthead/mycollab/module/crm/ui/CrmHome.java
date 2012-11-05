@@ -404,6 +404,12 @@ public class CrmHome extends AbstractView {
 		Button campaignList = new Button(CAMPAIGN_LIST, listener);
 		toolbar.addComponent(campaignList);
 
+		Button leadList = new Button(LEAD_LIST, listener);
+		toolbar.addComponent(leadList);
+
+		Button opportunityList = new Button(OPPORTUNITY_LIST, listener);
+		toolbar.addComponent(opportunityList);
+
 		toolbar.setStyleName("sidebar-menu");
 
 		addBtn = new PopupButton("Add");

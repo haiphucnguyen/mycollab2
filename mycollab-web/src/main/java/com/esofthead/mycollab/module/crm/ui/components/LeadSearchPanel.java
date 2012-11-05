@@ -11,6 +11,8 @@ import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.EventBus;
+import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
+import com.esofthead.mycollab.vaadin.ui.CountryListSelect;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -21,7 +23,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -146,13 +147,53 @@ public class LeadSearchPanel extends CustomComponent {
 		private TextField firstnameField;
 		private TextField lastnameField;
 		private TextField accountnameField;
-		
+		private LeadStatusListSelect statusField;
+
+		private TextField anyEmailField;
+		private TextField anyAddressField;
+		private CountryComboBox countryField;
+		private LeadSourceListSelect sourceField;
+
+		private TextField anyPhoneField;
+		private TextField cityField;
+		private TextField stateField;
+		private UserListSelect userField;
+
 		public AdvancedSearchLayout() {
 			super();
 			this.setSpacing(true);
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3);
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 4);
 
-			
+			firstnameField = (TextField) gridLayout.addComponent(
+					new TextField(), "First Name", 0, 0);
+			lastnameField = (TextField) gridLayout.addComponent(
+					new TextField(), "Last Name", 0, 1);
+			accountnameField = (TextField) gridLayout.addComponent(
+					new TextField(), "Account Name", 0, 2);
+			statusField = (LeadStatusListSelect) gridLayout.addComponent(
+					AppContext.getSpringBean(LeadStatusListSelect.class),
+					"Status", 0, 3);
+
+			anyEmailField = (TextField) gridLayout.addComponent(
+					new TextField(), "Any Email", 1, 0);
+			anyAddressField = (TextField) gridLayout.addComponent(
+					new TextField(), "Any Address", 1, 1);
+			countryField = (CountryComboBox) gridLayout.addComponent(
+					AppContext.getSpringBean(CountryComboBox.class), "Country",
+					1, 2);
+			sourceField = (LeadSourceListSelect) gridLayout.addComponent(
+					AppContext.getSpringBean(LeadSourceListSelect.class),
+					"Source", 1, 3);
+
+			anyPhoneField = (TextField) gridLayout.addComponent(
+					new TextField(), "Any Phone", 2, 0);
+			cityField = (TextField) gridLayout.addComponent(new TextField(),
+					"City", 2, 1);
+			stateField = (TextField) gridLayout.addComponent(new TextField(),
+					"State", 2, 2);
+			userField = (UserListSelect) gridLayout.addComponent(
+					AppContext.getSpringBean(UserListSelect.class),
+					"Assigned User", 2, 3);
 
 			HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
