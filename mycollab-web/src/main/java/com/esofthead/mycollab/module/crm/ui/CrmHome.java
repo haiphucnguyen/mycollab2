@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
+import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
@@ -66,6 +67,7 @@ public class CrmHome extends AbstractView {
 		registerCampaignListeners();
 		registerContactListeners();
 		registerLeadListeners();
+		registerOpportunityListeners();
 	}
 
 	@SuppressWarnings("serial")
@@ -344,6 +346,75 @@ public class CrmHome extends AbstractView {
 						.getView(LeadAddViewImpl.class);
 				leadView.editItem((Lead) event.getData());
 				addView((AbstractView) leadView);
+			}
+		});
+	}
+
+	private void registerOpportunityListeners() {
+		eventBus.addListener(new ApplicationEventListener<OpportunityEvent.GotoAdd>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return OpportunityEvent.GotoAdd.class;
+			}
+
+			@Override
+			public void handle(OpportunityEvent.GotoAdd event) {
+				OpportunityAddViewImpl view = AppContext
+						.getView(OpportunityAddViewImpl.class);
+				view.addNewItem();
+				addView(view);
+				addBtn.setPopupVisible(false);
+			}
+		});
+
+		eventBus.addListener(new ApplicationEventListener<OpportunityEvent.GotoRead>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return OpportunityEvent.GotoRead.class;
+			}
+
+			@Override
+			public void handle(OpportunityEvent.GotoRead event) {
+				OpportunityAddViewImpl view = AppContext
+						.getView(OpportunityAddViewImpl.class);
+				view.editItem((Opportunity) event.getData());
+				addView(view);
+				addBtn.setPopupVisible(false);
+			}
+		});
+
+		eventBus.addListener(new ApplicationEventListener<OpportunityEvent.GotoList>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return OpportunityEvent.GotoList.class;
+			}
+
+			@Override
+			public void handle(OpportunityEvent.GotoList event) {
+				OpportunityListViewImpl view = AppContext
+						.getView(OpportunityListViewImpl.class);
+				addView(view);
+				view.doDefaultSearch();
+				addBtn.setPopupVisible(false);
+			}
+		});
+
+		eventBus.addListener(new ApplicationEventListener<OpportunityEvent.GotoEdit>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return OpportunityEvent.GotoEdit.class;
+			}
+
+			@Override
+			public void handle(OpportunityEvent.GotoEdit event) {
+				OpportunityAddViewImpl view = AppContext
+						.getView(OpportunityAddViewImpl.class);
+				view.editItem((Opportunity) event.getData());
+				addView((AbstractView) view);
 			}
 		});
 	}

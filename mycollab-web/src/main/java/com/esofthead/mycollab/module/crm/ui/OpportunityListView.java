@@ -1,8 +1,9 @@
 package com.esofthead.mycollab.module.crm.ui;
 
-import com.vaadin.ui.Panel;
+import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.vaadin.mvp.ui.TemplateSearchableView;
 
-public class OpportunityListView extends Panel {
-	private static final long serialVersionUID = 1L;
+public interface OpportunityListView extends
+		TemplateSearchableView<OpportunitySearchCriteria> {
 
 }
