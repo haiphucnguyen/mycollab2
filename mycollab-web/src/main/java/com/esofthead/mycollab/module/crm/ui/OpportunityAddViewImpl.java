@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.crm.ui.components.AccountSelectionField;
+import com.esofthead.mycollab.module.crm.ui.components.CampaignSelectionField;
+import com.esofthead.mycollab.module.crm.ui.components.CampaignSelectionWindow;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormEditFieldFactory;
@@ -94,7 +97,15 @@ public class OpportunityAddViewImpl extends AbstractView implements
 			@Override
 			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
-
+				if (propertyId.equals("campaignid")) {
+					CampaignSelectionField campaignField = AppContext
+							.getSpringBean(CampaignSelectionField.class);
+					return campaignField;
+				} else if (propertyId.equals("accountid")) {
+					AccountSelectionField accountField = AppContext
+							.getSpringBean(AccountSelectionField.class);
+					return accountField;
+				}
 				return null;
 			}
 		}
