@@ -7,6 +7,9 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.crm.ui.components.AccountSelectionField;
+import com.esofthead.mycollab.module.crm.ui.components.CampaignSelectionField;
+import com.esofthead.mycollab.module.crm.ui.components.CampaignSelectionWindow;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormEditFieldFactory;
@@ -26,6 +29,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
+@Component
 public class OpportunityAddViewImpl extends AbstractView implements
 		OpportunityAddView {
 	private static final long serialVersionUID = 1L;
@@ -93,7 +97,15 @@ public class OpportunityAddViewImpl extends AbstractView implements
 			@Override
 			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
-
+				if (propertyId.equals("campaignid")) {
+					CampaignSelectionField campaignField = AppContext
+							.getSpringBean(CampaignSelectionField.class);
+					return campaignField;
+				} else if (propertyId.equals("accountid")) {
+					AccountSelectionField accountField = AppContext
+							.getSpringBean(AccountSelectionField.class);
+					return accountField;
+				}
 				return null;
 			}
 		}
@@ -216,7 +228,28 @@ public class OpportunityAddViewImpl extends AbstractView implements
 			informationLayout.addComponent(
 					propertyId.equals("opportunityname"), field,
 					"Opportunity Name", 0, 0);
-			
+			informationLayout.addComponent(propertyId.equals("currencyid"),
+					field, "Currency", 0, 1);
+			informationLayout.addComponent(propertyId.equals("amount"), field,
+					"Amount", 0, 2);
+			informationLayout.addComponent(propertyId.equals("salesstage"),
+					field, "Sales Stage", 0, 3);
+			informationLayout.addComponent(propertyId.equals("probability"),
+					field, "Probability", 0, 4);
+			informationLayout.addComponent(propertyId.equals("nextstep"),
+					field, "Next Step", 0, 5);
+
+			informationLayout.addComponent(propertyId.equals("accountid"),
+					field, "Account Name", 1, 0);
+			informationLayout.addComponent(
+					propertyId.equals("expectedcloseddate"), field,
+					"Expected Close Date", 1, 1);
+			informationLayout.addComponent(
+					propertyId.equals("opportunitytype"), field, "Type", 1, 2);
+			informationLayout.addComponent(propertyId.equals("source"), field,
+					"Source", 1, 3);
+			informationLayout.addComponent(propertyId.equals("campaignid"),
+					field, "Campaign", 1, 4);
 		}
 	}
 }

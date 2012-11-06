@@ -8,10 +8,8 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.ContactEvent;
-import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.EventBus;
-import com.esofthead.mycollab.vaadin.ui.CountryListSelect;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -74,7 +72,8 @@ public class OpportunitySearchPanel extends CustomComponent {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						eventBus.fireEvent(new ContactEvent.GotoAdd(this, null));
+						eventBus.fireEvent(new OpportunityEvent.GotoAdd(this,
+								null));
 
 					}
 				});
@@ -111,7 +110,7 @@ public class OpportunitySearchPanel extends CustomComponent {
 							SearchField.AND, AppContext.getAccountId()));
 					searchCriteria.setContactName(new StringSearchField(
 							SearchField.AND, (String) nameField.getValue()));
-					eventBus.fireEvent(new ContactEvent.Search(
+					eventBus.fireEvent(new OpportunityEvent.Search(
 							OpportunitySearchPanel.this, searchCriteria));
 				}
 			}));
@@ -144,14 +143,10 @@ public class OpportunitySearchPanel extends CustomComponent {
 	private class AdvancedSearchLayout extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
-		
-
 		public AdvancedSearchLayout() {
 			super();
 			this.setSpacing(true);
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 4);
-
-			
 
 			this.addComponent(gridLayout.getLayout());
 
@@ -166,7 +161,7 @@ public class OpportunitySearchPanel extends CustomComponent {
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
 
-							eventBus.fireEvent(new ContactEvent.Search(
+							eventBus.fireEvent(new OpportunityEvent.Search(
 									OpportunitySearchPanel.this, searchCriteria));
 						}
 
