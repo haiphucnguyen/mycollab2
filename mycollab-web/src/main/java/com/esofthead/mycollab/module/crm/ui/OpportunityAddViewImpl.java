@@ -26,6 +26,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
+@Component
 public class OpportunityAddViewImpl extends AbstractView implements
 		OpportunityAddView {
 	private static final long serialVersionUID = 1L;
@@ -216,7 +217,28 @@ public class OpportunityAddViewImpl extends AbstractView implements
 			informationLayout.addComponent(
 					propertyId.equals("opportunityname"), field,
 					"Opportunity Name", 0, 0);
-			
+			informationLayout.addComponent(propertyId.equals("currencyid"),
+					field, "Currency", 0, 1);
+			informationLayout.addComponent(propertyId.equals("amount"), field,
+					"Amount", 0, 2);
+			informationLayout.addComponent(propertyId.equals("salesstage"),
+					field, "Sales Stage", 0, 3);
+			informationLayout.addComponent(propertyId.equals("probability"),
+					field, "Probability", 0, 4);
+			informationLayout.addComponent(propertyId.equals("nextstep"),
+					field, "Next Step", 0, 5);
+
+			informationLayout.addComponent(propertyId.equals("accountid"),
+					field, "Account Name", 1, 0);
+			informationLayout.addComponent(
+					propertyId.equals("expectedcloseddate"), field,
+					"Expected Close Date", 1, 1);
+			informationLayout.addComponent(
+					propertyId.equals("opportunitytype"), field, "Type", 1, 2);
+			informationLayout.addComponent(propertyId.equals("source"), field,
+					"Source", 1, 3);
+			informationLayout.addComponent(propertyId.equals("campaignid"),
+					field, "Campaign", 1, 4);
 		}
 	}
 }
