@@ -1,4 +1,4 @@
-package com.esofthead.test;
+package com.esofthead.mycollab.test;
 
 public class TestException extends RuntimeException {
 	

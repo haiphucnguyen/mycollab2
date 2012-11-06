@@ -15,9 +15,9 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.esofthead.test.module;
+package com.esofthead.mycollab.test.module;
 
-import com.esofthead.test.EngroupTestModule;
+import com.esofthead.mycollab.test.EngroupTestModule;
 
 public abstract class AbstractEngroupTestModule implements EngroupTestModule {
     protected Class host;

@@ -8,8 +8,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.module.crm.domain.criteria.TaskSearchCriteria;
-import com.esofthead.test.DataSet;
-import com.esofthead.test.EngroupClassRunner;
+import com.esofthead.mycollab.test.DataSet;
+import com.esofthead.mycollab.test.EngroupClassRunner;
 
 @RunWith(EngroupClassRunner.class)
 @ContextConfiguration(locations = {

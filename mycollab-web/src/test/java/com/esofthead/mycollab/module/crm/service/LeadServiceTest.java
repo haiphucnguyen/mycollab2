@@ -28,8 +28,8 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
-import com.esofthead.test.DataSet;
-import com.esofthead.test.EngroupClassRunner;
+import com.esofthead.mycollab.test.DataSet;
+import com.esofthead.mycollab.test.EngroupClassRunner;
 
 @RunWith(EngroupClassRunner.class)
 @ContextConfiguration(locations = {

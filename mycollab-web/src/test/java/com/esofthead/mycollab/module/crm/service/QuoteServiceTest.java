@@ -17,8 +17,8 @@ import com.esofthead.mycollab.module.crm.domain.Quote;
 import com.esofthead.mycollab.module.crm.domain.QuoteGroupProduct;
 import com.esofthead.mycollab.module.crm.domain.SimpleQuoteGroupProduct;
 import com.esofthead.mycollab.module.crm.domain.criteria.QuoteSearchCriteria;
-import com.esofthead.test.DataSet;
-import com.esofthead.test.EngroupClassRunner;
+import com.esofthead.mycollab.test.DataSet;
+import com.esofthead.mycollab.test.EngroupClassRunner;
 
 @RunWith(EngroupClassRunner.class)
 @ContextConfiguration(locations = {

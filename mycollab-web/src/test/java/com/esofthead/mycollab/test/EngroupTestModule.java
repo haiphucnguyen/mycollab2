@@ -15,7 +15,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.esofthead.test;
+package com.esofthead.mycollab.test;
 
 /**
  * Engroup test class can be tested against external entities like database,

@@ -7,15 +7,11 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
-import com.esofthead.mycollab.module.crm.ui.components.AccountTypeComboBox;
-import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -23,13 +19,10 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TextArea;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
@@ -183,8 +176,6 @@ public class OpportunityAddViewImpl extends AbstractView implements
 
 		protected GridFormLayoutHelper informationLayout;
 
-		protected GridFormLayoutHelper addressLayout;
-
 		protected GridFormLayoutHelper descriptionLayout;
 
 		public GenericForm() {
@@ -201,12 +192,6 @@ public class OpportunityAddViewImpl extends AbstractView implements
 
 			informationLayout = new GridFormLayoutHelper(2, 6);
 			layout.addComponent(informationLayout.getLayout());
-
-			addressLayout = new GridFormLayoutHelper(2, 4);
-			Label addressHeader = new Label("Address Information");
-			addressHeader.setStyleName(Reindeer.LABEL_H2);
-			layout.addComponent(addressHeader);
-			layout.addComponent(addressLayout.getLayout());
 
 			descriptionLayout = new GridFormLayoutHelper(2, 1);
 			Label descHeader = new Label("Description");
@@ -228,7 +213,10 @@ public class OpportunityAddViewImpl extends AbstractView implements
 		 */
 		@Override
 		protected void attachField(Object propertyId, Field field) {
-
+			informationLayout.addComponent(
+					propertyId.equals("opportunityname"), field,
+					"Opportunity Name", 0, 0);
+			
 		}
 	}
 }

@@ -15,7 +15,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.esofthead.test;
+package com.esofthead.mycollab.test;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -25,7 +25,7 @@ import org.junit.runners.model.InitializationError;
 import org.junit.runners.model.Statement;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
-import com.esofthead.test.module.DbUnitModule;
+import com.esofthead.mycollab.test.module.DbUnitModule;
 
 public class EngroupClassRunner extends SpringJUnit4ClassRunner {
 	private List<EngroupTestModule> testModules;

@@ -1,4 +1,4 @@
-package com.esofthead.test.module;
+package com.esofthead.mycollab.test.module;
 
 import java.io.File;
 import java.io.FileOutputStream;
@@ -11,7 +11,7 @@ import org.dbunit.database.DatabaseDataSourceConnection;
 import org.dbunit.database.IDatabaseConnection;
 import org.dbunit.dataset.xml.FlatDtdDataSet;
 
-import com.esofthead.test.DataSourceFactoryBean;
+import com.esofthead.mycollab.test.DataSourceFactoryBean;
 
 public class DbUnitUtil {
 	public static void main(String[] args) throws Exception {
