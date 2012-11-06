@@ -3,10 +3,91 @@
 .v-table-cell-wrapper {
     white-space: normal;
 }
-
+.clear {
+	clear: both;
+}
 .formView {
 	background: white;
 	width: 600px;
 	-moz-border-radius: 1em;
 	-webkit-border-radius: 1em;
+}
+
+#header {
+    margin: 110px auto 20px;
+    width: 280px;
+    text-align: center;
+    font-size: 27px;
+}
+
+#loginFormContainer {
+    width: 280px;
+    margin: 0 auto;
+}
+
+#loginForm {
+    width: 280px;
+    border: 1px solid #E5E5E5;
+    background: white;
+    box-shadow: rgba(200, 200, 200, 0.7) 0 4px 10px -1px;
+    float: left;
+}
+
+#loginForm .v-captionwrapper {
+	margin: 20px auto;
+	display: block;
+	width: 230px;
+}
+
+#loginForm .v-captionwrapper .v-caption {
+	margin-bottom: 5px;
+}
+
+#loginForm .v-captionwrapper .v-caption .v-captiontext {
+	font-size: 14px;
+	color: #777;
+}
+
+#loginForm input.v-textfield {
+	width: 225px;
+	font-size: 14px;
+	background: #FBFBFB;
+	border-color: #BBB;
+	border-radius: 3px;
+	padding: .2em;
+}
+
+#loginForm #submitLogin {
+	margin-right: 23px;
+	float: right;
+	margin-bottom: 20px;
+}
+
+#loginFormContainer #newToUs {
+	float: left;
+    display: block;
+    width: 100%;
+    padding: 20px 0px;
+    text-align: right;
+}
+
+#loginFormContainer #newToUs #signupLink .v-button {
+	background: none;
+	border: none;
+	float: right;
+}
+
+#loginFormContainer #newToUs #signupLink span {
+	float: right;
+}
+
+#loginFormContainer #newToUs #signupLink .v-button-wrap {
+	color: #287ECE;
+	background: none;
+	border: none;
+	padding: 0px;
+}
+
+#loginFormContainer #newToUs #signupLink .v-button-wrap .v-button-caption {
+	text-decoration: underline;
 }
