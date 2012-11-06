@@ -9,11 +9,11 @@ import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 @SuppressWarnings("serial")
 @Scope("prototype")
@@ -29,10 +29,14 @@ public class MainPage extends AbstractView {
 		return layout;
 	}
 
-	private HorizontalLayout createTopMenu() {
-		HorizontalLayout layout = new HorizontalLayout();
+	private CustomLayout createTopMenu() {
+		CustomLayout layout = new CustomLayout("topNavigation");
+		layout.setStyleName("topNavigation");
+		layout.setHeight("40px");
+		layout.setWidth("100%");
 		final PopupButton serviceMenu = new PopupButton("Services");
-		serviceMenu.setStyleName("link");
+		serviceMenu.setStyleName("serviceMenu");
+		serviceMenu.addStyleName("topNavPopup");
 		VerticalLayout vLayout = new VerticalLayout();
 		vLayout.setWidth("200px");
 
@@ -69,13 +73,13 @@ public class MainPage extends AbstractView {
 		vLayout.addComponent(prjLink);
 
 		serviceMenu.addComponent(vLayout);
-		layout.addComponent(serviceMenu);
+		layout.addComponent(serviceMenu, "serviceMenu");
 
 		PopupButton accountMenu = new PopupButton(AppContext.getSession()
 				.getDisplayname());
 		accountMenu.setStyleName("link");
 		VerticalLayout accLayout = new VerticalLayout();
-		accLayout.setWidth("150px");
+		accLayout.setWidth("120px");
 
 		Button myAccountBtn = new Button("My Account");
 		myAccountBtn.setStyleName("link");
@@ -88,7 +92,9 @@ public class MainPage extends AbstractView {
 		accLayout.addComponent(signoutBtn);
 
 		accountMenu.addComponent(accLayout);
-		layout.addComponent(accountMenu);
+		accountMenu.setStyleName("accountMenu");
+		accountMenu.addStyleName("topNavPopup");
+		layout.addComponent(accountMenu, "accountMenu");
 		return layout;
 	}
 }

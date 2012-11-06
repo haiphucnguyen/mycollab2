@@ -6,6 +6,125 @@
 .clear {
 	clear: both;
 }
+.v-button-link:focus .v-button-caption, .v-button-borderless:focus .v-button-caption {
+	border: none;
+	margin: 0px;
+}
+
+
+/* Top Menu */
+
+#topNavigation {
+	height: 40px;
+	background: #444;
+	background: -moz-linear-gradient(top,#444 0,#222 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#444),color-stop(100%,#222));
+	background: -webkit-linear-gradient(top,#444 0,#222 100%);
+	background: -o-linear-gradient(top,#444 0,#222 100%);
+	background: -ms-linear-gradient(top,#444 0,#222 100%);
+	background: linear-gradient(to bottom,#444 0,#222 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444',endColorstr='#222222',GradientType=0);
+}
+
+.serviceMenuContainer {
+	float: left;
+}
+
+.serviceMenu {
+	float: left;
+	padding: 12px 14px 11px;
+	background: none !important;
+	border: none;
+	text-shadow: none;
+}
+
+.serviceMenu .v-button-wrap {
+	padding: 0px;
+}
+
+#topNavigation .serviceMenu .v-button-caption {
+	font-weight: bold;
+	font-size: 14px;
+	padding: 0 6px 0 3px;
+}
+
+#topNavigation .v-button-wrap, #topNavigation .v-button:active .v-button-wrap {
+	border: none;
+	background: none;
+	padding: 0px;
+}
+
+#topNavigation .v-button-caption {
+	color: white;
+	text-decoration: none;
+	padding: 0 3px;
+}
+
+#topNavigation .navSeparator {
+	display: block;
+	float: left;
+	border-left: solid 1px #222;
+	border-right: solid 1px #444;
+	height: 20px;
+	width: 0;
+	margin: 10px 0;
+}
+
+#mainLogo {
+	float: left;
+	height: 40px;
+	width: 20px;
+	margin: 10px 18px 6px 34px;
+	display: block;
+}
+
+.accountMenuContainer {
+	float: right;
+}
+
+#topNavigation .accountMenu {
+	float: right;
+	margin-right: 30px;
+	height: 40px;
+	display: block;
+	padding: 12px 12px 11px;
+	text-shadow: none;
+	background: none;
+	border: none;
+}
+
+.v-popupbutton-popup.v-popupbutton-popup-topNavPopup {
+	border: solid 1px #999;
+	border-top: 0px;
+	border-radius: 0px 0px 4px 4px;
+	-webkit-border-radius: 0px 0px 4px 4px;
+	-moz-border-radius: 0px 0px 4px 4px;
+	-o-border-radius: 0px 0px 4px 4px;
+	padding: 0px 15px;
+}
+
+.v-popupbutton-popup-topNavPopup .link {
+	padding: 10px 0px;
+}
+
+.v-popupbutton-popup-topNavPopup .link .v-button-caption {
+	text-decoration: none;
+	font-size: 14px;
+	color: black;
+	font-weight: normal;
+}
+
+.v-popupbutton-popup-topNavPopup .link .v-button-caption:hover {
+	color: #004B91;
+}
+.v-popupbutton-popup-serviceMenu .link .v-button-caption:hover {
+	font-weight: bold;
+}
+
+/* End Top Menu */
+
+/* Login Form */
+
 .formView {
 	background: white;
 	width: 600px;
@@ -91,3 +210,5 @@
 #loginFormContainer #newToUs #signupLink .v-button-wrap .v-button-caption {
 	text-decoration: underline;
 }
+
+/* End Login Form */

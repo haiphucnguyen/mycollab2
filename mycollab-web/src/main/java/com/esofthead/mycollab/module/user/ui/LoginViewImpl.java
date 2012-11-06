@@ -40,7 +40,7 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 
 		public LoginForm() {
 			// this.setCaption("Login Form");
-			CustomLayout custom = new CustomLayout("login-form");
+			CustomLayout custom = new CustomLayout("loginForm");
 			custom.addStyleName("customLoginForm");
 			usernameField = new TextField("Email");
 			usernameField.setValue("hainguyen@esofthead.com");
