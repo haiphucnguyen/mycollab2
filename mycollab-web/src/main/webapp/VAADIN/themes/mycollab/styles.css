@@ -1,4 +1,5 @@
 @import url(../chameleon-blue/styles.css);
+@import url("../melodion/melodion.css");
 
 .v-table-cell-wrapper {
     white-space: normal;

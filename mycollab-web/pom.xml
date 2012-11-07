@@ -13,7 +13,7 @@
 	</parent>
 	<packaging>war</packaging>
 	<properties>
-		<vaadinVersion>6.8.4</vaadinVersion>
+		<vaadinVersion>6.8.5</vaadinVersion>
 	</properties>
 
 	<dependencies>
@@ -140,6 +140,11 @@
 			<groupId>org.vaadin.hene.splitbutton</groupId>
 			<artifactId>splitbutton</artifactId>
 			<version>0.9.7</version>
+		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>melodion</artifactId>
+			<version>1.0.0</version>
 		</dependency>
 
 		<dependency>

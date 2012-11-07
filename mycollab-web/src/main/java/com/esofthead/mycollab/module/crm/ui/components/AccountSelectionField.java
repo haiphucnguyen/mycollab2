@@ -92,8 +92,11 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 	@Override
 	public void fireValueChange(Object data) {
 		Account account = (Account) data;
-		accountName.setValue(account.getAccountname());
-		this.getWrappedField().setValue(account.getId());
+		if (account != null) {
+			accountName.setValue(account.getAccountname());
+			this.getWrappedField().setValue(account.getId());
+		}
+		
 	}
 
 }
