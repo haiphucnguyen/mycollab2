@@ -1,5 +1,9 @@
 @import url(../chameleon-blue/styles.css);
 
+.v-app {
+	background: #FFF;
+}
+
 .v-table-cell-wrapper {
     white-space: normal;
 }
@@ -10,7 +14,50 @@
 	border: none;
 	margin: 0px;
 }
+.sidebar-menu {
+	height: 30px;
+	background: #FEFEFE;
+	background: -moz-linear-gradient(top,#FEFEFE 0,#F9F9F9 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#FEFEFE),color-stop(100%,#F9F9F9));
+	background: -webkit-linear-gradient(top,#FEFEFE 0,#F9F9F9 100%);
+	background: -o-linear-gradient(top,#FEFEFE 0,#F9F9F9 100%);
+	background: -ms-linear-gradient(top,#FEFEFE 0,#F9F9F9 100%);
+	background: linear-gradient(to bottom,#FEFEFE 0,#F9F9F9 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FEFEFE',endColorstr='#F9F9F9',GradientType=0);
+	border: 1px solid #D7D7D7;
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+	-o-border-radius: 5px;
+}
 
+.sidebar-menu .v-csslayout-container {
+	height: 30px;
+}
+
+.sidebar-menu .v-csslayout-container .v-button-link {
+	color: #4D4D4D;
+	height: 30px;
+	margin: 0px;
+}
+
+.sidebar-menu .v-csslayout-container .v-button-link .v-button-wrap, .sidebar-menu .v-csslayout-container .v-popupbutton .v-button-wrap, .sidebar-menu .v-csslayout-container .v-popupbutton:active .v-button-wrap {
+	margin-top: 7px;
+    display: block;
+    padding: 0px 30px;
+    border-right: 1px solid #E3E3E3;
+    height: 16px;
+}
+
+.sidebar-menu .v-csslayout-container .v-button-link .v-button-caption {
+	text-decoration: none;
+	font-weight: bold;
+	font-size: 12px;
+}
+
+.sidebar-menu .v-csslayout-container .v-button-link:hover, .sidebar-menu .v-csslayout-container .v-button-link:active, .sidebar-menu .v-csslayout-container .v-button-link.isSelected {
+	color: #287ECE;
+}
 
 /* Top Menu */
 
@@ -122,6 +169,14 @@
 }
 
 /* End Top Menu */
+
+/* CRM Service */
+
+.crmContainer {
+    margin: 15px 30px 0px 74px;
+}
+
+/* End CRM Service */
 
 /* Login Form */
 

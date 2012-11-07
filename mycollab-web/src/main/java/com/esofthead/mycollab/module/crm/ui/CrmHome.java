@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.ui;
 
+import java.util.Iterator;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.context.annotation.Scope;
@@ -24,6 +26,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
@@ -57,6 +60,8 @@ public class CrmHome extends AbstractView {
 
 	private PopupButton addBtn;
 
+	private CssLayout toolbar;
+
 	@PostConstruct
 	private void init() {
 		registerAccountListeners();
@@ -65,16 +70,16 @@ public class CrmHome extends AbstractView {
 		registerLeadListeners();
 		registerOpportunityListeners();
 	}
-	
+
 	@Override
 	protected ComponentContainer initMainLayout() {
-		VerticalLayout container = new VerticalLayout();
-		container.setSpacing(true);
-		container.setMargin(true);
+		CustomLayout container = new CustomLayout("crmContainer");
+		// container.setSpacing(true);
+		// container.setMargin(false);
 		container.setWidth("100%");
 		NavigatorItemListener listener = new NavigatorItemListener();
 
-		CssLayout toolbar = new CssLayout();
+		toolbar = new CssLayout();
 		toolbar.setWidth("100%");
 
 		Button accountList = new Button(ACCOUNT_LIST, listener);
@@ -128,13 +133,12 @@ public class CrmHome extends AbstractView {
 		addBtn.setStyleName("link");
 		toolbar.addComponent(addBtn);
 
-		container.addComponent(toolbar);
+		container.addComponent(toolbar, "crmToolbar");
 
 		currentView = new VerticalLayout();
-		container.addComponent(currentView);
+		container.addComponent(currentView, "currentView");
 		return container;
 	}
-
 
 	@SuppressWarnings("serial")
 	private void registerAccountListeners() {
@@ -237,7 +241,7 @@ public class CrmHome extends AbstractView {
 				CampaignAddViewImpl view = AppContext
 						.getView(CampaignAddViewImpl.class);
 				view.editItem((Campaign) event.getData());
-				addView((AbstractView) view);
+				addView(view);
 				addBtn.setPopupVisible(false);
 			}
 		});
@@ -254,7 +258,7 @@ public class CrmHome extends AbstractView {
 				CampaignAddViewImpl view = AppContext
 						.getView(CampaignAddViewImpl.class);
 				view.editItem((Campaign) event.getData());
-				addView((AbstractView) view);
+				addView(view);
 			}
 		});
 
@@ -350,6 +354,11 @@ public class CrmHome extends AbstractView {
 	private void registerLeadListeners() {
 		eventBus.addListener(new ApplicationEventListener<LeadEvent.GotoAdd>() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
 				return LeadEvent.GotoAdd.class;
@@ -366,6 +375,11 @@ public class CrmHome extends AbstractView {
 		});
 
 		eventBus.addListener(new ApplicationEventListener<LeadEvent.GotoRead>() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
@@ -384,6 +398,11 @@ public class CrmHome extends AbstractView {
 
 		eventBus.addListener(new ApplicationEventListener<LeadEvent.GotoList>() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
 				return LeadEvent.GotoList.class;
@@ -401,6 +420,11 @@ public class CrmHome extends AbstractView {
 
 		eventBus.addListener(new ApplicationEventListener<LeadEvent.GotoEdit>() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
 				return LeadEvent.GotoEdit.class;
@@ -411,13 +435,18 @@ public class CrmHome extends AbstractView {
 				LeadAddViewImpl leadView = AppContext
 						.getView(LeadAddViewImpl.class);
 				leadView.editItem((Lead) event.getData());
-				addView((AbstractView) leadView);
+				addView(leadView);
 			}
 		});
 	}
 
 	private void registerOpportunityListeners() {
 		eventBus.addListener(new ApplicationEventListener<OpportunityEvent.GotoAdd>() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
@@ -436,6 +465,11 @@ public class CrmHome extends AbstractView {
 
 		eventBus.addListener(new ApplicationEventListener<OpportunityEvent.GotoRead>() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
 				return OpportunityEvent.GotoRead.class;
@@ -452,6 +486,11 @@ public class CrmHome extends AbstractView {
 		});
 
 		eventBus.addListener(new ApplicationEventListener<OpportunityEvent.GotoList>() {
+
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
@@ -470,6 +509,11 @@ public class CrmHome extends AbstractView {
 
 		eventBus.addListener(new ApplicationEventListener<OpportunityEvent.GotoEdit>() {
 
+			/**
+			 * 
+			 */
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
 				return OpportunityEvent.GotoEdit.class;
@@ -480,7 +524,7 @@ public class CrmHome extends AbstractView {
 				OpportunityAddViewImpl view = AppContext
 						.getView(OpportunityAddViewImpl.class);
 				view.editItem((Opportunity) event.getData());
-				addView((AbstractView) view);
+				addView(view);
 			}
 		});
 	}
@@ -518,8 +562,15 @@ public class CrmHome extends AbstractView {
 			} else if (OPPORTUNITY_LIST.equals(caption)) {
 				eventBus.fireEvent(new OpportunityEvent.GotoList(this, null));
 			}
+
+			for (Iterator<com.vaadin.ui.Component> it = toolbar
+					.getComponentIterator(); it.hasNext();) {
+				Button btn = (Button) it.next();
+				btn.removeStyleName("isSelected");
+			}
+
+			event.getButton().addStyleName("isSelected");
 		}
 	}
 
-	
 }
