@@ -9,6 +9,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -143,10 +144,35 @@ public class OpportunitySearchPanel extends CustomComponent {
 	private class AdvancedSearchLayout extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
+		private TextField opportunityNameField;
+		private AccountSelectionField accountField;
+		private TextField nextStepField;
+		private UserListSelect userField;
+		private SalesStageListSelect stageField;
+		private LeadSourceListSelect sourceField;
+
 		public AdvancedSearchLayout() {
 			super();
 			this.setSpacing(true);
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 4);
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 2);
+
+			opportunityNameField = (TextField) gridLayout.addComponent(
+					new TextField(), "Opportunity Name", 0, 0);
+			accountField = (AccountSelectionField) gridLayout.addComponent(
+					AppContext.getSpringBean(AccountSelectionField.class),
+					"Account", 1, 0);
+			nextStepField = (TextField) gridLayout.addComponent(
+					new TextField(), "Next Step", 2, 0);
+
+			userField = (UserListSelect) gridLayout.addComponent(
+					AppContext.getSpringBean(UserListSelect.class),
+					"Assigned to", 0, 1);
+			stageField = (SalesStageListSelect) gridLayout.addComponent(
+					AppContext.getSpringBean(SalesStageListSelect.class),
+					"Sales Stage", 1, 1);
+			sourceField = (LeadSourceListSelect) gridLayout.addComponent(
+					AppContext.getSpringBean(LeadSourceListSelect.class),
+					"Lead Source", 2, 1);
 
 			this.addComponent(gridLayout.getLayout());
 
