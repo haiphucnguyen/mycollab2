@@ -41,6 +41,11 @@
             domainObjectName="Currency"
             schema="mycollab"
             tableName="s_currency" />
+
+        <table
+            domainObjectName="MonitorItem"
+            schema="mycollab"
+            tableName="m_monitor_item" />
     </context>
 
 </generatorConfiguration>

@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.engroup.module.ecm.dao.ContentTransactionMapperExt">
+<mapper namespace="com.esofthead.mycollab.module.ecm.dao.ContentTransactionMapperExt">
 	<resultMap id="contentTractionResult"
 		type="com.esofthead.mycollab.module.file.domain.SimpleContentTransaction">
 		<result column="ownerFullName" property="ownerFullName"
@@ -22,7 +22,7 @@
 		SELECT count(*) as totalCount FROM m_ecm_transaction
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			<include
-				refid="com.engroup.module.ecm.dao.ContentTransactionMapperExt.querySearchCriteria" />
+				refid="com.esofthead.mycollab.module.ecm.dao.ContentTransactionMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
 
@@ -36,7 +36,7 @@
 		]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			<include
-				refid="com.engroup.module.ecm.dao.ContentTransactionMapperExt.querySearchCriteria" />
+				refid="com.esofthead.mycollab.module.ecm.dao.ContentTransactionMapperExt.querySearchCriteria" />
 		</trim>
 		ORDER BY actiontime DESC
 	</select>

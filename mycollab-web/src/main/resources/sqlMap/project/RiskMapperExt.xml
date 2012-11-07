@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esofthead.mycollab.module.project.dao.RiskMapperExt">
+	<resultMap extends="com.esofthead.mycollab.module.project.dao.RiskMapper.BaseResultMap"
+		id="RiskResult" type="com.esofthead.mycollab.module.project.domain.SimpleRisk">
+		<result column="risksource" property="risksource" jdbcType="VARCHAR" />
+		<result column="raisedByUserFullName" property="raisedByUserFullName"
+			jdbcType="VARCHAR" />
+		<result column="assignedToUserFullName" property="assignedToUserFullName"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="querySearchCriteria">
+		<if test="riskname != null">
+			${riskname.operation} m_prj_risk.riskname
+			LIKE
+			'%${riskname.value}%'
+        </if>
+		<if test="projectId != null">
+			${projectId.operation} m_prj_risk.projectid =
+			#{projectId.value,javaType=INTEGER}
+        </if>
+		<if test="raisedByUser != null">
+			${raisedByUser.operation} m_prj_risk.raisedbyuser =
+			#{raisedByUser.value}
+        </if>
+		<if test="assignToUser != null">
+			${assignToUser.operation} m_prj_risk.assigntouser =
+			#{assignToUser.value}
+        </if>
+		<if test="isCompleted != null">
+			${isCompleted.operation} m_prj_risk.status IS
+			${isCompleted.value}
+        </if>
+	</sql>
+
+	<sql id="selectRisk">
+        <![CDATA[
+          SELECT m_prj_risk.id, m_prj_risk.riskname, m_prj_risk.description, m_prj_risk.projectid, m_prj_risk.raisedbyuser, 
+                 m_prj_risk.assigntouser, m_prj_risk.consequence, m_prj_risk.probalitity, m_prj_risk.status, m_prj_risk.dateraised, 
+                 m_prj_risk.datedue, m_prj_risk.response, m_prj_risk.resolution, m_prj_risk.level, m_prj_risk.risksourceid,
+                 m_prj_risk_source.name AS risksource,
+                 concat(raisedUser.firstname, IFNULL(concat(' ', raisedUser.middlename, ' '), ' '), raisedUser.lastname) AS raisedByUserFullName,
+                 concat(assignedUser.firstname, IFNULL(concat(' ', assignedUser.middlename, ' '), ' '), assignedUser.lastname) AS assignedToUserFullName 
+          FROM m_prj_risk
+              LEFT OUTER JOIN m_prj_risk_source ON (m_prj_risk.risksourceid=m_prj_risk_source.id)
+              LEFT OUTER JOIN s_user as raisedUser ON (m_prj_risk.raisedbyuser=raisedUser.username)
+              LEFT OUTER JOIN s_user as assignedUser ON ( m_prj_risk.assigntouser=assignedUser.username)
+        ]]>
+	</sql>
+
+	<select id="getTotalCount" resultType="int" parameterType="RiskSearchCriteria">
+		SELECT count(*) as totalCount FROM m_prj_risk
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include
+				refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
+
+	<select id="findPagableList" resultMap="RiskResult"
+		parameterType="RiskSearchCriteria">
+		<include refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.selectRisk" />
+
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include
+				refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
+
+	<insert id="insert" parameterType="com.esofthead.mycollab.module.project.domain.Risk"
+		useGeneratedKeys="true" keyProperty="id">
+       <![CDATA[
+        insert into m_prj_risk (id, riskname, description, 
+      projectid, raisedbyuser, assigntouser, 
+      consequence, probalitity, status, 
+      dateraised, datedue, response, 
+      resolution, level, risksourceid
+      )
+    values (#{id,jdbcType=INTEGER}, #{riskname,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
+      #{projectid,jdbcType=INTEGER}, #{raisedbyuser,jdbcType=VARCHAR}, #{assigntouser,jdbcType=VARCHAR}, 
+      #{consequence,jdbcType=VARCHAR}, #{probalitity,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
+      #{dateraised,jdbcType=TIMESTAMP}, #{datedue,jdbcType=TIMESTAMP}, #{response,jdbcType=VARCHAR}, 
+      #{resolution,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{risksourceid,jdbcType=INTEGER}
+      )
+      ]]>
+	</insert>
+</mapper>
