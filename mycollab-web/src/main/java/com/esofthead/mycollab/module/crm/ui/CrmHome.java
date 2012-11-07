@@ -57,10 +57,6 @@ public class CrmHome extends AbstractView {
 
 	private PopupButton addBtn;
 
-	public CrmHome() {
-		super();
-	}
-
 	@PostConstruct
 	private void init() {
 		registerAccountListeners();
@@ -69,6 +65,76 @@ public class CrmHome extends AbstractView {
 		registerLeadListeners();
 		registerOpportunityListeners();
 	}
+	
+	@Override
+	protected ComponentContainer initMainLayout() {
+		VerticalLayout container = new VerticalLayout();
+		container.setSpacing(true);
+		container.setMargin(true);
+		container.setWidth("100%");
+		NavigatorItemListener listener = new NavigatorItemListener();
+
+		CssLayout toolbar = new CssLayout();
+		toolbar.setWidth("100%");
+
+		Button accountList = new Button(ACCOUNT_LIST, listener);
+		accountList.setStyleName("link");
+		toolbar.addComponent(accountList);
+
+		Button contactList = new Button(CONTACT_LIST, listener);
+		contactList.setStyleName("link");
+		toolbar.addComponent(contactList);
+
+		Button campaignList = new Button(CAMPAIGN_LIST, listener);
+		campaignList.setStyleName("link");
+		toolbar.addComponent(campaignList);
+
+		Button leadList = new Button(LEAD_LIST, listener);
+		leadList.setStyleName("link");
+		toolbar.addComponent(leadList);
+
+		Button opportunityList = new Button(OPPORTUNITY_LIST, listener);
+		opportunityList.setStyleName("link");
+		toolbar.addComponent(opportunityList);
+
+		toolbar.setStyleName("sidebar-menu");
+
+		addBtn = new PopupButton("Add");
+		GridLayout addBtnLayout = new GridLayout(3, 2);
+		addBtnLayout.setMargin(true);
+		addBtnLayout.setSpacing(true);
+
+		Button newAccountBtn = new Button(NEW_ACCOUNT_ITEM, listener);
+		newAccountBtn.setStyleName(BaseTheme.BUTTON_LINK);
+		addBtnLayout.addComponent(newAccountBtn);
+
+		Button newContactBtn = new Button(NEW_CONTACT_ITEM, listener);
+		newContactBtn.setStyleName(BaseTheme.BUTTON_LINK);
+		addBtnLayout.addComponent(newContactBtn);
+
+		Button newCampaignBtn = new Button(NEW_CAMPAIGN_ITEM, listener);
+		newCampaignBtn.setStyleName(BaseTheme.BUTTON_LINK);
+		addBtnLayout.addComponent(newCampaignBtn);
+
+		Button newOpportunityBtn = new Button(NEW_OPPORTUNITY_ITEM, listener);
+		newOpportunityBtn.setStyleName(BaseTheme.BUTTON_LINK);
+		addBtnLayout.addComponent(newOpportunityBtn);
+
+		Button newLeadBtn = new Button(NEW_LEAD_ITEM, listener);
+		newLeadBtn.setStyleName(BaseTheme.BUTTON_LINK);
+		addBtnLayout.addComponent(newLeadBtn);
+
+		addBtn.addComponent(addBtnLayout);
+		addBtn.setStyleName("link");
+		toolbar.addComponent(addBtn);
+
+		container.addComponent(toolbar);
+
+		currentView = new VerticalLayout();
+		container.addComponent(currentView);
+		return container;
+	}
+
 
 	@SuppressWarnings("serial")
 	private void registerAccountListeners() {
@@ -455,68 +521,5 @@ public class CrmHome extends AbstractView {
 		}
 	}
 
-	@Override
-	protected ComponentContainer initMainLayout() {
-		VerticalLayout container = new VerticalLayout();
-		container.setSpacing(true);
-		container.setMargin(true);
-		container.setWidth("100%");
-		NavigatorItemListener listener = new NavigatorItemListener();
-
-		CssLayout toolbar = new CssLayout();
-		toolbar.setWidth("100%");
-
-		Button accountList = new Button(ACCOUNT_LIST, listener);
-		toolbar.addComponent(accountList);
-
-		Button contactList = new Button(CONTACT_LIST, listener);
-		toolbar.addComponent(contactList);
-
-		Button campaignList = new Button(CAMPAIGN_LIST, listener);
-		toolbar.addComponent(campaignList);
-
-		Button leadList = new Button(LEAD_LIST, listener);
-		toolbar.addComponent(leadList);
-
-		Button opportunityList = new Button(OPPORTUNITY_LIST, listener);
-		toolbar.addComponent(opportunityList);
-
-		toolbar.setStyleName("sidebar-menu");
-
-		addBtn = new PopupButton("Add");
-		GridLayout addBtnLayout = new GridLayout(3, 2);
-		addBtnLayout.setMargin(true);
-		addBtnLayout.setSpacing(true);
-
-		Button newAccountBtn = new Button(NEW_ACCOUNT_ITEM, listener);
-		newAccountBtn.setStyleName(BaseTheme.BUTTON_LINK);
-		addBtnLayout.addComponent(newAccountBtn);
-
-		Button newContactBtn = new Button(NEW_CONTACT_ITEM, listener);
-		newContactBtn.setStyleName(BaseTheme.BUTTON_LINK);
-		addBtnLayout.addComponent(newContactBtn);
-
-		Button newCampaignBtn = new Button(NEW_CAMPAIGN_ITEM, listener);
-		newCampaignBtn.setStyleName(BaseTheme.BUTTON_LINK);
-		addBtnLayout.addComponent(newCampaignBtn);
-
-		Button newOpportunityBtn = new Button(NEW_OPPORTUNITY_ITEM, listener);
-		newOpportunityBtn.setStyleName(BaseTheme.BUTTON_LINK);
-		addBtnLayout.addComponent(newOpportunityBtn);
-
-		Button newLeadBtn = new Button(NEW_LEAD_ITEM, listener);
-		newLeadBtn.setStyleName(BaseTheme.BUTTON_LINK);
-		addBtnLayout.addComponent(newLeadBtn);
-
-		addBtn.addComponent(addBtnLayout);
-		addBtn.setStyleName("link");
-		toolbar.addComponent(addBtn);
-
-		container.addComponent(toolbar);
-
-		currentView = new VerticalLayout();
-		container.addComponent(currentView);
-		return container;
-	}
-
+	
 }

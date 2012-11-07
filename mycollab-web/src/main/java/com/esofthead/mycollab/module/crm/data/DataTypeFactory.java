@@ -30,6 +30,12 @@ public class DataTypeFactory {
 			"Referral Program", "Advertisement", "Banner Ads", "Direct Email",
 			"Mail", "Telemarketing", "Others" };
 
+	private static String[] SALES_STAGE_LIST = new String[] { "Prospecting",
+			"Qualification", "Need Analysis", "Value Proposition",
+			"Id. Decision Markers", "Perception Analysis",
+			"Proposal/Price Quote", "Negotiation/Review", "Closed Won",
+			"Closed Lost" };
+
 	public static String[] getAccountIndustryList() {
 		return ACCOUNT_INDUSTRY_LIST;
 	}
@@ -52,5 +58,9 @@ public class DataTypeFactory {
 
 	public static String[] getCampaignTypeList() {
 		return CAMPAIGN_TYPE_LIST;
+	}
+
+	public static String[] getSalesStageList() {
+		return SALES_STAGE_LIST;
 	}
 }
