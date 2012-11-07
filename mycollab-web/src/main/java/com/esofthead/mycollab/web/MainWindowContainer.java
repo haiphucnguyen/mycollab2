@@ -6,5 +6,7 @@ public class MainWindowContainer extends Window {
 	private static final long serialVersionUID = 1L;
 
 	public MainWindowContainer() {
+		// this.setStyleName(ChameleonTheme.);
+		this.setCaption("MyCollab");
 	}
 }
