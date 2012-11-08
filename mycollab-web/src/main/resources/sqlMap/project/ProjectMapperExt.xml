@@ -1,0 +1,216 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esofthead.mycollab.module.project.dao.ProjectMapperExt">
+	<resultMap
+		extends="com.esofthead.mycollab.module.project.dao.ProjectMapper.BaseResultMap"
+		id="SimpleProjectResult" type="com.esofthead.mycollab.module.project.domain.SimpleProject">
+		<result column="ownerName" jdbcType="VARCHAR" property="ownerName" />
+		<result column="accountName" jdbcType="VARCHAR" property="accountName" />
+	</resultMap>
+
+	<insert id="insertAndReturnKey" parameterType="com.esofthead.mycollab.module.project.domain.Project"
+	   useGeneratedKeys="true" keyProperty="id">
+		insert into m_prj_project (id,
+		name, owner,
+		account, priority, shortname,
+		planStartDate, planEndDate,
+		targetBudget,
+		homePage, actualBudget, projectType,
+		projectStatus,
+		description, defaultBillingRate,
+		actualStartDate, actualEndDate,
+		defaultOvertimeBillingRate,
+		currencyid, progress, sAccountId
+		)
+		values
+		(#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
+		#{owner,jdbcType=VARCHAR},
+		#{account,jdbcType=INTEGER},
+		#{priority,jdbcType=INTEGER}, #{shortname,jdbcType=VARCHAR},
+		#{planstartdate,jdbcType=TIMESTAMP},
+		#{planenddate,jdbcType=TIMESTAMP}, #{targetbudget,jdbcType=DOUBLE},
+		#{homepage,jdbcType=VARCHAR}, #{actualbudget,jdbcType=DOUBLE},
+		#{projecttype,jdbcType=VARCHAR},
+		#{projectstatus,jdbcType=VARCHAR},
+		#{description,jdbcType=VARCHAR},
+		#{defaultbillingrate,jdbcType=DOUBLE},
+		#{actualstartdate,jdbcType=TIMESTAMP},
+		#{actualenddate,jdbcType=TIMESTAMP},
+		#{defaultovertimebillingrate,jdbcType=DOUBLE},
+		#{currencyid,jdbcType=INTEGER}, #{progress,jdbcType=DOUBLE},
+		#{saccountid,jdbcType=INTEGER}
+		)
+	</insert>
+
+	<sql id="querySearchCriteria">
+		<if test="username != null">
+            <![CDATA[
+            ${username.operation}
+            (SELECT COUNT(*)
+            FROM s_user as user 
+            WHERE m_prj_project.owner = user.username 
+                AND user.username = #{username.value} ) > 0
+            ]]>
+		</if>
+		<if test="ownerName != null">
+            <![CDATA[
+            ${ownerName.operation}
+            (SELECT COUNT(*) 
+             FROM s_user AS user
+             WHERE m_prj_project.owner = user.username 
+                 AND (concat(user.firstname, IFNULL(concat(' ', user.middlename, ' '), ' '), user.lastname) like '%${ownerName.value}%') ) > 0
+            ]]>
+		</if>
+		<if test="accountName != null">
+            <![CDATA[
+            ${accountName.operation}
+            (SELECT COUNT(*) 
+             FROM m_crm_account 
+             WHERE m_prj_project.account = m_crm_account.id 
+                 AND m_crm_account.accountName LIKE '%${accountName.value}%') > 0
+            ]]>
+		</if>
+		<if test="projectStatus != null">
+			${projectStatus.operation} m_prj_project.projectStatus
+			like '%${projectStatus.value}%'
+        </if>
+		<if test="projectType != null">
+			${projectType.operation} m_prj_project.projectType like
+			'%${projectType.value}%'
+        </if>
+		<if test="saccountid != null">
+            <![CDATA[${saccountid.operation} m_prj_project.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+		</if>
+	</sql>
+
+	<sql id="queryTotalCountSearchCriteria">
+		<if test="username != null">
+            <![CDATA[
+            ${username.operation}
+            (SELECT COUNT(*) 
+             FROM s_user as user 
+             WHERE m_prj_project.owner = user.username 
+                 AND user.username = #{username.value} ) > 0
+            ]]>
+		</if>
+		<if test="ownerName != null">
+            <![CDATA[
+            ${ownerName.operation}
+            (SELECT COUNT(*) 
+             FROM s_user as user 
+             WHERE m_prj_project.owner = user.username 
+                 AND (concat(user.firstname, IFNULL(concat(' ', user.middlename, ' '), ' '), user.lastname) like '%${ownerName.value}%') ) > 0
+            ]]>
+		</if>
+		<if test="accountName != null">
+            <![CDATA[
+            ${accountName.operation}
+            (SELECT COUNT(*)
+            FROM m_crm_account WHERE
+            m_prj_project.account = m_crm_account.id AND
+            m_crm_account.accountName LIKE '%${accountName.value}%') > 0
+            ]]>
+		</if>
+		<if test="projectStatus != null">
+			m_prj_project.projectStatus like
+			'%${projectStatus.value}%'
+        </if>
+		<if test="projectType != null">
+			${projectType.operation} m_prj_project.projectType like
+			'%${projectType.value}%'
+        </if>
+		<if test="saccountid != null">
+            <![CDATA[${saccountid.operation} m_prj_project.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+		</if>
+	</sql>
+
+	<sql id="selectSimpleProject">
+        <![CDATA[
+        SELECT m_prj_project.id, m_prj_project.name, m_prj_project.owner, m_prj_project.account, 
+        m_prj_project.priority, m_prj_project.shortname, m_prj_project.planStartDate, m_prj_project.planEndDate, 
+        m_prj_project.targetBudget, m_prj_project.homePage, m_prj_project.actualBudget, m_prj_project.projectType, 
+        m_prj_project.projectStatus, m_prj_project.description, m_prj_project.defaultBillingRate, m_prj_project.actualStartDate, 
+        m_prj_project.actualEndDate, m_prj_project.defaultOvertimeBillingRate, 
+        concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS ownerName, 
+        m_crm_account.accountName, 2 as ownerType, m_prj_project.currencyid, m_prj_project.progress
+        
+        FROM m_prj_project 
+            LEFT OUTER JOIN m_crm_account ON (m_crm_account.id=m_prj_project.account) 
+            LEFT OUTER JOIN s_user ON (m_prj_project.owner = s_user.username) 
+        ]]>
+	</sql>
+
+	<select id="getInvolvedProjectOfUser" resultMap="SimpleProjectResult"
+		parameterType="java.lang.String">
+        <![CDATA[
+        SELECT m_prj_project.id, m_prj_project.name, m_prj_project.owner, m_prj_project.account, 
+        m_prj_project.priority, m_prj_project.shortname, m_prj_project.planStartDate, m_prj_project.planEndDate, 
+        m_prj_project.targetBudget, m_prj_project.homePage, m_prj_project.actualBudget, m_prj_project.projectType, 
+        m_prj_project.projectStatus, m_prj_project.description, m_prj_project.defaultBillingRate, m_prj_project.actualStartDate, 
+        m_prj_project.actualEndDate, m_prj_project.defaultOvertimeBillingRate, 
+        concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS ownerName, 
+        m_crm_account.accountName, 0 as ownerType, m_prj_project.currencyid, m_prj_project.progress
+        
+        FROM m_prj_project 
+            LEFT OUTER JOIN m_crm_account ON (m_crm_account.id=m_prj_project.account) 
+            LEFT OUTER JOIN s_user ON (m_prj_project.owner = s_user.username)
+            
+        WHERE  (SELECT COUNT(*) FROM s_user as user WHERE
+            m_prj_project.owner = user.username AND user.username =
+            #{username} ) > 0
+        UNION
+        SELECT DISTINCT m_prj_project.id, m_prj_project.name, m_prj_project.owner, m_prj_project.account, 
+        m_prj_project.priority, m_prj_project.shortname, m_prj_project.planStartDate, m_prj_project.planEndDate, 
+        m_prj_project.targetBudget, m_prj_project.homePage, m_prj_project.actualBudget, m_prj_project.projectType, 
+        m_prj_project.projectStatus, m_prj_project.description, m_prj_project.defaultBillingRate, m_prj_project.actualStartDate, 
+        m_prj_project.actualEndDate, m_prj_project.defaultOvertimeBillingRate, 
+        concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS ownerName, 
+        m_crm_account.accountName, 1 as ownerType, m_prj_project.currencyid, m_prj_project.progress
+        
+        FROM m_prj_project 
+            LEFT OUTER JOIN m_crm_account ON (m_crm_account.id=m_prj_project.account) 
+            LEFT OUTER JOIN s_user ON (m_prj_project.owner = s_user.username)
+            
+        WHERE  ((SELECT COUNT(*) 
+                    FROM s_user 
+                    WHERE m_prj_project.owner = s_user.username 
+                        AND s_user.username = #{username} 
+                ) = 0)
+            AND (
+                (SELECT COUNT(*) 
+                    FROM m_prj_resource, s_user
+                    WHERE m_prj_resource.projectid=m_prj_project.id 
+                        AND m_prj_resource.username = s_user.username
+                        AND s_user.username = #{username} 
+                ) > 0)
+        ]]>
+
+	</select>
+
+	<select id="getTotalCount" resultType="int" parameterType="ProjectSearchCriteria">
+		SELECT count(*) as totalCount FROM m_prj_project
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.queryTotalCountSearchCriteria" />
+		</trim>
+	</select>
+
+
+	<select id="findPagableList" resultMap="SimpleProjectResult"
+		parameterType="ProjectSearchCriteria">
+		<include refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.selectSimpleProject" />
+
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
+
+	<select id="getUserMailsOfProject" resultType="java.lang.String"
+		parameterType="java.lang.Integer">
+        <![CDATA[
+        SELECT s_user.email
+        FROM m_prj_resource, s_user
+        WHERE m_prj_resource.projectid=#{projectid,javaType=INTEGER}
+            AND m_prj_resource.username = s_user.username
+        ]]>
+	</select>
+</mapper>

@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esofthead.mycollab.module.project.dao.ResourceMapperExt">
+	<resultMap
+		extends="com.esofthead.mycollab.module.project.dao.ResourceMapper.BaseResultMap"
+		id="ResourceResult" type="com.esofthead.mycollab.module.project.domain.SimpleResource">
+		<result column="assignedEmployeeName" property="assignedEmployeeName"
+			jdbcType="VARCHAR" />
+		<result column="roleName" property="roleName" jdbcType="VARCHAR" />
+	</resultMap>
+
+	<sql id="querySearchCriteria">
+		<if test="resourcename != null">
+			${resourcename.operation} m_prj_resource.resourcename LIKE
+			'%${resourcename.value}%'
+        </if>
+		<if test="projectId != null">
+			m_prj_resource.projectid = #{projectId.value,
+			javaType=INTEGER}
+        </if>
+		<if test="assignedToProject != null">
+            <![CDATA[${assignedToProject.operation} m_prj_resource.username IS NOT NULL]]>
+		</if>
+	</sql>
+
+	<sql id="selectResource">
+        <![CDATA[
+          SELECT m_prj_resource.id, m_prj_resource.resourcename, m_prj_resource.bookingtype, 
+                 m_prj_resource.notes, m_prj_resource.username, m_prj_resource.projectid, m_prj_resource.allocation,
+                 m_prj_resource.startdate, m_prj_resource.enddate, m_prj_resource.workingtimerate, m_prj_resource.overtimerate,
+                 m_prj_resource.roleid, m_prj_role.rolename AS roleName,
+                 concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS assignedEmployeeName
+          FROM m_prj_resource
+              LEFT OUTER JOIN s_user ON (m_prj_resource.username=s_user.username)
+              LEFT OUTER JOIN m_prj_role ON (m_prj_resource.roleid=m_prj_role.id)
+        ]]>
+	</sql>
+
+	<select id="getResourceNamesByProjectId" resultType="java.lang.String"
+		parameterType="java.lang.Integer">
+		SELECT resourcename FROM m_prj_resource
+    </select>
+
+	<select id="getTotalCount" resultType="int" parameterType="ResourceSearchCriteria">
+		SELECT count(*) as totalCount FROM m_prj_resource
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.project.dao.ResourceMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
+
+	<select id="findPagableList" resultMap="ResourceResult"
+		parameterType="ResourceSearchCriteria">
+		<include refid="com.esofthead.mycollab.module.project.dao.ResourceMapperExt.selectResource" />
+
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.project.dao.ResourceMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
+
+	<insert id="insert" parameterType="com.esofthead.mycollab.module.project.domain.Resource"
+		useGeneratedKeys="true" keyProperty="id">
+       <![CDATA[
+       insert into m_prj_resource (id, resourcename, bookingtype, 
+      notes, username, projectid, 
+      allocation, startdate, enddate, 
+      workingtimerate, overtimerate, roleid
+      )
+    values (#{id,jdbcType=INTEGER}, #{resourcename,jdbcType=VARCHAR}, #{bookingtype,jdbcType=VARCHAR}, 
+      #{notes,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{projectid,jdbcType=INTEGER}, 
+      #{allocation,jdbcType=INTEGER}, #{startdate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP}, 
+      #{workingtimerate,jdbcType=DOUBLE}, #{overtimerate,jdbcType=DOUBLE}, #{roleid,jdbcType=INTEGER}
+      )
+       ]]>
+	</insert>
+</mapper>

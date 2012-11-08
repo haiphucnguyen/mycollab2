@@ -1,0 +1,418 @@
+package com.esofthead.mycollab.module.tracker.service.ibatis;
+
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.apache.ibatis.session.RowBounds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
+import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.common.service.MonitorItemService;
+import com.esofthead.mycollab.core.EngroupException;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.module.file.service.AttachmentService;
+import com.esofthead.mycollab.module.project.ChangeLogAction;
+import com.esofthead.mycollab.module.project.ChangeLogSource;
+import com.esofthead.mycollab.module.project.service.ChangeLogService;
+import com.esofthead.mycollab.module.tracker.RelatedItemConstants;
+import com.esofthead.mycollab.module.tracker.dao.BugMapperExt;
+import com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt;
+import com.esofthead.mycollab.module.tracker.dao.HistoryMapper;
+import com.esofthead.mycollab.module.tracker.dao.MetaDataMapper;
+import com.esofthead.mycollab.module.tracker.dao.RelatedItemMapper;
+import com.esofthead.mycollab.module.tracker.dao.VersionMapperExt;
+import com.esofthead.mycollab.module.tracker.domain.Bug;
+import com.esofthead.mycollab.module.tracker.domain.Component;
+import com.esofthead.mycollab.module.tracker.domain.DefectComment;
+import com.esofthead.mycollab.module.tracker.domain.History;
+import com.esofthead.mycollab.module.tracker.domain.HistoryExample;
+import com.esofthead.mycollab.module.tracker.domain.MetaData;
+import com.esofthead.mycollab.module.tracker.domain.MetaDataExample;
+import com.esofthead.mycollab.module.tracker.domain.MetaField;
+import com.esofthead.mycollab.module.tracker.domain.MetaOptionField;
+import com.esofthead.mycollab.module.tracker.domain.RelatedItem;
+import com.esofthead.mycollab.module.tracker.domain.RelatedItemExample;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.Version;
+import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.shared.audit.service.AuditLogService;
+
+public class BugServiceImpl extends DefaultCrudService<Integer, Bug> implements
+		BugService {
+
+	private static Logger log = LoggerFactory.getLogger(BugServiceImpl.class);
+
+	private BugMapperExt bugExtDAO;
+
+	private ComponentMapperExt componentExtDAO;
+
+	private HistoryMapper historyDAO;
+
+	private MetaDataMapper metadataDAO;
+
+	private RelatedItemMapper relatedItemDAO;
+
+	private VersionMapperExt versionExtDAO;
+
+	private AuditLogService auditLogService;
+
+	private AttachmentService attachmentService;
+
+	private MonitorItemService monitorItemService;
+
+	private ChangeLogService changeLogService;
+
+	public void setMonitorItemService(MonitorItemService monitorItemService) {
+		this.monitorItemService = monitorItemService;
+	}
+
+	public void setAuditLogService(AuditLogService auditLogService) {
+		this.auditLogService = auditLogService;
+	}
+
+	public void setAttachmentService(AttachmentService attachmentService) {
+		this.attachmentService = attachmentService;
+	}
+
+	public void setComponentExtDAO(ComponentMapperExt componentExtDAO) {
+		this.componentExtDAO = componentExtDAO;
+	}
+
+	public void setVersionExtDAO(VersionMapperExt versionExtDAO) {
+		this.versionExtDAO = versionExtDAO;
+	}
+
+	public void setRelatedItemDAO(RelatedItemMapper relatedItemDAO) {
+		this.relatedItemDAO = relatedItemDAO;
+	}
+
+	public void setMetadataDAO(MetaDataMapper metadataDAO) {
+		this.metadataDAO = metadataDAO;
+	}
+
+	public void setHistoryDAO(HistoryMapper historyDAO) {
+		this.historyDAO = historyDAO;
+	}
+
+	public void setChangeLogService(ChangeLogService changeLogService) {
+		this.changeLogService = changeLogService;
+	}
+
+	@Override
+	protected int internalRemoveWithSession(Integer primaryKey, String username) {
+		Bug bug = findByPrimaryKey(primaryKey);
+		changeLogService.saveChangeLog(bug.getProjectid(), username,
+				ChangeLogSource.DEFECT, primaryKey, ChangeLogAction.DELETE,
+				bug.getSummary());
+
+		RelatedItemExample ex = new RelatedItemExample();
+		ex.createCriteria().andRefitemkeyEqualTo("bug-" + primaryKey);
+		relatedItemDAO.deleteByExample(ex);
+
+		// remove bug's attachments
+		String attachmentid = "defect-" + primaryKey;
+		attachmentService.removeById(attachmentid);
+
+		// notify watchers
+		String bugid = "defect-" + primaryKey;
+
+		monitorItemService.deleteWatchingItems(bugid);
+
+		return super.remove(primaryKey);
+	}
+
+	@Override
+	public int updateBug(String username, Bug bug, DefectComment comment) {
+		changeLogService.saveChangeLog(bug.getProjectid(), username,
+				ChangeLogSource.DEFECT, bug.getId(), ChangeLogAction.UPDATE,
+				bug.getSummary());
+		bug.setUpdateddate(new GregorianCalendar().getTime());
+		super.updateWithSession(bug, null);
+		return 0;
+	}
+
+	@Override
+	public int updateBugExt(String username, final SimpleBug record,
+			final DefectComment comment) {
+		changeLogService.saveChangeLog(record.getProjectid(), username,
+				ChangeLogSource.DEFECT, record.getId(), ChangeLogAction.UPDATE,
+				record.getSummary());
+
+		SimpleBug oldValue = this.getBugById(record.getId());
+
+		String refid = "bug-" + record.getId();
+		auditLogService.saveAuditLog(username, refid, (Object) oldValue,
+				(Object) record);
+
+		RelatedItemExample ex = new RelatedItemExample();
+		String refkey = "bug-" + record.getId();
+		ex.createCriteria().andRefitemkeyEqualTo("bug-" + record.getId());
+		relatedItemDAO.deleteByExample(ex);
+
+		saveBugRelatedItems(record, refkey);
+
+		record.setUpdateddate(new GregorianCalendar().getTime());
+
+		if (record.getStatus() == "Resolved") {
+			record.setResolveddate(new GregorianCalendar().getTime());
+		}
+
+		return super.updateWithSession(record, null);
+	}
+
+	public void setBugExtDAO(BugMapperExt bugExtDAO) {
+		this.bugExtDAO = bugExtDAO;
+	}
+
+	@Override
+	public List findPagableListByCriteria(BugSearchCriteria criteria,
+			int skipNum, int maxResult) {
+		return bugExtDAO.findPagableList(criteria, new RowBounds(skipNum,
+				maxResult));
+	}
+
+	@Override
+	public int getTotalCount(BugSearchCriteria criteria) {
+		return bugExtDAO.getTotalCount(criteria);
+	}
+
+	@Override
+	public List<History> getHistoriesOfBug(int bugid) {
+		HistoryExample ex = new HistoryExample();
+		ex.createCriteria().andRelatedbugEqualTo(bugid);
+		return historyDAO.selectByExample(ex);
+	}
+
+	@Override
+	public List<MetaField> getProjectTrackerMetaData(int projectid) {
+		MetaDataExample ex = new MetaDataExample();
+		ex.createCriteria().andProjectidEqualTo(projectid);
+		List<MetaData> metadata = metadataDAO.selectByExampleWithBLOBs(ex);
+		if (metadata == null || metadata.size() == 0) {
+			return null;
+		} else {
+			try {
+				return constructProjectMetaData(new InputSource(
+						new StringReader(metadata.get(0).getXmlstring())));
+			} catch (Exception e) {
+				return null;
+			}
+		}
+	}
+
+	private List<MetaField> constructProjectMetaData(InputSource docSource) {
+		DocumentBuilderFactory builderFactory = DocumentBuilderFactory
+				.newInstance();
+		try {
+			builderFactory.setIgnoringComments(true);
+			builderFactory.setIgnoringElementContentWhitespace(true);
+			DocumentBuilder documentBuilder = builderFactory
+					.newDocumentBuilder();
+			Document document = documentBuilder.parse(docSource);
+
+			return getFieldsFromDoc(document);
+		} catch (Exception e) {
+			throw new EngroupException("Error while constructing bug workflow.");
+		}
+	}
+
+	private List<MetaField> getFieldsFromDoc(Document document) {
+		List<MetaField> fields = new ArrayList<MetaField>();
+		NodeList elements = document.getElementsByTagName("fields");
+		if (elements.getLength() > 0) {
+			NodeList fieldNodes = ((Element) elements.item(0))
+					.getElementsByTagName("field");
+
+			for (int i = 0; i < fieldNodes.getLength(); i++) {
+				Element fieldnode = (Element) fieldNodes.item(i);
+
+				NodeList optionNodes = fieldnode.getElementsByTagName("option");
+				if (optionNodes == null || optionNodes.getLength() == 0) {
+					MetaField field = new MetaField();
+					field.setLabel(fieldnode.getAttribute("label"));
+					field.setName(fieldnode.getAttribute("name"));
+					fields.add(field);
+				} else {
+					MetaOptionField field = new MetaOptionField();
+					field.setLabel(fieldnode.getAttribute("label"));
+					field.setName(fieldnode.getAttribute("name"));
+					for (int j = 0; j < optionNodes.getLength(); j++) {
+						Element option = (Element) optionNodes.item(j);
+						String value = option.getAttribute("value");
+						String label = option.getTextContent();
+						field.putOption(label, value);
+					}
+					fields.add(field);
+				}
+
+			}
+		}
+		return fields;
+	}
+
+	private void saveBugRelatedItems(SimpleBug bug, String refkey) {
+		if (bug.getAffectedVersions() != null) {
+			for (Version version : bug.getAffectedVersions()) {
+				RelatedItem relatedItem = new RelatedItem();
+				relatedItem.setRefitemkey(refkey);
+				relatedItem.setRelateitemid(version.getId());
+				relatedItem.setType(RelatedItemConstants.AFFECTED_VERSION);
+
+				relatedItemDAO.insert(relatedItem);
+			}
+		}
+
+		if (bug.getFixedVersions() != null) {
+			for (Version version : bug.getFixedVersions()) {
+				RelatedItem relatedItem = new RelatedItem();
+				relatedItem.setRefitemkey(refkey);
+				relatedItem.setRelateitemid(version.getId());
+				relatedItem.setType(RelatedItemConstants.FIXED_VERSION);
+				relatedItemDAO.insert(relatedItem);
+			}
+		}
+
+		if (bug.getComponents() != null) {
+			for (Component component : bug.getComponents()) {
+				RelatedItem relatedItem = new RelatedItem();
+				relatedItem.setRefitemkey(refkey);
+				relatedItem.setRelateitemid(component.getId());
+				relatedItem.setType(RelatedItemConstants.COMPONENT);
+				relatedItemDAO.insert(relatedItem);
+			}
+		}
+
+	}
+
+	@Override
+	public int saveBugExt(SimpleBug bug, String username) {
+		bug.setPosteddate(new GregorianCalendar().getTime());
+
+		// Force these fields are null to prevent client application eventually
+		// add them
+		bug.setUpdateddate(new GregorianCalendar().getTime());
+		bug.setResolveddate(null);
+
+		bugExtDAO.insertAndReturnKey(bug);
+		int bugid = bug.getId();
+		String refkey = "bug-" + bugid;
+		saveBugRelatedItems(bug, refkey);
+
+		changeLogService.saveChangeLog(bug.getProjectid(), username,
+				ChangeLogSource.DEFECT, bugid, ChangeLogAction.CREATE,
+				bug.getSummary());
+
+		// Send mail to all relate ones
+		// TODO: switch to schedule send email with Quartz
+		/*
+		 * new Thread(new Runnable() {
+		 * 
+		 * @Override public void run() { try { User user =
+		 * securityDelegate.findUserByUsername(bug .getAssignuser()); Email
+		 * email = new Email(); email.setFrom("noreply@esofthead.com");
+		 * email.setTo(new InternetAddress[] { new InternetAddress(
+		 * user.getEmail()) });
+		 * email.setSubject(String.format("[Bug %d] New %s", bugid,
+		 * bug.getSummary()));
+		 * 
+		 * Map parameters = new HashMap(); parameters.put("bugweblink",
+		 * "<TODO: insert bug web link here>"); parameters.put("summary",
+		 * bug.getSummary()); parameters.put("project", bug.getProjectname());
+		 * parameters.put("severity", bug.getSeverity());
+		 * parameters.put("priority", convertPriority(bug.getPriority()));
+		 * parameters.put("components", bug.getComponents());
+		 * parameters.put("versions", bug.getAffectedVersions());
+		 * parameters.put("assignedTo", bug.getAssignuser());
+		 * parameters.put("reportedBy", bug.getLogby());
+		 * parameters.put("description", bug.getDetail());
+		 * parameters.put("reason", "You are the assignee for the bug.");
+		 * 
+		 * mailSender.sendEmailWithTemplate(email,
+		 * "defect/create_new_defect.template", parameters); } catch (Exception
+		 * e) { log.error("Error while sending email", e); }
+		 * 
+		 * } }).start();
+		 */
+		return bugid;
+	}
+
+	private String convertPriority(int priority) {
+		String result = "";
+		if (priority == 1) {
+			result = "Blocker";
+		} else if (priority == 2) {
+			result = "Critical";
+		} else if (priority == 3) {
+			result = "Major";
+		} else if (priority == 4) {
+			result = "Minor";
+		} else if (priority == 5) {
+			result = "Cosmetic";
+		}
+
+		return result;
+	}
+
+	@Override
+	public SimpleBug getBugById(int bugid) {
+		SimpleBug bug = bugExtDAO.getBugById(bugid);
+
+		// get related versions
+		String refKey = "bug-" + bug.getId();
+		bug.setAffectedVersions(versionExtDAO
+				.getAffectedVersionsByRelatedRefKey(refKey));
+		bug.setFixedVersions(versionExtDAO
+				.getFixedVersionByRelatedRefKey(refKey));
+
+		// get related components
+		bug.setComponents(componentExtDAO.getComponentByRefKey(refKey));
+		return bug;
+	}
+
+	@Override
+	public List<GroupItem> getStatusSummary(BugSearchCriteria criteria) {
+		return bugExtDAO.getStatusSummary(criteria);
+	}
+
+	@Override
+	public List<GroupItem> getPrioritySummary(BugSearchCriteria criteria) {
+		return bugExtDAO.getPrioritySummary(criteria);
+	}
+
+	@Override
+	public List<GroupItem> getAssignedDefectsSummary(BugSearchCriteria criteria) {
+		return bugExtDAO.getAssignedDefectsSummary(criteria);
+	}
+
+	@Override
+	public List<GroupItem> getReporterDefectsSummary(BugSearchCriteria criteria) {
+		return bugExtDAO.getReporterDefectsSummary(criteria);
+	}
+
+	@Override
+	public List<GroupItem> getResolutionDefectsSummary(
+			BugSearchCriteria criteria) {
+		return bugExtDAO.getResolutionDefectsSummary(criteria);
+	}
+
+	@Override
+	public List<GroupItem> getComponentDefectsSummary(BugSearchCriteria criteria) {
+		return bugExtDAO.getComponentDefectsSummary(criteria);
+	}
+
+	@Override
+	public List<GroupItem> getVersionDefectsSummary(BugSearchCriteria criteria) {
+		return bugExtDAO.getVersionDefectsSummary(criteria);
+	}
+}

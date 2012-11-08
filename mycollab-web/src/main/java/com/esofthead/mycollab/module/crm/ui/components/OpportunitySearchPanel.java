@@ -101,20 +101,23 @@ public class OpportunitySearchPanel extends CustomComponent {
 			myItemCheckbox = new CheckBox("My Items");
 			UiUtils.addComponent(this, myItemCheckbox, Alignment.MIDDLE_CENTER);
 
-			this.addComponent(new Button("Search", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			this.addComponent(new Button("Search Opportunities",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					searchCriteria = new ContactSearchCriteria();
-					searchCriteria.setSaccountid(new NumberSearchField(
-							SearchField.AND, AppContext.getAccountId()));
-					searchCriteria.setContactName(new StringSearchField(
-							SearchField.AND, (String) nameField.getValue()));
-					eventBus.fireEvent(new OpportunityEvent.Search(
-							OpportunitySearchPanel.this, searchCriteria));
-				}
-			}));
+						@Override
+						public void buttonClick(ClickEvent event) {
+							searchCriteria = new ContactSearchCriteria();
+							searchCriteria.setSaccountid(new NumberSearchField(
+									SearchField.AND, AppContext.getAccountId()));
+							searchCriteria
+									.setContactName(new StringSearchField(
+											SearchField.AND, (String) nameField
+													.getValue()));
+							eventBus.fireEvent(new OpportunityEvent.Search(
+									OpportunitySearchPanel.this, searchCriteria));
+						}
+					}));
 
 			this.addComponent(new Button("Cancel", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;

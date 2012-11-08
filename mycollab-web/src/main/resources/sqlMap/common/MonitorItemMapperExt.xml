@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.esofthead.mycollab.module.monitor.dao.MonitorItemMapperExt">
+	<select id="getMailsOfWatchers" resultType="list"
+		parameterType="java.lang.String">
+        <![CDATA[
+        SELECT s_user.email
+        FROM m_monitor_item, s_user
+        WHERE m_monitor_item.itemid = #{itemid} AND m_monitor_item.user = s_user.username
+        ]]>
+	</select>
+</mapper>

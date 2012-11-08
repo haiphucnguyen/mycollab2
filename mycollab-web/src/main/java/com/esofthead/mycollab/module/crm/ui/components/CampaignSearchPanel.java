@@ -69,7 +69,7 @@ public class CampaignSearchPanel extends CustomComponent {
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search");
+		Label searchtitle = new Label("Search Campaigns");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 

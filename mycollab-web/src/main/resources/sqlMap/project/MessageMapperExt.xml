@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esofthead.mycollab.module.project.dao.MessageMapperExt">
+	<resultMap extends="com.esofthead.mycollab.module.project.dao.MessageMapper.BaseResultMap"
+		id="MessageResult" type="com.esofthead.mycollab.module.project.domain.SimpleMessage">
+		<result column="commentsCount" property="commentsCount"
+			jdbcType="INTEGER" />
+		<result column="messageCategoryName" property="messageCategoryName"
+			jdbcType="VARCHAR" />
+		<result column="fullPostedUserName" property="fullPostedUserName"
+			jdbcType="VARCHAR" />
+	</resultMap>
+
+	<resultMap type="com.esofthead.mycollab.common.domain.GroupItem"
+		id="GroupItemResult">
+		<result column="groupid" jdbcType="VARCHAR" property="groupid" />
+		<result column="groupname" jdbcType="VARCHAR" property="groupname" />
+		<result column="value" jdbcType="INTEGER" property="value" />
+	</resultMap>
+
+	<sql id="querySearchCriteria">
+		<if test="id != null">
+			${id.operation} m_prj_message.id = #{id.value,javaType=INTEGER}
+        </if>
+		<if test="projectid != null">
+			${projectid.operation} m_prj_message.projectid = #{projectid.value,javaType=INTEGER}
+        </if>
+		<if test="categoryid != null">
+			${categoryid.operation} m_prj_message.categoryid = #{categoryid.value,javaType=INTEGER}
+        </if>
+	</sql>
+	
+	<sql id="selectMessage">
+        <![CDATA[
+          SELECT m_prj_message.id, m_prj_message.categoryid, m_prj_message.title, m_prj_message.message,
+              m_prj_message.messagehtml, m_prj_message.posteddate, m_prj_message.posteduser, m_prj_message.projectid,
+              (SELECT COUNT(*) FROM m_comment WHERE m_comment.commentid=concat('project-message-', m_prj_message.id)) AS commentsCount,
+              m_prj_message_category.category AS messageCategoryName,
+              concat(s_user.firstname,  IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS fullPostedUserName
+              FROM m_prj_message
+                LEFT OUTER JOIN m_prj_message_category ON (m_prj_message.categoryid=m_prj_message_category.id)
+                LEFT OUTER JOIN s_user ON (m_prj_message.posteduser = s_user.username)
+        ]]>
+	</sql>
+
+	<select id="getTotalCount" resultType="int"
+		parameterType="MessageSearchCriteria">
+		SELECT count(*) as totalCount FROM m_prj_message
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.project.dao.MessageMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
+
+	<select id="findPagableList" resultMap="MessageResult"
+		parameterType="MessageSearchCriteria">
+		<include refid="com.esofthead.mycollab.module.project.dao.MessageMapperExt.selectMessage" />
+
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include refid="com.esofthead.mycollab.module.project.dao.MessageMapperExt.querySearchCriteria" />
+		</trim>
+
+		ORDER BY m_prj_message.posteddate DESC
+	</select>
+	
+	<insert id="saveMessageAndReturnId" parameterType="com.esofthead.mycollab.module.project.domain.Message"
+	   useGeneratedKeys="true" keyProperty="id">
+		insert into m_prj_message (id, categoryid, title, 
+            message, messagehtml, posteddate, 
+            posteduser, projectid)
+        values (#{id,jdbcType=INTEGER}, #{categoryid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+            #{message,jdbcType=VARCHAR}, #{messagehtml,jdbcType=VARCHAR}, #{posteddate,jdbcType=TIMESTAMP}, 
+            #{posteduser,jdbcType=VARCHAR}, #{projectid,jdbcType=INTEGER})
+	</insert>
+
+	<select id="getMessageCategoryGroup" resultMap="GroupItemResult"
+		parameterType="int">
+        <![CDATA[
+        SELECT m_prj_message_category.id AS groupid,
+            COUNT(m_prj_message.categoryid) AS value,
+            m_prj_message_category.category AS groupname
+        FROM m_prj_message, m_prj_message_category
+        WHERE m_prj_message.categoryid = m_prj_message_category.id AND m_prj_message.projectid = #{projectid,javaType=INTEGER}
+        GROUP BY m_prj_message_category.id
+        ]]>
+	</select>
+</mapper>

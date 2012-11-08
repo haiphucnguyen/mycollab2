@@ -1,4 +1,5 @@
 @import url(../chameleon-blue/styles.css);
+@import url("../melodion/melodion.css");
 
 .v-app {
 	background: #E1E1E1;

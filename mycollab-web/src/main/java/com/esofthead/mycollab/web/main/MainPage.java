@@ -5,6 +5,8 @@ import org.springframework.stereotype.Component;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.module.crm.ui.CrmHome;
+import com.esofthead.mycollab.module.project.ui.ProjectDashboardView;
+import com.esofthead.mycollab.module.user.ui.AccountView;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.web.AppContext;
@@ -62,11 +64,18 @@ public class MainPage extends AbstractView {
 
 		Button prjLink = new Button("Project Management",
 				new Button.ClickListener() {
-
 					@Override
 					public void buttonClick(ClickEvent event) {
-						// TODO Auto-generated method stub
+						serviceMenu.setPopupVisible(false);
+						ProjectDashboardView projectDashboard = AppContext.getView(ProjectDashboardView.class);
+						if (serviceComp != null) {
+							compContainer.removeComponent(serviceComp);
+						}
 
+						ComponentContainer createMainLayout = projectDashboard
+								.getCompContainer();
+						serviceComp = new CustomComponent(createMainLayout);
+						MainPage.this.compContainer.addComponent(serviceComp);
 					}
 				});
 		prjLink.setStyleName("link");
@@ -81,7 +90,22 @@ public class MainPage extends AbstractView {
 		VerticalLayout accLayout = new VerticalLayout();
 		accLayout.setWidth("120px");
 
-		Button myAccountBtn = new Button("My Account");
+		Button myAccountBtn = new Button("My Account", new Button.ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				serviceMenu.setPopupVisible(false);
+				AccountView accountView = AppContext.getView(AccountView.class);
+				if (serviceComp != null) {
+					compContainer.removeComponent(serviceComp);
+				}
+
+				ComponentContainer createMainLayout = accountView
+						.getCompContainer();
+				serviceComp = new CustomComponent(createMainLayout);
+				MainPage.this.compContainer.addComponent(serviceComp);
+			}
+		});
 		myAccountBtn.setStyleName("link");
 		accLayout.addComponent(myAccountBtn);
 
