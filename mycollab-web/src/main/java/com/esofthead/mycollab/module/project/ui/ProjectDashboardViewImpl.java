@@ -20,22 +20,15 @@ public class ProjectDashboardViewImpl extends AbstractView implements
 	@Override
 	protected ComponentContainer initMainLayout() {
 		HorizontalLayout hoLayout = new HorizontalLayout();
+		hoLayout.setHeight("100%");
+		hoLayout.setWidth("300px");
 		Melodion melodion = new Melodion();
-		melodion.setHeight("100%");
-		melodion.addListener(new LayoutEvents.LayoutClickListener() {
-
-			@Override
-			public void layoutClick(LayoutClickEvent event) {
-				System.out.println("aaa" + event.getChildComponent());
-			}
-		});
 
 		Tab myHome = melodion.addTab(new Label("My Home"));
 		myHome.addButton(new NativeButton("My Feeds"));
 		myHome.addButton(new NativeButton("My Projects"));
 		myHome.addButton(new NativeButton("My Tasks"));
 		myHome.addButton(new NativeButton("My Bugs"));
-		melodion.setSelected(myHome);
 
 		hoLayout.addComponent(melodion);
 		return hoLayout;
