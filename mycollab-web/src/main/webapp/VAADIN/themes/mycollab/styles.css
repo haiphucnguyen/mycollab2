@@ -1,7 +1,7 @@
 @import url(../chameleon-blue/styles.css);
 
 .v-app {
-	background: #FFF;
+	background: #E1E1E1;
 }
 
 .v-table-cell-wrapper {
@@ -16,19 +16,22 @@
 }
 .sidebar-menu {
 	height: 30px;
-	background: #FEFEFE;
-	background: -moz-linear-gradient(top,#FEFEFE 0,#F9F9F9 100%);
-	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#FEFEFE),color-stop(100%,#F9F9F9));
-	background: -webkit-linear-gradient(top,#FEFEFE 0,#F9F9F9 100%);
-	background: -o-linear-gradient(top,#FEFEFE 0,#F9F9F9 100%);
-	background: -ms-linear-gradient(top,#FEFEFE 0,#F9F9F9 100%);
-	background: linear-gradient(to bottom,#FEFEFE 0,#F9F9F9 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FEFEFE',endColorstr='#F9F9F9',GradientType=0);
-	border: 1px solid #D7D7D7;
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	-o-border-radius: 5px;
+	background: #F3F3F3;
+	background: -moz-linear-gradient(top,#F3F3F3 0,#C6C6C6 100%);
+	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#F3F3F3),color-stop(100%,#C6C6C6));
+	background: -webkit-linear-gradient(top,#F3F3F3 0,#C6C6C6 100%);
+	background: -o-linear-gradient(top,#F3F3F3 0,#C6C6C6 100%);
+	background: -ms-linear-gradient(top,#F3F3F3 0,#C6C6C6 100%);
+	background: linear-gradient(to bottom,#F3F3F3 0,#C6C6C6 100%);
+	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F3F3F3',endColorstr='#C6C6C6',GradientType=0);
+	border: 1px solid #8F8F8F;
+	border-radius: 3px;
+	-webkit-border-radius: 3px;
+	-moz-border-radius: 3px;
+	-o-border-radius: 3px;
+	box-shadow: 0px 1px 2px 1px #D2D2D2;
+	-webkit-box-shadow: 0px 1px 2px 1px #D2D2D2;
+	-moz-box-shadow: 0px 1px 2px 1px #D2D2D2;
 }
 
 .sidebar-menu .v-csslayout-container {
@@ -41,22 +44,32 @@
 	margin: 0px;
 }
 
+.sidebar-menu .v-csslayout-container .v-button, .sidebar-menu .v-csslayout-container .v-button .v-button-wrap {
+	border-radius: 0px;
+	box-shadow: initial;
+	-webkit-box-shadow: initial;
+	-moz-box-shadow: initial;
+}
+
 .sidebar-menu .v-csslayout-container .v-button-link .v-button-wrap, .sidebar-menu .v-csslayout-container .v-popupbutton .v-button-wrap, .sidebar-menu .v-csslayout-container .v-popupbutton:active .v-button-wrap {
 	margin-top: 7px;
     display: block;
     padding: 0px 30px;
-    border-right: 1px solid #E3E3E3;
+    border-right: 1px solid #8F8F8F;
     height: 16px;
 }
 
 .sidebar-menu .v-csslayout-container .v-button-link .v-button-caption {
-	text-decoration: none;
-	font-weight: bold;
-	font-size: 12px;
+	text-decoration: none;	
+	color: #5E5E5E;
+	text-shadow: #F0F0F0 0 1px 0;
 }
 
-.sidebar-menu .v-csslayout-container .v-button-link:hover, .sidebar-menu .v-csslayout-container .v-button-link:active, .sidebar-menu .v-csslayout-container .v-button-link.isSelected {
+.sidebar-menu .v-csslayout-container .v-button-link.isSelected .v-button-caption, .sidebar-menu .v-csslayout-container .v-button-link.isSelected .v-button-caption:hover {
 	color: #287ECE;
+}
+.sidebar-menu .v-csslayout-container .v-button-link .v-button-caption:hover {
+	color: #333;
 }
 
 /* Top Menu */
@@ -71,6 +84,14 @@
 	background: -ms-linear-gradient(top,#444 0,#222 100%);
 	background: linear-gradient(to bottom,#444 0,#222 100%);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444',endColorstr='#222222',GradientType=0);
+	box-shadow: 0px 0px 2px 2px #444;
+}
+
+#topNavigation .v-button, #topNavigation .v-button .v-button-wrap {
+	border-radius: 0px;
+	box-shadow: initial;
+	-webkit-box-shadow: initial;
+	-moz-box-shadow: initial;
 }
 
 .serviceMenuContainer {
@@ -121,7 +142,7 @@
 	float: left;
 	height: 40px;
 	width: 20px;
-	margin: 10px 18px 6px 34px;
+	margin: 0px 18px 0px 34px;
 	display: block;
 }
 
@@ -169,6 +190,37 @@
 }
 
 /* End Top Menu */
+
+/* Advanced Search Template */
+
+.advSearch {
+	background-color: #F3F3F3;
+	padding: 10px 20px;
+	margin: 10px 2px;
+	box-shadow: #BFBFBF 0px 1px 2px 1px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border: 1px solid #B7B7B7;
+}
+
+.advSearch .advSearchHeader .h2 {
+	font-size: 16px;
+	border-bottom: 1px solid #B7B7B7;
+}
+
+.advSearch .advSearchFooterContainer {
+	width: 100%;
+	padding: 20px 0px 5px;
+}
+
+.advSearch .advSearchFooterContainer .advSearchFooter div:first-child {
+	margin: 0px auto;
+	display: block;
+}
+
+/* End Advanced Search Template */
 
 /* CRM Service */
 
