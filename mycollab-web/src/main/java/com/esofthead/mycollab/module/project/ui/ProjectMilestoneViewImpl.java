@@ -7,8 +7,8 @@ import com.vaadin.ui.ComponentContainer;
 
 @SuppressWarnings("serial")
 @Component
-public class ProjectDashboardViewImpl extends AbstractView implements
-		ProjectDashboardView {
+public class ProjectMilestoneViewImpl extends AbstractView implements
+		ProjectMilestoneView {
 
 	@Override
 	protected ComponentContainer initMainLayout() {

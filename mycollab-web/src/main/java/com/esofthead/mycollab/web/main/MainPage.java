@@ -5,7 +5,7 @@ import org.springframework.stereotype.Component;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.module.crm.ui.CrmHome;
-import com.esofthead.mycollab.module.project.ui.ProjectDashboardView;
+import com.esofthead.mycollab.module.project.ui.UserDashboardView;
 import com.esofthead.mycollab.module.user.ui.AccountView;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.Hr;
@@ -67,7 +67,7 @@ public class MainPage extends AbstractView {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
-						ProjectDashboardView projectDashboard = AppContext.getView(ProjectDashboardView.class);
+						UserDashboardView projectDashboard = AppContext.getView(UserDashboardView.class);
 						if (serviceComp != null) {
 							compContainer.removeComponent(serviceComp);
 						}

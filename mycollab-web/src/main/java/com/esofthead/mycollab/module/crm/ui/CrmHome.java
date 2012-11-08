@@ -102,7 +102,7 @@ public class CrmHome extends AbstractView {
 		opportunityList.setStyleName("link");
 		toolbar.addComponent(opportunityList);
 
-		toolbar.setStyleName("sidebar-menu");
+		toolbar.setStyleName("h-sidebar-menu");
 
 		addBtn = new PopupButton("Add");
 		GridLayout addBtnLayout = new GridLayout(3, 2);
