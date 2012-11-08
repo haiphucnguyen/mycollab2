@@ -24,12 +24,14 @@ public class ProjectDashboardViewImpl extends AbstractView implements
 		hoLayout.setWidth("300px");
 		Melodion melodion = new Melodion();
 
-		Tab myHome = melodion.addTab(new Label("My Home"));
-		myHome.addButton(new NativeButton("My Feeds"));
-		myHome.addButton(new NativeButton("My Projects"));
-		myHome.addButton(new NativeButton("My Tasks"));
-		myHome.addButton(new NativeButton("My Bugs"));
+//		Tab myHome = melodion.addTab(new Label("My Home"));
+//		myHome.addButton(new NativeButton("My Feeds"));
+//		myHome.addButton(new NativeButton("My Projects"));
+//		myHome.addButton(new NativeButton("My Tasks"));
+//		myHome.addButton(new NativeButton("My Bugs"));
 
+		melodion.addTab(new Label("Admin"));
+		melodion.addTab(new Label("Admin1"));
 		hoLayout.addComponent(melodion);
 		return hoLayout;
 	}
