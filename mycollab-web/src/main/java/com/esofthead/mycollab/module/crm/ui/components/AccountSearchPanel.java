@@ -20,6 +20,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -56,10 +57,11 @@ public class AccountSearchPanel extends CustomComponent {
 	}
 
 	private void createAdvancedSearchLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.addComponent(createSearchTopPanel());
-		layout.addComponent(new AdvancedSearchLayout());
-		layout.setSpacing(true);
+		// VerticalLayout layout = new VerticalLayout();
+		// layout.addComponent(createSearchTopPanel());
+		// layout.addComponent(new AccountAdvancedSearchLayout());
+		// layout.setSpacing(true);
+		AccountAdvancedSearchLayout layout = new AccountAdvancedSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
@@ -90,8 +92,8 @@ public class AccountSearchPanel extends CustomComponent {
 	}
 
 	private class BasicSearchLayout extends HorizontalLayout {
-		private TextField nameField;
-		private CheckBox myItemCheckbox;
+		private final TextField nameField;
+		private final CheckBox myItemCheckbox;
 
 		public BasicSearchLayout() {
 			this.setSpacing(true);
@@ -139,7 +141,7 @@ public class AccountSearchPanel extends CustomComponent {
 		}
 	}
 
-	private class AdvancedSearchLayout extends VerticalLayout {
+	private class AccountAdvancedSearchLayout extends AdvancedSearchLayout {
 		private TextField nameField;
 		private TextField websiteField;
 		private TextField anyPhoneField;
@@ -150,9 +152,17 @@ public class AccountSearchPanel extends CustomComponent {
 		private AccountTypeListSelect typeField;
 		private UserListSelect userField;
 
-		public AdvancedSearchLayout() {
+		public AccountAdvancedSearchLayout() {
 			super();
-			this.setSpacing(true);
+		}
+
+		@Override
+		ComponentContainer constructHeader() {
+			return createSearchTopPanel();
+		}
+
+		@Override
+		ComponentContainer constructBody() {
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3);
 			nameField = (TextField) gridLayout.addComponent(new TextField(),
 					"Name", 0, 0);
@@ -184,7 +194,11 @@ public class AccountSearchPanel extends CustomComponent {
 			userField = (UserListSelect) gridLayout.addComponent(
 					AppContext.getSpringBean(UserListSelect.class),
 					"Assigned User", 2, 2);
+			return gridLayout.getLayout();
+		}
 
+		@Override
+		ComponentContainer constructFooter() {
 			HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
 			buttonControls.addComponent(new Button("Search",
@@ -228,9 +242,7 @@ public class AccountSearchPanel extends CustomComponent {
 			basicSearchBtn.setStyleName("link");
 			UiUtils.addComponent(buttonControls, basicSearchBtn,
 					Alignment.MIDDLE_CENTER);
-
-			this.addComponent(gridLayout.getLayout());
-			this.addComponent(buttonControls);
+			return buttonControls;
 		}
 	}
 

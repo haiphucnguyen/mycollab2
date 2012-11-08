@@ -2,174 +2,226 @@
 @import url("../melodion/melodion.css");
 
 .v-app {
-	background: #FFF;
+    background: #E1E1E1;
 }
 
 .v-table-cell-wrapper {
     white-space: normal;
 }
 .clear {
-	clear: both;
+    clear: both;
 }
 .v-button-link:focus .v-button-caption, .v-button-borderless:focus .v-button-caption {
-	border: none;
-	margin: 0px;
+    border: none;
+    margin: 0px;
 }
-.h-sidebar-menu {
-	height: 30px;
-	background: #FEFEFE;
-	background: -moz-linear-gradient(top,#FEFEFE 0,#F9F9F9 100%);
-	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#FEFEFE),color-stop(100%,#F9F9F9));
-	background: -webkit-linear-gradient(top,#FEFEFE 0,#F9F9F9 100%);
-	background: -o-linear-gradient(top,#FEFEFE 0,#F9F9F9 100%);
-	background: -ms-linear-gradient(top,#FEFEFE 0,#F9F9F9 100%);
-	background: linear-gradient(to bottom,#FEFEFE 0,#F9F9F9 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#FEFEFE',endColorstr='#F9F9F9',GradientType=0);
-	border: 1px solid #D7D7D7;
-	border-radius: 5px;
-	-webkit-border-radius: 5px;
-	-moz-border-radius: 5px;
-	-o-border-radius: 5px;
-}
-
-.h-sidebar-menu .v-csslayout-container {
-	height: 30px;
-}
-
-.h-sidebar-menu .v-csslayout-container .v-button-link {
-	color: #4D4D4D;
-	height: 30px;
-	margin: 0px;
+.sidebar-menu {
+    height: 30px;
+    background: #F3F3F3;
+    background: -moz-linear-gradient(top,#F3F3F3 0,#C6C6C6 100%);
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#F3F3F3),color-stop(100%,#C6C6C6));
+    background: -webkit-linear-gradient(top,#F3F3F3 0,#C6C6C6 100%);
+    background: -o-linear-gradient(top,#F3F3F3 0,#C6C6C6 100%);
+    background: -ms-linear-gradient(top,#F3F3F3 0,#C6C6C6 100%);
+    background: linear-gradient(to bottom,#F3F3F3 0,#C6C6C6 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F3F3F3',endColorstr='#C6C6C6',GradientType=0);
+    border: 1px solid #8F8F8F;
+    border-radius: 3px;
+    -webkit-border-radius: 3px;
+    -moz-border-radius: 3px;
+    -o-border-radius: 3px;
+    box-shadow: 0px 1px 2px 1px #D2D2D2;
+    -webkit-box-shadow: 0px 1px 2px 1px #D2D2D2;
+    -moz-box-shadow: 0px 1px 2px 1px #D2D2D2;
 }
 
-.h-sidebar-menu .v-csslayout-container .v-button-link .v-button-wrap, .h-sidebar-menu .v-csslayout-container .v-popupbutton .v-button-wrap, .h-sidebar-menu .v-csslayout-container .v-popupbutton:active .v-button-wrap {
-	margin-top: 7px;
+.sidebar-menu .v-csslayout-container {
+    height: 30px;
+}
+
+.sidebar-menu .v-csslayout-container .v-button-link {
+    color: #4D4D4D;
+    height: 30px;
+    margin: 0px;
+}
+
+.sidebar-menu .v-csslayout-container .v-button, .sidebar-menu .v-csslayout-container .v-button .v-button-wrap {
+    border-radius: 0px;
+    box-shadow: initial;
+    -webkit-box-shadow: initial;
+    -moz-box-shadow: initial;
+}
+
+.sidebar-menu .v-csslayout-container .v-button-link .v-button-wrap, .sidebar-menu .v-csslayout-container .v-popupbutton .v-button-wrap, .sidebar-menu .v-csslayout-container .v-popupbutton:active .v-button-wrap {
+    margin-top: 7px;
     display: block;
     padding: 0px 30px;
-    border-right: 1px solid #E3E3E3;
+    border-right: 1px solid #8F8F8F;
     height: 16px;
 }
 
-.h-sidebar-menu .v-csslayout-container .v-button-link .v-button-caption {
-	text-decoration: none;
-	font-weight: bold;
-	font-size: 12px;
+.sidebar-menu .v-csslayout-container .v-button-link .v-button-caption {
+    text-decoration: none;  
+    color: #5E5E5E;
+    text-shadow: #F0F0F0 0 1px 0;
 }
 
-.h-sidebar-menu .v-csslayout-container .v-button-link:hover, .h-sidebar-menu .v-csslayout-container .v-button-link:active, .h-sidebar-menu .v-csslayout-container .v-button-link.isSelected {
-	color: #287ECE;
+.sidebar-menu .v-csslayout-container .v-button-link.isSelected .v-button-caption, .sidebar-menu .v-csslayout-container .v-button-link.isSelected .v-button-caption:hover {
+    color: #287ECE;
+}
+.sidebar-menu .v-csslayout-container .v-button-link .v-button-caption:hover {
+    color: #333;
 }
 
 /* Top Menu */
 
 #topNavigation {
-	height: 40px;
-	background: #444;
-	background: -moz-linear-gradient(top,#444 0,#222 100%);
-	background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#444),color-stop(100%,#222));
-	background: -webkit-linear-gradient(top,#444 0,#222 100%);
-	background: -o-linear-gradient(top,#444 0,#222 100%);
-	background: -ms-linear-gradient(top,#444 0,#222 100%);
-	background: linear-gradient(to bottom,#444 0,#222 100%);
-	filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444',endColorstr='#222222',GradientType=0);
+    height: 40px;
+    background: #444;
+    background: -moz-linear-gradient(top,#444 0,#222 100%);
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#444),color-stop(100%,#222));
+    background: -webkit-linear-gradient(top,#444 0,#222 100%);
+    background: -o-linear-gradient(top,#444 0,#222 100%);
+    background: -ms-linear-gradient(top,#444 0,#222 100%);
+    background: linear-gradient(to bottom,#444 0,#222 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#444444',endColorstr='#222222',GradientType=0);
+    box-shadow: 0px 0px 2px 2px #444;
+}
+
+#topNavigation .v-button, #topNavigation .v-button .v-button-wrap {
+    border-radius: 0px;
+    box-shadow: initial;
+    -webkit-box-shadow: initial;
+    -moz-box-shadow: initial;
 }
 
 .serviceMenuContainer {
-	float: left;
+    float: left;
 }
 
 .serviceMenu {
-	float: left;
-	padding: 12px 14px 11px;
-	background: none !important;
-	border: none;
-	text-shadow: none;
+    float: left;
+    padding: 12px 14px 11px;
+    background: none !important;
+    border: none;
+    text-shadow: none;
 }
 
 .serviceMenu .v-button-wrap {
-	padding: 0px;
+    padding: 0px;
 }
 
 #topNavigation .serviceMenu .v-button-caption {
-	font-weight: bold;
-	font-size: 14px;
-	padding: 0 6px 0 3px;
+    font-weight: bold;
+    font-size: 14px;
+    padding: 0 6px 0 3px;
 }
 
 #topNavigation .v-button-wrap, #topNavigation .v-button:active .v-button-wrap {
-	border: none;
-	background: none;
-	padding: 0px;
+    border: none;
+    background: none;
+    padding: 0px;
 }
 
 #topNavigation .v-button-caption {
-	color: white;
-	text-decoration: none;
-	padding: 0 3px;
+    color: white;
+    text-decoration: none;
+    padding: 0 3px;
 }
 
 #topNavigation .navSeparator {
-	display: block;
-	float: left;
-	border-left: solid 1px #222;
-	border-right: solid 1px #444;
-	height: 20px;
-	width: 0;
-	margin: 10px 0;
+    display: block;
+    float: left;
+    border-left: solid 1px #222;
+    border-right: solid 1px #444;
+    height: 20px;
+    width: 0;
+    margin: 10px 0;
 }
 
 #mainLogo {
-	float: left;
-	height: 40px;
-	width: 20px;
-	margin: 10px 18px 6px 34px;
-	display: block;
+    float: left;
+    height: 40px;
+    width: 20px;
+    margin: 0px 18px 0px 34px;
+    display: block;
 }
 
 .accountMenuContainer {
-	float: right;
+    float: right;
 }
 
 #topNavigation .accountMenu {
-	float: right;
-	margin-right: 30px;
-	height: 40px;
-	display: block;
-	padding: 12px 12px 11px;
-	text-shadow: none;
-	background: none;
-	border: none;
+    float: right;
+    margin-right: 30px;
+    height: 40px;
+    display: block;
+    padding: 12px 12px 11px;
+    text-shadow: none;
+    background: none;
+    border: none;
 }
 
 .v-popupbutton-popup.v-popupbutton-popup-topNavPopup {
-	border: solid 1px #999;
-	border-top: 0px;
-	border-radius: 0px 0px 4px 4px;
-	-webkit-border-radius: 0px 0px 4px 4px;
-	-moz-border-radius: 0px 0px 4px 4px;
-	-o-border-radius: 0px 0px 4px 4px;
-	padding: 0px 15px;
+    border: solid 1px #999;
+    border-top: 0px;
+    border-radius: 0px 0px 4px 4px;
+    -webkit-border-radius: 0px 0px 4px 4px;
+    -moz-border-radius: 0px 0px 4px 4px;
+    -o-border-radius: 0px 0px 4px 4px;
+    padding: 0px 15px;
 }
 
 .v-popupbutton-popup-topNavPopup .link {
-	padding: 10px 0px;
+    padding: 10px 0px;
 }
 
 .v-popupbutton-popup-topNavPopup .link .v-button-caption {
-	text-decoration: none;
-	font-size: 14px;
-	color: black;
-	font-weight: normal;
+    text-decoration: none;
+    font-size: 14px;
+    color: black;
+    font-weight: normal;
 }
 
 .v-popupbutton-popup-topNavPopup .link .v-button-caption:hover {
-	color: #004B91;
+    color: #004B91;
 }
 .v-popupbutton-popup-serviceMenu .link .v-button-caption:hover {
-	font-weight: bold;
+    font-weight: bold;
 }
 
 /* End Top Menu */
+
+/* Advanced Search Template */
+
+.advSearch {
+    background-color: #F3F3F3;
+    padding: 10px 20px;
+    margin: 10px 2px;
+    box-shadow: #BFBFBF 0px 1px 2px 1px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 1px solid #B7B7B7;
+}
+
+.advSearch .advSearchHeader .h2 {
+    font-size: 16px;
+    border-bottom: 1px solid #B7B7B7;
+}
+
+.advSearch .advSearchFooterContainer {
+    width: 100%;
+    padding: 20px 0px 5px;
+}
+
+.advSearch .advSearchFooterContainer .advSearchFooter div:first-child {
+    margin: 0px auto;
+    display: block;
+}
+
+/* End Advanced Search Template */
 
 /* CRM Service */
 
@@ -182,10 +234,10 @@
 /* Login Form */
 
 .formView {
-	background: white;
-	width: 600px;
-	-moz-border-radius: 1em;
-	-webkit-border-radius: 1em;
+    background: white;
+    width: 600px;
+    -moz-border-radius: 1em;
+    -webkit-border-radius: 1em;
 }
 
 #header {
@@ -209,37 +261,37 @@
 }
 
 #loginForm .v-captionwrapper {
-	margin: 20px auto;
-	display: block;
-	width: 230px;
+    margin: 20px auto;
+    display: block;
+    width: 230px;
 }
 
 #loginForm .v-captionwrapper .v-caption {
-	margin-bottom: 5px;
+    margin-bottom: 5px;
 }
 
 #loginForm .v-captionwrapper .v-caption .v-captiontext {
-	font-size: 14px;
-	color: #777;
+    font-size: 14px;
+    color: #777;
 }
 
 #loginForm input.v-textfield {
-	width: 225px;
-	font-size: 14px;
-	background: #FBFBFB;
-	border-color: #BBB;
-	border-radius: 3px;
-	padding: .2em;
+    width: 225px;
+    font-size: 14px;
+    background: #FBFBFB;
+    border-color: #BBB;
+    border-radius: 3px;
+    padding: .2em;
 }
 
 #loginForm #submitLogin {
-	margin-right: 23px;
-	float: right;
-	margin-bottom: 20px;
+    margin-right: 23px;
+    float: right;
+    margin-bottom: 20px;
 }
 
 #loginFormContainer #newToUs {
-	float: left;
+    float: left;
     display: block;
     width: 100%;
     padding: 20px 0px;
@@ -247,24 +299,24 @@
 }
 
 #loginFormContainer #newToUs #signupLink .v-button {
-	background: none;
-	border: none;
-	float: right;
+    background: none;
+    border: none;
+    float: right;
 }
 
 #loginFormContainer #newToUs #signupLink span {
-	float: right;
+    float: right;
 }
 
 #loginFormContainer #newToUs #signupLink .v-button-wrap {
-	color: #287ECE;
-	background: none;
-	border: none;
-	padding: 0px;
+    color: #287ECE;
+    background: none;
+    border: none;
+    padding: 0px;
 }
 
 #loginFormContainer #newToUs #signupLink .v-button-wrap .v-button-caption {
-	text-decoration: underline;
+    text-decoration: underline;
 }
 
 /* End Login Form */
