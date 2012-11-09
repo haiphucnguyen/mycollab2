@@ -4,7 +4,7 @@ import org.springframework.context.annotation.Scope;
 
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.module.crm.data.DataTypeFactory;
+import com.esofthead.mycollab.module.crm.CrmDataTypeFactory;
 import com.esofthead.mycollab.vaadin.ui.ValueListSelect;
 
 @SuppressWarnings("serial")
@@ -12,6 +12,6 @@ import com.esofthead.mycollab.vaadin.ui.ValueListSelect;
 @Component
 public class CampaignTypeListSelect extends ValueListSelect {
 	public CampaignTypeListSelect() {
-		this.loadData(DataTypeFactory.getCampaignTypeList());
+		this.loadData(CrmDataTypeFactory.getCampaignTypeList());
 	}
 }

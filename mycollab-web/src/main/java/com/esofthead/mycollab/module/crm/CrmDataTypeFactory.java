@@ -1,6 +1,6 @@
-package com.esofthead.mycollab.module.crm.data;
+package com.esofthead.mycollab.module.crm;
 
-public class DataTypeFactory {
+public class CrmDataTypeFactory {
 	private static String[] ACCOUNT_INDUSTRY_LIST = new String[] { "Apparel",
 			"Banking", "Biotechnology", "Chemicals", "Communications",
 			"Construction", "Consulting", "Education", "Electronics", "Energy",

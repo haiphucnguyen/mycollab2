@@ -1,0 +1,1 @@
+ALTER TABLE `m_prj_project` CHANGE COLUMN `priority` `priority` VARCHAR(45) NULL DEFAULT NULL  ;

@@ -30,4 +30,8 @@
     <inherits name="org.vaadin.hene.splitbutton.widgetset.SplitButtonWidgetSet" />
 
     
+
+    <inherits name="org.vaadin.teemu.wizards.WizardsforvaadinWidgetset" />
+
+    <inherits name="com.github.wolfie.detachedtabs.widgetset.DetachedtabsWidgetset" />
 </module>

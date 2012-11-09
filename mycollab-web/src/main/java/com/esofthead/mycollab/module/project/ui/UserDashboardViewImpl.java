@@ -27,6 +27,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 		layout.addComponent(hLayout);
 		layout.setExpandRatio(hLayout, 1);
 		hLayout.setSplitPosition(200, Sizeable.UNITS_PIXELS);
+		hLayout.setLocked(true);
 		hLayout.setSizeFull();
 
 		VerticalLayout lContainer = new VerticalLayout();
