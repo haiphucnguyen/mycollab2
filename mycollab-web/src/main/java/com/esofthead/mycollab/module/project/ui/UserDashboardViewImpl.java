@@ -10,11 +10,10 @@ import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.NativeButton;
-import com.vaadin.ui.Panel;
+import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @Component
@@ -23,13 +22,15 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 	@Override
 	protected ComponentContainer initMainLayout() {
+		VerticalLayout layout = new VerticalLayout();
 		final HorizontalSplitPanel hLayout = new HorizontalSplitPanel();
+		layout.addComponent(hLayout);
+		layout.setExpandRatio(hLayout, 1);
 		hLayout.setSplitPosition(200, Sizeable.UNITS_PIXELS);
 		hLayout.setSizeFull();
 
-		Panel lContainer = new Panel();
+		VerticalLayout lContainer = new VerticalLayout();
 		Melodion melodion = new Melodion();
-		melodion.setSizeUndefined();
 
 		Tab dashboardTab = melodion.addTab(new Label("Dashboard"));
 		melodion.setSelected(dashboardTab);
@@ -62,9 +63,9 @@ public class UserDashboardViewImpl extends AbstractView implements
 		mySpaceTab.addButton(new NativeButton("My Defects"));
 
 		melodion.addTab(new Label("Calendar"));
-		melodion.setSizeFull();
 		lContainer.addComponent(melodion);
-		lContainer.setHeight(null);
+
+		lContainer.setExpandRatio(melodion, 1);
 
 		hLayout.setFirstComponent(lContainer);
 		return hLayout;

@@ -6,7 +6,6 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.module.crm.ui.CrmContainer;
 import com.esofthead.mycollab.module.project.ui.ProjectContainer;
-import com.esofthead.mycollab.module.project.ui.UserDashboardView;
 import com.esofthead.mycollab.module.user.ui.AccountView;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.Hr;
