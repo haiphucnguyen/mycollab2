@@ -15,7 +15,7 @@
     border: none;
     margin: 0px;
 }
-.sidebar-menu {
+.h-sidebar-menu {
     height: 30px;
     background: #F3F3F3;
     background: -moz-linear-gradient(top,#F3F3F3 0,#C6C6C6 100%);
@@ -35,24 +35,24 @@
     -moz-box-shadow: 0px 1px 2px 1px #D2D2D2;
 }
 
-.sidebar-menu .v-csslayout-container {
+.h-sidebar-menu .v-csslayout-container {
     height: 30px;
 }
 
-.sidebar-menu .v-csslayout-container .v-button-link {
+.h-sidebar-menu .v-csslayout-container .v-button-link {
     color: #4D4D4D;
     height: 30px;
     margin: 0px;
 }
 
-.sidebar-menu .v-csslayout-container .v-button, .sidebar-menu .v-csslayout-container .v-button .v-button-wrap {
+.h-sidebar-menu .v-csslayout-container .v-button, .h-sidebar-menu .v-csslayout-container .v-button .v-button-wrap {
     border-radius: 0px;
     box-shadow: initial;
     -webkit-box-shadow: initial;
     -moz-box-shadow: initial;
 }
 
-.sidebar-menu .v-csslayout-container .v-button-link .v-button-wrap, .sidebar-menu .v-csslayout-container .v-popupbutton .v-button-wrap, .sidebar-menu .v-csslayout-container .v-popupbutton:active .v-button-wrap {
+.h-sidebar-menu .v-csslayout-container .v-button-link .v-button-wrap, .h-sidebar-menu .v-csslayout-container .v-popupbutton .v-button-wrap, .h-sidebar-menu .v-csslayout-container .v-popupbutton:active .v-button-wrap {
     margin-top: 7px;
     display: block;
     padding: 0px 30px;
@@ -60,16 +60,16 @@
     height: 16px;
 }
 
-.sidebar-menu .v-csslayout-container .v-button-link .v-button-caption {
+.h-sidebar-menu .v-csslayout-container .v-button-link .v-button-caption {
     text-decoration: none;  
     color: #5E5E5E;
     text-shadow: #F0F0F0 0 1px 0;
 }
 
-.sidebar-menu .v-csslayout-container .v-button-link.isSelected .v-button-caption, .sidebar-menu .v-csslayout-container .v-button-link.isSelected .v-button-caption:hover {
+.h-sidebar-menu .v-csslayout-container .v-button-link.isSelected .v-button-caption, .h-sidebar-menu .v-csslayout-container .v-button-link.isSelected .v-button-caption:hover {
     color: #287ECE;
 }
-.sidebar-menu .v-csslayout-container .v-button-link .v-button-caption:hover {
+.h-sidebar-menu .v-csslayout-container .v-button-link .v-button-caption:hover {
     color: #333;
 }
 

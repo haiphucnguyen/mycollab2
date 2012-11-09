@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.ui;
+package com.esofthead.mycollab.module.crm.ui;
 
 import org.springframework.stereotype.Component;
 
@@ -9,12 +9,12 @@ import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @Component
-public class MyProjectsViewImpl extends AbstractView implements MyProjectsView{
+public class CrmHomeViewImpl extends AbstractView implements CrmHomeView{
 
 	@Override
 	protected ComponentContainer initMainLayout() {
 		VerticalLayout layout = new VerticalLayout();
-		layout.addComponent(new Label("My Projects"));
+		layout.addComponent(new Label("Home"));
 		return layout;
 	}
 

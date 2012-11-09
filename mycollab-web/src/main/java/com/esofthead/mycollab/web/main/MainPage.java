@@ -4,7 +4,8 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vaadin.hene.popupbutton.PopupButton;
 
-import com.esofthead.mycollab.module.crm.ui.CrmHome;
+import com.esofthead.mycollab.module.crm.ui.CrmContainer;
+import com.esofthead.mycollab.module.project.ui.ProjectContainer;
 import com.esofthead.mycollab.module.project.ui.UserDashboardView;
 import com.esofthead.mycollab.module.user.ui.AccountView;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
@@ -48,12 +49,12 @@ public class MainPage extends AbstractView {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
-						CrmHome crmHome = AppContext.getView(CrmHome.class);
+						CrmContainer crmContainer = AppContext.getView(CrmContainer.class);
 						if (serviceComp != null) {
 							compContainer.removeComponent(serviceComp);
 						}
 
-						ComponentContainer createMainLayout = crmHome
+						ComponentContainer createMainLayout = crmContainer
 								.getCompContainer();
 						serviceComp = new CustomComponent(createMainLayout);
 						MainPage.this.compContainer.addComponent(serviceComp);
@@ -67,7 +68,7 @@ public class MainPage extends AbstractView {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
-						UserDashboardView projectDashboard = AppContext.getView(UserDashboardView.class);
+						ProjectContainer projectDashboard = AppContext.getView(ProjectContainer.class);
 						if (serviceComp != null) {
 							compContainer.removeComponent(serviceComp);
 						}

@@ -16,12 +16,14 @@ import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.events.CrmEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
@@ -33,7 +35,7 @@ import com.vaadin.ui.themes.BaseTheme;
 
 @Scope("prototype")
 @Component
-public class CrmHome extends AbstractView {
+public class CrmContainer extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
 	private static String ACCOUNT_LIST = "Accounts";
@@ -64,6 +66,7 @@ public class CrmHome extends AbstractView {
 
 	@PostConstruct
 	private void init() {
+		registerCommonListeners();
 		registerAccountListeners();
 		registerCampaignListeners();
 		registerContactListeners();
@@ -74,13 +77,17 @@ public class CrmHome extends AbstractView {
 	@Override
 	protected ComponentContainer initMainLayout() {
 		CustomLayout container = new CustomLayout("crmContainer");
-		// container.setSpacing(true);
-		// container.setMargin(false);
+
 		container.setWidth("100%");
 		NavigatorItemListener listener = new NavigatorItemListener();
 
 		toolbar = new CssLayout();
 		toolbar.setWidth("100%");
+
+		Button homeBtn = new Button(null, listener);
+		homeBtn.setStyleName("link");
+		homeBtn.setIcon(new ThemeResource("icons/16/home.png"));
+		toolbar.addComponent(homeBtn);
 
 		Button accountList = new Button(ACCOUNT_LIST, listener);
 		accountList.setStyleName("link");
@@ -137,7 +144,24 @@ public class CrmHome extends AbstractView {
 
 		currentView = new VerticalLayout();
 		container.addComponent(currentView, "currentView");
+		eventBus.fireEvent(new CrmEvent.GotoHome(this, null));
 		return container;
+	}
+	
+	private void registerCommonListeners() {
+		eventBus.addListener(new ApplicationEventListener<CrmEvent.GotoHome>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return CrmEvent.GotoHome.class;
+			}
+
+			@Override
+			public void handle(CrmEvent.GotoHome event) {
+				CrmHomeViewImpl view = AppContext.getView(CrmHomeViewImpl.class);
+				addView(view);
+			}
+		});
 	}
 
 	@SuppressWarnings("serial")
@@ -541,7 +565,9 @@ public class CrmHome extends AbstractView {
 		public void buttonClick(ClickEvent event) {
 			String caption = event.getButton().getCaption();
 
-			if (NEW_ACCOUNT_ITEM.equals(caption)) {
+			if (caption == null) {
+				eventBus.fireEvent(new CrmEvent.GotoHome(this, null));
+			} else if (NEW_ACCOUNT_ITEM.equals(caption)) {
 				eventBus.fireEvent(new AccountEvent.GotoAdd(this, null));
 			} else if (ACCOUNT_LIST.equals(caption)) {
 				eventBus.fireEvent(new AccountEvent.GotoList(this, null));
