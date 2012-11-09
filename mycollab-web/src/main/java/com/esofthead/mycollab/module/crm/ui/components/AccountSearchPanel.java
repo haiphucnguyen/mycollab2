@@ -25,7 +25,6 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
@@ -49,18 +48,11 @@ public class AccountSearchPanel extends CustomComponent {
 	}
 
 	private void createBasicSearchLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.addComponent(createSearchTopPanel());
-		layout.addComponent(new BasicSearchLayout());
-		layout.setSpacing(true);
+		AccountBasicSearchLayout layout = new AccountBasicSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
 	private void createAdvancedSearchLayout() {
-		// VerticalLayout layout = new VerticalLayout();
-		// layout.addComponent(createSearchTopPanel());
-		// layout.addComponent(new AccountAdvancedSearchLayout());
-		// layout.setSpacing(true);
 		AccountAdvancedSearchLayout layout = new AccountAdvancedSearchLayout();
 		this.setCompositionRoot(layout);
 	}
@@ -91,18 +83,31 @@ public class AccountSearchPanel extends CustomComponent {
 		return layout;
 	}
 
-	private class BasicSearchLayout extends HorizontalLayout {
-		private final TextField nameField;
-		private final CheckBox myItemCheckbox;
+	private class AccountBasicSearchLayout extends BasicSearchLayout {
+		private TextField nameField;
+		private CheckBox myItemCheckbox;
 
-		public BasicSearchLayout() {
-			this.setSpacing(true);
-			this.addComponent(new Label("Name"));
+		public AccountBasicSearchLayout() {
+			super();
+		}
+
+		@Override
+		public ComponentContainer constructHeader() {
+			return createSearchTopPanel();
+		}
+
+		@Override
+		public ComponentContainer constructBody() {
+			HorizontalLayout basicSearchBody = new HorizontalLayout();
+			basicSearchBody.setSpacing(true);
+			basicSearchBody.addComponent(new Label("Name"));
 			nameField = new TextField();
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(this, nameField, Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(basicSearchBody, nameField,
+					Alignment.MIDDLE_CENTER);
 			myItemCheckbox = new CheckBox("My Items");
-			UiUtils.addComponent(this, myItemCheckbox, Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
+					Alignment.MIDDLE_CENTER);
 
 			this.addComponent(new Button("Search", new Button.ClickListener() {
 
@@ -118,13 +123,14 @@ public class AccountSearchPanel extends CustomComponent {
 				}
 			}));
 
-			this.addComponent(new Button("Cancel", new Button.ClickListener() {
+			basicSearchBody.addComponent(new Button("Cancel",
+					new Button.ClickListener() {
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					nameField.setValue("");
-				}
-			}));
+						@Override
+						public void buttonClick(ClickEvent event) {
+							nameField.setValue("");
+						}
+					}));
 
 			Button advancedSearchBtn = new Button("Advanced Search",
 					new Button.ClickListener() {
@@ -136,8 +142,9 @@ public class AccountSearchPanel extends CustomComponent {
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
-			UiUtils.addComponent(this, advancedSearchBtn,
+			UiUtils.addComponent(basicSearchBody, advancedSearchBtn,
 					Alignment.MIDDLE_CENTER);
+			return basicSearchBody;
 		}
 	}
 

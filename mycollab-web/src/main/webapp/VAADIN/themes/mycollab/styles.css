@@ -223,6 +223,36 @@
 
 /* End Advanced Search Template */
 
+/* Advanced Search Template */
+
+.basicSearch {
+    background-color: #F3F3F3;
+    padding: 10px 20px;
+    margin: 10px 2px;
+    box-shadow: #BFBFBF 0px 1px 2px 1px;
+    border-top-left-radius: 5px;
+    border-top-right-radius: 5px;
+    border-bottom-right-radius: 5px;
+    border-bottom-left-radius: 5px;
+    border: 1px solid #B7B7B7;
+}
+
+.basicSearch .basicSearchHeader {
+	margin-bottom: 10px;
+}
+
+.basicSearch .basicSearchHeader .h2 {
+    font-size: 16px;
+    border-bottom: 1px solid #B7B7B7;
+    padding-top: 0px;
+}
+
+.basicSearch .basicSearchBody .v-label {
+	line-height: 1.8em;
+}
+
+/* End Advanced Search Template */
+
 /* CRM Service */
 
 .crmContainer {

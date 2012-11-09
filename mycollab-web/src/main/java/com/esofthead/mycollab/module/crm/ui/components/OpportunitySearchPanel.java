@@ -20,11 +20,11 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
@@ -43,18 +43,12 @@ public class OpportunitySearchPanel extends CustomComponent {
 	}
 
 	private void createBasicSearchLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
-		layout.addComponent(createSearchTopPanel());
-		layout.addComponent(new BasicSearchLayout());
+		OpportunityBasicSearchLayout layout = new OpportunityBasicSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
 	private void createAdvancedSearchLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.addComponent(createSearchTopPanel());
-		layout.addComponent(new AdvancedSearchLayout());
-		layout.setSpacing(true);
+		OpportunityAdvancedSearchLayout layout = new OpportunityAdvancedSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
@@ -86,22 +80,34 @@ public class OpportunitySearchPanel extends CustomComponent {
 		return layout;
 	}
 
-	private class BasicSearchLayout extends HorizontalLayout {
+	private class OpportunityBasicSearchLayout extends BasicSearchLayout {
 		private static final long serialVersionUID = 1L;
 
 		private TextField nameField;
 		private CheckBox myItemCheckbox;
 
-		public BasicSearchLayout() {
-			this.setSpacing(true);
-			this.addComponent(new Label("Name"));
+		public OpportunityBasicSearchLayout() {
+			super();
+		}
+
+		@Override
+		public ComponentContainer constructHeader() {
+			return createSearchTopPanel();
+		}
+
+		@Override
+		public ComponentContainer constructBody() {
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.setSpacing(true);
+			layout.addComponent(new Label("Name"));
 			nameField = new TextField();
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(this, nameField, Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(layout, nameField, Alignment.MIDDLE_CENTER);
 			myItemCheckbox = new CheckBox("My Items");
-			UiUtils.addComponent(this, myItemCheckbox, Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(layout, myItemCheckbox,
+					Alignment.MIDDLE_CENTER);
 
-			this.addComponent(new Button("Search Opportunities",
+			layout.addComponent(new Button("Search Opportunities",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -119,14 +125,15 @@ public class OpportunitySearchPanel extends CustomComponent {
 						}
 					}));
 
-			this.addComponent(new Button("Cancel", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			layout.addComponent(new Button("Cancel",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					nameField.setValue("");
-				}
-			}));
+						@Override
+						public void buttonClick(ClickEvent event) {
+							nameField.setValue("");
+						}
+					}));
 
 			Button advancedSearchBtn = new Button("Advanced Search",
 					new Button.ClickListener() {
@@ -139,12 +146,13 @@ public class OpportunitySearchPanel extends CustomComponent {
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
-			UiUtils.addComponent(this, advancedSearchBtn,
+			UiUtils.addComponent(layout, advancedSearchBtn,
 					Alignment.MIDDLE_CENTER);
+			return layout;
 		}
 	}
 
-	private class AdvancedSearchLayout extends VerticalLayout {
+	private class OpportunityAdvancedSearchLayout extends AdvancedSearchLayout {
 		private static final long serialVersionUID = 1L;
 
 		private TextField opportunityNameField;
@@ -154,9 +162,17 @@ public class OpportunitySearchPanel extends CustomComponent {
 		private SalesStageListSelect stageField;
 		private LeadSourceListSelect sourceField;
 
-		public AdvancedSearchLayout() {
+		public OpportunityAdvancedSearchLayout() {
 			super();
-			this.setSpacing(true);
+		}
+
+		@Override
+		ComponentContainer constructHeader() {
+			return createSearchTopPanel();
+		}
+
+		@Override
+		ComponentContainer constructBody() {
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 2);
 
 			opportunityNameField = (TextField) gridLayout.addComponent(
@@ -177,8 +193,11 @@ public class OpportunitySearchPanel extends CustomComponent {
 					AppContext.getSpringBean(LeadSourceListSelect.class),
 					"Lead Source", 2, 1);
 
-			this.addComponent(gridLayout.getLayout());
+			return gridLayout.getLayout();
+		}
 
+		@Override
+		ComponentContainer constructFooter() {
 			HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
 			buttonControls.addComponent(new Button("Search",
@@ -219,7 +238,8 @@ public class OpportunitySearchPanel extends CustomComponent {
 			basicSearchBtn.setStyleName("link");
 			UiUtils.addComponent(buttonControls, basicSearchBtn,
 					Alignment.MIDDLE_CENTER);
-			this.addComponent(buttonControls);
+
+			return buttonControls;
 		}
 	}
 }

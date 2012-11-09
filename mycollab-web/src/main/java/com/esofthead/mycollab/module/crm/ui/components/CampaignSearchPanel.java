@@ -20,12 +20,12 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
@@ -49,18 +49,12 @@ public class CampaignSearchPanel extends CustomComponent {
 	}
 
 	private void createBasicSearchLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.addComponent(createSearchTopPanel());
-		layout.addComponent(new BasicSearchLayout());
-		layout.setSpacing(true);
+		CampaignBasicSearchLayout layout = new CampaignBasicSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
 	private void createAdvancedSearchLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.addComponent(createSearchTopPanel());
-		layout.addComponent(new AdvancedSearchLayout());
-		layout.setSpacing(true);
+		CampaignAdvancedSearchLayout layout = new CampaignAdvancedSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
@@ -90,18 +84,30 @@ public class CampaignSearchPanel extends CustomComponent {
 		return layout;
 	}
 
-	private class BasicSearchLayout extends HorizontalLayout {
+	private class CampaignBasicSearchLayout extends BasicSearchLayout {
 		private TextField nameField;
 		private CheckBox myItemCheckbox;
 
-		public BasicSearchLayout() {
-			this.setSpacing(true);
-			this.addComponent(new Label("Name"));
+		public CampaignBasicSearchLayout() {
+			super();
+		}
+
+		@Override
+		public ComponentContainer constructHeader() {
+			return createSearchTopPanel();
+		}
+
+		@Override
+		public ComponentContainer constructBody() {
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.setSpacing(true);
+			layout.addComponent(new Label("Name"));
 			nameField = new TextField();
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(this, nameField, Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(layout, nameField, Alignment.MIDDLE_CENTER);
 			myItemCheckbox = new CheckBox("My Items");
-			UiUtils.addComponent(this, myItemCheckbox, Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(layout, myItemCheckbox,
+					Alignment.MIDDLE_CENTER);
 
 			this.addComponent(new Button("Search", new Button.ClickListener() {
 
@@ -117,13 +123,14 @@ public class CampaignSearchPanel extends CustomComponent {
 				}
 			}));
 
-			this.addComponent(new Button("Cancel", new Button.ClickListener() {
+			layout.addComponent(new Button("Cancel",
+					new Button.ClickListener() {
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					nameField.setValue("");
-				}
-			}));
+						@Override
+						public void buttonClick(ClickEvent event) {
+							nameField.setValue("");
+						}
+					}));
 
 			Button advancedSearchBtn = new Button("Advanced Search",
 					new Button.ClickListener() {
@@ -135,12 +142,13 @@ public class CampaignSearchPanel extends CustomComponent {
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
-			UiUtils.addComponent(this, advancedSearchBtn,
+			UiUtils.addComponent(layout, advancedSearchBtn,
 					Alignment.MIDDLE_CENTER);
+			return layout;
 		}
 	}
 
-	private class AdvancedSearchLayout extends VerticalLayout {
+	private class CampaignAdvancedSearchLayout extends AdvancedSearchLayout {
 
 		private TextField nameField;
 		private DateField startDateField;
@@ -149,9 +157,17 @@ public class CampaignSearchPanel extends CustomComponent {
 		private CampaignStatusListSelect statusField;
 		private UserListSelect assignUserField;
 
-		public AdvancedSearchLayout() {
+		public CampaignAdvancedSearchLayout() {
 			super();
-			this.setSpacing(true);
+		}
+
+		@Override
+		ComponentContainer constructHeader() {
+			return createSearchTopPanel();
+		}
+
+		@Override
+		ComponentContainer constructBody() {
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3);
 
 			nameField = (TextField) gridLayout.addComponent(new TextField(),
@@ -159,7 +175,7 @@ public class CampaignSearchPanel extends CustomComponent {
 			startDateField = (DateField) gridLayout.addComponent(
 					new DateField(), "Start Date", 1, 0);
 			startDateField.setDateFormat("yyyy-MM-dd");
-			
+
 			endDateField = (DateField) gridLayout.addComponent(new DateField(),
 					"End Date", 2, 0);
 			endDateField.setDateFormat("yyyy-MM-dd");
@@ -173,7 +189,11 @@ public class CampaignSearchPanel extends CustomComponent {
 			assignUserField = (UserListSelect) gridLayout.addComponent(
 					AppContext.getSpringBean(UserListSelect.class),
 					"Assign User", 2, 1);
+			return gridLayout.getLayout();
+		}
 
+		@Override
+		ComponentContainer constructFooter() {
 			HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
 			buttonControls.addComponent(new Button("Search",
@@ -213,9 +233,7 @@ public class CampaignSearchPanel extends CustomComponent {
 			basicSearchBtn.setStyleName("link");
 			UiUtils.addComponent(buttonControls, basicSearchBtn,
 					Alignment.MIDDLE_CENTER);
-
-			this.addComponent(gridLayout.getLayout());
-			this.addComponent(buttonControls);
+			return buttonControls;
 		}
 	}
 }
