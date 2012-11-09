@@ -60,7 +60,18 @@ public class UserDashboardViewImpl extends AbstractView implements
 								.getCompContainer());
 					}
 				}));
-		mySpaceTab.addButton(new NativeButton("My Defects"));
+		mySpaceTab.addButton(new NativeButton("My Defects",
+				new Button.ClickListener() {
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						MyDefectsViewImpl myDefects = AppContext
+								.getView(MyDefectsViewImpl.class);
+						hLayout.setSecondComponent((com.vaadin.ui.Component) myDefects
+								.getCompContainer());
+
+					}
+				}));
 
 		melodion.addTab(new Label("Calendar"));
 		lContainer.addComponent(melodion);
