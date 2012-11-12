@@ -19,6 +19,11 @@ import com.vaadin.ui.VerticalLayout;
 @Component
 public class UserDashboardViewImpl extends AbstractView implements
 		UserDashboardView {
+	private Melodion melodion;
+	private NativeButton myFeedsBtn;
+	private NativeButton myProjectsBtn;
+	private NativeButton myTasksBtn;
+	private NativeButton myDefectsBtn;
 
 	@Override
 	protected ComponentContainer initMainLayout() {
@@ -31,14 +36,17 @@ public class UserDashboardViewImpl extends AbstractView implements
 		hLayout.setSizeFull();
 
 		VerticalLayout lContainer = new VerticalLayout();
-		Melodion melodion = new Melodion();
+		melodion = new Melodion();
 
 		Tab dashboardTab = melodion.addTab(new Label("Dashboard"));
 		melodion.setSelected(dashboardTab);
 
 		Tab mySpaceTab = melodion.addTab(new Label("My Home"));
-		mySpaceTab.addButton(new NativeButton("My Feeds"));
-		mySpaceTab.addButton(new NativeButton("My Projects",
+
+		myFeedsBtn = new NativeButton("My Feeds");
+		mySpaceTab.addButton(myFeedsBtn);
+
+		myProjectsBtn = new NativeButton("My Projects",
 				new Button.ClickListener() {
 
 					@Override
@@ -47,21 +55,24 @@ public class UserDashboardViewImpl extends AbstractView implements
 								.getView(MyProjectsViewImpl.class);
 						hLayout.setSecondComponent((com.vaadin.ui.Component) myProject
 								.getCompContainer());
+						myProject.doDefaultSearch();
 					}
-				}));
+				});
+		mySpaceTab.addButton(myProjectsBtn);
 
-		mySpaceTab.addButton(new NativeButton("My Tasks",
-				new Button.ClickListener() {
+		myTasksBtn = new NativeButton("My Tasks", new Button.ClickListener() {
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						MyTasksViewImpl myTasks = AppContext
-								.getView(MyTasksViewImpl.class);
-						hLayout.setSecondComponent((com.vaadin.ui.Component) myTasks
-								.getCompContainer());
-					}
-				}));
-		mySpaceTab.addButton(new NativeButton("My Defects",
+			@Override
+			public void buttonClick(ClickEvent event) {
+				MyTasksViewImpl myTasks = AppContext
+						.getView(MyTasksViewImpl.class);
+				hLayout.setSecondComponent((com.vaadin.ui.Component) myTasks
+						.getCompContainer());
+			}
+		});
+		mySpaceTab.addButton(myTasksBtn);
+
+		myDefectsBtn = new NativeButton("My Defects",
 				new Button.ClickListener() {
 
 					@Override
@@ -72,7 +83,8 @@ public class UserDashboardViewImpl extends AbstractView implements
 								.getCompContainer());
 
 					}
-				}));
+				});
+		mySpaceTab.addButton(myDefectsBtn);
 
 		melodion.addTab(new Label("Calendar"));
 		lContainer.addComponent(melodion);
@@ -81,6 +93,12 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 		hLayout.setFirstComponent(lContainer);
 		return hLayout;
+	}
+
+	@Override
+	public void gotoMyProjectList() {
+		melodion.setSelected(myProjectsBtn);
+
 	}
 
 }

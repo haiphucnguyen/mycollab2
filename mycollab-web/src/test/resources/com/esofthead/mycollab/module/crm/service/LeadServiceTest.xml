@@ -20,9 +20,7 @@
 		active="true" accountId="1" />
 	<m_hr_employee id="1" code="1234" username="linh"
 		sAccountId="1" />
-	<m_crm_campaign_status id="1" name="abc" />
-	<m_crm_campaign_type id="1" name="abc" />
-	<m_crm_campaign id="1" type="1" status="1"
+	<m_crm_campaign id="1" type="type" status="status"
 		assignUser="linh" campaignName="ABC" sAccountId="1" />
 	<m_crm_lead id="1" firstname="Nguyen" lastname="Hai"
 		assignUser="linh" accountName="ABC" campaignId="1" referredBy="xyz"

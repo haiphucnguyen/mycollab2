@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.ui;
 
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.ui.components.ProjectAddWindow;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.vaadin.ui.Alignment;
@@ -22,6 +23,18 @@ public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
 		MyProjectLayout layout = new MyProjectLayout();
 		layout.addComponent(new Label("My Projects"));
 		return layout;
+	}
+	
+	@Override
+	public void doDefaultSearch() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void doSearch(ProjectSearchCriteria searchCriteria) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private class MyProjectLayout extends MyTemplateViewLayout {
@@ -61,5 +74,4 @@ public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
 		}
 
 	}
-
 }
