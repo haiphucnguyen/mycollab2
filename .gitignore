@@ -5,6 +5,7 @@ mycollab-web/.settings
 mycollab-web/.classpath
 mycollab-web/.project
 mycollab-web/.springBeans
+mycollab-web/src/main/resources/resources.properties:
 mycollab-core/bin
 mycollab-core/target
 mycollab-core/.classpath
