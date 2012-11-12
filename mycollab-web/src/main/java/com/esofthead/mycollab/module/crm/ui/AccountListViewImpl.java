@@ -99,21 +99,22 @@ public class AccountListViewImpl extends AbstractView implements
 
 		System.out.println("View: " + container.getQueryView().size());
 
-		tableItem.setColumnWidth("accountname", 250);
+		tableItem.setColumnWidth("accountname", 207);
 
-		tableItem.setColumnWidth("city", 150);
+		tableItem.setColumnWidth("city", 137);
 
-		tableItem.setColumnWidth("billingCountry", 150);
+		tableItem.setColumnWidth("billingCountry", 137);
 
-		tableItem.setColumnWidth("email", 150);
+		tableItem.setColumnWidth("email", 137);
 
-		tableItem.setColumnWidth("assignuser", 150);
+		tableItem.setColumnWidth("assignuser", 136);
 
-		tableItem.setColumnWidth("action", 80);
+		tableItem.setColumnWidth("action", 82);
 
 		tableItem.addGeneratedColumn("email", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			@SuppressWarnings("unchecked")
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
@@ -135,6 +136,7 @@ public class AccountListViewImpl extends AbstractView implements
 		tableItem.addGeneratedColumn("createdtime", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
 				@SuppressWarnings("unchecked")
@@ -155,6 +157,7 @@ public class AccountListViewImpl extends AbstractView implements
 		tableItem.addGeneratedColumn("accountname", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
 				@SuppressWarnings("unchecked")
@@ -183,6 +186,7 @@ public class AccountListViewImpl extends AbstractView implements
 		tableItem.addGeneratedColumn("action", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
 				@SuppressWarnings("unchecked")

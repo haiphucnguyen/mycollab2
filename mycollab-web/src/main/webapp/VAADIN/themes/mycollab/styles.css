@@ -8,6 +8,9 @@
 .v-table-cell-wrapper {
     white-space: normal;
 }
+.v-table-caption-container, .v-table-header-drag {
+	padding-top: .1em;
+}
 .clear {
     clear: both;
 }
@@ -71,6 +74,16 @@
 }
 .h-sidebar-menu .v-csslayout-container .v-button-link .v-button-caption:hover {
     color: #333;
+}
+.listControl {
+	margin-top: 3px;
+}
+
+.pagedtable .v-table-header td:last-child .v-table-resizer {
+	border-right-width: 0px;
+}
+input.v-textfield-pagedtable-pagefield {
+	margin-top: 1px;
 }
 
 /* Top Menu */
@@ -256,7 +269,8 @@
 /* CRM Service */
 
 .crmContainer {
-    margin: 15px 30px 0px 74px;
+    width: 1130px;
+    margin: 15px auto;
 }
 
 /* End CRM Service */

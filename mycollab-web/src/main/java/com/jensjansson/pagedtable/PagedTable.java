@@ -86,7 +86,6 @@ public class PagedTable extends Table {
 						.getProperty().getValue())));
 			}
 		});
-		itemsPerPageSelect.select("25");
 		Label pageLabel = new Label("Page:&nbsp;", Label.CONTENT_XHTML);
 		final TextField currentPageTextField = new TextField();
 		currentPageTextField.setValue(String.valueOf(getCurrentPage()));
@@ -116,6 +115,7 @@ public class PagedTable extends Table {
 		totalPagesLabel.setWidth(null);
 
 		HorizontalLayout controlBar = new HorizontalLayout();
+		controlBar.setStyleName("listControl");
 		HorizontalLayout pageSize = new HorizontalLayout();
 		HorizontalLayout pageManagement = new HorizontalLayout();
 		final Button first = new Button("<<", new ClickListener() {
@@ -235,6 +235,7 @@ public class PagedTable extends Table {
 				itemsPerPageSelect.setValue(itemsPerPage);
 			}
 		});
+		itemsPerPageSelect.select("25");
 		return controlBar;
 	}
 
@@ -299,23 +300,16 @@ public class PagedTable extends Table {
 
 	@Override
 	public void setPageLength(int pageLength) {
-		if (pageLength >= 0 && getPageLength() != pageLength) {
+		if (pageLength >= 0) {
 			container.setPageLength(pageLength);
 			super.setPageLength(pageLength);
 			firePagedChangedEvent();
 		}
 	}
 
-	// @Override
-	// public int getPageLength() {
-	// return itemsPerPage;
-	// }
-
 	public void adjustPageLength(int pageLength) {
-		if (pageLength >= 0 && itemsPerPage != pageLength) {
-			// container.setPageLength(pageLength);
-			super.setPageLength(pageLength + 1);
-			// firePagedChangedEvent();
+		if (pageLength >= 0) {
+			super.setPageLength(pageLength);
 		}
 	}
 
