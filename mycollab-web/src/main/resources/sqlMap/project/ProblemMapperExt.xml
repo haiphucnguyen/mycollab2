@@ -3,8 +3,6 @@
 <mapper namespace="com.esofthead.mycollab.module.project.dao.ProblemMapperExt">
 	<resultMap extends="com.esofthead.mycollab.module.project.dao.ProblemMapper.BaseResultMap"
 		id="ProblemResult" type="com.esofthead.mycollab.module.project.domain.SimpleProblem">
-		<result column="problemsource" property="problemsource"
-			jdbcType="VARCHAR" />
 		<result column="raisedByUserFullName" jdbcType="VARCHAR"
 			property="raisedByUserFullName" />
 		<result column="assignedUserFullName" jdbcType="VARCHAR"
@@ -40,7 +38,7 @@
                  m_prj_problem.raisedbyuser, m_prj_problem.assigntouser, m_prj_problem.impact,
                  m_prj_problem.priority, m_prj_problem.status, m_prj_problem.dateraised, m_prj_problem.datedue, 
                  m_prj_problem.actualstartdate, m_prj_problem.actualenddate, 
-                 m_prj_problem.level, m_prj_problem.resolution, m_prj_problem.source, m_prj_problem.state,
+                 m_prj_problem.level, m_prj_problem.resolution, m_prj_problem.problemsource, m_prj_problem.state,
                  concat(raisedUser.firstname, IFNULL(concat(' ', raisedUser.middlename, ' '), ' '), raisedUser.lastname) AS raisedByUserFullName,
                  concat(assignedUser.firstname, IFNULL(concat(' ', assignedUser.middlename, ' '), ' '), assignedUser.lastname) AS assignedUserFullName 
                  
@@ -53,7 +51,7 @@
 	<select id="getTotalCount" resultType="int" parameterType="ProblemSearchCriteria">
 		SELECT count(*) as totalCount FROM m_prj_problem
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.project.dao.ProblemMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
@@ -64,7 +62,7 @@
 			refid="com.esofthead.mycollab.module.project.dao.ProblemMapperExt.selectProblem" />
 
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.project.dao.ProblemMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
@@ -77,13 +75,13 @@
             impact, priority, status, 
             dateraised, datedue, actualstartdate, 
             actualenddate, level, resolution, 
-            source, state)
+            problemsource, state)
         values (#{id,jdbcType=INTEGER}, #{issuename,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
             #{projectid,jdbcType=INTEGER}, #{raisedbyuser,jdbcType=VARCHAR}, #{assigntouser,jdbcType=VARCHAR}, 
             #{impact,jdbcType=VARCHAR}, #{priority,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
             #{dateraised,jdbcType=TIMESTAMP}, #{datedue,jdbcType=TIMESTAMP}, #{actualstartdate,jdbcType=TIMESTAMP}, 
             #{actualenddate,jdbcType=TIMESTAMP}, #{level,jdbcType=INTEGER}, #{resolution,jdbcType=VARCHAR}, 
-            #{source,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR})
+            #{problemsource,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR})
         ]]>
 	</insert>
 </mapper>

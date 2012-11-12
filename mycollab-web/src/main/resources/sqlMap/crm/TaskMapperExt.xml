@@ -133,7 +133,7 @@
 		resultType="int">
 		SELECT count(*) as totalCount FROM m_crm_task
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
@@ -154,7 +154,7 @@
             INNER JOIN m_crm_contact as contact2 ON (m_crm_task.type='Contact' AND m_crm_task.typeid=contact2.id )
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
 
 		UNION ALL
@@ -173,7 +173,7 @@
             INNER JOIN m_crm_account ON (m_crm_task.type='Account' AND m_crm_task.typeid=m_crm_account.id )
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
 
 		UNION ALL
@@ -191,7 +191,7 @@
             INNER JOIN m_crm_campaign ON (m_crm_task.type='Campaign' AND m_crm_task.typeid=m_crm_campaign.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
 
 		UNION ALL
@@ -208,7 +208,7 @@
             INNER JOIN m_crm_target ON (m_crm_task.type='Target' AND m_crm_task.typeid=m_crm_target.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
 
 		UNION ALL
@@ -226,7 +226,7 @@
             INNER JOIN m_crm_lead ON (m_crm_task.type='Lead' AND m_crm_task.typeid=m_crm_lead.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
 
 		UNION ALL
@@ -244,7 +244,7 @@
             INNER JOIN m_crm_opportunity ON (m_crm_task.type = 'Opportunity' AND m_crm_task.typeid=m_crm_opportunity.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
 
 		UNION ALL
@@ -262,7 +262,7 @@
             INNER JOIN m_crm_quote ON (m_crm_task.type = 'Quote' AND m_crm_task.typeid=m_crm_quote.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
 
 		UNION ALL
@@ -280,7 +280,7 @@
             INNER JOIN m_crm_product ON (m_crm_task.type = 'Product' AND m_crm_task.typeid=m_crm_product.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
 
 		UNION ALL
@@ -298,7 +298,7 @@
             INNER JOIN m_crm_case ON (m_crm_task.type = 'Case' AND m_crm_task.typeid=m_crm_case.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
 
 
@@ -316,7 +316,7 @@
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_task.contactId)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
             <![CDATA[AND ((m_crm_task.type IS NULL) OR (m_crm_task.typeid IS NULL))]]>
 		</trim>
 	</select>

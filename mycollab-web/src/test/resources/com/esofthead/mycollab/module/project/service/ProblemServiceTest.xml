@@ -1,15 +1,45 @@
 <!DOCTYPE dataset PUBLIC "-//eSoftHead/Engroup Database Schema//EN" "http://www.esofthead.com/engroup.dtd">
 <dataset>
+
     <s_account id="1" />
-    <m_prj_project id="1" name="a" sAccountId="1" />\
-    <s_user username="user1" firstname="a1" lastname="b1" accountId="1" />
-    <s_user username="user2" firstname="a2" lastname="b2" accountId="1" />
-    
-    <m_prj_problem id="1" description="aaa" projectid="1"
-        assigntouser="user1" raisedbyuser="user2" issuename="a"
-        problemsourceid="1" status="true" source="source"/>
-    <m_prj_problem id="2" description="aaa" projectid="1"
-        issuename="b" />
-    <m_prj_problem id="3" description="aaa" projectid="1"
-        issuename="c" />
+
+    <m_prj_project
+        id="1"
+        name="a"
+        sAccountId="1" />
+
+    <s_user
+        accountId="1"
+        firstname="a1"
+        lastname="b1"
+        username="user1" />
+
+    <s_user
+        accountId="1"
+        firstname="a2"
+        lastname="b2"
+        username="user2" />
+
+    <m_prj_problem
+        id="1"
+        assigntouser="user1"
+        description="aaa"
+        issuename="a"
+        projectid="1"
+        raisedbyuser="user2"
+        problemsource="source"
+        status="true" />
+
+    <m_prj_problem
+        id="2"
+        description="aaa"
+        issuename="b"
+        projectid="1" />
+
+    <m_prj_problem
+        id="3"
+        description="aaa"
+        issuename="c"
+        projectid="1" />
+
 </dataset>

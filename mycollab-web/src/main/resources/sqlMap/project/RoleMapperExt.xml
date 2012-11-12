@@ -22,7 +22,7 @@
 	<select id="getTotalCount" resultType="int" parameterType="RoleSearchCriteria">
 		SELECT count(*) as totalCount FROM m_prj_role
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.project.dao.RoleMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
@@ -33,7 +33,7 @@
 		<include refid="com.esofthead.mycollab.module.project.dao.RoleMapperExt.selectRole" />
 
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.project.dao.RoleMapperExt.querySearchCriteria" />
 		</trim>
 	</select>

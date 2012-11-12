@@ -106,7 +106,7 @@
 		parameterType="TaskSearchCriteria">
 		SELECT count(*) as totalCount FROM m_prj_task
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
 
@@ -115,7 +115,7 @@
 		<include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.selectTask" />
 
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
 		ORDER BY m_prj_task.startdate DESC, m_prj_task.enddate DESC
 	</select>
@@ -144,7 +144,7 @@
             INNER JOIN m_prj_task ON (m_prj_task_resource.taskid=m_prj_task.id)                
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
 		GROUP BY m_prj_resource.username
 
@@ -156,7 +156,7 @@
                 
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
 </mapper>

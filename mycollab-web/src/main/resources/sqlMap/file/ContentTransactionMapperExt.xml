@@ -21,7 +21,7 @@
 		parameterType="com.esofthead.mycollab.module.file.domain.criteria.ContentTransactionSearchCriteria">
 		SELECT count(*) as totalCount FROM m_ecm_transaction
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.ecm.dao.ContentTransactionMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
@@ -35,7 +35,7 @@
 		      LEFT OUTER JOIN s_user ON (m_ecm_transaction.owner=s_user.username)
 		]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.ecm.dao.ContentTransactionMapperExt.querySearchCriteria" />
 		</trim>
 		ORDER BY actiontime DESC
