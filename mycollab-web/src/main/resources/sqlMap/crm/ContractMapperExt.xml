@@ -159,7 +159,7 @@
         parameterType="ContractSearchCriteria">
         SELECT count(*) as totalCount FROM m_crm_contract
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            <include refid="com.esofthead.mycollab.module.crm.dao.ContractMapperExt.queryTotalCountSearchCriteria" />
+            1=1 <include refid="com.esofthead.mycollab.module.crm.dao.ContractMapperExt.queryTotalCountSearchCriteria" />
         </trim>
     </select>
 
@@ -167,7 +167,7 @@
         parameterType="ContractSearchCriteria">
         <include refid="com.esofthead.mycollab.module.crm.dao.ContractMapperExt.selectSimpleContract" />
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            <include refid="com.esofthead.mycollab.module.crm.dao.ContractMapperExt.querySearchCriteria" />
+            1=1 <include refid="com.esofthead.mycollab.module.crm.dao.ContractMapperExt.querySearchCriteria" />
         </trim>        
     </select>
 </mapper>

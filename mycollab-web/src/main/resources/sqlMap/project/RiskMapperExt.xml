@@ -38,12 +38,11 @@
         <![CDATA[
           SELECT m_prj_risk.id, m_prj_risk.riskname, m_prj_risk.description, m_prj_risk.projectid, m_prj_risk.raisedbyuser, 
                  m_prj_risk.assigntouser, m_prj_risk.consequence, m_prj_risk.probalitity, m_prj_risk.status, m_prj_risk.dateraised, 
-                 m_prj_risk.datedue, m_prj_risk.response, m_prj_risk.resolution, m_prj_risk.level, m_prj_risk.risksourceid,
-                 m_prj_risk_source.name AS risksource,
+                 m_prj_risk.datedue, m_prj_risk.response, m_prj_risk.resolution, m_prj_risk.level,
+                 m_prj_risk.source,
                  concat(raisedUser.firstname, IFNULL(concat(' ', raisedUser.middlename, ' '), ' '), raisedUser.lastname) AS raisedByUserFullName,
                  concat(assignedUser.firstname, IFNULL(concat(' ', assignedUser.middlename, ' '), ' '), assignedUser.lastname) AS assignedToUserFullName 
           FROM m_prj_risk
-              LEFT OUTER JOIN m_prj_risk_source ON (m_prj_risk.risksourceid=m_prj_risk_source.id)
               LEFT OUTER JOIN s_user as raisedUser ON (m_prj_risk.raisedbyuser=raisedUser.username)
               LEFT OUTER JOIN s_user as assignedUser ON ( m_prj_risk.assigntouser=assignedUser.username)
         ]]>
@@ -74,13 +73,13 @@
       projectid, raisedbyuser, assigntouser, 
       consequence, probalitity, status, 
       dateraised, datedue, response, 
-      resolution, level, risksourceid
+      resolution, level, source
       )
     values (#{id,jdbcType=INTEGER}, #{riskname,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{projectid,jdbcType=INTEGER}, #{raisedbyuser,jdbcType=VARCHAR}, #{assigntouser,jdbcType=VARCHAR}, 
       #{consequence,jdbcType=VARCHAR}, #{probalitity,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
       #{dateraised,jdbcType=TIMESTAMP}, #{datedue,jdbcType=TIMESTAMP}, #{response,jdbcType=VARCHAR}, 
-      #{resolution,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{risksourceid,jdbcType=INTEGER}
+      #{resolution,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR}
       )
       ]]>
 	</insert>

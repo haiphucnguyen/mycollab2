@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+    <!--
+
+        Engroup - Enterprise Groupware Platform Copyright (C) 2007-2009
+        eSoftHead Company <engroup@esofthead.com> http://www.esofthead.com
+
+        Licensed under the GPL, Version 3.0 (the "License"); you may not use
+        this file except in compliance with the License. You may obtain a copy
+        of the License at http://www.gnu.org/licenses/gpl.html Unless required
+        by applicable law or agreed to in writing, software distributed under
+        the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+        CONDITIONS OF ANY KIND, either express or implied. See the License for
+        the specific language governing permissions and limitations under the
+        License.
+    -->
+<!DOCTYPE dataset PUBLIC "-//eSoftHead/Engroup Database Schema//EN" "http://www.esofthead.com/engroup.dtd">
+<dataset>
+    <s_account id="1" />
+    <s_user username="admin" firstname="Nguyen" lastname="Hai"
+        middlename="Phuc" accountId="1" />
+    <m_hr_employee id="1" code="0001" username="admin"
+        sAccountId="1" />
+    <m_crm_account id="1" accountName="a" sAccountId="1" />
+    <m_prj_project id="1" name="A" priority="1" sAccountId="1" />
+    <m_prj_project id="2" name="B" priority="1"
+        homePage="http://esofthead.com" owner="admin" sAccountId="1" />
+    <m_prj_project id="3" name="C" priority="1"
+        homePage="http://esofthead.com" owner="admin" account="1" sAccountId="1" />
+    <m_prj_project id="4" name="D" sAccountId="1" />
+    <m_prj_task id="1" projectid="4" taskindex="1" taskname="taskname" />
+    <m_prj_resource id="1" bookingtype="1a" projectid="4"
+        resourcename="x" username="admin" />
+    <m_prj_task_resource id="1" resourceid="1" taskid="1"
+        unit="1" />
+</dataset>

@@ -82,8 +82,7 @@
 
 
 	<sql id="queryTotalCountSearchCriteria">
-		<if test="contactName != null"><![CDATA[${contactName.operation} (m_crm_contact.firstname like '%${contactName.value}%' OR m_crm_contact.lastname like '%${contactName.value}%')]]></if>
-		<if test="accountName != null">
+	    <if test="accountName != null">
             <![CDATA[
             ${accountName.operation}
             (SELECT COUNT(*)
@@ -92,7 +91,9 @@
                 m_crm_account.accountName like '%${accountName.value}%' AND
                 m_crm_account.id=m_crm_contact.accountId) > 0
                 ]]>
-		</if>
+        </if>
+		<if test="contactName != null"><![CDATA[${contactName.operation} (m_crm_contact.firstname like '%${contactName.value}%' OR m_crm_contact.lastname like '%${contactName.value}%')]]></if>
+		
 		<if test="accountId != null">
             <![CDATA[
                 ${accountId.operation}
@@ -188,7 +189,7 @@
 		parameterType="ContactSearchCriteria">
 		SELECT count(*) as totalCount FROM m_crm_contact
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.queryTotalCountSearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.queryTotalCountSearchCriteria" />
 		</trim>
 	</select>
 
@@ -196,7 +197,7 @@
 		parameterType="ContactSearchCriteria">
 		<include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.selectSimpleContact" />
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
 

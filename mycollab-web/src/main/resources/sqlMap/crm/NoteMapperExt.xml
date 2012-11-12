@@ -296,7 +296,7 @@
 	<select id="getTotalCount" resultType="int" parameterType="NoteSearchCriteria">
 		SELECT count(*) as totalCount FROM m_crm_note
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.queryTotalCountSearchCriteria" />
 		</trim>
 	</select>
@@ -315,7 +315,7 @@
             INNER JOIN m_crm_contact as contact2 ON (m_crm_note.type=3 AND m_crm_note.typeid=contact2.id )
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
 
@@ -332,7 +332,7 @@
             INNER JOIN m_crm_account ON (m_crm_note.type=1 AND m_crm_note.typeid=m_crm_account.id )
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
 
@@ -349,7 +349,7 @@
             INNER JOIN m_crm_campaign ON (m_crm_note.type=2 AND m_crm_note.typeid=m_crm_campaign.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
 
@@ -366,7 +366,7 @@
             INNER JOIN m_crm_contact as contact2 ON (m_crm_note.type=3 AND m_crm_note.typeid=contact2.id )
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
 
@@ -383,7 +383,7 @@
             INNER JOIN m_crm_target ON (m_crm_note.type=6 AND m_crm_note.typeid=m_crm_target.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
 
@@ -400,7 +400,7 @@
             INNER JOIN m_crm_lead ON (m_crm_note.type=4 AND m_crm_note.typeid=m_crm_lead.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
 
@@ -417,7 +417,7 @@
             INNER JOIN m_crm_opportunity ON (m_crm_note.type = 5 AND m_crm_note.typeid=m_crm_opportunity.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
 
@@ -434,7 +434,7 @@
             INNER JOIN m_crm_quote ON (m_crm_note.type = 7 AND m_crm_note.typeid=m_crm_quote.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
 
@@ -451,7 +451,7 @@
             INNER JOIN m_crm_product ON (m_crm_note.type = 8 AND m_crm_note.typeid=m_crm_product.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
 
@@ -468,7 +468,7 @@
             INNER JOIN m_crm_case ON (m_crm_note.type = 9 AND m_crm_note.typeid=m_crm_case.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
 
@@ -485,7 +485,7 @@
             INNER JOIN m_crm_contract ON (m_crm_note.type = 10 AND m_crm_note.typeid=m_crm_contract.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
 
@@ -501,7 +501,7 @@
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 			AND ((m_crm_note.type IS NULL) OR (m_crm_note.typeid IS NULL))
 		</trim>

@@ -139,7 +139,7 @@
 		parameterType="LeadSearchCriteria">
 		SELECT count(*) as totalCount FROM m_crm_lead
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.queryTotalCountSearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.queryTotalCountSearchCriteria" />
 		</trim>
 	</select>
 
@@ -147,7 +147,7 @@
 		parameterType="LeadSearchCriteria">
 		<include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
 

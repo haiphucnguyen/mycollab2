@@ -1,0 +1,14 @@
+<!DOCTYPE dataset PUBLIC "-//eSoftHead/Engroup Database Schema//EN" "http://www.esofthead.com/engroup.dtd">
+<dataset>
+    <s_account id="1" />
+    <m_prj_project id="1" name="a" sAccountId="1" />
+    <m_prj_task taskindex="1" id="1" projectid="1" taskname="a" />
+    <m_prj_task taskindex="2" id="2" projectid="1" taskname="b"
+        parenttask="1" percentagecomplete="70" ismilestone="true" />
+    <s_user username="admin" firstname="Nguyen" lastname="Hai"
+        accountId="1" />
+    <m_prj_resource id="1" bookingtype="b" projectid="1"
+        resourcename="B" username="admin" />
+    <m_prj_task_resource id="1" resourceid="1" taskid="2"
+        unit="1" />
+</dataset>

@@ -34,4 +34,5 @@
 		<property name="monitorItemExtDAO" ref="monitorItemExtDAO" />
 	</bean>
 
+	<bean id="messageDispatcher" class="com.esofthead.mycollab.core.MessageDispatcherImpl" />
 </beans>

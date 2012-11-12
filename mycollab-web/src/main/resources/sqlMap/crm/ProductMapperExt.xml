@@ -94,7 +94,7 @@
         parameterType="ProductSearchCriteria">
         SELECT count(*) as totalCount FROM m_crm_product
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            <include refid="com.esofthead.mycollab.module.crm.dao.ProductMapperExt.querySearchCriteria" />
+            1=1 <include refid="com.esofthead.mycollab.module.crm.dao.ProductMapperExt.querySearchCriteria" />
         </trim>
     </select>
 
@@ -103,7 +103,7 @@
 
         <include refid="com.esofthead.mycollab.module.crm.dao.ProductMapperExt.selectSimpleProduct" />
        <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            <include refid="com.esofthead.mycollab.module.crm.dao.ProductMapperExt.querySearchCriteria" />
+            1=1 <include refid="com.esofthead.mycollab.module.crm.dao.ProductMapperExt.querySearchCriteria" />
         </trim>
     </select>
 </mapper>

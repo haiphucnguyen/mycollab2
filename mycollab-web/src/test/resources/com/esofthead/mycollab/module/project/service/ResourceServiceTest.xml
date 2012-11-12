@@ -1,0 +1,12 @@
+<!DOCTYPE dataset PUBLIC "-//eSoftHead/Engroup Database Schema//EN" "http://www.esofthead.com/engroup.dtd">
+<dataset>
+    <s_account id="1" />
+    <m_prj_project id="1" name="a" sAccountId="1" />
+    <m_prj_resource id="1" bookingtype="xxx" projectid="1"
+        resourcename="A" />
+    <m_prj_resource id="2" bookingtype="xxx" projectid="1"
+        resourcename="AB" />
+    <m_prj_resource id="3" bookingtype="xxx" projectid="1"
+        resourcename="c" />
+
+</dataset>
