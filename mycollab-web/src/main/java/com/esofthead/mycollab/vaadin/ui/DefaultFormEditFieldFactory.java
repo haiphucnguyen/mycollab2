@@ -5,7 +5,7 @@ import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextField;
 
-public abstract class DefaultFormEditFieldFactory extends DefaultFieldFactory {
+public class DefaultFormEditFieldFactory extends DefaultFieldFactory {
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -23,6 +23,8 @@ public abstract class DefaultFormEditFieldFactory extends DefaultFieldFactory {
 		return field;
 	}
 
-	abstract protected Field onCreateField(Item item, Object propertyId,
-			com.vaadin.ui.Component uiContext) ;
+	protected Field onCreateField(Item item, Object propertyId,
+			com.vaadin.ui.Component uiContext) {
+		return null;
+	}
 }

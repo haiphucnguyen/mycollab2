@@ -1,5 +1,13 @@
 package com.esofthead.mycollab.module.project.ui.events;
 
-public class ProjectEvent {
+import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEvent;
 
+@SuppressWarnings("serial")
+public class ProjectEvent {
+	
+	public static class Save extends ApplicationEvent {
+		public Save(Object source, Object data) {
+			super(source, data);
+		}
+	}
 }

@@ -9,28 +9,31 @@ import org.vaadin.teemu.wizards.event.WizardStepActivationEvent;
 import org.vaadin.teemu.wizards.event.WizardStepSetChangedEvent;
 
 import com.esofthead.mycollab.module.project.domain.Project;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.WizardExt;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
-import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.Window;
 
 @SuppressWarnings("serial")
 public class ProjectAddWindow extends Window {
 	private Project project;
+	private BeanItem<Project> beanItem;
 
 	public ProjectAddWindow() {
 		super();
 		project = new Project();
+		beanItem = new BeanItem<Project>(project);
 		initComponents();
 		center();
 		this.setWidth("900px");
-		this.setHeight("200px");
+		this.setHeight("300px");
 	}
 
 	private void initComponents() {
@@ -39,7 +42,6 @@ public class ProjectAddWindow extends Window {
 
 			@Override
 			public void wizardCompleted(WizardCompletedEvent event) {
-				System.out.println("Wizard complete");
 				// Save project information
 				project.setSaccountid(AppContext.getAccountId());
 
@@ -49,12 +51,12 @@ public class ProjectAddWindow extends Window {
 
 			@Override
 			public void wizardCancelled(WizardCancelledEvent event) {
-
+				ProjectAddWindow.this.getParent().removeWindow(
+						ProjectAddWindow.this);
 			}
 
 			@Override
 			public void stepSetChanged(WizardStepSetChangedEvent event) {
-				// TODO Auto-generated method stub
 
 			}
 
@@ -81,7 +83,22 @@ public class ProjectAddWindow extends Window {
 			super();
 			layoutHelper = new GridFormLayoutHelper(2, 3);
 			this.setLayout(layoutHelper.getLayout());
-			this.setItemDataSource(new BeanItem<Project>(project));
+			this.setFormFieldFactory(new DefaultFormEditFieldFactory() {
+				@Override
+				protected Field onCreateField(Item item, Object propertyId,
+						Component uiContext) {
+					if (propertyId.equals("projecttype")) {
+						return new ProjectTypeComboBox();
+					} else if (propertyId.equals("description")) {
+						TextArea textArea = new TextArea();
+						textArea.setWidth("400px");
+						return textArea;
+					}
+
+					return null;
+				}
+			});
+			this.setItemDataSource(beanItem);
 		}
 
 		@Override
@@ -92,12 +109,12 @@ public class ProjectAddWindow extends Window {
 					"Home Page", 1, 0);
 			layoutHelper.addComponent(propertyId.equals("shortname"), field,
 					"Short Name", 0, 1);
-			layoutHelper.addComponent(propertyId.equals("projecttype"), field, "Type",
-					1, 1);
+			layoutHelper.addComponent(propertyId.equals("projecttype"), field,
+					"Type", 1, 1);
 			if (propertyId.equals("description")) {
 				layoutHelper.addComponent(field, "Description", 0, 2, 1, 2);
 			}
-			
+
 		}
 
 		@Override
@@ -121,7 +138,35 @@ public class ProjectAddWindow extends Window {
 		}
 	}
 
-	private class ProjectAttributesStep implements WizardStep {
+	private class ProjectAttributesStep extends Form implements WizardStep {
+
+		private GridFormLayoutHelper layoutHelper;
+
+		private ProjectAttributesStep() {
+			super();
+			layoutHelper = new GridFormLayoutHelper(2, 3);
+			this.setLayout(layoutHelper.getLayout());
+			this.setFormFieldFactory(new DefaultFormEditFieldFactory());
+			this.setItemDataSource(beanItem);
+		}
+
+		@Override
+		protected void attachField(Object propertyId, Field field) {
+			layoutHelper.addComponent(propertyId.equals("planstartdate"),
+					field, "Planned Start Date", 0, 0);
+			layoutHelper.addComponent(propertyId.equals("planenddate"), field,
+					"Planned End Date", 0, 1);
+			layoutHelper.addComponent(propertyId.equals("currencyid"), field,
+					"Currency", 0, 2);
+
+			layoutHelper.addComponent(propertyId.equals("targetbudget"), field,
+					"Target Budget", 1, 0);
+			layoutHelper.addComponent(propertyId.equals("defaultbillingrate"),
+					field, "Billing Rate", 1, 1);
+			layoutHelper.addComponent(
+					propertyId.equals("defaultovertimebillingrate"), field,
+					"Overtime Billing Rate", 1, 2);
+		}
 
 		@Override
 		public String getCaption() {
@@ -130,7 +175,7 @@ public class ProjectAddWindow extends Window {
 
 		@Override
 		public Component getContent() {
-			return new VerticalLayout();
+			return this;
 		}
 
 		@Override
@@ -144,7 +189,38 @@ public class ProjectAddWindow extends Window {
 		}
 	}
 
-	private class ProjectBudgetStep implements WizardStep {
+	private class ProjectBudgetStep extends Form implements WizardStep {
+		private GridFormLayoutHelper layoutHelper;
+
+		public ProjectBudgetStep() {
+			super();
+			layoutHelper = new GridFormLayoutHelper(2, 3);
+			this.setLayout(layoutHelper.getLayout());
+			this.setFormFieldFactory(new DefaultFormEditFieldFactory() {
+				@Override
+				protected Field onCreateField(Item item, Object propertyId,
+						Component uiContext) {
+
+					return null;
+				}
+			});
+			this.setItemDataSource(beanItem);
+		}
+
+		@Override
+		protected void attachField(Object propertyId, Field field) {
+			if (propertyId.equals("currencyid")) {
+				layoutHelper.addComponent(field, "Currency", 0, 0);
+			} else if (propertyId.equals("defaultbillingrate")) {
+				layoutHelper.addComponent(field, "Billing Rate", 0, 1);
+			} else if (propertyId.equals("defaultovertimebillingrate")) {
+				layoutHelper.addComponent(field, "Overtime Billing Rate", 0, 2);
+			} else if (propertyId.equals("targetbudget")) {
+				layoutHelper.addComponent(field, "Target Budget", 1, 1);
+			} else if (propertyId.equals("actualbudget")) {
+				layoutHelper.addComponent(field, "Actual Budget", 1, 2);
+			}
+		}
 
 		@Override
 		public String getCaption() {
@@ -153,7 +229,7 @@ public class ProjectAddWindow extends Window {
 
 		@Override
 		public Component getContent() {
-			return new VerticalLayout();
+			return this;
 		}
 
 		@Override
