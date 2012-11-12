@@ -7,6 +7,18 @@ import com.vaadin.data.util.BeanItem;
 public class BeanTable<T> extends PagedTable {
 	private static final long serialVersionUID = 1L;
 
+	public BeanTable() {
+		super();
+		this.addListener(new PagedTable.PageChangeListener() {
+			@Override
+			public void pageChanged(PagedTableChangeEvent event) {
+
+				System.out.println("Page change: " + event.getCurrentPage()
+						+ " " + event.getTotalAmountOfPages() + " ");
+			}
+		});
+	}
+
 	@SuppressWarnings("unchecked")
 	public T getBeanByIndex(Object itemId) {
 		Container container = this.getContainerDataSource();

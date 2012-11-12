@@ -30,4 +30,6 @@
     <inherits name="org.vaadin.hene.splitbutton.widgetset.SplitButtonWidgetSet" />
 
     
+
+    
 </module>
