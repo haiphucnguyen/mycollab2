@@ -91,11 +91,7 @@
 			<artifactId>animator</artifactId>
 			<version>1.6.6</version>
 		</dependency>
-		<dependency>
-			<groupId>org.vaadin.addons</groupId>
-			<artifactId>pagedtable</artifactId>
-			<version>0.6.3</version>
-		</dependency>
+		
 		<dependency>
 			<groupId>org.vaadin.addons</groupId>
 			<artifactId>easyuploads</artifactId>
