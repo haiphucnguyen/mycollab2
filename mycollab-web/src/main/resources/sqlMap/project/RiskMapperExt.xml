@@ -51,7 +51,7 @@
 	<select id="getTotalCount" resultType="int" parameterType="RiskSearchCriteria">
 		SELECT count(*) as totalCount FROM m_prj_risk
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
@@ -61,7 +61,7 @@
 		<include refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.selectRisk" />
 
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.querySearchCriteria" />
 		</trim>
 	</select>

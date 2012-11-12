@@ -101,7 +101,7 @@
         parameterType="TargetSearchCriteria">
         SELECT count(*) as totalCount FROM m_crm_target
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            <include refid="com.esofthead.mycollab.module.crm.dao.TargetMapperExt.queryTotalCountSearchCriteria" />
+            1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TargetMapperExt.queryTotalCountSearchCriteria" />
         </trim>
     </select>
 
@@ -110,7 +110,7 @@
 
         <include refid="com.esofthead.mycollab.module.crm.dao.TargetMapperExt.selectSimpleTarget" />
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            <include refid="com.esofthead.mycollab.module.crm.dao.TargetMapperExt.querySearchCriteria" />
+            1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TargetMapperExt.querySearchCriteria" />
         </trim>
     </select>
 

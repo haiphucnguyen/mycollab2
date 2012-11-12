@@ -1,19 +1,10 @@
 package com.esofthead.mycollab.module.project.domain;
 
 public class SimpleProblem extends Problem {
-    private String problemsource;
 
     private String raisedByUserFullName;
 
     private String assignedUserFullName;
-
-    public String getProblemsource() {
-        return problemsource;
-    }
-
-    public void setProblemsource(String problemsource) {
-        this.problemsource = problemsource;
-    }
 
 	public String getRaisedByUserFullName() {
 		return raisedByUserFullName;

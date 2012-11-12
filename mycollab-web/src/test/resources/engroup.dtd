@@ -2,7 +2,6 @@
     chat_con_binval*,
     chat_con_bundle*,
     chat_con_names*,
-    chat_con_refs*,
     chat_ver_binval*,
     chat_ver_bundle*,
     chat_ver_names*,
@@ -38,15 +37,6 @@
     m_crm_task_status*,
     m_crm_task_type*,
     m_crm_type_relationship*,
-    m_ecm_con_binval*,
-    m_ecm_con_bundle*,
-    m_ecm_con_names*,
-    m_ecm_con_refs*,
-    m_ecm_transaction*,
-    m_ecm_ver_binval*,
-    m_ecm_ver_bundle*,
-    m_ecm_ver_names*,
-    m_ecm_ver_refs*,
     m_friend_friend*,
     m_friend_request*,
     m_group*,
@@ -148,12 +138,6 @@
 <!ATTLIST chat_con_names
     ID CDATA #REQUIRED
     NAME CDATA #REQUIRED
->
-
-<!ELEMENT chat_con_refs EMPTY>
-<!ATTLIST chat_con_refs
-    NODE_ID CDATA #REQUIRED
-    REFS_DATA CDATA #REQUIRED
 >
 
 <!ELEMENT chat_ver_binval EMPTY>
@@ -687,64 +671,6 @@
     type CDATA #REQUIRED
 >
 
-<!ELEMENT m_ecm_con_binval EMPTY>
-<!ATTLIST m_ecm_con_binval
-    BINVAL_ID CDATA #REQUIRED
-    BINVAL_DATA CDATA #REQUIRED
->
-
-<!ELEMENT m_ecm_con_bundle EMPTY>
-<!ATTLIST m_ecm_con_bundle
-    NODE_ID CDATA #REQUIRED
-    BUNDLE_DATA CDATA #REQUIRED
->
-
-<!ELEMENT m_ecm_con_names EMPTY>
-<!ATTLIST m_ecm_con_names
-    ID CDATA #REQUIRED
-    NAME CDATA #REQUIRED
->
-
-<!ELEMENT m_ecm_con_refs EMPTY>
-<!ATTLIST m_ecm_con_refs
-    NODE_ID CDATA #REQUIRED
-    REFS_DATA CDATA #REQUIRED
->
-
-<!ELEMENT m_ecm_transaction EMPTY>
-<!ATTLIST m_ecm_transaction
-    id CDATA #REQUIRED
-    contentpath CDATA #REQUIRED
-    owner CDATA #IMPLIED
-    action CDATA #REQUIRED
-    actiontime CDATA #REQUIRED
-    contenttype CDATA #REQUIRED
->
-
-<!ELEMENT m_ecm_ver_binval EMPTY>
-<!ATTLIST m_ecm_ver_binval
-    BINVAL_ID CDATA #REQUIRED
-    BINVAL_DATA CDATA #REQUIRED
->
-
-<!ELEMENT m_ecm_ver_bundle EMPTY>
-<!ATTLIST m_ecm_ver_bundle
-    NODE_ID CDATA #REQUIRED
-    BUNDLE_DATA CDATA #REQUIRED
->
-
-<!ELEMENT m_ecm_ver_names EMPTY>
-<!ATTLIST m_ecm_ver_names
-    ID CDATA #REQUIRED
-    NAME CDATA #REQUIRED
->
-
-<!ELEMENT m_ecm_ver_refs EMPTY>
-<!ATTLIST m_ecm_ver_refs
-    NODE_ID CDATA #REQUIRED
-    REFS_DATA CDATA #REQUIRED
->
-
 <!ELEMENT m_friend_friend EMPTY>
 <!ATTLIST m_friend_friend
     id CDATA #REQUIRED
@@ -1196,7 +1122,7 @@
     level CDATA #IMPLIED
     resolution CDATA #IMPLIED
     state CDATA #IMPLIED
-    source CDATA #IMPLIED
+    problemsource CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_project EMPTY>

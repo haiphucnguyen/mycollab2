@@ -27,7 +27,7 @@
 		parameterType="ChangeLogSearchCriteria">
 		SELECT count(*) as totalCount FROM m_prj_change_log
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.project.dao.ChangeLogMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.project.dao.ChangeLogMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
 
@@ -36,7 +36,7 @@
 		<include refid="com.esofthead.mycollab.module.project.dao.ChangeLogMapperExt.selectChangeLog" />
 
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.project.dao.ChangeLogMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.project.dao.ChangeLogMapperExt.querySearchCriteria" />
 		</trim>
 		ORDER BY m_prj_change_log.posteddate DESC
 	</select>

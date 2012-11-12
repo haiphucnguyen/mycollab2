@@ -190,7 +190,7 @@
 	<select id="getTotalCount" resultType="int" parameterType="ProjectSearchCriteria">
 		SELECT count(*) as totalCount FROM m_prj_project
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.queryTotalCountSearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.queryTotalCountSearchCriteria" />
 		</trim>
 	</select>
 
@@ -200,7 +200,7 @@
 		<include refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.selectSimpleProject" />
 
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
 

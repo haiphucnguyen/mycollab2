@@ -21,7 +21,7 @@
 	<select id="getTotalCount" resultType="int" parameterType="UserSearchCriteria">
 		SELECT count(*) as totalCount FROM s_user
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.user.dao.UserMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.user.dao.UserMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
 
@@ -35,7 +35,7 @@
         FROM s_user LEFT OUTER JOIN s_country ON (s_user.countryid=s_country.id)   
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.user.dao.UserMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.user.dao.UserMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
 

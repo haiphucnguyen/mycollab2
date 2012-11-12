@@ -1,0 +1,398 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.esofthead.mycollab.module.tracker.dao.BugMapperExt">
+	<resultMap type="com.esofthead.mycollab.common.domain.GroupItem"
+		id="GroupItemResult">
+		<result column="groupid" jdbcType="VARCHAR" property="groupid" />
+		<result column="groupname" jdbcType="VARCHAR" property="groupname" />
+		<result column="value" jdbcType="INTEGER" property="value" />
+	</resultMap>
+
+	<resultMap type="com.esofthead.mycollab.module.tracker.domain.SimpleBug"
+		extends="com.esofthead.mycollab.module.tracker.dao.BugMapper.BaseResultMap" id="SimpleBugResult">
+		<result column="loguserFullName" jdbcType="VARCHAR" property="loguserFullName" />
+		<result column="assignuserFullName" jdbcType="VARCHAR"
+			property="assignuserFullName" />
+		<result column="projectname" jdbcType="VARCHAR" property="projectname" />
+	</resultMap>
+
+	<sql id="querySearchCriteria">
+		<choose>
+			<when test="assignuser == ''">
+				AND m_tracker_bug.assignuser IS NULL
+	       </when>
+			<when test="assignuser != null">
+				AND m_tracker_bug.assignuser=#{assignuser}
+	       </when>
+		</choose>
+		<if test="involeduser != null">
+            <![CDATA[
+            AND
+            (m_tracker_bug.assignuser='$involeduser$' OR m_tracker_bug.logby = #{involeduser} OR
+            (SELECT COUNT(*) 
+                FROM m_tracker_history 
+                WHERE m_tracker_history.relatedbug = m_tracker_bug.id 
+                AND (m_tracker_history.assignuser=#{involeduser} OR m_tracker_history.logby=#{involeduser})) > 0)
+            ]]>
+		</if>
+		<if test="summary != null">
+            <![CDATA[AND m_tracker_bug.summary LIKE '%${summary}%']]>
+		</if>
+		<if test="detail != null">
+            <![CDATA[AND m_tracker_bug.detail LIKE '%${detail}%']]>
+		</if>
+		<if test="environment != null">
+            <![CDATA[AND m_tracker_bug.environment LIKE '%${environment}%']]>
+		</if>
+		<if test="loguser != null">
+            <![CDATA[AND m_tracker_bug.logby = #{loguser}]]>
+		</if>
+		<if test="postedDateFrom != null">
+            <![CDATA[AND m_tracker_bug.posteddate >= #{postedDateFrom,javaType=DATE}]]>
+		</if>
+		<if test="postedDateTo != null">
+            <![CDATA[AND m_tracker_bug.posteddate <= #{postedDateTo,javaType=DATE}]]>
+		</if>
+		<if test="updatedDateFrom != null">
+            <![CDATA[AND m_tracker_bug.updateddate >= #{updatedDateFrom,javaType=DATE}]]>
+		</if>
+		<if test="updatedDateTo != null">
+            <![CDATA[AND m_tracker_bug.updateddate <= #{updatedDateTo,javaType=DATE}]]>
+		</if>
+		<if test="dueDateFrom != null">
+            <![CDATA[AND m_tracker_bug.duedate >= #{dueDateFrom,javaType=DATE}]]>
+		</if>
+		<if test="dueDateTo != null">
+            <![CDATA[AND m_tracker_bug.duedate <= #{dueDateTo,javaType=DATE}]]>
+		</if>
+		<if test="resolvedDateFrom != null">
+            <![CDATA[AND m_tracker_bug.resolveddate >= #{resolvedDateFrom,javaType=DATE}]]>
+		</if>
+		<if test="resolvedDateTo != null">
+            <![CDATA[AND m_tracker_bug.resolveddate <= #{resolvedDateTo,javaType=DATE}]]>
+		</if>
+		<if test="projectid">
+			AND m_tracker_bug.projectid=#{projectid,javaType=INTEGER}
+		</if>
+		<if test="affectedversionids != null">
+			AND
+			<foreach close=")" collection="affectedversionids" item="affectedversion"
+				open="(" separator="OR">
+                <![CDATA[
+            (SELECT COUNT(*)
+                FROM m_tracker_related_item
+                WHERE m_tracker_related_item.type='1'
+                    AND m_tracker_related_item.relateitemid=#{affectedversion,javaType=INTEGER}
+                    AND m_tracker_related_item.refitemkey=concat('bug-', m_tracker_bug.id))> 0
+                    ]]>
+			</foreach>
+		</if>
+		<if test="fixedversionids != null">
+			AND
+			<foreach close=")" collection="fixedversionids" item="fixedversion"
+				open="(" separator="OR">
+                 <![CDATA[
+                (SELECT COUNT(*) 
+                    FROM m_tracker_related_item
+                    WHERE m_tracker_related_item.type='0'
+                        AND m_tracker_related_item.relateitemid=#{fixedversion,javaType=INTEGER}
+                        AND m_tracker_related_item.refitemkey=concat('bug-', m_tracker_bug.id))> 0
+                ]]>
+			</foreach>
+		</if>
+		<if test="versionids != null">
+			AND
+			<foreach close=")" collection="versionids" item="versionid"
+				open="(" separator="OR">
+                <![CDATA[
+                (((SELECT COUNT(*) 
+                    FROM m_tracker_related_item
+                    WHERE m_tracker_related_item.type='0'
+                        AND m_tracker_related_item.relateitemid=#{versionid,javaType=INTEGER}
+                        AND m_tracker_related_item.refitemkey=concat('bug-', m_tracker_bug.id))> 0)
+                  OR 
+                  ((SELECT COUNT(*)
+                    FROM m_tracker_related_item
+                    WHERE m_tracker_related_item.type='1'
+                        AND m_tracker_related_item.relateitemid=#{versionid,javaType=INTEGER}
+                        AND m_tracker_related_item.refitemkey=concat('bug-', m_tracker_bug.id))> 0))
+                ]]>
+			</foreach>
+		</if>
+		<if test="componentids != null">
+			AND
+			<foreach close=")" collection="componentids" item="componentid"
+				open="(" separator="OR">
+                <![CDATA[
+                (SELECT COUNT(*)
+                    FROM m_tracker_related_item
+                    WHERE m_tracker_related_item.type='2'
+                        AND m_tracker_related_item.relateitemid=#{componentid,javaType=INTEGER}
+                        AND m_tracker_related_item.refitemkey=concat('bug-', m_tracker_bug.id))> 0
+                ]]>
+			</foreach>
+		</if>
+		<if test="priorities != null">
+			AND m_tracker_bug.priority IN
+			<foreach close=")" collection="priorities" item="priorityitem"
+				open="(" separator=",">
+				#{priorityitem}
+            </foreach>
+
+		</if>
+		<if test="statuses != null">
+			AND m_tracker_bug.status IN
+			<foreach close=")" collection="statuses" item="statusitem"
+				open="(" separator=",">
+				#{statusitem}
+            </foreach>
+		</if>
+		<if test="resolutions != null">
+			AND m_tracker_bug.resolution IN
+			<foreach close=")" collection="resolutions" item="resolutionitem"
+				open="(" separator=",">
+				#{resolutionitem}
+            </foreach>
+		</if>
+		<if test="severities != null">
+			AND m_tracker_bug.severity IN
+			<foreach close=")" collection="severities" item="severityitem"
+				open="(" separator=",">
+				#{severityitem}
+            </foreach>
+		</if>
+	</sql>
+
+	<insert id="insert" parameterType="Bug" useGeneratedKeys="true"
+		keyProperty="id">
+    <![CDATA[
+    insert into m_tracker_bug (id, summary, detail, 
+      assignuser, posteddate, logby, 
+      severity, priority, updateddate, 
+      status, duedate, environment, 
+      resolution, cus_int_01, cus_int_02, 
+      cus_int_03, cus_int_04, cus_int_05, 
+      cus_int_06, cus_int_07, cus_int_08, 
+      cus_int_09, cus_int_10, cus_str_01, 
+      cus_str_02, cus_str_03, cus_str_04, 
+      cus_str_05, cus_time_01, cus_time_02, 
+      cus_time_03, cus_time_04, cus_dbl_01, 
+      cus_dbl_02, cus_dbl_03, projectid, 
+      resolveddate)
+    values (#{id,jdbcType=INTEGER}, #{summary,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, 
+      #{assignuser,jdbcType=VARCHAR}, #{posteddate,jdbcType=TIMESTAMP}, #{logby,jdbcType=VARCHAR}, 
+      #{severity,jdbcType=INTEGER}, #{priority,jdbcType=INTEGER}, #{updateddate,jdbcType=TIMESTAMP}, 
+      #{status,jdbcType=INTEGER}, #{duedate,jdbcType=TIMESTAMP}, #{environment,jdbcType=VARCHAR}, 
+      #{resolution,jdbcType=INTEGER}, #{cusInt01,jdbcType=INTEGER}, #{cusInt02,jdbcType=INTEGER}, 
+      #{cusInt03,jdbcType=INTEGER}, #{cusInt04,jdbcType=INTEGER}, #{cusInt05,jdbcType=INTEGER}, 
+      #{cusInt06,jdbcType=INTEGER}, #{cusInt07,jdbcType=INTEGER}, #{cusInt08,jdbcType=INTEGER}, 
+      #{cusInt09,jdbcType=INTEGER}, #{cusInt10,jdbcType=INTEGER}, #{cusStr01,jdbcType=VARCHAR}, 
+      #{cusStr02,jdbcType=VARCHAR}, #{cusStr03,jdbcType=VARCHAR}, #{cusStr04,jdbcType=VARCHAR}, 
+      #{cusStr05,jdbcType=VARCHAR}, #{cusTime01,jdbcType=TIMESTAMP}, #{cusTime02,jdbcType=TIMESTAMP}, 
+      #{cusTime03,jdbcType=TIMESTAMP}, #{cusTime04,jdbcType=TIMESTAMP}, #{cusDbl01,jdbcType=DOUBLE}, 
+      #{cusDbl02,jdbcType=DOUBLE}, #{cusDbl03,jdbcType=DOUBLE}, #{projectid,jdbcType=INTEGER}, 
+      #{resolveddate,jdbcType=TIMESTAMP})]]>
+
+	</insert>
+	<sql id="selectBug">
+        <![CDATA[
+          SELECT m_tracker_bug.id, m_tracker_bug.summary, m_tracker_bug.detail, m_tracker_bug.assignuser, m_tracker_bug.posteddate, 
+                 m_tracker_bug.logby, m_tracker_bug.severity, m_tracker_bug.priority, m_tracker_bug.updateddate,
+                 m_tracker_bug.status, m_tracker_bug.duedate, m_tracker_bug.environment, m_tracker_bug.resolution,
+                 m_tracker_bug.cus_int_01, m_tracker_bug.cus_int_02, m_tracker_bug.cus_int_03, m_tracker_bug.cus_int_04, 
+                 m_tracker_bug.cus_int_05, m_tracker_bug.cus_int_06, m_tracker_bug.cus_int_07,
+                 m_tracker_bug.cus_int_08, m_tracker_bug.cus_int_09, m_tracker_bug.cus_int_10, m_tracker_bug.cus_str_01, 
+                 m_tracker_bug.cus_str_02, m_tracker_bug.cus_str_03, m_tracker_bug.cus_str_04,
+                 m_tracker_bug.cus_str_05, m_tracker_bug.cus_time_01, m_tracker_bug.cus_time_02, 
+                 m_tracker_bug.cus_time_03, m_tracker_bug.cus_time_04, m_tracker_bug.cus_dbl_01, 
+                 m_tracker_bug.cus_dbl_02, m_tracker_bug.cus_dbl_03, m_tracker_bug.projectid, 
+                 m_tracker_bug.resolveddate, 
+                 concat(assignuserTbl.firstname, IFNULL(concat(' ', assignuserTbl.middlename, ' '), ' '), assignuserTbl.lastname) as assignuserFullName,
+                 concat(loguserTbl.firstname, IFNULL(concat(' ', loguserTbl.middlename, ' '), ' '), loguserTbl.lastname) as loguserFullName,
+                 m_prj_project.name as projectname
+           FROM m_tracker_bug
+               LEFT OUTER JOIN m_prj_project ON (m_tracker_bug.projectid = m_prj_project.id)
+               LEFT OUTER JOIN s_user AS assignuserTbl ON (m_tracker_bug.assignuser=assignuserTbl.username)
+               LEFT OUTER JOIN s_user AS loguserTbl ON (m_tracker_bug.logby=loguserTbl.username)
+        ]]>
+	</sql>
+
+	<select id="getBugById" resultMap="SimpleBugResult" resultType="int">
+        <![CDATA[
+        SELECT m_tracker_bug.id, m_tracker_bug.summary, m_tracker_bug.detail, m_tracker_bug.assignuser, m_tracker_bug.posteddate,
+               m_tracker_bug.logby, m_tracker_bug.severity, m_tracker_bug.priority, m_tracker_bug.updateddate,
+               m_tracker_bug.status, m_tracker_bug.duedate, m_tracker_bug.environment,
+               m_tracker_bug.resolution, m_tracker_bug.cus_int_01, m_tracker_bug.cus_int_02, m_tracker_bug.cus_int_03,
+               m_tracker_bug.cus_int_04, m_tracker_bug.cus_int_05, m_tracker_bug.cus_int_06, m_tracker_bug.cus_int_07,
+               m_tracker_bug.cus_int_08, m_tracker_bug.cus_int_09, m_tracker_bug.cus_int_10, m_tracker_bug.cus_str_01,
+               m_tracker_bug.cus_str_02, m_tracker_bug.cus_str_03, m_tracker_bug.cus_str_04, m_tracker_bug.cus_str_05,
+               m_tracker_bug.cus_time_01, m_tracker_bug.cus_time_02, m_tracker_bug.cus_time_03, m_tracker_bug.cus_time_04,
+               m_tracker_bug.cus_dbl_01, m_tracker_bug.cus_dbl_02, m_tracker_bug.cus_dbl_03, m_tracker_bug.projectid,
+               m_tracker_bug.resolveddate,
+               concat(assignuserTbl.firstname, IFNULL(concat(' ', assignuserTbl.middlename, ' '), ' '), assignuserTbl.lastname) as assignuserFullName,
+               concat(loguserTbl.firstname, IFNULL(concat(' ', loguserTbl.middlename, ' '), ' '), loguserTbl.lastname) as loguserFullName,
+               m_prj_project.name as projectname
+        FROM m_tracker_bug
+               LEFT OUTER JOIN s_user AS assignuserTbl ON (m_tracker_bug.assignuser=assignuserTbl.username)
+               LEFT OUTER JOIN s_user AS loguserTbl ON (m_tracker_bug.logby=loguserTbl.username)
+               LEFT OUTER JOIN m_prj_project ON (m_tracker_bug.projectid = m_prj_project.id)
+        WHERE m_tracker_bug.id = #{bugid,javaType=INTEGER}
+        ]]>
+	</select>
+
+	<select id="getTotalCount" resultType="int" parameterType="BugSearchCriteria">
+		SELECT count(*) as totalCount FROM m_tracker_bug
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1 <include
+				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
+
+	<select id="findPagableList" resultMap="SimpleBugResult"
+		parameterType="BugSearchCriteria">
+		<include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.selectBug" />
+
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1 <include
+				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+		</trim>
+
+		ORDER BY m_tracker_bug.updateddate DESC, m_tracker_bug.posteddate DESC
+	</select>
+
+	<select id="getStatusSummary" resultMap="GroupItemResult"
+		parameterType="BugSearchCriteria">
+		SELECT m_tracker_bug.status AS groupid, COUNT(m_tracker_bug.status) AS
+		value, '' as groupname
+		FROM m_tracker_bug
+
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1 <include
+				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+		</trim>
+
+		GROUP BY m_tracker_bug.status
+	</select>
+
+	<select id="getPrioritySummary" resultMap="GroupItemResult"
+		parameterType="BugSearchCriteria">
+        <![CDATA[
+        SELECT m_tracker_bug.priority AS groupid,
+            COUNT(m_tracker_bug.priority) AS value, '' as groupname
+        FROM m_tracker_bug
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1 <include
+				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+		</trim>
+
+		GROUP BY m_tracker_bug.priority
+	</select>
+
+	<select id="getResolutionDefectsSummary" resultMap="GroupItemResult"
+		parameterType="BugSearchCriteria">
+        <![CDATA[
+        SELECT m_tracker_bug.resolution AS groupid,
+            COUNT(m_tracker_bug.resolution) AS value, '' as groupname
+        FROM
+            m_tracker_bug
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1 <include
+				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+		</trim>
+
+		GROUP BY m_tracker_bug.resolution
+	</select>
+
+	<select id="getAssignedDefectsSummary" resultMap="GroupItemResult"
+		parameterType="BugSearchCriteria">
+        <![CDATA[
+        SELECT m_tracker_bug.assignuser AS groupid,
+            COUNT(IFNULL(m_tracker_bug.assignuser,'')) AS value,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as groupname
+        FROM m_tracker_bug
+            LEFT OUTER JOIN s_user ON (m_tracker_bug.assignuser = s_user.username)
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1 <include
+				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+		</trim>
+
+		GROUP BY m_tracker_bug.assignuser
+	</select>
+
+	<select id="getReporterDefectsSummary" resultMap="GroupItemResult"
+		parameterType="BugSearchCriteria">
+        <![CDATA[
+        SELECT m_tracker_bug.logby AS groupid,
+            COUNT(IFNULL(m_tracker_bug.logby,'')) AS value,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as groupname
+        FROM m_tracker_bug
+            LEFT OUTER JOIN s_user ON (m_tracker_bug.logby = s_user.username)
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1 <include
+				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+		</trim>
+
+		GROUP BY m_tracker_bug.logby
+	</select>
+
+	<select id="getComponentDefectsSummary" resultMap="GroupItemResult"
+		parameterType="BugSearchCriteria">
+        <![CDATA[
+        SELECT m_tracker_component.id AS groupid,
+            COUNT(IFNULL(m_tracker_component.id,'')) AS value,
+            m_tracker_component.componentname as groupname
+        FROM m_tracker_bug
+        RIGHT OUTER JOIN m_tracker_related_item ON (CONCAT('bug-', m_tracker_bug.id) = m_tracker_related_item.refitemkey) 
+        RIGHT OUTER JOIN m_tracker_component ON ((m_tracker_related_item.type = 2)
+                AND m_tracker_component.id = m_tracker_related_item.relateitemid)
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			<include
+				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+		</trim>
+
+		GROUP BY m_tracker_component.id
+
+		UNION
+        <![CDATA[
+        SELECT 0 as groupid, COUNT(m_tracker_bug.id) as value, '' as groupname
+            FROM m_tracker_bug
+            WHERE (SELECT COUNT(*) FROM m_tracker_related_item WHERE m_tracker_related_item.type=2 AND CONCAT('bug-', m_tracker_bug.id) = m_tracker_related_item.refitemkey) = 0
+        ]]>
+		<include
+			refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+	</select>
+
+	<select id="getVersionDefectsSummary" resultMap="GroupItemResult"
+		parameterType="BugSearchCriteria">
+        <![CDATA[
+        SELECT m_tracker_version.id AS groupid,
+            COUNT(IFNULL(m_tracker_version.id,'')) AS value,
+            m_tracker_version.versionname as groupname
+        FROM m_tracker_bug
+        RIGHT OUTER JOIN m_tracker_related_item ON (CONCAT('bug-', m_tracker_bug.id) = m_tracker_related_item.refitemkey) 
+        RIGHT OUTER JOIN m_tracker_version ON ((m_tracker_related_item.type = 0 || m_tracker_related_item.type =1)
+                AND m_tracker_version.id = m_tracker_related_item.relateitemid)
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1 <include
+				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+		</trim>
+
+		GROUP BY m_tracker_version.id
+
+		UNION
+        <![CDATA[       
+        SELECT 0 as groupid, COUNT(m_tracker_bug.id) as value, '' as groupname
+            FROM m_tracker_bug
+            WHERE (SELECT COUNT(*) FROM m_tracker_related_item WHERE (m_tracker_related_item.type=0 OR m_tracker_related_item.type=1) AND CONCAT('bug-', m_tracker_bug.id) = m_tracker_related_item.refitemkey) = 0
+        ]]>
+		<include
+			refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+
+	</select>
+</mapper>
