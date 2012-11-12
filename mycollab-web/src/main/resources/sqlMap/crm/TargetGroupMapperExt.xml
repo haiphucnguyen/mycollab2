@@ -157,7 +157,7 @@
 		parameterType="TargetGroupSearchCriteria">
 		SELECT count(*) as totalCount FROM m_crm_target_list
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.TargetGroupMapperExt.queryTotalCountSearchCriteria" />
 		</trim>
 	</select>
@@ -167,7 +167,7 @@
 
 		<include refid="com.esofthead.mycollab.module.crm.dao.TargetGroupMapperExt.selectSimpleTargetGroup" />
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.TargetGroupMapperExt.querySearchCriteria" />
 		</trim>
 	</select>

@@ -137,7 +137,7 @@
 		resultType="int">
 		SELECT count(*) as totalCount FROM m_crm_campaign
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.queryTotalCountSearchCriteria" />
 		</trim>
 	</select>
@@ -159,7 +159,7 @@
 		<include
 			refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.selectSimpleCampaign" />
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.querySearchCriteria" />
 		</trim>
 	</select>

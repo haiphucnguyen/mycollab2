@@ -28,7 +28,7 @@
 		parameterType="ProductCatalogSearchCriteria">
 		SELECT count(*) as totalCount FROM m_crm_product_catalog
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.ProductCatalogMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
@@ -40,7 +40,7 @@
 		<include
 			refid="com.esofthead.mycollab.module.crm.dao.ProductCatalogMapperExt.selectProductCatalog" />
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.ProductCatalogMapperExt.querySearchCriteria" />
 		</trim>
 	</select>

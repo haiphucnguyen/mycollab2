@@ -1,1 +1,0 @@
-ALTER TABLE `m_prj_milestone` ADD COLUMN `iscompleted` TINYINT(1) NOT NULL DEFAULT 1 ;

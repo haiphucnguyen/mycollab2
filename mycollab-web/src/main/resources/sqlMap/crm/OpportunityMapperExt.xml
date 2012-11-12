@@ -158,7 +158,7 @@
         parameterType="OpportunitySearchCriteria">
         SELECT count(*) as totalCount FROM m_crm_opportunity
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            <include refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria" />
+            1=1 <include refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria" />
         </trim>
     </select>
 
@@ -167,7 +167,7 @@
         <include refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.selectSimpleOpportunity" />
 
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            <include refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.querySearchCriteria" />
+            1=1 <include refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.querySearchCriteria" />
        </trim>
     </select>
 

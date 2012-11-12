@@ -17,15 +17,12 @@
     m_crm_account*,
     m_crm_accounttype*,
     m_crm_campaign*,
-    m_crm_campaign_status*,
-    m_crm_campaign_type*,
     m_crm_case*,
     m_crm_contact*,
     m_crm_contract*,
     m_crm_customer*,
     m_crm_industry*,
     m_crm_lead*,
-    m_crm_leadsource*,
     m_crm_note*,
     m_crm_opportunity*,
     m_crm_opportunity_type*,
@@ -88,19 +85,17 @@
     m_pm_sent_messages*,
     m_prj_change_log*,
     m_prj_message*,
-    m_prj_message_category*,
+    m_prj_milestone*,
     m_prj_monitor*,
     m_prj_news*,
     m_prj_permission*,
     m_prj_problem*,
-    m_prj_problem_source*,
     m_prj_project*,
-    m_prj_relation*,
     m_prj_resource*,
     m_prj_risk*,
-    m_prj_risk_source*,
     m_prj_role*,
     m_prj_task*,
+    m_prj_task_list*,
     m_prj_task_resource*,
     m_rss_agreegator*,
     m_social_message*,
@@ -289,6 +284,7 @@
 <!ATTLIST m_crm_accounttype
     id CDATA #REQUIRED
     name CDATA #REQUIRED
+    sAccountId CDATA #REQUIRED
 >
 
 <!ELEMENT m_crm_campaign EMPTY>
@@ -312,18 +308,6 @@
     status CDATA #IMPLIED
     type CDATA #IMPLIED
     assignUser CDATA #IMPLIED
->
-
-<!ELEMENT m_crm_campaign_status EMPTY>
-<!ATTLIST m_crm_campaign_status
-    id CDATA #REQUIRED
-    name CDATA #REQUIRED
->
-
-<!ELEMENT m_crm_campaign_type EMPTY>
-<!ATTLIST m_crm_campaign_type
-    id CDATA #REQUIRED
-    name CDATA #REQUIRED
 >
 
 <!ELEMENT m_crm_case EMPTY>
@@ -363,7 +347,7 @@
     primCity CDATA #IMPLIED
     primState CDATA #IMPLIED
     primPostalCode CDATA #IMPLIED
-    primCountryId CDATA #IMPLIED
+    primCountry CDATA #IMPLIED
     description CDATA #IMPLIED
     title CDATA #IMPLIED
     assistantPhone CDATA #IMPLIED
@@ -373,6 +357,11 @@
     createdUser CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
     assignUser CDATA #IMPLIED
+    otherAddress CDATA #IMPLIED
+    otherCity CDATA #IMPLIED
+    otherState CDATA #IMPLIED
+    otherPostalCode CDATA #IMPLIED
+    otherCountry CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_contract EMPTY>
@@ -446,7 +435,7 @@
     primState CDATA #IMPLIED
     primCity CDATA #IMPLIED
     primPostalCode CDATA #IMPLIED
-    primCountryId CDATA #IMPLIED
+    primCountry CDATA #IMPLIED
     description CDATA #IMPLIED
     email CDATA #IMPLIED
     createdTime CDATA #IMPLIED
@@ -455,12 +444,13 @@
     assignUser CDATA #IMPLIED
     status CDATA #IMPLIED
     source CDATA #IMPLIED
->
-
-<!ELEMENT m_crm_leadsource EMPTY>
-<!ATTLIST m_crm_leadsource
-    id CDATA #REQUIRED
-    name CDATA #REQUIRED
+    website CDATA #IMPLIED
+    otherAddress CDATA #IMPLIED
+    otherState CDATA #IMPLIED
+    otherCity CDATA #IMPLIED
+    otherPostalCode CDATA #IMPLIED
+    otherCountry CDATA #IMPLIED
+    industry CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_note EMPTY>
@@ -1139,19 +1129,26 @@
 <!ELEMENT m_prj_message EMPTY>
 <!ATTLIST m_prj_message
     id CDATA #REQUIRED
-    categoryid CDATA #IMPLIED
     title CDATA #REQUIRED
     message CDATA #IMPLIED
     messagehtml CDATA #IMPLIED
     posteddate CDATA #REQUIRED
     posteduser CDATA #IMPLIED
     projectid CDATA #REQUIRED
+    category CDATA #IMPLIED
 >
 
-<!ELEMENT m_prj_message_category EMPTY>
-<!ATTLIST m_prj_message_category
+<!ELEMENT m_prj_milestone EMPTY>
+<!ATTLIST m_prj_milestone
     id CDATA #REQUIRED
-    category CDATA #REQUIRED
+    name CDATA #REQUIRED
+    description CDATA #IMPLIED
+    startdate CDATA #REQUIRED
+    enddate CDATA #REQUIRED
+    owner CDATA #REQUIRED
+    flag CDATA #IMPLIED
+    projectid CDATA #REQUIRED
+    iscompleted CDATA #REQUIRED
 >
 
 <!ELEMENT m_prj_monitor EMPTY>
@@ -1198,15 +1195,8 @@
     actualenddate CDATA #IMPLIED
     level CDATA #IMPLIED
     resolution CDATA #IMPLIED
-    problemsourceid CDATA #IMPLIED
     state CDATA #IMPLIED
->
-
-<!ELEMENT m_prj_problem_source EMPTY>
-<!ATTLIST m_prj_problem_source
-    id CDATA #REQUIRED
-    sourcename CDATA #REQUIRED
-    description CDATA #IMPLIED
+    source CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_project EMPTY>
@@ -1232,16 +1222,6 @@
     currencyid CDATA #IMPLIED
     progress CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
->
-
-<!ELEMENT m_prj_relation EMPTY>
-<!ATTLIST m_prj_relation
-    id CDATA #REQUIRED
-    projectid CDATA #REQUIRED
-    taskid CDATA #REQUIRED
-    relatedtaskid CDATA #REQUIRED
-    type CDATA #REQUIRED
-    duration CDATA #REQUIRED
 >
 
 <!ELEMENT m_prj_resource EMPTY>
@@ -1276,14 +1256,7 @@
     response CDATA #IMPLIED
     resolution CDATA #IMPLIED
     level CDATA #IMPLIED
-    risksourceid CDATA #IMPLIED
->
-
-<!ELEMENT m_prj_risk_source EMPTY>
-<!ATTLIST m_prj_risk_source
-    id CDATA #REQUIRED
-    name CDATA #REQUIRED
-    description CDATA #IMPLIED
+    source CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_role EMPTY>
@@ -1315,6 +1288,15 @@
     cost CDATA #IMPLIED
     actualCost CDATA #IMPLIED
     ismilestone CDATA #IMPLIED
+    tasklistid CDATA #IMPLIED
+>
+
+<!ELEMENT m_prj_task_list EMPTY>
+<!ATTLIST m_prj_task_list
+    id CDATA #REQUIRED
+    name CDATA #REQUIRED
+    description CDATA #IMPLIED
+    projectid CDATA #REQUIRED
 >
 
 <!ELEMENT m_prj_task_resource EMPTY>

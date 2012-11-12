@@ -112,7 +112,7 @@
 		<include
 			refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.selectSimpleAccount" />
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
@@ -121,7 +121,7 @@
 		resultType="java.lang.Integer">
 		SELECT count(*) as totalCount FROM m_crm_account
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
+			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
 		</trim>
 	</select>

@@ -124,7 +124,7 @@
         SELECT m_crm_lead.id, m_crm_lead.campaignId, m_crm_lead.leadSourceDesc, m_crm_lead.statusDesc, m_crm_lead.referredBy, m_crm_lead.prefixName, 
                m_crm_lead.firstname, m_crm_lead.lastname, m_crm_lead.accountName, m_crm_lead.title, m_crm_lead.department, m_crm_lead.isCallable, 
                m_crm_lead.officePhone, m_crm_lead.homePhone, m_crm_lead.mobile, m_crm_lead.otherPhone, m_crm_lead.fax, m_crm_lead.primAddress, 
-               m_crm_lead.primState, m_crm_lead.primCity, m_crm_lead.primPostalCode, m_crm_lead.primCountryId, m_crm_lead.description,
+               m_crm_lead.primState, m_crm_lead.primCity, m_crm_lead.primPostalCode, m_crm_lead.primCountry, m_crm_lead.description,
                m_crm_lead.email, m_crm_lead.createdTime, m_crm_lead.createdUser, m_crm_lead.sAccountId, m_crm_lead.assignUser, m_crm_lead.status, 
                m_crm_lead.source, concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS assignUserFullName, 
                m_crm_campaign.campaignName, m_crm_lead.website
@@ -139,7 +139,7 @@
 		parameterType="LeadSearchCriteria">
 		SELECT count(*) as totalCount FROM m_crm_lead
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.queryTotalCountSearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.queryTotalCountSearchCriteria" />
 		</trim>
 	</select>
 
@@ -147,7 +147,7 @@
 		parameterType="LeadSearchCriteria">
 		<include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.querySearchCriteria" />
+			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
 

@@ -48,7 +48,7 @@ public class GridFormLayoutHelper {
 	}
 
 	public Field addComponent(Field field, String caption, int column1,
-			int row1, int column2, int row2, String width) {
+			int row1, int column2, int row2) {
 		Label l = new Label(caption);
 		l.setSizeUndefined();
 		layout.addComponent(l, 3 * column1, row1 + 1);
@@ -57,15 +57,13 @@ public class GridFormLayoutHelper {
 		layout.addComponent(field, 3 * column1 + 1, row1 + 1, 3 * column2 + 1,
 				row2 + 1);
 		field.setCaption(null);
-		field.setWidth(width);
 		return field;
 	}
 
 	public Field addComponent(boolean condition, Field field, String caption,
 			int column1, int row1, int column2, int row2) {
 		if (condition) {
-			return addComponent(field, caption, column1, row1, column2, row2,
-					UIConstants.DEFAULT_CONTROL_WIDTH);
+			return addComponent(field, caption, column1, row1, column2, row2);
 		} else {
 			return null;
 		}

@@ -106,9 +106,9 @@
             <![CDATA[
             ${accountName.operation}
             (SELECT COUNT(*)
-            FROM m_crm_account WHERE
-            m_prj_project.account = m_crm_account.id AND
-            m_crm_account.accountName LIKE '%${accountName.value}%') > 0
+                FROM m_crm_account 
+                WHERE m_prj_project.account = m_crm_account.id 
+                    AND m_crm_account.accountName LIKE '%${accountName.value}%') > 0
             ]]>
 		</if>
 		<if test="projectStatus != null">
