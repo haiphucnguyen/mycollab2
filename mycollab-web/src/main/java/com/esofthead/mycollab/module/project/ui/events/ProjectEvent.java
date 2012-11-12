@@ -10,6 +10,12 @@ public class ProjectEvent {
 			super(source, data);
 		}
 	}
+	
+	public static class GetMyProjects extends ApplicationEvent {
+		public GetMyProjects(Object source, Object data) {
+			super(source, data);
+		}
+	}
 
 	public static class GotoMyProjectList extends ApplicationEvent {
 		public GotoMyProjectList(Object source, Object data) {

@@ -47,6 +47,7 @@ public class ProjectAddWindow extends Window {
 			public void wizardCompleted(WizardCompletedEvent event) {
 				// Save project information
 				project.setSaccountid(AppContext.getAccountId());
+				project.setOwner(AppContext.getUsername());
 
 				EventBus eventBus = AppContext.getSpringBean(EventBus.class);
 				eventBus.fireEvent(new ProjectEvent.Save(this, beanItem
