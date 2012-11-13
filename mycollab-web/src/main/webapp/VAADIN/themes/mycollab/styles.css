@@ -67,6 +67,7 @@
     text-decoration: none;  
     color: #5E5E5E;
     text-shadow: #F0F0F0 0 1px 0;
+    font-weight: bold;
 }
 
 .h-sidebar-menu .v-csslayout-container .v-button-link.isSelected .v-button-caption, .h-sidebar-menu .v-csslayout-container .v-button-link.isSelected .v-button-caption:hover {
@@ -220,9 +221,18 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 .advSearch .advSearchHeader .h2 {
-    font-size: 16px;
+    font-size: 14px;
     border-bottom: 1px solid #B7B7B7;
+    padding-top: 0px;
 }
+
+.advSearch .advSearchBody .v-label {
+	width: 100px !important;
+	text-align: right;
+}/*
+.advSearch .advSearchBody select.v-select-select{
+	width: 220px !important;
+}*/
 
 .advSearch .advSearchFooterContainer {
     width: 100%;
@@ -236,7 +246,7 @@ input.v-textfield-pagedtable-pagefield {
 
 /* End Advanced Search Template */
 
-/* Advanced Search Template */
+/* Basic Search Template */
 
 .basicSearch {
     background-color: #F3F3F3;
@@ -255,7 +265,7 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 .basicSearch .basicSearchHeader .h2 {
-    font-size: 16px;
+    font-size: 14px;
     border-bottom: 1px solid #B7B7B7;
     padding-top: 0px;
 }
@@ -264,7 +274,7 @@ input.v-textfield-pagedtable-pagefield {
 	line-height: 1.8em;
 }
 
-/* End Advanced Search Template */
+/* End Basic Search Template */
 
 /* CRM Service */
 
@@ -364,3 +374,32 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 /* End Login Form */
+
+/* Add View Styles */
+.addViewLayout {
+	background-color: #F3F3F3;
+	padding: 10px 20px;
+	margin: 10px 2px;
+	box-shadow: #BFBFBF 0px 1px 2px 1px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border: 1px solid #B7B7B7;
+}
+.addViewLayout .addNewControl {
+	margin: 10px auto 0px;	
+}
+.addViewLayout .addViewHeader .headerName {
+	font-size: 16px;
+	font-weight: bold;
+	margin-top: 15px;
+}
+.addViewLayout .addViewBody .h2 {
+	font-size: 14px;
+	border-bottom: 1px solid #B7B7B7;
+	color: #5E5E5E;
+	text-shadow: #F0F0F0 0 1px 0;
+	width: 500px !important;
+}
+/* End Add View Styles */

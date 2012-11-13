@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AccountTypeComboBox;
+import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
@@ -30,7 +31,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.Reindeer;
 
 @Component
 public class AccountAddViewImpl extends AbstractView implements AccountAddView {
@@ -76,6 +76,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 		protected HorizontalLayout createButtonControls() {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(true);
+			layout.setStyleName("addNewControl");
 			FormActionListener formActionListener = new FormActionListener();
 			Button saveBtn = new Button(SAVE_ACTION, formActionListener);
 			Button cancelBtn = new Button(CANCEL_ACTION, formActionListener);
@@ -214,35 +215,48 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 		public GenericForm() {
 			super();
 
-			VerticalLayout layout = new VerticalLayout();
-			layout.setSpacing(true);
+			AddViewLayout accountAddLayout = new AddViewLayout("Account");
 
-			layout.addComponent(createButtonControls());
+			accountAddLayout.addTopControls(createButtonControls());
+
+			VerticalLayout layout = new VerticalLayout();
 
 			Label organizationHeader = new Label("Account Information");
-			organizationHeader.setStyleName(Reindeer.LABEL_H2);
+			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
 			informationLayout = new GridFormLayoutHelper(2, 6);
+			informationLayout.getLayout().setWidth("900px");
 			layout.addComponent(informationLayout.getLayout());
+			layout.setComponentAlignment(informationLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
 
 			addressLayout = new GridFormLayoutHelper(2, 4);
 			Label addressHeader = new Label("Address Information");
-			addressHeader.setStyleName(Reindeer.LABEL_H2);
+			addressHeader.setStyleName("h2");
 			layout.addComponent(addressHeader);
+			addressLayout.getLayout().setWidth("900px");
 			layout.addComponent(addressLayout.getLayout());
+			layout.setComponentAlignment(addressLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
 
 			descriptionLayout = new GridFormLayoutHelper(2, 1);
 			Label descHeader = new Label("Description");
-			descHeader.setStyleName(Reindeer.LABEL_H2);
+			descHeader.setStyleName("h2");
 			layout.addComponent(descHeader);
+			descriptionLayout.getLayout().setWidth("900px");
 			layout.addComponent(descriptionLayout.getLayout());
+			layout.setComponentAlignment(descriptionLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
 
 			this.setWriteThrough(true);
 			this.setInvalidCommitted(false);
 
-			layout.addComponent(createButtonControls());
-			setLayout(layout);
+			accountAddLayout.addBottomControls(createButtonControls());
+
+			accountAddLayout.addBody(layout);
+
+			setLayout(accountAddLayout);
 		}
 
 		abstract protected HorizontalLayout createButtonControls();

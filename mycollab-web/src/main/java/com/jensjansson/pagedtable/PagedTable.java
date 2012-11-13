@@ -64,7 +64,6 @@ public class PagedTable extends Table {
 		Label itemsPerPageLabel = new Label("Items per page:");
 		final ComboBox itemsPerPageSelect = new ComboBox();
 
-		itemsPerPageSelect.addItem("3");
 		itemsPerPageSelect.addItem("5");
 		itemsPerPageSelect.addItem("10");
 		itemsPerPageSelect.addItem("25");
