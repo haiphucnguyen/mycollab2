@@ -1,103 +1,109 @@
 package com.esofthead.mycollab.module.project.ui;
 
 import org.springframework.stereotype.Component;
-import org.vaadin.melodion.Melodion;
-import org.vaadin.melodion.Melodion.Tab;
 
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
-import com.esofthead.mycollab.web.AppContext;
+import com.github.wolfie.detachedtabs.DetachedTabs;
+import com.vaadin.event.LayoutEvents.LayoutClickEvent;
+import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.terminal.Sizeable;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.NativeButton;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @Component
 public class UserDashboardViewImpl extends AbstractView implements
 		UserDashboardView {
-	private Melodion melodion;
-	private NativeButton myFeedsBtn;
-	private NativeButton myProjectsBtn;
-	private NativeButton myTasksBtn;
-	private NativeButton myDefectsBtn;
+	private HorizontalSplitPanel root;
+
+	private DetachedTabs mySpaceTabs;
+	private CssLayout mySpaceArea = new CssLayout();
+	private DetachedTabs calendarToolTabs;
 
 	@Override
 	protected ComponentContainer initMainLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		final HorizontalSplitPanel hLayout = new HorizontalSplitPanel();
-		layout.addComponent(hLayout);
-		layout.setExpandRatio(hLayout, 1);
-		hLayout.setSplitPosition(200, Sizeable.UNITS_PIXELS);
-		hLayout.setLocked(true);
-		hLayout.setSizeFull();
+		root = new HorizontalSplitPanel();
+		root.setSplitPosition(200, Sizeable.UNITS_PIXELS);
+		root.setLocked(true);
+		root.setSizeFull();
 
-		VerticalLayout lContainer = new VerticalLayout();
-		melodion = new Melodion();
+		mySpaceArea.setWidth("100%");
+		mySpaceTabs = new DetachedTabs.Vertical(mySpaceArea);
+		mySpaceTabs.setSizeFull();
+		mySpaceTabs.setHeight(null);
 
-		Tab dashboardTab = melodion.addTab(new Label("Dashboard"));
-		melodion.setSelected(dashboardTab);
+		calendarToolTabs = new DetachedTabs.Vertical(mySpaceArea);
+		calendarToolTabs.setSizeFull();
+		calendarToolTabs.setHeight(null);
 
-		Tab mySpaceTab = melodion.addTab(new Label("My Home"));
+		VerticalLayout menu = new VerticalLayout();
+		menu.setSizeFull();
+		menu.setStyleName("sidebar-menu");
 
-		myFeedsBtn = new NativeButton("My Feeds");
-		mySpaceTab.addButton(myFeedsBtn);
+		menu.addComponent(new Label("My Home"));
+		menu.addComponent(mySpaceTabs);
+		menu.addComponent(new Label("Calendar"));
+		menu.addComponent(calendarToolTabs);
 
-		myProjectsBtn = new NativeButton("My Projects",
-				new Button.ClickListener() {
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						MyProjectsViewImpl myProject = AppContext
-								.getView(MyProjectsViewImpl.class);
-						hLayout.setSecondComponent((com.vaadin.ui.Component) myProject
-								.getCompContainer());
-						myProject.doDefaultSearch();
-					}
-				});
-		mySpaceTab.addButton(myProjectsBtn);
-
-		myTasksBtn = new NativeButton("My Tasks", new Button.ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				MyTasksViewImpl myTasks = AppContext
-						.getView(MyTasksViewImpl.class);
-				hLayout.setSecondComponent((com.vaadin.ui.Component) myTasks
-						.getCompContainer());
+		mySpaceTabs.setStyleName("hide-selection");
+		calendarToolTabs.setStyleName("hide-selection");
+		menu.addListener(new LayoutClickListener() {
+			public void layoutClick(LayoutClickEvent event) {
+				if (!root.getSecondComponent().equals(mySpaceArea)) {
+					root.setSecondComponent(mySpaceArea);
+				}
+				if (event.getChildComponent() == mySpaceTabs) {
+					calendarToolTabs.setStyleName("hide-selection");
+					mySpaceTabs.setStyleName("");
+				} else if (event.getChildComponent() == calendarToolTabs) {
+					mySpaceTabs.setStyleName("hide-selection");
+					calendarToolTabs.setStyleName("");
+				}
 			}
 		});
-		mySpaceTab.addButton(myTasksBtn);
 
-		myDefectsBtn = new NativeButton("My Defects",
-				new Button.ClickListener() {
+		root.setFirstComponent(menu);
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						MyDefectsViewImpl myDefects = AppContext
-								.getView(MyDefectsViewImpl.class);
-						hLayout.setSecondComponent((com.vaadin.ui.Component) myDefects
-								.getCompContainer());
+		buildComponents();
+		showWelcomeScreen();
 
-					}
-				});
-		mySpaceTab.addButton(myDefectsBtn);
+		return root;
+	}
+	
+	private void showWelcomeScreen() {
+        CustomLayout welcome = new CustomLayout("projectWelcomeScreen");
+        welcome.setSizeFull();
+        root.setSecondComponent(welcome);
+    }
 
-		melodion.addTab(new Label("Calendar"));
-		lContainer.addComponent(melodion);
+	private void buildComponents() {
+		mySpaceTabs.addTab(constructMyFeedsComponents(), "My Feeds");
+		mySpaceTabs.addTab(constructMyProjectsComponents(), "My Projects");
+		mySpaceTabs.addTab(constructMyFeedsComponents(), "My Tasks");
+		mySpaceTabs.addTab(constructMyFeedsComponents(), "My Bugs");
+		
+		
+	}
 
-		lContainer.setExpandRatio(melodion, 1);
-
-		hLayout.setFirstComponent(lContainer);
-		return hLayout;
+	private Layout constructMyFeedsComponents() {
+		return new VerticalLayout();
+	}
+	
+	private Layout constructMyProjectsComponents() {
+		VerticalLayout layout = new VerticalLayout();
+		layout.addComponent(new Label("AAA"));
+		return layout;
 	}
 
 	@Override
 	public void gotoMyProjectList() {
-		melodion.setSelected(myProjectsBtn);
+		// TODO Auto-generated method stub
 
 	}
 

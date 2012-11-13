@@ -28,7 +28,7 @@ public class ProjectContainer extends AbstractView {
 
 			@Override
 			public void handle(GotoMyProjectList event) {
-				// TODO Auto-generated method stub
+				gotoMyProjectList();
 
 			}
 		});
@@ -39,9 +39,18 @@ public class ProjectContainer extends AbstractView {
 		VerticalLayout container = new VerticalLayout();
 		UserDashboardViewImpl userDashboard = AppContext
 				.getView(UserDashboardViewImpl.class);
+		container.setSizeFull();
 		container.addComponent((com.vaadin.ui.Component) userDashboard
 				.getCompContainer());
 		return container;
+	}
+
+	private void gotoMyProjectList() {
+		UserDashboardViewImpl userDashboard = AppContext
+				.getView(UserDashboardViewImpl.class);
+		compContainer.removeAllComponents();
+		compContainer.addComponent(userDashboard.getCompContainer());
+		userDashboard.gotoMyProjectList();
 	}
 
 }
