@@ -40,184 +40,217 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public abstract class DetachedTabs extends CustomComponent {
 
-  public static class Horizontal extends DetachedTabs {
-    /**
-     * Creates a new horizontal {@link DetachedTabs}.
-     * 
-     * @param componentContainer
-     *          The {@link ComponentContainer} that will act as
-     *          "the sheet for the tabs". The client code will lose all control
-     *          over the <tt>componentContainer</tt>, excepting where it will be
-     *          added. So, you may add it to any layout you want, but you are
-     *          not in control over what will be presented inside it anymore.
-     */
-    public Horizontal(final ComponentContainer componentContainer) {
-      super(componentContainer, Orientation.HORIZONTAL);
-    }
-  }
+	public static class Horizontal extends DetachedTabs {
+		/**
+		 * Creates a new horizontal {@link DetachedTabs}.
+		 * 
+		 * @param componentContainer
+		 *            The {@link ComponentContainer} that will act as
+		 *            "the sheet for the tabs". The client code will lose all
+		 *            control over the <tt>componentContainer</tt>, excepting
+		 *            where it will be added. So, you may add it to any layout
+		 *            you want, but you are not in control over what will be
+		 *            presented inside it anymore.
+		 */
+		public Horizontal(final ComponentContainer componentContainer) {
+			super(componentContainer, Orientation.HORIZONTAL);
+		}
+	}
 
-  public static class Vertical extends DetachedTabs {
-    /**
-     * Creates a new vertical {@link DetachedTabs}.
-     * 
-     * @param componentContainer
-     *          The {@link ComponentContainer} that will act as
-     *          "the sheet for the tabs". The client code will lose all control
-     *          over the <tt>componentContainer</tt>, excepting where it will be
-     *          added. So, you may add it to any layout you want, but you are
-     *          not in control over what will be presented inside it anymore.
-     */
-    public Vertical(final ComponentContainer componentContainer) {
-      super(componentContainer, Orientation.VERTICAL);
-    }
-  }
+	public static class Vertical extends DetachedTabs {
+		/**
+		 * Creates a new vertical {@link DetachedTabs}.
+		 * 
+		 * @param componentContainer
+		 *            The {@link ComponentContainer} that will act as
+		 *            "the sheet for the tabs". The client code will lose all
+		 *            control over the <tt>componentContainer</tt>, excepting
+		 *            where it will be added. So, you may add it to any layout
+		 *            you want, but you are not in control over what will be
+		 *            presented inside it anymore.
+		 */
+		public Vertical(final ComponentContainer componentContainer) {
+			super(componentContainer, Orientation.VERTICAL);
+		}
+	}
 
-  private class TabChangeListener implements ClickListener {
-    public void buttonClick(final ClickEvent event) {
-      final Button button = event.getButton();
-      final Component componentToSwitch = buttonComponentMap.get(button);
-      switchTo(componentToSwitch, button);
-    }
-  }
+	public static interface TabChangedListener {
+		void tabChanged(TabChangedEvent event);
+	}
 
-  public enum Orientation {
-    HORIZONTAL, VERTICAL
-  };
+	public static class TabChangedEvent {
+		private Button source;
 
-  private final AbstractOrderedLayout layout;
-  private final ComponentContainer componentContainer;
-  private final ClickListener tabChangeListener = new TabChangeListener();
-  private final Map<Button, Component> buttonComponentMap = new LinkedHashMap<Button, Component>();
-  private final List<Button> tabs = new ArrayList<Button>();
-  private Button shownTab = null;
-  private final Orientation orientation;
+		public TabChangedEvent(Button source) {
+			this.source = source;
+		}
 
-  private static final String CLASS = "detachedtabs";
-  private static final String CLASS_HORIZONTAL = CLASS + "-horizontal";
-  private static final String CLASS_VERTICAL = CLASS + "-vertical";
+		public Button getSource() {
+			return source;
+		}
+	}
 
-  private static final String TAB_CLASS = "tab";
-  private static final String TAB_FIRST_CLASS = TAB_CLASS + "-first";
-  private static final String TAB_LAST_CLASS = TAB_CLASS + "-last";
-  private static final String TAB_SELECTED_CLASS = TAB_CLASS + "-selected";
+	private class TabChangeListener implements ClickListener {
+		public void buttonClick(final ClickEvent event) {
+			final Button button = event.getButton();
+			final Component componentToSwitch = buttonComponentMap.get(button);
+			switchTo(componentToSwitch, button);
 
-  private DetachedTabs(final ComponentContainer componentContainer,
-      final Orientation orientation) {
+			TabChangedEvent changeEvent = new TabChangedEvent(button);
+			for (TabChangedListener listener : tabListeners) {
+				listener.tabChanged(changeEvent);
+			}
+		}
+	}
 
-    if (componentContainer == null || orientation == null) {
-      throw new NullPointerException("arguments may not be null");
-    }
+	public enum Orientation {
+		HORIZONTAL, VERTICAL
+	};
 
-    setStyleName(CLASS);
+	private final AbstractOrderedLayout layout;
+	private final ComponentContainer componentContainer;
+	private final ClickListener tabChangeListener = new TabChangeListener();
+	private final Map<Button, Component> buttonComponentMap = new LinkedHashMap<Button, Component>();
+	private final List<Button> tabs = new ArrayList<Button>();
+	private Button shownTab = null;
+	private final Orientation orientation;
 
-    setSizeFull();
+	private static final String CLASS = "detachedtabs";
+	private static final String CLASS_HORIZONTAL = CLASS + "-horizontal";
+	private static final String CLASS_VERTICAL = CLASS + "-vertical";
 
-    switch (orientation) {
-    case HORIZONTAL:
-      layout = new HorizontalLayout();
-      addStyleName(CLASS_HORIZONTAL);
-      setHeight("30px");
-      break;
-    case VERTICAL:
-      layout = new VerticalLayout();
-      addStyleName(CLASS_VERTICAL);
-      setWidth("100px");
-      break;
-    default:
-      throw new UnsupportedOperationException("orientation " + orientation
-          + " not supported");
-    }
+	private static final String TAB_CLASS = "tab";
+	private static final String TAB_FIRST_CLASS = TAB_CLASS + "-first";
+	private static final String TAB_LAST_CLASS = TAB_CLASS + "-last";
+	private static final String TAB_SELECTED_CLASS = TAB_CLASS + "-selected";
 
-    layout.setSizeFull();
+	private List<TabChangedListener> tabListeners;
 
-    setCompositionRoot(layout);
-    this.componentContainer = componentContainer;
-    this.orientation = orientation;
-  }
+	private DetachedTabs(final ComponentContainer componentContainer,
+			final Orientation orientation) {
 
-  /**
-   * Add a tab
-   * 
-   * @param content
-   *          The {@link Component} that will be shown once its corresponding
-   *          tab is selected.
-   * @param caption
-   *          The caption for the tab.
-   */
-  public void addTab(final Component content, final String caption) {
-    if (content == null || caption == null) {
-      throw new NullPointerException("Arguments may not be null");
-    }
+		if (componentContainer == null || orientation == null) {
+			throw new NullPointerException("arguments may not be null");
+		}
 
-    final Button button = new NativeButton(caption, tabChangeListener);
+		setStyleName(CLASS);
 
-    if (orientation == Orientation.HORIZONTAL) {
-      button.setHeight("100%");
-      button.setWidth(getWidth(), getWidthUnits());
-    } else {
-      button.setHeight(getHeight(), getHeightUnits());
-      button.setWidth("100%");
-    }
+		setSizeFull();
 
-    layout.addComponent(button);
-    buttonComponentMap.put(button, content);
-    tabs.add(button);
+		switch (orientation) {
+		case HORIZONTAL:
+			layout = new HorizontalLayout();
+			addStyleName(CLASS_HORIZONTAL);
+			setHeight("30px");
+			break;
+		case VERTICAL:
+			layout = new VerticalLayout();
+			addStyleName(CLASS_VERTICAL);
+			setWidth("100px");
+			break;
+		default:
+			throw new UnsupportedOperationException("orientation "
+					+ orientation + " not supported");
+		}
 
-    adjustTabStyles();
+		layout.setSizeFull();
 
-    if (shownTab == null) {
-      switchTo(content, button);
-    }
-  }
+		setCompositionRoot(layout);
+		this.componentContainer = componentContainer;
+		this.orientation = orientation;
+	}
 
-  private void adjustTabStyles() {
-    if (!tabs.isEmpty()) {
-      final Component first = tabs.get(0);
-      Component last = first;
+	public void addTabChangedListener(TabChangedListener listener) {
+		if (tabListeners == null) {
+			tabListeners = new ArrayList<DetachedTabs.TabChangedListener>();
+		}
 
-      for (final Component tab : tabs) {
-        tab.setStyleName(TAB_CLASS);
-        last = tab;
-      }
+		tabListeners.add(listener);
+	}
 
-      first.addStyleName(TAB_FIRST_CLASS);
-      last.addStyleName(TAB_LAST_CLASS);
+	/**
+	 * Add a tab
+	 * 
+	 * @param content
+	 *            The {@link Component} that will be shown once its
+	 *            corresponding tab is selected.
+	 * @param caption
+	 *            The caption for the tab.
+	 */
+	public void addTab(final Component content, final String caption) {
+		if (content == null || caption == null) {
+			throw new NullPointerException("Arguments may not be null");
+		}
 
-      if (shownTab != null) {
-        shownTab.addStyleName(TAB_SELECTED_CLASS);
-      }
-    }
-  }
+		final Button button = new NativeButton(caption, tabChangeListener);
 
-  private void switchTo(final Component componentToSwitch, final Button button) {
-    componentContainer.removeAllComponents();
-    componentContainer.addComponent(componentToSwitch);
-    shownTab = button;
+		if (orientation == Orientation.HORIZONTAL) {
+			button.setHeight("100%");
+			button.setWidth(getWidth(), getWidthUnits());
+		} else {
+			button.setHeight(getHeight(), getHeightUnits());
+			button.setWidth("100%");
+		}
 
-    adjustTabStyles();
-  }
+		layout.addComponent(button);
+		buttonComponentMap.put(button, content);
+		tabs.add(button);
 
-  @Override
-  public void setWidth(final float width, final int unit) {
-    if (orientation == Orientation.VERTICAL) {
-      final Iterator<Component> i = layout.getComponentIterator();
-      while (i.hasNext()) {
-        i.next().setWidth(width, unit);
-      }
-    }
+		adjustTabStyles();
 
-    super.setWidth(width, unit);
-  }
+		if (shownTab == null) {
+			switchTo(content, button);
+		}
+	}
 
-  @Override
-  public void setHeight(final float height, final int unit) {
-    if (orientation == Orientation.HORIZONTAL) {
-      final Iterator<Component> i = layout.getComponentIterator();
-      while (i.hasNext()) {
-        i.next().setHeight(height, unit);
-      }
-    }
+	private void adjustTabStyles() {
+		if (!tabs.isEmpty()) {
+			final Component first = tabs.get(0);
+			Component last = first;
 
-    super.setHeight(height, unit);
-  }
+			for (final Component tab : tabs) {
+				tab.setStyleName(TAB_CLASS);
+				last = tab;
+			}
+
+			first.addStyleName(TAB_FIRST_CLASS);
+			last.addStyleName(TAB_LAST_CLASS);
+
+			if (shownTab != null) {
+				shownTab.addStyleName(TAB_SELECTED_CLASS);
+			}
+		}
+	}
+
+	private void switchTo(final Component componentToSwitch, final Button button) {
+		componentContainer.removeAllComponents();
+		componentContainer.addComponent(componentToSwitch);
+		shownTab = button;
+
+		adjustTabStyles();
+	}
+
+	@Override
+	public void setWidth(final float width, final int unit) {
+		if (orientation == Orientation.VERTICAL) {
+			final Iterator<Component> i = layout.getComponentIterator();
+			while (i.hasNext()) {
+				i.next().setWidth(width, unit);
+			}
+		}
+
+		super.setWidth(width, unit);
+	}
+
+	@Override
+	public void setHeight(final float height, final int unit) {
+		if (orientation == Orientation.HORIZONTAL) {
+			final Iterator<Component> i = layout.getComponentIterator();
+			while (i.hasNext()) {
+				i.next().setHeight(height, unit);
+			}
+		}
+
+		super.setHeight(height, unit);
+	}
 }

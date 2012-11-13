@@ -3,11 +3,13 @@ package com.esofthead.mycollab.module.project.ui;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
+import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
+import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.terminal.Sizeable;
-import com.vaadin.ui.AbsoluteLayout;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
@@ -75,30 +77,40 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 		return root;
 	}
-	
+
 	private void showWelcomeScreen() {
-        CustomLayout welcome = new CustomLayout("projectWelcomeScreen");
-        welcome.setSizeFull();
-        root.setSecondComponent(welcome);
-    }
+		CustomLayout welcome = new CustomLayout("projectWelcomeScreen");
+		welcome.setSizeFull();
+		root.setSecondComponent(welcome);
+	}
 
 	private void buildComponents() {
 		mySpaceTabs.addTab(constructMyFeedsComponents(), "My Feeds");
 		mySpaceTabs.addTab(constructMyProjectsComponents(), "My Projects");
 		mySpaceTabs.addTab(constructMyFeedsComponents(), "My Tasks");
 		mySpaceTabs.addTab(constructMyFeedsComponents(), "My Bugs");
-		
-		
+
+		mySpaceTabs
+				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+
+					@Override
+					public void tabChanged(TabChangedEvent event) {
+						Button btn = event.getSource();
+						String caption = btn.getCaption();
+						if ("My Projects".equals(caption)) {
+
+						}
+					}
+				});
 	}
 
 	private Layout constructMyFeedsComponents() {
 		return new VerticalLayout();
 	}
-	
-	private Layout constructMyProjectsComponents() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.addComponent(new Label("AAA"));
-		return layout;
+
+	private ComponentContainer constructMyProjectsComponents() {
+		MyProjectsViewImpl view = AppContext.getView(MyProjectsViewImpl.class);
+		return view.getCompContainer();
 	}
 
 	@Override

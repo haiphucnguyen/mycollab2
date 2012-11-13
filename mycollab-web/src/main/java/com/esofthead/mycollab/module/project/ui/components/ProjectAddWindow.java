@@ -126,7 +126,7 @@ public class ProjectAddWindow extends Window {
 		}
 
 		@Override
-		public String getCaption() {
+		public String getTitle() {
 			return "Project Information";
 		}
 
@@ -177,7 +177,7 @@ public class ProjectAddWindow extends Window {
 		}
 
 		@Override
-		public String getCaption() {
+		public String getTitle() {
 			return "Project Attributes";
 		}
 
@@ -231,7 +231,7 @@ public class ProjectAddWindow extends Window {
 		}
 
 		@Override
-		public String getCaption() {
+		public String getTitle() {
 			return "Project Budget";
 		}
 
