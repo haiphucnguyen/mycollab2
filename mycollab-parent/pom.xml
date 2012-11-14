@@ -7,6 +7,10 @@
 	<artifactId>parent</artifactId>
 	<version>1.0</version>
 	<packaging>pom</packaging>
+	<modules>
+		<module>../mycollab-core</module>
+		<module>../mycollab-web</module>
+	</modules>
 
 	<properties>
 		<springVersion>3.1.2.RELEASE</springVersion>
@@ -177,4 +181,19 @@
 			</plugin>
 		</plugins>
 	</build>
+	<distributionManagement>
+		<!-- Publish versioned releases here -->
+		<repository>
+			<id>releaseNexus</id>
+			<name>My releases</name>
+			<url>http://build2.netconference.com:8080/nexus/content/repositories/releases</url>
+		</repository>
+
+		<!-- Publish snapshots here -->
+		<snapshotRepository>
+			<id>snapshotNexus</id>
+			<name>My snapshots</name>
+			<url>http://build2.netconference.com:8080/nexus/content/repositories/snapshots</url>
+		</snapshotRepository>
+	</distributionManagement>
 </project>
