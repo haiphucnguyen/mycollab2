@@ -5,13 +5,12 @@ import javax.annotation.PostConstruct;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.project.ui.events.ProjectEvent;
+import com.esofthead.mycollab.module.project.ui.events.ProjectEvent.GotoMyProject;
 import com.esofthead.mycollab.module.project.ui.events.ProjectEvent.GotoMyProjectList;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @Component
@@ -32,6 +31,19 @@ public class ProjectContainer extends AbstractView {
 
 			}
 		});
+		
+		eventBus.addListener(new ApplicationEventListener<ProjectEvent.GotoMyProject>() {
+
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return ProjectEvent.GotoMyProject.class;
+			}
+
+			@Override
+			public void handle(GotoMyProject event) {
+				gotoMyProject();
+			}
+		});
 	}
 
 	@Override
@@ -50,4 +62,10 @@ public class ProjectContainer extends AbstractView {
 		userDashboard.gotoMyProjectList();
 	}
 
+	private void gotoMyProject() {
+		ProjectViewImpl projectDashboard = AppContext
+				.getView(ProjectViewImpl.class);
+		this.removeAllComponents();
+		this.addComponent(projectDashboard);
+	}
 }

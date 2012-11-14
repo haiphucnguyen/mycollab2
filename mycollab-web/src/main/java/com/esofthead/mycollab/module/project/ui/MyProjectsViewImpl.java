@@ -120,14 +120,14 @@ public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
 				@SuppressWarnings("unchecked")
 				BeanItemContainer<SimpleProject> container = (BeanItemContainer<SimpleProject>) tableContainer
 						.getContainer();
-				SimpleProject project = container.getItem(itemId).getBean();
+				final SimpleProject project = container.getItem(itemId).getBean();
 				Button projectBtn = new Button(project.getName(),
 						new Button.ClickListener() {
 
 							@Override
 							public void buttonClick(ClickEvent event) {
 								eventBus.fireEvent(new ProjectEvent.GotoMyProject(
-										this, null));
+										this, project));
 
 							}
 						});

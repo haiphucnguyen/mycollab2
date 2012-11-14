@@ -2,7 +2,6 @@ package com.esofthead.mycollab.module.project.ui;
 
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.module.project.ui.events.ProjectEvent;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
