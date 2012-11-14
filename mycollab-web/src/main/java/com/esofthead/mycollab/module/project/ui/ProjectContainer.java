@@ -50,7 +50,6 @@ public class ProjectContainer extends AbstractView {
 	protected void initializeLayout() {
 		UserDashboardViewImpl userDashboard = AppContext
 				.getView(UserDashboardViewImpl.class);
-		this.setSizeFull();
 		this.addComponent((com.vaadin.ui.Component) userDashboard);
 	}
 

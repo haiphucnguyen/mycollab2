@@ -1,0 +1,1 @@
+ALTER TABLE `s_user` ADD COLUMN `company` VARCHAR(255) NULL, ADD COLUMN `timezoneid` VARCHAR(255) NULL;

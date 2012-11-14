@@ -24,6 +24,7 @@ public class MainPage extends AbstractView {
 
 	@Override
 	protected void initializeLayout() {
+		this.setSizeFull();
 		this.addComponent(createTopMenu());
 		bodyLayout = new VerticalLayout();
 		this.addComponent(bodyLayout);

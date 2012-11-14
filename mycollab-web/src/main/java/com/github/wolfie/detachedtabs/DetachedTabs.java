@@ -97,8 +97,10 @@ public abstract class DetachedTabs extends CustomComponent {
 			switchTo(componentToSwitch, button);
 
 			TabChangedEvent changeEvent = new TabChangedEvent(button);
-			for (TabChangedListener listener : tabListeners) {
-				listener.tabChanged(changeEvent);
+			if (tabListeners != null) {
+				for (TabChangedListener listener : tabListeners) {
+					listener.tabChanged(changeEvent);
+				}
 			}
 		}
 	}

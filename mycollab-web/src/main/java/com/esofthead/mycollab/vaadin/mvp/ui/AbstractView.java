@@ -22,6 +22,10 @@ public abstract class AbstractView extends VerticalLayout implements View,
 
 	protected boolean isInitialized = false;
 
+	public AbstractView() {
+		super();
+	}
+
 	public void initLayout() {
 		if (!isInitialized) {
 			initializeLayout();

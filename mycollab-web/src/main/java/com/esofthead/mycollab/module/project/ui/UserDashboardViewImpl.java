@@ -9,6 +9,7 @@ import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.terminal.Sizeable;
+import com.vaadin.ui.AbsoluteLayout;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
@@ -75,7 +76,9 @@ public class UserDashboardViewImpl extends AbstractView implements
 		buildComponents();
 		showWelcomeScreen();
 
+		
 		this.addComponent(root);
+		this.setExpandRatio(root, 1.0f);
 	}
 
 	private void showWelcomeScreen() {

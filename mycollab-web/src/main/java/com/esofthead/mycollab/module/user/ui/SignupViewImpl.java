@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.module.user.ui;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.SecurityService;
@@ -22,7 +21,7 @@ import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
 
-@Configurable(preConstruction = true)
+
 public class SignupViewImpl extends Window {
 	private static final long serialVersionUID = 1L;
 

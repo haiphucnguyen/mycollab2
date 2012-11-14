@@ -19,8 +19,6 @@ package com.esofthead.mycollab.module.user.domain;
 
 import java.util.List;
 
-import com.google.gwt.i18n.shared.FirstStrongDirectionEstimator;
-
 public class SimpleUser extends User {
 	private List<Role> roles;
 
@@ -41,6 +39,8 @@ public class SimpleUser extends User {
 		this.setEmail(user.getEmail());
 		this.setPassword(user.getPassword());
 		this.setAccountid(user.getAccountid());
+		this.setCompany(user.getCompany());
+		this.setTimezoneid(user.getTimezoneid());
 	}
 
 	public List<Role> getRoles() {

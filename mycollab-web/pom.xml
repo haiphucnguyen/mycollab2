@@ -186,12 +186,12 @@
 				<executions>
 					<!-- <execution> <id>Audit Artifacts Generator</id> <phase>compile</phase> 
 						<goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/AuditGeneratorConfig.xml</configurationFile> 
-						<overwrite>true</overwrite> </configuration> </execution> <execution> <id>User 
-						Artifacts Generator</id> <phase>compile</phase> <goals> <goal>generate</goal> 
-						</goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
-						<overwrite>true</overwrite> </configuration> </execution> <execution> <id>File 
-						Artifacts Generator</id> <phase>compile</phase> <goals> <goal>generate</goal> 
-						</goals> <configuration> <configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile> 
+						<overwrite>true</overwrite> </configuration> </execution> -->
+					<!-- <execution> <id>User Artifacts Generator</id> <phase>compile</phase> 
+						<goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
+						<overwrite>true</overwrite> </configuration> </execution> -->
+					<!-- <execution> <id>File Artifacts Generator</id> <phase>compile</phase> 
+						<goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile> 
 						<overwrite>true</overwrite> </configuration> </execution> -->
 					<!-- <execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
 						<goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
@@ -215,12 +215,53 @@
 					<target>${javaVersion}</target>
 				</configuration>
 			</plugin>
-			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>aspectj-maven-plugin</artifactId> 
-				<configuration> <source>${javaVersion}</source> <target>${javaVersion}</target> 
-				<aspectLibraries> <aspectLibrary> <groupId>org.springframework</groupId> 
-				<artifactId>spring-aspects</artifactId> </aspectLibrary> </aspectLibraries> 
-				</configuration> <executions> <execution> <goals> <goal>compile</goal> </goals> 
-				</execution> </executions> </plugin> -->
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-war-plugin</artifactId>
+				<version>2.3</version>
+				<configuration>
+					<warName>${project.name}</warName>
+				</configuration>
+			</plugin>
+			<plugin>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<dependencies>
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant</artifactId>
+						<version>1.8.4</version>
+					</dependency>
+
+					<dependency>
+						<groupId>org.apache.ant</groupId>
+						<artifactId>ant-jsch</artifactId>
+						<version>1.8.4</version>
+					</dependency>
+
+
+					<dependency>
+						<groupId>com.jcraft</groupId>
+						<artifactId>jsch</artifactId>
+						<version>0.1.48</version>
+					</dependency>
+				</dependencies>
+				<executions>
+					<execution>
+						<phase> package </phase>
+						<configuration>
+							<target>
+								<scp file="${basedir}/target/${project.name}.war" keyfile="${basedir}/esofthead-virginia.pem"
+									todir="ubuntu@23.23.77.174:/home/ubuntu/jetty-hightide-7.6.4.v20120524/webapps" />
+
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-eclipse-plugin</artifactId>
