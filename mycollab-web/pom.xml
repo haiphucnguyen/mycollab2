@@ -220,7 +220,7 @@
 				<artifactId>maven-war-plugin</artifactId>
 				<version>2.3</version>
 				<configuration>
-					<warName>${project.name}</warName>
+					<warName>root</warName>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -251,8 +251,8 @@
 						<phase> package </phase>
 						<configuration>
 							<target>
-								<scp localfile="${basedir}/target/${project.name}.war" keyfile="${basedir}/esofthead-virginia.pem"
-									remotefile="ubuntu@23.23.77.174:/home/ubuntu/jetty-hightide-7.6.4.v20120524/webapps/root.war" />
+								<scp localfile="${basedir}/target/root.war" keyfile="${basedir}/esofthead-virginia.pem"
+									todir="ubuntu@23.23.77.174:/home/ubuntu/jetty-hightide-7.6.4.v20120524/webapps" />
 
 							</target>
 						</configuration>
