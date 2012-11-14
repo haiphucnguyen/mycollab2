@@ -7,10 +7,6 @@
 	<artifactId>parent</artifactId>
 	<version>1.0</version>
 	<packaging>pom</packaging>
-	<modules>
-		<module>../mycollab-core</module>
-		<module>../mycollab-web</module>
-	</modules>
 
 	<properties>
 		<springVersion>3.1.2.RELEASE</springVersion>
