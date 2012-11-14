@@ -19,7 +19,6 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
@@ -34,35 +33,31 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected ComponentContainer initMainLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
-
-		return layout;
+	protected void initializeLayout() {
 	}
 
 	@Override
 	public void addNewItem() {
-		compContainer.removeAllComponents();
+		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(EditForm.class);
 		formItem.setItemDataSource(new BeanItem<Contact>(new Contact()));
-		compContainer.addComponent(formItem);
+		this.addComponent(formItem);
 	}
 
 	@Override
 	public void editItem(Contact item) {
-		compContainer.removeAllComponents();
+		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(EditForm.class);
 		formItem.setItemDataSource(new BeanItem<Contact>(item));
-		compContainer.addComponent(formItem);
+		this.addComponent(formItem);
 	}
 
 	@Override
 	public void viewItem(Contact item) {
-		compContainer.removeAllComponents();
+		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(ViewForm.class);
 		formItem.setItemDataSource(new BeanItem<Contact>(item));
-		compContainer.addComponent(formItem);
+		this.addComponent(formItem);
 	}
 
 	@Scope("prototype")

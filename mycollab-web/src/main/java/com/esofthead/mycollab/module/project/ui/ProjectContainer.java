@@ -35,21 +35,18 @@ public class ProjectContainer extends AbstractView {
 	}
 
 	@Override
-	protected ComponentContainer initMainLayout() {
-		VerticalLayout container = new VerticalLayout();
+	protected void initializeLayout() {
 		UserDashboardViewImpl userDashboard = AppContext
 				.getView(UserDashboardViewImpl.class);
-		container.setSizeFull();
-		container.addComponent((com.vaadin.ui.Component) userDashboard
-				.getCompContainer());
-		return container;
+		this.setSizeFull();
+		this.addComponent((com.vaadin.ui.Component) userDashboard);
 	}
 
 	private void gotoMyProjectList() {
 		UserDashboardViewImpl userDashboard = AppContext
 				.getView(UserDashboardViewImpl.class);
-		compContainer.removeAllComponents();
-		compContainer.addComponent(userDashboard.getCompContainer());
+		this.removeAllComponents();
+		this.addComponent(userDashboard);
 		userDashboard.gotoMyProjectList();
 	}
 

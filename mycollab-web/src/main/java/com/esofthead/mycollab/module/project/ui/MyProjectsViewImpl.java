@@ -33,9 +33,9 @@ public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
 	private MyProjectLayout myProjectLayout;
 
 	@Override
-	protected ComponentContainer initMainLayout() {
+	protected void initializeLayout() {
 		myProjectLayout = new MyProjectLayout();
-		return myProjectLayout;
+		this.addComponent(myProjectLayout);
 	}
 
 	@Override

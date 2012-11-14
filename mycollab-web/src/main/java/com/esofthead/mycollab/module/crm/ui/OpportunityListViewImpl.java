@@ -97,16 +97,14 @@ public class OpportunityListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	protected ComponentContainer initMainLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
+	protected void initializeLayout() {
+		this.setSpacing(true);
 
 		OpportunitySearchPanel opportunitySearchPanel = AppContext
 				.getSpringBean(OpportunitySearchPanel.class);
-		layout.addComponent(opportunitySearchPanel);
+		this.addComponent(opportunitySearchPanel);
 
 		opportunityListLayout = new VerticalLayout();
-		layout.addComponent(opportunityListLayout);
-		return layout;
+		this.addComponent(opportunityListLayout);
 	}
 }

@@ -93,16 +93,13 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 	}
 
 	@Override
-	protected ComponentContainer initMainLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
-
+	protected void initializeLayout() {
+		this.setSpacing(true);
 		LeadSearchPanel leadSearchPanel = AppContext
 				.getSpringBean(LeadSearchPanel.class);
-		layout.addComponent(leadSearchPanel);
+		this.addComponent(leadSearchPanel);
 
 		leadListLayout = new VerticalLayout();
-		layout.addComponent(leadListLayout);
-		return layout;
+		this.addComponent(leadListLayout);
 	}
 }

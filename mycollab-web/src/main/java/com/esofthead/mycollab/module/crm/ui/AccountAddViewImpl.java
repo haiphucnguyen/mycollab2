@@ -23,7 +23,6 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.HorizontalLayout;
@@ -37,34 +36,31 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected ComponentContainer initMainLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
-		return layout;
+	protected void initializeLayout() {
 	}
 
 	@Override
 	public void addNewItem() {
-		compContainer.removeAllComponents();
+		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(EditForm.class);
 		formItem.setItemDataSource(new BeanItem<Account>(new Account()));
-		compContainer.addComponent(formItem);
+		this.addComponent(formItem);
 	}
 
 	@Override
 	public void editItem(Account account) {
-		compContainer.removeAllComponents();
+		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(EditForm.class);
 		formItem.setItemDataSource(new BeanItem<Account>(account));
-		compContainer.addComponent(formItem);
+		this.addComponent(formItem);
 	}
 
 	@Override
 	public void viewItem(Account item) {
-		compContainer.removeAllComponents();
+		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(ViewForm.class);
 		formItem.setItemDataSource(new BeanItem<Account>(item));
-		compContainer.addComponent(formItem);
+		this.addComponent(formItem);
 	}
 
 	@Scope("prototype")

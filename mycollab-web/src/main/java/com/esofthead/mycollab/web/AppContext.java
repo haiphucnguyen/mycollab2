@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ui.View;
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext.TransactionListener;
@@ -81,7 +82,7 @@ public class AppContext implements TransactionListener, Serializable {
 
 	public static <T extends View> T getView(Class<T> viewClass) {
 		T view = getSpringBean(viewClass);
-		view.createMainLayout();
+		((AbstractView)view).initLayout();
 		log.debug("Create view class {}", viewClass.getName());
 		return view;
 	}

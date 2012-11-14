@@ -230,6 +230,26 @@ public abstract class DetachedTabs extends CustomComponent {
 		adjustTabStyles();
 	}
 
+	public Component selectTab(String caption) {
+		Iterator<Button> buttonIter = buttonComponentMap.keySet().iterator();
+		Button button = null;
+		while (buttonIter.hasNext()) {
+			Button tmp = buttonIter.next();
+			if (caption.equals(tmp.getCaption())) {
+				button = tmp;
+				break;
+			}
+		}
+		
+		if (button != null) {
+			final Component componentToSwitch = buttonComponentMap.get(button);
+			switchTo(componentToSwitch, button);
+			return componentToSwitch;
+		}
+		
+		return null;
+	}
+
 	@Override
 	public void setWidth(final float width, final int unit) {
 		if (orientation == Orientation.VERTICAL) {

@@ -6,14 +6,12 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.module.crm.ui.CrmContainer;
 import com.esofthead.mycollab.module.project.ui.ProjectContainer;
-import com.esofthead.mycollab.module.user.ui.AccountView;
+import com.esofthead.mycollab.module.user.ui.AccountViewImpl;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -21,14 +19,14 @@ import com.vaadin.ui.VerticalLayout;
 @Scope("prototype")
 @Component
 public class MainPage extends AbstractView {
-
-	private CustomComponent serviceComp = null;
+	
+	private VerticalLayout bodyLayout;
 
 	@Override
-	protected ComponentContainer initMainLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.addComponent(createTopMenu());
-		return layout;
+	protected void initializeLayout() {
+		this.addComponent(createTopMenu());
+		bodyLayout = new VerticalLayout();
+		this.addComponent(bodyLayout);
 	}
 
 	private CustomLayout createTopMenu() {
@@ -49,14 +47,8 @@ public class MainPage extends AbstractView {
 					public void buttonClick(ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
 						CrmContainer crmContainer = AppContext.getView(CrmContainer.class);
-						if (serviceComp != null) {
-							compContainer.removeComponent(serviceComp);
-						}
-
-						ComponentContainer createMainLayout = crmContainer
-								.getCompContainer();
-						serviceComp = new CustomComponent(createMainLayout);
-						MainPage.this.compContainer.addComponent(serviceComp);
+						bodyLayout.removeAllComponents();
+						bodyLayout.addComponent(crmContainer);
 					}
 				});
 		crmLink.setStyleName("link");
@@ -68,14 +60,8 @@ public class MainPage extends AbstractView {
 					public void buttonClick(ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
 						ProjectContainer projectDashboard = AppContext.getView(ProjectContainer.class);
-						if (serviceComp != null) {
-							compContainer.removeComponent(serviceComp);
-						}
-
-						ComponentContainer createMainLayout = projectDashboard
-								.getCompContainer();
-						serviceComp = new CustomComponent(createMainLayout);
-						MainPage.this.compContainer.addComponent(serviceComp);
+						bodyLayout.removeAllComponents();
+						bodyLayout.addComponent(projectDashboard);
 					}
 				});
 		prjLink.setStyleName("link");
@@ -95,15 +81,9 @@ public class MainPage extends AbstractView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				serviceMenu.setPopupVisible(false);
-				AccountView accountView = AppContext.getView(AccountView.class);
-				if (serviceComp != null) {
-					compContainer.removeComponent(serviceComp);
-				}
-
-				ComponentContainer createMainLayout = accountView
-						.getCompContainer();
-				serviceComp = new CustomComponent(createMainLayout);
-				MainPage.this.compContainer.addComponent(serviceComp);
+				AccountViewImpl accountView = AppContext.getView(AccountViewImpl.class);
+				bodyLayout.removeAllComponents();
+				bodyLayout.addComponent(accountView);
 			}
 		});
 		myAccountBtn.setStyleName("link");

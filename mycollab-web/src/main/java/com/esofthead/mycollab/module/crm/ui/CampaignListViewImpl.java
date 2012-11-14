@@ -94,17 +94,15 @@ public class CampaignListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	protected ComponentContainer initMainLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
+	protected void initializeLayout() {
+		this.setSpacing(true);
 
 		CampaignSearchPanel campaignSearchPanel = AppContext
 				.getSpringBean(CampaignSearchPanel.class);
-		layout.addComponent(campaignSearchPanel);
+		this.addComponent(campaignSearchPanel);
 
 		campaignListLayout = new VerticalLayout();
-		layout.addComponent(campaignListLayout);
-		return layout;
+		this.addComponent(campaignListLayout);
 	}
 
 }

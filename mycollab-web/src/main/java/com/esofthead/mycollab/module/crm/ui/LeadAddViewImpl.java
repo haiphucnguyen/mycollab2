@@ -22,7 +22,6 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.HorizontalLayout;
@@ -36,35 +35,31 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected ComponentContainer initMainLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
-
-		return layout;
+	protected void initializeLayout() {
 	}
 
 	@Override
 	public void addNewItem() {
-		compContainer.removeAllComponents();
+		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(EditForm.class);
 		formItem.setItemDataSource(new BeanItem<Lead>(new Lead()));
-		compContainer.addComponent(formItem);
+		this.addComponent(formItem);
 	}
 
 	@Override
 	public void editItem(Lead item) {
-		compContainer.removeAllComponents();
+		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(EditForm.class);
 		formItem.setItemDataSource(new BeanItem<Lead>(item));
-		compContainer.addComponent(formItem);
+		this.addComponent(formItem);
 	}
 
 	@Override
 	public void viewItem(Lead item) {
-		compContainer.removeAllComponents();
+		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(ViewForm.class);
 		formItem.setItemDataSource(new BeanItem<Lead>(item));
-		compContainer.addComponent(formItem);
+		this.addComponent(formItem);
 	}
 
 	@Scope("prototype")

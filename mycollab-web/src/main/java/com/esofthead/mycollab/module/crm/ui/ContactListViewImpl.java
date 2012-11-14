@@ -144,17 +144,14 @@ public class ContactListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	protected ComponentContainer initMainLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
+	protected void initializeLayout() {
+		this.setSpacing(true);
 
 		ContactSearchPanel searchPanel = AppContext
 				.getSpringBean(ContactSearchPanel.class);
-		layout.addComponent(searchPanel);
+		this.addComponent(searchPanel);
 
 		contactListLayout = new VerticalLayout();
-		layout.addComponent(contactListLayout);
-
-		return layout;
+		this.addComponent(contactListLayout);
 	}
 }

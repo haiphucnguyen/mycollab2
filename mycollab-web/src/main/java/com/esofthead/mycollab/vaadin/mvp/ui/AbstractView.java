@@ -5,11 +5,12 @@ import java.io.Serializable;
 import org.springframework.beans.factory.annotation.Autowired;
 
 import com.esofthead.mycollab.vaadin.mvp.eventbus.EventBus;
-import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-public abstract class AbstractView implements View, Serializable {
-	
+public abstract class AbstractView extends VerticalLayout implements View,
+		Serializable {
+
 	public static String SAVE_ACTION = "Save";
 
 	public static String EDIT_ACTION = "Edit";
@@ -18,25 +19,16 @@ public abstract class AbstractView implements View, Serializable {
 
 	@Autowired
 	protected EventBus eventBus;
-	
-	protected ComponentContainer compContainer;
 
-	public ComponentContainer createMainLayout() {
-		compContainer = initMainLayout();
-		return compContainer;
-	}
-	
-	public ComponentContainer getCompContainer() {
-		return compContainer;
+	protected boolean isInitialized = false;
+
+	public void initLayout() {
+		if (!isInitialized) {
+			initializeLayout();
+			isInitialized = true;
+		}
 	}
 
-	protected abstract ComponentContainer initMainLayout();
-	
-	@Override
-	public void openView() {
-		
-		ViewOpenedEvent event = new ViewOpenedEvent(this);
-		eventBus.fireEvent(event);
-	}	
+	protected abstract void initializeLayout();
 
 }

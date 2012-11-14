@@ -21,7 +21,6 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.HorizontalLayout;
@@ -35,34 +34,31 @@ public class CampaignAddViewImpl extends AbstractView implements
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected ComponentContainer initMainLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
-		return layout;
+	protected void initializeLayout() {
 	}
 
 	@Override
 	public void addNewItem() {
-		compContainer.removeAllComponents();
+		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(EditForm.class);
 		formItem.setItemDataSource(new BeanItem<Campaign>(new Campaign()));
-		compContainer.addComponent(formItem);
+		this.addComponent(formItem);
 	}
 
 	@Override
 	public void editItem(Campaign account) {
-		compContainer.removeAllComponents();
+		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(EditForm.class);
 		formItem.setItemDataSource(new BeanItem<Campaign>(account));
-		compContainer.addComponent(formItem);
+		this.addComponent(formItem);
 	}
 
 	@Override
 	public void viewItem(Campaign item) {
-		compContainer.removeAllComponents();
+		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(ViewForm.class);
 		formItem.setItemDataSource(new BeanItem<Campaign>(item));
-		compContainer.addComponent(formItem);
+		this.addComponent(formItem);
 	}
 
 	@Scope("prototype")

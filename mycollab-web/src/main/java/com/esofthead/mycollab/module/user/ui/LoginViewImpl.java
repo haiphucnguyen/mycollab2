@@ -12,7 +12,6 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.terminal.UserError;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.PasswordField;
@@ -27,9 +26,8 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 	private LoginPresenter loginPresenter;
 
 	@Override
-	protected CustomComponent initMainLayout() {
-		CustomComponent comp = new CustomComponent(new LoginForm());
-		return comp;
+	protected void initializeLayout() {
+		this.addComponent(new LoginForm());
 	}
 
 	private class LoginForm extends Form {
@@ -97,6 +95,6 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 				.getApplication()
 				.getMainWindow()
 				.setContent(
-						AppContext.getView(MainPage.class).getCompContainer());
+						AppContext.getView(MainPage.class));
 	}
 }

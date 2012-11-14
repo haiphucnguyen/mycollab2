@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.ui;
 
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.module.project.ui.events.ProjectEvent;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
@@ -29,7 +30,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 	private DetachedTabs calendarToolTabs;
 
 	@Override
-	protected ComponentContainer initMainLayout() {
+	protected void initializeLayout() {
 		root = new HorizontalSplitPanel();
 		root.setSplitPosition(200, Sizeable.UNITS_PIXELS);
 		root.setLocked(true);
@@ -75,7 +76,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 		buildComponents();
 		showWelcomeScreen();
 
-		return root;
+		this.addComponent(root);
 	}
 
 	private void showWelcomeScreen() {
@@ -98,7 +99,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 						Button btn = event.getSource();
 						String caption = btn.getCaption();
 						if ("My Projects".equals(caption)) {
-
+							gotoMyProjectList();
 						}
 					}
 				});
@@ -110,13 +111,17 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 	private ComponentContainer constructMyProjectsComponents() {
 		MyProjectsViewImpl view = AppContext.getView(MyProjectsViewImpl.class);
-		return view.getCompContainer();
+		return view;
 	}
 
 	@Override
 	public void gotoMyProjectList() {
-		// TODO Auto-generated method stub
-
+		com.vaadin.ui.Component myProjectComponent = mySpaceTabs
+				.selectTab("My Projects");
+		if (myProjectComponent != null) {
+			MyProjectsViewImpl view = AppContext.getView(MyProjectsViewImpl.class);
+			view.doDefaultSearch();
+		}
 	}
 
 }

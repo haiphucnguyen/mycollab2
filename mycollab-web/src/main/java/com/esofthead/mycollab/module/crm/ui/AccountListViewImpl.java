@@ -22,7 +22,6 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
@@ -236,16 +235,14 @@ public class AccountListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	protected ComponentContainer initMainLayout() {
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
+	protected void initializeLayout() {
+		this.setSpacing(true);
 
 		AccountSearchPanel accountSearchPanel = AppContext
 				.getSpringBean(AccountSearchPanel.class);
-		layout.addComponent(accountSearchPanel);
+		this.addComponent(accountSearchPanel);
 
 		accountListLayout = new VerticalLayout();
-		layout.addComponent(accountListLayout);
-		return layout;
+		this.addComponent(accountListLayout);
 	}
 }

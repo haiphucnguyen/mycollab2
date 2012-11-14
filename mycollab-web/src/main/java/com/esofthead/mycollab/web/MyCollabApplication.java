@@ -33,7 +33,7 @@ public class MyCollabApplication extends Application {
 
 		EventBus eventBus = AppContext.getSpringBean(EventBus.class);
 		System.out.println("Main view: " + mainView);
-		getMainWindow().setContent(mainView.getCompContainer());
+		getMainWindow().setContent(mainView);
 
 		eventBus.addListener(new ApplicationEventListener<LogoutEvent>() {
 			private static final long serialVersionUID = 1L;

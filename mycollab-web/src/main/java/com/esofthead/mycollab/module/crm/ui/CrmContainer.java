@@ -26,7 +26,6 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.GridLayout;
@@ -75,7 +74,7 @@ public class CrmContainer extends AbstractView {
 	}
 
 	@Override
-	protected ComponentContainer initMainLayout() {
+	protected void initializeLayout() {
 		CustomLayout container = new CustomLayout("crmContainer");
 
 		container.setWidth("100%");
@@ -145,9 +144,10 @@ public class CrmContainer extends AbstractView {
 		currentView = new VerticalLayout();
 		container.addComponent(currentView, "currentView");
 		eventBus.fireEvent(new CrmEvent.GotoHome(this, null));
-		return container;
+		this.addComponent(container);
 	}
 	
+	@SuppressWarnings("serial")
 	private void registerCommonListeners() {
 		eventBus.addListener(new ApplicationEventListener<CrmEvent.GotoHome>() {
 
@@ -555,7 +555,7 @@ public class CrmContainer extends AbstractView {
 
 	private void addView(AbstractView view) {
 		currentView.removeAllComponents();
-		currentView.addComponent(view.getCompContainer());
+		currentView.addComponent(view);
 	}
 
 	private class NavigatorItemListener implements Button.ClickListener {
