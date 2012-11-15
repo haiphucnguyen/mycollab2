@@ -12,6 +12,8 @@ public class UserInformationViewImpl extends AbstractView implements UserInforma
 	@Override
 	protected void initializeLayout() {
 		this.addComponent(new Label("UserInformation"));
+		
+		
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.user.ui.accountsettings;
 
-public interface UserInformationView {
+import com.esofthead.mycollab.vaadin.mvp.ui.View;
+
+public interface UserInformationView extends View {
 
 }
