@@ -236,14 +236,13 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 			layout.setComponentAlignment(addressLayout.getLayout(),
 					Alignment.BOTTOM_CENTER);
 
-			descriptionLayout = new GridFormLayoutHelper(2, 1);
+			descriptionLayout = new GridFormLayoutHelper(1, 1);
 			Label descHeader = new Label("Description");
 			descHeader.setStyleName("h2");
 			layout.addComponent(descHeader);
 			descriptionLayout.getLayout().setWidth("900px");
+			descriptionLayout.getLayout().setColumnExpandRatio(1, 1.0f);
 			layout.addComponent(descriptionLayout.getLayout());
-			layout.setComponentAlignment(descriptionLayout.getLayout(),
-					Alignment.BOTTOM_CENTER);
 
 			this.setWriteThrough(true);
 			this.setInvalidCommitted(false);
@@ -304,8 +303,12 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 			addressLayout.addComponent(propertyId.equals("shippingpostalcode"),
 					field, "Shipping Postal Code", 1, 3);
 
-			descriptionLayout.addComponent(propertyId.equals("description"),
-					field, "Description", 0, 0, 1, 0);
+			if (propertyId.equals("description")) {
+				field.setSizeUndefined();
+				descriptionLayout.addComponent(propertyId.equals("description"),
+						field, "Description", 0, 0);
+			}
+			
 		}
 	}
 

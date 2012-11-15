@@ -16,6 +16,10 @@
 		<log4jVersion>1.2.16</log4jVersion>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 	</properties>
+	<modules>
+		<module>../mycollab-core</module>
+		<module>../mycollab-web</module>
+	</modules>
 	<dependencies>
 		<dependency>
 			<groupId>commons-beanutils</groupId>
@@ -144,29 +148,12 @@
 					<target>${javaVersion}</target>
 				</configuration>
 			</plugin>
-			<!-- 
-			<plugin>
-				<groupId>org.codehaus.mojo</groupId>
-				<artifactId>aspectj-maven-plugin</artifactId>
-				<configuration>
-					<source>${javaVersion}</source>
-					<target>${javaVersion}</target>
-					<aspectLibraries>
-						<aspectLibrary>
-							<groupId>org.springframework</groupId>
-							<artifactId>spring-aspects</artifactId>
-						</aspectLibrary>
-					</aspectLibraries>
-				</configuration>
-				<executions>
-					<execution>
-						<goals>
-							<goal>compile</goal>
-						</goals>
-					</execution>
-				</executions>
-			</plugin>
-			-->
+			<!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>aspectj-maven-plugin</artifactId> 
+				<configuration> <source>${javaVersion}</source> <target>${javaVersion}</target> 
+				<aspectLibraries> <aspectLibrary> <groupId>org.springframework</groupId> 
+				<artifactId>spring-aspects</artifactId> </aspectLibrary> </aspectLibraries> 
+				</configuration> <executions> <execution> <goals> <goal>compile</goal> </goals> 
+				</execution> </executions> </plugin> -->
 			<plugin>
 				<groupId>org.mortbay.jetty</groupId>
 				<artifactId>jetty-maven-plugin</artifactId>

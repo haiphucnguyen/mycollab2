@@ -70,6 +70,7 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 		protected HorizontalLayout createButtonControls() {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(true);
+			layout.setStyleName("addNewControl");
 			FormActionListener formActionListener = new FormActionListener();
 			Button saveBtn = new Button(SAVE_ACTION, formActionListener);
 			Button cancelBtn = new Button(CANCEL_ACTION, formActionListener);

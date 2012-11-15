@@ -29,6 +29,7 @@ public class GridFormLayoutHelper {
 
 		layout.setRowExpandRatio(0, 0);
 	}
+	
 
 	public Field addComponent(Field field, String caption, int columns,
 			int rows, String width) {

@@ -13,6 +13,7 @@ import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
@@ -40,10 +41,13 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 
 		accountName = new TextField();
 		layout.addComponent(accountName);
+		layout.setComponentAlignment(accountName, Alignment.MIDDLE_LEFT);
 
-		browseBtn = new Embedded("", new ThemeResource(
+		browseBtn = new Embedded(null, new ThemeResource(
 				"icons/16/browseItem.png"));
 		layout.addComponent(browseBtn);
+		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
+		
 		browseBtn.addListener(new MouseEvents.ClickListener() {
 
 			@Override
@@ -56,7 +60,9 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 			}
 		});
 
-		clearBtn = new Embedded("", new ThemeResource("icons/16/clearItem.png"));
+		clearBtn = new Embedded(null, new ThemeResource("icons/16/clearItem.png"));
+		
+		
 		clearBtn.addListener(new MouseEvents.ClickListener() {
 
 			@Override
@@ -66,6 +72,7 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 			}
 		});
 		layout.addComponent(clearBtn);
+		layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
 
 		this.setCompositionRoot(layout);
 		this.addListener(new Property.ValueChangeListener() {
@@ -74,15 +81,15 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 			public void valueChange(
 					com.vaadin.data.Property.ValueChangeEvent event) {
 				try {
-				Integer accountId = Integer.parseInt((String) event
-						.getProperty().getValue());
-				SimpleAccount account = accountService
-						.findAccountById(accountId);
-				if (account != null) {
-					accountName.setValue(account.getAccountname());
-				}
+					Integer accountId = Integer.parseInt((String) event
+							.getProperty().getValue());
+					SimpleAccount account = accountService
+							.findAccountById(accountId);
+					if (account != null) {
+						accountName.setValue(account.getAccountname());
+					}
 				} catch (Exception e) {
-					
+
 				}
 
 			}
@@ -96,7 +103,7 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 			accountName.setValue(account.getAccountname());
 			this.getWrappedField().setValue(account.getId());
 		}
-		
+
 	}
 
 }
