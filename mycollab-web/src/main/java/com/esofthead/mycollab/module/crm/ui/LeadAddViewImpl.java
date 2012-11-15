@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.LeadSourceComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.LeadStatusComboBox;
@@ -20,6 +21,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
@@ -27,7 +29,6 @@ import com.vaadin.ui.Form;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.Reindeer;
 
 @Component
 public class LeadAddViewImpl extends AbstractView implements LeadAddView {
@@ -76,7 +77,10 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 			Button cancelBtn = new Button(CANCEL_ACTION, formActionListener);
 
 			layout.addComponent(saveBtn);
+			layout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
+
 			layout.addComponent(cancelBtn);
+			layout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
 			return layout;
 		}
 
@@ -151,6 +155,7 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 		protected HorizontalLayout createButtonControls() {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(true);
+			layout.setStyleName("addNewControl");
 			FormActionListener formActionListener = new FormActionListener();
 			Button saveBtn = new Button(EDIT_ACTION, formActionListener);
 			Button cancelBtn = new Button(CANCEL_ACTION, formActionListener);
@@ -198,34 +203,41 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 
 		public GenericForm() {
 			super();
-			this.setCaption("Create Contact");
+
+			AddViewLayout leadAddLayout = new AddViewLayout("Account");
+			leadAddLayout.addTopControls(createButtonControls());
 
 			VerticalLayout layout = new VerticalLayout();
 			layout.setSpacing(true);
 
-			layout.addComponent(createButtonControls());
-
 			Label organizationHeader = new Label("Contact Information");
-			organizationHeader.setStyleName(Reindeer.LABEL_H2);
+			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
 			informationLayout = new GridFormLayoutHelper(2, 7);
+			informationLayout.getLayout().setWidth("900px");
 			layout.addComponent(informationLayout.getLayout());
 
 			Label addressHeader = new Label("Address Information");
-			addressHeader.setStyleName(Reindeer.LABEL_H2);
+			addressHeader.setStyleName("h2");
 			layout.addComponent(addressHeader);
 			addressLayout = new GridFormLayoutHelper(2, 5);
+			addressLayout.getLayout().setWidth("900px");
 			layout.addComponent(addressLayout.getLayout());
 
+			Label descriptionHeader = new Label("Description");
+			descriptionHeader.setStyleName("h2");
+			layout.addComponent(descriptionHeader);
 			descLayout = new GridFormLayoutHelper(1, 1);
+			descLayout.getLayout().setWidth("900px");
 			layout.addComponent(descLayout.getLayout());
 
 			this.setWriteThrough(true);
 			this.setInvalidCommitted(false);
 
-			layout.addComponent(createButtonControls());
-			setLayout(layout);
+			leadAddLayout.addBody(layout);
+			leadAddLayout.addBottomControls(createButtonControls());
+			setLayout(leadAddLayout);
 		}
 
 		abstract protected HorizontalLayout createButtonControls();

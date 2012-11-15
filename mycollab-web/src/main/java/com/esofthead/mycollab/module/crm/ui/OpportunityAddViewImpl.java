@@ -8,6 +8,7 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AccountSelectionField;
+import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.CampaignSelectionField;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedBeanForm;
@@ -69,6 +70,7 @@ public class OpportunityAddViewImpl extends AbstractView implements
 		protected HorizontalLayout createButtonControls() {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(true);
+			layout.setStyleName("addNewControl");
 			FormActionListener formActionListener = new FormActionListener();
 			Button saveBtn = new Button(SAVE_ACTION, formActionListener);
 			Button cancelBtn = new Button(CANCEL_ACTION, formActionListener);
@@ -187,30 +189,33 @@ public class OpportunityAddViewImpl extends AbstractView implements
 
 		public GenericForm() {
 			super();
-
+			AddViewLayout opportunityAddLayout = new AddViewLayout("Account");
+			opportunityAddLayout.addTopControls(createButtonControls());
+			
 			VerticalLayout layout = new VerticalLayout();
 			layout.setSpacing(true);
 
-			layout.addComponent(createButtonControls());
-
 			Label organizationHeader = new Label("Account Information");
-			organizationHeader.setStyleName(Reindeer.LABEL_H2);
+			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
 			informationLayout = new GridFormLayoutHelper(2, 6);
+			informationLayout.getLayout().setWidth("900px");
 			layout.addComponent(informationLayout.getLayout());
 
 			descriptionLayout = new GridFormLayoutHelper(2, 1);
+			descriptionLayout.getLayout().setWidth("900px");
 			Label descHeader = new Label("Description");
-			descHeader.setStyleName(Reindeer.LABEL_H2);
+			descHeader.setStyleName("h2");
 			layout.addComponent(descHeader);
 			layout.addComponent(descriptionLayout.getLayout());
 
 			this.setWriteThrough(true);
 			this.setInvalidCommitted(false);
 
-			layout.addComponent(createButtonControls());
-			setLayout(layout);
+			opportunityAddLayout.addBody(layout);
+			opportunityAddLayout.addBottomControls(createButtonControls());
+			setLayout(opportunityAddLayout);
 		}
 
 		abstract protected HorizontalLayout createButtonControls();

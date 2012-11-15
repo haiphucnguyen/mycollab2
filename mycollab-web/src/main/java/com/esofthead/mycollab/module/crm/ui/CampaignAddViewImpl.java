@@ -7,6 +7,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.CampaignStatusComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.CampaignTypeComboBox;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
@@ -70,6 +71,7 @@ public class CampaignAddViewImpl extends AbstractView implements
 		protected HorizontalLayout createButtonControls() {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(true);
+			layout.setStyleName("addNewControl");
 			FormActionListener formActionListener = new FormActionListener();
 			Button saveBtn = new Button(SAVE_ACTION, formActionListener);
 			Button cancelBtn = new Button(CANCEL_ACTION, formActionListener);
@@ -190,35 +192,39 @@ public class CampaignAddViewImpl extends AbstractView implements
 		public GenericForm() {
 			super();
 
+			AddViewLayout campaignFormLayout = new AddViewLayout("Account");
+			campaignFormLayout.addTopControls(createButtonControls());
+
 			VerticalLayout layout = new VerticalLayout();
-			layout.setSpacing(true);
-
-			layout.addComponent(createButtonControls());
-
 			Label organizationHeader = new Label("Account Information");
-			organizationHeader.setStyleName(Reindeer.LABEL_H2);
+			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
 			informationLayout = new GridFormLayoutHelper(2, 6);
+			informationLayout.getLayout().setWidth("900px");
 			layout.addComponent(informationLayout.getLayout());
 
 			campaignGoal = new GridFormLayoutHelper(2, 4);
 			Label addressHeader = new Label("Address Information");
-			addressHeader.setStyleName(Reindeer.LABEL_H2);
+			addressHeader.setStyleName("h2");
 			layout.addComponent(addressHeader);
+			campaignGoal.getLayout().setWidth("900px");
 			layout.addComponent(campaignGoal.getLayout());
 
 			descriptionLayout = new GridFormLayoutHelper(2, 1);
 			Label descHeader = new Label("Description");
-			descHeader.setStyleName(Reindeer.LABEL_H2);
+			descHeader.setStyleName("h2");
+
 			layout.addComponent(descHeader);
 			layout.addComponent(descriptionLayout.getLayout());
-
+			descriptionLayout.getLayout().setWidth("900px");
 			this.setWriteThrough(true);
 			this.setInvalidCommitted(false);
 
-			layout.addComponent(createButtonControls());
-			setLayout(layout);
+			campaignFormLayout.addBody(layout);
+			campaignFormLayout.addBottomControls(createButtonControls());
+
+			setLayout(campaignFormLayout);
 		}
 
 		abstract protected HorizontalLayout createButtonControls();
