@@ -100,28 +100,23 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 				if ("type".equals(propertyId)) {
 					AccountTypeComboBox accountTypeBox = AppContext
 							.getSpringBean(AccountTypeComboBox.class);
-					accountTypeBox.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 					return accountTypeBox;
 				} else if ("industry".equals(propertyId)) {
 					IndustryComboBox accountIndustryBox = AppContext
 							.getSpringBean(IndustryComboBox.class);
-					accountIndustryBox
-							.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 					return accountIndustryBox;
 				} else if ("assignuser".equals(propertyId)) {
 					UserComboBox userBox = AppContext
 							.getSpringBean(UserComboBox.class);
-					userBox.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 					return userBox;
 				} else if ("description".equals(propertyId)) {
 					TextArea textArea = new TextArea("", "");
-					textArea.setWidth(UIConstants.DEFAULT_2XCONTROL_WIDTH);
-					textArea.setHeight(UIConstants.DEFAULT_2XCONTROL_HEIGHT);
 					return textArea;
 				}
 
 				if (propertyId.equals("accountname")) {
 					TextField tf = new TextField();
+					tf.setNullRepresentation("");
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter an Account Name");
 					return tf;
@@ -168,7 +163,10 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 			Button cancelBtn = new Button(CANCEL_ACTION, formActionListener);
 
 			layout.addComponent(saveBtn);
+			layout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
+
 			layout.addComponent(cancelBtn);
+			layout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
 			return layout;
 		}
 
@@ -305,10 +303,11 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 
 			if (propertyId.equals("description")) {
 				field.setSizeUndefined();
-				descriptionLayout.addComponent(propertyId.equals("description"),
-						field, "Description", 0, 0);
+				descriptionLayout.addComponent(
+						propertyId.equals("description"), field, "Description",
+						0, 0);
 			}
-			
+
 		}
 	}
 

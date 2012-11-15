@@ -11,6 +11,9 @@ import com.esofthead.mycollab.vaadin.mvp.eventbus.EventBus;
 import com.vaadin.terminal.UserError;
 import com.vaadin.ui.Form;
 
+import de.steinwedel.vaadin.MessageBox;
+import de.steinwedel.vaadin.MessageBox.ButtonType;
+
 @SuppressWarnings("serial")
 public class AdvancedBeanForm<T> extends Form {
 	@Autowired
@@ -18,13 +21,13 @@ public class AdvancedBeanForm<T> extends Form {
 
 	@Autowired
 	protected EventBus eventBus;
-	
+
 	protected boolean isEditMode;
 
 	public AdvancedBeanForm() {
 		this(true);
 	}
-	
+
 	public AdvancedBeanForm(boolean isEditMode) {
 		super();
 		this.isEditMode = isEditMode;
@@ -33,9 +36,19 @@ public class AdvancedBeanForm<T> extends Form {
 	protected boolean validateForm(Object data) {
 		Set<ConstraintViolation<Object>> violations = validation.validate(data);
 		if (violations.size() > 0) {
-			for (@SuppressWarnings("rawtypes") ConstraintViolation violation : violations) {
-				this.setComponentError(new UserError(violation.getMessage()));
+			StringBuffer errorMsg = new StringBuffer();
+
+			for (@SuppressWarnings("rawtypes")
+			ConstraintViolation violation : violations) {
+				errorMsg.append(violation.getMessage()).append("<br/>");
+
 			}
+
+			MessageBox mb = new MessageBox(getWindow(), "Error!",
+					MessageBox.Icon.ERROR, errorMsg.toString(),
+					new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
+			mb.show();
+
 			return false;
 		}
 
