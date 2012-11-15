@@ -111,18 +111,17 @@ public class ProjectAddWindow extends Window {
 
 		@Override
 		protected void attachField(Object propertyId, Field field) {
-			layoutHelper.addComponent(propertyId.equals("name"), field,
-					"Project Name", 0, 0);
-			layoutHelper.addComponent(propertyId.equals("homepage"), field,
-					"Home Page", 1, 0);
-			layoutHelper.addComponent(propertyId.equals("shortname"), field,
-					"Short Name", 0, 1);
-			layoutHelper.addComponent(propertyId.equals("projecttype"), field,
-					"Type", 1, 1);
-			if (propertyId.equals("description")) {
+			if (propertyId.equals("name")) {
+				layoutHelper.addComponent(field, "Project Name", 0, 0);
+			} else if (propertyId.equals("homepage")) {
+				layoutHelper.addComponent(field, "Home Page", 1, 0);
+			} else if (propertyId.equals("shortname")) {
+				layoutHelper.addComponent(field, "Short Name", 0, 1);
+			} else if (propertyId.equals("projecttype")) {
+				layoutHelper.addComponent(field, "Type", 1, 1);
+			} else if (propertyId.equals("description")) {
 				layoutHelper.addComponent(field, "Description", 0, 2, 1, 2);
 			}
-
 		}
 
 		@Override
@@ -160,20 +159,19 @@ public class ProjectAddWindow extends Window {
 
 		@Override
 		protected void attachField(Object propertyId, Field field) {
-			layoutHelper.addComponent(propertyId.equals("planstartdate"),
-					field, "Planned Start Date", 0, 0);
-			layoutHelper.addComponent(propertyId.equals("planenddate"), field,
-					"Planned End Date", 0, 1);
-			layoutHelper.addComponent(propertyId.equals("currencyid"), field,
-					"Currency", 0, 2);
-
-			layoutHelper.addComponent(propertyId.equals("targetbudget"), field,
-					"Target Budget", 1, 0);
-			layoutHelper.addComponent(propertyId.equals("defaultbillingrate"),
-					field, "Billing Rate", 1, 1);
-			layoutHelper.addComponent(
-					propertyId.equals("defaultovertimebillingrate"), field,
-					"Overtime Billing Rate", 1, 2);
+			if (propertyId.equals("planstartdate")) {
+				layoutHelper.addComponent(field, "Planned Start Date", 0, 0);
+			} else if (propertyId.equals("planenddate")) {
+				layoutHelper.addComponent(field, "Planned End Date", 0, 1);
+			} else if (propertyId.equals("currencyid")) {
+				layoutHelper.addComponent(field, "Currency", 0, 2);
+			} else if (propertyId.equals("targetbudget")) {
+				layoutHelper.addComponent(field, "Target Budget", 1, 0);
+			} else if (propertyId.equals("defaultbillingrate")) {
+				layoutHelper.addComponent(field, "Billing Rate", 1, 1);
+			} else if (propertyId.equals("defaultovertimebillingrate")) {
+				layoutHelper.addComponent(field, "Overtime Billing Rate", 1, 2);
+			}
 		}
 
 		@Override

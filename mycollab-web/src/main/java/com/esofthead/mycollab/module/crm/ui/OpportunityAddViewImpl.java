@@ -189,9 +189,10 @@ public class OpportunityAddViewImpl extends AbstractView implements
 
 		public GenericForm() {
 			super();
-			AddViewLayout opportunityAddLayout = new AddViewLayout("Account");
+			AddViewLayout opportunityAddLayout = new AddViewLayout(
+					"Opportunity");
 			opportunityAddLayout.addTopControls(createButtonControls());
-			
+
 			VerticalLayout layout = new VerticalLayout();
 			layout.setSpacing(true);
 
@@ -250,6 +251,10 @@ public class OpportunityAddViewImpl extends AbstractView implements
 					"Source", 1, 3);
 			informationLayout.addComponent(propertyId.equals("campaignid"),
 					field, "Campaign", 1, 4);
+
+			if (propertyId.equals("description")) {
+				descriptionLayout.addComponent(field, "Description", 0, 0);
+			}
 		}
 	}
 }

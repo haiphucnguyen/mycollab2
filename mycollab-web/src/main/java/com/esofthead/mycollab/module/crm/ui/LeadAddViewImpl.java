@@ -72,6 +72,7 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 		protected HorizontalLayout createButtonControls() {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(true);
+			layout.setStyleName("addNewControl");
 			FormActionListener formActionListener = new FormActionListener();
 			Button saveBtn = new Button(SAVE_ACTION, formActionListener);
 			Button cancelBtn = new Button(CANCEL_ACTION, formActionListener);
@@ -158,10 +159,14 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 			layout.setStyleName("addNewControl");
 			FormActionListener formActionListener = new FormActionListener();
 			Button saveBtn = new Button(EDIT_ACTION, formActionListener);
+			
 			Button cancelBtn = new Button(CANCEL_ACTION, formActionListener);
 
 			layout.addComponent(saveBtn);
+			layout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
+
 			layout.addComponent(cancelBtn);
+			layout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
 			return layout;
 		}
 
@@ -204,7 +209,7 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 		public GenericForm() {
 			super();
 
-			AddViewLayout leadAddLayout = new AddViewLayout("Account");
+			AddViewLayout leadAddLayout = new AddViewLayout("Lead");
 			leadAddLayout.addTopControls(createButtonControls());
 
 			VerticalLayout layout = new VerticalLayout();

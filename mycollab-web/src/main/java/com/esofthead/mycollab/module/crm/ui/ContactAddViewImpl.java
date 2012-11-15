@@ -196,7 +196,7 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 		public GenericForm() {
 			super();
 
-			AddViewLayout contactAddLayout = new AddViewLayout("Account");
+			AddViewLayout contactAddLayout = new AddViewLayout("Contact");
 
 			contactAddLayout.addTopControls(createButtonControls());
 
@@ -234,81 +234,63 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 		 */
 		@Override
 		protected void attachField(Object propertyId, Field field) {
-			informationLayout.addComponent(propertyId.equals("firstname"),
-					field, "First Name", 0, 0);
-
-			informationLayout.addComponent(propertyId.equals("lastname"),
-					field, "Last Name", 0, 1);
-
-			informationLayout.addComponent(propertyId.equals("accountid"),
-					field, "Account", 0, 2);
-
-			informationLayout.addComponent(propertyId.equals("title"), field,
-					"Title", 0, 3);
-
-			informationLayout.addComponent(propertyId.equals("department"),
-					field, "Department", 0, 4);
-
-			informationLayout.addComponent(propertyId.equals("email"), field,
-					"Email", 0, 5);
-
-			informationLayout.addComponent(propertyId.equals("assistant"),
-					field, "Assistant", 0, 6);
-
-			informationLayout.addComponent(propertyId.equals("assistantphone"),
-					field, "Assistant Phone", 0, 7);
-			informationLayout.addComponent(propertyId.equals("leadsource"),
-					field, "Leade Source", 0, 8);
-
-			informationLayout.addComponent(propertyId.equals("officephone"),
-					field, "Phone Office", 1, 0);
-
-			informationLayout.addComponent(propertyId.equals("mobile"), field,
-					"Mobile", 1, 1);
-
-			informationLayout.addComponent(propertyId.equals("homephone"),
-					field, "Home Phone", 1, 2);
-
-			informationLayout.addComponent(propertyId.equals("otherphone"),
-					field, "Other Phone", 1, 3);
-
-			informationLayout.addComponent(propertyId.equals("fax"), field,
-					"Fax", 1, 4);
-
-			informationLayout.addComponent(propertyId.equals("birthday"),
-					field, "Birthday", 1, 5);
-
-			informationLayout.addComponent(propertyId.equals("iscallable"),
-					field, "Callable", 1, 6);
-
-			informationLayout.addComponent(propertyId.equals("assignuser"),
-					field, "Assign User", 1, 7);
-
-			informationLayout.addComponent(propertyId.equals("campaignid"),
-					field, "Campaign", 1, 8);
-
-			addressLayout.addComponent(propertyId.equals("primaddress"), field,
-					"Address", 0, 0);
-			addressLayout.addComponent(propertyId.equals("primcity"), field,
-					"City", 0, 1);
-			addressLayout.addComponent(propertyId.equals("primstate"), field,
-					"State", 0, 2);
-			addressLayout.addComponent(propertyId.equals("primpostalcode"),
-					field, "Postal Code", 0, 3);
-			addressLayout.addComponent(propertyId.equals("primcountry"), field,
-					"Country", 0, 4);
-
-			addressLayout.addComponent(propertyId.equals("otheraddress"),
-					field, "Other Address", 1, 0);
-			addressLayout.addComponent(propertyId.equals("othercity"), field,
-					"Other City", 1, 1);
-			addressLayout.addComponent(propertyId.equals("otherstate"), field,
-					"Other State", 1, 2);
-			addressLayout.addComponent(propertyId.equals("otherpostalcode"),
-					field, "Other Postal Code", 1, 3);
-			addressLayout.addComponent(propertyId.equals("othercountry"),
-					field, "Other Country", 1, 4);
-
+			if (propertyId.equals("firstname")) {
+				informationLayout.addComponent(field, "First Name", 0, 0);
+			} else if (propertyId.equals("lastname")) {
+				informationLayout.addComponent(field, "Last Name", 0, 1);
+			} else if (propertyId.equals("accountid")) {
+				informationLayout.addComponent(field, "Account", 0, 2);
+			} else if (propertyId.equals("title")) {
+				informationLayout.addComponent(field, "Title", 0, 3);
+			} else if (propertyId.equals("department")) {
+				informationLayout.addComponent(field, "Department", 0, 4);
+			} else if (propertyId.equals("email")) {
+				informationLayout.addComponent(field, "Email", 0, 5);
+			} else if (propertyId.equals("assistant")) {
+				informationLayout.addComponent(field, "Assistant", 0, 6);
+			} else if (propertyId.equals("assistantphone")) {
+				informationLayout.addComponent(field, "Assistant Phone", 0, 7);
+			} else if (propertyId.equals("leadsource")) {
+				informationLayout.addComponent(field, "Leade Source", 0, 8);
+			} else if (propertyId.equals("officephone")) {
+				informationLayout.addComponent(field, "Phone Office", 1, 0);
+			} else if (propertyId.equals("mobile")) {
+				informationLayout.addComponent(field, "Mobile", 1, 1);
+			} else if (propertyId.equals("homephone")) {
+				informationLayout.addComponent(field, "Home Phone", 1, 2);
+			} else if (propertyId.equals("otherphone")) {
+				informationLayout.addComponent(field, "Other Phone", 1, 3);
+			} else if (propertyId.equals("fax")) {
+				informationLayout.addComponent(field, "Fax", 1, 4);
+			} else if (propertyId.equals("birthday")) {
+				informationLayout.addComponent(field, "Birthday", 1, 5);
+			} else if (propertyId.equals("iscallable")) {
+				informationLayout.addComponent(field, "Callable", 1, 6);
+			} else if (propertyId.equals("assignuser")) {
+				informationLayout.addComponent(field, "Assign User", 1, 7);
+			} else if (propertyId.equals("campaignid")) {
+				informationLayout.addComponent(field, "Campaign", 1, 8);
+			} else if (propertyId.equals("primaddress")) {
+				addressLayout.addComponent(field, "Address", 0, 0);
+			} else if (propertyId.equals("primcity")) {
+				addressLayout.addComponent(field, "City", 0, 1);
+			} else if (propertyId.equals("primstate")) {
+				addressLayout.addComponent(field, "State", 0, 2);
+			} else if (propertyId.equals("primpostalcode")) {
+				addressLayout.addComponent(field, "Postal Code", 0, 3);
+			} else if (propertyId.equals("primcountry")) {
+				addressLayout.addComponent(field, "Country", 0, 4);
+			} else if (propertyId.equals("otheraddress")) {
+				addressLayout.addComponent(field, "Other Address", 1, 0);
+			} else if (propertyId.equals("othercity")) {
+				addressLayout.addComponent(field, "Other City", 1, 1);
+			} else if (propertyId.equals("otherstate")) {
+				addressLayout.addComponent(field, "Other State", 1, 2);
+			} else if (propertyId.equals("otherpostalcode")) {
+				addressLayout.addComponent(field, "Other Postal Code", 1, 3);
+			} else if (propertyId.equals("othercountry")) {
+				addressLayout.addComponent(field, "Other Country", 1, 4);
+			}
 		}
 	}
 

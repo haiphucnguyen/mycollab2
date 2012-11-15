@@ -41,7 +41,7 @@ public class CampaignSelectionField extends FieldWrapper<Campaign> implements
 		campaignName = new TextField();
 		layout.addComponent(campaignName);
 
-		browseBtn = new Embedded("", new ThemeResource(
+		browseBtn = new Embedded(null, new ThemeResource(
 				"icons/16/browseItem.png"));
 		layout.addComponent(browseBtn);
 		browseBtn.addListener(new MouseEvents.ClickListener() {
@@ -56,7 +56,7 @@ public class CampaignSelectionField extends FieldWrapper<Campaign> implements
 			}
 		});
 
-		clearBtn = new Embedded("", new ThemeResource("icons/16/clearItem.png"));
+		clearBtn = new Embedded(null, new ThemeResource("icons/16/clearItem.png"));
 		clearBtn.addListener(new MouseEvents.ClickListener() {
 
 			@Override
