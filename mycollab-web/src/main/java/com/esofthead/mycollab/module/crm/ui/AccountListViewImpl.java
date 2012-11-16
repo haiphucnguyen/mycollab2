@@ -28,6 +28,7 @@ import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton.SelectionOptionLis
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.terminal.ExternalResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
@@ -51,6 +52,8 @@ public class AccountListViewImpl extends AbstractView implements
 	private VerticalLayout accountListLayout;
 
 	private SplitButton tableActionControls;
+
+	private Label selectedItemsNumberLabel = new Label();
 
 	private final Set<Object> selectedItemIds = new HashSet<Object>();
 
@@ -93,6 +96,7 @@ public class AccountListViewImpl extends AbstractView implements
 		doSearch(searchCriteria);
 	}
 
+	@SuppressWarnings("serial")
 	@Override
 	public void doSearch(AccountSearchCriteria searchCriteria) {
 		tableItem = new BeanTable<SimpleAccount>();
@@ -147,6 +151,7 @@ public class AccountListViewImpl extends AbstractView implements
 				 * the selectedItemIds set
 				 */
 				final CheckBox cb = new CheckBox("", selected);
+				cb.setImmediate(true);
 				cb.addListener(new Property.ValueChangeListener() {
 					@Override
 					public void valueChange(Property.ValueChangeEvent event) {
@@ -155,8 +160,23 @@ public class AccountListViewImpl extends AbstractView implements
 						} else {
 							selectedItemIds.add(itemId);
 						}
+
+						checkWhetherEnableTableActionControl();
 					}
 				});
+
+				cb.addListener(new Button.ClickListener() {
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						System.out.println("Value: " + cb.getValue());
+
+					}
+				});
+				@SuppressWarnings("unchecked")
+				SimpleAccount account = ((BeanTable<SimpleAccount>) source)
+						.getBeanByIndex(itemId);
+				account.setExtraData(cb);
 				return cb;
 			}
 		});
@@ -249,36 +269,64 @@ public class AccountListViewImpl extends AbstractView implements
 
 		tableActionControls = new SplitButton("Delete");
 		tableActionControls.addStyleName(SplitButton.STYLE_CHAMELEON);
-		
+
 		VerticalLayout actionLayout = new VerticalLayout();
 		actionLayout.setWidth("100px");
 		actionLayout.addComponent(new ButtonLink("Mail"));
 		actionLayout.addComponent(new ButtonLink("Export"));
 		tableActionControls.setComponent(actionLayout);
-		
+
 		layout.addComponent(tableActionControls);
+		layout.addComponent(selectedItemsNumberLabel);
+		layout.setComponentAlignment(selectedItemsNumberLabel,
+				Alignment.MIDDLE_CENTER);
 		return layout;
+	}
+
+	private void checkWhetherEnableTableActionControl() {
+		if (selectedItemIds.size() > 0) {
+			tableActionControls.setEnabled(true);
+			selectedItemsNumberLabel.setValue("Selected: "
+					+ selectedItemIds.size());
+		} else {
+			tableActionControls.setEnabled(true);
+			selectedItemsNumberLabel.setValue("");
+		}
 	}
 
 	@Override
 	public void onSelect() {
 		tableActionControls.setEnabled(true);
 
-		for (Object id : tableItem.getItemIds()) {
+		for (Object itemId : tableItem.getItemIds()) {
 			CheckBox checkBox;
-            try {
-                checkBox = (CheckBox) tableItem.getContainerProperty(id,
-                        "selected").getValue();
-                System.out.println("Checkbox: " + checkBox);
-            } catch (Exception e) {
-                e.printStackTrace(); // ->> NullPointerException
-            }
+			try {
+				final SimpleAccount account = ((BeanTable<SimpleAccount>) tableItem)
+						.getBeanByIndex(itemId);
+				checkBox = (CheckBox) account.getExtraData();
+				checkBox.setValue(true);
+			} catch (Exception e) {
+				e.printStackTrace(); // ->> NullPointerException
+			}
 		}
+
+		checkWhetherEnableTableActionControl();
 	}
 
 	@Override
 	public void onDeSelect() {
 		tableActionControls.setEnabled(false);
-
+		for (Object itemId : tableItem.getItemIds()) {
+			CheckBox checkBox;
+			try {
+				final SimpleAccount account = ((BeanTable<SimpleAccount>) tableItem)
+						.getBeanByIndex(itemId);
+				checkBox = (CheckBox) account.getExtraData();
+				checkBox.setValue(false);
+			} catch (Exception e) {
+				e.printStackTrace(); // ->> NullPointerException
+			}
+		}
+		checkWhetherEnableTableActionControl();
 	}
 }

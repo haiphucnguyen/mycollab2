@@ -17,11 +17,10 @@
  */
 package com.esofthead.mycollab.module.crm.domain;
 
-
 public class SimpleAccount extends Account {
 
 	private String assignUserFullName;
-	
+
 	private String billingCountry;
 
 	public String getAssignUserFullName() {

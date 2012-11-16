@@ -302,9 +302,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 
 			if (propertyId.equals("description")) {
 				field.setSizeUndefined();
-				descriptionLayout.addComponent(
-						propertyId.equals("description"), field, "Description",
-						0, 0);
+				descriptionLayout.addComponent(field, "Description", 0, 0);
 			}
 
 		}
