@@ -1,8 +1,12 @@
 package com.esofthead.mycollab.module.crm.ui;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import javax.annotation.PostConstruct;
 
 import org.springframework.stereotype.Component;
+import org.vaadin.hene.splitbutton.SplitButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -19,9 +23,13 @@ import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.BeanTable;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.data.Property;
 import com.vaadin.terminal.ExternalResource;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
@@ -40,6 +48,21 @@ public class AccountListViewImpl extends AbstractView implements
 	private AccountSearchCriteria searchCriteria;
 
 	private VerticalLayout accountListLayout;
+
+	private final Set<Object> selectedItemIds = new HashSet<Object>();
+
+	@Override
+	protected void initializeLayout() {
+		this.setSpacing(true);
+
+		AccountSearchPanel accountSearchPanel = AppContext
+				.getSpringBean(AccountSearchPanel.class);
+		this.addComponent(accountSearchPanel);
+
+		accountListLayout = new VerticalLayout();
+		accountListLayout.setSpacing(true);
+		this.addComponent(accountListLayout);
+	}
 
 	@SuppressWarnings("serial")
 	@PostConstruct
@@ -77,6 +100,8 @@ public class AccountListViewImpl extends AbstractView implements
 						AppContext.getSpringBean(AccountService.class), false,
 						5), new MyBatisQueryFactory<AccountSearchCriteria>(
 						searchCriteria));
+		container.addContainerProperty("selected", Boolean.class, false, false,
+				false);
 		container.addContainerProperty("accountname", String.class, "", true,
 				true);
 		container.addContainerProperty("city", String.class, "", true, true);
@@ -92,23 +117,47 @@ public class AccountListViewImpl extends AbstractView implements
 				true);
 		container.addContainerProperty("action", Object.class, "", true, false);
 		tableItem.setContainerDataSource(container);
-		tableItem.setColumnHeaders(new String[] { "Name", "City",
+		tableItem.setColumnHeaders(new String[] { "", "Name", "City",
 				"Billing Country", "Phone Office", "Email Address",
 				"Assign User", "Created Time", "Action" });
 
-		System.out.println("View: " + container.getQueryView().size());
+		tableItem.setWidth("1130px");
 
-		tableItem.setColumnWidth("accountname", 207);
+		tableItem.setColumnWidth("city", 130);
 
-		tableItem.setColumnWidth("city", 137);
+		tableItem.setColumnWidth("billingCountry", 130);
 
-		tableItem.setColumnWidth("billingCountry", 137);
+		tableItem.setColumnWidth("phoneoffice", 90);
+		tableItem.setColumnWidth("email", 180);
 
-		tableItem.setColumnWidth("email", 137);
-
-		tableItem.setColumnWidth("assignuser", 136);
+		tableItem.setColumnWidth("assignuser", 140);
 
 		tableItem.setColumnWidth("action", 82);
+
+		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
+
+			@Override
+			public Object generateCell(Table source, final Object itemId,
+					Object columnId) {
+				boolean selected = selectedItemIds.contains(itemId);
+				/*
+				 * When the chekboc value changes, add/remove the itemId from
+				 * the selectedItemIds set
+				 */
+				final CheckBox cb = new CheckBox("", selected);
+				cb.addListener(new Property.ValueChangeListener() {
+					@Override
+					public void valueChange(Property.ValueChangeEvent event) {
+						if (selectedItemIds.contains(itemId)) {
+							selectedItemIds.remove(itemId);
+						} else {
+							selectedItemIds.add(itemId);
+						}
+					}
+				});
+				return cb;
+			}
+		});
 
 		tableItem.addGeneratedColumn("email", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -230,19 +279,25 @@ public class AccountListViewImpl extends AbstractView implements
 		});
 
 		accountListLayout.removeAllComponents();
+
+		accountListLayout.addComponent(constructTableActionControls());
 		accountListLayout.addComponent(tableItem);
 		accountListLayout.addComponent(tableItem.createControls());
 	}
 
-	@Override
-	protected void initializeLayout() {
-		this.setSpacing(true);
-
-		AccountSearchPanel accountSearchPanel = AppContext
-				.getSpringBean(AccountSearchPanel.class);
-		this.addComponent(accountSearchPanel);
-
-		accountListLayout = new VerticalLayout();
-		this.addComponent(accountListLayout);
+	private ComponentContainer constructTableActionControls() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
+		SplitButton selectSplitButton = new SplitButton();
+		selectSplitButton.addStyleName(SplitButton.STYLE_CHAMELEON);
+		selectSplitButton.setIcon(new ThemeResource("icons/16/checkbox_empty"));
+		
+		VerticalLayout selectContent = new VerticalLayout();
+		selectContent.setWidth("100px");
+		selectContent.addComponent(new Label("Select All"));
+		selectContent.addComponent(new Label("Deselect All"));
+		selectSplitButton.setComponent(selectContent);
+		layout.addComponent(selectSplitButton);
+		return layout;
 	}
 }

@@ -23,7 +23,6 @@ import com.esofthead.mycollab.web.AppContext;
 import com.jensjansson.pagedtable.PagedTable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
@@ -75,7 +74,14 @@ public class ContactListViewImpl extends AbstractView implements
 				true, true);
 
 		container.addContainerProperty("action", Object.class, "", true, false);
-		tableItem.setColumnWidth("action", 80);
+		
+		tableItem.setWidth("1130px");
+		tableItem.setColumnWidth("title", 140);
+		tableItem.setColumnWidth("accountName", 140);
+		tableItem.setColumnWidth("email", 180);
+		tableItem.setColumnWidth("officephone", 90);
+		tableItem.setColumnWidth("assignUserFullName", 140);
+		tableItem.setColumnWidth("action", 82);
 
 		tableItem.setContainerDataSource(container);
 		tableItem.setColumnHeaders(new String[] { "Name", "Title",

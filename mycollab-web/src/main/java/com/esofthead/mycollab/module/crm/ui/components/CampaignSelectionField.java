@@ -13,6 +13,7 @@ import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
@@ -44,6 +45,7 @@ public class CampaignSelectionField extends FieldWrapper<Campaign> implements
 		browseBtn = new Embedded(null, new ThemeResource(
 				"icons/16/browseItem.png"));
 		layout.addComponent(browseBtn);
+		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 		browseBtn.addListener(new MouseEvents.ClickListener() {
 
 			@Override
@@ -66,6 +68,7 @@ public class CampaignSelectionField extends FieldWrapper<Campaign> implements
 			}
 		});
 		layout.addComponent(clearBtn);
+		layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
 
 		this.setCompositionRoot(layout);
 		this.addListener(new Property.ValueChangeListener() {

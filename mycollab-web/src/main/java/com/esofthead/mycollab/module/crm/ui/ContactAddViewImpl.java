@@ -193,6 +193,8 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 
 		protected GridFormLayoutHelper addressLayout;
 
+		protected GridFormLayoutHelper descriptionLayout;
+
 		public GenericForm() {
 			super();
 
@@ -217,6 +219,14 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 			addressLayout = new GridFormLayoutHelper(2, 5);
 			addressLayout.getLayout().setWidth("900px");
 			layout.addComponent(addressLayout.getLayout());
+
+			descriptionLayout = new GridFormLayoutHelper(1, 1);
+			Label descHeader = new Label("Description");
+			descHeader.setStyleName("h2");
+			layout.addComponent(descHeader);
+			descriptionLayout.getLayout().setWidth("900px");
+			descriptionLayout.getLayout().setColumnExpandRatio(1, 1.0f);
+			layout.addComponent(descriptionLayout.getLayout());
 
 			this.setWriteThrough(true);
 			this.setInvalidCommitted(false);
@@ -290,6 +300,11 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 				addressLayout.addComponent(field, "Other Postal Code", 1, 3);
 			} else if (propertyId.equals("othercountry")) {
 				addressLayout.addComponent(field, "Other Country", 1, 4);
+			} else if (propertyId.equals("description")) {
+				field.setSizeUndefined();
+				descriptionLayout.addComponent(
+						propertyId.equals("description"), field, "Description",
+						0, 0);
 			}
 		}
 	}
