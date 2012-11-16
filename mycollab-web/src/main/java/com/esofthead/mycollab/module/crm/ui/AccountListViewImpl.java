@@ -22,10 +22,12 @@ import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.BeanTable;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton.SelectionOptionListener;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.terminal.ExternalResource;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
@@ -36,11 +38,10 @@ import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.BaseTheme;
 
 @Component
 public class AccountListViewImpl extends AbstractView implements
-		AccountListView {
+		AccountListView, SelectionOptionListener {
 	private static final long serialVersionUID = 1L;
 
 	private BeanTable<SimpleAccount> tableItem;
@@ -48,6 +49,8 @@ public class AccountListViewImpl extends AbstractView implements
 	private AccountSearchCriteria searchCriteria;
 
 	private VerticalLayout accountListLayout;
+
+	private SplitButton tableActionControls;
 
 	private final Set<Object> selectedItemIds = new HashSet<Object>();
 
@@ -119,7 +122,7 @@ public class AccountListViewImpl extends AbstractView implements
 		tableItem.setContainerDataSource(container);
 		tableItem.setColumnHeaders(new String[] { "", "Name", "City",
 				"Billing Country", "Phone Office", "Email Address",
-				"Assign User", "Created Time", "Action" });
+				"Assign User", "Created Time" });
 
 		tableItem.setWidth("1130px");
 
@@ -131,8 +134,6 @@ public class AccountListViewImpl extends AbstractView implements
 		tableItem.setColumnWidth("email", 180);
 
 		tableItem.setColumnWidth("assignuser", 140);
-
-		tableItem.setColumnWidth("action", 82);
 
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 
@@ -212,7 +213,7 @@ public class AccountListViewImpl extends AbstractView implements
 				final SimpleAccount account = ((BeanTable<SimpleAccount>) source)
 						.getBeanByIndex(itemId);
 				if (account != null) {
-					Button b = new Button(account.getAccountname(),
+					ButtonLink b = new ButtonLink(account.getAccountname(),
 							new Button.ClickListener() {
 								private static final long serialVersionUID = 1L;
 
@@ -222,55 +223,7 @@ public class AccountListViewImpl extends AbstractView implements
 											this, account));
 								}
 							});
-					b.setStyleName("link");
 					return b;
-				} else {
-					return new Label("");
-				}
-
-			}
-		});
-
-		tableItem.addGeneratedColumn("action", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					final Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleAccount account = ((BeanTable<SimpleAccount>) source)
-						.getBeanByIndex(itemId);
-				if (account != null) {
-					HorizontalLayout layout = new HorizontalLayout();
-					layout.setSpacing(true);
-					Button editAccount = new Button("Edit",
-							new Button.ClickListener() {
-								private static final long serialVersionUID = 1L;
-
-								@Override
-								public void buttonClick(ClickEvent event) {
-									eventBus.fireEvent(new AccountEvent.GotoEdit(
-											this, account));
-
-								}
-							});
-					editAccount.setStyleName(BaseTheme.BUTTON_LINK);
-					layout.addComponent(editAccount);
-
-					layout.addComponent(new Label("|"));
-					Button deleteAccount = new Button("Delete",
-							new Button.ClickListener() {
-								private static final long serialVersionUID = 1L;
-
-								@Override
-								public void buttonClick(ClickEvent event) {
-									// TODO Auto-generated method stub
-
-								}
-							});
-					deleteAccount.setStyleName(BaseTheme.BUTTON_LINK);
-					layout.addComponent(deleteAccount);
-					return layout;
 				} else {
 					return new Label("");
 				}
@@ -288,16 +241,27 @@ public class AccountListViewImpl extends AbstractView implements
 	private ComponentContainer constructTableActionControls() {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
-		SplitButton selectSplitButton = new SplitButton();
-		selectSplitButton.addStyleName(SplitButton.STYLE_CHAMELEON);
-		selectSplitButton.setIcon(new ThemeResource("icons/16/checkbox_empty"));
-		
-		VerticalLayout selectContent = new VerticalLayout();
-		selectContent.setWidth("100px");
-		selectContent.addComponent(new Label("Select All"));
-		selectContent.addComponent(new Label("Deselect All"));
-		selectSplitButton.setComponent(selectContent);
-		layout.addComponent(selectSplitButton);
+
+		SelectionOptionButton selecSplitButton = new SelectionOptionButton();
+		layout.addComponent(selecSplitButton);
+
+		tableActionControls = new SplitButton("Delete");
+		VerticalLayout actionLayout = new VerticalLayout();
+		actionLayout.setWidth("100px");
+
+		tableActionControls.setComponent(actionLayout);
 		return layout;
+	}
+
+	@Override
+	public void onSelect() {
+		tableActionControls.setEnabled(true);
+
+	}
+
+	@Override
+	public void onDeSelect() {
+		tableActionControls.setEnabled(false);
+
 	}
 }
