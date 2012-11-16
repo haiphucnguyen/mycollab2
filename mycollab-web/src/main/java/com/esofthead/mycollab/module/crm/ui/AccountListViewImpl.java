@@ -118,7 +118,6 @@ public class AccountListViewImpl extends AbstractView implements
 				true);
 		container.addContainerProperty("createdtime", String.class, "", true,
 				true);
-		container.addContainerProperty("action", Object.class, "", true, false);
 		tableItem.setContainerDataSource(container);
 		tableItem.setColumnHeaders(new String[] { "", "Name", "City",
 				"Billing Country", "Phone Office", "Email Address",
@@ -126,6 +125,7 @@ public class AccountListViewImpl extends AbstractView implements
 
 		tableItem.setWidth("1130px");
 
+		tableItem.setColumnWidth("selected", 20);
 		tableItem.setColumnWidth("city", 130);
 
 		tableItem.setColumnWidth("billingCountry", 130);
@@ -134,6 +134,7 @@ public class AccountListViewImpl extends AbstractView implements
 		tableItem.setColumnWidth("email", 180);
 
 		tableItem.setColumnWidth("assignuser", 140);
+		tableItem.setColumnWidth("createdtime", 120);
 
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 
@@ -244,12 +245,18 @@ public class AccountListViewImpl extends AbstractView implements
 
 		SelectionOptionButton selecSplitButton = new SelectionOptionButton();
 		layout.addComponent(selecSplitButton);
+		selecSplitButton.addListener(this);
 
 		tableActionControls = new SplitButton("Delete");
+		tableActionControls.addStyleName(SplitButton.STYLE_CHAMELEON);
+		
 		VerticalLayout actionLayout = new VerticalLayout();
 		actionLayout.setWidth("100px");
-
+		actionLayout.addComponent(new ButtonLink("Mail"));
+		actionLayout.addComponent(new ButtonLink("Export"));
 		tableActionControls.setComponent(actionLayout);
+		
+		layout.addComponent(tableActionControls);
 		return layout;
 	}
 
@@ -257,6 +264,16 @@ public class AccountListViewImpl extends AbstractView implements
 	public void onSelect() {
 		tableActionControls.setEnabled(true);
 
+		for (Object id : tableItem.getItemIds()) {
+			CheckBox checkBox;
+            try {
+                checkBox = (CheckBox) tableItem.getContainerProperty(id,
+                        "selected").getValue();
+                System.out.println("Checkbox: " + checkBox);
+            } catch (Exception e) {
+                e.printStackTrace(); // ->> NullPointerException
+            }
+		}
 	}
 
 	@Override
