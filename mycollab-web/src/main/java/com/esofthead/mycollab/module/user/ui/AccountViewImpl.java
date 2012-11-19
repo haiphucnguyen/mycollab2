@@ -7,29 +7,32 @@ import com.esofthead.mycollab.module.user.ui.accountsettings.UserInformationView
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @Component
 public class AccountViewImpl extends AbstractView implements AccountView {
 
-	private HorizontalSplitPanel root;
+	private HorizontalLayout root;
 	private DetachedTabs accountTab;
-	private CssLayout accountSpace = new CssLayout();
+	private final CssLayout accountSpace = new CssLayout();
 
 	@Override
 	protected void initializeLayout() {
-		root = new HorizontalSplitPanel();
-		root.setSplitPosition(200, Sizeable.UNITS_PIXELS);
-		root.setLocked(true);
-		root.setSizeFull();
+		this.setStyleName("accountViewContainer");
+		this.setWidth("1130px");
+		this.setMargin(false);
+		root = new HorizontalLayout();
+		// root.setWidth("1000px");
+		// root.setSplitPosition(200, Sizeable.UNITS_PIXELS);
+		// root.setLocked(true);
+		// root.setSizeFull();
 
 		accountSpace.setSizeFull();
 		accountTab = new DetachedTabs.Vertical(accountSpace);
-		accountTab.setSizeFull();
+		accountTab.setWidth("200px");
 		accountTab.setHeight(null);
 
 		VerticalLayout menu = new VerticalLayout();
@@ -37,21 +40,17 @@ public class AccountViewImpl extends AbstractView implements AccountView {
 		menu.setStyleName("sidebar-menu");
 
 		menu.addComponent(accountTab);
-		root.setFirstComponent(menu);
-		root.setSecondComponent(accountSpace);
+		root.addComponent(menu);
+		root.addComponent(accountSpace);
 
 		buildComponents();
 		this.addComponent(root);
 	}
-	
-	
 
 	@Override
 	public void attach() {
 		super.attach();
 	}
-
-
 
 	private void buildComponents() {
 		accountTab.addTab(constructUserInformationComponent(),
@@ -59,6 +58,11 @@ public class AccountViewImpl extends AbstractView implements AccountView {
 		accountTab.addTab(constructAccountSettingsComponent(),
 				"Account Settings");
 	}
+
+	// private void addView(AbstractView view) {
+	// this.removeAllComponents();
+	// this.addComponent(view);
+	// }
 
 	private com.vaadin.ui.Component constructUserInformationComponent() {
 		return AppContext.getView(UserInformationViewImpl.class);

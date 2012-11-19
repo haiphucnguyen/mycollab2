@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.user.ui.AccountViewImpl;
 import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CustomLayout;
@@ -19,7 +20,7 @@ import com.vaadin.ui.VerticalLayout;
 @Scope("prototype")
 @Component
 public class MainPage extends AbstractView {
-	
+
 	private VerticalLayout bodyLayout;
 
 	@Override
@@ -46,7 +47,8 @@ public class MainPage extends AbstractView {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
-						CrmContainer crmContainer = AppContext.getView(CrmContainer.class);
+						CrmContainer crmContainer = AppContext
+								.getView(CrmContainer.class);
 						bodyLayout.removeAllComponents();
 						bodyLayout.addComponent(crmContainer);
 					}
@@ -59,7 +61,8 @@ public class MainPage extends AbstractView {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
-						ProjectContainer projectDashboard = AppContext.getView(ProjectContainer.class);
+						ProjectContainer projectDashboard = AppContext
+								.getView(ProjectContainer.class);
 						bodyLayout.removeAllComponents();
 						bodyLayout.addComponent(projectDashboard);
 					}
@@ -70,22 +73,26 @@ public class MainPage extends AbstractView {
 		serviceMenu.addComponent(vLayout);
 		layout.addComponent(serviceMenu, "serviceMenu");
 
-		PopupButton accountMenu = new PopupButton(AppContext.getSession()
+		final PopupButton accountMenu = new PopupButton(AppContext.getSession()
 				.getDisplayname());
 		accountMenu.setStyleName("link");
 		VerticalLayout accLayout = new VerticalLayout();
 		accLayout.setWidth("120px");
 
-		Button myAccountBtn = new Button("My Account", new Button.ClickListener() {
-			
-			@Override
-			public void buttonClick(ClickEvent event) {
-				serviceMenu.setPopupVisible(false);
-				AccountViewImpl accountView = AppContext.getView(AccountViewImpl.class);
-				bodyLayout.removeAllComponents();
-				bodyLayout.addComponent(accountView);
-			}
-		});
+		Button myAccountBtn = new Button("My Account",
+				new Button.ClickListener() {
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						accountMenu.setPopupVisible(false);
+						AccountViewImpl accountView = AppContext
+								.getView(AccountViewImpl.class);
+						bodyLayout.removeAllComponents();
+						bodyLayout.addComponent(accountView);
+						bodyLayout.setComponentAlignment(accountView,
+								Alignment.MIDDLE_CENTER);
+					}
+				});
 		myAccountBtn.setStyleName("link");
 		accLayout.addComponent(myAccountBtn);
 

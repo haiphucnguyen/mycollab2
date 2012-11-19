@@ -12,8 +12,8 @@ public class AccountSettingViewImpl extends AbstractView implements
 
 	@Override
 	protected void initializeLayout() {
-		this.addComponent(new Label("Account Setting"));
-		
+		Label header = new Label("Account Settings");
+		header.setStyleName("h1");
+		this.addComponent(header);
 	}
-
 }
