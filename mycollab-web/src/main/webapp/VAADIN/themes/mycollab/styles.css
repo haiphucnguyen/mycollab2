@@ -45,6 +45,7 @@
     color: #4D4D4D;
     height: 30px;
     margin: 0px;
+    padding: 0px;
 }
 
 .h-sidebar-menu .v-csslayout-container .v-button, .h-sidebar-menu .v-csslayout-container .v-button .v-button-wrap {
@@ -185,7 +186,7 @@ input.v-textfield-pagedtable-pagefield {
     padding: 0px 15px;
 }
 
-.v-popupbutton-popup-topNavPopup .link {
+.v-popupbutton-popup-topNavPopup .link, .v-popupbutton-popup-topNavPopup div.v-button-link, .v-popupbutton-popup-topNavPopup div.v-button-link:focus {
     padding: 10px 0px;
 }
 
@@ -208,7 +209,7 @@ input.v-textfield-pagedtable-pagefield {
 /* Advanced Search Template */
 
 .advSearch {
-    background-color: #F3F3F3;
+    background-color: #FAFAFA;
     padding: 10px 20px;
     margin: 10px 2px;
     box-shadow: #BFBFBF 0px 1px 2px 1px;
@@ -248,7 +249,7 @@ input.v-textfield-pagedtable-pagefield {
 /* Basic Search Template */
 
 .basicSearch {
-    background-color: #F3F3F3;
+    background-color: #FAFAFA;
     padding: 10px 20px;
     margin: 10px 2px;
     box-shadow: #BFBFBF 0px 1px 2px 1px;
@@ -376,7 +377,7 @@ input.v-textfield-pagedtable-pagefield {
 
 /* Add View Styles */
 .addViewLayout {
-	background-color: #F3F3F3;
+	background-color: #FAFAFA;
 	padding: 10px 20px;
 	margin: 10px 2px;
 	box-shadow: #BFBFBF 0px 1px 2px 1px;
@@ -402,6 +403,70 @@ input.v-textfield-pagedtable-pagefield {
 	width: 500px !important;
 }
 /* End Add View Styles */
+
+/* Account Settings */
+
+.accountViewContainer {
+	background-color: #FAFAFA;
+	padding: 10px;
+	margin: 20px auto;
+	box-shadow: #BFBFBF 0px 1px 2px 1px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border: 1px solid #B7B7B7;
+}
+
+.accountViewContainer .v-label-h1, .accountViewContainer .v-label h1 {
+	padding: 0px;
+	font-weight: normal;
+	font-size: 20px;
+}
+
+.accountViewContainer .sidebar-menu {
+	background: none;
+	border-right: 1px solid #CCC;
+}
+.accountViewContainer .v-splitpanel-hsplitter-locked {
+	width: 0px;
+	border-style: solid;
+	border-color: #CCC;
+	border-width: 0px 1px 0px 0px;
+	background: none; 
+}
+
+.accountViewContainer .userInfoContainer {
+	padding: 0 0.6em;
+}
+
+.accountViewContainer .userInfoContainer .editInfoControl {
+	margin-top: 10px;
+}
+
+.accountViewContainer .sidebar-menu .v-nativebutton {
+	font-size: 14px;
+	padding: 0 0.6em 0 0;
+	margin: 3px 0px;
+}
+
+.accountViewContainer .sidebar-menu .tab-selected, .accountViewContainer .sidebar-menu .selected {
+	background: none;
+}
+
+.accountViewContainer .v-nativebutton .v-nativebutton-caption {
+    padding: 3px 0px 2px;
+    border-radius: 3px;
+    display: block;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.accountViewContainer .v-nativebutton-tab-selected .v-nativebutton-caption, .accountViewContainer .tab-selected .v-nativebutton-caption {
+	background: #287ECE;
+}
+
+/* End Account Settings */
 
 
 /*Css for wizard*/
