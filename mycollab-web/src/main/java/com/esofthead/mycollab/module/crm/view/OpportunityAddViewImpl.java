@@ -26,14 +26,9 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-@Component
 public class OpportunityAddViewImpl extends AbstractView implements
 		OpportunityAddView {
 	private static final long serialVersionUID = 1L;
-
-	@Override
-	protected void initializeLayout() {
-	}
 
 	@Override
 	public void addNewItem() {

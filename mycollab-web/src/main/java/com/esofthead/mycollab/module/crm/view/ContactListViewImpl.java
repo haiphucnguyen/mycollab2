@@ -2,9 +2,6 @@ package com.esofthead.mycollab.module.crm.view;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
@@ -27,8 +24,7 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
-@Scope("prototype")
-@Component
+
 public class ContactListViewImpl extends AbstractView implements
 		ContactListView {
 	private static final long serialVersionUID = 1L;
@@ -38,6 +34,17 @@ public class ContactListViewImpl extends AbstractView implements
 	private ContactSearchCriteria searchCriteria;
 
 	private VerticalLayout contactListLayout;
+	
+	public ContactListViewImpl() {
+		this.setSpacing(true);
+
+		ContactSearchPanel searchPanel = AppContext
+				.getSpringBean(ContactSearchPanel.class);
+		this.addComponent(searchPanel);
+
+		contactListLayout = new VerticalLayout();
+		this.addComponent(contactListLayout);
+	}
 
 	@Override
 	public void doDefaultSearch() {
@@ -144,17 +151,5 @@ public class ContactListViewImpl extends AbstractView implements
 //				searchCriteria = (ContactSearchCriteria) event.getData();
 //			}
 //		});
-	}
-
-	@Override
-	protected void initializeLayout() {
-		this.setSpacing(true);
-
-		ContactSearchPanel searchPanel = AppContext
-				.getSpringBean(ContactSearchPanel.class);
-		this.addComponent(searchPanel);
-
-		contactListLayout = new VerticalLayout();
-		this.addComponent(contactListLayout);
 	}
 }

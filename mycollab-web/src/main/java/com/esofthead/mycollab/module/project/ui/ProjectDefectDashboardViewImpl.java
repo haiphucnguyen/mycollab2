@@ -9,8 +9,5 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 public class ProjectDefectDashboardViewImpl extends AbstractView implements
 		ProjectDefectDashboardView {
 
-	@Override
-	protected void initializeLayout() {
-	}
-
+	
 }

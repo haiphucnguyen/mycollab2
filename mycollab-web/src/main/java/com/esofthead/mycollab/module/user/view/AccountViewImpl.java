@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.user.view;
 
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.module.user.ui.accountsettings.AccountSettingViewImpl;
 import com.esofthead.mycollab.module.user.ui.accountsettings.UserInformationViewImpl;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -12,15 +10,14 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-@Component
 public class AccountViewImpl extends AbstractView implements AccountView {
 
 	private HorizontalLayout root;
 	private DetachedTabs accountTab;
 	private final CssLayout accountSpace = new CssLayout();
 
-	@Override
-	protected void initializeLayout() {
+
+	public AccountViewImpl() {
 		this.setStyleName("accountViewContainer");
 		this.setWidth("1130px");
 		this.setMargin(false);

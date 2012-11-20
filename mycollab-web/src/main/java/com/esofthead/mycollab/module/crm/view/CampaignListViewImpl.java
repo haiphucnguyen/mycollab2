@@ -1,9 +1,5 @@
 package com.esofthead.mycollab.module.crm.view;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
@@ -19,7 +15,6 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-@Component
 public class CampaignListViewImpl extends AbstractView implements
 		CampaignListView {
 
@@ -30,8 +25,18 @@ public class CampaignListViewImpl extends AbstractView implements
 	private CampaignSearchCriteria searchCriteria;
 
 	private VerticalLayout campaignListLayout;
+	
+	public CampaignListViewImpl() {
+		this.setSpacing(true);
 
-	@PostConstruct
+		CampaignSearchPanel campaignSearchPanel = AppContext
+				.getSpringBean(CampaignSearchPanel.class);
+		this.addComponent(campaignSearchPanel);
+
+		campaignListLayout = new VerticalLayout();
+		this.addComponent(campaignListLayout);
+	}
+
 	private void init() {
 //		eventBus.addListener(new ApplicationEventListener<CampaignEvent.Search>() {
 //
@@ -87,18 +92,6 @@ public class CampaignListViewImpl extends AbstractView implements
 		campaignListLayout.removeAllComponents();
 		campaignListLayout.addComponent(tableItem);
 		campaignListLayout.addComponent(tableItem.createControls());
-	}
-
-	@Override
-	protected void initializeLayout() {
-		this.setSpacing(true);
-
-		CampaignSearchPanel campaignSearchPanel = AppContext
-				.getSpringBean(CampaignSearchPanel.class);
-		this.addComponent(campaignSearchPanel);
-
-		campaignListLayout = new VerticalLayout();
-		this.addComponent(campaignListLayout);
 	}
 
 }

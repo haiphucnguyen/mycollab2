@@ -14,11 +14,8 @@ public class LoginPresenter implements Presenter {
 
 	private LoginView view;
 
-	private EventBus eventBus;
-
-	public LoginPresenter(LoginView view, EventBus eventBus) {
+	public LoginPresenter(LoginView view) {
 		this.view = view;
-		this.eventBus = eventBus;
 		view.setPresenter(this);
 	}
 
@@ -29,7 +26,7 @@ public class LoginPresenter implements Presenter {
 			SimpleUser authentication = securityService.authentication(
 					username, password);
 			AppContext.setSession(authentication);
-			eventBus.fireEvent(new ShellEvent.GotoMainPage(this, null));
+			EventBus.getInstance().fireEvent(new ShellEvent.GotoMainPage(this, null));
 		} catch (EngroupException e) {
 			e.printStackTrace();
 		}

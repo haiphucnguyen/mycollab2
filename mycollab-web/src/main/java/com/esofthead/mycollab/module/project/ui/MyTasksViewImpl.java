@@ -9,8 +9,7 @@ import com.vaadin.ui.Label;
 @Component
 public class MyTasksViewImpl extends AbstractView implements MyTasksView {
 
-	@Override
-	protected void initializeLayout() {
+	public MyTasksViewImpl() {
 		this.addComponent(new Label("My Tasks"));
 	}
 

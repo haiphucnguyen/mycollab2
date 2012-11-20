@@ -8,8 +8,4 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 @Component
 public class MyDefectsViewImpl extends AbstractView implements MyDefectsView {
 
-	@Override
-	protected void initializeLayout() {
-	}
-
 }

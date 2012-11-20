@@ -52,11 +52,6 @@ public class AccountListViewImpl extends AbstractView
 	private Label selectedItemsNumberLabel = new Label();
 	
 	public AccountListViewImpl() {
-		initializeLayout();
-	}
-
-	@Override
-	protected void initializeLayout() {
 		this.setSpacing(true);
 
 		accountSearchPanel = new AccountSearchPanel();

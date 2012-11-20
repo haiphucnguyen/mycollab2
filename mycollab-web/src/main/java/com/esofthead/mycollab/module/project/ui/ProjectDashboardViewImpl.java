@@ -9,10 +9,8 @@ import com.vaadin.ui.Label;
 @Component
 public class ProjectDashboardViewImpl extends AbstractView implements ProjectDashboardView {
 
-	@Override
-	protected void initializeLayout() {
+	public ProjectDashboardViewImpl() {
 		this.addComponent(new Label("AAA"));
-		
 	}
 
 }

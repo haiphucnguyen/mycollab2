@@ -82,7 +82,7 @@ public class AppContext implements TransactionListener, Serializable {
 
 	public static <T extends View> T getView(Class<T> viewClass) {
 		T view = getSpringBean(viewClass);
-		((AbstractView)view).initLayout();
+		
 		log.debug("Create view class {}", viewClass.getName());
 		return view;
 	}

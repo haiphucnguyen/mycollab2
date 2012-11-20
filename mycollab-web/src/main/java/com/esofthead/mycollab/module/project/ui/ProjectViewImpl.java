@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.project.ui;
 
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
@@ -11,15 +9,13 @@ import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-@Component
 public class ProjectViewImpl extends AbstractView implements ProjectView {
 
 	private HorizontalSplitPanel root;
 	private DetachedTabs myProjectTab;
 	private CssLayout mySpaceArea = new CssLayout();
 
-	@Override
-	protected void initializeLayout() {
+	public ProjectViewImpl() {
 		root = new HorizontalSplitPanel();
 		root.setSplitPosition(200, Sizeable.UNITS_PIXELS);
 		root.setLocked(true);

@@ -28,13 +28,9 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-@Component
 public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 	private static final long serialVersionUID = 1L;
-
-	@Override
-	protected void initializeLayout() {
-	}
+	
 
 	@Override
 	public void addNewItem() {

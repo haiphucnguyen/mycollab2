@@ -18,9 +18,8 @@ import com.vaadin.ui.VerticalLayout;
 public class MainViewImpl extends AbstractView {
 
 	private VerticalLayout bodyLayout;
-
-	@Override
-	protected void initializeLayout() {
+	
+	public MainViewImpl() {
 		this.addComponent(createTopMenu());
 		bodyLayout = new VerticalLayout();
 		this.addComponent(bodyLayout);

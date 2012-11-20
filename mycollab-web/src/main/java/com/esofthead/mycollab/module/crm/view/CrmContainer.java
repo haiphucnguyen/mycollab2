@@ -16,8 +16,7 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
-@Scope("prototype")
-@Component
+
 public class CrmContainer extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
@@ -46,19 +45,8 @@ public class CrmContainer extends AbstractView {
 	private PopupButton addBtn;
 
 	private CssLayout toolbar;
-
-	@PostConstruct
-	private void init() {
-		registerCommonListeners();
-		registerAccountListeners();
-		registerCampaignListeners();
-		registerContactListeners();
-		registerLeadListeners();
-		registerOpportunityListeners();
-	}
-
-	@Override
-	protected void initializeLayout() {
+	
+	public CrmContainer() {
 		CustomLayout container = new CustomLayout("crmContainer");
 
 		container.setWidth("100%");
@@ -127,8 +115,17 @@ public class CrmContainer extends AbstractView {
 
 		currentView = new VerticalLayout();
 		container.addComponent(currentView, "currentView");
-//		eventBus.fireEvent(new CrmEvent.GotoHome(this, null));
 		this.addComponent(container);
+	}
+
+	@PostConstruct
+	private void init() {
+		registerCommonListeners();
+		registerAccountListeners();
+		registerCampaignListeners();
+		registerContactListeners();
+		registerLeadListeners();
+		registerOpportunityListeners();
 	}
 	
 	@SuppressWarnings("serial")

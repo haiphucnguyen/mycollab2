@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.project.ui;
 
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
@@ -19,7 +17,6 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-@Component
 public class UserDashboardViewImpl extends AbstractView implements
 		UserDashboardView {
 	private HorizontalSplitPanel root;
@@ -28,8 +25,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 	private CssLayout mySpaceArea = new CssLayout();
 	private DetachedTabs calendarToolTabs;
 
-	@Override
-	protected void initializeLayout() {
+	public UserDashboardViewImpl() {
 		root = new HorizontalSplitPanel();
 		root.setSplitPosition(200, Sizeable.UNITS_PIXELS);
 		root.setLocked(true);
@@ -75,7 +71,6 @@ public class UserDashboardViewImpl extends AbstractView implements
 		buildComponents();
 		showWelcomeScreen();
 
-		
 		this.addComponent(root);
 		this.setExpandRatio(root, 1.0f);
 	}
@@ -120,7 +115,8 @@ public class UserDashboardViewImpl extends AbstractView implements
 		com.vaadin.ui.Component myProjectComponent = mySpaceTabs
 				.selectTab("My Projects");
 		if (myProjectComponent != null) {
-			MyProjectsViewImpl view = AppContext.getView(MyProjectsViewImpl.class);
+			MyProjectsViewImpl view = AppContext
+					.getView(MyProjectsViewImpl.class);
 			view.doDefaultSearch();
 		}
 	}

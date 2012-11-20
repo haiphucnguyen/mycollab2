@@ -1,17 +1,18 @@
 package com.esofthead.mycollab.module.project.ui;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.web.AppContext;
 
 @SuppressWarnings("serial")
-@Component
 public class ProjectContainer extends AbstractView {
+	
+	public ProjectContainer() {
+		UserDashboardViewImpl userDashboard = AppContext
+				.getView(UserDashboardViewImpl.class);
+		this.addComponent((com.vaadin.ui.Component) userDashboard);
+	}
 
-	@PostConstruct
+	
 	private void init() {
 //		eventBus.addListener(new ApplicationEventListener<ProjectEvent.GotoMyProjectList>() {
 //
@@ -39,13 +40,6 @@ public class ProjectContainer extends AbstractView {
 //				gotoMyProject();
 //			}
 //		});
-	}
-
-	@Override
-	protected void initializeLayout() {
-		UserDashboardViewImpl userDashboard = AppContext
-				.getView(UserDashboardViewImpl.class);
-		this.addComponent((com.vaadin.ui.Component) userDashboard);
 	}
 
 	private void gotoMyProjectList() {

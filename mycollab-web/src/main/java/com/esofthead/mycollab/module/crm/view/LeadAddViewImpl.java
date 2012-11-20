@@ -6,7 +6,6 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.module.crm.domain.Lead;
-import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.LeadSourceComboBox;
@@ -30,14 +29,9 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-@Component
 public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 
 	private static final long serialVersionUID = 1L;
-
-	@Override
-	protected void initializeLayout() {
-	}
 
 	@Override
 	public void addNewItem() {

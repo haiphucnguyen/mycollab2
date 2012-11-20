@@ -33,10 +33,6 @@ public class CampaignAddViewImpl extends AbstractView implements
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void initializeLayout() {
-	}
-
-	@Override
 	public void addNewItem() {
 		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(EditForm.class);

@@ -34,10 +34,6 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 	private static final long serialVersionUID = 1L;
 
 	@Override
-	protected void initializeLayout() {
-	}
-
-	@Override
 	public void addNewItem() {
 		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(EditForm.class);
@@ -61,8 +57,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 		this.addComponent(formItem);
 	}
 
-	@Scope("prototype")
-	@Component
+
 	public static class EditForm extends GenericForm {
 		private static final long serialVersionUID = 1L;
 
@@ -144,8 +139,6 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 		}
 	}
 
-	@Scope("prototype")
-	@Component
 	public static class ViewForm extends GenericForm {
 		private static final long serialVersionUID = 1L;
 
@@ -165,7 +158,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 			return layout;
 		}
 
-		@PostConstruct
+		
 		private void initFieldFactory() {
 			this.setFormFieldFactory(new DefaultFormViewFieldFactory());
 		}

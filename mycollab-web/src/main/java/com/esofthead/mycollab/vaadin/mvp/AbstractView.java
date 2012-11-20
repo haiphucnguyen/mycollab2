@@ -15,21 +15,6 @@ public abstract class AbstractView extends VerticalLayout implements View,
 
 	public static String CANCEL_ACTION = "Cancel";
 
-	protected boolean isInitialized = false;
-
-	public AbstractView() {
-		super();
-	}
-
-	public void initLayout() {
-		if (!isInitialized) {
-			initializeLayout();
-			isInitialized = true;
-		}
-	}
-
-	protected abstract void initializeLayout();
-
 	@Override
 	public ComponentContainer getWidget() {
 		return this;

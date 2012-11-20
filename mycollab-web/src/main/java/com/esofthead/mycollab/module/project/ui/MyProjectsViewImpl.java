@@ -7,7 +7,6 @@ import org.springframework.stereotype.Component;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.ui.components.ProjectAddWindow;
-import com.esofthead.mycollab.module.project.ui.events.ProjectEvent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.BeanTable;
 import com.jensjansson.pagedtable.PagedTableContainer;
@@ -32,8 +31,7 @@ public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
 	private BeanTable<SimpleProject> tableItem;
 	private MyProjectLayout myProjectLayout;
 
-	@Override
-	protected void initializeLayout() {
+	public MyProjectsViewImpl() {
 		myProjectLayout = new MyProjectLayout();
 		this.addComponent(myProjectLayout);
 	}

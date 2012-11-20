@@ -18,12 +18,10 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-@Component
 public class UserInformationViewImpl extends AbstractView implements
 		UserInformationView {
 
-	@Override
-	protected void initializeLayout() {
+	public UserInformationViewImpl() {
 		this.removeAllComponents();
 		User currentUser = AppContext.getSession();
 		Form formItem = AppContext.getSpringBean(EditForm.class);

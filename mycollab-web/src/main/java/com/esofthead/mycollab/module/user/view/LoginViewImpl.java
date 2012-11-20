@@ -18,16 +18,11 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 	private LoginPresenter loginPresenter;
 	
 	public LoginViewImpl() {
-		initializeLayout();
+		this.addComponent(new LoginForm());
 	}
 	
 	public void setPresenter(LoginPresenter presenter) {
 		this.loginPresenter = presenter;
-	}
-
-	@Override
-	protected void initializeLayout() {
-		this.addComponent(new LoginForm());
 	}
 
 	private class LoginForm extends Form {

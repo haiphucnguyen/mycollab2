@@ -17,6 +17,12 @@ public class EventBus implements Serializable {
 	private Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> map = new HashMap<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>>();
 
 	private final Logger log = LoggerFactory.getLogger(EventBus.class);
+	
+	private static EventBus instance = new EventBus();
+	
+	public static EventBus getInstance() {
+		return instance;
+	}
 
 	public void addListener(ApplicationEventListener<?> listener) {
 

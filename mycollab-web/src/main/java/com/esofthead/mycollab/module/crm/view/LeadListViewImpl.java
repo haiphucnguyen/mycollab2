@@ -1,9 +1,5 @@
 package com.esofthead.mycollab.module.crm.view;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
@@ -18,7 +14,6 @@ import com.esofthead.mycollab.vaadin.ui.BeanTable;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.VerticalLayout;
 
-@Component
 @SuppressWarnings("serial")
 public class LeadListViewImpl extends AbstractView implements LeadListView {
 	private static final long serialVersionUID = 1L;
@@ -28,8 +23,18 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 	private LeadSearchCriteria searchCriteria;
 
 	private VerticalLayout leadListLayout;
+	
+	public LeadListViewImpl() {
+		this.setSpacing(true);
+		LeadSearchPanel leadSearchPanel = AppContext
+				.getSpringBean(LeadSearchPanel.class);
+		this.addComponent(leadSearchPanel);
 
-	@PostConstruct
+		leadListLayout = new VerticalLayout();
+		this.addComponent(leadListLayout);
+	}
+
+
 	private void init() {
 //		eventBus.addListener(new ApplicationEventListener<LeadEvent.Search>() {
 //
@@ -86,16 +91,5 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		leadListLayout.removeAllComponents();
 		leadListLayout.addComponent(tableItem);
 		leadListLayout.addComponent(tableItem.createControls());
-	}
-
-	@Override
-	protected void initializeLayout() {
-		this.setSpacing(true);
-		LeadSearchPanel leadSearchPanel = AppContext
-				.getSpringBean(LeadSearchPanel.class);
-		this.addComponent(leadSearchPanel);
-
-		leadListLayout = new VerticalLayout();
-		this.addComponent(leadListLayout);
 	}
 }

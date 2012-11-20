@@ -1,9 +1,5 @@
 package com.esofthead.mycollab.module.crm.view;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
@@ -18,7 +14,7 @@ import com.esofthead.mycollab.vaadin.ui.BeanTable;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.VerticalLayout;
 
-@Component
+
 public class OpportunityListViewImpl extends AbstractView implements
 		OpportunityListView {
 	private static final long serialVersionUID = 1L;
@@ -28,8 +24,18 @@ public class OpportunityListViewImpl extends AbstractView implements
 	private OpportunitySearchCriteria searchCriteria;
 
 	private VerticalLayout opportunityListLayout;
+	
+	public OpportunityListViewImpl() {
+		this.setSpacing(true);
 
-	@PostConstruct
+		OpportunitySearchPanel opportunitySearchPanel = AppContext
+				.getSpringBean(OpportunitySearchPanel.class);
+		this.addComponent(opportunitySearchPanel);
+
+		opportunityListLayout = new VerticalLayout();
+		this.addComponent(opportunityListLayout);
+	}
+
 	private void init() {
 //		eventBus.addListener(new ApplicationEventListener<OpportunityEvent.Search>() {
 //
@@ -85,17 +91,5 @@ public class OpportunityListViewImpl extends AbstractView implements
 		opportunityListLayout.removeAllComponents();
 		opportunityListLayout.addComponent(tableItem);
 		opportunityListLayout.addComponent(tableItem.createControls());
-	}
-
-	@Override
-	protected void initializeLayout() {
-		this.setSpacing(true);
-
-		OpportunitySearchPanel opportunitySearchPanel = AppContext
-				.getSpringBean(OpportunitySearchPanel.class);
-		this.addComponent(opportunitySearchPanel);
-
-		opportunityListLayout = new VerticalLayout();
-		this.addComponent(opportunityListLayout);
 	}
 }
