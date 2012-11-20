@@ -17,12 +17,14 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.apache.ibatis.session.RowBounds;
-
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.crm.Constants;
+import com.esofthead.mycollab.module.crm.dao.TargetMapper;
 import com.esofthead.mycollab.module.crm.dao.TargetMapperExt;
 import com.esofthead.mycollab.module.crm.dao.TaskMapper;
 import com.esofthead.mycollab.module.crm.domain.SimpleTarget;
@@ -31,18 +33,28 @@ import com.esofthead.mycollab.module.crm.domain.TaskExample;
 import com.esofthead.mycollab.module.crm.domain.criteria.TargetSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.TargetService;
 
-public class TargetServiceImpl extends DefaultCrudService<Integer, Target>
-		implements TargetService {
-	private TargetMapperExt targetExtDAO;
+@Service
+public class TargetServiceImpl extends
+		DefaultService<Integer, Target, TargetSearchCriteria> implements
+		TargetService {
 
-	public void setTargetExtDAO(TargetMapperExt targetExtDAO) {
-		this.targetExtDAO = targetExtDAO;
+	@Autowired
+	private TargetMapper targetMapper;
+
+	@Autowired
+	private TargetMapperExt targetMapperExt;
+
+	@Autowired
+	private TaskMapper taskMapper;
+
+	@Override
+	public ICrudGenericDAO<Integer, Target> getCrudMapper() {
+		return targetMapper;
 	}
 
-	private TaskMapper taskDAO;
-
-	public void setTaskDAO(TaskMapper taskDAO) {
-		this.taskDAO = taskDAO;
+	@Override
+	public ISearchableDAO<TargetSearchCriteria> getSearchMapper() {
+		return targetMapperExt;
 	}
 
 	public int remove(Integer primaryKey) {
@@ -50,22 +62,12 @@ public class TargetServiceImpl extends DefaultCrudService<Integer, Target>
 		TaskExample ex = new TaskExample();
 		ex.createCriteria().andTypeEqualTo(Constants.TARGET)
 				.andTypeidEqualTo(primaryKey);
-		taskDAO.deleteByExample(ex);
+		taskMapper.deleteByExample(ex);
 		return result;
 	}
 
-	public List<SimpleTarget> findPagableListByCriteria(
-			TargetSearchCriteria criteria, int skipNum, int maxResult) {
-		return targetExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
-	}
-
-	public int getTotalCount(TargetSearchCriteria criteria) {
-		return targetExtDAO.getTotalCount(criteria);
-	}
-
 	public SimpleTarget findTargetById(int targetId) {
-		return targetExtDAO.findTargetById(targetId);
+		return targetMapperExt.findTargetById(targetId);
 	}
 
 }

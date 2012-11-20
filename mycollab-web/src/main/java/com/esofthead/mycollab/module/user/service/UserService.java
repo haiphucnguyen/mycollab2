@@ -20,7 +20,7 @@ package com.esofthead.mycollab.module.user.service;
 import java.util.List;
 
 import com.esofthead.mycollab.core.persistence.ICrudService;
-import com.esofthead.mycollab.core.persistence.IPagableService;
+import com.esofthead.mycollab.core.persistence.ISearchableService;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserInfo;
@@ -30,7 +30,7 @@ import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
  * @author hai
  */
 public interface UserService extends ICrudService<String, User>,
-		IPagableService<UserSearchCriteria> {
+		ISearchableService<UserSearchCriteria> {
 	/**
 	 * @param name
 	 * @return

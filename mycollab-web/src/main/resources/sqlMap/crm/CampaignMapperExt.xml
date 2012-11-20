@@ -154,7 +154,7 @@
         ]]>
 	</sql>
 
-	<select id="findPagableList" parameterType="CampaignSearchCriteria"
+	<select id="findPagableListByCriteria" parameterType="CampaignSearchCriteria"
 		resultMap="SimpleCampaignResult">
 		<include
 			refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.selectSimpleCampaign" />

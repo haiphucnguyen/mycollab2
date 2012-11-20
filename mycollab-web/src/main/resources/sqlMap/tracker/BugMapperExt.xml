@@ -248,7 +248,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList" resultMap="SimpleBugResult"
+	<select id="findPagableListByCriteria" resultMap="SimpleBugResult"
 		parameterType="BugSearchCriteria">
 		<include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.selectBug" />
 

@@ -26,6 +26,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
@@ -37,6 +38,7 @@ import com.esofthead.mycollab.test.EngroupClassRunner;
 		"classpath:META-INF/spring/audit-context.xml",
 		"classpath:META-INF/spring/file-context.xml",
 		"classpath:META-INF/spring/crm-context.xml",
+		"classpath:META-INF/spring/crm-service-test-context.xml",
 		"classpath:META-INF/spring/datasource-test-context.xml" })
 public class CampaignServiceTest {
 	@Autowired
@@ -45,9 +47,11 @@ public class CampaignServiceTest {
 	@DataSet
 	@Test
 	public void testSearchByCriteria() {
-		Assert.assertEquals(1,
-				campaignService.findPagableListByCriteria(getCriteria(), 0, 2)
-						.size());
+		Assert.assertEquals(
+				1,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								getCriteria(), 0, Integer.MAX_VALUE)).size());
 	}
 
 	@DataSet

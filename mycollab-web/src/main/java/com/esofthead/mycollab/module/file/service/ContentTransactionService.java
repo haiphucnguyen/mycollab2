@@ -17,13 +17,11 @@
  */
 package com.esofthead.mycollab.module.file.service;
 
-import com.esofthead.mycollab.core.persistence.ICrudService;
-import com.esofthead.mycollab.core.persistence.IPagableService;
+import com.esofthead.mycollab.core.persistence.IDefaultService;
 import com.esofthead.mycollab.module.file.domain.ContentTransaction;
 import com.esofthead.mycollab.module.file.domain.criteria.ContentTransactionSearchCriteria;
 
 public interface ContentTransactionService extends
-        ICrudService<Integer, ContentTransaction>,
-        IPagableService<ContentTransactionSearchCriteria> {
+        IDefaultService<Integer, ContentTransaction, ContentTransactionSearchCriteria>{
     
 }

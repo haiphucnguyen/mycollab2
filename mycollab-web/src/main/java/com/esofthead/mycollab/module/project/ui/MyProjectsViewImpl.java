@@ -8,7 +8,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.ui.components.ProjectAddWindow;
 import com.esofthead.mycollab.module.project.ui.events.ProjectEvent;
-import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.BeanTable;
 import com.jensjansson.pagedtable.PagedTableContainer;
 import com.vaadin.data.Container;
@@ -40,7 +40,7 @@ public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
 
 	@Override
 	public void doDefaultSearch() {
-		eventBus.fireEvent(new ProjectEvent.GetMyProjects(this, null));
+		
 
 	}
 
@@ -126,8 +126,6 @@ public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								eventBus.fireEvent(new ProjectEvent.GotoMyProject(
-										this, project));
 
 							}
 						});

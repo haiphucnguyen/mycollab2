@@ -1,23 +1,34 @@
 package com.esofthead.mycollab.module.user.service.mybatis;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.module.user.dao.BillingAccountMapper;
 import com.esofthead.mycollab.module.user.dao.BillingAccountMapperExt;
 import com.esofthead.mycollab.module.user.domain.Account;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 
-public class BillingAccountServiceImpl extends DefaultCrudService<Integer, Account>
-		implements BillingAccountService {
+@Service
+public class BillingAccountServiceImpl extends
+		DefaultCrudService<Integer, Account> implements BillingAccountService {
 
-	private BillingAccountMapperExt billingAccountExtDAO;
+	@Autowired
+	private BillingAccountMapper billingAccountMapper;
 
-	public void setBillingAccountExtDAO(BillingAccountMapperExt billingAccountExtDAO) {
-		this.billingAccountExtDAO = billingAccountExtDAO;
-	}
+	@Autowired
+	private BillingAccountMapperExt billingAccountMapperExt;
 
 	@Override
 	public int insertAndReturnKey(Account account) {
-		billingAccountExtDAO.insertAndReturnKey(account);
+		billingAccountMapperExt.insertAndReturnKey(account);
 		return account.getId();
+	}
+
+	@Override
+	public ICrudGenericDAO<Integer, Account> getCrudMapper() {
+		return billingAccountMapper;
 	}
 
 }

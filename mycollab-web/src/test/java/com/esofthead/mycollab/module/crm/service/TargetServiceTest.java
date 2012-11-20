@@ -25,6 +25,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.TargetSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
@@ -35,6 +36,7 @@ import com.esofthead.mycollab.test.EngroupClassRunner;
 		"classpath:META-INF/spring/audit-context.xml",
 		"classpath:META-INF/spring/file-context.xml",
 		"classpath:META-INF/spring/crm-context.xml",
+		"classpath:META-INF/spring/crm-service-test-context.xml",
 		"classpath:META-INF/spring/datasource-test-context.xml" })
 public class TargetServiceTest {
 	@Autowired
@@ -43,9 +45,11 @@ public class TargetServiceTest {
 	@DataSet
 	@Test
 	public void testSearchByCriteria() {
-		Assert.assertEquals(1,
-				targetService.findPagableListByCriteria(getCriteria(), 0, 2)
-						.size());
+		Assert.assertEquals(
+				1,
+				targetService.findPagableListByCriteria(
+						new SearchRequest<TargetSearchCriteria>(null, 0,
+								Integer.MAX_VALUE)).size());
 	}
 
 	@DataSet
@@ -57,7 +61,8 @@ public class TargetServiceTest {
 	private TargetSearchCriteria getCriteria() {
 		TargetSearchCriteria criteria = new TargetSearchCriteria();
 		criteria.setAccountName(new StringSearchField(SearchField.AND, "A"));
-		criteria.setAssignUserName(new StringSearchField(SearchField.AND, "Duong"));
+		criteria.setAssignUserName(new StringSearchField(SearchField.AND,
+				"Duong"));
 		criteria.setTargetName(new StringSearchField(SearchField.AND, "Nguyen"));
 		return criteria;
 	}

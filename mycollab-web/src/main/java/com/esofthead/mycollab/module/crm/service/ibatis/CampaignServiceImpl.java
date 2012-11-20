@@ -17,12 +17,14 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.apache.ibatis.session.RowBounds;
-
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.crm.Constants;
+import com.esofthead.mycollab.module.crm.dao.CampaignMapper;
 import com.esofthead.mycollab.module.crm.dao.CampaignMapperExt;
 import com.esofthead.mycollab.module.crm.dao.TaskMapper;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
@@ -32,23 +34,38 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class CampaignServiceImpl extends DefaultCrudService<Integer, Campaign>
-		implements CampaignService {
-	private TaskMapper taskDAO;
+@Service
+public class CampaignServiceImpl extends
+		DefaultService<Integer, Campaign, CampaignSearchCriteria> implements
+		CampaignService {
+	@Autowired
+	private TaskMapper taskMapper;
 
-	private CampaignMapperExt campaignExtDAO;
+	@Autowired
+	private CampaignMapper campaignMapper;
 
+	@Autowired
+	private CampaignMapperExt campaignMapperExt;
+
+	@Autowired
 	private AuditLogService auditLogService;
 
-	public void setAuditLogService(AuditLogService auditLogService) {
-		this.auditLogService = auditLogService;
+	@Override
+	public ICrudGenericDAO<Integer, Campaign> getCrudMapper() {
+		return campaignMapper;
+	}
+
+	@Override
+	public ISearchableDAO<CampaignSearchCriteria> getSearchMapper() {
+		return campaignMapperExt;
 	}
 
 	public int remove(Integer primaryKey) {
 		int result = super.remove(primaryKey);
 		TaskExample ex = new TaskExample();
-		ex.createCriteria().andTypeEqualTo(Constants.CAMPAIGN).andTypeidEqualTo(primaryKey);
-		taskDAO.deleteByExample(ex);
+		ex.createCriteria().andTypeEqualTo(Constants.CAMPAIGN)
+				.andTypeidEqualTo(primaryKey);
+		taskMapper.deleteByExample(ex);
 		return result;
 	}
 
@@ -61,24 +78,7 @@ public class CampaignServiceImpl extends DefaultCrudService<Integer, Campaign>
 		return super.updateWithSession(record, username);
 	}
 
-	public void setTaskDAO(TaskMapper taskDAO) {
-		this.taskDAO = taskDAO;
-	}
-
-	public void setCampaignExtDAO(CampaignMapperExt campaignExtDAO) {
-		this.campaignExtDAO = campaignExtDAO;
-	}
-
-	public List<SimpleCampaign> findPagableListByCriteria(
-			CampaignSearchCriteria criteria, int skipNum, int maxResult) {
-		return campaignExtDAO.findPagableList(criteria, new RowBounds(skipNum, maxResult));
-	}
-
-	public int getTotalCount(CampaignSearchCriteria criteria) {
-		return campaignExtDAO.getTotalCount(criteria);
-	}
-
 	public SimpleCampaign findCampaignById(int campaignId) {
-		return campaignExtDAO.findCampaignById(campaignId);
+		return campaignMapperExt.findCampaignById(campaignId);
 	}
 }

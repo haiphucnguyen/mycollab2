@@ -2,6 +2,9 @@ package com.esofthead.mycollab.module.tracker.service.ibatis;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.module.tracker.RelatedItemConstants;
 import com.esofthead.mycollab.module.tracker.dao.RelatedItemMapper;
@@ -13,18 +16,23 @@ import com.esofthead.mycollab.module.tracker.service.VersionService;
 
 public class VersionServiceImpl extends DefaultCrudService<Integer, Version>
 		implements VersionService {
+	
+	@Autowired
+	private VersionMapper versionMapper;
 
-	private RelatedItemMapper relatedItemDAO;
+	@Autowired
+	private RelatedItemMapper relatedItemMapper;
 
-	public void setRelatedItemDAO(RelatedItemMapper relatedItemDAO) {
-		this.relatedItemDAO = relatedItemDAO;
+	@Override
+	public ICrudGenericDAO<Integer, Version> getCrudMapper() {
+		return versionMapper;
 	}
 
 	@Override
 	public List<Version> getVersionsOfProject(int projectid) {
 		VersionExample ex = new VersionExample();
 		ex.createCriteria().andProjectidEqualTo(projectid);
-		return ((VersionMapper) daoObj).selectByExample(ex);
+		return versionMapper.selectByExample(ex);
 	}
 
 	@Override
@@ -35,7 +43,7 @@ public class VersionServiceImpl extends DefaultCrudService<Integer, Version>
 				.andRelateitemidEqualTo(primaryKey);
 		ex.createCriteria().andTypeEqualTo(RelatedItemConstants.FIXED_VERSION)
 				.andRelateitemidEqualTo(primaryKey);
-		relatedItemDAO.deleteByExample(ex);
+		relatedItemMapper.deleteByExample(ex);
 
 		return super.remove(primaryKey);
 	}

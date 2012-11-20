@@ -142,7 +142,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList" resultMap="SimpleLeadResult"
+	<select id="findPagableListByCriteria" resultMap="SimpleLeadResult"
 		parameterType="LeadSearchCriteria">
 		<include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.selectSimpleLead" />
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">

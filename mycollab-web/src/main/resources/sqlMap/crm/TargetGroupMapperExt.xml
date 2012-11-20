@@ -73,7 +73,6 @@
 	</sql>
 
 	<sql id="queryTotalCountSearchCriteria">
-		1=1
 		<if test="listName != null">
 			${listName.operation} m_crm_target_list.name LIKE '%${listName.value}%'
         </if>
@@ -162,7 +161,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList" resultMap="SimpleTargetGroupResult"
+	<select id="findPagableListByCriteria" resultMap="SimpleTargetGroupResult"
 		parameterType="TargetGroupSearchCriteria">
 
 		<include refid="com.esofthead.mycollab.module.crm.dao.TargetGroupMapperExt.selectSimpleTargetGroup" />

@@ -56,7 +56,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList" resultMap="ProblemResult"
+	<select id="findPagableListByCriteria" resultMap="ProblemResult"
 		parameterType="ProblemSearchCriteria">
 		<include
 			refid="com.esofthead.mycollab.module.project.dao.ProblemMapperExt.selectProblem" />

@@ -19,6 +19,10 @@ package com.esofthead.mycollab.module.user.service.mybatis;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.module.user.dao.RoleMapper;
 import com.esofthead.mycollab.module.user.dao.RoleMapperExt;
@@ -26,27 +30,33 @@ import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.RoleExample;
 import com.esofthead.mycollab.module.user.service.RoleService;
 
+@Service
 public class RoleServiceDBImpl extends DefaultCrudService<Integer, Role>
 		implements RoleService {
 
-	private RoleMapperExt roleExtDAO;
+	@Autowired
+	private RoleMapper roleMapper;
+	
+	@Autowired
+	private RoleMapperExt roleMapperExt;
 
-	public void setRoleExtDAO(RoleMapperExt roleExtDAO) {
-		this.roleExtDAO = roleExtDAO;
+	@Override
+	public ICrudGenericDAO<Integer, Role> getCrudMapper() {
+		return roleMapper;
 	}
 
 	public List<Role> getAccountRoles(int accountid) {
 		RoleExample ex = new RoleExample();
 		ex.createCriteria().andSaccountidEqualTo(accountid);
 
-		return ((RoleMapper) this.daoObj).selectByExample(ex);
+		return roleMapper.selectByExample(ex);
 	}
 
 	public Role findByRoleName(int accountid, String rolename) {
 		RoleExample ex = new RoleExample();
 		ex.createCriteria().andRolenameEqualTo(rolename)
 				.andSaccountidEqualTo(accountid);
-		List<Role> roles = ((RoleMapper) this.daoObj).selectByExample(ex);
+		List<Role> roles = roleMapper.selectByExample(ex);
 
 		if (roles != null && roles.size() > 0) {
 			return roles.get(0);
@@ -56,28 +66,28 @@ public class RoleServiceDBImpl extends DefaultCrudService<Integer, Role>
 
 	@Override
 	public int insertAndReturnKey(Role role) {
-		roleExtDAO.insertAndReturnKey(role);
+		roleMapperExt.insertAndReturnKey(role);
 		return role.getId();
 	}
 
 	@Override
 	public List<Role> findRolesOfUser(String username) {
-		return roleExtDAO.findRolesOfUser(username);
+		return roleMapperExt.findRolesOfUser(username);
 	}
 	
 	@Override
 	public void save(Role role) {
-		((RoleMapper)daoObj).insert(role);
+		roleMapper.insert(role);
 	}
 
 	@Override
 	public int update(Role record) {
-		return ((RoleMapper) daoObj).updateByPrimaryKeySelective(record);
+		return roleMapper.updateByPrimaryKeySelective(record);
 	}
 
 	@Override
 	public int remove(int roleId) {
-		return ((RoleMapper) daoObj).deleteByPrimaryKey(roleId);
+		return roleMapper.deleteByPrimaryKey(roleId);
 	}
 
 }

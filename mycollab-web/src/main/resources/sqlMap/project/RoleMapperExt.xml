@@ -27,7 +27,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList"
+	<select id="findPagableListByCriteria"
 		resultMap="com.esofthead.mycollab.module.project.dao.RoleMapper.BaseResultMap"
 		parameterType="RoleSearchCriteria">
 		<include refid="com.esofthead.mycollab.module.project.dao.RoleMapperExt.selectRole" />

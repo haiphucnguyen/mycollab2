@@ -17,12 +17,14 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.apache.ibatis.session.RowBounds;
-
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.crm.Constants;
+import com.esofthead.mycollab.module.crm.dao.AccountMapper;
 import com.esofthead.mycollab.module.crm.dao.AccountMapperExt;
 import com.esofthead.mycollab.module.crm.dao.TaskMapper;
 import com.esofthead.mycollab.module.crm.domain.Account;
@@ -32,31 +34,38 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class AccountServiceImpl extends DefaultCrudService<Integer, Account>
-		implements AccountService {
+@Service
+public class AccountServiceImpl extends
+		DefaultService<Integer, Account, AccountSearchCriteria> implements
+		AccountService {
 
-	private AccountMapperExt accountExtDAO;
-	
-	private TaskMapper taskDAO;
+	@Autowired
+	protected AccountMapper accountMapper;
 
-	private AuditLogService auditLogService;
+	@Autowired
+	protected AccountMapperExt accountMapperExt;
 
-	public void setAuditLogService(AuditLogService auditLogService) {
-		this.auditLogService = auditLogService;
+	@Autowired
+	protected TaskMapper taskMapper;
+
+	@Autowired
+	protected AuditLogService auditLogService;
+
+	@Override
+	public ICrudGenericDAO<Integer, Account> getCrudMapper() {
+		return accountMapper;
 	}
 
-	public void setAccountExtDAO(AccountMapperExt accountExtDAO) {
-		this.accountExtDAO = accountExtDAO;
+	@Override
+	public ISearchableDAO<AccountSearchCriteria> getSearchMapper() {
+		return accountMapperExt;
 	}
-
-
 
 	@Override
 	public int updateWithSession(Account record, String username) {
 		Account oldValue = this.findByPrimaryKey(record.getId());
 		String refid = "crm-account-" + record.getId();
-		auditLogService.saveAuditLog(
-				username, refid, (Object) oldValue,
+		auditLogService.saveAuditLog(username, refid, (Object) oldValue,
 				(Object) record);
 		return super.updateWithSession(record, username);
 	}
@@ -67,26 +76,12 @@ public class AccountServiceImpl extends DefaultCrudService<Integer, Account>
 		TaskExample ex = new TaskExample();
 		ex.createCriteria().andTypeEqualTo(Constants.ACCOUNT)
 				.andTypeidEqualTo(primaryKey);
-		taskDAO.deleteByExample(ex);
+		taskMapper.deleteByExample(ex);
 		return result;
 	}
 
-	public List<SimpleAccount> findPagableListByCriteria(
-			AccountSearchCriteria criteria, int skipNum, int maxResult) {
-		return accountExtDAO.findPagableList(criteria,
-				new RowBounds(skipNum, maxResult));
-	}
-
-	public int getTotalCount(AccountSearchCriteria criteria) {
-		return accountExtDAO.getTotalCount(criteria);
-	}
-
 	public SimpleAccount findAccountById(int accountId) {
-		return accountExtDAO.findAccountById(accountId);
-	}
-
-	public void setTaskDAO(TaskMapper taskDAO) {
-		this.taskDAO = taskDAO;
+		return accountMapperExt.findAccountById(accountId);
 	}
 
 }

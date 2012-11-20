@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.project.ui;
 
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.vaadin.terminal.Sizeable;

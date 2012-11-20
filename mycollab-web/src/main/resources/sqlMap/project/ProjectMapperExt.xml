@@ -195,7 +195,7 @@
 	</select>
 
 
-	<select id="findPagableList" resultMap="SimpleProjectResult"
+	<select id="findPagableListByCriteria" resultMap="SimpleProjectResult"
 		parameterType="ProjectSearchCriteria">
 		<include refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.selectSimpleProject" />
 

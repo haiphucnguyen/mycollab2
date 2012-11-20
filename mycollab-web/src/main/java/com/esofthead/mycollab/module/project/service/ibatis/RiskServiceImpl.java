@@ -1,48 +1,46 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.apache.ibatis.session.RowBounds;
-
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.project.ChangeLogAction;
 import com.esofthead.mycollab.module.project.ChangeLogSource;
+import com.esofthead.mycollab.module.project.dao.RiskMapper;
 import com.esofthead.mycollab.module.project.dao.RiskMapperExt;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ChangeLogService;
 import com.esofthead.mycollab.module.project.service.RiskService;
 
-public class RiskServiceImpl extends DefaultCrudService<Integer, Risk>
+@Service
+public class RiskServiceImpl extends DefaultService<Integer, Risk, RiskSearchCriteria>
 		implements RiskService {
+	
+	@Autowired
+	private RiskMapper riskMapper;
 
-	private RiskMapperExt riskExtDAO;
+	@Autowired
+	private RiskMapperExt riskMapperExt;
 
+	@Autowired
 	private ChangeLogService changeLogService;
 
-	public void setRiskExtDAO(RiskMapperExt riskExtDAO) {
-		this.riskExtDAO = riskExtDAO;
-	}
-
-	public void setChangeLogService(ChangeLogService changeLogService) {
-		this.changeLogService = changeLogService;
+	@Override
+	public ICrudGenericDAO<Integer, Risk> getCrudMapper() {
+		return riskMapper;
 	}
 
 	@Override
-	public List findPagableListByCriteria(RiskSearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return riskExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
-	}
-
-	@Override
-	public int getTotalCount(RiskSearchCriteria criteria) {
-		return riskExtDAO.getTotalCount(criteria);
+	public ISearchableDAO<RiskSearchCriteria> getSearchMapper() {
+		return riskMapperExt;
 	}
 
 	@Override
 	protected void internalSaveWithSession(Risk risk, String username) {
-		riskExtDAO.insertAndReturnKey(risk);
+		riskMapperExt.insertAndReturnKey(risk);
 		int riskid = risk.getId();
 		changeLogService.saveChangeLog(risk.getProjectid(), username,
 				ChangeLogSource.RISK, riskid, ChangeLogAction.CREATE,

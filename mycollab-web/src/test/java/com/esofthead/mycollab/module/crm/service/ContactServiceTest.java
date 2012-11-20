@@ -25,6 +25,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
@@ -35,17 +36,20 @@ import com.esofthead.mycollab.test.EngroupClassRunner;
 		"classpath:META-INF/spring/audit-context.xml",
 		"classpath:META-INF/spring/file-context.xml",
 		"classpath:META-INF/spring/crm-context.xml",
+		"classpath:META-INF/spring/crm-service-test-context.xml",
 		"classpath:META-INF/spring/datasource-test-context.xml" })
 public class ContactServiceTest {
 	@Autowired
 	protected ContactService contactService;
-	
+
 	@DataSet
 	@Test
 	public void testGetFindByCriteria() {
-		Assert.assertEquals(1,
-				contactService.findPagableListByCriteria(getCriteria(), 0, 2)
-						.size());
+		Assert.assertEquals(
+				1,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(getCriteria(),
+								0, 2)).size());
 	}
 
 	@DataSet
@@ -56,7 +60,8 @@ public class ContactServiceTest {
 
 	private ContactSearchCriteria getCriteria() {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
-		criteria.setAssignUserName(new StringSearchField(SearchField.AND, "Duong"));
+		criteria.setAssignUserName(new StringSearchField(SearchField.AND,
+				"Duong"));
 		criteria.setAssignUser(new StringSearchField(SearchField.AND, "linh"));
 		criteria.setOpportunityId(new NumberSearchField(SearchField.AND, 1));
 		criteria.setAccountName(new StringSearchField(SearchField.AND, "x"));

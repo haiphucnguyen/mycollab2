@@ -1,35 +1,39 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
 import java.util.GregorianCalendar;
-import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
+import com.esofthead.mycollab.module.project.dao.ChangeLogMapper;
 import com.esofthead.mycollab.module.project.dao.ChangeLogMapperExt;
 import com.esofthead.mycollab.module.project.domain.ChangeLog;
 import com.esofthead.mycollab.module.project.domain.criteria.ChangeLogSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ChangeLogService;
 
+@Service
 public class ChangeLogServiceImpl extends
-		DefaultCrudService<Integer, ChangeLog> implements ChangeLogService {
+		DefaultService<Integer, ChangeLog, ChangeLogSearchCriteria> implements ChangeLogService {
 
-	private ChangeLogMapperExt changeLogExtDAO;
+	@Autowired
+	private ChangeLogMapper changeLogMapper;
+	
+	@Autowired
+	private ChangeLogMapperExt changeLogMapperExt;
+	
+	
 
-	public void setChangeLogExtDAO(ChangeLogMapperExt changeLogExtDAO) {
-		this.changeLogExtDAO = changeLogExtDAO;
+	@Override
+	public ICrudGenericDAO<Integer, ChangeLog> getCrudMapper() {
+		return changeLogMapper;
 	}
 
 	@Override
-	public List findPagableListByCriteria(ChangeLogSearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return changeLogExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
-	}
-
-	@Override
-	public int getTotalCount(ChangeLogSearchCriteria criteria) {
-		return changeLogExtDAO.getTotalCount(criteria);
+	public ISearchableDAO<ChangeLogSearchCriteria> getSearchMapper() {
+		return changeLogMapperExt;
 	}
 
 	@Override

@@ -17,38 +17,38 @@
  */
 package com.esofthead.mycollab.module.file.service.impl;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.apache.ibatis.session.RowBounds;
-
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
+import com.esofthead.mycollab.module.file.dao.ContentTransactionMapper;
 import com.esofthead.mycollab.module.file.dao.ContentTransactionMapperExt;
 import com.esofthead.mycollab.module.file.domain.ContentTransaction;
 import com.esofthead.mycollab.module.file.domain.criteria.ContentTransactionSearchCriteria;
 import com.esofthead.mycollab.module.file.service.ContentTransactionService;
 
+@Service
 public class ContentTransactionServiceImpl extends
-		DefaultCrudService<Integer, ContentTransaction> implements
-		ContentTransactionService {
+		DefaultService<Integer, ContentTransaction, ContentTransactionSearchCriteria>
+		implements ContentTransactionService {
 
-	private ContentTransactionMapperExt contentTransactionExtDAO;
+	@Autowired
+	private ContentTransactionMapper contentTransactionMapper;
+	
+	@Autowired
+	private ContentTransactionMapperExt contentTransactionMapperExt;
 
-	public void setContentTransactionExtDAO(
-			ContentTransactionMapperExt contentTransactionExtDAO) {
-		this.contentTransactionExtDAO = contentTransactionExtDAO;
+	@Override
+	public ICrudGenericDAO<Integer, ContentTransaction> getCrudMapper() {
+		return contentTransactionMapper;
 	}
 
 	@Override
-	public List findPagableListByCriteria(
-			ContentTransactionSearchCriteria criteria, int skipNum,
-			int maxResult) {
-		return contentTransactionExtDAO.findPagableList(criteria,
-				new RowBounds(skipNum, maxResult));
+	public ISearchableDAO<ContentTransactionSearchCriteria> getSearchMapper() {
+		return contentTransactionMapperExt;
 	}
 
-	@Override
-	public int getTotalCount(ContentTransactionSearchCriteria criteria) {
-		return contentTransactionExtDAO.getTotalCount(criteria);
-	}
-
+	
 }

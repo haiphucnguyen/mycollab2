@@ -1,51 +1,48 @@
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.apache.ibatis.session.RowBounds;
-
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
+import com.esofthead.mycollab.module.crm.dao.CaseMapper;
 import com.esofthead.mycollab.module.crm.dao.CaseMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class CaseServiceImpl extends DefaultCrudService<Integer, Case>
-		implements CaseService {
+@Service
+public class CaseServiceImpl extends
+		DefaultService<Integer, Case, CaseSearchCriteria> implements
+		CaseService {
 
-	private CaseMapperExt caseExtDAO;
-
+	@Autowired
 	private AuditLogService auditLogService;
 
-	public void setCaseExtDAO(CaseMapperExt caseExtDAO) {
-		this.caseExtDAO = caseExtDAO;
+	@Autowired
+	private CaseMapper caseMapper;
+
+	@Autowired
+	private CaseMapperExt caseMapperExt;
+
+	@Override
+	public ICrudGenericDAO<Integer, Case> getCrudMapper() {
+		return caseMapper;
 	}
 
-	public void setAuditLogService(AuditLogService auditLogService) {
-		this.auditLogService = auditLogService;
+	@Override
+	public ISearchableDAO<CaseSearchCriteria> getSearchMapper() {
+		return caseMapperExt;
 	}
 
 	@Override
 	public int updateWithSession(Case record, String username) {
 		Case oldValue = this.findByPrimaryKey(record.getId());
 		String refid = "crm-case-" + record.getId();
-		auditLogService.saveAuditLog(
-				username, refid, (Object) oldValue,
+		auditLogService.saveAuditLog(username, refid, (Object) oldValue,
 				(Object) record);
 		return super.updateWithSession(record, username);
 	}
-
-	@Override
-	public List findPagableListByCriteria(CaseSearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return caseExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
-	}
-
-	@Override
-	public int getTotalCount(CaseSearchCriteria criteria) {
-		return caseExtDAO.getTotalCount(criteria);
-	}
-
 }

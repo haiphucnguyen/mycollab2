@@ -1,36 +1,46 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.apache.ibatis.session.RowBounds;
-
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.project.ChangeLogAction;
 import com.esofthead.mycollab.module.project.ChangeLogSource;
+import com.esofthead.mycollab.module.project.dao.ProblemMapper;
 import com.esofthead.mycollab.module.project.dao.ProblemMapperExt;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ChangeLogService;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 
-public class ProblemServiceImpl extends DefaultCrudService<Integer, Problem>
+@Service
+public class ProblemServiceImpl extends DefaultService<Integer, Problem, ProblemSearchCriteria>
 		implements ProblemService {
+	
+	@Autowired
+	private ProblemMapper problemMapper;
 
-	private ProblemMapperExt problemExtDAO;
+	@Autowired
+	private ProblemMapperExt problemMapperExt;
 
+	@Autowired
 	private ChangeLogService changeLogService;
 
-	public void setProblemExtDAO(ProblemMapperExt problemExtDAO) {
-		this.problemExtDAO = problemExtDAO;
+	@Override
+	public ICrudGenericDAO<Integer, Problem> getCrudMapper() {
+		return problemMapper;
 	}
 
-	public void setChangeLogService(ChangeLogService changeLogService) {
-		this.changeLogService = changeLogService;
+	@Override
+	public ISearchableDAO<ProblemSearchCriteria> getSearchMapper() {
+		return problemMapperExt;
 	}
 
 	@Override
 	protected void internalSaveWithSession(Problem record, String username) {
-		problemExtDAO.insertAndReturnKey(record);
+		problemMapperExt.insertAndReturnKey(record);
 		int recordid = record.getId();
 		changeLogService.saveChangeLog(record.getProjectid(), username,
 				ChangeLogSource.PROBLEM, recordid, ChangeLogAction.CREATE,
@@ -52,18 +62,6 @@ public class ProblemServiceImpl extends DefaultCrudService<Integer, Problem>
 				ChangeLogSource.PROBLEM, record.getId(),
 				ChangeLogAction.DELETE, record.getIssuename());
 		return super.internalRemoveWithSession(primaryKey, username);
-	}
-
-	@Override
-	public List findPagableListByCriteria(ProblemSearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return problemExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
-	}
-
-	@Override
-	public int getTotalCount(ProblemSearchCriteria criteria) {
-		return problemExtDAO.getTotalCount(criteria);
 	}
 
 }

@@ -9,7 +9,6 @@
 	</resultMap>
 	
 	<sql id="querySearchCriteria">
-        1=1
         <if test="accountName != null">
             ${accountName.operation} m_crm_target.accountName like '%${accountName.value}%'
         </if>
@@ -105,7 +104,7 @@
         </trim>
     </select>
 
-    <select id="findPagableList" resultMap="SimpleTargetResult"
+    <select id="findPagableListByCriteria" resultMap="SimpleTargetResult"
         parameterType="com.esofthead.mycollab.module.crm.domain.criteria.TargetSearchCriteria">
 
         <include refid="com.esofthead.mycollab.module.crm.dao.TargetMapperExt.selectSimpleTarget" />

@@ -5,33 +5,22 @@
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-	<bean id="currencyDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<bean id="currencyMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"
 			value="com.esofthead.mycollab.common.dao.CurrencyMapper" />
 	</bean>
 
-	<bean id="monitorItemDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<bean id="monitorItemMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"
 			value="com.esofthead.mycollab.common.dao.MonitorItemMapper" />
 	</bean>
 
-	<bean id="monitorItemExtDAO" class="org.mybatis.spring.mapper.MapperFactoryBean">
+	<bean id="monitorItemMapperExt" class="org.mybatis.spring.mapper.MapperFactoryBean">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"
 			value="com.esofthead.mycollab.common.dao.MonitorItemMapperExt" />
-	</bean>
-
-	<bean name="currencyService"
-		class="com.esofthead.mycollab.common.service.ibatis.CurrencyServiceImpl">
-		<property name="daoObj" ref="currencyDAO" />
-	</bean>
-
-	<bean name="monitorItemService"
-		class="com.esofthead.mycollab.common.service.ibatis.MonitorItemServiceImpl">
-		<property name="daoObj" ref="monitorItemDAO" />
-		<property name="monitorItemExtDAO" ref="monitorItemExtDAO" />
 	</bean>
 
 	<bean id="messageDispatcher" class="com.esofthead.mycollab.core.MessageDispatcherImpl" />

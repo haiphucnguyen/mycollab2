@@ -2,13 +2,17 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.project.ChangeLogAction;
 import com.esofthead.mycollab.module.project.ChangeLogSource;
 import com.esofthead.mycollab.module.project.PermissionPaths;
 import com.esofthead.mycollab.module.project.dao.PermissionMapper;
+import com.esofthead.mycollab.module.project.dao.ResourceMapper;
 import com.esofthead.mycollab.module.project.dao.ResourceMapperExt;
 import com.esofthead.mycollab.module.project.domain.Permission;
 import com.esofthead.mycollab.module.project.domain.PermissionExample;
@@ -18,47 +22,40 @@ import com.esofthead.mycollab.module.project.service.ChangeLogService;
 import com.esofthead.mycollab.module.project.service.PermissionService;
 import com.esofthead.mycollab.module.project.service.ResourceService;
 
-public class ResourceServiceImpl extends DefaultCrudService<Integer, Resource>
+@Service
+public class ResourceServiceImpl extends DefaultService<Integer, Resource, ResourceSearchCriteria>
 		implements ResourceService {
+	
+	@Autowired
+	private ResourceMapper resourceMapper;
 
-	private ResourceMapperExt resourceExtDAO;
+	@Autowired
+	private ResourceMapperExt resourceMapperExt;
 
+	@Autowired
 	private PermissionService permissionService;
 
+	@Autowired
 	private ChangeLogService changeLogService;
 
-	public void setPermissionService(PermissionService permissionService) {
-		this.permissionService = permissionService;
-	}
-
-	public void setChangeLogService(ChangeLogService changeLogService) {
-		this.changeLogService = changeLogService;
+	@Override
+	public ICrudGenericDAO<Integer, Resource> getCrudMapper() {
+		return resourceMapper;
 	}
 
 	@Override
-	public List findPagableListByCriteria(ResourceSearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return resourceExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
-	}
-
-	@Override
-	public int getTotalCount(ResourceSearchCriteria criteria) {
-		return resourceExtDAO.getTotalCount(criteria);
-	}
-
-	public void setResourceExtDAO(ResourceMapperExt resourceExtDAO) {
-		this.resourceExtDAO = resourceExtDAO;
+	public ISearchableDAO<ResourceSearchCriteria> getSearchMapper() {
+		return resourceMapperExt;
 	}
 
 	@Override
 	public List<String> getResourceNamesByProjectId(int projectId) {
-		return resourceExtDAO.getResourceNamesByProjectId(projectId);
+		return resourceMapperExt.getResourceNamesByProjectId(projectId);
 	}
 
 	@Override
 	protected void internalSaveWithSession(Resource record, String username) {
-		resourceExtDAO.insertAndReturnKey(record);
+		resourceMapperExt.insertAndReturnKey(record);
 		int resourceid = record.getId();
 		changeLogService.saveChangeLog(record.getProjectid(), username,
 				ChangeLogSource.RESOURCE, resourceid, ChangeLogAction.CREATE,
@@ -89,7 +86,7 @@ public class ResourceServiceImpl extends DefaultCrudService<Integer, Resource>
 		if (resource.getId() == null) {
 			saveWithSession(resource, userSessionId);
 		} else {
-			Resource extResource = daoObj.selectByPrimaryKey(resource.getId());
+			Resource extResource = resourceMapper.selectByPrimaryKey(resource.getId());
 			if (extResource != null) {
 				if (extResource.getUsername() != resource.getResourcename()) {
 					updateWithSession(resource, userSessionId);
@@ -101,7 +98,7 @@ public class ResourceServiceImpl extends DefaultCrudService<Integer, Resource>
 							.andProjectidEqualTo(resource.getProjectid())
 							.andUsernameEqualTo(extResource.getUsername());
 					((PermissionMapper) ((PermissionServiceImpl) permissionService)
-							.getDaoObj()).deleteByExample(perEx);
+							.getCrudMapper()).deleteByExample(perEx);
 				} else {
 					updateWithSession(resource, userSessionId);
 				}

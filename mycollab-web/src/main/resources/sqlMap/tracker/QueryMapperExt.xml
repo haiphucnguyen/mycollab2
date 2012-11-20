@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper namespace="com.esofthead.mycollab.module.tracker.dao.QueryMapperExt">
+	<sql id="querySearchCriteria">
+		<if test="owner != null">
+			AND m_tracker_query.owner=#{owner}
+        </if>
+		<if test="projectid != null">
+			AND
+			m_tracker_query.projectid=#{projectid,javaType=INTEGER}
+        </if>
+		<if test="sharetypes != null">
+			AND
+			<foreach collection="sharetypes" open="(" close=")"
+				separator="OR" item="sharetype">
+				m_tracker_query.sharetype=sharetype
+		    </foreach>
+		</if>
+	</sql>
+
+	<select id="getTotalCount" resultType="int"
+		parameterType="QuerySearchCriteria">
+		SELECT count(*) as totalCount FROM m_tracker_query
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1 <include refid="com.esofthead.mycollab.module.tracker.dao.QueryMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
+
+	<select id="findPagableList" resultMap="com.esofthead.mycollab.module.tracker.dao.QueryMapper.BaseResultMap"
+		parameterType="QuerySearchCriteria">
+        <![CDATA[
+        SELECT id, queryname, sharetype, createddate, updateddate, owner,
+            querytext, description, projectid
+        
+        FROM m_tracker_query
+        ]]>
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1 <include refid="com.esofthead.mycollab.module.tracker.dao.QueryMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
+</mapper>

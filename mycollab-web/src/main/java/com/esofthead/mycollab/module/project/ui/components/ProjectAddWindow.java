@@ -9,8 +9,6 @@ import org.vaadin.teemu.wizards.event.WizardStepActivationEvent;
 import org.vaadin.teemu.wizards.event.WizardStepSetChangedEvent;
 
 import com.esofthead.mycollab.module.project.domain.Project;
-import com.esofthead.mycollab.module.project.ui.events.ProjectEvent;
-import com.esofthead.mycollab.vaadin.mvp.eventbus.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.WizardExt;
@@ -49,9 +47,7 @@ public class ProjectAddWindow extends Window {
 				project.setSaccountid(AppContext.getAccountId());
 				project.setOwner(AppContext.getUsername());
 
-				EventBus eventBus = AppContext.getSpringBean(EventBus.class);
-				eventBus.fireEvent(new ProjectEvent.Save(this, beanItem
-						.getBean()));
+				
 
 				ProjectAddWindow.this.getParent().removeWindow(
 						ProjectAddWindow.this);

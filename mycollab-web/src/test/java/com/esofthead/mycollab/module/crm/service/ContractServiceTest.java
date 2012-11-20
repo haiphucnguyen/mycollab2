@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContractSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
@@ -20,6 +21,7 @@ import com.esofthead.mycollab.test.EngroupClassRunner;
 		"classpath:META-INF/spring/audit-context.xml",
 		"classpath:META-INF/spring/file-context.xml",
 		"classpath:META-INF/spring/crm-context.xml",
+		"classpath:META-INF/spring/crm-service-test-context.xml",
 		"classpath:META-INF/spring/datasource-test-context.xml" })
 public class ContractServiceTest {
 
@@ -29,8 +31,9 @@ public class ContractServiceTest {
 	@DataSet
 	@Test
 	public void testGetAll() {
-		List contracts = contractService.findPagableListByCriteria(null, 0,
-				Integer.MAX_VALUE);
+		List contracts = contractService
+				.findPagableListByCriteria(new SearchRequest<ContractSearchCriteria>(
+						null, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(2, contracts.size());
 	}
 
@@ -48,8 +51,9 @@ public class ContractServiceTest {
 		criteria.setOpportunityId(new NumberSearchField(SearchField.AND, 1));
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND, 1));
 
-		List contracts = contractService.findPagableListByCriteria(criteria, 0,
-				100);
+		List contracts = contractService
+				.findPagableListByCriteria(new SearchRequest<ContractSearchCriteria>(
+						criteria, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(1, contracts.size());
 		Assert.assertEquals(1, contractService.getTotalCount(criteria));
 

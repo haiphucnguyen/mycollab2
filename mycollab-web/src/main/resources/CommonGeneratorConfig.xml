@@ -34,7 +34,7 @@
 
             <property
                 name="rootInterface"
-                value="com.esofthead.mycollab.core.persistence.CrudGenericDAO" />
+                value="com.esofthead.mycollab.core.persistence.ICrudGenericDAO" />
         </javaClientGenerator>
 
         <table

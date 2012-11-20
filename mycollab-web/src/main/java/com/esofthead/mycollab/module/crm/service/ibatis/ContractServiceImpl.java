@@ -1,29 +1,40 @@
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.apache.ibatis.session.RowBounds;
-
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
+import com.esofthead.mycollab.module.crm.dao.ContractMapper;
 import com.esofthead.mycollab.module.crm.dao.ContractMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Contract;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContractSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContractService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class ContractServiceImpl extends DefaultCrudService<Integer, Contract>
+@Service
+public class ContractServiceImpl extends DefaultService<Integer, Contract, ContractSearchCriteria>
 		implements ContractService {
 
-	private ContractMapperExt contractExtDAO;
+	@Autowired
+	private ContractMapper contractMapper;
+	
+	@Autowired
+	private ContractMapperExt contractMapperExt;
 
+	@Autowired
 	private AuditLogService auditLogService;
+	
 
-	public void setContractExtDAO(ContractMapperExt contractExtDAO) {
-		this.contractExtDAO = contractExtDAO;
+	@Override
+	public ICrudGenericDAO<Integer, Contract> getCrudMapper() {
+		return contractMapper;
 	}
 
-	public void setAuditLogService(AuditLogService auditLogService) {
-		this.auditLogService = auditLogService;
+	@Override
+	public ISearchableDAO<ContractSearchCriteria> getSearchMapper() {
+		return contractMapperExt;
 	}
 
 	@Override
@@ -34,18 +45,6 @@ public class ContractServiceImpl extends DefaultCrudService<Integer, Contract>
 				username, refid, (Object) oldValue,
 				(Object) record);
 		return super.updateWithSession(record, username);
-	}
-
-	@Override
-	public List findPagableListByCriteria(ContractSearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return contractExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
-	}
-
-	@Override
-	public int getTotalCount(ContractSearchCriteria criteria) {
-		return contractExtDAO.getTotalCount(criteria);
 	}
 
 }

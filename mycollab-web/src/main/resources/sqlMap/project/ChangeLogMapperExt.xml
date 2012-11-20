@@ -31,7 +31,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList" resultMap="ChangeLogResult"
+	<select id="findPagableListByCriteria" resultMap="ChangeLogResult"
 		parameterType="ChangeLogSearchCriteria">
 		<include refid="com.esofthead.mycollab.module.project.dao.ChangeLogMapperExt.selectChangeLog" />
 

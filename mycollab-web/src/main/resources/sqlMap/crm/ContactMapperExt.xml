@@ -193,7 +193,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList" resultMap="SimpleContactResult"
+	<select id="findPagableListByCriteria" resultMap="SimpleContactResult"
 		parameterType="ContactSearchCriteria">
 		<include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.selectSimpleContact" />
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">

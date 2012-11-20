@@ -20,90 +20,98 @@ package com.esofthead.mycollab.module.user.service.mybatis;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.core.EngroupException;
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.user.dao.RoleUserMapper;
 import com.esofthead.mycollab.module.user.dao.UserMapper;
 import com.esofthead.mycollab.module.user.dao.UserMapperExt;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.RoleUser;
 import com.esofthead.mycollab.module.user.domain.RoleUserExample;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.domain.UserInfo;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 
-public class UserServiceDBImpl extends DefaultCrudService<String, User>
+@Service
+public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCriteria>
 		implements UserService {
+	
+	@Autowired
+	private UserMapper userMapper;
 
-	private UserMapperExt userExtDAO;
+	@Autowired
+	private UserMapperExt userMapperExt;
 
-	private RoleUserMapper roleuserDAO;
+	@Autowired
+	private RoleUserMapper roleUserMapper;
+
+	@Override
+	public ICrudGenericDAO<String, User> getCrudMapper() {
+		return userMapper;
+	}
+
+	@Override
+	public ISearchableDAO<UserSearchCriteria> getSearchMapper() {
+		return userMapperExt;
+	}
 
 	public void save(User record) {
 		UserExample ex = new UserExample();
 		ex.createCriteria().andUsernameEqualTo(record.getUsername());
 		ex.createCriteria().andEmailEqualTo(record.getEmail());
 
-		List<User> users = ((UserMapper) daoObj).selectByExample(ex);
+		List<User> users = userMapper.selectByExample(ex);
 		if (users != null && users.size() > 0) {
 			throw new EngroupException(
 					"There is exist user has the same username or email already.");
 		}
 
-		((UserMapper) this.daoObj).insert(record);
+		userMapper.insert(record);
 	}
 
 	public int update(User record) {
-		return ((UserMapper) daoObj).updateByPrimaryKeySelective(record);
+		return userMapper.updateByPrimaryKeySelective(record);
 	}
 
 	public void setRoleuserDAO(RoleUserMapper roleuserDAO) {
-		this.roleuserDAO = roleuserDAO;
+		this.roleUserMapper = roleuserDAO;
 	}
 
 	public void setUserExtDAO(UserMapperExt userExtDAO) {
-		this.userExtDAO = userExtDAO;
+		this.userMapperExt = userExtDAO;
 	}
 
 	public List<Role> findRolesByUser(String username) {
-		return userExtDAO.findRolesByUser(username);
+		return userMapperExt.findRolesByUser(username);
 	}
 
 	public User findUserByUsername(String name) {
 		UserExample ex = new UserExample();
 		ex.createCriteria().andUsernameEqualTo(name);
-		List<User> users = ((UserMapper) (this.daoObj)).selectByExample(ex);
+		List<User> users = userMapper.selectByExample(ex);
 		if (users != null && users.size() > 0) {
 			return users.get(0);
 		}
 		return null;
 	}
 
-	public List<SimpleUser> findPagableListByCriteria(
-			UserSearchCriteria criteria, int skipNum, int maxResult) {
-		return userExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
-	}
-
-	public int getTotalCount(UserSearchCriteria criteria) {
-		return userExtDAO.getTotalCount(criteria);
-	}
-
 	public void assignUserToRoleId(String username, int roleid) {
 		RoleUserExample ex = new RoleUserExample();
 		ex.createCriteria().andUsernameEqualTo(username)
 				.andRoleidEqualTo(roleid);
-		List<RoleUser> result = roleuserDAO.selectByExample(ex);
+		List<RoleUser> result = roleUserMapper.selectByExample(ex);
 		if (result == null || result.size() == 0) {
 			RoleUser roleuser = new RoleUser();
 			roleuser.setRoleid(roleid);
 			roleuser.setUsername(username);
-			roleuserDAO.insert(roleuser);
+			roleUserMapper.insert(roleuser);
 		}
 	}
 
@@ -111,7 +119,7 @@ public class UserServiceDBImpl extends DefaultCrudService<String, User>
 		RoleUserExample ex = new RoleUserExample();
 		ex.createCriteria().andUsernameEqualTo(username)
 				.andRoleidEqualTo(roleid);
-		roleuserDAO.deleteByExample(ex);
+		roleUserMapper.deleteByExample(ex);
 
 	}
 
@@ -124,11 +132,11 @@ public class UserServiceDBImpl extends DefaultCrudService<String, User>
 		user.setActive(visible);
 		user.setLastaccessedtime(new GregorianCalendar().getTime());
 
-		((UserMapper) daoObj).updateByExampleSelective(user, ex);
+		userMapper.updateByExampleSelective(user, ex);
 	}
 
 	@Override
 	public List<UserInfo> getFriendsOfUser(int accountId, String username) {
-		return userExtDAO.getFriendsOfUser(accountId, username);
+		return userMapperExt.getFriendsOfUser(accountId, username);
 	}
 }

@@ -2,6 +2,8 @@ package com.esofthead.mycollab.module.file.service.impl;
 
 import java.util.Collection;
 
+import org.springframework.stereotype.Service;
+
 import com.esofthead.mycollab.module.file.domain.Content;
 import com.esofthead.mycollab.module.file.domain.ContentSearchResult;
 import com.esofthead.mycollab.module.file.domain.FileItem;
@@ -12,6 +14,7 @@ import com.esofthead.mycollab.module.file.domain.criteria.ContentSearchCriteria;
 import com.esofthead.mycollab.module.file.service.AccessValidatorFileSystemService;
 import com.esofthead.mycollab.module.file.validator.AccessValidator;
 
+@Service
 public class AccessValidatorFileSystemServiceImpl implements
 		AccessValidatorFileSystemService {
 

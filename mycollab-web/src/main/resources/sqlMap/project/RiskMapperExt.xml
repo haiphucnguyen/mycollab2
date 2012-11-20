@@ -56,7 +56,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList" resultMap="RiskResult"
+	<select id="findPagableListByCriteria" resultMap="RiskResult"
 		parameterType="RiskSearchCriteria">
 		<include refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.selectRisk" />
 

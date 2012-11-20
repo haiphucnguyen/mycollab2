@@ -138,7 +138,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList" parameterType="TaskSearchCriteria"
+	<select id="findPagableListByCriteria" parameterType="TaskSearchCriteria"
 		resultMap="SimpleTaskResult">
         <![CDATA[
         SELECT m_crm_task.id, m_crm_task.subject, m_crm_task.startdate, m_crm_task.duedate, m_crm_task.contactId, m_crm_task.typeid, 

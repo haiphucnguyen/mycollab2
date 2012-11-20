@@ -1,16 +1,10 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
-import com.esofthead.mycollab.vaadin.mvp.eventbus.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -29,13 +23,9 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-@Scope("prototype")
-@Component
+
 public class OpportunitySearchPanel extends CustomComponent {
 	protected ContactSearchCriteria searchCriteria;
-
-	@Autowired
-	private EventBus eventBus;
 
 	@Override
 	public void attach() {
@@ -67,8 +57,6 @@ public class OpportunitySearchPanel extends CustomComponent {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						eventBus.fireEvent(new OpportunityEvent.GotoAdd(this,
-								null));
 
 					}
 				});
@@ -120,8 +108,6 @@ public class OpportunitySearchPanel extends CustomComponent {
 									.setContactName(new StringSearchField(
 											SearchField.AND, (String) nameField
 													.getValue()));
-							eventBus.fireEvent(new OpportunityEvent.Search(
-									OpportunitySearchPanel.this, searchCriteria));
 						}
 					}));
 
@@ -208,9 +194,6 @@ public class OpportunitySearchPanel extends CustomComponent {
 							searchCriteria = new ContactSearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
-
-							eventBus.fireEvent(new OpportunityEvent.Search(
-									OpportunitySearchPanel.this, searchCriteria));
 						}
 
 					}));

@@ -2,36 +2,22 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+  
     
-    <bean id="accessValidatorFileService" class="com.esofthead.mycollab.module.file.service.impl.AccessValidatorFileSystemServiceImpl">
-    </bean>
-    
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contentTransactionDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contentTransactionMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.file.dao.ContentTransactionMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contentTransactionExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contentTransactionMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.file.dao.ContentTransactionMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="attachmentDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="attachmentMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.file.dao.AttachmentMapper" />
-    </bean>
-
-    <bean id="contentTransactionService"
-        class="com.esofthead.mycollab.module.file.service.impl.ContentTransactionServiceImpl">
-        <property name="daoObj" ref="contentTransactionDAO" />
-        <property name="contentTransactionExtDAO" ref="contentTransactionExtDAO" />
-    </bean>
-
-    <bean id="attachmentService"
-        class="com.esofthead.mycollab.module.file.service.impl.AttachmentServiceImpl">
-        <property name="daoObj" ref="attachmentDAO" />
-        <property name="accessValidatorFileSystemService" ref="accessValidatorFileService" />
     </bean>
 </beans>

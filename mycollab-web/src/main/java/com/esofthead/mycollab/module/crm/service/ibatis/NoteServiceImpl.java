@@ -1,29 +1,39 @@
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.apache.ibatis.session.RowBounds;
-
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
+import com.esofthead.mycollab.module.crm.dao.NoteMapper;
 import com.esofthead.mycollab.module.crm.dao.NoteMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Note;
 import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
 
-public class NoteServiceImpl extends DefaultCrudService<Integer, Note>
+@Service
+public class NoteServiceImpl extends DefaultService<Integer, Note, NoteSearchCriteria>
 		implements NoteService {
 
-	private NoteMapperExt noteExtDAO;
+	@Autowired
+	private NoteMapper noteMapper;
+	
+	@Autowired
+	private NoteMapperExt noteMapperExt;
 
+	@Autowired
 	private AttachmentService attachmentService;
-
-	public void setNoteExtDAO(NoteMapperExt noteExtDAO) {
-		this.noteExtDAO = noteExtDAO;
+	
+	@Override
+	public ICrudGenericDAO<Integer, Note> getCrudMapper() {
+		return noteMapper;
 	}
 
-	public void setAttachmentService(AttachmentService attachmentService) {
-		this.attachmentService = attachmentService;
+	@Override
+	public ISearchableDAO<NoteSearchCriteria> getSearchMapper() {
+		return noteMapperExt;
 	}
 
 	@Override
@@ -34,20 +44,8 @@ public class NoteServiceImpl extends DefaultCrudService<Integer, Note>
 	}
 
 	@Override
-	public List findPagableListByCriteria(NoteSearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return noteExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
-	}
-
-	@Override
-	public int getTotalCount(NoteSearchCriteria criteria) {
-		return noteExtDAO.getTotalCount(criteria);
-	}
-
-	@Override
 	public int insertNoteExt(Note note) {
-		noteExtDAO.insertNoteExt(note);
+		noteMapperExt.insertNoteExt(note);
 		return note.getId();
 	}
 

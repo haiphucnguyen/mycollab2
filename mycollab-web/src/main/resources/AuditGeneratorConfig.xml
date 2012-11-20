@@ -21,7 +21,7 @@
             type="XMLMAPPER" targetProject="src/main/java">
             <property name="exampleMethodVisibility" value="public" />
             <property name="rootInterface"
-                value="com.esofthead.mycollab.core.persistence.CrudGenericDAO" />
+                value="com.esofthead.mycollab.core.persistence.ICrudGenericDAO" />
         </javaClientGenerator>
 
         <table schema="mycollab" tableName="m_audit_log"

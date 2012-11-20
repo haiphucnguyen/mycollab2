@@ -21,12 +21,15 @@ import java.util.Dictionary;
 import java.util.Hashtable;
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.core.AvailableDestinationNames;
 import com.esofthead.mycollab.core.EngroupException;
 import com.esofthead.mycollab.core.MessageDispatcher;
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.project.PermissionPaths;
 import com.esofthead.mycollab.module.project.dao.PermissionMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMapper;
@@ -39,17 +42,29 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 
-public class ProjectServiceImpl extends DefaultCrudService<Integer, Project>
+@Service
+public class ProjectServiceImpl extends DefaultService<Integer, Project, ProjectSearchCriteria>
 		implements ProjectService {
+	@Autowired
+	private ProjectMapper projectMapper;
 
-	private ProjectMapperExt projectExtDAO;
+	@Autowired
+	private ProjectMapperExt projectMapperExt;
 
-	private PermissionMapper permissionDAO;
+	@Autowired
+	private PermissionMapper permissionMapper;
 
+	@Autowired
 	private MessageDispatcher messageDispatcher;
 
-	public void setMessageDispatcher(MessageDispatcher messageDispatcher) {
-		this.messageDispatcher = messageDispatcher;
+	@Override
+	public ICrudGenericDAO<Integer, Project> getCrudMapper() {
+		return projectMapper;
+	}
+
+	@Override
+	public ISearchableDAO<ProjectSearchCriteria> getSearchMapper() {
+		return projectMapperExt;
 	}
 
 	@Override
@@ -64,22 +79,6 @@ public class ProjectServiceImpl extends DefaultCrudService<Integer, Project>
 		return super.internalRemoveWithSession(primaryKey, username);
 	}
 
-	public void setProjectExtDAO(ProjectMapperExt projectExtDAO) {
-		this.projectExtDAO = projectExtDAO;
-	}
-
-	@Override
-	public List findPagableListByCriteria(ProjectSearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return projectExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
-	}
-
-	@Override
-	public int getTotalCount(ProjectSearchCriteria criteria) {
-		return projectExtDAO.getTotalCount(criteria);
-	}
-
 	@Override
 	protected int internalUpdateWithSession(Project record, String username) {
 		super.internalUpdateWithSession(record, username);
@@ -87,7 +86,7 @@ public class ProjectServiceImpl extends DefaultCrudService<Integer, Project>
 		if (record.getOwner() != null && record.getOwner() != "") {
 			ex.createCriteria().andProjectidEqualTo(record.getId())
 					.andUsernameEqualTo(record.getOwner());
-			permissionDAO.deleteByExample(ex);
+			permissionMapper.deleteByExample(ex);
 			setAllPermissions(record.getId(), record.getOwner());
 		}
 
@@ -102,7 +101,7 @@ public class ProjectServiceImpl extends DefaultCrudService<Integer, Project>
 					+ " already. Please choose another project name");
 		}
 
-		projectExtDAO.insertAndReturnKey(record);
+		projectMapperExt.insertAndReturnKey(record);
 		int projectid = record.getId();
 
 		if (record.getOwner() != null && record.getOwner() != "") {
@@ -119,29 +118,29 @@ public class ProjectServiceImpl extends DefaultCrudService<Integer, Project>
 	}
 
 	private void setAllPermissions(int projectid, String user) {
-		permissionDAO.insert(createPermission(projectid, user,
+		permissionMapper.insert(createPermission(projectid, user,
 				PermissionPaths.EDIT_MEMBERS));
-		permissionDAO.insert(createPermission(projectid, user,
+		permissionMapper.insert(createPermission(projectid, user,
 				PermissionPaths.EDIT_MESSAGES));
-		permissionDAO.insert(createPermission(projectid, user,
+		permissionMapper.insert(createPermission(projectid, user,
 				PermissionPaths.EDIT_PERMISSIONS));
-		permissionDAO.insert(createPermission(projectid, user,
+		permissionMapper.insert(createPermission(projectid, user,
 				PermissionPaths.EDIT_PROBLEMS));
-		permissionDAO.insert(createPermission(projectid, user,
+		permissionMapper.insert(createPermission(projectid, user,
 				PermissionPaths.EDIT_RISKS));
-		permissionDAO.insert(createPermission(projectid, user,
+		permissionMapper.insert(createPermission(projectid, user,
 				PermissionPaths.EDIT_TASKS));
-		permissionDAO.insert(createPermission(projectid, user,
+		permissionMapper.insert(createPermission(projectid, user,
 				PermissionPaths.VIEW_MEMBERS));
-		permissionDAO.insert(createPermission(projectid, user,
+		permissionMapper.insert(createPermission(projectid, user,
 				PermissionPaths.VIEW_MESSAGES));
-		permissionDAO.insert(createPermission(projectid, user,
+		permissionMapper.insert(createPermission(projectid, user,
 				PermissionPaths.VIEW_PERMISSIONS));
-		permissionDAO.insert(createPermission(projectid, user,
+		permissionMapper.insert(createPermission(projectid, user,
 				PermissionPaths.VIEW_PROBLEMS));
-		permissionDAO.insert(createPermission(projectid, user,
+		permissionMapper.insert(createPermission(projectid, user,
 				PermissionPaths.VIEW_RISKS));
-		permissionDAO.insert(createPermission(projectid, user,
+		permissionMapper.insert(createPermission(projectid, user,
 				PermissionPaths.VIEW_TASKS));
 	}
 
@@ -159,19 +158,13 @@ public class ProjectServiceImpl extends DefaultCrudService<Integer, Project>
 	public boolean isExistProjectHasSameName(String name) {
 		ProjectExample ex = new ProjectExample();
 		ex.createCriteria().andNameEqualTo(name);
-		List<Project> list = ((ProjectMapper) daoObj).selectByExample(ex);
+		List<Project> list = projectMapper.selectByExample(ex);
 		return (list != null && list.size() > 0);
 	}
 
 	@Override
 	public List<SimpleProject> getInvolvedProjectOfUser(String username) {
-		return projectExtDAO.getInvolvedProjectOfUser(username);
+		return projectMapperExt.getInvolvedProjectOfUser(username);
 	}
-
-	public void setPermissionDAO(PermissionMapper permissionDAO) {
-		this.permissionDAO = permissionDAO;
-	}
-
-	
 
 }

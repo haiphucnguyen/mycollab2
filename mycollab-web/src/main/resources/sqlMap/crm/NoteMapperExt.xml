@@ -289,7 +289,7 @@
             ]]>
 		</if>
 		<if test="saccountid != null">
-            <![CDATA[m_crm_note.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${saccountid.operation} m_crm_note.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
 		</if>
 	</sql>
 
@@ -301,7 +301,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList" resultMap="SimpleNoteResult"
+	<select id="findPagableListByCriteria" resultMap="SimpleNoteResult"
 		parameterType="NoteSearchCriteria">
         <![CDATA[
         SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 

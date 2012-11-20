@@ -1,34 +1,35 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.apache.ibatis.session.RowBounds;
-
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
+import com.esofthead.mycollab.module.project.dao.RoleMapper;
 import com.esofthead.mycollab.module.project.dao.RoleMapperExt;
 import com.esofthead.mycollab.module.project.domain.Role;
 import com.esofthead.mycollab.module.project.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.project.service.RoleService;
 
-public class RoleServiceImpl extends DefaultCrudService<Integer, Role>
+@Service
+public class RoleServiceImpl extends DefaultService<Integer, Role, RoleSearchCriteria>
 		implements RoleService {
 
-	private RoleMapperExt roleExtDAO;
+	@Autowired
+	private RoleMapper roleMapper;
+	
+	@Autowired
+	private RoleMapperExt roleMapperExt;
 
 	@Override
-	public List findPagableListByCriteria(RoleSearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return roleExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
+	public ICrudGenericDAO<Integer, Role> getCrudMapper() {
+		return roleMapper;
 	}
 
 	@Override
-	public int getTotalCount(RoleSearchCriteria criteria) {
-		return roleExtDAO.getTotalCount(criteria);
-	}
-
-	public void setRoleExtDAO(RoleMapperExt roleExtDAO) {
-		this.roleExtDAO = roleExtDAO;
+	public ISearchableDAO<RoleSearchCriteria> getSearchMapper() {
+		return roleMapperExt;
 	}
 
 }

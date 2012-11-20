@@ -4,179 +4,109 @@
 
 
     <!-- Spring DAO -->
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="changeLogDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="changeLogMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.ChangeLogMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="changeLogExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="changeLogMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.ChangeLogMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="messageDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="messageMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.MessageMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="messageExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="messageMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.MessageMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectMonitorDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectMonitorMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.ProjectMonitorMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="permissionDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="permissionMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.PermissionMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="problemDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="problemMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.ProblemMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="problemExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="problemMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.ProblemMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.ProjectMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.ProjectMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="resourceDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="resourceMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.ResourceMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="resourceExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="resourceMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.ResourceMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="riskDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="riskMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.RiskMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="riskExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="riskMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.RiskMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectRoleDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectRoleMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.RoleMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectRoleExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectRoleMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.RoleMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectTaskDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectTaskMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.TaskMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectTaskExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectTaskMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.TaskMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="taskResourceDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="taskResourceMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.TaskResourceMapper" />
-    </bean>
-
-    <!-- Spring Service -->
-    <bean id="changeLogService"
-        class="com.esofthead.mycollab.module.project.service.ibatis.ChangeLogServiceImpl">
-        <property name="daoObj" ref="changeLogDAO" />
-        <property name="changeLogExtDAO" ref="changeLogExtDAO" />
-    </bean>
-
-    <bean id="messageService"
-        class="com.esofthead.mycollab.module.project.service.ibatis.MessageServiceImpl">
-        <property name="daoObj" ref="messageDAO" />
-        <property name="messageExtDAO" ref="messageExtDAO" />
-        <property name="attachmentService" ref="attachmentService" />
-        <property name="changeLogService" ref="changeLogService" />
-    </bean>
-
-    <bean id="projectMonitorService"
-        class="com.esofthead.mycollab.module.project.service.ibatis.ProjectMonitorServiceImpl">
-        <property name="daoObj" ref="projectMonitorDAO" />
-    </bean>
-
-    <bean id="permissionService"
-        class="com.esofthead.mycollab.module.project.service.ibatis.PermissionServiceImpl">
-        <property name="daoObj" ref="permissionDAO" />
-    </bean>
-
-    <bean id="problemService"
-        class="com.esofthead.mycollab.module.project.service.ibatis.ProblemServiceImpl">
-        <property name="daoObj" ref="problemDAO" />
-        <property name="problemExtDAO" ref="problemExtDAO" />
-        <property name="changeLogService" ref="changeLogService" />
-    </bean>
-
-    <bean id="projectService"
-        class="com.esofthead.mycollab.module.project.service.ibatis.ProjectServiceImpl">
-        <property name="daoObj" ref="projectDAO" />
-        <property name="permissionDAO" ref="permissionDAO" />
-        <property name="projectExtDAO" ref="projectExtDAO" />
-        <property name="messageDispatcher" ref="messageDispatcher" />
-    </bean>
-
-    <bean id="resourceService"
-        class="com.esofthead.mycollab.module.project.service.ibatis.ResourceServiceImpl">
-        <property name="daoObj" ref="resourceDAO" />
-        <property name="resourceExtDAO" ref="resourceExtDAO" />
-        <property name="permissionService" ref="permissionService" />
-        <property name="changeLogService" ref="changeLogService" />
-    </bean>
-
-    <bean id="riskService"
-        class="com.esofthead.mycollab.module.project.service.ibatis.RiskServiceImpl">
-        <property name="daoObj" ref="riskDAO" />
-        <property name="riskExtDAO" ref="riskExtDAO" />
-        <property name="changeLogService" ref="changeLogService" />
-    </bean>
-
-    <bean id="roleService"
-        class="com.esofthead.mycollab.module.project.service.ibatis.RoleServiceImpl">
-        <property name="daoObj" ref="projectRoleDAO" />
-        <property name="roleExtDAO" ref="projectRoleExtDAO" />
-    </bean>
-
-    <bean id="taskService"
-        class="com.esofthead.mycollab.module.project.service.ibatis.TaskServiceImpl">
-        <property name="daoObj" ref="projectTaskDAO" />
-        <property name="taskExtDAO" ref="projectTaskExtDAO" />
-        <property name="projectDAO" ref="projectDAO" />
-        <property name="resourceDAO" ref="resourceDAO" />
-        <property name="taskResourceDAO" ref="taskResourceDAO" />
     </bean>
 
 </beans>

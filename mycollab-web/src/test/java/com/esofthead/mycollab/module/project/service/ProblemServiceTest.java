@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
@@ -21,7 +22,9 @@ import com.esofthead.mycollab.test.EngroupClassRunner;
 		"classpath:META-INF/spring/audit-context.xml",
 		"classpath:META-INF/spring/common-context.xml",
 		"classpath:META-INF/spring/file-context.xml",
+		"classpath:META-INF/spring/tracker-context.xml",
 		"classpath:META-INF/spring/project-context.xml",
+		"classpath:META-INF/spring/project-service-test-context.xml",
 		"classpath:META-INF/spring/datasource-test-context.xml" })
 public class ProblemServiceTest {
 
@@ -31,8 +34,9 @@ public class ProblemServiceTest {
 	@DataSet
 	@Test
 	public void testGetListIssues() {
-		List issues = problemService.findPagableListByCriteria(null, 0,
-				Integer.MAX_VALUE);
+		List issues = problemService
+				.findPagableListByCriteria(new SearchRequest<ProblemSearchCriteria>(
+						null, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(3, issues.size());
 	}
 
@@ -43,7 +47,8 @@ public class ProblemServiceTest {
 		criteria.setProblemname(new StringSearchField(StringSearchField.AND,
 				"a"));
 		List<SimpleProblem> problems = problemService
-				.findPagableListByCriteria(criteria, 0, Integer.MAX_VALUE);
+				.findPagableListByCriteria(new SearchRequest<ProblemSearchCriteria>(
+						criteria, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(1, problems.size());
 
 		SimpleProblem problem = problems.get(0);
@@ -52,7 +57,7 @@ public class ProblemServiceTest {
 		Assert.assertEquals("source", problem.getProblemsource());
 		Assert.assertEquals(1, problemService.getTotalCount(criteria));
 	}
-	
+
 	@DataSet
 	@Test
 	public void testgetTotalCount() {

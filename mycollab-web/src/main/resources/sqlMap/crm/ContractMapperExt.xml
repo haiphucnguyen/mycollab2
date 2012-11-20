@@ -163,7 +163,7 @@
         </trim>
     </select>
 
-    <select id="findPagableList" resultMap="SimpleContractResult"
+    <select id="findPagableListByCriteria" resultMap="SimpleContractResult"
         parameterType="ContractSearchCriteria">
         <include refid="com.esofthead.mycollab.module.crm.dao.ContractMapperExt.selectSimpleContract" />
         <trim prefix="WHERE" prefixOverrides="AND | OR ">

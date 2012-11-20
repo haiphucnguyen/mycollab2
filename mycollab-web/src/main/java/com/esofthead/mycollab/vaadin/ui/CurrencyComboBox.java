@@ -27,7 +27,7 @@ public class CurrencyComboBox extends ComboBox {
 	public void attach() {
 		super.attach();
 		this.removeAllItems();
-		List<Currency> currencyList = currencyService.getCountries();
+		List<Currency> currencyList = currencyService.getCurrencies();
 		BeanContainer<String, Currency> beanItem = new BeanContainer<String, Currency>(
 				Currency.class);
 		beanItem.setBeanIdProperty("name");

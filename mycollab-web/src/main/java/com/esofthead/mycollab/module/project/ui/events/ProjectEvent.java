@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.project.ui.events;
 
-import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 
 @SuppressWarnings("serial")
 public class ProjectEvent {

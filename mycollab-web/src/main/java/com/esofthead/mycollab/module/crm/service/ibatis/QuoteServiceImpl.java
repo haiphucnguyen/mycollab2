@@ -3,10 +3,14 @@ package com.esofthead.mycollab.module.crm.service.ibatis;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.crm.dao.ProductMapper;
+import com.esofthead.mycollab.module.crm.dao.QuoteMapper;
 import com.esofthead.mycollab.module.crm.dao.QuoteMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Product;
 import com.esofthead.mycollab.module.crm.domain.ProductExample;
@@ -18,29 +22,35 @@ import com.esofthead.mycollab.module.crm.service.QuoteGroupProductService;
 import com.esofthead.mycollab.module.crm.service.QuoteService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class QuoteServiceImpl extends DefaultCrudService<Integer, Quote>
+@Service
+public class QuoteServiceImpl extends DefaultService<Integer, Quote, QuoteSearchCriteria>
 		implements QuoteService {
 
-	private QuoteMapperExt quoteExtDAO;
+	@Autowired
+	private QuoteMapper quoteMapper;
+	
+	@Autowired
+	private QuoteMapperExt quoteMapperExt;
 
+	@Autowired
 	private QuoteGroupProductService quoteGroupProductService;
 
-	private ProductMapper productDAO;
+	@Autowired
+	private ProductMapper productMapper;
 
+	@Autowired
 	private AuditLogService auditLogService;
 
-	public void setQuoteExtDAO(QuoteMapperExt quoteExtDAO) {
-		this.quoteExtDAO = quoteExtDAO;
+	@Override
+	public ICrudGenericDAO<Integer, Quote> getCrudMapper() {
+		return quoteMapper;
 	}
 
-	public void setAuditLogService(AuditLogService auditLogService) {
-		this.auditLogService = auditLogService;
+	@Override
+	public ISearchableDAO<QuoteSearchCriteria> getSearchMapper() {
+		return quoteMapperExt;
 	}
 
-	public void setQuoteGroupProductService(
-			QuoteGroupProductService quoteGroupProductService) {
-		this.quoteGroupProductService = quoteGroupProductService;
-	}
 
 	@Override
 	public int updateWithSession(Quote record, String username) {
@@ -55,18 +65,7 @@ public class QuoteServiceImpl extends DefaultCrudService<Integer, Quote>
 	
 
 	public void setProductDAO(ProductMapper productDAO) {
-		this.productDAO = productDAO;
-	}
-
-	@Override
-	public List findPagableListByCriteria(QuoteSearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return quoteExtDAO.findPagableList(criteria, new RowBounds(skipNum, maxResult));
-	}
-
-	@Override
-	public int getTotalCount(QuoteSearchCriteria criteria) {
-		return quoteExtDAO.getTotalCount(criteria);
+		this.productMapper = productDAO;
 	}
 
 	@Override
@@ -84,7 +83,7 @@ public class QuoteServiceImpl extends DefaultCrudService<Integer, Quote>
 				// quoteProduct.setAccountid(accountid);
 				quoteProduct.setGroupid(quoteGroupProduct.getId());
 				quoteProduct.setStatus("Quoted");
-				productDAO.insert(quoteProduct);
+				productMapper.insert(quoteProduct);
 			}
 		}
 	}
@@ -103,7 +102,7 @@ public class QuoteServiceImpl extends DefaultCrudService<Integer, Quote>
 			ProductExample quoteProductEx = new ProductExample();
 			quoteProductEx.createCriteria().andGroupidEqualTo(
 					quoteGroupProduct.getId());
-			List<Product> quoteProducts = productDAO
+			List<Product> quoteProducts = productMapper
 					.selectByExample(quoteProductEx);
 			simpleQuoteGroupProduct.setQuoteProducts(quoteProducts);
 			result.add(simpleQuoteGroupProduct);
@@ -113,7 +112,7 @@ public class QuoteServiceImpl extends DefaultCrudService<Integer, Quote>
 
 	@Override
 	public int insertQuoteAndReturnKey(Quote quote) {
-		quoteExtDAO.insertQuoteAndReturnKey(quote);
+		quoteMapperExt.insertQuoteAndReturnKey(quote);
 		return quote.getId();
 	}
 

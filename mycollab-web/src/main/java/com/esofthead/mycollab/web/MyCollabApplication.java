@@ -1,11 +1,6 @@
 package com.esofthead.mycollab.web;
 
-import com.esofthead.mycollab.module.user.ui.LoginViewImpl;
-import com.esofthead.mycollab.vaadin.mvp.LogoutEvent;
-import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEvent;
-import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEventListener;
-import com.esofthead.mycollab.vaadin.mvp.eventbus.EventBus;
-import com.esofthead.mycollab.vaadin.mvp.ui.PresenterRegistry;
+import com.esofthead.mycollab.module.user.view.LoginViewImpl;
 import com.vaadin.Application;
 
 public class MyCollabApplication extends Application {
@@ -25,29 +20,9 @@ public class MyCollabApplication extends Application {
 		// Register it as a listener in the application context
 		this.getContext().addTransactionListener(sessionData);
 
-		PresenterRegistry presenterRegistry = AppContext
-				.getSpringBean(PresenterRegistry.class);
-		presenterRegistry.registerPresenter();
-
 		LoginViewImpl mainView = AppContext.getView(LoginViewImpl.class);
-
-		EventBus eventBus = AppContext.getSpringBean(EventBus.class);
-		System.out.println("Main view: " + mainView);
+		
 		getMainWindow().setContent(mainView);
-
-		eventBus.addListener(new ApplicationEventListener<LogoutEvent>() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void handle(LogoutEvent event) {
-				MyCollabApplication.this.close();
-			}
-
-			@Override
-			public Class<? extends ApplicationEvent> getEventType() {
-				return LogoutEvent.class;
-			}
-		});
 	}
 
 }

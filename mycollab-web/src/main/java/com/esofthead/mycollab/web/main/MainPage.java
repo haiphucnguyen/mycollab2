@@ -4,10 +4,10 @@ import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 import org.vaadin.hene.popupbutton.PopupButton;
 
-import com.esofthead.mycollab.module.crm.ui.CrmContainer;
+import com.esofthead.mycollab.module.crm.view.CrmContainer;
 import com.esofthead.mycollab.module.project.ui.ProjectContainer;
-import com.esofthead.mycollab.module.user.ui.AccountViewImpl;
-import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
+import com.esofthead.mycollab.module.user.view.AccountViewImpl;
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;

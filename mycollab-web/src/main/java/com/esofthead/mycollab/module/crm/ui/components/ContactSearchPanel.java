@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;
 
@@ -8,9 +7,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
-import com.esofthead.mycollab.vaadin.mvp.eventbus.EventBus;
 import com.esofthead.mycollab.vaadin.ui.CountryListSelect;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -35,9 +32,6 @@ import com.vaadin.ui.themes.Reindeer;
 public class ContactSearchPanel extends CustomComponent {
 
 	protected ContactSearchCriteria searchCriteria;
-
-	@Autowired
-	private EventBus eventBus;
 
 	@Override
 	public void attach() {
@@ -69,7 +63,6 @@ public class ContactSearchPanel extends CustomComponent {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						eventBus.fireEvent(new ContactEvent.GotoAdd(this, null));
 
 					}
 				});
@@ -118,8 +111,6 @@ public class ContactSearchPanel extends CustomComponent {
 							SearchField.AND, AppContext.getAccountId()));
 					searchCriteria.setContactName(new StringSearchField(
 							SearchField.AND, (String) nameField.getValue()));
-					eventBus.fireEvent(new ContactEvent.Search(
-							ContactSearchPanel.this, searchCriteria));
 				}
 			}));
 
@@ -228,9 +219,6 @@ public class ContactSearchPanel extends CustomComponent {
 									.setContactName(new StringSearchField(
 											SearchField.AND,
 											(String) firstnameField.getValue()));
-
-							eventBus.fireEvent(new ContactEvent.Search(
-									ContactSearchPanel.this, searchCriteria));
 						}
 
 					}));

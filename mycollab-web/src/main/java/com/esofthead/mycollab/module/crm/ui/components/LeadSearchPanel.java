@@ -1,16 +1,11 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
-import com.esofthead.mycollab.vaadin.mvp.eventbus.EventBus;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -29,16 +24,12 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
-@Scope("prototype")
-@Component
 @SuppressWarnings("serial")
 public class LeadSearchPanel extends CustomComponent {
 	private static final long serialVersionUID = 1L;
 
 	protected LeadSearchCriteria searchCriteria;
 
-	@Autowired
-	private EventBus eventBus;
 
 	public LeadSearchPanel() {
 		searchCriteria = new LeadSearchCriteria();
@@ -74,7 +65,6 @@ public class LeadSearchPanel extends CustomComponent {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						eventBus.fireEvent(new LeadEvent.GotoAdd(this, null));
 
 					}
 				});
@@ -123,8 +113,6 @@ public class LeadSearchPanel extends CustomComponent {
 									.setCampaignName(new StringSearchField(
 											SearchField.AND, (String) nameField
 													.getValue()));
-							eventBus.fireEvent(new LeadEvent.Search(
-									LeadSearchPanel.this, searchCriteria));
 						}
 					}));
 
@@ -227,9 +215,6 @@ public class LeadSearchPanel extends CustomComponent {
 							searchCriteria = new LeadSearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
-
-							eventBus.fireEvent(new LeadEvent.Search(
-									LeadSearchPanel.this, searchCriteria));
 						}
 
 					}));

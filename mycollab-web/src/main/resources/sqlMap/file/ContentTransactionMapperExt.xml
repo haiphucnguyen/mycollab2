@@ -26,7 +26,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList" resultMap="contentTractionResult"
+	<select id="findPagableListByCriteria" resultMap="contentTractionResult"
 		parameterType="com.esofthead.mycollab.module.file.domain.criteria.ContentTransactionSearchCriteria">
 		<![CDATA[
 		SELECT id, contentpath, owner, action, actiontime, contenttype,

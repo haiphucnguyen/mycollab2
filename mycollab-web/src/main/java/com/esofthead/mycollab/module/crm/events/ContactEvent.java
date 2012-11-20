@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.crm.events;
 
-import com.esofthead.mycollab.vaadin.mvp.eventbus.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 
 @SuppressWarnings("serial")
 public class ContactEvent {

@@ -17,12 +17,14 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.apache.ibatis.session.RowBounds;
-
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.crm.Constants;
+import com.esofthead.mycollab.module.crm.dao.LeadMapper;
 import com.esofthead.mycollab.module.crm.dao.LeadMapperExt;
 import com.esofthead.mycollab.module.crm.dao.TaskMapper;
 import com.esofthead.mycollab.module.crm.domain.Lead;
@@ -32,24 +34,30 @@ import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class LeadServiceImpl extends DefaultCrudService<Integer, Lead>
+@Service
+public class LeadServiceImpl extends DefaultService<Integer, Lead, LeadSearchCriteria>
 		implements LeadService {
-	private LeadMapperExt leadExtDAO;
+	
+	@Autowired
+	private LeadMapper leadMapper;
+	
+	@Autowired
+	private LeadMapperExt leadMapperExt;
 
+	@Autowired
 	private AuditLogService auditLogService;
 
-	public void setLeadExtDAO(LeadMapperExt leadExtDAO) {
-		this.leadExtDAO = leadExtDAO;
+	@Autowired
+	private TaskMapper taskMapper;
+	
+	@Override
+	public ICrudGenericDAO<Integer, Lead> getCrudMapper() {
+		return leadMapper;
 	}
 
-	public void setAuditLogService(AuditLogService auditLogService) {
-		this.auditLogService = auditLogService;
-	}
-
-	private TaskMapper taskDAO;
-
-	public void setTaskDAO(TaskMapper taskDAO) {
-		this.taskDAO = taskDAO;
+	@Override
+	public ISearchableDAO<LeadSearchCriteria> getSearchMapper() {
+		return leadMapperExt;
 	}
 
 	@Override
@@ -67,22 +75,12 @@ public class LeadServiceImpl extends DefaultCrudService<Integer, Lead>
 		TaskExample ex = new TaskExample();
 		ex.createCriteria().andTypeEqualTo(Constants.LEAD)
 				.andTypeidEqualTo(primaryKey);
-		taskDAO.deleteByExample(ex);
+		taskMapper.deleteByExample(ex);
 		return result;
 	}
 
-	public List<SimpleLead> findPagableListByCriteria(
-			LeadSearchCriteria criteria, int skipNum, int maxResult) {
-		return leadExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
-	}
-
-	public int getTotalCount(LeadSearchCriteria criteria) {
-		return leadExtDAO.getTotalCount(criteria);
-	}
-
 	public SimpleLead findLeadById(int leadId) {
-		return leadExtDAO.findLeadById(leadId);
+		return leadMapperExt.findLeadById(leadId);
 	}
 
 }

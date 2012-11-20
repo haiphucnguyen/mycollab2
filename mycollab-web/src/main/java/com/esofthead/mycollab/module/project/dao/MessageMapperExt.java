@@ -2,17 +2,12 @@ package com.esofthead.mycollab.module.project.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
-
 import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 
-public interface MessageMapperExt {
-	int getTotalCount(MessageSearchCriteria criteria);
-
-	List<Message> findPagableList(MessageSearchCriteria criteria,
-			RowBounds rowBounds);
+public interface MessageMapperExt extends ISearchableDAO<MessageSearchCriteria>{
 
 	void saveMessageAndReturnId(Message message);
 

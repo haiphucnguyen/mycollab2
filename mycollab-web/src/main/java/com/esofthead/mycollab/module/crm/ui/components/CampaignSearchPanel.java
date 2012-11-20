@@ -1,16 +1,10 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
-import com.esofthead.mycollab.vaadin.mvp.eventbus.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -30,13 +24,8 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-@Scope("prototype")
-@Component
 public class CampaignSearchPanel extends CustomComponent {
 	protected CampaignSearchCriteria searchCriteria;
-
-	@Autowired
-	private EventBus eventBus;
 
 	public CampaignSearchPanel() {
 		searchCriteria = new CampaignSearchCriteria();
@@ -72,7 +61,7 @@ public class CampaignSearchPanel extends CustomComponent {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						eventBus.fireEvent(new CampaignEvent.GotoAdd(this, null));
+						
 
 					}
 				});
@@ -118,8 +107,7 @@ public class CampaignSearchPanel extends CustomComponent {
 							SearchField.AND, AppContext.getAccountId()));
 					searchCriteria.setCampaignName(new StringSearchField(
 							SearchField.AND, (String) nameField.getValue()));
-					eventBus.fireEvent(new CampaignEvent.Search(
-							CampaignSearchPanel.this, searchCriteria));
+					
 				}
 			}));
 
@@ -205,8 +193,7 @@ public class CampaignSearchPanel extends CustomComponent {
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
 
-							eventBus.fireEvent(new CampaignEvent.Search(
-									CampaignSearchPanel.this, searchCriteria));
+							
 						}
 
 					}));

@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.Product;
 import com.esofthead.mycollab.module.crm.domain.Quote;
@@ -25,6 +26,7 @@ import com.esofthead.mycollab.test.EngroupClassRunner;
 		"classpath:META-INF/spring/audit-context.xml",
 		"classpath:META-INF/spring/file-context.xml",
 		"classpath:META-INF/spring/crm-context.xml",
+		"classpath:META-INF/spring/crm-service-test-context.xml",
 		"classpath:META-INF/spring/datasource-test-context.xml" })
 public class QuoteServiceTest {
 
@@ -34,29 +36,30 @@ public class QuoteServiceTest {
 	@DataSet
 	@Test
 	public void testGetAll() {
-		List quotes = quoteService.findPagableListByCriteria(null, 0,
-				Integer.MAX_VALUE);
+		List quotes = quoteService
+				.findPagableListByCriteria(new SearchRequest<QuoteSearchCriteria>(
+						null, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(3, quotes.size());
 	}
 
 	@DataSet
 	@Test
 	public void testGetSearchCriteria() {
-		List quotes = quoteService.findPagableListByCriteria(getCriteria(), 0,
-				Integer.MAX_VALUE);
+		List quotes = quoteService
+				.findPagableListByCriteria(new SearchRequest<QuoteSearchCriteria>(
+						getCriteria(), 0, Integer.MAX_VALUE));
 		Assert.assertEquals(1, quotes.size());
 	}
-	
+
 	@DataSet
 	@Test
 	public void testGetTotalCount() {
 		Assert.assertEquals(1, quoteService.getTotalCount(getCriteria()));
 	}
-	
+
 	private QuoteSearchCriteria getCriteria() {
 		QuoteSearchCriteria criteria = new QuoteSearchCriteria();
-		criteria.setAssignUserName(new StringSearchField(SearchField.AND,
-				"a"));
+		criteria.setAssignUserName(new StringSearchField(SearchField.AND, "a"));
 		criteria.setBillingAccountName(new StringSearchField(SearchField.AND,
 				"A"));
 		criteria.setShippingAccountName(new StringSearchField(SearchField.AND,

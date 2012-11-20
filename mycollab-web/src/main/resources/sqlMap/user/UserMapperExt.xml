@@ -25,7 +25,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList" resultMap="SimpleUserResult"
+	<select id="findPagableListByCriteria" resultMap="SimpleUserResult"
 		parameterType="UserSearchCriteria">
         <![CDATA[
         SELECT s_user.username, s_user.firstname, s_user.middlename, s_user.lastname, 

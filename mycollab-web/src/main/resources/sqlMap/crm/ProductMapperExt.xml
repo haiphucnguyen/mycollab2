@@ -98,7 +98,7 @@
         </trim>
     </select>
 
-    <select id="findPagableList" resultMap="SimpleProductResult"
+    <select id="findPagableListByCriteria" resultMap="SimpleProductResult"
         parameterType="ProductSearchCriteria">
 
         <include refid="com.esofthead.mycollab.module.crm.dao.ProductMapperExt.selectSimpleProduct" />

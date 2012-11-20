@@ -107,7 +107,7 @@
         ]]>
 	</sql>
 
-	<select id="findPagableList" parameterType="AccountSearchCriteria"
+	<select id="findPagableListByCriteria" parameterType="AccountSearchCriteria"
 		resultMap="SimpleAccountResult">
 		<include
 			refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.selectSimpleAccount" />

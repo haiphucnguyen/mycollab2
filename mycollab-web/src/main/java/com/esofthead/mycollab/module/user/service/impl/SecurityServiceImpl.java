@@ -22,9 +22,13 @@ import java.util.GregorianCalendar;
 import java.util.Hashtable;
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
 import com.esofthead.mycollab.core.AvailableDestinationNames;
 import com.esofthead.mycollab.core.EngroupException;
 import com.esofthead.mycollab.core.MessageDispatcher;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.user.RoleConstants;
 import com.esofthead.mycollab.module.user.domain.Account;
 import com.esofthead.mycollab.module.user.domain.Role;
@@ -36,15 +40,31 @@ import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.module.user.service.SecurityService;
 import com.esofthead.mycollab.module.user.service.UserService;
 
+@Service
 public class SecurityServiceImpl implements SecurityService {
 
-	private UserService userServiceDB;
+	@Autowired
+	private UserService userService;
 
-	private RoleService roleServiceDB;
+	@Autowired
+	private RoleService roleService;
 
+	@Autowired
 	private MessageDispatcher messageDispatcher;
 
-	private BillingAccountService accountService;
+	@Autowired
+	private BillingAccountService billingAccountService;
+
+	@Override
+	public int getTotalCount(UserSearchCriteria criteria) {
+		return userService.getTotalCount(criteria);
+	}
+
+	@Override
+	public List findPagableListByCriteria(
+			SearchRequest<UserSearchCriteria> searchRequest) {
+		return userService.findPagableListByCriteria(searchRequest);
+	}
 
 	public void registerUser(User user, Integer billingAccountId) {
 		if (billingAccountId == null) {
@@ -54,10 +74,10 @@ public class SecurityServiceImpl implements SecurityService {
 		Account account = new Account();
 		account.setBillingplanid(billingAccountId);
 		account.setCreatedtime(new GregorianCalendar().getTime());
-		int accountid = accountService.insertAndReturnKey(account);
+		int accountid = billingAccountService.insertAndReturnKey(account);
 
 		user.setAccountid(accountid);
-		userServiceDB.save(user);
+		userService.save(user);
 
 		int adminRoleId = saveRole(accountid, RoleConstants.ADMINSITRATOR_ROLE);
 		assignUserToRoleId(user.getUsername(), adminRoleId);
@@ -72,7 +92,7 @@ public class SecurityServiceImpl implements SecurityService {
 		Role role = new Role();
 		role.setSaccountid(accountid);
 		role.setRolename(rolename);
-		return roleServiceDB.insertAndReturnKey(role);
+		return roleService.insertAndReturnKey(role);
 	}
 
 	private void notifyRegisterAccount(User user) {
@@ -86,14 +106,14 @@ public class SecurityServiceImpl implements SecurityService {
 
 	public void assignUserToRoleId(String username, int roleId) {
 		// Assign role to user in database
-		if (roleServiceDB.findByPrimaryKey(roleId) == null) {
+		if (roleService.findByPrimaryKey(roleId) == null) {
 			throw new EngroupException("There is no role id " + roleId);
 		}
-		userServiceDB.assignUserToRoleId(username, roleId);
+		userService.assignUserToRoleId(username, roleId);
 	}
 
 	public void unAssignUserToRoleId(String username, int roleId) {
-		userServiceDB.unAssignUserToRoleId(username, roleId);
+		userService.unAssignUserToRoleId(username, roleId);
 	}
 
 	public SimpleUser authentication(String username, String password) {
@@ -103,7 +123,7 @@ public class SecurityServiceImpl implements SecurityService {
 			if (!password.equals(user.getPassword())) {
 				throw new EngroupException("Password is error");
 			}
-			List<Role> roles = roleServiceDB.findRolesOfUser(username);
+			List<Role> roles = roleService.findRolesOfUser(username);
 
 			SimpleUser result = new SimpleUser(user);
 			result.setRoles(roles);
@@ -116,13 +136,13 @@ public class SecurityServiceImpl implements SecurityService {
 	}
 
 	public void deleteRole(int roleid) {
-		roleServiceDB.remove(roleid);
+		roleService.remove(roleid);
 	}
 
 	public void deleteUser(String username) {
-		User user = userServiceDB.findByPrimaryKey(username);
+		User user = userService.findByPrimaryKey(username);
 		if (user != null) {
-			userServiceDB.remove(username);
+			userService.remove(username);
 
 			Dictionary<String, Object> props = new Hashtable<String, Object>();
 			props.put("user", user);
@@ -134,25 +154,25 @@ public class SecurityServiceImpl implements SecurityService {
 	}
 
 	public List<Role> findRolesByUser(String username) {
-		return userServiceDB.findRolesByUser(username);
+		return userService.findRolesByUser(username);
 	}
 
 	public User findUserByUsername(String username) {
-		return userServiceDB.findUserByUsername(username);
+		return userService.findUserByUsername(username);
 	}
 
 	public List<Role> getAccountRoles(int accountid) {
-		return roleServiceDB.getAccountRoles(accountid);
+		return roleService.getAccountRoles(accountid);
 	}
 
 	public void saveRole(Role role) {
-		roleServiceDB.save(role);
+		roleService.save(role);
 	}
 
 	public void saveUser(User user) {
-		userServiceDB.save(user);
+		userService.save(user);
 
-		Role registeredRole = roleServiceDB.findByRoleName(user.getAccountid(),
+		Role registeredRole = roleService.findByRoleName(user.getAccountid(),
 				RoleConstants.REGISTERED_USER);
 		if (registeredRole != null) {
 			assignUserToRoleId(user.getUsername(), registeredRole.getId());
@@ -171,47 +191,24 @@ public class SecurityServiceImpl implements SecurityService {
 	}
 
 	public void updateRole(Role role) {
-		roleServiceDB.update(role);
+		roleService.update(role);
 	}
 
 	public void updateUser(User user) {
-		userServiceDB.update(user);
-	}
-
-	@SuppressWarnings("unchecked")
-	public List<User> findPagableListByCriteria(UserSearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return userServiceDB.findPagableListByCriteria(criteria, skipNum,
-				maxResult);
-	}
-
-	public int getTotalCount(UserSearchCriteria criteria) {
-		return userServiceDB.getTotalCount(criteria);
+		userService.update(user);
 	}
 
 	public void setUserServiceDB(UserService userServiceDB) {
-		this.userServiceDB = userServiceDB;
-	}
-
-	public void setRoleServiceDB(RoleService roleServiceDB) {
-		this.roleServiceDB = roleServiceDB;
-	}
-
-	public void setAccountService(BillingAccountService accountService) {
-		this.accountService = accountService;
+		this.userService = userServiceDB;
 	}
 
 	public void updateUserStatus(String username, boolean visible) {
-		userServiceDB.updateUserStatus(username, visible);
+		userService.updateUserStatus(username, visible);
 
 	}
 
 	public Role findByRoleName(int accountid, String rolename) {
-		return roleServiceDB.findByRoleName(accountid, rolename);
-	}
-
-	public void setMessageDispatcher(MessageDispatcher messageDispatcher) {
-		this.messageDispatcher = messageDispatcher;
+		return roleService.findByRoleName(accountid, rolename);
 	}
 
 }

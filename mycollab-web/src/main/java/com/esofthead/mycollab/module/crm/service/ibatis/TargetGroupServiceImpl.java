@@ -1,34 +1,35 @@
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.apache.ibatis.session.RowBounds;
-
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
+import com.esofthead.mycollab.module.crm.dao.TargetGroupMapper;
 import com.esofthead.mycollab.module.crm.dao.TargetGroupMapperExt;
 import com.esofthead.mycollab.module.crm.domain.TargetGroup;
 import com.esofthead.mycollab.module.crm.domain.criteria.TargetGroupSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.TargetGroupService;
 
+@Service
 public class TargetGroupServiceImpl extends
-		DefaultCrudService<Integer, TargetGroup> implements TargetGroupService {
+		DefaultService<Integer, TargetGroup, TargetGroupSearchCriteria> implements TargetGroupService {
 
-	private TargetGroupMapperExt targetGroupExtDAO;
+	@Autowired
+	private TargetGroupMapper targetGroupMapper;
+	
+	@Autowired
+	private TargetGroupMapperExt targetGroupMapperExt;
 
-	public void setTargetGroupExtDAO(TargetGroupMapperExt targetGroupExtDAO) {
-		this.targetGroupExtDAO = targetGroupExtDAO;
+	@Override
+	public ICrudGenericDAO<Integer, TargetGroup> getCrudMapper() {
+		return targetGroupMapper;
 	}
 
 	@Override
-	public List findPagableListByCriteria(TargetGroupSearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return targetGroupExtDAO.findPagableList(criteria, new RowBounds(
-				skipNum, maxResult));
-	}
-
-	@Override
-	public int getTotalCount(TargetGroupSearchCriteria criteria) {
-		return targetGroupExtDAO.getTotalCount(criteria);
+	public ISearchableDAO<TargetGroupSearchCriteria> getSearchMapper() {
+		return targetGroupMapperExt;
 	}
 
 }

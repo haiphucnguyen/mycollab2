@@ -48,7 +48,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList" resultMap="ResourceResult"
+	<select id="findPagableListByCriteria" resultMap="ResourceResult"
 		parameterType="ResourceSearchCriteria">
 		<include refid="com.esofthead.mycollab.module.project.dao.ResourceMapperExt.selectResource" />
 

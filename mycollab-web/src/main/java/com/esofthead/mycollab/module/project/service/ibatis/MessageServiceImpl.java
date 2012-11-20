@@ -2,40 +2,47 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.project.ChangeLogAction;
 import com.esofthead.mycollab.module.project.ChangeLogSource;
+import com.esofthead.mycollab.module.project.dao.MessageMapper;
 import com.esofthead.mycollab.module.project.dao.MessageMapperExt;
 import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ChangeLogService;
 import com.esofthead.mycollab.module.project.service.MessageService;
 
-public class MessageServiceImpl extends DefaultCrudService<Integer, Message>
+@Service
+public class MessageServiceImpl extends DefaultService<Integer, Message, MessageSearchCriteria>
 		implements MessageService {
 
+	@Autowired
 	private AttachmentService attachmentService;
+	
+	@Autowired
+	private MessageMapper messageMapper;
 
-	private MessageMapperExt messageExtDAO;
+	@Autowired
+	private MessageMapperExt messageMapperExt;
 
+	@Autowired
 	private ChangeLogService changeLogService;
 
-	public void setMessageExtDAO(MessageMapperExt messageExtDAO) {
-		this.messageExtDAO = messageExtDAO;
+	@Override
+	public ICrudGenericDAO<Integer, Message> getCrudMapper() {
+		return messageMapper;
 	}
 
-	public void setAttachmentService(AttachmentService attachmentService) {
-		this.attachmentService = attachmentService;
-	}
-
-	public void setChangeLogService(ChangeLogService changeLogService) {
-		this.changeLogService = changeLogService;
+	@Override
+	public ISearchableDAO<MessageSearchCriteria> getSearchMapper() {
+		return messageMapperExt;
 	}
 
 	@Override
@@ -59,20 +66,8 @@ public class MessageServiceImpl extends DefaultCrudService<Integer, Message>
 	}
 
 	@Override
-	public List findPagableListByCriteria(MessageSearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return messageExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
-	}
-
-	@Override
-	public int getTotalCount(MessageSearchCriteria criteria) {
-		return messageExtDAO.getTotalCount(criteria);
-	}
-
-	@Override
 	public int saveMessageAndReturnId(Message message, String username) {
-		messageExtDAO.saveMessageAndReturnId(message);
+		messageMapperExt.saveMessageAndReturnId(message);
 		int messageid = message.getId();
 		changeLogService.saveChangeLog(message.getProjectid(), username,
 				ChangeLogSource.MESSAGE, messageid, ChangeLogAction.CREATE,
@@ -81,21 +76,8 @@ public class MessageServiceImpl extends DefaultCrudService<Integer, Message>
 	}
 
 	@Override
-	public Message findByPrimaryKey(Integer primaryKey) {
-		MessageSearchCriteria criteria = new MessageSearchCriteria();
-		criteria.setId(new NumberSearchField(SearchField.AND, primaryKey));
-		List<Message> messages = messageExtDAO.findPagableList(criteria,
-				new RowBounds(0, 1));
-		if (messages.size() > 0) {
-			return messages.get(0);
-		}
-
-		return null;
-	}
-
-	@Override
 	public List<GroupItem> getMessageCategoryGroup(int projectid) {
-		return messageExtDAO.getMessageCategoryGroup(projectid);
+		return messageMapperExt.getMessageCategoryGroup(projectid);
 	}
 
 }

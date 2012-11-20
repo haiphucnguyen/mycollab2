@@ -1,18 +1,11 @@
 package com.esofthead.mycollab.module.crm.dao;
 
-import java.util.List;
-
-import org.apache.ibatis.session.RowBounds;
-
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 
-public interface CampaignMapperExt {
+public interface CampaignMapperExt extends
+		ISearchableDAO<CampaignSearchCriteria> {
 
-	List<SimpleCampaign> findPagableList(
-			CampaignSearchCriteria criteria, RowBounds rowBounds);
-
-	int getTotalCount(CampaignSearchCriteria criteria);
-
-	SimpleCampaign findCampaignById(int campaignId);
+	public abstract SimpleCampaign findCampaignById(int campaignId);
 }

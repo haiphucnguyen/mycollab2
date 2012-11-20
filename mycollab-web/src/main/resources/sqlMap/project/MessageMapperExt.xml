@@ -51,7 +51,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList" resultMap="MessageResult"
+	<select id="findPagableListByCriteria" resultMap="MessageResult"
 		parameterType="MessageSearchCriteria">
 		<include refid="com.esofthead.mycollab.module.project.dao.MessageMapperExt.selectMessage" />
 

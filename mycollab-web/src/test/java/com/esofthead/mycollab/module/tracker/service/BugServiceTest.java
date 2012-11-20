@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
@@ -23,6 +24,7 @@ import com.esofthead.mycollab.test.EngroupClassRunner;
 		"classpath:META-INF/spring/file-context.xml",
 		"classpath:META-INF/spring/project-context.xml",
 		"classpath:META-INF/spring/tracker-context.xml",
+		"classpath:META-INF/spring/project-service-test-context.xml",
 		"classpath:META-INF/spring/datasource-test-context.xml" })
 public class BugServiceTest {
 	@Autowired
@@ -31,8 +33,9 @@ public class BugServiceTest {
 	@DataSet
 	@Test
 	public void testGetListBugs() {
-		List bugs = bugService.findPagableListByCriteria(null, 0,
-				Integer.MAX_VALUE);
+		List bugs = bugService
+				.findPagableListByCriteria(new SearchRequest<BugSearchCriteria>(
+						null, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(3, bugs.size());
 	}
 
@@ -48,8 +51,9 @@ public class BugServiceTest {
 		Assert.assertEquals(1, bugService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,
-				bugService.findPagableListByCriteria(criteria, 0,
-						Integer.MAX_VALUE).size());
+				bugService.findPagableListByCriteria(
+						new SearchRequest<BugSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
 	}
 
 	@DataSet
@@ -61,8 +65,9 @@ public class BugServiceTest {
 		Assert.assertEquals(3, bugService.getTotalCount(criteria));
 		Assert.assertEquals(
 				3,
-				bugService.findPagableListByCriteria(criteria, 0,
-						Integer.MAX_VALUE).size());
+				bugService.findPagableListByCriteria(
+						new SearchRequest<BugSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
 	}
 
 	@DataSet
@@ -86,10 +91,11 @@ public class BugServiceTest {
 		Assert.assertEquals(1, bugService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,
-				bugService.findPagableListByCriteria(criteria, 0,
-						Integer.MAX_VALUE).size());
+				bugService.findPagableListByCriteria(
+						new SearchRequest<BugSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
 	}
-	
+
 	@DataSet
 	@Test
 	public void testGetComponentDefectsSummary() {
@@ -108,8 +114,9 @@ public class BugServiceTest {
 		Assert.assertEquals(1, bugService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,
-				bugService.findPagableListByCriteria(criteria, 0,
-						Integer.MAX_VALUE).size());
+				bugService.findPagableListByCriteria(
+						new SearchRequest<BugSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
 	}
 
 	@DataSet
@@ -121,8 +128,9 @@ public class BugServiceTest {
 		Assert.assertEquals(1, bugService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,
-				bugService.findPagableListByCriteria(criteria, 0,
-						Integer.MAX_VALUE).size());
+				bugService.findPagableListByCriteria(
+						new SearchRequest<BugSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
 	}
 
 	@DataSet
@@ -147,8 +155,9 @@ public class BugServiceTest {
 		Assert.assertEquals(1, bugService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,
-				bugService.findPagableListByCriteria(criteria, 0,
-						Integer.MAX_VALUE).size());
+				bugService.findPagableListByCriteria(
+						new SearchRequest<BugSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
 	}
 
 	@DataSet
@@ -164,8 +173,9 @@ public class BugServiceTest {
 		Assert.assertEquals(0, bugService.getTotalCount(criteria));
 		Assert.assertEquals(
 				0,
-				bugService.findPagableListByCriteria(criteria, 0,
-						Integer.MAX_VALUE).size());
+				bugService.findPagableListByCriteria(
+						new SearchRequest<BugSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
 	}
 
 	@DataSet

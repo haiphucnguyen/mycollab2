@@ -10,6 +10,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
@@ -20,7 +21,9 @@ import com.esofthead.mycollab.test.EngroupClassRunner;
 		"classpath:META-INF/spring/audit-context.xml",
 		"classpath:META-INF/spring/common-context.xml",
 		"classpath:META-INF/spring/file-context.xml",
+		"classpath:META-INF/spring/tracker-context.xml",
 		"classpath:META-INF/spring/project-context.xml",
+		"classpath:META-INF/spring/project-service-test-context.xml",
 		"classpath:META-INF/spring/datasource-test-context.xml" })
 public class ProjectServiceTest {
 
@@ -30,8 +33,9 @@ public class ProjectServiceTest {
 	@DataSet
 	@Test
 	public void testGetListProjects() {
-		List projects = projectService.findPagableListByCriteria(null, 0,
-				Integer.MAX_VALUE);
+		List projects = projectService
+				.findPagableListByCriteria(new SearchRequest<ProjectSearchCriteria>(
+						null, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(4, projects.size());
 	}
 
@@ -41,8 +45,9 @@ public class ProjectServiceTest {
 		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
 		criteria.setAccountName(new StringSearchField(StringSearchField.AND,
 				"a"));
-		List projects = projectService.findPagableListByCriteria(criteria, 0,
-				Integer.MAX_VALUE);
+		List projects = projectService
+				.findPagableListByCriteria(new SearchRequest<ProjectSearchCriteria>(
+						criteria, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(1, projects.size());
 	}
 
@@ -61,8 +66,9 @@ public class ProjectServiceTest {
 	public void testGetListProjectsByUsername() {
 		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
 		criteria.setUsername(new StringSearchField(SearchField.AND, "admin"));
-		List projects = projectService.findPagableListByCriteria(criteria, 0,
-				Integer.MAX_VALUE);
+		List projects = projectService
+				.findPagableListByCriteria(new SearchRequest<ProjectSearchCriteria>(
+						criteria, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(2, projects.size());
 	}
 

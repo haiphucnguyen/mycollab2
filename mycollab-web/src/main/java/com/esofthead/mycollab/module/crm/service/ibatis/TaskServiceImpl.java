@@ -17,33 +17,36 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.apache.ibatis.session.RowBounds;
-
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
+import com.esofthead.mycollab.module.crm.dao.TaskMapper;
 import com.esofthead.mycollab.module.crm.dao.TaskMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 
-public class TaskServiceImpl extends DefaultCrudService<Integer, Task>
+@Service
+public class TaskServiceImpl extends DefaultService<Integer, Task, TaskSearchCriteria>
 		implements TaskService {
 	
-	private TaskMapperExt taskExtDAO;
+	@Autowired
+	protected TaskMapper taskMapper;
+	
+	@Autowired
+	private TaskMapperExt taskMapperExt;
 
-	public void setTaskExtDAO(TaskMapperExt taskExtDAO) {
-		this.taskExtDAO = taskExtDAO;
+	@Override
+	public ICrudGenericDAO<Integer, Task> getCrudMapper() {
+		return taskMapper;
 	}
 
-	public List findPagableListByCriteria(TaskSearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return taskExtDAO.findPagableList(criteria,
-				new RowBounds(skipNum, maxResult));
-	}
-
-	public int getTotalCount(TaskSearchCriteria criteria) {
-		return taskExtDAO.getTotalCount(criteria);
+	@Override
+	public ISearchableDAO<TaskSearchCriteria> getSearchMapper() {
+		return taskMapperExt;
 	}
 
 }

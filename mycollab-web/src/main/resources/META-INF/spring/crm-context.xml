@@ -10,267 +10,167 @@
 
 
     <!-- Spring DAO -->
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="accountDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="accountMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.AccountMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="accountExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="accountMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.AccountMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="campaignDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="campaignMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.CampaignMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="campaignExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="campaignMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="caseDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="caseMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.CaseMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="caseExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="caseMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.CaseMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contactDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contactMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.ContactMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contactExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contactMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.ContactMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contractDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contractMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.ContractMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contractExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contractMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.ContractMapperExt" />
     </bean>
     
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="customerDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="customerMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.CustomerMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="leadDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="leadMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.LeadMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="leadExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="leadMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.LeadMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="noteDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="noteMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.NoteMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="noteExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="noteMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.NoteMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="opportunityDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="opportunityMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.OpportunityMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="opportunityExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="opportunityMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="productDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="productMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.ProductMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="productExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="productMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.ProductMapperExt" />
     </bean>
     
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="productCatalogDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="productCatalogMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.ProductCatalogMapper" />
     </bean>
     
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="productCatalogExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="productCatalogMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.ProductCatalogMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="quoteProductGroupDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="quoteProductGroupMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.crm.dao.QuoteGroupProductMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="quoteProductGroupExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="quoteProductGroupMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.crm.dao.QuoteGroupProductMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="quoteDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="quoteMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.QuoteMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="quoteExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="quoteMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.QuoteMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="targetGroupDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="targetGroupMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.TargetGroupMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="targetGroupExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="targetGroupMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.crm.dao.TargetGroupMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="targetDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="targetMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.TargetMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="targetExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="targetMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.TargetMapperExt" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="taskDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="taskMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.TaskMapper" />
     </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="taskExtDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="taskMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.crm.dao.TaskMapperExt" />
     </bean>
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="typeRelationshipDAO">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="typeRelationshipMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.crm.dao.TypeRelationshipMapper" />
-    </bean>
-
-    <!-- Spring Service -->
-    <bean name="accountService"
-        class="com.esofthead.mycollab.module.crm.service.ibatis.AccountServiceImpl">
-        <property name="daoObj" ref="accountDAO" />
-        <property name="taskDAO" ref="taskDAO" />
-        <property name="accountExtDAO" ref="accountExtDAO" />
-        <property name="auditLogService" ref="auditLogService" />
-    </bean>
-    
-    <bean name="campaignService"
-        class="com.esofthead.mycollab.module.crm.service.ibatis.CampaignServiceImpl">
-        <property name="daoObj" ref="campaignDAO" />
-        <property name="taskDAO" ref="taskDAO" />
-        <property name="campaignExtDAO" ref="campaignExtDAO" />
-        <property name="auditLogService" ref="auditLogService" />
-    </bean>
-    <bean name="caseService" class="com.esofthead.mycollab.module.crm.service.ibatis.CaseServiceImpl">
-        <property name="daoObj" ref="caseDAO" />
-        <property name="caseExtDAO" ref="caseExtDAO" />
-        <property name="auditLogService" ref="auditLogService" />
-    </bean>
-    <bean name="contactService"
-        class="com.esofthead.mycollab.module.crm.service.ibatis.ContactServiceImpl">
-        <property name="daoObj" ref="contactDAO" />
-        <property name="taskDAO" ref="taskDAO" />
-        <property name="contactExtDAO" ref="contactExtDAO" />
-        <property name="auditLogService" ref="auditLogService" />
-    </bean>
-    <bean name="contractService"
-        class="com.esofthead.mycollab.module.crm.service.ibatis.ContractServiceImpl">
-        <property name="daoObj" ref="contractDAO" />
-        <property name="contractExtDAO" ref="contractExtDAO" />
-        <property name="auditLogService" ref="auditLogService" />
-    </bean>
-    <bean name="customerService"
-        class="com.esofthead.mycollab.module.crm.service.ibatis.CustomerServiceImpl">
-        <property name="daoObj" ref="customerDAO" />
-    </bean>
-    <bean name="leadService" class="com.esofthead.mycollab.module.crm.service.ibatis.LeadServiceImpl">
-        <property name="daoObj" ref="leadDAO" />
-        <property name="taskDAO" ref="taskDAO" />
-        <property name="leadExtDAO" ref="leadExtDAO" />
-        <property name="auditLogService" ref="auditLogService" />
-    </bean>
-    <bean name="noteService" class="com.esofthead.mycollab.module.crm.service.ibatis.NoteServiceImpl">
-        <property name="daoObj" ref="noteDAO" />
-        <property name="noteExtDAO" ref="noteExtDAO" />
-        <property name="attachmentService" ref="attachmentService" />
-    </bean>
-    <bean name="opportunityService"
-        class="com.esofthead.mycollab.module.crm.service.ibatis.OpportunityServiceImpl">
-        <property name="daoObj" ref="opportunityDAO" />
-        <property name="taskDAO" ref="taskDAO" />
-        <property name="opportunityExtDAO" ref="opportunityExtDAO" />
-        <property name="auditLogService" ref="auditLogService" />
-    </bean>
-    <bean name="productService"
-        class="com.esofthead.mycollab.module.crm.service.ibatis.ProductServiceImpl">
-        <property name="daoObj" ref="productDAO" />
-        <property name="productExtDAO" ref="productExtDAO" />
-        <property name="auditLogService" ref="auditLogService" />
-    </bean>
-    <bean name="productCatalogService"
-        class="com.esofthead.mycollab.module.crm.service.ibatis.ProductCatalogServiceImpl">
-        <property name="daoObj" ref="productCatalogDAO" />
-        <property name="productCatalogExtDAO" ref="productCatalogExtDAO" />
-    </bean>
-    <bean name="quoteService"
-        class="com.esofthead.mycollab.module.crm.service.ibatis.QuoteServiceImpl">
-        <property name="daoObj" ref="quoteDAO" />
-        <property name="quoteExtDAO" ref="quoteExtDAO" />
-        <property name="quoteGroupProductService" ref="quoteGroupProductService" />
-        <property name="productDAO" ref="productDAO" />
-        <property name="auditLogService" ref="auditLogService" />
-    </bean>
-    <bean name="quoteGroupProductService"
-        class="com.esofthead.mycollab.module.crm.service.ibatis.QuoteGroupServiceImpl">
-        <property name="daoObj" ref="quoteProductGroupDAO" />
-        <property name="daoExt" ref="quoteProductGroupExtDAO" />
-    </bean>
-    <bean name="targetService"
-        class="com.esofthead.mycollab.module.crm.service.ibatis.TargetServiceImpl">
-        <property name="daoObj" ref="targetDAO" />
-        <property name="taskDAO" ref="taskDAO" />
-        <property name="targetExtDAO" ref="targetExtDAO" />
-    </bean>
-    <bean name="targetGroupService"
-        class="com.esofthead.mycollab.module.crm.service.ibatis.TargetGroupServiceImpl">
-        <property name="daoObj" ref="targetGroupDAO" />
-        <property name="targetGroupExtDAO" ref="targetGroupExtDAO" />
-    </bean>
-    <bean name="taskService" class="com.esofthead.mycollab.module.crm.service.ibatis.TaskServiceImpl">
-        <property name="daoObj" ref="taskDAO" />
-        <property name="taskExtDAO" ref="taskExtDAO" />
-    </bean>
-    <bean name="typeRelationshipService"
-        class="com.esofthead.mycollab.module.crm.service.ibatis.TypeRelationshipServiceImpl">
-        <property name="daoObj" ref="typeRelationshipDAO" />
     </bean>
 </beans>

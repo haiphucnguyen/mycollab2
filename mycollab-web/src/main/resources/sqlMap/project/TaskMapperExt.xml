@@ -110,7 +110,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList" resultMap="TaskResult"
+	<select id="findPagableListByCriteria" resultMap="TaskResult"
 		parameterType="TaskSearchCriteria">
 		<include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.selectTask" />
 

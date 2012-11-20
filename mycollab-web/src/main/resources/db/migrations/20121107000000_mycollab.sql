@@ -23,7 +23,7 @@ CREATE TABLE `m_prj_milestone` (
   KEY `PK_m_prj_milestone_2_idx` (`projectid`),
   CONSTRAINT `PK_m_prj_milestone_1` FOREIGN KEY (`owner`) REFERENCES `s_user` (`username`) ON DELETE NO ACTION ON UPDATE NO ACTION,
   CONSTRAINT `PK_m_prj_milestone_2` FOREIGN KEY (`projectid`) REFERENCES `m_prj_project` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
-) ;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 ;
 
 
     

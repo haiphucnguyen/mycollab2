@@ -3,109 +3,70 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="bugDAO">
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="bugMapper">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"
 			value="com.esofthead.mycollab.module.tracker.dao.BugMapper" />
 	</bean>
 
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="bugExtDAO">
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="bugMapperExt">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"
 			value="com.esofthead.mycollab.module.tracker.dao.BugMapperExt" />
 	</bean>
 
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="componentDAO">
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="componentMapper">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"
 			value="com.esofthead.mycollab.module.tracker.dao.ComponentMapper" />
 	</bean>
 
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="componentExtDAO">
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="componentMapperExt">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"
 			value="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt" />
 	</bean>
 
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="historyDAO">
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="historyMapper">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"
 			value="com.esofthead.mycollab.module.tracker.dao.HistoryMapper" />
 	</bean>
 
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="metadataDAO">
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="metadataMapper">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"
 			value="com.esofthead.mycollab.module.tracker.dao.MetaDataMapper" />
 	</bean>
 
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="queryDAO">
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="queryMapper">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"
 			value="com.esofthead.mycollab.module.tracker.dao.QueryMapper" />
 	</bean>
 
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="queryExtDAO">
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="queryMapperExt">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"
 			value="com.esofthead.mycollab.module.tracker.dao.QueryMapperExt" />
 	</bean>
 
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="relatedItemDAO">
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="relatedItemMapper">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"
 			value="com.esofthead.mycollab.module.tracker.dao.RelatedItemMapper" />
 	</bean>
 
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="versionDAO">
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="versionMapper">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"
 			value="com.esofthead.mycollab.module.tracker.dao.VersionMapper" />
 	</bean>
 
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="versionExtDAO">
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="versionMapperExt">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"
 			value="com.esofthead.mycollab.module.tracker.dao.VersionMapperExt" />
-	</bean>
-
-
-	<bean id="bugService"
-		class="com.esofthead.mycollab.module.tracker.service.ibatis.BugServiceImpl">
-		<property name="daoObj" ref="bugDAO" />
-		<property name="bugExtDAO" ref="bugExtDAO" />
-		<property name="componentExtDAO" ref="componentExtDAO" />
-		<property name="historyDAO" ref="historyDAO" />
-		<property name="metadataDAO" ref="metadataDAO" />
-		<property name="relatedItemDAO" ref="relatedItemDAO" />
-		<property name="versionExtDAO" ref="versionExtDAO" />
-		<property name="auditLogService" ref="auditLogService" />
-		<property name="attachmentService" ref="attachmentService" />
-		<property name="monitorItemService" ref="monitorItemService" />
-		<property name="changeLogService" ref="changeLogService" />
-	</bean>
-
-	<bean id="componentService"
-		class="com.esofthead.mycollab.module.tracker.service.ibatis.ComponentServiceImpl">
-		<property name="daoObj" ref="componentDAO" />
-		<property name="componentExtDAO" ref="componentExtDAO" />
-		<property name="relatedItemDAO" ref="relatedItemDAO" />
-	</bean>
-
-	<bean id="relatedItemService"
-		class="com.esofthead.mycollab.module.tracker.service.ibatis.RelatedItemServiceImpl">
-		<property name="daoObj" ref="relatedItemDAO" />
-	</bean>
-
-	<bean id="versionService"
-		class="com.esofthead.mycollab.module.tracker.service.ibatis.VersionServiceImpl">
-		<property name="daoObj" ref="versionDAO" />
-		<property name="relatedItemDAO" ref="relatedItemDAO" />
-	</bean>
-	<bean id="queryService"
-		class="com.esofthead.mycollab.module.tracker.service.ibatis.QueryServiceImpl">
-		<property name="daoObj" ref="queryDAO" />
-		<property name="queryExtDAO" ref="queryExtDAO" />
 	</bean>
 
 </beans>

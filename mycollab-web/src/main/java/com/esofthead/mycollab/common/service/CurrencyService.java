@@ -6,5 +6,5 @@ import com.esofthead.mycollab.common.domain.Currency;
 import com.esofthead.mycollab.core.persistence.ICrudService;
 
 public interface CurrencyService extends ICrudService<Integer, Currency> {
-	List<Currency> getCountries();
+	List<Currency> getCurrencies();
 }

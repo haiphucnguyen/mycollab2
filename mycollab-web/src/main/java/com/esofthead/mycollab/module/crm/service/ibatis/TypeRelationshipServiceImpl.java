@@ -1,11 +1,16 @@
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.module.crm.dao.TypeRelationshipMapper;
 import com.esofthead.mycollab.module.crm.domain.TypeRelationship;
 import com.esofthead.mycollab.module.crm.domain.TypeRelationshipExample;
 import com.esofthead.mycollab.module.crm.service.TypeRelationshipService;
 
+@Service
 public class TypeRelationshipServiceImpl extends
 		DefaultCrudService<Integer, TypeRelationship> implements
 		TypeRelationshipService {
@@ -23,11 +28,19 @@ public class TypeRelationshipServiceImpl extends
 
 	public static final int CONTRACT_CONTACT = 7;
 
+	@Autowired
+	private TypeRelationshipMapper typeRelationshipMapper;
+
+	@Override
+	public ICrudGenericDAO<Integer, TypeRelationship> getCrudMapper() {
+		return typeRelationshipMapper;
+	}
+
 	public void deleteRelationShip(TypeRelationship typeRelationship) {
 		TypeRelationshipExample ex = new TypeRelationshipExample();
 		ex.createCriteria().andType1idEqualTo(typeRelationship.getType1id())
 				.andType2idEqualTo(typeRelationship.getType2id())
 				.andTypeEqualTo(typeRelationship.getType());
-		((TypeRelationshipMapper) daoObj).deleteByExample(ex);
+		typeRelationshipMapper.deleteByExample(ex);
 	}
 }

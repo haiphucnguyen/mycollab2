@@ -1,16 +1,11 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
-import com.esofthead.mycollab.vaadin.mvp.eventbus.EventBus;
+import com.esofthead.mycollab.vaadin.events.SearchEvent;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -21,7 +16,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -29,13 +23,9 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-@Scope("prototype")
-@Component
-public class AccountSearchPanel extends CustomComponent {
+public class AccountSearchPanel extends
+		GenericSearchPanel<AccountSearchCriteria> {
 	protected AccountSearchCriteria searchCriteria;
-
-	@Autowired
-	private EventBus eventBus;
 
 	public AccountSearchPanel() {
 		searchCriteria = new AccountSearchCriteria();
@@ -71,7 +61,6 @@ public class AccountSearchPanel extends CustomComponent {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						eventBus.fireEvent(new AccountEvent.GotoAdd(this, null));
 
 					}
 				});
@@ -118,8 +107,9 @@ public class AccountSearchPanel extends CustomComponent {
 							SearchField.AND, AppContext.getAccountId()));
 					searchCriteria.setAccountname(new StringSearchField(
 							SearchField.AND, (String) nameField.getValue()));
-					eventBus.fireEvent(new AccountEvent.Search(
-							AccountSearchPanel.this, searchCriteria));
+					SearchEvent<AccountSearchCriteria> searchEvent = new SearchEvent<AccountSearchCriteria>(
+							this, searchCriteria);
+					AccountSearchPanel.this.notifySearchHandler(searchEvent);
 				}
 			}));
 
@@ -220,9 +210,6 @@ public class AccountSearchPanel extends CustomComponent {
 									.setAccountname(new StringSearchField(
 											SearchField.AND, (String) nameField
 													.getValue()));
-
-							eventBus.fireEvent(new AccountEvent.Search(
-									AccountSearchPanel.this, searchCriteria));
 						}
 
 					}));

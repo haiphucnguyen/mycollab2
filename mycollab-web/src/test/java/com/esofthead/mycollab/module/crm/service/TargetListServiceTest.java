@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.TargetGroupSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
@@ -17,6 +18,7 @@ import com.esofthead.mycollab.test.EngroupClassRunner;
 		"classpath:META-INF/spring/audit-context.xml",
 		"classpath:META-INF/spring/file-context.xml",
 		"classpath:META-INF/spring/crm-context.xml",
+		"classpath:META-INF/spring/crm-service-test-context.xml",
 		"classpath:META-INF/spring/datasource-test-context.xml" })
 public class TargetListServiceTest {
 
@@ -28,8 +30,9 @@ public class TargetListServiceTest {
 	public void testGetAll() {
 		Assert.assertEquals(
 				3,
-				targetListService.findPagableListByCriteria(null, 0,
-						Integer.MAX_VALUE).size());
+				targetListService.findPagableListByCriteria(
+						new SearchRequest<TargetGroupSearchCriteria>(null, 0,
+								Integer.MAX_VALUE)).size());
 	}
 
 	@DataSet
@@ -42,8 +45,9 @@ public class TargetListServiceTest {
 
 		Assert.assertEquals(
 				1,
-				targetListService.findPagableListByCriteria(criteria, 0,
-						Integer.MAX_VALUE).size());
+				targetListService.findPagableListByCriteria(
+						new SearchRequest<TargetGroupSearchCriteria>(criteria,
+								0, Integer.MAX_VALUE)).size());
 
 		Assert.assertEquals(1, targetListService.getTotalCount(criteria));
 	}

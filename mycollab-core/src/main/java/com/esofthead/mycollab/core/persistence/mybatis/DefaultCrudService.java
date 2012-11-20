@@ -19,9 +19,7 @@ package com.esofthead.mycollab.core.persistence.mybatis;
 
 import java.io.Serializable;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
-import com.esofthead.mycollab.core.persistence.CrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ICrudService;
 
 /**
@@ -31,64 +29,55 @@ import com.esofthead.mycollab.core.persistence.ICrudService;
  * @param <T>
  * @param <K>
  */
-public class DefaultCrudService<K extends Serializable, T> implements
+public abstract class DefaultCrudService<K extends Serializable, T> implements
 		ICrudService<K, T> {
-
-	protected CrudGenericDAO<K, T> daoObj;
+	
+	public abstract ICrudGenericDAO<K, T> getCrudMapper();
 
 	public int remove(K primaryKey) {
-		return daoObj.deleteByPrimaryKey(primaryKey);
+		return getCrudMapper().deleteByPrimaryKey(primaryKey);
 	}
 
 	public T findByPrimaryKey(K primaryKey) {
-		return (T) daoObj.selectByPrimaryKey(primaryKey);
+		return (T) getCrudMapper().selectByPrimaryKey(primaryKey);
 	}
 
 	@Override
 	public void saveWithSession(T record, String username) {
 		if (username == null) {
-			daoObj.insert(record);
+			getCrudMapper().insert(record);
 		} else {
 			internalSaveWithSession(record, username);
 		}
 	}
 
 	protected void internalSaveWithSession(T record, String username) {
-		daoObj.insert(record);
-	}
-
-	public CrudGenericDAO<K, T> getDaoObj() {
-		return daoObj;
-	}
-
-	@Autowired
-	public void setDaoObj(CrudGenericDAO<K, T> daoObj) {
-		this.daoObj = daoObj;
+		getCrudMapper().insert(record);
 	}
 
 	@Override
 	public int updateWithSession(T record, String username) {
 		if (username == null) {
-			return daoObj.updateByPrimaryKey(record);
+			return getCrudMapper().updateByPrimaryKey(record);
 		} else {
 			return internalUpdateWithSession(record, username);
 		}
 	}
 
 	protected int internalUpdateWithSession(T record, String username) {
-		return daoObj.updateByPrimaryKey(record);
+		return getCrudMapper().updateByPrimaryKey(record);
 	}
 
 	@Override
 	public int removeWithSession(K primaryKey, String username) {
 		if (username == null) {
-			return daoObj.deleteByPrimaryKey(primaryKey);
+			return getCrudMapper().deleteByPrimaryKey(primaryKey);
 		} else {
 			return internalRemoveWithSession(primaryKey, username);
 		}
 	}
 
 	protected int internalRemoveWithSession(K primaryKey, String username) {
-		return daoObj.deleteByPrimaryKey(primaryKey);
+		return getCrudMapper().deleteByPrimaryKey(primaryKey);
 	}
 }

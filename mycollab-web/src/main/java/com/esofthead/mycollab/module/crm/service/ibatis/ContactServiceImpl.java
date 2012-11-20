@@ -17,12 +17,14 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.apache.ibatis.session.RowBounds;
-
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.crm.Constants;
+import com.esofthead.mycollab.module.crm.dao.ContactMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapperExt;
 import com.esofthead.mycollab.module.crm.dao.TaskMapper;
 import com.esofthead.mycollab.module.crm.domain.Contact;
@@ -32,25 +34,31 @@ import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class ContactServiceImpl extends DefaultCrudService<Integer, Contact>
-		implements ContactService {
+@Service
+public class ContactServiceImpl extends
+		DefaultService<Integer, Contact, ContactSearchCriteria> implements
+		ContactService {
 
-	private ContactMapperExt contactExtDAO;
+	@Autowired
+	private TaskMapper taskMapper;
 
-	private TaskMapper taskDAO;
-
+	@Autowired
 	private AuditLogService auditLogService;
 
-	public void setAuditLogService(AuditLogService auditLogService) {
-		this.auditLogService = auditLogService;
+	@Autowired
+	private ContactMapper contactMapper;
+
+	@Autowired
+	private ContactMapperExt contactMapperExt;
+
+	@Override
+	public ICrudGenericDAO<Integer, Contact> getCrudMapper() {
+		return contactMapper;
 	}
 
-	public void setTaskDAO(TaskMapper taskDAO) {
-		this.taskDAO = taskDAO;
-	}
-
-	public void setContactExtDAO(ContactMapperExt contactExtDAO) {
-		this.contactExtDAO = contactExtDAO;
+	@Override
+	public ISearchableDAO<ContactSearchCriteria> getSearchMapper() {
+		return contactMapperExt;
 	}
 
 	public int remove(Integer primaryKey) {
@@ -58,7 +66,7 @@ public class ContactServiceImpl extends DefaultCrudService<Integer, Contact>
 		TaskExample ex = new TaskExample();
 		ex.createCriteria().andTypeEqualTo(Constants.CONTACT)
 				.andTypeidEqualTo(primaryKey);
-		taskDAO.deleteByExample(ex);
+		taskMapper.deleteByExample(ex);
 		return result;
 	}
 
@@ -66,24 +74,13 @@ public class ContactServiceImpl extends DefaultCrudService<Integer, Contact>
 	public int updateWithSession(Contact record, String username) {
 		Contact oldValue = this.findByPrimaryKey(record.getId());
 		String refid = "crm-contact-" + record.getId();
-		auditLogService.saveAuditLog(
-				username, refid, (Object) oldValue,
+		auditLogService.saveAuditLog(username, refid, (Object) oldValue,
 				(Object) record);
 		return super.updateWithSession(record, username);
 	}
 
-	public List<SimpleContact> findPagableListByCriteria(
-			ContactSearchCriteria criteria, int skipNum, int maxResult) {
-		return contactExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
-	}
-
-	public int getTotalCount(ContactSearchCriteria criteria) {
-		return contactExtDAO.getTotalCount(criteria);
-	}
-
 	public SimpleContact findContactById(int contactId) {
-		return contactExtDAO.findContactById(contactId);
+		return contactMapperExt.findContactById(contactId);
 	}
 
 }

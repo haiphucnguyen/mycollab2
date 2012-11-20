@@ -33,7 +33,7 @@
 		</trim>
 	</select>
 
-	<select id="findPagableList"
+	<select id="findPagableListByCriteria"
 		resultMap="com.esofthead.mycollab.module.crm.dao.ProductCatalogMapper.BaseResultMap"
 		parameterType="ProductCatalogSearchCriteria">
 

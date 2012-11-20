@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.user.ui.accountsettings;
 
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.vaadin.mvp.ui.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.vaadin.ui.Label;
 
 @SuppressWarnings("serial")

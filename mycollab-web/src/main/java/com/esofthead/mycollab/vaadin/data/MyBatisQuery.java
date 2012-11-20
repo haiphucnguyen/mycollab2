@@ -7,7 +7,8 @@ import java.util.List;
 import org.vaadin.addons.lazyquerycontainer.Query;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.persistence.IPagableService;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.persistence.ISearchableService;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 
@@ -15,13 +16,13 @@ import com.vaadin.data.util.BeanItem;
 public class MyBatisQuery<S extends SearchCriteria> implements Query,
 		Serializable {
 
-	private IPagableService<S> pagableService;
+	private ISearchableService<S> searchableService;
 	private S searchCriteria;
 	private MyBatisQueryDefinition<S> queryDefinition;
 
 	public MyBatisQuery(MyBatisQueryDefinition<S> queryDefinition,
 			S searchCriteria) {
-		this.pagableService = queryDefinition.getService();
+		this.searchableService = queryDefinition.getService();
 		this.searchCriteria = searchCriteria;
 		this.queryDefinition = queryDefinition;
 	}
@@ -38,8 +39,9 @@ public class MyBatisQuery<S extends SearchCriteria> implements Query,
 
 	@Override
 	public List<Item> loadItems(int startIndex, int count) {
-		List beanItems = pagableService.findPagableListByCriteria(
-				searchCriteria, startIndex, count);
+		List beanItems = searchableService
+				.findPagableListByCriteria(new SearchRequest(searchCriteria,
+						startIndex, count));
 		final List<Item> items = new ArrayList<Item>();
 		for (final Object entity : beanItems) {
 			items.add(new BeanItem<Object>(entity));
@@ -57,7 +59,7 @@ public class MyBatisQuery<S extends SearchCriteria> implements Query,
 
 	@Override
 	public int size() {
-		return pagableService.getTotalCount(searchCriteria);
+		return searchableService.getTotalCount(searchCriteria);
 	}
 
 }

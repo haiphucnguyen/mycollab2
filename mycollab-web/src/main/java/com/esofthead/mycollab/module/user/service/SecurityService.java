@@ -2,13 +2,13 @@ package com.esofthead.mycollab.module.user.service;
 
 import java.util.List;
 
-import com.esofthead.mycollab.core.persistence.IPagableService;
+import com.esofthead.mycollab.core.persistence.ISearchableService;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 
-public interface SecurityService  extends IPagableService<UserSearchCriteria> {
+public interface SecurityService  extends ISearchableService<UserSearchCriteria> {
 
 	public static int FREE_BILLING = 1;
 	

@@ -19,9 +19,11 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.shared.audit.dao.AuditLogMapper;
 import com.esofthead.mycollab.shared.audit.domain.AuditLog;
@@ -29,14 +31,22 @@ import com.esofthead.mycollab.shared.audit.domain.AuditLogExample;
 import com.esofthead.mycollab.shared.audit.domain.SimpleAuditLog;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
+@Service
 public class AuditLogServiceImpl extends DefaultCrudService<Integer, AuditLog>
 		implements AuditLogService {
+	
+	private AuditLogMapper auditLogMapper;
+
+	@Override
+	public ICrudGenericDAO<Integer, AuditLog> getCrudMapper() {
+		return auditLogMapper;
+	}
 
 	@Override
 	public List<SimpleAuditLog> getAuditLog(String refid) {
 		AuditLogExample ex = new AuditLogExample();
 		ex.createCriteria().andRefidEqualTo(refid);
-		List<AuditLog> logs = ((AuditLogMapper) daoObj)
+		List<AuditLog> logs = auditLogMapper
 				.selectByExampleWithBLOBs(ex);
 		List<SimpleAuditLog> result = new ArrayList<SimpleAuditLog>();
 		for (AuditLog log : logs) {
@@ -56,7 +66,7 @@ public class AuditLogServiceImpl extends DefaultCrudService<Integer, AuditLog>
 		auditLog.setPosteddate(new GregorianCalendar().getTime());
 		auditLog.setChangeset(AuditLogUtil.getChangeSet(oldObj, newObj));
 		auditLog.setObjectClass(oldObj.getClass().getName());
-		((AuditLogMapper) daoObj).insert(auditLog);
+		auditLogMapper.insert(auditLog);
 	}
 
 	public static class AuditLogUtil {

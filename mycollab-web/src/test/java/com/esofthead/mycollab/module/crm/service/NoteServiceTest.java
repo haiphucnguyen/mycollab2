@@ -8,6 +8,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.crm.domain.Note;
 import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
@@ -18,6 +19,7 @@ import com.esofthead.mycollab.test.EngroupClassRunner;
 		"classpath:META-INF/spring/audit-context.xml",
 		"classpath:META-INF/spring/file-context.xml",
 		"classpath:META-INF/spring/crm-context.xml",
+		"classpath:META-INF/spring/crm-service-test-context.xml",
 		"classpath:META-INF/spring/datasource-test-context.xml" })
 public class NoteServiceTest {
 
@@ -38,10 +40,11 @@ public class NoteServiceTest {
 
 		Assert.assertEquals(
 				1,
-				noteService.findPagableListByCriteria(criteria, 0,
-						Integer.MAX_VALUE).size());
+				noteService.findPagableListByCriteria(
+						new SearchRequest<NoteSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
 	}
-	
+
 	@DataSet
 	@Test
 	public void testSaveNote() {

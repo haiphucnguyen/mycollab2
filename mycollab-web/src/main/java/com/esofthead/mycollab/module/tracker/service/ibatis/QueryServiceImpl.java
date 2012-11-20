@@ -1,34 +1,35 @@
 package com.esofthead.mycollab.module.tracker.service.ibatis;
 
-import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
-import org.apache.ibatis.session.RowBounds;
-
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
+import com.esofthead.mycollab.module.tracker.dao.QueryMapper;
 import com.esofthead.mycollab.module.tracker.dao.QueryMapperExt;
 import com.esofthead.mycollab.module.tracker.domain.Query;
 import com.esofthead.mycollab.module.tracker.domain.criteria.QuerySearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.QueryService;
 
-public class QueryServiceImpl extends DefaultCrudService<Integer, Query>
+@Service
+public class QueryServiceImpl extends DefaultService<Integer, Query, QuerySearchCriteria>
 		implements QueryService {
 
-	private QueryMapperExt queryExtDAO;
+	@Autowired
+	private QueryMapper queryMapper;
+	
+	@Autowired
+	private QueryMapperExt queryMapperExt;
 
-	public void setQueryExtDAO(QueryMapperExt queryExtDAO) {
-		this.queryExtDAO = queryExtDAO;
+	@Override
+	public ICrudGenericDAO<Integer, Query> getCrudMapper() {
+		return queryMapper;
 	}
 
 	@Override
-	public List findPagableListByCriteria(QuerySearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return queryExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
-	}
-
-	@Override
-	public int getTotalCount(QuerySearchCriteria criteria) {
-		return queryExtDAO.getTotalCount(criteria);
+	public ISearchableDAO<QuerySearchCriteria> getSearchMapper() {
+		return queryMapperExt;
 	}
 
 }

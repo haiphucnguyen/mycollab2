@@ -8,9 +8,8 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import org.apache.ibatis.session.RowBounds;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 import org.w3c.dom.NodeList;
@@ -19,12 +18,15 @@ import org.xml.sax.InputSource;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.core.EngroupException;
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.project.ChangeLogAction;
 import com.esofthead.mycollab.module.project.ChangeLogSource;
 import com.esofthead.mycollab.module.project.service.ChangeLogService;
 import com.esofthead.mycollab.module.tracker.RelatedItemConstants;
+import com.esofthead.mycollab.module.tracker.dao.BugMapper;
 import com.esofthead.mycollab.module.tracker.dao.BugMapperExt;
 import com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt;
 import com.esofthead.mycollab.module.tracker.dao.HistoryMapper;
@@ -48,65 +50,51 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
-public class BugServiceImpl extends DefaultCrudService<Integer, Bug> implements
+@Service
+public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriteria> implements
 		BugService {
+	
+	@Autowired
+	private BugMapper bugMapper;
 
-	private static Logger log = LoggerFactory.getLogger(BugServiceImpl.class);
+	@Autowired
+	private BugMapperExt bugMapperExt;
 
-	private BugMapperExt bugExtDAO;
+	@Autowired
+	private ComponentMapperExt componentMapperExt;
 
-	private ComponentMapperExt componentExtDAO;
+	@Autowired
+	private HistoryMapper historyMapper;
 
-	private HistoryMapper historyDAO;
+	@Autowired
+	private MetaDataMapper metaDataMapper;
 
-	private MetaDataMapper metadataDAO;
+	@Autowired
+	private RelatedItemMapper relatedItemMapper;
 
-	private RelatedItemMapper relatedItemDAO;
+	@Autowired
+	private VersionMapperExt versionMapperExt;
 
-	private VersionMapperExt versionExtDAO;
-
+	@Autowired
 	private AuditLogService auditLogService;
 
+	@Autowired
 	private AttachmentService attachmentService;
 
+	@Autowired
 	private MonitorItemService monitorItemService;
 
+	@Autowired
 	private ChangeLogService changeLogService;
 
-	public void setMonitorItemService(MonitorItemService monitorItemService) {
-		this.monitorItemService = monitorItemService;
+	@Override
+	public ICrudGenericDAO<Integer, Bug> getCrudMapper() {
+		return bugMapper;
 	}
 
-	public void setAuditLogService(AuditLogService auditLogService) {
-		this.auditLogService = auditLogService;
-	}
-
-	public void setAttachmentService(AttachmentService attachmentService) {
-		this.attachmentService = attachmentService;
-	}
-
-	public void setComponentExtDAO(ComponentMapperExt componentExtDAO) {
-		this.componentExtDAO = componentExtDAO;
-	}
-
-	public void setVersionExtDAO(VersionMapperExt versionExtDAO) {
-		this.versionExtDAO = versionExtDAO;
-	}
-
-	public void setRelatedItemDAO(RelatedItemMapper relatedItemDAO) {
-		this.relatedItemDAO = relatedItemDAO;
-	}
-
-	public void setMetadataDAO(MetaDataMapper metadataDAO) {
-		this.metadataDAO = metadataDAO;
-	}
-
-	public void setHistoryDAO(HistoryMapper historyDAO) {
-		this.historyDAO = historyDAO;
-	}
-
-	public void setChangeLogService(ChangeLogService changeLogService) {
-		this.changeLogService = changeLogService;
+	@Override
+	public ISearchableDAO<BugSearchCriteria> getSearchMapper() {
+		return bugMapperExt;
 	}
 
 	@Override
@@ -118,7 +106,7 @@ public class BugServiceImpl extends DefaultCrudService<Integer, Bug> implements
 
 		RelatedItemExample ex = new RelatedItemExample();
 		ex.createCriteria().andRefitemkeyEqualTo("bug-" + primaryKey);
-		relatedItemDAO.deleteByExample(ex);
+		relatedItemMapper.deleteByExample(ex);
 
 		// remove bug's attachments
 		String attachmentid = "defect-" + primaryKey;
@@ -158,7 +146,7 @@ public class BugServiceImpl extends DefaultCrudService<Integer, Bug> implements
 		RelatedItemExample ex = new RelatedItemExample();
 		String refkey = "bug-" + record.getId();
 		ex.createCriteria().andRefitemkeyEqualTo("bug-" + record.getId());
-		relatedItemDAO.deleteByExample(ex);
+		relatedItemMapper.deleteByExample(ex);
 
 		saveBugRelatedItems(record, refkey);
 
@@ -171,34 +159,18 @@ public class BugServiceImpl extends DefaultCrudService<Integer, Bug> implements
 		return super.updateWithSession(record, null);
 	}
 
-	public void setBugExtDAO(BugMapperExt bugExtDAO) {
-		this.bugExtDAO = bugExtDAO;
-	}
-
-	@Override
-	public List findPagableListByCriteria(BugSearchCriteria criteria,
-			int skipNum, int maxResult) {
-		return bugExtDAO.findPagableList(criteria, new RowBounds(skipNum,
-				maxResult));
-	}
-
-	@Override
-	public int getTotalCount(BugSearchCriteria criteria) {
-		return bugExtDAO.getTotalCount(criteria);
-	}
-
 	@Override
 	public List<History> getHistoriesOfBug(int bugid) {
 		HistoryExample ex = new HistoryExample();
 		ex.createCriteria().andRelatedbugEqualTo(bugid);
-		return historyDAO.selectByExample(ex);
+		return historyMapper.selectByExample(ex);
 	}
 
 	@Override
 	public List<MetaField> getProjectTrackerMetaData(int projectid) {
 		MetaDataExample ex = new MetaDataExample();
 		ex.createCriteria().andProjectidEqualTo(projectid);
-		List<MetaData> metadata = metadataDAO.selectByExampleWithBLOBs(ex);
+		List<MetaData> metadata = metaDataMapper.selectByExampleWithBLOBs(ex);
 		if (metadata == null || metadata.size() == 0) {
 			return null;
 		} else {
@@ -269,7 +241,7 @@ public class BugServiceImpl extends DefaultCrudService<Integer, Bug> implements
 				relatedItem.setRelateitemid(version.getId());
 				relatedItem.setType(RelatedItemConstants.AFFECTED_VERSION);
 
-				relatedItemDAO.insert(relatedItem);
+				relatedItemMapper.insert(relatedItem);
 			}
 		}
 
@@ -279,7 +251,7 @@ public class BugServiceImpl extends DefaultCrudService<Integer, Bug> implements
 				relatedItem.setRefitemkey(refkey);
 				relatedItem.setRelateitemid(version.getId());
 				relatedItem.setType(RelatedItemConstants.FIXED_VERSION);
-				relatedItemDAO.insert(relatedItem);
+				relatedItemMapper.insert(relatedItem);
 			}
 		}
 
@@ -289,7 +261,7 @@ public class BugServiceImpl extends DefaultCrudService<Integer, Bug> implements
 				relatedItem.setRefitemkey(refkey);
 				relatedItem.setRelateitemid(component.getId());
 				relatedItem.setType(RelatedItemConstants.COMPONENT);
-				relatedItemDAO.insert(relatedItem);
+				relatedItemMapper.insert(relatedItem);
 			}
 		}
 
@@ -304,7 +276,7 @@ public class BugServiceImpl extends DefaultCrudService<Integer, Bug> implements
 		bug.setUpdateddate(new GregorianCalendar().getTime());
 		bug.setResolveddate(null);
 
-		bugExtDAO.insertAndReturnKey(bug);
+		bugMapperExt.insertAndReturnKey(bug);
 		int bugid = bug.getId();
 		String refkey = "bug-" + bugid;
 		saveBugRelatedItems(bug, refkey);
@@ -366,53 +338,53 @@ public class BugServiceImpl extends DefaultCrudService<Integer, Bug> implements
 
 	@Override
 	public SimpleBug getBugById(int bugid) {
-		SimpleBug bug = bugExtDAO.getBugById(bugid);
+		SimpleBug bug = bugMapperExt.getBugById(bugid);
 
 		// get related versions
 		String refKey = "bug-" + bug.getId();
-		bug.setAffectedVersions(versionExtDAO
+		bug.setAffectedVersions(versionMapperExt
 				.getAffectedVersionsByRelatedRefKey(refKey));
-		bug.setFixedVersions(versionExtDAO
+		bug.setFixedVersions(versionMapperExt
 				.getFixedVersionByRelatedRefKey(refKey));
 
 		// get related components
-		bug.setComponents(componentExtDAO.getComponentByRefKey(refKey));
+		bug.setComponents(componentMapperExt.getComponentByRefKey(refKey));
 		return bug;
 	}
 
 	@Override
 	public List<GroupItem> getStatusSummary(BugSearchCriteria criteria) {
-		return bugExtDAO.getStatusSummary(criteria);
+		return bugMapperExt.getStatusSummary(criteria);
 	}
 
 	@Override
 	public List<GroupItem> getPrioritySummary(BugSearchCriteria criteria) {
-		return bugExtDAO.getPrioritySummary(criteria);
+		return bugMapperExt.getPrioritySummary(criteria);
 	}
 
 	@Override
 	public List<GroupItem> getAssignedDefectsSummary(BugSearchCriteria criteria) {
-		return bugExtDAO.getAssignedDefectsSummary(criteria);
+		return bugMapperExt.getAssignedDefectsSummary(criteria);
 	}
 
 	@Override
 	public List<GroupItem> getReporterDefectsSummary(BugSearchCriteria criteria) {
-		return bugExtDAO.getReporterDefectsSummary(criteria);
+		return bugMapperExt.getReporterDefectsSummary(criteria);
 	}
 
 	@Override
 	public List<GroupItem> getResolutionDefectsSummary(
 			BugSearchCriteria criteria) {
-		return bugExtDAO.getResolutionDefectsSummary(criteria);
+		return bugMapperExt.getResolutionDefectsSummary(criteria);
 	}
 
 	@Override
 	public List<GroupItem> getComponentDefectsSummary(BugSearchCriteria criteria) {
-		return bugExtDAO.getComponentDefectsSummary(criteria);
+		return bugMapperExt.getComponentDefectsSummary(criteria);
 	}
 
 	@Override
 	public List<GroupItem> getVersionDefectsSummary(BugSearchCriteria criteria) {
-		return bugExtDAO.getVersionDefectsSummary(criteria);
+		return bugMapperExt.getVersionDefectsSummary(criteria);
 	}
 }

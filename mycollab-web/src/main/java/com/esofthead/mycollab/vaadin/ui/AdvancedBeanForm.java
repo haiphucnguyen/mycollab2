@@ -7,8 +7,6 @@ import javax.validation.Validator;
 
 import org.springframework.beans.factory.annotation.Autowired;
 
-import com.esofthead.mycollab.vaadin.mvp.eventbus.EventBus;
-import com.vaadin.terminal.UserError;
 import com.vaadin.ui.Form;
 
 import de.steinwedel.vaadin.MessageBox;
@@ -18,9 +16,6 @@ import de.steinwedel.vaadin.MessageBox.ButtonType;
 public class AdvancedBeanForm<T> extends Form {
 	@Autowired
 	protected Validator validation;
-
-	@Autowired
-	protected EventBus eventBus;
 
 	protected boolean isEditMode;
 

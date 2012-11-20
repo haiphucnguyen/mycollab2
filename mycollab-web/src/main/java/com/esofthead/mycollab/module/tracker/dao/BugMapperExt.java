@@ -2,17 +2,13 @@ package com.esofthead.mycollab.module.tracker.dao;
 
 import java.util.List;
 
-import org.apache.ibatis.session.RowBounds;
-
 import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 
-public interface BugMapperExt {
-	int getTotalCount(BugSearchCriteria criteria);
-
-	List<Bug> findPagableList(BugSearchCriteria criteria, RowBounds rowBounds);
+public interface BugMapperExt extends ISearchableDAO<BugSearchCriteria> {
 
 	void insertAndReturnKey(Bug bug);
 
