@@ -1,13 +1,8 @@
 package com.esofthead.mycollab.module.user.view;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-
 import com.esofthead.mycollab.core.EngroupException;
 import com.esofthead.mycollab.module.user.presenter.LoginPresenter;
-import com.esofthead.mycollab.vaadin.events.DefaultFormView;
-import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.main.MainPage;
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.terminal.UserError;
 import com.vaadin.ui.Button;
@@ -17,12 +12,18 @@ import com.vaadin.ui.Form;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 
-@Scope("prototype")
-public class LoginViewImpl extends DefaultFormView implements LoginView {
+public class LoginViewImpl extends AbstractView implements LoginView {
 	private static final long serialVersionUID = 1L;
-
-	@Autowired
+	
 	private LoginPresenter loginPresenter;
+	
+	public LoginViewImpl() {
+		initializeLayout();
+	}
+	
+	public void setPresenter(LoginPresenter presenter) {
+		this.loginPresenter = presenter;
+	}
 
 	@Override
 	protected void initializeLayout() {
@@ -87,13 +88,13 @@ public class LoginViewImpl extends DefaultFormView implements LoginView {
 			this.setLayout(custom);
 		}
 	}
-
-	@Override
-	public void loginSuccess() {
-		AppContext
-				.getApplication()
-				.getMainWindow()
-				.setContent(
-						AppContext.getView(MainPage.class));
-	}
+//
+//	@Override
+//	public void loginSuccess() {
+//		AppContext
+//				.getApplication()
+//				.getMainWindow()
+//				.setContent(
+//						AppContext.getView(MainViewImpl.class));
+//	}
 }

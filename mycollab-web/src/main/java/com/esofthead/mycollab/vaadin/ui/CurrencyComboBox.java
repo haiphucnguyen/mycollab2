@@ -2,21 +2,14 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.util.List;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.common.domain.Currency;
 import com.esofthead.mycollab.common.service.CurrencyService;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.ComboBox;
 
 @SuppressWarnings("serial")
-@Scope("prototype")
-@Component
 public class CurrencyComboBox extends ComboBox {
-	@Autowired
-	private CurrencyService currencyService;
 
 	public CurrencyComboBox() {
 		super();
@@ -27,6 +20,7 @@ public class CurrencyComboBox extends ComboBox {
 	public void attach() {
 		super.attach();
 		this.removeAllItems();
+		CurrencyService currencyService = AppContext.getSpringBean(CurrencyService.class);
 		List<Currency> currencyList = currencyService.getCurrencies();
 		BeanContainer<String, Currency> beanItem = new BeanContainer<String, Currency>(
 				Currency.class);

@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.web;
 
-import com.esofthead.mycollab.module.user.view.LoginViewImpl;
+import com.esofthead.mycollab.shell.MainWindowContainer;
 import com.vaadin.Application;
 
 public class MyCollabApplication extends Application {
@@ -19,10 +19,6 @@ public class MyCollabApplication extends Application {
 
 		// Register it as a listener in the application context
 		this.getContext().addTransactionListener(sessionData);
-
-		LoginViewImpl mainView = AppContext.getView(LoginViewImpl.class);
-		
-		getMainWindow().setContent(mainView);
 	}
 
 }

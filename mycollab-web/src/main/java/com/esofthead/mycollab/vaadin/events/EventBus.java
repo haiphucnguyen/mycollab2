@@ -8,24 +8,15 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
-import javax.annotation.PostConstruct;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.stereotype.Component;
 
 @SuppressWarnings("serial")
-
 public class EventBus implements Serializable {
 
 	private Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> map = new HashMap<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>>();
 
 	private final Logger log = LoggerFactory.getLogger(EventBus.class);
-
-	@PostConstruct
-	void init() {
-		log.debug("Creating new EventBus.");
-	}
 
 	public void addListener(ApplicationEventListener<?> listener) {
 
@@ -43,7 +34,6 @@ public class EventBus implements Serializable {
 	}
 
 	public void removeListener(ApplicationEventListener<?> listener) {
-
 		Set<ApplicationEventListener<?>> listenerSet = map.get(listener
 				.getEventType());
 		listenerSet.remove(listener);

@@ -2,10 +2,11 @@ package com.esofthead.mycollab.vaadin.mvp;
 
 import java.io.Serializable;
 
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-public abstract class AbstractView<P> extends VerticalLayout implements View,
+public abstract class AbstractView extends VerticalLayout implements View,
 		Serializable {
 
 	public static String SAVE_ACTION = "Save";
@@ -29,4 +30,8 @@ public abstract class AbstractView<P> extends VerticalLayout implements View,
 
 	protected abstract void initializeLayout();
 
+	@Override
+	public ComponentContainer getWidget() {
+		return this;
+	}
 }

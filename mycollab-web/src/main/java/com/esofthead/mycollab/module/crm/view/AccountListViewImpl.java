@@ -35,7 +35,7 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
-public class AccountListViewImpl extends AbstractView<AccountListPresenterImpl>
+public class AccountListViewImpl extends AbstractView
 		implements AccountListView, SelectionOptionListener {
 	private static final long serialVersionUID = 1L;
 

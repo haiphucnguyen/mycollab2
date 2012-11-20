@@ -1,7 +1,5 @@
-package com.esofthead.mycollab.web.main;
+package com.esofthead.mycollab.shell;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.module.crm.view.CrmContainer;
@@ -17,9 +15,7 @@ import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-@Scope("prototype")
-@Component
-public class MainPage extends AbstractView {
+public class MainViewImpl extends AbstractView {
 
 	private VerticalLayout bodyLayout;
 
