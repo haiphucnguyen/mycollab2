@@ -94,9 +94,9 @@ public class AccountListPresenterImpl implements AccountListPresenter {
 
 		currentListData = accountService
 				.findPagableListByCriteria(searchRequest);
-		checkWhetherEnableTableActionControl();
 		view.displayAccounts(currentListData, 1, totalCount
 				/ SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS + 1);
+		checkWhetherEnableTableActionControl();
 	}
 
 	@Override

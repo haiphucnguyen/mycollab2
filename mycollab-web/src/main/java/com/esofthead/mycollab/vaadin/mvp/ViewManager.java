@@ -6,7 +6,7 @@ public class ViewManager {
 			return (T) viewClass.newInstance();
 		} catch (Exception e) {
 			throw new RuntimeException("Can not create view class: "
-					+ viewClass.getName());
+					+ viewClass.getName(), e);
 		}
 	}
 }

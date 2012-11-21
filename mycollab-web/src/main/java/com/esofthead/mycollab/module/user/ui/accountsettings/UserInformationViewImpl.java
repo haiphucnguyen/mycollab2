@@ -22,14 +22,14 @@ public class UserInformationViewImpl extends AbstractView implements
 	public UserInformationViewImpl() {
 		this.removeAllComponents();
 		User currentUser = AppContext.getSession();
-		Form formItem = AppContext.getSpringBean(EditForm.class);
+		Form formItem = new EditForm();
 		formItem.setItemDataSource(new BeanItem<User>(currentUser));
 		this.addComponent(formItem);
 		this.setStyleName("userInfoContainer");
 	}
 
 	
-	public static class EditForm extends GenericForm {
+	private static class EditForm extends GenericForm {
 		private static final long serialVersionUID = 1L;
 
 		@Override

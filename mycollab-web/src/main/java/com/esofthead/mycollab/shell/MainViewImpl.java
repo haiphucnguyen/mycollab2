@@ -81,7 +81,7 @@ public class MainViewImpl extends AbstractView {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						accountMenu.setPopupVisible(false);
-						AccountViewImpl accountView = AppContext
+						AccountViewImpl accountView = ViewManager
 								.getView(AccountViewImpl.class);
 						bodyLayout.removeAllComponents();
 						bodyLayout.addComponent(accountView);

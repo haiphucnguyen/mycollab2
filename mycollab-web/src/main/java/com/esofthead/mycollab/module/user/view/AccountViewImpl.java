@@ -3,7 +3,7 @@ package com.esofthead.mycollab.module.user.view;
 import com.esofthead.mycollab.module.user.ui.accountsettings.AccountSettingViewImpl;
 import com.esofthead.mycollab.module.user.ui.accountsettings.UserInformationViewImpl;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -62,11 +62,11 @@ public class AccountViewImpl extends AbstractView implements AccountView {
 	// }
 
 	private com.vaadin.ui.Component constructUserInformationComponent() {
-		return AppContext.getView(UserInformationViewImpl.class);
+		return ViewManager.getView(UserInformationViewImpl.class);
 	}
 
 	private com.vaadin.ui.Component constructAccountSettingsComponent() {
-		return AppContext.getView(AccountSettingViewImpl.class);
+		return ViewManager.getView(AccountSettingViewImpl.class);
 	}
 
 }
