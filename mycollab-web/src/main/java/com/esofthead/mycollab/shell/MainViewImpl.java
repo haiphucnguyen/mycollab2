@@ -2,10 +2,11 @@ package com.esofthead.mycollab.shell;
 
 import org.vaadin.hene.popupbutton.PopupButton;
 
-import com.esofthead.mycollab.module.crm.view.CrmContainer;
+import com.esofthead.mycollab.module.crm.CrmContainer;
 import com.esofthead.mycollab.module.project.ui.ProjectContainer;
 import com.esofthead.mycollab.module.user.view.AccountViewImpl;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
@@ -18,7 +19,7 @@ import com.vaadin.ui.VerticalLayout;
 public class MainViewImpl extends AbstractView {
 
 	private VerticalLayout bodyLayout;
-	
+
 	public MainViewImpl() {
 		this.addComponent(createTopMenu());
 		bodyLayout = new VerticalLayout();
@@ -42,7 +43,7 @@ public class MainViewImpl extends AbstractView {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
-						CrmContainer crmContainer = AppContext
+						CrmContainer crmContainer = ViewManager
 								.getView(CrmContainer.class);
 						bodyLayout.removeAllComponents();
 						bodyLayout.addComponent(crmContainer);

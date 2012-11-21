@@ -1,8 +1,6 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.vaadin.addon.customfield.FieldWrapper;
 
 import com.esofthead.mycollab.module.crm.domain.Campaign;
@@ -19,8 +17,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 
 @SuppressWarnings("serial")
-@Scope("prototype")
-@Component
 public class CampaignSelectionField extends FieldWrapper<Campaign> implements
 		FieldSelection {
 

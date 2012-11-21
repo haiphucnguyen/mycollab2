@@ -1,12 +1,20 @@
-package com.esofthead.mycollab.module.crm.view;
+package com.esofthead.mycollab.module.crm;
+
+import java.util.Iterator;
 
 import javax.annotation.PostConstruct;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 import org.vaadin.hene.popupbutton.PopupButton;
 
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.events.CrmEvent;
+import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.View;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -47,6 +55,7 @@ public class CrmContainer extends AbstractView {
 	private CssLayout toolbar;
 	
 	public CrmContainer() {
+		new CrmController(this);
 		CustomLayout container = new CustomLayout("crmContainer");
 
 		container.setWidth("100%");
@@ -510,9 +519,9 @@ public class CrmContainer extends AbstractView {
 //		});
 	}
 
-	private void addView(AbstractView view) {
+	public void addView(View view) {
 		currentView.removeAllComponents();
-		currentView.addComponent(view);
+		currentView.addComponent(view.getWidget());
 	}
 
 	private class NavigatorItemListener implements Button.ClickListener {
@@ -522,37 +531,37 @@ public class CrmContainer extends AbstractView {
 		public void buttonClick(ClickEvent event) {
 			String caption = event.getButton().getCaption();
 
-//			if (caption == null) {
-//				eventBus.fireEvent(new CrmEvent.GotoHome(this, null));
-//			} else if (NEW_ACCOUNT_ITEM.equals(caption)) {
-//				eventBus.fireEvent(new AccountEvent.GotoAdd(this, null));
-//			} else if (ACCOUNT_LIST.equals(caption)) {
-//				eventBus.fireEvent(new AccountEvent.GotoList(this, null));
-//			} else if (NEW_CAMPAIGN_ITEM.equals(caption)) {
-//				eventBus.fireEvent(new CampaignEvent.GotoAdd(this, null));
-//			} else if (CAMPAIGN_LIST.equals(caption)) {
-//				eventBus.fireEvent(new CampaignEvent.GotoList(this, null));
-//			} else if (CONTACT_LIST.equals(caption)) {
-//				eventBus.fireEvent(new ContactEvent.GotoList(this, null));
-//			} else if (NEW_CONTACT_ITEM.equals(caption)) {
-//				eventBus.fireEvent(new ContactEvent.GotoAdd(this, null));
-//			} else if (NEW_LEAD_ITEM.equals(caption)) {
-//				eventBus.fireEvent(new LeadEvent.GotoAdd(this, null));
-//			} else if (LEAD_LIST.equals(caption)) {
-//				eventBus.fireEvent(new LeadEvent.GotoList(this, null));
-//			} else if (NEW_OPPORTUNITY_ITEM.equals(caption)) {
-//				eventBus.fireEvent(new OpportunityEvent.GotoAdd(this, null));
-//			} else if (OPPORTUNITY_LIST.equals(caption)) {
-//				eventBus.fireEvent(new OpportunityEvent.GotoList(this, null));
-//			}
-//
-//			for (Iterator<com.vaadin.ui.Component> it = toolbar
-//					.getComponentIterator(); it.hasNext();) {
-//				Button btn = (Button) it.next();
-//				btn.removeStyleName("isSelected");
-//			}
-//
-//			event.getButton().addStyleName("isSelected");
+			if (caption == null) {
+				EventBus.getInstance().fireEvent(new CrmEvent.GotoHome(this, null));
+			} else if (NEW_ACCOUNT_ITEM.equals(caption)) {
+				EventBus.getInstance().fireEvent(new AccountEvent.GotoAdd(this, null));
+			} else if (ACCOUNT_LIST.equals(caption)) {
+				EventBus.getInstance().fireEvent(new AccountEvent.GotoList(this, null));
+			} else if (NEW_CAMPAIGN_ITEM.equals(caption)) {
+				EventBus.getInstance().fireEvent(new CampaignEvent.GotoAdd(this, null));
+			} else if (CAMPAIGN_LIST.equals(caption)) {
+				EventBus.getInstance().fireEvent(new CampaignEvent.GotoList(this, null));
+			} else if (CONTACT_LIST.equals(caption)) {
+				EventBus.getInstance().fireEvent(new ContactEvent.GotoList(this, null));
+			} else if (NEW_CONTACT_ITEM.equals(caption)) {
+				EventBus.getInstance().fireEvent(new ContactEvent.GotoAdd(this, null));
+			} else if (NEW_LEAD_ITEM.equals(caption)) {
+				EventBus.getInstance().fireEvent(new LeadEvent.GotoAdd(this, null));
+			} else if (LEAD_LIST.equals(caption)) {
+				EventBus.getInstance().fireEvent(new LeadEvent.GotoList(this, null));
+			} else if (NEW_OPPORTUNITY_ITEM.equals(caption)) {
+				EventBus.getInstance().fireEvent(new OpportunityEvent.GotoAdd(this, null));
+			} else if (OPPORTUNITY_LIST.equals(caption)) {
+				EventBus.getInstance().fireEvent(new OpportunityEvent.GotoList(this, null));
+			}
+
+			for (Iterator<com.vaadin.ui.Component> it = toolbar
+					.getComponentIterator(); it.hasNext();) {
+				Button btn = (Button) it.next();
+				btn.removeStyleName("isSelected");
+			}
+
+			event.getButton().addStyleName("isSelected");
 		}
 	}
 

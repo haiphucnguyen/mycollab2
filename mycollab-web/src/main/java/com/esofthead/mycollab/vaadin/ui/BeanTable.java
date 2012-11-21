@@ -1,22 +1,14 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.jensjansson.pagedtable.PagedTable;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Table;
 
-public class BeanTable<T> extends PagedTable {
+public class BeanTable<T> extends Table {
 	private static final long serialVersionUID = 1L;
 
 	public BeanTable() {
 		super();
-		this.addListener(new PagedTable.PageChangeListener() {
-			@Override
-			public void pageChanged(PagedTableChangeEvent event) {
-
-				System.out.println("Page change: " + event.getCurrentPage()
-						+ " " + event.getTotalAmountOfPages() + " ");
-			}
-		});
 	}
 
 	@SuppressWarnings("unchecked")

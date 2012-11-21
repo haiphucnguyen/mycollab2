@@ -5,27 +5,21 @@ import java.util.Set;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
 
-import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-import com.vaadin.ui.Form;
+import com.esofthead.mycollab.vaadin.events.DefaultFormView;
+import com.esofthead.mycollab.web.AppContext;
 
 import de.steinwedel.vaadin.MessageBox;
 import de.steinwedel.vaadin.MessageBox.ButtonType;
 
 @SuppressWarnings("serial")
-public class AdvancedBeanForm<T> extends Form {
-	@Autowired
-	protected Validator validation;
+public class AdvancedEditBeanForm<T> extends DefaultFormView {
+	private Validator validation;
 
-	protected boolean isEditMode;
-
-	public AdvancedBeanForm() {
-		this(true);
-	}
-
-	public AdvancedBeanForm(boolean isEditMode) {
+	public AdvancedEditBeanForm() {
 		super();
-		this.isEditMode = isEditMode;
+		validation = AppContext.getSpringBean(LocalValidatorFactoryBean.class);
 	}
 
 	protected boolean validateForm(Object data) {

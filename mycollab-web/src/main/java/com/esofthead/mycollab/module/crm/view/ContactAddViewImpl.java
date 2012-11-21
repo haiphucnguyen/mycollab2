@@ -10,7 +10,7 @@ import com.esofthead.mycollab.module.crm.ui.components.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.LeadSourceComboBox;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.AdvancedBeanForm;
+import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -48,7 +48,7 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 		this.addComponent(formItem);
 	}
 
-	@Override
+	
 	public void viewItem(Contact item) {
 		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(ViewForm.class);
@@ -56,8 +56,7 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 		this.addComponent(formItem);
 	}
 
-	@Scope("prototype")
-	@Component
+
 	public static class EditForm extends GenericForm {
 		private static final long serialVersionUID = 1L;
 
@@ -136,8 +135,7 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 		}
 	}
 
-	@Scope("prototype")
-	@Component
+
 	public static class ViewForm extends GenericForm {
 		private static final long serialVersionUID = 1L;
 
@@ -181,7 +179,7 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 
 	}
 
-	public static abstract class GenericForm extends AdvancedBeanForm<Contact> {
+	public static abstract class GenericForm extends AdvancedEditBeanForm<Contact> {
 		private static final long serialVersionUID = 1L;
 
 		protected GridFormLayoutHelper informationLayout;

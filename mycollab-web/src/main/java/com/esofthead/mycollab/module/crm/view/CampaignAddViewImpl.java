@@ -10,7 +10,7 @@ import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.CampaignStatusComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.CampaignTypeComboBox;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.AdvancedBeanForm;
+import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -27,7 +27,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-@Component
 public class CampaignAddViewImpl extends AbstractView implements
 		CampaignAddView {
 	private static final long serialVersionUID = 1L;
@@ -48,7 +47,7 @@ public class CampaignAddViewImpl extends AbstractView implements
 		this.addComponent(formItem);
 	}
 
-	@Override
+	
 	public void viewItem(Campaign item) {
 		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(ViewForm.class);
@@ -56,8 +55,7 @@ public class CampaignAddViewImpl extends AbstractView implements
 		this.addComponent(formItem);
 	}
 
-	@Scope("prototype")
-	@Component
+
 	public static class EditForm extends GenericForm {
 		private static final long serialVersionUID = 1L;
 
@@ -129,8 +127,6 @@ public class CampaignAddViewImpl extends AbstractView implements
 		}
 	}
 
-	@Scope("prototype")
-	@Component
 	public static class ViewForm extends GenericForm {
 		private static final long serialVersionUID = 1L;
 
@@ -174,7 +170,7 @@ public class CampaignAddViewImpl extends AbstractView implements
 
 	}
 
-	public static abstract class GenericForm extends AdvancedBeanForm<Campaign> {
+	public static abstract class GenericForm extends AdvancedEditBeanForm<Campaign> {
 		private static final long serialVersionUID = 1L;
 
 		protected GridFormLayoutHelper informationLayout;

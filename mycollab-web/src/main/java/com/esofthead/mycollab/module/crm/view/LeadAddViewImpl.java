@@ -12,7 +12,7 @@ import com.esofthead.mycollab.module.crm.ui.components.LeadSourceComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.LeadStatusComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.AdvancedBeanForm;
+import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
@@ -49,7 +49,7 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 		this.addComponent(formItem);
 	}
 
-	@Override
+	
 	public void viewItem(Lead item) {
 		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(ViewForm.class);
@@ -57,8 +57,7 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 		this.addComponent(formItem);
 	}
 
-	@Scope("prototype")
-	@Component
+	
 	public static class EditForm extends GenericForm {
 		private static final long serialVersionUID = 1L;
 
@@ -141,8 +140,7 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 		}
 	}
 
-	@Scope("prototype")
-	@Component
+	
 	public static class ViewForm extends GenericForm {
 		private static final long serialVersionUID = 1L;
 
@@ -191,7 +189,7 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 
 	}
 
-	public static abstract class GenericForm extends AdvancedBeanForm<Lead> {
+	public static abstract class GenericForm extends AdvancedEditBeanForm<Lead> {
 		private static final long serialVersionUID = 1L;
 
 		protected GridFormLayoutHelper informationLayout;

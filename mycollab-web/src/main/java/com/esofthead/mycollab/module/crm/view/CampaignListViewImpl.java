@@ -91,7 +91,7 @@ public class CampaignListViewImpl extends AbstractView implements
 
 		campaignListLayout.removeAllComponents();
 		campaignListLayout.addComponent(tableItem);
-		campaignListLayout.addComponent(tableItem.createControls());
+//		campaignListLayout.addComponent(tableItem.createControls());
 	}
 
 }

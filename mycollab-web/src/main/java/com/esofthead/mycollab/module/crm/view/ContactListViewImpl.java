@@ -14,7 +14,6 @@ import com.esofthead.mycollab.vaadin.data.MyBatisQueryFactory;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.BeanTable;
 import com.esofthead.mycollab.web.AppContext;
-import com.jensjansson.pagedtable.PagedTable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
@@ -29,7 +28,7 @@ public class ContactListViewImpl extends AbstractView implements
 		ContactListView {
 	private static final long serialVersionUID = 1L;
 
-	private PagedTable tableItem;
+	private BeanTable<SimpleContact> tableItem;
 
 	private ContactSearchCriteria searchCriteria;
 
@@ -132,7 +131,7 @@ public class ContactListViewImpl extends AbstractView implements
 
 		contactListLayout.removeAllComponents();
 		contactListLayout.addComponent(tableItem);
-		contactListLayout.addComponent(tableItem.createControls());
+//		contactListLayout.addComponent(tableItem.createControls());
 
 	}
 

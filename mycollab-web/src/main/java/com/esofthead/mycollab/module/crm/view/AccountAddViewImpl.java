@@ -1,17 +1,14 @@
 package com.esofthead.mycollab.module.crm.view;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.ui.components.AccountTypeComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.vaadin.events.FormEvent;
+import com.esofthead.mycollab.vaadin.events.HasFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.AdvancedBeanForm;
+import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormEditFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -22,7 +19,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.Form;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextArea;
@@ -32,34 +28,41 @@ import com.vaadin.ui.VerticalLayout;
 
 public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 	private static final long serialVersionUID = 1L;
-
-	@Override
-	public void addNewItem() {
-		this.removeAllComponents();
-		Form formItem = AppContext.getSpringBean(EditForm.class);
-		formItem.setItemDataSource(new BeanItem<Account>(new Account()));
-		this.addComponent(formItem);
+	
+	private EditForm editFormItem;
+	
+	public AccountAddViewImpl() {
+		editFormItem = new EditForm();
+		this.addComponent(editFormItem);
 	}
 
-	@Override
+	
+	public void addNewItem() {
+		editFormItem.setItemDataSource(new BeanItem<Account>(new Account()));
+	}
+
+	
 	public void editItem(Account account) {
 		this.removeAllComponents();
-		Form formItem = AppContext.getSpringBean(EditForm.class);
-		formItem.setItemDataSource(new BeanItem<Account>(account));
-		this.addComponent(formItem);
+		editFormItem.setItemDataSource(new BeanItem<Account>(account));
+		this.addComponent(editFormItem);
 	}
 
-	@Override
+	
 	public void viewItem(Account item) {
-		this.removeAllComponents();
-		Form formItem = AppContext.getSpringBean(ViewForm.class);
-		formItem.setItemDataSource(new BeanItem<Account>(item));
-		this.addComponent(formItem);
+//		this.removeAllComponents();
+//		Form editFormItem = AppContext.getSpringBean(ViewForm.class);
+//		editFormItem.setItemDataSource(new BeanItem<Account>(item));
+//		this.addComponent(editFormItem);
 	}
 
 
-	public static class EditForm extends GenericForm {
+	private static class EditForm extends GenericForm {
 		private static final long serialVersionUID = 1L;
+		
+		public EditForm() {
+			this.setFormFieldFactory(new EditFormFieldFactory());
+		}
 
 		@Override
 		protected HorizontalLayout createButtonControls() {
@@ -76,11 +79,6 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 			layout.addComponent(cancelBtn);
 			layout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
 			return layout;
-		}
-
-		@PostConstruct
-		private void initFieldFactory() {
-			this.setFormFieldFactory(new EditFormFieldFactory());
 		}
 
 		private class EditFormFieldFactory extends DefaultFormEditFieldFactory {
@@ -130,10 +128,10 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 						.getItemDataSource()).getBean();
 				if (caption.equals(SAVE_ACTION)) {
 					if (validateForm(account)) {
-						
+						EditForm.this.fireSaveEvent(new FormEvent.Save(this, account));
 					}
 				} else if (caption.equals(CANCEL_ACTION)) {
-					
+					EditForm.this.fireCancelEvent(new FormEvent.Cancel(this, null));
 				}
 			}
 		}
@@ -185,7 +183,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 
 	}
 
-	public static abstract class GenericForm extends AdvancedBeanForm<Account> {
+	public static abstract class GenericForm extends AdvancedEditBeanForm<Account> {
 		private static final long serialVersionUID = 1L;
 
 		protected GridFormLayoutHelper informationLayout;
@@ -295,6 +293,11 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 			}
 
 		}
+	}
+
+	@Override
+	public HasFormHandlers getFormHandler() {
+		return editFormItem;
 	}
 
 }

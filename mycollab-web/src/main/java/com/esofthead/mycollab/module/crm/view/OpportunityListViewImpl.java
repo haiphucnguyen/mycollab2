@@ -90,6 +90,6 @@ public class OpportunityListViewImpl extends AbstractView implements
 
 		opportunityListLayout.removeAllComponents();
 		opportunityListLayout.addComponent(tableItem);
-		opportunityListLayout.addComponent(tableItem.createControls());
+//		opportunityListLayout.addComponent(tableItem.createControls());
 	}
 }

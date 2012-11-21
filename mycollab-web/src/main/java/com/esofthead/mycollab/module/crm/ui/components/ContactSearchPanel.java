@@ -1,8 +1,5 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -27,8 +24,6 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-@Scope("prototype")
-@Component
 public class ContactSearchPanel extends CustomComponent {
 
 	protected ContactSearchCriteria searchCriteria;

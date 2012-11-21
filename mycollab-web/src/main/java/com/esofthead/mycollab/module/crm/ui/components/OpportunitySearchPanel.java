@@ -23,7 +23,6 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-
 public class OpportunitySearchPanel extends CustomComponent {
 	protected ContactSearchCriteria searchCriteria;
 

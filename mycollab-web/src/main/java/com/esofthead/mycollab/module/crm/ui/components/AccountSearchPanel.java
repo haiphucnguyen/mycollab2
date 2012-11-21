@@ -4,7 +4,9 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.SearchEvent;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -61,7 +63,8 @@ public class AccountSearchPanel extends
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-
+						EventBus.getInstance().fireEvent(
+								new AccountEvent.GotoAdd(this, null));
 					}
 				});
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
@@ -180,17 +183,14 @@ public class AccountSearchPanel extends
 					"City", 2, 1);
 
 			industryField = (AccountIndustryListSelect) gridLayout
-					.addComponent(AppContext
-							.getSpringBean(AccountIndustryListSelect.class),
-							"Industry", 0, 2);
+					.addComponent(new AccountIndustryListSelect(), "Industry",
+							0, 2);
 
 			typeField = (AccountTypeListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(AccountTypeListSelect.class),
-					"Type", 1, 2);
+					new AccountTypeListSelect(), "Type", 1, 2);
 
 			userField = (UserListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(UserListSelect.class),
-					"Assigned User", 2, 2);
+					new UserListSelect(), "Assigned User", 2, 2);
 			return gridLayout.getLayout();
 		}
 

@@ -90,6 +90,6 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 
 		leadListLayout.removeAllComponents();
 		leadListLayout.addComponent(tableItem);
-		leadListLayout.addComponent(tableItem.createControls());
+//		leadListLayout.addComponent(tableItem.createControls());
 	}
 }

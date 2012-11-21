@@ -1,10 +1,8 @@
 package com.esofthead.mycollab.module.user.ui.accountsettings;
 
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.AdvancedBeanForm;
+import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanItem;
@@ -30,7 +28,7 @@ public class UserInformationViewImpl extends AbstractView implements
 		this.setStyleName("userInfoContainer");
 	}
 
-	@Component
+	
 	public static class EditForm extends GenericForm {
 		private static final long serialVersionUID = 1L;
 
@@ -69,7 +67,7 @@ public class UserInformationViewImpl extends AbstractView implements
 		}
 	}
 
-	public static abstract class GenericForm extends AdvancedBeanForm<User> {
+	public static abstract class GenericForm extends AdvancedEditBeanForm<User> {
 		private static final long serialVersionUID = 1L;
 
 		protected GridFormLayoutHelper informationLayout;
