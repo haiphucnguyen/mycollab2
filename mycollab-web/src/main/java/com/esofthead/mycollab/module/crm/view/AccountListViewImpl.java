@@ -10,19 +10,14 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.ui.components.AccountSearchPanel;
-import com.esofthead.mycollab.vaadin.data.MyBatisQueryContainer;
-import com.esofthead.mycollab.vaadin.data.MyBatisQueryDefinition;
-import com.esofthead.mycollab.vaadin.data.MyBatisQueryFactory;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.BeanTable;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
-import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton.SelectionOptionListener;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Alignment;
@@ -38,20 +33,22 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
 public class AccountListViewImpl extends AbstractView implements
-		AccountListView, SelectionOptionListener {
+		AccountListView {
 	private static final long serialVersionUID = 1L;
 
 	private AccountSearchPanel accountSearchPanel;
 
-	private BeanTable<SimpleAccount> tableItem;
+	private PagedBeanTable<SimpleAccount> tableItem;
 
 	private AccountSearchCriteria searchCriteria;
 
 	private VerticalLayout accountListLayout;
 
-	private SplitButton tableActionControls;
+	private PopupButtonControl tableActionControls;
 
 	private Label selectedItemsNumberLabel = new Label();
+
+	private AccountListPresenter presenter;
 
 	public AccountListViewImpl() {
 		this.setSpacing(true);
@@ -65,9 +62,11 @@ public class AccountListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public void displayAccounts(List<SimpleAccount> accounts) {
-		tableItem = new BeanTable<SimpleAccount>();
-		tableItem.addStyleName("striped");
+	public void displayAccounts(List<SimpleAccount> accounts, int currentPage,
+			int totalPages) {
+		tableItem = new PagedBeanTable<SimpleAccount>();
+		tableItem.setCurrentPage(currentPage);
+		tableItem.setTotalPage(totalPages);
 
 		BeanItemContainer<SimpleAccount> container = new BeanItemContainer<SimpleAccount>(
 				SimpleAccount.class, accounts);
@@ -99,25 +98,19 @@ public class AccountListViewImpl extends AbstractView implements
 					Object columnId) {
 				final CheckBox cb = new CheckBox("", false);
 				cb.setImmediate(true);
-				cb.addListener(new Property.ValueChangeListener() {
-					@Override
-					public void valueChange(Property.ValueChangeEvent event) {
-						SimpleAccount account = ((BeanTable<SimpleAccount>) source)
-								.getBeanByIndex(itemId);
-
-					}
-				});
-
 				cb.addListener(new Button.ClickListener() {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						System.out.println("Value: " + cb.getValue());
+						SimpleAccount account = ((PagedBeanTable<SimpleAccount>) source)
+								.getBeanByIndex(itemId);
+						presenter.onItemSelect(account);
 
 					}
 				});
+
 				@SuppressWarnings("unchecked")
-				SimpleAccount account = ((BeanTable<SimpleAccount>) source)
+				SimpleAccount account = ((PagedBeanTable<SimpleAccount>) source)
 						.getBeanByIndex(itemId);
 				account.setExtraData(cb);
 				return cb;
@@ -131,7 +124,7 @@ public class AccountListViewImpl extends AbstractView implements
 			@SuppressWarnings("unchecked")
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
-				SimpleAccount account = ((BeanTable<SimpleAccount>) source)
+				SimpleAccount account = ((PagedBeanTable<SimpleAccount>) source)
 						.getBeanByIndex(itemId);
 				if (account != null) {
 					Link l = new Link();
@@ -153,7 +146,7 @@ public class AccountListViewImpl extends AbstractView implements
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
 				@SuppressWarnings("unchecked")
-				final SimpleAccount account = ((BeanTable<SimpleAccount>) source)
+				final SimpleAccount account = ((PagedBeanTable<SimpleAccount>) source)
 						.getBeanByIndex(itemId);
 				if (account != null) {
 					Label l = new Label();
@@ -174,7 +167,7 @@ public class AccountListViewImpl extends AbstractView implements
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
 				@SuppressWarnings("unchecked")
-				final SimpleAccount account = ((BeanTable<SimpleAccount>) source)
+				final SimpleAccount account = ((PagedBeanTable<SimpleAccount>) source)
 						.getBeanByIndex(itemId);
 				if (account != null) {
 					ButtonLink b = new ButtonLink(account.getAccountname(),
@@ -198,6 +191,7 @@ public class AccountListViewImpl extends AbstractView implements
 
 		accountListLayout.addComponent(constructTableActionControls());
 		accountListLayout.addComponent(tableItem);
+		accountListLayout.addComponent(tableItem.createControls());
 	}
 
 	@Override
@@ -394,16 +388,13 @@ public class AccountListViewImpl extends AbstractView implements
 
 		SelectionOptionButton selecSplitButton = new SelectionOptionButton();
 		layout.addComponent(selecSplitButton);
-		selecSplitButton.addListener(this);
+		selecSplitButton.addListener(presenter);
 
-		tableActionControls = new SplitButton("Delete");
-		tableActionControls.addStyleName(SplitButton.STYLE_CHAMELEON);
-
-		VerticalLayout actionLayout = new VerticalLayout();
-		actionLayout.setWidth("100px");
-		actionLayout.addComponent(new ButtonLink("Mail"));
-		actionLayout.addComponent(new ButtonLink("Export"));
-		tableActionControls.setComponent(actionLayout);
+		tableActionControls = new PopupButtonControl("delete", "Delete");
+		tableActionControls.addOptionItem("mail", "Mail");
+		tableActionControls.addOptionItem("export", "Export");
+		
+		tableActionControls.addListener(presenter);
 
 		layout.addComponent(tableActionControls);
 		layout.addComponent(selectedItemsNumberLabel);
@@ -413,35 +404,18 @@ public class AccountListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public void onSelect() {
+	public void enableActionControls() {
 		tableActionControls.setEnabled(true);
-
-		for (Object itemId : tableItem.getItemIds()) {
-			CheckBox checkBox;
-			try {
-				final SimpleAccount account = ((BeanTable<SimpleAccount>) tableItem)
-						.getBeanByIndex(itemId);
-				checkBox = (CheckBox) account.getExtraData();
-				checkBox.setValue(true);
-			} catch (Exception e) {
-				e.printStackTrace(); // ->> NullPointerException
-			}
-		}
 	}
 
 	@Override
-	public void onDeSelect() {
+	public void disableActionControls() {
 		tableActionControls.setEnabled(false);
-		for (Object itemId : tableItem.getItemIds()) {
-			CheckBox checkBox;
-			try {
-				final SimpleAccount account = ((BeanTable<SimpleAccount>) tableItem)
-						.getBeanByIndex(itemId);
-				checkBox = (CheckBox) account.getExtraData();
-				checkBox.setValue(false);
-			} catch (Exception e) {
-				e.printStackTrace(); // ->> NullPointerException
-			}
-		}
+	}
+
+	@Override
+	public void setPresenter(AccountListPresenter presenter) {
+		this.presenter = presenter;
+
 	}
 }

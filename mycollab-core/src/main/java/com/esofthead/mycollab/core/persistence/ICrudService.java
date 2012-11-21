@@ -18,6 +18,7 @@
 package com.esofthead.mycollab.core.persistence;
 
 import java.io.Serializable;
+import java.util.List;
 
 public interface ICrudService<K extends Serializable, T> extends IService {
 
@@ -44,4 +45,12 @@ public interface ICrudService<K extends Serializable, T> extends IService {
 	 * @return
 	 */
 	int removeWithSession(K primaryKey, String userSessionId);
+	
+	/**
+	 * 
+	 * @param primaryKeys
+	 * @param username
+	 * @return
+	 */
+	void removeWithSession(List<K> primaryKeys, String username);
 }

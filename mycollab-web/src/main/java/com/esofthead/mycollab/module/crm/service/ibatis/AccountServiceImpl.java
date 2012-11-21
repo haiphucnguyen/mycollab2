@@ -17,6 +17,8 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -28,6 +30,7 @@ import com.esofthead.mycollab.module.crm.dao.AccountMapper;
 import com.esofthead.mycollab.module.crm.dao.AccountMapperExt;
 import com.esofthead.mycollab.module.crm.dao.TaskMapper;
 import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.domain.AccountExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.TaskExample;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
@@ -82,6 +85,13 @@ public class AccountServiceImpl extends
 
 	public SimpleAccount findAccountById(int accountId) {
 		return accountMapperExt.findAccountById(accountId);
+	}
+
+	@Override
+	public void removeWithSession(List<Integer> primaryKeys, String username) {
+		AccountExample ex = new AccountExample();
+		ex.createCriteria().andIdIn(primaryKeys);
+		accountMapper.deleteByExample(ex);
 	}
 
 }

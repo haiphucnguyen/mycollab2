@@ -13,12 +13,11 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.AccountListView;
 import com.esofthead.mycollab.module.crm.view.AccountListView.AccountListPresenter;
-import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton.SelectionOptionListener;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
-public class AccountListPresenterImpl implements SelectionOptionListener,
-		AccountListPresenter {
+public class AccountListPresenterImpl implements AccountListPresenter {
 
 	private AccountService accountService;
 
@@ -32,17 +31,31 @@ public class AccountListPresenterImpl implements SelectionOptionListener,
 
 	public AccountListPresenterImpl(AccountListView view) {
 		this.view = view;
+		view.setPresenter(this);
 		accountService = AppContext.getSpringBean(AccountService.class);
 	}
 
 	@Override
 	public void onSelect() {
 		selectionModel.addSelections(currentListData);
+
+		for (SimpleAccount account : selectionModel) {
+			CheckBox checkBox = (CheckBox) account.getExtraData();
+			checkBox.setValue(true);
+		}
+
+		view.enableActionControls();
 	}
 
 	@Override
 	public void onDeSelect() {
 		selectionModel.removeAll();
+		for (SimpleAccount account : currentListData) {
+			CheckBox checkBox = (CheckBox) account.getExtraData();
+			checkBox.setValue(false);
+		}
+
+		view.disableActionControls();
 	}
 
 	@Override
@@ -57,7 +70,11 @@ public class AccountListPresenterImpl implements SelectionOptionListener,
 	}
 
 	private void checkWhetherEnableTableActionControl() {
-
+		if (selectionModel.size() > 0) {
+			view.enableActionControls();
+		} else {
+			view.disableActionControls();
+		}
 	}
 
 	@Override
@@ -72,10 +89,14 @@ public class AccountListPresenterImpl implements SelectionOptionListener,
 	public void doSearch(AccountSearchCriteria searchCriteria) {
 		this.searchRequest = new SearchRequest<AccountSearchCriteria>(
 				searchCriteria, 0, SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
-		List<SimpleAccount> accounts = accountService
+
+		int totalCount = accountService.getTotalCount(searchCriteria);
+
+		currentListData = accountService
 				.findPagableListByCriteria(searchRequest);
-		System.out.println("Display accounts: " + accounts.size());
-		view.displayAccounts(accounts);
+		checkWhetherEnableTableActionControl();
+		view.displayAccounts(currentListData, 1, totalCount
+				/ SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS + 1);
 	}
 
 	@Override
@@ -83,6 +104,24 @@ public class AccountListPresenterImpl implements SelectionOptionListener,
 		CrmContainer crmContainer = (CrmContainer) container;
 		crmContainer.addView(view);
 		doDefaultSearch();
+	}
+
+	@Override
+	public void onSelect(String id, String caption) {
+		if ("delete".equals(id)) {
+			deleteSelectedItems();
+		}
+	}
+
+	private void deleteSelectedItems() {
+		List<Integer> keyList = new ArrayList<Integer>();
+		for (SimpleAccount account : selectionModel) {
+			keyList.add(account.getId());
+		}
+
+		if (keyList.size() > 0) {
+			accountService.removeWithSession(keyList, AppContext.getUsername());
+		}
 	}
 
 }

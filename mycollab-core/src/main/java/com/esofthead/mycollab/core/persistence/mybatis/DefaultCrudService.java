@@ -18,6 +18,7 @@
 package com.esofthead.mycollab.core.persistence.mybatis;
 
 import java.io.Serializable;
+import java.util.List;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ICrudService;
@@ -80,4 +81,11 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
 	protected int internalRemoveWithSession(K primaryKey, String username) {
 		return getCrudMapper().deleteByPrimaryKey(primaryKey);
 	}
+
+	@Override
+	public void removeWithSession(List<K> primaryKeys, String username) {
+		throw new RuntimeException("Sub classes must override before call");
+	}
+	
+	
 }

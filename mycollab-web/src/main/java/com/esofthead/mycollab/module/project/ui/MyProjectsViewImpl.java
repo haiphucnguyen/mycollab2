@@ -2,8 +2,6 @@ package com.esofthead.mycollab.module.project.ui;
 
 import java.util.List;
 
-import org.springframework.stereotype.Component;
-
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.ui.components.ProjectAddWindow;
@@ -25,7 +23,6 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.ChameleonTheme;
 
 @SuppressWarnings("serial")
-@Component
 public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
 
 	private BeanTable<SimpleProject> tableItem;

@@ -67,7 +67,7 @@ public class SelectionOptionButton extends SplitButton {
 	private void changeOption() {
 		Resource icon = (isSelected) ? selectIcon : unSelectIcon;
 		SelectionOptionButton.this.setIcon(icon);
-
+		
 		if (listeners != null) {
 			for (SelectionOptionListener listener : listeners) {
 				if (isSelected) {
@@ -80,6 +80,7 @@ public class SelectionOptionButton extends SplitButton {
 	}
 
 	public void addListener(SelectionOptionListener listener) {
+		System.out.println("Add listener: " + listener);
 		if (listeners == null) {
 			listeners = new HashSet<SelectionOptionButton.SelectionOptionListener>();
 		}
