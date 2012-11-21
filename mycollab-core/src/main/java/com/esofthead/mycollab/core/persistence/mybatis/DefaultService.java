@@ -74,7 +74,8 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 	public List findPagableListByCriteria(SearchRequest<S> searchRequest) {
 		return getSearchMapper().findPagableListByCriteria(
 				searchRequest.getSearchCriteria(),
-				new RowBounds(searchRequest.getCurrentPage(), searchRequest
+				new RowBounds((searchRequest.getCurrentPage() - 1)
+						* searchRequest.getNumberOfItems(), searchRequest
 						.getNumberOfItems()));
 	}
 

@@ -13,8 +13,11 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.AccountListView;
 import com.esofthead.mycollab.module.crm.view.AccountListView.AccountListPresenter;
+import com.esofthead.mycollab.vaadin.events.PagableHandler;
+import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchEvent;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
+import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
@@ -49,29 +52,58 @@ public class AccountListPresenterImpl implements AccountListPresenter {
 						doSearch();
 					}
 				});
-	}
 
-	@Override
-	public void onSelect() {
-		selectionModel.addSelections(currentListData);
+		view.getPagableHandlers().addPagableHandler(new PagableHandler() {
 
-		for (SimpleAccount account : selectionModel) {
-			CheckBox checkBox = (CheckBox) account.getExtraData();
-			checkBox.setValue(true);
-		}
+			@Override
+			public void move(int newPageNumber) {
+				searchRequest.setCurrentPage(newPageNumber);
+				doSearch();
+			}
 
-		view.enableActionControls();
-	}
+			@Override
+			public void displayItemChange(int numOfItems) {
+				searchRequest.setNumberOfItems(numOfItems);
+				doSearch();
+			}
+		});
+		
+		view.getOptionSelectionHandlers().addSelectionOptionHandler(new SelectionOptionHandler() {
+			
+			@Override
+			public void onSelect() {
+				selectionModel.addSelections(currentListData);
 
-	@Override
-	public void onDeSelect() {
-		selectionModel.removeAll();
-		for (SimpleAccount account : currentListData) {
-			CheckBox checkBox = (CheckBox) account.getExtraData();
-			checkBox.setValue(false);
-		}
+				for (SimpleAccount account : selectionModel) {
+					CheckBox checkBox = (CheckBox) account.getExtraData();
+					checkBox.setValue(true);
+				}
 
-		view.disableActionControls();
+				checkWhetherEnableTableActionControl();
+			}
+			
+			@Override
+			public void onDeSelect() {
+				selectionModel.removeAll();
+				for (SimpleAccount account : currentListData) {
+					CheckBox checkBox = (CheckBox) account.getExtraData();
+					checkBox.setValue(false);
+				}
+
+				checkWhetherEnableTableActionControl();
+				
+			}
+		});
+		
+		view.getPopupActionHandlers().addPopupActionHandler(new PopupActionHandler() {
+			
+			@Override
+			public void onSelect(String id, String caption) {
+				if ("delete".equals(id)) {
+					deleteSelectedItems();
+				}
+			}
+		});
 	}
 
 	@Override
@@ -87,7 +119,7 @@ public class AccountListPresenterImpl implements AccountListPresenter {
 
 	private void checkWhetherEnableTableActionControl() {
 		if (selectionModel.size() > 0) {
-			view.enableActionControls();
+			view.enableActionControls(selectionModel.size());
 		} else {
 			view.disableActionControls();
 		}
@@ -104,7 +136,7 @@ public class AccountListPresenterImpl implements AccountListPresenter {
 	@Override
 	public void doSearch(AccountSearchCriteria searchCriteria) {
 		this.searchRequest = new SearchRequest<AccountSearchCriteria>(
-				searchCriteria, 0, SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
+				searchCriteria, 1, SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
 		doSearch();
 	}
 
@@ -112,11 +144,15 @@ public class AccountListPresenterImpl implements AccountListPresenter {
 	private void doSearch() {
 		int totalCount = accountService.getTotalCount(searchRequest
 				.getSearchCriteria());
+		int totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
+		if (searchRequest.getCurrentPage() > totalPage) {
+			searchRequest.setCurrentPage(totalPage);
+		}
 
 		currentListData = accountService
 				.findPagableListByCriteria(searchRequest);
-		view.displayAccounts(currentListData, 1, totalCount
-				/ SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS + 1);
+		view.displayAccounts(currentListData, searchRequest.getCurrentPage(),
+				totalPage);
 		checkWhetherEnableTableActionControl();
 	}
 
@@ -127,13 +163,6 @@ public class AccountListPresenterImpl implements AccountListPresenter {
 		doDefaultSearch();
 	}
 
-	@Override
-	public void onSelect(String id, String caption) {
-		if ("delete".equals(id)) {
-			deleteSelectedItems();
-		}
-	}
-
 	private void deleteSelectedItems() {
 		List<Integer> keyList = new ArrayList<Integer>();
 		for (SimpleAccount account : selectionModel) {
@@ -142,6 +171,7 @@ public class AccountListPresenterImpl implements AccountListPresenter {
 
 		if (keyList.size() > 0) {
 			accountService.removeWithSession(keyList, AppContext.getUsername());
+			doSearch();
 		}
 	}
 

@@ -4,20 +4,19 @@ import java.util.List;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
+import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.Presenter;
-import com.esofthead.mycollab.vaadin.mvp.TemplateSearchableView;
 import com.esofthead.mycollab.vaadin.mvp.View;
-import com.esofthead.mycollab.vaadin.ui.PopupButtonControl.PopupButtonControlListener;
-import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton.SelectionOptionListener;
 
-public interface AccountListView extends
-		TemplateSearchableView<AccountSearchCriteria>, View {
+public interface AccountListView extends View {
 
 	void displayAccounts(List<SimpleAccount> accounts, int currentPage,
 			int totalPages);
 
-	void enableActionControls();
+	void enableActionControls(int numOfSelectedItem);
 
 	void disableActionControls();
 
@@ -25,8 +24,13 @@ public interface AccountListView extends
 
 	HasSearchHandlers<AccountSearchCriteria> getSearchHandlers();
 
-	interface AccountListPresenter extends Presenter, SelectionOptionListener,
-			PopupButtonControlListener {
+	HasPagableHandlers getPagableHandlers();
+
+	HasSelectionOptionHandlers getOptionSelectionHandlers();
+
+	HasPopupActionHandlers getPopupActionHandlers();
+
+	interface AccountListPresenter extends Presenter {
 		void onItemSelect(SimpleAccount account);
 
 		void doDefaultSearch();

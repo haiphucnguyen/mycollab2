@@ -1,5 +1,10 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
+import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.IntegerValidator;
@@ -14,12 +19,22 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
-public class PagedBeanTable<T> extends Table {
+public class PagedBeanTable<T> extends Table implements HasPagableHandlers {
 	private static final long serialVersionUID = 1L;
 
-	private int currentPage = 0;
+	private int currentPage = 1;
 
-	private int totalPage = 0;
+	private int totalPage = 1;
+
+	private Button first, previous, next, last;
+
+	private Label totalPagesLabel;
+
+	private TextField currentPageTextField;
+
+	private ComboBox itemsPerPageSelect;
+
+	private Set<PagableHandler> handlers;
 
 	public PagedBeanTable() {
 		this.addStyleName("striped");
@@ -34,10 +49,32 @@ public class PagedBeanTable<T> extends Table {
 
 	public void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
+		currentPageTextField.setValue(currentPage);
+		checkButtonStatus();
 	}
 
 	public void setTotalPage(int totalPage) {
 		this.totalPage = totalPage;
+		totalPagesLabel.setValue(String.valueOf(totalPage));
+		checkButtonStatus();
+	}
+
+	private void checkButtonStatus() {
+		if (this.currentPage == 1) {
+			this.previous.setEnabled(false);
+			this.first.setEnabled(false);
+		} else {
+			this.previous.setEnabled(true);
+			this.first.setEnabled(true);
+		}
+
+		if (this.currentPage == totalPage) {
+			this.last.setEnabled(false);
+			this.next.setEnabled(false);
+		} else {
+			this.last.setEnabled(true);
+			this.next.setEnabled(true);
+		}
 	}
 
 	@Override
@@ -48,7 +85,7 @@ public class PagedBeanTable<T> extends Table {
 
 	public HorizontalLayout createControls() {
 		Label itemsPerPageLabel = new Label("Items per page:");
-		final ComboBox itemsPerPageSelect = new ComboBox();
+		itemsPerPageSelect = new ComboBox();
 
 		itemsPerPageSelect.addItem("5");
 		itemsPerPageSelect.addItem("10");
@@ -65,17 +102,19 @@ public class PagedBeanTable<T> extends Table {
 			@Override
 			public void valueChange(
 					com.vaadin.data.Property.ValueChangeEvent event) {
-				
+				Integer numberOfItems = Integer
+						.parseInt((String) itemsPerPageSelect.getValue());
+				fireDisplayItemNumberChange(numberOfItems);
 			}
 		});
-		
+
 		Label pageLabel = new Label("Page:&nbsp;", Label.CONTENT_XHTML);
-		final TextField currentPageTextField = new TextField();
+		currentPageTextField = new TextField();
 		currentPageTextField.setValue(String.valueOf(currentPage));
 		currentPageTextField.addValidator(new IntegerValidator(null));
 		Label separatorLabel = new Label("&nbsp;/&nbsp;", Label.CONTENT_XHTML);
-		final Label totalPagesLabel = new Label(
-				String.valueOf(totalPage), Label.CONTENT_XHTML);
+		totalPagesLabel = new Label(String.valueOf(totalPage),
+				Label.CONTENT_XHTML);
 		currentPageTextField.setStyleName(Reindeer.TEXTFIELD_SMALL);
 		currentPageTextField.setImmediate(true);
 		currentPageTextField.addListener(new ValueChangeListener() {
@@ -84,7 +123,7 @@ public class PagedBeanTable<T> extends Table {
 			@Override
 			public void valueChange(
 					com.vaadin.data.Property.ValueChangeEvent event) {
-			
+
 			}
 		});
 		pageLabel.setWidth(null);
@@ -96,37 +135,39 @@ public class PagedBeanTable<T> extends Table {
 		controlBar.setStyleName("listControl");
 		HorizontalLayout pageSize = new HorizontalLayout();
 		HorizontalLayout pageManagement = new HorizontalLayout();
-		final Button first = new Button("<<", new ClickListener() {
+		first = new Button("<<", new ClickListener() {
 			private static final long serialVersionUID = -355520120491283992L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				setCurrentPage(0);
+				firePageChangeHandler(1);
 			}
 		});
-		final Button previous = new Button("<", new ClickListener() {
+		previous = new Button("<", new ClickListener() {
 			private static final long serialVersionUID = -355520120491283992L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				
+				firePageChangeHandler(PagedBeanTable.this.currentPage - 1);
 			}
 		});
-		final Button next = new Button(">", new ClickListener() {
+		next = new Button(">", new ClickListener() {
 			private static final long serialVersionUID = -1927138212640638452L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				firePageChangeHandler(PagedBeanTable.this.currentPage + 1);
 			}
 		});
-		final Button last = new Button(">>", new ClickListener() {
+		last = new Button(">>", new ClickListener() {
 			private static final long serialVersionUID = -355520120491283992L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				
+				firePageChangeHandler(PagedBeanTable.this.totalPage);
 			}
 		});
+
 		first.setStyleName(Reindeer.BUTTON_LINK);
 		previous.setStyleName(Reindeer.BUTTON_LINK);
 		next.setStyleName(Reindeer.BUTTON_LINK);
@@ -187,8 +228,32 @@ public class PagedBeanTable<T> extends Table {
 				Alignment.MIDDLE_CENTER);
 		controlBar.setWidth("100%");
 		controlBar.setExpandRatio(pageSize, 1);
-		
+
 		itemsPerPageSelect.select("25");
 		return controlBar;
+	}
+
+	private void firePageChangeHandler(int newpage) {
+		if (handlers != null) {
+			for (PagableHandler handler : handlers) {
+				handler.move(newpage);
+			}
+		}
+	}
+
+	private void fireDisplayItemNumberChange(int numOfItems) {
+		if (handlers != null) {
+			for (PagableHandler handler : handlers) {
+				handler.displayItemChange(numOfItems);
+			}
+		}
+	}
+
+	@Override
+	public void addPagableHandler(PagableHandler handler) {
+		if (handlers == null) {
+			handlers = new HashSet<PagableHandler>();
+		}
+		handlers.add(handler);
 	}
 }

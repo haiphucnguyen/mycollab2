@@ -5,16 +5,18 @@ import java.util.Set;
 
 import org.vaadin.hene.splitbutton.SplitButton;
 
+import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
+import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
-public class PopupButtonControl extends SplitButton {
+public class PopupButtonControl extends SplitButton implements HasPopupActionHandlers{
 	private static final long serialVersionUID = 1L;
 
 	private VerticalLayout selectContent;
 
-	private Set<PopupButtonControlListener> listeners;
+	private Set<PopupActionHandler> handlers;
 
 	public PopupButtonControl(final String id, final String defaultName) {
 		super();
@@ -45,22 +47,20 @@ public class PopupButtonControl extends SplitButton {
 		selectContent.addComponent(selectAllBtn);
 	}
 
-	public void addListener(PopupButtonControlListener listener) {
-		if (listeners == null) {
-			listeners = new HashSet<PopupButtonControl.PopupButtonControlListener>();
-		}
-		listeners.add(listener);
-	}
-
 	private void changeOption(String id, String caption) {
-		if (listeners != null) {
-			for (PopupButtonControlListener listener : listeners) {
-				listener.onSelect(id, caption);
+		if (handlers != null) {
+			for (PopupActionHandler handler : handlers) {
+				handler.onSelect(id, caption);
 			}
 		}
 	}
 
-	public static interface PopupButtonControlListener {
-		void onSelect(String id, String caption);
+	@Override
+	public void addPopupActionHandler(PopupActionHandler handler) {
+		if (handlers == null) {
+			handlers = new HashSet<PopupActionHandler>();
+		}
+		handlers.add(handler);
+		
 	}
 }

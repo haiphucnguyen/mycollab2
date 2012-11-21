@@ -1,13 +1,13 @@
 package com.esofthead.mycollab.core.arguments;
 
 public class SearchRequest<S extends SearchCriteria> {
-	public static int DEFAULT_NUMBER_SEARCH_ITEMS = 20;
+	public static int DEFAULT_NUMBER_SEARCH_ITEMS = 3;
 	
 	private S searchCriteria;
 
-	private int currentPage;
+	private int currentPage = 1;
 
-	private int numberOfItems;
+	private int numberOfItems = 1;
 
 	public SearchRequest(S searchCriteria, int currentPage, int numberOfItems) {
 		this.searchCriteria = searchCriteria;

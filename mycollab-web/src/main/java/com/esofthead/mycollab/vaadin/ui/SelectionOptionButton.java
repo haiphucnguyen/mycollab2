@@ -5,13 +5,15 @@ import java.util.Set;
 
 import org.vaadin.hene.splitbutton.SplitButton;
 
+import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
+import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
-public class SelectionOptionButton extends SplitButton {
+public class SelectionOptionButton extends SplitButton implements HasSelectionOptionHandlers{
 	private static final long serialVersionUID = 1L;
 
 	private boolean isSelected = false;
@@ -22,7 +24,7 @@ public class SelectionOptionButton extends SplitButton {
 	private static Resource unSelectIcon = new ThemeResource(
 			"icons/16/checkbox_empty.png");
 
-	private Set<SelectionOptionListener> listeners;
+	private Set<SelectionOptionHandler> handlers;
 
 	@SuppressWarnings("serial")
 	public SelectionOptionButton() {
@@ -68,28 +70,22 @@ public class SelectionOptionButton extends SplitButton {
 		Resource icon = (isSelected) ? selectIcon : unSelectIcon;
 		SelectionOptionButton.this.setIcon(icon);
 		
-		if (listeners != null) {
-			for (SelectionOptionListener listener : listeners) {
+		if (handlers != null) {
+			for (SelectionOptionHandler handler : handlers) {
 				if (isSelected) {
-					listener.onSelect();
+					handler.onSelect();
 				} else {
-					listener.onDeSelect();
+					handler.onDeSelect();
 				}
 			}
 		}
 	}
 
-	public void addListener(SelectionOptionListener listener) {
-		System.out.println("Add listener: " + listener);
-		if (listeners == null) {
-			listeners = new HashSet<SelectionOptionButton.SelectionOptionListener>();
+	@Override
+	public void addSelectionOptionHandler(SelectionOptionHandler handler) {
+		if (handlers == null) {
+			handlers = new HashSet<SelectionOptionHandler>();
 		}
-		listeners.add(listener);
-	}
-
-	public static interface SelectionOptionListener {
-		void onSelect();
-
-		void onDeSelect();
+		handlers.add(handler);
 	}
 }
