@@ -131,6 +131,11 @@
 			<artifactId>splitbutton</artifactId>
 			<version>0.9.7</version>
 		</dependency>
+		<dependency>
+			<groupId>org.vaadin.addons</groupId>
+			<artifactId>browsercookies</artifactId>
+			<version>1.0.4</version>
+		</dependency>
 
 		<dependency>
 			<groupId>junit</groupId>

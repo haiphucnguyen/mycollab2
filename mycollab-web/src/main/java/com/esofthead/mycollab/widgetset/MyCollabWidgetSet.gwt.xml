@@ -29,7 +29,6 @@
 
     <inherits name="org.vaadin.hene.splitbutton.widgetset.SplitButtonWidgetSet" />
     
-    
-
-    
+	<inherits name="org.vaadin.browsercookies.widgetset.BrowserCookiesApplicationWidgetset" />
+	
 </module>
