@@ -32,7 +32,7 @@ public interface AccountListView extends View {
 
 	interface AccountListPresenter extends Presenter {
 		void onItemSelect(SimpleAccount account);
-
+		
 		void doDefaultSearch();
 
 		void doSearch(AccountSearchCriteria searchCriteria);

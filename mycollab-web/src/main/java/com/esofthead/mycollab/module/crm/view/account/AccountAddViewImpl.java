@@ -6,7 +6,7 @@ import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.FormEvent;
-import com.esofthead.mycollab.vaadin.events.HasFormHandlers;
+import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormEditFieldFactory;
@@ -35,24 +35,16 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 		this.addComponent(editFormItem);
 	}
 
-	
+	@Override
 	public void addNewItem() {
 		editFormItem.setItemDataSource(new BeanItem<Account>(new Account()));
 	}
 
-	
+	@Override
 	public void editItem(Account account) {
 		this.removeAllComponents();
 		editFormItem.setItemDataSource(new BeanItem<Account>(account));
 		this.addComponent(editFormItem);
-	}
-
-	
-	public void viewItem(Account item) {
-//		this.removeAllComponents();
-//		Form editFormItem = AppContext.getSpringBean(ViewForm.class);
-//		editFormItem.setItemDataSource(new BeanItem<Account>(item));
-//		this.addComponent(editFormItem);
 	}
 
 
@@ -295,7 +287,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 	}
 
 	@Override
-	public HasFormHandlers getFormHandler() {
+	public HasEditFormHandlers getFormHandlers() {
 		return editFormItem;
 	}
 

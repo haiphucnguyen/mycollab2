@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm;
+package com.esofthead.mycollab.module.crm.view;
 
 import java.util.Iterator;
 

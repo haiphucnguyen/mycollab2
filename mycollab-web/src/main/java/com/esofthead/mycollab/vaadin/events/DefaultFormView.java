@@ -7,30 +7,30 @@ import com.vaadin.ui.Form;
 
 @SuppressWarnings("serial")
 public abstract class DefaultFormView extends Form implements
-		HasFormHandlers {
+		HasEditFormHandlers {
 
-	private List<FormHandler> formHandlers;
+	private List<EditFormHandler> editFormHandlers;
 
-	public void addFormHandler(FormHandler formHandler) {
-		if (formHandlers == null) {
-			formHandlers = new ArrayList<FormHandler>();
+	public void addFormHandler(EditFormHandler editFormHandler) {
+		if (editFormHandlers == null) {
+			editFormHandlers = new ArrayList<EditFormHandler>();
 		}
 
-		formHandlers.add(formHandler);
+		editFormHandlers.add(editFormHandler);
 	}
 
 	protected void fireSaveEvent(FormEvent.Save event) {
-		if (formHandlers != null) {
-			for (FormHandler formHandler : formHandlers) {
-				formHandler.onSave(event);
+		if (editFormHandlers != null) {
+			for (EditFormHandler editFormHandler : editFormHandlers) {
+				editFormHandler.onSave(event);
 			}
 		}
 	}
 
 	protected void fireCancelEvent(FormEvent.Cancel event) {
-		if (formHandlers != null) {
-			for (FormHandler formHandler : formHandlers) {
-				formHandler.onCancel(event);
+		if (editFormHandlers != null) {
+			for (EditFormHandler editFormHandler : editFormHandlers) {
+				editFormHandler.onCancel(event);
 			}
 		}
 	}

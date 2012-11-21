@@ -1,20 +1,16 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
-import com.esofthead.mycollab.module.crm.CrmContainer;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.FormEvent.Cancel;
 import com.esofthead.mycollab.vaadin.events.FormEvent.Save;
-import com.esofthead.mycollab.vaadin.events.FormHandler;
-import com.esofthead.mycollab.vaadin.mvp.Presenter;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.ComponentContainer;
 
-public class AccountAddPresenter implements Presenter {
-
-	private AccountAddView view;
+public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView>{
 
 	public AccountAddPresenter(AccountAddView view) {
 		this.view = view;
@@ -22,7 +18,7 @@ public class AccountAddPresenter implements Presenter {
 	}
 	
 	private void bind() {
-		view.getFormHandler().addFormHandler(new FormHandler() {
+		view.getFormHandlers().addFormHandler(new EditFormHandler() {
 			
 			@Override
 			public void onSave(Save event) {
@@ -48,11 +44,5 @@ public class AccountAddPresenter implements Presenter {
 			accountService.updateWithSession(account, AppContext.getUsername());
 		}
 
-	}
-
-	@Override
-	public void go(ComponentContainer container) {
-		CrmContainer crmContainer = (CrmContainer) container;
-		crmContainer.addView(view);
 	}
 }

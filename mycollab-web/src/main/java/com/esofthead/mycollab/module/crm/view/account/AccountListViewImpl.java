@@ -4,7 +4,9 @@ import java.util.List;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AccountSearchPanel;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -33,7 +35,7 @@ public class AccountListViewImpl extends AbstractView implements
 	private static final long serialVersionUID = 1L;
 
 	private AccountSearchPanel accountSearchPanel;
-	
+
 	private SelectionOptionButton selectOptionButton;
 
 	private PagedBeanTable<SimpleAccount> tableItem;
@@ -55,13 +57,13 @@ public class AccountListViewImpl extends AbstractView implements
 		accountListLayout = new VerticalLayout();
 		accountListLayout.setSpacing(true);
 		this.addComponent(accountListLayout);
-		
+
 		generateDisplayTable();
 	}
-	
+
 	private void generateDisplayTable() {
 		tableItem = new PagedBeanTable<SimpleAccount>();
-		
+
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 
 			@Override
@@ -148,7 +150,8 @@ public class AccountListViewImpl extends AbstractView implements
 
 								@Override
 								public void buttonClick(ClickEvent event) {
-
+									System.out.println("View account: " + account);
+									
 								}
 							});
 					return b;
@@ -158,7 +161,7 @@ public class AccountListViewImpl extends AbstractView implements
 
 			}
 		});
-		
+
 		tableItem.setWidth("1130px");
 
 		tableItem.setColumnWidth("selected", 20);
@@ -171,7 +174,7 @@ public class AccountListViewImpl extends AbstractView implements
 
 		tableItem.setColumnWidth("assignuser", 140);
 		tableItem.setColumnWidth("createdtime", 120);
-		
+
 		accountListLayout.addComponent(constructTableActionControls());
 		accountListLayout.addComponent(tableItem);
 		accountListLayout.addComponent(tableItem.createControls());
@@ -193,7 +196,6 @@ public class AccountListViewImpl extends AbstractView implements
 				"Billing Country", "Phone Office", "Email Address",
 				"Assign User", "Created Time" });
 
-		
 	}
 
 	@Override

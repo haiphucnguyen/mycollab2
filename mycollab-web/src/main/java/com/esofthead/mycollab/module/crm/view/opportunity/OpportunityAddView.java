@@ -1,8 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
-import com.esofthead.mycollab.vaadin.mvp.TemplateItemView;
+import com.esofthead.mycollab.vaadin.mvp.TemplateEditItemView;
 
-public interface OpportunityAddView extends TemplateItemView<Opportunity> {
+public interface OpportunityAddView extends TemplateEditItemView<Opportunity> {
 
 }

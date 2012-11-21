@@ -7,10 +7,10 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.utils.SelectionModel;
-import com.esofthead.mycollab.module.crm.CrmContainer;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountListView.AccountListPresenter;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
@@ -19,9 +19,9 @@ import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
-import com.vaadin.ui.ComponentContainer;
 
-public class AccountListPresenterImpl implements AccountListPresenter {
+public class AccountListPresenterImpl extends
+		CrmGenericPresenter<AccountListView> implements AccountListPresenter {
 
 	private AccountService accountService;
 
@@ -30,8 +30,6 @@ public class AccountListPresenterImpl implements AccountListPresenter {
 	private List<SimpleAccount> currentListData = new ArrayList<SimpleAccount>();
 
 	private SelectionModel<SimpleAccount> selectionModel = new SelectionModel<SimpleAccount>();
-
-	private AccountListView view;
 
 	public AccountListPresenterImpl(AccountListView view) {
 		this.view = view;
@@ -66,43 +64,47 @@ public class AccountListPresenterImpl implements AccountListPresenter {
 				doSearch();
 			}
 		});
-		
-		view.getOptionSelectionHandlers().addSelectionOptionHandler(new SelectionOptionHandler() {
-			
-			@Override
-			public void onSelect() {
-				selectionModel.addSelections(currentListData);
 
-				for (SimpleAccount account : selectionModel) {
-					CheckBox checkBox = (CheckBox) account.getExtraData();
-					checkBox.setValue(true);
-				}
+		view.getOptionSelectionHandlers().addSelectionOptionHandler(
+				new SelectionOptionHandler() {
 
-				checkWhetherEnableTableActionControl();
-			}
-			
-			@Override
-			public void onDeSelect() {
-				selectionModel.removeAll();
-				for (SimpleAccount account : currentListData) {
-					CheckBox checkBox = (CheckBox) account.getExtraData();
-					checkBox.setValue(false);
-				}
+					@Override
+					public void onSelect() {
+						selectionModel.addSelections(currentListData);
 
-				checkWhetherEnableTableActionControl();
-				
-			}
-		});
-		
-		view.getPopupActionHandlers().addPopupActionHandler(new PopupActionHandler() {
-			
-			@Override
-			public void onSelect(String id, String caption) {
-				if ("delete".equals(id)) {
-					deleteSelectedItems();
-				}
-			}
-		});
+						for (SimpleAccount account : selectionModel) {
+							CheckBox checkBox = (CheckBox) account
+									.getExtraData();
+							checkBox.setValue(true);
+						}
+
+						checkWhetherEnableTableActionControl();
+					}
+
+					@Override
+					public void onDeSelect() {
+						selectionModel.removeAll();
+						for (SimpleAccount account : currentListData) {
+							CheckBox checkBox = (CheckBox) account
+									.getExtraData();
+							checkBox.setValue(false);
+						}
+
+						checkWhetherEnableTableActionControl();
+
+					}
+				});
+
+		view.getPopupActionHandlers().addPopupActionHandler(
+				new PopupActionHandler() {
+
+					@Override
+					public void onSelect(String id, String caption) {
+						if ("delete".equals(id)) {
+							deleteSelectedItems();
+						}
+					}
+				});
 	}
 
 	@Override
@@ -153,13 +155,6 @@ public class AccountListPresenterImpl implements AccountListPresenter {
 		view.displayAccounts(currentListData, searchRequest.getCurrentPage(),
 				totalPage);
 		checkWhetherEnableTableActionControl();
-	}
-
-	@Override
-	public void go(ComponentContainer container) {
-		CrmContainer crmContainer = (CrmContainer) container;
-		crmContainer.addView(view);
-		doDefaultSearch();
 	}
 
 	private void deleteSelectedItems() {

@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
-public interface TemplateItemView<T> extends View {
+public interface TemplateEditItemView<T> extends View {
 	void addNewItem();
 	
 	void editItem(T item);
