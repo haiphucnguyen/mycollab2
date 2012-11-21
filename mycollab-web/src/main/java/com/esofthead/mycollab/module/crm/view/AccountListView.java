@@ -23,7 +23,7 @@ public interface AccountListView extends
 
 	void setPresenter(AccountListPresenter presenter);
 
-	HasSearchHandlers<AccountSearchCriteria> getSearchPanel();
+	HasSearchHandlers<AccountSearchCriteria> getSearchHandlers();
 
 	interface AccountListPresenter extends Presenter, SelectionOptionListener,
 			PopupButtonControlListener {

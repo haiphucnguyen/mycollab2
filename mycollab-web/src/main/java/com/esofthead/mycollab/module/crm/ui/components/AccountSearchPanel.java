@@ -101,7 +101,7 @@ public class AccountSearchPanel extends
 			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			this.addComponent(new Button("Search", new Button.ClickListener() {
+			basicSearchBody.addComponent(new Button("Search", new Button.ClickListener() {
 
 				@Override
 				public void buttonClick(ClickEvent event) {

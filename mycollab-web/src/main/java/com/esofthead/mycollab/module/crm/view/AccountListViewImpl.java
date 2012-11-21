@@ -195,7 +195,7 @@ public class AccountListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public HasSearchHandlers<AccountSearchCriteria> getSearchPanel() {
+	public HasSearchHandlers<AccountSearchCriteria> getSearchHandlers() {
 		return accountSearchPanel;
 	}
 

@@ -13,6 +13,8 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.AccountListView;
 import com.esofthead.mycollab.module.crm.view.AccountListView.AccountListPresenter;
+import com.esofthead.mycollab.vaadin.events.SearchEvent;
+import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
@@ -33,6 +35,20 @@ public class AccountListPresenterImpl implements AccountListPresenter {
 		this.view = view;
 		view.setPresenter(this);
 		accountService = AppContext.getSpringBean(AccountService.class);
+
+		view.getSearchHandlers().addSearchHandler(
+				new SearchHandler<AccountSearchCriteria>() {
+
+					@Override
+					public void onSearch(
+							SearchEvent<AccountSearchCriteria> event) {
+						AccountSearchCriteria criteria = event.getCriteria();
+						searchRequest = new SearchRequest<AccountSearchCriteria>(
+								criteria, 0,
+								SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
+						doSearch();
+					}
+				});
 	}
 
 	@Override
@@ -89,8 +105,13 @@ public class AccountListPresenterImpl implements AccountListPresenter {
 	public void doSearch(AccountSearchCriteria searchCriteria) {
 		this.searchRequest = new SearchRequest<AccountSearchCriteria>(
 				searchCriteria, 0, SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
+		doSearch();
+	}
 
-		int totalCount = accountService.getTotalCount(searchCriteria);
+	@SuppressWarnings("unchecked")
+	private void doSearch() {
+		int totalCount = accountService.getTotalCount(searchRequest
+				.getSearchCriteria());
 
 		currentListData = accountService
 				.findPagableListByCriteria(searchRequest);
