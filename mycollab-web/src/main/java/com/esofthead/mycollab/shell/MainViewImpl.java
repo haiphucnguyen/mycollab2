@@ -4,7 +4,11 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.module.crm.CrmContainer;
 import com.esofthead.mycollab.module.project.ui.ProjectContainer;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.presenter.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.AccountViewImpl;
+import com.esofthead.mycollab.module.user.view.LoginView;
+import com.esofthead.mycollab.module.user.view.LoginViewImpl;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.Hr;
@@ -18,7 +22,7 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public class MainViewImpl extends AbstractView {
 
-	private VerticalLayout bodyLayout;
+	private final VerticalLayout bodyLayout;
 
 	public MainViewImpl() {
 		this.addComponent(createTopMenu());
@@ -94,7 +98,17 @@ public class MainViewImpl extends AbstractView {
 
 		accLayout.addComponent(new Hr());
 
-		Button signoutBtn = new Button("Sign out");
+		Button signoutBtn = new Button("Sign out", new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				AppContext.setSession(new SimpleUser());
+				LoginView loginView = new LoginViewImpl();
+				LoginPresenter presenter = new LoginPresenter(loginView);
+				AppContext.getApplication().getMainWindow()
+						.setContent(loginView.getWidget());
+			}
+		});
 		signoutBtn.setStyleName("link");
 		accLayout.addComponent(signoutBtn);
 
