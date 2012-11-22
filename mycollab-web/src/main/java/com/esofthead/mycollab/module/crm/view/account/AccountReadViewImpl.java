@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 
 public class AccountReadViewImpl extends AbstractView implements
@@ -10,6 +11,12 @@ public class AccountReadViewImpl extends AbstractView implements
 	@Override
 	public void displayItem(Account account) {
 		
+	}
+
+	@Override
+	public HasPreviewFormHandlers getPreviewFormHandlers() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

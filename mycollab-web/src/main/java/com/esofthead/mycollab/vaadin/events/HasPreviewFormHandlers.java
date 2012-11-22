@@ -1,5 +1,5 @@
 package com.esofthead.mycollab.vaadin.events;
 
-public interface HasPreviewFormHandlers {
-	void addFormHandler(PreviewFormHandlers handler);
+public interface HasPreviewFormHandlers<T> {
+	void addFormHandler(PreviewFormHandlers<T> handler);
 }

@@ -144,7 +144,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 	}
 
 	@Override
-	public HasEditFormHandlers<Account> getFormHandlers() {
+	public HasEditFormHandlers<Account> getEditFormHandlers() {
 		return editFormItem;
 	}
 
