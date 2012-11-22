@@ -5,7 +5,7 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.View;
 
 public interface AccountReadView extends View {
-	HasPreviewFormHandlers getPreviewFormHandlers();
+	HasPreviewFormHandlers<Account> getPreviewFormHandlers();
 
 	void displayItem(Account account);
 }

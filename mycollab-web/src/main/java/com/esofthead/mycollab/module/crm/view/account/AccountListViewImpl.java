@@ -34,17 +34,17 @@ public class AccountListViewImpl extends AbstractView implements
 		AccountListView {
 	private static final long serialVersionUID = 1L;
 
-	private AccountSearchPanel accountSearchPanel;
+	private final AccountSearchPanel accountSearchPanel;
 
 	private SelectionOptionButton selectOptionButton;
 
 	private PagedBeanTable<SimpleAccount> tableItem;
 
-	private VerticalLayout accountListLayout;
+	private final VerticalLayout accountListLayout;
 
 	private PopupButtonControl tableActionControls;
 
-	private Label selectedItemsNumberLabel = new Label();
+	private final Label selectedItemsNumberLabel = new Label();
 
 	private AccountListPresenter presenter;
 
@@ -167,18 +167,18 @@ public class AccountListViewImpl extends AbstractView implements
 			}
 		});
 
-		tableItem.setWidth("1130px");
+		tableItem.setWidth("100%");
 
-		tableItem.setColumnWidth("selected", 20);
-		tableItem.setColumnWidth("city", 130);
-
-		tableItem.setColumnWidth("billingCountry", 130);
-
-		tableItem.setColumnWidth("phoneoffice", 90);
-		tableItem.setColumnWidth("email", 180);
-
-		tableItem.setColumnWidth("assignuser", 140);
-		tableItem.setColumnWidth("createdtime", 120);
+		// tableItem.setColumnWidth("selected", 20);
+		// tableItem.setColumnWidth("city", 130);
+		//
+		// tableItem.setColumnWidth("billingCountry", 130);
+		//
+		// tableItem.setColumnWidth("phoneoffice", 90);
+		// tableItem.setColumnWidth("email", 180);
+		//
+		// tableItem.setColumnWidth("assignuser", 140);
+		// tableItem.setColumnWidth("createdtime", 120);
 
 		accountListLayout.addComponent(constructTableActionControls());
 		accountListLayout.addComponent(tableItem);

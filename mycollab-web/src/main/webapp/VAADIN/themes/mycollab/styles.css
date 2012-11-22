@@ -227,7 +227,7 @@ input.v-textfield-pagedtable-pagefield {
 }
 
 .advSearch .advSearchBody .v-label {
-	width: 100px !important;
+	width: 90px !important;
 	text-align: right;
 }/*
 .advSearch .advSearchBody select.v-select-select{
@@ -279,8 +279,9 @@ input.v-textfield-pagedtable-pagefield {
 /* CRM Service */
 
 .crmContainer {
-    width: 1130px;
-    margin: 15px auto;
+    /*width: 1000px;*/
+    margin: 15px;
+    max-width: 1130px;
 }
 
 /* End CRM Service */

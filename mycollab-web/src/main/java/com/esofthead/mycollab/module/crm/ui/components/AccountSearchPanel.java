@@ -7,7 +7,6 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.SearchEvent;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -110,9 +109,7 @@ public class AccountSearchPanel extends
 							SearchField.AND, AppContext.getAccountId()));
 					searchCriteria.setAccountname(new StringSearchField(
 							SearchField.AND, (String) nameField.getValue()));
-					SearchEvent<AccountSearchCriteria> searchEvent = new SearchEvent<AccountSearchCriteria>(
-							this, searchCriteria);
-					AccountSearchPanel.this.notifySearchHandler(searchEvent);
+					AccountSearchPanel.this.notifySearchHandler(searchCriteria);
 				}
 			}));
 
