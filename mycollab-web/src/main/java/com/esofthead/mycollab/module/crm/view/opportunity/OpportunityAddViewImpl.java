@@ -175,7 +175,6 @@ public class OpportunityAddViewImpl extends AbstractView implements
 		protected GridFormLayoutHelper descriptionLayout;
 
 		public GenericForm() {
-			super();
 			AddViewLayout opportunityAddLayout = new AddViewLayout(
 					"Opportunity");
 			opportunityAddLayout.addTopControls(createButtonControls());

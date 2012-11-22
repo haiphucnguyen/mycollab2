@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Set;
 
 import javax.validation.ConstraintViolation;
@@ -7,18 +9,21 @@ import javax.validation.Validator;
 
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
-import com.esofthead.mycollab.vaadin.events.DefaultFormView;
+import com.esofthead.mycollab.vaadin.events.EditFormHandler;
+import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.web.AppContext;
 
 import de.steinwedel.vaadin.MessageBox;
 import de.steinwedel.vaadin.MessageBox.ButtonType;
 
 @SuppressWarnings("serial")
-public class AdvancedEditBeanForm<T> extends DefaultFormView {
+public class AdvancedEditBeanForm<T> extends GenericForm implements
+		HasEditFormHandlers<T> {
 	private Validator validation;
 
+	private List<EditFormHandler<T>> editFormHandlers;
+
 	public AdvancedEditBeanForm() {
-		super();
 		validation = AppContext.getSpringBean(LocalValidatorFactoryBean.class);
 	}
 
@@ -42,5 +47,29 @@ public class AdvancedEditBeanForm<T> extends DefaultFormView {
 		}
 
 		return true;
+	}
+
+	public void addFormHandler(EditFormHandler<T> editFormHandler) {
+		if (editFormHandlers == null) {
+			editFormHandlers = new ArrayList<EditFormHandler<T>>();
+		}
+
+		editFormHandlers.add(editFormHandler);
+	}
+
+	protected void fireSaveForm(T bean) {
+		if (editFormHandlers != null) {
+			for (EditFormHandler<T> editFormHandler : editFormHandlers) {
+				editFormHandler.onSave(bean);
+			}
+		}
+	}
+
+	protected void fireCancelForm() {
+		if (editFormHandlers != null) {
+			for (EditFormHandler<T> editFormHandler : editFormHandlers) {
+				editFormHandler.onCancel();
+			}
+		}
 	}
 }

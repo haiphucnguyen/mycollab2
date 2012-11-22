@@ -47,14 +47,12 @@ public class CampaignAddViewImpl extends AbstractView implements
 		this.addComponent(formItem);
 	}
 
-	
 	public void viewItem(Campaign item) {
 		this.removeAllComponents();
 		Form formItem = AppContext.getSpringBean(ViewForm.class);
 		formItem.setItemDataSource(new BeanItem<Campaign>(item));
 		this.addComponent(formItem);
 	}
-
 
 	public static class EditForm extends GenericForm {
 		private static final long serialVersionUID = 1L;
@@ -121,7 +119,7 @@ public class CampaignAddViewImpl extends AbstractView implements
 
 					}
 				} else if (caption.equals(CANCEL_ACTION)) {
-					
+
 				}
 			}
 		}
@@ -161,16 +159,17 @@ public class CampaignAddViewImpl extends AbstractView implements
 				Campaign item = ((BeanItem<Campaign>) ViewForm.this
 						.getItemDataSource()).getBean();
 				if (caption.equals(EDIT_ACTION)) {
-					
+
 				} else if (caption.equals(CANCEL_ACTION)) {
-					
+
 				}
 			}
 		}
 
 	}
 
-	public static abstract class GenericForm extends AdvancedEditBeanForm<Campaign> {
+	public static abstract class GenericForm extends
+			AdvancedEditBeanForm<Campaign> {
 		private static final long serialVersionUID = 1L;
 
 		protected GridFormLayoutHelper informationLayout;
@@ -180,8 +179,6 @@ public class CampaignAddViewImpl extends AbstractView implements
 		protected GridFormLayoutHelper descriptionLayout;
 
 		public GenericForm() {
-			super();
-
 			AddViewLayout campaignFormLayout = new AddViewLayout("Campaign");
 			campaignFormLayout.addTopControls(createButtonControls());
 

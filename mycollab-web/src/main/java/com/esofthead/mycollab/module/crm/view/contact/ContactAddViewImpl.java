@@ -189,7 +189,6 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 		protected GridFormLayoutHelper descriptionLayout;
 
 		public GenericForm() {
-			super();
 
 			AddViewLayout contactAddLayout = new AddViewLayout("Contact");
 

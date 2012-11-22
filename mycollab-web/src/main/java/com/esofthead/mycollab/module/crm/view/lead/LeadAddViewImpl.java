@@ -199,7 +199,6 @@ public class LeadAddViewImpl extends AbstractView implements LeadAddView {
 		protected GridFormLayoutHelper descLayout;
 
 		public GenericForm() {
-			super();
 
 			AddViewLayout leadAddLayout = new AddViewLayout("Lead");
 			leadAddLayout.addTopControls(createButtonControls());
