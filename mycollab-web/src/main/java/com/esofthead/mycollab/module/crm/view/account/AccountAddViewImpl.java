@@ -72,18 +72,36 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 								}
 							}
 						});
-
-				Button cancelBtn = new Button(CANCEL_ACTION, new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						EditForm.this.fireCancelForm();
-					}
-				});
-
 				layout.addComponent(saveBtn);
 				layout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
+
+				Button saveAndNewBtn = new Button(SAVE_AND_NEW_ACTION,
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								@SuppressWarnings("unchecked")
+								Account account = ((BeanItem<Account>) EditForm.this
+										.getItemDataSource()).getBean();
+
+								EditForm.this.fireSaveAndNewForm(account);
+							}
+						});
+
+				layout.addComponent(saveAndNewBtn);
+				layout.setComponentAlignment(saveAndNewBtn,
+						Alignment.MIDDLE_CENTER);
+
+				Button cancelBtn = new Button(CANCEL_ACTION,
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EditForm.this.fireCancelForm();
+							}
+						});
 
 				layout.addComponent(cancelBtn);
 				layout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);

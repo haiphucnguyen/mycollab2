@@ -5,5 +5,5 @@ import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.TemplateEditItemView;
 
 public interface AccountAddView extends TemplateEditItemView<Account> {
-	HasEditFormHandlers getFormHandlers();
+	HasEditFormHandlers<Account> getFormHandlers();
 }

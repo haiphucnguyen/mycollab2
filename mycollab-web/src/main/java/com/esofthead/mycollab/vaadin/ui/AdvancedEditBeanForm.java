@@ -65,6 +65,14 @@ public class AdvancedEditBeanForm<T> extends GenericForm implements
 		}
 	}
 
+	protected void fireSaveAndNewForm(T bean) {
+		if (editFormHandlers != null) {
+			for (EditFormHandler<T> editFormHandler : editFormHandlers) {
+				editFormHandler.onSaveAndNew(bean);
+			}
+		}
+	}
+
 	protected void fireCancelForm() {
 		if (editFormHandlers != null) {
 			for (EditFormHandler<T> editFormHandler : editFormHandlers) {
