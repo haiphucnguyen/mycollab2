@@ -5,7 +5,7 @@ import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.TextField;
 
-public class DefaultFormEditFieldFactory extends DefaultFieldFactory {
+public class DefaultEditFormFieldFactory extends DefaultFieldFactory {
 	private static final long serialVersionUID = 1L;
 
 	@Override

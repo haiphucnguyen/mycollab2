@@ -5,6 +5,7 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -45,57 +46,8 @@ public class AccountReadViewImpl extends AbstractView implements
 
 			@Override
 			protected HorizontalLayout createButtonControls() {
-				HorizontalLayout layout = new HorizontalLayout();
-				layout.setSpacing(true);
-				layout.setStyleName("addNewControl");
-				Button editBtn = new Button(EDIT_ACTION,
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								@SuppressWarnings("unchecked")
-								Account account = ((BeanItem<Account>) PreviewForm.this
-										.getItemDataSource()).getBean();
-								fireEditForm(account);
-							}
-						});
-				layout.addComponent(editBtn);
-				layout.setComponentAlignment(editBtn, Alignment.MIDDLE_CENTER);
-
-				Button deleteBtn = new Button(DELETE_ACTION,
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								@SuppressWarnings("unchecked")
-								Account account = ((BeanItem<Account>) PreviewForm.this
-										.getItemDataSource()).getBean();
-								fireDeleteForm(account);
-							}
-						});
-
-				layout.addComponent(deleteBtn);
-				layout.setComponentAlignment(deleteBtn,
-						Alignment.MIDDLE_CENTER);
-
-				Button cloneBtn = new Button(CLONE_ACTION,
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								@SuppressWarnings("unchecked")
-								Account account = ((BeanItem<Account>) PreviewForm.this
-										.getItemDataSource()).getBean();
-								fireCloneForm(account);
-							}
-						});
-
-				layout.addComponent(cloneBtn);
-				layout.setComponentAlignment(cloneBtn, Alignment.MIDDLE_CENTER);
-				return layout;
+				return (new PreviewFormControlsGenerator<Account>(
+						PreviewForm.this)).createButtonControls();
 			}
 		}
 	}

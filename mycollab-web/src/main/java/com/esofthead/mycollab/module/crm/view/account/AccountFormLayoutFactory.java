@@ -5,7 +5,6 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
@@ -59,8 +58,8 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 
 		return accountAddLayout;
 	}
-
-	abstract protected HorizontalLayout createButtonControls();
+	
+	protected abstract Layout createButtonControls();
 
 	@Override
 	public void attachField(Object propertyId, Field field) {

@@ -5,20 +5,23 @@ import com.vaadin.ui.Form;
 
 public class GenericForm extends Form {
 	private static final long serialVersionUID = 1L;
-	
+
+	public static String SAVE_ACTION = "Save";
+
+	public static String SAVE_AND_NEW_ACTION = "Save & New";
+
+	public static String EDIT_ACTION = "Edit";
+
+	public static String CANCEL_ACTION = "Cancel";
+
+	public static String DELETE_ACTION = "Delete";
+
+	public static String CLONE_ACTION = "Clone";
+
 	private IFormLayoutFactory factory;
 
-	public GenericForm() {
-		super();
-	}
-	
 	public void setFormLayoutFactory(IFormLayoutFactory factory) {
 		this.factory = factory;
-	}
-
-	@Override
-	public void attach() {
-		super.attach();
 		this.setLayout(factory.getLayout());
 	}
 

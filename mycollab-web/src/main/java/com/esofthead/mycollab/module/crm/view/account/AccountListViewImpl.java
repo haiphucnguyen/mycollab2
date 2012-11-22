@@ -169,17 +169,6 @@ public class AccountListViewImpl extends AbstractView implements
 
 		tableItem.setWidth("100%");
 
-		// tableItem.setColumnWidth("selected", 20);
-		// tableItem.setColumnWidth("city", 130);
-		//
-		// tableItem.setColumnWidth("billingCountry", 130);
-		//
-		// tableItem.setColumnWidth("phoneoffice", 90);
-		// tableItem.setColumnWidth("email", 180);
-		//
-		// tableItem.setColumnWidth("assignuser", 140);
-		// tableItem.setColumnWidth("createdtime", 120);
-
 		accountListLayout.addComponent(constructTableActionControls());
 		accountListLayout.addComponent(tableItem);
 		accountListLayout.addComponent(tableItem.createControls());

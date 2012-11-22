@@ -1,5 +1,124 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
-public class ContactFormLayoutFactory {
+import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Layout;
+import com.vaadin.ui.VerticalLayout;
+
+public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
+
+	protected GridFormLayoutHelper informationLayout;
+
+	protected GridFormLayoutHelper addressLayout;
+
+	protected GridFormLayoutHelper descriptionLayout;
+
+	@Override
+	public Layout getLayout() {
+		AddViewLayout contactAddLayout = new AddViewLayout("Contact");
+
+		contactAddLayout.addTopControls(createButtonControls());
+
+		VerticalLayout layout = new VerticalLayout();
+		layout.setSpacing(true);
+
+		Label organizationHeader = new Label("Contact Information");
+		organizationHeader.setStyleName("h2");
+		layout.addComponent(organizationHeader);
+
+		informationLayout = new GridFormLayoutHelper(2, 9);
+		informationLayout.getLayout().setWidth("900px");
+		layout.addComponent(informationLayout.getLayout());
+
+		Label addressHeader = new Label("Address Information");
+		addressHeader.setStyleName("h2");
+		layout.addComponent(addressHeader);
+		addressLayout = new GridFormLayoutHelper(2, 5);
+		addressLayout.getLayout().setWidth("900px");
+		layout.addComponent(addressLayout.getLayout());
+
+		descriptionLayout = new GridFormLayoutHelper(1, 1);
+		Label descHeader = new Label("Description");
+		descHeader.setStyleName("h2");
+		layout.addComponent(descHeader);
+		descriptionLayout.getLayout().setWidth("900px");
+		descriptionLayout.getLayout().setColumnExpandRatio(1, 1.0f);
+		layout.addComponent(descriptionLayout.getLayout());
+
+		contactAddLayout.addBody(layout);
+		contactAddLayout.addBottomControls(createButtonControls());
+		return contactAddLayout;
+	}
+
+	abstract protected HorizontalLayout createButtonControls();
+
+	@Override
+	public void attachField(Object propertyId, Field field) {
+		if (propertyId.equals("firstname")) {
+			informationLayout.addComponent(field, "First Name", 0, 0);
+		} else if (propertyId.equals("lastname")) {
+			informationLayout.addComponent(field, "Last Name", 0, 1);
+		} else if (propertyId.equals("accountid")) {
+			informationLayout.addComponent(field, "Account", 0, 2);
+		} else if (propertyId.equals("title")) {
+			informationLayout.addComponent(field, "Title", 0, 3);
+		} else if (propertyId.equals("department")) {
+			informationLayout.addComponent(field, "Department", 0, 4);
+		} else if (propertyId.equals("email")) {
+			informationLayout.addComponent(field, "Email", 0, 5);
+		} else if (propertyId.equals("assistant")) {
+			informationLayout.addComponent(field, "Assistant", 0, 6);
+		} else if (propertyId.equals("assistantphone")) {
+			informationLayout.addComponent(field, "Assistant Phone", 0, 7);
+		} else if (propertyId.equals("leadsource")) {
+			informationLayout.addComponent(field, "Leade Source", 0, 8);
+		} else if (propertyId.equals("officephone")) {
+			informationLayout.addComponent(field, "Phone Office", 1, 0);
+		} else if (propertyId.equals("mobile")) {
+			informationLayout.addComponent(field, "Mobile", 1, 1);
+		} else if (propertyId.equals("homephone")) {
+			informationLayout.addComponent(field, "Home Phone", 1, 2);
+		} else if (propertyId.equals("otherphone")) {
+			informationLayout.addComponent(field, "Other Phone", 1, 3);
+		} else if (propertyId.equals("fax")) {
+			informationLayout.addComponent(field, "Fax", 1, 4);
+		} else if (propertyId.equals("birthday")) {
+			informationLayout.addComponent(field, "Birthday", 1, 5);
+		} else if (propertyId.equals("iscallable")) {
+			informationLayout.addComponent(field, "Callable", 1, 6);
+		} else if (propertyId.equals("assignuser")) {
+			informationLayout.addComponent(field, "Assign User", 1, 7);
+		} else if (propertyId.equals("campaignid")) {
+			informationLayout.addComponent(field, "Campaign", 1, 8);
+		} else if (propertyId.equals("primaddress")) {
+			addressLayout.addComponent(field, "Address", 0, 0);
+		} else if (propertyId.equals("primcity")) {
+			addressLayout.addComponent(field, "City", 0, 1);
+		} else if (propertyId.equals("primstate")) {
+			addressLayout.addComponent(field, "State", 0, 2);
+		} else if (propertyId.equals("primpostalcode")) {
+			addressLayout.addComponent(field, "Postal Code", 0, 3);
+		} else if (propertyId.equals("primcountry")) {
+			addressLayout.addComponent(field, "Country", 0, 4);
+		} else if (propertyId.equals("otheraddress")) {
+			addressLayout.addComponent(field, "Other Address", 1, 0);
+		} else if (propertyId.equals("othercity")) {
+			addressLayout.addComponent(field, "Other City", 1, 1);
+		} else if (propertyId.equals("otherstate")) {
+			addressLayout.addComponent(field, "Other State", 1, 2);
+		} else if (propertyId.equals("otherpostalcode")) {
+			addressLayout.addComponent(field, "Other Postal Code", 1, 3);
+		} else if (propertyId.equals("othercountry")) {
+			addressLayout.addComponent(field, "Other Country", 1, 4);
+		} else if (propertyId.equals("description")) {
+			field.setSizeUndefined();
+			descriptionLayout.addComponent(propertyId.equals("description"),
+					field, "Description", 0, 0);
+		}
+	}
 
 }

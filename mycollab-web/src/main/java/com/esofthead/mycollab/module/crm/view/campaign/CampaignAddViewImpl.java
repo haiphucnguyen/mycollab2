@@ -6,13 +6,11 @@ import com.esofthead.mycollab.module.crm.ui.components.CampaignTypeComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 
@@ -47,62 +45,14 @@ public class CampaignAddViewImpl extends AbstractView implements
 		}
 
 		class FormLayoutFactory extends CampaignFormLayoutFactory {
-			@SuppressWarnings("serial")
 			@Override
 			protected HorizontalLayout createButtonControls() {
-				HorizontalLayout layout = new HorizontalLayout();
-				layout.setSpacing(true);
-				layout.setStyleName("addNewControl");
-				Button saveBtn = new Button(SAVE_ACTION,
-						new Button.ClickListener() {
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								@SuppressWarnings("unchecked")
-								Campaign campaign = ((BeanItem<Campaign>) EditForm.this
-										.getItemDataSource()).getBean();
-								if (EditForm.this.validateForm(campaign)) {
-									EditForm.this.fireSaveForm(campaign);
-								}
-							}
-						});
-				layout.addComponent(saveBtn);
-				layout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
-
-				Button saveAndNewBtn = new Button(SAVE_AND_NEW_ACTION,
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								@SuppressWarnings("unchecked")
-								Campaign campaign = ((BeanItem<Campaign>) EditForm.this
-										.getItemDataSource()).getBean();
-
-								EditForm.this.fireSaveAndNewForm(campaign);
-							}
-						});
-
-				layout.addComponent(saveAndNewBtn);
-				layout.setComponentAlignment(saveAndNewBtn,
-						Alignment.MIDDLE_CENTER);
-
-				Button cancelBtn = new Button(CANCEL_ACTION,
-						new Button.ClickListener() {
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								EditForm.this.fireCancelForm();
-							}
-						});
-				layout.addComponent(cancelBtn);
-				layout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
-
-				return layout;
+				return (new EditFormControlsGenerator<Campaign>(EditForm.this))
+						.createButtonControls();
 			}
 		}
 
-		private class EditFormFieldFactory extends DefaultFormEditFieldFactory {
+		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 			private static final long serialVersionUID = 1L;
 
 			@Override

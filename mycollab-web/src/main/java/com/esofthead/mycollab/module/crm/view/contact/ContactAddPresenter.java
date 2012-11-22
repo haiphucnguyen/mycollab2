@@ -1,47 +1,55 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
-import javax.annotation.PostConstruct;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.vaadin.events.EditFormHandler;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.web.AppContext;
 
-@SuppressWarnings("serial")
-public class ContactAddPresenter {
+public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 
-	@Autowired
-	private ContactService contactService;
+	public ContactAddPresenter(ContactAddView view) {
+		this.view = view;
+		bind();
+	}
 
-	@PostConstruct
-	private void initListeners() {
-//		eventBus.addListener(new ApplicationEventListener<ContactEvent.Save>() {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return ContactEvent.Save.class;
-//			}
-//
-//			@Override
-//			public void handle(ContactEvent.Save event) {
-//				Contact contact = (Contact) event.getData();
-//				saveContact(contact);
-//			}
-//		});
+	private void bind() {
+		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Contact>() {
+
+			@Override
+			public void onSave(final Contact account) {
+				saveContact(account);
+				EventBus.getInstance().fireEvent(
+						new ContactEvent.GotoList(this, null));
+			}
+
+			@Override
+			public void onCancel() {
+				EventBus.getInstance().fireEvent(
+						new ContactEvent.GotoList(this, null));
+			}
+
+			@Override
+			public void onSaveAndNew(final Contact contact) {
+				saveContact(contact);
+				EventBus.getInstance().fireEvent(
+						new ContactEvent.GotoAdd(this, null));
+			}
+		});
 	}
 
 	public void saveContact(Contact contact) {
+		ContactService contactService = AppContext
+				.getSpringBean(ContactService.class);
+
 		contact.setSaccountid(AppContext.getAccountId());
-		System.out.println("Accountid " + contact.getAccountid());
 		if (contact.getId() == null) {
 			contactService.saveWithSession(contact, AppContext.getUsername());
 		} else {
 			contactService.updateWithSession(contact, AppContext.getUsername());
 		}
 
-		
 	}
 }

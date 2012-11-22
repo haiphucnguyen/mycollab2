@@ -9,7 +9,7 @@ import org.vaadin.teemu.wizards.event.WizardStepActivationEvent;
 import org.vaadin.teemu.wizards.event.WizardStepSetChangedEvent;
 
 import com.esofthead.mycollab.module.project.domain.Project;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.WizardExt;
 import com.esofthead.mycollab.web.AppContext;
@@ -87,7 +87,7 @@ public class ProjectAddWindow extends Window {
 			super();
 			layoutHelper = new GridFormLayoutHelper(2, 3);
 			this.setLayout(layoutHelper.getLayout());
-			this.setFormFieldFactory(new DefaultFormEditFieldFactory() {
+			this.setFormFieldFactory(new DefaultEditFormFieldFactory() {
 				@Override
 				protected Field onCreateField(Item item, Object propertyId,
 						Component uiContext) {
@@ -149,7 +149,7 @@ public class ProjectAddWindow extends Window {
 			super();
 			layoutHelper = new GridFormLayoutHelper(2, 3);
 			this.setLayout(layoutHelper.getLayout());
-			this.setFormFieldFactory(new DefaultFormEditFieldFactory());
+			this.setFormFieldFactory(new DefaultEditFormFieldFactory());
 			this.setItemDataSource(beanItem);
 		}
 
@@ -198,7 +198,7 @@ public class ProjectAddWindow extends Window {
 			super();
 			layoutHelper = new GridFormLayoutHelper(2, 3);
 			this.setLayout(layoutHelper.getLayout());
-			this.setFormFieldFactory(new DefaultFormEditFieldFactory() {
+			this.setFormFieldFactory(new DefaultEditFormFieldFactory() {
 				@Override
 				protected Field onCreateField(Item item, Object propertyId,
 						Component uiContext) {

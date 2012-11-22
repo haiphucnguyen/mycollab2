@@ -11,7 +11,7 @@ import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.CampaignSelectionField;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormEditFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.web.AppContext;
@@ -80,7 +80,7 @@ public class OpportunityAddViewImpl extends AbstractView implements
 			this.setFormFieldFactory(new EditFormFieldFactory());
 		}
 
-		private class EditFormFieldFactory extends DefaultFormEditFieldFactory {
+		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 			private static final long serialVersionUID = 1L;
 
 			@Override

@@ -173,14 +173,11 @@ public class CampaignSearchPanel extends
 			endDateField.setDateFormat("yyyy-MM-dd");
 
 			typeField = (CampaignTypeListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(CampaignTypeListSelect.class),
-					"Type", 0, 1);
+					new CampaignTypeListSelect(), "Type", 0, 1);
 			statusField = (CampaignStatusListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(CampaignStatusListSelect.class),
-					"Status", 1, 1);
+					new CampaignStatusListSelect(), "Status", 1, 1);
 			assignUserField = (UserListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(UserListSelect.class),
-					"Assign User", 2, 1);
+					new UserListSelect(), "Assign User", 2, 1);
 			return gridLayout.getLayout();
 		}
 
