@@ -1,5 +1,19 @@
 @import url(../chameleon-blue/styles.css);
 
+@media only screen and (max-width : 1024px),
+only screen and (max-device-width : 1024px) {  
+	.crmContainer {
+	    margin: 15px;
+	}
+}
+
+@media screen and (min-width: 1024px) {  
+	.crmContainer {
+	    margin: 15px auto;
+	}
+}
+
+
 .v-app {
     background: #E1E1E1;
 }
@@ -279,8 +293,8 @@ input.v-textfield-pagedtable-pagefield {
 /* CRM Service */
 
 .crmContainer {
-    /*width: 1000px;*/
-    margin: 15px;
+    /*width: 1000px;
+    margin: 15px;*/
     max-width: 1130px;
 }
 
