@@ -5,7 +5,6 @@ import com.esofthead.mycollab.module.crm.ui.components.AccountTypeComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
-import com.esofthead.mycollab.vaadin.events.FormEvent;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -119,10 +118,10 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 						.getItemDataSource()).getBean();
 				if (caption.equals(SAVE_ACTION)) {
 					if (validateForm(account)) {
-						EditForm.this.fireSaveEvent(new FormEvent.Save(this, account));
+						EditForm.this.fireSaveForm(account);
 					}
 				} else if (caption.equals(CANCEL_ACTION)) {
-					EditForm.this.fireCancelEvent(new FormEvent.Cancel(this, null));
+					EditForm.this.fireCancelForm();
 				}
 			}
 		}

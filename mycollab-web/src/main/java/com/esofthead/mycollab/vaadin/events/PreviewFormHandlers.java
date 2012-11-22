@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.vaadin.events;
 
-public interface PreviewFormHandlers {
-	void onEdit(FormEvent.Edit event);
+public interface PreviewFormHandlers<T> {
+	void onEdit(T data);
 
-	void onCancel(FormEvent.Cancel event);
+	void onCancel();
 }

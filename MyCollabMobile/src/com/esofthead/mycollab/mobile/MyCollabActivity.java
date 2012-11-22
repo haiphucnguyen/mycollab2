@@ -10,6 +10,6 @@ public class MyCollabActivity extends DroidGap {
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        super.loadUrl("http://192.168.1.111:8080/mycollab-web");
+        super.loadUrl("http://192.168.0.103:8080/mycollab-web");
     }
 }

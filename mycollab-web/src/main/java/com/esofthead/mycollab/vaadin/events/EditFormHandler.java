@@ -1,7 +1,9 @@
 package com.esofthead.mycollab.vaadin.events;
 
-public interface EditFormHandler {
-	void onSave(FormEvent.Save event);
+public interface EditFormHandler<T> {
+	void onSave(T bean);
 
-	void onCancel(FormEvent.Cancel event);
+	void onSaveAndNew(T bean);
+
+	void onCancel();
 }

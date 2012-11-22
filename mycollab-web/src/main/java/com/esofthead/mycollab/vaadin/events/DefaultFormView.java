@@ -6,8 +6,8 @@ import java.util.List;
 import com.vaadin.ui.Form;
 
 @SuppressWarnings("serial")
-public abstract class DefaultFormView extends Form implements
-		HasEditFormHandlers {
+public abstract class DefaultFormView<T> extends Form implements
+		HasEditFormHandlers<T> {
 
 	private List<EditFormHandler> editFormHandlers;
 
@@ -19,18 +19,18 @@ public abstract class DefaultFormView extends Form implements
 		editFormHandlers.add(editFormHandler);
 	}
 
-	protected void fireSaveEvent(FormEvent.Save event) {
+	protected void fireSaveForm(T bean) {
 		if (editFormHandlers != null) {
 			for (EditFormHandler editFormHandler : editFormHandlers) {
-				editFormHandler.onSave(event);
+				editFormHandler.onSave(bean);
 			}
 		}
 	}
 
-	protected void fireCancelEvent(FormEvent.Cancel event) {
+	protected void fireCancelForm() {
 		if (editFormHandlers != null) {
 			for (EditFormHandler editFormHandler : editFormHandlers) {
-				editFormHandler.onCancel(event);
+				editFormHandler.onCancel();
 			}
 		}
 	}
