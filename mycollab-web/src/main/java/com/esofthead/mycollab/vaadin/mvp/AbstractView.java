@@ -16,6 +16,10 @@ public abstract class AbstractView extends VerticalLayout implements View,
 	public static String EDIT_ACTION = "Edit";
 
 	public static String CANCEL_ACTION = "Cancel";
+	
+	public static String DELETE_ACTION = "Delete";
+	
+	public static String CLONE_ACTION = "Clone";
 
 	@Override
 	public ComponentContainer getWidget() {

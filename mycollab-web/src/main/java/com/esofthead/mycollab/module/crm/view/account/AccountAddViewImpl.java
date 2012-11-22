@@ -24,6 +24,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 	private EditForm editFormItem;
 
 	public AccountAddViewImpl() {
+		super();
 		editFormItem = new EditForm();
 		this.addComponent(editFormItem);
 	}
@@ -37,7 +38,6 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 	public void editItem(Account account) {
 		this.removeAllComponents();
 		editFormItem.setItemDataSource(new BeanItem<Account>(account));
-		this.addComponent(editFormItem);
 	}
 
 	public static class EditForm extends AdvancedEditBeanForm<Account> {
@@ -49,9 +49,6 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 		}
 
 		class FormLayoutFactory extends AccountFormLayoutFactory {
-			public FormLayoutFactory() {
-				super(null);
-			}
 
 			@Override
 			protected HorizontalLayout createButtonControls() {

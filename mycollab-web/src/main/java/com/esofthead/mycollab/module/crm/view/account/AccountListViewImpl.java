@@ -65,6 +65,7 @@ public class AccountListViewImpl extends AbstractView implements
 		tableItem = new PagedBeanTable<SimpleAccount>();
 
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
@@ -72,6 +73,7 @@ public class AccountListViewImpl extends AbstractView implements
 				final CheckBox cb = new CheckBox("", false);
 				cb.setImmediate(true);
 				cb.addListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(ClickEvent event) {
@@ -150,8 +152,11 @@ public class AccountListViewImpl extends AbstractView implements
 
 								@Override
 								public void buttonClick(ClickEvent event) {
-									System.out.println("View account: " + account);
-									
+									System.out.println("View account: "
+											+ account);
+									EventBus.getInstance().fireEvent(
+											new AccountEvent.GotoRead(this,
+													account));
 								}
 							});
 					return b;

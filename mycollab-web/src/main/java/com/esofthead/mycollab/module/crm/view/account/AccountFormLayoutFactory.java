@@ -1,27 +1,22 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
-import com.esofthead.mycollab.vaadin.ui.DefaultFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.Form;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
-public abstract class AccountFormLayoutFactory extends DefaultFormLayoutFactory {
+public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 
 	private GridFormLayoutHelper informationLayout;
 
 	private GridFormLayoutHelper addressLayout;
 
 	private GridFormLayoutHelper descriptionLayout;
-
-	public AccountFormLayoutFactory(Form form) {
-		super(form);
-	}
 
 	@Override
 	public Layout getLayout() {
@@ -69,8 +64,6 @@ public abstract class AccountFormLayoutFactory extends DefaultFormLayoutFactory 
 
 	@Override
 	public void attachField(Object propertyId, Field field) {
-		System.out.println("Layout: " + informationLayout + " " + propertyId
-				+ " " + field);
 		informationLayout.addComponent(propertyId.equals("accountname"), field,
 				"Account Name", 0, 0);
 		informationLayout.addComponent(propertyId.equals("phoneoffice"), field,

@@ -15,7 +15,6 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 		bind();
 	}
 
-	@SuppressWarnings("unchecked")
 	private void bind() {
 		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Account>() {
 
