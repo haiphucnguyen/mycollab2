@@ -21,23 +21,23 @@ import com.vaadin.ui.TextField;
 public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 	private static final long serialVersionUID = 1L;
 
-	private EditForm editFormItem;
+	private EditForm editForm;
 
 	public AccountAddViewImpl() {
 		super();
-		editFormItem = new EditForm();
-		this.addComponent(editFormItem);
+		editForm = new EditForm();
+		this.addComponent(editForm);
 	}
 
 	@Override
 	public void addNewItem() {
-		editFormItem.setItemDataSource(new BeanItem<Account>(new Account()));
+		editForm.setItemDataSource(new BeanItem<Account>(new Account()));
 	}
 
 	@Override
 	public void editItem(Account account) {
 		this.removeAllComponents();
-		editFormItem.setItemDataSource(new BeanItem<Account>(account));
+		editForm.setItemDataSource(new BeanItem<Account>(account));
 	}
 
 	public static class EditForm extends AdvancedEditBeanForm<Account> {
@@ -142,7 +142,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 
 	@Override
 	public HasEditFormHandlers<Account> getEditFormHandlers() {
-		return editFormItem;
+		return editForm;
 	}
 
 }

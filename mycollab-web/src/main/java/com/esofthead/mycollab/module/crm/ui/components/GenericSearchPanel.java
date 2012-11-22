@@ -5,7 +5,6 @@ import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
-import com.esofthead.mycollab.vaadin.events.SearchEvent;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.vaadin.ui.CustomComponent;
 
@@ -23,10 +22,10 @@ public class GenericSearchPanel<S extends SearchCriteria> extends
 		handers.add(handler);
 	}
 
-	protected void notifySearchHandler(SearchEvent<S> event) {
+	protected void notifySearchHandler(S criteria) {
 		if (handers != null) {
 			for (SearchHandler<S> handler : handers) {
-				handler.onSearch(event);
+				handler.onSearch(criteria);
 			}
 		}
 	}

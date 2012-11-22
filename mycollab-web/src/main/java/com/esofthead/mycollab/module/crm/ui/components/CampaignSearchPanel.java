@@ -4,7 +4,9 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -15,7 +17,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -24,7 +25,8 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-public class CampaignSearchPanel extends CustomComponent {
+public class CampaignSearchPanel extends
+		GenericSearchPanel<CampaignSearchCriteria> {
 	protected CampaignSearchCriteria searchCriteria;
 
 	public CampaignSearchPanel() {
@@ -61,7 +63,8 @@ public class CampaignSearchPanel extends CustomComponent {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						
+						EventBus.getInstance().fireEvent(
+								new CampaignEvent.GotoAdd(this, null));
 
 					}
 				});
@@ -107,7 +110,8 @@ public class CampaignSearchPanel extends CustomComponent {
 							SearchField.AND, AppContext.getAccountId()));
 					searchCriteria.setCampaignName(new StringSearchField(
 							SearchField.AND, (String) nameField.getValue()));
-					
+					CampaignSearchPanel.this
+							.notifySearchHandler(searchCriteria);
 				}
 			}));
 
@@ -193,7 +197,6 @@ public class CampaignSearchPanel extends CustomComponent {
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
 
-							
 						}
 
 					}));

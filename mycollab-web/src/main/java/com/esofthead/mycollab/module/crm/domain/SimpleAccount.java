@@ -18,8 +18,6 @@
 package com.esofthead.mycollab.module.crm.domain;
 
 public class SimpleAccount extends Account {
-	
-	private boolean selected = false;
 
 	private String assignUserFullName;
 
@@ -40,14 +38,5 @@ public class SimpleAccount extends Account {
 	public void setBillingCountry(String billingCountry) {
 		this.billingCountry = billingCountry;
 	}
-
-	public boolean isSelected() {
-		return selected;
-	}
-
-	public void setSelected(boolean selected) {
-		this.selected = selected;
-	}
-	
 	
 }

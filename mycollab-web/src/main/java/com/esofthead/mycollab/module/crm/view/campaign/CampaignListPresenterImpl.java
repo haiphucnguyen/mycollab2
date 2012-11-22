@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.view.account;
+package com.esofthead.mycollab.module.crm.view.campaign;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -7,11 +7,11 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.utils.SelectionModel;
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
+import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
-import com.esofthead.mycollab.module.crm.view.account.AccountListView.AccountListPresenter;
+import com.esofthead.mycollab.module.crm.view.campaign.CampaignListView.CampaignListPresenter;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -19,28 +19,27 @@ import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 
-public class AccountListPresenterImpl extends
-		CrmGenericPresenter<AccountListView> implements AccountListPresenter {
+public class CampaignListPresenterImpl extends
+		CrmGenericPresenter<CampaignListView> implements CampaignListPresenter {
+	private CampaignService campaignService;
 
-	private AccountService accountService;
+	private SearchRequest<CampaignSearchCriteria> searchRequest;
 
-	private SearchRequest<AccountSearchCriteria> searchRequest;
+	private List<SimpleCampaign> currentListData = new ArrayList<SimpleCampaign>();
 
-	private List<SimpleAccount> currentListData = new ArrayList<SimpleAccount>();
+	private SelectionModel<SimpleCampaign> selectionModel = new SelectionModel<SimpleCampaign>();
 
-	private SelectionModel<SimpleAccount> selectionModel = new SelectionModel<SimpleAccount>();
-
-	public AccountListPresenterImpl(AccountListView view) {
+	public CampaignListPresenterImpl(CampaignListView view) {
 		this.view = view;
 		view.setPresenter(this);
-		accountService = AppContext.getSpringBean(AccountService.class);
+		campaignService = AppContext.getSpringBean(CampaignService.class);
 
 		view.getSearchHandlers().addSearchHandler(
-				new SearchHandler<AccountSearchCriteria>() {
+				new SearchHandler<CampaignSearchCriteria>() {
 
 					@Override
-					public void onSearch(AccountSearchCriteria criteria) {
-						searchRequest = new SearchRequest<AccountSearchCriteria>(
+					public void onSearch(CampaignSearchCriteria criteria) {
+						searchRequest = new SearchRequest<CampaignSearchCriteria>(
 								criteria, 0,
 								SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
 						doSearch();
@@ -69,8 +68,8 @@ public class AccountListPresenterImpl extends
 					public void onSelect() {
 						selectionModel.addSelections(currentListData);
 
-						for (SimpleAccount account : selectionModel) {
-							CheckBox checkBox = (CheckBox) account
+						for (SimpleCampaign campaign : selectionModel) {
+							CheckBox checkBox = (CheckBox) campaign
 									.getExtraData();
 							checkBox.setValue(true);
 						}
@@ -81,8 +80,8 @@ public class AccountListPresenterImpl extends
 					@Override
 					public void onDeSelect() {
 						selectionModel.removeAll();
-						for (SimpleAccount account : currentListData) {
-							CheckBox checkBox = (CheckBox) account
+						for (SimpleCampaign campaign : currentListData) {
+							CheckBox checkBox = (CheckBox) campaign
 									.getExtraData();
 							checkBox.setValue(false);
 						}
@@ -105,11 +104,11 @@ public class AccountListPresenterImpl extends
 	}
 
 	@Override
-	public void onItemSelect(SimpleAccount account) {
-		if (selectionModel.isSelected(account)) {
-			selectionModel.removeSelection(account);
+	public void onItemSelect(SimpleCampaign campaign) {
+		if (selectionModel.isSelected(campaign)) {
+			selectionModel.removeSelection(campaign);
 		} else {
-			selectionModel.addSelection(account);
+			selectionModel.addSelection(campaign);
 		}
 
 		checkWhetherEnableTableActionControl();
@@ -125,45 +124,45 @@ public class AccountListPresenterImpl extends
 
 	@Override
 	public void doDefaultSearch() {
-		AccountSearchCriteria accountSearchCriteria = new AccountSearchCriteria();
-		accountSearchCriteria.setSaccountid(new NumberSearchField(
+		CampaignSearchCriteria campaignSearchCriteria = new CampaignSearchCriteria();
+		campaignSearchCriteria.setSaccountid(new NumberSearchField(
 				SearchField.AND, AppContext.getAccountId()));
-		doSearch(accountSearchCriteria);
+		doSearch(campaignSearchCriteria);
 	}
 
 	@Override
-	public void doSearch(AccountSearchCriteria searchCriteria) {
-		this.searchRequest = new SearchRequest<AccountSearchCriteria>(
+	public void doSearch(CampaignSearchCriteria searchCriteria) {
+		this.searchRequest = new SearchRequest<CampaignSearchCriteria>(
 				searchCriteria, 1, SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
 		doSearch();
 	}
 
 	@SuppressWarnings("unchecked")
 	private void doSearch() {
-		int totalCount = accountService.getTotalCount(searchRequest
+		int totalCount = campaignService.getTotalCount(searchRequest
 				.getSearchCriteria());
 		int totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
 		if (searchRequest.getCurrentPage() > totalPage) {
 			searchRequest.setCurrentPage(totalPage);
 		}
 
-		currentListData = accountService
+		currentListData = campaignService
 				.findPagableListByCriteria(searchRequest);
-		view.displayAccounts(currentListData, searchRequest.getCurrentPage(),
+		view.displayCampaigns(currentListData, searchRequest.getCurrentPage(),
 				totalPage);
 		checkWhetherEnableTableActionControl();
 	}
 
 	private void deleteSelectedItems() {
 		List<Integer> keyList = new ArrayList<Integer>();
-		for (SimpleAccount account : selectionModel) {
-			keyList.add(account.getId());
+		for (SimpleCampaign campaign : selectionModel) {
+			keyList.add(campaign.getId());
 		}
 
 		if (keyList.size() > 0) {
-			accountService.removeWithSession(keyList, AppContext.getUsername());
+			campaignService
+					.removeWithSession(keyList, AppContext.getUsername());
 			doSearch();
 		}
 	}
-
 }
