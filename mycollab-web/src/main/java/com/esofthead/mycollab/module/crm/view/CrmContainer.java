@@ -24,7 +24,6 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
-
 public class CrmContainer extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
@@ -48,21 +47,21 @@ public class CrmContainer extends AbstractView {
 
 	private static String NEW_OPPORTUNITY_ITEM = "New Opportunity";
 
-	private VerticalLayout currentView;
+	private final VerticalLayout currentView;
 
-	private PopupButton addBtn;
+	private final PopupButton addBtn;
 
-	private CssLayout toolbar;
-	
+	private final CssLayout toolbar;
+
 	public CrmContainer() {
 		new CrmController(this);
 		CustomLayout container = new CustomLayout("crmContainer");
 
-		container.setWidth("100%");
+		// container.setWidth("100%");
 		NavigatorItemListener listener = new NavigatorItemListener();
 
 		toolbar = new CssLayout();
-		toolbar.setWidth("100%");
+		// toolbar.setWidth("100%");
 
 		Button homeBtn = new Button(null, listener);
 		homeBtn.setStyleName("link");
@@ -136,387 +135,408 @@ public class CrmContainer extends AbstractView {
 		registerLeadListeners();
 		registerOpportunityListeners();
 	}
-	
+
 	@SuppressWarnings("serial")
 	private void registerCommonListeners() {
-//		eventBus.addListener(new ApplicationEventListener<CrmEvent.GotoHome>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return CrmEvent.GotoHome.class;
-//			}
-//
-//			@Override
-//			public void handle(CrmEvent.GotoHome event) {
-//				CrmHomeViewImpl view = AppContext.getView(CrmHomeViewImpl.class);
-//				addView(view);
-//			}
-//		});
+		// eventBus.addListener(new
+		// ApplicationEventListener<CrmEvent.GotoHome>() {
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return CrmEvent.GotoHome.class;
+		// }
+		//
+		// @Override
+		// public void handle(CrmEvent.GotoHome event) {
+		// CrmHomeViewImpl view = AppContext.getView(CrmHomeViewImpl.class);
+		// addView(view);
+		// }
+		// });
 	}
 
 	@SuppressWarnings("serial")
 	private void registerAccountListeners() {
-//		eventBus.addListener(new ApplicationEventListener<AccountEvent.GotoAdd>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return AccountEvent.GotoAdd.class;
-//			}
-//
-//			@Override
-//			public void handle(AccountEvent.GotoAdd event) {
-//				AccountAddView accountAddView = AppContext
-//						.getView(AccountAddViewImpl.class);
-//				accountAddView.addNewItem();
-//				addView((AbstractView) accountAddView);
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
-//
-//		eventBus.addListener(new ApplicationEventListener<AccountEvent.GotoRead>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return AccountEvent.GotoRead.class;
-//			}
-//
-//			@Override
-//			public void handle(AccountEvent.GotoRead event) {
-//				AccountAddView accountAddView = AppContext
-//						.getView(AccountAddViewImpl.class);
-//				accountAddView.editItem((Account) event.getData());
-//				addView((AbstractView) accountAddView);
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
-//
-//		eventBus.addListener(new ApplicationEventListener<AccountEvent.GotoList>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return AccountEvent.GotoList.class;
-//			}
-//
-//			@Override
-//			public void handle(AccountEvent.GotoList event) {
-//				AccountListViewImpl accountListView = AppContext
-//						.getView(AccountListViewImpl.class);
-//				addView(accountListView);
-//				accountListView.doDefaultSearch();
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
-//
-//		eventBus.addListener(new ApplicationEventListener<AccountEvent.GotoEdit>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return AccountEvent.GotoEdit.class;
-//			}
-//
-//			@Override
-//			public void handle(AccountEvent.GotoEdit event) {
-//				AccountAddView accountView = AppContext
-//						.getView(AccountAddViewImpl.class);
-//				accountView.editItem((Account) event.getData());
-//				addView((AbstractView) accountView);
-//			}
-//		});
+		// eventBus.addListener(new
+		// ApplicationEventListener<AccountEvent.GotoAdd>() {
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return AccountEvent.GotoAdd.class;
+		// }
+		//
+		// @Override
+		// public void handle(AccountEvent.GotoAdd event) {
+		// AccountAddView accountAddView = AppContext
+		// .getView(AccountAddViewImpl.class);
+		// accountAddView.addNewItem();
+		// addView((AbstractView) accountAddView);
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
+		//
+		// eventBus.addListener(new
+		// ApplicationEventListener<AccountEvent.GotoRead>() {
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return AccountEvent.GotoRead.class;
+		// }
+		//
+		// @Override
+		// public void handle(AccountEvent.GotoRead event) {
+		// AccountAddView accountAddView = AppContext
+		// .getView(AccountAddViewImpl.class);
+		// accountAddView.editItem((Account) event.getData());
+		// addView((AbstractView) accountAddView);
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
+		//
+		// eventBus.addListener(new
+		// ApplicationEventListener<AccountEvent.GotoList>() {
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return AccountEvent.GotoList.class;
+		// }
+		//
+		// @Override
+		// public void handle(AccountEvent.GotoList event) {
+		// AccountListViewImpl accountListView = AppContext
+		// .getView(AccountListViewImpl.class);
+		// addView(accountListView);
+		// accountListView.doDefaultSearch();
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
+		//
+		// eventBus.addListener(new
+		// ApplicationEventListener<AccountEvent.GotoEdit>() {
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return AccountEvent.GotoEdit.class;
+		// }
+		//
+		// @Override
+		// public void handle(AccountEvent.GotoEdit event) {
+		// AccountAddView accountView = AppContext
+		// .getView(AccountAddViewImpl.class);
+		// accountView.editItem((Account) event.getData());
+		// addView((AbstractView) accountView);
+		// }
+		// });
 	}
 
 	@SuppressWarnings("serial")
 	private void registerCampaignListeners() {
-//		eventBus.addListener(new ApplicationEventListener<CampaignEvent.GotoAdd>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return CampaignEvent.GotoAdd.class;
-//			}
-//
-//			@Override
-//			public void handle(CampaignEvent.GotoAdd event) {
-//				CampaignAddViewImpl view = AppContext
-//						.getView(CampaignAddViewImpl.class);
-//				addView(view);
-//				view.addNewItem();
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
-//
-//		eventBus.addListener(new ApplicationEventListener<CampaignEvent.GotoRead>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return CampaignEvent.GotoRead.class;
-//			}
-//
-//			@Override
-//			public void handle(CampaignEvent.GotoRead event) {
-//				CampaignAddViewImpl view = AppContext
-//						.getView(CampaignAddViewImpl.class);
-//				view.editItem((Campaign) event.getData());
-//				addView(view);
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
-//
-//		eventBus.addListener(new ApplicationEventListener<CampaignEvent.GotoEdit>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return CampaignEvent.GotoEdit.class;
-//			}
-//
-//			@Override
-//			public void handle(CampaignEvent.GotoEdit event) {
-//				CampaignAddViewImpl view = AppContext
-//						.getView(CampaignAddViewImpl.class);
-//				view.editItem((Campaign) event.getData());
-//				addView(view);
-//			}
-//		});
-//
-//		eventBus.addListener(new ApplicationEventListener<CampaignEvent.GotoList>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return CampaignEvent.GotoList.class;
-//			}
-//
-//			@Override
-//			public void handle(CampaignEvent.GotoList event) {
-//				CampaignListViewImpl campaignListView = AppContext
-//						.getView(CampaignListViewImpl.class);
-//				addView(campaignListView);
-//				campaignListView.doDefaultSearch();
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
+		// eventBus.addListener(new
+		// ApplicationEventListener<CampaignEvent.GotoAdd>() {
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return CampaignEvent.GotoAdd.class;
+		// }
+		//
+		// @Override
+		// public void handle(CampaignEvent.GotoAdd event) {
+		// CampaignAddViewImpl view = AppContext
+		// .getView(CampaignAddViewImpl.class);
+		// addView(view);
+		// view.addNewItem();
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
+		//
+		// eventBus.addListener(new
+		// ApplicationEventListener<CampaignEvent.GotoRead>() {
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return CampaignEvent.GotoRead.class;
+		// }
+		//
+		// @Override
+		// public void handle(CampaignEvent.GotoRead event) {
+		// CampaignAddViewImpl view = AppContext
+		// .getView(CampaignAddViewImpl.class);
+		// view.editItem((Campaign) event.getData());
+		// addView(view);
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
+		//
+		// eventBus.addListener(new
+		// ApplicationEventListener<CampaignEvent.GotoEdit>() {
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return CampaignEvent.GotoEdit.class;
+		// }
+		//
+		// @Override
+		// public void handle(CampaignEvent.GotoEdit event) {
+		// CampaignAddViewImpl view = AppContext
+		// .getView(CampaignAddViewImpl.class);
+		// view.editItem((Campaign) event.getData());
+		// addView(view);
+		// }
+		// });
+		//
+		// eventBus.addListener(new
+		// ApplicationEventListener<CampaignEvent.GotoList>() {
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return CampaignEvent.GotoList.class;
+		// }
+		//
+		// @Override
+		// public void handle(CampaignEvent.GotoList event) {
+		// CampaignListViewImpl campaignListView = AppContext
+		// .getView(CampaignListViewImpl.class);
+		// addView(campaignListView);
+		// campaignListView.doDefaultSearch();
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
 	}
 
 	@SuppressWarnings("serial")
 	private void registerContactListeners() {
-//		eventBus.addListener(new ApplicationEventListener<ContactEvent.GotoAdd>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return ContactEvent.GotoAdd.class;
-//			}
-//
-//			@Override
-//			public void handle(ContactEvent.GotoAdd event) {
-//				ContactAddViewImpl view = AppContext
-//						.getView(ContactAddViewImpl.class);
-//				addView(view);
-//				view.addNewItem();
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
-//
-//		eventBus.addListener(new ApplicationEventListener<ContactEvent.GotoRead>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return ContactEvent.GotoRead.class;
-//			}
-//
-//			@Override
-//			public void handle(ContactEvent.GotoRead event) {
-//				ContactAddViewImpl view = AppContext
-//						.getView(ContactAddViewImpl.class);
-//				addView(view);
-//				view.viewItem((Contact) event.getData());
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
-//
-//		eventBus.addListener(new ApplicationEventListener<ContactEvent.GotoEdit>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return ContactEvent.GotoEdit.class;
-//			}
-//
-//			@Override
-//			public void handle(ContactEvent.GotoEdit event) {
-//				ContactAddViewImpl view = AppContext
-//						.getView(ContactAddViewImpl.class);
-//				addView(view);
-//				view.editItem((Contact) event.getData());
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
-//
-//		eventBus.addListener(new ApplicationEventListener<ContactEvent.GotoList>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return ContactEvent.GotoList.class;
-//			}
-//
-//			@Override
-//			public void handle(ContactEvent.GotoList event) {
-//				ContactListViewImpl contactListView = AppContext
-//						.getView(ContactListViewImpl.class);
-//				addView(contactListView);
-//				contactListView.doDefaultSearch();
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
+		// eventBus.addListener(new
+		// ApplicationEventListener<ContactEvent.GotoAdd>() {
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return ContactEvent.GotoAdd.class;
+		// }
+		//
+		// @Override
+		// public void handle(ContactEvent.GotoAdd event) {
+		// ContactAddViewImpl view = AppContext
+		// .getView(ContactAddViewImpl.class);
+		// addView(view);
+		// view.addNewItem();
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
+		//
+		// eventBus.addListener(new
+		// ApplicationEventListener<ContactEvent.GotoRead>() {
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return ContactEvent.GotoRead.class;
+		// }
+		//
+		// @Override
+		// public void handle(ContactEvent.GotoRead event) {
+		// ContactAddViewImpl view = AppContext
+		// .getView(ContactAddViewImpl.class);
+		// addView(view);
+		// view.viewItem((Contact) event.getData());
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
+		//
+		// eventBus.addListener(new
+		// ApplicationEventListener<ContactEvent.GotoEdit>() {
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return ContactEvent.GotoEdit.class;
+		// }
+		//
+		// @Override
+		// public void handle(ContactEvent.GotoEdit event) {
+		// ContactAddViewImpl view = AppContext
+		// .getView(ContactAddViewImpl.class);
+		// addView(view);
+		// view.editItem((Contact) event.getData());
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
+		//
+		// eventBus.addListener(new
+		// ApplicationEventListener<ContactEvent.GotoList>() {
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return ContactEvent.GotoList.class;
+		// }
+		//
+		// @Override
+		// public void handle(ContactEvent.GotoList event) {
+		// ContactListViewImpl contactListView = AppContext
+		// .getView(ContactListViewImpl.class);
+		// addView(contactListView);
+		// contactListView.doDefaultSearch();
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
 	}
 
 	private void registerLeadListeners() {
-//		eventBus.addListener(new ApplicationEventListener<LeadEvent.GotoAdd>() {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return LeadEvent.GotoAdd.class;
-//			}
-//
-//			@Override
-//			public void handle(LeadEvent.GotoAdd event) {
-//				LeadAddView leadAddView = AppContext
-//						.getView(LeadAddViewImpl.class);
-//				leadAddView.addNewItem();
-//				addView((AbstractView) leadAddView);
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
-//
-//		eventBus.addListener(new ApplicationEventListener<LeadEvent.GotoRead>() {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return LeadEvent.GotoRead.class;
-//			}
-//
-//			@Override
-//			public void handle(LeadEvent.GotoRead event) {
-//				LeadAddView leadAddView = AppContext
-//						.getView(LeadAddViewImpl.class);
-//				leadAddView.editItem((Lead) event.getData());
-//				addView((AbstractView) leadAddView);
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
-//
-//		eventBus.addListener(new ApplicationEventListener<LeadEvent.GotoList>() {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return LeadEvent.GotoList.class;
-//			}
-//
-//			@Override
-//			public void handle(LeadEvent.GotoList event) {
-//				LeadListViewImpl accountListView = AppContext
-//						.getView(LeadListViewImpl.class);
-//				addView(accountListView);
-//				accountListView.doDefaultSearch();
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
-//
-//		eventBus.addListener(new ApplicationEventListener<LeadEvent.GotoEdit>() {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return LeadEvent.GotoEdit.class;
-//			}
-//
-//			@Override
-//			public void handle(LeadEvent.GotoEdit event) {
-//				LeadAddViewImpl leadView = AppContext
-//						.getView(LeadAddViewImpl.class);
-//				leadView.editItem((Lead) event.getData());
-//				addView(leadView);
-//			}
-//		});
+		// eventBus.addListener(new
+		// ApplicationEventListener<LeadEvent.GotoAdd>() {
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return LeadEvent.GotoAdd.class;
+		// }
+		//
+		// @Override
+		// public void handle(LeadEvent.GotoAdd event) {
+		// LeadAddView leadAddView = AppContext
+		// .getView(LeadAddViewImpl.class);
+		// leadAddView.addNewItem();
+		// addView((AbstractView) leadAddView);
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
+		//
+		// eventBus.addListener(new
+		// ApplicationEventListener<LeadEvent.GotoRead>() {
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return LeadEvent.GotoRead.class;
+		// }
+		//
+		// @Override
+		// public void handle(LeadEvent.GotoRead event) {
+		// LeadAddView leadAddView = AppContext
+		// .getView(LeadAddViewImpl.class);
+		// leadAddView.editItem((Lead) event.getData());
+		// addView((AbstractView) leadAddView);
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
+		//
+		// eventBus.addListener(new
+		// ApplicationEventListener<LeadEvent.GotoList>() {
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return LeadEvent.GotoList.class;
+		// }
+		//
+		// @Override
+		// public void handle(LeadEvent.GotoList event) {
+		// LeadListViewImpl accountListView = AppContext
+		// .getView(LeadListViewImpl.class);
+		// addView(accountListView);
+		// accountListView.doDefaultSearch();
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
+		//
+		// eventBus.addListener(new
+		// ApplicationEventListener<LeadEvent.GotoEdit>() {
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return LeadEvent.GotoEdit.class;
+		// }
+		//
+		// @Override
+		// public void handle(LeadEvent.GotoEdit event) {
+		// LeadAddViewImpl leadView = AppContext
+		// .getView(LeadAddViewImpl.class);
+		// leadView.editItem((Lead) event.getData());
+		// addView(leadView);
+		// }
+		// });
 	}
 
 	private void registerOpportunityListeners() {
-//		eventBus.addListener(new ApplicationEventListener<OpportunityEvent.GotoAdd>() {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return OpportunityEvent.GotoAdd.class;
-//			}
-//
-//			@Override
-//			public void handle(OpportunityEvent.GotoAdd event) {
-//				OpportunityAddViewImpl view = AppContext
-//						.getView(OpportunityAddViewImpl.class);
-//				view.addNewItem();
-//				addView(view);
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
-//
-//		eventBus.addListener(new ApplicationEventListener<OpportunityEvent.GotoRead>() {
-//
-//			/**
-//			 * 
-//			 */
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return OpportunityEvent.GotoRead.class;
-//			}
-//
-//			@Override
-//			public void handle(OpportunityEvent.GotoRead event) {
-//				OpportunityAddViewImpl view = AppContext
-//						.getView(OpportunityAddViewImpl.class);
-//				view.editItem((Opportunity) event.getData());
-//				addView(view);
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
-//
-//		eventBus.addListener(new ApplicationEventListener<OpportunityEvent.GotoList>() {
-//
-//			/**
-//			 * 
-//			 */
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return OpportunityEvent.GotoList.class;
-//			}
-//
-//			@Override
-//			public void handle(OpportunityEvent.GotoList event) {
-//				OpportunityListViewImpl view = AppContext
-//						.getView(OpportunityListViewImpl.class);
-//				addView(view);
-//				view.doDefaultSearch();
-//				addBtn.setPopupVisible(false);
-//			}
-//		});
-//
-//		eventBus.addListener(new ApplicationEventListener<OpportunityEvent.GotoEdit>() {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return OpportunityEvent.GotoEdit.class;
-//			}
-//
-//			@Override
-//			public void handle(OpportunityEvent.GotoEdit event) {
-//				OpportunityAddViewImpl view = AppContext
-//						.getView(OpportunityAddViewImpl.class);
-//				view.editItem((Opportunity) event.getData());
-//				addView(view);
-//			}
-//		});
+		// eventBus.addListener(new
+		// ApplicationEventListener<OpportunityEvent.GotoAdd>() {
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return OpportunityEvent.GotoAdd.class;
+		// }
+		//
+		// @Override
+		// public void handle(OpportunityEvent.GotoAdd event) {
+		// OpportunityAddViewImpl view = AppContext
+		// .getView(OpportunityAddViewImpl.class);
+		// view.addNewItem();
+		// addView(view);
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
+		//
+		// eventBus.addListener(new
+		// ApplicationEventListener<OpportunityEvent.GotoRead>() {
+		//
+		// /**
+		// *
+		// */
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return OpportunityEvent.GotoRead.class;
+		// }
+		//
+		// @Override
+		// public void handle(OpportunityEvent.GotoRead event) {
+		// OpportunityAddViewImpl view = AppContext
+		// .getView(OpportunityAddViewImpl.class);
+		// view.editItem((Opportunity) event.getData());
+		// addView(view);
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
+		//
+		// eventBus.addListener(new
+		// ApplicationEventListener<OpportunityEvent.GotoList>() {
+		//
+		// /**
+		// *
+		// */
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return OpportunityEvent.GotoList.class;
+		// }
+		//
+		// @Override
+		// public void handle(OpportunityEvent.GotoList event) {
+		// OpportunityListViewImpl view = AppContext
+		// .getView(OpportunityListViewImpl.class);
+		// addView(view);
+		// view.doDefaultSearch();
+		// addBtn.setPopupVisible(false);
+		// }
+		// });
+		//
+		// eventBus.addListener(new
+		// ApplicationEventListener<OpportunityEvent.GotoEdit>() {
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// public Class<? extends ApplicationEvent> getEventType() {
+		// return OpportunityEvent.GotoEdit.class;
+		// }
+		//
+		// @Override
+		// public void handle(OpportunityEvent.GotoEdit event) {
+		// OpportunityAddViewImpl view = AppContext
+		// .getView(OpportunityAddViewImpl.class);
+		// view.editItem((Opportunity) event.getData());
+		// addView(view);
+		// }
+		// });
 	}
 
 	public void addView(View view) {
@@ -532,27 +552,38 @@ public class CrmContainer extends AbstractView {
 			String caption = event.getButton().getCaption();
 
 			if (caption == null) {
-				EventBus.getInstance().fireEvent(new CrmEvent.GotoHome(this, null));
+				EventBus.getInstance().fireEvent(
+						new CrmEvent.GotoHome(this, null));
 			} else if (NEW_ACCOUNT_ITEM.equals(caption)) {
-				EventBus.getInstance().fireEvent(new AccountEvent.GotoAdd(this, null));
+				EventBus.getInstance().fireEvent(
+						new AccountEvent.GotoAdd(this, null));
 			} else if (ACCOUNT_LIST.equals(caption)) {
-				EventBus.getInstance().fireEvent(new AccountEvent.GotoList(this, null));
+				EventBus.getInstance().fireEvent(
+						new AccountEvent.GotoList(this, null));
 			} else if (NEW_CAMPAIGN_ITEM.equals(caption)) {
-				EventBus.getInstance().fireEvent(new CampaignEvent.GotoAdd(this, null));
+				EventBus.getInstance().fireEvent(
+						new CampaignEvent.GotoAdd(this, null));
 			} else if (CAMPAIGN_LIST.equals(caption)) {
-				EventBus.getInstance().fireEvent(new CampaignEvent.GotoList(this, null));
+				EventBus.getInstance().fireEvent(
+						new CampaignEvent.GotoList(this, null));
 			} else if (CONTACT_LIST.equals(caption)) {
-				EventBus.getInstance().fireEvent(new ContactEvent.GotoList(this, null));
+				EventBus.getInstance().fireEvent(
+						new ContactEvent.GotoList(this, null));
 			} else if (NEW_CONTACT_ITEM.equals(caption)) {
-				EventBus.getInstance().fireEvent(new ContactEvent.GotoAdd(this, null));
+				EventBus.getInstance().fireEvent(
+						new ContactEvent.GotoAdd(this, null));
 			} else if (NEW_LEAD_ITEM.equals(caption)) {
-				EventBus.getInstance().fireEvent(new LeadEvent.GotoAdd(this, null));
+				EventBus.getInstance().fireEvent(
+						new LeadEvent.GotoAdd(this, null));
 			} else if (LEAD_LIST.equals(caption)) {
-				EventBus.getInstance().fireEvent(new LeadEvent.GotoList(this, null));
+				EventBus.getInstance().fireEvent(
+						new LeadEvent.GotoList(this, null));
 			} else if (NEW_OPPORTUNITY_ITEM.equals(caption)) {
-				EventBus.getInstance().fireEvent(new OpportunityEvent.GotoAdd(this, null));
+				EventBus.getInstance().fireEvent(
+						new OpportunityEvent.GotoAdd(this, null));
 			} else if (OPPORTUNITY_LIST.equals(caption)) {
-				EventBus.getInstance().fireEvent(new OpportunityEvent.GotoList(this, null));
+				EventBus.getInstance().fireEvent(
+						new OpportunityEvent.GotoList(this, null));
 			}
 
 			for (Iterator<com.vaadin.ui.Component> it = toolbar
