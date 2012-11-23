@@ -61,7 +61,7 @@ public class MainViewImpl extends AbstractView {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
-						ProjectContainer projectDashboard = AppContext
+						ProjectContainer projectDashboard = ViewManager
 								.getView(ProjectContainer.class);
 						bodyLayout.removeAllComponents();
 						bodyLayout.addComponent(projectDashboard);
