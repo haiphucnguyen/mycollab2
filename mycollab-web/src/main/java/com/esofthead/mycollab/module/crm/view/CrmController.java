@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoAdd;
+import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoEdit;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoList;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoRead;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
@@ -111,6 +112,23 @@ public class CrmController {
 				});
 
 		EventBus.getInstance().addListener(
+				new ApplicationEventListener<AccountEvent.GotoEdit>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return AccountEvent.GotoEdit.class;
+					}
+
+					@Override
+					public void handle(GotoEdit event) {
+						AccountAddView view = ViewManager
+								.getView(AccountAddViewImpl.class);
+						new AccountAddPresenter(view).go(container);
+						view.editItem((Account) event.getData());
+					}
+				});
+
+		EventBus.getInstance().addListener(
 				new ApplicationEventListener<AccountEvent.GotoRead>() {
 
 					@Override
@@ -185,7 +203,7 @@ public class CrmController {
 					}
 				});
 	}
-	
+
 	@SuppressWarnings("serial")
 	private void bindContactEvents() {
 		EventBus.getInstance().addListener(
@@ -242,7 +260,7 @@ public class CrmController {
 					}
 				});
 	}
-	
+
 	@SuppressWarnings("serial")
 	private void bindLeadEvents() {
 		EventBus.getInstance().addListener(
@@ -299,7 +317,7 @@ public class CrmController {
 					}
 				});
 	}
-	
+
 	@SuppressWarnings("serial")
 	private void bindOpportunityEvents() {
 		EventBus.getInstance().addListener(

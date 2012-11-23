@@ -1,8 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.module.crm.domain.Contact;
+import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
+import com.esofthead.mycollab.web.AppContext;
 
 public class ContactReadPresenter  extends CrmGenericPresenter<ContactReadView> {
 
@@ -18,26 +22,32 @@ public class ContactReadPresenter  extends CrmGenericPresenter<ContactReadView> 
 
 					@Override
 					public void onEdit(Contact data) {
-						// TODO Auto-generated method stub
-
+						EventBus.getInstance().fireEvent(
+								new ContactEvent.GotoEdit(this, data));
 					}
 
 					@Override
 					public void onDelete(Contact data) {
-						// TODO Auto-generated method stub
-
+						ContactService ContactService = AppContext
+								.getSpringBean(ContactService.class);
+						ContactService.removeWithSession(data.getId(),
+								AppContext.getUsername());
+						EventBus.getInstance().fireEvent(
+								new ContactEvent.GotoList(this, null));
 					}
 
 					@Override
 					public void onClone(Contact data) {
-						// TODO Auto-generated method stub
-
+						Contact cloneData = (Contact) data.copy();
+						cloneData.setId(null);
+						EventBus.getInstance().fireEvent(
+								new ContactEvent.GotoEdit(this, cloneData));
 					}
 
 					@Override
 					public void onCancel() {
-						// TODO Auto-generated method stub
-
+						EventBus.getInstance().fireEvent(
+								new ContactEvent.GotoList(this, null));
 					}
 				});
 	}

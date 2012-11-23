@@ -19,6 +19,7 @@ import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
 
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.w3c.dom.Document;
 import org.w3c.dom.Element;
@@ -35,7 +36,8 @@ import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 public class AuditLogServiceImpl extends DefaultCrudService<Integer, AuditLog>
 		implements AuditLogService {
 	
-	private AuditLogMapper auditLogMapper;
+	@Autowired
+	protected AuditLogMapper auditLogMapper;
 
 	@Override
 	public ICrudGenericDAO<Integer, AuditLog> getCrudMapper() {

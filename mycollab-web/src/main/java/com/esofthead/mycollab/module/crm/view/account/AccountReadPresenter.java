@@ -1,8 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
+import com.esofthead.mycollab.web.AppContext;
 
 public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 
@@ -17,26 +21,32 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 
 					@Override
 					public void onEdit(Account data) {
-						// TODO Auto-generated method stub
-
+						EventBus.getInstance().fireEvent(
+								new AccountEvent.GotoEdit(this, data));
 					}
 
 					@Override
 					public void onDelete(Account data) {
-						// TODO Auto-generated method stub
-
+						AccountService accountService = AppContext
+								.getSpringBean(AccountService.class);
+						accountService.removeWithSession(data.getId(),
+								AppContext.getUsername());
+						EventBus.getInstance().fireEvent(
+								new AccountEvent.GotoList(this, null));
 					}
 
 					@Override
 					public void onClone(Account data) {
-						// TODO Auto-generated method stub
-
+						Account cloneData = (Account) data.copy();
+						cloneData.setId(null);
+						EventBus.getInstance().fireEvent(
+								new AccountEvent.GotoEdit(this, cloneData));
 					}
 
 					@Override
 					public void onCancel() {
-						// TODO Auto-generated method stub
-
+						EventBus.getInstance().fireEvent(
+								new AccountEvent.GotoList(this, null));
 					}
 				});
 	}

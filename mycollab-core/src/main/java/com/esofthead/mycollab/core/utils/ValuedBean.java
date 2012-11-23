@@ -1,9 +1,8 @@
 package com.esofthead.mycollab.core.utils;
 
-
-public class ValuedBean {
+public class ValuedBean implements Cloneable {
 	private boolean selected = false;
-	
+
 	private Object extraData;
 
 	public Object getExtraData() {
@@ -20,5 +19,13 @@ public class ValuedBean {
 
 	public void setSelected(boolean selected) {
 		this.selected = selected;
+	}
+
+	public Object copy() {
+		try {
+			return super.clone();
+		} catch (CloneNotSupportedException e) {
+			return null;
+		}
 	}
 }

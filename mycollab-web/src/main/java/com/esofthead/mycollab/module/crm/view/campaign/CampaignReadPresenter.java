@@ -1,8 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.module.crm.domain.Campaign;
+import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
+import com.esofthead.mycollab.web.AppContext;
 
 public class CampaignReadPresenter  extends CrmGenericPresenter<CampaignReadView> {
 
@@ -17,26 +21,32 @@ public class CampaignReadPresenter  extends CrmGenericPresenter<CampaignReadView
 
 					@Override
 					public void onEdit(Campaign data) {
-						// TODO Auto-generated method stub
-
+						EventBus.getInstance().fireEvent(
+								new CampaignEvent.GotoEdit(this, data));
 					}
 
 					@Override
 					public void onDelete(Campaign data) {
-						// TODO Auto-generated method stub
-
+						CampaignService campaignService = AppContext
+								.getSpringBean(CampaignService.class);
+						campaignService.removeWithSession(data.getId(),
+								AppContext.getUsername());
+						EventBus.getInstance().fireEvent(
+								new CampaignEvent.GotoList(this, null));
 					}
 
 					@Override
 					public void onClone(Campaign data) {
-						// TODO Auto-generated method stub
-
+						Campaign cloneData = (Campaign) data.copy();
+						cloneData.setId(null);
+						EventBus.getInstance().fireEvent(
+								new CampaignEvent.GotoEdit(this, cloneData));
 					}
 
 					@Override
 					public void onCancel() {
-						// TODO Auto-generated method stub
-
+						EventBus.getInstance().fireEvent(
+								new CampaignEvent.GotoList(this, null));
 					}
 				});
 	}
