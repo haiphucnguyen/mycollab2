@@ -1,95 +1,138 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
+import java.util.List;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
-import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.ui.components.OpportunitySearchPanel;
-import com.esofthead.mycollab.vaadin.data.MyBatisQueryContainer;
-import com.esofthead.mycollab.vaadin.data.MyBatisQueryDefinition;
-import com.esofthead.mycollab.vaadin.data.MyBatisQueryFactory;
+import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
+import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.BeanTable;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
+import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-
 
 public class OpportunityListViewImpl extends AbstractView implements
 		OpportunityListView {
 	private static final long serialVersionUID = 1L;
 
-	private BeanTable<SimpleOpportunity> tableItem;
+	private final OpportunitySearchPanel opportunitySeachPanel;
 
-	private OpportunitySearchCriteria searchCriteria;
+	private SelectionOptionButton selectOptionButton;
 
-	private VerticalLayout opportunityListLayout;
-	
+	private PagedBeanTable<SimpleOpportunity> tableItem;
+
+	private final VerticalLayout accountListLayout;
+
+	private PopupButtonControl tableActionControls;
+
+	private final Label selectedItemsNumberLabel = new Label();
+
+	private OpportunityListPresenter presenter;
+
 	public OpportunityListViewImpl() {
 		this.setSpacing(true);
 
-		OpportunitySearchPanel opportunitySearchPanel = AppContext
-				.getSpringBean(OpportunitySearchPanel.class);
-		this.addComponent(opportunitySearchPanel);
+		opportunitySeachPanel = new OpportunitySearchPanel();
+		this.addComponent(opportunitySeachPanel);
 
-		opportunityListLayout = new VerticalLayout();
-		this.addComponent(opportunityListLayout);
+		accountListLayout = new VerticalLayout();
+		accountListLayout.setSpacing(true);
+		this.addComponent(accountListLayout);
+
+		generateDisplayTable();
 	}
 
-	private void init() {
-//		eventBus.addListener(new ApplicationEventListener<OpportunityEvent.Search>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return OpportunityEvent.Search.class;
-//			}
-//
-//			@Override
-//			public void handle(OpportunityEvent.Search event) {
-//				searchCriteria = (OpportunitySearchCriteria) event.getData();
-//				OpportunityListViewImpl.this.doSearch(searchCriteria);
-//			}
-//		});
-	}
+	private void generateDisplayTable() {
+		tableItem = new PagedBeanTable<SimpleOpportunity>();
 
-	@Override
-	public void doDefaultSearch() {
-		searchCriteria = new OpportunitySearchCriteria();
-		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		doSearch(searchCriteria);
+		// add code generate column here
+
+		tableItem.setWidth("100%");
+
+		accountListLayout.addComponent(constructTableActionControls());
+		accountListLayout.addComponent(tableItem);
+		accountListLayout.addComponent(tableItem.createControls());
 	}
 
 	@Override
-	public void doSearch(OpportunitySearchCriteria searchCriteria) {
-		tableItem = new BeanTable<SimpleOpportunity>();
-		tableItem.addStyleName("striped");
+	public void displayOpportunitys(List<SimpleOpportunity> accounts,
+			int currentPage, int totalPages) {
+		tableItem.setCurrentPage(currentPage);
+		tableItem.setTotalPage(totalPages);
 
-		MyBatisQueryContainer<SimpleOpportunity> container = new MyBatisQueryContainer<SimpleOpportunity>(
-				new MyBatisQueryDefinition<OpportunitySearchCriteria>(
-						AppContext.getSpringBean(OpportunityService.class), false,
-						5), new MyBatisQueryFactory<OpportunitySearchCriteria>(
-						searchCriteria));
-
-		container.addContainerProperty("campaignname", String.class, "", true,
-				true);
-		container.addContainerProperty("status", String.class, "", true, true);
-		container.addContainerProperty("type", String.class, "", true, true);
-		container.addContainerProperty("expectedrevenue", Long.class, "", true,
-				true);
-
-		container.addContainerProperty("enddate", String.class, "", true, true);
-
-		container.addContainerProperty("assignUserFullName", String.class, "",
-				true, true);
-		container.addContainerProperty("action", Object.class, "", true, false);
-
+		BeanItemContainer<SimpleOpportunity> container = new BeanItemContainer<SimpleOpportunity>(
+				SimpleOpportunity.class, accounts);
 		tableItem.setContainerDataSource(container);
-		tableItem.setColumnHeaders(new String[] { "Campaign", "Status", "Type",
-				"Expected Revenue", "End Date", "Assign User", "Action" });
+		tableItem.setVisibleColumns(new String[] { "selected", "accountname",
+				"city", "billingCountry", "phoneoffice", "email", "assignuser",
+				"createdtime" });
+		tableItem.setColumnHeaders(new String[] { "", "Campaign", "Status",
+				"Type", "Expected Revenue", "End Date", "Assign User" });
 
-		opportunityListLayout.removeAllComponents();
-		opportunityListLayout.addComponent(tableItem);
-//		opportunityListLayout.addComponent(tableItem.createControls());
+	}
+
+	@Override
+	public HasSearchHandlers<OpportunitySearchCriteria> getSearchHandlers() {
+		return opportunitySeachPanel;
+	}
+
+	private ComponentContainer constructTableActionControls() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
+
+		selectOptionButton = new SelectionOptionButton();
+		layout.addComponent(selectOptionButton);
+
+		tableActionControls = new PopupButtonControl("delete", "Delete");
+		tableActionControls.addOptionItem("mail", "Mail");
+		tableActionControls.addOptionItem("export", "Export");
+
+		layout.addComponent(tableActionControls);
+		layout.addComponent(selectedItemsNumberLabel);
+		layout.setComponentAlignment(selectedItemsNumberLabel,
+				Alignment.MIDDLE_CENTER);
+		return layout;
+	}
+
+	@Override
+	public void enableActionControls(int numOfSelectedItems) {
+		tableActionControls.setEnabled(true);
+		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+	}
+
+	@Override
+	public void disableActionControls() {
+		tableActionControls.setEnabled(false);
+		selectedItemsNumberLabel.setValue("");
+	}
+
+	@Override
+	public void setPresenter(OpportunityListPresenter presenter) {
+		this.presenter = presenter;
+
+	}
+
+	@Override
+	public HasPagableHandlers getPagableHandlers() {
+		return tableItem;
+	}
+
+	@Override
+	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+		return selectOptionButton;
+	}
+
+	@Override
+	public HasPopupActionHandlers getPopupActionHandlers() {
+		return tableActionControls;
 	}
 }

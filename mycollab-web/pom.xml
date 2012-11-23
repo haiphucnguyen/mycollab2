@@ -253,7 +253,7 @@
 						<configuration>
 							<target>
 								<scp localfile="${basedir}/target/root.war" keyfile="${basedir}/esofthead-virginia.pem"
-									todir="ubuntu@23.23.77.174:/home/ubuntu/jetty-hightide-7.6.4.v20120524/webapps" />
+									todir="ubuntu@23.23.166.114:/home/ubuntu/jetty-hightide-8.1.8.v20121106/webapps" />
 
 							</target>
 						</configuration>

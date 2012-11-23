@@ -72,12 +72,10 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		BeanItemContainer<SimpleLead> container = new BeanItemContainer<SimpleLead>(
 				SimpleLead.class, accounts);
 		tableItem.setContainerDataSource(container);
-		tableItem.setVisibleColumns(new String[] { "selected", "accountname",
-				"primcity", "primcountry", "phoneoffice", "email", "assignuser",
-				"createdtime" });
+		tableItem.setVisibleColumns(new String[] { "selected", "leadName",
+				"status", "accountname", "officephone", "email", "assignuser"});
 		tableItem.setColumnHeaders(new String[] { "", "Name", "Status",
-				"Account Name", "Office Phone", "Email", "Assign User",
-				"Action" });
+				"Account Name", "Office Phone", "Email", "Assign User"});
 
 	}
 

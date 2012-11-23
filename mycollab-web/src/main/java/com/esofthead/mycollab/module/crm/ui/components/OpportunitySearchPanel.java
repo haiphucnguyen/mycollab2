@@ -2,9 +2,10 @@ package com.esofthead.mycollab.module.crm.ui.components;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -15,7 +16,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -23,8 +23,13 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-public class OpportunitySearchPanel extends CustomComponent {
-	protected ContactSearchCriteria searchCriteria;
+public class OpportunitySearchPanel extends
+		GenericSearchPanel<OpportunitySearchCriteria> {
+	protected OpportunitySearchCriteria searchCriteria;
+
+	public OpportunitySearchPanel() {
+		searchCriteria = new OpportunitySearchCriteria();
+	}
 
 	@Override
 	public void attach() {
@@ -56,7 +61,9 @@ public class OpportunitySearchPanel extends CustomComponent {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-
+						EventBus.getInstance().fireEvent(
+								new OpportunityEvent.GotoAdd(
+										OpportunitySearchPanel.this, null));
 					}
 				});
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
@@ -100,13 +107,11 @@ public class OpportunitySearchPanel extends CustomComponent {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							searchCriteria = new ContactSearchCriteria();
+							searchCriteria = new OpportunitySearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
-							searchCriteria
-									.setContactName(new StringSearchField(
-											SearchField.AND, (String) nameField
-													.getValue()));
+							OpportunitySearchPanel.this
+									.notifySearchHandler(searchCriteria);
 						}
 					}));
 
@@ -190,9 +195,11 @@ public class OpportunitySearchPanel extends CustomComponent {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							searchCriteria = new ContactSearchCriteria();
+							searchCriteria = new OpportunitySearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
+							OpportunitySearchPanel.this
+									.notifySearchHandler(searchCriteria);
 						}
 
 					}));
