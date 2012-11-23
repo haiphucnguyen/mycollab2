@@ -7,6 +7,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.Presenter;
 import com.esofthead.mycollab.vaadin.mvp.View;
@@ -19,8 +20,8 @@ public interface LeadListView  extends View {
 	void enableActionControls(int numOfSelectedItem);
 
 	void disableActionControls();
-
-	void setPresenter(LeadListPresenter presenter);
+	
+	HasSelectableItemHandlers<SimpleLead> getSelectableItemHandlers();
 
 	HasSearchHandlers<LeadSearchCriteria> getSearchHandlers();
 
@@ -31,7 +32,6 @@ public interface LeadListView  extends View {
 	HasPopupActionHandlers getPopupActionHandlers();
 
 	interface LeadListPresenter extends Presenter {
-		void onItemSelect(SimpleLead account);
 		
 		void doDefaultSearch();
 

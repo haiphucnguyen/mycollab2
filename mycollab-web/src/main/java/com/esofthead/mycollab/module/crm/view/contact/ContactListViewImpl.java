@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.crm.ui.components.ContactSearchPanel;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
@@ -44,8 +45,6 @@ public class ContactListViewImpl extends AbstractView implements
 
 	private final Label selectedItemsNumberLabel = new Label();
 
-	private ContactListPresenter presenter;
-
 	public ContactListViewImpl() {
 		this.setSpacing(true);
 
@@ -76,9 +75,9 @@ public class ContactListViewImpl extends AbstractView implements
 					@Override
 					public void buttonClick(ClickEvent event) {
 						@SuppressWarnings("unchecked")
-						SimpleContact account = ((PagedBeanTable<SimpleContact>) source)
+						SimpleContact contact = ((PagedBeanTable<SimpleContact>) source)
 								.getBeanByIndex(itemId);
-						presenter.onItemSelect(account);
+						tableItem.fireSelectItemEvent(contact);
 
 					}
 				});
@@ -133,13 +132,16 @@ public class ContactListViewImpl extends AbstractView implements
 
 			}
 		});
-		
+
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 		tableItem.setColumnWidth("title", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem
+				.setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
-		tableItem.setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem
+				.setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("assignUserFullName",
+				UIConstants.TABLE_X_LABEL_WIDTH);
 
 		tableItem.setWidth("100%");
 		contactListLayout.addComponent(constructTableActionControls());
@@ -159,7 +161,7 @@ public class ContactListViewImpl extends AbstractView implements
 
 		tableItem.setVisibleColumns(new String[] { "selected", "contactName",
 				"title", "accountName", "email", "officephone",
-				"assignUserFullName"});
+				"assignUserFullName" });
 		tableItem.setColumnHeaders(new String[] { "", "Name", "Title",
 				"Account Name", "Email", "Office Phone", "User" });
 
@@ -201,12 +203,6 @@ public class ContactListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public void setPresenter(ContactListPresenter presenter) {
-		this.presenter = presenter;
-
-	}
-
-	@Override
 	public HasPagableHandlers getPagableHandlers() {
 		return tableItem;
 	}
@@ -219,5 +215,10 @@ public class ContactListViewImpl extends AbstractView implements
 	@Override
 	public HasPopupActionHandlers getPopupActionHandlers() {
 		return tableActionControls;
+	}
+
+	@Override
+	public HasSelectableItemHandlers<SimpleContact> getSelectableItemHandlers() {
+		return tableItem;
 	}
 }

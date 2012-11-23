@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.crm.view.campaign.CampaignListView.Campaign
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
+import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
@@ -31,7 +32,6 @@ public class CampaignListPresenterImpl extends
 
 	public CampaignListPresenterImpl(CampaignListView view) {
 		this.view = view;
-		view.setPresenter(this);
 		campaignService = AppContext.getSpringBean(CampaignService.class);
 
 		view.getSearchHandlers().addSearchHandler(
@@ -101,17 +101,21 @@ public class CampaignListPresenterImpl extends
 						}
 					}
 				});
-	}
 
-	@Override
-	public void onItemSelect(SimpleCampaign campaign) {
-		if (selectionModel.isSelected(campaign)) {
-			selectionModel.removeSelection(campaign);
-		} else {
-			selectionModel.addSelection(campaign);
-		}
+		view.getSelectableItemHandlers().addSelectableItemHandler(
+				new SelectableItemHandler<SimpleCampaign>() {
 
-		checkWhetherEnableTableActionControl();
+					@Override
+					public void onSelect(SimpleCampaign item) {
+						if (selectionModel.isSelected(item)) {
+							selectionModel.removeSelection(item);
+						} else {
+							selectionModel.addSelection(item);
+						}
+
+						checkWhetherEnableTableActionControl();
+					}
+				});
 	}
 
 	private void checkWhetherEnableTableActionControl() {

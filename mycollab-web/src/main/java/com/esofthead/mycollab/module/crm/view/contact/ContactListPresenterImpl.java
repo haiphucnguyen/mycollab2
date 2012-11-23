@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.crm.view.contact.ContactListView.ContactLis
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
+import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
@@ -32,7 +33,6 @@ public class ContactListPresenterImpl extends CrmGenericPresenter<ContactListVie
 
 	public ContactListPresenterImpl(ContactListView view) {
 		this.view = view;
-		view.setPresenter(this);
 		contactService = AppContext.getSpringBean(ContactService.class);
 
 		view.getSearchHandlers().addSearchHandler(
@@ -102,17 +102,20 @@ public class ContactListPresenterImpl extends CrmGenericPresenter<ContactListVie
 						}
 					}
 				});
-	}
+		
+		view.getSelectableItemHandlers().addSelectableItemHandler(new SelectableItemHandler<SimpleContact>() {
+			
+			@Override
+			public void onSelect(SimpleContact item) {
+				if (selectionModel.isSelected(item)) {
+					selectionModel.removeSelection(item);
+				} else {
+					selectionModel.addSelection(item);
+				}
 
-	@Override
-	public void onItemSelect(SimpleContact contact) {
-		if (selectionModel.isSelected(contact)) {
-			selectionModel.removeSelection(contact);
-		} else {
-			selectionModel.addSelection(contact);
-		}
-
-		checkWhetherEnableTableActionControl();
+				checkWhetherEnableTableActionControl();
+			}
+		});
 	}
 
 	private void checkWhetherEnableTableActionControl() {

@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.crm.ui.components.CampaignSearchPanel;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
@@ -36,8 +37,6 @@ public class CampaignListViewImpl extends AbstractView implements
 	private PopupButtonControl tableActionControls;
 
 	private Label selectedItemsNumberLabel = new Label();
-
-	private CampaignListPresenter presenter;
 
 	public CampaignListViewImpl() {
 		this.setSpacing(true);
@@ -125,12 +124,6 @@ public class CampaignListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public void setPresenter(CampaignListPresenter presenter) {
-		this.presenter = presenter;
-
-	}
-
-	@Override
 	public HasPagableHandlers getPagableHandlers() {
 		return tableItem;
 	}
@@ -143,6 +136,11 @@ public class CampaignListViewImpl extends AbstractView implements
 	@Override
 	public HasPopupActionHandlers getPopupActionHandlers() {
 		return tableActionControls;
+	}
+
+	@Override
+	public HasSelectableItemHandlers<SimpleCampaign> getSelectableItemHandlers() {
+		return tableItem;
 	}
 
 }

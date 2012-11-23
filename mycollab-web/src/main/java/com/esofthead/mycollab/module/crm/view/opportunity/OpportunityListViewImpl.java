@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.crm.ui.components.OpportunitySearchPanel;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
@@ -36,8 +37,6 @@ public class OpportunityListViewImpl extends AbstractView implements
 	private PopupButtonControl tableActionControls;
 
 	private final Label selectedItemsNumberLabel = new Label();
-
-	private OpportunityListPresenter presenter;
 
 	public OpportunityListViewImpl() {
 		this.setSpacing(true);
@@ -125,12 +124,6 @@ public class OpportunityListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public void setPresenter(OpportunityListPresenter presenter) {
-		this.presenter = presenter;
-
-	}
-
-	@Override
 	public HasPagableHandlers getPagableHandlers() {
 		return tableItem;
 	}
@@ -143,5 +136,10 @@ public class OpportunityListViewImpl extends AbstractView implements
 	@Override
 	public HasPopupActionHandlers getPopupActionHandlers() {
 		return tableActionControls;
+	}
+
+	@Override
+	public HasSelectableItemHandlers<SimpleOpportunity> getSelectableItemHandlers() {
+		return tableItem;
 	}
 }

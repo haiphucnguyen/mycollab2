@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListView.Op
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
+import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
@@ -33,7 +34,6 @@ public class OpportunityListPresenterImpl extends
 
 	public OpportunityListPresenterImpl(OpportunityListView view) {
 		this.view = view;
-		view.setPresenter(this);
 		opportunityService = AppContext.getSpringBean(OpportunityService.class);
 
 		view.getSearchHandlers().addSearchHandler(
@@ -103,17 +103,21 @@ public class OpportunityListPresenterImpl extends
 						}
 					}
 				});
-	}
 
-	@Override
-	public void onItemSelect(SimpleOpportunity opportunity) {
-		if (selectionModel.isSelected(opportunity)) {
-			selectionModel.removeSelection(opportunity);
-		} else {
-			selectionModel.addSelection(opportunity);
-		}
+		view.getSelectableItemHandlers().addSelectableItemHandler(
+				new SelectableItemHandler<SimpleOpportunity>() {
 
-		checkWhetherEnableTableActionControl();
+					@Override
+					public void onSelect(SimpleOpportunity item) {
+						if (selectionModel.isSelected(item)) {
+							selectionModel.removeSelection(item);
+						} else {
+							selectionModel.addSelection(item);
+						}
+
+						checkWhetherEnableTableActionControl();
+					}
+				});
 	}
 
 	private void checkWhetherEnableTableActionControl() {

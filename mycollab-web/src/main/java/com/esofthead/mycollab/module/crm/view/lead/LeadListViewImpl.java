@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.crm.ui.components.LeadSearchPanel;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
@@ -35,8 +36,6 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 	private PopupButtonControl tableActionControls;
 
 	private final Label selectedItemsNumberLabel = new Label();
-
-	private LeadListPresenter presenter;
 
 	public LeadListViewImpl() {
 		this.setSpacing(true);
@@ -124,12 +123,6 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 	}
 
 	@Override
-	public void setPresenter(LeadListPresenter presenter) {
-		this.presenter = presenter;
-
-	}
-
-	@Override
 	public HasPagableHandlers getPagableHandlers() {
 		return tableItem;
 	}
@@ -142,5 +135,10 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 	@Override
 	public HasPopupActionHandlers getPopupActionHandlers() {
 		return tableActionControls;
+	}
+
+	@Override
+	public HasSelectableItemHandlers<SimpleLead> getSelectableItemHandlers() {
+		return tableItem;
 	}
 }

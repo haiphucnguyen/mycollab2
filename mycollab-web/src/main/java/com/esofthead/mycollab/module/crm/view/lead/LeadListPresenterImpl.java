@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.crm.view.lead.LeadListView.LeadListPresente
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
+import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
@@ -32,7 +33,6 @@ public class LeadListPresenterImpl extends CrmGenericPresenter<LeadListView>
 
 	public LeadListPresenterImpl(LeadListView view) {
 		this.view = view;
-		view.setPresenter(this);
 		leadService = AppContext.getSpringBean(LeadService.class);
 
 		view.getSearchHandlers().addSearchHandler(
@@ -100,17 +100,21 @@ public class LeadListPresenterImpl extends CrmGenericPresenter<LeadListView>
 						}
 					}
 				});
-	}
+		
+		view.getSelectableItemHandlers().addSelectableItemHandler(new SelectableItemHandler<SimpleLead>() {
+			
+			@Override
+			public void onSelect(SimpleLead item) {
+				if (selectionModel.isSelected(item)) {
+					selectionModel.removeSelection(item);
+				} else {
+					selectionModel.addSelection(item);
+				}
 
-	@Override
-	public void onItemSelect(SimpleLead lead) {
-		if (selectionModel.isSelected(lead)) {
-			selectionModel.removeSelection(lead);
-		} else {
-			selectionModel.addSelection(lead);
-		}
-
-		checkWhetherEnableTableActionControl();
+				checkWhetherEnableTableActionControl();
+				
+			}
+		});
 	}
 
 	private void checkWhetherEnableTableActionControl() {

@@ -7,6 +7,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.Presenter;
 import com.esofthead.mycollab.vaadin.mvp.View;
@@ -18,8 +19,8 @@ public interface ContactListView extends View {
 	void enableActionControls(int numOfSelectedItem);
 
 	void disableActionControls();
-
-	void setPresenter(ContactListPresenter presenter);
+	
+	HasSelectableItemHandlers<SimpleContact> getSelectableItemHandlers();
 
 	HasSearchHandlers<ContactSearchCriteria> getSearchHandlers();
 
@@ -30,7 +31,6 @@ public interface ContactListView extends View {
 	HasPopupActionHandlers getPopupActionHandlers();
 
 	interface ContactListPresenter extends Presenter {
-		void onItemSelect(SimpleContact contact);
 		
 		void doDefaultSearch();
 
