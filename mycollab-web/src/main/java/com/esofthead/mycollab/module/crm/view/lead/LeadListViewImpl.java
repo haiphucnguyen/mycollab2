@@ -1,95 +1,139 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
+import java.util.List;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.ui.components.LeadSearchPanel;
-import com.esofthead.mycollab.vaadin.data.MyBatisQueryContainer;
-import com.esofthead.mycollab.vaadin.data.MyBatisQueryDefinition;
-import com.esofthead.mycollab.vaadin.data.MyBatisQueryFactory;
+import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
+import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.BeanTable;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
+import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-@SuppressWarnings("serial")
+
 public class LeadListViewImpl extends AbstractView implements LeadListView {
 	private static final long serialVersionUID = 1L;
 
-	private BeanTable<SimpleLead> tableItem;
+	private final LeadSearchPanel leadSearchPanel;
 
-	private LeadSearchCriteria searchCriteria;
+	private SelectionOptionButton selectOptionButton;
 
-	private VerticalLayout leadListLayout;
-	
+	private PagedBeanTable<SimpleLead> tableItem;
+
+	private final VerticalLayout accountListLayout;
+
+	private PopupButtonControl tableActionControls;
+
+	private final Label selectedItemsNumberLabel = new Label();
+
+	private LeadListPresenter presenter;
+
 	public LeadListViewImpl() {
 		this.setSpacing(true);
-		LeadSearchPanel leadSearchPanel = AppContext
-				.getSpringBean(LeadSearchPanel.class);
+
+		leadSearchPanel = new LeadSearchPanel();
 		this.addComponent(leadSearchPanel);
 
-		leadListLayout = new VerticalLayout();
-		this.addComponent(leadListLayout);
+		accountListLayout = new VerticalLayout();
+		accountListLayout.setSpacing(true);
+		this.addComponent(accountListLayout);
+
+		generateDisplayTable();
 	}
 
+	private void generateDisplayTable() {
+		tableItem = new PagedBeanTable<SimpleLead>();
 
-	private void init() {
-//		eventBus.addListener(new ApplicationEventListener<LeadEvent.Search>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return LeadEvent.Search.class;
-//			}
-//
-//			@Override
-//			public void handle(LeadEvent.Search event) {
-//				searchCriteria = (LeadSearchCriteria) event.getData();
-//				LeadListViewImpl.this.doSearch(searchCriteria);
-//			}
-//		});
-	}
+		//generate column code here
 
-	@Override
-	public void doDefaultSearch() {
-		searchCriteria = new LeadSearchCriteria();
-		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		doSearch(searchCriteria);
+		tableItem.setWidth("100%");
+
+		accountListLayout.addComponent(constructTableActionControls());
+		accountListLayout.addComponent(tableItem);
+		accountListLayout.addComponent(tableItem.createControls());
 	}
 
 	@Override
-	public void doSearch(LeadSearchCriteria searchCriteria) {
-		tableItem = new BeanTable<SimpleLead>();
-		tableItem.addStyleName("striped");
+	public void displayLeads(List<SimpleLead> accounts, int currentPage,
+			int totalPages) {
+		tableItem.setCurrentPage(currentPage);
+		tableItem.setTotalPage(totalPages);
 
-		MyBatisQueryContainer<SimpleLead> container = new MyBatisQueryContainer<SimpleLead>(
-				new MyBatisQueryDefinition<LeadSearchCriteria>(
-						AppContext.getSpringBean(LeadService.class), false, 5),
-				new MyBatisQueryFactory<LeadSearchCriteria>(searchCriteria));
-
-		container
-				.addContainerProperty("leadName", String.class, "", true, true);
-		container.addContainerProperty("status", String.class, "", true, true);
-		container.addContainerProperty("accountname", String.class, "", true,
-				true);
-		container.addContainerProperty("officephone", Long.class, "", true,
-				true);
-
-		container.addContainerProperty("email", String.class, "", true, true);
-
-		container.addContainerProperty("assignUserFullName", String.class, "",
-				true, true);
-		container.addContainerProperty("action", Object.class, "", true, false);
-
+		BeanItemContainer<SimpleLead> container = new BeanItemContainer<SimpleLead>(
+				SimpleLead.class, accounts);
 		tableItem.setContainerDataSource(container);
-		tableItem.setColumnHeaders(new String[] { "Name", "Status",
+		tableItem.setVisibleColumns(new String[] { "selected", "accountname",
+				"primcity", "primcountry", "phoneoffice", "email", "assignuser",
+				"createdtime" });
+		tableItem.setColumnHeaders(new String[] { "", "Name", "Status",
 				"Account Name", "Office Phone", "Email", "Assign User",
 				"Action" });
 
-		leadListLayout.removeAllComponents();
-		leadListLayout.addComponent(tableItem);
-//		leadListLayout.addComponent(tableItem.createControls());
+	}
+
+	@Override
+	public HasSearchHandlers<LeadSearchCriteria> getSearchHandlers() {
+		return leadSearchPanel;
+	}
+
+	private ComponentContainer constructTableActionControls() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
+
+		selectOptionButton = new SelectionOptionButton();
+		layout.addComponent(selectOptionButton);
+
+		tableActionControls = new PopupButtonControl("delete", "Delete");
+		tableActionControls.addOptionItem("mail", "Mail");
+		tableActionControls.addOptionItem("export", "Export");
+
+		layout.addComponent(tableActionControls);
+		layout.addComponent(selectedItemsNumberLabel);
+		layout.setComponentAlignment(selectedItemsNumberLabel,
+				Alignment.MIDDLE_CENTER);
+		return layout;
+	}
+
+	@Override
+	public void enableActionControls(int numOfSelectedItems) {
+		tableActionControls.setEnabled(true);
+		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+	}
+
+	@Override
+	public void disableActionControls() {
+		tableActionControls.setEnabled(false);
+		selectedItemsNumberLabel.setValue("");
+	}
+
+	@Override
+	public void setPresenter(LeadListPresenter presenter) {
+		this.presenter = presenter;
+
+	}
+
+	@Override
+	public HasPagableHandlers getPagableHandlers() {
+		return tableItem;
+	}
+
+	@Override
+	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+		return selectOptionButton;
+	}
+
+	@Override
+	public HasPopupActionHandlers getPopupActionHandlers() {
+		return tableActionControls;
 	}
 }

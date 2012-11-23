@@ -3,12 +3,14 @@ package com.esofthead.mycollab.module.crm.view;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.Contact;
+import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoAdd;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoList;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoRead;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddView;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddViewImpl;
@@ -36,6 +38,15 @@ import com.esofthead.mycollab.module.crm.view.contact.ContactListViewImpl;
 import com.esofthead.mycollab.module.crm.view.contact.ContactReadPresenter;
 import com.esofthead.mycollab.module.crm.view.contact.ContactReadView;
 import com.esofthead.mycollab.module.crm.view.contact.ContactReadViewImpl;
+import com.esofthead.mycollab.module.crm.view.lead.LeadAddPresenter;
+import com.esofthead.mycollab.module.crm.view.lead.LeadAddView;
+import com.esofthead.mycollab.module.crm.view.lead.LeadAddViewImpl;
+import com.esofthead.mycollab.module.crm.view.lead.LeadListPresenterImpl;
+import com.esofthead.mycollab.module.crm.view.lead.LeadListView;
+import com.esofthead.mycollab.module.crm.view.lead.LeadListViewImpl;
+import com.esofthead.mycollab.module.crm.view.lead.LeadReadPresenter;
+import com.esofthead.mycollab.module.crm.view.lead.LeadReadView;
+import com.esofthead.mycollab.module.crm.view.lead.LeadReadViewImpl;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -50,6 +61,7 @@ public class CrmController {
 		bindAccountEvents();
 		bindCampaignEvents();
 		bindContactEvents();
+		bindLeadEvents();
 	}
 
 	@SuppressWarnings("serial")
@@ -218,6 +230,62 @@ public class CrmController {
 								.getView(ContactReadViewImpl.class);
 						Contact campaign = (Contact) event.getData();
 						new ContactReadPresenter(view).go(container);
+						view.displayItem(campaign);
+					}
+				});
+	}
+	
+	private void bindLeadEvents() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<LeadEvent.GotoList>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return LeadEvent.GotoList.class;
+					}
+
+					@Override
+					public void handle(LeadEvent.GotoList event) {
+						LeadListView view = ViewManager
+								.getView(LeadListViewImpl.class);
+						LeadListPresenterImpl presenter = new LeadListPresenterImpl(
+								view);
+						presenter.go(container);
+						presenter.doDefaultSearch();
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<LeadEvent.GotoAdd>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return LeadEvent.GotoAdd.class;
+					}
+
+					@Override
+					public void handle(LeadEvent.GotoAdd event) {
+						LeadAddView view = ViewManager
+								.getView(LeadAddViewImpl.class);
+						new LeadAddPresenter(view).go(container);
+						view.addNewItem();
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<LeadEvent.GotoRead>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return LeadEvent.GotoRead.class;
+					}
+
+					@Override
+					public void handle(LeadEvent.GotoRead event) {
+						LeadReadView view = ViewManager
+								.getView(LeadReadViewImpl.class);
+						Lead campaign = (Lead) event.getData();
+						new LeadReadPresenter(view).go(container);
 						view.displayItem(campaign);
 					}
 				});

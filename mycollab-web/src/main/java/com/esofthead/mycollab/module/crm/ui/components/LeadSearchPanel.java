@@ -6,6 +6,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -17,7 +18,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -25,11 +25,10 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-public class LeadSearchPanel extends CustomComponent {
+public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 
 	protected LeadSearchCriteria searchCriteria;
-
 
 	public LeadSearchPanel() {
 		searchCriteria = new LeadSearchCriteria();
@@ -65,7 +64,8 @@ public class LeadSearchPanel extends CustomComponent {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-
+						EventBus.getInstance().fireEvent(
+								new LeadEvent.GotoAdd(this, null));
 					}
 				});
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
@@ -113,6 +113,8 @@ public class LeadSearchPanel extends CustomComponent {
 									.setCampaignName(new StringSearchField(
 											SearchField.AND, (String) nameField
 													.getValue()));
+							LeadSearchPanel.this
+									.notifySearchHandler(searchCriteria);
 						}
 					}));
 
@@ -177,19 +179,16 @@ public class LeadSearchPanel extends CustomComponent {
 			accountnameField = (TextField) gridLayout.addComponent(
 					new TextField(), "Account Name", 0, 2);
 			statusField = (LeadStatusListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(LeadStatusListSelect.class),
-					"Status", 0, 3);
+					new LeadStatusListSelect(), "Status", 0, 3);
 
 			anyEmailField = (TextField) gridLayout.addComponent(
 					new TextField(), "Any Email", 1, 0);
 			anyAddressField = (TextField) gridLayout.addComponent(
 					new TextField(), "Any Address", 1, 1);
 			countryField = (CountryComboBox) gridLayout.addComponent(
-					AppContext.getSpringBean(CountryComboBox.class), "Country",
-					1, 2);
+					new CountryComboBox(), "Country", 1, 2);
 			sourceField = (LeadSourceListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(LeadSourceListSelect.class),
-					"Source", 1, 3);
+					new LeadSourceListSelect(), "Source", 1, 3);
 
 			anyPhoneField = (TextField) gridLayout.addComponent(
 					new TextField(), "Any Phone", 2, 0);
@@ -198,8 +197,7 @@ public class LeadSearchPanel extends CustomComponent {
 			stateField = (TextField) gridLayout.addComponent(new TextField(),
 					"State", 2, 2);
 			userField = (UserListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(UserListSelect.class),
-					"Assigned User", 2, 3);
+					new UserListSelect(), "Assigned User", 2, 3);
 			return gridLayout.getLayout();
 		}
 
@@ -215,6 +213,8 @@ public class LeadSearchPanel extends CustomComponent {
 							searchCriteria = new LeadSearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
+							LeadSearchPanel.this
+									.notifySearchHandler(searchCriteria);
 						}
 
 					}));
