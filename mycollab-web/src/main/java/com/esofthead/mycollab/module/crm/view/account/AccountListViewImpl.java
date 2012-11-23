@@ -77,7 +77,6 @@ public class AccountListViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						@SuppressWarnings("unchecked")
 						SimpleAccount account = tableItem
 								.getBeanByIndex(itemId);
 						tableItem.fireSelectItemEvent(account);
@@ -145,24 +144,20 @@ public class AccountListViewImpl extends AbstractView implements
 				@SuppressWarnings("unchecked")
 				final SimpleAccount account = ((PagedBeanTable<SimpleAccount>) source)
 						.getBeanByIndex(itemId);
-				if (account != null) {
-					ButtonLink b = new ButtonLink(account.getAccountname(),
-							new Button.ClickListener() {
-								private static final long serialVersionUID = 1L;
+				ButtonLink b = new ButtonLink(account.getAccountname(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-								@Override
-								public void buttonClick(ClickEvent event) {
-									System.out.println("View account: "
-											+ account);
-									EventBus.getInstance().fireEvent(
-											new AccountEvent.GotoRead(this,
-													account));
-								}
-							});
-					return b;
-				} else {
-					return new Label("");
-				}
+							@Override
+							public void buttonClick(ClickEvent event) {
+								System.out.println("View account: " + account);
+								EventBus.getInstance()
+										.fireEvent(
+												new AccountEvent.GotoRead(this,
+														account));
+							}
+						});
+				return b;
 
 			}
 		});

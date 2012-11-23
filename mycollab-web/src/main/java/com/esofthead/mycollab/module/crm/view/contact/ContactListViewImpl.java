@@ -4,13 +4,16 @@ import java.util.List;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.ui.components.ContactSearchPanel;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
@@ -58,6 +61,7 @@ public class ContactListViewImpl extends AbstractView implements
 		generateDisplayTable();
 	}
 
+	@SuppressWarnings("serial")
 	private void generateDisplayTable() {
 		tableItem = new PagedBeanTable<SimpleContact>();
 
@@ -87,6 +91,30 @@ public class ContactListViewImpl extends AbstractView implements
 						.getBeanByIndex(itemId);
 				account.setExtraData(cb);
 				return cb;
+			}
+		});
+
+		tableItem.addGeneratedColumn("contactName", new ColumnGenerator() {
+
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				@SuppressWarnings("unchecked")
+				final SimpleContact contact = ((PagedBeanTable<SimpleContact>) source)
+						.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(contact.getContactName(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance()
+										.fireEvent(
+												new ContactEvent.GotoRead(this,
+														contact));
+							}
+						});
+				return b;
 			}
 		});
 

@@ -11,7 +11,6 @@ public class CampaignReadPresenter  extends CrmGenericPresenter<CampaignReadView
 		bind();
 	}
 
-	@SuppressWarnings("unchecked")
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
 				new PreviewFormHandlers<Campaign>() {

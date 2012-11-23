@@ -4,22 +4,30 @@ import java.util.List;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.ui.components.OpportunitySearchPanel;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
 public class OpportunityListViewImpl extends AbstractView implements
@@ -51,18 +59,71 @@ public class OpportunityListViewImpl extends AbstractView implements
 		generateDisplayTable();
 	}
 
+	@SuppressWarnings("serial")
 	private void generateDisplayTable() {
 		tableItem = new PagedBeanTable<SimpleOpportunity>();
 
-		// add code generate column here
+		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Object generateCell(final Table source, final Object itemId,
+					Object columnId) {
+				final CheckBox cb = new CheckBox("", false);
+				cb.setImmediate(true);
+				cb.addListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						SimpleOpportunity opportunity = tableItem
+								.getBeanByIndex(itemId);
+						tableItem.fireSelectItemEvent(opportunity);
+					}
+				});
+
+				@SuppressWarnings("unchecked")
+				SimpleOpportunity opportunity = ((PagedBeanTable<SimpleOpportunity>) source)
+						.getBeanByIndex(itemId);
+				opportunity.setExtraData(cb);
+				return cb;
+			}
+		});
+
+		tableItem.addGeneratedColumn("opportunityname", new ColumnGenerator() {
+
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				@SuppressWarnings("unchecked")
+				final SimpleOpportunity opportunity = ((PagedBeanTable<SimpleOpportunity>) source)
+						.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(opportunity.getOpportunityname(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new OpportunityEvent.GotoRead(this,
+												opportunity));
+							}
+						});
+				return b;
+			}
+		});
 
 		tableItem.setWidth("100%");
-		
+
+		tableItem
+				.setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 		tableItem.setColumnWidth("salesstage", UIConstants.TABLE_M_LABEL_WIDTH);
 		tableItem.setColumnWidth("amount", UIConstants.TABLE_M_LABEL_WIDTH);
-		tableItem.setColumnWidth("expectedcloseddate", UIConstants.TABLE_DATE_WIDTH);
-		tableItem.setColumnWidth("assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("expectedcloseddate",
+				UIConstants.TABLE_DATE_WIDTH);
+		tableItem.setColumnWidth("assignUserFullName",
+				UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem.setColumnWidth("createdtime", UIConstants.TABLE_DATE_WIDTH);
 
 		accountListLayout.addComponent(constructTableActionControls());
@@ -80,10 +141,10 @@ public class OpportunityListViewImpl extends AbstractView implements
 				SimpleOpportunity.class, opportunities);
 		tableItem.setContainerDataSource(container);
 
-		tableItem.setVisibleColumns(new String[] { "selected", "accountName",
-				"salesstage", "amount", "expectedcloseddate",
-				"assignUserFullName", "createdtime" });
-		tableItem.setColumnHeaders(new String[] { "", "Account Name",
+		tableItem.setVisibleColumns(new String[] { "selected",
+				"opportunityname", "accountName", "salesstage", "amount",
+				"expectedcloseddate", "assignUserFullName", "createdtime" });
+		tableItem.setColumnHeaders(new String[] { "", "Name", "Account Name",
 				"Sales Stage", "Amount", "Close", "User", "Date Created" });
 
 	}

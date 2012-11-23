@@ -4,22 +4,30 @@ import java.util.List;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.ui.components.CampaignSearchPanel;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
@@ -53,6 +61,59 @@ public class CampaignListViewImpl extends AbstractView implements
 
 	private void generateDisplayTable() {
 		tableItem = new PagedBeanTable<SimpleCampaign>();
+
+		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Object generateCell(final Table source, final Object itemId,
+					Object columnId) {
+				final CheckBox cb = new CheckBox("", false);
+				cb.setImmediate(true);
+				cb.addListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						SimpleCampaign campaign = tableItem
+								.getBeanByIndex(itemId);
+						tableItem.fireSelectItemEvent(campaign);
+
+					}
+				});
+
+				@SuppressWarnings("unchecked")
+				SimpleCampaign campaign = ((PagedBeanTable<SimpleCampaign>) source)
+						.getBeanByIndex(itemId);
+				campaign.setExtraData(cb);
+				return cb;
+			}
+		});
+
+		tableItem.addGeneratedColumn("campaignname", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				@SuppressWarnings("unchecked")
+				final SimpleCampaign campaign = ((PagedBeanTable<SimpleCampaign>) source)
+						.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(campaign.getCampaignname(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new CampaignEvent.GotoRead(this,
+												campaign));
+							}
+						});
+				return b;
+
+			}
+		});
 
 		tableItem.setWidth("100%");
 

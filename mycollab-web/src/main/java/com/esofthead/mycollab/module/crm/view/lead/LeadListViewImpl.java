@@ -4,22 +4,30 @@ import java.util.List;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.ui.components.LeadSearchPanel;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
 public class LeadListViewImpl extends AbstractView implements LeadListView {
@@ -50,10 +58,61 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		generateDisplayTable();
 	}
 
+	@SuppressWarnings("serial")
 	private void generateDisplayTable() {
 		tableItem = new PagedBeanTable<SimpleLead>();
 
-		// generate column code here
+		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Object generateCell(final Table source, final Object itemId,
+					Object columnId) {
+				final CheckBox cb = new CheckBox("", false);
+				cb.setImmediate(true);
+				cb.addListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						SimpleLead lead = tableItem
+								.getBeanByIndex(itemId);
+						tableItem.fireSelectItemEvent(lead);
+
+					}
+				});
+
+				@SuppressWarnings("unchecked")
+				SimpleLead lead = ((PagedBeanTable<SimpleLead>) source)
+						.getBeanByIndex(itemId);
+				lead.setExtraData(cb);
+				return cb;
+			}
+		});
+		
+		tableItem.addGeneratedColumn("leadName", new ColumnGenerator() {
+
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				@SuppressWarnings("unchecked")
+				final SimpleLead lead = ((PagedBeanTable<SimpleLead>) source)
+						.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(lead.getLeadName(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance()
+										.fireEvent(
+												new LeadEvent.GotoRead(this,
+														lead));
+							}
+						});
+				return b;
+			}
+		});
 
 		tableItem.setWidth("100%");
 		
