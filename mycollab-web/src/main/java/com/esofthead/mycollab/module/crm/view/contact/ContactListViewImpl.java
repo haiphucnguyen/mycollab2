@@ -1,154 +1,214 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
-import javax.annotation.PostConstruct;
+import java.util.List;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.ContactSearchPanel;
-import com.esofthead.mycollab.vaadin.data.MyBatisQueryContainer;
-import com.esofthead.mycollab.vaadin.data.MyBatisQueryDefinition;
-import com.esofthead.mycollab.vaadin.data.MyBatisQueryFactory;
+import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
+import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.BeanTable;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
+import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.terminal.ExternalResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.BaseTheme;
-
 
 public class ContactListViewImpl extends AbstractView implements
 		ContactListView {
 	private static final long serialVersionUID = 1L;
 
-	private BeanTable<SimpleContact> tableItem;
+	private final ContactSearchPanel contactSearchPanel;
 
-	private ContactSearchCriteria searchCriteria;
+	private SelectionOptionButton selectOptionButton;
 
-	private VerticalLayout contactListLayout;
-	
+	private PagedBeanTable<SimpleContact> tableItem;
+
+	private final VerticalLayout contactListLayout;
+
+	private PopupButtonControl tableActionControls;
+
+	private final Label selectedItemsNumberLabel = new Label();
+
+	private ContactListPresenter presenter;
+
 	public ContactListViewImpl() {
 		this.setSpacing(true);
 
-		ContactSearchPanel searchPanel = AppContext
-				.getSpringBean(ContactSearchPanel.class);
-		this.addComponent(searchPanel);
+		contactSearchPanel = new ContactSearchPanel();
+		this.addComponent(contactSearchPanel);
 
 		contactListLayout = new VerticalLayout();
+		contactListLayout.setSpacing(true);
 		this.addComponent(contactListLayout);
+
+		generateDisplayTable();
 	}
 
-	@Override
-	public void doDefaultSearch() {
-		searchCriteria = new ContactSearchCriteria();
-		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		doSearch(searchCriteria);
-	}
+	private void generateDisplayTable() {
+		tableItem = new PagedBeanTable<SimpleContact>();
 
-	@Override
-	public void doSearch(ContactSearchCriteria searchCriteria) {
-		tableItem = new BeanTable<SimpleContact>();
-		tableItem.addStyleName("striped");
-
-		MyBatisQueryContainer<SimpleContact> container = new MyBatisQueryContainer<SimpleContact>(
-				new MyBatisQueryDefinition<ContactSearchCriteria>(
-						AppContext.getSpringBean(ContactService.class), false,
-						5), new MyBatisQueryFactory<ContactSearchCriteria>(
-						searchCriteria));
-
-		container.addContainerProperty("contactName", String.class, "", true,
-				true);
-		container.addContainerProperty("title", String.class, "", true, true);
-		container.addContainerProperty("accountName", String.class, "", true,
-				true);
-		container.addContainerProperty("email", String.class, "", true, true);
-		container.addContainerProperty("officephone", String.class, "", true,
-				true);
-
-		container.addContainerProperty("assignUserFullName", String.class, "",
-				true, true);
-
-		container.addContainerProperty("action", Object.class, "", true, false);
-		
-		tableItem.setWidth("1130px");
-		tableItem.setColumnWidth("title", 140);
-		tableItem.setColumnWidth("accountName", 140);
-		tableItem.setColumnWidth("email", 180);
-		tableItem.setColumnWidth("officephone", 90);
-		tableItem.setColumnWidth("assignUserFullName", 140);
-		tableItem.setColumnWidth("action", 82);
-
-		tableItem.setContainerDataSource(container);
-		tableItem.setColumnHeaders(new String[] { "Name", "Title",
-				"Account Name", "Email", "Office Phone", "User", "Action" });
-
-		tableItem.addGeneratedColumn("action", new ColumnGenerator() {
+		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
-			public com.vaadin.ui.Component generateCell(Table source,
-					final Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleContact item = ((BeanTable<SimpleContact>) source)
-						.getBeanByIndex(itemId);
-				HorizontalLayout layout = new HorizontalLayout();
-				layout.setSpacing(true);
-				Button editBtn = new Button("Edit", new Button.ClickListener() {
+			@Override
+			public Object generateCell(final Table source, final Object itemId,
+					Object columnId) {
+				final CheckBox cb = new CheckBox("", false);
+				cb.setImmediate(true);
+				cb.addListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						
+						@SuppressWarnings("unchecked")
+						SimpleContact account = ((PagedBeanTable<SimpleContact>) source)
+								.getBeanByIndex(itemId);
+						presenter.onItemSelect(account);
 
 					}
 				});
-				editBtn.setStyleName(BaseTheme.BUTTON_LINK);
-				layout.addComponent(editBtn);
 
-				layout.addComponent(new Label("|"));
-				Button deleteBtn = new Button("Delete",
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								// TODO Auto-generated method stub
-
-							}
-						});
-				deleteBtn.setStyleName(BaseTheme.BUTTON_LINK);
-				layout.addComponent(deleteBtn);
-				return layout;
+				@SuppressWarnings("unchecked")
+				SimpleContact account = ((PagedBeanTable<SimpleContact>) source)
+						.getBeanByIndex(itemId);
+				account.setExtraData(cb);
+				return cb;
 			}
 		});
 
-		contactListLayout.removeAllComponents();
+		tableItem.addGeneratedColumn("email", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			@SuppressWarnings("unchecked")
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				SimpleContact account = ((PagedBeanTable<SimpleContact>) source)
+						.getBeanByIndex(itemId);
+				if (account != null) {
+					Link l = new Link();
+					l.setResource(new ExternalResource("mailto:"
+							+ account.getEmail()));
+					l.setCaption(account.getEmail());
+					return l;
+				} else {
+					return new Label("");
+				}
+
+			}
+		});
+
+		tableItem.addGeneratedColumn("createdtime", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				@SuppressWarnings("unchecked")
+				final SimpleContact account = ((PagedBeanTable<SimpleContact>) source)
+						.getBeanByIndex(itemId);
+				if (account != null) {
+					Label l = new Label();
+
+					l.setCaption(account.getCreatedtime() + "");
+					return l;
+				} else {
+					return new Label("");
+				}
+
+			}
+		});
+
+		contactListLayout.addComponent(constructTableActionControls());
 		contactListLayout.addComponent(tableItem);
-//		contactListLayout.addComponent(tableItem.createControls());
+		contactListLayout.addComponent(tableItem.createControls());
+	}
+
+	@Override
+	public void displayContacts(List<SimpleContact> accounts, int currentPage,
+			int totalPages) {
+		tableItem.setCurrentPage(currentPage);
+		tableItem.setTotalPage(totalPages);
+
+		BeanItemContainer<SimpleContact> container = new BeanItemContainer<SimpleContact>(
+				SimpleContact.class, accounts);
+		tableItem.setContainerDataSource(container);
+
+		tableItem.setVisibleColumns(new String[] { "selected", "contactName",
+				"title", "accountName", "email", "officephone",
+				"assignUserFullName"});
+		tableItem.setColumnHeaders(new String[] { "", "Name", "Title",
+				"Account Name", "Email", "Office Phone", "User" });
 
 	}
 
-	@SuppressWarnings("serial")
-	@PostConstruct
-	private void init() {
-//		eventBus.addListener(new ApplicationEventListener<ContactEvent.Search>() {
-//
-//			@Override
-//			public Class<? extends ApplicationEvent> getEventType() {
-//				return ContactEvent.Search.class;
-//			}
-//
-//			@Override
-//			public void handle(ContactEvent.Search event) {
-//				searchCriteria = (ContactSearchCriteria) event.getData();
-//			}
-//		});
+	@Override
+	public HasSearchHandlers<ContactSearchCriteria> getSearchHandlers() {
+		return contactSearchPanel;
+	}
+
+	private ComponentContainer constructTableActionControls() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
+
+		selectOptionButton = new SelectionOptionButton();
+		layout.addComponent(selectOptionButton);
+
+		tableActionControls = new PopupButtonControl("delete", "Delete");
+		tableActionControls.addOptionItem("mail", "Mail");
+		tableActionControls.addOptionItem("export", "Export");
+
+		layout.addComponent(tableActionControls);
+		layout.addComponent(selectedItemsNumberLabel);
+		layout.setComponentAlignment(selectedItemsNumberLabel,
+				Alignment.MIDDLE_CENTER);
+		return layout;
+	}
+
+	@Override
+	public void enableActionControls(int numOfSelectedItems) {
+		tableActionControls.setEnabled(true);
+		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+	}
+
+	@Override
+	public void disableActionControls() {
+		tableActionControls.setEnabled(false);
+		selectedItemsNumberLabel.setValue("");
+	}
+
+	@Override
+	public void setPresenter(ContactListPresenter presenter) {
+		this.presenter = presenter;
+
+	}
+
+	@Override
+	public HasPagableHandlers getPagableHandlers() {
+		return tableItem;
+	}
+
+	@Override
+	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+		return selectOptionButton;
+	}
+
+	@Override
+	public HasPopupActionHandlers getPopupActionHandlers() {
+		return tableActionControls;
 	}
 }

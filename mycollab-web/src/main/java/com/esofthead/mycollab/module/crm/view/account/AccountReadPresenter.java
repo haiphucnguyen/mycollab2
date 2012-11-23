@@ -11,7 +11,6 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 		bind();
 	}
 
-	@SuppressWarnings("unchecked")
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
 				new PreviewFormHandlers<Account>() {

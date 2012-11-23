@@ -36,7 +36,7 @@ public class CampaignAddViewImpl extends AbstractView implements
 		editForm.setItemDataSource(new BeanItem<Campaign>(campaign));
 	}
 
-	public static class EditForm extends AdvancedEditBeanForm<Campaign> {
+	private static class EditForm extends AdvancedEditBeanForm<Campaign> {
 		private static final long serialVersionUID = 1L;
 
 		public EditForm() {

@@ -38,11 +38,10 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 
 	@Override
 	public void editItem(Account account) {
-		this.removeAllComponents();
 		editForm.setItemDataSource(new BeanItem<Account>(account));
 	}
 
-	public static class EditForm extends AdvancedEditBeanForm<Account> {
+	private static class EditForm extends AdvancedEditBeanForm<Account> {
 		private static final long serialVersionUID = 1L;
 
 		public EditForm() {

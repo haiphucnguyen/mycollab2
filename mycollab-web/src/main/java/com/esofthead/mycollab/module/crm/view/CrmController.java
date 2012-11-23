@@ -2,11 +2,13 @@ package com.esofthead.mycollab.module.crm.view;
 
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
+import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoAdd;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoList;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoRead;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddView;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddViewImpl;
@@ -25,6 +27,15 @@ import com.esofthead.mycollab.module.crm.view.campaign.CampaignListViewImpl;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignReadPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignReadView;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignReadViewImpl;
+import com.esofthead.mycollab.module.crm.view.contact.ContactAddPresenter;
+import com.esofthead.mycollab.module.crm.view.contact.ContactAddView;
+import com.esofthead.mycollab.module.crm.view.contact.ContactAddViewImpl;
+import com.esofthead.mycollab.module.crm.view.contact.ContactListPresenterImpl;
+import com.esofthead.mycollab.module.crm.view.contact.ContactListView;
+import com.esofthead.mycollab.module.crm.view.contact.ContactListViewImpl;
+import com.esofthead.mycollab.module.crm.view.contact.ContactReadPresenter;
+import com.esofthead.mycollab.module.crm.view.contact.ContactReadView;
+import com.esofthead.mycollab.module.crm.view.contact.ContactReadViewImpl;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -38,6 +49,7 @@ public class CrmController {
 
 		bindAccountEvents();
 		bindCampaignEvents();
+		bindContactEvents();
 	}
 
 	@SuppressWarnings("serial")
@@ -149,6 +161,63 @@ public class CrmController {
 								.getView(CampaignReadViewImpl.class);
 						Campaign campaign = (Campaign) event.getData();
 						new CampaignReadPresenter(view).go(container);
+						view.displayItem(campaign);
+					}
+				});
+	}
+	
+	@SuppressWarnings("serial")
+	private void bindContactEvents() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ContactEvent.GotoList>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ContactEvent.GotoList.class;
+					}
+
+					@Override
+					public void handle(ContactEvent.GotoList event) {
+						ContactListView view = ViewManager
+								.getView(ContactListViewImpl.class);
+						ContactListPresenterImpl presenter = new ContactListPresenterImpl(
+								view);
+						presenter.go(container);
+						presenter.doDefaultSearch();
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ContactEvent.GotoAdd>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ContactEvent.GotoAdd.class;
+					}
+
+					@Override
+					public void handle(ContactEvent.GotoAdd event) {
+						ContactAddView view = ViewManager
+								.getView(ContactAddViewImpl.class);
+						new ContactAddPresenter(view).go(container);
+						view.addNewItem();
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ContactEvent.GotoRead>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ContactEvent.GotoRead.class;
+					}
+
+					@Override
+					public void handle(ContactEvent.GotoRead event) {
+						ContactReadView view = ViewManager
+								.getView(ContactReadViewImpl.class);
+						Contact campaign = (Contact) event.getData();
+						new ContactReadPresenter(view).go(container);
 						view.displayItem(campaign);
 					}
 				});

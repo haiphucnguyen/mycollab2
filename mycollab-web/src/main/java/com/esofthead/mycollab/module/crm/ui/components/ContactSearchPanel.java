@@ -4,7 +4,9 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.CountryListSelect;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -16,7 +18,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -24,7 +25,8 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-public class ContactSearchPanel extends CustomComponent {
+public class ContactSearchPanel extends
+		GenericSearchPanel<ContactSearchCriteria> {
 
 	protected ContactSearchCriteria searchCriteria;
 
@@ -58,7 +60,8 @@ public class ContactSearchPanel extends CustomComponent {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-
+						EventBus.getInstance().fireEvent(
+								new ContactEvent.GotoAdd(this, null));
 					}
 				});
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
@@ -106,6 +109,7 @@ public class ContactSearchPanel extends CustomComponent {
 							SearchField.AND, AppContext.getAccountId()));
 					searchCriteria.setContactName(new StringSearchField(
 							SearchField.AND, (String) nameField.getValue()));
+					ContactSearchPanel.this.notifySearchHandler(searchCriteria);
 				}
 			}));
 
@@ -172,7 +176,7 @@ public class ContactSearchPanel extends CustomComponent {
 			accountnameField = (TextField) gridLayout.addComponent(
 					new TextField(), "Account Name", 0, 2);
 			assignUserField = (UserListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(UserListSelect.class),
+					new UserListSelect(),
 					"Assign User", 0, 3);
 
 			anyEmailField = (TextField) gridLayout.addComponent(
@@ -182,7 +186,7 @@ public class ContactSearchPanel extends CustomComponent {
 			stateField = (TextField) gridLayout.addComponent(new TextField(),
 					"State", 1, 2);
 			countryField = (CountryListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(CountryListSelect.class),
+					new CountryListSelect(),
 					"Country", 1, 3);
 
 			anyPhoneField = (TextField) gridLayout.addComponent(
@@ -192,7 +196,7 @@ public class ContactSearchPanel extends CustomComponent {
 			postalCodeField = (TextField) gridLayout.addComponent(
 					new TextField(), "Postal Code", 2, 2);
 			leadSourceField = (LeadSourceListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(LeadSourceListSelect.class),
+					new LeadSourceListSelect(),
 					"Lead Source", 2, 3);
 
 			return gridLayout.getLayout();
@@ -214,6 +218,8 @@ public class ContactSearchPanel extends CustomComponent {
 									.setContactName(new StringSearchField(
 											SearchField.AND,
 											(String) firstnameField.getValue()));
+							ContactSearchPanel.this
+									.notifySearchHandler(searchCriteria);
 						}
 
 					}));

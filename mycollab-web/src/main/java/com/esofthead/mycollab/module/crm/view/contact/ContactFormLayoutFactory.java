@@ -4,7 +4,6 @@ import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
@@ -54,7 +53,7 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 		return contactAddLayout;
 	}
 
-	abstract protected HorizontalLayout createButtonControls();
+	abstract protected Layout createButtonControls();
 
 	@Override
 	public void attachField(Object propertyId, Field field) {
