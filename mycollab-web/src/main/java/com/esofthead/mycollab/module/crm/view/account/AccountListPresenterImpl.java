@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.crm.view.account.AccountListView.AccountLis
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
+import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
@@ -32,7 +33,6 @@ public class AccountListPresenterImpl extends
 
 	public AccountListPresenterImpl(AccountListView view) {
 		this.view = view;
-		view.setPresenter(this);
 		accountService = AppContext.getSpringBean(AccountService.class);
 
 		view.getSearchHandlers().addSearchHandler(
@@ -102,17 +102,20 @@ public class AccountListPresenterImpl extends
 						}
 					}
 				});
-	}
+		
+		view.getSelectableItemHandlers().addSelectableItemHandler(new SelectableItemHandler<SimpleAccount>() {
+			
+			@Override
+			public void onSelect(SimpleAccount item) {
+				if (selectionModel.isSelected(item)) {
+					selectionModel.removeSelection(item);
+				} else {
+					selectionModel.addSelection(item);
+				}
 
-	@Override
-	public void onItemSelect(SimpleAccount account) {
-		if (selectionModel.isSelected(account)) {
-			selectionModel.removeSelection(account);
-		} else {
-			selectionModel.addSelection(account);
-		}
-
-		checkWhetherEnableTableActionControl();
+				checkWhetherEnableTableActionControl();
+			}
+		});
 	}
 
 	private void checkWhetherEnableTableActionControl() {

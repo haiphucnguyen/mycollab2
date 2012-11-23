@@ -10,6 +10,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
@@ -29,7 +30,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
-import com.vaadin.ui.Table.TableTransferable;
 import com.vaadin.ui.VerticalLayout;
 
 public class AccountListViewImpl extends AbstractView implements
@@ -47,8 +47,6 @@ public class AccountListViewImpl extends AbstractView implements
 	private PopupButtonControl tableActionControls;
 
 	private final Label selectedItemsNumberLabel = new Label();
-
-	private AccountListPresenter presenter;
 
 	public AccountListViewImpl() {
 		this.setSpacing(true);
@@ -80,9 +78,9 @@ public class AccountListViewImpl extends AbstractView implements
 					@Override
 					public void buttonClick(ClickEvent event) {
 						@SuppressWarnings("unchecked")
-						SimpleAccount account = ((PagedBeanTable<SimpleAccount>) source)
+						SimpleAccount account = tableItem
 								.getBeanByIndex(itemId);
-						presenter.onItemSelect(account);
+						tableItem.fireSelectItemEvent(account);
 
 					}
 				});
@@ -168,11 +166,13 @@ public class AccountListViewImpl extends AbstractView implements
 
 			}
 		});
-		
+
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 		tableItem.setColumnWidth("city", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("billingCountry", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("phoneoffice", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("billingCountry",
+				UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem
+				.setColumnWidth("phoneoffice", UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
 		tableItem.setColumnWidth("assignuser", UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem.setColumnWidth("createdtime", UIConstants.TABLE_DATE_WIDTH);
@@ -238,12 +238,6 @@ public class AccountListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public void setPresenter(AccountListPresenter presenter) {
-		this.presenter = presenter;
-
-	}
-
-	@Override
 	public HasPagableHandlers getPagableHandlers() {
 		return tableItem;
 	}
@@ -256,5 +250,10 @@ public class AccountListViewImpl extends AbstractView implements
 	@Override
 	public HasPopupActionHandlers getPopupActionHandlers() {
 		return tableActionControls;
+	}
+
+	@Override
+	public HasSelectableItemHandlers<SimpleAccount> getSelectableItemHandlers() {
+		return tableItem;
 	}
 }

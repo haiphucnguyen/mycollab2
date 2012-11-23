@@ -7,6 +7,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.Presenter;
 import com.esofthead.mycollab.vaadin.mvp.View;
@@ -20,8 +21,6 @@ public interface AccountListView extends View {
 
 	void disableActionControls();
 
-	void setPresenter(AccountListPresenter presenter);
-
 	HasSearchHandlers<AccountSearchCriteria> getSearchHandlers();
 
 	HasPagableHandlers getPagableHandlers();
@@ -29,9 +28,10 @@ public interface AccountListView extends View {
 	HasSelectionOptionHandlers getOptionSelectionHandlers();
 
 	HasPopupActionHandlers getPopupActionHandlers();
+	
+	HasSelectableItemHandlers<SimpleAccount> getSelectableItemHandlers();
 
 	interface AccountListPresenter extends Presenter {
-		void onItemSelect(SimpleAccount account);
 		
 		void doDefaultSearch();
 

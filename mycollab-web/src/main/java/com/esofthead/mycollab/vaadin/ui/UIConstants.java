@@ -15,7 +15,7 @@ public class UIConstants {
 	
 	public static int TABLE_X_LABEL_WIDTH = 140;
 	
-	public static int TABLE_EMAIL_WIDTH = 160;
+	public static int TABLE_EMAIL_WIDTH = 200;
 	
 	public static int TABLE_DATE_WIDTH = 140;
 }

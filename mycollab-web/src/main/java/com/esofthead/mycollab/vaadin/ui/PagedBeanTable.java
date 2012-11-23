@@ -4,7 +4,9 @@ import java.util.HashSet;
 import java.util.Set;
 
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
+import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.IntegerValidator;
@@ -19,7 +21,8 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
-public class PagedBeanTable<T> extends Table implements HasPagableHandlers {
+public class PagedBeanTable<T> extends Table implements HasPagableHandlers,
+		HasSelectableItemHandlers<T> {
 	private static final long serialVersionUID = 1L;
 
 	private int currentPage = 1;
@@ -34,7 +37,9 @@ public class PagedBeanTable<T> extends Table implements HasPagableHandlers {
 
 	private ComboBox itemsPerPageSelect;
 
-	private Set<PagableHandler> handlers;
+	private Set<PagableHandler> pagableHandlers;
+
+	private Set<SelectableItemHandler<T>> selectableHandlers;
 
 	public PagedBeanTable() {
 		this.addStyleName("striped");
@@ -234,26 +239,42 @@ public class PagedBeanTable<T> extends Table implements HasPagableHandlers {
 	}
 
 	private void firePageChangeHandler(int newpage) {
-		if (handlers != null) {
-			for (PagableHandler handler : handlers) {
+		if (pagableHandlers != null) {
+			for (PagableHandler handler : pagableHandlers) {
 				handler.move(newpage);
 			}
 		}
 	}
 
 	private void fireDisplayItemNumberChange(int numOfItems) {
-		if (handlers != null) {
-			for (PagableHandler handler : handlers) {
+		if (pagableHandlers != null) {
+			for (PagableHandler handler : pagableHandlers) {
 				handler.displayItemChange(numOfItems);
+			}
+		}
+	}
+	
+	public void fireSelectItemEvent(T item) {
+		if (selectableHandlers != null) {
+			for (SelectableItemHandler<T> handler : selectableHandlers) {
+				handler.onSelect(item);
 			}
 		}
 	}
 
 	@Override
 	public void addPagableHandler(PagableHandler handler) {
-		if (handlers == null) {
-			handlers = new HashSet<PagableHandler>();
+		if (pagableHandlers == null) {
+			pagableHandlers = new HashSet<PagableHandler>();
 		}
-		handlers.add(handler);
+		pagableHandlers.add(handler);
+	}
+
+	@Override
+	public void addSelectableItemHandler(SelectableItemHandler<T> handler) {
+		if (selectableHandlers == null) {
+			selectableHandlers = new HashSet<SelectableItemHandler<T>>();
+		}
+		selectableHandlers.add(handler);
 	}
 }
