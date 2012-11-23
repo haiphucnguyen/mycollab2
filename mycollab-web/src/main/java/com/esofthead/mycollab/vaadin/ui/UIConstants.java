@@ -8,4 +8,14 @@ public class UIConstants {
 	public static String DEFAULT_2XCONTROL_WIDTH = "400px";
 
 	public static String DEFAULT_2XCONTROL_HEIGHT = "300px";
+	
+	public static int TABLE_CONTROL_WIDTH = 22;
+	
+	public static int TABLE_M_LABEL_WIDTH = 120;
+	
+	public static int TABLE_X_LABEL_WIDTH = 140;
+	
+	public static int TABLE_EMAIL_WIDTH = 160;
+	
+	public static int TABLE_DATE_WIDTH = 140;
 }

@@ -13,13 +13,13 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-
 
 public class LeadListViewImpl extends AbstractView implements LeadListView {
 	private static final long serialVersionUID = 1L;
@@ -54,9 +54,16 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 	private void generateDisplayTable() {
 		tableItem = new PagedBeanTable<SimpleLead>();
 
-		//generate column code here
+		// generate column code here
 
 		tableItem.setWidth("100%");
+		
+		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+		tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
+		tableItem.setColumnWidth("accountname", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
+		tableItem.setColumnWidth("assignuser", UIConstants.TABLE_X_LABEL_WIDTH);
 
 		accountListLayout.addComponent(constructTableActionControls());
 		accountListLayout.addComponent(tableItem);
@@ -72,10 +79,12 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		BeanItemContainer<SimpleLead> container = new BeanItemContainer<SimpleLead>(
 				SimpleLead.class, accounts);
 		tableItem.setContainerDataSource(container);
-		tableItem.setVisibleColumns(new String[] { "selected", "leadName",
-				"status", "accountname", "officephone", "email", "assignuser"});
+		tableItem
+				.setVisibleColumns(new String[] { "selected", "leadName",
+						"status", "accountname", "officephone", "email",
+						"assignuser" });
 		tableItem.setColumnHeaders(new String[] { "", "Name", "Status",
-				"Account Name", "Office Phone", "Email", "Assign User"});
+				"Account Name", "Office Phone", "Email", "Assign User" });
 
 	}
 

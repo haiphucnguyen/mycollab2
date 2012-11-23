@@ -13,6 +13,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
@@ -53,7 +54,17 @@ public class CampaignListViewImpl extends AbstractView implements
 
 	private void generateDisplayTable() {
 		tableItem = new PagedBeanTable<SimpleCampaign>();
-		tableItem.setWidth("1130px");
+
+		tableItem.setWidth("100%");
+
+		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+		tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
+		tableItem.setColumnWidth("type", UIConstants.TABLE_M_LABEL_WIDTH);
+		tableItem.setColumnWidth("expectedrevenue",
+				UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("enddate", UIConstants.TABLE_DATE_WIDTH);
+		tableItem.setColumnWidth("assignUserFullName",
+				UIConstants.TABLE_X_LABEL_WIDTH);
 
 		campainListLayout.addComponent(constructTableActionControls());
 		campainListLayout.addComponent(tableItem);
@@ -61,20 +72,20 @@ public class CampaignListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public void displayCampaigns(List<SimpleCampaign> campaigns, int currentPage,
-			int totalPages) {
+	public void displayCampaigns(List<SimpleCampaign> campaigns,
+			int currentPage, int totalPages) {
 		tableItem.setCurrentPage(currentPage);
 		tableItem.setTotalPage(totalPages);
 
 		BeanItemContainer<SimpleCampaign> container = new BeanItemContainer<SimpleCampaign>(
 				SimpleCampaign.class, campaigns);
 		tableItem.setContainerDataSource(container);
-		
-		tableItem.setVisibleColumns(new String[] { "selected", "campaignname",
-				"status", "type", "expectedrevenue", "enddate", "assignUserFullName"});
-		tableItem.setColumnHeaders(new String[] { "", "Campaign", "Status", "Type",
-				"Expected Revenue", "End Date", "Assign User" });
 
+		tableItem.setVisibleColumns(new String[] { "selected", "campaignname",
+				"status", "type", "expectedrevenue", "enddate",
+				"assignUserFullName" });
+		tableItem.setColumnHeaders(new String[] { "", "Campaign", "Status",
+				"Type", "Expected Revenue", "End Date", "Assign User" });
 
 	}
 

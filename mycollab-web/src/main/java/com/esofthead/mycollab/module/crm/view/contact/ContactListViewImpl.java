@@ -13,6 +13,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Alignment;
@@ -132,7 +133,15 @@ public class ContactListViewImpl extends AbstractView implements
 
 			}
 		});
+		
+		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+		tableItem.setColumnWidth("title", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
+		tableItem.setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
+		tableItem.setWidth("100%");
 		contactListLayout.addComponent(constructTableActionControls());
 		contactListLayout.addComponent(tableItem);
 		contactListLayout.addComponent(tableItem.createControls());

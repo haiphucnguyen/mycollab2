@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoRead;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddView;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddViewImpl;
@@ -47,6 +48,12 @@ import com.esofthead.mycollab.module.crm.view.lead.LeadListViewImpl;
 import com.esofthead.mycollab.module.crm.view.lead.LeadReadPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadReadView;
 import com.esofthead.mycollab.module.crm.view.lead.LeadReadViewImpl;
+import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddPresenter;
+import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddView;
+import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddViewImpl;
+import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListPresenterImpl;
+import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListView;
+import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListViewImpl;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -62,6 +69,7 @@ public class CrmController {
 		bindCampaignEvents();
 		bindContactEvents();
 		bindLeadEvents();
+		bindOpportunityEvents();
 	}
 
 	@SuppressWarnings("serial")
@@ -235,6 +243,7 @@ public class CrmController {
 				});
 	}
 	
+	@SuppressWarnings("serial")
 	private void bindLeadEvents() {
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<LeadEvent.GotoList>() {
@@ -268,6 +277,63 @@ public class CrmController {
 						LeadAddView view = ViewManager
 								.getView(LeadAddViewImpl.class);
 						new LeadAddPresenter(view).go(container);
+						view.addNewItem();
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<LeadEvent.GotoRead>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return LeadEvent.GotoRead.class;
+					}
+
+					@Override
+					public void handle(LeadEvent.GotoRead event) {
+						LeadReadView view = ViewManager
+								.getView(LeadReadViewImpl.class);
+						Lead campaign = (Lead) event.getData();
+						new LeadReadPresenter(view).go(container);
+						view.displayItem(campaign);
+					}
+				});
+	}
+	
+	@SuppressWarnings("serial")
+	private void bindOpportunityEvents() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<OpportunityEvent.GotoList>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return OpportunityEvent.GotoList.class;
+					}
+
+					@Override
+					public void handle(OpportunityEvent.GotoList event) {
+						OpportunityListView view = ViewManager
+								.getView(OpportunityListViewImpl.class);
+						OpportunityListPresenterImpl presenter = new OpportunityListPresenterImpl(
+								view);
+						presenter.go(container);
+						presenter.doDefaultSearch();
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<OpportunityEvent.GotoAdd>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return OpportunityEvent.GotoAdd.class;
+					}
+
+					@Override
+					public void handle(OpportunityEvent.GotoAdd event) {
+						OpportunityAddView view = ViewManager
+								.getView(OpportunityAddViewImpl.class);
+						new OpportunityAddPresenter(view).go(container);
 						view.addNewItem();
 					}
 				});

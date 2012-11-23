@@ -16,6 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Alignment;
@@ -28,6 +29,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
+import com.vaadin.ui.Table.TableTransferable;
 import com.vaadin.ui.VerticalLayout;
 
 public class AccountListViewImpl extends AbstractView implements
@@ -166,6 +168,14 @@ public class AccountListViewImpl extends AbstractView implements
 
 			}
 		});
+		
+		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+		tableItem.setColumnWidth("city", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("billingCountry", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("phoneoffice", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
+		tableItem.setColumnWidth("assignuser", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("createdtime", UIConstants.TABLE_DATE_WIDTH);
 
 		tableItem.setWidth("100%");
 

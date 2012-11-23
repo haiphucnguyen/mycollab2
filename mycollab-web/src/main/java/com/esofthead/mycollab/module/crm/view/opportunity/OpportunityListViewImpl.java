@@ -13,6 +13,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
@@ -57,6 +58,13 @@ public class OpportunityListViewImpl extends AbstractView implements
 		// add code generate column here
 
 		tableItem.setWidth("100%");
+		
+		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+		tableItem.setColumnWidth("salesstage", UIConstants.TABLE_M_LABEL_WIDTH);
+		tableItem.setColumnWidth("amount", UIConstants.TABLE_M_LABEL_WIDTH);
+		tableItem.setColumnWidth("expectedcloseddate", UIConstants.TABLE_DATE_WIDTH);
+		tableItem.setColumnWidth("assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("createdtime", UIConstants.TABLE_DATE_WIDTH);
 
 		accountListLayout.addComponent(constructTableActionControls());
 		accountListLayout.addComponent(tableItem);
@@ -64,19 +72,20 @@ public class OpportunityListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public void displayOpportunitys(List<SimpleOpportunity> accounts,
+	public void displayOpportunitys(List<SimpleOpportunity> opportunities,
 			int currentPage, int totalPages) {
 		tableItem.setCurrentPage(currentPage);
 		tableItem.setTotalPage(totalPages);
 
 		BeanItemContainer<SimpleOpportunity> container = new BeanItemContainer<SimpleOpportunity>(
-				SimpleOpportunity.class, accounts);
+				SimpleOpportunity.class, opportunities);
 		tableItem.setContainerDataSource(container);
-		tableItem.setVisibleColumns(new String[] { "selected", "accountname",
-				"city", "billingCountry", "phoneoffice", "email", "assignuser",
-				"createdtime" });
-		tableItem.setColumnHeaders(new String[] { "", "Campaign", "Status",
-				"Type", "Expected Revenue", "End Date", "Assign User" });
+
+		tableItem.setVisibleColumns(new String[] { "selected", "accountName",
+				"salesstage", "amount", "expectedcloseddate",
+				"assignUserFullName", "createdtime" });
+		tableItem.setColumnHeaders(new String[] { "", "Account Name",
+				"Sales Stage", "Amount", "Close", "User", "Date Created" });
 
 	}
 

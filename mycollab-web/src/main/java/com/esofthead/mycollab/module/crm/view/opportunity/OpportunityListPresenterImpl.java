@@ -19,7 +19,7 @@ import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 
-public class OpportunityListViewPresenter extends
+public class OpportunityListPresenterImpl extends
 		CrmGenericPresenter<OpportunityListView> implements
 		OpportunityListPresenter {
 
@@ -31,7 +31,7 @@ public class OpportunityListViewPresenter extends
 
 	private SelectionModel<SimpleOpportunity> selectionModel = new SelectionModel<SimpleOpportunity>();
 
-	public OpportunityListViewPresenter(OpportunityListView view) {
+	public OpportunityListPresenterImpl(OpportunityListView view) {
 		this.view = view;
 		view.setPresenter(this);
 		opportunityService = AppContext.getSpringBean(OpportunityService.class);

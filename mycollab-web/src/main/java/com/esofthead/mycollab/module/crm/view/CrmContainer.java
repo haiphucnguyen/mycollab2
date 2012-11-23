@@ -28,6 +28,10 @@ public class CrmContainer extends AbstractView {
 	private static String ACCOUNT_LIST = "Accounts";
 
 	private static String NEW_ACCOUNT_ITEM = "New Account";
+	
+	private static String NEW_CASE_ITEM = "New Case";
+	
+	private static String CASE_LIST = "Cases";
 
 	private static String CONTACT_LIST = "Contacts";
 
@@ -85,6 +89,10 @@ public class CrmContainer extends AbstractView {
 		Button opportunityList = new Button(OPPORTUNITY_LIST, listener);
 		opportunityList.setStyleName("link");
 		toolbar.addComponent(opportunityList);
+		
+		Button caseList = new Button(CASE_LIST, listener);
+		caseList.setStyleName("link");
+		toolbar.addComponent(caseList);
 
 		toolbar.setStyleName("h-sidebar-menu");
 
