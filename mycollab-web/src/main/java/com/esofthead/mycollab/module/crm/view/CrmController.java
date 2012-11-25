@@ -4,10 +4,8 @@ import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
+import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoAdd;
-import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoEdit;
-import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoList;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoRead;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
@@ -55,6 +53,9 @@ import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddViewImpl
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListPresenterImpl;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListView;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListViewImpl;
+import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityReadPresenter;
+import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityReadView;
+import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityReadViewImpl;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -84,7 +85,7 @@ public class CrmController {
 					}
 
 					@Override
-					public void handle(GotoList event) {
+					public void handle(AccountEvent.GotoList event) {
 						AccountListView view = ViewManager
 								.getView(AccountListViewImpl.class);
 						AccountListPresenterImpl presenter = new AccountListPresenterImpl(
@@ -103,7 +104,7 @@ public class CrmController {
 					}
 
 					@Override
-					public void handle(GotoAdd event) {
+					public void handle(AccountEvent.GotoAdd event) {
 						AccountAddView view = ViewManager
 								.getView(AccountAddViewImpl.class);
 						new AccountAddPresenter(view).go(container);
@@ -120,7 +121,7 @@ public class CrmController {
 					}
 
 					@Override
-					public void handle(GotoEdit event) {
+					public void handle(AccountEvent.GotoEdit event) {
 						AccountAddView view = ViewManager
 								.getView(AccountAddViewImpl.class);
 						new AccountAddPresenter(view).go(container);
@@ -186,6 +187,23 @@ public class CrmController {
 				});
 
 		EventBus.getInstance().addListener(
+				new ApplicationEventListener<CampaignEvent.GotoEdit>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return CampaignEvent.GotoEdit.class;
+					}
+
+					@Override
+					public void handle(CampaignEvent.GotoEdit event) {
+						CampaignAddView view = ViewManager
+								.getView(CampaignAddViewImpl.class);
+						new CampaignAddPresenter(view).go(container);
+						view.editItem((Campaign) event.getData());
+					}
+				});
+
+		EventBus.getInstance().addListener(
 				new ApplicationEventListener<CampaignEvent.GotoRead>() {
 
 					@Override
@@ -239,6 +257,23 @@ public class CrmController {
 								.getView(ContactAddViewImpl.class);
 						new ContactAddPresenter(view).go(container);
 						view.addNewItem();
+					}
+				});
+		
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ContactEvent.GotoEdit>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ContactEvent.GotoEdit.class;
+					}
+
+					@Override
+					public void handle(ContactEvent.GotoEdit event) {
+						ContactAddView view = ViewManager
+								.getView(ContactAddViewImpl.class);
+						new ContactAddPresenter(view).go(container);
+						view.editItem((Contact) event.getData());
 					}
 				});
 
@@ -298,6 +333,23 @@ public class CrmController {
 						view.addNewItem();
 					}
 				});
+		
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<LeadEvent.GotoEdit>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return LeadEvent.GotoEdit.class;
+					}
+
+					@Override
+					public void handle(LeadEvent.GotoEdit event) {
+						LeadAddView view = ViewManager
+								.getView(LeadAddViewImpl.class);
+						new LeadAddPresenter(view).go(container);
+						view.editItem((Lead) event.getData());
+					}
+				});
 
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<LeadEvent.GotoRead>() {
@@ -355,22 +407,39 @@ public class CrmController {
 						view.addNewItem();
 					}
 				});
-
+		
 		EventBus.getInstance().addListener(
-				new ApplicationEventListener<LeadEvent.GotoRead>() {
+				new ApplicationEventListener<OpportunityEvent.GotoEdit>() {
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
-						return LeadEvent.GotoRead.class;
+						return OpportunityEvent.GotoEdit.class;
 					}
 
 					@Override
-					public void handle(LeadEvent.GotoRead event) {
-						LeadReadView view = ViewManager
-								.getView(LeadReadViewImpl.class);
-						Lead campaign = (Lead) event.getData();
-						new LeadReadPresenter(view).go(container);
-						view.displayItem(campaign);
+					public void handle(OpportunityEvent.GotoEdit event) {
+						OpportunityAddView view = ViewManager
+								.getView(OpportunityAddViewImpl.class);
+						new OpportunityAddPresenter(view).go(container);
+						view.editItem((Opportunity) event.getData());
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<OpportunityEvent.GotoRead>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return OpportunityEvent.GotoRead.class;
+					}
+
+					@Override
+					public void handle(OpportunityEvent.GotoRead event) {
+						OpportunityReadView view = ViewManager
+								.getView(OpportunityReadViewImpl.class);
+						Opportunity item = (Opportunity) event.getData();
+						new OpportunityReadPresenter(view).go(container);
+						view.displayItem(item);
 					}
 				});
 	}

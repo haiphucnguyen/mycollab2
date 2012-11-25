@@ -99,7 +99,8 @@
                m_crm_account.fax, m_crm_account.alternatePhone, m_crm_account.annualRevenue, m_crm_account.billingAddress, 
                m_crm_account.city, m_crm_account.postalCode, m_crm_account.countryId, m_crm_account.description, m_crm_account.state, 
                m_crm_account.email, m_crm_account.ownership, m_crm_account.shippingAddress, m_crm_account.shippingCity, m_crm_account.shippingPostalCode, 
-               m_crm_account.shippingCountryId, m_crm_account.shippingState, m_crm_account.numemployees, m_crm_account.createdTime, 
+               m_crm_account.shippingCountryId, m_crm_account.shippingState, m_crm_account.numemployees, m_crm_account.createdTime,
+               m_crm_account.lastUpdatedTime,
                m_crm_account.createdUser, m_crm_account.sAccountId, m_crm_account.assignUser, m_crm_account.type, m_crm_account.industry,
                concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName
         FROM m_crm_account

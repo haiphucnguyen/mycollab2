@@ -145,7 +145,7 @@
 	<sql id="selectSimpleTargetGroup">
         <![CDATA[
         SELECT m_crm_target_list.id, m_crm_target_list.name, m_crm_target_list.type, 
-            m_crm_target_list.assignUser, m_crm_target_list.description,
+            m_crm_target_list.assignUser, m_crm_target_list.description,  m_crm_target_list.createdTime,  m_crm_target_list.lastUpdatedTime,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName
         FROM m_crm_target_list
             LEFT OUTER JOIN s_user ON (m_crm_target_list.assignUser = s_user.username)

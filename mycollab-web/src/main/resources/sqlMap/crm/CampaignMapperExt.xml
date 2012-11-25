@@ -148,6 +148,7 @@
                m_crm_campaign.impressionnote, m_crm_campaign.budget, m_crm_campaign.actualCost, m_crm_campaign.expectedRevenue, 
                m_crm_campaign.expectedCost, m_crm_campaign.objective, m_crm_campaign.description, m_crm_campaign.impression, m_crm_campaign.createdTime, 
                m_crm_campaign.createdUser, m_crm_campaign.sAccountId, m_crm_campaign.status, m_crm_campaign.type, m_crm_campaign.assignUser,
+               m_crm_campaign.lastUpdatedTime,
                concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName
         FROM m_crm_campaign       
             LEFT OUTER JOIN s_user ON (m_crm_campaign.assignUser=s_user.username)

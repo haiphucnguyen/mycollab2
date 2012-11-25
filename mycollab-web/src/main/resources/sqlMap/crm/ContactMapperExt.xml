@@ -177,7 +177,7 @@
                m_crm_contact.createdTime, m_crm_contact.createdUser, m_crm_contact.sAccountId, m_crm_contact.assignUser,
                concat(m_crm_contact.prefix, ' ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, 
                concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName,
-               m_crm_account.accountName
+               m_crm_account.accountName, m_crm_account.lastUpdatedTime
 
         FROM m_crm_contact 
                LEFT OUTER JOIN m_crm_account ON (m_crm_contact.accountId = m_crm_account.id) 

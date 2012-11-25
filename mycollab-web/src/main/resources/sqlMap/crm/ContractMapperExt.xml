@@ -146,7 +146,7 @@
                m_crm_account.accountName, m_crm_opportunity.opportunityName, 
                m_crm_contract.startdate, m_crm_contract.enddate, m_crm_contract.contractvalue,
                concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName,
-               m_crm_contract.createdTime, m_crm_contract.createdUser
+               m_crm_contract.createdTime, m_crm_contract.createdUser, m_crm_contract.lastUpdatedTime
                
         FROM m_crm_contract
               LEFT OUTER JOIN m_crm_account ON (m_crm_contract.accountid = m_crm_account.id)

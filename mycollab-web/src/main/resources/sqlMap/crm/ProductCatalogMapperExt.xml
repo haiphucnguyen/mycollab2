@@ -19,7 +19,7 @@
         <![CDATA[
         SELECT id, url, taxclass, mft_partnumber, vendor_partnumber, currencyid, cost, listprice,
                 discountprice, pricing_formula, description, date_available, availability, quantity_in_stock,
-                support_name, support_contact, support_desc, support_term, productname
+                support_name, support_contact, support_desc, support_term, productname, createdTime, lastUpdatedTime
         FROM m_crm_product_catalog
        ]]>
 	</sql>

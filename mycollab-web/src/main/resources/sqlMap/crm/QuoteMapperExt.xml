@@ -198,7 +198,7 @@
                concat(IFNULL(billingContact.firstname,''), ' ', billingContact.lastname) AS billingContactName,
                shippingAccount.accountName AS shippingAccountName,
                concat(IFNULL(shippingContact.firstname,''), ' ', shippingContact.lastname) AS shippingContactName,
-               m_crm_quote.createdTime, m_crm_quote.createdUser
+               m_crm_quote.createdTime, m_crm_quote.createdUser, m_crm_quote.lastUpdatedTime
                
         FROM m_crm_quote
              LEFT OUTER JOIN s_user ON (m_crm_quote.assignUser = s_user.username)

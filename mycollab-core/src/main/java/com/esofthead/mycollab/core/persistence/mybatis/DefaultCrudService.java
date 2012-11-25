@@ -18,7 +18,11 @@
 package com.esofthead.mycollab.core.persistence.mybatis;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.util.GregorianCalendar;
 import java.util.List;
+
+import org.apache.commons.beanutils.PropertyUtils;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ICrudService;
@@ -32,7 +36,7 @@ import com.esofthead.mycollab.core.persistence.ICrudService;
  */
 public abstract class DefaultCrudService<K extends Serializable, T> implements
 		ICrudService<K, T> {
-	
+
 	public abstract ICrudGenericDAO<K, T> getCrudMapper();
 
 	public int remove(K primaryKey) {
@@ -46,6 +50,14 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
 	@Override
 	public void saveWithSession(T record, String username) {
 		if (username == null) {
+			try {
+				PropertyUtils.setProperty(record, "createdtime",
+						new GregorianCalendar().getTime());
+				PropertyUtils.setProperty(record, "lastupdatedtime",
+						new GregorianCalendar().getTime());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			getCrudMapper().insert(record);
 		} else {
 			internalSaveWithSession(record, username);
@@ -53,12 +65,26 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
 	}
 
 	protected void internalSaveWithSession(T record, String username) {
+		try {
+			PropertyUtils.setProperty(record, "createdtime",
+					new GregorianCalendar().getTime());
+			PropertyUtils.setProperty(record, "lastupdatedtime",
+					new GregorianCalendar().getTime());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		getCrudMapper().insert(record);
 	}
 
 	@Override
 	public int updateWithSession(T record, String username) {
 		if (username == null) {
+			try {
+				PropertyUtils.setProperty(record, "lastupdatedtime",
+						new GregorianCalendar().getTime());
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
 			return getCrudMapper().updateByPrimaryKey(record);
 		} else {
 			return internalUpdateWithSession(record, username);
@@ -66,6 +92,12 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
 	}
 
 	protected int internalUpdateWithSession(T record, String username) {
+		try {
+			PropertyUtils.setProperty(record, "lastupdatedtime",
+					new GregorianCalendar().getTime());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		return getCrudMapper().updateByPrimaryKey(record);
 	}
 
@@ -86,6 +118,5 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
 	public void removeWithSession(List<K> primaryKeys, String username) {
 		throw new RuntimeException("Sub classes must override before call");
 	}
-	
-	
+
 }

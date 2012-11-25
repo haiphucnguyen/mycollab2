@@ -81,7 +81,7 @@
                m_crm_product.producturl, m_crm_product.supportcontact, m_crm_product.supportterm, 
                m_crm_product.supportdesc, m_crm_product.cost, m_crm_product.listprice, m_crm_product.groupid, 
                m_crm_product.tax, m_crm_product.taxClass, m_crm_product.mftNumber, m_crm_product.vendorPartNumber,
-               m_crm_account.accountName as accountname, 
+               m_crm_account.accountName as accountname, m_crm_product.lastUpdatedTime,
                CONCAT(m_crm_contact.firstname, m_crm_contact.lastname) AS contactname,
                m_crm_product.createdTime, m_crm_product.createdUser
         FROM m_crm_product 

@@ -87,7 +87,7 @@
                m_crm_target.birthday, m_crm_target.accountname, m_crm_target.isCallable, m_crm_target.officePhone, m_crm_target.mobile, 
                m_crm_target.homePhone, m_crm_target.otherPhone, m_crm_target.fax, m_crm_target.assistant, m_crm_target.assistantPhone,
                m_crm_target.primaryAddress, m_crm_target.primaryCity, m_crm_target.primaryState, m_crm_target.primaryPostal, m_crm_target.primaryCountryId, 
-               m_crm_target.description, m_crm_target.email, m_crm_target.createdTime, m_crm_target.createdUser, m_crm_target.sAccountId, 
+               m_crm_target.description, m_crm_target.email, m_crm_target.createdTime, m_crm_target.lastUpdatedTime, m_crm_target.createdUser, m_crm_target.sAccountId, 
                m_crm_target.assignUser,  concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName,
                concat(m_crm_target.firstname,' ', m_crm_target.lastname) as targetName
 

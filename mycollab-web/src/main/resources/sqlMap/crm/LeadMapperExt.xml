@@ -126,7 +126,7 @@
                m_crm_lead.primState, m_crm_lead.primCity, m_crm_lead.primPostalCode, m_crm_lead.primCountry, m_crm_lead.description,
                m_crm_lead.email, m_crm_lead.createdTime, m_crm_lead.createdUser, m_crm_lead.sAccountId, m_crm_lead.assignUser, m_crm_lead.status, 
                m_crm_lead.source, concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS assignUserFullName, 
-               m_crm_campaign.campaignName, m_crm_lead.website
+               m_crm_campaign.campaignName, m_crm_lead.website, m_crm_lead.lastUpdatedTime
 
         FROM m_crm_lead
                LEFT OUTER JOIN s_user ON (m_crm_lead.assignUser = s_user.username) 

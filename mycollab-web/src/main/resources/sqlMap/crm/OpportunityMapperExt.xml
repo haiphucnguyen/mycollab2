@@ -142,7 +142,7 @@
                m_crm_opportunity.amount, m_crm_opportunity.type, m_crm_opportunity.source, m_crm_opportunity.expectedClosedDate,
                m_crm_opportunity.campaignid, m_crm_opportunity.nextStep, m_crm_opportunity.probability, m_crm_opportunity.description, 
                m_crm_opportunity.createdTime, m_crm_opportunity.createdUser, m_crm_opportunity.sAccountId, m_crm_opportunity.assignUser, 
-               m_crm_opportunity.opportunityType, m_crm_opportunity.salesStage,
+               m_crm_opportunity.opportunityType, m_crm_opportunity.salesStage, m_crm_opportunity.lastUpdatedTime,
                concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS assignUserFullName,
                m_crm_account.accountName, m_crm_campaign.campaignName
                

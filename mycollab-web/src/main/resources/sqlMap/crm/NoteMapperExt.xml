@@ -14,11 +14,11 @@
         insert into m_crm_note (contactid, subject, 
             note, type, typeid, 
             username, attachmentpath, createdTime, 
-            createdUser, sAccountId)
+            createdUser, sAccountId, lastupdatedtime)
         values (#{contactid,jdbcType=INTEGER}, #{subject,jdbcType=VARCHAR}, 
             #{note,jdbcType=VARCHAR}, #{type,jdbcType=INTEGER}, #{typeid,jdbcType=INTEGER}, 
             #{username,jdbcType=VARCHAR}, #{attachmentpath,jdbcType=VARCHAR}, #{createdtime,jdbcType=TIMESTAMP}, 
-            #{createduser,jdbcType=VARCHAR}, #{saccountid,jdbcType=INTEGER})
+            #{createduser,jdbcType=VARCHAR}, #{saccountid,jdbcType=INTEGER}, #{lastupdatedtime,jdbcType=TIMESTAMP})
         ]]>
 	</insert>
 
@@ -308,7 +308,7 @@
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
         FROM m_crm_note
             LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
@@ -325,7 +325,7 @@
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
         FROM m_crm_note
             LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
@@ -342,7 +342,7 @@
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
         FROM m_crm_note
             LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
@@ -359,7 +359,7 @@
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
         FROM m_crm_note
             LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
@@ -376,7 +376,7 @@
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
         FROM m_crm_note
             LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
@@ -393,7 +393,7 @@
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
         FROM m_crm_note
             LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
@@ -410,7 +410,7 @@
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
         FROM m_crm_note
             LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
@@ -427,7 +427,7 @@
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
         FROM m_crm_note
             LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
@@ -444,7 +444,7 @@
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
         FROM m_crm_note
             LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
@@ -461,7 +461,7 @@
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
         FROM m_crm_note
             LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
@@ -478,7 +478,7 @@
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
         FROM m_crm_note
             LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
@@ -495,7 +495,7 @@
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
         FROM m_crm_note
             LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
