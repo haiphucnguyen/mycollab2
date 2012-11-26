@@ -103,6 +103,13 @@
             1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TargetMapperExt.queryTotalCountSearchCriteria" />
         </trim>
     </select>
+    
+    <sql id="orderStatement">
+        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            lastUpdatedTime DESC
+        ]]>
+    </sql>
 
     <select id="findPagableListByCriteria" resultMap="SimpleTargetResult"
         parameterType="com.esofthead.mycollab.module.crm.domain.criteria.TargetSearchCriteria">
@@ -111,6 +118,7 @@
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TargetMapperExt.querySearchCriteria" />
         </trim>
+        <include refid="orderStatement"/>
     </select>
 
     <select id="findTargetById" parameterType="int" resultMap="SimpleTargetResult">

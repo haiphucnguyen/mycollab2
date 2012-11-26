@@ -141,6 +141,13 @@
 			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.queryTotalCountSearchCriteria" />
 		</trim>
 	</select>
+    
+    <sql id="orderStatement">
+        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            m_crm_lead.lastUpdatedTime DESC
+        ]]>
+    </sql>
 
 	<select id="findPagableListByCriteria" resultMap="SimpleLeadResult"
 		parameterType="LeadSearchCriteria">
@@ -148,6 +155,7 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 	</select>
 
 	<select id="findLeadById" parameterType="int" resultMap="SimpleLeadResult">

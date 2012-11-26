@@ -1,24 +1,23 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
-import java.util.List;
-
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.ui.components.AccountSearchPanel;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.data.util.BeanItemContainer;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -40,7 +39,7 @@ public class AccountListViewImpl extends AbstractView implements
 
 	private SelectionOptionButton selectOptionButton;
 
-	private PagedBeanTable<SimpleAccount> tableItem;
+	private PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount> tableItem;
 
 	private final VerticalLayout accountListLayout;
 
@@ -62,7 +61,13 @@ public class AccountListViewImpl extends AbstractView implements
 	}
 
 	private void generateDisplayTable() {
-		tableItem = new PagedBeanTable<SimpleAccount>();
+		tableItem = new PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>(
+				AppContext.getSpringBean(AccountService.class),
+				SimpleAccount.class, new String[] { "selected", "accountname",
+						"city", "billingCountry", "phoneoffice", "email",
+						"assignUserFullName", "createdtime" }, new String[] {
+						"", "Name", "City", "Billing Country", "Phone Office",
+						"Email Address", "Assign User", "Created Time" });
 
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -85,7 +90,7 @@ public class AccountListViewImpl extends AbstractView implements
 				});
 
 				@SuppressWarnings("unchecked")
-				SimpleAccount account = ((PagedBeanTable<SimpleAccount>) source)
+				SimpleAccount account = ((PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>) source)
 						.getBeanByIndex(itemId);
 				account.setExtraData(cb);
 				return cb;
@@ -99,7 +104,7 @@ public class AccountListViewImpl extends AbstractView implements
 			@SuppressWarnings("unchecked")
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
-				SimpleAccount account = ((PagedBeanTable<SimpleAccount>) source)
+				SimpleAccount account = ((PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>) source)
 						.getBeanByIndex(itemId);
 				if (account != null) {
 					Link l = new Link();
@@ -121,7 +126,7 @@ public class AccountListViewImpl extends AbstractView implements
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
 				@SuppressWarnings("unchecked")
-				final SimpleAccount account = ((PagedBeanTable<SimpleAccount>) source)
+				final SimpleAccount account = ((PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>) source)
 						.getBeanByIndex(itemId);
 				if (account != null) {
 					Label l = new Label();
@@ -142,7 +147,7 @@ public class AccountListViewImpl extends AbstractView implements
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
 				@SuppressWarnings("unchecked")
-				final SimpleAccount account = ((PagedBeanTable<SimpleAccount>) source)
+				final SimpleAccount account = ((PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>) source)
 						.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(account.getAccountname(),
 						new Button.ClickListener() {
@@ -177,24 +182,6 @@ public class AccountListViewImpl extends AbstractView implements
 		accountListLayout.addComponent(constructTableActionControls());
 		accountListLayout.addComponent(tableItem);
 		accountListLayout.addComponent(tableItem.createControls());
-	}
-
-	@Override
-	public void displayAccounts(List<SimpleAccount> accounts, int currentPage,
-			int totalPages) {
-		tableItem.setCurrentPage(currentPage);
-		tableItem.setTotalPage(totalPages);
-
-		BeanItemContainer<SimpleAccount> container = new BeanItemContainer<SimpleAccount>(
-				SimpleAccount.class, accounts);
-		tableItem.setContainerDataSource(container);
-		tableItem.setVisibleColumns(new String[] { "selected", "accountname",
-				"city", "billingCountry", "phoneoffice", "email", "assignuser",
-				"createdtime" });
-		tableItem.setColumnHeaders(new String[] { "", "Name", "City",
-				"Billing Country", "Phone Office", "Email Address",
-				"Assign User", "Created Time" });
-
 	}
 
 	@Override
@@ -233,11 +220,6 @@ public class AccountListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public HasPagableHandlers getPagableHandlers() {
-		return tableItem;
-	}
-
-	@Override
 	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
 		return selectOptionButton;
 	}
@@ -249,6 +231,11 @@ public class AccountListViewImpl extends AbstractView implements
 
 	@Override
 	public HasSelectableItemHandlers<SimpleAccount> getSelectableItemHandlers() {
+		return tableItem;
+	}
+
+	@Override
+	public IPagedBeanTable<AccountService, AccountSearchCriteria, SimpleAccount> getPagedBeanTable() {
 		return tableItem;
 	}
 }

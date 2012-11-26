@@ -5,14 +5,12 @@ import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.utils.SelectionModel;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListView.LeadListPresenter;
-import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
@@ -25,7 +23,7 @@ public class LeadListPresenterImpl extends CrmGenericPresenter<LeadListView>
 
 	private LeadService leadService;
 
-	private SearchRequest<LeadSearchCriteria> searchRequest;
+	private LeadSearchCriteria searchCriteria;
 
 	private List<SimpleLead> currentListData = new ArrayList<SimpleLead>();
 
@@ -40,28 +38,10 @@ public class LeadListPresenterImpl extends CrmGenericPresenter<LeadListView>
 
 					@Override
 					public void onSearch(LeadSearchCriteria criteria) {
-						searchRequest = new SearchRequest<LeadSearchCriteria>(
-								criteria, 0,
-								SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
-						doSearch();
+						doSearch(criteria);
 					}
 				});
-
-		view.getPagableHandlers().addPagableHandler(new PagableHandler() {
-
-			@Override
-			public void move(int newPageNumber) {
-				searchRequest.setCurrentPage(newPageNumber);
-				doSearch();
-			}
-
-			@Override
-			public void displayItemChange(int numOfItems) {
-				searchRequest.setNumberOfItems(numOfItems);
-				doSearch();
-			}
-		});
-
+		
 		view.getOptionSelectionHandlers().addSelectionOptionHandler(
 				new SelectionOptionHandler() {
 
@@ -135,24 +115,8 @@ public class LeadListPresenterImpl extends CrmGenericPresenter<LeadListView>
 
 	@Override
 	public void doSearch(LeadSearchCriteria searchCriteria) {
-		this.searchRequest = new SearchRequest<LeadSearchCriteria>(
-				searchCriteria, 1, SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
-		doSearch();
-	}
-
-	@SuppressWarnings("unchecked")
-	private void doSearch() {
-		int totalCount = leadService.getTotalCount(searchRequest
-				.getSearchCriteria());
-		int totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
-		if (searchRequest.getCurrentPage() > totalPage) {
-			searchRequest.setCurrentPage(totalPage);
-		}
-
-		currentListData = leadService.findPagableListByCriteria(searchRequest);
-		view.displayLeads(currentListData, searchRequest.getCurrentPage(),
-				totalPage);
-		checkWhetherEnableTableActionControl();
+		this.searchCriteria = searchCriteria;
+		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
 	}
 
 	private void deleteSelectedItems() {
@@ -163,7 +127,7 @@ public class LeadListPresenterImpl extends CrmGenericPresenter<LeadListView>
 
 		if (keyList.size() > 0) {
 			leadService.removeWithSession(keyList, AppContext.getUsername());
-			doSearch();
+			doSearch(searchCriteria);
 		}
 	}
 }

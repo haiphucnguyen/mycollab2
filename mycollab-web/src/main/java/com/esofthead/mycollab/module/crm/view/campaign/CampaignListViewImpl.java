@@ -1,24 +1,23 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
-import java.util.List;
-
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.ui.components.CampaignSearchPanel;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.data.util.BeanItemContainer;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -38,7 +37,7 @@ public class CampaignListViewImpl extends AbstractView implements
 
 	private SelectionOptionButton selectOptionButton;
 
-	private PagedBeanTable<SimpleCampaign> tableItem;
+	private PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign> tableItem;
 
 	private VerticalLayout campainListLayout;
 
@@ -60,7 +59,13 @@ public class CampaignListViewImpl extends AbstractView implements
 	}
 
 	private void generateDisplayTable() {
-		tableItem = new PagedBeanTable<SimpleCampaign>();
+		tableItem = new PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign>(
+				AppContext.getSpringBean(CampaignService.class),
+				SimpleCampaign.class, new String[] { "selected",
+						"campaignname", "status", "type", "expectedrevenue",
+						"enddate", "assignUserFullName" }, new String[] { "",
+						"Campaign", "Status", "Type", "Expected Revenue",
+						"End Date", "Assign User" });
 
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -83,7 +88,7 @@ public class CampaignListViewImpl extends AbstractView implements
 				});
 
 				@SuppressWarnings("unchecked")
-				SimpleCampaign campaign = ((PagedBeanTable<SimpleCampaign>) source)
+				SimpleCampaign campaign = ((PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign>) source)
 						.getBeanByIndex(itemId);
 				campaign.setExtraData(cb);
 				return cb;
@@ -97,7 +102,7 @@ public class CampaignListViewImpl extends AbstractView implements
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
 				@SuppressWarnings("unchecked")
-				final SimpleCampaign campaign = ((PagedBeanTable<SimpleCampaign>) source)
+				final SimpleCampaign campaign = ((PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign>) source)
 						.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(campaign.getCampaignname(),
 						new Button.ClickListener() {
@@ -129,24 +134,6 @@ public class CampaignListViewImpl extends AbstractView implements
 		campainListLayout.addComponent(constructTableActionControls());
 		campainListLayout.addComponent(tableItem);
 		campainListLayout.addComponent(tableItem.createControls());
-	}
-
-	@Override
-	public void displayCampaigns(List<SimpleCampaign> campaigns,
-			int currentPage, int totalPages) {
-		tableItem.setCurrentPage(currentPage);
-		tableItem.setTotalPage(totalPages);
-
-		BeanItemContainer<SimpleCampaign> container = new BeanItemContainer<SimpleCampaign>(
-				SimpleCampaign.class, campaigns);
-		tableItem.setContainerDataSource(container);
-
-		tableItem.setVisibleColumns(new String[] { "selected", "campaignname",
-				"status", "type", "expectedrevenue", "enddate",
-				"assignUserFullName" });
-		tableItem.setColumnHeaders(new String[] { "", "Campaign", "Status",
-				"Type", "Expected Revenue", "End Date", "Assign User" });
-
 	}
 
 	@Override
@@ -185,11 +172,6 @@ public class CampaignListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public HasPagableHandlers getPagableHandlers() {
-		return tableItem;
-	}
-
-	@Override
 	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
 		return selectOptionButton;
 	}
@@ -201,6 +183,11 @@ public class CampaignListViewImpl extends AbstractView implements
 
 	@Override
 	public HasSelectableItemHandlers<SimpleCampaign> getSelectableItemHandlers() {
+		return tableItem;
+	}
+
+	@Override
+	public IPagedBeanTable<CampaignService, CampaignSearchCriteria, SimpleCampaign> getPagedBeanTable() {
 		return tableItem;
 	}
 

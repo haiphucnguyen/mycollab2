@@ -1,24 +1,23 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
-import java.util.List;
-
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.ui.components.LeadSearchPanel;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.data.util.BeanItemContainer;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -37,7 +36,7 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 
 	private SelectionOptionButton selectOptionButton;
 
-	private PagedBeanTable<SimpleLead> tableItem;
+	private PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead> tableItem;
 
 	private final VerticalLayout accountListLayout;
 
@@ -60,7 +59,12 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 
 	@SuppressWarnings("serial")
 	private void generateDisplayTable() {
-		tableItem = new PagedBeanTable<SimpleLead>();
+		tableItem = new PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>(
+				AppContext.getSpringBean(LeadService.class), SimpleLead.class,
+				new String[] { "selected", "leadName", "status", "accountname",
+						"officephone", "email", "assignuser" }, new String[] {
+						"", "Name", "Status", "Account Name", "Office Phone",
+						"Email", "Assign User" });
 
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -75,28 +79,27 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						SimpleLead lead = tableItem
-								.getBeanByIndex(itemId);
+						SimpleLead lead = tableItem.getBeanByIndex(itemId);
 						tableItem.fireSelectItemEvent(lead);
 
 					}
 				});
 
 				@SuppressWarnings("unchecked")
-				SimpleLead lead = ((PagedBeanTable<SimpleLead>) source)
+				SimpleLead lead = ((PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>) source)
 						.getBeanByIndex(itemId);
 				lead.setExtraData(cb);
 				return cb;
 			}
 		});
-		
+
 		tableItem.addGeneratedColumn("leadName", new ColumnGenerator() {
 
 			@Override
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
 				@SuppressWarnings("unchecked")
-				final SimpleLead lead = ((PagedBeanTable<SimpleLead>) source)
+				final SimpleLead lead = ((PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>) source)
 						.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(lead.getLeadName(),
 						new Button.ClickListener() {
@@ -104,10 +107,8 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								EventBus.getInstance()
-										.fireEvent(
-												new LeadEvent.GotoRead(this,
-														lead));
+								EventBus.getInstance().fireEvent(
+										new LeadEvent.GotoRead(this, lead));
 							}
 						});
 				return b;
@@ -115,35 +116,19 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		});
 
 		tableItem.setWidth("100%");
-		
+
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 		tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
-		tableItem.setColumnWidth("accountname", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem
+				.setColumnWidth("accountname", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem
+				.setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
 		tableItem.setColumnWidth("assignuser", UIConstants.TABLE_X_LABEL_WIDTH);
 
 		accountListLayout.addComponent(constructTableActionControls());
 		accountListLayout.addComponent(tableItem);
 		accountListLayout.addComponent(tableItem.createControls());
-	}
-
-	@Override
-	public void displayLeads(List<SimpleLead> accounts, int currentPage,
-			int totalPages) {
-		tableItem.setCurrentPage(currentPage);
-		tableItem.setTotalPage(totalPages);
-
-		BeanItemContainer<SimpleLead> container = new BeanItemContainer<SimpleLead>(
-				SimpleLead.class, accounts);
-		tableItem.setContainerDataSource(container);
-		tableItem
-				.setVisibleColumns(new String[] { "selected", "leadName",
-						"status", "accountname", "officephone", "email",
-						"assignuser" });
-		tableItem.setColumnHeaders(new String[] { "", "Name", "Status",
-				"Account Name", "Office Phone", "Email", "Assign User" });
-
 	}
 
 	@Override
@@ -182,11 +167,6 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 	}
 
 	@Override
-	public HasPagableHandlers getPagableHandlers() {
-		return tableItem;
-	}
-
-	@Override
 	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
 		return selectOptionButton;
 	}
@@ -198,6 +178,11 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 
 	@Override
 	public HasSelectableItemHandlers<SimpleLead> getSelectableItemHandlers() {
+		return tableItem;
+	}
+
+	@Override
+	public IPagedBeanTable<LeadService, LeadSearchCriteria, SimpleLead> getPagedBeanTable() {
 		return tableItem;
 	}
 }

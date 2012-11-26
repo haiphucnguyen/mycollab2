@@ -221,7 +221,7 @@
       shippingpostalcode, shippingcountry, description, 
       paymentterm, originalpodate, purchaseordernum, 
       createdTime, createdUser, sAccountId, 
-      assignUser)
+      assignUser, lastUpdatedTime)
     values (#{subject,jdbcType=VARCHAR}, #{quotestage,jdbcType=VARCHAR}, 
       #{opportunityid,jdbcType=INTEGER}, #{validuntil,jdbcType=TIMESTAMP}, #{shipping,jdbcType=VARCHAR}, 
       #{billaccount,jdbcType=INTEGER}, #{billcontact,jdbcType=INTEGER}, #{shipaccount,jdbcType=INTEGER}, 
@@ -231,7 +231,7 @@
       #{shippingpostalcode,jdbcType=VARCHAR}, #{shippingcountry,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{paymentterm,jdbcType=VARCHAR}, #{originalpodate,jdbcType=TIMESTAMP}, #{purchaseordernum,jdbcType=VARCHAR}, 
       #{createdtime,jdbcType=TIMESTAMP}, #{createduser,jdbcType=VARCHAR}, #{saccountid,jdbcType=INTEGER}, 
-      #{assignuser,jdbcType=VARCHAR})]]>
+      #{assignuser,jdbcType=VARCHAR}, #{lastUpdatedTime,jdbcType=VARCHAR})]]>
     </insert>
 
     <select id="getTotalCount" resultType="int"
@@ -241,6 +241,13 @@
             1=1 <include refid="com.esofthead.mycollab.module.crm.dao.QuoteMapperExt.queryTotalCountSearchCriteria" />
         </trim>
     </select>
+    
+    <sql id="orderStatement">
+        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            lastUpdatedTime DESC
+        ]]>
+    </sql>
 
     <select id="findPagableListByCriteria" resultMap="SimpleQuoteResult"
         parameterType="QuoteSearchCriteria">
@@ -249,5 +256,6 @@
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1 <include refid="com.esofthead.mycollab.module.crm.dao.QuoteMapperExt.querySearchCriteria" />
         </trim>
+        <include refid="orderStatement"/>
     </select>
 </mapper>

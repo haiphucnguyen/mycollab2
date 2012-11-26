@@ -1,20 +1,17 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
-import java.util.List;
-
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
-import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
+import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.Presenter;
 import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 
 public interface CampaignListView extends View {
-	void displayCampaigns(List<SimpleCampaign> campaigns, int currentPage,
-			int totalPages);
 
 	void enableActionControls(int numOfSelectedItem);
 
@@ -24,11 +21,11 @@ public interface CampaignListView extends View {
 
 	HasSearchHandlers<CampaignSearchCriteria> getSearchHandlers();
 
-	HasPagableHandlers getPagableHandlers();
-
 	HasSelectionOptionHandlers getOptionSelectionHandlers();
 
 	HasPopupActionHandlers getPopupActionHandlers();
+	
+	IPagedBeanTable<CampaignService, CampaignSearchCriteria, SimpleCampaign> getPagedBeanTable();
 
 	interface CampaignListPresenter extends Presenter {
 

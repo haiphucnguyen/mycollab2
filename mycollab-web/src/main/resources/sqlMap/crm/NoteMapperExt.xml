@@ -300,6 +300,13 @@
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.queryTotalCountSearchCriteria" />
 		</trim>
 	</select>
+    
+    <sql id="orderStatement">
+        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            m_crm_note.lastUpdatedTime DESC
+        ]]>
+    </sql>
 
 	<select id="findPagableListByCriteria" resultMap="SimpleNoteResult"
 		parameterType="NoteSearchCriteria">
@@ -318,6 +325,7 @@
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -335,6 +343,7 @@
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -352,6 +361,7 @@
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -369,6 +379,7 @@
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -386,6 +397,7 @@
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -403,6 +415,7 @@
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -420,6 +433,7 @@
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -437,6 +451,7 @@
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -454,6 +469,7 @@
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -471,6 +487,7 @@
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -488,6 +505,7 @@
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -505,5 +523,6 @@
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 			AND ((m_crm_note.type IS NULL) OR (m_crm_note.typeid IS NULL))
 		</trim>
+        <include refid="orderStatement"/>
 	</select>
 </mapper>

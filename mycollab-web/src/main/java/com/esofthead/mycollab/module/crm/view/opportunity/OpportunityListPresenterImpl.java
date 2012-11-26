@@ -5,14 +5,12 @@ import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.utils.SelectionModel;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListView.OpportunityListPresenter;
-import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
@@ -26,7 +24,7 @@ public class OpportunityListPresenterImpl extends
 
 	private OpportunityService opportunityService;
 
-	private SearchRequest<OpportunitySearchCriteria> searchRequest;
+	private OpportunitySearchCriteria searchCriteria;
 
 	private List<SimpleOpportunity> currentListData = new ArrayList<SimpleOpportunity>();
 
@@ -41,27 +39,9 @@ public class OpportunityListPresenterImpl extends
 
 					@Override
 					public void onSearch(OpportunitySearchCriteria criteria) {
-						searchRequest = new SearchRequest<OpportunitySearchCriteria>(
-								criteria, 0,
-								SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
-						doSearch();
+						doSearch(criteria);
 					}
 				});
-
-		view.getPagableHandlers().addPagableHandler(new PagableHandler() {
-
-			@Override
-			public void move(int newPageNumber) {
-				searchRequest.setCurrentPage(newPageNumber);
-				doSearch();
-			}
-
-			@Override
-			public void displayItemChange(int numOfItems) {
-				searchRequest.setNumberOfItems(numOfItems);
-				doSearch();
-			}
-		});
 
 		view.getOptionSelectionHandlers().addSelectionOptionHandler(
 				new SelectionOptionHandler() {
@@ -138,25 +118,8 @@ public class OpportunityListPresenterImpl extends
 
 	@Override
 	public void doSearch(OpportunitySearchCriteria searchCriteria) {
-		this.searchRequest = new SearchRequest<OpportunitySearchCriteria>(
-				searchCriteria, 1, SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
-		doSearch();
-	}
-
-	@SuppressWarnings("unchecked")
-	private void doSearch() {
-		int totalCount = opportunityService.getTotalCount(searchRequest
-				.getSearchCriteria());
-		int totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
-		if (searchRequest.getCurrentPage() > totalPage) {
-			searchRequest.setCurrentPage(totalPage);
-		}
-
-		currentListData = opportunityService
-				.findPagableListByCriteria(searchRequest);
-		view.displayOpportunitys(currentListData,
-				searchRequest.getCurrentPage(), totalPage);
-		checkWhetherEnableTableActionControl();
+		this.searchCriteria = searchCriteria;
+		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
 	}
 
 	private void deleteSelectedItems() {
@@ -168,7 +131,7 @@ public class OpportunityListPresenterImpl extends
 		if (keyList.size() > 0) {
 			opportunityService.removeWithSession(keyList,
 					AppContext.getUsername());
-			doSearch();
+			doSearch(searchCriteria);
 		}
 	}
 }

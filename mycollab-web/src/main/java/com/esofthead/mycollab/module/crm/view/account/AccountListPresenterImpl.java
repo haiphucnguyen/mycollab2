@@ -5,14 +5,12 @@ import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.utils.SelectionModel;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountListView.AccountListPresenter;
-import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
@@ -25,7 +23,7 @@ public class AccountListPresenterImpl extends
 
 	private AccountService accountService;
 
-	private SearchRequest<AccountSearchCriteria> searchRequest;
+	private AccountSearchCriteria searchCriteria;
 
 	private List<SimpleAccount> currentListData = new ArrayList<SimpleAccount>();
 
@@ -40,27 +38,9 @@ public class AccountListPresenterImpl extends
 
 					@Override
 					public void onSearch(AccountSearchCriteria criteria) {
-						searchRequest = new SearchRequest<AccountSearchCriteria>(
-								criteria, 0,
-								SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
-						doSearch();
+						doSearch(criteria);
 					}
 				});
-
-		view.getPagableHandlers().addPagableHandler(new PagableHandler() {
-
-			@Override
-			public void move(int newPageNumber) {
-				searchRequest.setCurrentPage(newPageNumber);
-				doSearch();
-			}
-
-			@Override
-			public void displayItemChange(int numOfItems) {
-				searchRequest.setNumberOfItems(numOfItems);
-				doSearch();
-			}
-		});
 
 		view.getOptionSelectionHandlers().addSelectionOptionHandler(
 				new SelectionOptionHandler() {
@@ -102,20 +82,21 @@ public class AccountListPresenterImpl extends
 						}
 					}
 				});
-		
-		view.getSelectableItemHandlers().addSelectableItemHandler(new SelectableItemHandler<SimpleAccount>() {
-			
-			@Override
-			public void onSelect(SimpleAccount item) {
-				if (selectionModel.isSelected(item)) {
-					selectionModel.removeSelection(item);
-				} else {
-					selectionModel.addSelection(item);
-				}
 
-				checkWhetherEnableTableActionControl();
-			}
-		});
+		view.getSelectableItemHandlers().addSelectableItemHandler(
+				new SelectableItemHandler<SimpleAccount>() {
+
+					@Override
+					public void onSelect(SimpleAccount item) {
+						if (selectionModel.isSelected(item)) {
+							selectionModel.removeSelection(item);
+						} else {
+							selectionModel.addSelection(item);
+						}
+
+						checkWhetherEnableTableActionControl();
+					}
+				});
 	}
 
 	private void checkWhetherEnableTableActionControl() {
@@ -128,32 +109,16 @@ public class AccountListPresenterImpl extends
 
 	@Override
 	public void doDefaultSearch() {
-		AccountSearchCriteria accountSearchCriteria = new AccountSearchCriteria();
-		accountSearchCriteria.setSaccountid(new NumberSearchField(
-				SearchField.AND, AppContext.getAccountId()));
-		doSearch(accountSearchCriteria);
+		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		doSearch(criteria);
 	}
 
 	@Override
 	public void doSearch(AccountSearchCriteria searchCriteria) {
-		this.searchRequest = new SearchRequest<AccountSearchCriteria>(
-				searchCriteria, 1, SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
-		doSearch();
-	}
-
-	@SuppressWarnings("unchecked")
-	private void doSearch() {
-		int totalCount = accountService.getTotalCount(searchRequest
-				.getSearchCriteria());
-		int totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
-		if (searchRequest.getCurrentPage() > totalPage) {
-			searchRequest.setCurrentPage(totalPage);
-		}
-
-		currentListData = accountService
-				.findPagableListByCriteria(searchRequest);
-		view.displayAccounts(currentListData, searchRequest.getCurrentPage(),
-				totalPage);
+		this.searchCriteria = searchCriteria;
+		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
 		checkWhetherEnableTableActionControl();
 	}
 
@@ -165,7 +130,7 @@ public class AccountListPresenterImpl extends
 
 		if (keyList.size() > 0) {
 			accountService.removeWithSession(keyList, AppContext.getUsername());
-			doSearch();
+			doSearch(searchCriteria);
 		}
 	}
 

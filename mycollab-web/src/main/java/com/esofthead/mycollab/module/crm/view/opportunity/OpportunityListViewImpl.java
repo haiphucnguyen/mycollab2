@@ -1,24 +1,23 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
-import java.util.List;
-
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.ui.components.OpportunitySearchPanel;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.data.util.BeanItemContainer;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -38,7 +37,7 @@ public class OpportunityListViewImpl extends AbstractView implements
 
 	private SelectionOptionButton selectOptionButton;
 
-	private PagedBeanTable<SimpleOpportunity> tableItem;
+	private PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> tableItem;
 
 	private final VerticalLayout accountListLayout;
 
@@ -61,7 +60,14 @@ public class OpportunityListViewImpl extends AbstractView implements
 
 	@SuppressWarnings("serial")
 	private void generateDisplayTable() {
-		tableItem = new PagedBeanTable<SimpleOpportunity>();
+		tableItem = new PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>(
+				AppContext.getSpringBean(OpportunityService.class),
+				SimpleOpportunity.class, new String[] { "selected",
+						"opportunityname", "accountName", "salesstage",
+						"amount", "expectedcloseddate", "assignUserFullName",
+						"createdtime" }, new String[] { "", "Name",
+						"Account Name", "Sales Stage", "Amount", "Close",
+						"User", "Date Created" });
 
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -83,7 +89,7 @@ public class OpportunityListViewImpl extends AbstractView implements
 				});
 
 				@SuppressWarnings("unchecked")
-				SimpleOpportunity opportunity = ((PagedBeanTable<SimpleOpportunity>) source)
+				SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
 						.getBeanByIndex(itemId);
 				opportunity.setExtraData(cb);
 				return cb;
@@ -96,7 +102,7 @@ public class OpportunityListViewImpl extends AbstractView implements
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
 				@SuppressWarnings("unchecked")
-				final SimpleOpportunity opportunity = ((PagedBeanTable<SimpleOpportunity>) source)
+				final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
 						.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(opportunity.getOpportunityname(),
 						new Button.ClickListener() {
@@ -129,24 +135,6 @@ public class OpportunityListViewImpl extends AbstractView implements
 		accountListLayout.addComponent(constructTableActionControls());
 		accountListLayout.addComponent(tableItem);
 		accountListLayout.addComponent(tableItem.createControls());
-	}
-
-	@Override
-	public void displayOpportunitys(List<SimpleOpportunity> opportunities,
-			int currentPage, int totalPages) {
-		tableItem.setCurrentPage(currentPage);
-		tableItem.setTotalPage(totalPages);
-
-		BeanItemContainer<SimpleOpportunity> container = new BeanItemContainer<SimpleOpportunity>(
-				SimpleOpportunity.class, opportunities);
-		tableItem.setContainerDataSource(container);
-
-		tableItem.setVisibleColumns(new String[] { "selected",
-				"opportunityname", "accountName", "salesstage", "amount",
-				"expectedcloseddate", "assignUserFullName", "createdtime" });
-		tableItem.setColumnHeaders(new String[] { "", "Name", "Account Name",
-				"Sales Stage", "Amount", "Close", "User", "Date Created" });
-
 	}
 
 	@Override
@@ -185,11 +173,6 @@ public class OpportunityListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public HasPagableHandlers getPagableHandlers() {
-		return tableItem;
-	}
-
-	@Override
 	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
 		return selectOptionButton;
 	}
@@ -201,6 +184,11 @@ public class OpportunityListViewImpl extends AbstractView implements
 
 	@Override
 	public HasSelectableItemHandlers<SimpleOpportunity> getSelectableItemHandlers() {
+		return tableItem;
+	}
+
+	@Override
+	public IPagedBeanTable<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> getPagedBeanTable() {
 		return tableItem;
 	}
 }

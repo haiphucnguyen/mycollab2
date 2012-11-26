@@ -18,5 +18,27 @@
 package com.esofthead.mycollab.core.arguments;
 
 public abstract class SearchCriteria {
+	public static String ASC = "ASC";
+	
+	public static String DESC = "DESC";
+	
+	private String orderByField;
+	
+	private String sortDirection;
 
+	public String getOrderByField() {
+		return orderByField;
+	}
+
+	public void setOrderByField(String orderByField) {
+		this.orderByField = orderByField;
+	}
+
+	public String getSortDirection() {
+		return sortDirection;
+	}
+
+	public void setSortDirection(String sortDirection) {
+		this.sortDirection = sortDirection;
+	}
 }

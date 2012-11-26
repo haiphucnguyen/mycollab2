@@ -1,24 +1,23 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
-import java.util.List;
-
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.ContactSearchPanel;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.vaadin.data.util.BeanItemContainer;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -40,7 +39,7 @@ public class ContactListViewImpl extends AbstractView implements
 
 	private SelectionOptionButton selectOptionButton;
 
-	private PagedBeanTable<SimpleContact> tableItem;
+	private PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact> tableItem;
 
 	private final VerticalLayout contactListLayout;
 
@@ -63,7 +62,13 @@ public class ContactListViewImpl extends AbstractView implements
 
 	@SuppressWarnings("serial")
 	private void generateDisplayTable() {
-		tableItem = new PagedBeanTable<SimpleContact>();
+		tableItem = new PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>(
+				AppContext.getSpringBean(ContactService.class),
+				SimpleContact.class, new String[] { "selected", "contactName",
+						"title", "accountName", "email", "officephone",
+						"assignUserFullName" }, new String[] { "", "Name",
+						"Title", "Account Name", "Email", "Office Phone",
+						"User" });
 
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -79,7 +84,7 @@ public class ContactListViewImpl extends AbstractView implements
 					@Override
 					public void buttonClick(ClickEvent event) {
 						@SuppressWarnings("unchecked")
-						SimpleContact contact = ((PagedBeanTable<SimpleContact>) source)
+						SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
 								.getBeanByIndex(itemId);
 						tableItem.fireSelectItemEvent(contact);
 
@@ -87,7 +92,7 @@ public class ContactListViewImpl extends AbstractView implements
 				});
 
 				@SuppressWarnings("unchecked")
-				SimpleContact account = ((PagedBeanTable<SimpleContact>) source)
+				SimpleContact account = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
 						.getBeanByIndex(itemId);
 				account.setExtraData(cb);
 				return cb;
@@ -100,7 +105,7 @@ public class ContactListViewImpl extends AbstractView implements
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
 				@SuppressWarnings("unchecked")
-				final SimpleContact contact = ((PagedBeanTable<SimpleContact>) source)
+				final SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
 						.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(contact.getContactName(),
 						new Button.ClickListener() {
@@ -125,7 +130,7 @@ public class ContactListViewImpl extends AbstractView implements
 			@SuppressWarnings("unchecked")
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
-				SimpleContact account = ((PagedBeanTable<SimpleContact>) source)
+				SimpleContact account = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
 						.getBeanByIndex(itemId);
 				if (account != null) {
 					Link l = new Link();
@@ -147,7 +152,7 @@ public class ContactListViewImpl extends AbstractView implements
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
 				@SuppressWarnings("unchecked")
-				final SimpleContact account = ((PagedBeanTable<SimpleContact>) source)
+				final SimpleContact account = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
 						.getBeanByIndex(itemId);
 				if (account != null) {
 					Label l = new Label();
@@ -175,24 +180,6 @@ public class ContactListViewImpl extends AbstractView implements
 		contactListLayout.addComponent(constructTableActionControls());
 		contactListLayout.addComponent(tableItem);
 		contactListLayout.addComponent(tableItem.createControls());
-	}
-
-	@Override
-	public void displayContacts(List<SimpleContact> accounts, int currentPage,
-			int totalPages) {
-		tableItem.setCurrentPage(currentPage);
-		tableItem.setTotalPage(totalPages);
-
-		BeanItemContainer<SimpleContact> container = new BeanItemContainer<SimpleContact>(
-				SimpleContact.class, accounts);
-		tableItem.setContainerDataSource(container);
-
-		tableItem.setVisibleColumns(new String[] { "selected", "contactName",
-				"title", "accountName", "email", "officephone",
-				"assignUserFullName" });
-		tableItem.setColumnHeaders(new String[] { "", "Name", "Title",
-				"Account Name", "Email", "Office Phone", "User" });
-
 	}
 
 	@Override
@@ -231,11 +218,6 @@ public class ContactListViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public HasPagableHandlers getPagableHandlers() {
-		return tableItem;
-	}
-
-	@Override
 	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
 		return selectOptionButton;
 	}
@@ -247,6 +229,11 @@ public class ContactListViewImpl extends AbstractView implements
 
 	@Override
 	public HasSelectableItemHandlers<SimpleContact> getSelectableItemHandlers() {
+		return tableItem;
+	}
+
+	@Override
+	public IPagedBeanTable<ContactService, ContactSearchCriteria, SimpleContact> getPagedBeanTable() {
 		return tableItem;
 	}
 }

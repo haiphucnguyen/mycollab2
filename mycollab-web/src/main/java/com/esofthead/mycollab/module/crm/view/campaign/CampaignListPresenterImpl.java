@@ -5,14 +5,12 @@ import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.utils.SelectionModel;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignListView.CampaignListPresenter;
-import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
@@ -24,7 +22,7 @@ public class CampaignListPresenterImpl extends
 		CrmGenericPresenter<CampaignListView> implements CampaignListPresenter {
 	private CampaignService campaignService;
 
-	private SearchRequest<CampaignSearchCriteria> searchRequest;
+	private CampaignSearchCriteria searchCriteria;
 
 	private List<SimpleCampaign> currentListData = new ArrayList<SimpleCampaign>();
 
@@ -39,27 +37,9 @@ public class CampaignListPresenterImpl extends
 
 					@Override
 					public void onSearch(CampaignSearchCriteria criteria) {
-						searchRequest = new SearchRequest<CampaignSearchCriteria>(
-								criteria, 0,
-								SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
-						doSearch();
+						doSearch(criteria);
 					}
 				});
-
-		view.getPagableHandlers().addPagableHandler(new PagableHandler() {
-
-			@Override
-			public void move(int newPageNumber) {
-				searchRequest.setCurrentPage(newPageNumber);
-				doSearch();
-			}
-
-			@Override
-			public void displayItemChange(int numOfItems) {
-				searchRequest.setNumberOfItems(numOfItems);
-				doSearch();
-			}
-		});
 
 		view.getOptionSelectionHandlers().addSelectionOptionHandler(
 				new SelectionOptionHandler() {
@@ -136,25 +116,8 @@ public class CampaignListPresenterImpl extends
 
 	@Override
 	public void doSearch(CampaignSearchCriteria searchCriteria) {
-		this.searchRequest = new SearchRequest<CampaignSearchCriteria>(
-				searchCriteria, 1, SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
-		doSearch();
-	}
-
-	@SuppressWarnings("unchecked")
-	private void doSearch() {
-		int totalCount = campaignService.getTotalCount(searchRequest
-				.getSearchCriteria());
-		int totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
-		if (searchRequest.getCurrentPage() > totalPage) {
-			searchRequest.setCurrentPage(totalPage);
-		}
-
-		currentListData = campaignService
-				.findPagableListByCriteria(searchRequest);
-		view.displayCampaigns(currentListData, searchRequest.getCurrentPage(),
-				totalPage);
-		checkWhetherEnableTableActionControl();
+		this.searchCriteria = searchCriteria;
+		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
 	}
 
 	private void deleteSelectedItems() {
@@ -166,7 +129,7 @@ public class CampaignListPresenterImpl extends
 		if (keyList.size() > 0) {
 			campaignService
 					.removeWithSession(keyList, AppContext.getUsername());
-			doSearch();
+			doSearch(searchCriteria);
 		}
 	}
 }

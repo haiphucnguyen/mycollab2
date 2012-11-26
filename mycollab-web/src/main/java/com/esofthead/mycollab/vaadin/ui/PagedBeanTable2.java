@@ -1,15 +1,20 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
-import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.persistence.ISearchableService;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
-import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.IntegerValidator;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -21,9 +26,14 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
-public class PagedBeanTable<T> extends Table implements HasPagableHandlers,
-		HasSelectableItemHandlers<T> {
+public class PagedBeanTable2<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
+		extends Table implements HasSelectableItemHandlers<T>,
+		IPagedBeanTable<SearchService, S, T> {
 	private static final long serialVersionUID = 1L;
+
+	private String[] visibleColumns;
+
+	private String[] columnHeaders;
 
 	private int currentPage = 1;
 
@@ -37,12 +47,104 @@ public class PagedBeanTable<T> extends Table implements HasPagableHandlers,
 
 	private ComboBox itemsPerPageSelect;
 
-	private Set<PagableHandler> pagableHandlers;
-
 	private Set<SelectableItemHandler<T>> selectableHandlers;
 
-	public PagedBeanTable() {
+	private SearchRequest<S> searchRequest;
+
+	private SearchService searchService;
+
+	private List<T> currentListData;
+
+	private Class<T> type;
+
+	public PagedBeanTable2(SearchService searchService, Class<T> type,
+			final String[] visibleColumns, String[] columnHeaders) {
 		this.addStyleName("striped");
+		this.searchService = searchService;
+		this.visibleColumns = visibleColumns;
+		this.columnHeaders = columnHeaders;
+		this.type = type;
+
+		this.setSortDisabled(true);
+		this.addListener(new HeaderClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@SuppressWarnings("unchecked")
+			@Override
+			public void headerClick(HeaderClickEvent event) {
+				String propertyId = (String) event.getPropertyId();
+
+				if (propertyId.equals("selected")) {
+					return;
+				}
+
+				if (searchRequest != null) {
+
+					S searchCriteria = searchRequest.getSearchCriteria();
+					if (searchCriteria.getOrderByField() == null) {
+						searchCriteria.setOrderByField(propertyId);
+						searchCriteria.setSortDirection(SearchCriteria.DESC);
+					} else if (propertyId.equals(searchCriteria
+							.getOrderByField())) {
+						searchCriteria
+								.setSortDirection(searchCriteria
+										.getSortDirection().equals(
+												SearchCriteria.ASC) ? SearchCriteria.DESC
+										: SearchCriteria.ASC);
+					} else {
+						searchCriteria.setOrderByField(propertyId);
+						searchCriteria.setSortDirection(SearchCriteria.DESC);
+					}
+
+					PagedBeanTable2.this
+							.setColumnIcon(
+									propertyId,
+									searchCriteria.getSortDirection().equals(
+											SearchCriteria.DESC) ? new ThemeResource(
+											"icons/16/arrow_down.png")
+											: new ThemeResource(
+													"icons/16/arrow_up.png"));
+
+					Collection<String> containerIds = (Collection<String>) PagedBeanTable2.this
+							.getContainerPropertyIds();
+					for (String id : containerIds) {
+						if (!id.equals(propertyId)) {
+							PagedBeanTable2.this.setColumnIcon(id, null);
+						}
+					}
+
+					PagedBeanTable2.this.setSearchCriteria(searchCriteria);
+				}
+			}
+		});
+	}
+
+	public void setSearchCriteria(S searchCriteria) {
+		searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
+				SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
+		doSearch();
+	}
+
+	@SuppressWarnings("unchecked")
+	private void doSearch() {
+		int totalCount = searchService.getTotalCount(searchRequest
+				.getSearchCriteria());
+		int totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
+		if (searchRequest.getCurrentPage() > totalPage) {
+			searchRequest.setCurrentPage(totalPage);
+		}
+
+		currentListData = searchService
+				.findPagableListByCriteria(searchRequest);
+
+		this.setCurrentPage(currentPage);
+		this.setTotalPage(totalPage);
+
+		BeanItemContainer<T> container = new BeanItemContainer<T>(type,
+				currentListData);
+		this.setContainerDataSource(container);
+		this.setVisibleColumns(visibleColumns);
+		this.setColumnHeaders(columnHeaders);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -52,13 +154,13 @@ public class PagedBeanTable<T> extends Table implements HasPagableHandlers,
 		return (item == null) ? null : item.getBean();
 	}
 
-	public void setCurrentPage(int currentPage) {
+	private void setCurrentPage(int currentPage) {
 		this.currentPage = currentPage;
 		currentPageTextField.setValue(currentPage);
 		checkButtonStatus();
 	}
 
-	public void setTotalPage(int totalPage) {
+	private void setTotalPage(int totalPage) {
 		this.totalPage = totalPage;
 		totalPagesLabel.setValue(String.valueOf(totalPage));
 		checkButtonStatus();
@@ -109,7 +211,7 @@ public class PagedBeanTable<T> extends Table implements HasPagableHandlers,
 					com.vaadin.data.Property.ValueChangeEvent event) {
 				Integer numberOfItems = Integer
 						.parseInt((String) itemsPerPageSelect.getValue());
-				fireDisplayItemNumberChange(numberOfItems);
+				displayItemChange(numberOfItems);
 			}
 		});
 
@@ -145,7 +247,7 @@ public class PagedBeanTable<T> extends Table implements HasPagableHandlers,
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				firePageChangeHandler(1);
+				pageChange(1);
 			}
 		});
 		previous = new Button("<", new ClickListener() {
@@ -153,7 +255,7 @@ public class PagedBeanTable<T> extends Table implements HasPagableHandlers,
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				firePageChangeHandler(PagedBeanTable.this.currentPage - 1);
+				pageChange(PagedBeanTable2.this.currentPage - 1);
 			}
 		});
 		next = new Button(">", new ClickListener() {
@@ -161,7 +263,7 @@ public class PagedBeanTable<T> extends Table implements HasPagableHandlers,
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				firePageChangeHandler(PagedBeanTable.this.currentPage + 1);
+				pageChange(PagedBeanTable2.this.currentPage + 1);
 			}
 		});
 		last = new Button(">>", new ClickListener() {
@@ -169,7 +271,7 @@ public class PagedBeanTable<T> extends Table implements HasPagableHandlers,
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				firePageChangeHandler(PagedBeanTable.this.totalPage);
+				pageChange(PagedBeanTable2.this.totalPage);
 			}
 		});
 
@@ -238,36 +340,27 @@ public class PagedBeanTable<T> extends Table implements HasPagableHandlers,
 		return controlBar;
 	}
 
-	private void firePageChangeHandler(int newpage) {
-		if (pagableHandlers != null) {
-			for (PagableHandler handler : pagableHandlers) {
-				handler.move(newpage);
-			}
+	private void displayItemChange(int numOfItems) {
+		if (searchRequest != null) {
+			searchRequest.setNumberOfItems(numOfItems);
+			doSearch();
 		}
 	}
 
-	private void fireDisplayItemNumberChange(int numOfItems) {
-		if (pagableHandlers != null) {
-			for (PagableHandler handler : pagableHandlers) {
-				handler.displayItemChange(numOfItems);
-			}
+	private void pageChange(int currentPage) {
+		if (searchRequest != null) {
+			this.currentPage = currentPage;
+			searchRequest.setCurrentPage(currentPage);
+			doSearch();
 		}
 	}
-	
+
 	public void fireSelectItemEvent(T item) {
 		if (selectableHandlers != null) {
 			for (SelectableItemHandler<T> handler : selectableHandlers) {
 				handler.onSelect(item);
 			}
 		}
-	}
-
-	@Override
-	public void addPagableHandler(PagableHandler handler) {
-		if (pagableHandlers == null) {
-			pagableHandlers = new HashSet<PagableHandler>();
-		}
-		pagableHandlers.add(handler);
 	}
 
 	@Override

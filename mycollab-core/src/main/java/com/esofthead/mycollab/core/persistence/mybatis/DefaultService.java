@@ -1,8 +1,10 @@
 package com.esofthead.mycollab.core.persistence.mybatis;
 
 import java.io.Serializable;
+import java.util.GregorianCalendar;
 import java.util.List;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.ibatis.session.RowBounds;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
@@ -28,6 +30,14 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 
 	@Override
 	public void saveWithSession(T record, String username) {
+		try {
+			PropertyUtils.setProperty(record, "createdtime",
+					new GregorianCalendar().getTime());
+			PropertyUtils.setProperty(record, "lastupdatedtime",
+					new GregorianCalendar().getTime());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (username == null) {
 			getCrudMapper().insert(record);
 		} else {
@@ -41,6 +51,12 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 
 	@Override
 	public int updateWithSession(T record, String username) {
+		try {
+			PropertyUtils.setProperty(record, "lastupdatedtime",
+					new GregorianCalendar().getTime());
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 		if (username == null) {
 			return getCrudMapper().updateByPrimaryKey(record);
 		} else {

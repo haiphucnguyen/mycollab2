@@ -192,6 +192,13 @@
 			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.queryTotalCountSearchCriteria" />
 		</trim>
 	</select>
+    
+    <sql id="orderStatement">
+        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            m_crm_contact.lastUpdatedTime DESC
+        ]]>
+    </sql>
 
 	<select id="findPagableListByCriteria" resultMap="SimpleContactResult"
 		parameterType="ContactSearchCriteria">
@@ -199,6 +206,7 @@
 		<trim prefix="WHERE" prefixOverrides="AND |OR ">
 			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 	</select>
 
 	<select id="findContactById" parameterType="int"

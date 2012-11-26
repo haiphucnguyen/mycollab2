@@ -137,6 +137,13 @@
 				refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
+    
+    <sql id="orderStatement">
+        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            lastUpdatedTime DESC
+        ]]>
+    </sql>
 
 	<select id="findPagableListByCriteria" parameterType="TaskSearchCriteria"
 		resultMap="SimpleTaskResult">
@@ -156,6 +163,7 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
 
@@ -175,6 +183,7 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -193,6 +202,7 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -210,6 +220,7 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -228,6 +239,7 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -246,6 +258,7 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -264,6 +277,7 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -282,6 +296,7 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 		UNION ALL
         <![CDATA[
@@ -300,6 +315,7 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 
 
 		UNION ALL
@@ -319,5 +335,6 @@
 			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
             <![CDATA[AND ((m_crm_task.type IS NULL) OR (m_crm_task.typeid IS NULL))]]>
 		</trim>
+        <include refid="orderStatement"/>
 	</select>
 </mapper>
