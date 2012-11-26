@@ -261,7 +261,7 @@
                                 <sshexec host="23.23.166.114"
                                     username="ubuntu"
                                     keyfile="${basedir}/esofthead-virginia.pem"
-                                    command="sudo /etc/init.d/jetty restart" />
+                                    command="sudo /etc/init.d/jetty.sh restart" />
                             </target>
                         </configuration>
                         <goals>
