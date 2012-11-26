@@ -1,17 +1,12 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
-import javax.annotation.PostConstruct;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
-import com.esofthead.mycollab.vaadin.data.MyBatisQueryContainer;
-import com.esofthead.mycollab.vaadin.data.MyBatisQueryDefinition;
-import com.esofthead.mycollab.vaadin.data.MyBatisQueryFactory;
-import com.esofthead.mycollab.vaadin.ui.BeanTable;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
+import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
@@ -29,7 +24,7 @@ public class AccountSelectionWindow extends Window {
 
 	private AccountSearchCriteria searchCriteria;
 
-	private BeanTable<SimpleAccount> tableItem;
+	private PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount> tableItem;
 
 	private FieldSelection fieldSelection;
 
@@ -37,10 +32,6 @@ public class AccountSelectionWindow extends Window {
 		super("Account Name Lookup");
 
 		this.fieldSelection = fieldSelection;
-	}
-
-	@PostConstruct
-	private void init() {
 	}
 
 	public void show() {
@@ -51,9 +42,14 @@ public class AccountSelectionWindow extends Window {
 		VerticalLayout layout = new VerticalLayout();
 		layout.setSpacing(true);
 
+		createAccountList();
+
 		layout.addComponent(createSearchPanel());
-		layout.addComponent(createAccountList());
+		layout.addComponent(tableItem);
+		layout.addComponent(tableItem.createControls());
 		this.setContent(layout);
+
+		tableItem.setSearchCriteria(searchCriteria);
 	}
 
 	private ComponentContainer createSearchPanel() {
@@ -73,30 +69,18 @@ public class AccountSelectionWindow extends Window {
 		return layout;
 	}
 
-	private com.vaadin.ui.Component createAccountList() {
-		tableItem = new BeanTable<SimpleAccount>();
-		tableItem.addStyleName("striped");
+	private void createAccountList() {
+		tableItem = new PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>(
+				AppContext.getSpringBean(AccountService.class),
+				SimpleAccount.class, new String[] { "accountname", "city",
+						"assignuser" }, new String[] { "Name", "City",
+						"Assign User" });
 		tableItem.setWidth("100%");
 		tableItem.setHeight("200px");
 
-		MyBatisQueryContainer<SimpleAccount> container = new MyBatisQueryContainer<SimpleAccount>(
-				new MyBatisQueryDefinition<AccountSearchCriteria>(
-						AppContext.getSpringBean(AccountService.class), false,
-						5), new MyBatisQueryFactory<AccountSearchCriteria>(
-						searchCriteria));
-
-		container.addContainerProperty("accountname", String.class, "", true,
-				true);
 		tableItem.setColumnWidth("accountname", 250);
-
-		container.addContainerProperty("city", String.class, "", true, true);
 		tableItem.setColumnWidth("city", 150);
-
-		container.addContainerProperty("assignuser", String.class, "", true,
-				true);
 		tableItem.setColumnWidth("assignuser", 150);
-
-		tableItem.setContainerDataSource(container);
 
 		tableItem.addGeneratedColumn("accountname", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -104,7 +88,7 @@ public class AccountSelectionWindow extends Window {
 			public com.vaadin.ui.Component generateCell(final Table source,
 					final Object itemId, Object columnId) {
 				@SuppressWarnings("unchecked")
-				final SimpleAccount account = ((BeanTable<SimpleAccount>) source)
+				final SimpleAccount account = ((PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>) source)
 						.getBeanByIndex(itemId);
 				Button b = new Button(account.getAccountname(),
 						new Button.ClickListener() {
@@ -112,8 +96,6 @@ public class AccountSelectionWindow extends Window {
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								final SimpleAccount account = ((BeanTable<SimpleAccount>) source)
-										.getBeanByIndex(itemId);
 								fieldSelection.fireValueChange(account);
 								AccountSelectionWindow.this.getParent()
 										.removeWindow(
@@ -124,11 +106,6 @@ public class AccountSelectionWindow extends Window {
 				return b;
 			}
 		});
-
-		tableItem
-				.setColumnHeaders(new String[] { "Name", "City", "Assign User" });
-
-		return tableItem;
 	}
 
 }
