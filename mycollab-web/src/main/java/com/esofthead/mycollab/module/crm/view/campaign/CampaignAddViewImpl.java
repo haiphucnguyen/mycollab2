@@ -27,12 +27,12 @@ public class CampaignAddViewImpl extends FormAddView<Campaign> implements
 	}
 
 	@Override
-	public void addNewItem() {
+	protected void onNewItem() {
 		editForm.setItemDataSource(new BeanItem<Campaign>(new Campaign()));
 	}
 
 	@Override
-	public void editItem(Campaign campaign) {
+	protected void onEditItem(Campaign campaign) {
 		editForm.setItemDataSource(new BeanItem<Campaign>(campaign));
 	}
 

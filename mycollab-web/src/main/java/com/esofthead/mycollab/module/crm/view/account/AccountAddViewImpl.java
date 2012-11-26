@@ -28,12 +28,12 @@ public class AccountAddViewImpl extends FormAddView<Account> implements AccountA
 	}
 
 	@Override
-	public void addNewItem() {
+	protected void onNewItem() {
 		editForm.setItemDataSource(new BeanItem<Account>(new Account()));
 	}
 
 	@Override
-	public void editItem(Account account) {
+	protected void onEditItem(Account account) {
 		editForm.setItemDataSource(new BeanItem<Account>(account));
 	}
 

@@ -30,12 +30,12 @@ public class LeadAddViewImpl extends FormAddView<Lead> implements LeadAddView {
 	}
 
 	@Override
-	public void addNewItem() {
+	protected void onNewItem() {
 		editForm.setItemDataSource(new BeanItem<Lead>(new Lead()));
 	}
 
 	@Override
-	public void editItem(Lead account) {
+	protected void onEditItem(Lead account) {
 		editForm.setItemDataSource(new BeanItem<Lead>(account));
 	}
 

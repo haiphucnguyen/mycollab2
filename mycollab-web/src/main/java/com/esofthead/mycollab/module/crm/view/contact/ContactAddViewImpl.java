@@ -24,12 +24,12 @@ public class ContactAddViewImpl extends FormAddView<Contact> implements ContactA
 	}
 
 	@Override
-	public void addNewItem() {
+	protected void onNewItem() {
 		editForm.setItemDataSource(new BeanItem<Contact>(new Contact()));
 	}
 
 	@Override
-	public void editItem(Contact item) {
+	protected void onEditItem(Contact item) {
 		editForm.setItemDataSource(new BeanItem<Contact>(item));
 
 	}

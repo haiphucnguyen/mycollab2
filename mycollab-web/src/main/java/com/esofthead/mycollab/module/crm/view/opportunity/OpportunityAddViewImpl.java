@@ -26,12 +26,12 @@ public class OpportunityAddViewImpl extends FormAddView<Opportunity> implements
 	}
 
 	@Override
-	public void addNewItem() {
+	protected void onNewItem() {
 		editForm.setItemDataSource(new BeanItem<Opportunity>(new Opportunity()));
 	}
 
 	@Override
-	public void editItem(Opportunity item) {
+	public void onEditItem(Opportunity item) {
 		editForm.setItemDataSource(new BeanItem<Opportunity>(item));
 	}
 

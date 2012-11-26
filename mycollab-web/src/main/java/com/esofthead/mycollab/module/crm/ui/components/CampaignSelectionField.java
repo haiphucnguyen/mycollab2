@@ -54,7 +54,8 @@ public class CampaignSelectionField extends FieldWrapper<Campaign> implements
 			}
 		});
 
-		clearBtn = new Embedded(null, new ThemeResource("icons/16/clearItem.png"));
+		clearBtn = new Embedded(null, new ThemeResource(
+				"icons/16/clearItem.png"));
 		clearBtn.addListener(new MouseEvents.ClickListener() {
 
 			@Override
@@ -86,6 +87,10 @@ public class CampaignSelectionField extends FieldWrapper<Campaign> implements
 
 			}
 		});
+	}
+
+	public void setCampaignName(String name) {
+		campaignName.setValue(name);
 	}
 
 	@Override
