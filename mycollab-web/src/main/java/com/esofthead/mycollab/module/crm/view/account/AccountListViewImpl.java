@@ -167,6 +167,7 @@ public class AccountListViewImpl extends AbstractView implements
 			}
 		});
 
+		tableItem.setColumnExpandRatio("accountname", 1);
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 		tableItem.setColumnWidth("city", UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem.setColumnWidth("billingCountry",

@@ -121,6 +121,8 @@ public class OpportunityListViewImpl extends AbstractView implements
 
 		tableItem.setWidth("100%");
 
+		tableItem.setColumnExpandRatio("opportunityname", 1.0f);
+
 		tableItem
 				.setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);

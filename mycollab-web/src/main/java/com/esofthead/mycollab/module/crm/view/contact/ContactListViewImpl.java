@@ -166,6 +166,8 @@ public class ContactListViewImpl extends AbstractView implements
 			}
 		});
 
+		tableItem.setColumnExpandRatio("contactName", 1.0f);
+		
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 		tableItem.setColumnWidth("title", UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem

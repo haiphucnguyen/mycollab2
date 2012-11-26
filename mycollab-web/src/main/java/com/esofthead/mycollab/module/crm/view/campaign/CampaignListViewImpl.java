@@ -122,6 +122,7 @@ public class CampaignListViewImpl extends AbstractView implements
 
 		tableItem.setWidth("100%");
 
+		tableItem.setColumnExpandRatio("campaignname", 1.0f);
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 		tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
 		tableItem.setColumnWidth("type", UIConstants.TABLE_M_LABEL_WIDTH);

@@ -33,7 +33,7 @@ public class GridFormLayoutHelper {
 
 	public Field addComponent(Field field, String caption, int columns,
 			int rows, String width) {
-		Label l = new Label(caption);
+		Label l = new Label(caption + ":");
 		l.setSizeUndefined();
 		layout.addComponent(l, 2 * columns, rows + 1);
 		layout.setComponentAlignment(l, Alignment.TOP_RIGHT);
@@ -46,7 +46,7 @@ public class GridFormLayoutHelper {
 
 	public Field addComponent(Field field, String caption, int column1,
 			int row1, int column2, int row2) {
-		Label l = new Label(caption);
+		Label l = new Label(caption + ":");
 		l.setSizeUndefined();
 		layout.addComponent(l, 2 * column1, row1 + 1);
 		layout.setComponentAlignment(l, Alignment.TOP_RIGHT);

@@ -4,7 +4,6 @@ import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.LeadSourceComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.LeadStatusComboBox;
-import com.esofthead.mycollab.module.crm.view.account.AccountFormLayoutFactory;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.FormAddView;
@@ -35,8 +34,8 @@ public class LeadAddViewImpl extends FormAddView<Lead> implements LeadAddView {
 	}
 
 	@Override
-	protected void onEditItem(Lead account) {
-		editForm.setItemDataSource(new BeanItem<Lead>(account));
+	protected void onEditItem(Lead item) {
+		editForm.setItemDataSource(new BeanItem<Lead>(item));
 	}
 
 	public static class EditForm extends AdvancedEditBeanForm<Lead> {
@@ -47,7 +46,7 @@ public class LeadAddViewImpl extends FormAddView<Lead> implements LeadAddView {
 			this.setFormFieldFactory(new EditFormFieldFactory());
 		}
 
-		class FormLayoutFactory extends AccountFormLayoutFactory {
+		class FormLayoutFactory extends LeadFormLayoutFactory {
 
 			@Override
 			protected Layout createButtonControls() {

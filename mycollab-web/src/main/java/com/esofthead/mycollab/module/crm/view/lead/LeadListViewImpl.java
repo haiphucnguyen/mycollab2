@@ -116,6 +116,8 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		});
 
 		tableItem.setWidth("100%");
+		
+		tableItem.setColumnExpandRatio("leadName", 1.0f);
 
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 		tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
