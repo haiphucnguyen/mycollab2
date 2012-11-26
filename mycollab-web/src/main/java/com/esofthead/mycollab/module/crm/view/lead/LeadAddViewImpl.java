@@ -7,7 +7,7 @@ import com.esofthead.mycollab.module.crm.ui.components.LeadStatusComboBox;
 import com.esofthead.mycollab.module.crm.view.account.AccountFormLayoutFactory;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.FormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
@@ -17,7 +17,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 
-public class LeadAddViewImpl extends AbstractView implements LeadAddView {
+public class LeadAddViewImpl extends FormAddView<Lead> implements LeadAddView {
 
 	private static final long serialVersionUID = 1L;
 

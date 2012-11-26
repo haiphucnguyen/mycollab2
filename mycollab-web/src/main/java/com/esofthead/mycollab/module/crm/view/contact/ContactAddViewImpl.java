@@ -4,7 +4,7 @@ import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.ui.components.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.ui.components.LeadSourceComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.FormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -13,7 +13,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 
-public class ContactAddViewImpl extends AbstractView implements ContactAddView {
+public class ContactAddViewImpl extends FormAddView<Contact> implements ContactAddView{
 	private static final long serialVersionUID = 1L;
 	private EditForm editForm;
 
@@ -26,7 +26,6 @@ public class ContactAddViewImpl extends AbstractView implements ContactAddView {
 	@Override
 	public void addNewItem() {
 		editForm.setItemDataSource(new BeanItem<Contact>(new Contact()));
-
 	}
 
 	@Override

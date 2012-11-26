@@ -4,7 +4,7 @@ import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.ui.components.CampaignStatusComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.CampaignTypeComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.FormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -14,7 +14,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 
-public class CampaignAddViewImpl extends AbstractView implements
+public class CampaignAddViewImpl extends FormAddView<Campaign> implements
 		CampaignAddView {
 	private static final long serialVersionUID = 1L;
 

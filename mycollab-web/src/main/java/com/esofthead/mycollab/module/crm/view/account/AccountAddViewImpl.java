@@ -5,7 +5,7 @@ import com.esofthead.mycollab.module.crm.ui.components.AccountTypeComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.FormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -16,7 +16,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class AccountAddViewImpl extends AbstractView implements AccountAddView {
+public class AccountAddViewImpl extends FormAddView<Account> implements AccountAddView {
 	private static final long serialVersionUID = 1L;
 
 	private EditForm editForm;

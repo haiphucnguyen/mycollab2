@@ -4,7 +4,7 @@ import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.ui.components.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.ui.components.CampaignSelectionField;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.FormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -13,7 +13,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 
-public class OpportunityAddViewImpl extends AbstractView implements
+public class OpportunityAddViewImpl extends FormAddView<Opportunity> implements
 		OpportunityAddView {
 	private static final long serialVersionUID = 1L;
 
