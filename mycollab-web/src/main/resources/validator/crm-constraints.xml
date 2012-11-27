@@ -2,6 +2,7 @@
 	http://jboss.org/xml/ns/javax/validation/mapping/validation-mapping-1.0.xsd"
 	xmlns="http://jboss.org/xml/ns/javax/validation/mapping">
 	<default-package>com.esofthead.mycollab.module.crm.domain</default-package>
+	
 	<bean class="Account" ignore-annotations="true" >
 		<field name="accountname">
 			<constraint annotation="javax.validation.constraints.NotNull">

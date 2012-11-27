@@ -1,30 +1,32 @@
-package com.esofthead.mycollab.module.user.view;
+package com.esofthead.mycollab.module.user.accountsettings;
 
-import com.esofthead.mycollab.module.user.ui.accountsettings.AccountSettingViewImpl;
-import com.esofthead.mycollab.module.user.ui.accountsettings.UserInformationViewImpl;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingViewImpl;
+import com.esofthead.mycollab.module.user.accountsettings.view.UserInformationViewImpl;
+import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.github.wolfie.detachedtabs.DetachedTabs;
+import com.vaadin.event.LayoutEvents.LayoutClickEvent;
+import com.vaadin.event.LayoutEvents.LayoutClickListener;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-public class AccountViewImpl extends AbstractView implements AccountView {
+public class AccountContainer extends VerticalLayout implements View{
 
 	private final HorizontalLayout root;
 	private final DetachedTabs accountTab;
 	private final CssLayout accountSpace = new CssLayout();
+	
+	private Component userInformationTab;
+	private Component accountSettingTab;
 
-	public AccountViewImpl() {
+	public AccountContainer() {
 		this.setStyleName("accountViewContainer");
-		// this.setWidth("1130px");
 		this.setMargin(false);
 		root = new HorizontalLayout();
-		// root.setWidth("1000px");
-		// root.setSplitPosition(200, Sizeable.UNITS_PIXELS);
-		// root.setLocked(true);
-		// root.setSizeFull();
 
 		accountSpace.setSizeFull();
 		accountTab = new DetachedTabs.Vertical(accountSpace);
@@ -39,33 +41,33 @@ public class AccountViewImpl extends AbstractView implements AccountView {
 		root.addComponent(menu);
 		root.addComponent(accountSpace);
 
-		buildComponents();
+		
+		userInformationTab = constructUserInformationComponent();
+		accountTab.addTab(userInformationTab,
+				"User Information");
+		
+		accountSettingTab = constructAccountSettingsComponent();
+		accountTab.addTab(accountSettingTab,
+				"Account Settings");
+		
 		this.addComponent(root);
 	}
-
-	@Override
-	public void attach() {
-		super.attach();
+	
+	public void tabChange(Component component) {
+		
 	}
 
-	private void buildComponents() {
-		accountTab.addTab(constructUserInformationComponent(),
-				"User Information");
-		accountTab.addTab(constructAccountSettingsComponent(),
-				"Account Settings");
-	}
-
-	// private void addView(AbstractView view) {
-	// this.removeAllComponents();
-	// this.addComponent(view);
-	// }
-
-	private com.vaadin.ui.Component constructUserInformationComponent() {
+	private Component constructUserInformationComponent() {
 		return ViewManager.getView(UserInformationViewImpl.class);
 	}
 
 	private com.vaadin.ui.Component constructAccountSettingsComponent() {
 		return ViewManager.getView(AccountSettingViewImpl.class);
+	}
+
+	@Override
+	public ComponentContainer getWidget() {
+		return this;
 	}
 
 }

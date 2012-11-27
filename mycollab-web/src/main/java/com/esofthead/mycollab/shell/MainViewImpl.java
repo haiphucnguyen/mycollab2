@@ -4,9 +4,9 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.module.crm.view.CrmContainer;
 import com.esofthead.mycollab.module.project.ui.ProjectContainer;
+import com.esofthead.mycollab.module.user.accountsettings.AccountContainer;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.presenter.LoginPresenter;
-import com.esofthead.mycollab.module.user.view.AccountViewImpl;
 import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.module.user.view.LoginViewImpl;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -85,8 +85,8 @@ public class MainViewImpl extends AbstractView {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						accountMenu.setPopupVisible(false);
-						AccountViewImpl accountView = ViewManager
-								.getView(AccountViewImpl.class);
+						AccountContainer accountView = ViewManager
+								.getView(AccountContainer.class);
 						bodyLayout.removeAllComponents();
 						bodyLayout.addComponent(accountView);
 						bodyLayout.setComponentAlignment(accountView,

@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.user.ui.accountsettings;
+package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 

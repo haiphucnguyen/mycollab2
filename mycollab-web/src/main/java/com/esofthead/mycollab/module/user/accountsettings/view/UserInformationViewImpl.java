@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.user.ui.accountsettings;
+package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -8,7 +8,6 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.HorizontalLayout;
@@ -28,51 +27,12 @@ public class UserInformationViewImpl extends AbstractView implements
 		this.setStyleName("userInfoContainer");
 	}
 
-	
-	private static class EditForm extends GenericForm {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		protected HorizontalLayout createButtonControls() {
-			HorizontalLayout layout = new HorizontalLayout();
-			layout.setSpacing(true);
-			layout.setStyleName("editInfoControl");
-			FormActionListener formActionListener = new FormActionListener();
-			Button saveBtn = new Button(SAVE_ACTION, formActionListener);
-
-			layout.addComponent(saveBtn);
-			layout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
-
-			return layout;
-		}
-
-		private class FormActionListener implements Button.ClickListener {
-			private static final long serialVersionUID = 1L;
-
-			// ==================================================
-			// Actions
-			// ==================================================
-			@Override
-			public void buttonClick(ClickEvent event) {
-				String caption = event.getButton().getCaption();
-				@SuppressWarnings("unchecked")
-				User user = ((BeanItem<User>) EditForm.this.getItemDataSource())
-						.getBean();
-				if (caption.equals(SAVE_ACTION)) {
-					if (validateForm(user)) {
-
-					}
-				}
-			}
-		}
-	}
-
-	public static abstract class GenericForm extends AdvancedEditBeanForm<User> {
+	public static class EditForm extends AdvancedEditBeanForm<User> {
 		private static final long serialVersionUID = 1L;
 
 		protected GridFormLayoutHelper informationLayout;
 
-		public GenericForm() {
+		public EditForm() {
 			super();
 
 			VerticalLayout layout = new VerticalLayout();
@@ -97,7 +57,21 @@ public class UserInformationViewImpl extends AbstractView implements
 			setLayout(layout);
 		}
 
-		abstract protected HorizontalLayout createButtonControls();
+		private HorizontalLayout createButtonControls() {
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.setSpacing(true);
+			layout.setStyleName("editInfoControl");
+			Button saveBtn = new Button(SAVE_ACTION);
+			layout.addComponent(saveBtn);
+			layout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
+			
+			Button cancelBtn = new Button(CANCEL_ACTION);
+			layout.addComponent(cancelBtn);
+			layout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
+			
+
+			return layout;
+		}
 
 		/*
 		 * Override to get control over where fields are placed.
