@@ -6,12 +6,11 @@ import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
-import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
@@ -19,21 +18,24 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public class UserDashboardViewImpl extends AbstractView implements
 		UserDashboardView {
-	private HorizontalSplitPanel root;
+	private final HorizontalLayout root;
 
-	private DetachedTabs mySpaceTabs;
-	private CssLayout mySpaceArea = new CssLayout();
-	private DetachedTabs calendarToolTabs;
+	private final DetachedTabs mySpaceTabs;
+	private final CssLayout mySpaceArea = new CssLayout();
+	private final DetachedTabs calendarToolTabs;
 
 	public UserDashboardViewImpl() {
-		root = new HorizontalSplitPanel();
-		root.setSplitPosition(200, Sizeable.UNITS_PIXELS);
-		root.setLocked(true);
-		root.setSizeFull();
+		this.setStyleName("projectDashboardView");
+		this.setMargin(false);
+		root = new HorizontalLayout();
+		root.setStyleName("menuContent");
+		// root.setSplitPosition(200, Sizeable.UNITS_PIXELS);
+		// root.setLocked(true);
+		root.setWidth("100%");
 
 		mySpaceArea.setWidth("100%");
 		mySpaceTabs = new DetachedTabs.Vertical(mySpaceArea);
-		mySpaceTabs.setSizeFull();
+		mySpaceTabs.setWidth("200px");
 		mySpaceTabs.setHeight(null);
 
 		calendarToolTabs = new DetachedTabs.Vertical(mySpaceArea);
@@ -41,20 +43,27 @@ public class UserDashboardViewImpl extends AbstractView implements
 		calendarToolTabs.setHeight(null);
 
 		VerticalLayout menu = new VerticalLayout();
-		menu.setSizeFull();
+		menu.setWidth("200px");
 		menu.setStyleName("sidebar-menu");
 
-		menu.addComponent(new Label("My Home"));
+		Label myHome = new Label("My Home");
+		myHome.setStyleName("sectionHeader");
+		menu.addComponent(myHome);
 		menu.addComponent(mySpaceTabs);
-		menu.addComponent(new Label("Calendar"));
+		Label calendar = new Label("Calendar");
+		calendar.setStyleName("sectionHeader");
+		menu.addComponent(calendar);
 		menu.addComponent(calendarToolTabs);
 
 		mySpaceTabs.setStyleName("hide-selection");
 		calendarToolTabs.setStyleName("hide-selection");
 		menu.addListener(new LayoutClickListener() {
+			@Override
 			public void layoutClick(LayoutClickEvent event) {
-				if (!root.getSecondComponent().equals(mySpaceArea)) {
-					root.setSecondComponent(mySpaceArea);
+				if (!root.getComponent(1).equals(mySpaceArea)) {
+					// root.addComponent(mySpaceArea);
+					root.replaceComponent(root.getComponent(1), mySpaceArea);
+					root.setExpandRatio(root.getComponent(1), 1.0f);
 				}
 				if (event.getChildComponent() == mySpaceTabs) {
 					calendarToolTabs.setStyleName("hide-selection");
@@ -66,19 +75,20 @@ public class UserDashboardViewImpl extends AbstractView implements
 			}
 		});
 
-		root.setFirstComponent(menu);
+		root.addComponent(menu);
 
 		buildComponents();
 		showWelcomeScreen();
 
 		this.addComponent(root);
-		this.setExpandRatio(root, 1.0f);
+		// this.setExpandRatio(root, 1.0f);
+
 	}
 
 	private void showWelcomeScreen() {
 		CustomLayout welcome = new CustomLayout("projectWelcomeScreen");
 		welcome.setSizeFull();
-		root.setSecondComponent(welcome);
+		root.addComponent(welcome);
 	}
 
 	private void buildComponents() {

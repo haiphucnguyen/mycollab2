@@ -14,6 +14,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CssLayout;
@@ -28,9 +29,9 @@ public class CrmContainer extends AbstractView {
 	private static String ACCOUNT_LIST = "Accounts";
 
 	private static String NEW_ACCOUNT_ITEM = "New Account";
-	
+
 	private static String NEW_CASE_ITEM = "New Case";
-	
+
 	private static String CASE_LIST = "Cases";
 
 	private static String CONTACT_LIST = "Contacts";
@@ -58,8 +59,9 @@ public class CrmContainer extends AbstractView {
 	public CrmContainer() {
 		new CrmController(this);
 		CustomLayout container = new CustomLayout("crmContainer");
+		container.setStyleName("crmContainer");
 
-		// container.setWidth("100%");
+		container.setWidth("100%");
 		NavigatorItemListener listener = new NavigatorItemListener();
 
 		toolbar = new CssLayout();
@@ -89,7 +91,7 @@ public class CrmContainer extends AbstractView {
 		Button opportunityList = new Button(OPPORTUNITY_LIST, listener);
 		opportunityList.setStyleName("link");
 		toolbar.addComponent(opportunityList);
-		
+
 		Button caseList = new Button(CASE_LIST, listener);
 		caseList.setStyleName("link");
 		toolbar.addComponent(caseList);
@@ -130,6 +132,7 @@ public class CrmContainer extends AbstractView {
 		currentView = new VerticalLayout();
 		container.addComponent(currentView, "currentView");
 		this.addComponent(container);
+		this.setComponentAlignment(container, Alignment.MIDDLE_CENTER);
 	}
 
 	public void addView(View view) {

@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.ui;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.vaadin.ui.Alignment;
 
 @SuppressWarnings("serial")
 public class ProjectContainer extends AbstractView {
@@ -9,7 +10,8 @@ public class ProjectContainer extends AbstractView {
 	public ProjectContainer() {
 		UserDashboardViewImpl userDashboard = ViewManager
 				.getView(UserDashboardViewImpl.class);
-		this.addComponent((com.vaadin.ui.Component) userDashboard);
+		this.addComponent(userDashboard);
+		this.setComponentAlignment(userDashboard, Alignment.MIDDLE_CENTER);
 	}
 
 	private void init() {

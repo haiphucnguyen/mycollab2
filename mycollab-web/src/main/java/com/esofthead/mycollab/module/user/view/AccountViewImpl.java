@@ -12,14 +12,13 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 public class AccountViewImpl extends AbstractView implements AccountView {
 
-	private HorizontalLayout root;
-	private DetachedTabs accountTab;
+	private final HorizontalLayout root;
+	private final DetachedTabs accountTab;
 	private final CssLayout accountSpace = new CssLayout();
-
 
 	public AccountViewImpl() {
 		this.setStyleName("accountViewContainer");
-		this.setWidth("1130px");
+		// this.setWidth("1130px");
 		this.setMargin(false);
 		root = new HorizontalLayout();
 		// root.setWidth("1000px");

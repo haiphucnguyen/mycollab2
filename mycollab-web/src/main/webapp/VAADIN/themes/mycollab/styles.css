@@ -5,11 +5,23 @@ only screen and (max-device-width : 1024px) {
 	.crmContainer {
 	    margin: 15px;
 	}
+	.projectDashboardView {
+		margin: 20px 15px;
+	}
+	.accountViewContainer {
+		margin: 20px 15px;
+	}
 }
 
 @media screen and (min-width: 1024px) {  
 	.crmContainer {
 	    margin: 15px auto;
+	}
+	.projectDashboardView {
+		margin: 20px auto;
+	}
+	.accountViewContainer {
+		margin: 20px auto;
 	}
 }
 
@@ -55,11 +67,16 @@ only screen and (max-device-width : 1024px) {
     height: 30px;
 }
 
-.h-sidebar-menu .v-csslayout-container .v-button-link {
+.h-sidebar-menu .v-csslayout-container .v-button-link, .h-sidebar-menu .v-csslayout-container .v-button-link:active, .h-sidebar-menu .v-csslayout-container .v-button-link:focus {
     color: #4D4D4D;
     height: 30px;
     margin: 0px;
     padding: 0px;
+}
+
+.h-sidebar-menu .v-csslayout-container .v-button-link:active .v-button-wrap, .h-sidebar-menu .v-csslayout-container .v-button-link:focus .v-button-wrap {
+    padding: 0px 30px;
+    border-right: 1px solid #8F8F8F;
 }
 
 .h-sidebar-menu .v-csslayout-container .v-button, .h-sidebar-menu .v-csslayout-container .v-button .v-button-wrap {
@@ -70,7 +87,7 @@ only screen and (max-device-width : 1024px) {
 }
 
 .h-sidebar-menu .v-csslayout-container .v-button-link .v-button-wrap, .h-sidebar-menu .v-csslayout-container .v-popupbutton .v-button-wrap, .h-sidebar-menu .v-csslayout-container .v-popupbutton:active .v-button-wrap {
-    margin-top: 7px;
+    margin: 7px auto 0px;
     display: block;
     padding: 0px 30px;
     border-right: 1px solid #8F8F8F;
@@ -424,13 +441,13 @@ input.v-textfield-pagedtable-pagefield {
 .accountViewContainer {
 	background-color: #FAFAFA;
 	padding: 10px;
-	margin: 20px auto;
 	box-shadow: #BFBFBF 0px 1px 2px 1px;
 	border-top-left-radius: 5px;
 	border-top-right-radius: 5px;
 	border-bottom-right-radius: 5px;
 	border-bottom-left-radius: 5px;
 	border: 1px solid #B7B7B7;
+	max-width: 1130px;
 }
 
 .accountViewContainer .v-label-h1, .accountViewContainer .v-label h1 {
@@ -483,6 +500,73 @@ input.v-textfield-pagedtable-pagefield {
 
 /* End Account Settings */
 
+/* Project Management */
+
+.projectDashboardView {
+	background-color: #FAFAFA;
+	padding: 10px;
+	box-shadow: #BFBFBF 0px 1px 2px 1px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-bottom-right-radius: 5px;
+	border-bottom-left-radius: 5px;
+	border: 1px solid #B7B7B7;
+	max-width: 1130px;
+}
+
+.projectDashboardView .v-label-h1, .projectDashboardView .v-label h1 {
+	padding: 0px;
+	font-weight: normal;
+	font-size: 20px;
+}
+
+.projectDashboardView .sidebar-menu {
+	background: none;
+	border-right: 1px solid #CCC;
+}
+
+.projectDashboardView .menuContent {
+	max-width: 1130px;
+}
+.projectDashboardView .v-splitpanel-hsplitter-locked {
+	width: 0px;
+	border-style: solid;
+	border-color: #CCC;
+	border-width: 0px 1px 0px 0px;
+	background: none; 
+}
+
+.projectDashboardView .sidebar-menu .v-label.sectionHeader{
+	font-size: 14px;
+	padding: .3em .7em;
+}
+
+.projectDashboardView .sidebar-menu .v-nativebutton {
+	font-size: 14px;
+	padding: 0 0.6em 0 0;
+	margin: 3px 0px;
+}
+
+.projectDashboardView .sidebar-menu .tab-selected, .accountViewContainer .sidebar-menu .selected {
+	background: none;
+}
+
+.projectDashboardView .v-nativebutton .v-nativebutton-caption {
+    padding: 3px 0px 2px;
+    border-radius: 3px;
+    display: block;
+    text-align: left;
+    padding-left: 10px;
+}
+
+.projectDashboardView .v-nativebutton-tab-selected .v-nativebutton-caption, .projectDashboardView .tab-selected .v-nativebutton-caption {
+	background: #287ECE;
+}
+
+.projectDashboardView .v-label-h2, .v-label h2 {
+	padding: 0px;
+}
+/* End Project Management */
 
 /*Css for wizard*/
 .v-wizardprogressbar .step {
