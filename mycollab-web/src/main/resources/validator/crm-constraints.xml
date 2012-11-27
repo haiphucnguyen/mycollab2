@@ -2,22 +2,32 @@
 	http://jboss.org/xml/ns/javax/validation/mapping/validation-mapping-1.0.xsd"
 	xmlns="http://jboss.org/xml/ns/javax/validation/mapping">
 	<default-package>com.esofthead.mycollab.module.crm.domain</default-package>
-
 	<bean class="Account" ignore-annotations="true" >
 		<field name="accountname">
 			<constraint annotation="javax.validation.constraints.NotNull">
 				<message>Account Name may not be null</message>
 			</constraint>
 		</field>
+		<field name="alternatephone">
+			<constraint annotation="com.esofthead.mycollab.constraints.PhoneNumber">
+				<message>Please enter a valid phone number</message>		
+			</constraint>	
+		</field>
 		<field name="email">
 			<constraint annotation="org.hibernate.validator.constraints.Email">
 				<message>Please enter a valid email</message>
 			</constraint>
 		</field>
+		<field name="phoneoffice">
+			<constraint annotation="com.esofthead.mycollab.constraints.PhoneNumber">
+				<message>Please enter a valid phone number</message>		
+			</constraint>
+		</field>
 		<field name="website">
-			<constraint annotation="org.hibernate.validator.constraints.URL">
+			<constraint annotation="com.esofthead.mycollab.constraints.URL">
 				<message>Please enter a valid URL</message>
 			</constraint>
 		</field>
+		
 	</bean>
 </constraint-mappings>

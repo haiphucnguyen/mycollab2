@@ -19,7 +19,7 @@ import de.steinwedel.vaadin.MessageBox.ButtonType;
 @SuppressWarnings("serial")
 public class AdvancedEditBeanForm<T> extends GenericForm implements
 		HasEditFormHandlers<T> {
-	private Validator validation;
+	private final Validator validation;
 
 	private List<EditFormHandler<T>> editFormHandlers;
 
@@ -28,14 +28,18 @@ public class AdvancedEditBeanForm<T> extends GenericForm implements
 	}
 
 	protected boolean validateForm(Object data) {
+		for (Object propertyId : this.getItemPropertyIds()) {
+			this.getField(propertyId).removeStyleName("errorField");
+		}
 		Set<ConstraintViolation<Object>> violations = validation.validate(data);
-		
 		if (violations.size() > 0) {
 			StringBuffer errorMsg = new StringBuffer();
 
 			for (@SuppressWarnings("rawtypes")
 			ConstraintViolation violation : violations) {
 				errorMsg.append(violation.getMessage()).append("<br/>");
+				this.getField(violation.getPropertyPath().toString())
+						.addStyleName("errorField");
 			}
 
 			MessageBox mb = new MessageBox(getWindow(), "Error!",
@@ -49,6 +53,7 @@ public class AdvancedEditBeanForm<T> extends GenericForm implements
 		return true;
 	}
 
+	@Override
 	public void addFormHandler(EditFormHandler<T> editFormHandler) {
 		if (editFormHandlers == null) {
 			editFormHandlers = new ArrayList<EditFormHandler<T>>();
