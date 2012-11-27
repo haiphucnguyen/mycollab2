@@ -29,13 +29,13 @@ public class AdvancedEditBeanForm<T> extends GenericForm implements
 
 	protected boolean validateForm(Object data) {
 		Set<ConstraintViolation<Object>> violations = validation.validate(data);
+		
 		if (violations.size() > 0) {
 			StringBuffer errorMsg = new StringBuffer();
 
 			for (@SuppressWarnings("rawtypes")
 			ConstraintViolation violation : violations) {
 				errorMsg.append(violation.getMessage()).append("<br/>");
-
 			}
 
 			MessageBox mb = new MessageBox(getWindow(), "Error!",

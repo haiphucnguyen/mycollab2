@@ -19,6 +19,12 @@ public class UserInformationViewImpl extends AbstractView implements
 		UserInformationView {
 
 	public UserInformationViewImpl() {
+		super();
+	}
+	
+	@Override
+	public void attach() {
+		System.out.println("Init user information");
 		this.removeAllComponents();
 		User currentUser = AppContext.getSession();
 		Form formItem = new EditForm();
