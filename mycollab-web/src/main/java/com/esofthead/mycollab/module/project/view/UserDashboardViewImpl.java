@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.ui;
+package com.esofthead.mycollab.module.project.view;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -29,8 +29,6 @@ public class UserDashboardViewImpl extends AbstractView implements
 		this.setMargin(false);
 		root = new HorizontalLayout();
 		root.setStyleName("menuContent");
-		// root.setSplitPosition(200, Sizeable.UNITS_PIXELS);
-		// root.setLocked(true);
 		root.setWidth("100%");
 
 		mySpaceArea.setWidth("100%");
@@ -61,7 +59,6 @@ public class UserDashboardViewImpl extends AbstractView implements
 			@Override
 			public void layoutClick(LayoutClickEvent event) {
 				if (!root.getComponent(1).equals(mySpaceArea)) {
-					// root.addComponent(mySpaceArea);
 					root.replaceComponent(root.getComponent(1), mySpaceArea);
 					root.setExpandRatio(root.getComponent(1), 1.0f);
 				}
@@ -81,8 +78,6 @@ public class UserDashboardViewImpl extends AbstractView implements
 		showWelcomeScreen();
 
 		this.addComponent(root);
-		// this.setExpandRatio(root, 1.0f);
-
 	}
 
 	private void showWelcomeScreen() {

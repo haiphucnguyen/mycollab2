@@ -1,12 +1,13 @@
-package com.esofthead.mycollab.constraints;
+package com.esofthead.mycollab.validator.constraints;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 
-public class URLValidator implements ConstraintValidator<URL, String> {
+public class PhoneNumberValidator implements
+		ConstraintValidator<PhoneNumber, String> {
 
 	@Override
-	public void initialize(URL constraintAnnotation) {
+	public void initialize(PhoneNumber constraintAnnotation) {
 
 	}
 
@@ -14,9 +15,10 @@ public class URLValidator implements ConstraintValidator<URL, String> {
 	public boolean isValid(String value, ConstraintValidatorContext context) {
 		if (value != null) {
 			return value
-					.matches("[-a-zA-Z0-9@:%_\\+.~#?&//=]{2,256}\\.[a-z]{2,4}\\b(\\/[-a-zA-Z0-9@:%_\\+.~#?&//=]*)?");
+					.matches("[(]?\\d{3}[)]?\\s?-?\\s?\\d{3}\\s?-?\\s?\\d{4}");
 		} else {
 			return true;
 		}
 	}
+
 }

@@ -3,7 +3,7 @@ package com.esofthead.mycollab.shell;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.module.crm.view.CrmContainer;
-import com.esofthead.mycollab.module.project.ui.ProjectContainer;
+import com.esofthead.mycollab.module.project.ProjectContainer;
 import com.esofthead.mycollab.module.user.accountsettings.AccountContainer;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.presenter.LoginPresenter;

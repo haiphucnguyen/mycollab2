@@ -9,7 +9,7 @@
 			</constraint>
 		</field>
 		<field name="alternatephone">
-			<constraint annotation="com.esofthead.mycollab.constraints.PhoneNumber">
+			<constraint annotation="com.esofthead.mycollab.validator.constraints.PhoneNumber">
 				<message>Please enter a valid phone number</message>		
 			</constraint>	
 		</field>
@@ -19,12 +19,12 @@
 			</constraint>
 		</field>
 		<field name="phoneoffice">
-			<constraint annotation="com.esofthead.mycollab.constraints.PhoneNumber">
+			<constraint annotation="com.esofthead.mycollab.validator.constraints.PhoneNumber">
 				<message>Please enter a valid phone number</message>		
 			</constraint>
 		</field>
 		<field name="website">
-			<constraint annotation="com.esofthead.mycollab.constraints.URL">
+			<constraint annotation="com.esofthead.mycollab.validator.constraints.URL">
 				<message>Please enter a valid URL</message>
 			</constraint>
 		</field>

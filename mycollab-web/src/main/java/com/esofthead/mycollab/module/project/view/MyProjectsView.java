@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.ui;
+package com.esofthead.mycollab.module.project.view;
 
 import java.util.List;
 

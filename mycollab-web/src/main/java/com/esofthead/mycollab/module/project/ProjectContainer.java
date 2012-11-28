@@ -1,5 +1,7 @@
-package com.esofthead.mycollab.module.project.ui;
+package com.esofthead.mycollab.module.project;
 
+import com.esofthead.mycollab.module.project.view.ProjectViewImpl;
+import com.esofthead.mycollab.module.project.view.UserDashboardViewImpl;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.ui.Alignment;

@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.constraints;
+package com.esofthead.mycollab.validator.constraints;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;
@@ -14,10 +14,10 @@ import javax.validation.Payload;
 
 @Target({ METHOD, FIELD, ANNOTATION_TYPE })
 @Retention(RUNTIME)
-@Constraint(validatedBy = URLValidator.class)
+@Constraint(validatedBy = PhoneNumberValidator.class)
 @Documented
-public @interface URL {
-	String message() default "{com.esofthead.mycollab.constraints.URL}";
+public @interface PhoneNumber {
+	String message() default "{com.esofthead.mycollab.validator.constraints.PhoneNumber}";
 
 	Class<?>[] groups() default {};
 
