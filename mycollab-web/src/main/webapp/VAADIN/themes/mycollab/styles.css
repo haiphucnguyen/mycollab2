@@ -314,6 +314,9 @@ input.v-textfield-pagedtable-pagefield {
     margin: 15px;*/
     max-width: 1130px;
 }
+input.v-textfield-errorField {
+	border-color: red;
+}
 
 /* End CRM Service */
 
