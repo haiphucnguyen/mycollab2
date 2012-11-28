@@ -31,4 +31,8 @@
     <inherits name="com.vaadin.addon.toolbar.widgetset.ToolbarWidgetset" />
 
     <inherits name="org.vaadin.csstools.CssToolsWidgetset" />
+
+    
+
+    <inherits name="org.vaadin.teemu.wizards.WizardsforvaadinWidgetset" />
 </module>
