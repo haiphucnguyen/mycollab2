@@ -231,7 +231,7 @@
       #{shippingpostalcode,jdbcType=VARCHAR}, #{shippingcountry,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{paymentterm,jdbcType=VARCHAR}, #{originalpodate,jdbcType=TIMESTAMP}, #{purchaseordernum,jdbcType=VARCHAR}, 
       #{createdtime,jdbcType=TIMESTAMP}, #{createduser,jdbcType=VARCHAR}, #{saccountid,jdbcType=INTEGER}, 
-      #{assignuser,jdbcType=VARCHAR}, #{lastUpdatedTime,jdbcType=VARCHAR})]]>
+      #{assignuser,jdbcType=VARCHAR}, #{lastupdatedtime,jdbcType=TIMESTAMP})]]>
     </insert>
 
     <select id="getTotalCount" resultType="int"

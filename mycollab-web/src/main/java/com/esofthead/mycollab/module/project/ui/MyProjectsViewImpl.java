@@ -7,7 +7,6 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriter
 import com.esofthead.mycollab.module.project.ui.components.ProjectAddWindow;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.BeanTable;
-import com.jensjansson.pagedtable.PagedTableContainer;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.ui.Alignment;
@@ -19,7 +18,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.ChameleonTheme;
 
 @SuppressWarnings("serial")
@@ -110,22 +108,22 @@ public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
-				PagedTableContainer tableContainer = (PagedTableContainer) source
-						.getContainerDataSource();
-				@SuppressWarnings("unchecked")
-				BeanItemContainer<SimpleProject> container = (BeanItemContainer<SimpleProject>) tableContainer
-						.getContainer();
-				final SimpleProject project = container.getItem(itemId).getBean();
-				Button projectBtn = new Button(project.getName(),
-						new Button.ClickListener() {
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-
-							}
-						});
-				projectBtn.setStyleName(BaseTheme.BUTTON_LINK);
-				return projectBtn;
+//				PagedTableContainer tableContainer = (PagedTableContainer) source
+//						.getContainerDataSource();
+//				@SuppressWarnings("unchecked")
+//				BeanItemContainer<SimpleProject> container = (BeanItemContainer<SimpleProject>) tableContainer
+//						.getContainer();
+//				final SimpleProject project = container.getItem(itemId).getBean();
+//				Button projectBtn = new Button(project.getName(),
+//						new Button.ClickListener() {
+//
+//							@Override
+//							public void buttonClick(ClickEvent event) {
+//
+//							}
+//						});
+//				projectBtn.setStyleName(BaseTheme.BUTTON_LINK);
+				return null;
 			}
 		});
 

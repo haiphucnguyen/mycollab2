@@ -304,14 +304,14 @@
     <sql id="orderStatement">
         ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[
-            m_crm_note.lastUpdatedTime DESC
+            lastUpdatedTime DESC
         ]]>
     </sql>
 
 	<select id="findPagableListByCriteria" resultMap="SimpleNoteResult"
 		parameterType="NoteSearchCriteria">
         <![CDATA[
-        SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
+        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
@@ -324,12 +324,12 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>
-        <include refid="orderStatement"/>
+		</trim>)
+        
 
 		UNION ALL
         <![CDATA[
-        SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
+        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
@@ -342,12 +342,11 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>
-        <include refid="orderStatement"/>
+		</trim>)
 
 		UNION ALL
         <![CDATA[
-        SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
+        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
@@ -360,12 +359,12 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>
-        <include refid="orderStatement"/>
+		</trim>)
+        
 
 		UNION ALL
         <![CDATA[
-        SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
+        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
@@ -378,12 +377,12 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>
-        <include refid="orderStatement"/>
+		</trim>)
+        
 
 		UNION ALL
         <![CDATA[
-        SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
+        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
@@ -396,12 +395,12 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>
-        <include refid="orderStatement"/>
+		</trim>)
+        
 
 		UNION ALL
         <![CDATA[
-        SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
+        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
@@ -414,12 +413,12 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>
-        <include refid="orderStatement"/>
+		</trim>)
+        
 
 		UNION ALL
         <![CDATA[
-        SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
+        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
@@ -432,12 +431,12 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>
-        <include refid="orderStatement"/>
+		</trim>)
+        
 
 		UNION ALL
         <![CDATA[
-        SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
+        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
@@ -450,12 +449,12 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>
-        <include refid="orderStatement"/>
+		</trim>)
+        
 
 		UNION ALL
         <![CDATA[
-        SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
+        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
@@ -468,12 +467,12 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>
-        <include refid="orderStatement"/>
+		</trim>)
+        
 
 		UNION ALL
         <![CDATA[
-        SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
+        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
@@ -486,12 +485,12 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>
-        <include refid="orderStatement"/>
+		</trim>)
+        
 
 		UNION ALL
         <![CDATA[
-        SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
+        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
@@ -504,12 +503,12 @@
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>
-        <include refid="orderStatement"/>
+		</trim>)
+        
 
 		UNION ALL
         <![CDATA[
-        SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
+        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
@@ -522,7 +521,7 @@
 			1=1 <include
 				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
 			AND ((m_crm_note.type IS NULL) OR (m_crm_note.typeid IS NULL))
-		</trim>
+		</trim>)
         <include refid="orderStatement"/>
 	</select>
 </mapper>
