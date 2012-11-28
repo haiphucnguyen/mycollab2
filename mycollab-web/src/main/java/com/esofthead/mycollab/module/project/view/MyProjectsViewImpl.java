@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.project.view;
 
-import java.util.List;
-
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectService;

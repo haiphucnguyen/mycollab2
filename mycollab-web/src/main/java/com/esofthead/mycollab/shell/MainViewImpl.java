@@ -3,7 +3,7 @@ package com.esofthead.mycollab.shell;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.module.crm.view.CrmContainer;
-import com.esofthead.mycollab.module.project.view.ProjectContainer;
+import com.esofthead.mycollab.module.project.view.ProjectMainContainer;
 import com.esofthead.mycollab.module.user.accountsettings.AccountContainer;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.presenter.LoginPresenter;
@@ -61,8 +61,8 @@ public class MainViewImpl extends AbstractView {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
-						ProjectContainer projectDashboard = ViewManager
-								.getView(ProjectContainer.class);
+						ProjectMainContainer projectDashboard = ViewManager
+								.getView(ProjectMainContainer.class);
 						bodyLayout.removeAllComponents();
 						bodyLayout.addComponent(projectDashboard);
 					}

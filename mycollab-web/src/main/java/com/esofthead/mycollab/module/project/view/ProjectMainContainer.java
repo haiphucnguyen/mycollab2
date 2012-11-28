@@ -5,9 +5,9 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.ui.Alignment;
 
 @SuppressWarnings("serial")
-public class ProjectContainer extends AbstractView {
+public class ProjectMainContainer extends AbstractView {
 
-	public ProjectContainer() {
+	public ProjectMainContainer() {
 		UserDashboardViewImpl userDashboard = ViewManager
 				.getView(UserDashboardViewImpl.class);
 		this.addComponent(userDashboard);

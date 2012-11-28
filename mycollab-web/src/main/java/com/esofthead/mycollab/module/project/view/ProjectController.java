@@ -8,20 +8,21 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 
 public class ProjectController {
 
-	private ProjectContainer container;
+	private ProjectMainContainer container;
 
-	private ProjectController(ProjectContainer container) {
+	private ProjectController(ProjectMainContainer container) {
 		this.container = container;
+		bindProjectEvents();
 	}
 
+	@SuppressWarnings("serial")
 	private void bindProjectEvents() {
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ProjectEvent.SaveProjectSucess>() {
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
-						// TODO Auto-generated method stub
-						return null;
+						return ProjectEvent.SaveProjectSucess.class;
 					}
 
 					@Override

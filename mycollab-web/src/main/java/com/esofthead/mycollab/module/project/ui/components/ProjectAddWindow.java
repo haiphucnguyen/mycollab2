@@ -53,11 +53,11 @@ public class ProjectAddWindow extends Window {
 
 				ProjectService projectService = AppContext
 						.getSpringBean(ProjectService.class);
-				projectService.saveWithSession(project,
+				int projectId = projectService.saveWithSession(project,
 						AppContext.getUsername());
 
 				EventBus.getInstance().fireEvent(
-						new ProjectEvent.SaveProjectSucess(this, null));
+						new ProjectEvent.SaveProjectSucess(this, projectId));
 			}
 
 			@Override

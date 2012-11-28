@@ -1,6 +1,9 @@
 package com.esofthead.mycollab.module.project.view;
 
+import com.esofthead.mycollab.module.project.view.MyDefectsView.MyDefectsPresenter;
+import com.esofthead.mycollab.module.project.view.MyFeedsView.MyFeedsPresenter;
 import com.esofthead.mycollab.module.project.view.MyProjectsView.MyProjectPresenter;
+import com.esofthead.mycollab.module.project.view.MyTasksView.MyTasksPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.github.wolfie.detachedtabs.DetachedTabs;
@@ -26,6 +29,10 @@ public class UserDashboardViewImpl extends AbstractView implements
 	private final DetachedTabs calendarToolTabs;
 
 	private MyProjectPresenter myProjectPresenter;
+	private MyFeedsPresenter myFeedsPresenter;
+	private MyTasksPresenter myTasksPresenter;
+	private MyDefectsPresenter myDefectsPresenter;
+	
 
 	public UserDashboardViewImpl() {
 		this.setStyleName("projectDashboardView");
@@ -92,8 +99,8 @@ public class UserDashboardViewImpl extends AbstractView implements
 	private void buildComponents() {
 		mySpaceTabs.addTab(constructMyFeedsComponents(), "My Feeds");
 		mySpaceTabs.addTab(constructMyProjectsComponents(), "My Projects");
-		mySpaceTabs.addTab(constructMyFeedsComponents(), "My Tasks");
-		mySpaceTabs.addTab(constructMyFeedsComponents(), "My Bugs");
+		mySpaceTabs.addTab(constructMyTasksComponents(), "My Tasks");
+		mySpaceTabs.addTab(constructMyBugsComponents(), "My Bugs");
 
 		mySpaceTabs
 				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
@@ -104,18 +111,38 @@ public class UserDashboardViewImpl extends AbstractView implements
 						String caption = btn.getCaption();
 						if ("My Projects".equals(caption)) {
 							gotoMyProjectList();
+						} else if ("My Feeds".equals(caption)) {
+							gotoMyFeeds();
+						} else if ("My Tasks".equals(caption)) {
+							gotoMyFeeds();
+						} else if ("My Bugs".equals(caption)) {
+							gotoMyBugs();
 						}
 					}
 				});
 	}
 
 	private Layout constructMyFeedsComponents() {
-		return new VerticalLayout();
+		MyFeedsViewImpl view = ViewManager.getView(MyFeedsViewImpl.class);
+		myFeedsPresenter = new MyFeedsPresenterImpl(view);
+		return view;
 	}
 
 	private ComponentContainer constructMyProjectsComponents() {
 		MyProjectsViewImpl view = ViewManager.getView(MyProjectsViewImpl.class);
 		myProjectPresenter = new MyProjectsPresenterImpl(view);
+		return view;
+	}
+
+	private ComponentContainer constructMyTasksComponents() {
+		MyTasksViewImpl view = ViewManager.getView(MyTasksViewImpl.class);
+		myTasksPresenter = new MyTasksPresenterImpl(view);
+		return view;
+	}
+	
+	private ComponentContainer constructMyBugsComponents() {
+		MyDefectsViewImpl view = ViewManager.getView(MyDefectsViewImpl.class);
+		myDefectsPresenter = new MyDefectsPresenterImpl(view);
 		return view;
 	}
 
@@ -126,6 +153,31 @@ public class UserDashboardViewImpl extends AbstractView implements
 		if (myProjectComponent != null) {
 			myProjectPresenter.doDefaultSearch();
 		}
+	}
+
+	public void gotoMyFeeds() {
+		com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Feeds");
+		if (component != null) {
+			myFeedsPresenter.doDefaultSearch();
+		}
+	}
+
+	@Override
+	public void gotoMyTasks() {
+		com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Tasks");
+		if (component != null) {
+			myTasksPresenter.doDefaultSearch();
+		}
+
+	}
+
+	@Override
+	public void gotoMyBugs() {
+		com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Bugs");
+		if (component != null) {
+			myDefectsPresenter.doDefaultSearch();
+		}
+
 	}
 
 }

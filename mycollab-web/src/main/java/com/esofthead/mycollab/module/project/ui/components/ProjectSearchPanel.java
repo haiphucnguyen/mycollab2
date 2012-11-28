@@ -2,8 +2,6 @@ package com.esofthead.mycollab.module.project.ui.components;
 
 import com.esofthead.mycollab.module.crm.ui.components.GenericSearchPanel;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
-import com.esofthead.mycollab.module.project.ui.events.ProjectEvent;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -37,6 +35,7 @@ public class ProjectSearchPanel extends
 
 		Button createProjectBtn = new Button("Create",
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(ClickEvent event) {
