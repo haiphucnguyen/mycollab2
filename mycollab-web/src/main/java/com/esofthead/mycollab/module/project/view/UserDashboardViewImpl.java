@@ -114,7 +114,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 						} else if ("My Feeds".equals(caption)) {
 							gotoMyFeeds();
 						} else if ("My Tasks".equals(caption)) {
-							gotoMyFeeds();
+							gotoMyTasks();
 						} else if ("My Bugs".equals(caption)) {
 							gotoMyBugs();
 						}
