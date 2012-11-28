@@ -29,7 +29,7 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 	}
 
 	@Override
-	public void saveWithSession(T record, String username) {
+	public int saveWithSession(T record, String username) {
 		try {
 			PropertyUtils.setProperty(record, "createdtime",
 					new GregorianCalendar().getTime());
@@ -40,13 +40,15 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 		}
 		if (username == null) {
 			getCrudMapper().insert(record);
+			return -1;
 		} else {
-			internalSaveWithSession(record, username);
+			return internalSaveWithSession(record, username);
 		}
 	}
 
-	protected void internalSaveWithSession(T record, String username) {
+	protected int internalSaveWithSession(T record, String username) {
 		getCrudMapper().insert(record);
+		return -1;
 	}
 
 	@Override

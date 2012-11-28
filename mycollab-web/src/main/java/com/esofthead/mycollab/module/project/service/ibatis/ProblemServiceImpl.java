@@ -39,12 +39,13 @@ public class ProblemServiceImpl extends DefaultService<Integer, Problem, Problem
 	}
 
 	@Override
-	protected void internalSaveWithSession(Problem record, String username) {
+	protected int internalSaveWithSession(Problem record, String username) {
 		problemMapperExt.insertAndReturnKey(record);
 		int recordid = record.getId();
 		changeLogService.saveChangeLog(record.getProjectid(), username,
 				ChangeLogSource.PROBLEM, recordid, ChangeLogAction.CREATE,
 				record.getIssuename());
+		return recordid;
 	}
 
 	@Override

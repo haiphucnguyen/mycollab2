@@ -54,13 +54,14 @@ public class ResourceServiceImpl extends DefaultService<Integer, Resource, Resou
 	}
 
 	@Override
-	protected void internalSaveWithSession(Resource record, String username) {
+	protected int internalSaveWithSession(Resource record, String username) {
 		resourceMapperExt.insertAndReturnKey(record);
 		int resourceid = record.getId();
 		changeLogService.saveChangeLog(record.getProjectid(), username,
 				ChangeLogSource.RESOURCE, resourceid, ChangeLogAction.CREATE,
 				record.getResourcename());
 		addDefaultPermissions(record);
+		return resourceid;
 	}
 
 	@Override

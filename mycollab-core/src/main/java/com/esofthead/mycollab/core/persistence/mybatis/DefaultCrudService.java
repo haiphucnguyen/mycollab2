@@ -47,23 +47,7 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
 	}
 
 	@Override
-	public void saveWithSession(T record, String username) {
-		if (username == null) {
-			try {
-				PropertyUtils.setProperty(record, "createdtime",
-						new GregorianCalendar().getTime());
-				PropertyUtils.setProperty(record, "lastupdatedtime",
-						new GregorianCalendar().getTime());
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			getCrudMapper().insert(record);
-		} else {
-			internalSaveWithSession(record, username);
-		}
-	}
-
-	protected void internalSaveWithSession(T record, String username) {
+	public int saveWithSession(T record, String username) {
 		try {
 			PropertyUtils.setProperty(record, "createdtime",
 					new GregorianCalendar().getTime());
@@ -72,7 +56,18 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+
+		if (username == null) {
+			getCrudMapper().insert(record);
+			return -1;
+		} else {
+			return internalSaveWithSession(record, username);
+		}
+	}
+
+	protected int internalSaveWithSession(T record, String username) {
 		getCrudMapper().insert(record);
+		return -1;
 	}
 
 	@Override

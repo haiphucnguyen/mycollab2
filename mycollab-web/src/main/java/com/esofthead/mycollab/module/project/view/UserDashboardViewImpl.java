@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view;
 
+import com.esofthead.mycollab.module.project.view.MyProjectsView.MyProjectPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.github.wolfie.detachedtabs.DetachedTabs;
@@ -23,6 +24,8 @@ public class UserDashboardViewImpl extends AbstractView implements
 	private final DetachedTabs mySpaceTabs;
 	private final CssLayout mySpaceArea = new CssLayout();
 	private final DetachedTabs calendarToolTabs;
+
+	private MyProjectPresenter myProjectPresenter;
 
 	public UserDashboardViewImpl() {
 		this.setStyleName("projectDashboardView");
@@ -112,6 +115,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 
 	private ComponentContainer constructMyProjectsComponents() {
 		MyProjectsViewImpl view = ViewManager.getView(MyProjectsViewImpl.class);
+		myProjectPresenter = new MyProjectsPresenterImpl(view);
 		return view;
 	}
 
@@ -120,9 +124,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 		com.vaadin.ui.Component myProjectComponent = mySpaceTabs
 				.selectTab("My Projects");
 		if (myProjectComponent != null) {
-			MyProjectsViewImpl view = ViewManager
-					.getView(MyProjectsViewImpl.class);
-			view.doDefaultSearch();
+			myProjectPresenter.doDefaultSearch();
 		}
 	}
 

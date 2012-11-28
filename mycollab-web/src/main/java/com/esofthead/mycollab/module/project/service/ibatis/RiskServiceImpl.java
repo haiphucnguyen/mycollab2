@@ -39,12 +39,13 @@ public class RiskServiceImpl extends DefaultService<Integer, Risk, RiskSearchCri
 	}
 
 	@Override
-	protected void internalSaveWithSession(Risk risk, String username) {
+	protected int internalSaveWithSession(Risk risk, String username) {
 		riskMapperExt.insertAndReturnKey(risk);
 		int riskid = risk.getId();
 		changeLogService.saveChangeLog(risk.getProjectid(), username,
 				ChangeLogSource.RISK, riskid, ChangeLogAction.CREATE,
 				risk.getRiskname());
+		return riskid;
 	}
 
 	@Override

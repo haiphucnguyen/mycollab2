@@ -22,7 +22,7 @@ import java.util.List;
 
 public interface ICrudService<K extends Serializable, T> extends IService {
 
-	void saveWithSession(T record, String userSessionId);
+	int saveWithSession(T record, String userSessionId);
 
 	/**
 	 * 

@@ -94,7 +94,7 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
 	}
 
 	@Override
-	protected void internalSaveWithSession(Project record, String username) {
+	protected int internalSaveWithSession(Project record, String username) {
 		if (isExistProjectHasSameName(record.getName())) {
 			throw new EngroupException("There is project has name "
 					+ record.getName()
@@ -115,6 +115,8 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
 			messageDispatcher.dispatchObject(
 					AvailableDestinationNames.PROJECT_ADD, props);
 		}
+		
+		return projectid;
 	}
 
 	private void setAllPermissions(int projectid, String user) {
