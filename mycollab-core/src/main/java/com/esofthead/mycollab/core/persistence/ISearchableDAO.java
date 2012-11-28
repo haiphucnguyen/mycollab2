@@ -17,4 +17,6 @@ public interface ISearchableDAO<S extends SearchCriteria> {
 	 * @return
 	 */
 	List findPagableListByCriteria(S criteria, RowBounds rowBounds);
+	
+	void removeByCriteria(S criteria);
 }

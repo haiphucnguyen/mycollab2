@@ -1,7 +1,9 @@
 package com.esofthead.mycollab.vaadin.events;
 
 public interface SelectionOptionHandler {
-	void onSelect();
+	void onSelectCurrentPage();
+	
+	void onSelectAll();
 
 	void onDeSelect();
 }

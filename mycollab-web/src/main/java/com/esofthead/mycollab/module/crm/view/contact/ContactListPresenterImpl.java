@@ -46,7 +46,7 @@ public class ContactListPresenterImpl extends
 				new SelectionOptionHandler() {
 
 					@Override
-					public void onSelect() {
+					public void onSelectCurrentPage() {
 						selectionModel.addSelections(currentListData);
 
 						for (SimpleContact contact : selectionModel) {
@@ -69,6 +69,12 @@ public class ContactListPresenterImpl extends
 
 						checkWhetherEnableTableActionControl();
 
+					}
+
+					@Override
+					public void onSelectAll() {
+						// TODO Auto-generated method stub
+						
 					}
 				});
 

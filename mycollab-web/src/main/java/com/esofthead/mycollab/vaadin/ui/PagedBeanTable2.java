@@ -8,7 +8,7 @@ import java.util.Set;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.ISearchableService;
-import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
+import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.vaadin.data.Container;
 import com.vaadin.data.util.BeanItem;
@@ -27,8 +27,7 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
 public class PagedBeanTable2<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
-		extends Table implements HasSelectableItemHandlers<T>,
-		IPagedBeanTable<SearchService, S, T> {
+		extends Table implements IPagedBeanTable<SearchService, S, T> {
 	private static final long serialVersionUID = 1L;
 
 	private String[] visibleColumns;
@@ -39,6 +38,10 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
 	private int totalPage = 1;
 
+	private int currentViewCount;
+
+	private int totalCount;
+
 	private Button first, previous, next, last;
 
 	private Label totalPagesLabel;
@@ -48,6 +51,8 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 	private ComboBox itemsPerPageSelect;
 
 	private Set<SelectableItemHandler<T>> selectableHandlers;
+
+	private Set<PagableHandler> pagableHandlers;
 
 	private SearchRequest<S> searchRequest;
 
@@ -127,7 +132,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
 	@SuppressWarnings("unchecked")
 	private void doSearch() {
-		int totalCount = searchService.getTotalCount(searchRequest
+		totalCount = searchService.getTotalCount(searchRequest
 				.getSearchCriteria());
 		int totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
 		if (searchRequest.getCurrentPage() > totalPage) {
@@ -136,6 +141,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
 		currentListData = searchService
 				.findPagableListByCriteria(searchRequest);
+		currentViewCount = currentListData.size();
 
 		this.setCurrentPage(currentPage);
 		this.setTotalPage(totalPage);
@@ -187,7 +193,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 	@Override
 	public void setContainerDataSource(Container newDataSource) {
 		super.setContainerDataSource(newDataSource);
-		this.setPageLength(newDataSource.size() + 1);
+		this.setPageLength(newDataSource.size());
 	}
 
 	public HorizontalLayout createControls() {
@@ -352,6 +358,12 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 			this.currentPage = currentPage;
 			searchRequest.setCurrentPage(currentPage);
 			doSearch();
+
+			if (pagableHandlers != null) {
+				for (PagableHandler handler : pagableHandlers) {
+					handler.move(currentPage);
+				}
+			}
 		}
 	}
 
@@ -369,5 +381,33 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 			selectableHandlers = new HashSet<SelectableItemHandler<T>>();
 		}
 		selectableHandlers.add(handler);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Collection<T> getCurrentDataList() {
+		BeanItemContainer<T> containerDataSource = (BeanItemContainer<T>) this
+				.getContainerDataSource();
+		Collection<T> itemIds = containerDataSource.getItemIds();
+		return itemIds;
+	}
+
+	@Override
+	public int currentViewCount() {
+		return currentViewCount;
+	}
+
+	@Override
+	public int totalItemsCount() {
+		return totalCount;
+	}
+
+	@Override
+	public void addPagableHandler(PagableHandler handler) {
+		if (pagableHandlers == null) {
+			pagableHandlers = new HashSet<PagableHandler>();
+		}
+		pagableHandlers.add(handler);
+
 	}
 }

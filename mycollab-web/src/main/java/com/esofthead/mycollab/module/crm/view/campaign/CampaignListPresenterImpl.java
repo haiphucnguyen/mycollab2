@@ -45,7 +45,7 @@ public class CampaignListPresenterImpl extends
 				new SelectionOptionHandler() {
 
 					@Override
-					public void onSelect() {
+					public void onSelectCurrentPage() {
 						selectionModel.addSelections(currentListData);
 
 						for (SimpleCampaign campaign : selectionModel) {
@@ -68,6 +68,12 @@ public class CampaignListPresenterImpl extends
 
 						checkWhetherEnableTableActionControl();
 
+					}
+
+					@Override
+					public void onSelectAll() {
+						// TODO Auto-generated method stub
+						
 					}
 				});
 

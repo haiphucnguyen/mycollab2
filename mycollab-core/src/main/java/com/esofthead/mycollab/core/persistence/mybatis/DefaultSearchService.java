@@ -26,4 +26,11 @@ public abstract class DefaultSearchService<S extends SearchCriteria> implements
 						* searchRequest.getNumberOfItems(), searchRequest
 						.getNumberOfItems()));
 	}
+
+	@Override
+	public void removeByCriteria(S criteria) {
+		getSearchMapper().removeByCriteria(criteria);
+
+	}
+
 }

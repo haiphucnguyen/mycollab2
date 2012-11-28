@@ -146,7 +146,7 @@ public class CampaignListViewImpl extends AbstractView implements
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 
-		selectOptionButton = new SelectionOptionButton();
+		selectOptionButton = new SelectionOptionButton(tableItem);
 		layout.addComponent(selectOptionButton);
 
 		tableActionControls = new PopupButtonControl("delete", "Delete");

@@ -211,4 +211,10 @@ public class SecurityServiceImpl implements SecurityService {
 		return roleService.findByRoleName(accountid, rolename);
 	}
 
+	@Override
+	public void removeByCriteria(UserSearchCriteria criteria) {
+		// TODO Auto-generated method stub
+		
+	}
+
 }

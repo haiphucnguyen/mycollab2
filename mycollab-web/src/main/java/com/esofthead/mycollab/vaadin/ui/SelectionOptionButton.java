@@ -5,6 +5,7 @@ import java.util.Set;
 
 import org.vaadin.hene.splitbutton.SplitButton;
 
+import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.vaadin.terminal.Resource;
@@ -13,10 +14,15 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
-public class SelectionOptionButton extends SplitButton implements HasSelectionOptionHandlers{
+public class SelectionOptionButton extends SplitButton implements
+		HasSelectionOptionHandlers {
 	private static final long serialVersionUID = 1L;
+	
+	private boolean isSelectAll = false;
 
 	private boolean isSelected = false;
+
+	private HasSelectableItemHandlers selectableItemHandlers;
 
 	private static Resource selectIcon = new ThemeResource(
 			"icons/16/checkbox.png");
@@ -26,57 +32,115 @@ public class SelectionOptionButton extends SplitButton implements HasSelectionOp
 
 	private Set<SelectionOptionHandler> handlers;
 
+	private ButtonLink selectAllBtn;
+
+	private ButtonLink selectThisPageBtn;
+
+	private ButtonLink deSelectBtn;
+
 	@SuppressWarnings("serial")
-	public SelectionOptionButton() {
+	public SelectionOptionButton(
+			HasSelectableItemHandlers selectableItemHandlers) {
 		super();
+		this.selectableItemHandlers = selectableItemHandlers;
 		this.addStyleName(SplitButton.STYLE_CHAMELEON);
 		this.setIcon(unSelectIcon);
 
 		this.addClickListener(new SplitButtonClickListener() {
 			public void splitButtonClick(SplitButtonClickEvent event) {
-				isSelected = !isSelected;
-				changeOption();
+				toogleChangeOption();
+			}
+		});
+
+		this.addPopupVisibilityListener(new SplitButtonPopupVisibilityListener() {
+
+			@Override
+			public void splitButtonPopupVisibilityChange(
+					SplitButtonPopupVisibilityEvent event) {
+				if (event.isPopupVisible()) {
+					selectAllBtn.setCaption("Select All ("
+							+ SelectionOptionButton.this.selectableItemHandlers
+									.totalItemsCount() + ")");
+
+					selectThisPageBtn.setCaption("Select This Page ("
+							+ SelectionOptionButton.this.selectableItemHandlers
+									.currentViewCount() + ")");
+				}
 			}
 		});
 
 		VerticalLayout selectContent = new VerticalLayout();
-		selectContent.setWidth("100px");
+		selectContent.setWidth("150px");
 
-		ButtonLink selectAllBtn = new ButtonLink("Select All",
-				new Button.ClickListener() {
+		selectAllBtn = new ButtonLink("", new Button.ClickListener() {
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						isSelected = true;
-						changeOption();
-					}
-				});
+			@Override
+			public void buttonClick(ClickEvent event) {
+				isSelectAll = true;
+				fireSelectAll();
+			}
+		});
 		selectContent.addComponent(selectAllBtn);
 
-		ButtonLink deSelectBtn = new ButtonLink("Deselect All",
+		selectThisPageBtn = new ButtonLink("", new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				fireSelectCurrentPage();
+			}
+		});
+		selectContent.addComponent(selectThisPageBtn);
+
+		deSelectBtn = new ButtonLink("Deselect All",
 				new Button.ClickListener() {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						isSelected = false;
-						changeOption();
+						isSelectAll = false;
+						fireDeselect();
 					}
 				});
 		selectContent.addComponent(deSelectBtn);
 		this.setComponent(selectContent);
 	}
 
-	private void changeOption() {
+	private void toogleChangeOption() {
+		if (isSelectAll) {
+			return;
+		}
+		
+		isSelected = !isSelected;
 		Resource icon = (isSelected) ? selectIcon : unSelectIcon;
 		SelectionOptionButton.this.setIcon(icon);
-		
+
+		if (isSelected) {
+			fireSelectCurrentPage();
+		} else {
+			fireDeselect();
+		}
+	}
+
+	private void fireSelectCurrentPage() {
 		if (handlers != null) {
 			for (SelectionOptionHandler handler : handlers) {
-				if (isSelected) {
-					handler.onSelect();
-				} else {
-					handler.onDeSelect();
-				}
+				handler.onSelectCurrentPage();
+			}
+		}
+	}
+
+	private void fireSelectAll() {
+		if (handlers != null) {
+			for (SelectionOptionHandler handler : handlers) {
+				handler.onSelectAll();
+			}
+		}
+
+	}
+
+	private void fireDeselect() {
+		if (handlers != null) {
+			for (SelectionOptionHandler handler : handlers) {
+				handler.onDeSelect();
 			}
 		}
 	}

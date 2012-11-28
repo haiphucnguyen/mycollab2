@@ -47,7 +47,7 @@ public class OpportunityListPresenterImpl extends
 				new SelectionOptionHandler() {
 
 					@Override
-					public void onSelect() {
+					public void onSelectCurrentPage() {
 						selectionModel.addSelections(currentListData);
 
 						for (SimpleOpportunity opportunity : selectionModel) {
@@ -70,6 +70,12 @@ public class OpportunityListPresenterImpl extends
 
 						checkWhetherEnableTableActionControl();
 
+					}
+
+					@Override
+					public void onSelectAll() {
+						// TODO Auto-generated method stub
+						
 					}
 				});
 

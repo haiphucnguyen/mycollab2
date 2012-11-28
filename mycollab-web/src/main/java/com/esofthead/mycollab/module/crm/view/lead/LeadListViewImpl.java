@@ -142,7 +142,7 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
 
-		selectOptionButton = new SelectionOptionButton();
+		selectOptionButton = new SelectionOptionButton(tableItem);
 		layout.addComponent(selectOptionButton);
 
 		tableActionControls = new PopupButtonControl("delete", "Delete");
