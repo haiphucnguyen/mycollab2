@@ -1,16 +1,26 @@
 package com.esofthead.mycollab.shell;
 
+import java.util.Calendar;
+import java.util.Date;
+
+import org.vaadin.browsercookies.BrowserCookies;
+
+import com.esofthead.mycollab.module.user.presenter.LoginPresenter;
+import com.esofthead.mycollab.module.user.view.LoginView;
+import com.esofthead.mycollab.module.user.view.LoginViewImpl;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent.GotoMainPage;
+import com.esofthead.mycollab.shell.events.ShellEvent.LogOut;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 
 public class ShellController {
 
-	private ComponentContainer container;
+	private final ComponentContainer container;
 
 	public ShellController(ComponentContainer container) {
 		this.container = container;
@@ -22,6 +32,8 @@ public class ShellController {
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ShellEvent.GotoMainPage>() {
 
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
 						return ShellEvent.GotoMainPage.class;
@@ -30,9 +42,48 @@ public class ShellController {
 					@Override
 					public void handle(GotoMainPage event) {
 						System.out.println("Go to main page");
-						
-						((Window)container).setContent(new MainViewImpl());
+						Calendar cal = Calendar.getInstance();
+						cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
+						Date expiryDate = cal.getTime();
+						BrowserCookies cookies = new BrowserCookies();
+						MainViewImpl mainView = new MainViewImpl();
+						mainView.addComponent(cookies);
+						cookies.setCookie("loginInfo", AppContext.getUsername()
+								+ "$" + AppContext.getSession().getPassword(),
+								expiryDate);
+
+						((Window) container).setContent(mainView);
 					}
 				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ShellEvent.LogOut>() {
+
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ShellEvent.LogOut.class;
+					}
+
+					@Override
+					public void handle(LogOut event) {
+						System.out.println("Logged out");
+						Calendar cal = Calendar.getInstance();
+						cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) - 1);
+						Date expiryDate = cal.getTime();
+						BrowserCookies cookies = new BrowserCookies();
+						LoginView loginView = new LoginViewImpl();
+						((MainWindowContainer) AppContext.getApplication()
+								.getMainWindow()).presenter = new LoginPresenter(
+								loginView);
+						((LoginViewImpl) loginView).addComponent(cookies);
+						cookies.setCookie("loginInfo", "", expiryDate);
+
+						((Window) container).setContent(loginView.getWidget());
+					}
+
+				});
 	}
+
 }
