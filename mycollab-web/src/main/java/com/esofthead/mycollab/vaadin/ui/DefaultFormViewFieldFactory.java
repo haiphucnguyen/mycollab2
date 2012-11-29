@@ -16,22 +16,30 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 	@Override
 	public Field createField(Item item, Object propertyId,
 			com.vaadin.ui.Component uiContext) {
-		Object bean = ((BeanItem<Object>) item).getBean();
-		FormViewField field;
+		
+		Field field = onCreateField(item, propertyId, uiContext);
+		if (field == null) {
+			Object bean = ((BeanItem<Object>) item).getBean();
 
-		try {
-			String propertyValue = BeanUtils.getProperty(bean,
-					(String) propertyId);
-			field = new FormViewField(propertyValue);
-		} catch (Exception e) {
-			e.printStackTrace();
-			field = new FormViewField("Error");
+			try {
+				String propertyValue = BeanUtils.getProperty(bean,
+						(String) propertyId);
+				field = new FormViewField(propertyValue);
+			} catch (Exception e) {
+				e.printStackTrace();
+				field = new FormViewField("Error");
+			}
 		}
 
 		return field;
 	}
+	
+	protected Field onCreateField(Item item, Object propertyId,
+			com.vaadin.ui.Component uiContext) {
+		return null;
+	}
 
-	private class FormViewField extends CustomField {
+	public static class FormViewField extends CustomField {
 		private static final long serialVersionUID = 1L;
 
 		public FormViewField(String value) {

@@ -17,19 +17,15 @@
  */
 package com.esofthead.mycollab.module.crm.domain;
 
+
 public class SimpleContact extends Contact {
-	private String contactName;
 
 	private String accountName;
 
 	private String assignUserFullName;
 
 	public String getContactName() {
-		return contactName;
-	}
-
-	public void setContactName(String contactName) {
-		this.contactName = contactName;
+		return getFirstname() + " " + getLastname();
 	}
 
 	public String getAccountName() {

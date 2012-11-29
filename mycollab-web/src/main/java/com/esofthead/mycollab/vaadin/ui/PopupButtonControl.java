@@ -25,6 +25,8 @@ public class PopupButtonControl extends SplitButton implements HasPopupActionHan
 		this.setData(id);
 
 		this.addClickListener(new SplitButtonClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			public void splitButtonClick(SplitButtonClickEvent event) {
 				changeOption(id, defaultName);
 			}
@@ -38,6 +40,7 @@ public class PopupButtonControl extends SplitButton implements HasPopupActionHan
 	public void addOptionItem(final String id, final String name) {
 		ButtonLink selectAllBtn = new ButtonLink(name,
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(ClickEvent event) {

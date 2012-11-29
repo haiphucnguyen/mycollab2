@@ -23,6 +23,9 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 	private HorizontalLayout layout;
 
 	private TextField accountName;
+
+	private SimpleAccount account;
+
 	private Embedded browseBtn;
 	private Embedded clearBtn;
 
@@ -36,6 +39,7 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 		layout.setSpacing(true);
 
 		accountName = new TextField();
+		accountName.setEnabled(true);
 		layout.addComponent(accountName);
 		layout.setComponentAlignment(accountName, Alignment.MIDDLE_LEFT);
 
@@ -43,7 +47,7 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 				"icons/16/browseItem.png"));
 		layout.addComponent(browseBtn);
 		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
-		
+
 		browseBtn.addListener(new MouseEvents.ClickListener() {
 
 			@Override
@@ -56,9 +60,9 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 			}
 		});
 
-		clearBtn = new Embedded(null, new ThemeResource("icons/16/clearItem.png"));
-		
-		
+		clearBtn = new Embedded(null, new ThemeResource(
+				"icons/16/clearItem.png"));
+
 		clearBtn.addListener(new MouseEvents.ClickListener() {
 
 			@Override
@@ -92,9 +96,14 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 		});
 	}
 
+	public void setAccount(SimpleAccount account) {
+		this.account = account;
+		accountName.setValue(account.getAccountname());
+	}
+
 	@Override
 	public void fireValueChange(Object data) {
-		Account account = (Account) data;
+		account = (SimpleAccount) data;
 		if (account != null) {
 			accountName.setValue(account.getAccountname());
 			this.getWrappedField().setValue(account.getId());

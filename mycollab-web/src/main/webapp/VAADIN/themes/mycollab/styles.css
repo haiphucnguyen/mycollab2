@@ -641,3 +641,7 @@ input.v-textfield-errorField {
     background: -webkit-gradient(linear, left top, left bottom, from(#20d4ff), to(#009cd0)) top left repeat-x;
 }
 /*End wizard*/
+
+.v-table-cell-wrapper {
+white-space: normal;
+}

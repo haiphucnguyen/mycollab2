@@ -28,7 +28,7 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 		organizationHeader.setStyleName("h2");
 		layout.addComponent(organizationHeader);
 
-		informationLayout = new GridFormLayoutHelper(2, 7);
+		informationLayout = new GridFormLayoutHelper(2, 8);
 		informationLayout.getLayout().setWidth("900px");
 		layout.addComponent(informationLayout.getLayout());
 
@@ -69,21 +69,25 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 				"Lead Source", 0, 5);
 		informationLayout.addComponent(propertyId.equals("industry"), field,
 				"Industry", 0, 6);
+		informationLayout.addComponent(propertyId.equals("noemployees"), field,
+				"No of Employees", 0, 7);
 
+		informationLayout.addComponent(propertyId.equals("email"), field,
+				"Email", 1, 0);
 		informationLayout.addComponent(propertyId.equals("officephone"), field,
-				"Office Phone", 1, 0);
+				"Office Phone", 1, 1);
 		informationLayout.addComponent(propertyId.equals("mobile"), field,
-				"Mobile", 1, 1);
+				"Mobile", 1, 2);
 		informationLayout.addComponent(propertyId.equals("otherphone"), field,
-				"Other Phone", 1, 2);
+				"Other Phone", 1, 3);
 		informationLayout.addComponent(propertyId.equals("fax"), field, "Fax",
-				1, 3);
+				1, 4);
 		informationLayout.addComponent(propertyId.equals("website"), field,
-				"Web Site", 1, 4);
+				"Web Site", 1, 5);
 		informationLayout.addComponent(propertyId.equals("status"), field,
-				"Status", 1, 5);
+				"Status", 1, 6);
 		informationLayout.addComponent(propertyId.equals("assignuser"), field,
-				"Assigned User", 1, 6);
+				"Assigned User", 1, 7);
 
 		addressLayout.addComponent(propertyId.equals("primaddress"), field,
 				"Address", 0, 0);

@@ -7,7 +7,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext.TransactionListener;
