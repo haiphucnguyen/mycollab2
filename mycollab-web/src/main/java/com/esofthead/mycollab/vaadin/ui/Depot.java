@@ -13,12 +13,13 @@ public class Depot extends VerticalLayout {
 
 	private boolean isOpenned = true;
 
-	private HorizontalLayout header;
+	protected HorizontalLayout header;
 
-	private CustomComponent content;
+	protected Component content;
 
 	public Depot(String title, Component component) {
 		header = new HorizontalLayout();
+		this.content = component;
 		this.addComponent(header);
 
 		header.addComponent(new Label(title));
@@ -28,14 +29,14 @@ public class Depot extends VerticalLayout {
 			public void layoutClick(LayoutClickEvent event) {
 				isOpenned = !isOpenned;
 				if (isOpenned) {
-					content.setSizeUndefined();
+					content.setHeight("100%");
 				} else {
 					content.setHeight("0px");
 				}
 			}
 		});
 
-		content = new CustomComponent(component);
-		this.addComponent(content);
+		CustomComponent customComp = new CustomComponent(component);
+		this.addComponent(customComp);
 	}
 }
