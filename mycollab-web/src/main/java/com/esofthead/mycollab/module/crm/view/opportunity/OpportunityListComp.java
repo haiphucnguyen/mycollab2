@@ -7,7 +7,6 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 
 public class OpportunityListComp extends Depot {
