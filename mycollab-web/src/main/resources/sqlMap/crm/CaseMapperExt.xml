@@ -169,6 +169,13 @@
 				refid="com.esofthead.mycollab.module.crm.dao.CaseMapperExt.queryTotalCountSearchCriteria" />
 		</trim>
 	</select>
+    
+    <delete id="removeByCriteria" parameterType="CaseSearchCriteria">
+        DELETE FROM m_crm_case
+        <if test="_parameter != null">
+            <include refid="com.esofthead.mycollab.module.crm.dao.CaseMapperExt.queryTotalCountSearchCriteria" />
+        </if>
+    </delete>
 
 	<select id="findPagableListByCriteria" resultMap="SimpleCaseResult"
 		parameterType="CaseSearchCriteria">

@@ -1,16 +1,18 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.utils.SelectionModel;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListView.LeadListPresenter;
+import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
@@ -24,14 +26,33 @@ public class LeadListPresenterImpl extends CrmGenericPresenter<LeadListView>
 	private LeadService leadService;
 
 	private LeadSearchCriteria searchCriteria;
+	
+	private boolean isSelectAll = false;
 
-	private List<SimpleLead> currentListData = new ArrayList<SimpleLead>();
-
-	private SelectionModel<SimpleLead> selectionModel = new SelectionModel<SimpleLead>();
-
-	public LeadListPresenterImpl(LeadListView view) {
+	public LeadListPresenterImpl(final LeadListView view) {
 		this.view = view;
 		leadService = AppContext.getSpringBean(LeadService.class);
+		
+		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+
+			@Override
+			public void move(int newPageNumber) {
+				pageChange();
+			}
+
+			@Override
+			public void displayItemChange(int numOfItems) {
+				pageChange();
+			}
+			
+			private void pageChange() {
+				if (isSelectAll) {
+					selectAllItemsInCurrentPage();
+				}
+				
+				checkWhetherEnableTableActionControl();
+			}
+		});
 
 		view.getSearchHandlers().addSearchHandler(
 				new SearchHandler<LeadSearchCriteria>() {
@@ -47,32 +68,31 @@ public class LeadListPresenterImpl extends CrmGenericPresenter<LeadListView>
 
 					@Override
 					public void onSelectCurrentPage() {
-						selectionModel.addSelections(currentListData);
-
-						for (SimpleLead lead : selectionModel) {
-							CheckBox checkBox = (CheckBox) lead.getExtraData();
-							checkBox.setValue(true);
-						}
+						isSelectAll = false;
+						selectAllItemsInCurrentPage();
 
 						checkWhetherEnableTableActionControl();
 					}
 
 					@Override
 					public void onDeSelect() {
-						selectionModel.removeAll();
-						for (SimpleLead lead : currentListData) {
-							CheckBox checkBox = (CheckBox) lead.getExtraData();
+						Collection<SimpleLead> currentDataList = view
+								.getPagedBeanTable().getCurrentDataList();
+						isSelectAll = false;
+						for (SimpleLead item : currentDataList) {
+							item.setSelected(false);
+							CheckBox checkBox = (CheckBox) item
+									.getExtraData();
 							checkBox.setValue(false);
 						}
 
 						checkWhetherEnableTableActionControl();
-
 					}
 
 					@Override
 					public void onSelectAll() {
-						// TODO Auto-generated method stub
-						
+						isSelectAll = true;
+						selectAllItemsInCurrentPage();
 					}
 				});
 
@@ -91,21 +111,36 @@ public class LeadListPresenterImpl extends CrmGenericPresenter<LeadListView>
 			
 			@Override
 			public void onSelect(SimpleLead item) {
-				if (selectionModel.isSelected(item)) {
-					selectionModel.removeSelection(item);
-				} else {
-					selectionModel.addSelection(item);
-				}
+				isSelectAll = false;
+				item.setSelected(!item.isSelected());
 
 				checkWhetherEnableTableActionControl();
 				
 			}
 		});
 	}
+	
+	private void selectAllItemsInCurrentPage() {
+		Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
+				.getCurrentDataList();
+		for (SimpleLead item : currentDataList) {
+			item.setSelected(true);
+			CheckBox checkBox = (CheckBox) item.getExtraData();
+			checkBox.setValue(true);
+		}
+	}
 
 	private void checkWhetherEnableTableActionControl() {
-		if (selectionModel.size() > 0) {
-			view.enableActionControls(selectionModel.size());
+		Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
+				.getCurrentDataList();
+		int countItems = 0;
+		for (SimpleLead item : currentDataList) {
+			if (item.isSelected()) {
+				countItems++;
+			}
+		}
+		if (countItems > 0) {
+			view.enableActionControls(countItems);
 		} else {
 			view.disableActionControls();
 		}
@@ -126,13 +161,21 @@ public class LeadListPresenterImpl extends CrmGenericPresenter<LeadListView>
 	}
 
 	private void deleteSelectedItems() {
-		List<Integer> keyList = new ArrayList<Integer>();
-		for (SimpleLead lead : selectionModel) {
-			keyList.add(lead.getId());
-		}
+		if (!isSelectAll) {
+			Collection<SimpleLead> currentDataList = view
+					.getPagedBeanTable().getCurrentDataList();
+			List<Integer> keyList = new ArrayList<Integer>();
+			for (SimpleLead item : currentDataList) {
+				keyList.add(item.getId());
+			}
 
-		if (keyList.size() > 0) {
-			leadService.removeWithSession(keyList, AppContext.getUsername());
+			if (keyList.size() > 0) {
+				leadService.removeWithSession(keyList,
+						AppContext.getUsername());
+				doSearch(searchCriteria);
+			}
+		} else {
+			leadService.removeByCriteria(searchCriteria);
 			doSearch(searchCriteria);
 		}
 	}

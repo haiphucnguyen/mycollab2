@@ -301,6 +301,13 @@
 		</trim>
 	</select>
     
+    <delete id="removeByCriteria" parameterType="NoteSearchCriteria">
+        DELETE FROM m_crm_note
+        <if test="_parameter != null">
+            <include refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.queryTotalCountSearchCriteria" />
+        </if>
+    </delete>
+    
     <sql id="orderStatement">
         ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[

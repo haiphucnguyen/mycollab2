@@ -1,16 +1,17 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.utils.SelectionModel;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListView.OpportunityListPresenter;
+import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
@@ -26,13 +27,32 @@ public class OpportunityListPresenterImpl extends
 
 	private OpportunitySearchCriteria searchCriteria;
 
-	private List<SimpleOpportunity> currentListData = new ArrayList<SimpleOpportunity>();
+	private boolean isSelectAll = false;
 
-	private SelectionModel<SimpleOpportunity> selectionModel = new SelectionModel<SimpleOpportunity>();
-
-	public OpportunityListPresenterImpl(OpportunityListView view) {
+	public OpportunityListPresenterImpl(final OpportunityListView view) {
 		this.view = view;
 		opportunityService = AppContext.getSpringBean(OpportunityService.class);
+
+		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+
+			@Override
+			public void move(int newPageNumber) {
+				pageChange();
+			}
+
+			@Override
+			public void displayItemChange(int numOfItems) {
+				pageChange();
+			}
+
+			private void pageChange() {
+				if (isSelectAll) {
+					selectAllItemsInCurrentPage();
+				}
+
+				checkWhetherEnableTableActionControl();
+			}
+		});
 
 		view.getSearchHandlers().addSearchHandler(
 				new SearchHandler<OpportunitySearchCriteria>() {
@@ -48,34 +68,30 @@ public class OpportunityListPresenterImpl extends
 
 					@Override
 					public void onSelectCurrentPage() {
-						selectionModel.addSelections(currentListData);
-
-						for (SimpleOpportunity opportunity : selectionModel) {
-							CheckBox checkBox = (CheckBox) opportunity
-									.getExtraData();
-							checkBox.setValue(true);
-						}
+						isSelectAll = false;
+						selectAllItemsInCurrentPage();
 
 						checkWhetherEnableTableActionControl();
 					}
 
 					@Override
 					public void onDeSelect() {
-						selectionModel.removeAll();
-						for (SimpleOpportunity opportunity : currentListData) {
-							CheckBox checkBox = (CheckBox) opportunity
-									.getExtraData();
+						Collection<SimpleOpportunity> currentDataList = view
+								.getPagedBeanTable().getCurrentDataList();
+						isSelectAll = false;
+						for (SimpleOpportunity item : currentDataList) {
+							item.setSelected(false);
+							CheckBox checkBox = (CheckBox) item.getExtraData();
 							checkBox.setValue(false);
 						}
 
 						checkWhetherEnableTableActionControl();
-
 					}
 
 					@Override
 					public void onSelectAll() {
-						// TODO Auto-generated method stub
-						
+						isSelectAll = true;
+						selectAllItemsInCurrentPage();
 					}
 				});
 
@@ -95,20 +111,35 @@ public class OpportunityListPresenterImpl extends
 
 					@Override
 					public void onSelect(SimpleOpportunity item) {
-						if (selectionModel.isSelected(item)) {
-							selectionModel.removeSelection(item);
-						} else {
-							selectionModel.addSelection(item);
-						}
+						isSelectAll = false;
+						item.setSelected(!item.isSelected());
 
 						checkWhetherEnableTableActionControl();
 					}
 				});
 	}
 
+	private void selectAllItemsInCurrentPage() {
+		Collection<SimpleOpportunity> currentDataList = view
+				.getPagedBeanTable().getCurrentDataList();
+		for (SimpleOpportunity item : currentDataList) {
+			item.setSelected(true);
+			CheckBox checkBox = (CheckBox) item.getExtraData();
+			checkBox.setValue(true);
+		}
+	}
+
 	private void checkWhetherEnableTableActionControl() {
-		if (selectionModel.size() > 0) {
-			view.enableActionControls(selectionModel.size());
+		Collection<SimpleOpportunity> currentDataList = view
+				.getPagedBeanTable().getCurrentDataList();
+		int countItems = 0;
+		for (SimpleOpportunity item : currentDataList) {
+			if (item.isSelected()) {
+				countItems++;
+			}
+		}
+		if (countItems > 0) {
+			view.enableActionControls(countItems);
 		} else {
 			view.disableActionControls();
 		}
@@ -129,14 +160,21 @@ public class OpportunityListPresenterImpl extends
 	}
 
 	private void deleteSelectedItems() {
-		List<Integer> keyList = new ArrayList<Integer>();
-		for (SimpleOpportunity opportunity : selectionModel) {
-			keyList.add(opportunity.getId());
-		}
+		if (!isSelectAll) {
+			Collection<SimpleOpportunity> currentDataList = view
+					.getPagedBeanTable().getCurrentDataList();
+			List<Integer> keyList = new ArrayList<Integer>();
+			for (SimpleOpportunity item : currentDataList) {
+				keyList.add(item.getId());
+			}
 
-		if (keyList.size() > 0) {
-			opportunityService.removeWithSession(keyList,
-					AppContext.getUsername());
+			if (keyList.size() > 0) {
+				opportunityService.removeWithSession(keyList,
+						AppContext.getUsername());
+				doSearch(searchCriteria);
+			}
+		} else {
+			opportunityService.removeByCriteria(searchCriteria);
 			doSearch(searchCriteria);
 		}
 	}

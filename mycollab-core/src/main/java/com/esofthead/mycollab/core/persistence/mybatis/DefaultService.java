@@ -1,13 +1,17 @@
 package com.esofthead.mycollab.core.persistence.mybatis;
 
+import java.beans.PropertyDescriptor;
 import java.io.Serializable;
 import java.util.GregorianCalendar;
 import java.util.List;
 
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.ibatis.session.RowBounds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.IDefaultService;
@@ -15,6 +19,8 @@ import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 
 public abstract class DefaultService<K extends Serializable, T, S extends SearchCriteria>
 		implements IDefaultService<K, T, S> {
+
+	private static Logger log = LoggerFactory.getLogger(DefaultService.class);
 
 	public abstract ICrudGenericDAO<K, T> getCrudMapper();
 
@@ -99,7 +105,27 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 
 	@Override
 	public void removeByCriteria(S criteria) {
-		getSearchMapper().removeByCriteria(criteria);
+		boolean isValid = false;
+		try {
+			PropertyDescriptor[] propertyDescriptors = PropertyUtils
+					.getPropertyDescriptors(criteria);
+			
+			for (PropertyDescriptor descriptor : propertyDescriptors) {
+				String propName = descriptor.getName();
+				if ((descriptor.getPropertyType().getGenericSuperclass() == SearchField.class)
+						&& (PropertyUtils.getProperty(criteria, propName) != null)) {
+					isValid = true;
+					break;
+				}
+
+			}
+		} catch (Exception e) {
+			log.debug("Error while validating criteria", e);
+		}
+		if (isValid) {
+			getSearchMapper().removeByCriteria(criteria);
+		}
+		
 	}
 
 	@Override

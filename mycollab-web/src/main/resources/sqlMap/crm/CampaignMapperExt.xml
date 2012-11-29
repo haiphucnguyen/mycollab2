@@ -141,6 +141,13 @@
 				refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.queryTotalCountSearchCriteria" />
 		</trim>
 	</select>
+    
+    <delete id="removeByCriteria" parameterType="CampaignSearchCriteria">
+        DELETE FROM m_crm_campaign
+        <if test="_parameter != null">
+            <include refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.queryTotalCountSearchCriteria" />
+        </if>
+    </delete>
 
 	<sql id="selectSimpleCampaign">
         <![CDATA[

@@ -242,6 +242,13 @@
         </trim>
     </select>
     
+    <delete id="removeByCriteria" parameterType="QuoteSearchCriteria">
+        DELETE FROM m_crm_quote
+        <if test="_parameter != null">
+            <include refid="com.esofthead.mycollab.module.crm.dao.QuoteMapperExt.queryTotalCountSearchCriteria" />
+        </if>
+    </delete>
+    
     <sql id="orderStatement">
         ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[

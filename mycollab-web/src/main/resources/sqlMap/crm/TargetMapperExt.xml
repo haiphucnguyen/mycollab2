@@ -104,6 +104,13 @@
         </trim>
     </select>
     
+    <delete id="removeByCriteria" parameterType="TargetSearchCriteria">
+        DELETE FROM m_crm_target
+        <if test="_parameter != null">
+            <include refid="com.esofthead.mycollab.module.crm.dao.TargetMapperExt.queryTotalCountSearchCriteria" />
+        </if>
+    </delete>
+    
     <sql id="orderStatement">
         ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[

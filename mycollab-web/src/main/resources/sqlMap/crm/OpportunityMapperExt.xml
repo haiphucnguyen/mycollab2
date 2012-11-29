@@ -162,6 +162,13 @@
         </trim>
     </select>
     
+    <delete id="removeByCriteria" parameterType="OpportunitySearchCriteria">
+        DELETE FROM m_crm_opportunity
+        <if test="_parameter != null">
+            <include refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria" />
+        </if>
+    </delete>
+    
     <sql id="orderStatement">
         ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[

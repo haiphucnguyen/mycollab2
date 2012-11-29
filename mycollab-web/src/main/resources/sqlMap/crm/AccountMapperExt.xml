@@ -136,6 +136,13 @@
 				refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
 		</trim>
 	</select>
+    
+    <delete id="removeByCriteria" parameterType="AccountSearchCriteria">
+        DELETE FROM m_crm_account
+        <if test="_parameter != null">
+            <include refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
+        </if>
+    </delete>
 
 	<select id="findAccountById" parameterType="java.lang.Integer"
 		resultMap="SimpleAccountResult">

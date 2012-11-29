@@ -138,6 +138,13 @@
 		</trim>
 	</select>
     
+    <delete id="removeByCriteria" parameterType="TaskSearchCriteria">
+        DELETE FROM m_crm_task
+        <if test="_parameter != null">
+            <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.querySearchCriteria" />
+        </if>
+    </delete>
+    
     <sql id="orderStatement">
         ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[

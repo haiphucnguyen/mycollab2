@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountListView.AccountListPresenter;
+import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
@@ -31,6 +32,27 @@ public class AccountListPresenterImpl extends
 		this.view = view;
 		accountService = AppContext.getSpringBean(AccountService.class);
 
+		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+
+			@Override
+			public void move(int newPageNumber) {
+				pageChange();
+			}
+
+			@Override
+			public void displayItemChange(int numOfItems) {
+				pageChange();
+			}
+			
+			private void pageChange() {
+				if (isSelectAll) {
+					selectAllItemsInCurrentPage();
+				}
+				
+				checkWhetherEnableTableActionControl();
+			}
+		});
+
 		view.getSearchHandlers().addSearchHandler(
 				new SearchHandler<AccountSearchCriteria>() {
 
@@ -45,15 +67,8 @@ public class AccountListPresenterImpl extends
 
 					@Override
 					public void onSelectCurrentPage() {
-						Collection<SimpleAccount> currentDataList = view
-								.getPagedBeanTable().getCurrentDataList();
 						isSelectAll = false;
-						for (SimpleAccount account : currentDataList) {
-							account.setSelected(true);
-							CheckBox checkBox = (CheckBox) account
-									.getExtraData();
-							checkBox.setValue(true);
-						}
+						selectAllItemsInCurrentPage();
 
 						checkWhetherEnableTableActionControl();
 					}
@@ -63,9 +78,9 @@ public class AccountListPresenterImpl extends
 						Collection<SimpleAccount> currentDataList = view
 								.getPagedBeanTable().getCurrentDataList();
 						isSelectAll = false;
-						for (SimpleAccount account : currentDataList) {
-							account.setSelected(false);
-							CheckBox checkBox = (CheckBox) account
+						for (SimpleAccount item : currentDataList) {
+							item.setSelected(false);
+							CheckBox checkBox = (CheckBox) item
 									.getExtraData();
 							checkBox.setValue(false);
 						}
@@ -77,14 +92,7 @@ public class AccountListPresenterImpl extends
 					@Override
 					public void onSelectAll() {
 						isSelectAll = true;
-						Collection<SimpleAccount> currentDataList = view
-								.getPagedBeanTable().getCurrentDataList();
-						for (SimpleAccount account : currentDataList) {
-							account.setSelected(true);
-							CheckBox checkBox = (CheckBox) account
-									.getExtraData();
-							checkBox.setValue(true);
-						}
+						selectAllItemsInCurrentPage();
 					}
 				});
 
@@ -104,6 +112,7 @@ public class AccountListPresenterImpl extends
 
 					@Override
 					public void onSelect(SimpleAccount item) {
+						isSelectAll = false;
 						item.setSelected(!item.isSelected());
 
 						checkWhetherEnableTableActionControl();
@@ -111,12 +120,22 @@ public class AccountListPresenterImpl extends
 				});
 	}
 
+	private void selectAllItemsInCurrentPage() {
+		Collection<SimpleAccount> currentDataList = view.getPagedBeanTable()
+				.getCurrentDataList();
+		for (SimpleAccount item : currentDataList) {
+			item.setSelected(true);
+			CheckBox checkBox = (CheckBox) item.getExtraData();
+			checkBox.setValue(true);
+		}
+	}
+
 	private void checkWhetherEnableTableActionControl() {
 		Collection<SimpleAccount> currentDataList = view.getPagedBeanTable()
 				.getCurrentDataList();
 		int countItems = 0;
-		for (SimpleAccount account : currentDataList) {
-			if (account.isSelected()) {
+		for (SimpleAccount item : currentDataList) {
+			if (item.isSelected()) {
 				countItems++;
 			}
 		}
@@ -144,21 +163,23 @@ public class AccountListPresenterImpl extends
 
 	private void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleAccount> currentDataList = view.getPagedBeanTable()
-					.getCurrentDataList();
+			Collection<SimpleAccount> currentDataList = view
+					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
-			for (SimpleAccount account : currentDataList) {
-				keyList.add(account.getId());
+			for (SimpleAccount item : currentDataList) {
+				keyList.add(item.getId());
 			}
 
 			if (keyList.size() > 0) {
-				accountService.removeWithSession(keyList, AppContext.getUsername());
+				accountService.removeWithSession(keyList,
+						AppContext.getUsername());
 				doSearch(searchCriteria);
 			}
 		} else {
-			
+			accountService.removeByCriteria(searchCriteria);
+			doSearch(searchCriteria);
 		}
-		
+
 	}
 
 }
