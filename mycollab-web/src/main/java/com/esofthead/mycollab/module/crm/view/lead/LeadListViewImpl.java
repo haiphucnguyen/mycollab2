@@ -1,8 +1,11 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
@@ -17,6 +20,7 @@ import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -24,6 +28,7 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
@@ -114,8 +119,25 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 			}
 		});
 
+		tableItem.addGeneratedColumn("email", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			@SuppressWarnings("unchecked")
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				final SimpleLead lead = ((PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>) source)
+						.getBeanByIndex(itemId);
+				Link l = new Link();
+				l.setResource(new ExternalResource("mailto:" + lead.getEmail()));
+				l.setCaption(lead.getEmail());
+				return l;
+
+			}
+		});
+
 		tableItem.setWidth("100%");
-		
+
 		tableItem.setColumnExpandRatio("leadName", 1.0f);
 
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);

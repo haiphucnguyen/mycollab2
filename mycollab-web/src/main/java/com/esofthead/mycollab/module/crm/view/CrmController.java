@@ -5,6 +5,7 @@ import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoRead;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
@@ -259,7 +260,7 @@ public class CrmController {
 						view.addNewItem();
 					}
 				});
-		
+
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ContactEvent.GotoEdit>() {
 
@@ -289,7 +290,8 @@ public class CrmController {
 					public void handle(ContactEvent.GotoRead event) {
 						ContactReadView view = ViewManager
 								.getView(ContactReadViewImpl.class);
-						Contact campaign = (Contact) event.getData();
+						SimpleContact campaign = (SimpleContact) event
+								.getData();
 						new ContactReadPresenter(view).go(container);
 						view.displayItem(campaign);
 					}
@@ -333,7 +335,7 @@ public class CrmController {
 						view.addNewItem();
 					}
 				});
-		
+
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<LeadEvent.GotoEdit>() {
 
@@ -407,7 +409,7 @@ public class CrmController {
 						view.addNewItem();
 					}
 				});
-		
+
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<OpportunityEvent.GotoEdit>() {
 
