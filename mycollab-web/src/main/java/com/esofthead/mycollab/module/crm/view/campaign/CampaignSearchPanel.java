@@ -1,9 +1,13 @@
-package com.esofthead.mycollab.module.crm.ui.components;
+package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
-import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
+import com.esofthead.mycollab.module.crm.ui.components.BasicSearchLayout;
+import com.esofthead.mycollab.module.crm.ui.components.GenericSearchPanel;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -16,6 +20,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -23,26 +28,27 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-public class OpportunitySearchPanel extends
-		GenericSearchPanel<OpportunitySearchCriteria> {
-	protected OpportunitySearchCriteria searchCriteria;
+public class CampaignSearchPanel extends
+		GenericSearchPanel<CampaignSearchCriteria> {
+	protected CampaignSearchCriteria searchCriteria;
 
-	public OpportunitySearchPanel() {
-		searchCriteria = new OpportunitySearchCriteria();
+	public CampaignSearchPanel() {
+		searchCriteria = new CampaignSearchCriteria();
 	}
 
 	@Override
 	public void attach() {
+		super.attach();
 		createBasicSearchLayout();
 	}
 
 	private void createBasicSearchLayout() {
-		OpportunityBasicSearchLayout layout = new OpportunityBasicSearchLayout();
+		CampaignBasicSearchLayout layout = new CampaignBasicSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
 	private void createAdvancedSearchLayout() {
-		OpportunityAdvancedSearchLayout layout = new OpportunityAdvancedSearchLayout();
+		CampaignAdvancedSearchLayout layout = new CampaignAdvancedSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
@@ -51,19 +57,18 @@ public class OpportunitySearchPanel extends
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search");
+		Label searchtitle = new Label("Search Campaigns");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 
 		Button createAccountBtn = new Button("Create",
 				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(ClickEvent event) {
 						EventBus.getInstance().fireEvent(
-								new OpportunityEvent.GotoAdd(
-										OpportunitySearchPanel.this, null));
+								new CampaignEvent.GotoAdd(this, null));
+
 					}
 				});
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
@@ -74,13 +79,11 @@ public class OpportunitySearchPanel extends
 		return layout;
 	}
 
-	private class OpportunityBasicSearchLayout extends BasicSearchLayout {
-		private static final long serialVersionUID = 1L;
-
+	private class CampaignBasicSearchLayout extends BasicSearchLayout {
 		private TextField nameField;
 		private CheckBox myItemCheckbox;
 
-		public OpportunityBasicSearchLayout() {
+		public CampaignBasicSearchLayout() {
 			super();
 		}
 
@@ -101,23 +104,22 @@ public class OpportunitySearchPanel extends
 			UiUtils.addComponent(layout, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			layout.addComponent(new Button("Search Opportunities",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+			this.addComponent(new Button("Search", new Button.ClickListener() {
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							searchCriteria = new OpportunitySearchCriteria();
-							searchCriteria.setSaccountid(new NumberSearchField(
-									SearchField.AND, AppContext.getAccountId()));
-							OpportunitySearchPanel.this
-									.notifySearchHandler(searchCriteria);
-						}
-					}));
+				@Override
+				public void buttonClick(ClickEvent event) {
+					searchCriteria = new CampaignSearchCriteria();
+					searchCriteria.setSaccountid(new NumberSearchField(
+							SearchField.AND, AppContext.getAccountId()));
+					searchCriteria.setCampaignName(new StringSearchField(
+							SearchField.AND, (String) nameField.getValue()));
+					CampaignSearchPanel.this
+							.notifySearchHandler(searchCriteria);
+				}
+			}));
 
 			layout.addComponent(new Button("Cancel",
 					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(ClickEvent event) {
@@ -127,11 +129,10 @@ public class OpportunitySearchPanel extends
 
 			Button advancedSearchBtn = new Button("Advanced Search",
 					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							OpportunitySearchPanel.this
+							CampaignSearchPanel.this
 									.createAdvancedSearchLayout();
 						}
 					});
@@ -142,52 +143,49 @@ public class OpportunitySearchPanel extends
 		}
 	}
 
-	private class OpportunityAdvancedSearchLayout extends AdvancedSearchLayout {
-		private static final long serialVersionUID = 1L;
+	private class CampaignAdvancedSearchLayout extends AdvancedSearchLayout {
 
-		private TextField opportunityNameField;
-		private AccountSelectionField accountField;
-		private TextField nextStepField;
-		private UserListSelect userField;
-		private SalesStageListSelect stageField;
-		private LeadSourceListSelect sourceField;
+		private TextField nameField;
+		private DateField startDateField;
+		private DateField endDateField;
+		private CampaignTypeListSelect typeField;
+		private CampaignStatusListSelect statusField;
+		private UserListSelect assignUserField;
 
-		public OpportunityAdvancedSearchLayout() {
+		public CampaignAdvancedSearchLayout() {
 			super();
 		}
 
 		@Override
-		ComponentContainer constructHeader() {
+		public ComponentContainer constructHeader() {
 			return createSearchTopPanel();
 		}
 
 		@Override
-		ComponentContainer constructBody() {
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 2);
+		public ComponentContainer constructBody() {
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3);
 
-			opportunityNameField = (TextField) gridLayout.addComponent(
-					new TextField(), "Opportunity Name", 0, 0);
-			accountField = (AccountSelectionField) gridLayout.addComponent(
-					AppContext.getSpringBean(AccountSelectionField.class),
-					"Account", 1, 0);
-			nextStepField = (TextField) gridLayout.addComponent(
-					new TextField(), "Next Step", 2, 0);
+			nameField = (TextField) gridLayout.addComponent(new TextField(),
+					"Name", 0, 0);
+			startDateField = (DateField) gridLayout.addComponent(
+					new DateField(), "Start Date", 1, 0);
+			startDateField.setDateFormat("yyyy-MM-dd");
 
-			userField = (UserListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(UserListSelect.class),
-					"Assigned to", 0, 1);
-			stageField = (SalesStageListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(SalesStageListSelect.class),
-					"Sales Stage", 1, 1);
-			sourceField = (LeadSourceListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(LeadSourceListSelect.class),
-					"Lead Source", 2, 1);
+			endDateField = (DateField) gridLayout.addComponent(new DateField(),
+					"End Date", 2, 0);
+			endDateField.setDateFormat("yyyy-MM-dd");
 
+			typeField = (CampaignTypeListSelect) gridLayout.addComponent(
+					new CampaignTypeListSelect(), "Type", 0, 1);
+			statusField = (CampaignStatusListSelect) gridLayout.addComponent(
+					new CampaignStatusListSelect(), "Status", 1, 1);
+			assignUserField = (UserListSelect) gridLayout.addComponent(
+					new UserListSelect(), "Assign User", 2, 1);
 			return gridLayout.getLayout();
 		}
 
 		@Override
-		ComponentContainer constructFooter() {
+		public ComponentContainer constructFooter() {
 			HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
 			buttonControls.addComponent(new Button("Search",
@@ -195,11 +193,10 @@ public class OpportunitySearchPanel extends
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							searchCriteria = new OpportunitySearchCriteria();
+							searchCriteria = new CampaignSearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
-							OpportunitySearchPanel.this
-									.notifySearchHandler(searchCriteria);
+
 						}
 
 					}));
@@ -219,15 +216,13 @@ public class OpportunitySearchPanel extends
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							OpportunitySearchPanel.this
-									.createBasicSearchLayout();
+							CampaignSearchPanel.this.createBasicSearchLayout();
 
 						}
 					});
 			basicSearchBtn.setStyleName("link");
 			UiUtils.addComponent(buttonControls, basicSearchBtn,
 					Alignment.MIDDLE_CENTER);
-
 			return buttonControls;
 		}
 	}

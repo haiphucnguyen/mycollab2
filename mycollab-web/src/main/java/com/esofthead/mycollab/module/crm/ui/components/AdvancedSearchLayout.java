@@ -4,7 +4,7 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomLayout;
 
 @SuppressWarnings("serial")
-abstract class AdvancedSearchLayout extends CustomLayout {
+public abstract class AdvancedSearchLayout extends CustomLayout {
 
 	public AdvancedSearchLayout() {
 		super("advancedSearch");
@@ -21,9 +21,9 @@ abstract class AdvancedSearchLayout extends CustomLayout {
 		this.addComponent(footer, "advSearchFooter");
 	}
 
-	abstract ComponentContainer constructHeader();
+	public abstract ComponentContainer constructHeader();
 
-	abstract ComponentContainer constructBody();
+	public abstract ComponentContainer constructBody();
 
-	abstract ComponentContainer constructFooter();
+	public abstract ComponentContainer constructFooter();
 }

@@ -1,13 +1,15 @@
-package com.esofthead.mycollab.module.crm.ui.components;
+package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
+import com.esofthead.mycollab.module.crm.ui.components.BasicSearchLayout;
+import com.esofthead.mycollab.module.crm.ui.components.GenericSearchPanel;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -25,13 +27,12 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
-	private static final long serialVersionUID = 1L;
+public class AccountSearchPanel extends
+		GenericSearchPanel<AccountSearchCriteria> {
+	protected AccountSearchCriteria searchCriteria;
 
-	protected LeadSearchCriteria searchCriteria;
-
-	public LeadSearchPanel() {
-		searchCriteria = new LeadSearchCriteria();
+	public AccountSearchPanel() {
+		searchCriteria = new AccountSearchCriteria();
 	}
 
 	@Override
@@ -41,12 +42,12 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 	}
 
 	private void createBasicSearchLayout() {
-		LeadBasicSearchLayout layout = new LeadBasicSearchLayout();
+		AccountBasicSearchLayout layout = new AccountBasicSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
 	private void createAdvancedSearchLayout() {
-		LeadAdvancedSearchLayout layout = new LeadAdvancedSearchLayout();
+		AccountAdvancedSearchLayout layout = new AccountAdvancedSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
@@ -55,7 +56,7 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search Leads");
+		Label searchtitle = new Label("Search Accounts");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 
@@ -65,7 +66,7 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						EventBus.getInstance().fireEvent(
-								new LeadEvent.GotoAdd(this, null));
+								new AccountEvent.GotoAdd(this, null));
 					}
 				});
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
@@ -76,11 +77,11 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 		return layout;
 	}
 
-	private class LeadBasicSearchLayout extends BasicSearchLayout {
+	private class AccountBasicSearchLayout extends BasicSearchLayout {
 		private TextField nameField;
 		private CheckBox myItemCheckbox;
 
-		public LeadBasicSearchLayout() {
+		public AccountBasicSearchLayout() {
 			super();
 		}
 
@@ -91,34 +92,31 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 
 		@Override
 		public ComponentContainer constructBody() {
-			HorizontalLayout layout = new HorizontalLayout();
-			layout.setSpacing(true);
-			layout.addComponent(new Label("Name"));
+			HorizontalLayout basicSearchBody = new HorizontalLayout();
+			basicSearchBody.setSpacing(true);
+			basicSearchBody.addComponent(new Label("Name"));
 			nameField = new TextField();
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(layout, nameField, Alignment.MIDDLE_CENTER);
+			UiUtils.addComponent(basicSearchBody, nameField,
+					Alignment.MIDDLE_CENTER);
 			myItemCheckbox = new CheckBox("My Items");
-			UiUtils.addComponent(layout, myItemCheckbox,
+			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			layout.addComponent(new Button("Search",
-					new Button.ClickListener() {
+			basicSearchBody.addComponent(new Button("Search", new Button.ClickListener() {
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							searchCriteria = new LeadSearchCriteria();
-							searchCriteria.setSaccountid(new NumberSearchField(
-									SearchField.AND, AppContext.getAccountId()));
-							searchCriteria
-									.setCampaignName(new StringSearchField(
-											SearchField.AND, (String) nameField
-													.getValue()));
-							LeadSearchPanel.this
-									.notifySearchHandler(searchCriteria);
-						}
-					}));
+				@Override
+				public void buttonClick(ClickEvent event) {
+					searchCriteria = new AccountSearchCriteria();
+					searchCriteria.setSaccountid(new NumberSearchField(
+							SearchField.AND, AppContext.getAccountId()));
+					searchCriteria.setAccountname(new StringSearchField(
+							SearchField.AND, (String) nameField.getValue()));
+					AccountSearchPanel.this.notifySearchHandler(searchCriteria);
+				}
+			}));
 
-			layout.addComponent(new Button("Cancel",
+			basicSearchBody.addComponent(new Button("Cancel",
 					new Button.ClickListener() {
 
 						@Override
@@ -132,77 +130,72 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							LeadSearchPanel.this.createAdvancedSearchLayout();
+							AccountSearchPanel.this
+									.createAdvancedSearchLayout();
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
-			UiUtils.addComponent(layout, advancedSearchBtn,
+			UiUtils.addComponent(basicSearchBody, advancedSearchBtn,
 					Alignment.MIDDLE_CENTER);
-			return layout;
+			return basicSearchBody;
 		}
 	}
 
-	private class LeadAdvancedSearchLayout extends AdvancedSearchLayout {
-
-		private TextField firstnameField;
-		private TextField lastnameField;
-		private TextField accountnameField;
-		private LeadStatusListSelect statusField;
-
-		private TextField anyEmailField;
-		private TextField anyAddressField;
-		private CountryComboBox countryField;
-		private LeadSourceListSelect sourceField;
-
+	private class AccountAdvancedSearchLayout extends AdvancedSearchLayout {
+		private TextField nameField;
+		private TextField websiteField;
 		private TextField anyPhoneField;
+		private TextField anyMailField;
+		private TextField anyAddressField;
 		private TextField cityField;
-		private TextField stateField;
+		private AccountIndustryListSelect industryField;
+		private AccountTypeListSelect typeField;
 		private UserListSelect userField;
 
-		public LeadAdvancedSearchLayout() {
+		public AccountAdvancedSearchLayout() {
 			super();
 		}
 
 		@Override
-		ComponentContainer constructHeader() {
+		public ComponentContainer constructHeader() {
 			return createSearchTopPanel();
 		}
 
 		@Override
-		ComponentContainer constructBody() {
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 4);
+		public ComponentContainer constructBody() {
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3);
+			nameField = (TextField) gridLayout.addComponent(new TextField(),
+					"Name", 0, 0);
 
-			firstnameField = (TextField) gridLayout.addComponent(
-					new TextField(), "First Name", 0, 0);
-			lastnameField = (TextField) gridLayout.addComponent(
-					new TextField(), "Last Name", 0, 1);
-			accountnameField = (TextField) gridLayout.addComponent(
-					new TextField(), "Account Name", 0, 2);
-			statusField = (LeadStatusListSelect) gridLayout.addComponent(
-					new LeadStatusListSelect(), "Status", 0, 3);
-
-			anyEmailField = (TextField) gridLayout.addComponent(
-					new TextField(), "Any Email", 1, 0);
-			anyAddressField = (TextField) gridLayout.addComponent(
-					new TextField(), "Any Address", 1, 1);
-			countryField = (CountryComboBox) gridLayout.addComponent(
-					new CountryComboBox(), "Country", 1, 2);
-			sourceField = (LeadSourceListSelect) gridLayout.addComponent(
-					new LeadSourceListSelect(), "Source", 1, 3);
+			websiteField = (TextField) gridLayout.addComponent(new TextField(),
+					"Website", 1, 0);
 
 			anyPhoneField = (TextField) gridLayout.addComponent(
 					new TextField(), "Any Phone", 2, 0);
+
+			anyMailField = (TextField) gridLayout.addComponent(new TextField(),
+					"Any Email", 0, 1);
+
+			anyAddressField = (TextField) gridLayout.addComponent(
+					new TextField(), "Any Address", 1, 1);
+
 			cityField = (TextField) gridLayout.addComponent(new TextField(),
 					"City", 2, 1);
-			stateField = (TextField) gridLayout.addComponent(new TextField(),
-					"State", 2, 2);
+
+			industryField = (AccountIndustryListSelect) gridLayout
+					.addComponent(new AccountIndustryListSelect(), "Industry",
+							0, 2);
+
+			typeField = (AccountTypeListSelect) gridLayout.addComponent(
+					new AccountTypeListSelect(), "Type", 1, 2);
+
 			userField = (UserListSelect) gridLayout.addComponent(
-					new UserListSelect(), "Assigned User", 2, 3);
+					new UserListSelect(), "Assigned User", 2, 2);
 			return gridLayout.getLayout();
 		}
 
 		@Override
-		ComponentContainer constructFooter() {
+		public ComponentContainer constructFooter() {
 			HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
 			buttonControls.addComponent(new Button("Search",
@@ -210,11 +203,13 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							searchCriteria = new LeadSearchCriteria();
+							searchCriteria = new AccountSearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
-							LeadSearchPanel.this
-									.notifySearchHandler(searchCriteria);
+							searchCriteria
+									.setAccountname(new StringSearchField(
+											SearchField.AND, (String) nameField
+													.getValue()));
 						}
 
 					}));
@@ -234,7 +229,7 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							LeadSearchPanel.this.createBasicSearchLayout();
+							AccountSearchPanel.this.createBasicSearchLayout();
 
 						}
 					});
@@ -244,4 +239,5 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 			return buttonControls;
 		}
 	}
+
 }

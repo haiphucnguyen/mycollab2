@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.ui.components;
+package com.esofthead.mycollab.module.crm.view.account;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.addon.customfield.FieldWrapper;

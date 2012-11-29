@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.ui.components;
+package com.esofthead.mycollab.module.crm.view.lead;
 
 import org.springframework.context.annotation.Scope;
 import org.springframework.stereotype.Component;

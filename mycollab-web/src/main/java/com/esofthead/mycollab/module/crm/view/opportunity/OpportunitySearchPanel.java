@@ -1,13 +1,17 @@
-package com.esofthead.mycollab.module.crm.ui.components;
+package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
+import com.esofthead.mycollab.module.crm.ui.components.BasicSearchLayout;
+import com.esofthead.mycollab.module.crm.ui.components.GenericSearchPanel;
+import com.esofthead.mycollab.module.crm.ui.components.SalesStageListSelect;
+import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
+import com.esofthead.mycollab.module.crm.view.lead.LeadSourceListSelect;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.ui.CountryListSelect;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -25,10 +29,13 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-public class ContactSearchPanel extends
-		GenericSearchPanel<ContactSearchCriteria> {
+public class OpportunitySearchPanel extends
+		GenericSearchPanel<OpportunitySearchCriteria> {
+	protected OpportunitySearchCriteria searchCriteria;
 
-	protected ContactSearchCriteria searchCriteria;
+	public OpportunitySearchPanel() {
+		searchCriteria = new OpportunitySearchCriteria();
+	}
 
 	@Override
 	public void attach() {
@@ -36,12 +43,12 @@ public class ContactSearchPanel extends
 	}
 
 	private void createBasicSearchLayout() {
-		ContactBasicSearchLayout layout = new ContactBasicSearchLayout();
+		OpportunityBasicSearchLayout layout = new OpportunityBasicSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
 	private void createAdvancedSearchLayout() {
-		ContactAdvancedSearchLayout layout = new ContactAdvancedSearchLayout();
+		OpportunityAdvancedSearchLayout layout = new OpportunityAdvancedSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
@@ -50,7 +57,7 @@ public class ContactSearchPanel extends
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search Contacts");
+		Label searchtitle = new Label("Search");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 
@@ -61,7 +68,8 @@ public class ContactSearchPanel extends
 					@Override
 					public void buttonClick(ClickEvent event) {
 						EventBus.getInstance().fireEvent(
-								new ContactEvent.GotoAdd(this, null));
+								new OpportunityEvent.GotoAdd(
+										OpportunitySearchPanel.this, null));
 					}
 				});
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
@@ -72,13 +80,13 @@ public class ContactSearchPanel extends
 		return layout;
 	}
 
-	private class ContactBasicSearchLayout extends BasicSearchLayout {
+	private class OpportunityBasicSearchLayout extends BasicSearchLayout {
 		private static final long serialVersionUID = 1L;
 
 		private TextField nameField;
 		private CheckBox myItemCheckbox;
 
-		public ContactBasicSearchLayout() {
+		public OpportunityBasicSearchLayout() {
 			super();
 		}
 
@@ -99,19 +107,19 @@ public class ContactSearchPanel extends
 			UiUtils.addComponent(layout, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			this.addComponent(new Button("Search", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			layout.addComponent(new Button("Search Opportunities",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					searchCriteria = new ContactSearchCriteria();
-					searchCriteria.setSaccountid(new NumberSearchField(
-							SearchField.AND, AppContext.getAccountId()));
-					searchCriteria.setContactName(new StringSearchField(
-							SearchField.AND, (String) nameField.getValue()));
-					ContactSearchPanel.this.notifySearchHandler(searchCriteria);
-				}
-			}));
+						@Override
+						public void buttonClick(ClickEvent event) {
+							searchCriteria = new OpportunitySearchCriteria();
+							searchCriteria.setSaccountid(new NumberSearchField(
+									SearchField.AND, AppContext.getAccountId()));
+							OpportunitySearchPanel.this
+									.notifySearchHandler(searchCriteria);
+						}
+					}));
 
 			layout.addComponent(new Button("Cancel",
 					new Button.ClickListener() {
@@ -129,7 +137,7 @@ public class ContactSearchPanel extends
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							ContactSearchPanel.this
+							OpportunitySearchPanel.this
 									.createAdvancedSearchLayout();
 						}
 					});
@@ -140,70 +148,52 @@ public class ContactSearchPanel extends
 		}
 	}
 
-	private class ContactAdvancedSearchLayout extends AdvancedSearchLayout {
+	private class OpportunityAdvancedSearchLayout extends AdvancedSearchLayout {
 		private static final long serialVersionUID = 1L;
 
-		private TextField firstnameField;
-		private TextField lastnameField;
-		private TextField accountnameField;
-		private UserListSelect assignUserField;
-		private TextField anyEmailField;
-		private TextField anyAddressField;
-		private TextField stateField;
-		private CountryListSelect countryField;
-		private TextField anyPhoneField;
-		private TextField postalCodeField;
-		private TextField cityField;
-		private LeadSourceListSelect leadSourceField;
+		private TextField opportunityNameField;
+		private AccountSelectionField accountField;
+		private TextField nextStepField;
+		private UserListSelect userField;
+		private SalesStageListSelect stageField;
+		private LeadSourceListSelect sourceField;
 
-		public ContactAdvancedSearchLayout() {
+		public OpportunityAdvancedSearchLayout() {
 			super();
 		}
 
 		@Override
-		ComponentContainer constructHeader() {
+		public ComponentContainer constructHeader() {
 			return createSearchTopPanel();
 		}
 
 		@Override
-		ComponentContainer constructBody() {
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 4);
+		public ComponentContainer constructBody() {
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 2);
 
-			firstnameField = (TextField) gridLayout.addComponent(
-					new TextField(), "First Name", 0, 0);
-			lastnameField = (TextField) gridLayout.addComponent(
-					new TextField(), "Last Name", 0, 1);
-			accountnameField = (TextField) gridLayout.addComponent(
-					new TextField(), "Account Name", 0, 2);
-			assignUserField = (UserListSelect) gridLayout.addComponent(
-					new UserListSelect(),
-					"Assign User", 0, 3);
+			opportunityNameField = (TextField) gridLayout.addComponent(
+					new TextField(), "Opportunity Name", 0, 0);
+			accountField = (AccountSelectionField) gridLayout.addComponent(
+					AppContext.getSpringBean(AccountSelectionField.class),
+					"Account", 1, 0);
+			nextStepField = (TextField) gridLayout.addComponent(
+					new TextField(), "Next Step", 2, 0);
 
-			anyEmailField = (TextField) gridLayout.addComponent(
-					new TextField(), "Any Email", 1, 0);
-			anyAddressField = (TextField) gridLayout.addComponent(
-					new TextField(), "Any Address", 1, 1);
-			stateField = (TextField) gridLayout.addComponent(new TextField(),
-					"State", 1, 2);
-			countryField = (CountryListSelect) gridLayout.addComponent(
-					new CountryListSelect(),
-					"Country", 1, 3);
-
-			anyPhoneField = (TextField) gridLayout.addComponent(
-					new TextField(), "Any Phone", 2, 0);
-			cityField = (TextField) gridLayout.addComponent(new TextField(),
-					"City", 2, 1);
-			postalCodeField = (TextField) gridLayout.addComponent(
-					new TextField(), "Postal Code", 2, 2);
-			leadSourceField = (LeadSourceListSelect) gridLayout.addComponent(
-					new LeadSourceListSelect(),
-					"Lead Source", 2, 3);
+			userField = (UserListSelect) gridLayout.addComponent(
+					AppContext.getSpringBean(UserListSelect.class),
+					"Assigned to", 0, 1);
+			stageField = (SalesStageListSelect) gridLayout.addComponent(
+					AppContext.getSpringBean(SalesStageListSelect.class),
+					"Sales Stage", 1, 1);
+			sourceField = (LeadSourceListSelect) gridLayout.addComponent(
+					AppContext.getSpringBean(LeadSourceListSelect.class),
+					"Lead Source", 2, 1);
 
 			return gridLayout.getLayout();
 		}
 
 		@Override
-		ComponentContainer constructFooter() {
+		public ComponentContainer constructFooter() {
 			HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
 			buttonControls.addComponent(new Button("Search",
@@ -211,14 +201,10 @@ public class ContactSearchPanel extends
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							searchCriteria = new ContactSearchCriteria();
+							searchCriteria = new OpportunitySearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
-							searchCriteria
-									.setContactName(new StringSearchField(
-											SearchField.AND,
-											(String) firstnameField.getValue()));
-							ContactSearchPanel.this
+							OpportunitySearchPanel.this
 									.notifySearchHandler(searchCriteria);
 						}
 
@@ -239,13 +225,15 @@ public class ContactSearchPanel extends
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							ContactSearchPanel.this.createBasicSearchLayout();
+							OpportunitySearchPanel.this
+									.createBasicSearchLayout();
 
 						}
 					});
 			basicSearchBtn.setStyleName("link");
 			UiUtils.addComponent(buttonControls, basicSearchBtn,
 					Alignment.MIDDLE_CENTER);
+
 			return buttonControls;
 		}
 	}

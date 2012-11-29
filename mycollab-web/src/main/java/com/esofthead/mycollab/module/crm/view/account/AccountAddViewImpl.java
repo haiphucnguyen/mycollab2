@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.domain.Account;
-import com.esofthead.mycollab.module.crm.ui.components.AccountTypeComboBox;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
@@ -47,10 +46,20 @@ public class AccountAddViewImpl extends FormAddView<Account> implements AccountA
 
 		class FormLayoutFactory extends AccountFormLayoutFactory {
 
-			@Override
-			protected Layout createButtonControls() {
+			
+			private Layout createButtonControls() {
 				return (new EditFormControlsGenerator<Account>(EditForm.this))
 						.createButtonControls();
+			}
+
+			@Override
+			protected Layout createTopPanel() {
+				return createButtonControls();
+			}
+
+			@Override
+			protected Layout createBottomPanel() {
+				return createButtonControls();
 			}
 		}
 

@@ -1,12 +1,16 @@
-package com.esofthead.mycollab.module.crm.ui.components;
+package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
+import com.esofthead.mycollab.module.crm.ui.components.BasicSearchLayout;
+import com.esofthead.mycollab.module.crm.ui.components.GenericSearchPanel;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -17,7 +21,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
@@ -25,12 +28,13 @@ import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-public class CampaignSearchPanel extends
-		GenericSearchPanel<CampaignSearchCriteria> {
-	protected CampaignSearchCriteria searchCriteria;
+public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
+	private static final long serialVersionUID = 1L;
 
-	public CampaignSearchPanel() {
-		searchCriteria = new CampaignSearchCriteria();
+	protected LeadSearchCriteria searchCriteria;
+
+	public LeadSearchPanel() {
+		searchCriteria = new LeadSearchCriteria();
 	}
 
 	@Override
@@ -40,12 +44,12 @@ public class CampaignSearchPanel extends
 	}
 
 	private void createBasicSearchLayout() {
-		CampaignBasicSearchLayout layout = new CampaignBasicSearchLayout();
+		LeadBasicSearchLayout layout = new LeadBasicSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
 	private void createAdvancedSearchLayout() {
-		CampaignAdvancedSearchLayout layout = new CampaignAdvancedSearchLayout();
+		LeadAdvancedSearchLayout layout = new LeadAdvancedSearchLayout();
 		this.setCompositionRoot(layout);
 	}
 
@@ -54,7 +58,7 @@ public class CampaignSearchPanel extends
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search Campaigns");
+		Label searchtitle = new Label("Search Leads");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 
@@ -64,8 +68,7 @@ public class CampaignSearchPanel extends
 					@Override
 					public void buttonClick(ClickEvent event) {
 						EventBus.getInstance().fireEvent(
-								new CampaignEvent.GotoAdd(this, null));
-
+								new LeadEvent.GotoAdd(this, null));
 					}
 				});
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
@@ -76,11 +79,11 @@ public class CampaignSearchPanel extends
 		return layout;
 	}
 
-	private class CampaignBasicSearchLayout extends BasicSearchLayout {
+	private class LeadBasicSearchLayout extends BasicSearchLayout {
 		private TextField nameField;
 		private CheckBox myItemCheckbox;
 
-		public CampaignBasicSearchLayout() {
+		public LeadBasicSearchLayout() {
 			super();
 		}
 
@@ -101,19 +104,22 @@ public class CampaignSearchPanel extends
 			UiUtils.addComponent(layout, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			this.addComponent(new Button("Search", new Button.ClickListener() {
+			layout.addComponent(new Button("Search",
+					new Button.ClickListener() {
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					searchCriteria = new CampaignSearchCriteria();
-					searchCriteria.setSaccountid(new NumberSearchField(
-							SearchField.AND, AppContext.getAccountId()));
-					searchCriteria.setCampaignName(new StringSearchField(
-							SearchField.AND, (String) nameField.getValue()));
-					CampaignSearchPanel.this
-							.notifySearchHandler(searchCriteria);
-				}
-			}));
+						@Override
+						public void buttonClick(ClickEvent event) {
+							searchCriteria = new LeadSearchCriteria();
+							searchCriteria.setSaccountid(new NumberSearchField(
+									SearchField.AND, AppContext.getAccountId()));
+							searchCriteria
+									.setCampaignName(new StringSearchField(
+											SearchField.AND, (String) nameField
+													.getValue()));
+							LeadSearchPanel.this
+									.notifySearchHandler(searchCriteria);
+						}
+					}));
 
 			layout.addComponent(new Button("Cancel",
 					new Button.ClickListener() {
@@ -129,8 +135,7 @@ public class CampaignSearchPanel extends
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							CampaignSearchPanel.this
-									.createAdvancedSearchLayout();
+							LeadSearchPanel.this.createAdvancedSearchLayout();
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
@@ -140,49 +145,67 @@ public class CampaignSearchPanel extends
 		}
 	}
 
-	private class CampaignAdvancedSearchLayout extends AdvancedSearchLayout {
+	private class LeadAdvancedSearchLayout extends AdvancedSearchLayout {
 
-		private TextField nameField;
-		private DateField startDateField;
-		private DateField endDateField;
-		private CampaignTypeListSelect typeField;
-		private CampaignStatusListSelect statusField;
-		private UserListSelect assignUserField;
+		private TextField firstnameField;
+		private TextField lastnameField;
+		private TextField accountnameField;
+		private LeadStatusListSelect statusField;
 
-		public CampaignAdvancedSearchLayout() {
+		private TextField anyEmailField;
+		private TextField anyAddressField;
+		private CountryComboBox countryField;
+		private LeadSourceListSelect sourceField;
+
+		private TextField anyPhoneField;
+		private TextField cityField;
+		private TextField stateField;
+		private UserListSelect userField;
+
+		public LeadAdvancedSearchLayout() {
 			super();
 		}
 
 		@Override
-		ComponentContainer constructHeader() {
+		public ComponentContainer constructHeader() {
 			return createSearchTopPanel();
 		}
 
 		@Override
-		ComponentContainer constructBody() {
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3);
+		public ComponentContainer constructBody() {
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 4);
 
-			nameField = (TextField) gridLayout.addComponent(new TextField(),
-					"Name", 0, 0);
-			startDateField = (DateField) gridLayout.addComponent(
-					new DateField(), "Start Date", 1, 0);
-			startDateField.setDateFormat("yyyy-MM-dd");
+			firstnameField = (TextField) gridLayout.addComponent(
+					new TextField(), "First Name", 0, 0);
+			lastnameField = (TextField) gridLayout.addComponent(
+					new TextField(), "Last Name", 0, 1);
+			accountnameField = (TextField) gridLayout.addComponent(
+					new TextField(), "Account Name", 0, 2);
+			statusField = (LeadStatusListSelect) gridLayout.addComponent(
+					new LeadStatusListSelect(), "Status", 0, 3);
 
-			endDateField = (DateField) gridLayout.addComponent(new DateField(),
-					"End Date", 2, 0);
-			endDateField.setDateFormat("yyyy-MM-dd");
+			anyEmailField = (TextField) gridLayout.addComponent(
+					new TextField(), "Any Email", 1, 0);
+			anyAddressField = (TextField) gridLayout.addComponent(
+					new TextField(), "Any Address", 1, 1);
+			countryField = (CountryComboBox) gridLayout.addComponent(
+					new CountryComboBox(), "Country", 1, 2);
+			sourceField = (LeadSourceListSelect) gridLayout.addComponent(
+					new LeadSourceListSelect(), "Source", 1, 3);
 
-			typeField = (CampaignTypeListSelect) gridLayout.addComponent(
-					new CampaignTypeListSelect(), "Type", 0, 1);
-			statusField = (CampaignStatusListSelect) gridLayout.addComponent(
-					new CampaignStatusListSelect(), "Status", 1, 1);
-			assignUserField = (UserListSelect) gridLayout.addComponent(
-					new UserListSelect(), "Assign User", 2, 1);
+			anyPhoneField = (TextField) gridLayout.addComponent(
+					new TextField(), "Any Phone", 2, 0);
+			cityField = (TextField) gridLayout.addComponent(new TextField(),
+					"City", 2, 1);
+			stateField = (TextField) gridLayout.addComponent(new TextField(),
+					"State", 2, 2);
+			userField = (UserListSelect) gridLayout.addComponent(
+					new UserListSelect(), "Assigned User", 2, 3);
 			return gridLayout.getLayout();
 		}
 
 		@Override
-		ComponentContainer constructFooter() {
+		public ComponentContainer constructFooter() {
 			HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
 			buttonControls.addComponent(new Button("Search",
@@ -190,10 +213,11 @@ public class CampaignSearchPanel extends
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							searchCriteria = new CampaignSearchCriteria();
+							searchCriteria = new LeadSearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
-
+							LeadSearchPanel.this
+									.notifySearchHandler(searchCriteria);
 						}
 
 					}));
@@ -213,7 +237,7 @@ public class CampaignSearchPanel extends
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							CampaignSearchPanel.this.createBasicSearchLayout();
+							LeadSearchPanel.this.createBasicSearchLayout();
 
 						}
 					});

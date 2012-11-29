@@ -77,6 +77,7 @@ public class SelectionOptionButton extends SplitButton implements
 			@Override
 			public void buttonClick(ClickEvent event) {
 				isSelectAll = true;
+				SelectionOptionButton.this.setIcon(selectIcon);
 				fireSelectAll();
 			}
 		});
@@ -86,6 +87,8 @@ public class SelectionOptionButton extends SplitButton implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				isSelectAll = false;
+				SelectionOptionButton.this.setIcon(selectIcon);
 				fireSelectCurrentPage();
 			}
 		});

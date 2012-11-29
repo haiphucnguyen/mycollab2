@@ -21,7 +21,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 	public Layout getLayout() {
 		AddViewLayout accountAddLayout = new AddViewLayout("Account");
 
-		accountAddLayout.addTopControls(createButtonControls());
+		accountAddLayout.addTopControls(createTopPanel());
 
 		VerticalLayout layout = new VerticalLayout();
 
@@ -52,14 +52,16 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 		descriptionLayout.getLayout().setColumnExpandRatio(1, 1.0f);
 		layout.addComponent(descriptionLayout.getLayout());
 
-		accountAddLayout.addBottomControls(createButtonControls());
+		accountAddLayout.addBottomControls(createBottomPanel());
 
 		accountAddLayout.addBody(layout);
 
 		return accountAddLayout;
 	}
-	
-	protected abstract Layout createButtonControls();
+
+	protected abstract Layout createTopPanel();
+
+	protected abstract Layout createBottomPanel();
 
 	@Override
 	public void attachField(Object propertyId, Field field) {
