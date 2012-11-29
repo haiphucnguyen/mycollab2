@@ -22,6 +22,7 @@ public class SelectionOptionButton extends SplitButton implements
 
 	private boolean isSelected = false;
 
+	@SuppressWarnings("rawtypes")
 	private HasSelectableItemHandlers selectableItemHandlers;
 
 	private static Resource selectIcon = new ThemeResource(
@@ -40,7 +41,7 @@ public class SelectionOptionButton extends SplitButton implements
 
 	@SuppressWarnings("serial")
 	public SelectionOptionButton(
-			HasSelectableItemHandlers selectableItemHandlers) {
+			@SuppressWarnings("rawtypes") HasSelectableItemHandlers selectableItemHandlers) {
 		super();
 		this.selectableItemHandlers = selectableItemHandlers;
 		this.addStyleName(SplitButton.STYLE_CHAMELEON);

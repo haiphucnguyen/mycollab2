@@ -24,6 +24,7 @@ public class Depot extends VerticalLayout {
 
 		header.addComponent(new Label(title));
 		header.addListener(new LayoutClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void layoutClick(LayoutClickEvent event) {
