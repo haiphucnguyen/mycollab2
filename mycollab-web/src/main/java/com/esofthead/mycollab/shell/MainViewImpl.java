@@ -6,9 +6,8 @@ import com.esofthead.mycollab.module.crm.view.CrmContainer;
 import com.esofthead.mycollab.module.project.view.ProjectMainContainer;
 import com.esofthead.mycollab.module.user.accountsettings.AccountContainer;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.module.user.presenter.LoginPresenter;
-import com.esofthead.mycollab.module.user.view.LoginView;
-import com.esofthead.mycollab.module.user.view.LoginViewImpl;
+import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.Hr;
@@ -103,10 +102,8 @@ public class MainViewImpl extends AbstractView {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				AppContext.setSession(new SimpleUser());
-				LoginView loginView = new LoginViewImpl();
-				LoginPresenter presenter = new LoginPresenter(loginView);
-				AppContext.getApplication().getMainWindow()
-						.setContent(loginView.getWidget());
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.LogOut(this, null));
 			}
 		});
 		signoutBtn.setStyleName("link");
