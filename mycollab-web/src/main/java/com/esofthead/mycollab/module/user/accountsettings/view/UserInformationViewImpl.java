@@ -20,11 +20,11 @@ public class UserInformationViewImpl extends AbstractView implements
 
 	public UserInformationViewImpl() {
 		super();
+		System.out.println("Init user information");
 	}
-	
+
 	@Override
 	public void attach() {
-		System.out.println("Init user information");
 		this.removeAllComponents();
 		User currentUser = AppContext.getSession();
 		Form formItem = new EditForm();
@@ -70,11 +70,10 @@ public class UserInformationViewImpl extends AbstractView implements
 			Button saveBtn = new Button(SAVE_ACTION);
 			layout.addComponent(saveBtn);
 			layout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
-			
+
 			Button cancelBtn = new Button(CANCEL_ACTION);
 			layout.addComponent(cancelBtn);
 			layout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
-			
 
 			return layout;
 		}
