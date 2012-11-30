@@ -1,25 +1,32 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.module.user.domain.User;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
+import com.esofthead.mycollab.vaadin.mvp.FormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.Form;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-public class UserInformationViewImpl extends AbstractView implements
+public class UserInformationViewImpl extends FormAddView<User> implements
 		UserInformationView {
+
+	private final EditForm formItem;
 
 	public UserInformationViewImpl() {
 		super();
+		formItem = new EditForm();
 		System.out.println("Init user information");
 	}
 
@@ -27,7 +34,6 @@ public class UserInformationViewImpl extends AbstractView implements
 	public void attach() {
 		this.removeAllComponents();
 		User currentUser = AppContext.getSession();
-		Form formItem = new EditForm();
 		formItem.setItemDataSource(new BeanItem<User>(currentUser));
 		this.addComponent(formItem);
 		this.setStyleName("userInfoContainer");
@@ -61,13 +67,28 @@ public class UserInformationViewImpl extends AbstractView implements
 					Alignment.BOTTOM_CENTER);
 
 			setLayout(layout);
+
+			this.setFormFieldFactory(new EditFormFieldFactory());
 		}
 
 		private HorizontalLayout createButtonControls() {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setSpacing(true);
 			layout.setStyleName("editInfoControl");
-			Button saveBtn = new Button(SAVE_ACTION);
+			Button saveBtn = new Button(SAVE_ACTION,
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							@SuppressWarnings("unchecked")
+							User item = ((BeanItem<User>) EditForm.this
+									.getItemDataSource()).getBean();
+							if (EditForm.this.validateForm(item)) {
+								EditForm.this.fireSaveForm(item);
+							}
+						}
+					});
 			layout.addComponent(saveBtn);
 			layout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
 
@@ -125,6 +146,39 @@ public class UserInformationViewImpl extends AbstractView implements
 			}
 
 		}
+
+		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
+			@Override
+			protected Field onCreateField(Item item, Object propertyId,
+					com.vaadin.ui.Component uiContext) {
+
+				if (propertyId.equals("email")) {
+					TextField tf = new TextField();
+					tf.setNullRepresentation("");
+					tf.setRequired(true);
+					tf.setRequiredError("Please enter a valid email");
+					return tf;
+				}
+
+				return null;
+			}
+		}
+	}
+
+	@Override
+	protected void onNewItem() {
+		// TODO Auto-generated method stub
+
+	}
+
+	@Override
+	protected void onEditItem(User user) {
+		formItem.setItemDataSource(new BeanItem<User>(user));
+	}
+
+	@Override
+	public HasEditFormHandlers<User> getEditFormHandlers() {
+		return formItem;
 	}
 
 }
