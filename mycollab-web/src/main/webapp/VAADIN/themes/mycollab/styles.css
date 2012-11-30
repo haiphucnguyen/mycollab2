@@ -314,6 +314,10 @@ input.v-textfield-pagedtable-pagefield {
     margin: 15px;*/
     max-width: 1130px;
 }
+.crmContainer .v-table-body-noselection {
+	height: 100% !important;
+}
+
 input.v-textfield-errorField {
 	border-color: red;
 }
