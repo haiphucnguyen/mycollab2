@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.Contact;
@@ -8,6 +10,11 @@ import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
+import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoRead;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
@@ -62,7 +69,9 @@ import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityReadViewImp
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.web.AppContext;
 
 public class CrmController {
 	private CrmContainer container;
@@ -93,8 +102,13 @@ public class CrmController {
 								.getView(AccountListViewImpl.class);
 						AccountListPresenterImpl presenter = new AccountListPresenterImpl(
 								view);
-						presenter.go(container);
-						presenter.doDefaultSearch();
+
+						AccountSearchCriteria criteria = new AccountSearchCriteria();
+						criteria.setSaccountid(new NumberSearchField(
+								SearchField.AND, AppContext.getAccountId()));
+						presenter.go(container,
+								new ScreenData.Search<AccountSearchCriteria>(
+										criteria));
 					}
 				});
 
@@ -167,8 +181,13 @@ public class CrmController {
 								.getView(CampaignListViewImpl.class);
 						CampaignListPresenterImpl presenter = new CampaignListPresenterImpl(
 								view);
-						presenter.go(container);
-						presenter.doDefaultSearch();
+						CampaignSearchCriteria searchCriteria = new CampaignSearchCriteria();
+						searchCriteria.setSaccountid(new NumberSearchField(
+								SearchField.AND, AppContext.getAccountId()));
+
+						presenter.go(container,
+								new ScreenData.Search<CampaignSearchCriteria>(
+										searchCriteria));
 					}
 				});
 
@@ -241,8 +260,13 @@ public class CrmController {
 								.getView(ContactListViewImpl.class);
 						ContactListPresenterImpl presenter = new ContactListPresenterImpl(
 								view);
-						presenter.go(container);
-						presenter.doDefaultSearch();
+
+						ContactSearchCriteria searchCriteria = new ContactSearchCriteria();
+						searchCriteria.setSaccountid(new NumberSearchField(
+								SearchField.AND, AppContext.getAccountId()));
+						presenter.go(container,
+								new ScreenData.Search<ContactSearchCriteria>(
+										searchCriteria));
 					}
 				});
 
@@ -316,8 +340,12 @@ public class CrmController {
 								.getView(LeadListViewImpl.class);
 						LeadListPresenterImpl presenter = new LeadListPresenterImpl(
 								view);
-						presenter.go(container);
-						presenter.doDefaultSearch();
+						LeadSearchCriteria searchCriteria = new LeadSearchCriteria();
+						searchCriteria.setSaccountid(new NumberSearchField(
+								SearchField.AND, AppContext.getAccountId()));
+						presenter.go(container,
+								new ScreenData.Search<LeadSearchCriteria>(
+										searchCriteria));
 					}
 				});
 
@@ -390,8 +418,13 @@ public class CrmController {
 								.getView(OpportunityListViewImpl.class);
 						OpportunityListPresenterImpl presenter = new OpportunityListPresenterImpl(
 								view);
-						presenter.go(container);
-						presenter.doDefaultSearch();
+						OpportunitySearchCriteria searchCriteria = new OpportunitySearchCriteria();
+						searchCriteria.setSaccountid(new NumberSearchField(
+								SearchField.AND, AppContext.getAccountId()));
+						presenter
+								.go(container,
+										new ScreenData.Search<OpportunitySearchCriteria>(
+												searchCriteria));
 					}
 				});
 
@@ -441,7 +474,8 @@ public class CrmController {
 					public void handle(OpportunityEvent.GotoRead event) {
 						OpportunityReadView view = ViewManager
 								.getView(OpportunityReadViewImpl.class);
-						SimpleOpportunity item = (SimpleOpportunity) event.getData();
+						SimpleOpportunity item = (SimpleOpportunity) event
+								.getData();
 						new OpportunityReadPresenter(view).go(container);
 						view.displayItem(item);
 					}

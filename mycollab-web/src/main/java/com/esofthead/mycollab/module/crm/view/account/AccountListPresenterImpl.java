@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
@@ -16,11 +14,14 @@ import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComponentContainer;
 
 public class AccountListPresenterImpl extends
-		CrmGenericPresenter<AccountListView> implements ListPresenter<AccountSearchCriteria> {
+		CrmGenericPresenter<AccountListView> implements
+		ListPresenter<AccountSearchCriteria> {
 
 	private AccountService accountService;
 
@@ -43,12 +44,12 @@ public class AccountListPresenterImpl extends
 			public void displayItemChange(int numOfItems) {
 				pageChange();
 			}
-			
+
 			private void pageChange() {
 				if (isSelectAll) {
 					selectAllItemsInCurrentPage();
 				}
-				
+
 				checkWhetherEnableTableActionControl();
 			}
 		});
@@ -80,8 +81,7 @@ public class AccountListPresenterImpl extends
 						isSelectAll = false;
 						for (SimpleAccount item : currentDataList) {
 							item.setSelected(false);
-							CheckBox checkBox = (CheckBox) item
-									.getExtraData();
+							CheckBox checkBox = (CheckBox) item.getExtraData();
 							checkBox.setValue(false);
 						}
 
@@ -147,11 +147,9 @@ public class AccountListPresenterImpl extends
 	}
 
 	@Override
-	public void doDefaultSearch() {
-		AccountSearchCriteria criteria = new AccountSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		doSearch(criteria);
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		super.onGo(container, data);
+		doSearch((AccountSearchCriteria) data.getParams());
 	}
 
 	@Override

@@ -2,6 +2,7 @@ package com.esofthead.mycollab.vaadin.mvp;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 
+
 public abstract class ScreenData<P> {
 	protected P params;
 

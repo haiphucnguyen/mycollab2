@@ -13,6 +13,7 @@ public abstract class AbstractPresenter implements Presenter {
 	@Override
 	public void go(ComponentContainer container, ScreenData<?> data) {
 		HistoryViewManager.addHistory(new ViewState(this, data));
+		onGo(container, data);
 	}
 
 	protected abstract void onGo(ComponentContainer container,

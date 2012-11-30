@@ -4,8 +4,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.LeadService;
@@ -16,8 +14,10 @@ import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComponentContainer;
 
 public class LeadListPresenterImpl extends CrmGenericPresenter<LeadListView>
 		implements ListPresenter<LeadSearchCriteria> {
@@ -144,13 +144,11 @@ public class LeadListPresenterImpl extends CrmGenericPresenter<LeadListView>
 			view.disableActionControls();
 		}
 	}
-
+	
 	@Override
-	public void doDefaultSearch() {
-		LeadSearchCriteria leadSearchCriteria = new LeadSearchCriteria();
-		leadSearchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		doSearch(leadSearchCriteria);
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		super.onGo(container, data);
+		doSearch((LeadSearchCriteria) data.getParams());
 	}
 
 	@Override
