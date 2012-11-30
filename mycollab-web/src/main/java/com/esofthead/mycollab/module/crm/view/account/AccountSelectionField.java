@@ -89,7 +89,7 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 						accountName.setValue(account.getAccountname());
 					}
 				} catch (Exception e) {
-
+					e.printStackTrace();
 				}
 
 			}

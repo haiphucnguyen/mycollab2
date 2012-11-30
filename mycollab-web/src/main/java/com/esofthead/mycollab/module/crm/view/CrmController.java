@@ -7,6 +7,7 @@ import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoRead;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
@@ -440,7 +441,7 @@ public class CrmController {
 					public void handle(OpportunityEvent.GotoRead event) {
 						OpportunityReadView view = ViewManager
 								.getView(OpportunityReadViewImpl.class);
-						Opportunity item = (Opportunity) event.getData();
+						SimpleOpportunity item = (SimpleOpportunity) event.getData();
 						new OpportunityReadPresenter(view).go(container);
 						view.displayItem(item);
 					}
