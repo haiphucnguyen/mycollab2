@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.addon.customfield.FieldWrapper;
 
 import com.esofthead.mycollab.module.crm.domain.Campaign;

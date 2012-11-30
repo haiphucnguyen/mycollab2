@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import java.util.Collection;
+
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
@@ -36,9 +38,12 @@ public class LeadAddViewImpl extends AbstractView implements IFormAddView<Lead>,
 	public class EditForm extends AdvancedEditBeanForm<Lead> {
 		private static final long serialVersionUID = 1L;
 
-		public EditForm() {
+		@Override
+		public void setItemDataSource(Item newDataSource,
+				Collection<?> propertyIds) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
+			super.setItemDataSource(newDataSource, propertyIds);
 		}
 
 		class FormLayoutFactory extends LeadFormLayoutFactory {

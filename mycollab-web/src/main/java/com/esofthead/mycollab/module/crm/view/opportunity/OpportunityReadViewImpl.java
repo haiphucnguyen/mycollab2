@@ -41,7 +41,8 @@ public class OpportunityReadViewImpl extends AbstractView implements
 	private class PreviewForm extends AdvancedPreviewBeanForm<Opportunity> {
 		private static final long serialVersionUID = 1L;
 
-		public PreviewForm() {
+		@Override
+		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 				private static final long serialVersionUID = 1L;
@@ -59,6 +60,7 @@ public class OpportunityReadViewImpl extends AbstractView implements
 				}
 
 			});
+			super.setItemDataSource(newDataSource);
 		}
 
 		class FormLayoutFactory extends OpportunityFormLayoutFactory {

@@ -2,9 +2,7 @@ package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;

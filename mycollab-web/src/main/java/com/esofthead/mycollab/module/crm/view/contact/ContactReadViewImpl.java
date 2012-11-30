@@ -42,7 +42,8 @@ public class ContactReadViewImpl extends AbstractView implements
 		private static final long serialVersionUID = 1L;
 
 		@SuppressWarnings("serial")
-		public PreviewForm() {
+		@Override
+		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 
@@ -57,6 +58,7 @@ public class ContactReadViewImpl extends AbstractView implements
 				}
 
 			});
+			super.setItemDataSource(newDataSource);
 		}
 
 		class FormLayoutFactory extends ContactFormLayoutFactory {

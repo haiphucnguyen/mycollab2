@@ -6,7 +6,9 @@ import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -30,8 +32,14 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 
 					@Override
 					public void onCancel() {
-						EventBus.getInstance().fireEvent(
-								new AccountEvent.GotoList(this, null));
+						ViewState previousViewState = HistoryViewManager
+								.getPreviousViewState();
+						if (previousViewState.getPresenter() instanceof AccountReadPresenter) {
+							HistoryViewManager.back();
+						} else {
+							EventBus.getInstance().fireEvent(
+									new AccountEvent.GotoList(this, null));
+						}
 					}
 
 					@Override

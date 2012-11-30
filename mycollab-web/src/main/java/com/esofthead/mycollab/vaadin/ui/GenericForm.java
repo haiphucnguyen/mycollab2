@@ -20,6 +20,10 @@ public class GenericForm extends Form {
 
 	private IFormLayoutFactory factory;
 
+	public GenericForm() {
+		super();
+	}
+
 	public void setFormLayoutFactory(IFormLayoutFactory factory) {
 		this.factory = factory;
 		this.setLayout(factory.getLayout());

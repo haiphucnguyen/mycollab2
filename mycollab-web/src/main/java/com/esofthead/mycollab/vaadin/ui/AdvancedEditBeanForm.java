@@ -27,6 +27,11 @@ public class AdvancedEditBeanForm<T> extends GenericForm implements
 		validation = AppContext.getSpringBean(LocalValidatorFactoryBean.class);
 	}
 
+	public AdvancedEditBeanForm(IFormLayoutFactory factory) {
+		this();
+		this.setFormLayoutFactory(factory);
+	}
+
 	protected boolean validateForm(Object data) {
 		for (Object propertyId : this.getItemPropertyIds()) {
 			this.getField(propertyId).removeStyleName("errorField");

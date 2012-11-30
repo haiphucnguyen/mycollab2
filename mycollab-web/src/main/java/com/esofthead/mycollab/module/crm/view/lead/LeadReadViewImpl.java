@@ -41,7 +41,8 @@ public class LeadReadViewImpl extends AbstractView implements LeadReadView {
 		private static final long serialVersionUID = 1L;
 
 		@SuppressWarnings("serial")
-		public PreviewForm() {
+		@Override
+		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 
@@ -60,6 +61,7 @@ public class LeadReadViewImpl extends AbstractView implements LeadReadView {
 				}
 
 			});
+			super.setItemDataSource(newDataSource);
 		}
 
 		class FormLayoutFactory extends LeadFormLayoutFactory {

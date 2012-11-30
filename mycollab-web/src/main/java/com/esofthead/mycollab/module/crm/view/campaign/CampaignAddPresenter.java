@@ -6,7 +6,9 @@ import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -29,8 +31,14 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 
 					@Override
 					public void onCancel() {
-						EventBus.getInstance().fireEvent(
-								new CampaignEvent.GotoList(this, null));
+						ViewState previousViewState = HistoryViewManager
+								.getPreviousViewState();
+						if (previousViewState.getPresenter() instanceof CampaignReadPresenter) {
+							HistoryViewManager.back();
+						} else {
+							EventBus.getInstance().fireEvent(
+									new CampaignEvent.GotoList(this, null));
+						}
 					}
 
 					@Override
@@ -41,7 +49,7 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 					}
 				});
 	}
-	
+
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
