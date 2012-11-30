@@ -4,7 +4,8 @@ import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.FormAddView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -15,7 +16,8 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class AccountAddViewImpl extends FormAddView<Account> implements AccountAddView {
+public class AccountAddViewImpl extends AbstractView implements AccountAddView,
+		IFormAddView<Account> {
 	private static final long serialVersionUID = 1L;
 
 	private EditForm editForm;
@@ -27,12 +29,7 @@ public class AccountAddViewImpl extends FormAddView<Account> implements AccountA
 	}
 
 	@Override
-	protected void onNewItem() {
-		editForm.setItemDataSource(new BeanItem<Account>(new Account()));
-	}
-
-	@Override
-	protected void onEditItem(Account account) {
+	public void editItem(Account account) {
 		editForm.setItemDataSource(new BeanItem<Account>(account));
 	}
 
@@ -46,7 +43,6 @@ public class AccountAddViewImpl extends FormAddView<Account> implements AccountA
 
 		class FormLayoutFactory extends AccountFormLayoutFactory {
 
-			
 			private Layout createButtonControls() {
 				return (new EditFormControlsGenerator<Account>(EditForm.this))
 						.createButtonControls();

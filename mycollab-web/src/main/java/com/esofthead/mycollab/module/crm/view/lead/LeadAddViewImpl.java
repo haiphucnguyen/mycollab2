@@ -4,7 +4,8 @@ import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.FormAddView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
@@ -15,7 +16,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 
-public class LeadAddViewImpl extends FormAddView<Lead> implements LeadAddView {
+public class LeadAddViewImpl extends AbstractView implements IFormAddView<Lead>, LeadAddView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -28,12 +29,7 @@ public class LeadAddViewImpl extends FormAddView<Lead> implements LeadAddView {
 	}
 
 	@Override
-	protected void onNewItem() {
-		editForm.setItemDataSource(new BeanItem<Lead>(new Lead()));
-	}
-
-	@Override
-	protected void onEditItem(Lead item) {
+	public void editItem(Lead item) {
 		editForm.setItemDataSource(new BeanItem<Lead>(item));
 	}
 

@@ -1,12 +1,15 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.module.crm.domain.Lead;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.ComponentContainer;
 
 public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 
@@ -49,6 +52,12 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 								new LeadEvent.GotoList(this, null));
 					}
 				});
+	}
+	
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		super.onGo(container, data);
+		view.previewItem((SimpleLead)data.getParams());
 	}
 
 }

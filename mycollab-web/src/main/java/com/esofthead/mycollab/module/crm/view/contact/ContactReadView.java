@@ -3,10 +3,8 @@ package com.esofthead.mycollab.module.crm.view.contact;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
-public interface ContactReadView extends View{
+public interface ContactReadView extends IPreviewView<SimpleContact>{
 	HasPreviewFormHandlers<Contact> getPreviewFormHandlers();
-
-	void displayItem(SimpleContact contact);
 }

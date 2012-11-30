@@ -3,11 +3,9 @@ package com.esofthead.mycollab.module.crm.view.opportunity;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
-public interface OpportunityReadView extends View {
+public interface OpportunityReadView extends IPreviewView<SimpleOpportunity> {
 	HasPreviewFormHandlers<Opportunity> getPreviewFormHandlers();
-
-	void displayItem(SimpleOpportunity item);
 
 }

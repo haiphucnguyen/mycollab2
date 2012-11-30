@@ -2,7 +2,8 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.FormAddView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -12,8 +13,8 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 
-public class CampaignAddViewImpl extends FormAddView<Campaign> implements
-		CampaignAddView {
+public class CampaignAddViewImpl extends AbstractView implements
+		IFormAddView<Campaign>, CampaignAddView {
 	private static final long serialVersionUID = 1L;
 
 	private EditForm editForm;
@@ -25,12 +26,7 @@ public class CampaignAddViewImpl extends FormAddView<Campaign> implements
 	}
 
 	@Override
-	protected void onNewItem() {
-		editForm.setItemDataSource(new BeanItem<Campaign>(new Campaign()));
-	}
-
-	@Override
-	protected void onEditItem(Campaign campaign) {
+	public void editItem(Campaign campaign) {
 		editForm.setItemDataSource(new BeanItem<Campaign>(campaign));
 	}
 

@@ -6,7 +6,8 @@ import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.FormAddView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -16,7 +17,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 
-public class ContactAddViewImpl extends FormAddView<Contact> implements
+public class ContactAddViewImpl extends AbstractView implements IFormAddView<Contact>,
 		ContactAddView {
 	private static final long serialVersionUID = 1L;
 	private EditForm editForm;
@@ -30,13 +31,7 @@ public class ContactAddViewImpl extends FormAddView<Contact> implements
 	}
 
 	@Override
-	protected void onNewItem() {
-		this.contact = new Contact();
-		editForm.setItemDataSource(new BeanItem<Contact>(contact));
-	}
-
-	@Override
-	protected void onEditItem(Contact item) {
+	public void editItem(Contact item) {
 		this.contact = item;
 		editForm.setItemDataSource(new BeanItem<Contact>(contact));
 
