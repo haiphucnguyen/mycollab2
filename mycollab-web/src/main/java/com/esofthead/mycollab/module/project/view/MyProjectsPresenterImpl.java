@@ -5,11 +5,13 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.MyProjectsView.MyProjectPresenter;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.Presenter;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class MyProjectsPresenterImpl implements Presenter, MyProjectPresenter {
+public class MyProjectsPresenterImpl extends AbstractPresenter implements MyProjectPresenter {
 
 	private MyProjectsView view;
 	private ProjectService projectService;
@@ -22,12 +24,6 @@ public class MyProjectsPresenterImpl implements Presenter, MyProjectPresenter {
 	}
 
 	private void bind() {
-	}
-
-	@Override
-	public void go(ComponentContainer container) {
-		// TODO Auto-generated method stub
-
 	}
 
 	@Override
@@ -47,6 +43,11 @@ public class MyProjectsPresenterImpl implements Presenter, MyProjectPresenter {
 	}
 	
 	private void checkWhetherEnableTableActionControl() {
+		
+	}
+
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		
 	}
 }

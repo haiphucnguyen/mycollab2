@@ -4,4 +4,6 @@ import com.vaadin.ui.ComponentContainer;
 
 public interface Presenter {
 	void go(ComponentContainer container);
+
+	void go(ComponentContainer container, ScreenData<?> data);
 }

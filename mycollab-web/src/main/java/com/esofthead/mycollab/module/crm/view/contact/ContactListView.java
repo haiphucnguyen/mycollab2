@@ -7,7 +7,6 @@ import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
-import com.esofthead.mycollab.vaadin.mvp.Presenter;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 
@@ -26,11 +25,4 @@ public interface ContactListView extends View {
 	HasSelectionOptionHandlers getOptionSelectionHandlers();
 
 	HasPopupActionHandlers getPopupActionHandlers();
-
-	interface ContactListPresenter extends Presenter {
-		
-		void doDefaultSearch();
-
-		void doSearch(ContactSearchCriteria searchCriteria);
-	}
 }

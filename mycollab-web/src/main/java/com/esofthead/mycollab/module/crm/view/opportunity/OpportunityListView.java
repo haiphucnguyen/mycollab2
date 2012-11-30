@@ -7,7 +7,6 @@ import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
-import com.esofthead.mycollab.vaadin.mvp.Presenter;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 
@@ -26,12 +25,5 @@ public interface OpportunityListView extends View {
 	HasPopupActionHandlers getPopupActionHandlers();
 
 	HasSelectableItemHandlers<SimpleOpportunity> getSelectableItemHandlers();
-
-	interface OpportunityListPresenter extends Presenter {
-
-		void doDefaultSearch();
-
-		void doSearch(OpportunitySearchCriteria searchCriteria);
-	}
 
 }

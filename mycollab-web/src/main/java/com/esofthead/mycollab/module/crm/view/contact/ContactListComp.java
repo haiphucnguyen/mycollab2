@@ -2,11 +2,15 @@ package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
 public class ContactListComp extends Depot {
@@ -24,6 +28,20 @@ public class ContactListComp extends Depot {
 
 	private void initUI() {
 		VerticalLayout contentContainer = (VerticalLayout) content;
+		contentContainer.setSpacing(true);
+		
+		@SuppressWarnings("serial")
+		Button createBtn = new Button("Create", new Button.ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+//				EventBus.getInstance().fireEvent(new ContactEvent.GotoAdd(source, data));
+				
+			}
+		});
+		
+		contentContainer.addComponent(createBtn);
+		
 		tableItem = new PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>(
 				AppContext.getSpringBean(ContactService.class),
 				SimpleContact.class,

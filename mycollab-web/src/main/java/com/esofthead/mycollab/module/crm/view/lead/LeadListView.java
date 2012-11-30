@@ -7,7 +7,6 @@ import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
-import com.esofthead.mycollab.vaadin.mvp.Presenter;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 
@@ -25,12 +24,5 @@ public interface LeadListView extends View {
 	HasSelectionOptionHandlers getOptionSelectionHandlers();
 
 	HasPopupActionHandlers getPopupActionHandlers();
-
-	interface LeadListPresenter extends Presenter {
-
-		void doDefaultSearch();
-
-		void doSearch(LeadSearchCriteria searchCriteria);
-	}
 
 }

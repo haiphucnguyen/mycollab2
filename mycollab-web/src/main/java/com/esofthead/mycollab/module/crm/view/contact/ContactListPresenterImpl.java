@@ -4,23 +4,23 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
-import com.esofthead.mycollab.module.crm.view.contact.ContactListView.ContactListPresenter;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
+import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.ComponentContainer;
 
 public class ContactListPresenterImpl extends
-		CrmGenericPresenter<ContactListView> implements ContactListPresenter {
+		CrmGenericPresenter<ContactListView> implements ListPresenter<ContactSearchCriteria> {
 
 	private ContactService contactService;
 
@@ -144,13 +144,11 @@ public class ContactListPresenterImpl extends
 			view.disableActionControls();
 		}
 	}
-
+	
 	@Override
-	public void doDefaultSearch() {
-		ContactSearchCriteria contactSearchCriteria = new ContactSearchCriteria();
-		contactSearchCriteria.setSaccountid(new NumberSearchField(
-				SearchField.AND, AppContext.getAccountId()));
-		doSearch(contactSearchCriteria);
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		super.onGo(container, data);
+		doSearch((ContactSearchCriteria) data.getParams());
 	}
 
 	@Override
