@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
@@ -31,7 +32,7 @@ public class GridFormLayoutHelper {
 	}
 	
 
-	public Field addComponent(Field field, String caption, int columns,
+	public Component addComponent(Component field, String caption, int columns,
 			int rows, String width) {
 		Label l = new Label(caption + ":");
 		l.setSizeUndefined();
@@ -66,12 +67,12 @@ public class GridFormLayoutHelper {
 		}
 	}
 
-	public Field addComponent(Field field, String caption, int columns, int rows) {
+	public Component addComponent(Component field, String caption, int columns, int rows) {
 		return addComponent(field, caption, columns, rows,
 				UIConstants.DEFAULT_CONTROL_WIDTH);
 	}
 
-	public Field addComponent(boolean condition, Field field, String caption,
+	public Component addComponent(boolean condition, Field field, String caption,
 			int columns, int rows) {
 		if (condition) {
 			return addComponent(field, caption, columns, rows,

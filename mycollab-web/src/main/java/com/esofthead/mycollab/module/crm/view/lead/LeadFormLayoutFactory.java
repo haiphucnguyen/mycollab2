@@ -3,7 +3,9 @@ package com.esofthead.mycollab.module.crm.view.lead;
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
@@ -15,6 +17,8 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 	protected GridFormLayoutHelper addressLayout;
 
 	protected GridFormLayoutHelper descLayout;
+	
+	private HorizontalLayout prefixFirstNameBox;
 
 	@Override
 	public Layout getLayout() {
@@ -31,6 +35,11 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 		informationLayout = new GridFormLayoutHelper(2, 8);
 		informationLayout.getLayout().setWidth("900px");
 		layout.addComponent(informationLayout.getLayout());
+		
+		prefixFirstNameBox = new HorizontalLayout();
+		prefixFirstNameBox.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+		prefixFirstNameBox.setSpacing(true);
+		informationLayout.addComponent(prefixFirstNameBox, "First Name", 0, 0);
 
 		Label addressHeader = new Label("Address Information");
 		addressHeader.setStyleName("h2");
@@ -55,8 +64,14 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 
 	@Override
 	public void attachField(Object propertyId, Field field) {
-		informationLayout.addComponent(propertyId.equals("firstname"), field,
-				"First Name", 0, 0);
+		if (propertyId.equals("prefixname")) {
+			prefixFirstNameBox.addComponent(field, 0);
+			field.setWidth("45px");
+		} else if (propertyId.equals("firstname")) {
+			prefixFirstNameBox.addComponent(field);
+			field.setWidth("145px");
+		}
+		
 		informationLayout.addComponent(propertyId.equals("lastname"), field,
 				"Last Name", 0, 1);
 		informationLayout.addComponent(propertyId.equals("title"), field,

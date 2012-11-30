@@ -22,6 +22,8 @@ public class CampaignSelectionField extends FieldWrapper<Campaign> implements
 
 	private HorizontalLayout layout;
 
+	private SimpleCampaign campaign;
+
 	private TextField campaignName;
 	private Embedded browseBtn;
 	private Embedded clearBtn;
@@ -89,13 +91,14 @@ public class CampaignSelectionField extends FieldWrapper<Campaign> implements
 		});
 	}
 
-	public void setCampaignName(String name) {
-		campaignName.setValue(name);
+	public void setCampaign(SimpleCampaign campaign) {
+		this.campaign = campaign;
+		campaignName.setValue(campaign.getCampaignname());
 	}
 
 	@Override
 	public void fireValueChange(Object data) {
-		Campaign campaign = (Campaign) data;
+		this.campaign = (SimpleCampaign) data;
 		campaignName.setValue(campaign.getCampaignname());
 		this.getWrappedField().setValue(campaign.getId());
 	}

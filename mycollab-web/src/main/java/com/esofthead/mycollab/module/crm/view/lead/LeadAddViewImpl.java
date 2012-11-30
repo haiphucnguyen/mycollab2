@@ -9,6 +9,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.PrefixListSelect;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
@@ -59,8 +60,9 @@ public class LeadAddViewImpl extends FormAddView<Lead> implements LeadAddView {
 			@Override
 			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
-
-				if (propertyId.equals("primcountry")
+				if (propertyId.equals("prefixname")) {
+					return new PrefixListSelect();
+				} else if (propertyId.equals("primcountry")
 						|| propertyId.equals("othercountry")) {
 					CountryComboBox countryComboBox = new CountryComboBox();
 					return countryComboBox;

@@ -1,12 +1,16 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
+import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 
 public class OpportunityReadViewImpl extends AbstractView implements
@@ -15,6 +19,8 @@ public class OpportunityReadViewImpl extends AbstractView implements
 
 	private PreviewForm previewForm;
 
+	private SimpleOpportunity opportunity;
+
 	public OpportunityReadViewImpl() {
 		super();
 		previewForm = new PreviewForm();
@@ -22,8 +28,9 @@ public class OpportunityReadViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public void displayItem(Opportunity item) {
-		previewForm.setItemDataSource(new BeanItem<Opportunity>(item));
+	public void displayItem(SimpleOpportunity item) {
+		this.opportunity = item;
+		previewForm.setItemDataSource(new BeanItem<Opportunity>(opportunity));
 	}
 
 	@Override
@@ -31,13 +38,27 @@ public class OpportunityReadViewImpl extends AbstractView implements
 		return previewForm;
 	}
 
-	private static class PreviewForm extends
-			AdvancedPreviewBeanForm<Opportunity> {
+	private class PreviewForm extends AdvancedPreviewBeanForm<Opportunity> {
 		private static final long serialVersionUID = 1L;
 
 		public PreviewForm() {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory());
+			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected Field onCreateField(Item item, Object propertyId,
+						Component uiContext) {
+					Field field = null;
+					if (propertyId.equals("accountid")) {
+						field = new FormViewField(opportunity.getAccountName());
+					} else if (propertyId.equals("campaignid")) {
+						field = new FormViewField(opportunity.getCampaignName());
+					}
+					return field;
+				}
+
+			});
 		}
 
 		class FormLayoutFactory extends OpportunityFormLayoutFactory {
