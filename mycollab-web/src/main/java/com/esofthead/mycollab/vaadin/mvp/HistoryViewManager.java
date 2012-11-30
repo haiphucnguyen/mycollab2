@@ -8,7 +8,7 @@ public class HistoryViewManager {
 
 	public static void addHistory(ViewState viewState) {
 		if (history.size() > 10) {
-			history.remove(history.size());
+			history.remove(history.size() - 1);
 		}
 
 		history.push(viewState);
