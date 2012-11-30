@@ -27,11 +27,4 @@ public interface OpportunityListView extends View {
 
 	HasSelectableItemHandlers<SimpleOpportunity> getSelectableItemHandlers();
 
-	interface OpportunityListPresenter extends Presenter {
-
-		void doDefaultSearch();
-
-		void doSearch(OpportunitySearchCriteria searchCriteria);
-	}
-
 }

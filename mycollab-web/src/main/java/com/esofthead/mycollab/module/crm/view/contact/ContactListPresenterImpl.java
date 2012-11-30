@@ -10,17 +10,17 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
-import com.esofthead.mycollab.module.crm.view.contact.ContactListView.ContactListPresenter;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
+import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 
 public class ContactListPresenterImpl extends
-		CrmGenericPresenter<ContactListView> implements ContactListPresenter {
+		CrmGenericPresenter<ContactListView> implements ListPresenter<ContactSearchCriteria> {
 
 	private ContactService contactService;
 

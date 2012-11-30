@@ -10,17 +10,17 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
-import com.esofthead.mycollab.module.crm.view.campaign.CampaignListView.CampaignListPresenter;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
+import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 
 public class CampaignListPresenterImpl extends
-		CrmGenericPresenter<CampaignListView> implements CampaignListPresenter {
+		CrmGenericPresenter<CampaignListView> implements ListPresenter<CampaignSearchCriteria> {
 	private CampaignService campaignService;
 
 	private CampaignSearchCriteria searchCriteria;

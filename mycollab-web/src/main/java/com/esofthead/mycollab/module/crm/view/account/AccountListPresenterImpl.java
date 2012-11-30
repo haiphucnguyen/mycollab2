@@ -10,17 +10,17 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
-import com.esofthead.mycollab.module.crm.view.account.AccountListView.AccountListPresenter;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
+import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 
 public class AccountListPresenterImpl extends
-		CrmGenericPresenter<AccountListView> implements AccountListPresenter {
+		CrmGenericPresenter<AccountListView> implements ListPresenter<AccountSearchCriteria> {
 
 	private AccountService accountService;
 

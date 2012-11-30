@@ -26,11 +26,4 @@ public interface LeadListView extends View {
 
 	HasPopupActionHandlers getPopupActionHandlers();
 
-	interface LeadListPresenter extends Presenter {
-
-		void doDefaultSearch();
-
-		void doSearch(LeadSearchCriteria searchCriteria);
-	}
-
 }
