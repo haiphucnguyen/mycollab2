@@ -27,7 +27,7 @@ public class LeadReadViewImpl extends AbstractView implements LeadReadView {
 	}
 
 	@Override
-	public void displayItem(SimpleLead lead) {
+	public void previewItem(SimpleLead lead) {
 		this.lead = lead;
 		previewForm.setItemDataSource(new BeanItem<Lead>(lead));
 	}

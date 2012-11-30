@@ -7,6 +7,8 @@ import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
@@ -124,8 +126,8 @@ public class CrmController {
 					public void handle(AccountEvent.GotoAdd event) {
 						AccountAddView view = ViewManager
 								.getView(AccountAddViewImpl.class);
-						new AccountAddPresenter(view).go(container);
-						view.addNewItem();
+						new AccountAddPresenter(view).go(container,
+								new ScreenData.Add<Account>(new Account()));
 					}
 				});
 
@@ -141,8 +143,10 @@ public class CrmController {
 					public void handle(AccountEvent.GotoEdit event) {
 						AccountAddView view = ViewManager
 								.getView(AccountAddViewImpl.class);
-						new AccountAddPresenter(view).go(container);
-						view.editItem((Account) event.getData());
+						new AccountAddPresenter(view).go(
+								container,
+								new ScreenData.Edit<Account>((Account) event
+										.getData()));
 					}
 				});
 
@@ -158,9 +162,9 @@ public class CrmController {
 					public void handle(GotoRead event) {
 						AccountReadView view = ViewManager
 								.getView(AccountReadViewImpl.class);
-						Account account = (Account) event.getData();
-						new AccountReadPresenter(view).go(container);
-						view.displayItem(account);
+						SimpleAccount account = (SimpleAccount) event.getData();
+						new AccountReadPresenter(view).go(container,
+								new ScreenData.Preview<SimpleAccount>(account));
 					}
 				});
 	}
@@ -203,8 +207,8 @@ public class CrmController {
 					public void handle(CampaignEvent.GotoAdd event) {
 						CampaignAddView view = ViewManager
 								.getView(CampaignAddViewImpl.class);
-						new CampaignAddPresenter(view).go(container);
-						view.addNewItem();
+						new CampaignAddPresenter(view).go(container,
+								new ScreenData.Add<Campaign>(new Campaign()));
 					}
 				});
 
@@ -220,8 +224,10 @@ public class CrmController {
 					public void handle(CampaignEvent.GotoEdit event) {
 						CampaignAddView view = ViewManager
 								.getView(CampaignAddViewImpl.class);
-						new CampaignAddPresenter(view).go(container);
-						view.editItem((Campaign) event.getData());
+						new CampaignAddPresenter(view).go(
+								container,
+								new ScreenData.Edit<Campaign>((Campaign) event
+										.getData()));
 					}
 				});
 
@@ -237,9 +243,12 @@ public class CrmController {
 					public void handle(CampaignEvent.GotoRead event) {
 						CampaignReadView view = ViewManager
 								.getView(CampaignReadViewImpl.class);
-						Campaign campaign = (Campaign) event.getData();
-						new CampaignReadPresenter(view).go(container);
-						view.displayItem(campaign);
+						SimpleCampaign campaign = (SimpleCampaign) event
+								.getData();
+						new CampaignReadPresenter(view)
+								.go(container,
+										new ScreenData.Preview<SimpleCampaign>(
+												campaign));
 					}
 				});
 	}
@@ -282,8 +291,8 @@ public class CrmController {
 					public void handle(ContactEvent.GotoAdd event) {
 						ContactAddView view = ViewManager
 								.getView(ContactAddViewImpl.class);
-						new ContactAddPresenter(view).go(container);
-						view.addNewItem();
+						new ContactAddPresenter(view).go(container,
+								new ScreenData.Add<Contact>(new Contact()));
 					}
 				});
 
@@ -299,8 +308,10 @@ public class CrmController {
 					public void handle(ContactEvent.GotoEdit event) {
 						ContactAddView view = ViewManager
 								.getView(ContactAddViewImpl.class);
-						new ContactAddPresenter(view).go(container);
-						view.editItem((Contact) event.getData());
+						new ContactAddPresenter(view).go(
+								container,
+								new ScreenData.Edit<Contact>((Contact) event
+										.getData()));
 					}
 				});
 
@@ -316,10 +327,9 @@ public class CrmController {
 					public void handle(ContactEvent.GotoRead event) {
 						ContactReadView view = ViewManager
 								.getView(ContactReadViewImpl.class);
-						SimpleContact campaign = (SimpleContact) event
-								.getData();
-						new ContactReadPresenter(view).go(container);
-						view.displayItem(campaign);
+						SimpleContact contact = (SimpleContact) event.getData();
+						new ContactReadPresenter(view).go(container,
+								new ScreenData.Preview<SimpleContact>(contact));
 					}
 				});
 	}
@@ -361,8 +371,8 @@ public class CrmController {
 					public void handle(LeadEvent.GotoAdd event) {
 						LeadAddView view = ViewManager
 								.getView(LeadAddViewImpl.class);
-						new LeadAddPresenter(view).go(container);
-						view.addNewItem();
+						new LeadAddPresenter(view).go(container,
+								new ScreenData.Add<Lead>(new Lead()));
 					}
 				});
 
@@ -378,8 +388,10 @@ public class CrmController {
 					public void handle(LeadEvent.GotoEdit event) {
 						LeadAddView view = ViewManager
 								.getView(LeadAddViewImpl.class);
-						new LeadAddPresenter(view).go(container);
-						view.editItem((Lead) event.getData());
+						new LeadAddPresenter(view).go(
+								container,
+								new ScreenData.Edit<Lead>((Lead) event
+										.getData()));
 					}
 				});
 
@@ -396,8 +408,8 @@ public class CrmController {
 						LeadReadView view = ViewManager
 								.getView(LeadReadViewImpl.class);
 						SimpleLead lead = (SimpleLead) event.getData();
-						new LeadReadPresenter(view).go(container);
-						view.displayItem(lead);
+						new LeadReadPresenter(view).go(container,
+								new ScreenData.Preview<SimpleLead>(lead));
 					}
 				});
 	}
@@ -440,8 +452,9 @@ public class CrmController {
 					public void handle(OpportunityEvent.GotoAdd event) {
 						OpportunityAddView view = ViewManager
 								.getView(OpportunityAddViewImpl.class);
-						new OpportunityAddPresenter(view).go(container);
-						view.addNewItem();
+						new OpportunityAddPresenter(view).go(container,
+								new ScreenData.Add<Opportunity>(
+										new Opportunity()));
 					}
 				});
 
@@ -457,8 +470,9 @@ public class CrmController {
 					public void handle(OpportunityEvent.GotoEdit event) {
 						OpportunityAddView view = ViewManager
 								.getView(OpportunityAddViewImpl.class);
-						new OpportunityAddPresenter(view).go(container);
-						view.editItem((Opportunity) event.getData());
+						new OpportunityAddPresenter(view).go(container,
+								new ScreenData.Edit<Opportunity>(
+										(Opportunity) event.getData()));
 					}
 				});
 
@@ -476,8 +490,10 @@ public class CrmController {
 								.getView(OpportunityReadViewImpl.class);
 						SimpleOpportunity item = (SimpleOpportunity) event
 								.getData();
-						new OpportunityReadPresenter(view).go(container);
-						view.displayItem(item);
+						new OpportunityReadPresenter(view)
+								.go(container,
+										new ScreenData.Preview<SimpleOpportunity>(
+												item));
 					}
 				});
 	}

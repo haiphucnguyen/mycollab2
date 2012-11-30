@@ -1,12 +1,15 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.module.crm.domain.Contact;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.ComponentContainer;
 
 public class ContactReadPresenter  extends CrmGenericPresenter<ContactReadView> {
 
@@ -50,5 +53,11 @@ public class ContactReadPresenter  extends CrmGenericPresenter<ContactReadView> 
 								new ContactEvent.GotoList(this, null));
 					}
 				});
+	}
+	
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		super.onGo(container, data);
+		view.previewItem((SimpleContact)data.getParams());
 	}
 }

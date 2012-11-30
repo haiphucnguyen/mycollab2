@@ -8,7 +8,8 @@ import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignSelectionField;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.FormAddView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -18,7 +19,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 
-public class OpportunityAddViewImpl extends FormAddView<Opportunity> implements
+public class OpportunityAddViewImpl extends AbstractView implements IFormAddView<Opportunity>,
 		OpportunityAddView {
 	private static final long serialVersionUID = 1L;
 
@@ -33,13 +34,7 @@ public class OpportunityAddViewImpl extends FormAddView<Opportunity> implements
 	}
 
 	@Override
-	protected void onNewItem() {
-		this.opportunity = new Opportunity();
-		editForm.setItemDataSource(new BeanItem<Opportunity>(opportunity));
-	}
-
-	@Override
-	public void onEditItem(Opportunity item) {
+	public void editItem(Opportunity item) {
 		this.opportunity = item;
 		editForm.setItemDataSource(new BeanItem<Opportunity>(opportunity));
 	}

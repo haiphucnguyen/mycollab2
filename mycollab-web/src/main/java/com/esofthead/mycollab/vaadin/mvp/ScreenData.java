@@ -18,6 +18,13 @@ public abstract class ScreenData<P> {
 		this.params = params;
 	}
 	
+	public static class Add<P> extends ScreenData<P> {
+
+		public Add(P params) {
+			super(params);
+		}
+	}
+	
 	public static class Edit<P> extends ScreenData<P> {
 
 		public Edit(P params) {

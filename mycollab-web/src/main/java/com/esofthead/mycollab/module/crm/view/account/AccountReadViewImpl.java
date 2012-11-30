@@ -4,6 +4,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
@@ -41,7 +42,7 @@ public class AccountReadViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public void displayItem(Account item) {
+	public void previewItem(SimpleAccount item) {
 		account = item;
 		previewForm.setItemDataSource(new BeanItem<Account>(account));
 		displayAssociateContactList();

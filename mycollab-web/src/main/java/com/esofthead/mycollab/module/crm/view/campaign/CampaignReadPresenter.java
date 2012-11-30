@@ -1,12 +1,15 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.module.crm.domain.Campaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.ComponentContainer;
 
 public class CampaignReadPresenter  extends CrmGenericPresenter<CampaignReadView> {
 
@@ -49,5 +52,11 @@ public class CampaignReadPresenter  extends CrmGenericPresenter<CampaignReadView
 								new CampaignEvent.GotoList(this, null));
 					}
 				});
+	}
+	
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		super.onGo(container, data);
+		view.previewItem((SimpleCampaign)data.getParams());
 	}
 }

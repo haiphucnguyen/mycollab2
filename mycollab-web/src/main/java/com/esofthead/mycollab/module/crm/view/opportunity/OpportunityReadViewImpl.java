@@ -28,7 +28,7 @@ public class OpportunityReadViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public void displayItem(SimpleOpportunity item) {
+	public void previewItem(SimpleOpportunity item) {
 		this.opportunity = item;
 		previewForm.setItemDataSource(new BeanItem<Opportunity>(opportunity));
 	}

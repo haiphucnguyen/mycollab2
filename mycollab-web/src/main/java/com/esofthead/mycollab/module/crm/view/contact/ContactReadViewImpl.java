@@ -28,7 +28,7 @@ public class ContactReadViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public void displayItem(SimpleContact item) {
+	public void previewItem(SimpleContact item) {
 		this.contact = item;
 		previewForm.setItemDataSource(new BeanItem<SimpleContact>(contact));
 	}

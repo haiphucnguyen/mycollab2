@@ -6,7 +6,9 @@ import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.ComponentContainer;
 
 public class OpportunityAddPresenter extends
 		CrmGenericPresenter<OpportunityAddView> {
@@ -40,6 +42,12 @@ public class OpportunityAddPresenter extends
 								new OpportunityEvent.GotoAdd(this, null));
 					}
 				});
+	}
+	
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		super.onGo(container, data);
+		view.editItem((Opportunity) data.getParams());
 	}
 
 	public void saveOpportunity(Opportunity opportunity) {

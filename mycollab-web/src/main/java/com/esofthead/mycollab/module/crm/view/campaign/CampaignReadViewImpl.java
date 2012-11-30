@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.module.crm.domain.Campaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -22,7 +23,7 @@ public class CampaignReadViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public void displayItem(Campaign campaign) {
+	public void previewItem(SimpleCampaign campaign) {
 		previewForm.setItemDataSource(new BeanItem<Campaign>(campaign));
 	}
 
