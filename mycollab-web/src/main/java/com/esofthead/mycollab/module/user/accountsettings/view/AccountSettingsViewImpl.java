@@ -6,6 +6,5 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 public class AccountSettingsViewImpl extends AbstractView implements
 		AccountSettingsView {
 	public AccountSettingsViewImpl() {
-		System.out.println("Init account setting");
 	}
 }

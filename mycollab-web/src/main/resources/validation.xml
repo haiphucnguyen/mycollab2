@@ -7,4 +7,5 @@
 	<traversable-resolver>org.hibernate.validator.engine.resolver.DefaultTraversableResolver</traversable-resolver>
 	<constraint-validator-factory>org.hibernate.validator.engine.ConstraintValidatorFactoryImpl</constraint-validator-factory>
 	<constraint-mapping>/validator/crm-constraints.xml</constraint-mapping>
+	<constraint-mapping>/validator/user-constraints.xml</constraint-mapping>
 </validation-config>

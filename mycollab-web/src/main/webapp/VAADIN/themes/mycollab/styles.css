@@ -117,6 +117,12 @@ only screen and (max-device-width : 1024px) {
 input.v-textfield-pagedtable-pagefield {
 	margin-top: 1px;
 }
+input.v-textfield[type="text"], textarea.v-textarea, .v-filterselect {
+	padding: .2em .2em .1em;
+}
+.v-datefield-button {
+	padding: .1em 0 .2em;
+}
 
 /* Top Menu */
 
@@ -314,6 +320,10 @@ input.v-textfield-pagedtable-pagefield {
     margin: 15px;*/
     max-width: 1130px;
 }
+.crmContainer .v-table-body-noselection {
+	height: 100% !important;
+}
+
 input.v-textfield-errorField {
 	border-color: red;
 }
