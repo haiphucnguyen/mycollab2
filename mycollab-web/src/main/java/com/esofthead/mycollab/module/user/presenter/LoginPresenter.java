@@ -6,11 +6,13 @@ import com.esofthead.mycollab.module.user.service.SecurityService;
 import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.Presenter;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class LoginPresenter implements Presenter {
+public class LoginPresenter extends AbstractPresenter {
 
 	private LoginView view;
 
@@ -33,7 +35,7 @@ public class LoginPresenter implements Presenter {
 	}
 
 	@Override
-	public void go(ComponentContainer container) {
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		container.removeAllComponents();
 		container.addComponent(view.getWidget());
 	}

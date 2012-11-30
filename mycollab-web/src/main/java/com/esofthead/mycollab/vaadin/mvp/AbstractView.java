@@ -20,6 +20,20 @@ public abstract class AbstractView extends VerticalLayout implements View,
 	public static String DELETE_ACTION = "Delete";
 	
 	public static String CLONE_ACTION = "Clone";
+	
+	protected ViewState viewState;
+
+	public ViewState getViewState() {
+		return viewState;
+	}
+
+
+
+	public void setViewState(ViewState viewState) {
+		this.viewState = viewState;
+	}
+
+
 
 	@Override
 	public ComponentContainer getWidget() {
