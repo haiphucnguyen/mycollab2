@@ -2,7 +2,8 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.mvp.FormAddView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -19,15 +20,14 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-public class UserInformationViewImpl extends FormAddView<User> implements
-		UserInformationView {
+public class UserInformationViewImpl extends AbstractView implements
+		UserInformationView, IFormAddView<User> {
 
 	private final EditForm formItem;
 
 	public UserInformationViewImpl() {
 		super();
 		formItem = new EditForm();
-		System.out.println("Init user information");
 	}
 
 	@Override
@@ -166,19 +166,13 @@ public class UserInformationViewImpl extends FormAddView<User> implements
 	}
 
 	@Override
-	protected void onNewItem() {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	protected void onEditItem(User user) {
-		formItem.setItemDataSource(new BeanItem<User>(user));
-	}
-
-	@Override
 	public HasEditFormHandlers<User> getEditFormHandlers() {
 		return formItem;
+	}
+
+	@Override
+	public void editItem(User user) {
+		formItem.setItemDataSource(new BeanItem<User>(user));
 	}
 
 }

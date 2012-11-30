@@ -14,6 +14,7 @@
         <property name="mappingLocations">
             <list>
                 <value>classpath:validator/crm-constraints.xml</value>
+                <value>classpath:validator/user-constraints.xml</value>
             </list>
         </property>
     </bean>
