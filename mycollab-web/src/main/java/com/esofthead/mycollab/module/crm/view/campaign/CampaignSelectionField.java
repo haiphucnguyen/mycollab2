@@ -7,6 +7,7 @@ import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
@@ -27,9 +28,6 @@ public class CampaignSelectionField extends FieldWrapper<Campaign> implements
 	private TextField campaignName;
 	private Embedded browseBtn;
 	private Embedded clearBtn;
-
-	@Autowired
-	private CampaignService campaignService;
 
 	public CampaignSelectionField() {
 		super(new TextField(""), Campaign.class);
@@ -78,6 +76,8 @@ public class CampaignSelectionField extends FieldWrapper<Campaign> implements
 				try {
 					Integer campaignId = Integer.parseInt((String) event
 							.getProperty().getValue());
+					CampaignService campaignService = AppContext
+							.getSpringBean(CampaignService.class);
 					SimpleCampaign campaign = campaignService
 							.findCampaignById(campaignId);
 					if (campaign != null) {

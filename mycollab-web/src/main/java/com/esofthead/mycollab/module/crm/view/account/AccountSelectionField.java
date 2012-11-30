@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import javax.security.auth.login.AppConfigurationEntry;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.addon.customfield.FieldWrapper;
 
@@ -7,6 +9,7 @@ import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.event.MouseEvents;
 import com.vaadin.event.MouseEvents.ClickEvent;
@@ -28,9 +31,6 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 
 	private Embedded browseBtn;
 	private Embedded clearBtn;
-
-	@Autowired
-	private AccountService accountService;
 
 	public AccountSelectionField() {
 		super(new TextField(""), Account.class);
@@ -81,6 +81,8 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 			public void valueChange(
 					com.vaadin.data.Property.ValueChangeEvent event) {
 				try {
+					AccountService accountService = AppContext
+							.getSpringBean(AccountService.class);
 					Integer accountId = Integer.parseInt((String) event
 							.getProperty().getValue());
 					SimpleAccount account = accountService
