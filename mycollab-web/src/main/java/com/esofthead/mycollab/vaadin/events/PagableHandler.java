@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.vaadin.events;
 
-public interface PagableHandler {
+import java.io.Serializable;
+
+public interface PagableHandler extends Serializable{
 	void move(int newPageNumber);
 	
 	void displayItemChange(int numOfItems);

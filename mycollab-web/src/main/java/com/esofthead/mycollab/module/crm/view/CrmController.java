@@ -23,6 +23,7 @@ import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddView;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddViewImpl;
@@ -143,10 +144,10 @@ public class CrmController {
 					public void handle(AccountEvent.GotoEdit event) {
 						AccountAddView view = ViewManager
 								.getView(AccountAddViewImpl.class);
-						new AccountAddPresenter(view).go(
-								container,
-								new ScreenData.Edit<Account>((Account) event
-										.getData()));
+
+						SimpleAccount account = (SimpleAccount) event.getData();
+						new AccountAddPresenter(view).go(container,
+								new ScreenData.Edit<Account>(account));
 					}
 				});
 
@@ -162,7 +163,15 @@ public class CrmController {
 					public void handle(GotoRead event) {
 						AccountReadView view = ViewManager
 								.getView(AccountReadViewImpl.class);
-						SimpleAccount account = (SimpleAccount) event.getData();
+						SimpleAccount account = null;
+						if (event.getData() instanceof Integer) {
+							account = AppContext.getSpringBean(
+									AccountService.class).findAccountById(
+									(Integer) event.getData());
+						} else {
+							account = (SimpleAccount) event.getData();
+						}
+
 						new AccountReadPresenter(view).go(container,
 								new ScreenData.Preview<SimpleAccount>(account));
 					}

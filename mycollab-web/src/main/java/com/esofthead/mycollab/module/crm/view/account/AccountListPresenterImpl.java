@@ -22,6 +22,7 @@ import com.vaadin.ui.ComponentContainer;
 public class AccountListPresenterImpl extends
 		CrmGenericPresenter<AccountListView> implements
 		ListPresenter<AccountSearchCriteria> {
+	private static final long serialVersionUID = 1L;
 
 	private AccountService accountService;
 
@@ -34,6 +35,7 @@ public class AccountListPresenterImpl extends
 		accountService = AppContext.getSpringBean(AccountService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void move(int newPageNumber) {

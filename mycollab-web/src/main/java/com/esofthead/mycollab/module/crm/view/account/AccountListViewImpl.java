@@ -127,15 +127,10 @@ public class AccountListViewImpl extends AbstractView implements
 				@SuppressWarnings("unchecked")
 				final SimpleAccount account = ((PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>) source)
 						.getBeanByIndex(itemId);
-				if (account != null) {
-					Label l = new Label();
+				Label l = new Label();
 
-					l.setCaption(account.getCreatedtime() + "");
-					return l;
-				} else {
-					return new Label("");
-				}
-
+				l.setCaption(account.getCreatedtime() + "");
+				return l;
 			}
 		});
 
@@ -154,7 +149,6 @@ public class AccountListViewImpl extends AbstractView implements
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								System.out.println("View account: " + account);
 								EventBus.getInstance()
 										.fireEvent(
 												new AccountEvent.GotoRead(this,

@@ -174,20 +174,16 @@ public class OpportunitySearchPanel extends
 			opportunityNameField = (TextField) gridLayout.addComponent(
 					new TextField(), "Opportunity Name", 0, 0);
 			accountField = (AccountSelectionField) gridLayout.addComponent(
-					AppContext.getSpringBean(AccountSelectionField.class),
-					"Account", 1, 0);
+					new AccountSelectionField(), "Account", 1, 0);
 			nextStepField = (TextField) gridLayout.addComponent(
 					new TextField(), "Next Step", 2, 0);
 
 			userField = (UserListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(UserListSelect.class),
-					"Assigned to", 0, 1);
+					new UserListSelect(), "Assigned to", 0, 1);
 			stageField = (SalesStageListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(SalesStageListSelect.class),
-					"Sales Stage", 1, 1);
+					new SalesStageListSelect(), "Sales Stage", 1, 1);
 			sourceField = (LeadSourceListSelect) gridLayout.addComponent(
-					AppContext.getSpringBean(LeadSourceListSelect.class),
-					"Lead Source", 2, 1);
+					new LeadSourceListSelect(), "Lead Source", 2, 1);
 
 			return gridLayout.getLayout();
 		}

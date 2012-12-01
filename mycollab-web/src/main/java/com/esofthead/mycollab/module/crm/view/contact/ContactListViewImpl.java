@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -122,6 +123,29 @@ public class ContactListViewImpl extends AbstractView implements
 			}
 		});
 
+		tableItem.addGeneratedColumn("accountName", new ColumnGenerator() {
+
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				@SuppressWarnings("unchecked")
+				final SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
+						.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(contact.getAccountName(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new AccountEvent.GotoRead(this, contact
+												.getAccountid()));
+							}
+						});
+				return b;
+			}
+		});
+
 		tableItem.addGeneratedColumn("email", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
@@ -166,7 +190,7 @@ public class ContactListViewImpl extends AbstractView implements
 		});
 
 		tableItem.setColumnExpandRatio("contactName", 1.0f);
-		
+
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 		tableItem.setColumnWidth("title", UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem

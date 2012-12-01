@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.shell;
 
+import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -18,8 +19,8 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 
-public class ShellController {
-
+public class ShellController implements Serializable{
+	private static final long serialVersionUID = 1L;
 	private final ComponentContainer container;
 
 	public ShellController(ComponentContainer container) {

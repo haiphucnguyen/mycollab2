@@ -13,6 +13,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
+	private static final long serialVersionUID = 1L;
 
 	public ContactAddPresenter(ContactAddView view) {
 		this.view = view;

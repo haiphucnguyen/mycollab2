@@ -18,28 +18,27 @@ public class ContactListComp extends Depot {
 
 	public ContactListComp() {
 		super("Contacts", new VerticalLayout());
-
 		this.setWidth("900px");
-
 		initUI();
 	}
 
 	private void initUI() {
 		VerticalLayout contentContainer = (VerticalLayout) content;
 		contentContainer.setSpacing(true);
-		
-		@SuppressWarnings("serial")
+
 		Button createBtn = new Button("Create", new Button.ClickListener() {
-			
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
-//				EventBus.getInstance().fireEvent(new ContactEvent.GotoAdd(source, data));
-				
+				// EventBus.getInstance().fireEvent(new
+				// ContactEvent.GotoAdd(source, data));
+
 			}
 		});
-		
+
 		contentContainer.addComponent(createBtn);
-		
+
 		tableItem = new PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>(
 				AppContext.getSpringBean(ContactService.class),
 				SimpleContact.class,
@@ -56,7 +55,6 @@ public class ContactListComp extends Depot {
 				UIConstants.TABLE_X_LABEL_WIDTH);
 
 		tableItem.setWidth("100%");
-		contentContainer.addComponent(tableItem);
 		contentContainer.addComponent(tableItem);
 		contentContainer.addComponent(tableItem.createControls());
 	}

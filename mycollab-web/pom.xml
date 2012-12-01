@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <name>mycollab-web</name>
     <groupId>com.esofthead.mycollab</groupId>
@@ -142,6 +142,11 @@
             <artifactId>mycollab-wizard</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>vaadin-calendar-agpl-3.0</artifactId>
+            <version>1.2.1</version>
+        </dependency>
 
         <dependency>
             <groupId>junit</groupId>
@@ -191,29 +196,29 @@
                 </dependencies>
                 <executions>
                     <!-- <execution> <id>Audit Artifacts Generator</id> <phase>compile</phase> 
-                    <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/AuditGeneratorConfig.xml</configurationFile> 
-                    <overwrite>true</overwrite> </configuration> </execution> -->
+                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/AuditGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
                     <!-- <execution> <id>User Artifacts Generator</id> <phase>compile</phase> 
-                    <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
-                    <overwrite>true</overwrite> </configuration> </execution> -->
+                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
                     <!-- <execution> <id>File Artifacts Generator</id> <phase>compile</phase> 
-                    <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile> 
-                    <overwrite>true</overwrite> </configuration> </execution> -->
+                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
                     <!-- <execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
-                    <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
-                    <overwrite>true</overwrite> </configuration> </execution> -->
+                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
                     <!-- <execution> <id>Common Artifacts Generator</id> 
-                    <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
-                    <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile> 
-                    <overwrite>true</overwrite> </configuration> </execution> -->
+                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
+                        <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
                     <!-- <execution> <id>Project Artifacts Generator</id> 
-                    <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
-                    <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile> 
-                    <overwrite>true</overwrite> </configuration> </execution> -->
+                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
+                        <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
                     <!-- <execution> <id>Tracker Artifacts Generator</id> 
-                    <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
-                    <configurationFile>${basedir}/src/main/resources/TrackerGeneratorConfig.xml</configurationFile> 
-                    <overwrite>true</overwrite> </configuration> </execution> -->
+                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
+                        <configurationFile>${basedir}/src/main/resources/TrackerGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
                 </executions>
             </plugin>
             <plugin>
@@ -262,12 +267,12 @@
                         <configuration>
                             <target>
                                 <scp localfile="${basedir}/target/root.war"
-                                     keyfile="${basedir}/esofthead-virginia.pem"
-                                     todir="ubuntu@23.23.166.114:/home/ubuntu/jetty-hightide-8.1.8.v20121106/webapps" />
+                                    keyfile="${basedir}/esofthead-virginia.pem"
+                                    todir="ubuntu@23.23.166.114:/home/ubuntu/jetty-hightide-8.1.8.v20121106/webapps" />
                                 <sshexec host="23.23.166.114"
-                                         username="ubuntu"
-                                         keyfile="${basedir}/esofthead-virginia.pem"
-                                         command="sudo /etc/init.d/jetty.sh restart" />
+                                    username="ubuntu"
+                                    keyfile="${basedir}/esofthead-virginia.pem"
+                                    command="sudo /etc/init.d/jetty.sh restart" />
                             </target>
                         </configuration>
                         <goals>
@@ -291,9 +296,9 @@
                     <execution>
                         <configuration>
                             <!-- if you don't specify any modules, the plugin 
-                            will find them -->
+                                will find them -->
                             <!-- <modules> <module>${package}.gwt.MyWidgetSet</module> 
-                            </modules> -->
+                                </modules> -->
                         </configuration>
                         <goals>
                             <goal>update-widgetset</goal>

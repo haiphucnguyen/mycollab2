@@ -35,4 +35,8 @@
     
 
     <inherits name="org.vaadin.teemu.wizards.WizardsforvaadinWidgetset" />
+
+    
+
+    <inherits name="com.vaadin.addon.calendar.gwt.CalendarWidgetset" />
 </module>

@@ -21,6 +21,7 @@ import com.vaadin.ui.ComponentContainer;
 
 public class ContactListPresenterImpl extends
 		CrmGenericPresenter<ContactListView> implements ListPresenter<ContactSearchCriteria> {
+	private static final long serialVersionUID = 1L;
 
 	private ContactService contactService;
 

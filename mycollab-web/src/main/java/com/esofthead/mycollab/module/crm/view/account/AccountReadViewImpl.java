@@ -26,7 +26,7 @@ public class AccountReadViewImpl extends AbstractView implements
 		AccountReadView {
 	private static final long serialVersionUID = 1L;
 
-	private Account account;
+	private SimpleAccount account;
 
 	private PreviewForm previewForm;
 

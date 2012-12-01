@@ -1,8 +1,11 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import java.util.Arrays;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
@@ -103,18 +106,22 @@ public class AccountSearchPanel extends
 			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			basicSearchBody.addComponent(new Button("Search", new Button.ClickListener() {
+			basicSearchBody.addComponent(new Button("Search",
+					new Button.ClickListener() {
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					searchCriteria = new AccountSearchCriteria();
-					searchCriteria.setSaccountid(new NumberSearchField(
-							SearchField.AND, AppContext.getAccountId()));
-					searchCriteria.setAccountname(new StringSearchField(
-							SearchField.AND, (String) nameField.getValue()));
-					AccountSearchPanel.this.notifySearchHandler(searchCriteria);
-				}
-			}));
+						@Override
+						public void buttonClick(ClickEvent event) {
+							searchCriteria = new AccountSearchCriteria();
+							searchCriteria.setSaccountid(new NumberSearchField(
+									SearchField.AND, AppContext.getAccountId()));
+							searchCriteria
+									.setAccountname(new StringSearchField(
+											SearchField.AND, (String) nameField
+													.getValue()));
+							AccountSearchPanel.this
+									.notifySearchHandler(searchCriteria);
+						}
+					}));
 
 			basicSearchBody.addComponent(new Button("Cancel",
 					new Button.ClickListener() {
@@ -210,6 +217,28 @@ public class AccountSearchPanel extends
 									.setAccountname(new StringSearchField(
 											SearchField.AND, (String) nameField
 													.getValue()));
+
+							if (StringUtil.isNotNullOrEmpty((String) nameField
+									.getValue())) {
+								searchCriteria
+										.setAccountname(new StringSearchField(
+												SearchField.AND,
+												(String) nameField.getValue()));
+							}
+
+							if (StringUtil
+									.isNotNullOrEmpty((String) websiteField
+											.getValue())) {
+								searchCriteria
+										.setWebsite(new StringSearchField(
+												SearchField.AND,
+												(String) websiteField
+														.getValue()));
+							}
+
+							AccountSearchPanel.this
+									.notifySearchHandler(searchCriteria);
+
 						}
 
 					}));
@@ -219,7 +248,15 @@ public class AccountSearchPanel extends
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-
+							nameField.setValue("");
+							websiteField.setValue("");
+							anyPhoneField.setValue("");
+							anyMailField.setValue("");
+							anyAddressField.setValue("");
+							cityField.setValue("");
+							industryField.setValue(Arrays.asList(""));
+							typeField.setValue(Arrays.asList(""));
+							userField.setValue(Arrays.asList(""));
 						}
 
 					}));

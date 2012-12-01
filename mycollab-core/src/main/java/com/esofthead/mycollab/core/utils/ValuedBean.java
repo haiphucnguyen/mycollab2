@@ -1,6 +1,10 @@
 package com.esofthead.mycollab.core.utils;
 
-public class ValuedBean implements Cloneable {
+import java.io.Serializable;
+
+public class ValuedBean implements Cloneable, Serializable {
+	private static final long serialVersionUID = 1L;
+
 	private boolean selected = false;
 
 	private Object extraData;
