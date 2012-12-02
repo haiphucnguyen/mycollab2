@@ -51,6 +51,8 @@ public class CrmContainer extends AbstractView {
 
 	private static String NEW_OPPORTUNITY_ITEM = "New Opportunity";
 
+	private static String ACTIVITIES_LIST = "Activities";
+
 	private final VerticalLayout currentView;
 
 	private final PopupButton addBtn;
@@ -95,6 +97,10 @@ public class CrmContainer extends AbstractView {
 		Button caseList = new Button(CASE_LIST, listener);
 		caseList.setStyleName("link");
 		toolbar.addComponent(caseList);
+		
+		Button activitiesList = new Button(ACTIVITIES_LIST, listener);
+		activitiesList.setStyleName("link");
+		toolbar.addComponent(activitiesList);
 
 		toolbar.setStyleName("h-sidebar-menu");
 
