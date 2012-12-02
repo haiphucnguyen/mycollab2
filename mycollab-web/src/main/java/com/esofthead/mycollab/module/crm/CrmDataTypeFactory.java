@@ -36,6 +36,22 @@ public class CrmDataTypeFactory {
 			"Proposal/Price Quote", "Negotiation/Review", "Closed Won",
 			"Closed Lost" };
 
+	private static String[] CASES_STATUS_LIST = new String[] { "New",
+			"Assigned", "Closed", "Pending Input", "Rejected", "Duplicate" };
+
+	private static String[] CASES_PRIORITY_LIST = new String[] { "High",
+			"Medium", "Low" };
+
+	private static String[] CASES_REASON_LIST = new String[] { "-None-",
+			"User did not attend any training", "Complex functionality",
+			"New problem", "Ambigous instruction" };
+
+	private static String[] CASES_ORIGIN_LIST = new String[] { "-None-",
+			"Email", "Phone", "Web", "Error Log" };
+
+	private static String[] CASES_TYPE_LIST = new String[] { "-None-",
+			"Problem", "Feature Request", "Question" };
+
 	public static String[] getAccountIndustryList() {
 		return ACCOUNT_INDUSTRY_LIST;
 	}
@@ -62,5 +78,25 @@ public class CrmDataTypeFactory {
 
 	public static String[] getSalesStageList() {
 		return SALES_STAGE_LIST;
+	}
+
+	public static String[] getCasesStatusList() {
+		return CASES_STATUS_LIST;
+	}
+
+	public static String[] getCasesPriorityList() {
+		return CASES_PRIORITY_LIST;
+	}
+
+	public static String[] getCasesReason() {
+		return CASES_REASON_LIST;
+	}
+
+	public static String[] getCasesOrigin() {
+		return CASES_ORIGIN_LIST;
+	}
+
+	public static String[] getCasesType() {
+		return CASES_TYPE_LIST;
 	}
 }

@@ -19,7 +19,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
-public class CampaignListPresenterImpl extends
+public class CampaignListPresenter extends
 		CrmGenericPresenter<CampaignListView> implements ListPresenter<CampaignSearchCriteria> {
 	private CampaignService campaignService;
 
@@ -27,7 +27,7 @@ public class CampaignListPresenterImpl extends
 
 	private boolean isSelectAll = false;
 
-	public CampaignListPresenterImpl(final CampaignListView view) {
+	public CampaignListPresenter(final CampaignListView view) {
 		this.view = view;
 		campaignService = AppContext.getSpringBean(CampaignService.class);
 		

@@ -6,6 +6,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
@@ -65,7 +66,6 @@ public class CrmContainer extends AbstractView {
 		NavigatorItemListener listener = new NavigatorItemListener();
 
 		toolbar = new CssLayout();
-		// toolbar.setWidth("100%");
 
 		Button homeBtn = new Button(null, listener);
 		homeBtn.setStyleName("link");
@@ -162,6 +162,12 @@ public class CrmContainer extends AbstractView {
 			} else if (CAMPAIGN_LIST.equals(caption)) {
 				EventBus.getInstance().fireEvent(
 						new CampaignEvent.GotoList(this, null));
+			} else if (NEW_CASE_ITEM.equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new CaseEvent.GotoAdd(this, null));
+			} else if (CASE_LIST.equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new CaseEvent.GotoList(this, null));
 			} else if (CONTACT_LIST.equals(caption)) {
 				EventBus.getInstance().fireEvent(
 						new ContactEvent.GotoList(this, null));

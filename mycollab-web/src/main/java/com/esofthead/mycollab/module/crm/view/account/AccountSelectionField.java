@@ -1,8 +1,5 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
-import javax.security.auth.login.AppConfigurationEntry;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.vaadin.addon.customfield.FieldWrapper;
 
 import com.esofthead.mycollab.module.crm.domain.Account;

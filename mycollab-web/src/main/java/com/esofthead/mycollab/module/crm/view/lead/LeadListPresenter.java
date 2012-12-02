@@ -1,12 +1,12 @@
-package com.esofthead.mycollab.module.crm.view.contact;
+package com.esofthead.mycollab.module.crm.view.lead;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
+import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
@@ -19,20 +19,19 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
-public class ContactListPresenterImpl extends
-		CrmGenericPresenter<ContactListView> implements ListPresenter<ContactSearchCriteria> {
-	private static final long serialVersionUID = 1L;
+public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
+		implements ListPresenter<LeadSearchCriteria> {
 
-	private ContactService contactService;
+	private LeadService leadService;
 
-	private ContactSearchCriteria searchCriteria;
-
+	private LeadSearchCriteria searchCriteria;
+	
 	private boolean isSelectAll = false;
 
-	public ContactListPresenterImpl(final ContactListView view) {
+	public LeadListPresenter(final LeadListView view) {
 		this.view = view;
-		contactService = AppContext.getSpringBean(ContactService.class);
-
+		leadService = AppContext.getSpringBean(LeadService.class);
+		
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
 
 			@Override
@@ -44,25 +43,25 @@ public class ContactListPresenterImpl extends
 			public void displayItemChange(int numOfItems) {
 				pageChange();
 			}
-
+			
 			private void pageChange() {
 				if (isSelectAll) {
 					selectAllItemsInCurrentPage();
 				}
-
+				
 				checkWhetherEnableTableActionControl();
 			}
 		});
 
 		view.getSearchHandlers().addSearchHandler(
-				new SearchHandler<ContactSearchCriteria>() {
+				new SearchHandler<LeadSearchCriteria>() {
 
 					@Override
-					public void onSearch(ContactSearchCriteria criteria) {
+					public void onSearch(LeadSearchCriteria criteria) {
 						doSearch(criteria);
 					}
 				});
-
+		
 		view.getOptionSelectionHandlers().addSelectionOptionHandler(
 				new SelectionOptionHandler() {
 
@@ -76,17 +75,17 @@ public class ContactListPresenterImpl extends
 
 					@Override
 					public void onDeSelect() {
-						Collection<SimpleContact> currentDataList = view
+						Collection<SimpleLead> currentDataList = view
 								.getPagedBeanTable().getCurrentDataList();
 						isSelectAll = false;
-						for (SimpleContact item : currentDataList) {
+						for (SimpleLead item : currentDataList) {
 							item.setSelected(false);
-							CheckBox checkBox = (CheckBox) item.getExtraData();
+							CheckBox checkBox = (CheckBox) item
+									.getExtraData();
 							checkBox.setValue(false);
 						}
 
 						checkWhetherEnableTableActionControl();
-
 					}
 
 					@Override
@@ -106,24 +105,24 @@ public class ContactListPresenterImpl extends
 						}
 					}
 				});
+		
+		view.getSelectableItemHandlers().addSelectableItemHandler(new SelectableItemHandler<SimpleLead>() {
+			
+			@Override
+			public void onSelect(SimpleLead item) {
+				isSelectAll = false;
+				item.setSelected(!item.isSelected());
 
-		view.getSelectableItemHandlers().addSelectableItemHandler(
-				new SelectableItemHandler<SimpleContact>() {
-
-					@Override
-					public void onSelect(SimpleContact item) {
-						isSelectAll = false;
-						item.setSelected(!item.isSelected());
-
-						checkWhetherEnableTableActionControl();
-					}
-				});
+				checkWhetherEnableTableActionControl();
+				
+			}
+		});
 	}
-
+	
 	private void selectAllItemsInCurrentPage() {
-		Collection<SimpleContact> currentDataList = view.getPagedBeanTable()
+		Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
 				.getCurrentDataList();
-		for (SimpleContact item : currentDataList) {
+		for (SimpleLead item : currentDataList) {
 			item.setSelected(true);
 			CheckBox checkBox = (CheckBox) item.getExtraData();
 			checkBox.setValue(true);
@@ -131,10 +130,10 @@ public class ContactListPresenterImpl extends
 	}
 
 	private void checkWhetherEnableTableActionControl() {
-		Collection<SimpleContact> currentDataList = view.getPagedBeanTable()
+		Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
 				.getCurrentDataList();
 		int countItems = 0;
-		for (SimpleContact item : currentDataList) {
+		for (SimpleLead item : currentDataList) {
 			if (item.isSelected()) {
 				countItems++;
 			}
@@ -149,31 +148,31 @@ public class ContactListPresenterImpl extends
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
-		doSearch((ContactSearchCriteria) data.getParams());
+		doSearch((LeadSearchCriteria) data.getParams());
 	}
 
 	@Override
-	public void doSearch(ContactSearchCriteria searchCriteria) {
+	public void doSearch(LeadSearchCriteria searchCriteria) {
 		this.searchCriteria = searchCriteria;
 		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
 	}
 
 	private void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleContact> currentDataList = view
+			Collection<SimpleLead> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
-			for (SimpleContact account : currentDataList) {
-				keyList.add(account.getId());
+			for (SimpleLead item : currentDataList) {
+				keyList.add(item.getId());
 			}
 
 			if (keyList.size() > 0) {
-				contactService.removeWithSession(keyList,
+				leadService.removeWithSession(keyList,
 						AppContext.getUsername());
 				doSearch(searchCriteria);
 			}
 		} else {
-			contactService.removeByCriteria(searchCriteria);
+			leadService.removeByCriteria(searchCriteria);
 			doSearch(searchCriteria);
 		}
 	}

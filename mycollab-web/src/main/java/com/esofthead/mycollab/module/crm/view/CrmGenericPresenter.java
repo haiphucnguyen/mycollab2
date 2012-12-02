@@ -6,7 +6,8 @@ import com.esofthead.mycollab.vaadin.mvp.View;
 import com.vaadin.ui.ComponentContainer;
 
 public class CrmGenericPresenter<V extends View> extends AbstractPresenter{
-
+	private static final long serialVersionUID = 1L;
+	
 	protected V view;
 
 	@Override

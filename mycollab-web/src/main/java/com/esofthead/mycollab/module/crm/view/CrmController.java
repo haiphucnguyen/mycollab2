@@ -4,22 +4,26 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
+import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoRead;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
@@ -27,7 +31,7 @@ import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddView;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddViewImpl;
-import com.esofthead.mycollab.module.crm.view.account.AccountListPresenterImpl;
+import com.esofthead.mycollab.module.crm.view.account.AccountListPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountListView;
 import com.esofthead.mycollab.module.crm.view.account.AccountListViewImpl;
 import com.esofthead.mycollab.module.crm.view.account.AccountReadPresenter;
@@ -36,16 +40,25 @@ import com.esofthead.mycollab.module.crm.view.account.AccountReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddView;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddViewImpl;
-import com.esofthead.mycollab.module.crm.view.campaign.CampaignListPresenterImpl;
+import com.esofthead.mycollab.module.crm.view.campaign.CampaignListPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignListView;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignListViewImpl;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignReadPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignReadView;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignReadViewImpl;
+import com.esofthead.mycollab.module.crm.view.cases.CaseAddPresenter;
+import com.esofthead.mycollab.module.crm.view.cases.CaseAddView;
+import com.esofthead.mycollab.module.crm.view.cases.CaseAddViewImpl;
+import com.esofthead.mycollab.module.crm.view.cases.CaseListPresenter;
+import com.esofthead.mycollab.module.crm.view.cases.CaseListView;
+import com.esofthead.mycollab.module.crm.view.cases.CaseListViewImpl;
+import com.esofthead.mycollab.module.crm.view.cases.CaseReadPresenter;
+import com.esofthead.mycollab.module.crm.view.cases.CaseReadView;
+import com.esofthead.mycollab.module.crm.view.cases.CaseReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.contact.ContactAddPresenter;
 import com.esofthead.mycollab.module.crm.view.contact.ContactAddView;
 import com.esofthead.mycollab.module.crm.view.contact.ContactAddViewImpl;
-import com.esofthead.mycollab.module.crm.view.contact.ContactListPresenterImpl;
+import com.esofthead.mycollab.module.crm.view.contact.ContactListPresenter;
 import com.esofthead.mycollab.module.crm.view.contact.ContactListView;
 import com.esofthead.mycollab.module.crm.view.contact.ContactListViewImpl;
 import com.esofthead.mycollab.module.crm.view.contact.ContactReadPresenter;
@@ -54,7 +67,7 @@ import com.esofthead.mycollab.module.crm.view.contact.ContactReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.lead.LeadAddPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadAddView;
 import com.esofthead.mycollab.module.crm.view.lead.LeadAddViewImpl;
-import com.esofthead.mycollab.module.crm.view.lead.LeadListPresenterImpl;
+import com.esofthead.mycollab.module.crm.view.lead.LeadListPresenter;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListView;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListViewImpl;
 import com.esofthead.mycollab.module.crm.view.lead.LeadReadPresenter;
@@ -63,7 +76,7 @@ import com.esofthead.mycollab.module.crm.view.lead.LeadReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddView;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddViewImpl;
-import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListPresenterImpl;
+import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListView;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListViewImpl;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityReadPresenter;
@@ -87,6 +100,7 @@ public class CrmController {
 		bindContactEvents();
 		bindLeadEvents();
 		bindOpportunityEvents();
+		bindCasesEvents();
 	}
 
 	@SuppressWarnings("serial")
@@ -103,7 +117,7 @@ public class CrmController {
 					public void handle(AccountEvent.GotoList event) {
 						AccountListView view = ViewManager
 								.getView(AccountListViewImpl.class);
-						AccountListPresenterImpl presenter = new AccountListPresenterImpl(
+						AccountListPresenter presenter = new AccountListPresenter(
 								view);
 
 						AccountSearchCriteria criteria = new AccountSearchCriteria();
@@ -192,7 +206,7 @@ public class CrmController {
 					public void handle(CampaignEvent.GotoList event) {
 						CampaignListView view = ViewManager
 								.getView(CampaignListViewImpl.class);
-						CampaignListPresenterImpl presenter = new CampaignListPresenterImpl(
+						CampaignListPresenter presenter = new CampaignListPresenter(
 								view);
 						CampaignSearchCriteria searchCriteria = new CampaignSearchCriteria();
 						searchCriteria.setSaccountid(new NumberSearchField(
@@ -276,7 +290,7 @@ public class CrmController {
 					public void handle(ContactEvent.GotoList event) {
 						ContactListView view = ViewManager
 								.getView(ContactListViewImpl.class);
-						ContactListPresenterImpl presenter = new ContactListPresenterImpl(
+						ContactListPresenter presenter = new ContactListPresenter(
 								view);
 
 						ContactSearchCriteria searchCriteria = new ContactSearchCriteria();
@@ -357,7 +371,7 @@ public class CrmController {
 					public void handle(LeadEvent.GotoList event) {
 						LeadListView view = ViewManager
 								.getView(LeadListViewImpl.class);
-						LeadListPresenterImpl presenter = new LeadListPresenterImpl(
+						LeadListPresenter presenter = new LeadListPresenter(
 								view);
 						LeadSearchCriteria searchCriteria = new LeadSearchCriteria();
 						searchCriteria.setSaccountid(new NumberSearchField(
@@ -437,7 +451,7 @@ public class CrmController {
 					public void handle(OpportunityEvent.GotoList event) {
 						OpportunityListView view = ViewManager
 								.getView(OpportunityListViewImpl.class);
-						OpportunityListPresenterImpl presenter = new OpportunityListPresenterImpl(
+						OpportunityListPresenter presenter = new OpportunityListPresenter(
 								view);
 						OpportunitySearchCriteria searchCriteria = new OpportunitySearchCriteria();
 						searchCriteria.setSaccountid(new NumberSearchField(
@@ -503,6 +517,87 @@ public class CrmController {
 								.go(container,
 										new ScreenData.Preview<SimpleOpportunity>(
 												item));
+					}
+				});
+	}
+	
+	@SuppressWarnings("serial")
+	private void bindCasesEvents() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<CaseEvent.GotoList>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return CaseEvent.GotoList.class;
+					}
+
+					@Override
+					public void handle(CaseEvent.GotoList event) {
+						CaseListView view = ViewManager
+								.getView(CaseListViewImpl.class);
+						CaseListPresenter presenter = new CaseListPresenter(
+								view);
+
+						CaseSearchCriteria searchCriteria = new CaseSearchCriteria();
+						searchCriteria.setSaccountid(new NumberSearchField(
+								SearchField.AND, AppContext.getAccountId()));
+						presenter.go(container,
+								new ScreenData.Search<CaseSearchCriteria>(
+										searchCriteria));
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<CaseEvent.GotoAdd>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return CaseEvent.GotoAdd.class;
+					}
+
+					@Override
+					public void handle(CaseEvent.GotoAdd event) {
+						CaseAddView view = ViewManager
+								.getView(CaseAddViewImpl.class);
+						new CaseAddPresenter(view).go(container,
+								new ScreenData.Add<Case>(new Case()));
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<CaseEvent.GotoEdit>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return CaseEvent.GotoEdit.class;
+					}
+
+					@Override
+					public void handle(CaseEvent.GotoEdit event) {
+						CaseAddView view = ViewManager
+								.getView(CaseAddViewImpl.class);
+						new CaseAddPresenter(view).go(
+								container,
+								new ScreenData.Edit<Case>((Case) event
+										.getData()));
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<CaseEvent.GotoRead>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return CaseEvent.GotoRead.class;
+					}
+
+					@Override
+					public void handle(CaseEvent.GotoRead event) {
+						CaseReadView view = ViewManager
+								.getView(CaseReadViewImpl.class);
+						SimpleCase contact = (SimpleCase) event.getData();
+						new CaseReadPresenter(view).go(container,
+								new ScreenData.Preview<SimpleCase>(contact));
 					}
 				});
 	}

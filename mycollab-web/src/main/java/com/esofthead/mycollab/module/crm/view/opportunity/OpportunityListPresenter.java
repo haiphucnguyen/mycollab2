@@ -19,7 +19,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
-public class OpportunityListPresenterImpl extends
+public class OpportunityListPresenter extends
 		CrmGenericPresenter<OpportunityListView> implements
 		ListPresenter<OpportunitySearchCriteria> {
 
@@ -29,7 +29,7 @@ public class OpportunityListPresenterImpl extends
 
 	private boolean isSelectAll = false;
 
-	public OpportunityListPresenterImpl(final OpportunityListView view) {
+	public OpportunityListPresenter(final OpportunityListView view) {
 		this.view = view;
 		opportunityService = AppContext.getSpringBean(OpportunityService.class);
 

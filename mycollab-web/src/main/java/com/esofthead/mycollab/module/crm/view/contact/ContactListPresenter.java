@@ -1,12 +1,12 @@
-package com.esofthead.mycollab.module.crm.view.account;
+package com.esofthead.mycollab.module.crm.view.contact;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
@@ -19,23 +19,21 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
-public class AccountListPresenterImpl extends
-		CrmGenericPresenter<AccountListView> implements
-		ListPresenter<AccountSearchCriteria> {
+public class ContactListPresenter extends
+		CrmGenericPresenter<ContactListView> implements ListPresenter<ContactSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 
-	private AccountService accountService;
+	private ContactService contactService;
 
-	private AccountSearchCriteria searchCriteria;
+	private ContactSearchCriteria searchCriteria;
 
 	private boolean isSelectAll = false;
 
-	public AccountListPresenterImpl(final AccountListView view) {
+	public ContactListPresenter(final ContactListView view) {
 		this.view = view;
-		accountService = AppContext.getSpringBean(AccountService.class);
+		contactService = AppContext.getSpringBean(ContactService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
-			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void move(int newPageNumber) {
@@ -57,10 +55,10 @@ public class AccountListPresenterImpl extends
 		});
 
 		view.getSearchHandlers().addSearchHandler(
-				new SearchHandler<AccountSearchCriteria>() {
+				new SearchHandler<ContactSearchCriteria>() {
 
 					@Override
-					public void onSearch(AccountSearchCriteria criteria) {
+					public void onSearch(ContactSearchCriteria criteria) {
 						doSearch(criteria);
 					}
 				});
@@ -78,10 +76,10 @@ public class AccountListPresenterImpl extends
 
 					@Override
 					public void onDeSelect() {
-						Collection<SimpleAccount> currentDataList = view
+						Collection<SimpleContact> currentDataList = view
 								.getPagedBeanTable().getCurrentDataList();
 						isSelectAll = false;
-						for (SimpleAccount item : currentDataList) {
+						for (SimpleContact item : currentDataList) {
 							item.setSelected(false);
 							CheckBox checkBox = (CheckBox) item.getExtraData();
 							checkBox.setValue(false);
@@ -110,10 +108,10 @@ public class AccountListPresenterImpl extends
 				});
 
 		view.getSelectableItemHandlers().addSelectableItemHandler(
-				new SelectableItemHandler<SimpleAccount>() {
+				new SelectableItemHandler<SimpleContact>() {
 
 					@Override
-					public void onSelect(SimpleAccount item) {
+					public void onSelect(SimpleContact item) {
 						isSelectAll = false;
 						item.setSelected(!item.isSelected());
 
@@ -123,9 +121,9 @@ public class AccountListPresenterImpl extends
 	}
 
 	private void selectAllItemsInCurrentPage() {
-		Collection<SimpleAccount> currentDataList = view.getPagedBeanTable()
+		Collection<SimpleContact> currentDataList = view.getPagedBeanTable()
 				.getCurrentDataList();
-		for (SimpleAccount item : currentDataList) {
+		for (SimpleContact item : currentDataList) {
 			item.setSelected(true);
 			CheckBox checkBox = (CheckBox) item.getExtraData();
 			checkBox.setValue(true);
@@ -133,10 +131,10 @@ public class AccountListPresenterImpl extends
 	}
 
 	private void checkWhetherEnableTableActionControl() {
-		Collection<SimpleAccount> currentDataList = view.getPagedBeanTable()
+		Collection<SimpleContact> currentDataList = view.getPagedBeanTable()
 				.getCurrentDataList();
 		int countItems = 0;
-		for (SimpleAccount item : currentDataList) {
+		for (SimpleContact item : currentDataList) {
 			if (item.isSelected()) {
 				countItems++;
 			}
@@ -147,39 +145,36 @@ public class AccountListPresenterImpl extends
 			view.disableActionControls();
 		}
 	}
-
+	
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
-		doSearch((AccountSearchCriteria) data.getParams());
+		doSearch((ContactSearchCriteria) data.getParams());
 	}
 
 	@Override
-	public void doSearch(AccountSearchCriteria searchCriteria) {
+	public void doSearch(ContactSearchCriteria searchCriteria) {
 		this.searchCriteria = searchCriteria;
 		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
-		checkWhetherEnableTableActionControl();
 	}
 
 	private void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleAccount> currentDataList = view
+			Collection<SimpleContact> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
-			for (SimpleAccount item : currentDataList) {
-				keyList.add(item.getId());
+			for (SimpleContact account : currentDataList) {
+				keyList.add(account.getId());
 			}
 
 			if (keyList.size() > 0) {
-				accountService.removeWithSession(keyList,
+				contactService.removeWithSession(keyList,
 						AppContext.getUsername());
 				doSearch(searchCriteria);
 			}
 		} else {
-			accountService.removeByCriteria(searchCriteria);
+			contactService.removeByCriteria(searchCriteria);
 			doSearch(searchCriteria);
 		}
-
 	}
-
 }
