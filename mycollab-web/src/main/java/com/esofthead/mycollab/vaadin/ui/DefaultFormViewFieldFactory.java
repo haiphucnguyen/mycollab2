@@ -5,6 +5,7 @@ import org.vaadin.addon.customfield.CustomField;
 
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -16,7 +17,7 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 	@Override
 	public Field createField(Item item, Object propertyId,
 			com.vaadin.ui.Component uiContext) {
-		
+
 		Field field = onCreateField(item, propertyId, uiContext);
 		if (field == null) {
 			Object bean = ((BeanItem<Object>) item).getBean();
@@ -33,7 +34,7 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 
 		return field;
 	}
-	
+
 	protected Field onCreateField(Item item, Object propertyId,
 			com.vaadin.ui.Component uiContext) {
 		return null;
@@ -47,6 +48,36 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 			l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 			this.setCompositionRoot(l);
 			l.setValue(value);
+		}
+
+		@Override
+		public Class<?> getType() {
+			return String.class;
+		}
+	}
+
+	public static class FormLinkViewField extends CustomField {
+		private static final long serialVersionUID = 1L;
+
+		public FormLinkViewField(String value, Button.ClickListener listener) {
+			ButtonLink l = new ButtonLink(value, listener);
+			l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			this.setCompositionRoot(l);
+		}
+
+		@Override
+		public Class<?> getType() {
+			return String.class;
+		}
+	}
+	
+	public static class FormEmailLinkViewField extends CustomField {
+		private static final long serialVersionUID = 1L;
+
+		public FormEmailLinkViewField(String email) {
+			EmailLink l = new EmailLink(email);
+			l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			this.setCompositionRoot(l);
 		}
 
 		@Override

@@ -56,7 +56,7 @@ public abstract class OpportunityFormLayoutFactory implements
 		informationLayout.addComponent(propertyId.equals("salesstage"), field,
 				"Sales Stage", 0, 3);
 		informationLayout.addComponent(propertyId.equals("probability"), field,
-				"Probability", 0, 4);
+				"Probability (%)", 0, 4);
 		informationLayout.addComponent(propertyId.equals("nextstep"), field,
 				"Next Step", 0, 5);
 
@@ -67,7 +67,7 @@ public abstract class OpportunityFormLayoutFactory implements
 		informationLayout.addComponent(propertyId.equals("opportunitytype"),
 				field, "Type", 1, 2);
 		informationLayout.addComponent(propertyId.equals("source"), field,
-				"Source", 1, 3);
+				"Lead Source", 1, 3);
 		informationLayout.addComponent(propertyId.equals("campaignid"), field,
 				"Campaign", 1, 4);
 

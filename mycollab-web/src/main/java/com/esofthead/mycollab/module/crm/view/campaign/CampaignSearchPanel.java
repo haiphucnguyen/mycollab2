@@ -104,7 +104,7 @@ public class CampaignSearchPanel extends
 			UiUtils.addComponent(layout, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			this.addComponent(new Button("Search", new Button.ClickListener() {
+			layout.addComponent(new Button("Search", new Button.ClickListener() {
 
 				@Override
 				public void buttonClick(ClickEvent event) {

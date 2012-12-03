@@ -2,6 +2,8 @@ package com.esofthead.mycollab.module.crm.view.cases;
 
 import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -9,8 +11,12 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 public class CaseReadViewImpl extends AbstractView implements CaseReadView {
 	private static final long serialVersionUID = 1L;
@@ -42,7 +48,32 @@ public class CaseReadViewImpl extends AbstractView implements CaseReadView {
 		@Override
 		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory());
+			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected Field onCreateField(Item item, Object propertyId,
+						Component uiContext) {
+					if (propertyId.equals("accountid")) {
+						return new FormLinkViewField(cases.getAccountName(),
+								new Button.ClickListener() {
+									private static final long serialVersionUID = 1L;
+
+									@Override
+									public void buttonClick(ClickEvent event) {
+										EventBus.getInstance().fireEvent(
+												new AccountEvent.GotoRead(this,
+														cases.getAccountid()));
+
+									}
+								});
+					} else if (propertyId.equals("email")) {
+						return new FormEmailLinkViewField(cases.getEmail());
+					}
+
+					return null;
+				}
+			});
 			super.setItemDataSource(newDataSource);
 		}
 
@@ -50,8 +81,8 @@ public class CaseReadViewImpl extends AbstractView implements CaseReadView {
 
 			@Override
 			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<Case>(
-						PreviewForm.this)).createButtonControls();
+				return (new PreviewFormControlsGenerator<Case>(PreviewForm.this))
+						.createButtonControls();
 			}
 
 			@Override

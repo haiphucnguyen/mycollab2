@@ -7,6 +7,7 @@ import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignSelectionField;
+import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
@@ -18,9 +19,10 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.TextField;
 
-public class OpportunityAddViewImpl extends AbstractView implements IFormAddView<Opportunity>,
-		OpportunityAddView {
+public class OpportunityAddViewImpl extends AbstractView implements
+		IFormAddView<Opportunity>, OpportunityAddView {
 	private static final long serialVersionUID = 1L;
 
 	private EditForm editForm;
@@ -76,6 +78,7 @@ public class OpportunityAddViewImpl extends AbstractView implements IFormAddView
 					return campaignField;
 				} else if (propertyId.equals("accountid")) {
 					AccountSelectionField accountField = new AccountSelectionField();
+					accountField.setRequired(true);
 					if (opportunity.getAccountid() != null) {
 						AccountService accountService = AppContext
 								.getSpringBean(AccountService.class);
@@ -86,7 +89,20 @@ public class OpportunityAddViewImpl extends AbstractView implements IFormAddView
 						}
 					}
 					return accountField;
+				} else if (propertyId.equals("opportunityname")) {
+					TextField tf = new TextField();
+					tf.setNullRepresentation("");
+					tf.setRequired(true);
+					tf.setRequiredError("Name must not be null");
+					return tf;
+				} else if (propertyId.equals("salesstage")) {
+					return new OpportunitySalesStageComboBox();
+				} else if (propertyId.equals("opportunitytype")) {
+					return new OpportunityTypeComboBox();
+				} else if (propertyId.equals("source")) {
+					return new LeadSourceComboBox();
 				}
+
 				return null;
 			}
 		}

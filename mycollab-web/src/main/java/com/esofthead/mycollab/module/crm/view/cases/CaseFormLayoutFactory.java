@@ -27,7 +27,7 @@ public abstract class CaseFormLayoutFactory implements IFormLayoutFactory {
 		organizationHeader.setStyleName("h2");
 		layout.addComponent(organizationHeader);
 
-		informationLayout = new GridFormLayoutHelper(2, 4);
+		informationLayout = new GridFormLayoutHelper(2, 5);
 		informationLayout.getLayout().setWidth("900px");
 		layout.addComponent(informationLayout.getLayout());
 		layout.setComponentAlignment(informationLayout.getLayout(),
@@ -58,6 +58,8 @@ public abstract class CaseFormLayoutFactory implements IFormLayoutFactory {
 			informationLayout.addComponent(field, "Account Name", 0, 2);
 		} else if (propertyId.equals("phonenumber")) {
 			informationLayout.addComponent(field, "Phone Number", 0, 3);
+		} else if (propertyId.equals("origin")) {
+			informationLayout.addComponent(field, "Origin", 0, 4);
 		} else if (propertyId.equals("type")) {
 			informationLayout.addComponent(field, "Type", 1, 0);
 		} else if (propertyId.equals("reason")) {
@@ -66,6 +68,8 @@ public abstract class CaseFormLayoutFactory implements IFormLayoutFactory {
 			informationLayout.addComponent(field, "Subject", 1, 2);
 		} else if (propertyId.equals("email")) {
 			informationLayout.addComponent(field, "Email", 1, 3);
+		} else if (propertyId.equals("assignuser")) {
+			informationLayout.addComponent(field, "Assigned User", 1, 4);
 		} else if (propertyId.equals("description")) {
 			descriptionLayout.addComponent(field, "Description", 0, 0);
 		} else if (propertyId.equals("resolution")) {

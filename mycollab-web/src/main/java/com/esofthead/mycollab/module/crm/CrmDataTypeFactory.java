@@ -30,11 +30,14 @@ public class CrmDataTypeFactory {
 			"Referral Program", "Advertisement", "Banner Ads", "Direct Email",
 			"Mail", "Telemarketing", "Others" };
 
-	private static String[] SALES_STAGE_LIST = new String[] { "Prospecting",
-			"Qualification", "Need Analysis", "Value Proposition",
-			"Id. Decision Markers", "Perception Analysis",
+	private static String[] OPPORTUNITY_SALES_STAGE_LIST = new String[] {
+			"Prospecting", "Qualification", "Need Analysis",
+			"Value Proposition", "Id. Decision Markers", "Perception Analysis",
 			"Proposal/Price Quote", "Negotiation/Review", "Closed Won",
 			"Closed Lost" };
+
+	private static String[] OPPORTUNITY_TYPE_LIST = new String[] {
+			"Existing Business", "New Business" };
 
 	private static String[] CASES_STATUS_LIST = new String[] { "New",
 			"Assigned", "Closed", "Pending Input", "Rejected", "Duplicate" };
@@ -76,8 +79,12 @@ public class CrmDataTypeFactory {
 		return CAMPAIGN_TYPE_LIST;
 	}
 
-	public static String[] getSalesStageList() {
-		return SALES_STAGE_LIST;
+	public static String[] getOpportunitySalesStageList() {
+		return OPPORTUNITY_SALES_STAGE_LIST;
+	}
+
+	public static String[] getOpportunityTypeList() {
+		return OPPORTUNITY_TYPE_LIST;
 	}
 
 	public static String[] getCasesStatusList() {
