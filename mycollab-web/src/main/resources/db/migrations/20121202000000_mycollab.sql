@@ -1,0 +1,1 @@
+ALTER TABLE `m_crm_case` ADD COLUMN `email` VARCHAR(45) NULL, ADD COLUMN `phonenumber` VARCHAR(45) NULL;

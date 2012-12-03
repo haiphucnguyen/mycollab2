@@ -9,12 +9,12 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
-public abstract class CaseFormLayoutFactory  implements IFormLayoutFactory{
+public abstract class CaseFormLayoutFactory implements IFormLayoutFactory {
 
 	private GridFormLayoutHelper informationLayout;
 
 	private GridFormLayoutHelper descriptionLayout;
-	
+
 	@Override
 	public Layout getLayout() {
 		AddViewLayout accountAddLayout = new AddViewLayout("Case");
@@ -50,10 +50,15 @@ public abstract class CaseFormLayoutFactory  implements IFormLayoutFactory{
 
 	@Override
 	public void attachField(Object propertyId, Field field) {
-		// TODO Auto-generated method stub
-		
+		if (propertyId.equals("priority")) {
+			informationLayout.addComponent(field, "Priority", 0, 0);
+		} else if (propertyId.equals("status")) {
+			informationLayout.addComponent(field, "Status", 0, 1);
+		} else if (propertyId.equals("accountid")) {
+			informationLayout.addComponent(field, "Account Name", 0, 2);
+		}
 	}
-	
+
 	protected abstract Layout createTopPanel();
 
 	protected abstract Layout createBottomPanel();

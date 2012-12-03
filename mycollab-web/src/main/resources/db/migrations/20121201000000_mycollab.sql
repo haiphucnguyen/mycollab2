@@ -1,0 +1,1 @@
+ALTER TABLE `m_crm_case` ADD COLUMN `reason` VARCHAR(45) NULL, ADD COLUMN `origin` VARCHAR(45) NULL ;

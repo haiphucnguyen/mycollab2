@@ -34,10 +34,6 @@ public class AccountSearchPanel extends
 		GenericSearchPanel<AccountSearchCriteria> {
 	protected AccountSearchCriteria searchCriteria;
 
-	public AccountSearchPanel() {
-		searchCriteria = new AccountSearchCriteria();
-	}
-
 	@Override
 	public void attach() {
 		super.attach();
