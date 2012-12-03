@@ -1,19 +1,28 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
+import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
+import com.esofthead.mycollab.module.crm.view.RelatedListHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
-public class OpportunityListComp extends Depot {
+public class OpportunityListComp extends Depot implements IRelatedListHandlers {
 	private static final long serialVersionUID = 1L;
 
 	private PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> tableItem;
 
+	private Set<RelatedListHandler> handlers;
+	
 	public OpportunityListComp() {
 		super("Opportunities", new VerticalLayout());
 
@@ -24,6 +33,19 @@ public class OpportunityListComp extends Depot {
 
 	private void initUI() {
 		VerticalLayout contentContainer = (VerticalLayout) content;
+		contentContainer.setSpacing(true);
+
+		Button createBtn = new Button("Create", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				fireRelatedListHandler();
+			}
+		});
+
+		contentContainer.addComponent(createBtn);
+		
 		tableItem = new PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>(
 				AppContext.getSpringBean(OpportunityService.class),
 				SimpleOpportunity.class, new String[] { "opportunityname",
@@ -46,6 +68,23 @@ public class OpportunityListComp extends Depot {
 	
 	public void setSearchCriteria(OpportunitySearchCriteria searchCriteria) {
 		tableItem.setSearchCriteria(searchCriteria);
+	}
+
+	private void fireRelatedListHandler() {
+		if (handlers != null) {
+			for (RelatedListHandler handler : handlers) {
+				handler.createNewRelatedItem();
+			}
+		}
+	}
+
+	@Override
+	public void addRelatedListHandler(RelatedListHandler handler) {
+		if (handlers == null) {
+			handlers = new HashSet<RelatedListHandler>();
+		}
+
+		handlers.add(handler);
 	}
 
 }

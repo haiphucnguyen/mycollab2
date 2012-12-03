@@ -40,11 +40,11 @@ public class AccountReadViewImpl extends AbstractView implements
 	public AccountReadViewImpl() {
 		super();
 		previewForm = new PreviewForm();
-		
+
 		associateContactList = new ContactListComp();
 		associateOpportunityList = new OpportunityListComp();
 		associateLeadList = new LeadListComp();
-		
+
 		this.addComponent(previewForm);
 	}
 
@@ -110,7 +110,7 @@ public class AccountReadViewImpl extends AbstractView implements
 			@Override
 			protected Layout createBottomPanel() {
 				VerticalLayout relatedItemsPanel = new VerticalLayout();
-				
+
 				relatedItemsPanel.addComponent(associateContactList);
 				relatedItemsPanel.addComponent(associateOpportunityList);
 				relatedItemsPanel.addComponent(associateLeadList);
@@ -128,6 +128,16 @@ public class AccountReadViewImpl extends AbstractView implements
 	@Override
 	public IRelatedListHandlers getRelatedContactHandlers() {
 		return associateContactList;
+	}
+
+	@Override
+	public IRelatedListHandlers getRelatedOpportunityHandlers() {
+		return associateOpportunityList;
+	}
+
+	@Override
+	public IRelatedListHandlers getRelatedLeadHandlers() {
+		return associateLeadList;
 	}
 
 }

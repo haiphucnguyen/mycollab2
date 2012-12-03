@@ -2,9 +2,13 @@ package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Contact;
+import com.esofthead.mycollab.module.crm.domain.Lead;
+import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.RelatedListHandler;
@@ -66,6 +70,32 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 						contact.setAccountid(view.getItem().getId());
 						EventBus.getInstance().fireEvent(
 								new ContactEvent.GotoEdit(this, contact));
+					}
+				});
+
+		view.getRelatedOpportunityHandlers().addRelatedListHandler(
+				new RelatedListHandler() {
+
+					@Override
+					public void createNewRelatedItem() {
+						Opportunity opportunity = new Opportunity();
+						opportunity.setAccountid(view.getItem().getId());
+						EventBus.getInstance()
+								.fireEvent(
+										new OpportunityEvent.GotoEdit(this,
+												opportunity));
+					}
+				});
+
+		view.getRelatedLeadHandlers().addRelatedListHandler(
+				new RelatedListHandler() {
+
+					@Override
+					public void createNewRelatedItem() {
+						Lead lead = new Lead();
+						lead.setAccountname(view.getItem().getAccountname());
+						EventBus.getInstance().fireEvent(
+								new LeadEvent.GotoEdit(this, lead));
 					}
 				});
 	}

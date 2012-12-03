@@ -10,4 +10,8 @@ public interface AccountReadView extends IPreviewView<SimpleAccount> {
 	HasPreviewFormHandlers<Account> getPreviewFormHandlers();
 	
 	IRelatedListHandlers getRelatedContactHandlers();
+	
+	IRelatedListHandlers getRelatedOpportunityHandlers();
+	
+	IRelatedListHandlers getRelatedLeadHandlers();
 }
