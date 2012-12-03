@@ -107,7 +107,7 @@ public class OpportunitySearchPanel extends
 			UiUtils.addComponent(layout, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			layout.addComponent(new Button("Search Opportunities",
+			layout.addComponent(new Button("Search",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

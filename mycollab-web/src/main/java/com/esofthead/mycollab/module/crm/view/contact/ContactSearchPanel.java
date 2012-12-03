@@ -103,7 +103,7 @@ public class ContactSearchPanel extends
 			UiUtils.addComponent(layout, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			this.addComponent(new Button("Search", new Button.ClickListener() {
+			layout.addComponent(new Button("Search", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
