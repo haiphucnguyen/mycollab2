@@ -17,8 +17,10 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.TextField;
 
-public class LeadAddViewImpl extends AbstractView implements IFormAddView<Lead>, LeadAddView {
+public class LeadAddViewImpl extends AbstractView implements
+		IFormAddView<Lead>, LeadAddView {
 
 	private static final long serialVersionUID = 1L;
 
@@ -79,6 +81,12 @@ public class LeadAddViewImpl extends AbstractView implements IFormAddView<Lead>,
 				} else if (propertyId.equals("source")) {
 					LeadSourceComboBox statusComboBox = new LeadSourceComboBox();
 					return statusComboBox;
+				} else if (propertyId.equals("lastname")) {
+					TextField tf = new TextField();
+					tf.setNullRepresentation("");
+					tf.setRequired(true);
+					tf.setRequiredError("Last name must not be null");
+					return tf;
 				}
 
 				return null;

@@ -7,8 +7,11 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormViewField;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -42,7 +45,19 @@ public class CaseReadViewImpl extends AbstractView implements CaseReadView {
 		@Override
 		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory());
+			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected Field onCreateField(Item item, Object propertyId,
+						Component uiContext) {
+					if (propertyId.equals("accountid")) {
+						return new FormViewField(cases.getAccountName());
+					}
+
+					return null;
+				}
+			});
 			super.setItemDataSource(newDataSource);
 		}
 
@@ -50,8 +65,8 @@ public class CaseReadViewImpl extends AbstractView implements CaseReadView {
 
 			@Override
 			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<Case>(
-						PreviewForm.this)).createButtonControls();
+				return (new PreviewFormControlsGenerator<Case>(PreviewForm.this))
+						.createButtonControls();
 			}
 
 			@Override

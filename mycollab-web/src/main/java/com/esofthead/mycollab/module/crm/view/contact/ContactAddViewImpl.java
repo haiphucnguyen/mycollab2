@@ -16,11 +16,12 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.TextField;
 
-public class ContactAddViewImpl extends AbstractView implements IFormAddView<Contact>,
-		ContactAddView {
+public class ContactAddViewImpl extends AbstractView implements
+		IFormAddView<Contact>, ContactAddView {
 	private static final long serialVersionUID = 1L;
-	
+
 	private EditForm editForm;
 
 	private Contact contact;
@@ -82,6 +83,12 @@ public class ContactAddViewImpl extends AbstractView implements IFormAddView<Con
 						}
 					}
 					return accountField;
+				} else if (propertyId.equals("lastname")) {
+					TextField tf = new TextField();
+					tf.setNullRepresentation("");
+					tf.setRequired(true);
+					tf.setRequiredError("Last name must not be null");
+					return tf;
 				}
 
 				return null;

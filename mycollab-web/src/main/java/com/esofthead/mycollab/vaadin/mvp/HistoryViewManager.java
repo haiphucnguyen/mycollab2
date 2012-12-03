@@ -36,6 +36,8 @@ public class HistoryViewManager {
 			history.remove(history.size() - 1);
 			history.remove(history.size() - 1);
 			
+			log.debug("Back to view: " + viewState.getPresenter());
+			
 			viewState.getPresenter().go(viewState.getContainer(),
 					viewState.getParams());
 			return viewState;

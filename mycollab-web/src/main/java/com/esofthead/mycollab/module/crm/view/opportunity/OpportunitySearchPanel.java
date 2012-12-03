@@ -7,7 +7,6 @@ import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
 import com.esofthead.mycollab.module.crm.ui.components.BasicSearchLayout;
 import com.esofthead.mycollab.module.crm.ui.components.GenericSearchPanel;
-import com.esofthead.mycollab.module.crm.ui.components.SalesStageListSelect;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceListSelect;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
@@ -155,7 +154,7 @@ public class OpportunitySearchPanel extends
 		private AccountSelectionField accountField;
 		private TextField nextStepField;
 		private UserListSelect userField;
-		private SalesStageListSelect stageField;
+		private OpportunitySalesStageListSelect stageField;
 		private LeadSourceListSelect sourceField;
 
 		public OpportunityAdvancedSearchLayout() {
@@ -180,8 +179,8 @@ public class OpportunitySearchPanel extends
 
 			userField = (UserListSelect) gridLayout.addComponent(
 					new UserListSelect(), "Assigned to", 0, 1);
-			stageField = (SalesStageListSelect) gridLayout.addComponent(
-					new SalesStageListSelect(), "Sales Stage", 1, 1);
+			stageField = (OpportunitySalesStageListSelect) gridLayout.addComponent(
+					new OpportunitySalesStageListSelect(), "Sales Stage", 1, 1);
 			sourceField = (LeadSourceListSelect) gridLayout.addComponent(
 					new LeadSourceListSelect(), "Lead Source", 2, 1);
 

@@ -76,7 +76,7 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 		layout.setWidth("100%");
 		layout.setSpacing(true);
 
-		Label searchtitle = new Label("Search Accounts");
+		Label searchtitle = new Label("Search Cases");
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 

@@ -4,6 +4,7 @@ import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
+import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -15,12 +16,13 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
+import com.vaadin.ui.TextField;
 
-public class CaseAddViewImpl extends AbstractView implements CaseAddView{
+public class CaseAddViewImpl extends AbstractView implements CaseAddView {
 	private static final long serialVersionUID = 1L;
 
 	private EditForm editForm;
-	
+
 	private Case cases;
 
 	public CaseAddViewImpl() {
@@ -83,6 +85,8 @@ public class CaseAddViewImpl extends AbstractView implements CaseAddView{
 					return new TextArea("", "");
 				} else if (propertyId.equals("accountid")) {
 					AccountSelectionField accountField = new AccountSelectionField();
+					accountField.setRequired(true);
+					
 					if (cases.getAccountid() != null) {
 						AccountService accountService = AppContext
 								.getSpringBean(AccountService.class);
@@ -93,8 +97,17 @@ public class CaseAddViewImpl extends AbstractView implements CaseAddView{
 						}
 					}
 					return accountField;
+				} else if (propertyId.equals("subject")) {
+					TextField tf = new TextField();
+					tf.setNullRepresentation("");
+					tf.setRequired(true);
+					tf.setRequiredError("Subject must not be null");
+					return tf;
+				} else if (propertyId.equals("assignuser")) {
+					UserComboBox userBox = new UserComboBox();
+					return userBox;
 				}
-				
+
 				return null;
 			}
 		}

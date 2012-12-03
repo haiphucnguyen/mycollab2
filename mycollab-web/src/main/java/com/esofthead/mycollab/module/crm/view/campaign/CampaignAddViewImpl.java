@@ -12,6 +12,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TextField;
 
 public class CampaignAddViewImpl extends AbstractView implements
 		IFormAddView<Campaign>, CampaignAddView {
@@ -61,6 +62,12 @@ public class CampaignAddViewImpl extends AbstractView implements
 					CampaignStatusComboBox statusCombo = new CampaignStatusComboBox();
 					statusCombo.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 					return statusCombo;
+				} else if ("campaignname".equals(propertyId)) {
+					TextField tf = new TextField();
+					tf.setNullRepresentation("");
+					tf.setRequired(true);
+					tf.setRequiredError("Name must not be null");
+					return tf;
 				}
 
 				return null;

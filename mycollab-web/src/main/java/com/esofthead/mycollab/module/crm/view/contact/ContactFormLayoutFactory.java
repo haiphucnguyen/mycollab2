@@ -91,8 +91,6 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 			informationLayout.addComponent(field, "Callable", 1, 6);
 		} else if (propertyId.equals("assignuser")) {
 			informationLayout.addComponent(field, "Assign User", 1, 7);
-		} else if (propertyId.equals("campaignid")) {
-			informationLayout.addComponent(field, "Campaign", 1, 8);
 		} else if (propertyId.equals("primaddress")) {
 			addressLayout.addComponent(field, "Address", 0, 0);
 		} else if (propertyId.equals("primcity")) {
