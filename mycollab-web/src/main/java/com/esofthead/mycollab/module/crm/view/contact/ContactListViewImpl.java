@@ -92,9 +92,9 @@ public class ContactListViewImpl extends AbstractView implements
 				});
 
 				@SuppressWarnings("unchecked")
-				SimpleContact account = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
+				SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
 						.getBeanByIndex(itemId);
-				account.setExtraData(cb);
+				contact.setExtraData(cb);
 				return cb;
 			}
 		});
