@@ -11,13 +11,13 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -25,7 +25,6 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
@@ -105,16 +104,7 @@ public class AccountListViewImpl extends AbstractView implements
 					Object itemId, Object columnId) {
 				SimpleAccount account = ((PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>) source)
 						.getBeanByIndex(itemId);
-				if (account != null) {
-					Link l = new Link();
-					l.setResource(new ExternalResource("mailto:"
-							+ account.getEmail()));
-					l.setCaption(account.getEmail());
-					return l;
-				} else {
-					return new Label("");
-				}
-
+				return new EmailLink(account.getEmail());
 			}
 		});
 
@@ -127,10 +117,8 @@ public class AccountListViewImpl extends AbstractView implements
 				@SuppressWarnings("unchecked")
 				final SimpleAccount account = ((PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>) source)
 						.getBeanByIndex(itemId);
-				Label l = new Label();
-
-				l.setValue(AppContext.formatDate(account.getCreatedtime()));
-				return l;
+				return new Label(
+						AppContext.formatDate(account.getCreatedtime()));
 			}
 		});
 

@@ -12,6 +12,7 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
@@ -153,17 +154,9 @@ public class ContactListViewImpl extends AbstractView implements
 			@SuppressWarnings("unchecked")
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
-				SimpleContact account = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
+				SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
 						.getBeanByIndex(itemId);
-				if (account != null) {
-					Link l = new Link();
-					l.setResource(new ExternalResource("mailto:"
-							+ account.getEmail()));
-					l.setCaption(account.getEmail());
-					return l;
-				} else {
-					return new Label("");
-				}
+				return new EmailLink(contact.getEmail());
 
 			}
 		});
@@ -175,16 +168,10 @@ public class ContactListViewImpl extends AbstractView implements
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
 				@SuppressWarnings("unchecked")
-				final SimpleContact account = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
+				final SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
 						.getBeanByIndex(itemId);
-				if (account != null) {
-					Label l = new Label();
-
-					l.setCaption(account.getCreatedtime() + "");
-					return l;
-				} else {
-					return new Label("");
-				}
+				return new Label(
+						AppContext.formatDate(contact.getCreatedtime()));
 
 			}
 		});
