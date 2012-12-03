@@ -71,4 +71,8 @@ public class ContactReadViewImpl extends AbstractView implements
 		}
 	}
 
+	@Override
+	public SimpleContact getItem() {
+		return contact;
+	}
 }

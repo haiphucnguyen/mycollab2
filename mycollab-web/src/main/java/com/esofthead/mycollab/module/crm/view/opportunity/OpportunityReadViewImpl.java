@@ -73,4 +73,9 @@ public class OpportunityReadViewImpl extends AbstractView implements
 		}
 	}
 
+	@Override
+	public SimpleOpportunity getItem() {
+		return opportunity;
+	}
+
 }

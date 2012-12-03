@@ -16,6 +16,8 @@ public class CampaignReadViewImpl extends AbstractView implements
 	private static final long serialVersionUID = 1L;
 
 	private PreviewForm previewForm;
+	
+	private SimpleCampaign campaign;
 
 	public CampaignReadViewImpl() {
 		super();
@@ -25,6 +27,7 @@ public class CampaignReadViewImpl extends AbstractView implements
 
 	@Override
 	public void previewItem(SimpleCampaign campaign) {
+		this.campaign = campaign;
 		previewForm.setItemDataSource(new BeanItem<Campaign>(campaign));
 	}
 
@@ -51,6 +54,11 @@ public class CampaignReadViewImpl extends AbstractView implements
 						PreviewForm.this)).createButtonControls();
 			}
 		}
+	}
+
+	@Override
+	public SimpleCampaign getItem() {
+		return campaign;
 	}
 
 }

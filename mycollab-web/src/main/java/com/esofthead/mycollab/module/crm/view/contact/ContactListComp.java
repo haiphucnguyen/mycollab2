@@ -1,8 +1,13 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
+import com.esofthead.mycollab.module.crm.view.RelatedListHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -11,10 +16,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
-public class ContactListComp extends Depot {
+public class ContactListComp extends Depot implements IRelatedListHandlers {
 	private static final long serialVersionUID = 1L;
 
 	private PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact> tableItem;
+	
+	private Set<RelatedListHandler> handlers;
 
 	public ContactListComp() {
 		super("Contacts", new VerticalLayout());
@@ -31,9 +38,7 @@ public class ContactListComp extends Depot {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// EventBus.getInstance().fireEvent(new
-				// ContactEvent.GotoAdd(source, data));
-
+				fireRelatedListHandler();
 			}
 		});
 
@@ -61,6 +66,23 @@ public class ContactListComp extends Depot {
 
 	public void setSearchCriteria(ContactSearchCriteria searchCriteria) {
 		tableItem.setSearchCriteria(searchCriteria);
+	}
+	
+	private void fireRelatedListHandler() {
+		if (handlers != null) {
+			for (RelatedListHandler handler : handlers) {
+				handler.createNewRelatedItem();
+			}
+		}
+	}
+
+	@Override
+	public void addRelatedListHandler(RelatedListHandler handler) {
+		if (handlers == null) {
+			handlers = new HashSet<RelatedListHandler>();
+		}
+
+		handlers.add(handler);
 	}
 
 }

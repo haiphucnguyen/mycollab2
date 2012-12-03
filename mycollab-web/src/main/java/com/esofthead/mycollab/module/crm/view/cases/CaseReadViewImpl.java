@@ -15,7 +15,7 @@ import com.vaadin.ui.VerticalLayout;
 public class CaseReadViewImpl extends AbstractView implements CaseReadView {
 	private static final long serialVersionUID = 1L;
 
-	private SimpleCase account;
+	private SimpleCase cases;
 
 	private PreviewForm previewForm;
 
@@ -27,8 +27,8 @@ public class CaseReadViewImpl extends AbstractView implements CaseReadView {
 
 	@Override
 	public void previewItem(SimpleCase item) {
-		account = item;
-		previewForm.setItemDataSource(new BeanItem<Case>(account));
+		cases = item;
+		previewForm.setItemDataSource(new BeanItem<Case>(cases));
 	}
 
 	@Override
@@ -61,6 +61,11 @@ public class CaseReadViewImpl extends AbstractView implements CaseReadView {
 				return relatedItemsPanel;
 			}
 		}
+	}
+
+	@Override
+	public SimpleCase getItem() {
+		return cases;
 	}
 
 }

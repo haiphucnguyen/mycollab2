@@ -7,6 +7,7 @@ import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
+import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
@@ -27,17 +28,19 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 					@Override
 					public void onSave(final Contact account) {
 						saveContact(account);
-						EventBus.getInstance().fireEvent(
-								new ContactEvent.GotoList(this, null));
+						ViewState viewState = HistoryViewManager.back();
+						
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new ContactEvent.GotoList(this, null));
+						}
+						
 					}
 
 					@Override
 					public void onCancel() {
-						ViewState previousViewState = HistoryViewManager
-								.getPreviousViewState();
-						if (previousViewState.getPresenter() instanceof ContactReadPresenter) {
-							HistoryViewManager.back();
-						} else {
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
 							EventBus.getInstance().fireEvent(
 									new ContactEvent.GotoList(this, null));
 						}

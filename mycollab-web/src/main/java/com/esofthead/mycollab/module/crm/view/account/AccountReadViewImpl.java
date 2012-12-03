@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.module.crm.view.contact.ContactListComp;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListComp;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListComp;
@@ -39,6 +40,11 @@ public class AccountReadViewImpl extends AbstractView implements
 	public AccountReadViewImpl() {
 		super();
 		previewForm = new PreviewForm();
+		
+		associateContactList = new ContactListComp();
+		associateOpportunityList = new OpportunityListComp();
+		associateLeadList = new LeadListComp();
+		
 		this.addComponent(previewForm);
 	}
 
@@ -104,19 +110,24 @@ public class AccountReadViewImpl extends AbstractView implements
 			@Override
 			protected Layout createBottomPanel() {
 				VerticalLayout relatedItemsPanel = new VerticalLayout();
-
-				associateContactList = new ContactListComp();
+				
 				relatedItemsPanel.addComponent(associateContactList);
-
-				associateOpportunityList = new OpportunityListComp();
 				relatedItemsPanel.addComponent(associateOpportunityList);
-
-				associateLeadList = new LeadListComp();
 				relatedItemsPanel.addComponent(associateLeadList);
 
 				return relatedItemsPanel;
 			}
 		}
+	}
+
+	@Override
+	public SimpleAccount getItem() {
+		return account;
+	}
+
+	@Override
+	public IRelatedListHandlers getRelatedContactHandlers() {
+		return associateContactList;
 	}
 
 }

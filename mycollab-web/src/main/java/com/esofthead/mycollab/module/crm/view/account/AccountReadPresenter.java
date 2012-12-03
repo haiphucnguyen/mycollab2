@@ -1,10 +1,13 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.RelatedListHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -53,11 +56,23 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 								new AccountEvent.GotoList(this, null));
 					}
 				});
+
+		view.getRelatedContactHandlers().addRelatedListHandler(
+				new RelatedListHandler() {
+
+					@Override
+					public void createNewRelatedItem() {
+						Contact contact = new Contact();
+						contact.setAccountid(view.getItem().getId());
+						EventBus.getInstance().fireEvent(
+								new ContactEvent.GotoEdit(this, contact));
+					}
+				});
 	}
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
-		view.previewItem((SimpleAccount)data.getParams());
+		view.previewItem((SimpleAccount) data.getParams());
 	}
 }
