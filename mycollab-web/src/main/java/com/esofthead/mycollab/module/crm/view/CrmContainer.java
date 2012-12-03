@@ -5,6 +5,7 @@ import java.util.Iterator;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
@@ -97,7 +98,7 @@ public class CrmContainer extends AbstractView {
 		Button caseList = new Button(CASE_LIST, listener);
 		caseList.setStyleName("link");
 		toolbar.addComponent(caseList);
-		
+
 		Button activitiesList = new Button(ACTIVITIES_LIST, listener);
 		activitiesList.setStyleName("link");
 		toolbar.addComponent(activitiesList);
@@ -192,6 +193,9 @@ public class CrmContainer extends AbstractView {
 			} else if (OPPORTUNITY_LIST.equals(caption)) {
 				EventBus.getInstance().fireEvent(
 						new OpportunityEvent.GotoList(this, null));
+			} else if (ACTIVITIES_LIST.equals(caption)) {
+				EventBus.getInstance().fireEvent(
+						new ActivityEvent.GotoCalendar(this, null));
 			}
 
 			for (Iterator<com.vaadin.ui.Component> it = toolbar

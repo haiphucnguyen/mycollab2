@@ -22,6 +22,8 @@ import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoRead;
+import com.esofthead.mycollab.module.crm.events.ActivityEvent;
+import com.esofthead.mycollab.module.crm.events.ActivityEvent.GotoCalendar;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
@@ -37,6 +39,8 @@ import com.esofthead.mycollab.module.crm.view.account.AccountListViewImpl;
 import com.esofthead.mycollab.module.crm.view.account.AccountReadPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountReadView;
 import com.esofthead.mycollab.module.crm.view.account.AccountReadViewImpl;
+import com.esofthead.mycollab.module.crm.view.activity.ActivityRootPresenter;
+import com.esofthead.mycollab.module.crm.view.activity.ActivityRootView;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddView;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddViewImpl;
@@ -96,6 +100,7 @@ public class CrmController {
 		this.container = container;
 
 		bindAccountEvents();
+		bindActivityEvents();
 		bindCampaignEvents();
 		bindContactEvents();
 		bindLeadEvents();
@@ -188,6 +193,26 @@ public class CrmController {
 
 						new AccountReadPresenter(view).go(container,
 								new ScreenData.Preview<SimpleAccount>(account));
+					}
+				});
+	}
+
+	private void bindActivityEvents() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ActivityEvent.GotoCalendar>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ActivityEvent.GotoCalendar.class;
+					}
+
+					@Override
+					public void handle(GotoCalendar event) {
+						ActivityRootView view = ViewManager
+								.getView(ActivityRootView.class);
+						System.out.println("View: " + view);
+						new ActivityRootPresenter(view).go(container, null);
 					}
 				});
 	}
@@ -520,7 +545,7 @@ public class CrmController {
 					}
 				});
 	}
-	
+
 	@SuppressWarnings("serial")
 	private void bindCasesEvents() {
 		EventBus.getInstance().addListener(
