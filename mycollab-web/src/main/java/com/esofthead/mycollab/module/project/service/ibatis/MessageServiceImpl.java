@@ -9,7 +9,7 @@ import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
-import com.esofthead.mycollab.module.file.service.AttachmentService;
+import com.esofthead.mycollab.module.file_old.service.AttachmentService;
 import com.esofthead.mycollab.module.project.ChangeLogAction;
 import com.esofthead.mycollab.module.project.ChangeLogSource;
 import com.esofthead.mycollab.module.project.dao.MessageMapper;

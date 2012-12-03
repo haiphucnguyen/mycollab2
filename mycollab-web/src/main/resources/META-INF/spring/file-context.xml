@@ -7,17 +7,17 @@
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contentTransactionMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.file.dao.ContentTransactionMapper" />
+            value="com.esofthead.mycollab.module.file_old.dao.ContentTransactionMapper" />
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contentTransactionMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.file.dao.ContentTransactionMapperExt" />
+            value="com.esofthead.mycollab.module.file_old.dao.ContentTransactionMapperExt" />
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="attachmentMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface" value="com.esofthead.mycollab.module.file.dao.AttachmentMapper" />
+        <property name="mapperInterface" value="com.esofthead.mycollab.module.file_old.dao.AttachmentMapper" />
     </bean>
 </beans>

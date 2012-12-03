@@ -22,6 +22,7 @@ import com.vaadin.ui.ComponentContainer;
 public class OpportunityListPresenter extends
 		CrmGenericPresenter<OpportunityListView> implements
 		ListPresenter<OpportunitySearchCriteria> {
+	private static final long serialVersionUID = 1L;
 
 	private OpportunityService opportunityService;
 
@@ -34,6 +35,7 @@ public class OpportunityListPresenter extends
 		opportunityService = AppContext.getSpringBean(OpportunityService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void move(int newPageNumber) {

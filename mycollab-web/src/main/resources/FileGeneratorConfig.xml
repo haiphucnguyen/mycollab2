@@ -10,14 +10,14 @@
             connectionURL="jdbc:mysql://localhost:3306/mycollab" userId="root"
             password="esofthead321" />
 
-        <javaModelGenerator targetPackage="com.esofthead.mycollab.module.file.domain"
+        <javaModelGenerator targetPackage="com.esofthead.mycollab.module.file_old.domain"
             targetProject="src/main/java">
         </javaModelGenerator>
 
         <sqlMapGenerator targetPackage="."
             targetProject="src/main/resources/sqlMap/file" />
 
-        <javaClientGenerator targetPackage="com.esofthead.mycollab.module.file.dao"
+        <javaClientGenerator targetPackage="com.esofthead.mycollab.module.file_old.dao"
             type="XMLMAPPER" targetProject="src/main/java">
             <property name="exampleMethodVisibility" value="public" />
             <property name="rootInterface"

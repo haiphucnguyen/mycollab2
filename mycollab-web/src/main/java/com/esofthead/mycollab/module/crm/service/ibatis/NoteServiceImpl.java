@@ -11,7 +11,7 @@ import com.esofthead.mycollab.module.crm.dao.NoteMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Note;
 import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.NoteService;
-import com.esofthead.mycollab.module.file.service.AttachmentService;
+import com.esofthead.mycollab.module.file_old.service.AttachmentService;
 
 @Service
 public class NoteServiceImpl extends DefaultService<Integer, Note, NoteSearchCriteria>
