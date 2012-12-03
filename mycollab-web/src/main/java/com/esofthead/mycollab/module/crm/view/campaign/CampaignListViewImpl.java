@@ -119,6 +119,22 @@ public class CampaignListViewImpl extends AbstractView implements
 			}
 		});
 
+		tableItem.addGeneratedColumn("enddate", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				@SuppressWarnings("unchecked")
+				final SimpleCampaign campaign = ((PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign>) source)
+						.getBeanByIndex(itemId);
+				Label l = new Label();
+
+				l.setValue(AppContext.formatDate(campaign.getEnddate()));
+				return l;
+			}
+		});
+
 		tableItem.setWidth("100%");
 
 		tableItem.setColumnExpandRatio("campaignname", 1.0f);

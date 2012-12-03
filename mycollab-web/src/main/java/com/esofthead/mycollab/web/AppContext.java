@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.web;
 
 import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -81,8 +83,18 @@ public class AppContext implements TransactionListener, Serializable {
 
 	public static <T extends View> T getView(Class<T> viewClass) {
 		T view = getSpringBean(viewClass);
-		
+
 		log.debug("Create view class {}", viewClass.getName());
 		return view;
+	}
+
+	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"MM/dd/yyyy hh:mm a");
+
+	public static String formatDate(Date date) {
+		if (date == null) {
+			return "";
+		}
+		return simpleDateFormat.format(date);
 	}
 }

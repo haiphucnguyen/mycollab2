@@ -1,18 +1,27 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.LeadService;
+import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
+import com.esofthead.mycollab.module.crm.view.RelatedListHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
-public class LeadListComp extends Depot {
+public class LeadListComp extends Depot  implements IRelatedListHandlers{
 	private static final long serialVersionUID = 1L;
 
 	private PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead> tableItem;
+	
+	private Set<RelatedListHandler> handlers;
 
 	public LeadListComp() {
 		super("Leads", new VerticalLayout());
@@ -24,6 +33,18 @@ public class LeadListComp extends Depot {
 
 	private void initUI() {
 		VerticalLayout contentContainer = (VerticalLayout) content;
+		contentContainer.setSpacing(true);
+
+		Button createBtn = new Button("Create", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				fireRelatedListHandler();
+			}
+		});
+
+		contentContainer.addComponent(createBtn);
 
 		tableItem = new PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>(
 				AppContext.getSpringBean(LeadService.class), SimpleLead.class,
@@ -45,5 +66,22 @@ public class LeadListComp extends Depot {
 
 	public void setSearchCriteria(LeadSearchCriteria searchCriteria) {
 		tableItem.setSearchCriteria(searchCriteria);
+	}
+	
+	private void fireRelatedListHandler() {
+		if (handlers != null) {
+			for (RelatedListHandler handler : handlers) {
+				handler.createNewRelatedItem();
+			}
+		}
+	}
+
+	@Override
+	public void addRelatedListHandler(RelatedListHandler handler) {
+		if (handlers == null) {
+			handlers = new HashSet<RelatedListHandler>();
+		}
+
+		handlers.add(handler);
 	}
 }

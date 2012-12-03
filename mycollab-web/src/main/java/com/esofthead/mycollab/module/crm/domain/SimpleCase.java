@@ -2,7 +2,9 @@ package com.esofthead.mycollab.module.crm.domain;
 
 
 public class SimpleCase extends Case {
-    private String assignUserFullName;
+	private static final long serialVersionUID = 1L;
+
+	private String assignUserFullName;
 
     private String accountName;
 

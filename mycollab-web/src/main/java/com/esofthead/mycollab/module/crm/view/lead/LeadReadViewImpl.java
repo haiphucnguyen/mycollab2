@@ -73,4 +73,9 @@ public class LeadReadViewImpl extends AbstractView implements LeadReadView {
 			}
 		}
 	}
+
+	@Override
+	public SimpleLead getItem() {
+		return lead;
+	}
 }

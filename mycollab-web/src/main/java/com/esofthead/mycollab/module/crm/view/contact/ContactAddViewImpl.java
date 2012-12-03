@@ -20,6 +20,7 @@ import com.vaadin.ui.Layout;
 public class ContactAddViewImpl extends AbstractView implements IFormAddView<Contact>,
 		ContactAddView {
 	private static final long serialVersionUID = 1L;
+	
 	private EditForm editForm;
 
 	private Contact contact;

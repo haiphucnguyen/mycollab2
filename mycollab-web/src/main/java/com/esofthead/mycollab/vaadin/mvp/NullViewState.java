@@ -9,6 +9,7 @@ public class NullViewState extends ViewState{
 	}
 	
 	private static class EmptyPresenter implements Presenter {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void go(ComponentContainer container) {

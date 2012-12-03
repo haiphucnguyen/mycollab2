@@ -12,6 +12,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
+	private static final long serialVersionUID = 1L;
 
 	public LeadReadPresenter(LeadReadView view) {
 		this.view = view;

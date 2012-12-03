@@ -21,6 +21,7 @@ import com.vaadin.ui.ComponentContainer;
 
 public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 		implements ListPresenter<LeadSearchCriteria> {
+	private static final long serialVersionUID = 1L;
 
 	private LeadService leadService;
 
@@ -33,6 +34,7 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 		leadService = AppContext.getSpringBean(LeadService.class);
 		
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void move(int newPageNumber) {

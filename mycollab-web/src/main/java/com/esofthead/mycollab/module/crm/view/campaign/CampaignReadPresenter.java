@@ -12,6 +12,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class CampaignReadPresenter  extends CrmGenericPresenter<CampaignReadView> {
+	private static final long serialVersionUID = 1L;
 
 	public CampaignReadPresenter(CampaignReadView view) {
 		this.view = view;

@@ -1,12 +1,9 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
-import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
-import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
-import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
@@ -121,7 +118,7 @@ public class OpportunityListViewImpl extends AbstractView implements
 				return b;
 			}
 		});
-		
+
 		tableItem.addGeneratedColumn("accountName", new ColumnGenerator() {
 
 			@Override
@@ -137,11 +134,43 @@ public class OpportunityListViewImpl extends AbstractView implements
 							@Override
 							public void buttonClick(ClickEvent event) {
 								EventBus.getInstance().fireEvent(
-										new AccountEvent.GotoRead(this, opportunity
-												.getAccountid()));
+										new AccountEvent.GotoRead(this,
+												opportunity.getAccountid()));
 							}
 						});
 				return b;
+			}
+		});
+
+		tableItem.addGeneratedColumn("expectedcloseddate",
+				new ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public com.vaadin.ui.Component generateCell(Table source,
+							Object itemId, Object columnId) {
+						@SuppressWarnings("unchecked")
+						final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
+								.getBeanByIndex(itemId);
+						Label l = new Label();
+						l.setValue(AppContext.formatDate(opportunity
+								.getExpectedcloseddate()));
+						return l;
+					}
+				});
+
+		tableItem.addGeneratedColumn("createdtime", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				@SuppressWarnings("unchecked")
+				final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
+						.getBeanByIndex(itemId);
+				Label l = new Label();
+				l.setValue(AppContext.formatDate(opportunity.getCreatedtime()));
+				return l;
 			}
 		});
 
