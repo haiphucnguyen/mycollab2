@@ -66,7 +66,7 @@ public class AccountListViewImpl extends AbstractView implements
 						"city", "billingCountry", "phoneoffice", "email",
 						"assignUserFullName", "createdtime" }, new String[] {
 						"", "Name", "City", "Billing Country", "Phone Office",
-						"Email Address", "Assign User", "Created Time" });
+						"Email Address", "Assign User", "Date Created" });
 
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -129,7 +129,7 @@ public class AccountListViewImpl extends AbstractView implements
 						.getBeanByIndex(itemId);
 				Label l = new Label();
 
-				l.setCaption(account.getCreatedtime() + "");
+				l.setValue(AppContext.formatDate(account.getCreatedtime()));
 				return l;
 			}
 		});

@@ -21,6 +21,8 @@ import com.vaadin.ui.ComponentContainer;
 
 public class CampaignListPresenter extends
 		CrmGenericPresenter<CampaignListView> implements ListPresenter<CampaignSearchCriteria> {
+	private static final long serialVersionUID = 1L;
+
 	private CampaignService campaignService;
 
 	private CampaignSearchCriteria searchCriteria;
@@ -32,6 +34,7 @@ public class CampaignListPresenter extends
 		campaignService = AppContext.getSpringBean(CampaignService.class);
 		
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void move(int newPageNumber) {
