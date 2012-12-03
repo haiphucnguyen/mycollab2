@@ -7,9 +7,11 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.BaseTheme;
 
 public class ContactListComp extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -26,17 +28,20 @@ public class ContactListComp extends Depot {
 		VerticalLayout contentContainer = (VerticalLayout) content;
 		contentContainer.setSpacing(true);
 
-		Button createBtn = new Button("Create", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button createBtn = new Button("New Contact",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				// EventBus.getInstance().fireEvent(new
-				// ContactEvent.GotoAdd(source, data));
+					@Override
+					public void buttonClick(ClickEvent event) {
+						// EventBus.getInstance().fireEvent(new
+						// ContactEvent.GotoAdd(source, data));
 
-			}
-		});
+					}
+				});
 
+		createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createBtn.setStyleName(BaseTheme.BUTTON_LINK);
 		contentContainer.addComponent(createBtn);
 
 		tableItem = new PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>(
@@ -57,6 +62,7 @@ public class ContactListComp extends Depot {
 		tableItem.setWidth("100%");
 		contentContainer.addComponent(tableItem);
 		contentContainer.addComponent(tableItem.createControls());
+
 	}
 
 	public void setSearchCriteria(ContactSearchCriteria searchCriteria) {
