@@ -43,6 +43,18 @@ only screen and (max-device-width : 1024px) {
     border: none;
     margin: 0px;
 }
+.v-button-link {
+	width: 100%;
+}
+.v-button-link .v-button-wrap {
+	width: 100%;
+}
+.v-button-link .v-button-caption {
+	word-break: normal;
+	word-wrap: break-word;
+	white-space: normal;
+	display: inline-block;
+}
 .h-sidebar-menu {
     height: 30px;
     background: #F3F3F3;
