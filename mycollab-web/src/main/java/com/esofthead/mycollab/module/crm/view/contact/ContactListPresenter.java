@@ -34,6 +34,7 @@ public class ContactListPresenter extends
 		contactService = AppContext.getSpringBean(ContactService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void move(int newPageNumber) {

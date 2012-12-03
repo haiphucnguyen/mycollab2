@@ -12,6 +12,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class OpportunityReadPresenter  extends CrmGenericPresenter<OpportunityReadView> {
+	private static final long serialVersionUID = 1L;
 
 	public OpportunityReadPresenter(OpportunityReadView view) {
 		this.view = view;

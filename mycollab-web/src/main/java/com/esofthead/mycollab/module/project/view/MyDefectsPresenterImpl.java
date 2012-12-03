@@ -6,6 +6,8 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
 public class MyDefectsPresenterImpl extends AbstractPresenter implements MyDefectsPresenter{
+	
+	private static final long serialVersionUID = 1L;
 	private MyDefectsView view;
 	
 	public MyDefectsPresenterImpl(MyDefectsView view) {
