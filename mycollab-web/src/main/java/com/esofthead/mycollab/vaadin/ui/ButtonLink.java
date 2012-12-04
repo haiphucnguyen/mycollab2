@@ -8,10 +8,12 @@ public class ButtonLink extends Button {
 	public ButtonLink(String caption) {
 		super(caption);
 		this.setStyleName("link");
+		this.addStyleName("wordWrap");
 	}
 
 	public ButtonLink(String caption, ClickListener listener) {
 		super(caption, listener);
 		this.setStyleName("link");
+		this.addStyleName("wordWrap");
 	}
 }
