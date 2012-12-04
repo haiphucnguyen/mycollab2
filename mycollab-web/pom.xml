@@ -15,6 +15,7 @@
     <properties>
         <vaadinVersion>6.8.5</vaadinVersion>
         <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
+        <gwtversion>2.3.0</gwtversion>
     </properties>
 
     <dependencies>
@@ -32,13 +33,13 @@
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-user</artifactId>
-            <version>2.3.0</version>
+            <version>${gwtversion}</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.google.gwt</groupId>
             <artifactId>gwt-dev</artifactId>
-            <version>2.3.0</version>
+            <version>${gwtversion}</version>
             <scope>provided</scope>
         </dependency>
 
@@ -239,40 +240,12 @@
                 </configuration>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>gwt-maven-plugin</artifactId>
-                <version>2.3.0</version>
-                <dependencies>
-                    <dependency>
-                        <groupId>com.google.gwt</groupId>
-                        <artifactId>gwt-user</artifactId>
-                        <version>2.3.0</version>
-                    </dependency>
-                    <dependency>
-                        <groupId>com.google.gwt</groupId>
-                        <artifactId>gwt-dev</artifactId>
-                        <version>2.3.0</version>
-                    </dependency>
-                </dependencies>
-                <executions>
-                    <execution>
-                        <phase>compile</phase>
-                        <configuration>
-                            <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
-                        </configuration>
-                        <goals>
-                            <goal>clean</goal>
-                        </goals>
-                    </execution>
-                </executions>
-            </plugin>
-            <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
                 <version>1.0.1</version>
                 <executions>
                     <execution>
-                        <phase>compile</phase>
+                        <phase>prepare-package</phase>
                         <configuration>
                         </configuration>
                         <goals>
@@ -284,22 +257,22 @@
             <plugin>
                 <groupId>org.codehaus.mojo</groupId>
                 <artifactId>gwt-maven-plugin</artifactId>
-                <version>2.3.0</version>
+                <version>${gwtversion}</version>
                 <dependencies>
                     <dependency>
                         <groupId>com.google.gwt</groupId>
                         <artifactId>gwt-user</artifactId>
-                        <version>2.3.0</version>
+                        <version>${gwtversion}</version>
                     </dependency>
                     <dependency>
                         <groupId>com.google.gwt</groupId>
                         <artifactId>gwt-dev</artifactId>
-                        <version>2.3.0</version>
+                        <version>${gwtversion}</version>
                     </dependency>
                 </dependencies>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>prepare-package</phase>
                         <configuration>
                             <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
                         </configuration>
@@ -372,6 +345,17 @@
                 </configuration>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-war-plugin</artifactId>
+                    <configuration>
+                        <failOnMissingWebXml>false</failOnMissingWebXml>
+                    </configuration>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
     <pluginRepositories>
         <pluginRepository>
