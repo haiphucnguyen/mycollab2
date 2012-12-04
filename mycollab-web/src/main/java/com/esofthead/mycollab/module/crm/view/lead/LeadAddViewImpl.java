@@ -37,7 +37,7 @@ public class LeadAddViewImpl extends AbstractView implements
 		editForm.setItemDataSource(new BeanItem<Lead>(item));
 	}
 
-	public class EditForm extends AdvancedEditBeanForm<Lead> {
+	private class EditForm extends AdvancedEditBeanForm<Lead> {
 		private static final long serialVersionUID = 1L;
 
 		@Override

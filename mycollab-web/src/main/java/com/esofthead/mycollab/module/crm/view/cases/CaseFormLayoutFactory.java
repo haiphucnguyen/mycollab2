@@ -17,9 +17,9 @@ public abstract class CaseFormLayoutFactory implements IFormLayoutFactory {
 
 	@Override
 	public Layout getLayout() {
-		AddViewLayout accountAddLayout = new AddViewLayout("Case");
+		AddViewLayout caseAddLayout = new AddViewLayout("Case");
 
-		accountAddLayout.addTopControls(createTopPanel());
+		caseAddLayout.addTopControls(createTopPanel());
 
 		VerticalLayout layout = new VerticalLayout();
 
@@ -41,11 +41,11 @@ public abstract class CaseFormLayoutFactory implements IFormLayoutFactory {
 		descriptionLayout.getLayout().setColumnExpandRatio(1, 1.0f);
 		layout.addComponent(descriptionLayout.getLayout());
 
-		accountAddLayout.addBottomControls(createBottomPanel());
+		caseAddLayout.addBottomControls(createBottomPanel());
 
-		accountAddLayout.addBody(layout);
+		caseAddLayout.addBody(layout);
 
-		return accountAddLayout;
+		return caseAddLayout;
 	}
 
 	@Override

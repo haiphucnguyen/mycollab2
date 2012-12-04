@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
+import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
@@ -234,7 +235,7 @@ public class CrmController {
 					public void handle(ActivityEvent.TaskAdd event) {
 						TaskAddViewImpl view = ViewManager
 								.getView(TaskAddViewImpl.class);
-						new TaskAddPresenter(view).go(container, null);
+						new TaskAddPresenter(view).go(container, new ScreenData.Add<Task>(new Task()));
 					}
 				});
 

@@ -39,7 +39,7 @@ public class UserInformationViewImpl extends AbstractView implements
 		this.setStyleName("userInfoContainer");
 	}
 
-	public static class EditForm extends AdvancedEditBeanForm<User> {
+	private static class EditForm extends AdvancedEditBeanForm<User> {
 		private static final long serialVersionUID = 1L;
 
 		protected GridFormLayoutHelper informationLayout;
