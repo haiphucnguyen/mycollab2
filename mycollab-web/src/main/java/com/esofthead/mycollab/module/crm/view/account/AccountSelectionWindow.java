@@ -5,6 +5,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
@@ -30,6 +31,7 @@ public class AccountSelectionWindow extends Window {
 
 	public AccountSelectionWindow(FieldSelection fieldSelection) {
 		super("Account Name Lookup");
+		this.setWidth("600px");
 
 		this.fieldSelection = fieldSelection;
 	}
@@ -41,6 +43,7 @@ public class AccountSelectionWindow extends Window {
 
 		VerticalLayout layout = new VerticalLayout();
 		layout.setSpacing(true);
+		layout.setMargin(true);
 
 		createAccountList();
 
@@ -50,6 +53,7 @@ public class AccountSelectionWindow extends Window {
 		this.setContent(layout);
 
 		tableItem.setSearchCriteria(searchCriteria);
+		center();
 	}
 
 	private ComponentContainer createSearchPanel() {
@@ -76,9 +80,8 @@ public class AccountSelectionWindow extends Window {
 						"assignuser" }, new String[] { "Name", "City",
 						"Assign User" });
 		tableItem.setWidth("100%");
-		tableItem.setHeight("200px");
 
-		tableItem.setColumnWidth("accountname", 250);
+		tableItem.setColumnExpandRatio("accountname", 1.0f);
 		tableItem.setColumnWidth("city", 150);
 		tableItem.setColumnWidth("assignuser", 150);
 
@@ -90,7 +93,7 @@ public class AccountSelectionWindow extends Window {
 				@SuppressWarnings("unchecked")
 				final SimpleAccount account = ((PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>) source)
 						.getBeanByIndex(itemId);
-				Button b = new Button(account.getAccountname(),
+				ButtonLink b = new ButtonLink(account.getAccountname(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
@@ -102,7 +105,6 @@ public class AccountSelectionWindow extends Window {
 												AccountSelectionWindow.this);
 							}
 						});
-				b.setStyleName("link");
 				return b;
 			}
 		});

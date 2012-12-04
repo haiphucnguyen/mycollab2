@@ -20,6 +20,8 @@ import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -95,7 +97,19 @@ public class AccountReadViewImpl extends AbstractView implements
 		@Override
 		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory());
+			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected Field onCreateField(Item item, Object propertyId,
+						Component uiContext) {
+					if (propertyId.equals("email")) {
+						return new FormEmailLinkViewField(account.getEmail());
+					}
+					
+					return null;
+				}
+			});
 			super.setItemDataSource(newDataSource);
 		}
 

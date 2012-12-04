@@ -55,16 +55,21 @@ public class ContactReadViewImpl extends AbstractView implements
 				protected Field onCreateField(Item item, Object propertyId,
 						Component uiContext) {
 					if (propertyId.equals("accountid")) {
-						return new FormLinkViewField(contact.getAccountName(), new Button.ClickListener() {
+						return new FormLinkViewField(contact.getAccountName(),
+								new Button.ClickListener() {
 
-							@Override
-							public void buttonClick(ClickEvent event) {
-								EventBus.getInstance().fireEvent(
-										new AccountEvent.GotoRead(this,
-												contact.getAccountid()));
-								
-							}
-						});
+									@Override
+									public void buttonClick(ClickEvent event) {
+										EventBus.getInstance()
+												.fireEvent(
+														new AccountEvent.GotoRead(
+																this,
+																contact.getAccountid()));
+
+									}
+								});
+					} else if (propertyId.equals("email")) {
+						return new FormEmailLinkViewField(contact.getEmail());
 					}
 
 					return null;
