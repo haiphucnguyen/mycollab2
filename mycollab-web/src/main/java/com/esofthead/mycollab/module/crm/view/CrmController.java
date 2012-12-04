@@ -41,6 +41,12 @@ import com.esofthead.mycollab.module.crm.view.account.AccountReadView;
 import com.esofthead.mycollab.module.crm.view.account.AccountReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.activity.ActivityRootPresenter;
 import com.esofthead.mycollab.module.crm.view.activity.ActivityRootView;
+import com.esofthead.mycollab.module.crm.view.activity.CallAddPresenter;
+import com.esofthead.mycollab.module.crm.view.activity.CallAddViewImpl;
+import com.esofthead.mycollab.module.crm.view.activity.MeetingAddPresenter;
+import com.esofthead.mycollab.module.crm.view.activity.MeetingAddViewImpl;
+import com.esofthead.mycollab.module.crm.view.activity.TaskAddPresenter;
+import com.esofthead.mycollab.module.crm.view.activity.TaskAddViewImpl;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddView;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddViewImpl;
@@ -211,8 +217,58 @@ public class CrmController {
 					public void handle(GotoCalendar event) {
 						ActivityRootView view = ViewManager
 								.getView(ActivityRootView.class);
-						System.out.println("View: " + view);
 						new ActivityRootPresenter(view).go(container, null);
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ActivityEvent.TaskAdd>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ActivityEvent.TaskAdd.class;
+					}
+
+					@Override
+					public void handle(ActivityEvent.TaskAdd event) {
+						TaskAddViewImpl view = ViewManager
+								.getView(TaskAddViewImpl.class);
+						new TaskAddPresenter(view).go(container, null);
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ActivityEvent.MeetingAdd>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ActivityEvent.MeetingAdd.class;
+					}
+
+					@Override
+					public void handle(ActivityEvent.MeetingAdd event) {
+						MeetingAddViewImpl view = ViewManager
+								.getView(MeetingAddViewImpl.class);
+						new MeetingAddPresenter(view).go(container, null);
+					}
+				});
+		
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ActivityEvent.CallAdd>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ActivityEvent.CallAdd.class;
+					}
+
+					@Override
+					public void handle(ActivityEvent.CallAdd event) {
+						CallAddViewImpl view = ViewManager
+								.getView(CallAddViewImpl.class);
+						new CallAddPresenter(view).go(container, null);
 					}
 				});
 	}
