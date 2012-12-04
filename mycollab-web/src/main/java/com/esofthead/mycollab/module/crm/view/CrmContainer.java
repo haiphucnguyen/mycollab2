@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -110,24 +111,19 @@ public class CrmContainer extends AbstractView {
 		addBtnLayout.setMargin(true);
 		addBtnLayout.setSpacing(true);
 
-		Button newAccountBtn = new Button(NEW_ACCOUNT_ITEM, listener);
-		newAccountBtn.setStyleName(BaseTheme.BUTTON_LINK);
+		ButtonLink newAccountBtn = new ButtonLink(NEW_ACCOUNT_ITEM, listener);
 		addBtnLayout.addComponent(newAccountBtn);
 
-		Button newContactBtn = new Button(NEW_CONTACT_ITEM, listener);
-		newContactBtn.setStyleName(BaseTheme.BUTTON_LINK);
+		ButtonLink newContactBtn = new ButtonLink(NEW_CONTACT_ITEM, listener);
 		addBtnLayout.addComponent(newContactBtn);
 
-		Button newCampaignBtn = new Button(NEW_CAMPAIGN_ITEM, listener);
-		newCampaignBtn.setStyleName(BaseTheme.BUTTON_LINK);
+		ButtonLink newCampaignBtn = new ButtonLink(NEW_CAMPAIGN_ITEM, listener);
 		addBtnLayout.addComponent(newCampaignBtn);
 
-		Button newOpportunityBtn = new Button(NEW_OPPORTUNITY_ITEM, listener);
-		newOpportunityBtn.setStyleName(BaseTheme.BUTTON_LINK);
+		ButtonLink newOpportunityBtn = new ButtonLink(NEW_OPPORTUNITY_ITEM, listener);
 		addBtnLayout.addComponent(newOpportunityBtn);
 
-		Button newLeadBtn = new Button(NEW_LEAD_ITEM, listener);
-		newLeadBtn.setStyleName(BaseTheme.BUTTON_LINK);
+		ButtonLink newLeadBtn = new ButtonLink(NEW_LEAD_ITEM, listener);
 		addBtnLayout.addComponent(newLeadBtn);
 
 		addBtn.addComponent(addBtnLayout);
