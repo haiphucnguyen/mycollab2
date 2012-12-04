@@ -152,7 +152,7 @@
                 <message>Account must not be null</message>
             </constraint>
         </field>
-        
+
         <field name="email">
             <constraint annotation="org.hibernate.validator.constraints.Email">
                 <message>Please enter a valid email</message>
@@ -162,6 +162,14 @@
             <constraint
                 annotation="com.esofthead.mycollab.validator.constraints.PhoneNumber">
                 <message>Please enter a valid phone number</message>
+            </constraint>
+        </field>
+    </bean>
+
+    <bean class="Task" ignore-annotations="true">
+        <field name="subject">
+            <constraint annotation="javax.validation.constraints.NotNull">
+                <message>Subject must not be null</message>
             </constraint>
         </field>
     </bean>

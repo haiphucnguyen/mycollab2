@@ -2,7 +2,10 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import java.util.Collection;
 
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.Task;
+import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.module.crm.view.contact.ContactSelectionField;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -15,12 +18,15 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
+import com.vaadin.ui.TextField;
 
 public class TaskAddViewImpl extends AbstractView implements TaskAddView,
 		IFormAddView<Task> {
 	private static final long serialVersionUID = 1L;
 
 	private EditForm editForm;
+
+	private Task task;
 
 	public TaskAddViewImpl() {
 		super();
@@ -30,7 +36,8 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView,
 
 	@Override
 	public void editItem(Task item) {
-		editForm.setItemDataSource(new BeanItem<Task>(item));
+		this.task = item;
+		editForm.setItemDataSource(new BeanItem<Task>(task));
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Task> {
@@ -82,6 +89,24 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView,
 					return new TaskPriorityComboBox();
 				} else if (propertyId.equals("description")) {
 					return new TextArea();
+				} else if (propertyId.equals("contactid")) {
+					ContactSelectionField field = new ContactSelectionField();
+					if (task.getContactid() != null) {
+						ContactService accountService = AppContext
+								.getSpringBean(ContactService.class);
+						SimpleContact contact = accountService
+								.findContactById(task.getContactid());
+						if (contact != null) {
+							field.setContact(contact);
+						}
+					}
+					return field;
+				} else if (propertyId.equals("subject")) {
+					TextField tf = new TextField();
+					tf.setNullRepresentation("");
+					tf.setRequired(true);
+					tf.setRequiredError("Subject must not be null");
+					return tf;
 				}
 				return null;
 			}
