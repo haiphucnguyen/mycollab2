@@ -23,7 +23,7 @@ import com.vaadin.ui.VerticalLayout;
 public class UserInformationViewImpl extends AbstractView implements
 		UserInformationView, IFormAddView<User> {
 
-	private final EditForm formItem;
+	private EditForm formItem;
 
 	public UserInformationViewImpl() {
 		super();
@@ -34,6 +34,7 @@ public class UserInformationViewImpl extends AbstractView implements
 	public void attach() {
 		this.removeAllComponents();
 		User currentUser = AppContext.getSession();
+		formItem = new EditForm();
 		formItem.setItemDataSource(new BeanItem<User>(currentUser));
 		this.addComponent(formItem);
 		this.setStyleName("userInfoContainer");

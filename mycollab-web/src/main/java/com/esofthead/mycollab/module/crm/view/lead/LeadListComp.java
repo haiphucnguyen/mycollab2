@@ -12,15 +12,17 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.BaseTheme;
 
-public class LeadListComp extends Depot  implements IRelatedListHandlers{
+public class LeadListComp extends Depot implements IRelatedListHandlers {
 	private static final long serialVersionUID = 1L;
 
 	private PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead> tableItem;
-	
+
 	private Set<RelatedListHandler> handlers;
 
 	public LeadListComp() {
@@ -35,7 +37,7 @@ public class LeadListComp extends Depot  implements IRelatedListHandlers{
 		VerticalLayout contentContainer = (VerticalLayout) content;
 		contentContainer.setSpacing(true);
 
-		Button createBtn = new Button("Create", new Button.ClickListener() {
+		Button createBtn = new Button("New Lead", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -44,6 +46,8 @@ public class LeadListComp extends Depot  implements IRelatedListHandlers{
 			}
 		});
 
+		createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createBtn.setStyleName(BaseTheme.BUTTON_LINK);
 		contentContainer.addComponent(createBtn);
 
 		tableItem = new PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>(
@@ -67,7 +71,7 @@ public class LeadListComp extends Depot  implements IRelatedListHandlers{
 	public void setSearchCriteria(LeadSearchCriteria searchCriteria) {
 		tableItem.setSearchCriteria(searchCriteria);
 	}
-	
+
 	private void fireRelatedListHandler() {
 		if (handlers != null) {
 			for (RelatedListHandler handler : handlers) {

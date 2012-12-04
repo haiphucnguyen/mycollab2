@@ -58,7 +58,8 @@ only screen and (max-device-width : 1024px) {
 	white-space: normal;
 	word-wrap: break-word;
 	word-break: normal;
-	width: 100%
+	width: 100%;
+	height: 100%;
 }
 
 .h-sidebar-menu {
@@ -339,7 +340,7 @@ input.v-textfield[type="text"], textarea.v-textarea, .v-filterselect {
     max-width: 1130px;
 }
 .crmContainer .v-table-body-noselection {
-	height: 100% !important;
+ 	height: 100% !important;
 }
 
 input.v-textfield-errorField {
@@ -464,30 +465,6 @@ input.v-textfield-errorField {
 	color: #5E5E5E;
 	text-shadow: #F0F0F0 0 1px 0;
 	width: 500px !important;
-}
-.addViewLayout .h2-extra {
-	font-size: 14px;
-	border-bottom: 1px solid #B7B7B7;
-	color: #5E5E5E;
-	text-shadow: #F0F0F0 0 1px 0;
-	width: 500px !important;
-	font-weight: bold;
-	margin-top: 30px;
-	background: url('icons/16/arrow_up.png') no-repeat bottom right transparent;
-	cursor: pointer;
-}
-.addViewLayout .collapsed .h2-extra {
-	background: url('icons/16/arrow_down.png') no-repeat bottom right transparent;
-}
-.addViewLayout .depotContent {
-	margin-top: 10px;
-/* 	transition: height 2s; */
-/* 	-moz-transition: height 2s; */
-/* 	-webkit-transition: height 2s; */
-/* 	-o-transition: height 2s; */
-}
-.addViewLayout .depotContent .v-button-link {
-	margin-bottom: 5px;
 }
 /* End Add View Styles */
 
@@ -693,6 +670,43 @@ input.v-textfield-errorField {
     background: -webkit-gradient(linear, left top, left bottom, from(#20d4ff), to(#009cd0)) top left repeat-x;
 }
 /*End wizard*/
+
+/* Depot */
+.depotComp {
+	border: 1px solid #B7B7B7;
+	background-color: white;
+	margin-top: 30px;
+}
+.depotComp .depotHeader {
+	margin: 5px 4px;
+}
+
+.depotComp .h2 {
+	font-size: 14px;
+/* 	border-bottom: 1px solid #B7B7B7; */
+	color: #5E5E5E;
+	text-shadow: #F0F0F0 0 1px 0;
+	width: 500px !important;
+	font-weight: bold;
+/* 	margin-top: 30px; */
+	background: url('icons/16/depot_arrow_down.png') no-repeat 0 0 transparent;
+	cursor: pointer;
+	padding: 0 0 0 17px;
+	border: 0px;
+}
+.depotComp.collapsed .h2 {
+	background: url('icons/16/depot_arrow_right.png') no-repeat 0 0 transparent;
+}
+.depotComp.collapsed .depotContent {
+	padding: 0px;
+}
+.depotComp .depotContent {
+	padding: 0px 0px 10px;
+}
+.addViewLayout .depotContent .v-button-link {
+	margin-bottom: 5px;
+}
+/* End Depot */
 
 .v-table-cell-wrapper {
 white-space: normal;
