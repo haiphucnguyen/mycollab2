@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-public interface MeetingReadView {
+import com.esofthead.mycollab.vaadin.mvp.View;
+
+public interface MeetingReadView extends View{
 
 }

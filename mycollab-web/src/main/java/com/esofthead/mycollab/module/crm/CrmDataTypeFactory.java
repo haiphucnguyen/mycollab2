@@ -45,15 +45,21 @@ public class CrmDataTypeFactory {
 	private static String[] CASES_PRIORITY_LIST = new String[] { "High",
 			"Medium", "Low" };
 
-	private static String[] CASES_REASON_LIST = new String[] { "-None-",
+	private static String[] CASES_REASON_LIST = new String[] {
 			"User did not attend any training", "Complex functionality",
 			"New problem", "Ambigous instruction" };
 
-	private static String[] CASES_ORIGIN_LIST = new String[] { "-None-",
-			"Email", "Phone", "Web", "Error Log" };
+	private static String[] CASES_ORIGIN_LIST = new String[] { "Email",
+			"Phone", "Web", "Error Log" };
 
-	private static String[] CASES_TYPE_LIST = new String[] { "-None-",
-			"Problem", "Feature Request", "Question" };
+	private static String[] CASES_TYPE_LIST = new String[] { "Problem",
+			"Feature Request", "Question" };
+
+	private static String[] TASK_PRIORITY_LIST = new String[] { "High",
+			"Medium", "Low" };
+
+	private static String[] TASK_STATUS_LIST = new String[] { "Not Started",
+			"In Progress", "Completed", "Pending Input", "Deferred" };
 
 	public static String[] getAccountIndustryList() {
 		return ACCOUNT_INDUSTRY_LIST;
@@ -105,5 +111,13 @@ public class CrmDataTypeFactory {
 
 	public static String[] getCasesType() {
 		return CASES_TYPE_LIST;
+	}
+
+	public static String[] getTaskPriorities() {
+		return TASK_PRIORITY_LIST;
+	}
+	
+	public static String[] getTaskStatuses() {
+		return TASK_STATUS_LIST;
 	}
 }

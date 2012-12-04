@@ -44,7 +44,7 @@ public class ContactAddViewImpl extends AbstractView implements
 		return editForm;
 	}
 
-	public class EditForm extends AdvancedEditBeanForm<Contact> {
+	private class EditForm extends AdvancedEditBeanForm<Contact> {
 		private static final long serialVersionUID = 1L;
 
 		public EditForm() {

@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-public class CallAddViewImpl {
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+
+public class CallAddViewImpl extends AbstractView implements CallAddView {
+	private static final long serialVersionUID = 1L;
 
 }

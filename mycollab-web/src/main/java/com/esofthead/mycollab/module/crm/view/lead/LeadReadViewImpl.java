@@ -9,6 +9,8 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
@@ -56,7 +58,22 @@ public class LeadReadViewImpl extends AbstractView implements LeadReadView {
 							return new FormViewField(lead.getTitle() + " "
 									+ lead.getFirstname());
 						}
+					} else if (propertyId.equals("email")) {
+						return new FormEmailLinkViewField(lead.getEmail());
+					} else if (propertyId.equals("accountid")) {
+						FormLinkViewField field = new FormLinkViewField(lead
+								.getAccountname(), new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								
+							}
+						});
+						
+						return field;
 					}
+
 					return super.onCreateField(item, propertyId, uiContext);
 				}
 

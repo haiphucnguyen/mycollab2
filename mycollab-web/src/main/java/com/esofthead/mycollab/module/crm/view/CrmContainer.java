@@ -24,7 +24,6 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.BaseTheme;
 
 public class CrmContainer extends AbstractView {
 	private static final long serialVersionUID = 1L;

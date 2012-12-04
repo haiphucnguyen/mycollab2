@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-public interface TaskAddView {
+import com.esofthead.mycollab.module.crm.domain.Task;
+import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
+
+public interface TaskAddView extends IFormAddView<Task> {
 
 }

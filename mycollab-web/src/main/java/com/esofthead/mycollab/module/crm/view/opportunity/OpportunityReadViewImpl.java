@@ -2,6 +2,9 @@ package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -9,9 +12,11 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 public class OpportunityReadViewImpl extends AbstractView implements
 		OpportunityReadView {
@@ -52,9 +57,29 @@ public class OpportunityReadViewImpl extends AbstractView implements
 						Component uiContext) {
 					Field field = null;
 					if (propertyId.equals("accountid")) {
-						field = new FormViewField(opportunity.getAccountName());
+						field = new FormLinkViewField(opportunity
+								.getAccountName(), new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new AccountEvent.GotoRead(this,
+												opportunity.getAccountid()));
+							}
+						});
 					} else if (propertyId.equals("campaignid")) {
-						field = new FormViewField(opportunity.getCampaignName());
+						field = new FormLinkViewField(opportunity.getCampaignName(), new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new CampaignEvent.GotoRead(this,
+												opportunity.getCampaignid()));
+								
+							}
+						});
 					}
 					return field;
 				}
