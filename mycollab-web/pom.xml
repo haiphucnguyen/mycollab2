@@ -244,11 +244,12 @@
                 <version>2.5.0</version>
                 <executions>
                     <execution>
-                        <phase>clean</phase>
+                        <phase>compile</phase>
                         <configuration>
                             <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs>
                         </configuration>
                         <goals>
+                            <goal>clean</goal>
                             <goal>compile</goal>
                         </goals>
                     </execution>
@@ -260,7 +261,7 @@
                 <version>1.0.1</version>
                 <executions>
                     <execution>
-                        <phase>package</phase>
+                        <phase>compile</phase>
                         <configuration>
                         </configuration>
                         <goals>
