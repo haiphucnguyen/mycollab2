@@ -53,7 +53,7 @@ public class TaskRelatedItemField extends CustomField implements FieldSelection 
 							TaskRelatedItemField.this);
 					getWindow().addWindow(accountWindow);
 					accountWindow.show();
-				} else if (type.equals("Campaign")) {
+				} else if ("Campaign".equals(type)) {
 
 				} else {
 					relatedItemComboBox.focus();

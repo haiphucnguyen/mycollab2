@@ -6,9 +6,9 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.contact.ContactSelectionField;
+import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -21,8 +21,7 @@ import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
-public class TaskAddViewImpl extends AbstractView implements TaskAddView,
-		IFormAddView<Task> {
+public class TaskAddViewImpl extends AbstractView implements TaskAddView {
 	private static final long serialVersionUID = 1L;
 
 	private EditForm editForm;
@@ -114,6 +113,9 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView,
 				} else if (propertyId.equals("type")) {
 					TaskRelatedItemField field = new TaskRelatedItemField(task);
 					return field;
+				} else if (propertyId.equals("assignUser")) {
+					UserComboBox userBox = new UserComboBox();
+					return userBox;
 				}
 				return null;
 			}

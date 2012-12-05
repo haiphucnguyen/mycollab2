@@ -56,6 +56,8 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 					UIConstants.DEFAULT_CONTROL_EXT_WIDTH);
 		} else if (propertyId.equals("contactid")) {
 			informationLayout.addComponent(field, "Contact", 1, 2);
+		} else if (propertyId.equals("assignUser")) {
+			informationLayout.addComponent(field, "Assigned to", 1, 3);
 		}
 	}
 
