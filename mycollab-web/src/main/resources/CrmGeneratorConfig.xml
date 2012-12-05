@@ -54,6 +54,11 @@
             domainObjectName="Campaign"
             schema="mycollab"
             tableName="m_crm_campaign" />
+        
+        <table
+            domainObjectName="Call"
+            schema="mycollab"
+            tableName="m_crm_call" />
 
         <table
             domainObjectName="Case"

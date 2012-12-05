@@ -32,6 +32,12 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt" />
     </bean>
+    
+     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="callMapper">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.crm.dao.CallMapper" />
+    </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="caseMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
