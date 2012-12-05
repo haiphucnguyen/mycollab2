@@ -13,7 +13,7 @@
     </parent>
     <packaging>war</packaging>
     <properties>
-        <vaadinVersion>6.8.5</vaadinVersion>
+        <vaadinVersion>6.8.6</vaadinVersion>
         <netbeans.hint.deploy.server>gfv3ee6</netbeans.hint.deploy.server>
         <gwtversion>2.3.0</gwtversion>
     </properties>

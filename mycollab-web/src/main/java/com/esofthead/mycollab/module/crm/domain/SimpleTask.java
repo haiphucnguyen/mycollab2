@@ -18,7 +18,9 @@
 package com.esofthead.mycollab.module.crm.domain;
 
 public class SimpleTask extends Task {
-    private String contactName;
+	private static final long serialVersionUID = 1L;
+
+	private String contactName;
 
     private String relatedTo;
 

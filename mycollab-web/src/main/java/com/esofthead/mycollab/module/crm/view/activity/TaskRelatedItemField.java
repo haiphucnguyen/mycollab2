@@ -48,13 +48,15 @@ public class TaskRelatedItemField extends CustomField implements FieldSelection 
 			@Override
 			public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
 				String type = (String) relatedItemComboBox.getValue();
-				if (type.equals("Account")) {
+				if ("Account".equals(type)) {
 					AccountSelectionWindow accountWindow = new AccountSelectionWindow(
 							TaskRelatedItemField.this);
 					getWindow().addWindow(accountWindow);
 					accountWindow.show();
 				} else if (type.equals("Campaign")) {
 
+				} else {
+					relatedItemComboBox.focus();
 				}
 			}
 		});
