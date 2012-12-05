@@ -17,6 +17,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
 public class LeadAddViewImpl extends AbstractView implements
@@ -87,6 +88,10 @@ public class LeadAddViewImpl extends AbstractView implements
 					tf.setRequired(true);
 					tf.setRequiredError("Last name must not be null");
 					return tf;
+				} else if (propertyId.equals("description")) {
+					TextArea descArea = new TextArea();
+					descArea.setNullRepresentation("");
+					return descArea;
 				}
 
 				return null;

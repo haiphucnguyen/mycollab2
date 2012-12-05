@@ -44,27 +44,18 @@ public class GridFormLayoutHelper {
 		field.setWidth(width);
 		return field;
 	}
-
-	public Field addComponent(Field field, String caption, int column1,
-			int row1, int column2, int row2) {
+	
+	public Component addComponent(Component field, String caption, int columns,
+			int rows, int colspan, String width, String height) {
 		Label l = new Label(caption + ":");
 		l.setSizeUndefined();
-		layout.addComponent(l, 2 * column1, row1 + 1);
+		layout.addComponent(l, 2 * columns, rows + 1);
 		layout.setComponentAlignment(l, Alignment.TOP_RIGHT);
-
-		layout.addComponent(field, 2 * column1 + 1, row1 + 1, 2 * column2 + 1,
-				row2 + 1);
+		
+		layout.addComponent(field, 2 * columns + 1, rows + 1, 2*(columns +colspan -1) + 1, rows + 1);
 		field.setCaption(null);
+		field.setWidth(width);
 		return field;
-	}
-
-	public Field addComponent(boolean condition, Field field, String caption,
-			int column1, int row1, int column2, int row2) {
-		if (condition) {
-			return addComponent(field, caption, column1, row1, column2, row2);
-		} else {
-			return null;
-		}
 	}
 
 	public Component addComponent(Component field, String caption, int columns, int rows) {

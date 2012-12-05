@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view.cases;
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -33,12 +34,11 @@ public abstract class CaseFormLayoutFactory implements IFormLayoutFactory {
 		layout.setComponentAlignment(informationLayout.getLayout(),
 				Alignment.BOTTOM_CENTER);
 
-		descriptionLayout = new GridFormLayoutHelper(1, 2);
+		descriptionLayout = new GridFormLayoutHelper(2, 2);
 		Label descHeader = new Label("Description");
 		descHeader.setStyleName("h2");
 		layout.addComponent(descHeader);
 		descriptionLayout.getLayout().setWidth("900px");
-		descriptionLayout.getLayout().setColumnExpandRatio(1, 1.0f);
 		layout.addComponent(descriptionLayout.getLayout());
 
 		caseAddLayout.addBottomControls(createBottomPanel());
@@ -71,9 +71,13 @@ public abstract class CaseFormLayoutFactory implements IFormLayoutFactory {
 		} else if (propertyId.equals("assignuser")) {
 			informationLayout.addComponent(field, "Assigned User", 1, 4);
 		} else if (propertyId.equals("description")) {
-			descriptionLayout.addComponent(field, "Description", 0, 0);
+			descriptionLayout.addComponent(field, "Description", 0, 0, 2,
+					UIConstants.DEFAULT_2XCONTROL_WIDTH,
+					UIConstants.DEFAULT_2XCONTROL_HEIGHT);
 		} else if (propertyId.equals("resolution")) {
-			descriptionLayout.addComponent(field, "Resolution", 0, 1);
+			descriptionLayout.addComponent(field, "Resolution", 0, 1, 2,
+					UIConstants.DEFAULT_2XCONTROL_WIDTH,
+					UIConstants.DEFAULT_2XCONTROL_HEIGHT);
 		}
 	}
 

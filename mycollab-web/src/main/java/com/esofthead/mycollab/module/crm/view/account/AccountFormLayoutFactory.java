@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view.account;
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -44,12 +45,11 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 		layout.setComponentAlignment(addressLayout.getLayout(),
 				Alignment.BOTTOM_CENTER);
 
-		descriptionLayout = new GridFormLayoutHelper(1, 1);
+		descriptionLayout = new GridFormLayoutHelper(2, 1);
 		Label descHeader = new Label("Description");
 		descHeader.setStyleName("h2");
 		layout.addComponent(descHeader);
 		descriptionLayout.getLayout().setWidth("900px");
-		descriptionLayout.getLayout().setColumnExpandRatio(1, 1.0f);
 		layout.addComponent(descriptionLayout.getLayout());
 
 		accountAddLayout.addBottomControls(createBottomPanel());
@@ -109,7 +109,9 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 
 		if (propertyId.equals("description")) {
 			field.setSizeUndefined();
-			descriptionLayout.addComponent(field, "Description", 0, 0);
+			descriptionLayout.addComponent(field, "Description", 0, 0, 2,
+					UIConstants.DEFAULT_2XCONTROL_WIDTH,
+					UIConstants.DEFAULT_2XCONTROL_HEIGHT);
 		}
 
 	}

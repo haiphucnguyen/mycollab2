@@ -20,6 +20,8 @@ package com.esofthead.mycollab.module.user.domain;
 import java.util.List;
 
 public class SimpleUser extends User {
+	private static final long serialVersionUID = 1L;
+
 	private List<Role> roles;
 
 	private String userId;

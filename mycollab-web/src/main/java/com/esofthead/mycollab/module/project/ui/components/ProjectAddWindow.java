@@ -123,7 +123,7 @@ public class ProjectAddWindow extends Window {
 			} else if (propertyId.equals("projecttype")) {
 				layoutHelper.addComponent(field, "Type", 1, 1);
 			} else if (propertyId.equals("description")) {
-				layoutHelper.addComponent(field, "Description", 0, 2, 1, 2);
+				layoutHelper.addComponent(field, "Description", 0, 2);
 			}
 		}
 

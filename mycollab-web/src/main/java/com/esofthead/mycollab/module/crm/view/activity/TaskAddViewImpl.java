@@ -88,7 +88,9 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView,
 				} else if (propertyId.equals("priority")) {
 					return new TaskPriorityComboBox();
 				} else if (propertyId.equals("description")) {
-					return new TextArea();
+					TextArea descArea = new TextArea();
+					descArea.setNullRepresentation("");
+					return descArea;
 				} else if (propertyId.equals("contactid")) {
 					ContactSelectionField field = new ContactSelectionField();
 					if (task.getContactid() != null) {
@@ -107,6 +109,9 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView,
 					tf.setRequired(true);
 					tf.setRequiredError("Subject must not be null");
 					return tf;
+				} else if (propertyId.equals("type")) {
+					TaskRelatedItemField field = new TaskRelatedItemField();
+					return field;
 				}
 				return null;
 			}

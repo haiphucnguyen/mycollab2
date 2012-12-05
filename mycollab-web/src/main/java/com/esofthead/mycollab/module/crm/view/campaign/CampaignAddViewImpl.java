@@ -12,6 +12,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
 public class CampaignAddViewImpl extends AbstractView implements
@@ -68,6 +69,10 @@ public class CampaignAddViewImpl extends AbstractView implements
 					tf.setRequired(true);
 					tf.setRequiredError("Name must not be null");
 					return tf;
+				} else if ("description".equals(propertyId)) {
+					TextArea descArea = new TextArea();
+					descArea.setNullRepresentation("");
+					return descArea;
 				}
 
 				return null;

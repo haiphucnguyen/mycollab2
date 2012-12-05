@@ -19,6 +19,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
 public class OpportunityAddViewImpl extends AbstractView implements
@@ -101,6 +102,10 @@ public class OpportunityAddViewImpl extends AbstractView implements
 					return new OpportunityTypeComboBox();
 				} else if (propertyId.equals("source")) {
 					return new LeadSourceComboBox();
+				} else if (propertyId.equals("description")) {
+					TextArea descArea = new TextArea();
+					descArea.setNullRepresentation("");
+					return descArea;
 				}
 
 				return null;

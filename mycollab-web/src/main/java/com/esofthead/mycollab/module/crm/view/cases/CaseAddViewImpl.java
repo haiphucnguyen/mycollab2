@@ -80,9 +80,13 @@ public class CaseAddViewImpl extends AbstractView implements CaseAddView {
 				} else if (propertyId.equals("type")) {
 					return new CaseTypeComboBox();
 				} else if (propertyId.equals("description")) {
-					return new TextArea("", "");
+					TextArea descArea = new TextArea("", "");
+					descArea.setNullRepresentation("");
+					return descArea;
 				} else if (propertyId.equals("resolution")) {
-					return new TextArea("", "");
+					TextArea reArea = new TextArea("", "");
+					reArea.setNullRepresentation("");
+					return reArea;
 				} else if (propertyId.equals("accountid")) {
 					AccountSelectionField accountField = new AccountSelectionField();
 					accountField.setRequired(true);

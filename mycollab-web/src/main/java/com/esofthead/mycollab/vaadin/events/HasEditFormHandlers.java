@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.vaadin.events;
 
-public interface HasEditFormHandlers<T> {
+import java.io.Serializable;
+
+public interface HasEditFormHandlers<T> extends Serializable {
 	void addFormHandler(EditFormHandler<T> handler);
 }

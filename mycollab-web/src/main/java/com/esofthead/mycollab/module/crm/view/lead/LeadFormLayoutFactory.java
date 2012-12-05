@@ -17,7 +17,7 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 	protected GridFormLayoutHelper addressLayout;
 
 	protected GridFormLayoutHelper descLayout;
-	
+
 	private HorizontalLayout prefixFirstNameBox;
 
 	@Override
@@ -35,7 +35,7 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 		informationLayout = new GridFormLayoutHelper(2, 8);
 		informationLayout.getLayout().setWidth("900px");
 		layout.addComponent(informationLayout.getLayout());
-		
+
 		prefixFirstNameBox = new HorizontalLayout();
 		prefixFirstNameBox.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 		prefixFirstNameBox.setSpacing(true);
@@ -51,7 +51,7 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 		Label descriptionHeader = new Label("Description");
 		descriptionHeader.setStyleName("h2");
 		layout.addComponent(descriptionHeader);
-		descLayout = new GridFormLayoutHelper(1, 1);
+		descLayout = new GridFormLayoutHelper(2, 1);
 		descLayout.getLayout().setWidth("900px");
 		layout.addComponent(descLayout.getLayout());
 
@@ -71,7 +71,7 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 			prefixFirstNameBox.addComponent(field);
 			field.setWidth("145px");
 		}
-		
+
 		informationLayout.addComponent(propertyId.equals("lastname"), field,
 				"Last Name", 0, 1);
 		informationLayout.addComponent(propertyId.equals("title"), field,
@@ -126,9 +126,11 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 		addressLayout.addComponent(propertyId.equals("othercountry"), field,
 				"Other Country", 1, 4);
 
-		descLayout.addComponent(propertyId.equals("description"), field,
-				"Description", 0, 0);
-
+		if (propertyId.equals("description")) {
+			descLayout.addComponent(field, "Description", 0, 0, 2,
+					UIConstants.DEFAULT_2XCONTROL_WIDTH,
+					UIConstants.DEFAULT_2XCONTROL_HEIGHT);
+		}
 	}
 
 }

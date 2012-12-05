@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view.contact;
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -40,12 +41,11 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 		addressLayout.getLayout().setWidth("900px");
 		layout.addComponent(addressLayout.getLayout());
 
-		descriptionLayout = new GridFormLayoutHelper(1, 1);
+		descriptionLayout = new GridFormLayoutHelper(2, 1);
 		Label descHeader = new Label("Description");
 		descHeader.setStyleName("h2");
 		layout.addComponent(descHeader);
 		descriptionLayout.getLayout().setWidth("900px");
-		descriptionLayout.getLayout().setColumnExpandRatio(1, 1.0f);
 		layout.addComponent(descriptionLayout.getLayout());
 
 		contactAddLayout.addBody(layout);
@@ -112,9 +112,9 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 		} else if (propertyId.equals("othercountry")) {
 			addressLayout.addComponent(field, "Other Country", 1, 4);
 		} else if (propertyId.equals("description")) {
-			field.setSizeUndefined();
-			descriptionLayout.addComponent(propertyId.equals("description"),
-					field, "Description", 0, 0);
+			descriptionLayout.addComponent(field, "Description", 0, 0, 2,
+					UIConstants.DEFAULT_2XCONTROL_WIDTH,
+					UIConstants.DEFAULT_2XCONTROL_HEIGHT);
 		}
 	}
 

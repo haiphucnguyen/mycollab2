@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -44,11 +45,14 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 		} else if (propertyId.equals("priority")) {
 			informationLayout.addComponent(field, "Priority", 0, 3);
 		} else if (propertyId.equals("description")) {
-			informationLayout.addComponent(field, "Description", 0, 4);
+			informationLayout.addComponent(field, "Description", 0, 4, 2,
+					UIConstants.DEFAULT_2XCONTROL_WIDTH,
+					UIConstants.DEFAULT_2XCONTROL_HEIGHT);
 		} else if (propertyId.equals("status")) {
 			informationLayout.addComponent(field, "Status", 1, 0);
-		} else if (propertyId.equals("typeid")) {
-			informationLayout.addComponent(field, "Related To", 1, 1);
+		} else if (propertyId.equals("type")) {
+			informationLayout.addComponent(field, "Related To", 1, 1,
+					UIConstants.DEFAULT_CONTROL_EXT_WIDTH);
 		} else if (propertyId.equals("contactid")) {
 			informationLayout.addComponent(field, "Contact", 1, 2);
 		}

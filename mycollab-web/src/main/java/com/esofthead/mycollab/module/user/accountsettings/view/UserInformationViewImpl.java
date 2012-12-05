@@ -108,42 +108,31 @@ public class UserInformationViewImpl extends AbstractView implements
 
 			if (propertyId.equals("firstname")) {
 				field.setSizeUndefined();
-				informationLayout.addComponent(propertyId.equals("firstname"),
-						field, "First Name", 0, 0);
+				informationLayout.addComponent(field, "First Name", 0, 0);
 			} else if (propertyId.equals("lastname")) {
 				field.setSizeUndefined();
-				informationLayout.addComponent(propertyId.equals("lastname"),
-						field, "Last Name", 0, 1);
+				informationLayout.addComponent(field, "Last Name", 0, 1);
 			} else if (propertyId.equals("middlename")) {
 				field.setSizeUndefined();
-				informationLayout.addComponent(propertyId.equals("middlename"),
-						field, "Middle Name", 0, 2);
+				informationLayout.addComponent(field, "Middle Name", 0, 2);
 			} else if (propertyId.equals("nickname")) {
 				field.setSizeUndefined();
-				informationLayout.addComponent(propertyId.equals("nickname"),
-						field, "Nickname", 0, 3);
+				informationLayout.addComponent(field, "Nickname", 0, 3);
 			} else if (propertyId.equals("dateofbirth")) {
 				field.setSizeUndefined();
-				informationLayout.addComponent(
-						propertyId.equals("dateofbirth"), field, "Birthday", 0,
-						4);
+				informationLayout.addComponent(field, "Birthday", 0, 4);
 			} else if (propertyId.equals("email")) {
 				field.setSizeUndefined();
-				informationLayout.addComponent(propertyId.equals("email"),
-						field, "Email", 0, 5);
+				informationLayout.addComponent(field, "Email", 0, 5);
 			} else if (propertyId.equals("website")) {
 				field.setSizeUndefined();
-				informationLayout.addComponent(propertyId.equals("website"),
-						field, "Website", 0, 6);
+				informationLayout.addComponent(field, "Website", 0, 6);
 			} else if (propertyId.equals("displayname")) {
 				field.setSizeUndefined();
-				informationLayout.addComponent(
-						propertyId.equals("displayname"), field,
-						"Display Name", 0, 7);
+				informationLayout.addComponent(field, "Display Name", 0, 7);
 			} else if (propertyId.equals("company")) {
 				field.setSizeUndefined();
-				informationLayout.addComponent(propertyId.equals("company"),
-						field, "Company", 0, 8);
+				informationLayout.addComponent(field, "Company", 0, 8);
 			}
 
 		}

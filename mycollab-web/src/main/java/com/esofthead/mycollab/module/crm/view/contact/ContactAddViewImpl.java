@@ -16,6 +16,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
 public class ContactAddViewImpl extends AbstractView implements
@@ -47,9 +48,11 @@ public class ContactAddViewImpl extends AbstractView implements
 	private class EditForm extends AdvancedEditBeanForm<Contact> {
 		private static final long serialVersionUID = 1L;
 
-		public EditForm() {
+		@Override
+		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
+			super.setItemDataSource(newDataSource);
 		}
 
 		class FormLayoutFactory extends ContactFormLayoutFactory {
@@ -89,6 +92,10 @@ public class ContactAddViewImpl extends AbstractView implements
 					tf.setRequired(true);
 					tf.setRequiredError("Last name must not be null");
 					return tf;
+				} else if (propertyId.equals("description")) {
+					TextArea descArea = new TextArea();
+					descArea.setNullRepresentation("");
+					return descArea;
 				}
 
 				return null;

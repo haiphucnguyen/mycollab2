@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view.opportunity;
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -47,32 +48,32 @@ public abstract class OpportunityFormLayoutFactory implements
 
 	@Override
 	public void attachField(Object propertyId, Field field) {
-		informationLayout.addComponent(propertyId.equals("opportunityname"),
-				field, "Opportunity Name", 0, 0);
-		informationLayout.addComponent(propertyId.equals("currencyid"), field,
-				"Currency", 0, 1);
-		informationLayout.addComponent(propertyId.equals("amount"), field,
-				"Amount", 0, 2);
-		informationLayout.addComponent(propertyId.equals("salesstage"), field,
-				"Sales Stage", 0, 3);
-		informationLayout.addComponent(propertyId.equals("probability"), field,
-				"Probability (%)", 0, 4);
-		informationLayout.addComponent(propertyId.equals("nextstep"), field,
-				"Next Step", 0, 5);
-
-		informationLayout.addComponent(propertyId.equals("accountid"), field,
-				"Account Name", 1, 0);
-		informationLayout.addComponent(propertyId.equals("expectedcloseddate"),
-				field, "Expected Close Date", 1, 1);
-		informationLayout.addComponent(propertyId.equals("opportunitytype"),
-				field, "Type", 1, 2);
-		informationLayout.addComponent(propertyId.equals("source"), field,
-				"Lead Source", 1, 3);
-		informationLayout.addComponent(propertyId.equals("campaignid"), field,
-				"Campaign", 1, 4);
-
-		if (propertyId.equals("description")) {
-			descriptionLayout.addComponent(field, "Description", 0, 0);
+		if (propertyId.equals("opportunityname")) {
+			informationLayout.addComponent(field, "Opportunity Name", 0, 0);
+		} else if (propertyId.equals("currencyid")) {
+			informationLayout.addComponent(field, "Currency", 0, 1);
+		} else if (propertyId.equals("amount")) {
+			informationLayout.addComponent(field, "Amount", 0, 2);
+		} else if (propertyId.equals("salesstage")) {
+			informationLayout.addComponent(field, "Sales Stage", 0, 3);
+		} else if (propertyId.equals("probability")) {
+			informationLayout.addComponent(field, "Probability (%)", 0, 4);
+		} else if (propertyId.equals("nextstep")) {
+			informationLayout.addComponent(field, "Next Step", 0, 5);
+		} else if (propertyId.equals("accountid")) {
+			informationLayout.addComponent(field, "Account Name", 1, 0);
+		} else if (propertyId.equals("expectedcloseddate")) {
+			informationLayout.addComponent(field, "Expected Close Date", 1, 1);
+		} else if (propertyId.equals("opportunitytype")) {
+			informationLayout.addComponent(field, "Type", 1, 2);
+		} else if (propertyId.equals("source")) {
+			informationLayout.addComponent(field, "Lead Source", 1, 3);
+		} else if (propertyId.equals("campaignid")) {
+			informationLayout.addComponent(field, "Campaign", 1, 4);
+		} else if (propertyId.equals("description")) {
+			descriptionLayout.addComponent(field, "Description", 0, 0, 2,
+					UIConstants.DEFAULT_2XCONTROL_WIDTH,
+					UIConstants.DEFAULT_2XCONTROL_HEIGHT);
 		}
 	}
 
