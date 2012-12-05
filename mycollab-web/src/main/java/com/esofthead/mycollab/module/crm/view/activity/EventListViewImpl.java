@@ -1,10 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
-import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.EventService;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -19,14 +16,14 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Table.ColumnGenerator;
+import com.vaadin.ui.VerticalLayout;
 
 public class EventListViewImpl extends AbstractView implements
 		EventListView {
@@ -60,7 +57,7 @@ public class EventListViewImpl extends AbstractView implements
 	private void generateDisplayTable() {
 		tableItem = new PagedBeanTable2<EventService, EventSearchCriteria, SimpleEvent>(
 				AppContext.getSpringBean(EventService.class),
-				SimpleEvent.class, new String[] { "selected", "status", "type", "subject" }, new String[] {
+				SimpleEvent.class, new String[] { "selected", "status", "eventType", "subject" }, new String[] {
 						"", "Status", "Type", "Subject" });
 
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
@@ -94,7 +91,7 @@ public class EventListViewImpl extends AbstractView implements
 		tableItem.setColumnExpandRatio("subject", 1);
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 		tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
-		tableItem.setColumnWidth("type", UIConstants.TABLE_M_LABEL_WIDTH);
+		tableItem.setColumnWidth("eventType", UIConstants.TABLE_M_LABEL_WIDTH);
 
 		tableItem.setWidth("100%");
 
