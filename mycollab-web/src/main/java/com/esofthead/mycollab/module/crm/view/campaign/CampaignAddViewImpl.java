@@ -35,12 +35,18 @@ public class CampaignAddViewImpl extends AbstractView implements
 	private static class EditForm extends AdvancedEditBeanForm<Campaign> {
 		private static final long serialVersionUID = 1L;
 
-		public EditForm() {
+		@Override
+		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
+			super.setItemDataSource(newDataSource);
 		}
 
+
+
 		class FormLayoutFactory extends CampaignFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			protected HorizontalLayout createButtonControls() {
 				return (new EditFormControlsGenerator<Campaign>(EditForm.this))
