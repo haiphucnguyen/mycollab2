@@ -108,6 +108,7 @@ public class CrmContainer extends AbstractView {
 		addBtn = new PopupButton("Add");
 		GridLayout addBtnLayout = new GridLayout(3, 2);
 		addBtnLayout.setMargin(true);
+		addBtnLayout.setWidth("300px");
 		addBtnLayout.setSpacing(true);
 
 		ButtonLink newAccountBtn = new ButtonLink(NEW_ACCOUNT_ITEM, listener);
@@ -119,11 +120,14 @@ public class CrmContainer extends AbstractView {
 		ButtonLink newCampaignBtn = new ButtonLink(NEW_CAMPAIGN_ITEM, listener);
 		addBtnLayout.addComponent(newCampaignBtn);
 
-		ButtonLink newOpportunityBtn = new ButtonLink(NEW_OPPORTUNITY_ITEM, listener);
+		ButtonLink newOpportunityBtn = new ButtonLink(NEW_OPPORTUNITY_ITEM,
+				listener);
 		addBtnLayout.addComponent(newOpportunityBtn);
 
 		ButtonLink newLeadBtn = new ButtonLink(NEW_LEAD_ITEM, listener);
 		addBtnLayout.addComponent(newLeadBtn);
+
+		addBtnLayout.addComponent(new ButtonLink(NEW_CASE_ITEM, listener));
 
 		addBtn.addComponent(addBtnLayout);
 		addBtn.setStyleName("link");

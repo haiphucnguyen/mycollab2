@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.contact.ContactSelectionField;
+import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -51,7 +52,8 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView,
 			super.setItemDataSource(newDataSource, propertyIds);
 		}
 
-		class FormLayoutFactory extends TaskFormLayoutFactory {
+		private class FormLayoutFactory extends TaskFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
 
 			private Layout createButtonControls() {
 				return (new EditFormControlsGenerator<Task>(EditForm.this))
@@ -110,11 +112,16 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView,
 					tf.setRequiredError("Subject must not be null");
 					return tf;
 				} else if (propertyId.equals("type")) {
-					TaskRelatedItemField field = new TaskRelatedItemField();
+					TaskRelatedItemField field = new TaskRelatedItemField(task);
 					return field;
 				}
 				return null;
 			}
 		}
+	}
+
+	@Override
+	public HasEditFormHandlers<Task> getEditFormHandlers() {
+		return editForm;
 	}
 }

@@ -1,12 +1,16 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.io.Serializable;
+
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 
-public class GridFormLayoutHelper {
+public class GridFormLayoutHelper implements Serializable {
+	private static final long serialVersionUID = 1L;
+	
 	private final GridLayout layout;
 
 	public GridFormLayoutHelper(int columns, int rows) {
@@ -30,7 +34,6 @@ public class GridFormLayoutHelper {
 
 		layout.setRowExpandRatio(0, 0);
 	}
-	
 
 	public Component addComponent(Component field, String caption, int columns,
 			int rows, String width) {
@@ -44,27 +47,29 @@ public class GridFormLayoutHelper {
 		field.setWidth(width);
 		return field;
 	}
-	
+
 	public Component addComponent(Component field, String caption, int columns,
 			int rows, int colspan, String width, String height) {
 		Label l = new Label(caption + ":");
 		l.setSizeUndefined();
 		layout.addComponent(l, 2 * columns, rows + 1);
 		layout.setComponentAlignment(l, Alignment.TOP_RIGHT);
-		
-		layout.addComponent(field, 2 * columns + 1, rows + 1, 2*(columns +colspan -1) + 1, rows + 1);
+
+		layout.addComponent(field, 2 * columns + 1, rows + 1, 2 * (columns
+				+ colspan - 1) + 1, rows + 1);
 		field.setCaption(null);
 		field.setWidth(width);
 		return field;
 	}
 
-	public Component addComponent(Component field, String caption, int columns, int rows) {
+	public Component addComponent(Component field, String caption, int columns,
+			int rows) {
 		return addComponent(field, caption, columns, rows,
 				UIConstants.DEFAULT_CONTROL_WIDTH);
 	}
 
-	public Component addComponent(boolean condition, Field field, String caption,
-			int columns, int rows) {
+	public Component addComponent(boolean condition, Field field,
+			String caption, int columns, int rows) {
 		if (condition) {
 			return addComponent(field, caption, columns, rows,
 					UIConstants.DEFAULT_CONTROL_WIDTH);

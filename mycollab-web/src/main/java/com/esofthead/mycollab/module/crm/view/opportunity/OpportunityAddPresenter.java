@@ -27,8 +27,8 @@ public class OpportunityAddPresenter extends
 				new EditFormHandler<Opportunity>() {
 
 					@Override
-					public void onSave(final Opportunity account) {
-						saveOpportunity(account);
+					public void onSave(final Opportunity item) {
+						saveOpportunity(item);
 						ViewState viewState = HistoryViewManager.back();
 						if (viewState instanceof NullViewState) {
 							EventBus.getInstance().fireEvent(
@@ -46,8 +46,8 @@ public class OpportunityAddPresenter extends
 					}
 
 					@Override
-					public void onSaveAndNew(final Opportunity account) {
-						saveOpportunity(account);
+					public void onSaveAndNew(final Opportunity item) {
+						saveOpportunity(item);
 						EventBus.getInstance().fireEvent(
 								new OpportunityEvent.GotoAdd(this, null));
 					}

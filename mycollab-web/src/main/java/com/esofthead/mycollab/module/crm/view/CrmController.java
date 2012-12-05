@@ -25,6 +25,7 @@ import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.AccountEvent.GotoRead;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent.GotoCalendar;
+import com.esofthead.mycollab.module.crm.events.ActivityEvent.GotoTodoList;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
@@ -223,6 +224,24 @@ public class CrmController {
 				});
 
 		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ActivityEvent.GotoTodoList>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ActivityEvent.GotoTodoList.class;
+					}
+
+					@Override
+					public void handle(GotoTodoList event) {
+						ActivityRootView view = ViewManager
+								.getView(ActivityRootView.class);
+						new ActivityRootPresenter(view).go(container,
+								new ScreenData<String>("todo"));
+					}
+				});
+
+		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ActivityEvent.TaskAdd>() {
 					private static final long serialVersionUID = 1L;
 
@@ -235,7 +254,8 @@ public class CrmController {
 					public void handle(ActivityEvent.TaskAdd event) {
 						TaskAddViewImpl view = ViewManager
 								.getView(TaskAddViewImpl.class);
-						new TaskAddPresenter(view).go(container, new ScreenData.Add<Task>(new Task()));
+						new TaskAddPresenter(view).go(container,
+								new ScreenData.Add<Task>(new Task()));
 					}
 				});
 
@@ -255,7 +275,7 @@ public class CrmController {
 						new MeetingAddPresenter(view).go(container, null);
 					}
 				});
-		
+
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ActivityEvent.CallAdd>() {
 					private static final long serialVersionUID = 1L;

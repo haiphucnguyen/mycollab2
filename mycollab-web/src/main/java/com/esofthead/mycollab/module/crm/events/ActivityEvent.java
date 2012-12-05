@@ -10,6 +10,12 @@ public class ActivityEvent {
 			super(source, data);
 		}
 	}
+	
+	public static class GotoTodoList extends ApplicationEvent {
+		public GotoTodoList(Object source, Object data) {
+			super(source, data);
+		}
+	}
 
 	public static class TaskAdd extends ApplicationEvent {
 		public TaskAdd(Object source, Object data) {

@@ -53,7 +53,6 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 						AccountSelectionField.this);
 				getWindow().addWindow(accountWindow);
 				accountWindow.show();
-
 			}
 		});
 

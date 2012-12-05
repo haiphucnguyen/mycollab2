@@ -14,9 +14,13 @@ public class ActivityRootView extends AbstractView {
 	private DetachedTabs activityTabs;
 	private CssLayout mySpaceArea = new CssLayout();
 
+	private ActivityCalendarPresenter calendarPresenter;
+
+	private ActivityListPresenter activityListPresenter;
+
 	public ActivityRootView() {
 		super();
-		
+
 		this.setSizeFull();
 
 		mySpaceArea.setWidth("100%");
@@ -51,30 +55,32 @@ public class ActivityRootView extends AbstractView {
 	private ComponentContainer constructCalendarView() {
 		ActivityCalendarViewImpl view = ViewManager
 				.getView(ActivityCalendarViewImpl.class);
+		calendarPresenter = new ActivityCalendarPresenter(view);
 		return view;
 	}
 
 	private ComponentContainer constructActivityListView() {
 		ActivityListViewImpl view = ViewManager
 				.getView(ActivityListViewImpl.class);
+		activityListPresenter = new ActivityListPresenter(view);
 		return view;
 	}
 
-	private void gotoCalendar() {
+	public void gotoCalendar() {
 		com.vaadin.ui.Component calendarComp = activityTabs
 				.selectTab("Calendar");
 
 		if (calendarComp != null) {
-System.out.println("AAA");
+			calendarPresenter.go(this, null);
 		}
 	}
 
-	private void gotoActivityList() {
+	public void gotoActivityList() {
 		com.vaadin.ui.Component activityList = activityTabs
 				.selectTab("All Todo and Events");
 
 		if (activityList != null) {
-
+			activityListPresenter.go(this, null);
 		}
 	}
 }

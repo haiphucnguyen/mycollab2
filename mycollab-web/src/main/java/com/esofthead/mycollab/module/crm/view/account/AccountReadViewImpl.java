@@ -114,6 +114,7 @@ public class AccountReadViewImpl extends AbstractView implements
 		}
 
 		class FormLayoutFactory extends AccountFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected Layout createTopPanel() {
