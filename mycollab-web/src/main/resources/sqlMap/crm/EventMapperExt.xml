@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esofthead.mycollab.module.crm.dao.EventMapperExt" >
+
+    <resultMap
+        id="SimpleEventResult"
+        type="com.esofthead.mycollab.module.crm.domain.SimpleEvent" >
+
+        <result column="id" jdbcType="INTEGER" property="id" />
+        
+        <result
+            column="status"
+            jdbcType="VARCHAR"
+            property="status" />
+        
+         <result
+            column="subject"
+            jdbcType="VARCHAR"
+            property="subject" />
+
+        <result
+            column="eventType"
+            jdbcType="VARCHAR"
+            property="eventType" />
+
+        <result
+            column="type"
+            jdbcType="VARCHAR"
+            property="type" />
+
+        <result
+            column="typeid"
+            jdbcType="INTEGER"
+            property="typeid" />
+
+        <result
+            column="typeName"
+            jdbcType="VARCHAR"
+            property="typeName" />
+
+        <result
+            column="startDate"
+            jdbcType="TIMESTAMP"
+            property="startDate" />
+
+        <result
+            column="endDate"
+            jdbcType="TIMESTAMP"
+            property="endDate" />
+
+        <result
+            column="assignUser"
+            jdbcType="VARCHAR"
+            property="assignUser" />
+
+        <result
+            column="assignUserFullName"
+            jdbcType="VARCHAR"
+            property="assignUserFullName" />
+        <result column="createdTime" jdbcType="TIMESTAMP" property="createdTime" />
+        <result column="lastUpdatedTime" jdbcType="TIMESTAMP" property="lastUpdatedTime" />
+        <result column="description" jdbcType="VARCHAR" property="description" />
+    </resultMap>
+
+    <sql id="queryTaskSearchCriteria" >
+    </sql>
+
+    <sql id="selectSimpleEventFromTask" >
+         SELECT id, subject, "Task" as eventType, startdate, duedate as endDate, typeid, description, createdTime, createdUser, 
+            status, assignUser, priority, type, "Error" as typeName, lastUpdatedTime, concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName
+            FROM m_crm_task
+            LEFT OUTER JOIN s_user ON m_crm_task.assignUser = s_user.username
+    </sql>
+    
+    <sql id="orderStatement">
+        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            lastUpdatedTime DESC
+        ]]>
+    </sql>
+    
+    <select id="getTotalCount" parameterType="EventSearchCriteria"
+        resultType="java.lang.Integer">
+        SELECT count(*) as totalCount FROM m_crm_task
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include
+                refid="com.esofthead.mycollab.module.crm.dao.EventMapperExt.queryTaskSearchCriteria" />
+        </trim>
+    </select>
+    
+    <select id="findPagableListByCriteria" parameterType="EventSearchCriteria"
+        resultMap="SimpleEventResult">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.EventMapperExt.selectSimpleEventFromTask" />
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include
+                refid="com.esofthead.mycollab.module.crm.dao.EventMapperExt.queryTaskSearchCriteria" />
+        </trim>
+        <include refid="orderStatement"/>
+    </select>
+</mapper>

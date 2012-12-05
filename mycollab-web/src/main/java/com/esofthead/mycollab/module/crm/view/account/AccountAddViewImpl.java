@@ -35,13 +35,17 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView,
 
 	private static class EditForm extends AdvancedEditBeanForm<Account> {
 		private static final long serialVersionUID = 1L;
+		
 
-		public EditForm() {
+		@Override
+		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
+			super.setItemDataSource(newDataSource);
 		}
 
 		class FormLayoutFactory extends AccountFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
 
 			private Layout createButtonControls() {
 				return (new EditFormControlsGenerator<Account>(EditForm.this))

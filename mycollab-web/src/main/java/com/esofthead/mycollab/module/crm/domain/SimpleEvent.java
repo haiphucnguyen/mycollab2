@@ -3,12 +3,18 @@ package com.esofthead.mycollab.module.crm.domain;
 import java.io.Serializable;
 import java.util.Date;
 
-public class SimpleEvent implements Serializable {
+import com.esofthead.mycollab.core.utils.ValuedBean;
+
+public class SimpleEvent extends ValuedBean implements Serializable {
 	private static final long serialVersionUID = 1L;
+	
+	private Integer id;
 
 	private String status;
 
 	private String eventType;
+	
+	private String subject;
 
 	private String type;
 
@@ -23,6 +29,20 @@ public class SimpleEvent implements Serializable {
 	private String assignUser;
 
 	private String assignUserFullName;
+	
+	private Date createdTime;
+	
+	private Date lastUpdatedTime;
+	
+	private String description;
+
+	public Integer getId() {
+		return id;
+	}
+
+	public void setId(Integer id) {
+		this.id = id;
+	}
 
 	public String getStatus() {
 		return status;
@@ -95,4 +115,38 @@ public class SimpleEvent implements Serializable {
 	public void setAssignUserFullName(String assignUserFullName) {
 		this.assignUserFullName = assignUserFullName;
 	}
+
+	public Date getCreatedTime() {
+		return createdTime;
+	}
+
+	public void setCreatedTime(Date createdTime) {
+		this.createdTime = createdTime;
+	}
+
+	public Date getLastUpdatedTime() {
+		return lastUpdatedTime;
+	}
+
+	public void setLastUpdatedTime(Date lastUpdatedTime) {
+		this.lastUpdatedTime = lastUpdatedTime;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+	public String getSubject() {
+		return subject;
+	}
+
+	public void setSubject(String subject) {
+		this.subject = subject;
+	}
+	
+	
 }

@@ -1,7 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.ui.Button;
@@ -16,7 +21,7 @@ public class ActivityRootView extends AbstractView {
 
 	private ActivityCalendarPresenter calendarPresenter;
 
-	private ActivityListPresenter activityListPresenter;
+	private EventListPresenter eventListPresenter;
 
 	public ActivityRootView() {
 		super();
@@ -60,9 +65,8 @@ public class ActivityRootView extends AbstractView {
 	}
 
 	private ComponentContainer constructActivityListView() {
-		ActivityListViewImpl view = ViewManager
-				.getView(ActivityListViewImpl.class);
-		activityListPresenter = new ActivityListPresenter(view);
+		EventListViewImpl view = ViewManager.getView(EventListViewImpl.class);
+		eventListPresenter = new EventListPresenter(view);
 		return view;
 	}
 
@@ -80,7 +84,11 @@ public class ActivityRootView extends AbstractView {
 				.selectTab("All Todo and Events");
 
 		if (activityList != null) {
-			activityListPresenter.go(this, null);
+			EventSearchCriteria searchCriteria = new EventSearchCriteria();
+			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+					AppContext.getAccountId()));
+			eventListPresenter.go(this, new ScreenData<EventSearchCriteria>(
+					searchCriteria));
 		}
 	}
 }
