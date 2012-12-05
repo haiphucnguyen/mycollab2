@@ -2,16 +2,24 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import java.util.Collection;
 
+import org.vaadin.addon.customfield.CustomField;
+
 import com.esofthead.mycollab.module.crm.domain.Call;
+import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.TextArea;
+import com.vaadin.ui.TextField;
 
 public class CallAddViewImpl extends AbstractView implements CallAddView {
 	private static final long serialVersionUID = 1L;
@@ -68,7 +76,33 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
 			@Override
 			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
-				
+				if (propertyId.equals("subject")) {
+					TextField tf = new TextField();
+					tf.setNullRepresentation("");
+					tf.setRequired(true);
+					tf.setRequiredError("Subject must not be null");
+					return tf;
+				} else if (propertyId.equals("assignuser")) {
+					UserComboBox userBox = new UserComboBox();
+					return userBox;
+				} else if (propertyId.equals("description")) {
+					TextArea descArea = new TextArea();
+					descArea.setNullRepresentation("");
+					return descArea;
+				} else if (propertyId.equals("result")) {
+					TextArea resultArea = new TextArea();
+					resultArea.setNullRepresentation("");
+					return resultArea;
+				} else if (propertyId.equals("durationinseconds")) {
+					CallDurationControl durationField = new CallDurationControl();
+					return durationField;
+				} else if (propertyId.equals("purpose")) {
+					CallPurposeComboBox purposeField = new CallPurposeComboBox();
+					return purposeField;
+				} else if (propertyId.equals("status")) {
+					CallStatusTypeField field = new CallStatusTypeField();
+					return field;
+				}
 				return null;
 			}
 		}
@@ -77,6 +111,86 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
 	@Override
 	public HasEditFormHandlers<Call> getEditFormHandlers() {
 		return editForm;
+	}
+
+	private class CallPurposeComboBox extends ValueComboBox {
+		private static final long serialVersionUID = 1L;
+
+		public CallPurposeComboBox() {
+			super();
+			setCaption(null);
+			this.loadData(new String[] { "Prospecting", "Administrative",
+					"Negotiation", "Project", "Support" });
+		}
+	}
+
+	private class CallDurationControl extends CustomField {
+		private static final long serialVersionUID = 1L;
+
+		private TextField hourField;
+		private ValueComboBox minutesField;
+
+		public CallDurationControl() {
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.setSpacing(true);
+			hourField = new TextField();
+			hourField.setWidth("30px");
+			layout.addComponent(hourField);
+
+			minutesField = new ValueComboBox();
+			minutesField.loadData(new String[] { "00", "15", "30", "45" });
+			minutesField.setWidth("40px");
+			layout.addComponent(minutesField);
+
+			layout.addComponent(new Label("(hours/minutes)"));
+
+			this.setCompositionRoot(layout);
+		}
+
+		@Override
+		public Class<?> getType() {
+			return Integer.class;
+		}
+	}
+
+	private class CallStatusTypeField extends CustomField {
+		private static final long serialVersionUID = 1L;
+
+		public CallStatusTypeField() {
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.setSpacing(true);
+			layout.addComponent(new CallTypeComboBox());
+			layout.addComponent(new CallStatusComboBox());
+
+			this.setCompositionRoot(layout);
+		}
+
+		@Override
+		public Class<?> getType() {
+			return String.class;
+		}
+	}
+
+	private class CallTypeComboBox extends ValueComboBox {
+		private static final long serialVersionUID = 1L;
+
+		public CallTypeComboBox() {
+			super();
+			setCaption(null);
+			this.setWidth("80px");
+			this.loadData(new String[] { "Inbound", "Outbound" });
+		}
+	}
+
+	private class CallStatusComboBox extends ValueComboBox {
+		private static final long serialVersionUID = 1L;
+
+		public CallStatusComboBox() {
+			super();
+			setCaption(null);
+			this.setWidth("100px");
+			this.loadData(new String[] { "Planned", "Held", "Not Held" });
+		}
 	}
 
 }

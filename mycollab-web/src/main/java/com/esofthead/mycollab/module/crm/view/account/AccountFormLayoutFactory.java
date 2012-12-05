@@ -11,6 +11,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
+	private static final long serialVersionUID = 1L;
 
 	private GridFormLayoutHelper informationLayout;
 
