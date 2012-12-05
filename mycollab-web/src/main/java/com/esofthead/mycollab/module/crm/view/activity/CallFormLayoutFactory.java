@@ -46,7 +46,8 @@ public abstract class CallFormLayoutFactory implements IFormLayoutFactory {
 		} else if (propertyId.equals("status")) {
 			informationLayout.addComponent(field, "Status", 1, 0);
 		} else if (propertyId.equals("type")) {
-			informationLayout.addComponent(field, "Related to", 1, 1);
+			informationLayout.addComponent(field, "Related to", 1, 1,
+					UIConstants.DEFAULT_CONTROL_EXT_WIDTH);
 		} else if (propertyId.equals("purpose")) {
 			informationLayout.addComponent(field, "Purpose", 1, 2);
 		} else if (propertyId.equals("assignuser")) {
