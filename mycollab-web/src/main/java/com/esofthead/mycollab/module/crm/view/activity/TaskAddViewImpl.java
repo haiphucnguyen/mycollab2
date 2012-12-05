@@ -113,7 +113,7 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
 				} else if (propertyId.equals("type")) {
 					TaskRelatedItemField field = new TaskRelatedItemField(task);
 					return field;
-				} else if (propertyId.equals("assignUser")) {
+				} else if (propertyId.equals("assignuser")) {
 					UserComboBox userBox = new UserComboBox();
 					return userBox;
 				}

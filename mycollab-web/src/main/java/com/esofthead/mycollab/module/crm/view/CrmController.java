@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.domain.Call;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.Contact;
@@ -289,7 +290,8 @@ public class CrmController {
 					public void handle(ActivityEvent.CallAdd event) {
 						CallAddViewImpl view = ViewManager
 								.getView(CallAddViewImpl.class);
-						new CallAddPresenter(view).go(container, null);
+						new CallAddPresenter(view).go(container,
+								new ScreenData<Call>(new Call()));
 					}
 				});
 	}

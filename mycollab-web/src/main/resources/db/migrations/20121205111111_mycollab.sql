@@ -1,0 +1,1 @@
+ALTER TABLE `m_crm_call` ADD COLUMN `purpose` VARCHAR(45) NULL, ADD COLUMN `result` VARCHAR(4000) NULL;
