@@ -112,7 +112,7 @@ public class OpportunityListViewImpl extends AbstractView implements
 							public void buttonClick(ClickEvent event) {
 								EventBus.getInstance().fireEvent(
 										new OpportunityEvent.GotoRead(this,
-												opportunity));
+												opportunity.getId()));
 							}
 						});
 				return b;
@@ -169,7 +169,8 @@ public class OpportunityListViewImpl extends AbstractView implements
 				final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
 						.getBeanByIndex(itemId);
 				Label l = new Label();
-				l.setValue(AppContext.formatDateTime(opportunity.getCreatedtime()));
+				l.setValue(AppContext.formatDateTime(opportunity
+						.getCreatedtime()));
 				return l;
 			}
 		});

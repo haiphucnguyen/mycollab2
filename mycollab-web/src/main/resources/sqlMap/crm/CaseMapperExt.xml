@@ -186,4 +186,11 @@
 		</trim>
         <include refid="orderStatement"/>
 	</select>
+    
+    <select id="findCaseById" parameterType="int"
+        resultMap="SimpleCaseResult">
+        <include refid="com.esofthead.mycollab.module.crm.dao.CaseMapperExt.selectSimpleCase" />
+
+        WHERE m_crm_case.id=#{caseId,javaType=INTEGER}
+    </select>
 </mapper>

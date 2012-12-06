@@ -45,7 +45,7 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 
 		public FormViewField(String value) {
 			Label l = new Label();
-			l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			l.setWidth("100%");
 			this.setCompositionRoot(l);
 			l.setValue(value);
 		}

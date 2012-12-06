@@ -13,9 +13,7 @@ import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
-import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
-import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
@@ -696,16 +694,15 @@ public class CrmController {
 						return OpportunityEvent.GotoRead.class;
 					}
 
+					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(OpportunityEvent.GotoRead event) {
 						OpportunityReadView view = ViewManager
 								.getView(OpportunityReadViewImpl.class);
-						SimpleOpportunity item = (SimpleOpportunity) event
-								.getData();
 						new OpportunityReadPresenter(view)
 								.go(container,
-										new ScreenData.Preview<SimpleOpportunity>(
-												item));
+										new ScreenData.Preview(
+												event.getData()));
 					}
 				});
 	}
@@ -780,13 +777,13 @@ public class CrmController {
 						return CaseEvent.GotoRead.class;
 					}
 
+					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(CaseEvent.GotoRead event) {
 						CaseReadView view = ViewManager
 								.getView(CaseReadViewImpl.class);
-						SimpleCase contact = (SimpleCase) event.getData();
 						new CaseReadPresenter(view).go(container,
-								new ScreenData.Preview<SimpleCase>(contact));
+								new ScreenData.Preview(event.getData()));
 					}
 				});
 	}

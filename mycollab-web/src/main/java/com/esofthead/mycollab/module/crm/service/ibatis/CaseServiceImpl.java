@@ -9,6 +9,7 @@ import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.crm.dao.CaseMapper;
 import com.esofthead.mycollab.module.crm.dao.CaseMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Case;
+import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
@@ -19,13 +20,13 @@ public class CaseServiceImpl extends
 		CaseService {
 
 	@Autowired
-	private AuditLogService auditLogService;
+	protected AuditLogService auditLogService;
 
 	@Autowired
-	private CaseMapper caseMapper;
+	protected CaseMapper caseMapper;
 
 	@Autowired
-	private CaseMapperExt caseMapperExt;
+	protected CaseMapperExt caseMapperExt;
 
 	@Override
 	public ICrudGenericDAO<Integer, Case> getCrudMapper() {
@@ -35,6 +36,11 @@ public class CaseServiceImpl extends
 	@Override
 	public ISearchableDAO<CaseSearchCriteria> getSearchMapper() {
 		return caseMapperExt;
+	}
+
+	@Override
+	public SimpleCase findCaseById(int caseId) {
+		return caseMapperExt.findCaseById(caseId);
 	}
 
 	@Override

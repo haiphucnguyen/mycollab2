@@ -10,6 +10,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
@@ -69,7 +70,8 @@ public class OpportunityReadViewImpl extends AbstractView implements
 							}
 						});
 					} else if (propertyId.equals("campaignid")) {
-						field = new FormLinkViewField(opportunity.getCampaignName(), new Button.ClickListener() {
+						field = new FormLinkViewField(opportunity
+								.getCampaignName(), new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
@@ -77,10 +79,26 @@ public class OpportunityReadViewImpl extends AbstractView implements
 								EventBus.getInstance().fireEvent(
 										new CampaignEvent.GotoRead(this,
 												opportunity.getCampaignid()));
-								
+
 							}
 						});
-					}
+					} else if (propertyId.equals("assignuser")) {
+						field = new FormLinkViewField(opportunity
+								.getAssignUserFullName(),
+								new Button.ClickListener() {
+									private static final long serialVersionUID = 1L;
+
+									@Override
+									public void buttonClick(ClickEvent event) {
+										// TODO Auto-generated method stub
+
+									}
+								});
+					} else if (propertyId.equals("expectedcloseddate")) {
+						field = new FormViewField(
+								AppContext.formatDate(opportunity
+										.getExpectedcloseddate()));
+					} 
 					return field;
 				}
 

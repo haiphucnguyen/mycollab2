@@ -11,7 +11,7 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class CaseReadPresenter  extends CrmGenericPresenter<CaseReadView> {
+public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 	private static final long serialVersionUID = 1L;
 
 	public CaseReadPresenter(CaseReadView view) {
@@ -58,7 +58,13 @@ public class CaseReadPresenter  extends CrmGenericPresenter<CaseReadView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
-		view.previewItem((SimpleCase)data.getParams());
+		if (data.getParams() instanceof Integer) {
+			CaseService caseService = AppContext
+					.getSpringBean(CaseService.class);
+			SimpleCase cases = caseService.findCaseById((Integer) data
+					.getParams());
+			view.previewItem(cases);
+		}
 	}
 
 }

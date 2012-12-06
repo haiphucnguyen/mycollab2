@@ -65,7 +65,7 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 						"createdtime" }, new String[] { "", "Subject",
 						"Account Name", "Priority", "Status", "Assigned To",
 						"Date Created" });
-		
+
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
@@ -88,13 +88,13 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 				});
 
 				@SuppressWarnings("unchecked")
-				SimpleCase cases =((PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase>) source)
+				SimpleCase cases = ((PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase>) source)
 						.getBeanByIndex(itemId);
 				cases.setExtraData(cb);
 				return cb;
 			}
 		});
-		
+
 		tableItem.addGeneratedColumn("subject", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
@@ -110,10 +110,9 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								EventBus.getInstance()
-										.fireEvent(
-												new CaseEvent.GotoRead(this,
-														cases));
+								EventBus.getInstance().fireEvent(
+										new CaseEvent.GotoRead(this, cases
+												.getId()));
 							}
 						});
 				return b;
@@ -143,7 +142,7 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 				return b;
 			}
 		});
-		
+
 		tableItem.addGeneratedColumn("createdtime", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 

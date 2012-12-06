@@ -11,7 +11,8 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class OpportunityReadPresenter  extends CrmGenericPresenter<OpportunityReadView> {
+public class OpportunityReadPresenter extends
+		CrmGenericPresenter<OpportunityReadView> {
 	private static final long serialVersionUID = 1L;
 
 	public OpportunityReadPresenter(OpportunityReadView view) {
@@ -54,11 +55,17 @@ public class OpportunityReadPresenter  extends CrmGenericPresenter<OpportunityRe
 					}
 				});
 	}
-	
+
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
-		view.previewItem((SimpleOpportunity)data.getParams());
+		if (data.getParams() instanceof Integer) {
+			OpportunityService opportunityService = AppContext
+					.getSpringBean(OpportunityService.class);
+			SimpleOpportunity opportunity = opportunityService
+					.findOpportunityById((Integer) data.getParams());
+			view.previewItem(opportunity);
+		}
 	}
 
 }
