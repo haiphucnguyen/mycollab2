@@ -11,10 +11,12 @@ import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
@@ -35,6 +37,8 @@ import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.module.crm.service.CallService;
+import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddView;
@@ -49,8 +53,12 @@ import com.esofthead.mycollab.module.crm.view.activity.ActivityRootPresenter;
 import com.esofthead.mycollab.module.crm.view.activity.ActivityRootView;
 import com.esofthead.mycollab.module.crm.view.activity.CallAddPresenter;
 import com.esofthead.mycollab.module.crm.view.activity.CallAddViewImpl;
+import com.esofthead.mycollab.module.crm.view.activity.CallReadPresenter;
+import com.esofthead.mycollab.module.crm.view.activity.CallReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.activity.MeetingAddPresenter;
 import com.esofthead.mycollab.module.crm.view.activity.MeetingAddViewImpl;
+import com.esofthead.mycollab.module.crm.view.activity.MeetingReadPresenter;
+import com.esofthead.mycollab.module.crm.view.activity.MeetingReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.activity.TaskAddPresenter;
 import com.esofthead.mycollab.module.crm.view.activity.TaskAddViewImpl;
 import com.esofthead.mycollab.module.crm.view.activity.TaskReadPresenter;
@@ -310,6 +318,34 @@ public class CrmController {
 								new ScreenData.Add<Meeting>(new Meeting()));
 					}
 				});
+		
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ActivityEvent.MeetingRead>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ActivityEvent.MeetingRead.class;
+					}
+
+					@Override
+					public void handle(ActivityEvent.MeetingRead event) {
+						MeetingReadViewImpl view = ViewManager
+								.getView(MeetingReadViewImpl.class);
+						Object data = event.getData();
+						if (data instanceof Integer) {
+							MeetingService meetingService = AppContext
+									.getSpringBean(MeetingService.class);
+							SimpleMeeting meeting = meetingService
+									.findMeetingById((Integer) data);
+							if (meeting != null) {
+								new MeetingReadPresenter(view).go(container,
+										new ScreenData.Add<Meeting>(meeting));
+							}
+						}
+
+					}
+				});
 
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ActivityEvent.CallAdd>() {
@@ -326,6 +362,34 @@ public class CrmController {
 								.getView(CallAddViewImpl.class);
 						new CallAddPresenter(view).go(container,
 								new ScreenData<Call>(new Call()));
+					}
+				});
+		
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ActivityEvent.CallRead>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ActivityEvent.CallRead.class;
+					}
+
+					@Override
+					public void handle(ActivityEvent.CallRead event) {
+						CallReadViewImpl view = ViewManager
+								.getView(CallReadViewImpl.class);
+						Object data = event.getData();
+						if (data instanceof Integer) {
+							CallService callService = AppContext
+									.getSpringBean(CallService.class);
+							SimpleCall call = callService
+									.findCallById((Integer) data);
+							if (call != null) {
+								new CallReadPresenter(view).go(container,
+										new ScreenData.Add<Call>(call));
+							}
+						}
+
 					}
 				});
 

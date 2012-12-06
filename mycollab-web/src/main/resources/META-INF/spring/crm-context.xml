@@ -38,6 +38,12 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.crm.dao.CallMapper" />
     </bean>
+    
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="callMapperExt">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.crm.dao.CallMapperExt" />
+    </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="caseMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
@@ -103,6 +109,12 @@
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.crm.dao.MeetingMapper" />
+    </bean>
+    
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="meetingMapperExt">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt" />
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="noteMapper">

@@ -2,7 +2,6 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import java.util.Collection;
 
-import com.esofthead.mycollab.module.crm.CrmDataTypeFactory;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;

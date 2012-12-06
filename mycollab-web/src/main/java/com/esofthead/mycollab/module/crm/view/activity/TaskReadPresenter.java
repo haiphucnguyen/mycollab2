@@ -31,9 +31,9 @@ public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 
 					@Override
 					public void onDelete(Task data) {
-						TaskService campaignService = AppContext
+						TaskService taskService = AppContext
 								.getSpringBean(TaskService.class);
-						campaignService.removeWithSession(data.getId(),
+						taskService.removeWithSession(data.getId(),
 								AppContext.getUsername());
 						EventBus.getInstance().fireEvent(
 								new ActivityEvent.GotoTodoList(this, null));
