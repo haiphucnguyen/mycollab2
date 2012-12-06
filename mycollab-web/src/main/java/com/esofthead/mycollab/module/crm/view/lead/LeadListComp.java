@@ -5,16 +5,23 @@ import java.util.Set;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.module.crm.view.RelatedListHandler;
+import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Link;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
@@ -55,6 +62,46 @@ public class LeadListComp extends Depot implements IRelatedListHandlers {
 				new String[] { "leadName", "status", "officephone", "email",
 						"assignuser" }, new String[] { "Name", "Status",
 						"Office Phone", "Email", "Assign User" });
+		
+		tableItem.addGeneratedColumn("leadName", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				@SuppressWarnings("unchecked")
+				final SimpleLead lead = ((PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>) source)
+						.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(lead.getLeadName(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new LeadEvent.GotoRead(this, lead));
+							}
+						});
+				return b;
+			}
+		});
+		
+		tableItem.addGeneratedColumn("email", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			@SuppressWarnings("unchecked")
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				final SimpleLead lead = ((PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>) source)
+						.getBeanByIndex(itemId);
+				Link l = new Link();
+				l.setResource(new ExternalResource("mailto:" + lead.getEmail()));
+				l.setCaption(lead.getEmail());
+				return l;
+
+			}
+		});
 
 		tableItem.setWidth("100%");
 

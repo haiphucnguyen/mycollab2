@@ -5,9 +5,12 @@ import java.util.Set;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.module.crm.view.RelatedListHandler;
+import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -15,6 +18,9 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
@@ -57,6 +63,45 @@ public class OpportunityListComp extends Depot implements IRelatedListHandlers {
 						"salesstage", "amount", "expectedcloseddate",
 						"assignUserFullName" }, new String[] { "Name",
 						"Sales Stage", "Amount", "Close", "User" });
+		
+		tableItem.addGeneratedColumn("opportunityname", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				@SuppressWarnings("unchecked")
+				final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
+						.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(opportunity.getOpportunityname(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new OpportunityEvent.GotoRead(this,
+												opportunity));
+							}
+						});
+				return b;
+			}
+		});
+
+		tableItem.addGeneratedColumn("expectedcloseddate",
+				new ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public com.vaadin.ui.Component generateCell(Table source,
+							Object itemId, Object columnId) {
+						@SuppressWarnings("unchecked")
+						final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
+								.getBeanByIndex(itemId);
+						return new Label(AppContext.formatDate(opportunity
+								.getExpectedcloseddate()));
+					}
+				});
 		tableItem.setWidth("100%");
 
 		tableItem.setColumnExpandRatio("opportunityname", 1.0f);

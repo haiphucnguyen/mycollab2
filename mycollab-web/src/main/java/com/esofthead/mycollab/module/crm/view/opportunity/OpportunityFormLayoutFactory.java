@@ -11,6 +11,7 @@ import com.vaadin.ui.VerticalLayout;
 
 public abstract class OpportunityFormLayoutFactory implements
 		IFormLayoutFactory {
+	private static final long serialVersionUID = 1L;
 
 	protected GridFormLayoutHelper informationLayout;
 

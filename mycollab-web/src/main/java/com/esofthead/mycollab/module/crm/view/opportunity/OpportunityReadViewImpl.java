@@ -89,6 +89,7 @@ public class OpportunityReadViewImpl extends AbstractView implements
 		}
 
 		class FormLayoutFactory extends OpportunityFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected HorizontalLayout createButtonControls() {

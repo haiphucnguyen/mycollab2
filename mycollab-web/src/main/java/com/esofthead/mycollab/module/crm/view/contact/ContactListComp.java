@@ -5,16 +5,22 @@ import java.util.Set;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.module.crm.view.RelatedListHandler;
+import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
@@ -31,6 +37,7 @@ public class ContactListComp extends Depot implements IRelatedListHandlers {
 		initUI();
 	}
 
+	@SuppressWarnings("serial")
 	private void initUI() {
 		VerticalLayout contentContainer = (VerticalLayout) content;
 		contentContainer.setSpacing(true);
@@ -55,6 +62,44 @@ public class ContactListComp extends Depot implements IRelatedListHandlers {
 				new String[] { "contactName", "title", "email", "officephone",
 						"assignUserFullName" },
 				new String[] { "Name", "Title", "Email", "Office Phone", "User" });
+		
+		tableItem.addGeneratedColumn("contactName", new ColumnGenerator() {
+
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				@SuppressWarnings("unchecked")
+				final SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
+						.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(contact.getContactName(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance()
+										.fireEvent(
+												new ContactEvent.GotoRead(this,
+														contact));
+							}
+						});
+				return b;
+			}
+		});
+		
+		tableItem.addGeneratedColumn("email", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			@SuppressWarnings("unchecked")
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
+						.getBeanByIndex(itemId);
+				return new EmailLink(contact.getEmail());
+
+			}
+		});
 
 		tableItem.setColumnExpandRatio("contactName", 1.0f);
 		tableItem.setColumnWidth("title", UIConstants.TABLE_X_LABEL_WIDTH);
