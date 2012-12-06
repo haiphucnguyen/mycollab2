@@ -155,7 +155,7 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 						.getBeanByIndex(itemId);
 				Label l = new Label();
 
-				l.setValue(AppContext.formatDate(cases.getCreatedtime()));
+				l.setValue(AppContext.formatDateTime(cases.getCreatedtime()));
 				return l;
 			}
 		});

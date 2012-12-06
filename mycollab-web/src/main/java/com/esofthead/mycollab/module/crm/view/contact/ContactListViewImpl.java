@@ -112,10 +112,9 @@ public class ContactListViewImpl extends AbstractView implements
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								EventBus.getInstance()
-										.fireEvent(
-												new ContactEvent.GotoRead(this,
-														contact));
+								EventBus.getInstance().fireEvent(
+										new ContactEvent.GotoRead(this, contact
+												.getId()));
 							}
 						});
 				return b;
@@ -169,7 +168,7 @@ public class ContactListViewImpl extends AbstractView implements
 				final SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
 						.getBeanByIndex(itemId);
 				return new Label(
-						AppContext.formatDate(contact.getCreatedtime()));
+						AppContext.formatDateTime(contact.getCreatedtime()));
 
 			}
 		});

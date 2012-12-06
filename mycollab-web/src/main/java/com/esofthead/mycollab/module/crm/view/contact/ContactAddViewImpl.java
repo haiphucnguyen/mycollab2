@@ -5,6 +5,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
+import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
@@ -97,6 +98,10 @@ public class ContactAddViewImpl extends AbstractView implements
 					TextArea descArea = new TextArea();
 					descArea.setNullRepresentation("");
 					return descArea;
+				} else if (propertyId.equals("assignuser")) {
+					UserComboBox userBox = new UserComboBox();
+					userBox.select(contact.getAssignuser());
+					return userBox;
 				}
 
 				return null;

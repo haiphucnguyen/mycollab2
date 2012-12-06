@@ -8,10 +8,10 @@ import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
 public interface AccountReadView extends IPreviewView<SimpleAccount> {
 	HasPreviewFormHandlers<Account> getPreviewFormHandlers();
-	
+
 	IRelatedListHandlers getRelatedContactHandlers();
-	
+
 	IRelatedListHandlers getRelatedOpportunityHandlers();
-	
+
 	IRelatedListHandlers getRelatedLeadHandlers();
 }

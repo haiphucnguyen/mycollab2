@@ -11,6 +11,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
+	private static final long serialVersionUID = 1L;
 
 	private GridFormLayoutHelper informationLayout;
 
@@ -79,7 +80,9 @@ public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
 		campaignGoal.addComponent(propertyId.equals("expectedrevenue"), field,
 				"Expected Revenue", 0, 2);
 
-		if (propertyId.equals("description")) {
+		if (propertyId.equals("assignuser")) {
+			informationLayout.addComponent(field, "Assigned to", 1, 2);
+		} else if (propertyId.equals("description")) {
 			descriptionLayout.addComponent(field,
 					"Description", 0, 0, 2, UIConstants.DEFAULT_2XCONTROL_WIDTH,
 					UIConstants.DEFAULT_2XCONTROL_HEIGHT);

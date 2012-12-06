@@ -15,16 +15,11 @@ import com.vaadin.ui.ComboBox;
 public class UserComboBox extends ComboBox {
 	private static final long serialVersionUID = 1L;
 
+	@SuppressWarnings("unchecked")
 	public UserComboBox() {
 		super();
 		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
-	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void attach() {
-		super.attach();
-		this.removeAllItems();
 		UserSearchCriteria criteria = new UserSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
@@ -43,12 +38,6 @@ public class UserComboBox extends ComboBox {
 		}
 
 		this.setContainerDataSource(beanItem);
-		this.setItemCaptionPropertyId("username");
-	}
-
-	@Override
-	public void select(Object itemId) {
-		System.out.println("Select: " + itemId);
-		super.select(itemId);
+		this.setItemCaptionPropertyId("displayname");
 	}
 }

@@ -118,7 +118,7 @@ public class AccountListViewImpl extends AbstractView implements
 				final SimpleAccount account = ((PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>) source)
 						.getBeanByIndex(itemId);
 				return new Label(
-						AppContext.formatDate(account.getCreatedtime()));
+						AppContext.formatDateTime(account.getCreatedtime()));
 			}
 		});
 
@@ -140,7 +140,7 @@ public class AccountListViewImpl extends AbstractView implements
 								EventBus.getInstance()
 										.fireEvent(
 												new AccountEvent.GotoRead(this,
-														account));
+														account.getId()));
 							}
 						});
 				return b;

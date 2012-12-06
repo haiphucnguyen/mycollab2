@@ -103,6 +103,13 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
-		view.previewItem((SimpleAccount) data.getParams());
+
+		if (data.getParams() instanceof Integer) {
+			AccountService accountService = AppContext
+					.getSpringBean(AccountService.class);
+			SimpleAccount account = accountService
+					.findAccountById((Integer) data.getParams());
+			view.previewItem((SimpleAccount) account);
+		}
 	}
 }

@@ -58,6 +58,12 @@ public class CampaignReadPresenter  extends CrmGenericPresenter<CampaignReadView
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
-		view.previewItem((SimpleCampaign)data.getParams());
+		
+		if (data.getParams() instanceof Integer) {
+			CampaignService campaignService = AppContext.getSpringBean(CampaignService.class);
+			SimpleCampaign campaign = campaignService.findCampaignById((Integer)data.getParams());
+			view.previewItem(campaign);
+		}
+		
 	}
 }

@@ -69,6 +69,16 @@ public class CaseReadViewImpl extends AbstractView implements CaseReadView {
 								});
 					} else if (propertyId.equals("email")) {
 						return new FormEmailLinkViewField(cases.getEmail());
+					} else if (propertyId.equals("assignuser")) {
+						return new FormLinkViewField(cases.getAssignUserFullName(), new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
 					}
 
 					return null;
@@ -78,6 +88,7 @@ public class CaseReadViewImpl extends AbstractView implements CaseReadView {
 		}
 
 		class FormLayoutFactory extends CaseFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected Layout createTopPanel() {

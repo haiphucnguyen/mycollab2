@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.module.crm.domain.Campaign;
+import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
@@ -21,6 +22,8 @@ public class CampaignAddViewImpl extends AbstractView implements
 
 	private EditForm editForm;
 
+	private Campaign campaign;
+
 	public CampaignAddViewImpl() {
 		super();
 		editForm = new EditForm();
@@ -29,10 +32,11 @@ public class CampaignAddViewImpl extends AbstractView implements
 
 	@Override
 	public void editItem(Campaign campaign) {
+		this.campaign = campaign;
 		editForm.setItemDataSource(new BeanItem<Campaign>(campaign));
 	}
 
-	private static class EditForm extends AdvancedEditBeanForm<Campaign> {
+	private class EditForm extends AdvancedEditBeanForm<Campaign> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -41,8 +45,6 @@ public class CampaignAddViewImpl extends AbstractView implements
 			this.setFormFieldFactory(new EditFormFieldFactory());
 			super.setItemDataSource(newDataSource);
 		}
-
-
 
 		class FormLayoutFactory extends CampaignFormLayoutFactory {
 			private static final long serialVersionUID = 1L;
@@ -79,6 +81,10 @@ public class CampaignAddViewImpl extends AbstractView implements
 					TextArea descArea = new TextArea();
 					descArea.setNullRepresentation("");
 					return descArea;
+				} else if ("assignuser".equals(propertyId)) {
+					UserComboBox userBox = new UserComboBox();
+					userBox.select(campaign.getAssignuser());
+					return userBox;
 				}
 
 				return null;

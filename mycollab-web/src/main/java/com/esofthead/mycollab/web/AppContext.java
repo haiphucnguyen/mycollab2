@@ -88,9 +88,18 @@ public class AppContext implements TransactionListener, Serializable {
 		return view;
 	}
 
-	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+	private static SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
 			"MM/dd/yyyy hh:mm a");
+	
+	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
 
+	public static String formatDateTime(Date date) {
+		if (date == null) {
+			return "";
+		}
+		return simpleDateTimeFormat.format(date);
+	}
+	
 	public static String formatDate(Date date) {
 		if (date == null) {
 			return "";

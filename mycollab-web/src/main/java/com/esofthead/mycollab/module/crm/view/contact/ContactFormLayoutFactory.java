@@ -10,6 +10,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
+	private static final long serialVersionUID = 1L;
 
 	protected GridFormLayoutHelper informationLayout;
 

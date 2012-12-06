@@ -153,7 +153,7 @@ public class OpportunityListViewImpl extends AbstractView implements
 						final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
 								.getBeanByIndex(itemId);
 						Label l = new Label();
-						l.setValue(AppContext.formatDate(opportunity
+						l.setValue(AppContext.formatDateTime(opportunity
 								.getExpectedcloseddate()));
 						return l;
 					}
@@ -169,7 +169,7 @@ public class OpportunityListViewImpl extends AbstractView implements
 				final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
 						.getBeanByIndex(itemId);
 				Label l = new Label();
-				l.setValue(AppContext.formatDate(opportunity.getCreatedtime()));
+				l.setValue(AppContext.formatDateTime(opportunity.getCreatedtime()));
 				return l;
 			}
 		});

@@ -98,7 +98,7 @@ public class OpportunityListComp extends Depot implements IRelatedListHandlers {
 						@SuppressWarnings("unchecked")
 						final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
 								.getBeanByIndex(itemId);
-						return new Label(AppContext.formatDate(opportunity
+						return new Label(AppContext.formatDateTime(opportunity
 								.getExpectedcloseddate()));
 					}
 				});

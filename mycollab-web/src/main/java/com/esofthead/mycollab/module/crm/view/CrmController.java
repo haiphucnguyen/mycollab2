@@ -14,7 +14,6 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
-import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
@@ -36,7 +35,6 @@ import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
-import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.service.TaskService;
@@ -200,21 +198,13 @@ public class CrmController {
 						return AccountEvent.GotoRead.class;
 					}
 
+					@SuppressWarnings({ "rawtypes", "unchecked" })
 					@Override
 					public void handle(GotoRead event) {
 						AccountReadView view = ViewManager
 								.getView(AccountReadViewImpl.class);
-						SimpleAccount account = null;
-						if (event.getData() instanceof Integer) {
-							account = AppContext.getSpringBean(
-									AccountService.class).findAccountById(
-									(Integer) event.getData());
-						} else {
-							account = (SimpleAccount) event.getData();
-						}
-
 						new AccountReadPresenter(view).go(container,
-								new ScreenData.Preview<SimpleAccount>(account));
+								new ScreenData.Preview(event.getData()));
 					}
 				});
 	}
@@ -318,7 +308,7 @@ public class CrmController {
 								new ScreenData.Add<Meeting>(new Meeting()));
 					}
 				});
-		
+
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ActivityEvent.MeetingRead>() {
 					private static final long serialVersionUID = 1L;
@@ -364,7 +354,7 @@ public class CrmController {
 								new ScreenData<Call>(new Call()));
 					}
 				});
-		
+
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ActivityEvent.CallRead>() {
 					private static final long serialVersionUID = 1L;
@@ -465,16 +455,13 @@ public class CrmController {
 						return CampaignEvent.GotoRead.class;
 					}
 
+					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(CampaignEvent.GotoRead event) {
 						CampaignReadView view = ViewManager
 								.getView(CampaignReadViewImpl.class);
-						SimpleCampaign campaign = (SimpleCampaign) event
-								.getData();
-						new CampaignReadPresenter(view)
-								.go(container,
-										new ScreenData.Preview<SimpleCampaign>(
-												campaign));
+						new CampaignReadPresenter(view).go(container,
+								new ScreenData.Preview(event.getData()));
 					}
 				});
 	}
@@ -549,13 +536,13 @@ public class CrmController {
 						return ContactEvent.GotoRead.class;
 					}
 
+					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(ContactEvent.GotoRead event) {
 						ContactReadView view = ViewManager
 								.getView(ContactReadViewImpl.class);
-						SimpleContact contact = (SimpleContact) event.getData();
 						new ContactReadPresenter(view).go(container,
-								new ScreenData.Preview<SimpleContact>(contact));
+								new ScreenData.Preview(event.getData()));
 					}
 				});
 	}

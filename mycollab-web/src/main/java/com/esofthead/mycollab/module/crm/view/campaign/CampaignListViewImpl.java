@@ -111,7 +111,7 @@ public class CampaignListViewImpl extends AbstractView implements
 							public void buttonClick(ClickEvent event) {
 								EventBus.getInstance().fireEvent(
 										new CampaignEvent.GotoRead(this,
-												campaign));
+												campaign.getId()));
 							}
 						});
 				return b;

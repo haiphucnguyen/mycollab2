@@ -22,6 +22,8 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView,
 
 	private EditForm editForm;
 
+	private Account account;
+
 	public AccountAddViewImpl() {
 		super();
 		editForm = new EditForm();
@@ -30,12 +32,12 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView,
 
 	@Override
 	public void editItem(Account account) {
+		this.account = account;
 		editForm.setItemDataSource(new BeanItem<Account>(account));
 	}
 
-	private static class EditForm extends AdvancedEditBeanForm<Account> {
+	private class EditForm extends AdvancedEditBeanForm<Account> {
 		private static final long serialVersionUID = 1L;
-		
 
 		@Override
 		public void setItemDataSource(Item newDataSource) {
@@ -78,6 +80,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView,
 					return accountIndustryBox;
 				} else if ("assignuser".equals(propertyId)) {
 					UserComboBox userBox = new UserComboBox();
+					userBox.select(account.getAssignuser());
 					return userBox;
 				} else if ("description".equals(propertyId)) {
 					TextArea textArea = new TextArea("", "");

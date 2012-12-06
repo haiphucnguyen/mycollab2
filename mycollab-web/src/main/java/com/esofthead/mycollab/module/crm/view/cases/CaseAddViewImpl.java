@@ -112,6 +112,7 @@ public class CaseAddViewImpl extends AbstractView implements CaseAddView {
 					return tf;
 				} else if (propertyId.equals("assignuser")) {
 					UserComboBox userBox = new UserComboBox();
+					userBox.select(cases.getAssignuser());
 					return userBox;
 				}
 

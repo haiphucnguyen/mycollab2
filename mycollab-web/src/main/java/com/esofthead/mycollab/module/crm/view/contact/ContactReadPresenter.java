@@ -11,14 +11,13 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class ContactReadPresenter  extends CrmGenericPresenter<ContactReadView> {
+public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 	private static final long serialVersionUID = 1L;
 
 	public ContactReadPresenter(ContactReadView view) {
 		this.view = view;
 		bind();
 	}
-
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
@@ -55,10 +54,18 @@ public class ContactReadPresenter  extends CrmGenericPresenter<ContactReadView> 
 					}
 				});
 	}
-	
+
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
-		view.previewItem((SimpleContact)data.getParams());
+
+		if (data.getParams() instanceof Integer) {
+			ContactService contactService = AppContext
+					.getSpringBean(ContactService.class);
+			SimpleContact contact = contactService
+					.findContactById((Integer) data.getParams());
+			view.previewItem(contact);
+		}
+
 	}
 }

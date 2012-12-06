@@ -70,6 +70,17 @@ public class ContactReadViewImpl extends AbstractView implements
 								});
 					} else if (propertyId.equals("email")) {
 						return new FormEmailLinkViewField(contact.getEmail());
+					} else if (propertyId.equals("assignuser")) {
+						return new FormLinkViewField(contact
+								.getAssignUserFullName(),
+								new Button.ClickListener() {
+
+									@Override
+									public void buttonClick(ClickEvent event) {
+										// TODO Auto-generated method stub
+
+									}
+								});
 					}
 
 					return null;
@@ -80,6 +91,7 @@ public class ContactReadViewImpl extends AbstractView implements
 		}
 
 		class FormLayoutFactory extends ContactFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected HorizontalLayout createButtonControls() {
