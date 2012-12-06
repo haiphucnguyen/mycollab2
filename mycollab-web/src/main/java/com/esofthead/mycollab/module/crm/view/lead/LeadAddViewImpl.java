@@ -50,6 +50,7 @@ public class LeadAddViewImpl extends AbstractView implements
 		}
 
 		class FormLayoutFactory extends LeadFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected Layout createButtonControls() {

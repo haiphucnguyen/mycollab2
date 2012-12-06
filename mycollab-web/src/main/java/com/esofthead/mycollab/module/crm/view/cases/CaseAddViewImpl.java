@@ -40,12 +40,15 @@ public class CaseAddViewImpl extends AbstractView implements CaseAddView {
 	private class EditForm extends AdvancedEditBeanForm<Case> {
 		private static final long serialVersionUID = 1L;
 
-		public EditForm() {
+		@Override
+		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
+			super.setItemDataSource(newDataSource);
 		}
 
 		class FormLayoutFactory extends CaseFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
 
 			private Layout createButtonControls() {
 				return (new EditFormControlsGenerator<Case>(EditForm.this))

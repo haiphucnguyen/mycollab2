@@ -56,6 +56,7 @@ public class ContactAddViewImpl extends AbstractView implements
 		}
 
 		class FormLayoutFactory extends ContactFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected Layout createButtonControls() {

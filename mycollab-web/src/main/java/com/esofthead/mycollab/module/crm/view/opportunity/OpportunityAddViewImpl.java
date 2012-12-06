@@ -45,12 +45,15 @@ public class OpportunityAddViewImpl extends AbstractView implements
 	private class EditForm extends AdvancedEditBeanForm<Opportunity> {
 		private static final long serialVersionUID = 1L;
 
-		public EditForm() {
+		@Override
+		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
 			this.setFormFieldFactory(new EditFormFieldFactory());
+			super.setItemDataSource(newDataSource);
 		}
 
 		class FormLayoutFactory extends OpportunityFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected Layout createButtonControls() {
