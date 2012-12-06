@@ -91,6 +91,40 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 				return cb;
 			}
 		});
+		
+		tableItem.addGeneratedColumn("startDate",
+				new ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public com.vaadin.ui.Component generateCell(Table source,
+							Object itemId, Object columnId) {
+						@SuppressWarnings("unchecked")
+						final SimpleEvent event = ((PagedBeanTable2<EventService, EventSearchCriteria, SimpleEvent>) source)
+								.getBeanByIndex(itemId);
+						Label l = new Label();
+						l.setValue(AppContext.formatDateTime(event
+								.getStartDate()));
+						return l;
+					}
+				});
+		
+		tableItem.addGeneratedColumn("endDate",
+				new ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public com.vaadin.ui.Component generateCell(Table source,
+							Object itemId, Object columnId) {
+						@SuppressWarnings("unchecked")
+						final SimpleEvent event = ((PagedBeanTable2<EventService, EventSearchCriteria, SimpleEvent>) source)
+								.getBeanByIndex(itemId);
+						Label l = new Label();
+						l.setValue(AppContext.formatDateTime(event
+								.getEndDate()));
+						return l;
+					}
+				});
 
 		tableItem.addGeneratedColumn("subject", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
