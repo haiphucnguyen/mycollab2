@@ -296,6 +296,8 @@ public class CrmController {
 								new ScreenData<Call>(new Call()));
 					}
 				});
+		
+		
 	}
 
 	@SuppressWarnings("serial")

@@ -2,12 +2,15 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.EventService;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
@@ -25,8 +28,7 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
-public class EventListViewImpl extends AbstractView implements
-		EventListView {
+public class EventListViewImpl extends AbstractView implements EventListView {
 	private static final long serialVersionUID = 1L;
 
 	private final EventSearchPanel eventSearchPanel;
@@ -57,8 +59,10 @@ public class EventListViewImpl extends AbstractView implements
 	private void generateDisplayTable() {
 		tableItem = new PagedBeanTable2<EventService, EventSearchCriteria, SimpleEvent>(
 				AppContext.getSpringBean(EventService.class),
-				SimpleEvent.class, new String[] { "selected", "status", "eventType", "subject" }, new String[] {
-						"", "Status", "Type", "Subject" });
+				SimpleEvent.class, new String[] { "selected", "status",
+						"eventType", "subject", "startDate", "endDate" },
+				new String[] { "", "Status", "Type", "Subject", "Start Date",
+						"End Date" });
 
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -87,11 +91,50 @@ public class EventListViewImpl extends AbstractView implements
 				return cb;
 			}
 		});
-		
+
+		tableItem.addGeneratedColumn("subject", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				@SuppressWarnings("unchecked")
+				final SimpleEvent simpleEvent = ((PagedBeanTable2<EventService, EventSearchCriteria, SimpleEvent>) source)
+						.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(simpleEvent.getSubject(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								if ("Task".equals(simpleEvent.getEventType())) {
+									EventBus.getInstance().fireEvent(
+											new ActivityEvent.TaskRead(this,
+													simpleEvent.getId()));
+								} else if ("Meeting".equals(simpleEvent
+										.getEventType())) {
+									EventBus.getInstance().fireEvent(
+											new ActivityEvent.MeetingRead(this,
+													simpleEvent.getId()));
+								} else if ("Call".equals(simpleEvent
+										.getEventType())) {
+									EventBus.getInstance().fireEvent(
+											new ActivityEvent.CallRead(this,
+													simpleEvent.getId()));
+								}
+							}
+						});
+				return b;
+
+			}
+		});
+
 		tableItem.setColumnExpandRatio("subject", 1);
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 		tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
 		tableItem.setColumnWidth("eventType", UIConstants.TABLE_M_LABEL_WIDTH);
+		tableItem.setColumnWidth("startDate", UIConstants.TABLE_DATE_WIDTH);
+		tableItem.setColumnWidth("endDate", UIConstants.TABLE_DATE_WIDTH);
 
 		tableItem.setWidth("100%");
 

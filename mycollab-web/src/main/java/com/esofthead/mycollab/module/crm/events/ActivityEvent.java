@@ -22,15 +22,33 @@ public class ActivityEvent {
 			super(source, data);
 		}
 	}
+	
+	public static class TaskRead extends ApplicationEvent {
+		public TaskRead(Object source, Object data) {
+			super(source, data);
+		}
+	}
 
 	public static class MeetingAdd extends ApplicationEvent {
 		public MeetingAdd(Object source, Object data) {
 			super(source, data);
 		}
 	}
+	
+	public static class MeetingRead extends ApplicationEvent {
+		public MeetingRead(Object source, Object data) {
+			super(source, data);
+		}
+	}
 
 	public static class CallAdd extends ApplicationEvent {
 		public CallAdd(Object source, Object data) {
+			super(source, data);
+		}
+	}
+	
+	public static class CallRead extends ApplicationEvent {
+		public CallRead(Object source, Object data) {
 			super(source, data);
 		}
 	}
