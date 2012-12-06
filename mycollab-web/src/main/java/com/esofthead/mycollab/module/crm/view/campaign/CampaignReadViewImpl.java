@@ -47,6 +47,7 @@ public class CampaignReadViewImpl extends AbstractView implements
 		}
 
 		class FormLayoutFactory extends CampaignFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected HorizontalLayout createButtonControls() {

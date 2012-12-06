@@ -151,6 +151,24 @@
             lastUpdatedTime DESC
         ]]>
     </sql>
+    
+    <sql id="selectSimpleTask">
+        SELECT m_crm_task.id, m_crm_task.subject, m_crm_task.startdate, m_crm_task.duedate, m_crm_task.contactId, 
+            m_crm_task.typeid, m_crm_task.description, m_crm_task.createdTime, m_crm_task.createdUser, 
+            m_crm_task.sAccountId, m_crm_task.status, m_crm_task.assignUser, m_crm_task.priority, 
+            m_crm_task.type, m_crm_task.lastUpdatedTime,  concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName,
+               concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName, "" AS relatedTo
+        FROM m_crm_task
+            LEFT OUTER JOIN s_user ON (m_crm_task.assignUser = s_user.username) 
+            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_task.contactId) 
+    </sql>
+    
+    <select id="findTaskById" parameterType="int"
+        resultMap="SimpleTaskResult">
+        <include refid="com.esofthead.mycollab.module.crm.dao.TaskMapperExt.selectSimpleTask" />
+
+        WHERE m_crm_task.id=#{taskId,javaType=INTEGER}
+    </select>
 
 	<select id="findPagableListByCriteria" parameterType="TaskSearchCriteria"
 		resultMap="SimpleTaskResult">

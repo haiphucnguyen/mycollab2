@@ -25,17 +25,19 @@ import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.crm.dao.TaskMapper;
 import com.esofthead.mycollab.module.crm.dao.TaskMapperExt;
+import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 
 @Service
-public class TaskServiceImpl extends DefaultService<Integer, Task, TaskSearchCriteria>
-		implements TaskService {
-	
+public class TaskServiceImpl extends
+		DefaultService<Integer, Task, TaskSearchCriteria> implements
+		TaskService {
+
 	@Autowired
 	protected TaskMapper taskMapper;
-	
+
 	@Autowired
 	private TaskMapperExt taskMapperExt;
 
@@ -47,6 +49,11 @@ public class TaskServiceImpl extends DefaultService<Integer, Task, TaskSearchCri
 	@Override
 	public ISearchableDAO<TaskSearchCriteria> getSearchMapper() {
 		return taskMapperExt;
+	}
+
+	@Override
+	public SimpleTask findTaskById(int taskId) {
+		return taskMapperExt.findTaskById(taskId);
 	}
 
 }

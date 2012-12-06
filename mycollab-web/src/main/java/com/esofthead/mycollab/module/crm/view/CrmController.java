@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
+import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
@@ -34,6 +35,7 @@ import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddView;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddViewImpl;
@@ -51,6 +53,8 @@ import com.esofthead.mycollab.module.crm.view.activity.MeetingAddPresenter;
 import com.esofthead.mycollab.module.crm.view.activity.MeetingAddViewImpl;
 import com.esofthead.mycollab.module.crm.view.activity.TaskAddPresenter;
 import com.esofthead.mycollab.module.crm.view.activity.TaskAddViewImpl;
+import com.esofthead.mycollab.module.crm.view.activity.TaskReadPresenter;
+import com.esofthead.mycollab.module.crm.view.activity.TaskReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddView;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddViewImpl;
@@ -262,6 +266,34 @@ public class CrmController {
 				});
 
 		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ActivityEvent.TaskRead>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ActivityEvent.TaskRead.class;
+					}
+
+					@Override
+					public void handle(ActivityEvent.TaskRead event) {
+						TaskReadViewImpl view = ViewManager
+								.getView(TaskReadViewImpl.class);
+						Object data = event.getData();
+						if (data instanceof Integer) {
+							TaskService taskService = AppContext
+									.getSpringBean(TaskService.class);
+							SimpleTask task = taskService
+									.findTaskById((Integer) data);
+							if (task != null) {
+								new TaskReadPresenter(view).go(container,
+										new ScreenData.Add<Task>(task));
+							}
+						}
+
+					}
+				});
+
+		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ActivityEvent.MeetingAdd>() {
 					private static final long serialVersionUID = 1L;
 
@@ -296,8 +328,7 @@ public class CrmController {
 								new ScreenData<Call>(new Call()));
 					}
 				});
-		
-		
+
 	}
 
 	@SuppressWarnings("serial")
