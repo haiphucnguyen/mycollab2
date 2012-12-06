@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
+import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
@@ -273,7 +274,8 @@ public class CrmController {
 					public void handle(ActivityEvent.MeetingAdd event) {
 						MeetingAddViewImpl view = ViewManager
 								.getView(MeetingAddViewImpl.class);
-						new MeetingAddPresenter(view).go(container, null);
+						new MeetingAddPresenter(view).go(container,
+								new ScreenData.Add<Meeting>(new Meeting()));
 					}
 				});
 
