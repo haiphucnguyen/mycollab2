@@ -12,7 +12,6 @@ import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
-import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
@@ -261,6 +260,26 @@ public class CrmController {
 				});
 
 		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ActivityEvent.TaskEdit>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ActivityEvent.TaskEdit.class;
+					}
+
+					@Override
+					public void handle(ActivityEvent.TaskEdit event) {
+						TaskAddViewImpl view = ViewManager
+								.getView(TaskAddViewImpl.class);
+						new TaskAddPresenter(view).go(
+								container,
+								new ScreenData.Edit<Task>((Task) event
+										.getData()));
+					}
+				});
+
+		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ActivityEvent.TaskRead>() {
 					private static final long serialVersionUID = 1L;
 
@@ -269,21 +288,13 @@ public class CrmController {
 						return ActivityEvent.TaskRead.class;
 					}
 
+					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(ActivityEvent.TaskRead event) {
 						TaskReadViewImpl view = ViewManager
 								.getView(TaskReadViewImpl.class);
-						Object data = event.getData();
-						if (data instanceof Integer) {
-							TaskService taskService = AppContext
-									.getSpringBean(TaskService.class);
-							SimpleTask task = taskService
-									.findTaskById((Integer) data);
-							if (task != null) {
-								new TaskReadPresenter(view).go(container,
-										new ScreenData.Add<Task>(task));
-							}
-						}
+						new TaskReadPresenter(view).go(container,
+								new ScreenData.Preview(event.getData()));
 
 					}
 				});
@@ -699,10 +710,8 @@ public class CrmController {
 					public void handle(OpportunityEvent.GotoRead event) {
 						OpportunityReadView view = ViewManager
 								.getView(OpportunityReadViewImpl.class);
-						new OpportunityReadPresenter(view)
-								.go(container,
-										new ScreenData.Preview(
-												event.getData()));
+						new OpportunityReadPresenter(view).go(container,
+								new ScreenData.Preview(event.getData()));
 					}
 				});
 	}

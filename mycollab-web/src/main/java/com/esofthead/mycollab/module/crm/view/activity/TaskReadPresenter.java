@@ -18,7 +18,7 @@ public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 		this.view = view;
 		bind();
 	}
-	
+
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
 				new PreviewFormHandlers<Task>() {
@@ -26,7 +26,7 @@ public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 					@Override
 					public void onEdit(Task data) {
 						EventBus.getInstance().fireEvent(
-								new ActivityEvent.TaskAdd(this, data));
+								new ActivityEvent.TaskEdit(this, data));
 					}
 
 					@Override
@@ -44,7 +44,7 @@ public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 						Task cloneData = (Task) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
-								new ActivityEvent.TaskAdd(this, cloneData));
+								new ActivityEvent.TaskEdit(this, cloneData));
 					}
 
 					@Override
@@ -54,10 +54,17 @@ public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 					}
 				});
 	}
-	
+
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
-		view.previewItem((SimpleTask)data.getParams());
+		if (data.getParams() instanceof Integer) {
+			TaskService taskService = AppContext
+					.getSpringBean(TaskService.class);
+			SimpleTask task = taskService.findTaskById((Integer) data
+					.getParams());
+			view.previewItem(task);
+		}
+
 	}
 }

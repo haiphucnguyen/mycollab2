@@ -124,9 +124,11 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
 					return tf;
 				} else if (propertyId.equals("type")) {
 					TaskRelatedItemField field = new TaskRelatedItemField();
+					field.setType(task.getType());
 					return field;
 				} else if (propertyId.equals("assignuser")) {
 					UserComboBox userBox = new UserComboBox();
+					userBox.select(task.getAssignuser());
 					return userBox;
 				}
 				return null;
@@ -218,6 +220,10 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
 				this.loadData(new String[] { "Account", "Campaign", "Contact",
 						"Lead", "Opportunity", "Case" });
 			}
+		}
+
+		public void setType(String type) {
+			relatedItemComboBox.select(type);
 		}
 
 		@Override

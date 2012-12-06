@@ -23,6 +23,12 @@ public class ActivityEvent {
 		}
 	}
 	
+	public static class TaskEdit extends ApplicationEvent {
+		public TaskEdit(Object source, Object data) {
+			super(source, data);
+		}
+	}
+	
 	public static class TaskRead extends ApplicationEvent {
 		public TaskRead(Object source, Object data) {
 			super(source, data);
