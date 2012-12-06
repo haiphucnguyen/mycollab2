@@ -15,6 +15,7 @@ public class CallServiceImpl extends DefaultCrudService<Integer, Call> implement
 	@Autowired
 	protected CallMapper callMapper;
 	
+	@SuppressWarnings("unchecked")
 	@Override
 	public ICrudGenericDAO<Integer, Call> getCrudMapper() {
 		return callMapper;
