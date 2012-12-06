@@ -72,6 +72,15 @@ public class LeadReadViewImpl extends AbstractView implements LeadReadView {
 						});
 						
 						return field;
+					} else if (propertyId.equals("assignuser")) {
+						return new FormLinkViewField(lead.getAssignUserFullName(), new Button.ClickListener() {
+							
+							@Override
+							public void buttonClick(ClickEvent event) {
+								// TODO Auto-generated method stub
+								
+							}
+						});
 					}
 
 					return super.onCreateField(item, propertyId, uiContext);
@@ -82,6 +91,7 @@ public class LeadReadViewImpl extends AbstractView implements LeadReadView {
 		}
 
 		class FormLayoutFactory extends LeadFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			protected HorizontalLayout createButtonControls() {

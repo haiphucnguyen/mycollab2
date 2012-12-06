@@ -18,6 +18,7 @@
 package com.esofthead.mycollab.module.crm.domain;
 
 public class SimpleLead extends Lead {
+	private static final long serialVersionUID = 1L;
 
 	private String assignUserFullName;
 

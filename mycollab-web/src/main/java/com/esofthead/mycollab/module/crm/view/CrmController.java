@@ -12,7 +12,6 @@ import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
-import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
@@ -616,13 +615,13 @@ public class CrmController {
 						return LeadEvent.GotoRead.class;
 					}
 
+					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(LeadEvent.GotoRead event) {
 						LeadReadView view = ViewManager
 								.getView(LeadReadViewImpl.class);
-						SimpleLead lead = (SimpleLead) event.getData();
 						new LeadReadPresenter(view).go(container,
-								new ScreenData.Preview<SimpleLead>(lead));
+								new ScreenData.Preview(event.getData()));
 					}
 				});
 	}

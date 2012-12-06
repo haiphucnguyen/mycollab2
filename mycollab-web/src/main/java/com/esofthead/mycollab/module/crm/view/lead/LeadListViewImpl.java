@@ -63,7 +63,7 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		tableItem = new PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>(
 				AppContext.getSpringBean(LeadService.class), SimpleLead.class,
 				new String[] { "selected", "leadName", "status", "accountname",
-						"officephone", "email", "assignuser" }, new String[] {
+						"officephone", "email", "assignUserFullName" }, new String[] {
 						"", "Name", "Status", "Account Name", "Office Phone",
 						"Email", "Assign User" });
 
@@ -109,7 +109,8 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 							@Override
 							public void buttonClick(ClickEvent event) {
 								EventBus.getInstance().fireEvent(
-										new LeadEvent.GotoRead(this, lead));
+										new LeadEvent.GotoRead(this, lead
+												.getId()));
 							}
 						});
 				return b;

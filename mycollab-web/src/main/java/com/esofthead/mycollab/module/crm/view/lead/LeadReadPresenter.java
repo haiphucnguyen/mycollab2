@@ -58,7 +58,12 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
-		view.previewItem((SimpleLead)data.getParams());
+		
+		if (data.getParams() instanceof Integer) {
+			LeadService leadService = AppContext.getSpringBean(LeadService.class);
+			SimpleLead lead = leadService.findLeadById((Integer)data.getParams());
+			view.previewItem(lead);
+		}
 	}
 
 }

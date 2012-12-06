@@ -25,7 +25,7 @@ public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
 		campaignFormLayout.addTopControls(createButtonControls());
 
 		VerticalLayout layout = new VerticalLayout();
-		Label organizationHeader = new Label("Account Information");
+		Label organizationHeader = new Label("Campaign Information");
 		organizationHeader.setStyleName("h2");
 		layout.addComponent(organizationHeader);
 
@@ -34,7 +34,7 @@ public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
 		layout.addComponent(informationLayout.getLayout());
 
 		campaignGoal = new GridFormLayoutHelper(2, 4);
-		Label addressHeader = new Label("Address Information");
+		Label addressHeader = new Label("Campaign Goal");
 		addressHeader.setStyleName("h2");
 		layout.addComponent(addressHeader);
 		campaignGoal.getLayout().setWidth("900px");
