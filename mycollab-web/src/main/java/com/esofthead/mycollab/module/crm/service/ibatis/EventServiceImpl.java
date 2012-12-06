@@ -21,4 +21,15 @@ public class EventServiceImpl extends DefaultSearchService<EventSearchCriteria>
 		return eventMapperExt;
 	}
 
+	@Override
+	public int getTotalCount(EventSearchCriteria criteria) {
+		return eventMapperExt.getTotalCountFromCall(criteria)
+				+ eventMapperExt.getTotalCountFromTask(criteria)
+				+ eventMapperExt.getTotalCountFromMeeting(criteria);
+	}
+
+	@Override
+	public void removeByCriteria(EventSearchCriteria criteria) {
+		super.removeByCriteria(criteria);
+	}
 }
