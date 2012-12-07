@@ -4,8 +4,12 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.vaadin.addon.customfield.CustomField;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionWindow;
+import com.esofthead.mycollab.module.crm.view.campaign.CampaignSelectionWindow;
+import com.esofthead.mycollab.module.crm.view.contact.ContactSelectionWindow;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
@@ -17,7 +21,7 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 
-public class RelatedItemField extends CustomField implements FieldSelection {
+public class RelatedEditItemField extends CustomField implements FieldSelection {
 	private static final long serialVersionUID = 1L;
 
 	private Object bean;
@@ -28,7 +32,7 @@ public class RelatedItemField extends CustomField implements FieldSelection {
 	private Embedded browseBtn;
 	private Embedded clearBtn;
 
-	public RelatedItemField(String[] types, Object bean) {
+	public RelatedEditItemField(String[] types, Object bean) {
 		this.bean = bean;
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
@@ -51,11 +55,19 @@ public class RelatedItemField extends CustomField implements FieldSelection {
 				String type = (String) relatedItemComboBox.getValue();
 				if ("Account".equals(type)) {
 					AccountSelectionWindow accountWindow = new AccountSelectionWindow(
-							RelatedItemField.this);
+							RelatedEditItemField.this);
 					getWindow().addWindow(accountWindow);
 					accountWindow.show();
 				} else if ("Campaign".equals(type)) {
-
+					CampaignSelectionWindow campaignWindow = new CampaignSelectionWindow(
+							RelatedEditItemField.this);
+					getWindow().addWindow(campaignWindow);
+					campaignWindow.show();
+				} else if ("Contact".equals(type)) {
+					ContactSelectionWindow contactWindow = new ContactSelectionWindow(
+							RelatedEditItemField.this);
+					getWindow().addWindow(contactWindow);
+					contactWindow.show();
 				} else {
 					relatedItemComboBox.focus();
 				}
@@ -73,9 +85,9 @@ public class RelatedItemField extends CustomField implements FieldSelection {
 			@Override
 			public void click(ClickEvent event) {
 				try {
-					PropertyUtils.setProperty(RelatedItemField.this.bean,
+					PropertyUtils.setProperty(RelatedEditItemField.this.bean,
 							"type", "");
-					PropertyUtils.setProperty(RelatedItemField.this.bean,
+					PropertyUtils.setProperty(RelatedEditItemField.this.bean,
 							"typeid", null);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -119,6 +131,14 @@ public class RelatedItemField extends CustomField implements FieldSelection {
 					if (account != null) {
 						itemField.setValue(account.getAccountname());
 					}
+				} else if ("Campaign".equals(type)) {
+					CampaignService campaignService = AppContext
+							.getSpringBean(CampaignService.class);
+					SimpleCampaign campaign = campaignService
+							.findCampaignById(typeid);
+					if (campaign != null) {
+						itemField.setValue(campaign.getCampaignname());
+					}
 				}
 			}
 
@@ -135,6 +155,11 @@ public class RelatedItemField extends CustomField implements FieldSelection {
 				PropertyUtils.setProperty(bean, "typeid",
 						((SimpleAccount) data).getId());
 				itemField.setValue(((SimpleAccount) data).getAccountname());
+			} else if (data instanceof SimpleCampaign) {
+				PropertyUtils.setProperty(bean, "type", "Campaign");
+				PropertyUtils.setProperty(bean, "typeid",
+						((SimpleCampaign) data).getId());
+				itemField.setValue(((SimpleCampaign) data).getCampaignname());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

@@ -6,7 +6,7 @@ import com.esofthead.mycollab.module.crm.CrmDataTypeFactory;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.service.ContactService;
-import com.esofthead.mycollab.module.crm.ui.components.RelatedItemField;
+import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.esofthead.mycollab.module.crm.view.contact.ContactSelectionField;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
@@ -114,7 +114,7 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
 					tf.setRequiredError("Subject must not be null");
 					return tf;
 				} else if (propertyId.equals("type")) {
-					RelatedItemField field = new RelatedItemField(new String[] {
+					RelatedEditItemField field = new RelatedEditItemField(new String[] {
 							"Account", "Campaign", "Contact", "Lead",
 							"Opportunity", "Case" }, task);
 					field.setType(task.getType());

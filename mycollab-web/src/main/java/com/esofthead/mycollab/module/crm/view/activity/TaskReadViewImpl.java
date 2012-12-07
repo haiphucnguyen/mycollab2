@@ -1,11 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
-import com.esofthead.mycollab.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.module.crm.service.AccountService;
-import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.module.crm.ui.components.RelatedReadItemField;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -15,11 +12,11 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 	private static final long serialVersionUID = 1L;
@@ -76,32 +73,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 					} else if (propertyId.equals("contactid")) {
 						return new FormViewField(task.getContactName());
 					} else if (propertyId.equals("type")) {
-						if (task.getTypeid() != null) {
-							if ("Account".equals(task.getType())) {
-								AccountService accountService = AppContext
-										.getSpringBean(AccountService.class);
-								final SimpleAccount account = accountService
-										.findAccountById(task.getTypeid());
-								if (account != null) {
-									FormLinkViewField field = new FormLinkViewField(
-											account.getAccountname(),
-											new Button.ClickListener() {
-
-												@Override
-												public void buttonClick(
-														ClickEvent event) {
-													EventBus.getInstance()
-															.fireEvent(
-																	new AccountEvent.GotoRead(
-																			this,
-																			account.getId()));
-
-												}
-											});
-									return field;
-								}
-							}
-						}
+						return new RelatedReadItemField(task);
 
 					}
 
