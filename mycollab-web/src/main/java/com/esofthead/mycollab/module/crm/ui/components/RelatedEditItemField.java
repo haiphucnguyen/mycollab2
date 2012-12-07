@@ -5,11 +5,22 @@ import org.vaadin.addon.customfield.CustomField;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleCase;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
+import com.esofthead.mycollab.module.crm.service.CaseService;
+import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.module.crm.service.LeadService;
+import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignSelectionWindow;
+import com.esofthead.mycollab.module.crm.view.cases.CaseSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.contact.ContactSelectionWindow;
+import com.esofthead.mycollab.module.crm.view.lead.LeadSelectionWindow;
+import com.esofthead.mycollab.module.crm.view.opportunity.OpportunitySelectionWindow;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
@@ -68,6 +79,21 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 							RelatedEditItemField.this);
 					getWindow().addWindow(contactWindow);
 					contactWindow.show();
+				} else if ("Lead".equals(type)) {
+					LeadSelectionWindow leadWindow = new LeadSelectionWindow(
+							RelatedEditItemField.this);
+					getWindow().addWindow(leadWindow);
+					leadWindow.show();
+				} else if ("Opportunity".equals(type)) {
+					OpportunitySelectionWindow opportunityWindow = new OpportunitySelectionWindow(
+							RelatedEditItemField.this);
+					getWindow().addWindow(opportunityWindow);
+					opportunityWindow.show();
+				} else if ("Case".equals(type)) {
+					CaseSelectionWindow caseWindow = new CaseSelectionWindow(
+							RelatedEditItemField.this);
+					getWindow().addWindow(caseWindow);
+					caseWindow.show();
 				} else {
 					relatedItemComboBox.focus();
 				}
@@ -139,6 +165,36 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 					if (campaign != null) {
 						itemField.setValue(campaign.getCampaignname());
 					}
+				} else if ("Contact".equals(type)) {
+					ContactService contactService = AppContext
+							.getSpringBean(ContactService.class);
+					SimpleContact contact = contactService
+							.findContactById(typeid);
+					if (contact != null) {
+						itemField.setValue(contact.getContactName());
+					}
+				} else if ("Lead".equals(type)) {
+					LeadService leadService = AppContext
+							.getSpringBean(LeadService.class);
+					SimpleLead lead = leadService.findLeadById(typeid);
+					if (lead != null) {
+						itemField.setValue(lead.getLeadName());
+					}
+				} else if ("Opportunity".equals(type)) {
+					OpportunityService opportunityService = AppContext
+							.getSpringBean(OpportunityService.class);
+					SimpleOpportunity opportunity = opportunityService
+							.findOpportunityById(typeid);
+					if (opportunity != null) {
+						itemField.setValue(opportunity.getOpportunityname());
+					}
+				} else if ("Case".equals(type)) {
+					CaseService caseService = AppContext
+							.getSpringBean(CaseService.class);
+					SimpleCase cases = caseService.findCaseById(typeid);
+					if (cases != null) {
+						itemField.setValue(cases.getSubject());
+					}
 				}
 			}
 
@@ -160,6 +216,27 @@ public class RelatedEditItemField extends CustomField implements FieldSelection 
 				PropertyUtils.setProperty(bean, "typeid",
 						((SimpleCampaign) data).getId());
 				itemField.setValue(((SimpleCampaign) data).getCampaignname());
+			} else if (data instanceof SimpleContact) {
+				PropertyUtils.setProperty(bean, "type", "Contact");
+				PropertyUtils.setProperty(bean, "typeid",
+						((SimpleContact) data).getId());
+				itemField.setValue(((SimpleContact) data).getContactName());
+			} else if (data instanceof SimpleLead) {
+				PropertyUtils.setProperty(bean, "type", "Lead");
+				PropertyUtils.setProperty(bean, "typeid",
+						((SimpleLead) data).getId());
+				itemField.setValue(((SimpleLead) data).getLeadName());
+			} else if (data instanceof SimpleOpportunity) {
+				PropertyUtils.setProperty(bean, "type", "Opportunity");
+				PropertyUtils.setProperty(bean, "typeid",
+						((SimpleOpportunity) data).getId());
+				itemField.setValue(((SimpleOpportunity) data)
+						.getOpportunityname());
+			} else if (data instanceof SimpleCase) {
+				PropertyUtils.setProperty(bean, "type", "Case");
+				PropertyUtils.setProperty(bean, "typeid",
+						((SimpleCase) data).getId());
+				itemField.setValue(((SimpleCase) data).getSubject());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();

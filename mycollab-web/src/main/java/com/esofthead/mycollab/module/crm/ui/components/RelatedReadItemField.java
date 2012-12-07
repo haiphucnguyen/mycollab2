@@ -5,10 +5,22 @@ import org.vaadin.addon.customfield.CustomField;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleCase;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.events.CaseEvent;
+import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
+import com.esofthead.mycollab.module.crm.service.CaseService;
+import com.esofthead.mycollab.module.crm.service.ContactService;
+import com.esofthead.mycollab.module.crm.service.LeadService;
+import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.web.AppContext;
@@ -39,49 +51,125 @@ public class RelatedReadItemField extends CustomField {
 				return;
 			}
 
-			ButtonLink l = null;
-			
+			ButtonLink relatedLink = null;
+
 			if ("Account".equals(type)) {
 				AccountService accountService = AppContext
 						.getSpringBean(AccountService.class);
 				final SimpleAccount account = accountService
 						.findAccountById(typeid);
 				if (account != null) {
-					l = new ButtonLink(account.getAccountname(), new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+					relatedLink = new ButtonLink(account.getAccountname(),
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							EventBus.getInstance().fireEvent(
-									new AccountEvent.GotoRead(this, account
-											.getId()));
-						}
-					});
+								@Override
+								public void buttonClick(ClickEvent event) {
+									EventBus.getInstance().fireEvent(
+											new AccountEvent.GotoRead(this,
+													account.getId()));
+								}
+							});
 				}
 			} else if ("Campaign".equals(type)) {
-				CampaignService campaignService = AppContext.getSpringBean(CampaignService.class);
-				final SimpleCampaign campaign = campaignService.findCampaignById(typeid);
+				CampaignService campaignService = AppContext
+						.getSpringBean(CampaignService.class);
+				final SimpleCampaign campaign = campaignService
+						.findCampaignById(typeid);
 				if (campaign != null) {
-					l = new ButtonLink(campaign.getCampaignname(), new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+					relatedLink = new ButtonLink(campaign.getCampaignname(),
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							EventBus.getInstance().fireEvent(
-									new CampaignEvent.GotoRead(this, campaign
-											.getId()));
-							
-						}
-					});
+								@Override
+								public void buttonClick(ClickEvent event) {
+									EventBus.getInstance().fireEvent(
+											new CampaignEvent.GotoRead(this,
+													campaign.getId()));
+
+								}
+							});
+				}
+			} else if ("Contact".equals(type)) {
+				ContactService contactService = AppContext
+						.getSpringBean(ContactService.class);
+				final SimpleContact contact = contactService
+						.findContactById(typeid);
+				if (contact != null) {
+					relatedLink = new ButtonLink(contact.getContactName(),
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void buttonClick(ClickEvent event) {
+									EventBus.getInstance().fireEvent(
+											new ContactEvent.GotoRead(this,
+													contact.getId()));
+								}
+							});
+				}
+			} else if ("Lead".equals(type)) {
+				LeadService leadService = AppContext
+						.getSpringBean(LeadService.class);
+				final SimpleLead lead = leadService.findLeadById(typeid);
+				if (lead != null) {
+					relatedLink = new ButtonLink(lead.getLeadName(),
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void buttonClick(ClickEvent event) {
+									EventBus.getInstance().fireEvent(
+											new LeadEvent.GotoRead(this, lead
+													.getId()));
+								}
+							});
+				}
+			} else if ("Opportunity".equals(type)) {
+				OpportunityService opportunityService = AppContext
+						.getSpringBean(OpportunityService.class);
+				final SimpleOpportunity opportunity = opportunityService
+						.findOpportunityById(typeid);
+				if (opportunity != null) {
+					relatedLink = new ButtonLink(
+							opportunity.getOpportunityname(),
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void buttonClick(ClickEvent event) {
+									EventBus.getInstance().fireEvent(
+											new OpportunityEvent.GotoRead(this,
+													opportunity.getId()));
+								}
+							});
+				}
+			} else if ("Case".equals(type)) {
+				CaseService caseService = AppContext
+						.getSpringBean(CaseService.class);
+				final SimpleCase cases = caseService.findCaseById(typeid);
+				if (cases != null) {
+					relatedLink = new ButtonLink(cases.getSubject(),
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void buttonClick(ClickEvent event) {
+									EventBus.getInstance().fireEvent(
+											new CaseEvent.GotoRead(this, cases
+													.getId()));
+
+								}
+							});
 				}
 			}
-			
-			if (l != null) {
-				this.setCompositionRoot(l);
+
+			if (relatedLink != null) {
+				this.setCompositionRoot(relatedLink);
 			} else {
 				this.setCompositionRoot(new Label(""));
 			}
-			
+
 		} catch (Exception e) {
 			this.setCompositionRoot(new Label(""));
 		}
