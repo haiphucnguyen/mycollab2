@@ -708,6 +708,155 @@ input.v-textfield-errorField {
 }
 /* End Depot */
 
+/* Activity Tabs */
+
+.activityTabs {
+	margin-top: 15px;
+}
+.activityTabs  .v-nativebutton-tab {
+	border: 0px;
+	background: none;
+	line-height: 1.9em;
+	border-bottom: 1px solid #AAA;
+	color: #666;
+}
+.activityTabs  .v-nativebutton-tab:hover {
+	color: #222;
+}
+.activityTabs  .v-nativebutton-tab.v-nativebutton-tab-selected {
+	background: -moz-linear-gradient(top,#F3F3F3 0,#E6E6E6 100%);
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#F3F3F3),color-stop(100%,#E6E6E6));
+    background: -webkit-linear-gradient(top,#F3F3F3 0,#E6E6E6 100%);
+    background: -o-linear-gradient(top,#F3F3F3 0,#E6E6E6 100%);
+    background: -ms-linear-gradient(top,#F3F3F3 0,#E6E6E6 100%);
+    background: linear-gradient(to bottom,#F3F3F3 0,#E6E6E6 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F3F3F3',endColorstr='#E6E6E6',GradientType=0);
+    -webkit-border-top-left-radius: 5px;
+	-webkit-border-top-right-radius: 5px;
+	-moz-border-radius-topleft: 5px;
+	-moz-border-radius-topright: 5px;
+	border-top-left-radius: 5px;
+	border-top-right-radius: 5px;
+	border-left: 1px solid #AAA;
+	border-right: 1px solid #AAA;
+	border-top: 1px solid #AAA;
+	border-bottom: 0px;
+	color: #222;
+}
+
+/* End Activity Tabs */
+
+/* Calendar */
+.actionPanel {
+	background: -moz-linear-gradient(top,#E6E6E6 0,#DDD 100%);
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#E6E6E6),color-stop(100%,#DDD));
+    background: -webkit-linear-gradient(top,#E6E6E6 0,#DDD 100%);
+    background: -o-linear-gradient(top,#E6E6E6 0,#DDD 100%);
+    background: -ms-linear-gradient(top,#E6E6E6 0,#DDD 100%);
+    background: linear-gradient(to bottom,#E6E6E6 0,#DDD 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#E6E6E6',endColorstr='#DDD',GradientType=0);
+}
+.actionPanel .v-button {
+	background: none;
+	border: 0px;
+}
+.actionPanel .v-button .v-button-wrap {
+	background: none;
+	border: 0px;
+	margin: 0px;
+	padding: 12px 15px;
+}
+.calendarTab .v-csslayout-margin {
+	border-left: 1px solid #AAA;
+	border-right: 1px solid #AAA;
+	border-bottom: 1px solid #AAA;
+}
+.v-calendar {
+	border-top: 1px solid #AAA;
+}
+.v-calendar-header-week {
+	margin-top: 10px;
+}
+.v-calendar-header-week td:nth-of-type(2) .v-calendar-header-day-Hsized {
+	border-left: 1px solid #CCC;
+}
+.v-calendar-header-day-Hsized {
+	max-width: 150px;
+	min-width: 100px;
+	padding: 5px 0px;
+	background: -moz-linear-gradient(top,#F8F8F8 0,#EEEEEE 100%);
+    background: -webkit-gradient(linear,left top,left bottom,color-stop(0%,#F8F8F8),color-stop(100%,#EEEEEE));
+    background: -webkit-linear-gradient(top,#F8F8F8 0,#EEEEEE 100%);
+    background: -o-linear-gradient(top,#F8F8F8 0,#EEEEEE 100%);
+    background: -ms-linear-gradient(top,#F8F8F8 0,#EEEEEE 100%);
+    background: linear-gradient(to bottom,#F8F8F8 0,#EEEEEE 100%);
+    filter: progid:DXImageTransform.Microsoft.gradient(startColorstr='#F8F8F8',endColorstr='#EEEEEE',GradientType=0);
+    border-right: 1px solid #CCC;
+    border-top: 1px solid #CCC;
+}
+.v-calendar-day-times-Hsized, .v-calendar-day-times-Hsized .v-slot, .v-calendar-day-times-Hsized .v-slot-even {
+	max-width: 150px;
+	min-width: 100px;
+}
+.v-calendar-weekly-longevents {
+	min-height: 10px;
+	border-bottom: 1px solid #BBB !important;
+	border-top: 1px solid #BBB;
+}
+.v-calendar-weekly-longevents .v-calendar-datecell {
+	min-height: 10px;
+}
+.v-calendar-header-week .v-calendar-back, .v-calendar-header-week .v-calendar-next {
+	margin: 7px 0 0 0 !important;
+}
+.v-calendar-header-week .v-calendar-back {
+	float: right;
+}
+.v-calendar-header-week .v-calendar-next {
+	float: left;
+}
+.v-calendar-header-month, .v-calendar-header-week {
+	border: 0px !important;
+}
+.v-calendar-week-wrapper-Vsized {
+/* 	height: 100% !important; */
+
+}
+/* .v-calendar-week-wrapper-Vsized::-webkit-scrollbar { */
+/* 	height:16px; */
+/* 	overflow:visible; */
+/* 	width:16px; */
+/* } */
+/* .v-calendar-week-wrapper-Vsized::-webkit-scrollbar-button { */
+/* 	height:0; */
+/* 	width:0; */
+/* } */
+/* .v-calendar-week-wrapper-Vsized::-webkit-scrollbar-track { */
+/* 	background-clip:padding-box; */
+/* 	border:solid transparent; */
+/* 	border-width:0 0 0 7px; */
+/* } */
+
+.v-calendar-week-wrapper-Vsized::-webkit-scrollbar {
+    width: 6px;
+    height: 6px;
+    float: left;
+}
+
+.v-calendar-week-wrapper-Vsized::-webkit-scrollbar-track-piece {
+    background-color: #EEE;
+	-webkit-border-radius: 3px;
+}
+.v-calendar-week-wrapper-Vsized::-webkit-scrollbar-thumb {
+	background-color: #ccc;
+	-webkit-border-radius: 3px;
+}​
+
+.v-calendar-header-week .v-calendar-next {
+	float: left;
+}
+/* End Calendar */
+
 .v-table-cell-wrapper {
 white-space: normal;
 }

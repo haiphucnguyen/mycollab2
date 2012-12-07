@@ -7,18 +7,22 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.vaadin.addon.calendar.ui.Calendar;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 public class ActivityCalendarViewImpl extends AbstractView implements
 		ActivityCalendarView {
 	private static final long serialVersionUID = 1L;
 
-	private PopupButton calendarActionBtn;
+	private final PopupButton calendarActionBtn;
 
 	public ActivityCalendarViewImpl() {
 		super();
+
+		this.setStyleName("activityCalendar");
 
 		MenuActionListener listener = new MenuActionListener();
 
@@ -36,10 +40,16 @@ public class ActivityCalendarViewImpl extends AbstractView implements
 
 		calendarActionBtn.addComponent(actionBtnLayout);
 
-		this.addComponent(calendarActionBtn);
+		HorizontalLayout actionPanel = new HorizontalLayout();
+		actionPanel.setWidth("100%");
+		actionPanel.setStyleName("actionPanel");
+		actionPanel.addComponent(calendarActionBtn);
+
+		this.addComponent(actionPanel);
 
 		Calendar calendar = new Calendar();
 		this.addComponent(calendar);
+		this.setComponentAlignment(calendar, Alignment.MIDDLE_CENTER);
 	}
 
 	private class MenuActionListener implements Button.ClickListener {
