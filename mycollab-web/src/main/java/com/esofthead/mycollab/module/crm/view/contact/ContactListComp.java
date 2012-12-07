@@ -80,7 +80,7 @@ public class ContactListComp extends Depot implements IRelatedListHandlers {
 								EventBus.getInstance()
 										.fireEvent(
 												new ContactEvent.GotoRead(this,
-														contact));
+														contact.getId()));
 							}
 						});
 				return b;

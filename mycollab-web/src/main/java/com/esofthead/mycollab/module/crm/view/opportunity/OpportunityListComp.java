@@ -81,7 +81,7 @@ public class OpportunityListComp extends Depot implements IRelatedListHandlers {
 							public void buttonClick(ClickEvent event) {
 								EventBus.getInstance().fireEvent(
 										new OpportunityEvent.GotoRead(this,
-												opportunity));
+												opportunity.getId()));
 							}
 						});
 				return b;

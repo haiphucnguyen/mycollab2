@@ -26,7 +26,7 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 					@Override
 					public void onEdit(SimpleCall data) {
 						EventBus.getInstance().fireEvent(
-								new ActivityEvent.CallAdd(this, data));
+								new ActivityEvent.CallEdit(this, data));
 					}
 
 					@Override
@@ -44,7 +44,7 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 						Call cloneData = (Call) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
-								new ActivityEvent.CallAdd(this, cloneData));
+								new ActivityEvent.CallEdit(this, cloneData));
 					}
 
 					@Override

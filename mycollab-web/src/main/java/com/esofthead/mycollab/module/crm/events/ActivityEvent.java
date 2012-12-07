@@ -10,7 +10,7 @@ public class ActivityEvent {
 			super(source, data);
 		}
 	}
-	
+
 	public static class GotoTodoList extends ApplicationEvent {
 		public GotoTodoList(Object source, Object data) {
 			super(source, data);
@@ -22,13 +22,13 @@ public class ActivityEvent {
 			super(source, data);
 		}
 	}
-	
+
 	public static class TaskEdit extends ApplicationEvent {
 		public TaskEdit(Object source, Object data) {
 			super(source, data);
 		}
 	}
-	
+
 	public static class TaskRead extends ApplicationEvent {
 		public TaskRead(Object source, Object data) {
 			super(source, data);
@@ -40,7 +40,13 @@ public class ActivityEvent {
 			super(source, data);
 		}
 	}
-	
+
+	public static class MeetingEdit extends ApplicationEvent {
+		public MeetingEdit(Object source, Object data) {
+			super(source, data);
+		}
+	}
+
 	public static class MeetingRead extends ApplicationEvent {
 		public MeetingRead(Object source, Object data) {
 			super(source, data);
@@ -52,7 +58,13 @@ public class ActivityEvent {
 			super(source, data);
 		}
 	}
-	
+
+	public static class CallEdit extends ApplicationEvent {
+		public CallEdit(Object source, Object data) {
+			super(source, data);
+		}
+	}
+
 	public static class CallRead extends ApplicationEvent {
 		public CallRead(Object source, Object data) {
 			super(source, data);

@@ -26,7 +26,7 @@ public class MeetingReadPresenter  extends CrmGenericPresenter<MeetingReadView> 
 					@Override
 					public void onEdit(Meeting data) {
 						EventBus.getInstance().fireEvent(
-								new ActivityEvent.MeetingAdd(this, data));
+								new ActivityEvent.MeetingEdit(this, data));
 					}
 
 					@Override
@@ -44,7 +44,7 @@ public class MeetingReadPresenter  extends CrmGenericPresenter<MeetingReadView> 
 						Meeting cloneData = (Meeting) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
-								new ActivityEvent.MeetingAdd(this, cloneData));
+								new ActivityEvent.MeetingEdit(this, cloneData));
 					}
 
 					@Override

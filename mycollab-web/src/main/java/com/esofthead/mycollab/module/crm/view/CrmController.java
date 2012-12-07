@@ -13,7 +13,6 @@ import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
-import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
@@ -33,7 +32,6 @@ import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
-import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddView;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddViewImpl;
@@ -318,6 +316,26 @@ public class CrmController {
 				});
 
 		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ActivityEvent.MeetingEdit>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ActivityEvent.MeetingEdit.class;
+					}
+
+					@Override
+					public void handle(ActivityEvent.MeetingEdit event) {
+						MeetingAddViewImpl view = ViewManager
+								.getView(MeetingAddViewImpl.class);
+						new MeetingAddPresenter(view).go(
+								container,
+								new ScreenData.Edit<Meeting>((Meeting) event
+										.getData()));
+					}
+				});
+
+		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ActivityEvent.MeetingRead>() {
 					private static final long serialVersionUID = 1L;
 
@@ -360,6 +378,26 @@ public class CrmController {
 								.getView(CallAddViewImpl.class);
 						new CallAddPresenter(view).go(container,
 								new ScreenData<Call>(new Call()));
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ActivityEvent.CallEdit>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ActivityEvent.CallEdit.class;
+					}
+
+					@Override
+					public void handle(ActivityEvent.CallEdit event) {
+						CallAddViewImpl view = ViewManager
+								.getView(CallAddViewImpl.class);
+						new CallAddPresenter(view).go(
+								container,
+								new ScreenData.Edit<Call>((Call) event
+										.getData()));
 					}
 				});
 

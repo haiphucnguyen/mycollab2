@@ -79,7 +79,7 @@ public class LeadListComp extends Depot implements IRelatedListHandlers {
 							@Override
 							public void buttonClick(ClickEvent event) {
 								EventBus.getInstance().fireEvent(
-										new LeadEvent.GotoRead(this, lead));
+										new LeadEvent.GotoRead(this, lead.getId()));
 							}
 						});
 				return b;
