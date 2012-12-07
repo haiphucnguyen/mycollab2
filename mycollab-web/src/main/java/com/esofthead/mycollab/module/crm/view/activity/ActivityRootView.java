@@ -16,8 +16,8 @@ import com.vaadin.ui.CssLayout;
 public class ActivityRootView extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
-	private DetachedTabs activityTabs;
-	private CssLayout mySpaceArea = new CssLayout();
+	private final DetachedTabs activityTabs;
+	private final CssLayout mySpaceArea = new CssLayout();
 
 	private ActivityCalendarPresenter calendarPresenter;
 
@@ -32,6 +32,7 @@ public class ActivityRootView extends AbstractView {
 		activityTabs = new DetachedTabs.Horizontal(mySpaceArea);
 		activityTabs.setWidth("100%");
 		activityTabs.setHeight(null);
+		activityTabs.setStyleName("activityTabs");
 
 		activityTabs.addTab(constructCalendarView(), "Calendar");
 		activityTabs.addTab(constructActivityListView(), "All Todo and Events");
@@ -73,6 +74,7 @@ public class ActivityRootView extends AbstractView {
 	public void gotoCalendar() {
 		com.vaadin.ui.Component calendarComp = activityTabs
 				.selectTab("Calendar");
+		this.mySpaceArea.setStyleName("calendarTab");
 
 		if (calendarComp != null) {
 			calendarPresenter.go(this, null);
@@ -82,6 +84,7 @@ public class ActivityRootView extends AbstractView {
 	public void gotoActivityList() {
 		com.vaadin.ui.Component activityList = activityTabs
 				.selectTab("All Todo and Events");
+		this.mySpaceArea.setStyleName("activityTab");
 
 		if (activityList != null) {
 			EventSearchCriteria searchCriteria = new EventSearchCriteria();
