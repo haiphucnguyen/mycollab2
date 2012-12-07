@@ -8,6 +8,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
@@ -65,8 +66,36 @@ public class CallReadViewImpl extends AbstractView implements CallReadView {
 								});
 					} else if (propertyId.equals("type")) {
 						return new RelatedReadItemField(call);
-					} 
-					
+					} else if (propertyId.equals("status")) {
+						String value = call.getStatus() + " "
+								+ call.getCalltype();
+						FormViewField field = new FormViewField(value);
+						return field;
+					} else if (propertyId.equals("durationinseconds")) {
+						Integer duration = call.getDurationinseconds();
+						if (duration != null && duration != 0) {
+							int hours = duration / 3600;
+							int minutes = (duration % 3600) / 60;
+							StringBuffer value = new StringBuffer();
+							if (hours == 1) {
+								value.append("1 hour ");
+							} else if (hours >= 2) {
+								value.append(hours + " hours ");
+							}
+
+							if (minutes > 0) {
+								value.append(minutes + " minutes");
+							}
+
+							return new FormViewField(value.toString());
+						} else {
+							return new FormViewField("");
+						}
+					} else if (propertyId.equals("startdate")) {
+						return new FormViewField(AppContext.formatDateTime(call
+								.getStartdate()));
+					}
+
 					return null;
 				}
 			});
