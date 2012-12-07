@@ -1,11 +1,4 @@
 <!ELEMENT dataset (
-    chat_con_binval*,
-    chat_con_bundle*,
-    chat_con_names*,
-    chat_ver_binval*,
-    chat_ver_bundle*,
-    chat_ver_names*,
-    chat_ver_refs*,
     m_attachment*,
     m_audit_log*,
     m_colla_workgroup*,
@@ -14,29 +7,25 @@
     m_colla_workgroup_user*,
     m_comment*,
     m_crm_account*,
-    m_crm_accounttype*,
+    m_crm_call*,
     m_crm_campaign*,
     m_crm_case*,
     m_crm_contact*,
     m_crm_contract*,
     m_crm_customer*,
-    m_crm_industry*,
     m_crm_lead*,
+    m_crm_meeting*,
     m_crm_note*,
     m_crm_opportunity*,
-    m_crm_opportunity_type*,
     m_crm_product*,
     m_crm_product_catalog*,
     m_crm_quote*,
     m_crm_quote_group_product*,
-    m_crm_sales_stage*,
-    m_crm_source_type*,
     m_crm_target*,
     m_crm_target_list*,
     m_crm_task*,
-    m_crm_task_status*,
-    m_crm_task_type*,
     m_crm_type_relationship*,
+    m_ecm_transaction*,
     m_friend_friend*,
     m_friend_request*,
     m_group*,
@@ -106,69 +95,22 @@
     m_tracker_version*,
     s_account*,
     s_billing_plan*,
-    s_chat_server*,
     s_country*,
     s_currency*,
-    s_marital_status*,
-    s_module*,
     s_role_permission*,
     s_roles*,
     s_roleuser*,
     s_title*,
     s_user*,
-    s_user_module_settings*,
-    s_user_preferences*,
-    s_user_view_settings*,
-    s_view*,
     schema_version*)>
-
-<!ELEMENT chat_con_binval EMPTY>
-<!ATTLIST chat_con_binval
-    BINVAL_ID CDATA #REQUIRED
-    BINVAL_DATA CDATA #REQUIRED
->
-
-<!ELEMENT chat_con_bundle EMPTY>
-<!ATTLIST chat_con_bundle
-    NODE_ID CDATA #REQUIRED
-    BUNDLE_DATA CDATA #REQUIRED
->
-
-<!ELEMENT chat_con_names EMPTY>
-<!ATTLIST chat_con_names
-    ID CDATA #REQUIRED
-    NAME CDATA #REQUIRED
->
-
-<!ELEMENT chat_ver_binval EMPTY>
-<!ATTLIST chat_ver_binval
-    BINVAL_ID CDATA #REQUIRED
-    BINVAL_DATA CDATA #REQUIRED
->
-
-<!ELEMENT chat_ver_bundle EMPTY>
-<!ATTLIST chat_ver_bundle
-    NODE_ID CDATA #REQUIRED
-    BUNDLE_DATA CDATA #REQUIRED
->
-
-<!ELEMENT chat_ver_names EMPTY>
-<!ATTLIST chat_ver_names
-    ID CDATA #REQUIRED
-    NAME CDATA #REQUIRED
->
-
-<!ELEMENT chat_ver_refs EMPTY>
-<!ATTLIST chat_ver_refs
-    NODE_ID CDATA #REQUIRED
-    REFS_DATA CDATA #REQUIRED
->
 
 <!ELEMENT m_attachment EMPTY>
 <!ATTLIST m_attachment
     id CDATA #REQUIRED
     attachmentid CDATA #REQUIRED
     documentpath CDATA #REQUIRED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_audit_log EMPTY>
@@ -179,18 +121,20 @@
     posteddate CDATA #REQUIRED
     posteduser CDATA #REQUIRED
     refid CDATA #REQUIRED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_colla_workgroup EMPTY>
 <!ATTLIST m_colla_workgroup
     id CDATA #REQUIRED
-    createdDate CDATA #IMPLIED
     owner CDATA #IMPLIED
     description CDATA #IMPLIED
     isModerated CDATA #IMPLIED
     sAccountId CDATA #IMPLIED
     groupname CDATA #IMPLIED
     accessMode CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_colla_workgroup_comment EMPTY>
@@ -200,6 +144,8 @@
     postedUser CDATA #IMPLIED
     postedDate CDATA #IMPLIED
     messageid CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_colla_workgroup_message EMPTY>
@@ -207,7 +153,7 @@
     id CDATA #REQUIRED
     message CDATA #IMPLIED
     postedUser CDATA #IMPLIED
-    postedDate CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
     workgroupId CDATA #IMPLIED
     title CDATA #IMPLIED
     m_colla_workgroup_messagecol CDATA #IMPLIED
@@ -222,6 +168,8 @@
     isApproved CDATA #IMPLIED
     id CDATA #REQUIRED
     role CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_comment EMPTY>
@@ -231,6 +179,8 @@
     owner CDATA #REQUIRED
     posteddate CDATA #REQUIRED
     commentid CDATA #REQUIRED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_account EMPTY>
@@ -262,13 +212,28 @@
     assignUser CDATA #IMPLIED
     type CDATA #IMPLIED
     industry CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
-<!ELEMENT m_crm_accounttype EMPTY>
-<!ATTLIST m_crm_accounttype
+<!ELEMENT m_crm_call EMPTY>
+<!ATTLIST m_crm_call
     id CDATA #REQUIRED
-    name CDATA #REQUIRED
+    subject CDATA #REQUIRED
+    startDate CDATA #IMPLIED
+    durationInSeconds CDATA #IMPLIED
+    calltype CDATA #IMPLIED
+    type CDATA #IMPLIED
+    typeid CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
+    createdUser CDATA #IMPLIED
+    assignUser CDATA #IMPLIED
+    description CDATA #IMPLIED
+    contactId CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
+    status CDATA #IMPLIED
+    purpose CDATA #IMPLIED
+    result CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_campaign EMPTY>
@@ -292,6 +257,7 @@
     status CDATA #IMPLIED
     type CDATA #IMPLIED
     assignUser CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_case EMPTY>
@@ -308,6 +274,11 @@
     createdUser CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
     assignUser CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
+    reason CDATA #IMPLIED
+    origin CDATA #IMPLIED
+    email CDATA #IMPLIED
+    phonenumber CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_contact EMPTY>
@@ -346,6 +317,7 @@
     otherState CDATA #IMPLIED
     otherPostalCode CDATA #IMPLIED
     otherCountry CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_contract EMPTY>
@@ -368,6 +340,7 @@
     createdUser CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
     assignUser CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_customer EMPTY>
@@ -388,12 +361,7 @@
     createdTime CDATA #IMPLIED
     createdUser CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
->
-
-<!ELEMENT m_crm_industry EMPTY>
-<!ATTLIST m_crm_industry
-    id CDATA #REQUIRED
-    name CDATA #REQUIRED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_lead EMPTY>
@@ -435,6 +403,31 @@
     otherPostalCode CDATA #IMPLIED
     otherCountry CDATA #IMPLIED
     industry CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
+    noEmployees CDATA #IMPLIED
+>
+
+<!ELEMENT m_crm_meeting EMPTY>
+<!ATTLIST m_crm_meeting
+    id CDATA #REQUIRED
+    subject CDATA #IMPLIED
+    status CDATA #IMPLIED
+    type CDATA #IMPLIED
+    typeid CDATA #IMPLIED
+    startDate CDATA #IMPLIED
+    endDate CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
+    createdUser CDATA #IMPLIED
+    sAccountId CDATA #REQUIRED
+    location CDATA #IMPLIED
+    description CDATA #IMPLIED
+    isRecurrence CDATA #IMPLIED
+    recurrenceType CDATA #IMPLIED
+    recurrenceStartDate CDATA #IMPLIED
+    recurrenceEndDate CDATA #IMPLIED
+    contactType CDATA #IMPLIED
+    contactTypeId CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_note EMPTY>
@@ -450,6 +443,7 @@
     createdTime CDATA #IMPLIED
     createdUser CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_opportunity EMPTY>
@@ -472,12 +466,7 @@
     assignUser CDATA #IMPLIED
     opportunityType CDATA #IMPLIED
     salesStage CDATA #IMPLIED
->
-
-<!ELEMENT m_crm_opportunity_type EMPTY>
-<!ATTLIST m_crm_opportunity_type
-    id CDATA #REQUIRED
-    name CDATA #REQUIRED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_product EMPTY>
@@ -510,6 +499,7 @@
     createdTime CDATA #IMPLIED
     createdUser CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_product_catalog EMPTY>
@@ -534,6 +524,8 @@
     support_term CDATA #IMPLIED
     productname CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_quote EMPTY>
@@ -566,6 +558,7 @@
     createdUser CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
     assignUser CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_quote_group_product EMPTY>
@@ -576,18 +569,8 @@
     tax CDATA #IMPLIED
     shipping CDATA #IMPLIED
     quoteid CDATA #REQUIRED
->
-
-<!ELEMENT m_crm_sales_stage EMPTY>
-<!ATTLIST m_crm_sales_stage
-    id CDATA #REQUIRED
-    name CDATA #REQUIRED
->
-
-<!ELEMENT m_crm_source_type EMPTY>
-<!ATTLIST m_crm_source_type
-    id CDATA #REQUIRED
-    name CDATA #REQUIRED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_target EMPTY>
@@ -619,6 +602,7 @@
     createdUser CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
     assignUser CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_target_list EMPTY>
@@ -631,6 +615,7 @@
     createdUser CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
     assignUser CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_task EMPTY>
@@ -649,18 +634,7 @@
     assignUser CDATA #IMPLIED
     priority CDATA #IMPLIED
     type CDATA #IMPLIED
->
-
-<!ELEMENT m_crm_task_status EMPTY>
-<!ATTLIST m_crm_task_status
-    id CDATA #REQUIRED
-    status CDATA #REQUIRED
->
-
-<!ELEMENT m_crm_task_type EMPTY>
-<!ATTLIST m_crm_task_type
-    id CDATA #REQUIRED
-    type CDATA #REQUIRED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_type_relationship EMPTY>
@@ -669,6 +643,16 @@
     type1id CDATA #REQUIRED
     type2id CDATA #REQUIRED
     type CDATA #REQUIRED
+>
+
+<!ELEMENT m_ecm_transaction EMPTY>
+<!ATTLIST m_ecm_transaction
+    id CDATA #REQUIRED
+    contentpath CDATA #REQUIRED
+    owner CDATA #IMPLIED
+    action CDATA #REQUIRED
+    actiontime CDATA #REQUIRED
+    contenttype CDATA #REQUIRED
 >
 
 <!ELEMENT m_friend_friend EMPTY>
@@ -1466,15 +1450,6 @@
     numProjects CDATA #IMPLIED
 >
 
-<!ELEMENT s_chat_server EMPTY>
-<!ATTLIST s_chat_server
-    id CDATA #REQUIRED
-    code CDATA #REQUIRED
-    host CDATA #REQUIRED
-    port CDATA #REQUIRED
-    account_suffix CDATA #IMPLIED
->
-
 <!ELEMENT s_country EMPTY>
 <!ATTLIST s_country
     id CDATA #REQUIRED
@@ -1488,23 +1463,6 @@
     isocode CDATA #REQUIRED
     symbol CDATA #REQUIRED
     conversionrate CDATA #IMPLIED
->
-
-<!ELEMENT s_marital_status EMPTY>
-<!ATTLIST s_marital_status
-    id CDATA #REQUIRED
-    name CDATA #REQUIRED
->
-
-<!ELEMENT s_module EMPTY>
-<!ATTLIST s_module
-    id CDATA #REQUIRED
-    modulename CDATA #REQUIRED
-    description CDATA #IMPLIED
-    uri CDATA #REQUIRED
-    status CDATA #REQUIRED
-    title CDATA #REQUIRED
-    sortindex CDATA #REQUIRED
 >
 
 <!ELEMENT s_role_permission EMPTY>
@@ -1553,42 +1511,8 @@
     lastAccessedTime CDATA #IMPLIED
     accountId CDATA #REQUIRED
     countryid CDATA #IMPLIED
->
-
-<!ELEMENT s_user_module_settings EMPTY>
-<!ATTLIST s_user_module_settings
-    id CDATA #REQUIRED
-    rolename CDATA #REQUIRED
-    moduleid CDATA #REQUIRED
-    active CDATA #IMPLIED
->
-
-<!ELEMENT s_user_preferences EMPTY>
-<!ATTLIST s_user_preferences
-    username CDATA #REQUIRED
-    email CDATA #IMPLIED
-    email_password CDATA #IMPLIED
-    chat_account CDATA #IMPLIED
-    chat_password CDATA #IMPLIED
-    chat_server_id CDATA #IMPLIED
->
-
-<!ELEMENT s_user_view_settings EMPTY>
-<!ATTLIST s_user_view_settings
-    id CDATA #REQUIRED
-    username CDATA #REQUIRED
-    active CDATA #REQUIRED
-    viewid CDATA #REQUIRED
->
-
-<!ELEMENT s_view EMPTY>
-<!ATTLIST s_view
-    id CDATA #REQUIRED
-    viewname CDATA #REQUIRED
-    title CDATA #REQUIRED
-    uri CDATA #REQUIRED
-    description CDATA #REQUIRED
-    status CDATA #REQUIRED
+    company CDATA #IMPLIED
+    timezoneid CDATA #IMPLIED
 >
 
 <!ELEMENT schema_version EMPTY>

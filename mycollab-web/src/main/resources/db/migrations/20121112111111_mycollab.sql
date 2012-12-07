@@ -1,1 +1,0 @@
-ALTER TABLE `m_prj_problem` CHANGE COLUMN `source` `problemsource` VARCHAR(45) NULL DEFAULT NULL  ;

@@ -18,7 +18,7 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 		this.view = view;
 		bind();
 	}
-	
+
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
 				new PreviewFormHandlers<SimpleCall>() {
@@ -54,10 +54,17 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 					}
 				});
 	}
-	
+
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
-		view.previewItem((SimpleCall)data.getParams());
+		if (data.getParams() instanceof Integer) {
+			CallService callService = AppContext
+					.getSpringBean(CallService.class);
+			SimpleCall call = callService.findCallById((Integer) data
+					.getParams());
+			view.previewItem(call);
+		}
+		view.previewItem((SimpleCall) data.getParams());
 	}
 }
