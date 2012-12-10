@@ -2,10 +2,8 @@ package com.esofthead.mycollab.core.arguments;
 
 public class BooleanSearchField extends SearchField {
 	private boolean value;
-
-	public BooleanSearchField() {
-		
-	}
+	
+	
 	
 	public BooleanSearchField(String oper, boolean value) {
 		this.operation = oper;

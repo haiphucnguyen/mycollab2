@@ -212,8 +212,8 @@ input.v-textfield[type="text"], textarea.v-textarea, .v-filterselect {
 #mainLogo {
     float: left;
     height: 40px;
-    width: 20px;
-    margin: 10px 10px 5px 5px;
+    width: 120px;
+    margin: 1px 5px 1px 5px;
     display: block;
 }
 
