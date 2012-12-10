@@ -58,22 +58,29 @@ public class AccountServiceTest {
 	@Test
 	public void testSearchByCriteria() {
 		Assert.assertEquals(
-				1,
+				2,
 				accountService.findPagableListByCriteria(
 						new SearchRequest<AccountSearchCriteria>(getCriteria(),
-								0, 2)).size());
+								0, Integer.MAX_VALUE)).size());
 	}
 
 	@DataSet
 	@Test
 	public void testGetTotalCounts() {
-		Assert.assertEquals(1, accountService.getTotalCount(getCriteria()));
+		Assert.assertEquals(2, accountService.getTotalCount(getCriteria()));
+	}
+
+	@DataSet
+	@Test
+	public void testSearchAnyPhoneField() {
+		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		criteria.setAnyPhone(new StringSearchField(SearchField.AND, "111"));
+		Assert.assertEquals(2, accountService.getTotalCount(criteria));
 	}
 
 	private AccountSearchCriteria getCriteria() {
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		criteria.setAccountname(new StringSearchField(SearchField.AND, "xy"));
-		criteria.setAssignUser(new StringSearchField(SearchField.AND, "hai79"));
 		criteria.setAssignUsers(new SetSearchField(SearchField.AND,
 				new String[] { "hai79", "linhduong" }));
 		criteria.setIndustries(new SetSearchField(SearchField.AND,

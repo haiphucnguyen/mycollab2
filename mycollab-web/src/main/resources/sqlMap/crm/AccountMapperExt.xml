@@ -43,6 +43,10 @@
 				#{user}
             </foreach>
 		</if>
+        
+        <if test="anyPhone != null">
+            ${anyPhone.operation} (alternatePhone LIKE '%${anyPhone.value}%' OR phoneOffice LIKE '%${anyPhone.value}%')
+        </if>
 
 		<if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_account.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
@@ -80,6 +84,9 @@
 				#{industry}
             </foreach>
 		</if>
+        <if test="anyPhone != null">
+            ${anyPhone.operation} (alternatePhone LIKE '%${anyPhone.value}%' OR phoneOffice LIKE '%${anyPhone.value}%')
+        </if>
 
 		<if test="assignUsers != null">
 			${assignUsers.operation} m_crm_account.assignUser IN

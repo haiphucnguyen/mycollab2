@@ -39,6 +39,8 @@ public class AccountSearchCriteria extends SearchCriteria {
     
     private SetSearchField<String> assignUsers;
     
+    private StringSearchField anyPhone;
+    
     private NumberSearchField saccountid;
 
 	public StringSearchField getAccountname() {
@@ -111,5 +113,13 @@ public class AccountSearchCriteria extends SearchCriteria {
 
 	public void setAssignUserName(StringSearchField assignUserName) {
 		this.assignUserName = assignUserName;
+	}
+
+	public StringSearchField getAnyPhone() {
+		return anyPhone;
+	}
+
+	public void setAnyPhone(StringSearchField anyPhone) {
+		this.anyPhone = anyPhone;
 	}
 }

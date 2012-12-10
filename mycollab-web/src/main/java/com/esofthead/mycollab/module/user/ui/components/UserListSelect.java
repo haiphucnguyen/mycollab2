@@ -3,8 +3,6 @@ package com.esofthead.mycollab.module.user.ui.components;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Scope;
-import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -22,8 +20,9 @@ class UserListSelect extends ListSelect {
 	private UserService userService;
 
 	public UserListSelect() {
-		super();
+		super("username");
 		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+		this.setMultiSelect(true);
 	}
 
 	@SuppressWarnings("unchecked")
@@ -49,7 +48,7 @@ class UserListSelect extends ListSelect {
 		}
 
 		this.setContainerDataSource(beanItem);
-		this.setItemCaptionPropertyId("username");
+		this.setItemCaptionPropertyId("displayname");
 		this.setRows(4);
 	}
 }

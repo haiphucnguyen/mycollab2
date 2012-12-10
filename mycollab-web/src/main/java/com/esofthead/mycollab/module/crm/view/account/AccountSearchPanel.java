@@ -245,9 +245,19 @@ public class AccountSearchPanel extends
 														.getValue()));
 							}
 
+							if (StringUtil
+									.isNotNullOrEmpty((String) anyPhoneField
+											.getValue())) {
+								searchCriteria
+										.setAnyPhone(new StringSearchField(
+												SearchField.AND,
+												(String) anyPhoneField
+														.getValue()));
+							}
+
 							Collection<String> industries = (Collection<String>) industryField
 									.getValue();
-							if (industries.size() > 0) {
+							if (industries != null && industries.size() > 0) {
 								searchCriteria
 										.setIndustries(new SetSearchField(
 												SearchField.AND, industries));
@@ -255,18 +265,14 @@ public class AccountSearchPanel extends
 
 							Collection<String> types = (Collection<String>) typeField
 									.getValue();
-							if (types.size() > 0) {
+							if (types != null && types.size() > 0) {
 								searchCriteria.setTypes(new SetSearchField(
 										SearchField.AND, types));
 							}
 
-							Collection<SimpleUser> users = (Collection<SimpleUser>) userField
+							Collection<String> users = (Collection<String>) userField
 									.getValue();
-							if (users.size() > 0) {
-								Collection<String> usernames = new ArrayList<String>();
-								for (SimpleUser user : users) {
-
-								}
+							if (users != null && users.size() > 0) {
 								searchCriteria
 										.setAssignUsers(new SetSearchField(
 												SearchField.AND, users));
@@ -290,9 +296,9 @@ public class AccountSearchPanel extends
 							anyMailField.setValue("");
 							anyAddressField.setValue("");
 							cityField.setValue("");
-							industryField.setValue(Arrays.asList(""));
-							typeField.setValue(Arrays.asList(""));
-							userField.setValue(Arrays.asList(""));
+							industryField.setValue(null);
+							typeField.setValue(null);
+							userField.setValue(null);
 						}
 
 					}));
