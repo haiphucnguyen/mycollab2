@@ -47,6 +47,14 @@
         <if test="anyPhone != null">
             ${anyPhone.operation} (alternatePhone LIKE '%${anyPhone.value}%' OR phoneOffice LIKE '%${anyPhone.value}%')
         </if>
+        
+		<if test="anyAddress != null">
+            ${anyAddress.operation} (shippingAddress LIKE '%${anyAddress.value}%' OR billingAddress LIKE '%${anyAddress.value}%')
+        </if>
+        
+		<if test="anyMail != null">
+			${anyMail.operation} m_crm_account.email LIKE '%${anyMail.value}%'		
+		</if>
 
 		<if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_account.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
@@ -87,6 +95,12 @@
         <if test="anyPhone != null">
             ${anyPhone.operation} (alternatePhone LIKE '%${anyPhone.value}%' OR phoneOffice LIKE '%${anyPhone.value}%')
         </if>
+        <if test="anyAddress != null">
+            ${anyAddress.operation} (shippingAddress LIKE '%${anyAddress.value}%' OR billingAddress LIKE '%${anyAddress.value}%')
+        </if>
+		<if test="anyMail != null">
+			${anyMail.operation} email LIKE '%${anyMail.value}%'		
+		</if>
 
 		<if test="assignUsers != null">
 			${assignUsers.operation} m_crm_account.assignUser IN

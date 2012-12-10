@@ -78,6 +78,14 @@ public class AccountServiceTest {
 		Assert.assertEquals(2, accountService.getTotalCount(criteria));
 	}
 
+	@DataSet
+	@Test
+	public void testSearchAnyMailField() {
+		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		criteria.setAnyMail(new StringSearchField(SearchField.AND, "abc"));
+		Assert.assertEquals(2, accountService.getTotalCount(criteria));
+	}
+
 	private AccountSearchCriteria getCriteria() {
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		criteria.setAccountname(new StringSearchField(SearchField.AND, "xy"));

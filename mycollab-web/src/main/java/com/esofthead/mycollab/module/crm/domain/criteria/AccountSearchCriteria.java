@@ -23,25 +23,45 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class AccountSearchCriteria extends SearchCriteria {
-    private StringSearchField accountname;
+	private StringSearchField accountname;
 
-    private StringSearchField assignUser;
-    
-    private StringSearchField assignUserName;
-    
-    private StringSearchField city;
-    
-    private StringSearchField website;
-    
-    private SetSearchField<String> types;
-    
-    private SetSearchField<String> industries;
-    
-    private SetSearchField<String> assignUsers;
-    
-    private StringSearchField anyPhone;
-    
-    private NumberSearchField saccountid;
+	private StringSearchField assignUser;
+
+	private StringSearchField assignUserName;
+
+	private StringSearchField city;
+
+	private StringSearchField website;
+
+	private SetSearchField<String> types;
+
+	private SetSearchField<String> industries;
+
+	private SetSearchField<String> assignUsers;
+
+	private StringSearchField anyPhone;
+
+	private StringSearchField anyAddress;
+
+	private StringSearchField anyMail;
+
+	public StringSearchField getAnyMail() {
+		return anyMail;
+	}
+
+	public void setAnyMail(StringSearchField anyMail) {
+		this.anyMail = anyMail;
+	}
+
+	public StringSearchField getAnyAddress() {
+		return anyAddress;
+	}
+
+	public void setAnyAddress(StringSearchField anyAddress) {
+		this.anyAddress = anyAddress;
+	}
+
+	private NumberSearchField saccountid;
 
 	public StringSearchField getAccountname() {
 		return accountname;

@@ -39,6 +39,7 @@ only screen and (max-device-width : 1024px) {
 .clear {
     clear: both;
 }
+
 .v-button-link:focus .v-button-caption, .v-button-borderless:focus .v-button-caption {
     border: none;
     margin: 0px;
@@ -197,6 +198,10 @@ input.v-textfield[type="text"], textarea.v-textarea, .v-filterselect {
     color: white;
     text-decoration: none;
     padding: 0 3px;
+}
+
+#topNavigation .v-popupbutton .v-popup-indicator {
+	background: url("icons/sprites.png") no-repeat -5px -10px transparent;
 }
 
 #topNavigation .navSeparator {

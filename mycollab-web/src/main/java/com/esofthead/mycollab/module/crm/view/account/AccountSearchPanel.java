@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -14,7 +12,6 @@ import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
 import com.esofthead.mycollab.module.crm.ui.components.BasicSearchLayout;
 import com.esofthead.mycollab.module.crm.ui.components.GenericSearchPanel;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -252,6 +249,26 @@ public class AccountSearchPanel extends
 										.setAnyPhone(new StringSearchField(
 												SearchField.AND,
 												(String) anyPhoneField
+														.getValue()));
+							}
+
+							if (StringUtil
+									.isNotNullOrEmpty((String) anyAddressField
+											.getValue())) {
+								searchCriteria
+										.setAnyAddress(new StringSearchField(
+												SearchField.AND,
+												(String) anyAddressField
+														.getValue()));
+							}
+
+							if (StringUtil
+									.isNotNullOrEmpty((String) anyMailField
+											.getValue())) {
+								searchCriteria
+										.setAnyMail(new StringSearchField(
+												SearchField.AND,
+												(String) anyMailField
 														.getValue()));
 							}
 
