@@ -6,7 +6,10 @@ import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.vaadin.addon.calendar.event.CalendarEvent;
 import com.vaadin.addon.calendar.ui.Calendar;
+import com.vaadin.addon.calendar.ui.CalendarComponentEvents;
+import com.vaadin.addon.calendar.ui.CalendarComponentEvents.EventClick;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -14,62 +17,73 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 public class ActivityCalendarViewImpl extends AbstractView implements
-        ActivityCalendarView {
+		ActivityCalendarView {
 
-    private static final long serialVersionUID = 1L;
-    private final PopupButton calendarActionBtn;
+	private static final long serialVersionUID = 1L;
+	private final PopupButton calendarActionBtn;
 
-    public ActivityCalendarViewImpl() {
-        super();
+	public ActivityCalendarViewImpl() {
+		super();
 
-        this.setStyleName("activityCalendar");
+		this.setStyleName("activityCalendar");
 
-        MenuActionListener listener = new MenuActionListener();
+		MenuActionListener listener = new MenuActionListener();
 
-        calendarActionBtn = new PopupButton("Create");
+		calendarActionBtn = new PopupButton("Create");
 
-        VerticalLayout actionBtnLayout = new VerticalLayout();
-        actionBtnLayout.setMargin(true);
-        actionBtnLayout.setSpacing(true);
-        actionBtnLayout.setWidth("200px");
+		VerticalLayout actionBtnLayout = new VerticalLayout();
+		actionBtnLayout.setMargin(true);
+		actionBtnLayout.setSpacing(true);
+		actionBtnLayout.setWidth("200px");
 
-        actionBtnLayout.addComponent(new ButtonLink("Create Todo", listener));
-        actionBtnLayout.addComponent(new ButtonLink("Create Call", listener));
-        actionBtnLayout
-                .addComponent(new ButtonLink("Create Meeting", listener));
+		actionBtnLayout.addComponent(new ButtonLink("Create Todo", listener));
+		actionBtnLayout.addComponent(new ButtonLink("Create Call", listener));
+		actionBtnLayout
+				.addComponent(new ButtonLink("Create Meeting", listener));
 
-        calendarActionBtn.addComponent(actionBtnLayout);
+		calendarActionBtn.addComponent(actionBtnLayout);
 
-        HorizontalLayout actionPanel = new HorizontalLayout();
-        actionPanel.setWidth("100%");
-        actionPanel.setStyleName("actionPanel");
-        actionPanel.addComponent(calendarActionBtn);
+		HorizontalLayout actionPanel = new HorizontalLayout();
+		actionPanel.setWidth("100%");
+		actionPanel.setStyleName("actionPanel");
+		actionPanel.addComponent(calendarActionBtn);
 
-        this.addComponent(actionPanel);
+		this.addComponent(actionPanel);
 
-        Calendar calendar = new Calendar();
-        this.addComponent(calendar);
-        calendar.setEventProvider(new ActivityEventProvider());
-        this.setComponentAlignment(calendar, Alignment.MIDDLE_CENTER);
-    }
+		Calendar calendar = new Calendar(new ActivityEventProvider());
+		calendar.setHandler(new CalendarComponentEvents.EventClickHandler() {
+			private static final long serialVersionUID = 1L;
 
-    private class MenuActionListener implements Button.ClickListener {
+			@Override
+			public void eventClick(EventClick event) {
+				CalendarEvent calendarEvent = event.getCalendarEvent();
+				getWindow().showNotification(
+						"Event clicked: " + calendarEvent.getCaption(),
+						calendarEvent.getDescription());
+			}
+		});
 
-        private static final long serialVersionUID = 1L;
+		this.addComponent(calendar);
+		this.setComponentAlignment(calendar, Alignment.MIDDLE_CENTER);
+	}
 
-        @Override
-        public void buttonClick(ClickEvent event) {
-            String caption = event.getButton().getCaption();
-            if (caption.equals("Create Todo")) {
-                EventBus.getInstance().fireEvent(
-                        new ActivityEvent.TaskAdd(this, null));
-            } else if (caption.equals("Create Call")) {
-                EventBus.getInstance().fireEvent(
-                        new ActivityEvent.CallAdd(this, null));
-            } else if (caption.equals("Create Meeting")) {
-                EventBus.getInstance().fireEvent(
-                        new ActivityEvent.MeetingAdd(this, null));
-            }
-        }
-    }
+	private class MenuActionListener implements Button.ClickListener {
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void buttonClick(ClickEvent event) {
+			String caption = event.getButton().getCaption();
+			if (caption.equals("Create Todo")) {
+				EventBus.getInstance().fireEvent(
+						new ActivityEvent.TaskAdd(this, null));
+			} else if (caption.equals("Create Call")) {
+				EventBus.getInstance().fireEvent(
+						new ActivityEvent.CallAdd(this, null));
+			} else if (caption.equals("Create Meeting")) {
+				EventBus.getInstance().fireEvent(
+						new ActivityEvent.MeetingAdd(this, null));
+			}
+		}
+	}
 }

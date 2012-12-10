@@ -3,7 +3,9 @@ package com.esofthead.mycollab.module.project.view;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.vaadin.terminal.Sizeable;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.VerticalLayout;
 
@@ -17,6 +19,12 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	public ProjectViewImpl() {
 		this.setStyleName("projectDashboardView");
 		this.setMargin(false);
+		
+		HorizontalLayout topPanel = new HorizontalLayout();
+		topPanel.addComponent(new Button("Home"));
+		topPanel.addComponent(new Button("Project"));
+		
+		this.addComponent(topPanel);
 		
 		root = new HorizontalSplitPanel();
 		root.setSplitPosition(200, Sizeable.UNITS_PIXELS);

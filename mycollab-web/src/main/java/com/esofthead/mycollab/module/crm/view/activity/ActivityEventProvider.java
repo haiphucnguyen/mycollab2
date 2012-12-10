@@ -22,31 +22,49 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class ActivityEventProvider implements CalendarEventProvider {
-    
-    private static Logger log = LoggerFactory.getLogger(ActivityEventProvider.class);
-    private EventService eventService;
-    
-    public ActivityEventProvider() {
-        eventService = AppContext.getSpringBean(EventService.class);
-    }
-    
-    @Override
-    public List<CalendarEvent> getEvents(Date startDate, Date endDate) {
-        List<CalendarEvent> events = new ArrayList<CalendarEvent>();
-        
-        EventSearchCriteria searchCriteria = new EventSearchCriteria();
-        searchCriteria.setStartDate(new DateSearchField(SearchField.AND, DateSearchField.GRREATERTHANEQUAL, startDate));
-        searchCriteria.setStartDate(new DateSearchField(SearchField.AND, DateSearchField.LESSTHANEQUAL, endDate));
-        
-        
-        log.debug("Get events from: " + startDate + " to " + endDate);
-        List<SimpleEvent> crmEvents = (List<SimpleEvent>) eventService.findPagableListByCriteria(new SearchRequest<EventSearchCriteria>(searchCriteria, 0, Integer.MAX_VALUE));
-        log.debug("There are " + crmEvents.size() + " from " + startDate + " to " + endDate);
-        
-        return events;
-    }
+	private static final long serialVersionUID = 1L;
+	private static Logger log = LoggerFactory
+			.getLogger(ActivityEventProvider.class);
+	private EventService eventService;
+
+	public ActivityEventProvider() {
+		eventService = AppContext.getSpringBean(EventService.class);
+	}
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<CalendarEvent> getEvents(Date startDate, Date endDate) {
+		List<CalendarEvent> events = new ArrayList<CalendarEvent>();
+
+		EventSearchCriteria searchCriteria = new EventSearchCriteria();
+		searchCriteria.setStartDate(new DateSearchField(SearchField.AND,
+				DateSearchField.GRREATERTHANEQUAL, startDate));
+		searchCriteria.setStartDate(new DateSearchField(SearchField.AND,
+				DateSearchField.LESSTHANEQUAL, endDate));
+
+		log.debug("Get events from: " + startDate + " to " + endDate);
+		List<SimpleEvent> crmEvents = (List<SimpleEvent>) eventService
+				.findPagableListByCriteria(new SearchRequest<EventSearchCriteria>(
+						searchCriteria, 0, Integer.MAX_VALUE));
+		log.debug("There are " + crmEvents.size() + " events from " + startDate
+				+ " to " + endDate);
+		
+		if (crmEvents != null && crmEvents.size() > 0) {
+			for (SimpleEvent crmEvent : crmEvents) {
+				BasicEvent event = new BasicEvent();
+		        event.setCaption(crmEvent.getSubject());
+		        event.setDescription(crmEvent.getDescription());
+		        event.setStart(crmEvent.getStartDate());
+		        event.setEnd(crmEvent.getEndDate());
+		        events.add(event);
+			}
+		}
+		
+
+		return events;
+	}
 }
