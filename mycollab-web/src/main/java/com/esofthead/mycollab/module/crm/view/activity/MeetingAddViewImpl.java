@@ -2,7 +2,10 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import java.util.Collection;
 
+import org.vaadin.addon.customfield.CustomField;
+
 import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -11,6 +14,7 @@ import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.PopupDateField;
@@ -88,6 +92,14 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
 					TextArea descArea = new TextArea();
 					descArea.setNullRepresentation("");
 					return descArea;
+				} else if (propertyId.equals("type")) {
+					RelatedEditItemField field = new RelatedEditItemField(
+							new String[] { "Account", "Campaign", "Contact",
+									"Lead", "Opportunity", "Case" }, meeting);
+					field.setType(meeting.getType());
+					return field;
+				} else if (propertyId.equals("isrecurrence")) {
+
 				}
 				return null;
 			}
@@ -97,6 +109,17 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
 	@Override
 	public HasEditFormHandlers<Meeting> getEditFormHandlers() {
 		return editForm;
+	}
+
+	private class RecurringSettingPanel extends CustomField {
+		public RecurringSettingPanel() {
+			CheckBox isRecurringBox = new CheckBox();
+		}
+
+		@Override
+		public Class<?> getType() {
+			return Object.class;
+		}
 	}
 
 	private class MeetingStatusComboBox extends ValueComboBox {

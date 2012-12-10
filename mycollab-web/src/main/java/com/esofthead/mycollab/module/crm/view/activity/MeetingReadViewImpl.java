@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
+import com.esofthead.mycollab.module.crm.ui.components.RelatedReadItemField;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -9,6 +10,8 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -42,7 +45,19 @@ public class MeetingReadViewImpl  extends AbstractView implements MeetingReadVie
 		@Override
 		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory());
+			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected Field onCreateField(Item item, Object propertyId,
+						Component uiContext) {
+					if (propertyId.equals("type")) {
+						return new RelatedReadItemField(meeting);
+					}
+					
+					return null;
+				}
+			});
 			super.setItemDataSource(newDataSource);
 		}
 

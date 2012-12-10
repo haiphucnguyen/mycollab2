@@ -6,8 +6,11 @@ import com.vaadin.ui.Alignment;
 
 @SuppressWarnings("serial")
 public class ProjectMainContainer extends AbstractView {
+	
+	private ProjectController controller;
 
 	public ProjectMainContainer() {
+		controller = new ProjectController(this);
 		UserDashboardViewImpl userDashboard = ViewManager
 				.getView(UserDashboardViewImpl.class);
 		this.addComponent(userDashboard);

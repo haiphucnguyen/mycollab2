@@ -39,7 +39,7 @@ public class ProjectSearchPanel extends
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						getApplication().addWindow(new ProjectAddWindow());
+						getWindow().addWindow(new ProjectAddWindow());
 
 					}
 

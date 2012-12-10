@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.module.project.view;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.CssLayout;
@@ -16,10 +15,13 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private CssLayout mySpaceArea = new CssLayout();
 
 	public ProjectViewImpl() {
+		this.setStyleName("projectDashboardView");
+		this.setMargin(false);
+		
 		root = new HorizontalSplitPanel();
 		root.setSplitPosition(200, Sizeable.UNITS_PIXELS);
-		root.setLocked(true);
-		root.setSizeFull();
+		root.setStyleName("menuContent");
+		root.setWidth("100%");
 
 		mySpaceArea.setWidth("100%");
 		myProjectTab = new DetachedTabs.Vertical(mySpaceArea);
@@ -27,8 +29,9 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		myProjectTab.setHeight(null);
 
 		VerticalLayout menu = new VerticalLayout();
-		menu.setSizeFull();
+		menu.setWidth("200px");
 		menu.setStyleName("sidebar-menu");
+		menu.addComponent(myProjectTab);
 
 		root.setFirstComponent(menu);
 
@@ -38,11 +41,14 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
 	private void buildComponents() {
 		myProjectTab.addTab(constructProjectDashboardComponent(), "Dashboard");
+		myProjectTab.addTab(constructProjectDashboardComponent(), "Messages");
+		myProjectTab.addTab(constructProjectDashboardComponent(), "Milestones");
 		myProjectTab.addTab(constructProjectDashboardComponent(), "Tasks");
 		myProjectTab.addTab(constructProjectDashboardComponent(), "Bugs");
+		myProjectTab.addTab(constructProjectDashboardComponent(), "Calendar");
 	}
 
 	private com.vaadin.ui.Component constructProjectDashboardComponent() {
-		return AppContext.getView(ProjectDashboardViewImpl.class);
+		return new ProjectDashboardViewImpl();
 	}
 }
