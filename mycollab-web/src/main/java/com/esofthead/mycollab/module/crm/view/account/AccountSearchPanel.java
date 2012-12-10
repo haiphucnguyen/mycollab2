@@ -1,9 +1,11 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
 import java.util.Arrays;
+import java.util.Collection;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
@@ -114,6 +116,14 @@ public class AccountSearchPanel extends
 									.setAccountname(new StringSearchField(
 											SearchField.AND, (String) nameField
 													.getValue()));
+							if (myItemCheckbox.booleanValue()) {
+								searchCriteria
+										.setAssignUserName(new StringSearchField(
+												SearchField.AND, AppContext
+														.getUsername()));
+							} else {
+								searchCriteria.setAssignUser(null);
+							}
 							AccountSearchPanel.this
 									.notifySearchHandler(searchCriteria);
 						}
@@ -204,6 +214,7 @@ public class AccountSearchPanel extends
 			buttonControls.addComponent(new Button("Search",
 					new Button.ClickListener() {
 
+						@SuppressWarnings({ "unchecked", "rawtypes" })
 						@Override
 						public void buttonClick(ClickEvent event) {
 							searchCriteria = new AccountSearchCriteria();
@@ -230,6 +241,22 @@ public class AccountSearchPanel extends
 												SearchField.AND,
 												(String) websiteField
 														.getValue()));
+							}
+
+							Collection<String> industries = (Collection<String>) industryField
+									.getValue();
+							if (industries.size() > 0) {
+								searchCriteria
+										.setIndustries(new SetSearchField(
+												SearchField.AND, industries));
+							}
+
+							Collection<String> types = (Collection<String>) typeField
+									.getValue();
+							if (types.size() > 0) {
+								searchCriteria
+										.setIndustries(new SetSearchField(
+												SearchField.AND, types));
 							}
 
 							AccountSearchPanel.this
