@@ -5,10 +5,6 @@ import java.util.Collection;
 public class SetSearchField<T> extends SearchField {
 	public T[] values;
 	
-	public SetSearchField() {
-		
-	}
-	
 	@SuppressWarnings("unchecked")
 	public SetSearchField(String oper, Collection<T> values) {
 		this.operation = oper;

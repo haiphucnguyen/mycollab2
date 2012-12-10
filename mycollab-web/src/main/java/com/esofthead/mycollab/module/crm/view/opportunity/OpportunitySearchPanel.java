@@ -171,7 +171,7 @@ public class OpportunitySearchPanel extends
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 2);
 
 			opportunityNameField = (TextField) gridLayout.addComponent(
-					new TextField(), "Opportunity Name", 0, 0);
+					new TextField(), "Name", 0, 0);
 			accountField = (AccountSelectionField) gridLayout.addComponent(
 					new AccountSelectionField(), "Account", 1, 0);
 			nextStepField = (TextField) gridLayout.addComponent(
