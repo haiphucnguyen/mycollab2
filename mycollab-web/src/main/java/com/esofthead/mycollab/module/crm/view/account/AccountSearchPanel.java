@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 
@@ -13,6 +14,7 @@ import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
 import com.esofthead.mycollab.module.crm.ui.components.BasicSearchLayout;
 import com.esofthead.mycollab.module.crm.ui.components.GenericSearchPanel;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -254,9 +256,20 @@ public class AccountSearchPanel extends
 							Collection<String> types = (Collection<String>) typeField
 									.getValue();
 							if (types.size() > 0) {
+								searchCriteria.setTypes(new SetSearchField(
+										SearchField.AND, types));
+							}
+
+							Collection<SimpleUser> users = (Collection<SimpleUser>) userField
+									.getValue();
+							if (users.size() > 0) {
+								Collection<String> usernames = new ArrayList<String>();
+								for (SimpleUser user : users) {
+
+								}
 								searchCriteria
-										.setIndustries(new SetSearchField(
-												SearchField.AND, types));
+										.setAssignUsers(new SetSearchField(
+												SearchField.AND, users));
 							}
 
 							AccountSearchPanel.this
