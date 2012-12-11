@@ -1,11 +1,19 @@
 package com.esofthead.mycollab.module.project.view;
 
+import org.vaadin.hene.popupbutton.PopupButton;
+
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
+import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.terminal.Sizeable;
@@ -14,6 +22,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
@@ -23,6 +32,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private HorizontalSplitPanel root;
 	private DetachedTabs myProjectTab;
 	private CssLayout mySpaceArea = new CssLayout();
+
+	private HorizontalLayout topPanel;
 
 	private ProjectMessagePresenter messagePresenter;
 	private ProjectMilestonePresenter milestonesPresenter;
@@ -35,18 +46,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		this.setStyleName("projectDashboardView");
 		this.setMargin(false);
 
-		HorizontalLayout topPanel = new HorizontalLayout();
-		topPanel.addComponent(new Button("Home", new Button.ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new ShellEvent.GotoProjectPage(this, null));
-			}
-		}));
-
-		topPanel.addComponent(new Button("Project"));
-
+		topPanel = new HorizontalLayout();
 		this.addComponent(topPanel);
 
 		root = new HorizontalSplitPanel();
@@ -138,6 +138,35 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	@Override
 	public void displayProject(SimpleProject project) {
 		this.project = project;
+
+		topPanel.removeAllComponents();
+		topPanel.addComponent(new Button("Home", new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.GotoProjectPage(this, null));
+			}
+		}));
+
+		PopupButton projectPopupBtn = new PopupButton(project.getName());
+		BeanList<ProjectService, ProjectSearchCriteria, SimpleProject> projectList = new BeanList<ProjectService, ProjectSearchCriteria, SimpleProject>(
+				AppContext.getSpringBean(ProjectService.class),
+				new BeanList.RowDisplayHandler<SimpleProject>() {
+
+					@Override
+					public Component generateRow(SimpleProject obj, int rowIndex) {
+						return new Label(obj.getName());
+					}
+				});
+		projectList.setWidth("200px");
+		ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
+		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		projectList.setSearchCriteria(searchCriteria);
+		projectPopupBtn.addComponent(projectList);
+
+		topPanel.addComponent(projectPopupBtn);
 	}
 
 	@Override
