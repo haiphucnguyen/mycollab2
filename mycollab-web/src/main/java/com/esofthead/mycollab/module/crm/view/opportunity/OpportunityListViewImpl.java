@@ -64,10 +64,9 @@ public class OpportunityListViewImpl extends AbstractView implements
 				AppContext.getSpringBean(OpportunityService.class),
 				SimpleOpportunity.class, new String[] { "selected",
 						"opportunityname", "accountName", "salesstage",
-						"amount", "expectedcloseddate", "assignUserFullName",
-						"createdtime" }, new String[] { "", "Name",
-						"Account Name", "Sales Stage", "Amount", "Close",
-						"User", "Date Created" });
+						"amount", "expectedcloseddate", "assignUserFullName" },
+				new String[] { "", "Name", "Account Name", "Sales Stage",
+						"Amount", "Close", "User" });
 
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -154,21 +153,6 @@ public class OpportunityListViewImpl extends AbstractView implements
 						return l;
 					}
 				});
-
-		tableItem.addGeneratedColumn("createdtime", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					Object itemId, Object columnId) {
-				final SimpleOpportunity opportunity = tableItem
-						.getBeanByIndex(itemId);
-				Label l = new Label();
-				l.setValue(AppContext.formatDateTime(opportunity
-						.getCreatedtime()));
-				return l;
-			}
-		});
 
 		tableItem.setWidth("100%");
 

@@ -105,6 +105,7 @@ public class AccountListPresenter extends
 					public void onSelect(String id, String caption) {
 						if ("delete".equals(id)) {
 							deleteSelectedItems();
+						} else if ("mail".equals(id)) {
 						}
 					}
 				});
