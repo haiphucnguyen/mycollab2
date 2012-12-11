@@ -35,7 +35,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
 	private HorizontalLayout topPanel;
 
-	private ProjectMessagePresenter messagePresenter;
+	private ProjectMessageListPresenter messagePresenter;
 	private ProjectMilestonePresenter milestonesPresenter;
 	private ProjectTaskPresenter taskPresenter;
 	private ProjectDefectDashboardPresenter defectPresenter;
@@ -108,9 +108,9 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	}
 
 	private Component constructProjectMessageComponent() {
-		ProjectMessageViewImpl messageView = ViewManager
-				.getView(ProjectMessageViewImpl.class);
-		messagePresenter = new ProjectMessagePresenter(messageView);
+		ProjectMessageListViewImpl messageView = ViewManager
+				.getView(ProjectMessageListViewImpl.class);
+		messagePresenter = new ProjectMessageListPresenter(messageView);
 		return messageView;
 	}
 

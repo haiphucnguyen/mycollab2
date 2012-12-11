@@ -29,8 +29,8 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-public class ProjectMessageViewImpl extends ProjectAbstractView implements
-		ProjectMessageView, HasEditFormHandlers<Message> {
+public class ProjectMessageListViewImpl extends ProjectAbstractView implements
+		ProjectMessageListView, HasEditFormHandlers<Message> {
 	private static final long serialVersionUID = 8433776359091397422L;
 
 	private PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage> tableItem;
@@ -41,7 +41,7 @@ public class ProjectMessageViewImpl extends ProjectAbstractView implements
 
 	private TopMessagePanel topMessagePanel;
 
-	public ProjectMessageViewImpl() {
+	public ProjectMessageListViewImpl() {
 		super();
 		this.setSpacing(true);
 		topMessagePanel = new TopMessagePanel();
@@ -66,8 +66,32 @@ public class ProjectMessageViewImpl extends ProjectAbstractView implements
 		@Override
 		public Component generateRow(SimpleMessage obj, int rowIndex) {
 			VerticalLayout rowLayout = new VerticalLayout();
-			rowLayout.addComponent(new Label(obj.getTitle()));
-			rowLayout.addComponent(new Label(obj.getMessage(), Label.CONTENT_XHTML));
+			Button title = new Button(obj.getTitle(),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							// TODO Auto-generated method stub
+
+						}
+					});
+			title.setStyleName("link");
+
+			rowLayout.addComponent(title);
+
+			Label messageInfo = new Label();
+			messageInfo.setValue("Posted by " + obj.getFullPostedUserName()
+					+ " on " + obj.getPosteddate());
+
+			rowLayout.addComponent(messageInfo);
+
+			rowLayout.addComponent(new Label(obj.getMessage(),
+					Label.CONTENT_XHTML));
+			
+			HorizontalLayout footer = new HorizontalLayout();
+			footer.addComponent(new Label(obj.getCommentsCount() + " comments"));
+			rowLayout.addComponent(footer);
 			return rowLayout;
 		}
 
@@ -135,7 +159,7 @@ public class ProjectMessageViewImpl extends ProjectAbstractView implements
 						@Override
 						public void buttonClick(ClickEvent event) {
 							Message message = new Message();
-							message.setProjectid(ProjectMessageViewImpl.this.project
+							message.setProjectid(ProjectMessageListViewImpl.this.project
 									.getId());
 							message.setPosteddate(new GregorianCalendar()
 									.getTime());
@@ -188,8 +212,8 @@ public class ProjectMessageViewImpl extends ProjectAbstractView implements
 			searchCriteria = new MessageSearchCriteria();
 			searchCriteria.setProjectid(new NumberSearchField(SearchField.AND,
 					project.getId()));
-			
-		} 
+
+		}
 		setCriteria(searchCriteria);
 	}
 }

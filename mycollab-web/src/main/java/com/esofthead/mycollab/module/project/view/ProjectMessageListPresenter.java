@@ -8,12 +8,12 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class ProjectMessagePresenter extends AbstractPresenter {
+public class ProjectMessageListPresenter extends AbstractPresenter {
 	private static final long serialVersionUID = 1L;
 
-	private ProjectMessageView view;
+	private ProjectMessageListView view;
 
-	public ProjectMessagePresenter(ProjectMessageView view) {
+	public ProjectMessageListPresenter(ProjectMessageListView view) {
 		this.view = view;
 		bind();
 	}
@@ -46,7 +46,7 @@ public class ProjectMessagePresenter extends AbstractPresenter {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectView projectViewContainer = (ProjectView) container;
-		ProjectMessageView messageView = (ProjectMessageView) projectViewContainer
+		ProjectMessageListView messageView = (ProjectMessageListView) projectViewContainer
 				.gotoSubView("Messages");
 		messageView.displayMessages();
 	}
