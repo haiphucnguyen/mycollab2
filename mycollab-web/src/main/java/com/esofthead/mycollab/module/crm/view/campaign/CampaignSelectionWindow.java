@@ -76,8 +76,7 @@ public class CampaignSelectionWindow extends Window {
 
 			public com.vaadin.ui.Component generateCell(final Table source,
 					final Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleCampaign campaign = ((PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign>) source)
+				final SimpleCampaign campaign = tableItem
 						.getBeanByIndex(itemId);
 				Button b = new Button(campaign.getCampaignname(),
 						new Button.ClickListener() {

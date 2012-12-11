@@ -69,9 +69,7 @@ public class LeadSelectionWindow extends Window {
 
 			public com.vaadin.ui.Component generateCell(final Table source,
 					final Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleLead lead = ((PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>) source)
-						.getBeanByIndex(itemId);
+				final SimpleLead lead = tableItem.getBeanByIndex(itemId);
 				Button b = new Button(lead.getLeadName(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;

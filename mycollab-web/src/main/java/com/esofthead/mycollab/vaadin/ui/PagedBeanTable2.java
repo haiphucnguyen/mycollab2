@@ -1,8 +1,10 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
@@ -11,6 +13,7 @@ import com.esofthead.mycollab.core.persistence.ISearchableService;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.vaadin.data.Container;
+import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.IntegerValidator;
@@ -23,11 +26,13 @@ import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
 public class PagedBeanTable2<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
-		extends Table implements IPagedBeanTable<SearchService, S, T> {
+		extends VerticalLayout implements IPagedBeanTable<SearchService, S, T> {
 	private static final long serialVersionUID = 1L;
 
 	private String[] visibleColumns;
@@ -62,66 +67,35 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
 	private Class<T> type;
 
+	private Table tableItem;
+
+	private Object columnExpandId;
+
+	private Object sortColumnId;
+
+	private boolean isAscending = true;
+
+	private Map<Object, ColumnGenerator> columnGenerators = new HashMap<Object, Table.ColumnGenerator>();
+	private Map<Object, Integer> columnWidths = new HashMap<Object, Integer>();
+
 	public PagedBeanTable2(SearchService searchService, Class<T> type,
 			final String[] visibleColumns, String[] columnHeaders) {
-		this.addStyleName("striped");
 		this.searchService = searchService;
 		this.visibleColumns = visibleColumns;
 		this.columnHeaders = columnHeaders;
 		this.type = type;
+	}
 
-		this.setSortDisabled(true);
-		this.addListener(new HeaderClickListener() {
-			private static final long serialVersionUID = 1L;
+	public void addGeneratedColumn(Object id, ColumnGenerator generatedColumn) {
+		columnGenerators.put(id, generatedColumn);
+	}
 
-			@SuppressWarnings("unchecked")
-			@Override
-			public void headerClick(HeaderClickEvent event) {
-				String propertyId = (String) event.getPropertyId();
+	public void setColumnExpandRatio(Object propertyId, float expandRation) {
+		columnExpandId = propertyId;
+	}
 
-				if (propertyId.equals("selected")) {
-					return;
-				}
-
-				if (searchRequest != null) {
-
-					S searchCriteria = searchRequest.getSearchCriteria();
-					if (searchCriteria.getOrderByField() == null) {
-						searchCriteria.setOrderByField(propertyId);
-						searchCriteria.setSortDirection(SearchCriteria.DESC);
-					} else if (propertyId.equals(searchCriteria
-							.getOrderByField())) {
-						searchCriteria
-								.setSortDirection(searchCriteria
-										.getSortDirection().equals(
-												SearchCriteria.ASC) ? SearchCriteria.DESC
-										: SearchCriteria.ASC);
-					} else {
-						searchCriteria.setOrderByField(propertyId);
-						searchCriteria.setSortDirection(SearchCriteria.DESC);
-					}
-
-					PagedBeanTable2.this
-							.setColumnIcon(
-									propertyId,
-									searchCriteria.getSortDirection().equals(
-											SearchCriteria.DESC) ? new ThemeResource(
-											"icons/16/arrow_down.png")
-											: new ThemeResource(
-													"icons/16/arrow_up.png"));
-
-					Collection<String> containerIds = (Collection<String>) PagedBeanTable2.this
-							.getContainerPropertyIds();
-					for (String id : containerIds) {
-						if (!id.equals(propertyId)) {
-							PagedBeanTable2.this.setColumnIcon(id, null);
-						}
-					}
-
-					PagedBeanTable2.this.setSearchCriteria(searchCriteria);
-				}
-			}
-		});
+	public void setColumnWidth(Object propertyId, int width) {
+		columnWidths.put(propertyId, width);
 	}
 
 	public void setSearchCriteria(S searchCriteria) {
@@ -146,16 +120,82 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		this.setCurrentPage(currentPage);
 		this.setTotalPage(totalPage);
 
+		tableItem = new Table();
+		tableItem.addStyleName("striped");
+		tableItem.setWidth("100%");
+		tableItem.setSortDisabled(true);
+
+		// set column generator
+		for (Object propertyId : columnGenerators.keySet()) {
+			tableItem.addGeneratedColumn(propertyId,
+					columnGenerators.get(propertyId));
+		}
+
+		// set column width
+		for (Object propertyId : columnWidths.keySet()) {
+			tableItem.setColumnWidth(propertyId, columnWidths.get(propertyId));
+		}
+
+		if (columnExpandId != null && !columnExpandId.equals("")) {
+			tableItem.setColumnExpandRatio(columnExpandId, 1.0f);
+		}
+
+		if (sortColumnId != null && !sortColumnId.equals("")) {
+			tableItem.setColumnIcon(sortColumnId,
+					isAscending ? new ThemeResource("icons/16/arrow_down.png")
+							: new ThemeResource("icons/16/arrow_up.png"));
+		}
+
+		tableItem.addListener(new Table.HeaderClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void headerClick(Table.HeaderClickEvent event) {
+				String propertyId = (String) event.getPropertyId();
+
+				if (propertyId.equals("selected")) {
+					return;
+				}
+
+				if (searchRequest != null) {
+					sortColumnId = propertyId;
+					isAscending = !isAscending;
+
+					S searchCriteria = searchRequest.getSearchCriteria();
+					if (searchCriteria.getOrderByField() == null) {
+						searchCriteria.setOrderByField(propertyId);
+						searchCriteria.setSortDirection(SearchCriteria.DESC);
+					} else if (propertyId.equals(searchCriteria
+							.getOrderByField())) {
+						searchCriteria
+								.setSortDirection(searchCriteria
+										.getSortDirection().equals(
+												SearchCriteria.ASC) ? SearchCriteria.DESC
+										: SearchCriteria.ASC);
+					} else {
+						searchCriteria.setOrderByField(propertyId);
+						searchCriteria.setSortDirection(SearchCriteria.DESC);
+					}
+
+					PagedBeanTable2.this.setSearchCriteria(searchCriteria);
+				}
+			}
+		});
+
 		BeanItemContainer<T> container = new BeanItemContainer<T>(type,
 				currentListData);
-		this.setContainerDataSource(container);
-		this.setVisibleColumns(visibleColumns);
-		this.setColumnHeaders(columnHeaders);
+		tableItem.setPageLength(0);
+		tableItem.setContainerDataSource(container);
+		tableItem.setVisibleColumns(visibleColumns);
+		tableItem.setColumnHeaders(columnHeaders);
+
+		this.removeAllComponents();
+		this.addComponent(tableItem);
 	}
 
 	@SuppressWarnings("unchecked")
 	public T getBeanByIndex(Object itemId) {
-		Container container = this.getContainerDataSource();
+		Container container = tableItem.getContainerDataSource();
 		BeanItem<T> item = (BeanItem<T>) container.getItem(itemId);
 		return (item == null) ? null : item.getBean();
 	}
@@ -190,12 +230,6 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		}
 	}
 
-	@Override
-	public void setContainerDataSource(Container newDataSource) {
-		super.setContainerDataSource(newDataSource);
-		this.setPageLength(newDataSource.size());
-	}
-
 	public HorizontalLayout createControls() {
 		Label itemsPerPageLabel = new Label("Items per page:");
 		itemsPerPageSelect = new ComboBox();
@@ -209,7 +243,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		itemsPerPageSelect.setImmediate(true);
 		itemsPerPageSelect.setNullSelectionAllowed(false);
 		itemsPerPageSelect.setWidth("50px");
-		itemsPerPageSelect.addListener(new ValueChangeListener() {
+		itemsPerPageSelect.addListener(new Property.ValueChangeListener() {
 			private static final long serialVersionUID = -2255853716069800092L;
 
 			@Override
@@ -230,7 +264,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 				Label.CONTENT_XHTML);
 		currentPageTextField.setStyleName(Reindeer.TEXTFIELD_SMALL);
 		currentPageTextField.setImmediate(true);
-		currentPageTextField.addListener(new ValueChangeListener() {
+		currentPageTextField.addListener(new Property.ValueChangeListener() {
 			private static final long serialVersionUID = -2255853716069800092L;
 
 			@Override
@@ -381,7 +415,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 	@SuppressWarnings("unchecked")
 	@Override
 	public Collection<T> getCurrentDataList() {
-		BeanItemContainer<T> containerDataSource = (BeanItemContainer<T>) this
+		BeanItemContainer<T> containerDataSource = (BeanItemContainer<T>) tableItem
 				.getContainerDataSource();
 		Collection<T> itemIds = containerDataSource.getItemIds();
 		return itemIds;

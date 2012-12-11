@@ -54,9 +54,7 @@ public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleProject project = ((PagedBeanTable2<ProjectService, ProjectSearchCriteria, SimpleProject>) source)
-						.getBeanByIndex(itemId);
+				final SimpleProject project = tableItem.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(project.getName(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
@@ -75,7 +73,7 @@ public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
 
 		tableItem.setWidth("100%");
 
-		tableItem.setColumnExpandRatio("name", 1);
+		tableItem.setColumnExpandRatio("name", 1f);
 		tableItem
 				.setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem

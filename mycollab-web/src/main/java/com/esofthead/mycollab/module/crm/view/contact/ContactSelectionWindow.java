@@ -95,8 +95,7 @@ public class ContactSelectionWindow extends Window {
 
 			public com.vaadin.ui.Component generateCell(final Table source,
 					final Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
+				final SimpleContact contact = tableItem
 						.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(contact.getContactName(),
 						new Button.ClickListener() {
@@ -118,10 +117,9 @@ public class ContactSelectionWindow extends Window {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			@SuppressWarnings("unchecked")
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
-				SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
+				SimpleContact contact = tableItem
 						.getBeanByIndex(itemId);
 				return new EmailLink(contact.getEmail());
 

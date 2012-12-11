@@ -69,8 +69,7 @@ public class CaseSelectionWindow extends Window {
 
 			public com.vaadin.ui.Component generateCell(final Table source,
 					final Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleCase cases = ((PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase>) source)
+				final SimpleCase cases = tableItem
 						.getBeanByIndex(itemId);
 				Button b = new Button(cases.getSubject(),
 						new Button.ClickListener() {

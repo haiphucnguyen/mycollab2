@@ -88,8 +88,7 @@ public class OpportunityListViewImpl extends AbstractView implements
 					}
 				});
 
-				@SuppressWarnings("unchecked")
-				SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
+				SimpleOpportunity opportunity = tableItem
 						.getBeanByIndex(itemId);
 				opportunity.setExtraData(cb);
 				return cb;
@@ -101,8 +100,7 @@ public class OpportunityListViewImpl extends AbstractView implements
 			@Override
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
+				final SimpleOpportunity opportunity = tableItem
 						.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(opportunity.getOpportunityname(),
 						new Button.ClickListener() {
@@ -124,8 +122,7 @@ public class OpportunityListViewImpl extends AbstractView implements
 			@Override
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
+				final SimpleOpportunity opportunity = tableItem
 						.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(opportunity.getAccountName(),
 						new Button.ClickListener() {
@@ -149,8 +146,7 @@ public class OpportunityListViewImpl extends AbstractView implements
 					@Override
 					public com.vaadin.ui.Component generateCell(Table source,
 							Object itemId, Object columnId) {
-						@SuppressWarnings("unchecked")
-						final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
+						final SimpleOpportunity opportunity = tableItem
 								.getBeanByIndex(itemId);
 						Label l = new Label();
 						l.setValue(AppContext.formatDateTime(opportunity
@@ -165,8 +161,7 @@ public class OpportunityListViewImpl extends AbstractView implements
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
+				final SimpleOpportunity opportunity = tableItem
 						.getBeanByIndex(itemId);
 				Label l = new Label();
 				l.setValue(AppContext.formatDateTime(opportunity

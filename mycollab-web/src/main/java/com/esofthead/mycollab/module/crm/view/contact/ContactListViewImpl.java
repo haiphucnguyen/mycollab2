@@ -82,17 +82,14 @@ public class ContactListViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						@SuppressWarnings("unchecked")
-						SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
+						SimpleContact contact = tableItem
 								.getBeanByIndex(itemId);
 						tableItem.fireSelectItemEvent(contact);
 
 					}
 				});
 
-				@SuppressWarnings("unchecked")
-				SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
-						.getBeanByIndex(itemId);
+				SimpleContact contact = tableItem.getBeanByIndex(itemId);
 				contact.setExtraData(cb);
 				return cb;
 			}
@@ -103,9 +100,7 @@ public class ContactListViewImpl extends AbstractView implements
 			@Override
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
-						.getBeanByIndex(itemId);
+				final SimpleContact contact = tableItem.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(contact.getContactName(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
@@ -126,9 +121,7 @@ public class ContactListViewImpl extends AbstractView implements
 			@Override
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
-						.getBeanByIndex(itemId);
+				final SimpleContact contact = tableItem.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(contact.getAccountName(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
@@ -148,11 +141,9 @@ public class ContactListViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			@SuppressWarnings("unchecked")
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
-				SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
-						.getBeanByIndex(itemId);
+				SimpleContact contact = tableItem.getBeanByIndex(itemId);
 				return new EmailLink(contact.getEmail());
 
 			}
@@ -164,11 +155,9 @@ public class ContactListViewImpl extends AbstractView implements
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
-						.getBeanByIndex(itemId);
-				return new Label(
-						AppContext.formatDateTime(contact.getCreatedtime()));
+				final SimpleContact contact = tableItem.getBeanByIndex(itemId);
+				return new Label(AppContext.formatDateTime(contact
+						.getCreatedtime()));
 
 			}
 		});

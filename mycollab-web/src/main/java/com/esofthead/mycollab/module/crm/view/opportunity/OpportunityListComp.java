@@ -63,15 +63,14 @@ public class OpportunityListComp extends Depot implements IRelatedListHandlers {
 						"salesstage", "amount", "expectedcloseddate",
 						"assignUserFullName" }, new String[] { "Name",
 						"Sales Stage", "Amount", "Close", "User" });
-		
+
 		tableItem.addGeneratedColumn("opportunityname", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
+				final SimpleOpportunity opportunity = tableItem
 						.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(opportunity.getOpportunityname(),
 						new Button.ClickListener() {
@@ -95,8 +94,7 @@ public class OpportunityListComp extends Depot implements IRelatedListHandlers {
 					@Override
 					public com.vaadin.ui.Component generateCell(Table source,
 							Object itemId, Object columnId) {
-						@SuppressWarnings("unchecked")
-						final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
+						final SimpleOpportunity opportunity = tableItem
 								.getBeanByIndex(itemId);
 						return new Label(AppContext.formatDateTime(opportunity
 								.getExpectedcloseddate()));

@@ -18,8 +18,8 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
@@ -62,40 +62,35 @@ public class ContactListComp extends Depot implements IRelatedListHandlers {
 				new String[] { "contactName", "title", "email", "officephone",
 						"assignUserFullName" },
 				new String[] { "Name", "Title", "Email", "Office Phone", "User" });
-		
+
 		tableItem.addGeneratedColumn("contactName", new ColumnGenerator() {
 
 			@Override
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
-						.getBeanByIndex(itemId);
+				final SimpleContact contact = tableItem.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(contact.getContactName(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								EventBus.getInstance()
-										.fireEvent(
-												new ContactEvent.GotoRead(this,
-														contact.getId()));
+								EventBus.getInstance().fireEvent(
+										new ContactEvent.GotoRead(this, contact
+												.getId()));
 							}
 						});
 				return b;
 			}
 		});
-		
+
 		tableItem.addGeneratedColumn("email", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			@SuppressWarnings("unchecked")
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
-				SimpleContact contact = ((PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>) source)
-						.getBeanByIndex(itemId);
+				SimpleContact contact = tableItem.getBeanByIndex(itemId);
 				return new EmailLink(contact.getEmail());
 
 			}

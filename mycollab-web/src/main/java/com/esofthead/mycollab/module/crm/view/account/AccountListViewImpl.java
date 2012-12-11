@@ -62,10 +62,9 @@ public class AccountListViewImpl extends AbstractView implements
 		tableItem = new PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>(
 				AppContext.getSpringBean(AccountService.class),
 				SimpleAccount.class, new String[] { "selected", "accountname",
-						"city", "billingCountry", "phoneoffice", "email",
-						"assignUserFullName", "createdtime" }, new String[] {
-						"", "Name", "City", "Billing Country", "Phone Office",
-						"Email Address", "Assign User", "Date Created" });
+						"city", "phoneoffice", "email", "assignUserFullName" },
+				new String[] { "", "Name", "City", "Phone Office",
+						"Email Address", "Assign User" });
 
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -73,6 +72,8 @@ public class AccountListViewImpl extends AbstractView implements
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
 					Object columnId) {
+				System.out.println("Add generated column: " + itemId + " "
+						+ columnId);
 				final CheckBox cb = new CheckBox("", false);
 				cb.setImmediate(true);
 				cb.addListener(new Button.ClickListener() {
@@ -86,10 +87,8 @@ public class AccountListViewImpl extends AbstractView implements
 
 					}
 				});
-
-				@SuppressWarnings("unchecked")
-				SimpleAccount account = ((PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>) source)
-						.getBeanByIndex(itemId);
+				
+				SimpleAccount account = tableItem.getBeanByIndex(itemId);
 				account.setExtraData(cb);
 				return cb;
 			}
@@ -99,26 +98,10 @@ public class AccountListViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			@SuppressWarnings("unchecked")
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
-				SimpleAccount account = ((PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>) source)
-						.getBeanByIndex(itemId);
+				SimpleAccount account = tableItem.getBeanByIndex(itemId);
 				return new EmailLink(account.getEmail());
-			}
-		});
-
-		tableItem.addGeneratedColumn("createdtime", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleAccount account = ((PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>) source)
-						.getBeanByIndex(itemId);
-				return new Label(
-						AppContext.formatDateTime(account.getCreatedtime()));
 			}
 		});
 
@@ -128,19 +111,16 @@ public class AccountListViewImpl extends AbstractView implements
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleAccount account = ((PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>) source)
-						.getBeanByIndex(itemId);
+				final SimpleAccount account = tableItem.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(account.getAccountname(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								EventBus.getInstance()
-										.fireEvent(
-												new AccountEvent.GotoRead(this,
-														account.getId()));
+								EventBus.getInstance().fireEvent(
+										new AccountEvent.GotoRead(this, account
+												.getId()));
 							}
 						});
 				return b;
@@ -151,13 +131,10 @@ public class AccountListViewImpl extends AbstractView implements
 		tableItem.setColumnExpandRatio("accountname", 1);
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 		tableItem.setColumnWidth("city", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("billingCountry",
-				UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem
 				.setColumnWidth("phoneoffice", UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
 		tableItem.setColumnWidth("assignuser", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("createdtime", UIConstants.TABLE_DATE_WIDTH);
 
 		tableItem.setWidth("100%");
 

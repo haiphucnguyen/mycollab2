@@ -79,16 +79,14 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						@SuppressWarnings("unchecked")
-						SimpleCase cases = ((PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase>) source)
+						SimpleCase cases = tableItem
 								.getBeanByIndex(itemId);
 						tableItem.fireSelectItemEvent(cases);
 
 					}
 				});
-
-				@SuppressWarnings("unchecked")
-				SimpleCase cases = ((PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase>) source)
+				
+				SimpleCase cases = tableItem
 						.getBeanByIndex(itemId);
 				cases.setExtraData(cb);
 				return cb;
@@ -101,8 +99,7 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 			@Override
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleCase cases = ((PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase>) source)
+				final SimpleCase cases = tableItem
 						.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(cases.getSubject(),
 						new Button.ClickListener() {
@@ -125,8 +122,7 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 			@Override
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleCase cases = ((PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase>) source)
+				final SimpleCase cases = tableItem
 						.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(cases.getAccountName(),
 						new Button.ClickListener() {
@@ -149,8 +145,7 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleCase cases = ((PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase>) source)
+				final SimpleCase cases = tableItem
 						.getBeanByIndex(itemId);
 				Label l = new Label();
 

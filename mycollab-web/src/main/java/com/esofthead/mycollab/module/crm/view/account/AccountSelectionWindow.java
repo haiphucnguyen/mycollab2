@@ -90,9 +90,7 @@ public class AccountSelectionWindow extends Window {
 
 			public com.vaadin.ui.Component generateCell(final Table source,
 					final Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleAccount account = ((PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>) source)
-						.getBeanByIndex(itemId);
+				final SimpleAccount account = tableItem.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(account.getAccountname(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;

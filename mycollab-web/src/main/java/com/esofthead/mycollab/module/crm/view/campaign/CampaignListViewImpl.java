@@ -85,10 +85,8 @@ public class CampaignListViewImpl extends AbstractView implements
 
 					}
 				});
-
-				@SuppressWarnings("unchecked")
-				SimpleCampaign campaign = ((PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign>) source)
-						.getBeanByIndex(itemId);
+				
+				SimpleCampaign campaign = tableItem.getBeanByIndex(itemId);
 				campaign.setExtraData(cb);
 				return cb;
 			}
@@ -100,8 +98,7 @@ public class CampaignListViewImpl extends AbstractView implements
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleCampaign campaign = ((PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign>) source)
+				final SimpleCampaign campaign = tableItem
 						.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(campaign.getCampaignname(),
 						new Button.ClickListener() {
@@ -125,8 +122,7 @@ public class CampaignListViewImpl extends AbstractView implements
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleCampaign campaign = ((PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign>) source)
+				final SimpleCampaign campaign = tableItem
 						.getBeanByIndex(itemId);
 				Label l = new Label();
 

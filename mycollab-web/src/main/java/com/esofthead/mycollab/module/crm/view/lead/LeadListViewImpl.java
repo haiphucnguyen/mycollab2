@@ -63,9 +63,9 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 		tableItem = new PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>(
 				AppContext.getSpringBean(LeadService.class), SimpleLead.class,
 				new String[] { "selected", "leadName", "status", "accountname",
-						"officephone", "email", "assignUserFullName" }, new String[] {
-						"", "Name", "Status", "Account Name", "Office Phone",
-						"Email", "Assign User" });
+						"officephone", "email", "assignUserFullName" },
+				new String[] { "", "Name", "Status", "Account Name",
+						"Office Phone", "Email", "Assign User" });
 
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -86,9 +86,7 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 					}
 				});
 
-				@SuppressWarnings("unchecked")
-				SimpleLead lead = ((PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>) source)
-						.getBeanByIndex(itemId);
+				SimpleLead lead = tableItem.getBeanByIndex(itemId);
 				lead.setExtraData(cb);
 				return cb;
 			}
@@ -99,9 +97,7 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 			@Override
 			public Object generateCell(Table source, Object itemId,
 					Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleLead lead = ((PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>) source)
-						.getBeanByIndex(itemId);
+				final SimpleLead lead = tableItem.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(lead.getLeadName(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
@@ -121,11 +117,9 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			@SuppressWarnings("unchecked")
 			public com.vaadin.ui.Component generateCell(Table source,
 					Object itemId, Object columnId) {
-				final SimpleLead lead = ((PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>) source)
-						.getBeanByIndex(itemId);
+				final SimpleLead lead = tableItem.getBeanByIndex(itemId);
 				Link l = new Link();
 				l.setResource(new ExternalResource("mailto:" + lead.getEmail()));
 				l.setCaption(lead.getEmail());

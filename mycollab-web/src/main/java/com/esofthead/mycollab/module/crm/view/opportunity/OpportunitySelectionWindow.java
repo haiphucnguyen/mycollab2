@@ -69,8 +69,7 @@ public class OpportunitySelectionWindow extends Window {
 
 			public com.vaadin.ui.Component generateCell(final Table source,
 					final Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleOpportunity opportunity = ((PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>) source)
+				final SimpleOpportunity opportunity = tableItem
 						.getBeanByIndex(itemId);
 				Button b = new Button(opportunity.getOpportunityname(),
 						new Button.ClickListener() {

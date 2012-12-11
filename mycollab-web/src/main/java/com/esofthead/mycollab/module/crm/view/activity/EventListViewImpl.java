@@ -83,48 +83,39 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 
 					}
 				});
-
-				@SuppressWarnings("unchecked")
-				SimpleEvent simpleEvent = ((PagedBeanTable2<EventService, EventSearchCriteria, SimpleEvent>) source)
-						.getBeanByIndex(itemId);
+				
+				SimpleEvent simpleEvent = tableItem.getBeanByIndex(itemId);
 				simpleEvent.setExtraData(cb);
 				return cb;
 			}
 		});
-		
-		tableItem.addGeneratedColumn("startDate",
-				new ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
 
-					@Override
-					public com.vaadin.ui.Component generateCell(Table source,
-							Object itemId, Object columnId) {
-						@SuppressWarnings("unchecked")
-						final SimpleEvent event = ((PagedBeanTable2<EventService, EventSearchCriteria, SimpleEvent>) source)
-								.getBeanByIndex(itemId);
-						Label l = new Label();
-						l.setValue(AppContext.formatDateTime(event
-								.getStartDate()));
-						return l;
-					}
-				});
-		
-		tableItem.addGeneratedColumn("endDate",
-				new ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
+		tableItem.addGeneratedColumn("startDate", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public com.vaadin.ui.Component generateCell(Table source,
-							Object itemId, Object columnId) {
-						@SuppressWarnings("unchecked")
-						final SimpleEvent event = ((PagedBeanTable2<EventService, EventSearchCriteria, SimpleEvent>) source)
-								.getBeanByIndex(itemId);
-						Label l = new Label();
-						l.setValue(AppContext.formatDateTime(event
-								.getEndDate()));
-						return l;
-					}
-				});
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				
+				final SimpleEvent event = tableItem.getBeanByIndex(itemId);
+				Label l = new Label();
+				l.setValue(AppContext.formatDateTime(event.getStartDate()));
+				return l;
+			}
+		});
+
+		tableItem.addGeneratedColumn("endDate", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				final SimpleEvent event = tableItem.getBeanByIndex(itemId);
+				Label l = new Label();
+				l.setValue(AppContext.formatDateTime(event.getEndDate()));
+				return l;
+			}
+		});
 
 		tableItem.addGeneratedColumn("subject", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -132,8 +123,7 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
-				@SuppressWarnings("unchecked")
-				final SimpleEvent simpleEvent = ((PagedBeanTable2<EventService, EventSearchCriteria, SimpleEvent>) source)
+				final SimpleEvent simpleEvent = tableItem
 						.getBeanByIndex(itemId);
 				ButtonLink b = new ButtonLink(simpleEvent.getSubject(),
 						new Button.ClickListener() {
