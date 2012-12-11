@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -8,39 +7,40 @@ import java.util.Set;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.ISearchableService;
+import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
-import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
-import com.vaadin.data.Container;
-import com.vaadin.data.util.BeanItem;
-import com.vaadin.data.util.BeanItemContainer;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.validator.IntegerValidator;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
 
-public class PagedBeanTable2<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
-		extends Table implements IPagedBeanTable<SearchService, S, T> {
+public class PagedBeanList<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
+		extends VerticalLayout implements HasPagableHandlers {
 	private static final long serialVersionUID = 1L;
 
-	private String[] visibleColumns;
+	private SearchService searchService;
 
-	private String[] columnHeaders;
+	private SearchRequest<S> searchRequest;
 
 	private int currentPage = 1;
 
 	private int totalPage = 1;
 
+	private int totalCount;
+
 	private int currentViewCount;
 
-	private int totalCount;
+	private ComboBox itemsPerPageSelect;
 
 	private Button first, previous, next, last;
 
@@ -48,155 +48,26 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
 	private TextField currentPageTextField;
 
-	private ComboBox itemsPerPageSelect;
+	private List<T> currentListData;
 
-	private Set<SelectableItemHandler<T>> selectableHandlers;
+	private VerticalLayout content;
 
 	private Set<PagableHandler> pagableHandlers;
 
-	private SearchRequest<S> searchRequest;
+	private RowDisplayHandler<T> rowDisplayHandler;
 
-	private SearchService searchService;
-
-	private List<T> currentListData;
-
-	private Class<T> type;
-
-	public PagedBeanTable2(SearchService searchService, Class<T> type,
-			final String[] visibleColumns, String[] columnHeaders) {
-		this.addStyleName("striped");
+	public PagedBeanList(SearchService searchService,
+			RowDisplayHandler<T> rowDisplayHandler) {
 		this.searchService = searchService;
-		this.visibleColumns = visibleColumns;
-		this.columnHeaders = columnHeaders;
-		this.type = type;
+		this.rowDisplayHandler = rowDisplayHandler;
 
-		this.setSortDisabled(true);
-		this.addListener(new HeaderClickListener() {
-			private static final long serialVersionUID = 1L;
+		this.addComponent(createPageControls());
 
-			@SuppressWarnings("unchecked")
-			@Override
-			public void headerClick(HeaderClickEvent event) {
-				String propertyId = (String) event.getPropertyId();
-
-				if (propertyId.equals("selected")) {
-					return;
-				}
-
-				if (searchRequest != null) {
-
-					S searchCriteria = searchRequest.getSearchCriteria();
-					if (searchCriteria.getOrderByField() == null) {
-						searchCriteria.setOrderByField(propertyId);
-						searchCriteria.setSortDirection(SearchCriteria.DESC);
-					} else if (propertyId.equals(searchCriteria
-							.getOrderByField())) {
-						searchCriteria
-								.setSortDirection(searchCriteria
-										.getSortDirection().equals(
-												SearchCriteria.ASC) ? SearchCriteria.DESC
-										: SearchCriteria.ASC);
-					} else {
-						searchCriteria.setOrderByField(propertyId);
-						searchCriteria.setSortDirection(SearchCriteria.DESC);
-					}
-
-					PagedBeanTable2.this
-							.setColumnIcon(
-									propertyId,
-									searchCriteria.getSortDirection().equals(
-											SearchCriteria.DESC) ? new ThemeResource(
-											"icons/16/arrow_down.png")
-											: new ThemeResource(
-													"icons/16/arrow_up.png"));
-
-					Collection<String> containerIds = (Collection<String>) PagedBeanTable2.this
-							.getContainerPropertyIds();
-					for (String id : containerIds) {
-						if (!id.equals(propertyId)) {
-							PagedBeanTable2.this.setColumnIcon(id, null);
-						}
-					}
-
-					PagedBeanTable2.this.setSearchCriteria(searchCriteria);
-				}
-			}
-		});
+		content = new VerticalLayout();
+		this.addComponent(content);
 	}
 
-	public void setSearchCriteria(S searchCriteria) {
-		searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
-				SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
-		doSearch();
-	}
-
-	@SuppressWarnings("unchecked")
-	private void doSearch() {
-		totalCount = searchService.getTotalCount(searchRequest
-				.getSearchCriteria());
-		int totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
-		if (searchRequest.getCurrentPage() > totalPage) {
-			searchRequest.setCurrentPage(totalPage);
-		}
-
-		currentListData = searchService
-				.findPagableListByCriteria(searchRequest);
-		currentViewCount = currentListData.size();
-
-		this.setCurrentPage(currentPage);
-		this.setTotalPage(totalPage);
-
-		BeanItemContainer<T> container = new BeanItemContainer<T>(type,
-				currentListData);
-		this.setContainerDataSource(container);
-		this.setVisibleColumns(visibleColumns);
-		this.setColumnHeaders(columnHeaders);
-	}
-
-	@SuppressWarnings("unchecked")
-	public T getBeanByIndex(Object itemId) {
-		Container container = this.getContainerDataSource();
-		BeanItem<T> item = (BeanItem<T>) container.getItem(itemId);
-		return (item == null) ? null : item.getBean();
-	}
-
-	private void setCurrentPage(int currentPage) {
-		this.currentPage = currentPage;
-		currentPageTextField.setValue(currentPage);
-		checkButtonStatus();
-	}
-
-	private void setTotalPage(int totalPage) {
-		this.totalPage = totalPage;
-		totalPagesLabel.setValue(String.valueOf(totalPage));
-		checkButtonStatus();
-	}
-
-	private void checkButtonStatus() {
-		if (this.currentPage == 1) {
-			this.previous.setEnabled(false);
-			this.first.setEnabled(false);
-		} else {
-			this.previous.setEnabled(true);
-			this.first.setEnabled(true);
-		}
-
-		if (this.currentPage == totalPage) {
-			this.last.setEnabled(false);
-			this.next.setEnabled(false);
-		} else {
-			this.last.setEnabled(true);
-			this.next.setEnabled(true);
-		}
-	}
-
-	@Override
-	public void setContainerDataSource(Container newDataSource) {
-		super.setContainerDataSource(newDataSource);
-		this.setPageLength(newDataSource.size());
-	}
-
-	public HorizontalLayout createControls() {
+	public Layout createPageControls() {
 		Label itemsPerPageLabel = new Label("Items per page:");
 		itemsPerPageSelect = new ComboBox();
 
@@ -261,7 +132,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				pageChange(PagedBeanTable2.this.currentPage - 1);
+				pageChange(PagedBeanList.this.currentPage - 1);
 			}
 		});
 		next = new ButtonLink(">", new ClickListener() {
@@ -269,7 +140,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				pageChange(PagedBeanTable2.this.currentPage + 1);
+				pageChange(PagedBeanList.this.currentPage + 1);
 			}
 		});
 		last = new ButtonLink(">>", new ClickListener() {
@@ -277,7 +148,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				pageChange(PagedBeanTable2.this.totalPage);
+				pageChange(PagedBeanList.this.totalPage);
 			}
 		});
 
@@ -341,13 +212,6 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		return controlBar;
 	}
 
-	private void displayItemChange(int numOfItems) {
-		if (searchRequest != null) {
-			searchRequest.setNumberOfItems(numOfItems);
-			doSearch();
-		}
-	}
-
 	private void pageChange(int currentPage) {
 		if (searchRequest != null) {
 			this.currentPage = currentPage;
@@ -362,39 +226,71 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		}
 	}
 
-	public void fireSelectItemEvent(T item) {
-		if (selectableHandlers != null) {
-			for (SelectableItemHandler<T> handler : selectableHandlers) {
-				handler.onSelect(item);
-			}
+	private void displayItemChange(int numOfItems) {
+		if (searchRequest != null) {
+			searchRequest.setNumberOfItems(numOfItems);
+			doSearch();
 		}
 	}
 
-	@Override
-	public void addSelectableItemHandler(SelectableItemHandler<T> handler) {
-		if (selectableHandlers == null) {
-			selectableHandlers = new HashSet<SelectableItemHandler<T>>();
-		}
-		selectableHandlers.add(handler);
+	public void setSearchCriteria(S searchCriteria) {
+		searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
+				SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
+		doSearch();
 	}
 
 	@SuppressWarnings("unchecked")
-	@Override
-	public Collection<T> getCurrentDataList() {
-		BeanItemContainer<T> containerDataSource = (BeanItemContainer<T>) this
-				.getContainerDataSource();
-		Collection<T> itemIds = containerDataSource.getItemIds();
-		return itemIds;
+	private void doSearch() {
+		totalCount = searchService.getTotalCount(searchRequest
+				.getSearchCriteria());
+		int totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
+		if (searchRequest.getCurrentPage() > totalPage) {
+			searchRequest.setCurrentPage(totalPage);
+		}
+
+		currentListData = searchService
+				.findPagableListByCriteria(searchRequest);
+		currentViewCount = currentListData.size();
+
+		this.setCurrentPage(currentPage);
+		this.setTotalPage(totalPage);
+
+		content.removeAllComponents();
+
+		for (T item : currentListData) {
+			Component row = rowDisplayHandler.generateRow(item);
+			content.addComponent(row);
+		}
 	}
 
-	@Override
-	public int currentViewCount() {
-		return currentViewCount;
+	private void setCurrentPage(int currentPage) {
+		this.currentPage = currentPage;
+		currentPageTextField.setValue(currentPage);
+		checkButtonStatus();
 	}
 
-	@Override
-	public int totalItemsCount() {
-		return totalCount;
+	private void setTotalPage(int totalPage) {
+		this.totalPage = totalPage;
+		totalPagesLabel.setValue(String.valueOf(totalPage));
+		checkButtonStatus();
+	}
+
+	private void checkButtonStatus() {
+		if (this.currentPage == 1) {
+			this.previous.setEnabled(false);
+			this.first.setEnabled(false);
+		} else {
+			this.previous.setEnabled(true);
+			this.first.setEnabled(true);
+		}
+
+		if (this.currentPage == totalPage) {
+			this.last.setEnabled(false);
+			this.next.setEnabled(false);
+		} else {
+			this.last.setEnabled(true);
+			this.next.setEnabled(true);
+		}
 	}
 
 	@Override
@@ -403,6 +299,9 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 			pagableHandlers = new HashSet<PagableHandler>();
 		}
 		pagableHandlers.add(handler);
+	}
 
+	public interface RowDisplayHandler<T> {
+		Component generateRow(T obj);
 	}
 }
