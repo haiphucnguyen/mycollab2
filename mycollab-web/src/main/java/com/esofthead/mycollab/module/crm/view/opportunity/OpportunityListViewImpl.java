@@ -171,7 +171,6 @@ public class OpportunityListViewImpl extends AbstractView implements
 
 		accountListLayout.addComponent(constructTableActionControls());
 		accountListLayout.addComponent(tableItem);
-		accountListLayout.addComponent(tableItem.createControls());
 	}
 
 	@Override

@@ -43,7 +43,6 @@ public class LeadSelectionWindow extends Window {
 		createLeadList();
 		layout.addComponent(createSearchPanel());
 		layout.addComponent(tableItem);
-		layout.addComponent(tableItem.createControls());
 		this.setContent(layout);
 
 		tableItem.setSearchCriteria(searchCriteria);

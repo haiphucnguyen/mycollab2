@@ -23,6 +23,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
@@ -84,6 +85,8 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		this.visibleColumns = visibleColumns;
 		this.columnHeaders = columnHeaders;
 		this.type = type;
+
+		this.addComponent(createControls());
 	}
 
 	public void addGeneratedColumn(Object id, ColumnGenerator generatedColumn) {
@@ -191,8 +194,12 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		tableItem.setVisibleColumns(visibleColumns);
 		tableItem.setColumnHeaders(columnHeaders);
 
-		this.removeAllComponents();
-		this.addComponent(tableItem);
+		Component component0 = this.getComponent(0);
+		if (component0 instanceof Table) {
+			this.replaceComponent(component0, tableItem);
+		} else {
+			this.addComponent(tableItem, 0);
+		}
 	}
 
 	@SuppressWarnings("unchecked")
@@ -232,7 +239,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		}
 	}
 
-	public HorizontalLayout createControls() {
+	private HorizontalLayout createControls() {
 		Label itemsPerPageLabel = new Label("Items per page:");
 		itemsPerPageSelect = new ComboBox();
 

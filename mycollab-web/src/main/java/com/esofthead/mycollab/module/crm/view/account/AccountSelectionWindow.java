@@ -49,7 +49,6 @@ public class AccountSelectionWindow extends Window {
 
 		layout.addComponent(createSearchPanel());
 		layout.addComponent(tableItem);
-		layout.addComponent(tableItem.createControls());
 		this.setContent(layout);
 
 		tableItem.setSearchCriteria(searchCriteria);

@@ -106,7 +106,6 @@ public class ContactListComp extends Depot implements IRelatedListHandlers {
 
 		tableItem.setWidth("100%");
 		contentContainer.addComponent(tableItem);
-		contentContainer.addComponent(tableItem.createControls());
 
 	}
 

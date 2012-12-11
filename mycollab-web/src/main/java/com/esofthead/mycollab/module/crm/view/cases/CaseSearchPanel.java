@@ -50,6 +50,7 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 	}
 	
 	private class CaseAdvancedSearchLayout extends AdvancedSearchLayout {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public ComponentContainer constructHeader() {

@@ -164,7 +164,6 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 
 		eventListLayout.addComponent(constructTableActionControls());
 		eventListLayout.addComponent(tableItem);
-		eventListLayout.addComponent(tableItem.createControls());
 	}
 
 	@Override

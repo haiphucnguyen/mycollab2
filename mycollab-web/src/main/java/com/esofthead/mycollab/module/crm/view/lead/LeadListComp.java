@@ -109,7 +109,6 @@ public class LeadListComp extends Depot implements IRelatedListHandlers {
 		tableItem.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
 		tableItem.setColumnWidth("assignuser", UIConstants.TABLE_X_LABEL_WIDTH);
 		contentContainer.addComponent(tableItem);
-		contentContainer.addComponent(tableItem.createControls());
 	}
 
 	public void setSearchCriteria(LeadSearchCriteria searchCriteria) {

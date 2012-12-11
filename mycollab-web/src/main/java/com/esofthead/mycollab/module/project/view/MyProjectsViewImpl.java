@@ -82,7 +82,6 @@ public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
 				UIConstants.TABLE_M_LABEL_WIDTH);
 
 		listLayout.addComponent(tableItem);
-		listLayout.addComponent(tableItem.createControls());
 	}
 
 	@Override

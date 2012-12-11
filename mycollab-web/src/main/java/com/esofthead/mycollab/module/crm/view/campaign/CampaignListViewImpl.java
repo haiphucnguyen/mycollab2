@@ -145,7 +145,6 @@ public class CampaignListViewImpl extends AbstractView implements
 
 		campainListLayout.addComponent(constructTableActionControls());
 		campainListLayout.addComponent(tableItem);
-		campainListLayout.addComponent(tableItem.createControls());
 	}
 
 	@Override

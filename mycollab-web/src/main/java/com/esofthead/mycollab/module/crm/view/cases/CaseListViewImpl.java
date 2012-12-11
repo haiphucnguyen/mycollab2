@@ -170,7 +170,6 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 
 		listLayout.addComponent(constructTableActionControls());
 		listLayout.addComponent(tableItem);
-		listLayout.addComponent(tableItem.createControls());
 	}
 
 	@Override

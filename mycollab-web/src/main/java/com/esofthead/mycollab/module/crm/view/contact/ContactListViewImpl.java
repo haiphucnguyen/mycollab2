@@ -177,7 +177,6 @@ public class ContactListViewImpl extends AbstractView implements
 		tableItem.setWidth("100%");
 		contactListLayout.addComponent(constructTableActionControls());
 		contactListLayout.addComponent(tableItem);
-		contactListLayout.addComponent(tableItem.createControls());
 	}
 
 	@Override

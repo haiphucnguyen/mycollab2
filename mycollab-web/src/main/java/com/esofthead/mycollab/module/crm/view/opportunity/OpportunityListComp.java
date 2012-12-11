@@ -111,7 +111,6 @@ public class OpportunityListComp extends Depot implements IRelatedListHandlers {
 				UIConstants.TABLE_X_LABEL_WIDTH);
 
 		contentContainer.addComponent(tableItem);
-		contentContainer.addComponent(tableItem.createControls());
 	}
 
 	public void setSearchCriteria(OpportunitySearchCriteria searchCriteria) {

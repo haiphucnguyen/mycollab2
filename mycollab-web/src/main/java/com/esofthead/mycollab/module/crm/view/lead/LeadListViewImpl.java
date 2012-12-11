@@ -143,7 +143,6 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 
 		accountListLayout.addComponent(constructTableActionControls());
 		accountListLayout.addComponent(tableItem);
-		accountListLayout.addComponent(tableItem.createControls());
 	}
 
 	@Override
