@@ -17,7 +17,7 @@ import com.vaadin.ui.VerticalLayout;
 public class SelectionOptionButton extends SplitButton implements
 		HasSelectionOptionHandlers {
 	private static final long serialVersionUID = 1L;
-	
+
 	private boolean isSelectAll = false;
 
 	private boolean isSelected = false;
@@ -33,11 +33,11 @@ public class SelectionOptionButton extends SplitButton implements
 
 	private Set<SelectionOptionHandler> handlers;
 
-	private ButtonLink selectAllBtn;
+	private Button selectAllBtn;
 
-	private ButtonLink selectThisPageBtn;
+	private Button selectThisPageBtn;
 
-	private ButtonLink deSelectBtn;
+	private Button deSelectBtn;
 
 	@SuppressWarnings("serial")
 	public SelectionOptionButton(
@@ -73,7 +73,7 @@ public class SelectionOptionButton extends SplitButton implements
 		VerticalLayout selectContent = new VerticalLayout();
 		selectContent.setWidth("150px");
 
-		selectAllBtn = new ButtonLink("", new Button.ClickListener() {
+		selectAllBtn = new Button("", new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -82,9 +82,10 @@ public class SelectionOptionButton extends SplitButton implements
 				fireSelectAll();
 			}
 		});
+		selectAllBtn.setStyleName("link");
 		selectContent.addComponent(selectAllBtn);
 
-		selectThisPageBtn = new ButtonLink("", new Button.ClickListener() {
+		selectThisPageBtn = new Button("", new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -93,6 +94,7 @@ public class SelectionOptionButton extends SplitButton implements
 				fireSelectCurrentPage();
 			}
 		});
+		selectThisPageBtn.setStyleName("link");
 		selectContent.addComponent(selectThisPageBtn);
 
 		deSelectBtn = new ButtonLink("Deselect All",
@@ -104,6 +106,7 @@ public class SelectionOptionButton extends SplitButton implements
 						fireDeselect();
 					}
 				});
+		deSelectBtn.setStyleName("link");
 		selectContent.addComponent(deSelectBtn);
 		this.setComponent(selectContent);
 	}
@@ -112,7 +115,7 @@ public class SelectionOptionButton extends SplitButton implements
 		if (isSelectAll) {
 			return;
 		}
-		
+
 		isSelected = !isSelected;
 		Resource icon = (isSelected) ? selectIcon : unSelectIcon;
 		SelectionOptionButton.this.setIcon(icon);

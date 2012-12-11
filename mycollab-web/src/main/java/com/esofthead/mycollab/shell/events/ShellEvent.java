@@ -10,6 +10,18 @@ public class ShellEvent {
 			super(source, data);
 		}
 	}
+	
+	public static class GotoProjectPage extends ApplicationEvent {
+		public GotoProjectPage(Object source, Object data) {
+			super(source, data);
+		}
+	}
+	
+	public static class GotoCrmPagePage extends ApplicationEvent {
+		public GotoCrmPagePage(Object source, Object data) {
+			super(source, data);
+		}
+	}
 
 	public static class LogOut extends ApplicationEvent {
 		public LogOut(Object source, Object data) {

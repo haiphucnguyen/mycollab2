@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.project.view;
 
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -13,6 +15,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 @SuppressWarnings("serial")
 public class ProjectViewImpl extends AbstractView implements ProjectView {
@@ -33,7 +36,15 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		this.setMargin(false);
 
 		HorizontalLayout topPanel = new HorizontalLayout();
-		topPanel.addComponent(new Button("Home"));
+		topPanel.addComponent(new Button("Home", new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.GotoProjectPage(this, null));
+			}
+		}));
+
 		topPanel.addComponent(new Button("Project"));
 
 		this.addComponent(topPanel);

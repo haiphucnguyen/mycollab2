@@ -6,22 +6,27 @@ import java.util.Date;
 
 import org.vaadin.browsercookies.BrowserCookies;
 
+import com.esofthead.mycollab.module.project.view.ProjectMainContainer;
 import com.esofthead.mycollab.module.user.presenter.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.module.user.view.LoginViewImpl;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent.GotoMainPage;
+import com.esofthead.mycollab.shell.events.ShellEvent.GotoProjectPage;
 import com.esofthead.mycollab.shell.events.ShellEvent.LogOut;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 
-public class ShellController implements Serializable{
+public class ShellController implements Serializable {
 	private static final long serialVersionUID = 1L;
 	private final ComponentContainer container;
+
+	private MainViewImpl mainView;
 
 	public ShellController(ComponentContainer container) {
 		this.container = container;
@@ -42,12 +47,11 @@ public class ShellController implements Serializable{
 
 					@Override
 					public void handle(GotoMainPage event) {
-						System.out.println("Go to main page");
 						Calendar cal = Calendar.getInstance();
 						cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
 						Date expiryDate = cal.getTime();
 						BrowserCookies cookies = new BrowserCookies();
-						MainViewImpl mainView = new MainViewImpl();
+						mainView = ViewManager.getView(MainViewImpl.class);
 						mainView.addComponent(cookies);
 						cookies.setCookie("loginInfo", AppContext.getUsername()
 								+ "$" + AppContext.getSession().getPassword(),
@@ -85,6 +89,23 @@ public class ShellController implements Serializable{
 					}
 
 				});
-	}
 
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ShellEvent.GotoProjectPage>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ShellEvent.GotoProjectPage.class;
+					}
+
+					@Override
+					public void handle(GotoProjectPage event) {
+						ProjectMainContainer projectDashboard = ViewManager
+								.getView(ProjectMainContainer.class);
+						mainView.addView(projectDashboard);
+
+					}
+				});
+	}
 }

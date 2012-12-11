@@ -3,12 +3,12 @@ package com.esofthead.mycollab.shell;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.module.crm.view.CrmContainer;
-import com.esofthead.mycollab.module.project.view.ProjectMainContainer;
 import com.esofthead.mycollab.module.user.accountsettings.AccountDashboardViewImpl;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.web.AppContext;
@@ -60,10 +60,8 @@ public class MainViewImpl extends AbstractView {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
-						ProjectMainContainer projectDashboard = ViewManager
-								.getView(ProjectMainContainer.class);
-						bodyLayout.removeAllComponents();
-						bodyLayout.addComponent(projectDashboard);
+						EventBus.getInstance().fireEvent(
+								new ShellEvent.GotoProjectPage(this, null));
 					}
 				});
 		prjLink.setStyleName("link");
@@ -114,5 +112,12 @@ public class MainViewImpl extends AbstractView {
 		accountMenu.addStyleName("topNavPopup");
 		layout.addComponent(accountMenu, "accountMenu");
 		return layout;
+	}
+
+	public void addView(View view) {
+		bodyLayout.removeAllComponents();
+		bodyLayout.addComponent(view.getWidget());
+		bodyLayout.setComponentAlignment(view.getWidget(),
+				Alignment.MIDDLE_CENTER);
 	}
 }

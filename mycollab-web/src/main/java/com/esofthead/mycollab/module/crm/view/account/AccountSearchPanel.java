@@ -60,7 +60,7 @@ public class AccountSearchPanel extends
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 
-		ButtonLink createAccountBtn = new ButtonLink("Create",
+		Button createAccountBtn = new Button("Create",
 				new Button.ClickListener() {
 
 					@Override
@@ -69,6 +69,7 @@ public class AccountSearchPanel extends
 								new AccountEvent.GotoAdd(this, null));
 					}
 				});
+		createAccountBtn.setStyleName("link");
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 
 		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
