@@ -1,11 +1,8 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
-import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
@@ -73,11 +70,6 @@ public class MessageServiceImpl extends DefaultService<Integer, Message, Message
 				ChangeLogSource.MESSAGE, messageid, ChangeLogAction.CREATE,
 				message.getTitle());
 		return messageid;
-	}
-
-	@Override
-	public List<GroupItem> getMessageCategoryGroup(int projectid) {
-		return messageMapperExt.getMessageCategoryGroup(projectid);
 	}
 
 }

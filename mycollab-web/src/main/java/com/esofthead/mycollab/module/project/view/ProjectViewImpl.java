@@ -23,6 +23,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
 	private ProjectMessagePresenter messagePresenter;
 	private ProjectMilestonePresenter milestonesPresenter;
+	private ProjectTaskPresenter taskPresenter;
+	private ProjectDefectDashboardPresenter defectPresenter;
 
 	private SimpleProject project;
 
@@ -62,8 +64,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		myProjectTab.addTab(constructProjectDashboardComponent(), "Dashboard");
 		myProjectTab.addTab(constructProjectMessageComponent(), "Messages");
 		myProjectTab.addTab(constructProjectMilestoneComponent(), "Milestones");
-		myProjectTab.addTab(constructProjectDashboardComponent(), "Tasks");
-		myProjectTab.addTab(constructProjectDashboardComponent(), "Bugs");
+		myProjectTab.addTab(constructTaskDashboardComponent(), "Tasks");
+		myProjectTab.addTab(constructProjectDefectComponent(), "Bugs");
 		myProjectTab.addTab(constructProjectDashboardComponent(), "Calendar");
 
 		myProjectTab
@@ -78,6 +80,12 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 									new ScreenData<SimpleProject>(project));
 						} else if ("Milestones".equals(caption)) {
 							milestonesPresenter.go(ProjectViewImpl.this,
+									new ScreenData<SimpleProject>(project));
+						} else if ("Tasks".equals(caption)) {
+							taskPresenter.go(ProjectViewImpl.this,
+									new ScreenData<SimpleProject>(project));
+						} else if ("Defects".equals(caption)) {
+							defectPresenter.go(ProjectViewImpl.this,
 									new ScreenData<SimpleProject>(project));
 						}
 					}
@@ -102,6 +110,20 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		return milestoneView;
 	}
 
+	private Component constructTaskDashboardComponent() {
+		ProjectTaskViewImpl taskView = ViewManager
+				.getView(ProjectTaskViewImpl.class);
+		taskPresenter = new ProjectTaskPresenter(taskView);
+		return taskView;
+	}
+
+	private Component constructProjectDefectComponent() {
+		ProjectDefectDashboardViewImpl defectView = ViewManager
+				.getView(ProjectDefectDashboardViewImpl.class);
+		defectPresenter = new ProjectDefectDashboardPresenter(defectView);
+		return defectView;
+	}
+
 	@Override
 	public void displayProject(SimpleProject project) {
 		this.project = project;
@@ -109,7 +131,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
 	@Override
 	public Component gotoSubView(String name) {
-		ProjectAbstractView component = (ProjectAbstractView)myProjectTab.selectTab(name);
+		ProjectAbstractView component = (ProjectAbstractView) myProjectTab
+				.selectTab(name);
 		component.setProject(project);
 		return component;
 	}
