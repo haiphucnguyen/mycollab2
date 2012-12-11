@@ -159,14 +159,15 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
 				if (searchRequest != null) {
 					sortColumnId = propertyId;
-					isAscending = !isAscending;
 
 					S searchCriteria = searchRequest.getSearchCriteria();
 					if (searchCriteria.getOrderByField() == null) {
 						searchCriteria.setOrderByField(propertyId);
 						searchCriteria.setSortDirection(SearchCriteria.DESC);
+						isAscending = false;
 					} else if (propertyId.equals(searchCriteria
 							.getOrderByField())) {
+						isAscending = !isAscending;
 						searchCriteria
 								.setSortDirection(searchCriteria
 										.getSortDirection().equals(
@@ -175,6 +176,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 					} else {
 						searchCriteria.setOrderByField(propertyId);
 						searchCriteria.setSortDirection(SearchCriteria.DESC);
+						isAscending = false;
 					}
 
 					PagedBeanTable2.this.setSearchCriteria(searchCriteria);
