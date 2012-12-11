@@ -15,7 +15,6 @@ import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriter
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -40,9 +39,13 @@ public class ProjectMessageViewImpl extends ProjectAbstractView implements
 
 	private MessageSearchCriteria searchCriteria;
 
+	private TopMessagePanel topMessagePanel;
+
 	public ProjectMessageViewImpl() {
 		super();
-		this.addComponent(new TopMessagePanel());
+		this.setSpacing(true);
+		topMessagePanel = new TopMessagePanel();
+		this.addComponent(topMessagePanel);
 		tableItem = new PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage>(
 				AppContext.getSpringBean(MessageService.class),
 				new MessageRowDisplayHandler());
@@ -52,15 +55,20 @@ public class ProjectMessageViewImpl extends ProjectAbstractView implements
 	@Override
 	public void setCriteria(MessageSearchCriteria criteria) {
 		this.searchCriteria = criteria;
+		topMessagePanel.createBasicLayout();
 		tableItem.setSearchCriteria(searchCriteria);
+
 	}
 
 	private class MessageRowDisplayHandler implements
 			RowDisplayHandler<SimpleMessage> {
 
 		@Override
-		public Component generateRow(SimpleMessage obj) {
-			return new Label("Message");
+		public Component generateRow(SimpleMessage obj, int rowIndex) {
+			VerticalLayout rowLayout = new VerticalLayout();
+			rowLayout.addComponent(new Label(obj.getTitle()));
+			rowLayout.addComponent(new Label(obj.getMessage(), Label.CONTENT_XHTML));
+			return rowLayout;
 		}
 
 	}
@@ -73,12 +81,12 @@ public class ProjectMessageViewImpl extends ProjectAbstractView implements
 			createBasicLayout();
 		}
 
-		private void createBasicLayout() {
+		public void createBasicLayout() {
 			this.removeAllComponents();
 
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setWidth("100%");
-			ButtonLink createAccountBtn = new ButtonLink("New Message",
+			Button createAccountBtn = new Button("New Message",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -87,6 +95,7 @@ public class ProjectMessageViewImpl extends ProjectAbstractView implements
 							createAddMessageLayout();
 						}
 					});
+			createAccountBtn.setStyleName("link");
 			createAccountBtn
 					.setIcon(new ThemeResource("icons/16/addRecord.png"));
 
@@ -179,6 +188,8 @@ public class ProjectMessageViewImpl extends ProjectAbstractView implements
 			searchCriteria = new MessageSearchCriteria();
 			searchCriteria.setProjectid(new NumberSearchField(SearchField.AND,
 					project.getId()));
-		}
+			
+		} 
+		setCriteria(searchCriteria);
 	}
 }

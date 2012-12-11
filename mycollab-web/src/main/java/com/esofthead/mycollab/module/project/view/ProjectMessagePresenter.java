@@ -48,6 +48,7 @@ public class ProjectMessagePresenter extends AbstractPresenter {
 		ProjectView projectViewContainer = (ProjectView) container;
 		ProjectMessageView messageView = (ProjectMessageView) projectViewContainer
 				.gotoSubView("Messages");
+		messageView.displayMessages();
 	}
 
 }

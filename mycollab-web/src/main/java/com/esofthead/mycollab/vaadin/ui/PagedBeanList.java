@@ -61,10 +61,9 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 		this.searchService = searchService;
 		this.rowDisplayHandler = rowDisplayHandler;
 
-		this.addComponent(createPageControls());
-
 		content = new VerticalLayout();
 		this.addComponent(content);
+		this.addComponent(createPageControls());
 	}
 
 	public Layout createPageControls() {
@@ -257,9 +256,11 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 
 		content.removeAllComponents();
 
+		int i = 0;
 		for (T item : currentListData) {
-			Component row = rowDisplayHandler.generateRow(item);
+			Component row = rowDisplayHandler.generateRow(item, i);
 			content.addComponent(row);
+			i++;
 		}
 	}
 
@@ -302,6 +303,6 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 	}
 
 	public interface RowDisplayHandler<T> {
-		Component generateRow(T obj);
+		Component generateRow(T obj, int rowIndex);
 	}
 }

@@ -25,20 +25,19 @@
 		<if test="projectid != null">
 			${projectid.operation} m_prj_message.projectid = #{projectid.value,javaType=INTEGER}
         </if>
-		<if test="categoryid != null">
-			${categoryid.operation} m_prj_message.categoryid = #{categoryid.value,javaType=INTEGER}
+		<if test="category != null">
+			${category.operation} m_prj_message.category = #{category.value,javaType=VARCHAR}
         </if>
 	</sql>
 	
 	<sql id="selectMessage">
         <![CDATA[
-          SELECT m_prj_message.id, m_prj_message.categoryid, m_prj_message.title, m_prj_message.message,
+          SELECT m_prj_message.id, m_prj_message.category, m_prj_message.title, m_prj_message.message,
               m_prj_message.messagehtml, m_prj_message.posteddate, m_prj_message.posteduser, m_prj_message.projectid,
               (SELECT COUNT(*) FROM m_comment WHERE m_comment.commentid=concat('project-message-', m_prj_message.id)) AS commentsCount,
-              m_prj_message_category.category AS messageCategoryName, m_prj_message.createdTime, m_prj_message.lastUpdatedTime,
+              m_prj_message.createdTime, m_prj_message.lastUpdatedTime,
               concat(s_user.firstname,  IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS fullPostedUserName
               FROM m_prj_message
-                LEFT OUTER JOIN m_prj_message_category ON (m_prj_message.categoryid=m_prj_message_category.id)
                 LEFT OUTER JOIN s_user ON (m_prj_message.posteduser = s_user.username)
         ]]>
 	</sql>
@@ -64,23 +63,11 @@
 	
 	<insert id="saveMessageAndReturnId" parameterType="com.esofthead.mycollab.module.project.domain.Message"
 	   useGeneratedKeys="true" keyProperty="id">
-		insert into m_prj_message (id, categoryid, title, 
+		insert into m_prj_message (id, category, title, 
             message, messagehtml, posteddate, 
             posteduser, projectid)
-        values (#{id,jdbcType=INTEGER}, #{categoryid,jdbcType=INTEGER}, #{title,jdbcType=VARCHAR}, 
+        values (#{id,jdbcType=INTEGER}, #{category,jdbcType=VARCHAR}, #{title,jdbcType=VARCHAR}, 
             #{message,jdbcType=VARCHAR}, #{messagehtml,jdbcType=VARCHAR}, #{posteddate,jdbcType=TIMESTAMP}, 
             #{posteduser,jdbcType=VARCHAR}, #{projectid,jdbcType=INTEGER})
 	</insert>
-
-	<select id="getMessageCategoryGroup" resultMap="GroupItemResult"
-		parameterType="int">
-        <![CDATA[
-        SELECT m_prj_message_category.id AS groupid,
-            COUNT(m_prj_message.categoryid) AS value,
-            m_prj_message_category.category AS groupname
-        FROM m_prj_message, m_prj_message_category
-        WHERE m_prj_message.categoryid = m_prj_message_category.id AND m_prj_message.projectid = #{projectid,javaType=INTEGER}
-        GROUP BY m_prj_message_category.id
-        ]]>
-	</select>
 </mapper>
