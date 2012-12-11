@@ -1,24 +1,48 @@
 package com.esofthead.mycollab.module.project.view;
 
+import java.util.GregorianCalendar;
+import java.util.HashSet;
+import java.util.Set;
+
+import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
+import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
+
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.service.MessageService;
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.events.EditFormHandler;
+import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList.RowDisplayHandler;
+import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.TextField;
+import com.vaadin.ui.VerticalLayout;
 
-public class ProjectMessageViewImpl extends AbstractView implements
-		ProjectMessageView {
+public class ProjectMessageViewImpl extends ProjectAbstractView implements
+		ProjectMessageView, HasEditFormHandlers<Message> {
 	private static final long serialVersionUID = 8433776359091397422L;
 
 	private PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage> tableItem;
 
+	private Set<EditFormHandler<Message>> editFormHandlers;
+
+	private MessageSearchCriteria searchCriteria;
+
 	public ProjectMessageViewImpl() {
 		super();
-
+		this.addComponent(new TopMessagePanel());
 		tableItem = new PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage>(
 				AppContext.getSpringBean(MessageService.class),
 				new MessageRowDisplayHandler());
@@ -27,6 +51,8 @@ public class ProjectMessageViewImpl extends AbstractView implements
 
 	@Override
 	public void setCriteria(MessageSearchCriteria criteria) {
+		this.searchCriteria = criteria;
+		tableItem.setSearchCriteria(searchCriteria);
 	}
 
 	private class MessageRowDisplayHandler implements
@@ -37,5 +63,122 @@ public class ProjectMessageViewImpl extends AbstractView implements
 			return new Label("Message");
 		}
 
+	}
+
+	private class TopMessagePanel extends VerticalLayout {
+		private static final long serialVersionUID = 1L;
+
+		public TopMessagePanel() {
+			this.setWidth("100%");
+			createBasicLayout();
+		}
+
+		private void createBasicLayout() {
+			this.removeAllComponents();
+
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.setWidth("100%");
+			ButtonLink createAccountBtn = new ButtonLink("New Message",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							createAddMessageLayout();
+						}
+					});
+			createAccountBtn
+					.setIcon(new ThemeResource("icons/16/addRecord.png"));
+
+			UiUtils.addComponent(layout, createAccountBtn,
+					Alignment.MIDDLE_LEFT);
+			this.addComponent(layout);
+		}
+
+		private void createAddMessageLayout() {
+			this.removeAllComponents();
+
+			HorizontalLayout titleLayout = new HorizontalLayout();
+			Label titleLbl = new Label("Title: ");
+			final TextField titleField = new TextField();
+			titleLayout.addComponent(titleLbl);
+			titleLayout.addComponent(titleField);
+
+			this.addComponent(titleLayout);
+
+			CKEditorConfig config = new CKEditorConfig();
+			config.useCompactTags();
+			config.disableElementsPath();
+			config.setResizeDir(CKEditorConfig.RESIZE_DIR.HORIZONTAL);
+			config.disableSpellChecker();
+			config.setToolbarCanCollapse(false);
+			config.setWidth("100%");
+
+			final CKEditorTextField ckEditorTextField = new CKEditorTextField(
+					config);
+			this.addComponent(ckEditorTextField);
+
+			HorizontalLayout controls = new HorizontalLayout();
+			controls.addComponent(new Button("Save",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							Message message = new Message();
+							message.setProjectid(ProjectMessageViewImpl.this.project
+									.getId());
+							message.setPosteddate(new GregorianCalendar()
+									.getTime());
+							message.setTitle((String) titleField.getValue());
+							message.setMessage((String) ckEditorTextField
+									.getValue());
+							message.setPosteduser(AppContext.getUsername());
+							fireSaveItem(message);
+						}
+					}));
+
+			controls.addComponent(new Button("Cancel",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							createBasicLayout();
+						}
+					}));
+
+			this.addComponent(controls);
+		}
+	}
+
+	@Override
+	public void addFormHandler(EditFormHandler<Message> handler) {
+		if (editFormHandlers == null) {
+			editFormHandlers = new HashSet<EditFormHandler<Message>>();
+		}
+		editFormHandlers.add(handler);
+	}
+
+	private void fireSaveItem(Message message) {
+		if (editFormHandlers != null) {
+			for (EditFormHandler<Message> handler : editFormHandlers) {
+				handler.onSave(message);
+			}
+		}
+	}
+
+	@Override
+	public HasEditFormHandlers<Message> getEditFormHandlers() {
+		return this;
+	}
+
+	@Override
+	public void displayMessages() {
+		if (searchCriteria == null) {
+			searchCriteria = new MessageSearchCriteria();
+			searchCriteria.setProjectid(new NumberSearchField(SearchField.AND,
+					project.getId()));
+		}
 	}
 }

@@ -32,7 +32,7 @@
 		deadline, notes, taskindex,
 		predecessors, parenttask, actualStartDate,
 		actualEndDate, cost, actualCost,
-		ismilestone)
+		ismilestone, createdTime, lastUpdatedTime)
 		values (#{id,jdbcType=INTEGER}, #{taskname,jdbcType=VARCHAR},
 		#{percentagecomplete,jdbcType=DOUBLE},
 		#{startdate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP},
@@ -44,7 +44,8 @@
 		#{actualstartdate,jdbcType=TIMESTAMP},
 		#{actualenddate,jdbcType=TIMESTAMP}, #{cost,jdbcType=DOUBLE},
 		#{actualcost,jdbcType=DOUBLE},
-		#{ismilestone,jdbcType=BIT})
+		#{ismilestone,jdbcType=BIT}, #{createdtime,jdbcType=TIMESTAMP}, 
+        #{lastupdatedtime,jdbcType=TIMESTAMP}))
     </insert>
 
 	<sql id="querySearchCriteria">
@@ -95,7 +96,7 @@
               m_prj_task.projectid, m_prj_task.deadline, m_prj_task.notes, m_prj_task.taskindex, 
               m_prj_task.predecessors, m_prj_task.parenttask, m_prj_project.name AS projectName,
               m_prj_task.actualStartDate, m_prj_task.actualEndDate, m_prj_task.cost, m_prj_task.actualCost,
-              m_prj_task.ismilestone, 
+              m_prj_task.ismilestone, m_prj_task.createdTime, m_prj_task.lastUpdatedTime,
               (SELECT COUNT(*) FROM m_comment WHERE m_comment.commentid=concat('project-task-', m_prj_task.id)) AS numComments
           FROM m_prj_task
               LEFT OUTER JOIN m_prj_project ON (m_prj_task.projectid = m_prj_project.id)          

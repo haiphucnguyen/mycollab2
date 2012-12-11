@@ -35,7 +35,7 @@
           SELECT m_prj_message.id, m_prj_message.categoryid, m_prj_message.title, m_prj_message.message,
               m_prj_message.messagehtml, m_prj_message.posteddate, m_prj_message.posteduser, m_prj_message.projectid,
               (SELECT COUNT(*) FROM m_comment WHERE m_comment.commentid=concat('project-message-', m_prj_message.id)) AS commentsCount,
-              m_prj_message_category.category AS messageCategoryName,
+              m_prj_message_category.category AS messageCategoryName, m_prj_message.createdTime, m_prj_message.lastUpdatedTime,
               concat(s_user.firstname,  IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS fullPostedUserName
               FROM m_prj_message
                 LEFT OUTER JOIN m_prj_message_category ON (m_prj_message.categoryid=m_prj_message_category.id)

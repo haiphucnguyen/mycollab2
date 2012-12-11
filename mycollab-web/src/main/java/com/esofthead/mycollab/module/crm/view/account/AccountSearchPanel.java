@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.crm.ui.components.BasicSearchLayout;
 import com.esofthead.mycollab.module.crm.ui.components.GenericSearchPanel;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -27,7 +28,6 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
@@ -60,7 +60,7 @@ public class AccountSearchPanel extends
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 
-		Button createAccountBtn = new Button("Create",
+		ButtonLink createAccountBtn = new ButtonLink("Create",
 				new Button.ClickListener() {
 
 					@Override
@@ -70,7 +70,6 @@ public class AccountSearchPanel extends
 					}
 				});
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
-		createAccountBtn.setStyleName(BaseTheme.BUTTON_LINK);
 
 		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
 

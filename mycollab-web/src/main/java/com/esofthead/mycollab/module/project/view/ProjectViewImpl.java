@@ -109,7 +109,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
 	@Override
 	public Component gotoSubView(String name) {
-		Component component = myProjectTab.selectTab(name);
+		ProjectAbstractView component = (ProjectAbstractView)myProjectTab.selectTab(name);
+		component.setProject(project);
 		return component;
 	}
 }
