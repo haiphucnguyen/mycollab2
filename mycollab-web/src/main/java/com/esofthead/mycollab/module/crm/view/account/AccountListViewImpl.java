@@ -72,8 +72,6 @@ public class AccountListViewImpl extends AbstractView implements
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
 					Object columnId) {
-				System.out.println("Add generated column: " + itemId + " "
-						+ columnId);
 				final CheckBox cb = new CheckBox("", false);
 				cb.setImmediate(true);
 				cb.addListener(new Button.ClickListener() {

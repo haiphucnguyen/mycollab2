@@ -33,7 +33,7 @@ public class NoteSearchCriteria extends SearchCriteria {
 
     private StringSearchField username;
 
-    private NumberSearchField type;
+    private StringSearchField type;
     
     private NumberSearchField saccountid;
 
@@ -149,11 +149,11 @@ public class NoteSearchCriteria extends SearchCriteria {
 		this.username = username;
 	}
 
-	public NumberSearchField getType() {
+	public StringSearchField getType() {
 		return type;
 	}
 
-	public void setType(NumberSearchField type) {
+	public void setType(StringSearchField type) {
 		this.type = type;
 	}
 

@@ -140,6 +140,9 @@ public class AccountReadViewImpl extends AbstractView implements
 			protected Layout createBottomPanel() {
 				VerticalLayout relatedItemsPanel = new VerticalLayout();
 
+				relatedItemsPanel.addComponent(new NoteListItems(
+						"Notes for this Account", "Account", account.getId()));
+
 				relatedItemsPanel.addComponent(associateContactList);
 				relatedItemsPanel.addComponent(associateOpportunityList);
 				relatedItemsPanel.addComponent(associateLeadList);
