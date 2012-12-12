@@ -132,8 +132,9 @@ public class NoteListItems extends VerticalLayout {
 					note.setType(type);
 					note.setTypeid(typeid);
 					int noteid = noteService.insertNoteExt(note);
-					String attachmentPrefixPath = "/note/" + noteid + "/";
-					attachments.saveContentsToRepo(attachmentPrefixPath);
+					String attachmentPrefixPath = "/crm/note/" + noteid + "/";
+					attachments.saveContentsToRepo(attachmentPrefixPath,
+							"crm-note-" + noteid);
 					displayNotes();
 					NoteListItems.this.replaceComponent(noteEditor,
 							noteTextField);

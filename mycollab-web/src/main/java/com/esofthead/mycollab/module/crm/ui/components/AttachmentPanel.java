@@ -11,6 +11,8 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.easyuploads.FileBuffer;
 import org.vaadin.easyuploads.MultiFileUpload;
 
+import com.esofthead.mycollab.module.file.domain.Attachment;
+import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.file.service.ContentService;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Label;
@@ -24,6 +26,7 @@ public class AttachmentPanel extends VerticalLayout {
 	private Map<String, File> fileStores;
 
 	private ContentService contentService;
+	private AttachmentService attachmentService;
 
 	private MultiFileUpload multiFileUpload;
 
@@ -52,17 +55,17 @@ public class AttachmentPanel extends VerticalLayout {
 					displayFileName(fileName);
 				}
 			}
-			
+
 			@Override
-            protected FileBuffer createReceiver() {
-                FileBuffer receiver = super.createReceiver();
-                /*
-                 * Make receiver not to delete files after they have been
-                 * handled by #handleFile().
-                 */
-                receiver.setDeleteFiles(false);
-                return receiver;
-            }
+			protected FileBuffer createReceiver() {
+				FileBuffer receiver = super.createReceiver();
+				/*
+				 * Make receiver not to delete files after they have been
+				 * handled by #handleFile().
+				 */
+				receiver.setDeleteFiles(false);
+				return receiver;
+			}
 		};
 		multiFileUpload.setCaption("Attachments");
 		this.addComponent(multiFileUpload);
@@ -72,14 +75,23 @@ public class AttachmentPanel extends VerticalLayout {
 		this.addComponent(new Label(fileName));
 	}
 
-	public void saveContentsToRepo(String attachmentPrefixPath) {
+	public void saveContentsToRepo(String attachmentPrefixPath,
+			String attachmentid) {
 		if (fileStores != null) {
+			attachmentService = AppContext
+					.getSpringBean(AttachmentService.class);
+
 			for (String fileName : fileStores.keySet()) {
-				String filePath = attachmentPrefixPath + "/" + fileName;
+				String filePath = attachmentPrefixPath + fileName;
 				try {
 					contentService.saveContent(AppContext.getAccountId(),
 							filePath,
 							new FileInputStream(fileStores.get(fileName)));
+					Attachment record = new Attachment();
+					record.setAttachmentid(attachmentid);
+					record.setDocumentpath(filePath);
+					attachmentService.saveWithSession(record,
+							AppContext.getUsername());
 				} catch (FileNotFoundException e) {
 					log.error("Error when attach content in UI", e);
 				}

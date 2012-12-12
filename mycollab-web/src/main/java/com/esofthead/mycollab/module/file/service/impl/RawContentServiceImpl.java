@@ -19,27 +19,14 @@ public class RawContentServiceImpl implements RawContentService {
 			.getLogger(RawContentServiceImpl.class);
 
 	private static File baseContentFolder;
-	
-	private static File tempContentFolder;
 
 	static {
-		String userFolder = System.getProperty("user.dir");
-		baseContentFolder = new File(userFolder + "/mycollab");
+		String userFolder = System.getProperty("user.home");
+		baseContentFolder = new File(userFolder + "/.mycollab");
 		baseContentFolder.mkdirs();
-		
-		tempContentFolder = new File(userFolder + "/mycollab/temp/");
-		tempContentFolder.mkdirs();
 
 		log.debug("Create content folder for mycollab application at "
 				+ baseContentFolder.getAbsolutePath());
-	}
-	
-	public static File getBaseContentFolder() {
-		return baseContentFolder;
-	}
-	
-	public static File getTempContainerFolder() {
-		return tempContentFolder;
 	}
 
 	public void saveContent(String objectPath, InputStream stream) {
