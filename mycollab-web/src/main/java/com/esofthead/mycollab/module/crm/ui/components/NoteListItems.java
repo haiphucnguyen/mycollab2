@@ -115,7 +115,7 @@ public class NoteListItems extends VerticalLayout {
 			noteArea = new CKEditorTextField(config);
 			this.addComponent(noteArea);
 
-			AttachmentPanel attachments = new AttachmentPanel();
+			final AttachmentPanel attachments = new AttachmentPanel();
 			this.addComponent(attachments);
 
 			HorizontalLayout controls = new HorizontalLayout();
@@ -131,7 +131,9 @@ public class NoteListItems extends VerticalLayout {
 					note.setSubject("");
 					note.setType(type);
 					note.setTypeid(typeid);
-					noteService.saveWithSession(note, AppContext.getUsername());
+					int noteid = noteService.insertNoteExt(note);
+					String attachmentPrefixPath = "/note/" + noteid + "/";
+					attachments.saveContentsToRepo(attachmentPrefixPath);
 					displayNotes();
 					NoteListItems.this.replaceComponent(noteEditor,
 							noteTextField);
