@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.view.account;
+package com.esofthead.mycollab.module.crm.ui.components;
 
 import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
 import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
@@ -85,9 +85,8 @@ public class NoteListItems extends VerticalLayout {
 					Label.CONTENT_XHTML));
 
 			HorizontalLayout footer = new HorizontalLayout();
-			footer.addComponent(new Label("Posted by "
-					+ obj.getCreateduser() + " on "
-					+ obj.getCreatedtime()));
+			footer.addComponent(new Label("Posted by " + obj.getCreateduser()
+					+ " on " + obj.getCreatedtime()));
 			noteLayout.addComponent(footer);
 			return noteLayout;
 		}
@@ -115,6 +114,9 @@ public class NoteListItems extends VerticalLayout {
 
 			noteArea = new CKEditorTextField(config);
 			this.addComponent(noteArea);
+
+			AttachmentPanel attachments = new AttachmentPanel();
+			this.addComponent(attachments);
 
 			HorizontalLayout controls = new HorizontalLayout();
 			Button saveBtn = new Button("Save", new Button.ClickListener() {
