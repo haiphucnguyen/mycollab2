@@ -81,7 +81,7 @@ public class AttachmentPanel extends VerticalLayout {
 					.getSpringBean(AttachmentService.class);
 
 			for (String fileName : fileStores.keySet()) {
-				String filePath = type + "/" + typeid + fileName;
+				String filePath = type + "/" + typeid + "/" + fileName;
 				try {
 					contentService.saveContent(AppContext.getAccountId(),
 							filePath,

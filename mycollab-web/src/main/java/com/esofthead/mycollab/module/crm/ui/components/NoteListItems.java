@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
+import java.util.GregorianCalendar;
+import java.util.List;
+
 import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
 import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
 
@@ -9,21 +12,19 @@ import com.esofthead.mycollab.module.crm.domain.Note;
 import com.esofthead.mycollab.module.crm.domain.SimpleNote;
 import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.NoteService;
+import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.event.FieldEvents;
-import com.vaadin.event.FieldEvents.FocusEvent;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.themes.BaseTheme;
 
 public class NoteListItems extends Depot {
 	private static final long serialVersionUID = 1L;
@@ -95,6 +96,21 @@ public class NoteListItems extends Depot {
 			footer.addComponent(new Label("Posted by " + obj.getCreateduser()
 					+ " on " + obj.getCreatedtime()));
 			noteLayout.addComponent(footer);
+
+			List<Attachment> attachments = obj.getAttachments();
+			if (attachments != null && attachments.size() != 0) {
+				if (attachments.size() == 1) {
+					noteLayout.addComponent(new Label(attachments.get(0)
+							.getDocumentpath()));
+				} else {
+					noteLayout.addComponent(new Label(attachments.size()
+							+ " Attachments:"));
+					for (Attachment attachment : attachments) {
+						noteLayout.addComponent(new Label(attachment
+								.getDocumentpath()));
+					}
+				}
+			}
 			return noteLayout;
 		}
 
@@ -140,6 +156,8 @@ public class NoteListItems extends Depot {
 					note.setSubject("");
 					note.setType(type);
 					note.setTypeid(typeid);
+					note.setCreatedtime(new GregorianCalendar().getTime());
+					note.setLastupdatedtime(new GregorianCalendar().getTime());
 					int noteid = noteService.insertNoteExt(note);
 					attachments.saveContentsToRepo("crm-note", noteid);
 					displayNotes();
