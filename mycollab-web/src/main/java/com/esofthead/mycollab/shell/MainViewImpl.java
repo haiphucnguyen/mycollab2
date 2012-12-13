@@ -27,6 +27,7 @@ public class MainViewImpl extends AbstractView {
 		this.addComponent(createTopMenu());
 		bodyLayout = new VerticalLayout();
 		this.addComponent(bodyLayout);
+		addView(new ConsoleView());
 	}
 
 	private CustomLayout createTopMenu() {
