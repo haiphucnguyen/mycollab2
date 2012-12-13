@@ -3,21 +3,9 @@
 	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
   
-    
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contentTransactionMapper">
-        <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.file_old.dao.ContentTransactionMapper" />
-    </bean>
-
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contentTransactionMapperExt">
-        <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.file_old.dao.ContentTransactionMapperExt" />
-    </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="attachmentMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface" value="com.esofthead.mycollab.module.file_old.dao.AttachmentMapper" />
+        <property name="mapperInterface" value="com.esofthead.mycollab.module.file.dao.AttachmentMapper" />
     </bean>
 </beans>
