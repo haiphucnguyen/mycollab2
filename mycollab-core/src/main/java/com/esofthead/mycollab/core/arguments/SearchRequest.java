@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.core.arguments;
 
 public class SearchRequest<S extends SearchCriteria> {
-	public static int DEFAULT_NUMBER_SEARCH_ITEMS = 3;
+	public static int DEFAULT_NUMBER_SEARCH_ITEMS = 25;
 	
 	private S searchCriteria;
 
