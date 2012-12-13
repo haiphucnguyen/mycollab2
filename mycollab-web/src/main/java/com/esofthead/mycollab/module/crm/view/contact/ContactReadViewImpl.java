@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view.contact;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -15,7 +16,9 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Layout;
 
 public class ContactReadViewImpl extends AbstractView implements
 		ContactReadView {
@@ -94,9 +97,18 @@ public class ContactReadViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected HorizontalLayout createButtonControls() {
+			protected HorizontalLayout createTopPanel() {
 				return (new PreviewFormControlsGenerator<Contact>(
 						PreviewForm.this)).createButtonControls();
+			}
+
+			@Override
+			protected Layout createBottomPanel() {
+				VerticalLayout relatedItemsPanel = new VerticalLayout();
+
+				relatedItemsPanel.addComponent(new NoteListItems("Notes",
+						"Contact", contact.getId()));
+				return relatedItemsPanel;
 			}
 		}
 	}

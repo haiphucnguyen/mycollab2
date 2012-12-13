@@ -52,10 +52,19 @@ public class LeadAddViewImpl extends AbstractView implements
 		class FormLayoutFactory extends LeadFormLayoutFactory {
 			private static final long serialVersionUID = 1L;
 
-			@Override
-			protected Layout createButtonControls() {
+			private Layout createButtonControls() {
 				return (new EditFormControlsGenerator<Lead>(EditForm.this))
 						.createButtonControls();
+			}
+
+			@Override
+			protected Layout createTopPanel() {
+				return createButtonControls();
+			}
+
+			@Override
+			protected Layout createBottomPanel() {
+				return createButtonControls();
 			}
 		}
 

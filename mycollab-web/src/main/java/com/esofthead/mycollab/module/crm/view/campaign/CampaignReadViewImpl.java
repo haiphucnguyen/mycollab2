@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -11,10 +12,11 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Layout;
+import com.vaadin.ui.VerticalLayout;
 
 public class CampaignReadViewImpl extends AbstractView implements
 		CampaignReadView {
@@ -82,9 +84,20 @@ public class CampaignReadViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected HorizontalLayout createButtonControls() {
+			protected Layout createTopPanel() {
 				return (new PreviewFormControlsGenerator<Campaign>(
 						PreviewForm.this)).createButtonControls();
+			}
+
+			@Override
+			protected Layout createBottomPanel() {
+				VerticalLayout relatedItemsPanel = new VerticalLayout();
+
+				relatedItemsPanel.addComponent(new NoteListItems(
+						"Notes", "Campaign", campaign.getId()));
+				
+				return relatedItemsPanel;
+
 			}
 		}
 	}

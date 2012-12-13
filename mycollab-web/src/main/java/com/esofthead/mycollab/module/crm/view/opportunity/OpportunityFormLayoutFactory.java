@@ -20,7 +20,7 @@ public abstract class OpportunityFormLayoutFactory implements
 	@Override
 	public Layout getLayout() {
 		AddViewLayout opportunityAddLayout = new AddViewLayout("Opportunity");
-		opportunityAddLayout.addTopControls(createButtonControls());
+		opportunityAddLayout.addTopControls(createTopPanel());
 
 		VerticalLayout layout = new VerticalLayout();
 		layout.setSpacing(true);
@@ -41,11 +41,13 @@ public abstract class OpportunityFormLayoutFactory implements
 		layout.addComponent(descriptionLayout.getLayout());
 
 		opportunityAddLayout.addBody(layout);
-		opportunityAddLayout.addBottomControls(createButtonControls());
+		opportunityAddLayout.addBottomControls(createBottomPanel());
 		return opportunityAddLayout;
 	}
 
-	protected abstract Layout createButtonControls();
+	protected abstract Layout createTopPanel();
+
+	protected abstract Layout createBottomPanel();
 
 	@Override
 	public void attachField(Object propertyId, Field field) {

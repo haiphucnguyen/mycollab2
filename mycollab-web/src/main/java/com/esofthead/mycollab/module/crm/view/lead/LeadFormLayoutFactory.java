@@ -24,7 +24,7 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		AddViewLayout leadAddLayout = new AddViewLayout("Lead");
-		leadAddLayout.addTopControls(createButtonControls());
+		leadAddLayout.addTopControls(createTopPanel());
 
 		VerticalLayout layout = new VerticalLayout();
 		layout.setSpacing(true);
@@ -57,11 +57,13 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 		layout.addComponent(descLayout.getLayout());
 
 		leadAddLayout.addBody(layout);
-		leadAddLayout.addBottomControls(createButtonControls());
+		leadAddLayout.addBottomControls(createBottomPanel());
 		return leadAddLayout;
 	}
 
-	protected abstract Layout createButtonControls();
+	protected abstract Layout createTopPanel();
+
+	protected abstract Layout createBottomPanel();
 
 	@Override
 	public void attachField(Object propertyId, Field field) {

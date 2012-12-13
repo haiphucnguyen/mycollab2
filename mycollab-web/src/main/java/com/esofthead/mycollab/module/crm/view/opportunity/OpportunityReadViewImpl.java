@@ -4,6 +4,7 @@ import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -14,10 +15,11 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Layout;
+import com.vaadin.ui.VerticalLayout;
 
 public class OpportunityReadViewImpl extends AbstractView implements
 		OpportunityReadView {
@@ -98,7 +100,7 @@ public class OpportunityReadViewImpl extends AbstractView implements
 						field = new FormViewField(
 								AppContext.formatDate(opportunity
 										.getExpectedcloseddate()));
-					} 
+					}
 					return field;
 				}
 
@@ -110,9 +112,18 @@ public class OpportunityReadViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			protected HorizontalLayout createButtonControls() {
+			protected Layout createTopPanel() {
 				return (new PreviewFormControlsGenerator<Opportunity>(
 						PreviewForm.this)).createButtonControls();
+			}
+
+			@Override
+			protected Layout createBottomPanel() {
+				VerticalLayout relatedItemsPanel = new VerticalLayout();
+
+				relatedItemsPanel.addComponent(new NoteListItems("Notes",
+						"Opportunity", opportunity.getId()));
+				return relatedItemsPanel;
 			}
 		}
 	}

@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
@@ -99,16 +100,16 @@ public class NoteListItems extends Depot {
 
 			List<Attachment> attachments = obj.getAttachments();
 			if (attachments != null && attachments.size() != 0) {
-				if (attachments.size() == 1) {
-					noteLayout.addComponent(new Label(attachments.get(0)
-							.getDocumentpath()));
-				} else {
-					noteLayout.addComponent(new Label(attachments.size()
-							+ " Attachments:"));
-					for (Attachment attachment : attachments) {
-						noteLayout.addComponent(new Label(attachment
-								.getDocumentpath()));
+				for (Attachment attachment : attachments) {
+					String docName = attachment.getDocumentpath();
+					int lastIndex = docName.lastIndexOf("/");
+					if (lastIndex != -1) {
+						docName = docName.substring(lastIndex + 1,
+								docName.length());
 					}
+					Button attachmentLink = new Button(docName);
+					attachmentLink.setStyleName(BaseTheme.BUTTON_LINK);
+					noteLayout.addComponent(attachmentLink);
 				}
 			}
 			return noteLayout;

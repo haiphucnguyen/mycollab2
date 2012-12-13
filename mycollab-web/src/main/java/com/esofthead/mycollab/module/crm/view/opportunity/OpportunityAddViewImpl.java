@@ -55,10 +55,19 @@ public class OpportunityAddViewImpl extends AbstractView implements
 		class FormLayoutFactory extends OpportunityFormLayoutFactory {
 			private static final long serialVersionUID = 1L;
 
-			@Override
-			protected Layout createButtonControls() {
+			private Layout createButtonControls() {
 				return (new EditFormControlsGenerator<Opportunity>(
 						EditForm.this)).createButtonControls();
+			}
+
+			@Override
+			protected Layout createTopPanel() {
+				return createButtonControls();
+			}
+
+			@Override
+			protected Layout createBottomPanel() {
+				return createButtonControls();
 			}
 		}
 

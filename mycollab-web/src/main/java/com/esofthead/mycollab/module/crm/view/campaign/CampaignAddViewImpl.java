@@ -13,6 +13,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
@@ -49,10 +50,19 @@ public class CampaignAddViewImpl extends AbstractView implements
 		class FormLayoutFactory extends CampaignFormLayoutFactory {
 			private static final long serialVersionUID = 1L;
 
-			@Override
-			protected HorizontalLayout createButtonControls() {
+			private HorizontalLayout createButtonControls() {
 				return (new EditFormControlsGenerator<Campaign>(EditForm.this))
 						.createButtonControls();
+			}
+
+			@Override
+			protected Layout createTopPanel() {
+				return createButtonControls();
+			}
+
+			@Override
+			protected Layout createBottomPanel() {
+				return createButtonControls();
 			}
 		}
 

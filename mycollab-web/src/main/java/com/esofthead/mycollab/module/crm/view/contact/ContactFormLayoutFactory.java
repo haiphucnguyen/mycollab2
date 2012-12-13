@@ -22,7 +22,7 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 	public Layout getLayout() {
 		AddViewLayout contactAddLayout = new AddViewLayout("Contact");
 
-		contactAddLayout.addTopControls(createButtonControls());
+		contactAddLayout.addTopControls(createTopPanel());
 
 		VerticalLayout layout = new VerticalLayout();
 		layout.setSpacing(true);
@@ -50,11 +50,13 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 		layout.addComponent(descriptionLayout.getLayout());
 
 		contactAddLayout.addBody(layout);
-		contactAddLayout.addBottomControls(createButtonControls());
+		contactAddLayout.addBottomControls(createBottomPanel());
 		return contactAddLayout;
 	}
 
-	abstract protected Layout createButtonControls();
+	protected abstract Layout createTopPanel();
+
+	protected abstract Layout createBottomPanel();
 
 	@Override
 	public void attachField(Object propertyId, Field field) {

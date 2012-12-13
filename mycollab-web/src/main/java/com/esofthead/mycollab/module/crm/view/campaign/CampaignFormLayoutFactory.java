@@ -5,7 +5,6 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
@@ -22,7 +21,7 @@ public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public Layout getLayout() {
 		AddViewLayout campaignFormLayout = new AddViewLayout("Campaign");
-		campaignFormLayout.addTopControls(createButtonControls());
+		campaignFormLayout.addTopControls(createTopPanel());
 
 		VerticalLayout layout = new VerticalLayout();
 		Label organizationHeader = new Label("Campaign Information");
@@ -49,12 +48,14 @@ public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
 		descriptionLayout.getLayout().setWidth("900px");
 
 		campaignFormLayout.addBody(layout);
-		campaignFormLayout.addBottomControls(createButtonControls());
+		campaignFormLayout.addBottomControls(createBottomPanel());
 
 		return campaignFormLayout;
 	}
 
-	abstract protected HorizontalLayout createButtonControls();
+	protected abstract Layout createTopPanel();
+
+	protected abstract Layout createBottomPanel();
 
 	@Override
 	public void attachField(Object propertyId, Field field) {
