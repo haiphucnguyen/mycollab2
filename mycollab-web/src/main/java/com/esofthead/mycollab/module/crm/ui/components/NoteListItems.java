@@ -11,18 +11,21 @@ import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
+import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.event.FieldEvents;
 import com.vaadin.event.FieldEvents.FocusEvent;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-public class NoteListItems extends VerticalLayout {
+public class NoteListItems extends Depot {
 	private static final long serialVersionUID = 1L;
 
 	private String type;
@@ -31,12 +34,13 @@ public class NoteListItems extends VerticalLayout {
 	private BeanList<NoteService, NoteSearchCriteria, SimpleNote> noteList;
 
 	private NoteService noteService;
-
-	private TextField noteTextField;
 	private NoteEditor noteEditor;
 
+	private Button createBtn;
+
 	public NoteListItems(String title, String type, Integer typeid) {
-		this.setWidth("600px");
+		super(title, new VerticalLayout());
+		this.setWidth("900px");
 		this.setSpacing(true);
 		this.setMargin(true);
 
@@ -44,24 +48,27 @@ public class NoteListItems extends VerticalLayout {
 		this.type = type;
 		this.typeid = typeid;
 
-		this.addComponent(new Label(title));
+		initUI();
+	}
 
-		noteTextField = new TextField();
-		noteTextField.setWidth("300px");
-		noteTextField.addListener(new FieldEvents.FocusListener() {
+	private void initUI() {
+		final VerticalLayout contentContainer = (VerticalLayout) content;
+		createBtn = new Button("New Note", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void focus(FocusEvent event) {
-				noteEditor = new NoteEditor();
-				NoteListItems.this.replaceComponent(noteTextField, noteEditor);
+			public void buttonClick(ClickEvent event) {
+				contentContainer.replaceComponent(createBtn, new NoteEditor());
 			}
 		});
-		this.addComponent(noteTextField);
+
+		createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createBtn.setStyleName(BaseTheme.BUTTON_LINK);
+		contentContainer.addComponent(createBtn);
 
 		noteList = new BeanList<NoteService, NoteSearchCriteria, SimpleNote>(
 				noteService, new NoteRowDisplayHandler());
-		this.addComponent(noteList);
+		contentContainer.addComponent(noteList);
 		displayNotes();
 	}
 
@@ -102,7 +109,7 @@ public class NoteListItems extends VerticalLayout {
 			super();
 			this.setSpacing(true);
 			this.setMargin(true);
-			this.setWidth("600px");
+			this.setWidth("900px");
 
 			CKEditorConfig config = new CKEditorConfig();
 			config.useCompactTags();
@@ -113,12 +120,14 @@ public class NoteListItems extends VerticalLayout {
 			config.setWidth("100%");
 
 			noteArea = new CKEditorTextField(config);
+			noteArea.setWidth("800px");
 			this.addComponent(noteArea);
 
 			final AttachmentPanel attachments = new AttachmentPanel();
 			this.addComponent(attachments);
 
 			HorizontalLayout controls = new HorizontalLayout();
+			controls.setSpacing(true);
 			Button saveBtn = new Button("Save", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
@@ -136,8 +145,7 @@ public class NoteListItems extends VerticalLayout {
 					attachments.saveContentsToRepo(attachmentPrefixPath,
 							"crm-note-" + noteid);
 					displayNotes();
-					NoteListItems.this.replaceComponent(noteEditor,
-							noteTextField);
+					addCreateBtn();
 				}
 
 			});
@@ -148,14 +156,21 @@ public class NoteListItems extends VerticalLayout {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					NoteListItems.this.replaceComponent(noteEditor,
-							noteTextField);
+					addCreateBtn();
 				}
 
 			});
 			controls.addComponent(cancelBtn);
 
 			this.addComponent(controls);
+		}
+	}
+
+	private void addCreateBtn() {
+		VerticalLayout contentContainer = (VerticalLayout) content;
+		Component component = contentContainer.getComponent(0);
+		if (component instanceof NoteEditor) {
+			contentContainer.replaceComponent(component, createBtn);
 		}
 	}
 }

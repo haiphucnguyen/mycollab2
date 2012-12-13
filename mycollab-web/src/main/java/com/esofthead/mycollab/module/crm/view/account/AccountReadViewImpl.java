@@ -142,7 +142,7 @@ public class AccountReadViewImpl extends AbstractView implements
 				VerticalLayout relatedItemsPanel = new VerticalLayout();
 
 				relatedItemsPanel.addComponent(new NoteListItems(
-						"Notes for this Account", "Account", account.getId()));
+						"Notes", "Account", account.getId()));
 
 				relatedItemsPanel.addComponent(associateContactList);
 				relatedItemsPanel.addComponent(associateOpportunityList);
