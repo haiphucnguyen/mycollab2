@@ -75,20 +75,20 @@ public class AttachmentPanel extends VerticalLayout {
 		this.addComponent(new Label(fileName));
 	}
 
-	public void saveContentsToRepo(String attachmentPrefixPath,
-			String attachmentid) {
+	public void saveContentsToRepo(String type, Integer typeid) {
 		if (fileStores != null) {
 			attachmentService = AppContext
 					.getSpringBean(AttachmentService.class);
 
 			for (String fileName : fileStores.keySet()) {
-				String filePath = attachmentPrefixPath + fileName;
+				String filePath = type + "/" + typeid + fileName;
 				try {
 					contentService.saveContent(AppContext.getAccountId(),
 							filePath,
 							new FileInputStream(fileStores.get(fileName)));
 					Attachment record = new Attachment();
-					record.setAttachmentid(attachmentid);
+					record.setType(type);
+					record.setTypeid(typeid);
 					record.setDocumentpath(filePath);
 					attachmentService.saveWithSession(record,
 							AppContext.getUsername());

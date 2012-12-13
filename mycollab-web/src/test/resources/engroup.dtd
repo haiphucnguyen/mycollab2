@@ -107,10 +107,11 @@
 <!ELEMENT m_attachment EMPTY>
 <!ATTLIST m_attachment
     id CDATA #REQUIRED
-    attachmentid CDATA #REQUIRED
+    type CDATA #REQUIRED
     documentpath CDATA #REQUIRED
     createdTime CDATA #IMPLIED
     lastUpdatedTime CDATA #IMPLIED
+    typeid CDATA #IMPLIED
 >
 
 <!ELEMENT m_audit_log EMPTY>
@@ -1046,6 +1047,8 @@
     posteduser CDATA #IMPLIED
     projectid CDATA #REQUIRED
     category CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_milestone EMPTY>
@@ -1059,6 +1062,8 @@
     flag CDATA #IMPLIED
     projectid CDATA #REQUIRED
     iscompleted CDATA #REQUIRED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_monitor EMPTY>
@@ -1077,6 +1082,8 @@
     source CDATA #IMPLIED
     posteduser CDATA #IMPLIED
     posteddate CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_permission EMPTY>
@@ -1132,6 +1139,8 @@
     currencyid CDATA #IMPLIED
     progress CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_resource EMPTY>
@@ -1199,6 +1208,8 @@
     actualCost CDATA #IMPLIED
     ismilestone CDATA #IMPLIED
     tasklistid CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_task_list EMPTY>
@@ -1207,6 +1218,8 @@
     name CDATA #REQUIRED
     description CDATA #IMPLIED
     projectid CDATA #REQUIRED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_task_resource EMPTY>

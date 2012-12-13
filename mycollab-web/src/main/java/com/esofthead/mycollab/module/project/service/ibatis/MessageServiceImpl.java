@@ -50,7 +50,7 @@ public class MessageServiceImpl extends DefaultService<Integer, Message, Message
 				ChangeLogAction.DELETE, message.getTitle());
 
 		String attachmentid = "project-message-" + primaryKey;
-		attachmentService.removeById(attachmentid);
+//		attachmentService.removeById(attachmentid);
 		return super.internalRemoveWithSession(primaryKey, username);
 	}
 

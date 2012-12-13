@@ -23,18 +23,18 @@ public class AttachmentServiceImpl extends
 	public ICrudGenericDAO<Integer, Attachment> getCrudMapper() {
 		return attachmentMapper;
 	}
-
-	@Override
-	public List<Attachment> findByAttachmentId(String attachmentid) {
-		AttachmentExample ex = new AttachmentExample();
-		ex.createCriteria().andAttachmentidEqualTo(attachmentid);
-		return attachmentMapper.selectByExample(ex);
-	}
-
-	@Override
-	public void removeById(String attachmentid) {
-		AttachmentExample ex = new AttachmentExample();
-		ex.createCriteria().andAttachmentidEqualTo(attachmentid);
-		attachmentMapper.deleteByExample(ex);
-	}
+//
+//	@Override
+//	public List<Attachment> findByAttachmentId(String attachmentid) {
+//		AttachmentExample ex = new AttachmentExample();
+//		ex.createCriteria().andAttachmentidEqualTo(attachmentid);
+//		return attachmentMapper.selectByExample(ex);
+//	}
+//
+//	@Override
+//	public void removeById(String attachmentid) {
+//		AttachmentExample ex = new AttachmentExample();
+//		ex.createCriteria().andAttachmentidEqualTo(attachmentid);
+//		attachmentMapper.deleteByExample(ex);
+//	}
 }

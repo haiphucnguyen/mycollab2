@@ -1,9 +1,17 @@
 package com.esofthead.mycollab.module.crm.domain;
 
+import java.util.List;
+
+import com.esofthead.mycollab.module.file.domain.Attachment;
+
 public class SimpleNote extends Note {
+	private static final long serialVersionUID = 1L;
+
 	private String contactName;
-	
-	private String assignUserFullName;
+
+	private String createUserFullName;
+
+	private List<Attachment> attachments;
 
 	public String getContactName() {
 		return contactName;
@@ -13,12 +21,19 @@ public class SimpleNote extends Note {
 		this.contactName = contactName;
 	}
 
-	public String getAssignUserFullName() {
-		return assignUserFullName;
+	public String getCreateUserFullName() {
+		return createUserFullName;
 	}
 
-	public void setAssignUserFullName(String assignUserFullName) {
-		this.assignUserFullName = assignUserFullName;
+	public void setCreateUserFullName(String createUserFullName) {
+		this.createUserFullName = createUserFullName;
 	}
-	
+
+	public List<Attachment> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(List<Attachment> attachments) {
+		this.attachments = attachments;
+	}
 }

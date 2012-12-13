@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.service;
 
+import java.util.List;
+
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -10,6 +12,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.crm.domain.Note;
+import com.esofthead.mycollab.module.crm.domain.SimpleNote;
 import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
@@ -33,16 +36,20 @@ public class NoteServiceTest {
 		Assert.assertEquals(1, noteService.getTotalCount(criteria));
 	}
 
+	@SuppressWarnings("unchecked")
 	@DataSet
 	@Test
 	public void testSearch() {
 		NoteSearchCriteria criteria = getCriteria();
 
-		Assert.assertEquals(
-				1,
-				noteService.findPagableListByCriteria(
-						new SearchRequest<NoteSearchCriteria>(criteria, 0,
-								Integer.MAX_VALUE)).size());
+		List<SimpleNote> noteList = noteService
+				.findPagableListByCriteria(new SearchRequest<NoteSearchCriteria>(
+						criteria, 0, Integer.MAX_VALUE));
+
+		Assert.assertEquals(1, noteList.size());
+
+		SimpleNote note = noteList.get(0);
+		Assert.assertEquals(2, note.getAttachments().size());
 	}
 
 	@DataSet

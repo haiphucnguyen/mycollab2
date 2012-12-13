@@ -1,0 +1,1 @@
+ALTER TABLE `m_attachment` CHANGE COLUMN `attachmentid` `type` VARCHAR(45) NOT NULL  , ADD COLUMN `typeid` INT NULL;

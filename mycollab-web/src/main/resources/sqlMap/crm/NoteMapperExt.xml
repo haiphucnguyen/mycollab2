@@ -4,8 +4,10 @@
 	<resultMap extends="com.esofthead.mycollab.module.crm.dao.NoteMapper.BaseResultMap"
 		id="SimpleNoteResult" type="com.esofthead.mycollab.module.crm.domain.SimpleNote">
 		<result column="contactName" jdbcType="VARCHAR" property="contactName" />
-		<result column="assignUserFullName" jdbcType="VARCHAR"
-			property="assignUserFullName" />
+		<result column="createUserFullName" jdbcType="VARCHAR"
+			property="createUserFullName" />
+        <collection property="attachments" ofType="com.esofthead.mycollab.module.file.domain.Attachment" 
+            resultMap="com.esofthead.mycollab.module.file.dao.AttachmentMapper.BaseResultMap" columnPrefix="attach_"/>
 	</resultMap>
 
 	<insert id="insertNoteExt" parameterType="Note"
@@ -320,12 +322,16 @@
         <![CDATA[
         (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
+            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
+            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
+            m_attachment.typeid as attach_typeid
         FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
+            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
+            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
             INNER JOIN m_crm_contact as contact2 ON (m_crm_note.type='Contact' AND m_crm_note.typeid=contact2.id )
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
@@ -338,12 +344,16 @@
         <![CDATA[
         (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
+            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
+            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
+            m_attachment.typeid as attach_typeid
         FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
+            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
+            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
             INNER JOIN m_crm_account ON (m_crm_note.type='Account' AND m_crm_note.typeid=m_crm_account.id )
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
@@ -355,12 +365,16 @@
         <![CDATA[
         (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
+            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
+            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
+            m_attachment.typeid as attach_typeid
         FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
+            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
+            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
             INNER JOIN m_crm_campaign ON (m_crm_note.type='Campaign' AND m_crm_note.typeid=m_crm_campaign.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
@@ -373,12 +387,16 @@
         <![CDATA[
         (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
+            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
+            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
+            m_attachment.typeid as attach_typeid
         FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
+            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
+            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
             INNER JOIN m_crm_contact as contact2 ON (m_crm_note.type='Contact' AND m_crm_note.typeid=contact2.id )
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
@@ -391,12 +409,16 @@
         <![CDATA[
         (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
+            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
+            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
+            m_attachment.typeid as attach_typeid
         FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
+            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
+            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
             INNER JOIN m_crm_target ON (m_crm_note.type='Target' AND m_crm_note.typeid=m_crm_target.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
@@ -409,12 +431,16 @@
         <![CDATA[
         (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
+            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
+            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
+            m_attachment.typeid as attach_typeid
         FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
+            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
+            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
             INNER JOIN m_crm_lead ON (m_crm_note.type='Lead' AND m_crm_note.typeid=m_crm_lead.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
@@ -427,12 +453,16 @@
         <![CDATA[
         (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
+            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
+            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
+            m_attachment.typeid as attach_typeid
         FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
+            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
+            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
             INNER JOIN m_crm_opportunity ON (m_crm_note.type = 'Opportunity' AND m_crm_note.typeid=m_crm_opportunity.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
@@ -445,12 +475,16 @@
         <![CDATA[
         (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
+            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
+            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
+            m_attachment.typeid as attach_typeid
         FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
+            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
+            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
             INNER JOIN m_crm_quote ON (m_crm_note.type = 'Quote' AND m_crm_note.typeid=m_crm_quote.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
@@ -463,12 +497,16 @@
         <![CDATA[
         (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
+            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
+            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
+            m_attachment.typeid as attach_typeid
         FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
+            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
+            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
             INNER JOIN m_crm_product ON (m_crm_note.type = 'Product' AND m_crm_note.typeid=m_crm_product.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
@@ -481,12 +519,16 @@
         <![CDATA[
         (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
+            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
+            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
+            m_attachment.typeid as attach_typeid
         FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
+            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
+            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
             INNER JOIN m_crm_case ON (m_crm_note.type = 'Case' AND m_crm_note.typeid=m_crm_case.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
@@ -499,12 +541,16 @@
         <![CDATA[
         (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
+            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
+            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
+            m_attachment.typeid as attach_typeid
         FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
+            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
+            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
             INNER JOIN m_crm_contract ON (m_crm_note.type = 'Contract' AND m_crm_note.typeid=m_crm_contract.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
@@ -517,12 +563,16 @@
         <![CDATA[
         (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
             m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignEmployeeName,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
             concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime
+            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
+            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
+            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
+            m_attachment.typeid as attach_typeid
         FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.username = s_user.username) 
+            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
             LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
+            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
         ]]>
 		<trim prefix="WHERE" prefixOverrides="AND | OR ">
 			1=1 <include

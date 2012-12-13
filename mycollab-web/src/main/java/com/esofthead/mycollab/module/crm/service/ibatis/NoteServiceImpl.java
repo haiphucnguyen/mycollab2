@@ -38,8 +38,6 @@ public class NoteServiceImpl extends DefaultService<Integer, Note, NoteSearchCri
 
 	@Override
 	public int remove(Integer primaryKey) {
-		String attachmentid = "crm-note-" + primaryKey;
-		attachmentService.removeById(attachmentid);
 		return super.remove(primaryKey);
 	}
 

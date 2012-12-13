@@ -141,9 +141,7 @@ public class NoteListItems extends Depot {
 					note.setType(type);
 					note.setTypeid(typeid);
 					int noteid = noteService.insertNoteExt(note);
-					String attachmentPrefixPath = "/crm/note/" + noteid + "/";
-					attachments.saveContentsToRepo(attachmentPrefixPath,
-							"crm-note-" + noteid);
+					attachments.saveContentsToRepo("crm-note", noteid);
 					displayNotes();
 					addCreateBtn();
 				}

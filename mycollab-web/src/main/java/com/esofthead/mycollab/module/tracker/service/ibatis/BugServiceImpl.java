@@ -110,7 +110,7 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
 
 		// remove bug's attachments
 		String attachmentid = "defect-" + primaryKey;
-		attachmentService.removeById(attachmentid);
+//		attachmentService.removeById(attachmentid);
 
 		// notify watchers
 		String bugid = "defect-" + primaryKey;
