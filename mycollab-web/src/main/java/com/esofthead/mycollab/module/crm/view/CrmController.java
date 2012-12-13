@@ -28,6 +28,8 @@ import com.esofthead.mycollab.module.crm.events.ActivityEvent.GotoTodoList;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.events.CrmEvent;
+import com.esofthead.mycollab.module.crm.events.CrmEvent.GotoHome;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.CallService;
@@ -113,6 +115,7 @@ public class CrmController {
 	public CrmController(CrmContainer container) {
 		this.container = container;
 
+		bindCrmEvents();
 		bindAccountEvents();
 		bindActivityEvents();
 		bindCampaignEvents();
@@ -120,6 +123,26 @@ public class CrmController {
 		bindLeadEvents();
 		bindOpportunityEvents();
 		bindCasesEvents();
+	}
+
+	@SuppressWarnings("serial")
+	private void bindCrmEvents() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<CrmEvent.GotoHome>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return CrmEvent.GotoHome.class;
+					}
+
+					@Override
+					public void handle(GotoHome event) {
+						CrmHomeViewImpl crmHome = ViewManager.getView(CrmHomeViewImpl.class);
+						CrmHomePresenter presenter = new CrmHomePresenter(crmHome);
+						presenter.go(container, null);
+					}
+
+				});
 	}
 
 	@SuppressWarnings("serial")

@@ -139,6 +139,8 @@ public class CrmContainer extends AbstractView {
 		container.addComponent(currentView, "currentView");
 		this.addComponent(container);
 		this.setComponentAlignment(container, Alignment.MIDDLE_CENTER);
+
+		EventBus.getInstance().fireEvent(new CrmEvent.GotoHome(this, null));
 	}
 
 	public void addView(View view) {
