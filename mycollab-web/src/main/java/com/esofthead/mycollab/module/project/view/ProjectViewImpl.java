@@ -7,6 +7,8 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.view.defect.DefectDashboardPresenter;
+import com.esofthead.mycollab.module.project.view.defect.DefectDashboardViewImpl;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -38,7 +40,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private ProjectMessageListPresenter messagePresenter;
 	private ProjectMilestonePresenter milestonesPresenter;
 	private ProjectTaskPresenter taskPresenter;
-	private ProjectDefectDashboardPresenter defectPresenter;
+	private DefectDashboardPresenter defectPresenter;
 
 	private SimpleProject project;
 
@@ -129,9 +131,9 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	}
 
 	private Component constructProjectDefectComponent() {
-		ProjectDefectDashboardViewImpl defectView = ViewManager
-				.getView(ProjectDefectDashboardViewImpl.class);
-		defectPresenter = new ProjectDefectDashboardPresenter(defectView);
+		DefectDashboardViewImpl defectView = ViewManager
+				.getView(DefectDashboardViewImpl.class);
+		defectPresenter = new DefectDashboardPresenter(defectView);
 		return defectView;
 	}
 
