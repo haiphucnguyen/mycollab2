@@ -1,5 +1,6 @@
-package com.esofthead.mycollab.module.project.view;
+package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.module.project.view.ProjectAbstractView;
 import com.vaadin.ui.Label;
 
 @SuppressWarnings("serial")

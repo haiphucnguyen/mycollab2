@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view;
+package com.esofthead.mycollab.module.project.view.user;
 
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.VerticalLayout;

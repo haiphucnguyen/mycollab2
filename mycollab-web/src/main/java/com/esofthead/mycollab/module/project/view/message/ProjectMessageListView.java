@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view;
+package com.esofthead.mycollab.module.project.view.message;
 
 import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;

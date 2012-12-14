@@ -9,6 +9,12 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriter
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.defect.DefectDashboardPresenter;
 import com.esofthead.mycollab.module.project.view.defect.DefectDashboardViewImpl;
+import com.esofthead.mycollab.module.project.view.message.ProjectMessageListPresenter;
+import com.esofthead.mycollab.module.project.view.message.ProjectMessageListViewImpl;
+import com.esofthead.mycollab.module.project.view.milestone.ProjectMilestonePresenter;
+import com.esofthead.mycollab.module.project.view.milestone.ProjectMilestoneViewImpl;
+import com.esofthead.mycollab.module.project.view.task.ProjectTaskPresenter;
+import com.esofthead.mycollab.module.project.view.task.ProjectTaskViewImpl;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;

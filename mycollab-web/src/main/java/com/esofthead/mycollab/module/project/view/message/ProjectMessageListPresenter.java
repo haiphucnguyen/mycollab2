@@ -1,7 +1,8 @@
-package com.esofthead.mycollab.module.project.view;
+package com.esofthead.mycollab.module.project.view.message;
 
 import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.service.MessageService;
+import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;

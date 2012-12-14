@@ -1,6 +1,6 @@
-package com.esofthead.mycollab.module.project.view;
+package com.esofthead.mycollab.module.project.view.user;
 
-import com.esofthead.mycollab.module.project.view.MyDefectsView.MyDefectsPresenter;
+import com.esofthead.mycollab.module.project.view.user.MyDefectsView.MyDefectsPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;

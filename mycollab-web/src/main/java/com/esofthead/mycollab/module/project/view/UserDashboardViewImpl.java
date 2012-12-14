@@ -1,9 +1,17 @@
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.module.project.view.MyDefectsView.MyDefectsPresenter;
-import com.esofthead.mycollab.module.project.view.MyFeedsView.MyFeedsPresenter;
-import com.esofthead.mycollab.module.project.view.MyProjectsView.MyProjectPresenter;
-import com.esofthead.mycollab.module.project.view.MyTasksView.MyTasksPresenter;
+import com.esofthead.mycollab.module.project.view.user.MyDefectsPresenterImpl;
+import com.esofthead.mycollab.module.project.view.user.MyDefectsViewImpl;
+import com.esofthead.mycollab.module.project.view.user.MyFeedsPresenterImpl;
+import com.esofthead.mycollab.module.project.view.user.MyFeedsViewImpl;
+import com.esofthead.mycollab.module.project.view.user.MyProjectsPresenterImpl;
+import com.esofthead.mycollab.module.project.view.user.MyProjectsViewImpl;
+import com.esofthead.mycollab.module.project.view.user.MyTasksPresenterImpl;
+import com.esofthead.mycollab.module.project.view.user.MyTasksViewImpl;
+import com.esofthead.mycollab.module.project.view.user.MyDefectsView.MyDefectsPresenter;
+import com.esofthead.mycollab.module.project.view.user.MyFeedsView.MyFeedsPresenter;
+import com.esofthead.mycollab.module.project.view.user.MyProjectsView.MyProjectPresenter;
+import com.esofthead.mycollab.module.project.view.user.MyTasksView.MyTasksPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.github.wolfie.detachedtabs.DetachedTabs;

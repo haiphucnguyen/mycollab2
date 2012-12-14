@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view;
+package com.esofthead.mycollab.module.project.view.message;
 
 import java.util.GregorianCalendar;
 import java.util.HashSet;
@@ -13,6 +13,7 @@ import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.service.MessageService;
+import com.esofthead.mycollab.module.project.view.ProjectAbstractView;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList;
