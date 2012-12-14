@@ -10,7 +10,7 @@ import com.vaadin.ui.Label;
 
 public class GridFormLayoutHelper implements Serializable {
 	private static final long serialVersionUID = 1L;
-	
+
 	private final GridLayout layout;
 
 	public GridFormLayoutHelper(int columns, int rows) {
@@ -60,6 +60,28 @@ public class GridFormLayoutHelper implements Serializable {
 		field.setCaption(null);
 		field.setWidth(width);
 		return field;
+	}
+
+	public Component addComponent(Component field, String caption, int columns,
+			int rows, int colspan, int rowspan) {
+		if (caption != null) {
+			Label l = new Label(caption + ":");
+			l.setSizeUndefined();
+			layout.addComponent(l, 2 * columns, rows + 1);
+			layout.setComponentAlignment(l, Alignment.TOP_RIGHT);
+
+			layout.addComponent(field, 2 * columns + 1, rows + 1, 2 * (columns
+					+ colspan - 1) + 1, rows + rowspan);
+			field.setCaption(null);
+			return field;
+		} else {
+			layout.addComponent(field, 2 * columns, rows + 1, 2 * (columns
+					+ colspan - 1) + 1, rows + rowspan);
+			field.setCaption(null);
+			field.setWidth("100%");
+			return field;
+		}
+
 	}
 
 	public Component addComponent(Component field, String caption, int columns,

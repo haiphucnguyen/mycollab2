@@ -14,7 +14,6 @@ import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
@@ -22,6 +21,7 @@ import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -107,9 +107,25 @@ public class NoteListItems extends Depot {
 						docName = docName.substring(lastIndex + 1,
 								docName.length());
 					}
+
+					HorizontalLayout attachmentLayout = new HorizontalLayout();
+					
 					Button attachmentLink = new Button(docName);
 					attachmentLink.setStyleName(BaseTheme.BUTTON_LINK);
-					noteLayout.addComponent(attachmentLink);
+					attachmentLayout.addComponent(attachmentLink);
+					
+					attachmentLayout.setSpacing(true);
+					attachmentLayout.setMargin(false, false, false, true);
+
+					Embedded trashBtn = new Embedded(null, new ThemeResource(
+							"icons/16/trash.png"));
+					attachmentLayout.addComponent(trashBtn);
+
+					Embedded downloadBtn = new Embedded(null,
+							new ThemeResource("icons/16/download.png"));
+					attachmentLayout.addComponent(downloadBtn);
+					
+					noteLayout.addComponent(attachmentLayout);
 				}
 			}
 			return noteLayout;

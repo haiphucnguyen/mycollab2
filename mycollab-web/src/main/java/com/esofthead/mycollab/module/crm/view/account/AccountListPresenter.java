@@ -15,13 +15,13 @@ import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
-public class AccountListPresenter extends
-		CrmGenericPresenter<AccountListView> implements
-		ListPresenter<AccountSearchCriteria> {
+public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
+		implements ListPresenter<AccountSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 
 	private AccountService accountService;
@@ -106,6 +106,8 @@ public class AccountListPresenter extends
 						if ("delete".equals(id)) {
 							deleteSelectedItems();
 						} else if ("mail".equals(id)) {
+							view.getWidget().getWindow()
+									.addWindow(new MailFormWindow());
 						}
 					}
 				});

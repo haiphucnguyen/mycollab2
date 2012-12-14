@@ -198,6 +198,8 @@ public class CrmContainer extends AbstractView {
 				EventBus.getInstance().fireEvent(
 						new ActivityEvent.GotoCalendar(this, null));
 			}
+			
+			addBtn.setPopupVisible(false);
 
 			for (Iterator<com.vaadin.ui.Component> it = toolbar
 					.getComponentIterator(); it.hasNext();) {
