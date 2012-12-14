@@ -17,6 +17,10 @@
         <javaModelGenerator
             targetPackage="com.esofthead.mycollab.module.project.domain"
             targetProject="src/main/java" >
+
+            <property
+                name="rootClass"
+                value="com.esofthead.mycollab.core.utils.ValuedBean" />
         </javaModelGenerator>
 
         <sqlMapGenerator

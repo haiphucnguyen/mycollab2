@@ -6,6 +6,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.defect.DefectDashboardPresenter;
 import com.esofthead.mycollab.module.project.view.defect.DefectDashboardViewImpl;
@@ -13,6 +14,10 @@ import com.esofthead.mycollab.module.project.view.message.ProjectMessageListPres
 import com.esofthead.mycollab.module.project.view.message.ProjectMessageListViewImpl;
 import com.esofthead.mycollab.module.project.view.milestone.ProjectMilestonePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.ProjectMilestoneViewImpl;
+import com.esofthead.mycollab.module.project.view.problem.ProblemListPresenter;
+import com.esofthead.mycollab.module.project.view.risk.RiskContainer;
+import com.esofthead.mycollab.module.project.view.risk.RiskListPresenter;
+import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
 import com.esofthead.mycollab.module.project.view.task.ProjectTaskPresenter;
 import com.esofthead.mycollab.module.project.view.task.ProjectTaskViewImpl;
 import com.esofthead.mycollab.shell.events.ShellEvent;
@@ -26,13 +31,13 @@ import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 @SuppressWarnings("serial")
 public class ProjectViewImpl extends AbstractView implements ProjectView {
@@ -47,6 +52,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private ProjectMilestonePresenter milestonesPresenter;
 	private ProjectTaskPresenter taskPresenter;
 	private DefectDashboardPresenter defectPresenter;
+	private ProblemListPresenter problemListPresenter;
+	private RiskPresenter riskPresenter;
 
 	private SimpleProject project;
 
@@ -85,6 +92,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		myProjectTab.addTab(constructProjectMilestoneComponent(), "Milestones");
 		myProjectTab.addTab(constructTaskDashboardComponent(), "Tasks");
 		myProjectTab.addTab(constructProjectDefectComponent(), "Bugs");
+		myProjectTab.addTab(constructProjectRiskComponent(), "Risks");
+		myProjectTab.addTab(constructProjectDefectComponent(), "Problems");
 		myProjectTab.addTab(constructProjectDashboardComponent(), "Calendar");
 
 		myProjectTab
@@ -106,6 +115,12 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 						} else if ("Defects".equals(caption)) {
 							defectPresenter.go(ProjectViewImpl.this,
 									new ScreenData<SimpleProject>(project));
+						} else if ("Risks".equals(caption)) {
+							RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
+
+							riskPresenter.go(ProjectViewImpl.this,
+									new ScreenData.Search<RiskSearchCriteria>(
+											searchCriteria));
 						}
 					}
 				});
@@ -127,6 +142,12 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 				.getView(ProjectMilestoneViewImpl.class);
 		milestonesPresenter = new ProjectMilestonePresenter(milestoneView);
 		return milestoneView;
+	}
+
+	private Component constructProjectRiskComponent() {
+		RiskContainer riskView = ViewManager.getView(RiskContainer.class);
+		riskPresenter = new RiskPresenter(riskView);
+		return riskView;
 	}
 
 	private Component constructTaskDashboardComponent() {

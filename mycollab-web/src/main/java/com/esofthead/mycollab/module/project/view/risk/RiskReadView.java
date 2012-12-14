@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
-public interface RiskReadView {
+import com.esofthead.mycollab.vaadin.mvp.View;
+
+public interface RiskReadView extends View{
 
 }
