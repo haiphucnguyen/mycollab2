@@ -46,7 +46,7 @@ public class PopupButtonControl extends SplitButton implements HasPopupActionHan
 					@Override
 					public void buttonClick(ClickEvent event) {
 						changeOption(id, name);
-						
+						PopupButtonControl.this.setPopupVisible(false);
 					}
 				});
 		selectContent.addComponent(selectAllBtn);
