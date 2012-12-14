@@ -3,6 +3,8 @@ package com.esofthead.mycollab.web;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -24,6 +26,8 @@ public class AppContext implements TransactionListener, Serializable {
 	private SimpleUser session;
 
 	private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
+
+	private Map<String, Object> variables = new HashMap<String, Object>();
 
 	public AppContext(Application application) {
 		this.app = application;
@@ -81,6 +85,14 @@ public class AppContext implements TransactionListener, Serializable {
 		return springContext.getBean(requiredType);
 	}
 
+	public static void putVariable(String key, Object value) {
+		instance.get().variables.put(key, value);
+	}
+
+	public static Object getVariable(String key) {
+		return instance.get().variables.get(key);
+	}
+
 	public static <T extends View> T getView(Class<T> viewClass) {
 		T view = getSpringBean(viewClass);
 
@@ -90,8 +102,9 @@ public class AppContext implements TransactionListener, Serializable {
 
 	private static SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
 			"MM/dd/yyyy hh:mm a");
-	
-	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat("MM/dd/yyyy");
+
+	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"MM/dd/yyyy");
 
 	public static String formatDateTime(Date date) {
 		if (date == null) {
@@ -99,14 +112,14 @@ public class AppContext implements TransactionListener, Serializable {
 		}
 		return simpleDateTimeFormat.format(date);
 	}
-	
+
 	public static String formatDate(Date date) {
 		if (date == null) {
 			return "";
 		}
 		return simpleDateFormat.format(date);
 	}
-	
+
 	public static String getDateTimeFormat() {
 		return "MM/dd/yyyy hh:mm a";
 	}

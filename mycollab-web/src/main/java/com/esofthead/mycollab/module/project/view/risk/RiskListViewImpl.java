@@ -29,13 +29,13 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 
 	private static final long serialVersionUID = 1L;
 
-	private final RiskSearchPanel accountSearchPanel;
+	private final RiskSearchPanel riskSearchPanel;
 
 	private SelectionOptionButton selectOptionButton;
 
 	private PagedBeanTable2<RiskService, RiskSearchCriteria, SimpleRisk> tableItem;
 
-	private final VerticalLayout accountListLayout;
+	private final VerticalLayout riskListLayout;
 
 	private PopupButtonControl tableActionControls;
 
@@ -44,23 +44,22 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 	public RiskListViewImpl() {
 		this.setSpacing(true);
 
-		accountSearchPanel = new RiskSearchPanel();
-		this.addComponent(accountSearchPanel);
+		riskSearchPanel = new RiskSearchPanel();
+		this.addComponent(riskSearchPanel);
 
-		accountListLayout = new VerticalLayout();
-		accountListLayout.setSpacing(true);
-		this.addComponent(accountListLayout);
+		riskListLayout = new VerticalLayout();
+		riskListLayout.setSpacing(true);
+		this.addComponent(riskListLayout);
 
 		generateDisplayTable();
 	}
 
 	private void generateDisplayTable() {
 		tableItem = new PagedBeanTable2<RiskService, RiskSearchCriteria, SimpleRisk>(
-				AppContext.getSpringBean(RiskService.class),
-				SimpleRisk.class, new String[] { "selected", "accountname",
-						"city", "phoneoffice", "email", "assignUserFullName" },
-				new String[] { "", "Name", "City", "Phone Office",
-						"Email Address", "Assign User" });
+				AppContext.getSpringBean(RiskService.class), SimpleRisk.class,
+				new String[] { "selected", "riskname",
+						"assignedToUserFullName", "datedue", "level" },
+				new String[] { "", "Name", "Assigned to", "Due Date", "Level" });
 
 		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -75,13 +74,12 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						SimpleRisk account = tableItem
-								.getBeanByIndex(itemId);
+						SimpleRisk account = tableItem.getBeanByIndex(itemId);
 						tableItem.fireSelectItemEvent(account);
 
 					}
 				});
-				
+
 				SimpleRisk account = tableItem.getBeanByIndex(itemId);
 				account.setExtraData(cb);
 				return cb;
@@ -98,13 +96,13 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 
 		tableItem.setWidth("100%");
 
-		accountListLayout.addComponent(constructTableActionControls());
-		accountListLayout.addComponent(tableItem);
+		riskListLayout.addComponent(constructTableActionControls());
+		riskListLayout.addComponent(tableItem);
 	}
 
 	@Override
 	public HasSearchHandlers<RiskSearchCriteria> getSearchHandlers() {
-		return accountSearchPanel;
+		return riskSearchPanel;
 	}
 
 	private ComponentContainer constructTableActionControls() {

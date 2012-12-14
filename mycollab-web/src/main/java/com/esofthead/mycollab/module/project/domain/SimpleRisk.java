@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.project.domain;
 
 public class SimpleRisk extends Risk {
+	private static final long serialVersionUID = 1L;
+
 	private String risksource;
 
 	private String raisedByUserFullName;

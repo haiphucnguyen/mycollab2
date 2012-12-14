@@ -6,13 +6,13 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriter
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.user.MyProjectsView.MyProjectPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.mvp.Presenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class MyProjectsPresenterImpl extends AbstractPresenter implements MyProjectPresenter {
-
+	private static final long serialVersionUID = 1L;
+	
 	private MyProjectsView view;
 	private ProjectService projectService;
 	private ProjectSearchCriteria searchCriteria;

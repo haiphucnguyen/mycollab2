@@ -1,13 +1,18 @@
 package com.esofthead.mycollab.module.project.view;
 
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.Project;
-import com.esofthead.mycollab.module.project.ui.events.ProjectEvent;
-import com.esofthead.mycollab.module.project.ui.events.ProjectEvent.SaveProjectSucess;
+import com.esofthead.mycollab.module.project.domain.Risk;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.module.project.events.ProjectEvent.SaveProjectSucess;
+import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.web.AppContext;
 
 public class ProjectController {
 
@@ -16,6 +21,7 @@ public class ProjectController {
 	public ProjectController(ProjectMainContainer container) {
 		this.container = container;
 		bindProjectEvents();
+		bindRiskEvents();
 	}
 
 	@SuppressWarnings("serial")
@@ -49,8 +55,32 @@ public class ProjectController {
 								.getView(ProjectViewImpl.class);
 						ProjectViewPresenter presenter = new ProjectViewPresenter(
 								projectView);
-						presenter.go(container, new ScreenData<Project>(
-								(Project) event.getData()));
+						SimpleProject project = (SimpleProject) event.getData();
+						AppContext.putVariable(ProjectContants.PROJECT_NAME,
+								project);
+						presenter.go(container,
+								new ScreenData<Project>(project));
+					}
+				});
+	}
+
+	@SuppressWarnings("serial")
+	private void bindRiskEvents() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<RiskEvent.GotoAdd>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return RiskEvent.GotoAdd.class;
+					}
+
+					@Override
+					public void handle(RiskEvent.GotoAdd event) {
+						ProjectViewImpl projectView = ViewManager
+								.getView(ProjectViewImpl.class);
+						ScreenData.Add<Risk> data = new ScreenData.Add<Risk>(
+								new Risk());
+						projectView.gotoRiskView(data);
 					}
 				});
 	}

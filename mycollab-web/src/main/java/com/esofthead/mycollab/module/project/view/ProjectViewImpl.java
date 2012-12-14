@@ -4,6 +4,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
@@ -117,13 +118,21 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 									new ScreenData<SimpleProject>(project));
 						} else if ("Risks".equals(caption)) {
 							RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
-
+							SimpleProject project = (SimpleProject) AppContext
+									.getVariable(ProjectContants.PROJECT_NAME);
+							searchCriteria.setProjectId(new NumberSearchField(
+									SearchField.AND, project.getId()));
 							riskPresenter.go(ProjectViewImpl.this,
 									new ScreenData.Search<RiskSearchCriteria>(
 											searchCriteria));
 						}
 					}
 				});
+	}
+
+	@Override
+	public void gotoRiskView(ScreenData data) {
+		riskPresenter.go(ProjectViewImpl.this, data);
 	}
 
 	private Component constructProjectDashboardComponent() {

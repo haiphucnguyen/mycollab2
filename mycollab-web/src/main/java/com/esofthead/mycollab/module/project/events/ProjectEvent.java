@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.ui.events;
+package com.esofthead.mycollab.module.project.events;
 
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 
