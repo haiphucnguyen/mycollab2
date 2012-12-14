@@ -51,7 +51,7 @@ public class ShellController implements Serializable {
 						cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
 						Date expiryDate = cal.getTime();
 						BrowserCookies cookies = new BrowserCookies();
-						mainView = ViewManager.getView(MainViewImpl.class);
+						mainView = new MainViewImpl();
 						mainView.addComponent(cookies);
 						cookies.setCookie("loginInfo", AppContext.getUsername()
 								+ "$" + AppContext.getSession().getPassword(),

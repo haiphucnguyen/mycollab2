@@ -1,0 +1,2 @@
+ALTER TABLE `m_prj_problem` ADD COLUMN `type` VARCHAR(45) NULL, ADD COLUMN `typeid` INT NULL ;
+ALTER TABLE `m_prj_risk` ADD COLUMN `type` VARCHAR(45) NULL, ADD COLUMN `typeid` INT NULL;

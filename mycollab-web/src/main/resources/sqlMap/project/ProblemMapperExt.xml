@@ -38,6 +38,7 @@
                  m_prj_problem.raisedbyuser, m_prj_problem.assigntouser, m_prj_problem.impact,
                  m_prj_problem.priority, m_prj_problem.status, m_prj_problem.dateraised, m_prj_problem.datedue, 
                  m_prj_problem.actualstartdate, m_prj_problem.actualenddate, 
+                 m_prj_problem.createdTime, m_prj_problem.lastUpdatedTime, m_prj_problem.type, m_prj_problem.typeid,
                  m_prj_problem.level, m_prj_problem.resolution, m_prj_problem.problemsource, m_prj_problem.state,
                  concat(raisedUser.firstname, IFNULL(concat(' ', raisedUser.middlename, ' '), ' '), raisedUser.lastname) AS raisedByUserFullName,
                  concat(assignedUser.firstname, IFNULL(concat(' ', assignedUser.middlename, ' '), ' '), assignedUser.lastname) AS assignedUserFullName 
@@ -75,13 +76,15 @@
             impact, priority, status, 
             dateraised, datedue, actualstartdate, 
             actualenddate, level, resolution, 
-            problemsource, state)
+            problemsource, state, createdTime, lastUpdatedTime, type, typeid)
         values (#{id,jdbcType=INTEGER}, #{issuename,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
             #{projectid,jdbcType=INTEGER}, #{raisedbyuser,jdbcType=VARCHAR}, #{assigntouser,jdbcType=VARCHAR}, 
             #{impact,jdbcType=VARCHAR}, #{priority,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
             #{dateraised,jdbcType=TIMESTAMP}, #{datedue,jdbcType=TIMESTAMP}, #{actualstartdate,jdbcType=TIMESTAMP}, 
             #{actualenddate,jdbcType=TIMESTAMP}, #{level,jdbcType=INTEGER}, #{resolution,jdbcType=VARCHAR}, 
-            #{problemsource,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR})
+            #{problemsource,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
+            #{createdTime,jdbcType=TIMESTAMP}, #{lastUpdatedTime,jdbcType=TIMESTAMP}, {type,jdbcType=VARCHAR},
+            #{typeid,jdbcType=INTEGER})
         ]]>
 	</insert>
 </mapper>

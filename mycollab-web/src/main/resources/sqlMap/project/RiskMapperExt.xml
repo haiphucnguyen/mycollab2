@@ -39,7 +39,7 @@
           SELECT m_prj_risk.id, m_prj_risk.riskname, m_prj_risk.description, m_prj_risk.projectid, m_prj_risk.raisedbyuser, 
                  m_prj_risk.assigntouser, m_prj_risk.consequence, m_prj_risk.probalitity, m_prj_risk.status, m_prj_risk.dateraised, 
                  m_prj_risk.datedue, m_prj_risk.response, m_prj_risk.resolution, m_prj_risk.level,
-                 m_prj_risk.source,
+                 m_prj_risk.source, m_prj_risk.createdTime, m_prj_risk.lastUpdatedTime, m_prj_risk.type, m_prj_risk.typeid,
                  concat(raisedUser.firstname, IFNULL(concat(' ', raisedUser.middlename, ' '), ' '), raisedUser.lastname) AS raisedByUserFullName,
                  concat(assignedUser.firstname, IFNULL(concat(' ', assignedUser.middlename, ' '), ' '), assignedUser.lastname) AS assignedToUserFullName 
           FROM m_prj_risk
@@ -73,13 +73,15 @@
       projectid, raisedbyuser, assigntouser, 
       consequence, probalitity, status, 
       dateraised, datedue, response, 
-      resolution, level, source
+      resolution, level, source, createdTime, lastUpdatedTime, type, typeid
       )
     values (#{id,jdbcType=INTEGER}, #{riskname,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
       #{projectid,jdbcType=INTEGER}, #{raisedbyuser,jdbcType=VARCHAR}, #{assigntouser,jdbcType=VARCHAR}, 
       #{consequence,jdbcType=VARCHAR}, #{probalitity,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
       #{dateraised,jdbcType=TIMESTAMP}, #{datedue,jdbcType=TIMESTAMP}, #{response,jdbcType=VARCHAR}, 
-      #{resolution,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR}
+      #{resolution,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR,
+      #{createdTime,jdbcType=TIMESTAMP}, #{lastUpdatedTime,jdbcType=TIMESTAMP}, {type,jdbcType=VARCHAR},
+      #{typeid,jdbcType=INTEGER}}
       )
       ]]>
 	</insert>
