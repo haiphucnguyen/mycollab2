@@ -10,8 +10,6 @@ import com.esofthead.mycollab.utils.ParsingUtils;
 import com.esofthead.mycollab.utils.ParsingUtils.InvalidEmailException;
 
 public class MailParsingTest {
-
-	// Hai Nguyen < hainguyen@esofthead.com>, A<a@.com, , B>, C c@a.com, C<a@,
 	@Test
 	public void testValidEmail() throws InvalidEmailException {
 		String validEmails = "Hai Nguyen <hainguyen@esofthead.com>, b@a.com";
@@ -47,25 +45,25 @@ public class MailParsingTest {
 		String emails = " ";
 		ParsingUtils.parseEmailField(emails);
 	}
-	
+
 	@Test(expected = InvalidEmailException.class)
 	public void testInvalidEmail3() throws InvalidEmailException {
 		String emails = "a<a.com, hai@a.com";
 		ParsingUtils.parseEmailField(emails);
 	}
-	
+
 	@Test(expected = InvalidEmailException.class)
 	public void testInvalidEmail4() throws InvalidEmailException {
 		String emails = "a>a.com<, hai@a.com";
 		ParsingUtils.parseEmailField(emails);
 	}
-	
+
 	@Test(expected = InvalidEmailException.class)
 	public void testInvalidEmail5() throws InvalidEmailException {
 		String emails = "a<a. >, hai@a.com";
 		ParsingUtils.parseEmailField(emails);
 	}
-	
+
 	@Test(expected = InvalidEmailException.class)
 	public void testInvalidEmail6() throws InvalidEmailException {
 		String emails = "a<.com>, hai@a.com";
