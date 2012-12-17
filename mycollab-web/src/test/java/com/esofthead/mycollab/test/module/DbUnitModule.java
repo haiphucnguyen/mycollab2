@@ -103,15 +103,6 @@ public final class DbUnitModule extends AbstractEngroupTestModule {
 		log.debug("Finish test setup");
 	}
 
-	/*private void initDatabase(DataSource ds) {
-		DataSourceMigrationManager migrationManager = new DataSourceMigrationManager(
-				ds);
-		ResourceMigrationResolver resolver = new ResourceMigrationResolver(
-				"classpath:/dbscripts/");
-		migrationManager.setMigrationResolver(resolver);
-		migrationManager.migrate();
-	}*/
-
 	public void tearDown() {
 		try {
 			this.databaseTester.onTearDown();

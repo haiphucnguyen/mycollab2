@@ -186,4 +186,10 @@ public class MailParsingTest {
 		String emails = "a@a.com  b <b@y.co , abc@y.co";
 		ParsingUtils.parseEmailField(emails);
 	}
+	
+	@Test (expected = InvalidEmailException.class)
+	public void testInvalidEmail17() throws InvalidEmailException {
+		String emails = "Hai Nguyen <<a@a.com>";
+		ParsingUtils.parseEmailField(emails);
+	}
 }

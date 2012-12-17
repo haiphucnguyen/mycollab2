@@ -11,6 +11,7 @@ import org.springframework.test.context.ContextConfiguration;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
@@ -46,5 +47,18 @@ public class RiskServiceTest {
 				.findPagableListByCriteria(new SearchRequest<RiskSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(2, risks.size());
+	}
+
+	@DataSet
+	@Test
+	public void testInsertAndReturnKey() {
+		Risk record = new Risk();
+		record.setProjectid(1);
+		record.setRiskname("New risk");
+		record.setDescription("aaa");
+		int newId = riskService.saveWithSession(record, "hainguyen");
+
+		Risk risk = riskService.findByPrimaryKey(newId);
+		Assert.assertEquals("New risk", risk.getRiskname());
 	}
 }

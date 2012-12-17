@@ -147,11 +147,6 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView,
 		}
 	}
 
-	public static void main(String[] args) {
-		Double value = Double.valueOf("1.0");
-		System.out.println(value);
-	}
-
 	@Override
 	public HasEditFormHandlers<Risk> getEditFormHandlers() {
 		return editForm;

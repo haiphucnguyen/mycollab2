@@ -1114,6 +1114,10 @@
     resolution CDATA #IMPLIED
     state CDATA #IMPLIED
     problemsource CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
+    type CDATA #IMPLIED
+    typeid CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_project EMPTY>
@@ -1176,6 +1180,10 @@
     resolution CDATA #IMPLIED
     level CDATA #IMPLIED
     source CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
+    type CDATA #IMPLIED
+    typeid CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_role EMPTY>
