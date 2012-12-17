@@ -159,8 +159,8 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 		tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
 		tableItem.setColumnWidth("eventType", UIConstants.TABLE_M_LABEL_WIDTH);
-		tableItem.setColumnWidth("startDate", UIConstants.TABLE_DATE_WIDTH);
-		tableItem.setColumnWidth("endDate", UIConstants.TABLE_DATE_WIDTH);
+		tableItem.setColumnWidth("startDate", UIConstants.TABLE_DATE_TIME_WIDTH);
+		tableItem.setColumnWidth("endDate", UIConstants.TABLE_DATE_TIME_WIDTH);
 
 		tableItem.setWidth("100%");
 

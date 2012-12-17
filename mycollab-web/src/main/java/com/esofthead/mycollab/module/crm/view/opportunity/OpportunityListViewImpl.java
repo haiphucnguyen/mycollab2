@@ -166,10 +166,10 @@ public class OpportunityListViewImpl extends AbstractView implements
 		tableItem.setColumnWidth("salesstage", UIConstants.TABLE_M_LABEL_WIDTH);
 		tableItem.setColumnWidth("amount", UIConstants.TABLE_M_LABEL_WIDTH);
 		tableItem.setColumnWidth("expectedcloseddate",
-				UIConstants.TABLE_DATE_WIDTH);
+				UIConstants.TABLE_DATE_TIME_WIDTH);
 		tableItem.setColumnWidth("assignUserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("createdtime", UIConstants.TABLE_DATE_WIDTH);
+		tableItem.setColumnWidth("createdtime", UIConstants.TABLE_DATE_TIME_WIDTH);
 
 		accountListLayout.addComponent(constructTableActionControls());
 		accountListLayout.addComponent(tableItem);

@@ -106,7 +106,7 @@ public class OpportunityListComp extends Depot implements IRelatedListHandlers {
 		tableItem.setColumnWidth("salesstage", UIConstants.TABLE_M_LABEL_WIDTH);
 		tableItem.setColumnWidth("amount", UIConstants.TABLE_M_LABEL_WIDTH);
 		tableItem.setColumnWidth("expectedcloseddate",
-				UIConstants.TABLE_DATE_WIDTH);
+				UIConstants.TABLE_DATE_TIME_WIDTH);
 		tableItem.setColumnWidth("assignUserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
 

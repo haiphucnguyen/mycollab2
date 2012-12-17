@@ -85,4 +85,12 @@
       )
       ]]>
 	</insert>
+    
+    <select id="findRiskById" parameterType="java.lang.Integer"
+        resultMap="RiskResult">
+        <include
+            refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.selectRisk" />
+
+        WHERE m_prj_risk.id=#{riskId, javaType=INTEGER}
+    </select>
 </mapper>

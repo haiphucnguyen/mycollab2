@@ -166,7 +166,7 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 		tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
 		tableItem.setColumnWidth("assignUserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("createdtime", UIConstants.TABLE_DATE_WIDTH);
+		tableItem.setColumnWidth("createdtime", UIConstants.TABLE_DATE_TIME_WIDTH);
 
 		tableItem.setWidth("100%");
 

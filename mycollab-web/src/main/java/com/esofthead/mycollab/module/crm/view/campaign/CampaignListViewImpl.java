@@ -141,7 +141,7 @@ public class CampaignListViewImpl extends AbstractView implements
 		tableItem.setColumnWidth("type", UIConstants.TABLE_M_LABEL_WIDTH);
 		tableItem.setColumnWidth("expectedrevenue",
 				UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("enddate", UIConstants.TABLE_DATE_WIDTH);
+		tableItem.setColumnWidth("enddate", UIConstants.TABLE_DATE_TIME_WIDTH);
 		tableItem.setColumnWidth("assignUserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
 
