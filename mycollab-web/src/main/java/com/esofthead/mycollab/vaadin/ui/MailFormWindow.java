@@ -4,7 +4,6 @@ import java.util.List;
 
 import org.apache.commons.mail.EmailException;
 import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
-import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
 
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.service.MailService;
@@ -63,7 +62,7 @@ public class MailFormWindow extends Window {
 		config.setToolbarCanCollapse(false);
 		config.setWidth("100%");
 
-		final CKEditorTextField noteArea = new CKEditorTextField(config);
+		final RichTextEditor noteArea = new RichTextEditor();
 		noteArea.setWidth("800px");
 		inputLayout.addComponent(noteArea, null, 0, 4, 2, 1);
 

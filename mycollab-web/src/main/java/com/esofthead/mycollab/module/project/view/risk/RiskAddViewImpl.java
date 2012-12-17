@@ -3,8 +3,6 @@ package com.esofthead.mycollab.module.project.view.risk;
 import java.util.HashMap;
 import java.util.Map;
 
-import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
-import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 import com.esofthead.mycollab.module.project.domain.Risk;
@@ -15,6 +13,7 @@ import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.RichTextEditor;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
@@ -89,28 +88,13 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView,
 			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("description")) {
-					CKEditorConfig config = new CKEditorConfig();
-					config.useCompactTags();
-					config.disableElementsPath();
-					config.setResizeDir(CKEditorConfig.RESIZE_DIR.HORIZONTAL);
-					config.disableSpellChecker();
-					config.setToolbarCanCollapse(false);
-					config.setWidth("100%");
-
-					return new CKEditorTextField(config);
+					return new RichTextEditor();
 				} else if (propertyId.equals("raisedbyuser")) {
 					return new UserComboBox();
 				} 
 				else if (propertyId.equals("response")) {
-					CKEditorConfig config = new CKEditorConfig();
-					config.useCompactTags();
-					config.disableElementsPath();
-					config.setResizeDir(CKEditorConfig.RESIZE_DIR.HORIZONTAL);
-					config.disableSpellChecker();
-					config.setToolbarCanCollapse(false);
-					config.setWidth("100%");
 
-					return new CKEditorTextField(config);
+					return new RichTextEditor();
 				} else if (propertyId.equals("consequence")) {
 					ValueComboBox box = new ValueComboBox();
 					box.loadData(new String[] { "Catastrophic", "Critical",

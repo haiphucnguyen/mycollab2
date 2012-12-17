@@ -3,7 +3,6 @@ package com.esofthead.mycollab.module.crm.ui.components;
 import java.util.GregorianCalendar;
 import java.util.List;
 
-import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
 import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
 
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -14,6 +13,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.RichTextEditor;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
@@ -144,15 +144,8 @@ public class NoteListItems extends Depot {
 			this.setMargin(true);
 			this.setWidth("900px");
 
-			CKEditorConfig config = new CKEditorConfig();
-			config.useCompactTags();
-			config.disableElementsPath();
-			config.setResizeDir(CKEditorConfig.RESIZE_DIR.HORIZONTAL);
-			config.disableSpellChecker();
-			config.setToolbarCanCollapse(false);
-			config.setWidth("100%");
 
-			noteArea = new CKEditorTextField(config);
+			noteArea = new RichTextEditor();
 			noteArea.setWidth("800px");
 			this.addComponent(noteArea);
 
