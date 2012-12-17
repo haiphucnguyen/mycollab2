@@ -1,8 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.util.ArrayList;
 import java.util.List;
-import java.util.StringTokenizer;
 
 import org.apache.commons.mail.EmailException;
 import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
@@ -10,6 +8,8 @@ import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
 
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.service.MailService;
+import com.esofthead.mycollab.utils.ParsingUtils;
+import com.esofthead.mycollab.utils.ParsingUtils.InvalidEmailException;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -81,20 +81,25 @@ public class MailFormWindow extends Window {
 			public void buttonClick(ClickEvent event) {
 				MailService mailService = AppContext
 						.getSpringBean(MailService.class);
-
-				List<MailRecipientField> toFields = parseEmailField((String) mailTo
-						.getValue());
-				List<MailRecipientField> ccFields = parseEmailField((String) mailCc
-						.getValue());
-				List<MailRecipientField> bccFields = parseEmailField((String) mailBcc
-						.getValue());
-
 				try {
+
+					List<MailRecipientField> toFields = ParsingUtils
+							.parseEmailField((String) mailTo.getValue());
+					List<MailRecipientField> ccFields = ParsingUtils
+							.parseEmailField((String) mailCc.getValue());
+					List<MailRecipientField> bccFields = ParsingUtils
+							.parseEmailField((String) mailBcc.getValue());
+
 					mailService.sendMail(toFields, ccFields, bccFields,
 							(String) subject.getValue(),
 							(String) noteArea.getValue());
-				} catch (EmailException e) {
-					e.printStackTrace();
+				} catch (InvalidEmailException e) {
+					// TODO: add more descriptive error message
+					getWindow()
+							.showNotification("Error", "Email invalid error");
+				} catch (EmailException e1) {
+					getWindow().showNotification("Error", "Send email error");
+					e1.printStackTrace();
 				}
 			}
 		});
@@ -117,20 +122,4 @@ public class MailFormWindow extends Window {
 		this.setContent(inputLayout.getLayout());
 	}
 
-	// TODO: need to check mail validation
-	private List<MailRecipientField> parseEmailField(String emailField) {
-		if (emailField == null || emailField.trim().equals("")) {
-			return null;
-		} else {
-			List<MailRecipientField> fields = new ArrayList<MailRecipientField>();
-			StringTokenizer emailTokenizer = new StringTokenizer(emailField,
-					",");
-			while (emailTokenizer.hasMoreElements()) {
-				String email = emailTokenizer.nextToken();
-				MailRecipientField mailField = new MailRecipientField(email);
-				fields.add(mailField);
-			}
-			return fields;
-		}
-	}
 }
