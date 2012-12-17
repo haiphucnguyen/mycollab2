@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.project.ChangeLogSource;
 import com.esofthead.mycollab.module.project.dao.RiskMapper;
 import com.esofthead.mycollab.module.project.dao.RiskMapperExt;
 import com.esofthead.mycollab.module.project.domain.Risk;
+import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ChangeLogService;
 import com.esofthead.mycollab.module.project.service.RiskService;
@@ -63,5 +64,10 @@ public class RiskServiceImpl extends DefaultService<Integer, Risk, RiskSearchCri
 				ChangeLogSource.RISK, risk.getId(), ChangeLogAction.DELETE,
 				risk.getRiskname());
 		return super.internalRemoveWithSession(primaryKey, username);
+	}
+
+	@Override
+	public SimpleRisk findRiskById(int riskId) {
+		return riskMapperExt.findRiskById(riskId);
 	}
 }

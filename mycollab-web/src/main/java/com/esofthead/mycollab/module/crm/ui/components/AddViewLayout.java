@@ -9,35 +9,25 @@ import com.vaadin.ui.Label;
 
 public class AddViewLayout extends CustomLayout {
 	private static final long serialVersionUID = 1L;
-	private final HorizontalLayout Header;
-
-	public AddViewLayout() {
-		super("addView");
-		// this.setSizeUndefined();
-		this.Header = new HorizontalLayout();
-		Label headerName = new Label("Add New");
-		headerName.setStyleName("headerName");
-		this.addComponent(headerName);
-		this.Header.setStyleName("addViewHeader");
-		this.addComponent(Header, "addViewHeader");
-	}
+	private final HorizontalLayout header;
 
 	public AddViewLayout(String section) {
 		super("addView");
 		String sectionName = section.substring(0, 1).toUpperCase()
 				+ section.substring(1).toLowerCase();
 		// this.setSizeUndefined();
-		this.Header = new HorizontalLayout();
-		this.Header.setStyleName("addViewHeader");
-		this.Header.addStyleName("create" + sectionName + "Header");
+		this.header = new HorizontalLayout();
+		this.header.setStyleName("addViewHeader");
+		this.header.addStyleName("create" + sectionName + "header");
 		Embedded icon = new Embedded();
 		icon.setSource(new ThemeResource("icons/48/crm/"
 				+ section.toLowerCase() + ".png"));
-		this.Header.addComponent(icon);
+		this.header.addComponent(icon);
 		Label headerName = new Label("Create " + sectionName);
+		headerName.setWidth("100%");
 		headerName.setStyleName("headerName");
-		this.Header.addComponent(headerName);
-		this.addComponent(Header, "addViewHeader");
+		this.header.addComponent(headerName);
+		this.addComponent(header, "addViewHeader");
 	}
 
 	public void addTopControls(ComponentContainer topControls) {

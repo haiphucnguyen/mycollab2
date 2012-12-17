@@ -1,13 +1,18 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
+import org.vaadin.teemu.ratingstars.RatingStars;
+
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.service.RiskService;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
@@ -85,14 +90,63 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 				return cb;
 			}
 		});
+		
+		tableItem.addGeneratedColumn("riskname", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-		tableItem.setColumnExpandRatio("accountname", 1);
-		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-		tableItem.setColumnWidth("city", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem
-				.setColumnWidth("phoneoffice", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
-		tableItem.setColumnWidth("assignuser", UIConstants.TABLE_X_LABEL_WIDTH);
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleRisk risk = tableItem.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(risk.getRiskname(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new RiskEvent.GotoRead(this, risk
+												.getId()));
+							}
+						});
+				return b;
+
+			}
+		});
+
+		tableItem.addGeneratedColumn("datedue", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				final SimpleRisk item = tableItem.getBeanByIndex(itemId);
+				Label l = new Label();
+				l.setValue(AppContext.formatDate(item.getDatedue()));
+				return l;
+			}
+		});
+
+		tableItem.addGeneratedColumn("level", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				final SimpleRisk item = tableItem.getBeanByIndex(itemId);
+				RatingStars tinyRs = new RatingStars();
+				tinyRs.setValue(item.getLevel());
+				tinyRs.setStyleName("tiny");
+				tinyRs.setReadOnly(true);
+				return tinyRs;
+			}
+		});
+
+		tableItem.setColumnExpandRatio("riskname", 1);
+		tableItem.setColumnWidth("assignedToUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("level",
+				UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("datedue", UIConstants.TABLE_DATE_WIDTH);
 
 		tableItem.setWidth("100%");
 

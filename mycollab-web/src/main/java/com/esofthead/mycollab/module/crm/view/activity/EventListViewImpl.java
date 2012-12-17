@@ -16,6 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -28,6 +29,7 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
+@ViewComponent
 public class EventListViewImpl extends AbstractView implements EventListView {
 	private static final long serialVersionUID = 1L;
 
@@ -157,8 +159,8 @@ public class EventListViewImpl extends AbstractView implements EventListView {
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 		tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
 		tableItem.setColumnWidth("eventType", UIConstants.TABLE_M_LABEL_WIDTH);
-		tableItem.setColumnWidth("startDate", UIConstants.TABLE_DATE_WIDTH);
-		tableItem.setColumnWidth("endDate", UIConstants.TABLE_DATE_WIDTH);
+		tableItem.setColumnWidth("startDate", UIConstants.TABLE_DATE_TIME_WIDTH);
+		tableItem.setColumnWidth("endDate", UIConstants.TABLE_DATE_TIME_WIDTH);
 
 		tableItem.setWidth("100%");
 

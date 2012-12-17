@@ -16,6 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -29,6 +30,7 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
+@ViewComponent
 public class CampaignListViewImpl extends AbstractView implements
 		CampaignListView {
 
@@ -139,7 +141,7 @@ public class CampaignListViewImpl extends AbstractView implements
 		tableItem.setColumnWidth("type", UIConstants.TABLE_M_LABEL_WIDTH);
 		tableItem.setColumnWidth("expectedrevenue",
 				UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("enddate", UIConstants.TABLE_DATE_WIDTH);
+		tableItem.setColumnWidth("enddate", UIConstants.TABLE_DATE_TIME_WIDTH);
 		tableItem.setColumnWidth("assignUserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
 

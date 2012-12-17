@@ -66,7 +66,7 @@
 		</trim>
 	</select>
 
-	<insert id="insert" parameterType="com.esofthead.mycollab.module.project.domain.Risk"
+	<insert id="insertAndReturnKey" parameterType="com.esofthead.mycollab.module.project.domain.Risk"
 		useGeneratedKeys="true" keyProperty="id">
        <![CDATA[
         insert into m_prj_risk (id, riskname, description, 
@@ -79,10 +79,18 @@
       #{projectid,jdbcType=INTEGER}, #{raisedbyuser,jdbcType=VARCHAR}, #{assigntouser,jdbcType=VARCHAR}, 
       #{consequence,jdbcType=VARCHAR}, #{probalitity,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
       #{dateraised,jdbcType=TIMESTAMP}, #{datedue,jdbcType=TIMESTAMP}, #{response,jdbcType=VARCHAR}, 
-      #{resolution,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR,
-      #{createdTime,jdbcType=TIMESTAMP}, #{lastUpdatedTime,jdbcType=TIMESTAMP}, {type,jdbcType=VARCHAR},
-      #{typeid,jdbcType=INTEGER}}
+      #{resolution,jdbcType=VARCHAR}, #{level,jdbcType=DOUBLE}, #{source,jdbcType=VARCHAR},
+      #{createdtime,jdbcType=TIMESTAMP}, #{lastupdatedtime,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR},
+      #{typeid,jdbcType=INTEGER}
       )
       ]]>
 	</insert>
+    
+    <select id="findRiskById" parameterType="java.lang.Integer"
+        resultMap="RiskResult">
+        <include
+            refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.selectRisk" />
+
+        WHERE m_prj_risk.id=#{riskId, javaType=INTEGER}
+    </select>
 </mapper>

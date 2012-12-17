@@ -5,7 +5,6 @@ import java.util.HashSet;
 import java.util.Set;
 
 import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
-import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -18,6 +17,7 @@ import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList.RowDisplayHandler;
+import com.esofthead.mycollab.vaadin.ui.RichTextEditor;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
@@ -89,7 +89,7 @@ public class ProjectMessageListViewImpl extends ProjectAbstractView implements
 
 			rowLayout.addComponent(new Label(obj.getMessage(),
 					Label.CONTENT_XHTML));
-			
+
 			HorizontalLayout footer = new HorizontalLayout();
 			footer.addComponent(new Label(obj.getCommentsCount() + " comments"));
 			rowLayout.addComponent(footer);
@@ -148,8 +148,7 @@ public class ProjectMessageListViewImpl extends ProjectAbstractView implements
 			config.setToolbarCanCollapse(false);
 			config.setWidth("100%");
 
-			final CKEditorTextField ckEditorTextField = new CKEditorTextField(
-					config);
+			final RichTextEditor ckEditorTextField = new RichTextEditor();
 			this.addComponent(ckEditorTextField);
 
 			HorizontalLayout controls = new HorizontalLayout();
