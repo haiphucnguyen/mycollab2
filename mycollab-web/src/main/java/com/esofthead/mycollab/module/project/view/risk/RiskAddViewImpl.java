@@ -28,17 +28,17 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView,
 	private EditForm editForm;
 
 	private Risk risk;
-	
+
 	private static Map<Integer, String> valueCaptions = new HashMap<Integer, String>(
-            5);
+			5);
 
 	static {
-        valueCaptions.put(1, "Epic Fail");
-        valueCaptions.put(2, "Poor");
-        valueCaptions.put(3, "OK");
-        valueCaptions.put(4, "Good");
-        valueCaptions.put(5, "Excellent");
-    }
+		valueCaptions.put(1, "Epic Fail");
+		valueCaptions.put(2, "Poor");
+		valueCaptions.put(3, "OK");
+		valueCaptions.put(4, "Good");
+		valueCaptions.put(5, "Excellent");
+	}
 
 	public RiskAddViewImpl() {
 		super();
@@ -91,9 +91,9 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView,
 					return new RichTextEditor();
 				} else if (propertyId.equals("raisedbyuser")) {
 					return new UserComboBox();
-				} 
-				else if (propertyId.equals("response")) {
-
+				} else if (propertyId.equals("assigntouser")) {
+					return new UserComboBox();
+				} else if (propertyId.equals("response")) {
 					return new RichTextEditor();
 				} else if (propertyId.equals("consequence")) {
 					ValueComboBox box = new ValueComboBox();
@@ -104,32 +104,52 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView,
 					ValueComboBox box = new ValueComboBox();
 					box.loadData(new String[] { "Certain", "Likely",
 							"Possible", "Unlikely", "Rare" });
+					return box;
 				} else if (propertyId.equals("status")) {
 					ValueComboBox box = new ValueComboBox();
 					box.loadData(new String[] { "Open", "Closed" });
 					return box;
 				} else if (propertyId.equals("level")) {
-					RatingStars ratingField = new RatingStars();
+					final RatingStars ratingField = new RatingStars();
 					ratingField.setMaxValue(5);
 					ratingField.setImmediate(true);
 					ratingField.setDescription("Risk level");
-					ratingField.setValueCaption(valueCaptions.values()
-		                    .toArray(new String[5]));
-					ratingField.setValue(1f);
-					
+					ratingField.setValueCaption(valueCaptions.values().toArray(
+							new String[5]));
+
 					ratingField.addListener(new Property.ValueChangeListener() {
 
-		                private static final long serialVersionUID = -3277119031169194273L;
+						private static final long serialVersionUID = -3277119031169194273L;
 
 						public void valueChange(Property.ValueChangeEvent event) {
-		                    
-		                }
-		            });
-					return null;
+							Double value = (Double) event.getProperty()
+									.getValue();
+							RatingStars changedRs = (RatingStars) event
+									.getProperty();
+
+							// reset value captions
+							changedRs.setValueCaption(valueCaptions.values()
+									.toArray(new String[5]));
+							// set "Your Rating" caption
+							if (value == null) {
+								changedRs.setValue(1);
+							} else {
+								changedRs.setValueCaption(
+										(int) Math.round(value), "Your Rating");
+							}
+
+						}
+					});
+					return ratingField;
 				}
 				return null;
 			}
 		}
+	}
+
+	public static void main(String[] args) {
+		Double value = Double.valueOf("1.0");
+		System.out.println(value);
 	}
 
 	@Override

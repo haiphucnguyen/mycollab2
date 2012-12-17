@@ -79,7 +79,7 @@
       #{projectid,jdbcType=INTEGER}, #{raisedbyuser,jdbcType=VARCHAR}, #{assigntouser,jdbcType=VARCHAR}, 
       #{consequence,jdbcType=VARCHAR}, #{probalitity,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
       #{dateraised,jdbcType=TIMESTAMP}, #{datedue,jdbcType=TIMESTAMP}, #{response,jdbcType=VARCHAR}, 
-      #{resolution,jdbcType=VARCHAR}, #{level,jdbcType=INTEGER}, #{source,jdbcType=VARCHAR,
+      #{resolution,jdbcType=VARCHAR}, #{level,jdbcType=DOUBLE}, #{source,jdbcType=VARCHAR,
       #{createdTime,jdbcType=TIMESTAMP}, #{lastUpdatedTime,jdbcType=TIMESTAMP}, {type,jdbcType=VARCHAR},
       #{typeid,jdbcType=INTEGER}}
       )
