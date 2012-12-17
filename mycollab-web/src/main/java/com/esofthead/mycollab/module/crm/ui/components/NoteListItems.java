@@ -18,6 +18,7 @@ import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -30,12 +31,12 @@ import com.vaadin.ui.themes.BaseTheme;
 public class NoteListItems extends Depot {
 	private static final long serialVersionUID = 1L;
 
-	private String type;
-	private Integer typeid;
+	private final String type;
+	private final Integer typeid;
 
 	private BeanList<NoteService, NoteSearchCriteria, SimpleNote> noteList;
 
-	private NoteService noteService;
+	private final NoteService noteService;
 	private NoteEditor noteEditor;
 
 	private Button createBtn;
@@ -70,6 +71,7 @@ public class NoteListItems extends Depot {
 
 		noteList = new BeanList<NoteService, NoteSearchCriteria, SimpleNote>(
 				noteService, new NoteRowDisplayHandler());
+		noteList.setStyleName("noteList");
 		contentContainer.addComponent(noteList);
 		displayNotes();
 	}
@@ -86,16 +88,24 @@ public class NoteListItems extends Depot {
 		@Override
 		public Component generateRow(SimpleNote obj, int rowIndex) {
 			VerticalLayout noteLayout = new VerticalLayout();
+			noteLayout.setWidth("98%");
+			noteLayout.setStyleName("noteRow");
 			if (obj.getSubject() != null && !obj.getSubject().equals("")) {
 				noteLayout.addComponent(new Label(obj.getSubject()));
 			}
-
-			noteLayout.addComponent(new Label(obj.getNote(),
-					Label.CONTENT_XHTML));
+			
+			Label noteContent = new Label(obj.getNote(),Label.CONTENT_XHTML);
+			noteContent.setWidth("98%");
+			noteLayout.addComponent(noteContent);
+			noteLayout.setComponentAlignment(noteContent, Alignment.MIDDLE_CENTER);
 
 			HorizontalLayout footer = new HorizontalLayout();
-			footer.addComponent(new Label("Posted by " + obj.getCreateduser()
-					+ " on " + obj.getCreatedtime()));
+			Label metadata = new Label("Posted by " + obj.getCreateduser()
+					+ " on " + obj.getCreatedtime());
+			footer.addComponent(metadata);
+			metadata.setSizeUndefined();
+			footer.setComponentAlignment(metadata, Alignment.MIDDLE_RIGHT);
+			footer.setWidth("99%");
 			noteLayout.addComponent(footer);
 
 			List<Attachment> attachments = obj.getAttachments();
@@ -109,11 +119,11 @@ public class NoteListItems extends Depot {
 					}
 
 					HorizontalLayout attachmentLayout = new HorizontalLayout();
-					
+
 					Button attachmentLink = new Button(docName);
 					attachmentLink.setStyleName(BaseTheme.BUTTON_LINK);
 					attachmentLayout.addComponent(attachmentLink);
-					
+
 					attachmentLayout.setSpacing(true);
 					attachmentLayout.setMargin(false, false, false, true);
 
@@ -124,7 +134,7 @@ public class NoteListItems extends Depot {
 					Embedded downloadBtn = new Embedded(null,
 							new ThemeResource("icons/16/download.png"));
 					attachmentLayout.addComponent(downloadBtn);
-					
+
 					noteLayout.addComponent(attachmentLayout);
 				}
 			}
@@ -136,7 +146,7 @@ public class NoteListItems extends Depot {
 	private class NoteEditor extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
-		private CKEditorTextField noteArea;
+		private final CKEditorTextField noteArea;
 
 		public NoteEditor() {
 			super();

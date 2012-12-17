@@ -862,6 +862,21 @@ input.v-textfield-errorField {
 }
 /* End Calendar */
 
+/* Note List */
+
+.noteList .noteRow {
+	border: 1px solid #919191;
+}
+.noteList > div > div:first-child .noteRow {
+	border-bottom: 0px;
+}
+
+.noteList > div > div:nth-child(odd) .noteRow {
+	background-color: #dce5ee;
+}
+
+/* End Note List */
+
 .v-table-cell-wrapper {
 white-space: normal;
 }
