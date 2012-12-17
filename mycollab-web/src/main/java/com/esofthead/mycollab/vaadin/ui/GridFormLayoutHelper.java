@@ -61,6 +61,20 @@ public class GridFormLayoutHelper implements Serializable {
 		field.setWidth(width);
 		return field;
 	}
+	
+	public Component addComponent(Component field, String caption, int columns,
+			int rows, int colspan, String width) {
+		Label l = new Label(caption + ":");
+		l.setSizeUndefined();
+		layout.addComponent(l, 2 * columns, rows + 1);
+		layout.setComponentAlignment(l, Alignment.TOP_RIGHT);
+
+		layout.addComponent(field, 2 * columns + 1, rows + 1, 2 * (columns
+				+ colspan - 1) + 1, rows + 1);
+		field.setCaption(null);
+		field.setWidth(width);
+		return field;
+	}
 
 	public Component addComponent(Component field, String caption, int columns,
 			int rows, int colspan, int rowspan) {
