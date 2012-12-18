@@ -9,7 +9,6 @@ import org.vaadin.browsercookies.BrowserCookies;
 import com.esofthead.mycollab.module.project.view.ProjectMainContainer;
 import com.esofthead.mycollab.module.user.presenter.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
-import com.esofthead.mycollab.module.user.view.LoginViewImpl;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent.GotoMainPage;
 import com.esofthead.mycollab.shell.events.ShellEvent.GotoProjectPage;
@@ -17,6 +16,7 @@ import com.esofthead.mycollab.shell.events.ShellEvent.LogOut;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
@@ -78,11 +78,10 @@ public class ShellController implements Serializable {
 						cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) - 1);
 						Date expiryDate = cal.getTime();
 						BrowserCookies cookies = new BrowserCookies();
-						LoginView loginView = new LoginViewImpl();
-						((MainWindowContainer) AppContext.getApplication()
-								.getMainWindow()).presenter = new LoginPresenter(
-								loginView);
-						((LoginViewImpl) loginView).addComponent(cookies);
+						LoginPresenter presenter = PresenterResolver
+								.getPresenter(LoginPresenter.class);
+						LoginView loginView = presenter.getView();
+						loginView.addComponent(cookies);
 						cookies.setCookie("loginInfo", "", expiryDate);
 
 						((Window) container).setContent(loginView.getWidget());

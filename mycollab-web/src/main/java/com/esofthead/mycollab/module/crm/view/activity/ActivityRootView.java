@@ -4,8 +4,9 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
@@ -13,6 +14,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 
+@ViewComponent
 public class ActivityRootView extends AbstractView {
 	private static final long serialVersionUID = 1L;
 
@@ -59,16 +61,15 @@ public class ActivityRootView extends AbstractView {
 	}
 
 	private ComponentContainer constructCalendarView() {
-		ActivityCalendarViewImpl view = ViewManager
-				.getView(ActivityCalendarViewImpl.class);
-		calendarPresenter = new ActivityCalendarPresenter(view);
-		return view;
+		calendarPresenter = PresenterResolver
+				.getPresenter(ActivityCalendarPresenter.class);
+		return calendarPresenter.getView();
 	}
 
 	private ComponentContainer constructActivityListView() {
-		EventListViewImpl view = ViewManager.getView(EventListViewImpl.class);
-		eventListPresenter = new EventListPresenter(view);
-		return view;
+		eventListPresenter = PresenterResolver
+				.getPresenter(EventListPresenter.class);
+		return eventListPresenter.getView();
 	}
 
 	public void gotoCalendar() {

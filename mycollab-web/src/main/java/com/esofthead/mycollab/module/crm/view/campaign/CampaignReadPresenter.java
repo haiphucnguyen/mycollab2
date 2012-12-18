@@ -14,8 +14,8 @@ import com.vaadin.ui.ComponentContainer;
 public class CampaignReadPresenter  extends CrmGenericPresenter<CampaignReadView> {
 	private static final long serialVersionUID = 1L;
 
-	public CampaignReadPresenter(CampaignReadView view) {
-		this.view = view;
+	public CampaignReadPresenter() {
+		super(CampaignReadView.class);
 		bind();
 	}
 

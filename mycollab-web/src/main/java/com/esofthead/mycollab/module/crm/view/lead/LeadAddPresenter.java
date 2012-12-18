@@ -16,8 +16,8 @@ import com.vaadin.ui.ComponentContainer;
 public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 	private static final long serialVersionUID = 1L;
 
-	public LeadAddPresenter(LeadAddView view) {
-		this.view = view;
+	public LeadAddPresenter() {
+		super(LeadAddView.class);
 		bind();
 	}
 

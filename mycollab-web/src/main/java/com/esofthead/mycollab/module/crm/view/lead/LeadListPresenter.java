@@ -26,13 +26,13 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 	private LeadService leadService;
 
 	private LeadSearchCriteria searchCriteria;
-	
+
 	private boolean isSelectAll = false;
 
-	public LeadListPresenter(final LeadListView view) {
-		this.view = view;
+	public LeadListPresenter() {
+		super(LeadListView.class);
 		leadService = AppContext.getSpringBean(LeadService.class);
-		
+
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
 			private static final long serialVersionUID = 1L;
 
@@ -45,12 +45,12 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 			public void displayItemChange(int numOfItems) {
 				pageChange();
 			}
-			
+
 			private void pageChange() {
 				if (isSelectAll) {
 					selectAllItemsInCurrentPage();
 				}
-				
+
 				checkWhetherEnableTableActionControl();
 			}
 		});
@@ -63,7 +63,7 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 						doSearch(criteria);
 					}
 				});
-		
+
 		view.getOptionSelectionHandlers().addSelectionOptionHandler(
 				new SelectionOptionHandler() {
 
@@ -82,8 +82,7 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 						isSelectAll = false;
 						for (SimpleLead item : currentDataList) {
 							item.setSelected(false);
-							CheckBox checkBox = (CheckBox) item
-									.getExtraData();
+							CheckBox checkBox = (CheckBox) item.getExtraData();
 							checkBox.setValue(false);
 						}
 
@@ -107,20 +106,21 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 						}
 					}
 				});
-		
-		view.getSelectableItemHandlers().addSelectableItemHandler(new SelectableItemHandler<SimpleLead>() {
-			
-			@Override
-			public void onSelect(SimpleLead item) {
-				isSelectAll = false;
-				item.setSelected(!item.isSelected());
 
-				checkWhetherEnableTableActionControl();
-				
-			}
-		});
+		view.getSelectableItemHandlers().addSelectableItemHandler(
+				new SelectableItemHandler<SimpleLead>() {
+
+					@Override
+					public void onSelect(SimpleLead item) {
+						isSelectAll = false;
+						item.setSelected(!item.isSelected());
+
+						checkWhetherEnableTableActionControl();
+
+					}
+				});
 	}
-	
+
 	private void selectAllItemsInCurrentPage() {
 		Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
 				.getCurrentDataList();
@@ -146,7 +146,7 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 			view.disableActionControls();
 		}
 	}
-	
+
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
@@ -161,16 +161,16 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 
 	private void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleLead> currentDataList = view
-					.getPagedBeanTable().getCurrentDataList();
+			Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
+					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleLead item : currentDataList) {
 				keyList.add(item.getId());
 			}
 
 			if (keyList.size() > 0) {
-				leadService.removeWithSession(keyList,
-						AppContext.getUsername());
+				leadService
+						.removeWithSession(keyList, AppContext.getUsername());
 				doSearch(searchCriteria);
 			}
 		} else {

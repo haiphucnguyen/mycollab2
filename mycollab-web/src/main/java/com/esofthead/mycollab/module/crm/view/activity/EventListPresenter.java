@@ -12,16 +12,16 @@ import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
-public class EventListPresenter implements ListPresenter<EventSearchCriteria> {
+public class EventListPresenter extends AbstractPresenter<EventListView>
+		implements ListPresenter<EventSearchCriteria> {
 	private static final long serialVersionUID = 1L;
-
-	private EventListView view;
 
 	private EventService eventService;
 
@@ -29,8 +29,8 @@ public class EventListPresenter implements ListPresenter<EventSearchCriteria> {
 
 	private boolean isSelectAll = false;
 
-	public EventListPresenter(final EventListView view) {
-		this.view = view;
+	public EventListPresenter() {
+		super(EventListView.class);
 		eventService = AppContext.getSpringBean(EventService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
@@ -146,9 +146,11 @@ public class EventListPresenter implements ListPresenter<EventSearchCriteria> {
 			view.disableActionControls();
 		}
 	}
+	
+
 
 	@Override
-	public void go(ComponentContainer container, ScreenData<?> data) {
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		doSearch((EventSearchCriteria) data.getParams());
 	}
 
@@ -161,16 +163,16 @@ public class EventListPresenter implements ListPresenter<EventSearchCriteria> {
 
 	private void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleEvent> currentDataList = view
-					.getPagedBeanTable().getCurrentDataList();
+			Collection<SimpleEvent> currentDataList = view.getPagedBeanTable()
+					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleEvent item : currentDataList) {
 				keyList.add(item.getId());
 			}
 
 			if (keyList.size() > 0) {
-//				eventService.removeWithSession(keyList,
-//						AppContext.getUsername());
+				// eventService.removeWithSession(keyList,
+				// AppContext.getUsername());
 				doSearch(searchCriteria);
 			}
 		} else {
@@ -178,11 +180,6 @@ public class EventListPresenter implements ListPresenter<EventSearchCriteria> {
 			doSearch(searchCriteria);
 		}
 
-	}
-
-	@Override
-	public void go(ComponentContainer container) {
-		
 	}
 
 }

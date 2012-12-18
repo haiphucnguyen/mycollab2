@@ -30,8 +30,8 @@ public class OpportunityListPresenter extends
 
 	private boolean isSelectAll = false;
 
-	public OpportunityListPresenter(final OpportunityListView view) {
-		this.view = view;
+	public OpportunityListPresenter() {
+		super(OpportunityListView.class);
 		opportunityService = AppContext.getSpringBean(OpportunityService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {

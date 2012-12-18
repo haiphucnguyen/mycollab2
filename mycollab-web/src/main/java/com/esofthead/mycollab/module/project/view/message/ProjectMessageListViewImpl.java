@@ -19,6 +19,7 @@ import com.esofthead.mycollab.vaadin.ui.PagedBeanList;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.RichTextEditor;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -30,6 +31,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
+@ViewComponent
 public class ProjectMessageListViewImpl extends ProjectAbstractView implements
 		ProjectMessageListView, HasEditFormHandlers<Message> {
 	private static final long serialVersionUID = 8433776359091397422L;

@@ -1,11 +1,10 @@
 package com.esofthead.mycollab.module.user.accountsettings;
 
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingsPresenter;
-import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingsViewImpl;
 import com.esofthead.mycollab.module.user.accountsettings.view.UserInformationPresenter;
-import com.esofthead.mycollab.module.user.accountsettings.view.UserInformationViewImpl;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.ui.Button;
@@ -15,15 +14,13 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
+@ViewComponent 
 public class AccountDashboardViewImpl extends AbstractView implements
 		AccountDashboardView {
 
 	private final HorizontalLayout root;
 	private final DetachedTabs accountTab;
 	private final CssLayout accountSpace = new CssLayout();
-
-	private UserInformationPresenter userInformationPresenter;
-	private AccountSettingsPresenter accountSettingsPresenter;
 
 	public AccountDashboardViewImpl() {
 		this.setStyleName("accountViewContainer");
@@ -70,17 +67,15 @@ public class AccountDashboardViewImpl extends AbstractView implements
 	}
 
 	private ComponentContainer constructAccountSettingsComponent() {
-		AccountSettingsViewImpl view = ViewManager
-				.getView(AccountSettingsViewImpl.class);
-		accountSettingsPresenter = new AccountSettingsPresenter(view);
-		return view;
+		AccountSettingsPresenter presenter = PresenterResolver
+				.getPresenter(AccountSettingsPresenter.class);
+		return presenter.getView();
 	}
 
 	private ComponentContainer constructUserInformationComponent() {
-		UserInformationViewImpl view = ViewManager
-				.getView(UserInformationViewImpl.class);
-		userInformationPresenter = new UserInformationPresenter(view);
-		return view;
+		UserInformationPresenter presenter = PresenterResolver
+				.getPresenter(UserInformationPresenter.class);
+		return presenter.getView();
 	}
 
 	@Override

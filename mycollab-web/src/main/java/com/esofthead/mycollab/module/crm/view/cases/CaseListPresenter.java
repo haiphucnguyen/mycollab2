@@ -29,8 +29,8 @@ public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
 
 	private boolean isSelectAll = false;
 
-	public CaseListPresenter(final CaseListView view) {
-		this.view = view;
+	public CaseListPresenter() {
+		super(CaseListView.class);
 		caseService = AppContext.getSpringBean(CaseService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
@@ -162,16 +162,16 @@ public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
 
 	private void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleCase> currentDataList = view
-					.getPagedBeanTable().getCurrentDataList();
+			Collection<SimpleCase> currentDataList = view.getPagedBeanTable()
+					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleCase item : currentDataList) {
 				keyList.add(item.getId());
 			}
 
 			if (keyList.size() > 0) {
-				caseService.removeWithSession(keyList,
-						AppContext.getUsername());
+				caseService
+						.removeWithSession(keyList, AppContext.getUsername());
 				doSearch(searchCriteria);
 			}
 		} else {

@@ -16,8 +16,8 @@ import com.vaadin.ui.ComponentContainer;
 public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 	private static final long serialVersionUID = 1L;
 
-	public ContactAddPresenter(ContactAddView view) {
-		this.view = view;
+	public ContactAddPresenter() {
+		super(ContactAddView.class);
 		bind();
 	}
 
@@ -29,12 +29,12 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 					public void onSave(final Contact account) {
 						saveContact(account);
 						ViewState viewState = HistoryViewManager.back();
-						
+
 						if (viewState instanceof NullViewState) {
 							EventBus.getInstance().fireEvent(
 									new ContactEvent.GotoList(this, null));
 						}
-						
+
 					}
 
 					@Override

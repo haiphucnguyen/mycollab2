@@ -14,8 +14,8 @@ import com.vaadin.ui.ComponentContainer;
 public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 	private static final long serialVersionUID = 1L;
 
-	public LeadReadPresenter(LeadReadView view) {
-		this.view = view;
+	public LeadReadPresenter() {
+		super(LeadReadView.class);
 		bind();
 	}
 
@@ -54,14 +54,16 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 					}
 				});
 	}
-	
+
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
-		
+
 		if (data.getParams() instanceof Integer) {
-			LeadService leadService = AppContext.getSpringBean(LeadService.class);
-			SimpleLead lead = leadService.findLeadById((Integer)data.getParams());
+			LeadService leadService = AppContext
+					.getSpringBean(LeadService.class);
+			SimpleLead lead = leadService.findLeadById((Integer) data
+					.getParams());
 			view.previewItem(lead);
 		}
 	}

@@ -11,14 +11,14 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class MeetingReadPresenter  extends CrmGenericPresenter<MeetingReadView> {
+public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 	private static final long serialVersionUID = 1L;
 
-	public MeetingReadPresenter(MeetingReadView view) {
-		this.view = view;
+	public MeetingReadPresenter() {
+		super(MeetingReadView.class);
 		bind();
 	}
-	
+
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
 				new PreviewFormHandlers<Meeting>() {
@@ -54,11 +54,11 @@ public class MeetingReadPresenter  extends CrmGenericPresenter<MeetingReadView> 
 					}
 				});
 	}
-	
+
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);
-		view.previewItem((SimpleMeeting)data.getParams());
+		view.previewItem((SimpleMeeting) data.getParams());
 	}
 
 }

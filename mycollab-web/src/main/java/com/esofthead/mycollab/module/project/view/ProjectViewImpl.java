@@ -10,23 +10,18 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriter
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.defect.DefectDashboardPresenter;
-import com.esofthead.mycollab.module.project.view.defect.DefectDashboardViewImpl;
 import com.esofthead.mycollab.module.project.view.message.ProjectMessageListPresenter;
-import com.esofthead.mycollab.module.project.view.message.ProjectMessageListViewImpl;
 import com.esofthead.mycollab.module.project.view.milestone.ProjectMilestonePresenter;
-import com.esofthead.mycollab.module.project.view.milestone.ProjectMilestoneViewImpl;
 import com.esofthead.mycollab.module.project.view.problem.ProblemListPresenter;
-import com.esofthead.mycollab.module.project.view.risk.RiskContainer;
-import com.esofthead.mycollab.module.project.view.risk.RiskListPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
 import com.esofthead.mycollab.module.project.view.task.ProjectTaskPresenter;
-import com.esofthead.mycollab.module.project.view.task.ProjectTaskViewImpl;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
@@ -41,6 +36,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
+@ViewComponent
 public class ProjectViewImpl extends AbstractView implements ProjectView {
 
 	private HorizontalSplitPanel root;
@@ -140,37 +136,32 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	}
 
 	private Component constructProjectMessageComponent() {
-		ProjectMessageListViewImpl messageView = ViewManager
-				.getView(ProjectMessageListViewImpl.class);
-		messagePresenter = new ProjectMessageListPresenter(messageView);
-		return messageView;
+		messagePresenter = PresenterResolver
+				.getPresenter(ProjectMessageListPresenter.class);
+		return messagePresenter.getView();
 	}
 
 	private Component constructProjectMilestoneComponent() {
-		ProjectMilestoneViewImpl milestoneView = ViewManager
-				.getView(ProjectMilestoneViewImpl.class);
-		milestonesPresenter = new ProjectMilestonePresenter(milestoneView);
-		return milestoneView;
+		milestonesPresenter = PresenterResolver
+				.getPresenter(ProjectMilestonePresenter.class);
+		return milestonesPresenter.getView();
 	}
 
 	private Component constructProjectRiskComponent() {
-		RiskContainer riskView = ViewManager.getView(RiskContainer.class);
-		riskPresenter = new RiskPresenter(riskView);
-		return riskView;
+		riskPresenter = PresenterResolver.getPresenter(RiskPresenter.class);
+		return riskPresenter.getView();
 	}
 
 	private Component constructTaskDashboardComponent() {
-		ProjectTaskViewImpl taskView = ViewManager
-				.getView(ProjectTaskViewImpl.class);
-		taskPresenter = new ProjectTaskPresenter(taskView);
-		return taskView;
+		taskPresenter = PresenterResolver
+				.getPresenter(ProjectTaskPresenter.class);
+		return taskPresenter.getView();
 	}
 
 	private Component constructProjectDefectComponent() {
-		DefectDashboardViewImpl defectView = ViewManager
-				.getView(DefectDashboardViewImpl.class);
-		defectPresenter = new DefectDashboardPresenter(defectView);
-		return defectView;
+		defectPresenter = PresenterResolver
+				.getPresenter(DefectDashboardPresenter.class);
+		return defectPresenter.getView();
 	}
 
 	@Override

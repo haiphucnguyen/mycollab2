@@ -5,13 +5,12 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
-public class DefectDashboardPresenter extends AbstractPresenter {
+public class DefectDashboardPresenter extends
+		AbstractPresenter<DefectDashboardView> {
 	private static final long serialVersionUID = 1L;
 
-	private DefectDashboardView view;
-
-	public DefectDashboardPresenter(DefectDashboardView view) {
-		this.view = view;
+	public DefectDashboardPresenter() {
+		super(DefectDashboardView.class);
 	}
 
 	@Override

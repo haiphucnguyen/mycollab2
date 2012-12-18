@@ -15,12 +15,14 @@ import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.RichTextEditor;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 
+@ViewComponent
 public class RiskAddViewImpl extends AbstractView implements RiskAddView,
 		IFormAddView<Risk> {
 	private static final long serialVersionUID = 1L;

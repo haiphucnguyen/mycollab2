@@ -16,8 +16,8 @@ import com.vaadin.ui.ComponentContainer;
 public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 	private static final long serialVersionUID = 1L;
 
-	public CallAddPresenter(CallAddView view) {
-		this.view = view;
+	public CallAddPresenter() {
+		super(CallAddView.class);
 
 		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Call>() {
 

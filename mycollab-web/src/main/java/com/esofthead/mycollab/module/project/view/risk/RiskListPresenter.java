@@ -19,11 +19,9 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
-public class RiskListPresenter extends AbstractPresenter implements
+public class RiskListPresenter extends AbstractPresenter<RiskListView> implements
 		ListPresenter<RiskSearchCriteria> {
 	private static final long serialVersionUID = 1L;
-
-	private final RiskListView view;
 	
 	private RiskService accountService;
 
@@ -31,8 +29,8 @@ public class RiskListPresenter extends AbstractPresenter implements
 
 	private boolean isSelectAll = false;
 
-	public RiskListPresenter(final RiskListView view) {
-		this.view = view;
+	public RiskListPresenter() {
+		super(RiskListView.class);
 		
 		accountService = AppContext.getSpringBean(RiskService.class);
 

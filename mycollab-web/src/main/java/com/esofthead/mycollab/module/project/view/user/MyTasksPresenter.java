@@ -1,29 +1,20 @@
 package com.esofthead.mycollab.module.project.view.user;
 
-import com.esofthead.mycollab.module.project.view.user.MyDefectsView.MyDefectsPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
-public class MyDefectsPresenterImpl extends AbstractPresenter implements MyDefectsPresenter{
-	
+public class MyTasksPresenter extends AbstractPresenter<MyTasksView>{
 	private static final long serialVersionUID = 1L;
-	private MyDefectsView view;
-	
-	public MyDefectsPresenterImpl(MyDefectsView view) {
-		this.view = view;
-	}
 
-	@Override
-	public void doDefaultSearch() {
-		// TODO Auto-generated method stub
-		
+	public MyTasksPresenter() {
+		super(MyTasksView.class);
 	}
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }
