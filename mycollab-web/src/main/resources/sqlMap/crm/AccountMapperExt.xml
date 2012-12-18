@@ -9,17 +9,20 @@
 
 
 	<sql id="querySearchCriteria">
-		<if test="accountname != null "><![CDATA[${accountname.operation} m_crm_account.accountname LIKE '%${accountname.value}%' ]]>
+		<if test="accountname != null ">
+			<![CDATA[${accountname.operation} m_crm_account.accountname LIKE '%${accountname.value}%' ]]>
 		</if>
-		<if test="assignUser != null"><![CDATA[${assignUser.operation} m_crm_account.assignUser = #{assignUser.value}]]>
+		<if test="assignUser != null">
+			<![CDATA[${assignUser.operation} m_crm_account.assignUser = #{assignUser.value}]]>
 		</if>
-		<if test=" assignUserName != null "><![CDATA[${assignUserName.operation} concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) LIKE '%${assignUserName.value}%']]>
+		<if test=" assignUserName != null ">
+			<![CDATA[${assignUserName.operation} concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) LIKE '%${assignUserName.value}%']]>
 		</if>
 		<if test="website != null">
             <![CDATA[${website.operation} m_crm_account.website like '%${website.value}%']]>
 		</if>
-		<if test="city != null">
-            <![CDATA[${city.operation} m_crm_account.city like '%${city.value}%']]>
+		<if test="anyCity != null">
+            ${anyCity.operation} (shippingCity LIKE '%${anyCity.value}%' OR city LIKE '%${anyCity.value}%')
 		</if>
 		<if test="types != null">
 			${types.operation} m_crm_account.type IN
@@ -75,8 +78,8 @@
 		</if>
 		<if test="website != null"><![CDATA[${website.operation} m_crm_account.website LiKE '%${website.value}%']]>
 		</if>
-		<if test="city != null">
-            <![CDATA[${city.operation} m_crm_account.city LIKE '%${city.value}%']]>
+		<if test="anyCity != null">
+            ${anyCity.operation} (shippingCity LIKE '%${anyCity.value}%' OR city LIKE '%${anyCity.value}%')
 		</if>
 		<if test="types != null">
 			${types.operation} m_crm_account.type IN
@@ -101,7 +104,6 @@
 		<if test="anyMail != null">
 			${anyMail.operation} email LIKE '%${anyMail.value}%'		
 		</if>
-
 		<if test="assignUsers != null">
 			${assignUsers.operation} m_crm_account.assignUser IN
 			<foreach close=")" collection="assignUsers.values" item="user"

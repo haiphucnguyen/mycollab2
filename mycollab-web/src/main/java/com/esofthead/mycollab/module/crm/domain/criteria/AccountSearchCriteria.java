@@ -29,7 +29,7 @@ public class AccountSearchCriteria extends SearchCriteria {
 
 	private StringSearchField assignUserName;
 
-	private StringSearchField city;
+	private StringSearchField anyCity;
 
 	private StringSearchField website;
 
@@ -44,7 +44,7 @@ public class AccountSearchCriteria extends SearchCriteria {
 	private StringSearchField anyAddress;
 
 	private StringSearchField anyMail;
-
+	
 	public StringSearchField getAnyMail() {
 		return anyMail;
 	}
@@ -79,12 +79,12 @@ public class AccountSearchCriteria extends SearchCriteria {
 		this.assignUser = assignUser;
 	}
 
-	public StringSearchField getCity() {
-		return city;
+	public void setAnyCity(StringSearchField anyCity) {
+		this.anyCity = anyCity;
 	}
 
-	public void setCity(StringSearchField city) {
-		this.city = city;
+	public StringSearchField getAnyCity() {
+		return anyCity;
 	}
 
 	public StringSearchField getWebsite() {

@@ -143,9 +143,36 @@ public class AccountServiceTest {
 
 	@Test
 	@DataSet
+	public void testSearchWebsite() {
+		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		criteria.setWebsite(new StringSearchField(SearchField.AND,
+				"http://www.esofthead.com"));
+		Assert.assertEquals(3, accountService.getTotalCount(criteria));
+		Assert.assertEquals(
+				3,
+				accountService.findPagableListByCriteria(
+						new SearchRequest<AccountSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
+
+	@Test
+	@DataSet
 	public void tesSearchAnyAddress() {
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		criteria.setAnyAddress(new StringSearchField(SearchField.AND, "123"));
+		Assert.assertEquals(2, accountService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				accountService.findPagableListByCriteria(
+						new SearchRequest<AccountSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void tesSearchAnyCity() {
+		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		criteria.setAnyCity(new StringSearchField(SearchField.AND, "ha noi"));
 		Assert.assertEquals(2, accountService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -159,6 +186,19 @@ public class AccountServiceTest {
 	public void testAssignUser() {
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		criteria.setAssignUser(new StringSearchField(SearchField.AND, "hai79"));
+		Assert.assertEquals(1, accountService.getTotalCount(criteria));
+		Assert.assertEquals(
+				1,
+				accountService.findPagableListByCriteria(
+						new SearchRequest<AccountSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testAssignUserName() {
+		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		criteria.setAssignUserName(new StringSearchField(SearchField.AND, "Nguyen Phuc Hai"));
 		Assert.assertEquals(1, accountService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,
