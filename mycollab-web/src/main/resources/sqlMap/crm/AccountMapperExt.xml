@@ -161,7 +161,9 @@
     <delete id="removeByCriteria" parameterType="AccountSearchCriteria">
         DELETE FROM m_crm_account
         <if test="_parameter != null">
-            <include refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1  <include refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
+            </trim>
         </if>
     </delete>
 
