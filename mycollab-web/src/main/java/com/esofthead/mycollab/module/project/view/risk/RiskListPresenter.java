@@ -19,22 +19,20 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
-public class RiskListPresenter extends AbstractPresenter implements
+public class RiskListPresenter extends AbstractPresenter<RiskListView> implements
 		ListPresenter<RiskSearchCriteria> {
 	private static final long serialVersionUID = 1L;
-
-	private final RiskListView view;
 	
-	private RiskService accountService;
+	private RiskService riskService;
 
 	private RiskSearchCriteria searchCriteria;
 
 	private boolean isSelectAll = false;
 
-	public RiskListPresenter(final RiskListView view) {
-		this.view = view;
+	public RiskListPresenter() {
+		super(RiskListView.class);
 		
-		accountService = AppContext.getSpringBean(RiskService.class);
+		riskService = AppContext.getSpringBean(RiskService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
 			private static final long serialVersionUID = 1L;
@@ -175,12 +173,12 @@ public class RiskListPresenter extends AbstractPresenter implements
 			}
 
 			if (keyList.size() > 0) {
-				accountService.removeWithSession(keyList,
+				riskService.removeWithSession(keyList,
 						AppContext.getUsername());
 				doSearch(searchCriteria);
 			}
 		} else {
-			accountService.removeByCriteria(searchCriteria);
+			riskService.removeByCriteria(searchCriteria);
 			doSearch(searchCriteria);
 		}
 

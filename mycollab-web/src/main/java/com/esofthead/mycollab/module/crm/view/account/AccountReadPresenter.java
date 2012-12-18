@@ -21,8 +21,8 @@ import com.vaadin.ui.ComponentContainer;
 public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 	private static final long serialVersionUID = 1L;
 
-	public AccountReadPresenter(AccountReadView view) {
-		this.view = view;
+	public AccountReadPresenter() {
+		super(AccountReadView.class);
 		bind();
 	}
 

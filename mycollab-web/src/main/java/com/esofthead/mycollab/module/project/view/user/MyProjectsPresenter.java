@@ -4,34 +4,28 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.user.MyProjectsView.MyProjectPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
+import com.esofthead.mycollab.vaadin.mvp.ListPresenter2;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class MyProjectsPresenterImpl extends AbstractPresenter implements MyProjectPresenter {
+public class MyProjectsPresenter extends AbstractPresenter<MyProjectsView>
+		implements ListPresenter2<ProjectSearchCriteria> {
 	private static final long serialVersionUID = 1L;
-	
-	private MyProjectsView view;
+
 	private ProjectService projectService;
 	private ProjectSearchCriteria searchCriteria;
 
-	public MyProjectsPresenterImpl(MyProjectsView view) {
-		this.view = view;
+	public MyProjectsPresenter() {
+		super(MyProjectsView.class);
+
 		projectService = AppContext.getSpringBean(ProjectService.class);
 		bind();
 	}
 
 	private void bind() {
-	}
-
-	@Override
-	public void doDefaultSearch() {
-		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		doSearch(criteria);
 	}
 
 	@Override
@@ -41,13 +35,21 @@ public class MyProjectsPresenterImpl extends AbstractPresenter implements MyProj
 		checkWhetherEnableTableActionControl();
 
 	}
-	
+
 	private void checkWhetherEnableTableActionControl() {
-		
+
 	}
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		
+
+	}
+
+	@Override
+	public void doDefaultSearch() {
+		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		doSearch(criteria);
 	}
 }

@@ -9,13 +9,12 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class ProjectMessageListPresenter extends AbstractPresenter {
+public class ProjectMessageListPresenter extends
+		AbstractPresenter<ProjectMessageListView> {
 	private static final long serialVersionUID = 1L;
 
-	private ProjectMessageListView view;
-
-	public ProjectMessageListPresenter(ProjectMessageListView view) {
-		this.view = view;
+	public ProjectMessageListPresenter() {
+		super(ProjectMessageListView.class);
 		bind();
 	}
 

@@ -7,17 +7,15 @@ import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.mvp.Presenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class LoginPresenter extends AbstractPresenter {
+public class LoginPresenter extends AbstractPresenter<LoginView> {
+	private static final long serialVersionUID = 1L;
 
-	private LoginView view;
-
-	public LoginPresenter(LoginView view) {
-		this.view = view;
+	public LoginPresenter() {
+		super(LoginView.class);
 		view.setPresenter(this);
 	}
 
@@ -28,7 +26,8 @@ public class LoginPresenter extends AbstractPresenter {
 			SimpleUser authentication = securityService.authentication(
 					username, password);
 			AppContext.setSession(authentication);
-			EventBus.getInstance().fireEvent(new ShellEvent.GotoMainPage(this, null));
+			EventBus.getInstance().fireEvent(
+					new ShellEvent.GotoMainPage(this, null));
 		} catch (EngroupException e) {
 			e.printStackTrace();
 		}

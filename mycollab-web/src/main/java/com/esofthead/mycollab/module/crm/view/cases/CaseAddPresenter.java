@@ -16,8 +16,8 @@ import com.vaadin.ui.ComponentContainer;
 public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 	private static final long serialVersionUID = 1L;
 
-	public CaseAddPresenter(CaseAddView view) {
-		this.view = view;
+	public CaseAddPresenter() {
+		super(CaseAddView.class);
 		bind();
 	}
 

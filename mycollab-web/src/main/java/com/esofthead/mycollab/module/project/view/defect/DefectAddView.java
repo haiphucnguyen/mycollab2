@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.view.defect;
 
-public interface DefectAddView {
+import com.esofthead.mycollab.vaadin.mvp.View;
+
+public interface DefectAddView extends View{
 
 }

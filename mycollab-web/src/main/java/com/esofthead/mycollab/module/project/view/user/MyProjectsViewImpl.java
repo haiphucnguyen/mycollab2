@@ -11,6 +11,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -19,6 +20,7 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
+@ViewComponent
 public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
 
 	private PagedBeanTable2<ProjectService, ProjectSearchCriteria, SimpleProject> tableItem;

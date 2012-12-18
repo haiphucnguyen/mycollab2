@@ -16,37 +16,38 @@ import com.vaadin.ui.ComponentContainer;
 public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 	private static final long serialVersionUID = 1L;
 
-	public MeetingAddPresenter(MeetingAddView view) {
-		this.view = view;
+	public MeetingAddPresenter() {
+		super(MeetingAddView.class);
 
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Meeting>() {
+		view.getEditFormHandlers().addFormHandler(
+				new EditFormHandler<Meeting>() {
 
-			@Override
-			public void onSave(final Meeting item) {
-				save(item);
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.GotoTodoList(this, null));
-				}
-			}
+					@Override
+					public void onSave(final Meeting item) {
+						save(item);
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new ActivityEvent.GotoTodoList(this, null));
+						}
+					}
 
-			@Override
-			public void onCancel() {
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.GotoTodoList(this, null));
-				}
-			}
+					@Override
+					public void onCancel() {
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new ActivityEvent.GotoTodoList(this, null));
+						}
+					}
 
-			@Override
-			public void onSaveAndNew(final Meeting item) {
-				save(item);
-				EventBus.getInstance().fireEvent(
-						new ActivityEvent.MeetingAdd(this, null));
-			}
-		});
+					@Override
+					public void onSaveAndNew(final Meeting item) {
+						save(item);
+						EventBus.getInstance().fireEvent(
+								new ActivityEvent.MeetingAdd(this, null));
+					}
+				});
 	}
 
 	@Override
@@ -56,7 +57,8 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 	}
 
 	public void save(Meeting item) {
-		MeetingService meetingService = AppContext.getSpringBean(MeetingService.class);
+		MeetingService meetingService = AppContext
+				.getSpringBean(MeetingService.class);
 
 		item.setSaccountid(AppContext.getAccountId());
 		if (item.getId() == null) {

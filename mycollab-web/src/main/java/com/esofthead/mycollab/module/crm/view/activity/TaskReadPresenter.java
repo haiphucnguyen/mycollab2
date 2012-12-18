@@ -14,8 +14,8 @@ import com.vaadin.ui.ComponentContainer;
 public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 	private static final long serialVersionUID = 1L;
 
-	public TaskReadPresenter(TaskReadView view) {
-		this.view = view;
+	public TaskReadPresenter() {
+		super(TaskReadView.class);
 		bind();
 	}
 

@@ -1,7 +1,9 @@
 package com.esofthead.mycollab.module.project.domain;
 
 public class SimpleTaskResource extends TaskResource {
-    private String taskname;
+	private static final long serialVersionUID = 1L;
+
+	private String taskname;
 
     private String resourcename;
 

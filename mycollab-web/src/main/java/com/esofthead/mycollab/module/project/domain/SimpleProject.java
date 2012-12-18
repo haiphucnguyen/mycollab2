@@ -1,8 +1,9 @@
 package com.esofthead.mycollab.module.project.domain;
 
 public class SimpleProject extends Project {
+	private static final long serialVersionUID = 1L;
 
-    private String ownerName;
+	private String ownerName;
 
     private String accountName;
 

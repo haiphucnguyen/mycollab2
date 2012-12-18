@@ -29,8 +29,8 @@ public class CampaignListPresenter extends
 
 	private boolean isSelectAll = false;
 
-	public CampaignListPresenter(final CampaignListView view) {
-		this.view = view;
+	public CampaignListPresenter() {
+		super(CampaignListView.class);
 		campaignService = AppContext.getSpringBean(CampaignService.class);
 		
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {

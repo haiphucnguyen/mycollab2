@@ -4,12 +4,11 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
-public class AccountSettingsPresenter extends AbstractPresenter {
+public class AccountSettingsPresenter extends AbstractPresenter<AccountSettingsView> {
+	private static final long serialVersionUID = 1L;
 
-	private final AccountSettingsView view;
-
-	public AccountSettingsPresenter(AccountSettingsView view) {
-		this.view = view;
+	public AccountSettingsPresenter() {
+		super(AccountSettingsView.class);
 	}
 
 	@Override

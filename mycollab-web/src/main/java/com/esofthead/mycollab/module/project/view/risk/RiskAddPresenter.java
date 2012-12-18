@@ -15,13 +15,11 @@ import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class RiskAddPresenter extends AbstractPresenter {
+public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 	private static final long serialVersionUID = 1L;
 
-	private RiskAddView view;
-
-	public RiskAddPresenter(RiskAddView view) {
-		this.view = view;
+	public RiskAddPresenter() {
+		super(RiskAddView.class);
 		bind();
 	}
 
@@ -33,40 +31,38 @@ public class RiskAddPresenter extends AbstractPresenter {
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(
-				new EditFormHandler<Risk>() {
+		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Risk>() {
 
-					@Override
-					public void onSave(final Risk risk) {
-						saveRisk(risk);
-						ViewState viewState = HistoryViewManager.back();
-						if (viewState instanceof NullViewState) {
-							EventBus.getInstance().fireEvent(
-									new RiskEvent.GotoList(this, null));
-						}
-					}
+			@Override
+			public void onSave(final Risk risk) {
+				saveRisk(risk);
+				ViewState viewState = HistoryViewManager.back();
+				if (viewState instanceof NullViewState) {
+					EventBus.getInstance().fireEvent(
+							new RiskEvent.GotoList(this, null));
+				}
+			}
 
-					@Override
-					public void onCancel() {
-						ViewState viewState = HistoryViewManager.back();
-						if (viewState instanceof NullViewState) {
-							EventBus.getInstance().fireEvent(
-									new RiskEvent.GotoList(this, null));
-						}
-					}
+			@Override
+			public void onCancel() {
+				ViewState viewState = HistoryViewManager.back();
+				if (viewState instanceof NullViewState) {
+					EventBus.getInstance().fireEvent(
+							new RiskEvent.GotoList(this, null));
+				}
+			}
 
-					@Override
-					public void onSaveAndNew(final Risk risk) {
-						saveRisk(risk);
-						EventBus.getInstance().fireEvent(
-								new RiskEvent.GotoAdd(this, null));
-					}
-				});
+			@Override
+			public void onSaveAndNew(final Risk risk) {
+				saveRisk(risk);
+				EventBus.getInstance().fireEvent(
+						new RiskEvent.GotoAdd(this, null));
+			}
+		});
 	}
 
 	public void saveRisk(Risk risk) {
-		RiskService riskService = AppContext
-				.getSpringBean(RiskService.class);
+		RiskService riskService = AppContext.getSpringBean(RiskService.class);
 		SimpleProject project = (SimpleProject) AppContext
 				.getVariable(ProjectContants.PROJECT_NAME);
 		risk.setProjectid(project.getId());

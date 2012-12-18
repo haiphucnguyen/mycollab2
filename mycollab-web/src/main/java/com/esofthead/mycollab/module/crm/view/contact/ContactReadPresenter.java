@@ -14,8 +14,8 @@ import com.vaadin.ui.ComponentContainer;
 public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 	private static final long serialVersionUID = 1L;
 
-	public ContactReadPresenter(ContactReadView view) {
-		this.view = view;
+	public ContactReadPresenter() {
+		super(ContactReadView.class);
 		bind();
 	}
 

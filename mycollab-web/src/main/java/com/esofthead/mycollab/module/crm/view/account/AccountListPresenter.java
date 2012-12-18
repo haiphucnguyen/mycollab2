@@ -30,8 +30,8 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 
 	private boolean isSelectAll = false;
 
-	public AccountListPresenter(final AccountListView view) {
-		this.view = view;
+	public AccountListPresenter() {
+		super(AccountListView.class);
 		accountService = AppContext.getSpringBean(AccountService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {

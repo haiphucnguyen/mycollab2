@@ -35,76 +35,35 @@ import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddPresenter;
-import com.esofthead.mycollab.module.crm.view.account.AccountAddView;
-import com.esofthead.mycollab.module.crm.view.account.AccountAddViewImpl;
 import com.esofthead.mycollab.module.crm.view.account.AccountListPresenter;
-import com.esofthead.mycollab.module.crm.view.account.AccountListView;
-import com.esofthead.mycollab.module.crm.view.account.AccountListViewImpl;
 import com.esofthead.mycollab.module.crm.view.account.AccountReadPresenter;
-import com.esofthead.mycollab.module.crm.view.account.AccountReadView;
-import com.esofthead.mycollab.module.crm.view.account.AccountReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.activity.ActivityRootPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.ActivityRootView;
 import com.esofthead.mycollab.module.crm.view.activity.CallAddPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.CallAddViewImpl;
 import com.esofthead.mycollab.module.crm.view.activity.CallReadPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.CallReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.activity.MeetingAddPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.MeetingAddViewImpl;
 import com.esofthead.mycollab.module.crm.view.activity.MeetingReadPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.MeetingReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.activity.TaskAddPresenter;
 import com.esofthead.mycollab.module.crm.view.activity.TaskAddViewImpl;
 import com.esofthead.mycollab.module.crm.view.activity.TaskReadPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.TaskReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddPresenter;
-import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddView;
-import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddViewImpl;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignListPresenter;
-import com.esofthead.mycollab.module.crm.view.campaign.CampaignListView;
-import com.esofthead.mycollab.module.crm.view.campaign.CampaignListViewImpl;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignReadPresenter;
-import com.esofthead.mycollab.module.crm.view.campaign.CampaignReadView;
-import com.esofthead.mycollab.module.crm.view.campaign.CampaignReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.cases.CaseAddPresenter;
-import com.esofthead.mycollab.module.crm.view.cases.CaseAddView;
-import com.esofthead.mycollab.module.crm.view.cases.CaseAddViewImpl;
 import com.esofthead.mycollab.module.crm.view.cases.CaseListPresenter;
-import com.esofthead.mycollab.module.crm.view.cases.CaseListView;
-import com.esofthead.mycollab.module.crm.view.cases.CaseListViewImpl;
 import com.esofthead.mycollab.module.crm.view.cases.CaseReadPresenter;
-import com.esofthead.mycollab.module.crm.view.cases.CaseReadView;
-import com.esofthead.mycollab.module.crm.view.cases.CaseReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.contact.ContactAddPresenter;
-import com.esofthead.mycollab.module.crm.view.contact.ContactAddView;
-import com.esofthead.mycollab.module.crm.view.contact.ContactAddViewImpl;
 import com.esofthead.mycollab.module.crm.view.contact.ContactListPresenter;
-import com.esofthead.mycollab.module.crm.view.contact.ContactListView;
-import com.esofthead.mycollab.module.crm.view.contact.ContactListViewImpl;
 import com.esofthead.mycollab.module.crm.view.contact.ContactReadPresenter;
-import com.esofthead.mycollab.module.crm.view.contact.ContactReadView;
-import com.esofthead.mycollab.module.crm.view.contact.ContactReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.lead.LeadAddPresenter;
-import com.esofthead.mycollab.module.crm.view.lead.LeadAddView;
-import com.esofthead.mycollab.module.crm.view.lead.LeadAddViewImpl;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListPresenter;
-import com.esofthead.mycollab.module.crm.view.lead.LeadListView;
-import com.esofthead.mycollab.module.crm.view.lead.LeadListViewImpl;
 import com.esofthead.mycollab.module.crm.view.lead.LeadReadPresenter;
-import com.esofthead.mycollab.module.crm.view.lead.LeadReadView;
-import com.esofthead.mycollab.module.crm.view.lead.LeadReadViewImpl;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddPresenter;
-import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddView;
-import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddViewImpl;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListPresenter;
-import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListView;
-import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListViewImpl;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityReadPresenter;
-import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityReadView;
-import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityReadViewImpl;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.web.AppContext;
@@ -137,8 +96,8 @@ public class CrmController {
 
 					@Override
 					public void handle(GotoHome event) {
-						CrmHomeViewImpl crmHome = ViewManager.getView(CrmHomeViewImpl.class);
-						CrmHomePresenter presenter = new CrmHomePresenter(crmHome);
+						CrmHomePresenter presenter = PresenterResolver
+								.getPresenter(CrmHomePresenter.class);
 						presenter.go(container, null);
 					}
 
@@ -157,10 +116,8 @@ public class CrmController {
 
 					@Override
 					public void handle(AccountEvent.GotoList event) {
-						AccountListView view = ViewManager
-								.getView(AccountListViewImpl.class);
-						AccountListPresenter presenter = new AccountListPresenter(
-								view);
+						AccountListPresenter presenter = PresenterResolver
+								.getPresenter(AccountListPresenter.class);
 
 						AccountSearchCriteria criteria = new AccountSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(
@@ -181,10 +138,10 @@ public class CrmController {
 
 					@Override
 					public void handle(AccountEvent.GotoAdd event) {
-						AccountAddView view = ViewManager
-								.getView(AccountAddViewImpl.class);
-						new AccountAddPresenter(view).go(container,
-								new ScreenData.Add<Account>(new Account()));
+						AccountAddPresenter presenter = PresenterResolver
+								.getPresenter(AccountAddPresenter.class);
+						presenter.go(container, new ScreenData.Add<Account>(
+								new Account()));
 					}
 				});
 
@@ -198,12 +155,12 @@ public class CrmController {
 
 					@Override
 					public void handle(AccountEvent.GotoEdit event) {
-						AccountAddView view = ViewManager
-								.getView(AccountAddViewImpl.class);
+						AccountAddPresenter presenter = PresenterResolver
+								.getPresenter(AccountAddPresenter.class);
 
 						SimpleAccount account = (SimpleAccount) event.getData();
-						new AccountAddPresenter(view).go(container,
-								new ScreenData.Edit<Account>(account));
+						presenter.go(container, new ScreenData.Edit<Account>(
+								account));
 					}
 				});
 
@@ -218,9 +175,9 @@ public class CrmController {
 					@SuppressWarnings({ "rawtypes", "unchecked" })
 					@Override
 					public void handle(GotoRead event) {
-						AccountReadView view = ViewManager
-								.getView(AccountReadViewImpl.class);
-						new AccountReadPresenter(view).go(container,
+						AccountReadPresenter presenter = PresenterResolver
+								.getPresenter(AccountReadPresenter.class);
+						presenter.go(container,
 								new ScreenData.Preview(event.getData()));
 					}
 				});
@@ -238,9 +195,9 @@ public class CrmController {
 
 					@Override
 					public void handle(GotoCalendar event) {
-						ActivityRootView view = ViewManager
-								.getView(ActivityRootView.class);
-						new ActivityRootPresenter(view).go(container, null);
+						ActivityRootPresenter presenter = PresenterResolver
+								.getPresenter(ActivityRootPresenter.class);
+						presenter.go(container, null);
 					}
 				});
 
@@ -255,10 +212,9 @@ public class CrmController {
 
 					@Override
 					public void handle(GotoTodoList event) {
-						ActivityRootView view = ViewManager
-								.getView(ActivityRootView.class);
-						new ActivityRootPresenter(view).go(container,
-								new ScreenData<String>("todo"));
+						ActivityRootPresenter presenter = PresenterResolver
+								.getPresenter(ActivityRootPresenter.class);
+						presenter.go(container, new ScreenData<String>("todo"));
 					}
 				});
 
@@ -312,9 +268,9 @@ public class CrmController {
 					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(ActivityEvent.TaskRead event) {
-						TaskReadViewImpl view = ViewManager
-								.getView(TaskReadViewImpl.class);
-						new TaskReadPresenter(view).go(container,
+						TaskReadPresenter presenter = PresenterResolver
+								.getPresenter(TaskReadPresenter.class);
+						presenter.go(container,
 								new ScreenData.Preview(event.getData()));
 
 					}
@@ -331,10 +287,10 @@ public class CrmController {
 
 					@Override
 					public void handle(ActivityEvent.MeetingAdd event) {
-						MeetingAddViewImpl view = ViewManager
-								.getView(MeetingAddViewImpl.class);
-						new MeetingAddPresenter(view).go(container,
-								new ScreenData.Add<Meeting>(new Meeting()));
+						MeetingAddPresenter presenter = PresenterResolver
+								.getPresenter(MeetingAddPresenter.class);
+						presenter.go(container, new ScreenData.Add<Meeting>(
+								new Meeting()));
 					}
 				});
 
@@ -349,12 +305,10 @@ public class CrmController {
 
 					@Override
 					public void handle(ActivityEvent.MeetingEdit event) {
-						MeetingAddViewImpl view = ViewManager
-								.getView(MeetingAddViewImpl.class);
-						new MeetingAddPresenter(view).go(
-								container,
-								new ScreenData.Edit<Meeting>((Meeting) event
-										.getData()));
+						MeetingAddPresenter presenter = PresenterResolver
+								.getPresenter(MeetingAddPresenter.class);
+						presenter.go(container, new ScreenData.Edit<Meeting>(
+								(Meeting) event.getData()));
 					}
 				});
 
@@ -369,8 +323,8 @@ public class CrmController {
 
 					@Override
 					public void handle(ActivityEvent.MeetingRead event) {
-						MeetingReadViewImpl view = ViewManager
-								.getView(MeetingReadViewImpl.class);
+						MeetingReadPresenter presenter = PresenterResolver
+								.getPresenter(MeetingReadPresenter.class);
 						Object data = event.getData();
 						if (data instanceof Integer) {
 							MeetingService meetingService = AppContext
@@ -378,7 +332,7 @@ public class CrmController {
 							SimpleMeeting meeting = meetingService
 									.findMeetingById((Integer) data);
 							if (meeting != null) {
-								new MeetingReadPresenter(view).go(container,
+								presenter.go(container,
 										new ScreenData.Add<Meeting>(meeting));
 							}
 						}
@@ -397,9 +351,9 @@ public class CrmController {
 
 					@Override
 					public void handle(ActivityEvent.CallAdd event) {
-						CallAddViewImpl view = ViewManager
-								.getView(CallAddViewImpl.class);
-						new CallAddPresenter(view).go(container,
+						CallAddPresenter presenter = PresenterResolver
+								.getPresenter(CallAddPresenter.class);
+						presenter.go(container,
 								new ScreenData<Call>(new Call()));
 					}
 				});
@@ -415,12 +369,10 @@ public class CrmController {
 
 					@Override
 					public void handle(ActivityEvent.CallEdit event) {
-						CallAddViewImpl view = ViewManager
-								.getView(CallAddViewImpl.class);
-						new CallAddPresenter(view).go(
-								container,
-								new ScreenData.Edit<Call>((Call) event
-										.getData()));
+						CallAddPresenter presenter = PresenterResolver
+								.getPresenter(CallAddPresenter.class);
+						presenter.go(container, new ScreenData.Edit<Call>(
+								(Call) event.getData()));
 					}
 				});
 
@@ -435,8 +387,8 @@ public class CrmController {
 
 					@Override
 					public void handle(ActivityEvent.CallRead event) {
-						CallReadViewImpl view = ViewManager
-								.getView(CallReadViewImpl.class);
+						CallReadPresenter presenter = PresenterResolver
+								.getPresenter(CallReadPresenter.class);
 						Object data = event.getData();
 						if (data instanceof Integer) {
 							CallService callService = AppContext
@@ -444,7 +396,7 @@ public class CrmController {
 							SimpleCall call = callService
 									.findCallById((Integer) data);
 							if (call != null) {
-								new CallReadPresenter(view).go(container,
+								presenter.go(container,
 										new ScreenData.Add<Call>(call));
 							}
 						}
@@ -466,10 +418,8 @@ public class CrmController {
 
 					@Override
 					public void handle(CampaignEvent.GotoList event) {
-						CampaignListView view = ViewManager
-								.getView(CampaignListViewImpl.class);
-						CampaignListPresenter presenter = new CampaignListPresenter(
-								view);
+						CampaignListPresenter presenter = PresenterResolver
+								.getPresenter(CampaignListPresenter.class);
 						CampaignSearchCriteria searchCriteria = new CampaignSearchCriteria();
 						searchCriteria.setSaccountid(new NumberSearchField(
 								SearchField.AND, AppContext.getAccountId()));
@@ -490,10 +440,10 @@ public class CrmController {
 
 					@Override
 					public void handle(CampaignEvent.GotoAdd event) {
-						CampaignAddView view = ViewManager
-								.getView(CampaignAddViewImpl.class);
-						new CampaignAddPresenter(view).go(container,
-								new ScreenData.Add<Campaign>(new Campaign()));
+						CampaignAddPresenter presenter = PresenterResolver
+								.getPresenter(CampaignAddPresenter.class);
+						presenter.go(container, new ScreenData.Add<Campaign>(
+								new Campaign()));
 					}
 				});
 
@@ -507,12 +457,10 @@ public class CrmController {
 
 					@Override
 					public void handle(CampaignEvent.GotoEdit event) {
-						CampaignAddView view = ViewManager
-								.getView(CampaignAddViewImpl.class);
-						new CampaignAddPresenter(view).go(
-								container,
-								new ScreenData.Edit<Campaign>((Campaign) event
-										.getData()));
+						CampaignAddPresenter presenter = PresenterResolver
+								.getPresenter(CampaignAddPresenter.class);
+						presenter.go(container, new ScreenData.Edit<Campaign>(
+								(Campaign) event.getData()));
 					}
 				});
 
@@ -527,9 +475,9 @@ public class CrmController {
 					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(CampaignEvent.GotoRead event) {
-						CampaignReadView view = ViewManager
-								.getView(CampaignReadViewImpl.class);
-						new CampaignReadPresenter(view).go(container,
+						CampaignReadPresenter presenter = PresenterResolver
+								.getPresenter(CampaignReadPresenter.class);
+						presenter.go(container,
 								new ScreenData.Preview(event.getData()));
 					}
 				});
@@ -547,10 +495,8 @@ public class CrmController {
 
 					@Override
 					public void handle(ContactEvent.GotoList event) {
-						ContactListView view = ViewManager
-								.getView(ContactListViewImpl.class);
-						ContactListPresenter presenter = new ContactListPresenter(
-								view);
+						ContactListPresenter presenter = PresenterResolver
+								.getPresenter(ContactListPresenter.class);
 
 						ContactSearchCriteria searchCriteria = new ContactSearchCriteria();
 						searchCriteria.setSaccountid(new NumberSearchField(
@@ -571,10 +517,10 @@ public class CrmController {
 
 					@Override
 					public void handle(ContactEvent.GotoAdd event) {
-						ContactAddView view = ViewManager
-								.getView(ContactAddViewImpl.class);
-						new ContactAddPresenter(view).go(container,
-								new ScreenData.Add<Contact>(new Contact()));
+						ContactAddPresenter presenter = PresenterResolver
+								.getPresenter(ContactAddPresenter.class);
+						presenter.go(container, new ScreenData.Add<Contact>(
+								new Contact()));
 					}
 				});
 
@@ -588,12 +534,10 @@ public class CrmController {
 
 					@Override
 					public void handle(ContactEvent.GotoEdit event) {
-						ContactAddView view = ViewManager
-								.getView(ContactAddViewImpl.class);
-						new ContactAddPresenter(view).go(
-								container,
-								new ScreenData.Edit<Contact>((Contact) event
-										.getData()));
+						ContactAddPresenter presenter = PresenterResolver
+								.getPresenter(ContactAddPresenter.class);
+						presenter.go(container, new ScreenData.Edit<Contact>(
+								(Contact) event.getData()));
 					}
 				});
 
@@ -608,9 +552,9 @@ public class CrmController {
 					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(ContactEvent.GotoRead event) {
-						ContactReadView view = ViewManager
-								.getView(ContactReadViewImpl.class);
-						new ContactReadPresenter(view).go(container,
+						ContactReadPresenter presenter = PresenterResolver
+								.getPresenter(ContactReadPresenter.class);
+						presenter.go(container,
 								new ScreenData.Preview(event.getData()));
 					}
 				});
@@ -628,10 +572,8 @@ public class CrmController {
 
 					@Override
 					public void handle(LeadEvent.GotoList event) {
-						LeadListView view = ViewManager
-								.getView(LeadListViewImpl.class);
-						LeadListPresenter presenter = new LeadListPresenter(
-								view);
+						LeadListPresenter presenter = PresenterResolver
+								.getPresenter(LeadListPresenter.class);
 						LeadSearchCriteria searchCriteria = new LeadSearchCriteria();
 						searchCriteria.setSaccountid(new NumberSearchField(
 								SearchField.AND, AppContext.getAccountId()));
@@ -651,10 +593,10 @@ public class CrmController {
 
 					@Override
 					public void handle(LeadEvent.GotoAdd event) {
-						LeadAddView view = ViewManager
-								.getView(LeadAddViewImpl.class);
-						new LeadAddPresenter(view).go(container,
-								new ScreenData.Add<Lead>(new Lead()));
+						LeadAddPresenter presenter = PresenterResolver
+								.getPresenter(LeadAddPresenter.class);
+						presenter.go(container, new ScreenData.Add<Lead>(
+								new Lead()));
 					}
 				});
 
@@ -668,12 +610,10 @@ public class CrmController {
 
 					@Override
 					public void handle(LeadEvent.GotoEdit event) {
-						LeadAddView view = ViewManager
-								.getView(LeadAddViewImpl.class);
-						new LeadAddPresenter(view).go(
-								container,
-								new ScreenData.Edit<Lead>((Lead) event
-										.getData()));
+						LeadAddPresenter presenter = PresenterResolver
+								.getPresenter(LeadAddPresenter.class);
+						presenter.go(container, new ScreenData.Edit<Lead>(
+								(Lead) event.getData()));
 					}
 				});
 
@@ -688,9 +628,9 @@ public class CrmController {
 					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(LeadEvent.GotoRead event) {
-						LeadReadView view = ViewManager
-								.getView(LeadReadViewImpl.class);
-						new LeadReadPresenter(view).go(container,
+						LeadReadPresenter presenter = PresenterResolver
+								.getPresenter(LeadReadPresenter.class);
+						presenter.go(container,
 								new ScreenData.Preview(event.getData()));
 					}
 				});
@@ -708,10 +648,8 @@ public class CrmController {
 
 					@Override
 					public void handle(OpportunityEvent.GotoList event) {
-						OpportunityListView view = ViewManager
-								.getView(OpportunityListViewImpl.class);
-						OpportunityListPresenter presenter = new OpportunityListPresenter(
-								view);
+						OpportunityListPresenter presenter = PresenterResolver
+								.getPresenter(OpportunityListPresenter.class);
 						OpportunitySearchCriteria searchCriteria = new OpportunitySearchCriteria();
 						searchCriteria.setSaccountid(new NumberSearchField(
 								SearchField.AND, AppContext.getAccountId()));
@@ -732,9 +670,9 @@ public class CrmController {
 
 					@Override
 					public void handle(OpportunityEvent.GotoAdd event) {
-						OpportunityAddView view = ViewManager
-								.getView(OpportunityAddViewImpl.class);
-						new OpportunityAddPresenter(view).go(container,
+						OpportunityAddPresenter presenter = PresenterResolver
+								.getPresenter(OpportunityAddPresenter.class);
+						presenter.go(container,
 								new ScreenData.Add<Opportunity>(
 										new Opportunity()));
 					}
@@ -750,9 +688,9 @@ public class CrmController {
 
 					@Override
 					public void handle(OpportunityEvent.GotoEdit event) {
-						OpportunityAddView view = ViewManager
-								.getView(OpportunityAddViewImpl.class);
-						new OpportunityAddPresenter(view).go(container,
+						OpportunityAddPresenter presenter = PresenterResolver
+								.getPresenter(OpportunityAddPresenter.class);
+						presenter.go(container,
 								new ScreenData.Edit<Opportunity>(
 										(Opportunity) event.getData()));
 					}
@@ -769,9 +707,9 @@ public class CrmController {
 					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(OpportunityEvent.GotoRead event) {
-						OpportunityReadView view = ViewManager
-								.getView(OpportunityReadViewImpl.class);
-						new OpportunityReadPresenter(view).go(container,
+						OpportunityReadPresenter presenter = PresenterResolver
+								.getPresenter(OpportunityReadPresenter.class);
+						presenter.go(container,
 								new ScreenData.Preview(event.getData()));
 					}
 				});
@@ -789,10 +727,8 @@ public class CrmController {
 
 					@Override
 					public void handle(CaseEvent.GotoList event) {
-						CaseListView view = ViewManager
-								.getView(CaseListViewImpl.class);
-						CaseListPresenter presenter = new CaseListPresenter(
-								view);
+						CaseListPresenter presenter = PresenterResolver
+								.getPresenter(CaseListPresenter.class);
 
 						CaseSearchCriteria searchCriteria = new CaseSearchCriteria();
 						searchCriteria.setSaccountid(new NumberSearchField(
@@ -813,10 +749,10 @@ public class CrmController {
 
 					@Override
 					public void handle(CaseEvent.GotoAdd event) {
-						CaseAddView view = ViewManager
-								.getView(CaseAddViewImpl.class);
-						new CaseAddPresenter(view).go(container,
-								new ScreenData.Add<Case>(new Case()));
+						CaseAddPresenter presenter = PresenterResolver
+								.getPresenter(CaseAddPresenter.class);
+						presenter.go(container, new ScreenData.Add<Case>(
+								new Case()));
 					}
 				});
 
@@ -830,12 +766,10 @@ public class CrmController {
 
 					@Override
 					public void handle(CaseEvent.GotoEdit event) {
-						CaseAddView view = ViewManager
-								.getView(CaseAddViewImpl.class);
-						new CaseAddPresenter(view).go(
-								container,
-								new ScreenData.Edit<Case>((Case) event
-										.getData()));
+						CaseAddPresenter presenter = PresenterResolver
+								.getPresenter(CaseAddPresenter.class);
+						presenter.go(container, new ScreenData.Edit<Case>(
+								(Case) event.getData()));
 					}
 				});
 
@@ -850,9 +784,9 @@ public class CrmController {
 					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(CaseEvent.GotoRead event) {
-						CaseReadView view = ViewManager
-								.getView(CaseReadViewImpl.class);
-						new CaseReadPresenter(view).go(container,
+						CaseReadPresenter presenter = PresenterResolver
+								.getPresenter(CaseReadPresenter.class);
+						presenter.go(container,
 								new ScreenData.Preview(event.getData()));
 					}
 				});

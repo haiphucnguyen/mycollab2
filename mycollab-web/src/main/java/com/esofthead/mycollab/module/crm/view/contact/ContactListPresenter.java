@@ -19,8 +19,8 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
-public class ContactListPresenter extends
-		CrmGenericPresenter<ContactListView> implements ListPresenter<ContactSearchCriteria> {
+public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
+		implements ListPresenter<ContactSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 
 	private ContactService contactService;
@@ -29,8 +29,8 @@ public class ContactListPresenter extends
 
 	private boolean isSelectAll = false;
 
-	public ContactListPresenter(final ContactListView view) {
-		this.view = view;
+	public ContactListPresenter() {
+		super(ContactListView.class);
 		contactService = AppContext.getSpringBean(ContactService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
@@ -146,7 +146,7 @@ public class ContactListPresenter extends
 			view.disableActionControls();
 		}
 	}
-	
+
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		super.onGo(container, data);

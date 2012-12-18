@@ -1,7 +1,9 @@
 package com.esofthead.mycollab.module.project.domain;
 
 public class SimpleTask extends Task {
-    private String projectName;
+	private static final long serialVersionUID = 1L;
+
+	private String projectName;
     
     private int numComments;
 

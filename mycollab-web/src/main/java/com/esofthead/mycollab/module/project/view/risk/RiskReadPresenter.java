@@ -7,13 +7,11 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class RiskReadPresenter extends AbstractPresenter {
+public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 	private static final long serialVersionUID = 1L;
 
-	private RiskReadView view;
-
-	public RiskReadPresenter(RiskReadView view) {
-		this.view = view;
+	public RiskReadPresenter() {
+		super(RiskReadView.class);
 	}
 
 	@Override

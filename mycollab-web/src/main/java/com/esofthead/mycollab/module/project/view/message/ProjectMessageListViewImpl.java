@@ -8,17 +8,20 @@ import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.service.MessageService;
-import com.esofthead.mycollab.module.project.view.ProjectAbstractView;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.RichTextEditor;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -30,7 +33,8 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
-public class ProjectMessageListViewImpl extends ProjectAbstractView implements
+@ViewComponent
+public class ProjectMessageListViewImpl extends AbstractView implements
 		ProjectMessageListView, HasEditFormHandlers<Message> {
 	private static final long serialVersionUID = 8433776359091397422L;
 
@@ -161,8 +165,9 @@ public class ProjectMessageListViewImpl extends ProjectAbstractView implements
 						@Override
 						public void buttonClick(ClickEvent event) {
 							Message message = new Message();
-							message.setProjectid(ProjectMessageListViewImpl.this.project
-									.getId());
+							SimpleProject project = (SimpleProject) AppContext
+									.getVariable(ProjectContants.PROJECT_NAME);
+							message.setProjectid(project.getId());
 							message.setPosteddate(new GregorianCalendar()
 									.getTime());
 							message.setTitle((String) titleField.getValue());
@@ -212,6 +217,8 @@ public class ProjectMessageListViewImpl extends ProjectAbstractView implements
 	public void displayMessages() {
 		if (searchCriteria == null) {
 			searchCriteria = new MessageSearchCriteria();
+			SimpleProject project = (SimpleProject) AppContext
+					.getVariable(ProjectContants.PROJECT_NAME);
 			searchCriteria.setProjectid(new NumberSearchField(SearchField.AND,
 					project.getId()));
 

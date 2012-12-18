@@ -8,12 +8,12 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class UserInformationPresenter extends AbstractPresenter {
+public class UserInformationPresenter extends
+		AbstractPresenter<UserInformationView> {
+	private static final long serialVersionUID = 1L;
 
-	private final UserInformationView view;
-
-	public UserInformationPresenter(UserInformationView view) {
-		this.view = view;
+	public UserInformationPresenter() {
+		super(UserInformationView.class);
 		bind();
 	}
 

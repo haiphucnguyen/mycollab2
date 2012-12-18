@@ -3,10 +3,13 @@ package com.esofthead.mycollab.module.project.view;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent.SaveProjectSucess;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
@@ -25,6 +28,7 @@ public class ProjectController {
 		this.container = container;
 		bindProjectEvents();
 		bindRiskEvents();
+		bindProblemEvents();
 	}
 
 	@SuppressWarnings("serial")
@@ -127,6 +131,71 @@ public class ProjectController {
 								SearchField.AND, project.getId()));
 						projectView
 								.gotoRiskView(new ScreenData.Search<RiskSearchCriteria>(
+										criteria));
+					}
+				});
+	}
+	
+	@SuppressWarnings("serial")
+	private void bindProblemEvents() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ProblemEvent.GotoAdd>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ProblemEvent.GotoAdd.class;
+					}
+
+					@Override
+					public void handle(ProblemEvent.GotoAdd event) {
+						ProjectViewImpl projectView = ViewManager
+								.getView(ProjectViewImpl.class);
+						ScreenData.Add<Problem> data = new ScreenData.Add<Problem>(
+								new Problem());
+						projectView.gotoProblemView(data);
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ProblemEvent.GotoRead>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ProblemEvent.GotoRead.class;
+					}
+
+					@Override
+					public void handle(ProblemEvent.GotoRead event) {
+						ProjectViewImpl projectView = ViewManager
+								.getView(ProjectViewImpl.class);
+						ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
+								(Integer) event.getData());
+						projectView.gotoProblemView(data);
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ProblemEvent.GotoList>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ProblemEvent.GotoList.class;
+					}
+
+					@Override
+					public void handle(ProblemEvent.GotoList event) {
+						ProjectViewImpl projectView = ViewManager
+								.getView(ProjectViewImpl.class);
+
+						SimpleProject project = (SimpleProject) AppContext
+								.getVariable(ProjectContants.PROJECT_NAME);
+
+						ProblemSearchCriteria criteria = new ProblemSearchCriteria();
+
+						criteria.setProjectId(new NumberSearchField(
+								SearchField.AND, project.getId()));
+						projectView
+								.gotoProblemView(new ScreenData.Search<ProblemSearchCriteria>(
 										criteria));
 					}
 				});

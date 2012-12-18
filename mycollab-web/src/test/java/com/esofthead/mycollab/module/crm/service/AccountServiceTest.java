@@ -17,8 +17,9 @@
  */
 package com.esofthead.mycollab.module.crm.service;
 
-import junit.framework.Assert;
+import java.util.Arrays;
 
+import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -30,6 +31,7 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
@@ -97,5 +99,111 @@ public class AccountServiceTest {
 				"a", "b" }));
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND, 1));
 		return criteria;
+	}
+
+	@Test
+	@DataSet
+	public void testRemoveAccounts() {
+		accountService.removeWithSession(Arrays.asList(1, 2), "hai79");
+		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		Assert.assertEquals(1, accountService.getTotalCount(criteria));
+	}
+
+	@Test
+	@DataSet
+	public void testFindAccountById() {
+		SimpleAccount account = accountService.findAccountById(1);
+		Assert.assertEquals("xyz", account.getAccountname());
+	}
+
+	@Test
+	@DataSet
+	public void testRemoveAccountBySearchCriteria() {
+		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		criteria.setIndustries(new SetSearchField<String>(SearchField.AND,
+				new String[] { "a" }));
+		accountService.removeByCriteria(criteria);
+
+		criteria = new AccountSearchCriteria();
+		Assert.assertEquals(1, accountService.getTotalCount(criteria));
+	}
+
+	@Test
+	@DataSet
+	public void testUpdateAccount() {
+		Account account = new Account();
+		account.setId(1);
+		account.setAccountname("abc");
+		account.setSaccountid(1);
+		accountService.updateWithSession(account, "hai79");
+
+		accountService.findAccountById(1);
+		Assert.assertEquals("abc", account.getAccountname());
+	}
+
+	@Test
+	@DataSet
+	public void testSearchWebsite() {
+		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		criteria.setWebsite(new StringSearchField(SearchField.AND,
+				"http://www.esofthead.com"));
+		Assert.assertEquals(3, accountService.getTotalCount(criteria));
+		Assert.assertEquals(
+				3,
+				accountService.findPagableListByCriteria(
+						new SearchRequest<AccountSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
+
+	@Test
+	@DataSet
+	public void tesSearchAnyAddress() {
+		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		criteria.setAnyAddress(new StringSearchField(SearchField.AND, "123"));
+		Assert.assertEquals(2, accountService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				accountService.findPagableListByCriteria(
+						new SearchRequest<AccountSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void tesSearchAnyCity() {
+		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		criteria.setAnyCity(new StringSearchField(SearchField.AND, "ha noi"));
+		Assert.assertEquals(2, accountService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				accountService.findPagableListByCriteria(
+						new SearchRequest<AccountSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
+
+	@Test
+	@DataSet
+	public void testAssignUser() {
+		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		criteria.setAssignUser(new StringSearchField(SearchField.AND, "hai79"));
+		Assert.assertEquals(1, accountService.getTotalCount(criteria));
+		Assert.assertEquals(
+				1,
+				accountService.findPagableListByCriteria(
+						new SearchRequest<AccountSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testAssignUserName() {
+		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		criteria.setAssignUserName(new StringSearchField(SearchField.AND, "Nguyen Phuc Hai"));
+		Assert.assertEquals(1, accountService.getTotalCount(criteria));
+		Assert.assertEquals(
+				1,
+				accountService.findPagableListByCriteria(
+						new SearchRequest<AccountSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
 	}
 }

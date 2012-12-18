@@ -1,19 +1,12 @@
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.module.project.view.user.MyDefectsPresenterImpl;
-import com.esofthead.mycollab.module.project.view.user.MyDefectsView.MyDefectsPresenter;
-import com.esofthead.mycollab.module.project.view.user.MyDefectsViewImpl;
-import com.esofthead.mycollab.module.project.view.user.MyFeedsPresenterImpl;
-import com.esofthead.mycollab.module.project.view.user.MyFeedsView.MyFeedsPresenter;
-import com.esofthead.mycollab.module.project.view.user.MyFeedsViewImpl;
-import com.esofthead.mycollab.module.project.view.user.MyProjectsPresenterImpl;
-import com.esofthead.mycollab.module.project.view.user.MyProjectsView.MyProjectPresenter;
-import com.esofthead.mycollab.module.project.view.user.MyProjectsViewImpl;
-import com.esofthead.mycollab.module.project.view.user.MyTasksPresenterImpl;
-import com.esofthead.mycollab.module.project.view.user.MyTasksView.MyTasksPresenter;
-import com.esofthead.mycollab.module.project.view.user.MyTasksViewImpl;
+import com.esofthead.mycollab.module.project.view.user.MyDefectsPresenter;
+import com.esofthead.mycollab.module.project.view.user.MyFeedsPresenter;
+import com.esofthead.mycollab.module.project.view.user.MyProjectsPresenter;
+import com.esofthead.mycollab.module.project.view.user.MyTasksPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
@@ -24,10 +17,10 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
+@ViewComponent
 public class UserDashboardViewImpl extends AbstractView implements
 		UserDashboardView {
 	private final HorizontalLayout root;
@@ -36,7 +29,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 	private final CssLayout mySpaceArea = new CssLayout();
 	private final DetachedTabs calendarToolTabs;
 
-	private MyProjectPresenter myProjectPresenter;
+	private MyProjectsPresenter myProjectPresenter;
 	private MyFeedsPresenter myFeedsPresenter;
 	private MyTasksPresenter myTasksPresenter;
 	private MyDefectsPresenter myDefectsPresenter;
@@ -129,28 +122,28 @@ public class UserDashboardViewImpl extends AbstractView implements
 				});
 	}
 
-	private Layout constructMyFeedsComponents() {
-		MyFeedsViewImpl view = ViewManager.getView(MyFeedsViewImpl.class);
-		myFeedsPresenter = new MyFeedsPresenterImpl(view);
-		return view;
+	private ComponentContainer constructMyFeedsComponents() {
+		myFeedsPresenter = PresenterResolver
+				.getPresenter(MyFeedsPresenter.class);
+		return myFeedsPresenter.getView();
 	}
 
 	private ComponentContainer constructMyProjectsComponents() {
-		MyProjectsViewImpl view = ViewManager.getView(MyProjectsViewImpl.class);
-		myProjectPresenter = new MyProjectsPresenterImpl(view);
-		return view;
+		myProjectPresenter = PresenterResolver
+				.getPresenter(MyProjectsPresenter.class);
+		return myProjectPresenter.getView();
 	}
 
 	private ComponentContainer constructMyTasksComponents() {
-		MyTasksViewImpl view = ViewManager.getView(MyTasksViewImpl.class);
-		myTasksPresenter = new MyTasksPresenterImpl(view);
-		return view;
+		myTasksPresenter = PresenterResolver
+				.getPresenter(MyTasksPresenter.class);
+		return myTasksPresenter.getView();
 	}
 
 	private ComponentContainer constructMyBugsComponents() {
-		MyDefectsViewImpl view = ViewManager.getView(MyDefectsViewImpl.class);
-		myDefectsPresenter = new MyDefectsPresenterImpl(view);
-		return view;
+		myDefectsPresenter = PresenterResolver
+				.getPresenter(MyDefectsPresenter.class);
+		return myDefectsPresenter.getView();
 	}
 
 	@Override
@@ -166,7 +159,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 	public void gotoMyFeeds() {
 		com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Feeds");
 		if (component != null) {
-			myFeedsPresenter.doDefaultSearch();
+
 		}
 	}
 
@@ -174,7 +167,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 	public void gotoMyTasks() {
 		com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Tasks");
 		if (component != null) {
-			myTasksPresenter.doDefaultSearch();
+
 		}
 
 	}
@@ -183,7 +176,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 	public void gotoMyBugs() {
 		com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Bugs");
 		if (component != null) {
-			myDefectsPresenter.doDefaultSearch();
+
 		}
 
 	}

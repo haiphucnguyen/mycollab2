@@ -15,8 +15,8 @@ public class OpportunityReadPresenter extends
 		CrmGenericPresenter<OpportunityReadView> {
 	private static final long serialVersionUID = 1L;
 
-	public OpportunityReadPresenter(OpportunityReadView view) {
-		this.view = view;
+	public OpportunityReadPresenter() {
+		super(OpportunityReadView.class);
 		bind();
 	}
 
