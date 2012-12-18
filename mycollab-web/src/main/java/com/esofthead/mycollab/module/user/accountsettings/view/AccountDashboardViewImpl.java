@@ -1,7 +1,5 @@
-package com.esofthead.mycollab.module.user.accountsettings;
+package com.esofthead.mycollab.module.user.accountsettings.view;
 
-import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingsPresenter;
-import com.esofthead.mycollab.module.user.accountsettings.view.UserInformationPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
