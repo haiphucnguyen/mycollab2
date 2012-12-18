@@ -27,7 +27,7 @@ public abstract class RiskFormLayoutFactory implements IFormLayoutFactory {
 		layout.addComponent(organizationHeader);
 
 		informationLayout = new GridFormLayoutHelper(2, 7);
-		informationLayout.getLayout().setWidth("900px");
+		informationLayout.getLayout().setWidth("100%");
 		layout.addComponent(informationLayout.getLayout());
 		layout.setComponentAlignment(informationLayout.getLayout(),
 				Alignment.BOTTOM_CENTER);
@@ -42,10 +42,10 @@ public abstract class RiskFormLayoutFactory implements IFormLayoutFactory {
 	@Override
 	public void attachField(Object propertyId, Field field) {
 		if (propertyId.equals("riskname")) {
-			informationLayout.addComponent(field, "Name", 0, 0, 2, "600px");
+			informationLayout.addComponent(field, "Name", 0, 0, 2, "100%");
 		} else if (propertyId.equals("description")) {
 			informationLayout.addComponent(field, "Description", 0, 1, 2,
-					"600px");
+					"100%");
 		} else if (propertyId.equals("raisedbyuser")) {
 			informationLayout.addComponent(field, "Raised by", 0, 2);
 		} else if (propertyId.equals("type")) {
@@ -63,7 +63,7 @@ public abstract class RiskFormLayoutFactory implements IFormLayoutFactory {
 		} else if (propertyId.equals("level")) {
 			informationLayout.addComponent(field, "Rating", 1, 5);
 		} else if (propertyId.equals("response")) {
-			informationLayout.addComponent(field, "Response", 0, 6, 2, "600px");
+			informationLayout.addComponent(field, "Response", 0, 6, 2, "100%");
 		}
 	}
 

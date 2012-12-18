@@ -863,7 +863,9 @@ input.v-textfield-errorField {
 /* End Calendar */
 
 /* Note List */
-
+.depotContent .noteList {
+	margin-top: 5px;
+}
 .noteList .noteRow {
 	border: 1px solid #919191;
 }
@@ -873,6 +875,15 @@ input.v-textfield-errorField {
 
 .noteList > div > div:nth-child(odd) .noteRow {
 	background-color: #dce5ee;
+}
+
+.noteRow .metadata {
+	font-size: 11px;
+	color: #999;
+}
+.menuContent .v-csslayout {
+	min-width: 700px;
+	margin-left: 15px;
 }
 
 /* End Note List */

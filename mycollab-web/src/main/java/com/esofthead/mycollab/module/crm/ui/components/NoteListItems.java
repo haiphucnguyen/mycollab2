@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
+import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -93,17 +94,20 @@ public class NoteListItems extends Depot {
 			if (obj.getSubject() != null && !obj.getSubject().equals("")) {
 				noteLayout.addComponent(new Label(obj.getSubject()));
 			}
-			
-			Label noteContent = new Label(obj.getNote(),Label.CONTENT_XHTML);
+
+			Label noteContent = new Label(obj.getNote(), Label.CONTENT_XHTML);
 			noteContent.setWidth("98%");
 			noteLayout.addComponent(noteContent);
-			noteLayout.setComponentAlignment(noteContent, Alignment.MIDDLE_CENTER);
+			noteLayout.setComponentAlignment(noteContent,
+					Alignment.MIDDLE_CENTER);
 
 			HorizontalLayout footer = new HorizontalLayout();
+			SimpleDateFormat df = new SimpleDateFormat("EEE MMM dd, hh:mm aa");
 			Label metadata = new Label("Posted by " + obj.getCreateduser()
-					+ " on " + obj.getCreatedtime());
+					+ " on " + df.format(obj.getCreatedtime()));
 			footer.addComponent(metadata);
 			metadata.setSizeUndefined();
+			metadata.setStyleName("metadata");
 			footer.setComponentAlignment(metadata, Alignment.MIDDLE_RIGHT);
 			footer.setWidth("99%");
 			noteLayout.addComponent(footer);
@@ -153,7 +157,6 @@ public class NoteListItems extends Depot {
 			this.setSpacing(true);
 			this.setMargin(true);
 			this.setWidth("900px");
-
 
 			noteArea = new RichTextEditor();
 			noteArea.setWidth("800px");
