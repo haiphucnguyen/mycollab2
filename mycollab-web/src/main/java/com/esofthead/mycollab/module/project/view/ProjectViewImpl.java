@@ -21,6 +21,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -224,9 +225,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
 	@Override
 	public Component gotoSubView(String name) {
-		ProjectAbstractView component = (ProjectAbstractView) myProjectTab
+		View component = (View) myProjectTab
 				.selectTab(name);
-		component.setProject(project);
 		return component;
 	}
 }
