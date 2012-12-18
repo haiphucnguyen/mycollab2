@@ -23,7 +23,7 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView> implement
 		ListPresenter<RiskSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 	
-	private RiskService accountService;
+	private RiskService riskService;
 
 	private RiskSearchCriteria searchCriteria;
 
@@ -32,7 +32,7 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView> implement
 	public RiskListPresenter() {
 		super(RiskListView.class);
 		
-		accountService = AppContext.getSpringBean(RiskService.class);
+		riskService = AppContext.getSpringBean(RiskService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
 			private static final long serialVersionUID = 1L;
@@ -173,12 +173,12 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView> implement
 			}
 
 			if (keyList.size() > 0) {
-				accountService.removeWithSession(keyList,
+				riskService.removeWithSession(keyList,
 						AppContext.getUsername());
 				doSearch(searchCriteria);
 			}
 		} else {
-			accountService.removeByCriteria(searchCriteria);
+			riskService.removeByCriteria(searchCriteria);
 			doSearch(searchCriteria);
 		}
 

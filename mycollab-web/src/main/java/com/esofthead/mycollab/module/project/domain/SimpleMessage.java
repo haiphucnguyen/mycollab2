@@ -1,7 +1,9 @@
 package com.esofthead.mycollab.module.project.domain;
 
 public class SimpleMessage extends Message {
-    private int commentsCount;
+	private static final long serialVersionUID = 1L;
+
+	private int commentsCount;
     
     private String messageCategoryName;
     

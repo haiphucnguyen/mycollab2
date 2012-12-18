@@ -1,5 +1,10 @@
 package com.esofthead.mycollab.module.project.view.problem;
 
-public interface ProblemAddView {
+import com.esofthead.mycollab.module.project.domain.Problem;
+import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
+import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
+
+public interface ProblemAddView extends IFormAddView<Problem> {
+	HasEditFormHandlers<Problem> getEditFormHandlers();
 
 }

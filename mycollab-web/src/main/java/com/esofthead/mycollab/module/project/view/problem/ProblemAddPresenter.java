@@ -1,5 +1,77 @@
 package com.esofthead.mycollab.module.project.view.problem;
 
-public class ProblemAddPresenter {
+import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.domain.Problem;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.events.ProblemEvent;
+import com.esofthead.mycollab.module.project.service.ProblemService;
+import com.esofthead.mycollab.vaadin.events.EditFormHandler;
+import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
+import com.esofthead.mycollab.vaadin.mvp.NullViewState;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.ComponentContainer;
+
+public class ProblemAddPresenter  extends AbstractPresenter<ProblemAddView> {
+	private static final long serialVersionUID = 1L;
+
+	public ProblemAddPresenter() {
+		super(ProblemAddView.class);
+		bind();
+	}
+
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		ProblemContainer problemContainer = (ProblemContainer) container;
+		problemContainer.addComponent(view.getWidget());
+		view.editItem((Problem) data.getParams());
+	}
+
+	private void bind() {
+		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Problem>() {
+
+			@Override
+			public void onSave(final Problem problem) {
+				saveProblem(problem);
+				ViewState viewState = HistoryViewManager.back();
+				if (viewState instanceof NullViewState) {
+					EventBus.getInstance().fireEvent(
+							new ProblemEvent.GotoList(this, null));
+				}
+			}
+
+			@Override
+			public void onCancel() {
+				ViewState viewState = HistoryViewManager.back();
+				if (viewState instanceof NullViewState) {
+					EventBus.getInstance().fireEvent(
+							new ProblemEvent.GotoList(this, null));
+				}
+			}
+
+			@Override
+			public void onSaveAndNew(final Problem problem) {
+				saveProblem(problem);
+				EventBus.getInstance().fireEvent(
+						new ProblemEvent.GotoAdd(this, null));
+			}
+		});
+	}
+
+	public void saveProblem(Problem problem) {
+		ProblemService problemService = AppContext.getSpringBean(ProblemService.class);
+		SimpleProject project = (SimpleProject) AppContext
+				.getVariable(ProjectContants.PROJECT_NAME);
+		problem.setProjectid(project.getId());
+		if (problem.getId() == null) {
+			problemService.saveWithSession(problem, AppContext.getUsername());
+		} else {
+			problemService.updateWithSession(problem, AppContext.getUsername());
+		}
+
+	}
 
 }

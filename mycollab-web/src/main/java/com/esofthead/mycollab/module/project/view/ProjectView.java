@@ -9,6 +9,7 @@ public interface ProjectView extends View {
 	void displayProject(SimpleProject project);
 
 	void gotoRiskView(@SuppressWarnings("rawtypes") ScreenData data);
+	void gotoProblemView(@SuppressWarnings("rawtypes") ScreenData data);
 
 	Component gotoSubView(String name);
 }

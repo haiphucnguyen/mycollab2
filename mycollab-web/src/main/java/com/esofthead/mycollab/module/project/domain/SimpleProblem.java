@@ -1,8 +1,9 @@
 package com.esofthead.mycollab.module.project.domain;
 
 public class SimpleProblem extends Problem {
+	private static final long serialVersionUID = 1L;
 
-    private String raisedByUserFullName;
+	private String raisedByUserFullName;
 
     private String assignedUserFullName;
 

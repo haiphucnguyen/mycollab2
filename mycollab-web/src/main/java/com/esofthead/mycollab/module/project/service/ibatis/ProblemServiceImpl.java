@@ -11,14 +11,16 @@ import com.esofthead.mycollab.module.project.ChangeLogSource;
 import com.esofthead.mycollab.module.project.dao.ProblemMapper;
 import com.esofthead.mycollab.module.project.dao.ProblemMapperExt;
 import com.esofthead.mycollab.module.project.domain.Problem;
+import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ChangeLogService;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 
 @Service
-public class ProblemServiceImpl extends DefaultService<Integer, Problem, ProblemSearchCriteria>
-		implements ProblemService {
-	
+public class ProblemServiceImpl extends
+		DefaultService<Integer, Problem, ProblemSearchCriteria> implements
+		ProblemService {
+
 	@Autowired
 	private ProblemMapper problemMapper;
 
@@ -63,6 +65,11 @@ public class ProblemServiceImpl extends DefaultService<Integer, Problem, Problem
 				ChangeLogSource.PROBLEM, record.getId(),
 				ChangeLogAction.DELETE, record.getIssuename());
 		return super.internalRemoveWithSession(primaryKey, username);
+	}
+
+	@Override
+	public SimpleProblem findProblemById(Integer problemId) {
+		return problemMapperExt.findProblemById(problemId);
 	}
 
 }

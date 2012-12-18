@@ -49,9 +49,9 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView,
 	}
 
 	@Override
-	public void editItem(Risk account) {
-		this.risk = account;
-		editForm.setItemDataSource(new BeanItem<Risk>(account));
+	public void editItem(Risk risk) {
+		this.risk = risk;
+		editForm.setItemDataSource(new BeanItem<Risk>(risk));
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<Risk> {
