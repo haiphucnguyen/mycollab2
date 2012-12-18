@@ -17,7 +17,6 @@ import com.esofthead.mycollab.module.project.view.milestone.ProjectMilestonePres
 import com.esofthead.mycollab.module.project.view.milestone.ProjectMilestoneViewImpl;
 import com.esofthead.mycollab.module.project.view.problem.ProblemListPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskContainer;
-import com.esofthead.mycollab.module.project.view.risk.RiskListPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
 import com.esofthead.mycollab.module.project.view.task.ProjectTaskPresenter;
 import com.esofthead.mycollab.module.project.view.task.ProjectTaskViewImpl;
@@ -30,24 +29,22 @@ import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 public class ProjectViewImpl extends AbstractView implements ProjectView {
 
-	private HorizontalSplitPanel root;
-	private DetachedTabs myProjectTab;
-	private CssLayout mySpaceArea = new CssLayout();
+	private final HorizontalLayout root;
+	private final DetachedTabs myProjectTab;
+	private final CssLayout mySpaceArea = new CssLayout();
 
-	private HorizontalLayout topPanel;
+	private final HorizontalLayout topPanel;
 
 	private ProjectMessageListPresenter messagePresenter;
 	private ProjectMilestonePresenter milestonesPresenter;
@@ -65,12 +62,9 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		topPanel = new HorizontalLayout();
 		this.addComponent(topPanel);
 
-		root = new HorizontalSplitPanel();
-		root.setSplitPosition(200, Sizeable.UNITS_PIXELS);
+		root = new HorizontalLayout();
 		root.setStyleName("menuContent");
-		root.setWidth("100%");
 
-		mySpaceArea.setWidth("100%");
 		myProjectTab = new DetachedTabs.Vertical(mySpaceArea);
 		myProjectTab.setSizeFull();
 		myProjectTab.setHeight(null);
@@ -80,8 +74,9 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		menu.setStyleName("sidebar-menu");
 		menu.addComponent(myProjectTab);
 
-		root.setFirstComponent(menu);
+		root.addComponent(menu);
 		root.addComponent(mySpaceArea);
+		root.setExpandRatio(mySpaceArea, 1.0f);
 
 		buildComponents();
 		this.addComponent(root);
