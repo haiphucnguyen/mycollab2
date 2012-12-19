@@ -74,6 +74,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		menu.addComponent(myProjectTab);
 
 		root.addComponent(menu);
+		mySpaceArea.setStyleName("projectTabContent");
 		root.addComponent(mySpaceArea);
 		root.setExpandRatio(mySpaceArea, 1.0f);
 
