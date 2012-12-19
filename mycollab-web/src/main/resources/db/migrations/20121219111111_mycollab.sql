@@ -1,0 +1,1 @@
+ALTER TABLE `m_tracker_related_item` ADD COLUMN `refkey` VARCHAR(45) NOT NULL ;

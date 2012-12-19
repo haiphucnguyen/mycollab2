@@ -5,10 +5,12 @@
 	<s_user username="admin" firstname="Nguyen" lastname="Hai" accountId="1"/>
 	<s_user username="user1" firstname="first1" lastname="last1" accountId="1"/>
 	<m_prj_project id="1" name="aaa" sAccountId="1"/>
+        
 	<m_tracker_component projectid="1" componentname="component1"
 		id="1" />
 	<m_tracker_component projectid="1" componentname="component2"
 		id="2" />
+        
 	<m_tracker_bug summary="summary 1" id="1" projectid="1"
 		detail="detail 1" status="1" resolution="1" assignuser="admin" logby="admin"
 		createdTime="2009-01-01 00:00:00"/>
@@ -18,16 +20,26 @@
 	<m_tracker_bug summary="summary 3" id="3" projectid="1"
 		detail="detail 3" status="1" resolution="1" logby="user1" assignuser="user1"
 		createdTime="2009-01-03 00:00:00" />
+        
 	<m_tracker_history id="1" relatedbug="3" logby="admin"
 		assignuser="user1" />
+        
 	<m_tracker_version id="1" projectid="1" versionname="version1" />
 	<m_tracker_version id="2" projectid="1" versionname="version2" />
-	<m_tracker_related_item refitemkey="bug-1" type="0"
-		relateitemid="1" id="1" />
-	<m_tracker_related_item refitemkey="bug-1" type="0"
-		relateitemid="2" id="2" />
-	<m_tracker_related_item refitemkey="bug-1" type="1"
-		relateitemid="2" id="3" />
-	<m_tracker_related_item refitemkey="bug-1" type="2"
-		relateitemid="1" id="4" />
+        
+        <!--FIXED version-->
+	<m_tracker_related_item refkey="bug-1" type="0"
+		typeid="1" id="1" />
+        
+        <!--FIXED version-->
+	<m_tracker_related_item refkey="bug-1" type="0"
+		typeid="2" id="2" />
+        
+        <!--AFFECTED VERSION-->
+	<m_tracker_related_item refkey="bug-1" type="1"
+		typeid="2" id="3" />
+        
+        <!--COMPONENT-->
+	<m_tracker_related_item refkey="bug-1" type="2"
+		typeid="1" id="4" />
 </dataset>

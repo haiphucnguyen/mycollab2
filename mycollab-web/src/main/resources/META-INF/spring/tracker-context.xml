@@ -63,10 +63,4 @@
 			value="com.esofthead.mycollab.module.tracker.dao.VersionMapper" />
 	</bean>
 
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="versionMapperExt">
-		<property name="sqlSessionTemplate" ref="sqlMapClient" />
-		<property name="mapperInterface"
-			value="com.esofthead.mycollab.module.tracker.dao.VersionMapperExt" />
-	</bean>
-
 </beans>

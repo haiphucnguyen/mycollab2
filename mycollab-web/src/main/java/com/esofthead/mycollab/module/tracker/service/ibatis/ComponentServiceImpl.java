@@ -1,14 +1,10 @@
 package com.esofthead.mycollab.module.tracker.service.ibatis;
 
-import java.util.List;
-
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.tracker.RelatedItemConstants;
 import com.esofthead.mycollab.module.tracker.dao.ComponentMapper;
@@ -21,17 +17,17 @@ import com.esofthead.mycollab.module.tracker.service.ComponentService;
 
 @Service
 public class ComponentServiceImpl extends
-		DefaultService<Integer, Component, ComponentSearchCriteria> implements ComponentService {
+		DefaultService<Integer, Component, ComponentSearchCriteria> implements
+		ComponentService {
 
 	@Autowired
 	private ComponentMapper componentMapper;
-	
+
 	@Autowired
 	private ComponentMapperExt componentMapperExt;
 
 	@Autowired
 	private RelatedItemMapper relatedItemMapper;
-	
 
 	@Override
 	public ICrudGenericDAO<Integer, Component> getCrudMapper() {
@@ -47,7 +43,7 @@ public class ComponentServiceImpl extends
 	public int remove(Integer primaryKey) {
 		RelatedItemExample ex = new RelatedItemExample();
 		ex.createCriteria().andTypeEqualTo(RelatedItemConstants.COMPONENT)
-				.andRelateitemidEqualTo(primaryKey);
+				.andTypeidEqualTo(primaryKey);
 		relatedItemMapper.deleteByExample(ex);
 
 		return super.remove(primaryKey);

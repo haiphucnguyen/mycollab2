@@ -2,8 +2,11 @@ package com.esofthead.mycollab.module.tracker.domain;
 
 import java.util.List;
 
+import com.esofthead.mycollab.module.file.domain.Attachment;
+
 public class SimpleBug extends Bug {
-	
+	private static final long serialVersionUID = 1L;
+
 	private String loguserFullName;
 
 	private String assignuserFullName;
@@ -16,7 +19,7 @@ public class SimpleBug extends Bug {
 
 	private List<Component> components;
 
-	private List<String> attachmentPaths;
+	private List<Attachment> attachments;
 
 	public String getProjectname() {
 		return projectname;
@@ -24,14 +27,6 @@ public class SimpleBug extends Bug {
 
 	public void setProjectname(String projectname) {
 		this.projectname = projectname;
-	}
-
-	public List<String> getAttachmentPaths() {
-		return attachmentPaths;
-	}
-
-	public void setAttachmentPaths(List<String> attachmentPaths) {
-		this.attachmentPaths = attachmentPaths;
 	}
 
 	public String getLoguserFullName() {
@@ -72,5 +67,13 @@ public class SimpleBug extends Bug {
 
 	public void setComponents(List<Component> components) {
 		this.components = components;
+	}
+
+	public List<Attachment> getAttachments() {
+		return attachments;
+	}
+
+	public void setAttachments(List<Attachment> attachments) {
+		this.attachments = attachments;
 	}
 }

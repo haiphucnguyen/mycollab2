@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.tracker.service.ibatis;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,7 +17,7 @@ import com.esofthead.mycollab.module.tracker.service.VersionService;
 
 public class VersionServiceImpl extends DefaultCrudService<Integer, Version>
 		implements VersionService {
-	
+
 	@Autowired
 	private VersionMapper versionMapper;
 
@@ -39,10 +40,10 @@ public class VersionServiceImpl extends DefaultCrudService<Integer, Version>
 	public int remove(Integer primaryKey) {
 		RelatedItemExample ex = new RelatedItemExample();
 		ex.createCriteria()
-				.andTypeEqualTo(RelatedItemConstants.AFFECTED_VERSION)
-				.andRelateitemidEqualTo(primaryKey);
-		ex.createCriteria().andTypeEqualTo(RelatedItemConstants.FIXED_VERSION)
-				.andRelateitemidEqualTo(primaryKey);
+				.andTypeidIn(
+						Arrays.asList(RelatedItemConstants.AFFECTED_VERSION,
+								RelatedItemConstants.FIXED_VERSION))
+				.andTypeidEqualTo(primaryKey);
 		relatedItemMapper.deleteByExample(ex);
 
 		return super.remove(primaryKey);

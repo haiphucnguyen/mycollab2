@@ -1439,9 +1439,9 @@
 <!ELEMENT m_tracker_related_item EMPTY>
 <!ATTLIST m_tracker_related_item
     id CDATA #REQUIRED
+    typeid CDATA #REQUIRED
     type CDATA #REQUIRED
-    relateitemid CDATA #REQUIRED
-    refitemkey CDATA #REQUIRED
+    refkey CDATA #REQUIRED
 >
 
 <!ELEMENT m_tracker_version EMPTY>

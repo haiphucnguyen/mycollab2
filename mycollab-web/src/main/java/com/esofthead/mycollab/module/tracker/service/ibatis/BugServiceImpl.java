@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.tracker.service.ibatis;
 
 import java.io.StringReader;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -32,7 +33,6 @@ import com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt;
 import com.esofthead.mycollab.module.tracker.dao.HistoryMapper;
 import com.esofthead.mycollab.module.tracker.dao.MetaDataMapper;
 import com.esofthead.mycollab.module.tracker.dao.RelatedItemMapper;
-import com.esofthead.mycollab.module.tracker.dao.VersionMapperExt;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.DefectComment;
@@ -55,37 +55,34 @@ public class BugServiceImpl extends
 		DefaultService<Integer, Bug, BugSearchCriteria> implements BugService {
 
 	@Autowired
-	private BugMapper bugMapper;
+	protected BugMapper bugMapper;
 
 	@Autowired
-	private BugMapperExt bugMapperExt;
+	protected BugMapperExt bugMapperExt;
 
 	@Autowired
-	private ComponentMapperExt componentMapperExt;
+	protected ComponentMapperExt componentMapperExt;
 
 	@Autowired
-	private HistoryMapper historyMapper;
+	protected HistoryMapper historyMapper;
 
 	@Autowired
-	private MetaDataMapper metaDataMapper;
+	protected MetaDataMapper metaDataMapper;
 
 	@Autowired
-	private RelatedItemMapper relatedItemMapper;
+	protected RelatedItemMapper relatedItemMapper;
 
 	@Autowired
-	private VersionMapperExt versionMapperExt;
+	protected AuditLogService auditLogService;
 
 	@Autowired
-	private AuditLogService auditLogService;
+	protected AttachmentService attachmentService;
 
 	@Autowired
-	private AttachmentService attachmentService;
+	protected MonitorItemService monitorItemService;
 
 	@Autowired
-	private MonitorItemService monitorItemService;
-
-	@Autowired
-	private ChangeLogService changeLogService;
+	protected ChangeLogService changeLogService;
 
 	@Override
 	public ICrudGenericDAO<Integer, Bug> getCrudMapper() {
@@ -105,7 +102,12 @@ public class BugServiceImpl extends
 				bug.getSummary());
 
 		RelatedItemExample ex = new RelatedItemExample();
-		ex.createCriteria().andRefitemkeyEqualTo("bug-" + primaryKey);
+		ex.createCriteria()
+				.andTypeIn(
+						Arrays.asList(RelatedItemConstants.AFFECTED_VERSION,
+								RelatedItemConstants.COMPONENT,
+								RelatedItemConstants.FIXED_VERSION))
+				.andRefkeyEqualTo("bug-" + primaryKey);
 		relatedItemMapper.deleteByExample(ex);
 
 		// remove bug's attachments
@@ -144,11 +146,15 @@ public class BugServiceImpl extends
 				(Object) record);
 
 		RelatedItemExample ex = new RelatedItemExample();
-		String refkey = "bug-" + record.getId();
-		ex.createCriteria().andRefitemkeyEqualTo("bug-" + record.getId());
+		ex.createCriteria()
+				.andTypeidIn(
+						Arrays.asList(RelatedItemConstants.AFFECTED_VERSION,
+								RelatedItemConstants.FIXED_VERSION,
+								RelatedItemConstants.COMPONENT))
+				.andRefkeyEqualTo("bug-" + record.getId());
 		relatedItemMapper.deleteByExample(ex);
 
-		saveBugRelatedItems(record, refkey);
+		saveBugRelatedItems(record);
 
 		record.setLastupdatedtime(new GregorianCalendar().getTime());
 
@@ -233,14 +239,13 @@ public class BugServiceImpl extends
 		return fields;
 	}
 
-	private void saveBugRelatedItems(SimpleBug bug, String refkey) {
+	private void saveBugRelatedItems(SimpleBug bug) {
 		if (bug.getAffectedVersions() != null) {
 			for (Version version : bug.getAffectedVersions()) {
 				RelatedItem relatedItem = new RelatedItem();
-				relatedItem.setRefitemkey(refkey);
-				relatedItem.setRelateitemid(version.getId());
+				relatedItem.setTypeid(version.getId());
 				relatedItem.setType(RelatedItemConstants.AFFECTED_VERSION);
-
+				relatedItem.setRefkey("bug-" + bug.getId());
 				relatedItemMapper.insert(relatedItem);
 			}
 		}
@@ -248,9 +253,9 @@ public class BugServiceImpl extends
 		if (bug.getFixedVersions() != null) {
 			for (Version version : bug.getFixedVersions()) {
 				RelatedItem relatedItem = new RelatedItem();
-				relatedItem.setRefitemkey(refkey);
-				relatedItem.setRelateitemid(version.getId());
+				relatedItem.setTypeid(version.getId());
 				relatedItem.setType(RelatedItemConstants.FIXED_VERSION);
+				relatedItem.setRefkey("bug-" + bug.getId());
 				relatedItemMapper.insert(relatedItem);
 			}
 		}
@@ -258,9 +263,9 @@ public class BugServiceImpl extends
 		if (bug.getComponents() != null) {
 			for (Component component : bug.getComponents()) {
 				RelatedItem relatedItem = new RelatedItem();
-				relatedItem.setRefitemkey(refkey);
-				relatedItem.setRelateitemid(component.getId());
+				relatedItem.setTypeid(component.getId());
 				relatedItem.setType(RelatedItemConstants.COMPONENT);
+				relatedItem.setRefkey("bug-" + bug.getId());
 				relatedItemMapper.insert(relatedItem);
 			}
 		}
@@ -278,8 +283,7 @@ public class BugServiceImpl extends
 
 		bugMapperExt.insertAndReturnKey(bug);
 		int bugid = bug.getId();
-		String refkey = "bug-" + bugid;
-		saveBugRelatedItems(bug, refkey);
+		saveBugRelatedItems(bug);
 
 		changeLogService.saveChangeLog(bug.getProjectid(), username,
 				ChangeLogSource.DEFECT, bugid, ChangeLogAction.CREATE,
@@ -358,16 +362,6 @@ public class BugServiceImpl extends
 	@Override
 	public SimpleBug findBugById(int bugId) {
 		SimpleBug bug = bugMapperExt.getBugById(bugId);
-
-		// get related versions
-		String refKey = "bug-" + bug.getId();
-		bug.setAffectedVersions(versionMapperExt
-				.getAffectedVersionsByRelatedRefKey(refKey));
-		bug.setFixedVersions(versionMapperExt
-				.getFixedVersionByRelatedRefKey(refKey));
-
-		// get related components
-		bug.setComponents(componentMapperExt.getComponentByRefKey(refKey));
 		return bug;
 	}
 }

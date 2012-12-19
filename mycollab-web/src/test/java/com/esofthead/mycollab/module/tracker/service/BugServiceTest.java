@@ -81,9 +81,9 @@ public class BugServiceTest {
 		SimpleBug bug = bugService.findBugById(1);
 		Assert.assertEquals("Nguyen Hai", bug.getLoguserFullName());
 		Assert.assertEquals("Nguyen Hai", bug.getAssignuserFullName());
-		Assert.assertEquals(bug.getAffectedVersions().size(), 1);
-		Assert.assertEquals(bug.getFixedVersions().size(), 2);
-		Assert.assertEquals(bug.getComponents().size(), 1);
+		Assert.assertEquals(1, bug.getAffectedVersions().size());
+		Assert.assertEquals(2, bug.getFixedVersions().size());
+		Assert.assertEquals(1, bug.getComponents().size());
 	}
 
 	@DataSet
@@ -123,6 +123,7 @@ public class BugServiceTest {
 								Integer.MAX_VALUE)).size());
 	}
 
+	@SuppressWarnings("unchecked")
 	@DataSet
 	@Test
 	public void testSearchByVersions2() {
@@ -130,11 +131,14 @@ public class BugServiceTest {
 		criteria.setVersionids(new SetSearchField<Integer>(1, 2));
 
 		Assert.assertEquals(1, bugService.getTotalCount(criteria));
-		Assert.assertEquals(
-				1,
-				bugService.findPagableListByCriteria(
-						new SearchRequest<BugSearchCriteria>(criteria, 0,
-								Integer.MAX_VALUE)).size());
+
+		List<SimpleBug> bugList = (List<SimpleBug>) bugService
+				.findPagableListByCriteria(new SearchRequest<BugSearchCriteria>(
+						criteria, 0, Integer.MAX_VALUE));
+		Assert.assertEquals(1, bugList.size());
+		SimpleBug bug = bugList.get(0);
+		Assert.assertEquals(1, bug.getAffectedVersions().size());
+		Assert.assertEquals(2, bug.getFixedVersions().size());
 	}
 
 	@DataSet
