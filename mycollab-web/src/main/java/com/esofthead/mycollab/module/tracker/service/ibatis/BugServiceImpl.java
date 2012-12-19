@@ -125,7 +125,7 @@ public class BugServiceImpl extends
 		changeLogService.saveChangeLog(bug.getProjectid(), username,
 				ChangeLogSource.DEFECT, bug.getId(), ChangeLogAction.UPDATE,
 				bug.getSummary());
-		bug.setUpdateddate(new GregorianCalendar().getTime());
+		bug.setLastupdatedtime(new GregorianCalendar().getTime());
 		super.updateWithSession(bug, null);
 		return 0;
 	}
@@ -150,7 +150,7 @@ public class BugServiceImpl extends
 
 		saveBugRelatedItems(record, refkey);
 
-		record.setUpdateddate(new GregorianCalendar().getTime());
+		record.setLastupdatedtime(new GregorianCalendar().getTime());
 
 		if (record.getStatus() == "Resolved") {
 			record.setResolveddate(new GregorianCalendar().getTime());
@@ -269,11 +269,11 @@ public class BugServiceImpl extends
 
 	@Override
 	public int saveBugExt(SimpleBug bug, String username) {
-		bug.setPosteddate(new GregorianCalendar().getTime());
+		bug.setCreatedtime(new GregorianCalendar().getTime());
 
 		// Force these fields are null to prevent client application eventually
 		// add them
-		bug.setUpdateddate(new GregorianCalendar().getTime());
+		bug.setLastupdatedtime(new GregorianCalendar().getTime());
 		bug.setResolveddate(null);
 
 		bugMapperExt.insertAndReturnKey(bug);
@@ -317,23 +317,6 @@ public class BugServiceImpl extends
 		 * } }).start();
 		 */
 		return bugid;
-	}
-
-	private String convertPriority(int priority) {
-		String result = "";
-		if (priority == 1) {
-			result = "Blocker";
-		} else if (priority == 2) {
-			result = "Critical";
-		} else if (priority == 3) {
-			result = "Major";
-		} else if (priority == 4) {
-			result = "Minor";
-		} else if (priority == 5) {
-			result = "Cosmetic";
-		}
-
-		return result;
 	}
 
 	@Override

@@ -4,14 +4,17 @@ import java.util.Collection;
 
 public class SetSearchField<T> extends SearchField {
 	public T[] values;
-	
+
 	@SuppressWarnings("unchecked")
 	public SetSearchField(String oper, Collection<T> values) {
-		this.operation = oper;
-		this.values = (T[])values.toArray();
+		this(oper, (T[]) values.toArray());
 	}
 	
-	public SetSearchField(String oper, T[] values) {
+	public SetSearchField(T... values) {
+		this(SearchField.AND, values);
+	}
+
+	public SetSearchField(String oper, T... values) {
 		this.values = values;
 		this.operation = oper;
 	}

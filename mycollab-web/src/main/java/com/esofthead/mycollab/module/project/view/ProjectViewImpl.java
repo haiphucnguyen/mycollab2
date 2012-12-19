@@ -10,12 +10,13 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.defect.BugDashboardPresenter;
+import com.esofthead.mycollab.module.project.view.defect.BugPresenter;
 import com.esofthead.mycollab.module.project.view.message.ProjectMessageListPresenter;
 import com.esofthead.mycollab.module.project.view.milestone.ProjectMilestonePresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
 import com.esofthead.mycollab.module.project.view.task.ProjectTaskPresenter;
+import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -48,7 +49,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private ProjectMessageListPresenter messagePresenter;
 	private ProjectMilestonePresenter milestonesPresenter;
 	private ProjectTaskPresenter taskPresenter;
-	private BugDashboardPresenter defectPresenter;
+	private BugPresenter defectPresenter;
 	private ProblemPresenter problemPresenter;
 	private RiskPresenter riskPresenter;
 
@@ -87,7 +88,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		myProjectTab.addTab(constructProjectMessageComponent(), "Messages");
 		myProjectTab.addTab(constructProjectMilestoneComponent(), "Milestones");
 		myProjectTab.addTab(constructTaskDashboardComponent(), "Tasks");
-		myProjectTab.addTab(constructProjectDefectComponent(), "Bugs");
+		myProjectTab.addTab(constructProjectBugComponent(), "Bugs");
 		myProjectTab.addTab(constructProjectRiskComponent(), "Risks");
 		myProjectTab.addTab(constructProjectProblemComponent(), "Problems");
 		myProjectTab.addTab(constructProjectDashboardComponent(), "Calendar");
@@ -108,7 +109,10 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 						} else if ("Tasks".equals(caption)) {
 							taskPresenter.go(ProjectViewImpl.this,
 									new ScreenData<SimpleProject>(project));
-						} else if ("Defects".equals(caption)) {
+						} else if ("Bugs".equals(caption)) {
+							SimpleProject project = (SimpleProject) AppContext
+									.getVariable(ProjectContants.PROJECT_NAME);
+							BugSearchCriteria criteria = new BugSearchCriteria();
 							defectPresenter.go(ProjectViewImpl.this,
 									new ScreenData<SimpleProject>(project));
 						} else if ("Risks".equals(caption)) {
@@ -180,9 +184,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		return taskPresenter.getView();
 	}
 
-	private Component constructProjectDefectComponent() {
-		defectPresenter = PresenterResolver
-				.getPresenter(BugDashboardPresenter.class);
+	private Component constructProjectBugComponent() {
+		defectPresenter = PresenterResolver.getPresenter(BugPresenter.class);
 		return defectPresenter.getView();
 	}
 

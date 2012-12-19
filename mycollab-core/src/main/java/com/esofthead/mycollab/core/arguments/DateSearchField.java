@@ -8,6 +8,7 @@ public class DateSearchField extends SearchField {
     public static String LESSTHANEQUAL = "<=";
     public static String GREATERTHAN = ">";
     public static String GRREATERTHANEQUAL = ">=";
+    
     private Date value;
     private String comparision;
 
