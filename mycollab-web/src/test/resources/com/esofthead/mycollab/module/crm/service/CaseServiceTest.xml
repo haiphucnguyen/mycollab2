@@ -16,10 +16,14 @@
 <!DOCTYPE dataset PUBLIC "-//eSoftHead/Engroup Database Schema//EN" "http://www.esofthead.com/engroup.dtd">
 <dataset>
 	<s_account id="1" />
+	<s_user username="linh" firstname="Linh" lastname="Nguyen"
+		accountId="1" />
 	<s_user username="admin" firstname="Nguyen" lastname="Hai"
 		accountId="1" />
 	<m_crm_account id="1" accountName="a" sAccountId="1" />
 	<m_crm_case id="1" subject="abc" accountId="1" assignUser="admin"
-		sAccountId="1" />
-	<m_crm_case id="2" subject="a" accountId="1" sAccountId="1" />
+		sAccountId="1" status="New" priority="High"/>
+	<m_crm_case id="2" subject="a" accountId="1" sAccountId="1" 
+		status="Test Status" priority="Medium"
+		assignUser="linh"/>
 </dataset>

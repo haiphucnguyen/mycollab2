@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.crm.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class ContactSearchCriteria extends SearchCriteria {
@@ -26,7 +27,7 @@ public class ContactSearchCriteria extends SearchCriteria {
 
     private StringSearchField accountName;
 
-    private StringSearchField assignUser;
+    private SetSearchField<String> assignUsers;
     
     private StringSearchField assignUserName;
 
@@ -54,7 +55,7 @@ public class ContactSearchCriteria extends SearchCriteria {
     
     private StringSearchField anyState;
     
-    private StringSearchField anyCountry;
+    private SetSearchField<String> countries;
     
     private StringSearchField anyPhone;
     
@@ -62,7 +63,7 @@ public class ContactSearchCriteria extends SearchCriteria {
     
     private StringSearchField anyPostalCode;
     
-    private StringSearchField leadSource;
+    private SetSearchField<String> leadSources;
     
 
 	public StringSearchField getContactName() {
@@ -81,12 +82,12 @@ public class ContactSearchCriteria extends SearchCriteria {
 		this.accountName = accountName;
 	}
 
-	public StringSearchField getAssignUser() {
-		return assignUser;
+	public void setAssignUsers(SetSearchField<String> assignUsers) {
+		this.assignUsers = assignUsers;
 	}
 
-	public void setAssignUser(StringSearchField assignUser) {
-		this.assignUser = assignUser;
+	public SetSearchField<String> getAssignUsers() {
+		return assignUsers;
 	}
 
 	public StringSearchField getUsername() {
@@ -193,12 +194,12 @@ public class ContactSearchCriteria extends SearchCriteria {
 		this.anyState = anyState;
 	}
 
-	public StringSearchField getAnyCountry() {
-		return anyCountry;
+	public void setCountries(SetSearchField<String> countries) {
+		this.countries = countries;
 	}
 
-	public void setAnyCountry(StringSearchField anyCountry) {
-		this.anyCountry = anyCountry;
+	public SetSearchField<String> getCountries() {
+		return countries;
 	}
 
 	public StringSearchField getAnyPhone() {
@@ -225,13 +226,11 @@ public class ContactSearchCriteria extends SearchCriteria {
 		this.anyPostalCode = anyPostalCode;
 	}
 
-	public StringSearchField getLeadSource() {
-		return leadSource;
+	public void setLeadSources(SetSearchField<String> leadSources) {
+		this.leadSources = leadSources;
 	}
 
-	public void setLeadSource(StringSearchField leadSource) {
-		this.leadSource = leadSource;
+	public SetSearchField<String> getLeadSources() {
+		return leadSources;
 	}
-	
-	
 }

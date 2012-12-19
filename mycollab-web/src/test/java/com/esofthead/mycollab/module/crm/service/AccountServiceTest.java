@@ -91,11 +91,11 @@ public class AccountServiceTest {
 	private AccountSearchCriteria getCriteria() {
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
 		criteria.setAccountname(new StringSearchField(SearchField.AND, "xy"));
-		criteria.setAssignUsers(new SetSearchField(SearchField.AND,
+		criteria.setAssignUsers(new SetSearchField<String>(SearchField.AND,
 				new String[] { "hai79", "linhduong" }));
-		criteria.setIndustries(new SetSearchField(SearchField.AND,
+		criteria.setIndustries(new SetSearchField<String>(SearchField.AND,
 				new String[] { "a", "b" }));
-		criteria.setTypes(new SetSearchField(SearchField.AND, new String[] {
+		criteria.setTypes(new SetSearchField<String>(SearchField.AND, new String[] {
 				"a", "b" }));
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND, 1));
 		return criteria;

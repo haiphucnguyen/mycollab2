@@ -27,8 +27,8 @@ import org.springframework.test.context.ContextConfiguration;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
@@ -72,12 +72,12 @@ public class LeadServiceTest {
 	
 	@Test
 	@DataSet
-	public void testSearchStatus() {
+	public void testSearchStatuses() {
 		LeadSearchCriteria criteria = new LeadSearchCriteria();
-		criteria.setStatus(new StringSearchField(SearchField.AND, "New"));
-		Assert.assertEquals(1, leadService.getTotalCount(criteria));
+		criteria.setStatuses(new SetSearchField<String>(SearchField.AND, new String[]{"New", "Test status"}));
+		Assert.assertEquals(2, leadService.getTotalCount(criteria));
 		Assert.assertEquals(
-				1,
+				2,
 				leadService.findPagableListByCriteria(
 						new SearchRequest<LeadSearchCriteria>(criteria, 0,
 								Integer.MAX_VALUE)).size());
@@ -87,7 +87,7 @@ public class LeadServiceTest {
 	@DataSet
 	public void testSearchAssignUser() {
 		LeadSearchCriteria criteria = new LeadSearchCriteria();
-		criteria.setAssignUser(new StringSearchField(SearchField.AND, "linh"));
+		criteria.setAssignUsers(new SetSearchField<String>(SetSearchField.AND, new String[]{"linh", "Hai"}));
 		Assert.assertEquals(2, leadService.getTotalCount(criteria));
 		Assert.assertEquals(
 				2,
@@ -137,12 +137,12 @@ public class LeadServiceTest {
 	
 	@Test
 	@DataSet
-	public void testSearchSource() {
+	public void testSearchSources() {
 		LeadSearchCriteria criteria = new LeadSearchCriteria();
-		criteria.setSource(new StringSearchField(SearchField.AND, "Cold Call"));
-		Assert.assertEquals(1, leadService.getTotalCount(criteria));
+		criteria.setSources(new SetSearchField<String>(SearchField.AND, new String[]{"Cold Call", "Employee"}));
+		Assert.assertEquals(2, leadService.getTotalCount(criteria));
 		Assert.assertEquals(
-				1,
+				2,
 				leadService.findPagableListByCriteria(
 						new SearchRequest<LeadSearchCriteria>(criteria, 0,
 								Integer.MAX_VALUE)).size());

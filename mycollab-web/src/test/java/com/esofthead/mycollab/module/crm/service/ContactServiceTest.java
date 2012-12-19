@@ -26,6 +26,7 @@ import org.springframework.test.context.ContextConfiguration;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
@@ -62,7 +63,6 @@ public class ContactServiceTest {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
 		criteria.setAssignUserName(new StringSearchField(SearchField.AND,
 				"Duong"));
-		criteria.setAssignUser(new StringSearchField(SearchField.AND, "linh"));
 		criteria.setOpportunityId(new NumberSearchField(SearchField.AND, 1));
 		criteria.setAccountName(new StringSearchField(SearchField.AND, "x"));
 		criteria.setContactName(new StringSearchField(SearchField.AND, "Hai"));
@@ -72,12 +72,25 @@ public class ContactServiceTest {
 	
 	@Test
 	@DataSet
-	public void testSearchLeadSource() {
+	public void testSearchAssignUsers() {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
-		criteria.setLeadSource(new StringSearchField(SearchField.AND, "Email"));
-		Assert.assertEquals(1, contactService.getTotalCount(criteria));
+		criteria.setAssignUsers(new SetSearchField<String>(SearchField.AND, new String[] {"linh","hai"}));
+		Assert.assertEquals(3, contactService.getTotalCount(criteria));
 		Assert.assertEquals(
-				1,
+				3,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchLeadSources() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setLeadSources(new SetSearchField<String>(SearchField.AND, new String[] {"Email","Campaign"}));
+		Assert.assertEquals(2, contactService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
 				contactService.findPagableListByCriteria(
 						new SearchRequest<ContactSearchCriteria>(criteria, 0,
 								Integer.MAX_VALUE)).size());
@@ -124,12 +137,12 @@ public class ContactServiceTest {
 	
 	@Test
 	@DataSet
-	public void testSearchAnyCountry() {
+	public void testSearchAnyCountries() {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
-		criteria.setAnyCountry(new StringSearchField(SearchField.AND, "Viet nam"));
-		Assert.assertEquals(3, contactService.getTotalCount(criteria));
+		criteria.setCountries(new SetSearchField<String>(SearchField.AND, new String[] {"Viet nam","America"}));
+		Assert.assertEquals(2, contactService.getTotalCount(criteria));
 		Assert.assertEquals(
-				3,
+				2,
 				contactService.findPagableListByCriteria(
 						new SearchRequest<ContactSearchCriteria>(criteria, 0,
 								Integer.MAX_VALUE)).size());

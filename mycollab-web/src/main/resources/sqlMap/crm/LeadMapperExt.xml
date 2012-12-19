@@ -32,8 +32,12 @@
                 ${assignUserName.operation} concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) like '%${assignUserName.value}%'
             ]]>
 		</if>
-		<if test="assignUser != null">
-            <![CDATA[${assignUser.operation} m_crm_lead.assignUser = #{assignUser.value}]]>
+		<if test="assignUsers != null">
+           	${assignUsers.operation} m_crm_lead.assignUser IN
+           	<foreach close=")" collection="assignUsers.values" item="assignUser"
+           			open="(" separator=",">
+           			#{assignUser}
+           	</foreach>
 		</if>
 		<if test="opportunityId != null">
             <![CDATA[
@@ -75,8 +79,12 @@
             <![CDATA[${anyCountry.operation} m_crm_lead.primCountry like '%${anyCountry.value}%'
             							 OR  m_crm_lead.otherCountry like '%${anyCountry.value}%']]>
 		</if>
-		<if test="source != null">
-            <![CDATA[${source.operation} m_crm_lead.source = #{source.value}]]>
+		<if test="sources != null">
+           	${sources.operation} m_crm_lead.source IN
+           	<foreach close=")" collection="sources.values" item="source"
+           			open="(" separator=",">
+           			#{source}
+           	</foreach>
 		</if>
 		<if test="anyPhone != null">
             <![CDATA[${anyPhone.operation} m_crm_lead.officePhone like '%${anyPhone.value}%'
@@ -92,8 +100,12 @@
             <![CDATA[${anyState.operation} m_crm_lead.primCity like '%${anyState.value}%'
             							 OR  m_crm_lead.otherState like '%${anyState.value}%']]>
 		</if>
-		<if test="status != null">
-            <![CDATA[${status.operation} m_crm_lead.status = #{status.value}]]>
+		<if test="statuses != null">
+            ${statuses.operation} m_crm_lead.status IN
+           	<foreach close=")" collection="statuses.values" item="status"
+           			open="(" separator=",">
+           			#{status}
+           	</foreach>
 		</if>
 	</sql>
 
@@ -118,8 +130,12 @@
 		<if test="accountName != null">
             <![CDATA[${accountName.operation} m_crm_lead.accountName like '%${accountName.value}%']]>
 		</if>
-		<if test="assignUser">
-            <![CDATA[${assignUser.operation} m_crm_lead.assignUser = #{assignUser.value}]]>
+		<if test="assignUsers != null">
+           	${assignUsers.operation} m_crm_lead.assignUser IN
+           	<foreach close=")" collection="assignUsers.values" item="assignUser"
+           			open="(" separator=",">
+           			#{assignUser}
+           	</foreach>
 		</if>
 		<if test="assignUserName != null">
             <![CDATA[
@@ -166,8 +182,12 @@
             <![CDATA[${anyAddress.operation} m_crm_lead.primAddress like '%${anyAddress.value}%'
             							 OR  m_crm_lead.otherAddress like '%${anyAddress.value}%']]>
 		</if>
-		<if test="source != null">
-            <![CDATA[${source.operation} m_crm_lead.source = #{source.value}]]>
+		<if test="sources != null">
+           	${sources.operation} m_crm_lead.source IN
+           	<foreach close=")" collection="sources.values" item="source"
+           			open="(" separator=",">
+           			#{source}
+           	</foreach>
 		</if>
 		<if test="anyPhone != null">
             <![CDATA[${anyPhone.operation} m_crm_lead.officePhone like '%${anyPhone.value}%'
@@ -183,8 +203,12 @@
             <![CDATA[${anyState.operation} m_crm_lead.primCity like '%${anyState.value}%'
             							 OR  m_crm_lead.otherState like '%${anyState.value}%']]>
 		</if>
-		<if test="status != null">
-            <![CDATA[${status.operation} m_crm_lead.status = #{status.value}]]>
+		<if test="statuses != null">
+            ${statuses.operation} m_crm_lead.status IN
+           	<foreach close=")" collection="statuses.values" item="status"
+           			open="(" separator=",">
+           			#{status}
+           	</foreach>
 		</if>
 	</sql>
 

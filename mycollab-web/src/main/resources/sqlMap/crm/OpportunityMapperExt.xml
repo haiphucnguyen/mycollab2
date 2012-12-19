@@ -44,11 +44,13 @@
             ${assignUserName.operation} concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) like '%${assignUserName.value}%'
             ]]>
         </if>
-        <if test="assignUser != null">
-            <![CDATA[
-            ${assignUser.operation} m_crm_opportunity.assignUser = #{assignUser.value}
-            ]]>
-        </if>
+        <if test="assignUsers != null">
+           	${assignUsers.operation} m_crm_opportunity.assignUser IN
+           	<foreach close=")" collection="assignUsers.values" item="assignUser"
+           			open="(" separator=",">
+           			#{assignUser}
+           	</foreach>
+		</if>
         <if test="quoteId != null">
           <![CDATA[
             ${quoteId.operation}
@@ -67,15 +69,17 @@
             ${nextStep.operation} m_crm_opportunity.nextStep like '%${nextStep.value}%'
             ]]>
         </if>
-        <if test="salesStage != null">
-            <![CDATA[
-            ${salesStage.operation} m_crm_opportunity.salesStage = #{salesStage.value}
-            ]]>
+        <if test="salesStages != null">
+            ${salesStages.operation} m_crm_opportunity.salesStage IN
+            <foreach item="salesStage" open="(" close=")" collection="salesStages.values" separator=",">
+            	#{salesStage}
+            </foreach>
         </if>
-        <if test="leadSource != null">
-            <![CDATA[
-            ${leadSource.operation} m_crm_opportunity.source = #{leadSource.value}
-            ]]>
+        <if test="leadSources != null">
+             ${leadSources.operation} m_crm_opportunity.source IN
+            <foreach item="source" open="(" close=")" collection="leadSources.values" separator=",">
+            	#{source}
+            </foreach>
         </if>
     </sql>
 
@@ -140,12 +144,13 @@
                 AND (concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) like '%${assignUserName.value}%')) > 0
             ]]>
         </if>
-        <if test="assignUser != null">
-            <![CDATA[
-            ${assignUser.operation}
-            m_crm_opportunity.assignUser = #{assignUser.value}
-            ]]>
-        </if>
+         <if test="assignUsers != null">
+           	${assignUsers.operation} m_crm_opportunity.assignUser IN
+           	<foreach close=")" collection="assignUsers.values" item="assignUser"
+           			open="(" separator=",">
+           			#{assignUser}
+           	</foreach>
+		</if>
         <if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_opportunity.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
         </if>
@@ -154,15 +159,17 @@
             ${nextStep.operation} m_crm_opportunity.nextStep like '%${nextStep.value}%'
             ]]>
         </if>
-        <if test="salesStage != null">
-            <![CDATA[
-            ${salesStage.operation} m_crm_opportunity.salesStage = #{salesStage.value}
-            ]]>
+        <if test="salesStages != null">
+            ${salesStages.operation} m_crm_opportunity.salesStage IN
+            <foreach item="salesStage" open="(" close=")" collection="salesStages.values" separator=",">
+            	#{salesStage}
+            </foreach>
         </if>
-         <if test="leadSource != null">
-            <![CDATA[
-            ${leadSource.operation} m_crm_opportunity.source = #{leadSource.value}
-            ]]>
+         <if test="leadSources != null">
+             ${leadSources.operation} m_crm_opportunity.source IN
+            <foreach item="source" open="(" close=")" collection="leadSources.values" separator=",">
+            	#{source}
+            </foreach>
         </if>
     </sql>
 

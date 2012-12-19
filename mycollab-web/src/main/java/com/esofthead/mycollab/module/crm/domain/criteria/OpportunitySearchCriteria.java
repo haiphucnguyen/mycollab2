@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.crm.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class OpportunitySearchCriteria extends SearchCriteria {
@@ -28,7 +29,7 @@ public class OpportunitySearchCriteria extends SearchCriteria {
 
     private StringSearchField campaignName;
 
-    private StringSearchField assignUser;
+    private SetSearchField<String> assignUsers;
 
     private StringSearchField assignUserName;
 
@@ -42,9 +43,9 @@ public class OpportunitySearchCriteria extends SearchCriteria {
     
     private StringSearchField nextStep;
     
-    private StringSearchField salesStage;
+    private SetSearchField<String> salesStages;
     
-    private StringSearchField leadSource;
+    private SetSearchField<String> leadSources;
 
 	public StringSearchField getOpportunityName() {
 		return opportunityName;
@@ -70,12 +71,12 @@ public class OpportunitySearchCriteria extends SearchCriteria {
 		this.campaignName = campaignName;
 	}
 
-	public StringSearchField getAssignUser() {
-		return assignUser;
+	public void setAssignUsers(SetSearchField<String> assignUsers) {
+		this.assignUsers = assignUsers;
 	}
 
-	public void setAssignUser(StringSearchField assignUser) {
-		this.assignUser = assignUser;
+	public SetSearchField<String> getAssignUsers() {
+		return assignUsers;
 	}
 
 	public StringSearchField getAssignUserName() {
@@ -126,19 +127,19 @@ public class OpportunitySearchCriteria extends SearchCriteria {
 		this.nextStep = nextStep;
 	}
 
-	public StringSearchField getSalesStage() {
-		return salesStage;
+	public void setSalesStages(SetSearchField<String> salesStages) {
+		this.salesStages = salesStages;
 	}
 
-	public void setSalesStage(StringSearchField salesStage) {
-		this.salesStage = salesStage;
+	public SetSearchField<String> getSalesStages() {
+		return salesStages;
 	}
 
-	public StringSearchField getLeadSource() {
-		return leadSource;
+	public void setLeadSources(SetSearchField<String> leadSources) {
+		this.leadSources = leadSources;
 	}
 
-	public void setLeadSource(StringSearchField leadSource) {
-		this.leadSource = leadSource;
+	public SetSearchField<String> getLeadSources() {
+		return leadSources;
 	}
 }

@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.crm.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class LeadSearchCriteria extends SearchCriteria {
@@ -30,7 +31,7 @@ public class LeadSearchCriteria extends SearchCriteria {
 
 	private StringSearchField accountName;
 
-	private StringSearchField assignUser;
+	private SetSearchField<String> assignUsers;
 
 	private StringSearchField assignUserName;
 
@@ -52,7 +53,7 @@ public class LeadSearchCriteria extends SearchCriteria {
 	
 	private StringSearchField anyCountry;
 	
-	private StringSearchField source;
+	private SetSearchField<String> sources;
 	
 	private StringSearchField anyPhone;
 	
@@ -60,7 +61,7 @@ public class LeadSearchCriteria extends SearchCriteria {
 	
 	private StringSearchField anyState;
 	
-	private StringSearchField status;
+	private SetSearchField<String> statuses;
 
 	public StringSearchField getCampaignName() {
 		return campaignName;
@@ -94,14 +95,14 @@ public class LeadSearchCriteria extends SearchCriteria {
 		this.accountName = accountName;
 	}
 
-	public StringSearchField getAssignUser() {
-		return assignUser;
+	public void setAssignUsers(SetSearchField<String> assignUsers) {
+		this.assignUsers = assignUsers;
 	}
 
-	public void setAssignUser(StringSearchField assignUser) {
-		this.assignUser = assignUser;
+	public SetSearchField<String> getAssignUsers() {
+		return assignUsers;
 	}
-
+	
 	public StringSearchField getAssignUserName() {
 		return assignUserName;
 	}
@@ -182,12 +183,12 @@ public class LeadSearchCriteria extends SearchCriteria {
 		this.anyCountry = anyCountry;
 	}
 
-	public StringSearchField getSource() {
-		return source;
+	public void setSources(SetSearchField<String> sources) {
+		this.sources = sources;
 	}
 
-	public void setSource(StringSearchField source) {
-		this.source = source;
+	public SetSearchField<String> getSources() {
+		return sources;
 	}
 
 	public StringSearchField getAnyPhone() {
@@ -214,12 +215,12 @@ public class LeadSearchCriteria extends SearchCriteria {
 		this.anyState = anyState;
 	}
 
-	public void setStatus(StringSearchField status) {
-		this.status = status;
+	public void setStatuses(SetSearchField<String> statuses) {
+		this.statuses = statuses;
 	}
 
-	public StringSearchField getStatus() {
-		return status;
+	public SetSearchField<String> getStatuses() {
+		return statuses;
 	}
 	
 }
