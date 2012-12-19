@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.project.view.problem;
 
-import org.vaadin.teemu.ratingstars.RatingStars;
-
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;

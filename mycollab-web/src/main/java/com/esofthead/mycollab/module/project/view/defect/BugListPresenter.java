@@ -1,12 +1,12 @@
-package com.esofthead.mycollab.module.project.view.problem;
+package com.esofthead.mycollab.module.project.view.defect;
 
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.esofthead.mycollab.module.project.domain.SimpleProblem;
-import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
-import com.esofthead.mycollab.module.project.service.ProblemService;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -19,20 +19,20 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
-public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
-		implements ListPresenter<ProblemSearchCriteria> {
+public class BugListPresenter extends AbstractPresenter<BugListView>
+		implements ListPresenter<BugSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 
-	private ProblemService problemService;
+	private BugService bugService;
 
-	private ProblemSearchCriteria searchCriteria;
+	private BugSearchCriteria searchCriteria;
 
 	private boolean isSelectAll = false;
 
-	public ProblemListPresenter() {
-		super(ProblemListView.class);
+	public BugListPresenter() {
+		super(BugListView.class);
 
-		problemService = AppContext.getSpringBean(ProblemService.class);
+		bugService = AppContext.getSpringBean(BugService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
 			private static final long serialVersionUID = 1L;
@@ -57,10 +57,10 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 		});
 
 		view.getSearchHandlers().addSearchHandler(
-				new SearchHandler<ProblemSearchCriteria>() {
+				new SearchHandler<BugSearchCriteria>() {
 
 					@Override
-					public void onSearch(ProblemSearchCriteria criteria) {
+					public void onSearch(BugSearchCriteria criteria) {
 						doSearch(criteria);
 					}
 				});
@@ -78,10 +78,10 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 
 					@Override
 					public void onDeSelect() {
-						Collection<SimpleProblem> currentDataList = view
+						Collection<SimpleBug> currentDataList = view
 								.getPagedBeanTable().getCurrentDataList();
 						isSelectAll = false;
-						for (SimpleProblem item : currentDataList) {
+						for (SimpleBug item : currentDataList) {
 							item.setSelected(false);
 							CheckBox checkBox = (CheckBox) item.getExtraData();
 							checkBox.setValue(false);
@@ -110,10 +110,10 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 				});
 
 		view.getSelectableItemHandlers().addSelectableItemHandler(
-				new SelectableItemHandler<SimpleProblem>() {
+				new SelectableItemHandler<SimpleBug>() {
 
 					@Override
-					public void onSelect(SimpleProblem item) {
+					public void onSelect(SimpleBug item) {
 						isSelectAll = false;
 						item.setSelected(!item.isSelected());
 
@@ -123,9 +123,9 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 	}
 
 	private void selectAllItemsInCurrentPage() {
-		Collection<SimpleProblem> currentDataList = view.getPagedBeanTable()
+		Collection<SimpleBug> currentDataList = view.getPagedBeanTable()
 				.getCurrentDataList();
-		for (SimpleProblem item : currentDataList) {
+		for (SimpleBug item : currentDataList) {
 			item.setSelected(true);
 			CheckBox checkBox = (CheckBox) item.getExtraData();
 			checkBox.setValue(true);
@@ -133,10 +133,10 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 	}
 
 	private void checkWhetherEnableTableActionControl() {
-		Collection<SimpleProblem> currentDataList = view.getPagedBeanTable()
+		Collection<SimpleBug> currentDataList = view.getPagedBeanTable()
 				.getCurrentDataList();
 		int countItems = 0;
-		for (SimpleProblem item : currentDataList) {
+		for (SimpleBug item : currentDataList) {
 			if (item.isSelected()) {
 				countItems++;
 			}
@@ -150,14 +150,14 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		ProblemContainer problemContainer = (ProblemContainer) container;
-		problemContainer.addComponent(view.getWidget());
+		BugContainer bugContainer = (BugContainer) container;
+		bugContainer.addComponent(view.getWidget());
 
-		doSearch((ProblemSearchCriteria) data.getParams());
+		doSearch((BugSearchCriteria) data.getParams());
 	}
 
 	@Override
-	public void doSearch(ProblemSearchCriteria searchCriteria) {
+	public void doSearch(BugSearchCriteria searchCriteria) {
 		this.searchCriteria = searchCriteria;
 		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
 		checkWhetherEnableTableActionControl();
@@ -165,20 +165,20 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 
 	private void deleteSelectedItems() {
 		if (!isSelectAll) {
-			Collection<SimpleProblem> currentDataList = view.getPagedBeanTable()
-					.getCurrentDataList();
+			Collection<SimpleBug> currentDataList = view
+					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
-			for (SimpleProblem item : currentDataList) {
+			for (SimpleBug item : currentDataList) {
 				keyList.add(item.getId());
 			}
 
 			if (keyList.size() > 0) {
-				problemService.removeWithSession(keyList,
-						AppContext.getUsername());
+				bugService
+						.removeWithSession(keyList, AppContext.getUsername());
 				doSearch(searchCriteria);
 			}
 		} else {
-			problemService.removeByCriteria(searchCriteria);
+			bugService.removeByCriteria(searchCriteria);
 			doSearch(searchCriteria);
 		}
 

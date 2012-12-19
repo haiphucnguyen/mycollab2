@@ -155,10 +155,11 @@ public class UserDashboardViewImpl extends AbstractView implements
 		}
 	}
 
+	@Override
 	public void gotoMyFeeds() {
 		com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Feeds");
 		if (component != null) {
-			
+
 		}
 	}
 
@@ -166,7 +167,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 	public void gotoMyTasks() {
 		com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Tasks");
 		if (component != null) {
-			
+
 		}
 
 	}
@@ -175,7 +176,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 	public void gotoMyBugs() {
 		com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Bugs");
 		if (component != null) {
-			
+
 		}
 
 	}

@@ -51,9 +51,9 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
 @Service
-public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriteria> implements
-		BugService {
-	
+public class BugServiceImpl extends
+		DefaultService<Integer, Bug, BugSearchCriteria> implements BugService {
+
 	@Autowired
 	private BugMapper bugMapper;
 
@@ -110,7 +110,7 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
 
 		// remove bug's attachments
 		String attachmentid = "defect-" + primaryKey;
-//		attachmentService.removeById(attachmentid);
+		// attachmentService.removeById(attachmentid);
 
 		// notify watchers
 		String bugid = "defect-" + primaryKey;
@@ -125,7 +125,7 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
 		changeLogService.saveChangeLog(bug.getProjectid(), username,
 				ChangeLogSource.DEFECT, bug.getId(), ChangeLogAction.UPDATE,
 				bug.getSummary());
-		bug.setUpdateddate(new GregorianCalendar().getTime());
+		bug.setLastupdatedtime(new GregorianCalendar().getTime());
 		super.updateWithSession(bug, null);
 		return 0;
 	}
@@ -137,7 +137,7 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
 				ChangeLogSource.DEFECT, record.getId(), ChangeLogAction.UPDATE,
 				record.getSummary());
 
-		SimpleBug oldValue = this.getBugById(record.getId());
+		SimpleBug oldValue = this.findBugById(record.getId());
 
 		String refid = "bug-" + record.getId();
 		auditLogService.saveAuditLog(username, refid, (Object) oldValue,
@@ -150,7 +150,7 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
 
 		saveBugRelatedItems(record, refkey);
 
-		record.setUpdateddate(new GregorianCalendar().getTime());
+		record.setLastupdatedtime(new GregorianCalendar().getTime());
 
 		if (record.getStatus() == "Resolved") {
 			record.setResolveddate(new GregorianCalendar().getTime());
@@ -269,11 +269,11 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
 
 	@Override
 	public int saveBugExt(SimpleBug bug, String username) {
-		bug.setPosteddate(new GregorianCalendar().getTime());
+		bug.setCreatedtime(new GregorianCalendar().getTime());
 
 		// Force these fields are null to prevent client application eventually
 		// add them
-		bug.setUpdateddate(new GregorianCalendar().getTime());
+		bug.setLastupdatedtime(new GregorianCalendar().getTime());
 		bug.setResolveddate(null);
 
 		bugMapperExt.insertAndReturnKey(bug);
@@ -319,39 +319,6 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
 		return bugid;
 	}
 
-	private String convertPriority(int priority) {
-		String result = "";
-		if (priority == 1) {
-			result = "Blocker";
-		} else if (priority == 2) {
-			result = "Critical";
-		} else if (priority == 3) {
-			result = "Major";
-		} else if (priority == 4) {
-			result = "Minor";
-		} else if (priority == 5) {
-			result = "Cosmetic";
-		}
-
-		return result;
-	}
-
-	@Override
-	public SimpleBug getBugById(int bugid) {
-		SimpleBug bug = bugMapperExt.getBugById(bugid);
-
-		// get related versions
-		String refKey = "bug-" + bug.getId();
-		bug.setAffectedVersions(versionMapperExt
-				.getAffectedVersionsByRelatedRefKey(refKey));
-		bug.setFixedVersions(versionMapperExt
-				.getFixedVersionByRelatedRefKey(refKey));
-
-		// get related components
-		bug.setComponents(componentMapperExt.getComponentByRefKey(refKey));
-		return bug;
-	}
-
 	@Override
 	public List<GroupItem> getStatusSummary(BugSearchCriteria criteria) {
 		return bugMapperExt.getStatusSummary(criteria);
@@ -386,5 +353,21 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
 	@Override
 	public List<GroupItem> getVersionDefectsSummary(BugSearchCriteria criteria) {
 		return bugMapperExt.getVersionDefectsSummary(criteria);
+	}
+
+	@Override
+	public SimpleBug findBugById(int bugId) {
+		SimpleBug bug = bugMapperExt.getBugById(bugId);
+
+		// get related versions
+		String refKey = "bug-" + bug.getId();
+		bug.setAffectedVersions(versionMapperExt
+				.getAffectedVersionsByRelatedRefKey(refKey));
+		bug.setFixedVersions(versionMapperExt
+				.getFixedVersionByRelatedRefKey(refKey));
+
+		// get related components
+		bug.setComponents(componentMapperExt.getComponentByRefKey(refKey));
+		return bug;
 	}
 }

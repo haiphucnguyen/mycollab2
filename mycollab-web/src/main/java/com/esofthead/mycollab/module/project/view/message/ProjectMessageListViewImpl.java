@@ -38,17 +38,18 @@ public class ProjectMessageListViewImpl extends AbstractView implements
 		ProjectMessageListView, HasEditFormHandlers<Message> {
 	private static final long serialVersionUID = 8433776359091397422L;
 
-	private PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage> tableItem;
+	private final PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage> tableItem;
 
 	private Set<EditFormHandler<Message>> editFormHandlers;
 
 	private MessageSearchCriteria searchCriteria;
 
-	private TopMessagePanel topMessagePanel;
+	private final TopMessagePanel topMessagePanel;
 
 	public ProjectMessageListViewImpl() {
 		super();
 		this.setSpacing(true);
+		this.setWidth("100%");
 		topMessagePanel = new TopMessagePanel();
 		this.addComponent(topMessagePanel);
 		tableItem = new PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage>(
@@ -153,6 +154,7 @@ public class ProjectMessageListViewImpl extends AbstractView implements
 			config.setWidth("100%");
 
 			final RichTextEditor ckEditorTextField = new RichTextEditor();
+			ckEditorTextField.setWidth("100%");
 			this.addComponent(ckEditorTextField);
 
 			HorizontalLayout controls = new HorizontalLayout();

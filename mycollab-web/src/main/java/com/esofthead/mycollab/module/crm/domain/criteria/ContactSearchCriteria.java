@@ -43,6 +43,27 @@ public class ContactSearchCriteria extends SearchCriteria {
     private NumberSearchField targetListId;
     
     private NumberSearchField saccountid;
+    
+    private StringSearchField firstname;
+    
+    private StringSearchField lastname;
+    
+    private StringSearchField anyEmail;
+    
+    private StringSearchField anyAddress;
+    
+    private StringSearchField anyState;
+    
+    private StringSearchField anyCountry;
+    
+    private StringSearchField anyPhone;
+    
+    private StringSearchField anyCity;
+    
+    private StringSearchField anyPostalCode;
+    
+    private StringSearchField leadSource;
+    
 
 	public StringSearchField getContactName() {
 		return contactName;
@@ -130,6 +151,86 @@ public class ContactSearchCriteria extends SearchCriteria {
 
 	public void setAssignUserName(StringSearchField assignUserName) {
 		this.assignUserName = assignUserName;
+	}
+
+	public StringSearchField getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(StringSearchField firstname) {
+		this.firstname = firstname;
+	}
+
+	public StringSearchField getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(StringSearchField lastname) {
+		this.lastname = lastname;
+	}
+
+	public StringSearchField getAnyEmail() {
+		return anyEmail;
+	}
+
+	public void setAnyEmail(StringSearchField anyEmail) {
+		this.anyEmail = anyEmail;
+	}
+
+	public StringSearchField getAnyAddress() {
+		return anyAddress;
+	}
+
+	public void setAnyAddress(StringSearchField anyAddress) {
+		this.anyAddress = anyAddress;
+	}
+
+	public StringSearchField getAnyState() {
+		return anyState;
+	}
+
+	public void setAnyState(StringSearchField anyState) {
+		this.anyState = anyState;
+	}
+
+	public StringSearchField getAnyCountry() {
+		return anyCountry;
+	}
+
+	public void setAnyCountry(StringSearchField anyCountry) {
+		this.anyCountry = anyCountry;
+	}
+
+	public StringSearchField getAnyPhone() {
+		return anyPhone;
+	}
+
+	public void setAnyPhone(StringSearchField anyPhone) {
+		this.anyPhone = anyPhone;
+	}
+
+	public StringSearchField getAnyCity() {
+		return anyCity;
+	}
+
+	public void setAnyCity(StringSearchField anyCity) {
+		this.anyCity = anyCity;
+	}
+
+	public StringSearchField getAnyPostalCode() {
+		return anyPostalCode;
+	}
+
+	public void setAnyPostalCode(StringSearchField anyPostalCode) {
+		this.anyPostalCode = anyPostalCode;
+	}
+
+	public StringSearchField getLeadSource() {
+		return leadSource;
+	}
+
+	public void setLeadSource(StringSearchField leadSource) {
+		this.leadSource = leadSource;
 	}
 	
 	

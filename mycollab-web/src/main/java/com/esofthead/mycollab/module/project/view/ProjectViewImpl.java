@@ -10,12 +10,13 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.defect.DefectDashboardPresenter;
+import com.esofthead.mycollab.module.project.view.defect.BugPresenter;
 import com.esofthead.mycollab.module.project.view.message.ProjectMessageListPresenter;
 import com.esofthead.mycollab.module.project.view.milestone.ProjectMilestonePresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
 import com.esofthead.mycollab.module.project.view.task.ProjectTaskPresenter;
+import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -27,13 +28,11 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.HorizontalSplitPanel;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -41,16 +40,16 @@ import com.vaadin.ui.VerticalLayout;
 @ViewComponent
 public class ProjectViewImpl extends AbstractView implements ProjectView {
 
-	private HorizontalSplitPanel root;
-	private DetachedTabs myProjectTab;
-	private CssLayout mySpaceArea = new CssLayout();
+	private final HorizontalLayout root;
+	private final DetachedTabs myProjectTab;
+	private final CssLayout mySpaceArea = new CssLayout();
 
-	private HorizontalLayout topPanel;
+	private final HorizontalLayout topPanel;
 
 	private ProjectMessageListPresenter messagePresenter;
 	private ProjectMilestonePresenter milestonesPresenter;
 	private ProjectTaskPresenter taskPresenter;
-	private DefectDashboardPresenter defectPresenter;
+	private BugPresenter defectPresenter;
 	private ProblemPresenter problemPresenter;
 	private RiskPresenter riskPresenter;
 
@@ -63,12 +62,9 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		topPanel = new HorizontalLayout();
 		this.addComponent(topPanel);
 
-		root = new HorizontalSplitPanel();
-		root.setSplitPosition(200, Sizeable.UNITS_PIXELS);
+		root = new HorizontalLayout();
 		root.setStyleName("menuContent");
-		root.setWidth("100%");
 
-		mySpaceArea.setWidth("100%");
 		myProjectTab = new DetachedTabs.Vertical(mySpaceArea);
 		myProjectTab.setSizeFull();
 		myProjectTab.setHeight(null);
@@ -78,8 +74,10 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		menu.setStyleName("sidebar-menu");
 		menu.addComponent(myProjectTab);
 
-		root.setFirstComponent(menu);
+		root.addComponent(menu);
+		mySpaceArea.setStyleName("projectTabContent");
 		root.addComponent(mySpaceArea);
+		root.setExpandRatio(mySpaceArea, 1.0f);
 
 		buildComponents();
 		this.addComponent(root);
@@ -90,7 +88,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		myProjectTab.addTab(constructProjectMessageComponent(), "Messages");
 		myProjectTab.addTab(constructProjectMilestoneComponent(), "Milestones");
 		myProjectTab.addTab(constructTaskDashboardComponent(), "Tasks");
-		myProjectTab.addTab(constructProjectDefectComponent(), "Bugs");
+		myProjectTab.addTab(constructProjectBugComponent(), "Bugs");
 		myProjectTab.addTab(constructProjectRiskComponent(), "Risks");
 		myProjectTab.addTab(constructProjectProblemComponent(), "Problems");
 		myProjectTab.addTab(constructProjectDashboardComponent(), "Calendar");
@@ -111,7 +109,10 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 						} else if ("Tasks".equals(caption)) {
 							taskPresenter.go(ProjectViewImpl.this,
 									new ScreenData<SimpleProject>(project));
-						} else if ("Defects".equals(caption)) {
+						} else if ("Bugs".equals(caption)) {
+							SimpleProject project = (SimpleProject) AppContext
+									.getVariable(ProjectContants.PROJECT_NAME);
+							BugSearchCriteria criteria = new BugSearchCriteria();
 							defectPresenter.go(ProjectViewImpl.this,
 									new ScreenData<SimpleProject>(project));
 						} else if ("Risks".equals(caption)) {
@@ -183,9 +184,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		return taskPresenter.getView();
 	}
 
-	private Component constructProjectDefectComponent() {
-		defectPresenter = PresenterResolver
-				.getPresenter(DefectDashboardPresenter.class);
+	private Component constructProjectBugComponent() {
+		defectPresenter = PresenterResolver.getPresenter(BugPresenter.class);
 		return defectPresenter.getView();
 	}
 
@@ -225,8 +225,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
 	@Override
 	public Component gotoSubView(String name) {
-		View component = (View) myProjectTab
-				.selectTab(name);
+		View component = (View) myProjectTab.selectTab(name);
 		return component;
 	}
 }
