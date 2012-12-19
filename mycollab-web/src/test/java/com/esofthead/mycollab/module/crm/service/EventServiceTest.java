@@ -10,7 +10,7 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
-import com.esofthead.mycollab.core.arguments.DateSearchField;
+import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
@@ -37,10 +37,10 @@ public class EventServiceTest {
 			Date startDate = format.parse("2012-11-11 00:00:00");
 			Date endDate = format.parse("2012-11-15 00:00:00");
 			EventSearchCriteria criteria = new EventSearchCriteria();
-			criteria.setStartDate(new DateSearchField(SearchField.AND,
-					DateSearchField.GRREATERTHANEQUAL, startDate));
-			criteria.setEndDate(new DateSearchField(SearchField.AND,
-					DateSearchField.LESSTHANEQUAL, endDate));
+			criteria.setStartDate(new DateTimeSearchField(SearchField.AND,
+					DateTimeSearchField.GREATERTHANEQUAL, startDate));
+			criteria.setEndDate(new DateTimeSearchField(SearchField.AND,
+					DateTimeSearchField.LESSTHANEQUAL, endDate));
 
 			List list = eventService
 					.findPagableListByCriteria(new SearchRequest<EventSearchCriteria>(

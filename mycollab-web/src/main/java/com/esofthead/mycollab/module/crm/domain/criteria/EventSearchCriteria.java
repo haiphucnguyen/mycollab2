@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.crm.domain.criteria;
 
-import com.esofthead.mycollab.core.arguments.DateSearchField;
+import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -11,8 +11,8 @@ public class EventSearchCriteria extends SearchCriteria {
     private StringSearchField subject;
     private StringSearchField relatedTo;
     private StringSearchField assignUser;
-    private DateSearchField startDate;
-    private DateSearchField endDate;
+    private DateTimeSearchField startDate;
+    private DateTimeSearchField endDate;
 
     public NumberSearchField getSaccountid() {
         return saccountid;
@@ -46,19 +46,19 @@ public class EventSearchCriteria extends SearchCriteria {
         this.assignUser = assignUser;
     }
 
-    public DateSearchField getStartDate() {
+    public DateTimeSearchField getStartDate() {
         return startDate;
     }
 
-    public void setStartDate(DateSearchField startDate) {
+    public void setStartDate(DateTimeSearchField startDate) {
         this.startDate = startDate;
     }
 
-    public DateSearchField getEndDate() {
+    public DateTimeSearchField getEndDate() {
         return endDate;
     }
 
-    public void setEndDate(DateSearchField endDate) {
+    public void setEndDate(DateTimeSearchField endDate) {
         this.endDate = endDate;
     }
 }

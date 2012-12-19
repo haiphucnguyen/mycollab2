@@ -25,4 +25,13 @@ public class ViewState {
 	public ComponentContainer getContainer() {
 		return container;
 	}
+
+	@Override
+	public String toString() {
+		StringBuffer result = new StringBuffer();
+		result.append("View State:").append("\n");
+		result.append("   Presenter: " + presenter.getClass().getName()).append("\n");
+		result.append("   Params: " + ((params != null) ? params : "null"));
+		return result.toString();
+	}
 }

@@ -1,29 +1,21 @@
 package com.esofthead.mycollab.module.project.view;
 
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.vaadin.mvp.Presenter;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 
-public class ProjectViewPresenter implements Presenter {
+public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 	private static final long serialVersionUID = 1L;
 
-	private final ProjectView view;
-
-	public ProjectViewPresenter(ProjectView view) {
-		this.view = view;
+	public ProjectViewPresenter() {
+		super(ProjectView.class);
 	}
 
 	@Override
-	public void go(ComponentContainer container) {
-		// TODO Auto-generated method stub
-
-	}
-
-	@Override
-	public void go(ComponentContainer container, ScreenData<?> data) {
+	public void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectMainContainer prjContainer = (ProjectMainContainer) container;
 		prjContainer.removeAllComponents();
 		prjContainer.addComponent((Component) view);

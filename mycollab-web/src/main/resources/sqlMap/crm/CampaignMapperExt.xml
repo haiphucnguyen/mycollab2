@@ -62,6 +62,9 @@
 				#{user}
             </foreach>
 		</if>
+        <if test="startDate != null">
+            ${startDate.operation} m_crm_campaign.startDate ${startDate.comparision} ${startDate.value}
+        </if>    
 		<if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_campaign.sAccountId = #{saccountid.value, javaType=INTEGER}]]>
 		</if>

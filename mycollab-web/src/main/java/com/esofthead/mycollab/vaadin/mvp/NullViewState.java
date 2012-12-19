@@ -19,6 +19,12 @@ public class NullViewState extends ViewState{
 		@Override
 		public void go(ComponentContainer container, ScreenData<?> data) {
 		}
+
+		@Override
+		public void go(ComponentContainer container, ScreenData<?> data,
+				boolean isHistoryTrack) {
+			
+		}
 		
 	}
 

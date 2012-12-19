@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.module.project.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
-import com.esofthead.mycollab.core.arguments.DateSearchField;
+import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -15,9 +15,9 @@ public class TaskSearchCriteria extends SearchCriteria {
 
 	private NumberSearchField projectid;
 	
-	private DateSearchField greaterThan;
+	private DateTimeSearchField greaterThan;
 	
-	private DateSearchField lessThan;
+	private DateTimeSearchField lessThan;
 
 	public StringSearchField getUsername() {
 		return username;
@@ -51,19 +51,19 @@ public class TaskSearchCriteria extends SearchCriteria {
 		this.projectid = projectid;
 	}
 
-	public DateSearchField getLessThan() {
+	public DateTimeSearchField getLessThan() {
 		return lessThan;
 	}
 
-	public void setLessThan(DateSearchField lessThan) {
+	public void setLessThan(DateTimeSearchField lessThan) {
 		this.lessThan = lessThan;
 	}
 
-	public DateSearchField getGreaterThan() {
+	public DateTimeSearchField getGreaterThan() {
 		return greaterThan;
 	}
 
-	public void setGreaterThan(DateSearchField greaterThan) {
+	public void setGreaterThan(DateTimeSearchField greaterThan) {
 		this.greaterThan = greaterThan;
 	}
 }

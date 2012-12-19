@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.web.AppContext;
@@ -58,10 +59,8 @@ public class ProjectController {
 
 					@Override
 					public void handle(ProjectEvent.GotoMyProject event) {
-						ProjectViewImpl projectView = ViewManager
-								.getView(ProjectViewImpl.class);
-						ProjectViewPresenter presenter = new ProjectViewPresenter(
-								projectView);
+						ProjectViewPresenter presenter = PresenterResolver
+								.getPresenter(ProjectViewPresenter.class);
 						SimpleProject project = (SimpleProject) event.getData();
 						AppContext.putVariable(ProjectContants.PROJECT_NAME,
 								project);
@@ -135,7 +134,7 @@ public class ProjectController {
 					}
 				});
 	}
-	
+
 	@SuppressWarnings("serial")
 	private void bindProblemEvents() {
 		EventBus.getInstance().addListener(

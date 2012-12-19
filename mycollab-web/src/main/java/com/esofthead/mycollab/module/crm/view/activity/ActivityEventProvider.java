@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import com.esofthead.mycollab.core.arguments.DateSearchField;
+import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
@@ -41,10 +41,10 @@ public class ActivityEventProvider implements CalendarEventProvider {
 		List<CalendarEvent> events = new ArrayList<CalendarEvent>();
 
 		EventSearchCriteria searchCriteria = new EventSearchCriteria();
-		searchCriteria.setStartDate(new DateSearchField(SearchField.AND,
-				DateSearchField.GRREATERTHANEQUAL, startDate));
-		searchCriteria.setStartDate(new DateSearchField(SearchField.AND,
-				DateSearchField.LESSTHANEQUAL, endDate));
+		searchCriteria.setStartDate(new DateTimeSearchField(SearchField.AND,
+				DateTimeSearchField.GREATERTHANEQUAL, startDate));
+		searchCriteria.setStartDate(new DateTimeSearchField(SearchField.AND,
+				DateTimeSearchField.LESSTHANEQUAL, endDate));
 
 		log.debug("Get events from: " + startDate + " to " + endDate);
 		List<SimpleEvent> crmEvents = (List<SimpleEvent>) eventService

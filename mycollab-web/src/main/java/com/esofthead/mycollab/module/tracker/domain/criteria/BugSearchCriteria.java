@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.tracker.domain.criteria;
 
-import com.esofthead.mycollab.core.arguments.DateSearchField;
+import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -15,21 +15,21 @@ public class BugSearchCriteria extends SearchCriteria {
 
 	private NumberSearchField projectid;
 
-	private DateSearchField postedDateFrom;
+	private DateTimeSearchField postedDateFrom;
 
-	private DateSearchField postedDateTo;
+	private DateTimeSearchField postedDateTo;
 	
-	private DateSearchField updatedDateFrom;
+	private DateTimeSearchField updatedDateFrom;
 	
-	private DateSearchField updatedDateTo;
+	private DateTimeSearchField updatedDateTo;
 	
-	private DateSearchField dueDateFrom;
+	private DateTimeSearchField dueDateFrom;
 	
-	private DateSearchField dueDateTo;
+	private DateTimeSearchField dueDateTo;
 	
-	private DateSearchField resolvedDateFrom;
+	private DateTimeSearchField resolvedDateFrom;
 	
-	private DateSearchField resolvedDateTo;
+	private DateTimeSearchField resolvedDateTo;
 
 	private StringSearchField summary;
 
@@ -85,67 +85,67 @@ public class BugSearchCriteria extends SearchCriteria {
 		this.projectid = projectid;
 	}
 
-	public DateSearchField getPostedDateFrom() {
+	public DateTimeSearchField getPostedDateFrom() {
 		return postedDateFrom;
 	}
 
-	public void setPostedDateFrom(DateSearchField postedDateFrom) {
+	public void setPostedDateFrom(DateTimeSearchField postedDateFrom) {
 		this.postedDateFrom = postedDateFrom;
 	}
 
-	public DateSearchField getPostedDateTo() {
+	public DateTimeSearchField getPostedDateTo() {
 		return postedDateTo;
 	}
 
-	public void setPostedDateTo(DateSearchField postedDateTo) {
+	public void setPostedDateTo(DateTimeSearchField postedDateTo) {
 		this.postedDateTo = postedDateTo;
 	}
 
-	public DateSearchField getUpdatedDateFrom() {
+	public DateTimeSearchField getUpdatedDateFrom() {
 		return updatedDateFrom;
 	}
 
-	public void setUpdatedDateFrom(DateSearchField updatedDateFrom) {
+	public void setUpdatedDateFrom(DateTimeSearchField updatedDateFrom) {
 		this.updatedDateFrom = updatedDateFrom;
 	}
 
-	public DateSearchField getUpdatedDateTo() {
+	public DateTimeSearchField getUpdatedDateTo() {
 		return updatedDateTo;
 	}
 
-	public void setUpdatedDateTo(DateSearchField updatedDateTo) {
+	public void setUpdatedDateTo(DateTimeSearchField updatedDateTo) {
 		this.updatedDateTo = updatedDateTo;
 	}
 
-	public DateSearchField getDueDateFrom() {
+	public DateTimeSearchField getDueDateFrom() {
 		return dueDateFrom;
 	}
 
-	public void setDueDateFrom(DateSearchField dueDateFrom) {
+	public void setDueDateFrom(DateTimeSearchField dueDateFrom) {
 		this.dueDateFrom = dueDateFrom;
 	}
 
-	public DateSearchField getDueDateTo() {
+	public DateTimeSearchField getDueDateTo() {
 		return dueDateTo;
 	}
 
-	public void setDueDateTo(DateSearchField dueDateTo) {
+	public void setDueDateTo(DateTimeSearchField dueDateTo) {
 		this.dueDateTo = dueDateTo;
 	}
 
-	public DateSearchField getResolvedDateFrom() {
+	public DateTimeSearchField getResolvedDateFrom() {
 		return resolvedDateFrom;
 	}
 
-	public void setResolvedDateFrom(DateSearchField resolvedDateFrom) {
+	public void setResolvedDateFrom(DateTimeSearchField resolvedDateFrom) {
 		this.resolvedDateFrom = resolvedDateFrom;
 	}
 
-	public DateSearchField getResolvedDateTo() {
+	public DateTimeSearchField getResolvedDateTo() {
 		return resolvedDateTo;
 	}
 
-	public void setResolvedDateTo(DateSearchField resolvedDateTo) {
+	public void setResolvedDateTo(DateTimeSearchField resolvedDateTo) {
 		this.resolvedDateTo = resolvedDateTo;
 	}
 

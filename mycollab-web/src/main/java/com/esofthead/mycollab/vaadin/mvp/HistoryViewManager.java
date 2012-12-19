@@ -18,7 +18,6 @@ public class HistoryViewManager {
 		}
 
 		history.add(viewState);
-		log.debug("Add view state to history. The history list is " + history);
 	}
 
 	public static ViewState getPreviousViewState() {

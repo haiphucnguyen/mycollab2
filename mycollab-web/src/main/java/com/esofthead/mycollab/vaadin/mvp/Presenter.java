@@ -8,4 +8,6 @@ public interface Presenter extends Serializable{
 	void go(ComponentContainer container);
 
 	void go(ComponentContainer container, ScreenData<?> data);
+	
+	void go(ComponentContainer container, ScreenData<?> data, boolean isHistoryTrack);
 }
