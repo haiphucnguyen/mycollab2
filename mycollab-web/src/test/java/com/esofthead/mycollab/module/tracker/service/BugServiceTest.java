@@ -73,7 +73,7 @@ public class BugServiceTest {
 	@DataSet
 	@Test
 	public void testGetExtBug() {
-		SimpleBug bug = bugService.getBugById(1);
+		SimpleBug bug = bugService.findBugById(1);
 		Assert.assertEquals("Nguyen Hai", bug.getLoguserFullName());
 		Assert.assertEquals("Nguyen Hai", bug.getAssignuserFullName());
 		Assert.assertEquals(bug.getAffectedVersions().size(), 1);

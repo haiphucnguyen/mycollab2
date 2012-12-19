@@ -1,8 +1,7 @@
 package com.esofthead.mycollab.module.project.view.defect;
 
-import com.esofthead.mycollab.module.project.domain.SimpleRisk;
-import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.module.project.view.risk.RiskContainer;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -22,11 +21,11 @@ public class BugReadPresenter extends AbstractPresenter<BugReadView> {
 		riskContainer.addComponent(view.getWidget());
 
 		if (data.getParams() instanceof Integer) {
-//			BugService riskService = AppContext
-//					.getSpringBean(BugService.class);
-//			SimpleRisk risk = riskService.f((Integer) data
-//					.getParams());
-//			view.previewItem(risk);
+			BugService bugService = AppContext
+					.getSpringBean(BugService.class);
+			SimpleBug bug = bugService.findBugById((Integer) data
+					.getParams());
+			view.previewItem(bug);
 
 		}
 	}

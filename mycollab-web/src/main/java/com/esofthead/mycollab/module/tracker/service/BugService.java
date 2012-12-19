@@ -24,7 +24,7 @@ public interface BugService extends
 
 	int updateBugExt(String username, SimpleBug bug, DefectComment comment);
 
-	SimpleBug getBugById(int bugid);
+	SimpleBug findBugById(int bugid);
 
 	List<GroupItem> getStatusSummary(BugSearchCriteria criteria);
 

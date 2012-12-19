@@ -23,7 +23,7 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 		implements ListPresenter<ProblemSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 
-	private ProblemService riskService;
+	private ProblemService problemService;
 
 	private ProblemSearchCriteria searchCriteria;
 
@@ -32,7 +32,7 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 	public ProblemListPresenter() {
 		super(ProblemListView.class);
 
-		riskService = AppContext.getSpringBean(ProblemService.class);
+		problemService = AppContext.getSpringBean(ProblemService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
 			private static final long serialVersionUID = 1L;
@@ -150,8 +150,8 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		ProblemContainer riskContainer = (ProblemContainer) container;
-		riskContainer.addComponent(view.getWidget());
+		ProblemContainer problemContainer = (ProblemContainer) container;
+		problemContainer.addComponent(view.getWidget());
 
 		doSearch((ProblemSearchCriteria) data.getParams());
 	}
@@ -173,12 +173,12 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 			}
 
 			if (keyList.size() > 0) {
-				riskService.removeWithSession(keyList,
+				problemService.removeWithSession(keyList,
 						AppContext.getUsername());
 				doSearch(searchCriteria);
 			}
 		} else {
-			riskService.removeByCriteria(searchCriteria);
+			problemService.removeByCriteria(searchCriteria);
 			doSearch(searchCriteria);
 		}
 
