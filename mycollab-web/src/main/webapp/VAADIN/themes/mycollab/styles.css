@@ -11,6 +11,9 @@ only screen and (max-device-width : 1024px) {
 	.accountViewContainer {
 		margin: 20px 15px;
 	}
+	.menuContent .v-csslayout-projectTabContent {
+		min-width: 700px;
+	}
 }
 
 @media screen and (min-width: 1024px) {  
@@ -22,6 +25,9 @@ only screen and (max-device-width : 1024px) {
 	}
 	.accountViewContainer {
 		margin: 20px auto;
+	}
+	.menuContent .v-csslayout-projectTabContent {
+		min-width: 900px;
 	}
 }
 
@@ -35,6 +41,10 @@ only screen and (max-device-width : 1024px) {
 }
 .v-table-caption-container, .v-table-header-drag {
 	padding-top: .1em;
+}
+.v-ratingstars-wrapper {
+	border: 0px !important;
+	padding: 0px !important;
 }
 .clear {
     clear: both;
@@ -95,7 +105,7 @@ only screen and (max-device-width : 1024px) {
 }
 
 .h-sidebar-menu .v-csslayout-container .v-button-link:active .v-button-wrap, .h-sidebar-menu .v-csslayout-container .v-button-link:focus .v-button-wrap {
-    padding: 0px 30px;
+    padding: 0px 20px;
     border-right: 1px solid #8F8F8F;
 }
 
@@ -109,7 +119,7 @@ only screen and (max-device-width : 1024px) {
 .h-sidebar-menu .v-csslayout-container .v-button-link .v-button-wrap, .h-sidebar-menu .v-csslayout-container .v-popupbutton .v-button-wrap, .h-sidebar-menu .v-csslayout-container .v-popupbutton:active .v-button-wrap {
     margin: 7px auto 0px;
     display: block;
-    padding: 0px 30px;
+    padding: 0px 20px;
     border-right: 1px solid #8F8F8F;
     height: 16px;
 }
@@ -447,7 +457,7 @@ input.v-textfield-errorField {
 /* Add View Styles */
 .addViewLayout {
 	background-color: #FAFAFA;
-	padding: 10px 20px;
+	padding: 10px 5px 10px 15px;
 	margin: 10px 2px;
 	box-shadow: #BFBFBF 0px 1px 2px 1px;
 	border-top-left-radius: 5px;
@@ -863,7 +873,9 @@ input.v-textfield-errorField {
 /* End Calendar */
 
 /* Note List */
-
+.depotContent .noteList {
+	margin-top: 5px;
+}
 .noteList .noteRow {
 	border: 1px solid #919191;
 }
@@ -873,6 +885,14 @@ input.v-textfield-errorField {
 
 .noteList > div > div:nth-child(odd) .noteRow {
 	background-color: #dce5ee;
+}
+
+.noteRow .metadata {
+	font-size: 11px;
+	color: #999;
+}
+.menuContent .v-csslayout-projectTabContent {
+	margin-left: 15px;
 }
 
 /* End Note List */
