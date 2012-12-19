@@ -62,6 +62,21 @@
         <if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_opportunity.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
         </if>
+        <if test="nextStep != null">
+            <![CDATA[
+            ${nextStep.operation} m_crm_opportunity.nextStep like '%${nextStep.value}%'
+            ]]>
+        </if>
+        <if test="salesStage != null">
+            <![CDATA[
+            ${salesStage.operation} m_crm_opportunity.salesStage = #{salesStage.value}
+            ]]>
+        </if>
+        <if test="leadSource != null">
+            <![CDATA[
+            ${leadSource.operation} m_crm_opportunity.source = #{leadSource.value}
+            ]]>
+        </if>
     </sql>
 
     <sql id="queryTotalCountSearchCriteria">
@@ -133,6 +148,21 @@
         </if>
         <if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_opportunity.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+        </if>
+         <if test="nextStep != null">
+            <![CDATA[
+            ${nextStep.operation} m_crm_opportunity.nextStep like '%${nextStep.value}%'
+            ]]>
+        </if>
+        <if test="salesStage != null">
+            <![CDATA[
+            ${salesStage.operation} m_crm_opportunity.salesStage = #{salesStage.value}
+            ]]>
+        </if>
+         <if test="leadSource != null">
+            <![CDATA[
+            ${leadSource.operation} m_crm_opportunity.source = #{leadSource.value}
+            ]]>
         </if>
     </sql>
 

@@ -77,6 +77,42 @@
 		<if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_contact.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
 		</if>
+		<if test="firstname != null">
+            <![CDATA[${firstname.operation} m_crm_contact.firstname like '%${firstname.value}%']]>
+		</if>
+		<if test="lastname != null">
+            <![CDATA[${lastname.operation} m_crm_contact.lastname like '%${lastname.value}%']]>
+		</if>
+		<if test="anyEmail != null">
+            <![CDATA[${anyEmail.operation} m_crm_contact.email like '%${anyEmail.value}%']]>
+		</if>
+		<if test="anyAddress != null">
+            <![CDATA[${anyAddress.operation} m_crm_contact.primAddress like '%${anyAddress.value}%' OR m_crm_contact.otherAddress like '%${anyAddress.value}%']]>
+		</if>
+		<if test="anyState != null">
+            <![CDATA[${anyState.operation} m_crm_contact.primState like '%${anyState.value}%' OR m_crm_contact.otherState like '%${anyState.value}%']]>
+		</if>
+		<if test="anyCountry != null">
+            <![CDATA[${anyCountry.operation} m_crm_contact.primCountry like '%${anyCountry.value}%' OR m_crm_contact.otherCountry like '%${anyCountry.value}%']]>
+		</if>
+		<if test="anyPhone != null">
+            <![CDATA[${anyPhone.operation} m_crm_contact.officePhone like '%${anyPhone.value}%' 
+            							OR m_crm_contact.mobile like '%${anyPhone.value}%'
+            							OR m_crm_contact.homePhone like '%${anyPhone.value}%'
+            							OR m_crm_contact.otherPhone like '%${anyPhone.value}%'
+            							OR m_crm_contact.assistantPhone like '%${anyPhone.value}%']]>
+		</if>
+		<if test="anyCity != null">
+            <![CDATA[${anyCity.operation} m_crm_contact.primCity like '%${anyCity.value}%' OR m_crm_contact.otherCity like '%${anyCity.value}%']]>
+		</if>
+		<if test="anyPostalCode != null">
+            <![CDATA[${anyPostalCode.operation} m_crm_contact.primPostalCode like '%${anyPostalCode.value}%' OR m_crm_contact.otherPostalCode like '%${anyPostalCode.value}%']]>
+		</if>
+		<if test="leadSource != null">
+            <![CDATA[
+            ${leadSource.operation} m_crm_contact.leadSource = #{leadSource.value}
+            ]]>
+		</if>
 	</sql>
 
 
@@ -162,6 +198,42 @@
 		</if>
 		<if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_contact.sAccountId = #{saccountid.value,javaType=int}]]>
+		</if>
+		<if test="firstname != null">
+            <![CDATA[${firstname.operation} m_crm_contact.firstname like '%${firstname.value}%']]>
+		</if>
+		<if test="lastname != null">
+            <![CDATA[${lastname.operation} m_crm_contact.lastname like '%${lastname.value}%']]>
+		</if>
+		<if test="anyEmail != null">
+            <![CDATA[${anyEmail.operation} m_crm_contact.email like '%${anyEmail.value}%']]>
+		</if>
+		<if test="anyAddress != null">
+            <![CDATA[${anyAddress.operation} m_crm_contact.primAddress like '%${anyAddress.value}%' OR m_crm_contact.otherAddress like '%${anyAddress.value}%']]>
+		</if>
+		<if test="anyState != null">
+            <![CDATA[${anyState.operation} m_crm_contact.primState like '%${anyState.value}%' OR m_crm_contact.otherState like '%${anyState.value}%']]>
+		</if>
+		<if test="anyCountry != null">
+            <![CDATA[${anyCountry.operation} m_crm_contact.primCountry like '%${anyCountry.value}%' OR m_crm_contact.otherCountry like '%${anyCountry.value}%']]>
+		</if>
+		<if test="anyPhone != null">
+            <![CDATA[${anyPhone.operation} m_crm_contact.officePhone like '%${anyPhone.value}%' 
+            							OR m_crm_contact.mobile like '%${anyPhone.value}%'
+            							OR m_crm_contact.homePhone like '%${anyPhone.value}%'
+            							OR m_crm_contact.otherPhone like '%${anyPhone.value}%'
+            							OR m_crm_contact.assistantPhone like '%${anyPhone.value}%']]>
+		</if>
+		<if test="anyCity != null">
+            <![CDATA[${anyCity.operation} m_crm_contact.primCity like '%${anyCity.value}%' OR m_crm_contact.otherCity like '%${anyCity.value}%']]>
+		</if>
+		<if test="anyPostalCode != null">
+            <![CDATA[${anyPostalCode.operation} m_crm_contact.primPostalCode like '%${anyPostalCode.value}%' OR m_crm_contact.otherPostalCode like '%${anyPostalCode.value}%']]>
+		</if>
+		<if test="leadSource != null">
+            <![CDATA[
+            ${leadSource.operation} m_crm_contact.leadSource = #{leadSource.value}
+            ]]>
 		</if>
 	</sql>
 
