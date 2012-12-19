@@ -11,13 +11,13 @@
 		id="2" />
 	<m_tracker_bug summary="summary 1" id="1" projectid="1"
 		detail="detail 1" status="1" resolution="1" assignuser="admin" logby="admin"
-		posteddate="2009-01-01 00:00:00"/>
+		createdTime="2009-01-01 00:00:00"/>
 	<m_tracker_bug summary="summary 2" projectid="1" id="2"
 		detail="detail 2" status="1" resolution="1" assignuser="user1" logby="admin"
-		posteddate="2009-01-02 00:00:00" />
+		createdTime="2009-01-02 00:00:00" />
 	<m_tracker_bug summary="summary 3" id="3" projectid="1"
 		detail="detail 3" status="1" resolution="1" logby="user1" assignuser="user1"
-		posteddate="2009-01-03 00:00:00" />
+		createdTime="2009-01-03 00:00:00" />
 	<m_tracker_history id="1" relatedbug="3" logby="admin"
 		assignuser="user1" />
 	<m_tracker_version id="1" projectid="1" versionname="version1" />

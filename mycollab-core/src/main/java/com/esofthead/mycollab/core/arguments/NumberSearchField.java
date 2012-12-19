@@ -2,7 +2,11 @@ package com.esofthead.mycollab.core.arguments;
 
 public class NumberSearchField extends SearchField {
 	private Number value;
-	
+
+	public NumberSearchField(Number value) {
+		this(SearchField.AND, value);
+	}
+
 	public NumberSearchField(String oper, Number value) {
 		this.operation = oper;
 		this.value = value;

@@ -1321,11 +1321,11 @@
     summary CDATA #REQUIRED
     detail CDATA #IMPLIED
     assignuser CDATA #IMPLIED
-    posteddate CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
     logby CDATA #IMPLIED
     severity CDATA #IMPLIED
     priority CDATA #IMPLIED
-    updateddate CDATA #IMPLIED
+    lastUpdatedTime CDATA #IMPLIED
     status CDATA #REQUIRED
     duedate CDATA #IMPLIED
     environment CDATA #IMPLIED
