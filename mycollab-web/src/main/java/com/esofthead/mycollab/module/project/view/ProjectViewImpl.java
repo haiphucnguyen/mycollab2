@@ -10,7 +10,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.defect.DefectDashboardPresenter;
+import com.esofthead.mycollab.module.project.view.defect.BugDashboardPresenter;
 import com.esofthead.mycollab.module.project.view.message.ProjectMessageListPresenter;
 import com.esofthead.mycollab.module.project.view.milestone.ProjectMilestonePresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
@@ -48,7 +48,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private ProjectMessageListPresenter messagePresenter;
 	private ProjectMilestonePresenter milestonesPresenter;
 	private ProjectTaskPresenter taskPresenter;
-	private DefectDashboardPresenter defectPresenter;
+	private BugDashboardPresenter defectPresenter;
 	private ProblemPresenter problemPresenter;
 	private RiskPresenter riskPresenter;
 
@@ -181,7 +181,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
 	private Component constructProjectDefectComponent() {
 		defectPresenter = PresenterResolver
-				.getPresenter(DefectDashboardPresenter.class);
+				.getPresenter(BugDashboardPresenter.class);
 		return defectPresenter.getView();
 	}
 

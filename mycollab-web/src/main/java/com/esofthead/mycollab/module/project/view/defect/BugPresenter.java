@@ -6,11 +6,11 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
-public class DefectPresenter  extends AbstractPresenter<DefectContainer> {
+public class BugPresenter  extends AbstractPresenter<BugContainer> {
 	private static final long serialVersionUID = 1L;
 
-	public DefectPresenter() {
-		super(DefectContainer.class);
+	public BugPresenter() {
+		super(BugContainer.class);
 	}
 
 	@Override
@@ -21,18 +21,18 @@ public class DefectPresenter  extends AbstractPresenter<DefectContainer> {
 		view.removeAllComponents();
 
 		if (data instanceof ScreenData.Search) {
-			DefectListPresenter presenter = PresenterResolver
-					.getPresenter(DefectListPresenter.class);
+			BugListPresenter presenter = PresenterResolver
+					.getPresenter(BugListPresenter.class);
 			presenter.go(view, data);
 
 		} else if (data instanceof ScreenData.Add
 				|| data instanceof ScreenData.Edit) {
-			DefectAddPresenter presenter = PresenterResolver
-					.getPresenter(DefectAddPresenter.class);
+			BugAddPresenter presenter = PresenterResolver
+					.getPresenter(BugAddPresenter.class);
 			presenter.go(view, data);
 		} else if (data instanceof ScreenData.Preview) {
-			DefectReadPresenter presenter = PresenterResolver
-					.getPresenter(DefectReadPresenter.class);
+			BugReadPresenter presenter = PresenterResolver
+					.getPresenter(BugReadPresenter.class);
 			presenter.go(view, data);
 		}
 	}

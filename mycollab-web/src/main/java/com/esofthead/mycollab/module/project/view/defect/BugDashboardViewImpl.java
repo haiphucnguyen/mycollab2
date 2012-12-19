@@ -7,10 +7,10 @@ import com.vaadin.ui.Label;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class DefectDashboardViewImpl extends AbstractView
-		implements DefectDashboardView {
+public class BugDashboardViewImpl extends AbstractView
+		implements BugDashboardView {
 
-	public DefectDashboardViewImpl() {
+	public BugDashboardViewImpl() {
 		super();
 		this.addComponent(new Label("Defects"));
 	}

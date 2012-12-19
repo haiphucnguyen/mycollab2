@@ -9,11 +9,11 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class DefectReadPresenter extends AbstractPresenter<DefectReadView> {
+public class BugReadPresenter extends AbstractPresenter<BugReadView> {
 	private static final long serialVersionUID = 1L;
 
-	public DefectReadPresenter() {
-		super(DefectReadView.class);
+	public BugReadPresenter() {
+		super(BugReadView.class);
 	}
 
 	@Override

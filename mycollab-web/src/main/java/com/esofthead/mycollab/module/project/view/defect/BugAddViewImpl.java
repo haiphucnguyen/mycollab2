@@ -4,10 +4,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
 @ViewComponent
-public class DefectReadViewImpl extends AbstractView implements DefectReadView {
+public class BugAddViewImpl extends AbstractView implements BugAddView {
 	private static final long serialVersionUID = 1L;
 
-	public DefectReadViewImpl() {
-		
-	}
 }

@@ -4,11 +4,11 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
-public class DefectListPresenter extends AbstractPresenter<DefectListView> {
+public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 	private static final long serialVersionUID = 1L;
 
-	public DefectListPresenter() {
-		super(DefectListView.class);
+	public BugAddPresenter() {
+		super(BugAddView.class);
 	}
 
 	@Override
