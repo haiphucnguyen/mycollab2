@@ -41,6 +41,26 @@ public class LeadSearchCriteria extends SearchCriteria {
 	private NumberSearchField targetListId;
 
 	private NumberSearchField saccountid;
+	
+	private StringSearchField firstname;
+	
+	private StringSearchField lastname;
+	
+	private StringSearchField anyEmail;
+	
+	private StringSearchField anyAddress;
+	
+	private StringSearchField anyCountry;
+	
+	private StringSearchField source;
+	
+	private StringSearchField anyPhone;
+	
+	private StringSearchField anyCity;
+	
+	private StringSearchField anyState;
+	
+	private StringSearchField status;
 
 	public StringSearchField getCampaignName() {
 		return campaignName;
@@ -120,6 +140,86 @@ public class LeadSearchCriteria extends SearchCriteria {
 
 	public void setSaccountid(NumberSearchField saccountid) {
 		this.saccountid = saccountid;
+	}
+
+	public StringSearchField getFirstname() {
+		return firstname;
+	}
+
+	public void setFirstname(StringSearchField firstname) {
+		this.firstname = firstname;
+	}
+
+	public StringSearchField getLastname() {
+		return lastname;
+	}
+
+	public void setLastname(StringSearchField lastname) {
+		this.lastname = lastname;
+	}
+
+	public StringSearchField getAnyEmail() {
+		return anyEmail;
+	}
+
+	public void setAnyEmail(StringSearchField anyEmail) {
+		this.anyEmail = anyEmail;
+	}
+
+	public StringSearchField getAnyAddress() {
+		return anyAddress;
+	}
+
+	public void setAnyAddress(StringSearchField anyAddress) {
+		this.anyAddress = anyAddress;
+	}
+
+	public StringSearchField getAnyCountry() {
+		return anyCountry;
+	}
+
+	public void setAnyCountry(StringSearchField anyCountry) {
+		this.anyCountry = anyCountry;
+	}
+
+	public StringSearchField getSource() {
+		return source;
+	}
+
+	public void setSource(StringSearchField source) {
+		this.source = source;
+	}
+
+	public StringSearchField getAnyPhone() {
+		return anyPhone;
+	}
+
+	public void setAnyPhone(StringSearchField anyPhone) {
+		this.anyPhone = anyPhone;
+	}
+
+	public StringSearchField getAnyCity() {
+		return anyCity;
+	}
+
+	public void setAnyCity(StringSearchField anyCity) {
+		this.anyCity = anyCity;
+	}
+
+	public StringSearchField getAnyState() {
+		return anyState;
+	}
+
+	public void setAnyState(StringSearchField anyState) {
+		this.anyState = anyState;
+	}
+
+	public void setStatus(StringSearchField status) {
+		this.status = status;
+	}
+
+	public StringSearchField getStatus() {
+		return status;
 	}
 	
 }
