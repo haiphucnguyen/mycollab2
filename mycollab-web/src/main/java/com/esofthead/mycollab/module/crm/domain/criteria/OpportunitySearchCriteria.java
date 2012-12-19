@@ -39,6 +39,12 @@ public class OpportunitySearchCriteria extends SearchCriteria {
     private NumberSearchField quoteId;
     
     private NumberSearchField saccountid;
+    
+    private StringSearchField nextStep;
+    
+    private StringSearchField salesStage;
+    
+    private StringSearchField leadSource;
 
 	public StringSearchField getOpportunityName() {
 		return opportunityName;
@@ -110,5 +116,29 @@ public class OpportunitySearchCriteria extends SearchCriteria {
 
 	public void setSaccountid(NumberSearchField saccountid) {
 		this.saccountid = saccountid;
+	}
+
+	public StringSearchField getNextStep() {
+		return nextStep;
+	}
+
+	public void setNextStep(StringSearchField nextStep) {
+		this.nextStep = nextStep;
+	}
+
+	public StringSearchField getSalesStage() {
+		return salesStage;
+	}
+
+	public void setSalesStage(StringSearchField salesStage) {
+		this.salesStage = salesStage;
+	}
+
+	public StringSearchField getLeadSource() {
+		return leadSource;
+	}
+
+	public void setLeadSource(StringSearchField leadSource) {
+		this.leadSource = leadSource;
 	}
 }
