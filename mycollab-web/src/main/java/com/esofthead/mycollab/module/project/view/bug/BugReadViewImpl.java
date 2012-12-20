@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.defect;
+package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.tracker.domain.Bug;

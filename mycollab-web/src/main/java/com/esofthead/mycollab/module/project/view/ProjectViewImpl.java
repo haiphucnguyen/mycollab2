@@ -12,7 +12,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.defect.BugPresenter;
+import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.module.project.view.message.ProjectMessageListPresenter;
 import com.esofthead.mycollab.module.project.view.milestone.ProjectMilestonePresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;

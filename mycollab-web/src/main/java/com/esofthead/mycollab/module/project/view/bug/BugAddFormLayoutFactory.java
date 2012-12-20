@@ -1,10 +1,10 @@
-package com.esofthead.mycollab.module.project.view.defect;
+package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 
-public abstract class BugReadFormLayoutFactory implements IFormLayoutFactory {
+public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
 
 	@Override
@@ -18,9 +18,8 @@ public abstract class BugReadFormLayoutFactory implements IFormLayoutFactory {
 		// TODO Auto-generated method stub
 
 	}
-	
+
 	protected abstract Layout createTopPanel();
 
 	protected abstract Layout createBottomPanel();
-
 }

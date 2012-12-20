@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.defect;
+package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;

@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.defect;
+package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.ArrayList;
 import java.util.Collection;
