@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
+import com.esofthead.mycollab.core.EngroupException;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.service.RiskService;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -25,7 +26,8 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 			SimpleRisk risk = riskService.findRiskById((Integer) data
 					.getParams());
 			view.previewItem(risk);
-
+		} else {
+			throw new EngroupException("Unhanddle this case yet");
 		}
 	}
 

@@ -30,17 +30,26 @@ public abstract class AbstractPresenter<V extends View> implements Presenter {
 	public void go(ComponentContainer container, ScreenData<?> data) {
 		go(container, data, true);
 	}
-	
+
 	@Override
-	public void go(ComponentContainer container, ScreenData<?> data, boolean isHistoryTrack) {
+	public void go(ComponentContainer container, ScreenData<?> data,
+			boolean isHistoryTrack) {
 		if (isHistoryTrack) {
 			ViewState state = new ViewState(container, this, data);
-			log.debug("Add view state " + state + " to  history");
+			if (log.isDebugEnabled()) {
+				StringBuffer str = new StringBuffer();
+				str.append("----").append("\n");
+				str.append("Add " + state).append("\n");
+				str.append("to history with container " + container).append(
+						"\n");
+				str.append("----");
+				log.debug(str.toString());
+			}
 			HistoryViewManager.addHistory(state);
 		} else {
 			log.debug("Disable history track for " + this);
 		}
-		
+
 		onGo(container, data);
 	}
 

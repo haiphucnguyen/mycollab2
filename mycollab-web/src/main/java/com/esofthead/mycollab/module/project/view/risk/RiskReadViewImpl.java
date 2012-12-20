@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
-import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -78,9 +77,6 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 			@Override
 			protected Layout createBottomPanel() {
 				VerticalLayout relatedItemsPanel = new VerticalLayout();
-
-				relatedItemsPanel.addComponent(new NoteListItems(
-						"Notes", "Risk", risk.getId()));
 
 				return relatedItemsPanel;
 			}

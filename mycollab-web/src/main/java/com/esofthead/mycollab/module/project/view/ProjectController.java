@@ -82,8 +82,8 @@ public class ProjectController {
 
 					@Override
 					public void handle(RiskEvent.GotoAdd event) {
-						ProjectViewImpl projectView = ViewManager
-								.getView(ProjectViewImpl.class);
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
 						ScreenData.Add<Risk> data = new ScreenData.Add<Risk>(
 								new Risk());
 						projectView.gotoRiskView(data);
@@ -100,8 +100,8 @@ public class ProjectController {
 
 					@Override
 					public void handle(RiskEvent.GotoRead event) {
-						ProjectViewImpl projectView = ViewManager
-								.getView(ProjectViewImpl.class);
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
 						ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
 								(Integer) event.getData());
 						projectView.gotoRiskView(data);
@@ -118,8 +118,8 @@ public class ProjectController {
 
 					@Override
 					public void handle(RiskEvent.GotoList event) {
-						ProjectViewImpl projectView = ViewManager
-								.getView(ProjectViewImpl.class);
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
 
 						SimpleProject project = (SimpleProject) AppContext
 								.getVariable(ProjectContants.PROJECT_NAME);
@@ -147,8 +147,8 @@ public class ProjectController {
 
 					@Override
 					public void handle(ProblemEvent.GotoAdd event) {
-						ProjectViewImpl projectView = ViewManager
-								.getView(ProjectViewImpl.class);
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
 						ScreenData.Add<Problem> data = new ScreenData.Add<Problem>(
 								new Problem());
 						projectView.gotoProblemView(data);
@@ -165,8 +165,8 @@ public class ProjectController {
 
 					@Override
 					public void handle(ProblemEvent.GotoRead event) {
-						ProjectViewImpl projectView = ViewManager
-								.getView(ProjectViewImpl.class);
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
 						ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
 								(Integer) event.getData());
 						projectView.gotoProblemView(data);
@@ -183,8 +183,8 @@ public class ProjectController {
 
 					@Override
 					public void handle(ProblemEvent.GotoList event) {
-						ProjectViewImpl projectView = ViewManager
-								.getView(ProjectViewImpl.class);
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
 
 						SimpleProject project = (SimpleProject) AppContext
 								.getVariable(ProjectContants.PROJECT_NAME);

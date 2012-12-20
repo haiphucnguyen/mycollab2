@@ -11,7 +11,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.vaadin.mvp.View;
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext.TransactionListener;
 import com.vaadin.terminal.gwt.server.WebApplicationContext;
@@ -43,6 +42,8 @@ public class AppContext implements TransactionListener, Serializable {
 		if (this.app == application) {
 			instance.set(this);
 		}
+
+		log.debug("Transaction start");
 	}
 
 	@Override
@@ -51,6 +52,8 @@ public class AppContext implements TransactionListener, Serializable {
 		if (this.app == application) {
 			instance.set(null);
 		}
+
+		log.debug("Transaction end");
 	}
 
 	public static void setSession(SimpleUser userSession) {
@@ -74,7 +77,6 @@ public class AppContext implements TransactionListener, Serializable {
 	}
 
 	public static <T> T getSpringBean(Class<T> requiredType) {
-
 		WebApplicationContext context = (WebApplicationContext) instance.get().app
 				.getContext();
 
@@ -91,13 +93,6 @@ public class AppContext implements TransactionListener, Serializable {
 
 	public static Object getVariable(String key) {
 		return instance.get().variables.get(key);
-	}
-
-	public static <T extends View> T getView(Class<T> viewClass) {
-		T view = getSpringBean(viewClass);
-
-		log.debug("Create view class {}", viewClass.getName());
-		return view;
 	}
 
 	private static SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(

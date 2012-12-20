@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -39,6 +41,8 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 @ViewComponent
 public class ProjectViewImpl extends AbstractView implements ProjectView {
+
+	private static Logger log = LoggerFactory.getLogger(ProjectViewImpl.class);
 
 	private final HorizontalLayout root;
 	private final DetachedTabs myProjectTab;
@@ -121,9 +125,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 									.getVariable(ProjectContants.PROJECT_NAME);
 							searchCriteria.setProjectId(new NumberSearchField(
 									SearchField.AND, project.getId()));
-							riskPresenter.go(ProjectViewImpl.this,
-									new ScreenData.Search<RiskSearchCriteria>(
-											searchCriteria));
+							gotoRiskView(new ScreenData.Search<RiskSearchCriteria>(
+									searchCriteria));
 						} else if ("Problems".equals(caption)) {
 							ProblemSearchCriteria searchCriteria = new ProblemSearchCriteria();
 							SimpleProject project = (SimpleProject) AppContext
@@ -214,6 +217,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 					}
 				});
 		projectList.setWidth("200px");
+
 		ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
 		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
@@ -225,6 +229,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
 	@Override
 	public Component gotoSubView(String name) {
+		log.debug("Project: Go to tab view name " + name);
 		View component = (View) myProjectTab.selectTab(name);
 		return component;
 	}
