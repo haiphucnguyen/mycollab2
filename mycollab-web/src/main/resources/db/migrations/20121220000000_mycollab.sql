@@ -1,0 +1,1 @@
+ALTER TABLE `m_tracker_bug` ADD COLUMN `description` VARCHAR(4000) NULL, ADD COLUMN `estimateTime` INT NULL, ADD COLUMN `estimateRemainTime` INT NULL;

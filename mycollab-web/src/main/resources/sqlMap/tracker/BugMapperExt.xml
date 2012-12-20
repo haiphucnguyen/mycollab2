@@ -169,7 +169,7 @@
 		</if>
 	</sql>
 
-	<insert id="insert" parameterType="Bug" useGeneratedKeys="true"
+	<insert id="insertAndReturnKey" parameterType="Bug" useGeneratedKeys="true"
 		keyProperty="id">
     <![CDATA[
     insert into m_tracker_bug (id, summary, detail, 
@@ -184,7 +184,8 @@
       cus_str_05, cus_time_01, cus_time_02, 
       cus_time_03, cus_time_04, cus_dbl_01, 
       cus_dbl_02, cus_dbl_03, projectid, 
-      resolveddate)
+      resolveddate, description, estimateTime, 
+      estimateRemainTime)
     values (#{id,jdbcType=INTEGER}, #{summary,jdbcType=VARCHAR}, #{detail,jdbcType=VARCHAR}, 
       #{assignuser,jdbcType=VARCHAR}, #{createdtime,jdbcType=TIMESTAMP}, #{logby,jdbcType=VARCHAR}, 
       #{severity,jdbcType=INTEGER}, #{priority,jdbcType=INTEGER}, #{lastupdatedtime,jdbcType=TIMESTAMP}, 
@@ -197,7 +198,8 @@
       #{cusStr05,jdbcType=VARCHAR}, #{cusTime01,jdbcType=TIMESTAMP}, #{cusTime02,jdbcType=TIMESTAMP}, 
       #{cusTime03,jdbcType=TIMESTAMP}, #{cusTime04,jdbcType=TIMESTAMP}, #{cusDbl01,jdbcType=DOUBLE}, 
       #{cusDbl02,jdbcType=DOUBLE}, #{cusDbl03,jdbcType=DOUBLE}, #{projectid,jdbcType=INTEGER}, 
-      #{resolveddate,jdbcType=TIMESTAMP})]]>
+      #{resolveddate,jdbcType=TIMESTAMP}, #{description,jdbcType=VARCHAR}, #{estimatetime,jdbcType=INTEGER}, 
+      #{estimateremaintime,jdbcType=INTEGER})]]>
 
 	</insert>
 	<sql id="selectBug">
@@ -222,7 +224,8 @@
                  fixedversion.versionname as fixedversion_versionname, fixedversion.createdUser as fixedversion_createdUser, 
                  fixedversion.createdDate as fixedversion_createdDate,
                  component.id as component_id, component.projectid as component_projectid, component.componentname as componentname, component.userlead as component_userlead, 
-                 component.description as component_description, component.createdUser as component_createdUser, component.createdDate as component_createdDate
+                 component.description as component_description, component.createdUser as component_createdUser, component.createdDate as component_createdDate,
+                 m_tracker_bug.description, m_tracker_bug.estimateTime, m_tracker_bug.estimateRemainTime
            FROM m_tracker_bug
                LEFT OUTER JOIN m_prj_project ON (m_tracker_bug.projectid = m_prj_project.id)
                LEFT OUTER JOIN s_user AS assignuserTbl ON (m_tracker_bug.assignuser=assignuserTbl.username)

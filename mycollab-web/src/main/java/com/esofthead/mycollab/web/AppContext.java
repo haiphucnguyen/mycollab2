@@ -96,7 +96,10 @@ public class AppContext implements TransactionListener, Serializable {
 	}
 
 	static void clearAllVariables() {
-		instance.get().variables.clear();
+		if (instance.get() != null) {
+			instance.get().variables.clear();
+		}
+		
 	}
 
 	private static SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(

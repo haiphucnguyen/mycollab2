@@ -12,9 +12,10 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.TextArea;
 
 @ViewComponent
-public class BugAddViewImpl extends AbstractView implements BugAddView{
+public class BugAddViewImpl extends AbstractView implements BugAddView {
 	private static final long serialVersionUID = 1L;
 
 	private EditForm editForm;
@@ -69,6 +70,17 @@ public class BugAddViewImpl extends AbstractView implements BugAddView{
 			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
 
+				if (propertyId.equals("environment")) {
+					TextArea field = new TextArea("", "");
+					field.setNullRepresentation("");
+					return field;
+				} else if (propertyId.equals("description")) {
+					TextArea field = new TextArea("", "");
+					field.setNullRepresentation("");
+					return field;
+				} else if (propertyId.equals("priority")) {
+					return new BugPriorityComboBox();
+				}
 				return null;
 			}
 		}

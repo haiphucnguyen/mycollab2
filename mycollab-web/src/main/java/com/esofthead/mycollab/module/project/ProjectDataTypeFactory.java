@@ -7,11 +7,18 @@ public class ProjectDataTypeFactory {
 	private static String[] PROJECT_TYPE_LIST = new String[] { "Unknown",
 			"Administrative", "Operative" };
 
+	private static String[] BUG_PRIORITY_LIST = new String[] { "Blocker",
+			"Critical", "Major", "Minor", "Trivial" };
+
 	public static String[] getProjectPriorityList() {
 		return PROJECT_PRIORITY_LIST;
 	}
 
 	public static String[] getProjectTypeList() {
 		return PROJECT_TYPE_LIST;
+	}
+
+	public static String[] getBugPriorityList() {
+		return BUG_PRIORITY_LIST;
 	}
 }

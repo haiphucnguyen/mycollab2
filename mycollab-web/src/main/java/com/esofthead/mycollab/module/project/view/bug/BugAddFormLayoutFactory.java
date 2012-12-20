@@ -58,7 +58,7 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
 		} else if (propertyId.equals("environment")) {
 			informationLayout.addComponent(field, "Environment", 0, 4, 2, "100%");
 		} else if (propertyId.equals("description")) {
-			informationLayout.addComponent(field, "Environment", 0, 5, 2, "100%");
+			informationLayout.addComponent(field, "Description", 0, 5, 2, "100%");
 		}
 
 	}
