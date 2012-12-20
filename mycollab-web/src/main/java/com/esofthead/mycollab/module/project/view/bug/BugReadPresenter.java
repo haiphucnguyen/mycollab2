@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
-import com.esofthead.mycollab.module.project.view.risk.RiskContainer;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -18,6 +17,7 @@ public class BugReadPresenter extends AbstractPresenter<BugReadView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		BugContainer bugContainer = (BugContainer) container;
+		bugContainer.removeAllComponents();
 		bugContainer.addComponent(view.getWidget());
 
 		if (data.getParams() instanceof Integer) {

@@ -14,6 +14,11 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
 	}
 
 	@Override
+	public void go(ComponentContainer container, ScreenData<?> data) {
+		super.go(container, data, false);
+	}
+
+	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectView projectViewContainer = (ProjectView) container;
 		projectViewContainer.gotoSubView("Bugs");

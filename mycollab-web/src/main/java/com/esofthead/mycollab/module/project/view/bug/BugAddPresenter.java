@@ -28,6 +28,7 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		BugContainer bugContainer = (BugContainer) container;
+		bugContainer.removeAllComponents();
 		bugContainer.addComponent(view.getWidget());
 		view.editItem((SimpleBug) data.getParams());
 	}

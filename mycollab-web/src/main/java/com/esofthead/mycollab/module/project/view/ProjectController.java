@@ -14,8 +14,8 @@ import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent.SaveProjectSucess;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
-import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -239,6 +239,32 @@ public class ProjectController {
 						ScreenData.Add<SimpleBug> data = new ScreenData.Add<SimpleBug>(
 								new SimpleBug());
 						projectView.gotoBugView(data);
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<BugEvent.GotoList>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return BugEvent.GotoList.class;
+					}
+
+					@Override
+					public void handle(BugEvent.GotoList event) {
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
+
+						SimpleProject project = (SimpleProject) AppContext
+								.getVariable(ProjectContants.PROJECT_NAME);
+
+						BugSearchCriteria criteria = new BugSearchCriteria();
+
+						criteria.setProjectid(new NumberSearchField(
+								SearchField.AND, project.getId()));
+						projectView
+								.gotoBugView(new ScreenData.Search<BugSearchCriteria>(
+										criteria));
 					}
 				});
 	}
