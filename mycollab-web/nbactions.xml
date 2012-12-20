@@ -30,4 +30,12 @@
                 <netbeans.deploy>true</netbeans.deploy>
             </properties>
         </action>
+        <action>
+            <actionName>CUSTOM-Run Jetty</actionName>
+            <displayName>Run Jetty</displayName>
+            <goals>
+                <goal>jetty:run</goal>
+                <goal>-Djetty.port=8080</goal>
+            </goals>
+        </action>
     </actions>
