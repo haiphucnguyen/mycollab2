@@ -26,6 +26,7 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		RiskContainer riskContainer = (RiskContainer) container;
+		riskContainer.removeAllComponents();
 		riskContainer.addComponent(view.getWidget());
 		view.editItem((Risk) data.getParams());
 	}

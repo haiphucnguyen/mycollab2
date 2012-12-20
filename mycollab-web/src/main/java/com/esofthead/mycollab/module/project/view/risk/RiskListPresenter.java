@@ -151,8 +151,8 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView> implement
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		RiskContainer riskContainer = (RiskContainer) container;
+		riskContainer.removeAllComponents();
 		riskContainer.addComponent(view.getWidget());
-		
 		doSearch((RiskSearchCriteria) data.getParams());
 	}
 

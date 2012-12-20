@@ -91,6 +91,24 @@ public class ProjectController {
 				});
 
 		EventBus.getInstance().addListener(
+				new ApplicationEventListener<RiskEvent.GotoEdit>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return RiskEvent.GotoEdit.class;
+					}
+
+					@Override
+					public void handle(RiskEvent.GotoEdit event) {
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
+						ScreenData.Edit<Risk> data = new ScreenData.Edit<Risk>(
+								(Risk) event.getData());
+						projectView.gotoRiskView(data);
+					}
+				});
+
+		EventBus.getInstance().addListener(
 				new ApplicationEventListener<RiskEvent.GotoRead>() {
 
 					@Override

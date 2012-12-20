@@ -44,8 +44,13 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 		private static final long serialVersionUID = 1L;
 
 		public FormViewField(String value) {
+			this(value, Label.CONTENT_DEFAULT);
+		}
+
+		public FormViewField(String value, int contentMode) {
 			Label l = new Label();
 			l.setWidth("100%");
+			l.setContentMode(contentMode);
 			this.setCompositionRoot(l);
 			l.setValue(value);
 		}
@@ -70,7 +75,7 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 			return String.class;
 		}
 	}
-	
+
 	public static class FormEmailLinkViewField extends CustomField {
 		private static final long serialVersionUID = 1L;
 
