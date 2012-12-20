@@ -1,12 +1,17 @@
 package com.esofthead.mycollab.web;
 
+import org.mortbay.log.Log;
+
 import com.esofthead.mycollab.shell.MainWindowContainer;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.Application;
 
 public class MyCollabApplication extends Application {
 
 	private static final long serialVersionUID = 1L;
+
+	private ViewManager viewManager;
 
 	public MyCollabApplication() {
 		super();
@@ -17,12 +22,18 @@ public class MyCollabApplication extends Application {
 		setTheme("mycollab");
 		this.setMainWindow(new MainWindowContainer());
 		AppContext sessionData = new AppContext(this);
-		
-		//dump declare variable to force application load view classes declration when startup
-		ViewManager viewManager;
 
 		// Register it as a listener in the application context
 		this.getContext().addTransactionListener(sessionData);
 	}
 
+	@Override
+	public void close() {
+		super.close();
+
+		Log.debug("Session is closed. Clean resource");
+		AppContext.clearAllVariables();
+		ViewManager.clearResources();
+		PresenterResolver.clearResources();
+	}
 }

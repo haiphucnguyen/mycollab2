@@ -21,4 +21,8 @@ public class PresenterResolver {
 			return value;
 		}
 	}
+
+	public static void clearResources() {
+		presenterMap.clear();
+	}
 }
