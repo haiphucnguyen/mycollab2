@@ -18,7 +18,6 @@ import com.esofthead.mycollab.module.project.view.milestone.ProjectMilestonePres
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
 import com.esofthead.mycollab.module.project.view.task.ProjectTaskPresenter;
-import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -53,7 +52,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private ProjectMessageListPresenter messagePresenter;
 	private ProjectMilestonePresenter milestonesPresenter;
 	private ProjectTaskPresenter taskPresenter;
-	private BugPresenter defectPresenter;
+	private BugPresenter bugPresenter;
 	private ProblemPresenter problemPresenter;
 	private RiskPresenter riskPresenter;
 
@@ -114,11 +113,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 							taskPresenter.go(ProjectViewImpl.this,
 									new ScreenData<SimpleProject>(project));
 						} else if ("Bugs".equals(caption)) {
-							SimpleProject project = (SimpleProject) AppContext
-									.getVariable(ProjectContants.PROJECT_NAME);
-							BugSearchCriteria criteria = new BugSearchCriteria();
-							defectPresenter.go(ProjectViewImpl.this,
-									new ScreenData<SimpleProject>(project));
+							gotoBugView(null);
 						} else if ("Risks".equals(caption)) {
 							RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
 							SimpleProject project = (SimpleProject) AppContext
@@ -152,6 +147,12 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	@Override
 	public void gotoProblemView(ScreenData data) {
 		problemPresenter.go(ProjectViewImpl.this, data);
+	}
+
+	@SuppressWarnings("rawtypes")
+	@Override
+	public void gotoBugView(ScreenData data) {
+		bugPresenter.go(ProjectViewImpl.this, data);
 	}
 
 	private Component constructProjectDashboardComponent() {
@@ -188,8 +189,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	}
 
 	private Component constructProjectBugComponent() {
-		defectPresenter = PresenterResolver.getPresenter(BugPresenter.class);
-		return defectPresenter.getView();
+		bugPresenter = PresenterResolver.getPresenter(BugPresenter.class);
+		return bugPresenter.getView();
 	}
 
 	@Override

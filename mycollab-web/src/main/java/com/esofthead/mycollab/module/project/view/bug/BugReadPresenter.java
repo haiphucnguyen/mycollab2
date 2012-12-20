@@ -17,8 +17,8 @@ public class BugReadPresenter extends AbstractPresenter<BugReadView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		RiskContainer riskContainer = (RiskContainer) container;
-		riskContainer.addComponent(view.getWidget());
+		BugContainer bugContainer = (BugContainer) container;
+		bugContainer.addComponent(view.getWidget());
 
 		if (data.getParams() instanceof Integer) {
 			BugService bugService = AppContext
@@ -26,7 +26,6 @@ public class BugReadPresenter extends AbstractPresenter<BugReadView> {
 			SimpleBug bug = bugService.findBugById((Integer) data
 					.getParams());
 			view.previewItem(bug);
-
 		}
 	}
 

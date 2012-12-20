@@ -9,10 +9,12 @@ import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent.SaveProjectSucess;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
+import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -30,6 +32,7 @@ public class ProjectController {
 		bindProjectEvents();
 		bindRiskEvents();
 		bindProblemEvents();
+		bindBugEvents();
 	}
 
 	@SuppressWarnings("serial")
@@ -214,6 +217,27 @@ public class ProjectController {
 						projectView
 								.gotoProblemView(new ScreenData.Search<ProblemSearchCriteria>(
 										criteria));
+					}
+				});
+	}
+	
+	@SuppressWarnings("serial")
+	private void bindBugEvents() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<BugEvent.GotoAdd>() {
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return BugEvent.GotoAdd.class;
+					}
+
+					@Override
+					public void handle(BugEvent.GotoAdd event) {
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
+						ScreenData.Add<Bug> data = new ScreenData.Add<Bug>(
+								new Bug());
+						projectView.gotoBugView(data);
 					}
 				});
 	}

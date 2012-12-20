@@ -52,7 +52,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 
-		Button createAccountBtn = new Button("Create",
+		Button createBtn = new Button("Create",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -62,10 +62,10 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 								new RiskEvent.GotoAdd(this, null));
 					}
 				});
-		createAccountBtn.setStyleName("link");
-		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createBtn.setStyleName("link");
+		createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 
-		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
+		UiUtils.addComponent(layout, createBtn, Alignment.MIDDLE_RIGHT);
 
 		return layout;
 	}

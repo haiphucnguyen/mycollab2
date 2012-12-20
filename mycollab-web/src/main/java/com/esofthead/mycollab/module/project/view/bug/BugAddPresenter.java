@@ -61,15 +61,15 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 		});
 	}
 
-	public void saveBug(Bug problem) {
-		BugService problemService = AppContext.getSpringBean(BugService.class);
+	public void saveBug(Bug bug) {
+		BugService bugService = AppContext.getSpringBean(BugService.class);
 		SimpleProject project = (SimpleProject) AppContext
 				.getVariable(ProjectContants.PROJECT_NAME);
-		problem.setProjectid(project.getId());
-		if (problem.getId() == null) {
-			problemService.saveWithSession(problem, AppContext.getUsername());
+		bug.setProjectid(project.getId());
+		if (bug.getId() == null) {
+			bugService.saveWithSession(bug, AppContext.getUsername());
 		} else {
-			problemService.updateWithSession(problem, AppContext.getUsername());
+			bugService.updateWithSession(bug, AppContext.getUsername());
 		}
 
 	}

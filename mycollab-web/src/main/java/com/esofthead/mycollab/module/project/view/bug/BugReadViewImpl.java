@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
-import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -78,9 +77,6 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 			@Override
 			protected Layout createBottomPanel() {
 				VerticalLayout relatedItemsPanel = new VerticalLayout();
-
-				relatedItemsPanel.addComponent(new NoteListItems(
-						"Notes", "Bug", problem.getId()));
 
 				return relatedItemsPanel;
 			}

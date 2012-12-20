@@ -6,7 +6,7 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
-public class BugPresenter  extends AbstractPresenter<BugContainer> {
+public class BugPresenter extends AbstractPresenter<BugContainer> {
 	private static final long serialVersionUID = 1L;
 
 	public BugPresenter() {
@@ -16,7 +16,7 @@ public class BugPresenter  extends AbstractPresenter<BugContainer> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectView projectViewContainer = (ProjectView) container;
-		projectViewContainer.gotoSubView("Defects");
+		projectViewContainer.gotoSubView("Bugs");
 
 		view.removeAllComponents();
 
@@ -33,6 +33,10 @@ public class BugPresenter  extends AbstractPresenter<BugContainer> {
 		} else if (data instanceof ScreenData.Preview) {
 			BugReadPresenter presenter = PresenterResolver
 					.getPresenter(BugReadPresenter.class);
+			presenter.go(view, data);
+		} else {
+			BugDashboardPresenter presenter = PresenterResolver
+					.getPresenter(BugDashboardPresenter.class);
 			presenter.go(view, data);
 		}
 	}
