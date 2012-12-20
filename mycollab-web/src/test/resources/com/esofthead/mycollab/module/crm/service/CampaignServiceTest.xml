@@ -18,7 +18,49 @@
 	<s_account id="1" />
 	<s_user username="hai79" password="abc" firstname="Nguyen"
 		lastname="Hai" active="true" accountId="1" />
+		
 	<m_crm_campaign id="1" campaignName="AAA" status="a"
 		type="b" assignUser="hai79" budget="12.1"
-		expectedCost="2" sAccountId="1" />
+		expectedCost="2" sAccountId="1" 
+		startDate="2011-11-1 00:00:00" endDate="2011-11-5 00:00:00"/>
+		
+	<m_crm_campaign id="2" campaignName="AAA" status="a"
+		type="b" assignUser="hai79" budget="12.1"
+		expectedCost="2" sAccountId="1" 
+		startDate="2012-11-1 00:00:00" endDate="2012-11-5 00:00:00"/>
+		
+	<m_crm_campaign id="3" campaignName="AAA" status="a"
+		type="b" assignUser="hai79" budget="12.1"
+		expectedCost="2" sAccountId="1" 
+		startDate="2012-11-20 00:00:00" endDate="2012-11-25 00:00:00"/>
+		
+	<m_crm_campaign id="4" campaignName="AAA" status="a"
+		type="b" assignUser="hai79" budget="12.1"
+		expectedCost="2" sAccountId="1" 
+		startDate="2012-12-15 00:00:00" endDate="2012-12-20 00:00:00"/>
+	<m_crm_campaign id="5" campaignName="AAA" status="a"
+		type="b" assignUser="hai79" budget="12.1"
+		expectedCost="2" sAccountId="1" 
+		startDate="2012-12-16 00:00:00" endDate="2012-12-21 00:00:00"/>
+	<m_crm_campaign id="6" campaignName="AAA" status="a"
+		type="b" assignUser="hai79" budget="12.1"
+		expectedCost="2" sAccountId="1" 
+		startDate="2012-12-17 00:00:00" endDate="2012-12-22 00:00:00"/>
+	<m_crm_campaign id="7" campaignName="AAA" status="a"
+		type="b" assignUser="hai79" budget="12.1"
+		expectedCost="2" sAccountId="1" 
+		startDate="2012-12-18 00:00:00" endDate="2012-12-23 00:00:00"/>
+	<m_crm_campaign id="8" campaignName="AAA" status="a"
+		type="b" assignUser="hai79" budget="12.1"
+		expectedCost="2" sAccountId="1" 
+		startDate="2012-12-27 00:00:00" endDate="2012-12-31 00:00:00"/>
+		
+	<m_crm_campaign id="9" campaignName="AAA" status="a"
+		type="b" assignUser="hai79" budget="12.1"
+		expectedCost="2" sAccountId="1" 
+		startDate="2013-1-1 00:00:00" endDate="2013-1-5 00:00:00"/>
+	<m_crm_campaign id="10" campaignName="AAA" status="a"
+		type="b" assignUser="hai79" budget="12.1"
+		expectedCost="2" sAccountId="1" 
+		startDate="2013-1-25 00:00:00" endDate="2013-1-30 00:00:00"/>
 </dataset>

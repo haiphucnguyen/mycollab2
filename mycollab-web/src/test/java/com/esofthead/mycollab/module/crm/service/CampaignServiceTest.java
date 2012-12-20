@@ -17,6 +17,8 @@
  */
 package com.esofthead.mycollab.module.crm.service;
 
+import java.util.Date;
+
 import junit.framework.Assert;
 
 import org.junit.Test;
@@ -24,11 +26,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
+import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
@@ -48,7 +53,7 @@ public class CampaignServiceTest {
 	@Test
 	public void testSearchByCriteria() {
 		Assert.assertEquals(
-				1,
+				10,
 				campaignService.findPagableListByCriteria(
 						new SearchRequest<CampaignSearchCriteria>(
 								getCriteria(), 0, Integer.MAX_VALUE)).size());
@@ -57,7 +62,7 @@ public class CampaignServiceTest {
 	@DataSet
 	@Test
 	public void testGetTotalCounts() {
-		Assert.assertEquals(1, campaignService.getTotalCount(getCriteria()));
+		Assert.assertEquals(10, campaignService.getTotalCount(getCriteria()));
 	}
 
 	private CampaignSearchCriteria getCriteria() {
@@ -65,12 +70,236 @@ public class CampaignServiceTest {
 		criteria.setAssignUserName(new StringSearchField(SearchField.AND, "Hai"));
 		criteria.setCampaignName(new StringSearchField(SearchField.AND, "A"));
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND, 1));
-		criteria.setAssignUsers(new SetSearchField(SearchField.AND,
+		criteria.setAssignUsers(new SetSearchField<String>(SearchField.AND,
 				new String[] { "hai79", "linh" }));
-		criteria.setStatuses(new SetSearchField(SearchField.AND, new String[] {
+		criteria.setStatuses(new SetSearchField<String>(SearchField.AND, new String[] {
 				"a", "b" }));
-		criteria.setTypes(new SetSearchField(SearchField.AND, new String[] {
+		criteria.setTypes(new SetSearchField<String>(SearchField.AND, new String[] {
 				"a", "b" }));
 		return criteria;
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchStartDateRangeNext7Days() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		criteria.setStartDateRange(new RangeDateSearchField().getNext7Days());
+		Assert.assertEquals(1, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				1,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchStartDateRangeLast7Days() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		criteria.setStartDateRange(new RangeDateSearchField().getLast7Days());
+		Assert.assertEquals(4, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				4,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchEndDateLessThanEqual() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date startDate = DateTimeUtils.getDateByString("2012-12-21");
+		criteria.setEndDate(new DateSearchField(SearchField.AND, DateSearchField.LESSTHANEQUAL, startDate));
+		Assert.assertEquals(5, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				5,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchEndDateLessThan() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date startDate = DateTimeUtils.getDateByString("2012-12-21");
+		criteria.setEndDate(new DateSearchField(SearchField.AND, DateSearchField.LESSTHAN, startDate));
+		Assert.assertEquals(4, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				4,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchEndDateGreaterThanEqual() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date startDate = DateTimeUtils.getDateByString("2012-12-20");
+		criteria.setEndDate(new DateSearchField(SearchField.AND, DateSearchField.GREATERTHANEQUAL, startDate));
+		Assert.assertEquals(7, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				7,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchEndDateGreaterThan() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date startDate = DateTimeUtils.getDateByString("2012-12-20");
+		criteria.setEndDate(new DateSearchField(SearchField.AND, DateSearchField.GREATERTHAN, startDate));
+		Assert.assertEquals(6, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				6,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchEndDateNotEqual() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date startDate = DateTimeUtils.getDateByString("2012-12-20");
+		criteria.setEndDate(new DateSearchField(SearchField.AND, DateSearchField.NOTEQUAL, startDate));
+		Assert.assertEquals(9, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				9,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchEndDateEqual() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date startDate = DateTimeUtils.getDateByString("2012-12-20");
+		criteria.setEndDate(new DateSearchField(SearchField.AND, DateSearchField.EQUAL, startDate));
+		Assert.assertEquals(1, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				1,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchEndDateBetween() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date from = DateTimeUtils.getDateByString("2012-12-20");
+		Date to = DateTimeUtils.getDateByString("2012-12-21");
+		criteria.setEndDateRange(new RangeDateSearchField(from, to));
+		Assert.assertEquals(2, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchStartDateLessThanEqual() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date startDate = DateTimeUtils.getDateByString("2012-12-16");
+		criteria.setStartDate(new DateSearchField(SearchField.AND, DateSearchField.LESSTHANEQUAL, startDate));
+		Assert.assertEquals(5, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				5,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchStartDateLessThan() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date startDate = DateTimeUtils.getDateByString("2012-12-16");
+		criteria.setStartDate(new DateSearchField(SearchField.AND, DateSearchField.LESSTHAN, startDate));
+		Assert.assertEquals(4, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				4,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchStartDateGreaterThanEqual() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date startDate = DateTimeUtils.getDateByString("2012-12-15");
+		criteria.setStartDate(new DateSearchField(SearchField.AND, DateSearchField.GREATERTHANEQUAL, startDate));
+		Assert.assertEquals(7, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				7,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchStartDateGreaterThan() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date startDate = DateTimeUtils.getDateByString("2012-12-15");
+		criteria.setStartDate(new DateSearchField(SearchField.AND, DateSearchField.GREATERTHAN, startDate));
+		Assert.assertEquals(6, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				6,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchStartDateNotEqual() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date startDate = DateTimeUtils.getDateByString("2012-12-15");
+		criteria.setStartDate(new DateSearchField(SearchField.AND, DateSearchField.NOTEQUAL, startDate));
+		Assert.assertEquals(9, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				9,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchStartDateEqual() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date startDate = DateTimeUtils.getDateByString("2012-12-15");
+		criteria.setStartDate(new DateSearchField(SearchField.AND, DateSearchField.EQUAL, startDate));
+		Assert.assertEquals(1, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				1,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
+	public void testSearchStartDateBetween() {
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date from = DateTimeUtils.getDateByString("2012-12-15");
+		Date to = DateTimeUtils.getDateByString("2012-12-17");
+		criteria.setStartDateRange(new RangeDateSearchField(from, to));
+		Assert.assertEquals(3, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				3,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
 	}
 }

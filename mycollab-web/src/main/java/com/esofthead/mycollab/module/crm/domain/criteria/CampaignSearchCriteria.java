@@ -19,7 +19,7 @@ package com.esofthead.mycollab.module.crm.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
+import com.esofthead.mycollab.core.arguments.RangeDateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -48,9 +48,9 @@ public class CampaignSearchCriteria extends SearchCriteria {
 	
 	private DateTimeSearchField endDate;
 	
-	private RangeDateSearchField startDateRange;
+	private RangeDateTimeSearchField startDateRange;
 	
-	private RangeDateSearchField endDateRange;
+	private RangeDateTimeSearchField endDateRange;
 
 	public StringSearchField getCampaignName() {
 		return campaignName;
@@ -140,19 +140,19 @@ public class CampaignSearchCriteria extends SearchCriteria {
 		this.endDate = endDate;
 	}
 
-	public RangeDateSearchField getStartDateRange() {
+	public RangeDateTimeSearchField getStartDateRange() {
 		return startDateRange;
 	}
 
-	public void setStartDateRange(RangeDateSearchField startDateRange) {
+	public void setStartDateRange(RangeDateTimeSearchField startDateRange) {
 		this.startDateRange = startDateRange;
 	}
 
-	public RangeDateSearchField getEndDateRange() {
+	public RangeDateTimeSearchField getEndDateRange() {
 		return endDateRange;
 	}
 
-	public void setEndDateRange(RangeDateSearchField endDateRange) {
+	public void setEndDateRange(RangeDateTimeSearchField endDateRange) {
 		this.endDateRange = endDateRange;
 	}
 }

@@ -2,34 +2,32 @@ package com.esofthead.mycollab.core.arguments;
 
 import java.util.Date;
 
-public class RangeDateSearchField extends SearchField {
-	private Date from;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 
-	private Date to;
+public class RangeDateSearchField extends RangeDateTimeSearchField {
+	
+	public RangeDateSearchField() {
+		super();
+	}
 
 	public RangeDateSearchField(Date from, Date to) {
-		this(SearchField.AND, from, to);
+		super(DateTimeUtils.convertDate(from), DateTimeUtils.convertDate(to));
 	}
-
+	
 	public RangeDateSearchField(String oper, Date from, Date to) {
-		this.operation = oper;
-		this.from = from;
-		this.to = to;
+		super(oper, DateTimeUtils.convertDate(from), DateTimeUtils.convertDate(to));
+	}
+	
+	public RangeDateSearchField getLast7Days() {
+		from = new Date(new Date().getTime() - 7*24*60*60*1000);
+		to = new Date();
+		return new RangeDateSearchField(from, to);
+	}
+	
+	public RangeDateSearchField getNext7Days() {
+		from = new Date();
+		to = new Date(new Date().getTime() + 7*24*60*60*1000);
+		return new RangeDateSearchField(from, to);
 	}
 
-	public Date getFrom() {
-		return from;
-	}
-
-	public void setFrom(Date from) {
-		this.from = from;
-	}
-
-	public Date getTo() {
-		return to;
-	}
-
-	public void setTo(Date to) {
-		this.to = to;
-	}
 }
