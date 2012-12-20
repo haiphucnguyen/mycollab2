@@ -43,7 +43,7 @@ public class AppContext implements TransactionListener, Serializable {
 			instance.set(this);
 		}
 
-		log.debug("Transaction start");
+		log.debug("Transaction start: " + transactionData);
 	}
 
 	@Override
@@ -53,7 +53,7 @@ public class AppContext implements TransactionListener, Serializable {
 			instance.set(null);
 		}
 
-		log.debug("Transaction end");
+		log.debug("Transaction end: " + transactionData);
 	}
 
 	public static void setSession(SimpleUser userSession) {

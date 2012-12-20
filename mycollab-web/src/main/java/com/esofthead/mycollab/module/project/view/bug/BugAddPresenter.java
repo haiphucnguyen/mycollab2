@@ -4,6 +4,7 @@ import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -27,14 +28,14 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		BugContainer bugContainer = (BugContainer) container;
 		bugContainer.addComponent(view.getWidget());
-		view.editItem((Bug) data.getParams());
+		view.editItem((SimpleBug) data.getParams());
 	}
 	
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Bug>() {
+		view.getEditFormHandlers().addFormHandler(new EditFormHandler<SimpleBug>() {
 
 			@Override
-			public void onSave(final Bug problem) {
+			public void onSave(final SimpleBug problem) {
 				saveBug(problem);
 				ViewState viewState = HistoryViewManager.back();
 				if (viewState instanceof NullViewState) {
@@ -53,7 +54,7 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 			}
 
 			@Override
-			public void onSaveAndNew(final Bug problem) {
+			public void onSaveAndNew(final SimpleBug problem) {
 				saveBug(problem);
 				EventBus.getInstance().fireEvent(
 						new BugEvent.GotoAdd(this, null));

@@ -16,9 +16,9 @@ public abstract class RiskFormLayoutFactory implements IFormLayoutFactory {
 
 	@Override
 	public Layout getLayout() {
-		AddViewLayout accountAddLayout = new AddViewLayout("Risk");
+		AddViewLayout riskAddLayout = new AddViewLayout("Risk");
 
-		accountAddLayout.addTopControls(createTopPanel());
+		riskAddLayout.addTopControls(createTopPanel());
 
 		VerticalLayout layout = new VerticalLayout();
 
@@ -32,11 +32,11 @@ public abstract class RiskFormLayoutFactory implements IFormLayoutFactory {
 		layout.setComponentAlignment(informationLayout.getLayout(),
 				Alignment.BOTTOM_CENTER);
 
-		accountAddLayout.addBottomControls(createBottomPanel());
+		riskAddLayout.addBottomControls(createBottomPanel());
 
-		accountAddLayout.addBody(layout);
+		riskAddLayout.addBody(layout);
 
-		return accountAddLayout;
+		return riskAddLayout;
 	}
 
 	@Override

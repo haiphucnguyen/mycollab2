@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent.SaveProjectSucess;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -220,7 +221,7 @@ public class ProjectController {
 					}
 				});
 	}
-	
+
 	@SuppressWarnings("serial")
 	private void bindBugEvents() {
 		EventBus.getInstance().addListener(
@@ -235,8 +236,8 @@ public class ProjectController {
 					public void handle(BugEvent.GotoAdd event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Add<Bug> data = new ScreenData.Add<Bug>(
-								new Bug());
+						ScreenData.Add<SimpleBug> data = new ScreenData.Add<SimpleBug>(
+								new SimpleBug());
 						projectView.gotoBugView(data);
 					}
 				});

@@ -6,10 +6,6 @@ public class RangeDateTimeSearchField extends SearchField {
 	protected Date from;
 
 	protected Date to;
-	
-	public RangeDateTimeSearchField() {
-		this(SearchField.AND, new Date(), new Date());
-	}
 
 	public RangeDateTimeSearchField(Date from, Date to) {
 		this(SearchField.AND, from, to);

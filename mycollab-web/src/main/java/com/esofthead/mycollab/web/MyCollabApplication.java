@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.web;
 
-import org.mortbay.log.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.shell.MainWindowContainer;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
@@ -10,6 +11,9 @@ import com.vaadin.Application;
 public class MyCollabApplication extends Application {
 
 	private static final long serialVersionUID = 1L;
+
+	private static Logger log = LoggerFactory
+			.getLogger(MyCollabApplication.class);
 
 	private ViewManager viewManager;
 
@@ -30,8 +34,7 @@ public class MyCollabApplication extends Application {
 	@Override
 	public void close() {
 		super.close();
-
-		Log.debug("Session is closed. Clean resource");
+		log.debug("Application is closed. Clean all resources");
 		AppContext.clearAllVariables();
 		ViewManager.clearResources();
 		PresenterResolver.clearResources();

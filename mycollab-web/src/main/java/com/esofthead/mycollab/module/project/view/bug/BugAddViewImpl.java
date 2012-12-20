@@ -1,9 +1,9 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.tracker.domain.Bug;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -14,13 +14,12 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 
 @ViewComponent
-public class BugAddViewImpl extends AbstractView implements BugAddView,
-		IFormAddView<Bug> {
+public class BugAddViewImpl extends AbstractView implements BugAddView{
 	private static final long serialVersionUID = 1L;
 
 	private EditForm editForm;
 
-	private Bug bug;
+	private SimpleBug bug;
 
 	public BugAddViewImpl() {
 		super();
@@ -29,12 +28,12 @@ public class BugAddViewImpl extends AbstractView implements BugAddView,
 	}
 
 	@Override
-	public void editItem(Bug item) {
+	public void editItem(SimpleBug item) {
 		this.bug = item;
 		editForm.setItemDataSource(new BeanItem<Bug>(item));
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<Bug> {
+	private class EditForm extends AdvancedEditBeanForm<SimpleBug> {
 		private static final long serialVersionUID = 1L;
 
 		@Override
@@ -48,7 +47,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView,
 			private static final long serialVersionUID = 1L;
 
 			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<Bug>(EditForm.this))
+				return (new EditFormControlsGenerator<SimpleBug>(EditForm.this))
 						.createButtonControls();
 			}
 
@@ -76,7 +75,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView,
 	}
 
 	@Override
-	public HasEditFormHandlers<Bug> getEditFormHandlers() {
+	public HasEditFormHandlers<SimpleBug> getEditFormHandlers() {
 		return editForm;
 	}
 }

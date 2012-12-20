@@ -18,6 +18,12 @@ public class DateTimeUtils {
 		return date;
 	}
 	
+	public static Date addDayDuration(Date date, int duration) {
+		return null;
+	}
+	
+	
+	
 	public static Date getDateByString(String strDate) {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();

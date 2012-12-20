@@ -5,10 +5,6 @@ import java.util.Date;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 
 public class RangeDateSearchField extends RangeDateTimeSearchField {
-	
-	public RangeDateSearchField() {
-		super();
-	}
 
 	public RangeDateSearchField(Date from, Date to) {
 		super(DateTimeUtils.convertDate(from), DateTimeUtils.convertDate(to));
