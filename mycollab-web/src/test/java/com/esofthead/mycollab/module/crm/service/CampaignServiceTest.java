@@ -82,27 +82,31 @@ public class CampaignServiceTest {
 	@Test
 	@DataSet
 	public void testSearchStartDateRangeNext7Days() {
-//		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-//		criteria.setStartDateRange(new RangeDateSearchField().getNext7Days());
-//		Assert.assertEquals(1, campaignService.getTotalCount(criteria));
-//		Assert.assertEquals(
-//				1,
-//				campaignService.findPagableListByCriteria(
-//						new SearchRequest<CampaignSearchCriteria>(
-//								criteria, 0, Integer.MAX_VALUE)).size());
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date startDate = DateTimeUtils.getDateByString("2012-12-20");
+		Date endDate = DateTimeUtils.addDayDuration(DateTimeUtils.getDateByString("2012-12-21"), 7);
+		criteria.setStartDateRange(new RangeDateSearchField(startDate, endDate));
+		Assert.assertEquals(1, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				1,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
 	}
 	
 	@Test
 	@DataSet
 	public void testSearchStartDateRangeLast7Days() {
-//		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-//		criteria.setStartDateRange(new RangeDateSearchField().getLast7Days());
-//		Assert.assertEquals(4, campaignService.getTotalCount(criteria));
-//		Assert.assertEquals(
-//				4,
-//				campaignService.findPagableListByCriteria(
-//						new SearchRequest<CampaignSearchCriteria>(
-//								criteria, 0, Integer.MAX_VALUE)).size());
+		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
+		Date startDate = DateTimeUtils.subtractDayDuration(DateTimeUtils.getDateByString("2012-12-21"), 7);
+		Date endDate = DateTimeUtils.getDateByString("2012-12-21");
+		criteria.setStartDateRange(new RangeDateSearchField(startDate, endDate));
+		Assert.assertEquals(4, campaignService.getTotalCount(criteria));
+		Assert.assertEquals(
+				4,
+				campaignService.findPagableListByCriteria(
+						new SearchRequest<CampaignSearchCriteria>(
+								criteria, 0, Integer.MAX_VALUE)).size());
 	}
 	
 	@Test

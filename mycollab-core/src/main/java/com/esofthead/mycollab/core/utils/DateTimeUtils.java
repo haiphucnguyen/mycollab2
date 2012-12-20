@@ -8,7 +8,7 @@ import java.util.Date;
 public class DateTimeUtils {
 	
 	public static Date convertDate(Date value) {
-		DateFormat df = new SimpleDateFormat();
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
 		Date date = new Date();
 		try {
 			date = df.parse(df.format(value.getTime()));
@@ -19,10 +19,12 @@ public class DateTimeUtils {
 	}
 	
 	public static Date addDayDuration(Date date, int duration) {
-		return null;
+		return new Date(date.getTime() + duration*24*60*60*1000);
 	}
 	
-	
+	public static Date subtractDayDuration(Date date, int duration) {
+		return new Date(date.getTime() - duration*24*60*60*1000);
+	}
 	
 	public static Date getDateByString(String strDate) {
 		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");

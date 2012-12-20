@@ -17,18 +17,6 @@ public class RangeDateTimeSearchField extends SearchField {
 		this.to = to;
 	}
 	
-	public RangeDateTimeSearchField getLast7Days() {
-		this.from = new Date(new Date().getTime() - 7*24*60*60*1000);
-		this.to = new Date();
-		return new RangeDateTimeSearchField(this.from, this.to);
-	}
-	
-	public RangeDateTimeSearchField getNext7Days() {
-		this.from = new Date();
-		this.to = new Date(new Date().getTime() + 7*24*60*60*1000);
-		return new RangeDateTimeSearchField(this.from, this.to);
-	}
-	
 	public Date getFrom() {
 		return from;
 	}
