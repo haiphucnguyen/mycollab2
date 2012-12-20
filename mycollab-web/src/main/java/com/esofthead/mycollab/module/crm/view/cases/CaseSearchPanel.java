@@ -8,7 +8,10 @@ import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
 import com.esofthead.mycollab.module.crm.ui.components.BasicSearchLayout;
 import com.esofthead.mycollab.module.crm.ui.components.GenericSearchPanel;
+import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
+import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
@@ -28,11 +31,11 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 
 	private CaseSearchCriteria searchCriteria;
-	
+
 	public CaseSearchPanel() {
 		super();
 	}
-	
+
 	@Override
 	public void attach() {
 		super.attach();
@@ -43,33 +46,92 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 		CaseBasicSearchLayout layout = new CaseBasicSearchLayout();
 		this.setCompositionRoot(layout);
 	}
-	
+
 	private void createAdvancedSearchLayout() {
 		CaseAdvancedSearchLayout layout = new CaseAdvancedSearchLayout();
 		this.setCompositionRoot(layout);
 	}
-	
+
 	private class CaseAdvancedSearchLayout extends AdvancedSearchLayout {
 		private static final long serialVersionUID = 1L;
 
+		private TextField numberField;
+		private TextField subjectField;
+		private AccountSelectionField accountField;
+		private CaseStatusListSelect statusField;
+		private UserListSelect userField;
+		private CasePriorityListSelect priorityField;
+
 		@Override
 		public ComponentContainer constructHeader() {
-			// TODO Auto-generated method stub
-			return null;
+			return createSearchTopPanel();
 		}
 
 		@Override
 		public ComponentContainer constructBody() {
-			// TODO Auto-generated method stub
-			return null;
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 2);
+
+			numberField = (TextField) gridLayout.addComponent(new TextField(),
+					"Number", 0, 0);
+			subjectField = (TextField) gridLayout.addComponent(new TextField(),
+					"Account", 1, 0);
+			accountField = (AccountSelectionField) gridLayout.addComponent(
+					new AccountSelectionField(), "Account", 2, 0);
+
+			statusField = (CaseStatusListSelect) gridLayout.addComponent(
+					new CaseStatusListSelect(), "Status", 0, 1);
+			userField = (UserListSelect) gridLayout.addComponent(
+					new UserListSelect(), "Assigned to", 1, 1);
+			priorityField = (CasePriorityListSelect) gridLayout.addComponent(
+					new CasePriorityListSelect(), "Priority", 2, 1);
+
+			return gridLayout.getLayout();
 		}
 
 		@Override
 		public ComponentContainer constructFooter() {
-			// TODO Auto-generated method stub
-			return null;
+			HorizontalLayout buttonControls = new HorizontalLayout();
+			buttonControls.setSpacing(true);
+			buttonControls.addComponent(new Button("Search",
+					new Button.ClickListener() {
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							searchCriteria = new CaseSearchCriteria();
+							searchCriteria.setSaccountid(new NumberSearchField(
+									SearchField.AND, AppContext.getAccountId()));
+							CaseSearchPanel.this
+									.notifySearchHandler(searchCriteria);
+						}
+
+					}));
+
+			buttonControls.addComponent(new Button("Clear",
+					new Button.ClickListener() {
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+
+						}
+
+					}));
+
+			Button basicSearchBtn = new Button("Basic Search",
+					new Button.ClickListener() {
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							CaseSearchPanel.this.createBasicSearchLayout();
+
+						}
+					});
+			basicSearchBtn.setStyleName("link");
+			UiUtils.addComponent(buttonControls, basicSearchBtn,
+					Alignment.MIDDLE_CENTER);
+
+			return buttonControls;
 		}
-		
+
 	}
 
 	private HorizontalLayout createSearchTopPanel() {
@@ -101,7 +163,7 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 
 	private class CaseBasicSearchLayout extends BasicSearchLayout {
 		private static final long serialVersionUID = 1L;
-		
+
 		private TextField subjectField;
 		private CheckBox myItemCheckbox;
 
@@ -136,10 +198,9 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 							searchCriteria = new CaseSearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
-							searchCriteria
-									.setSubject(new StringSearchField(
-											SearchField.AND, (String) subjectField
-													.getValue()));
+							searchCriteria.setSubject(new StringSearchField(
+									SearchField.AND, (String) subjectField
+											.getValue()));
 							CaseSearchPanel.this
 									.notifySearchHandler(searchCriteria);
 						}
@@ -161,8 +222,7 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							CaseSearchPanel.this
-									.createAdvancedSearchLayout();
+							CaseSearchPanel.this.createAdvancedSearchLayout();
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
