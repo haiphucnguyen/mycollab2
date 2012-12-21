@@ -21,8 +21,10 @@
             <![CDATA[${referredBy.operation} m_crm_lead.referredBy like '%${referredBy.value}%']]>
 		</if>
 		<if test="leadName != null">
-		  ${leadName.operation}
-			(m_crm_lead.firstname like '%${leadName.value}%' OR m_crm_lead.lastname like '%${leadName.value}%')
+			<![CDATA[
+				  ${leadName.operation}
+				  	(concat (m_crm_lead.firstname, " ", m_crm_lead.lastname) like '%${leadName.value}%')
+		  	]]>
         </if>
 		<if test="accountName != null">
 		  ${accountName.operation} m_crm_lead.accountName like '%${accountName.value}%'
@@ -125,8 +127,11 @@
             <![CDATA[${referredBy.operation} m_crm_lead.referredBy like '%${referredBy.value}%']]>
 		</if>
 		<if test="leadName != null">
-            <![CDATA[${leadName.operation} (m_crm_lead.firstname like '%${leadName.value}%' OR m_crm_lead.lastname like '%${leadName.value}%')]]>
-		</if>
+			<![CDATA[
+				  ${leadName.operation}
+				  	(concat (m_crm_lead.firstname, " ", m_crm_lead.lastname) like '%${leadName.value}%')
+		  	]]>
+        </if>
 		<if test="accountName != null">
             <![CDATA[${accountName.operation} m_crm_lead.accountName like '%${accountName.value}%']]>
 		</if>
