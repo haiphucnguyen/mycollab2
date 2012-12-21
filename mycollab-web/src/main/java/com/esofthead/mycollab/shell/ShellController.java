@@ -103,7 +103,7 @@ public class ShellController implements Serializable {
 						ProjectMainContainer projectDashboard = ViewManager
 								.getView(ProjectMainContainer.class);
 						mainView.addView(projectDashboard);
-
+						projectDashboard.gotoProjectPage();
 					}
 				});
 	}

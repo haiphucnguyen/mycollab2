@@ -13,8 +13,12 @@ public class ProjectMainContainer extends AbstractView {
 
 	public ProjectMainContainer() {
 		controller = new ProjectController(this);
+	}
+	
+	public void gotoProjectPage() {
 		UserDashboardView userDashboard = ViewManager
 				.getView(UserDashboardView.class);
+		this.removeAllComponents();
 		this.addComponent(userDashboard);
 		this.setComponentAlignment(userDashboard, Alignment.MIDDLE_CENTER);
 	}
