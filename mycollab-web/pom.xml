@@ -134,6 +134,16 @@
             <version>0.3</version>
         </dependency>
         <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>timefield</artifactId>
+            <version>0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>overlays</artifactId>
+            <version>0.9.8</version>
+        </dependency>
+        <dependency>
             <groupId>org.vaadin.hene.splitbutton</groupId>
             <artifactId>splitbutton</artifactId>
             <version>0.9.7</version>
@@ -162,6 +172,11 @@
             <groupId>org.vaadin.addons</groupId>
             <artifactId>refresher</artifactId>
             <version>1.1.1</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addon</groupId>
+            <artifactId>confirmdialog</artifactId>
+            <version>1.2.1</version>
         </dependency>
 
         <dependency>
@@ -241,8 +256,7 @@
                         <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
                         <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile> 
                         <overwrite>true</overwrite> </configuration> </execution> -->
-                        <!-- 
-                     <execution> <id>Tracker Artifacts Generator</id> 
+                    <!-- <execution> <id>Tracker Artifacts Generator</id> 
                         <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
                         <configurationFile>${basedir}/src/main/resources/TrackerGeneratorConfig.xml</configurationFile> 
                         <overwrite>true</overwrite> </configuration> </execution> -->

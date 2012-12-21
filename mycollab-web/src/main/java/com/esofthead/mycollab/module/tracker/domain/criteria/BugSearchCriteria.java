@@ -37,7 +37,7 @@ public class BugSearchCriteria extends SearchCriteria {
 
 	private StringSearchField environment;
 
-	private SetSearchField<Integer> resolutions;
+	private SetSearchField<String> resolutions;
 
 	private SetSearchField<Integer> componentids;
 
@@ -173,11 +173,11 @@ public class BugSearchCriteria extends SearchCriteria {
 		this.environment = environment;
 	}
 
-	public SetSearchField<Integer> getResolutions() {
+	public SetSearchField<String> getResolutions() {
 		return resolutions;
 	}
 
-	public void setResolutions(SetSearchField<Integer> resolutions) {
+	public void setResolutions(SetSearchField<String> resolutions) {
 		this.resolutions = resolutions;
 	}
 
