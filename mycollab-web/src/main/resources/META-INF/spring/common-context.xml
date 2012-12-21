@@ -11,10 +11,10 @@
             value="com.esofthead.mycollab.common.dao.ActivityStreamMapper" />
     </bean>
 
-    <bean id="commentStreamMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+    <bean id="commentMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.common.dao.CommentStreamMapper" />
+            value="com.esofthead.mycollab.common.dao.CommentMapper" />
     </bean>
 
     <bean id="currencyMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">

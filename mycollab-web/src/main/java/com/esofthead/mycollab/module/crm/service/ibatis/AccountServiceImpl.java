@@ -22,6 +22,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.esofthead.mycollab.common.service.ActivityStreamService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
@@ -53,6 +54,9 @@ public class AccountServiceImpl extends
 
 	@Autowired
 	protected AuditLogService auditLogService;
+
+	@Autowired
+	protected ActivityStreamService activityStreamService;
 
 	@Override
 	public ICrudGenericDAO<Integer, Account> getCrudMapper() {
