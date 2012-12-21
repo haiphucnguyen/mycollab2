@@ -29,4 +29,18 @@ public class ActivityStreamServiceImpl extends
 		return null;
 	}
 
+	@Override
+	public void saveActivityStream(int sAccountId, String module, String type,
+			int typeid, String action, String createdUser) {
+		ActivityStream activity = new ActivityStream();
+		activity.setSaccountid(sAccountId);
+		activity.setModule(module);
+		activity.setType(type);
+		activity.setTypeid(typeid);
+		activity.setAction(action);
+		activity.setCreateduser(createdUser);
+		
+		this.saveWithSession(activity, createdUser);
+	}
+
 }

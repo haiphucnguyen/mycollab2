@@ -7,4 +7,6 @@ import com.esofthead.mycollab.core.persistence.IDefaultService;
 public interface ActivityStreamService extends
 		IDefaultService<Integer, ActivityStream, ActivityStreamSearchCriteria> {
 
+	void saveActivityStream(int sAccountId, String module, String type,
+			int typeid, String action, String createdUser);
 }

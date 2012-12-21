@@ -244,6 +244,11 @@
                         <artifactId>mysql-connector-java</artifactId>
                         <version>5.1.21</version>
                     </dependency>
+                    <dependency>
+                        <groupId>com.esofthead.mycollab</groupId>
+                        <artifactId>mycollab-core</artifactId>
+                        <version>1.0-SNAPSHOT</version>
+                    </dependency>
                 </dependencies>
                 <executions>
                     <!-- <execution> <id>Audit Artifacts Generator</id> <phase>compile</phase> 
@@ -258,10 +263,18 @@
                     <!-- <execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
                         <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
                         <overwrite>true</overwrite> </configuration> </execution> -->
-                    <execution> <id>Common Artifacts Generator</id> 
-                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
-                        <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> 
+                    <!--  <execution>
+                        <id>Common Artifacts Generator</id>
+                        <phase>compile</phase>
+                        <goals>
+                            <goal>generate</goal>
+                        </goals>
+                        <configuration>
+                            <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile>
+                            <overwrite>true</overwrite>
+                        </configuration>
+                    </execution>
+                    -->
                     <!-- <execution> <id>Project Artifacts Generator</id> 
                         <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
                         <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile> 

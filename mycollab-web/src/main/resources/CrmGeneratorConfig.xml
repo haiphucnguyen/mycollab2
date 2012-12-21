@@ -17,6 +17,7 @@
         <javaModelGenerator
             targetPackage="com.esofthead.mycollab.module.crm.domain"
             targetProject="src/main/java" >
+
             <property
                 name="rootClass"
                 value="com.esofthead.mycollab.core.utils.ValuedBean" />
@@ -44,7 +45,7 @@
             domainObjectName="Account"
             schema="mycollab"
             tableName="m_crm_account" />
-        
+
         <table
             domainObjectName="CrmActivityStream"
             schema="mycollab"
@@ -59,7 +60,7 @@
             domainObjectName="Campaign"
             schema="mycollab"
             tableName="m_crm_campaign" />
-        
+
         <table
             domainObjectName="Call"
             schema="mycollab"
@@ -89,7 +90,7 @@
             domainObjectName="Lead"
             schema="mycollab"
             tableName="m_crm_lead" />
-        
+
         <table
             domainObjectName="Meeting"
             schema="mycollab"
