@@ -72,6 +72,19 @@ public class LeadServiceTest {
 	
 	@Test
 	@DataSet
+	public void testSearchLeadName() {
+		LeadSearchCriteria criteria = new LeadSearchCriteria();
+		criteria.setLeadName(new StringSearchField(SearchField.AND, "Nguyen Hai"));
+		Assert.assertEquals(2, leadService.getTotalCount(criteria));
+		Assert.assertEquals(
+				2,
+				leadService.findPagableListByCriteria(
+						new SearchRequest<LeadSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
 	public void testSearchStatuses() {
 		LeadSearchCriteria criteria = new LeadSearchCriteria();
 		criteria.setStatuses(new SetSearchField<String>(SearchField.AND, new String[]{"New", "Test status"}));
