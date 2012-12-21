@@ -72,6 +72,19 @@ public class ContactServiceTest {
 	
 	@Test
 	@DataSet
+	public void testSearchContactName() {
+		ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setContactName(new StringSearchField(SearchField.AND, "Nguyen Hai"));
+		Assert.assertEquals(1, contactService.getTotalCount(criteria));
+		Assert.assertEquals(
+				1,
+				contactService.findPagableListByCriteria(
+						new SearchRequest<ContactSearchCriteria>(criteria, 0,
+								Integer.MAX_VALUE)).size());
+	}
+	
+	@Test
+	@DataSet
 	public void testSearchAssignUsers() {
 		ContactSearchCriteria criteria = new ContactSearchCriteria();
 		criteria.setAssignUsers(new SetSearchField<String>(SearchField.AND, new String[] {"linh","hai"}));

@@ -10,7 +10,9 @@
 
 	<sql id="querySearchCriteria">
 		<if test="contactName != null">
-            <![CDATA[${contactName.operation} (m_crm_contact.firstname like '%${contactName.value}%' OR m_crm_contact.lastname like '%${contactName.value}%')]]>
+			<![CDATA[
+				${contactName.operation} (concat (m_crm_contact.firstname, ' ', m_crm_contact.lastname) like '%${contactName.value}%' )
+			]]>
 		</if>
 		<if test="accountName != null">
 			${accountName.operation} (m_crm_account.accountName like '%${accountName.value}%')
@@ -139,7 +141,11 @@
                 m_crm_account.id=m_crm_contact.accountId) > 0
                 ]]>
         </if>
-		<if test="contactName != null"><![CDATA[${contactName.operation} (m_crm_contact.firstname like '%${contactName.value}%' OR m_crm_contact.lastname like '%${contactName.value}%')]]></if>
+		<if test="contactName != null">
+			<![CDATA[
+				${contactName.operation} (concat (m_crm_contact.firstname, ' ', m_crm_contact.lastname) like '%${contactName.value}%')
+			]]>
+		</if>
 		
 		<if test="accountId != null">
             <![CDATA[
