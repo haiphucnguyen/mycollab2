@@ -46,6 +46,16 @@
             domainObjectName="MonitorItem"
             schema="mycollab"
             tableName="m_monitor_item" />
+
+        <table
+            domainObjectName="ActivityStream"
+            schema="mycollab"
+            tableName="s_activitystream" />
+
+        <table
+            domainObjectName="Comment"
+            schema="mycollab"
+            tableName="m_comment" />
     </context>
 
 </generatorConfiguration>

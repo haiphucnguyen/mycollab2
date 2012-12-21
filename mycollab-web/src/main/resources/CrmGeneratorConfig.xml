@@ -44,6 +44,11 @@
             domainObjectName="Account"
             schema="mycollab"
             tableName="m_crm_account" />
+        
+        <table
+            domainObjectName="CrmActivityStream"
+            schema="mycollab"
+            tableName="m_crm_activitystream" />
 
         <table
             domainObjectName="AccountType"

@@ -1,0 +1,1 @@
+ALTER TABLE `m_crm_activitystream` RENAME TO  `s_activitystream` ;
