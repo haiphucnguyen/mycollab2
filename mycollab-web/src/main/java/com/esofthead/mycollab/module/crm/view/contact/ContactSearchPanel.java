@@ -1,8 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import java.util.Collection;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
@@ -103,19 +107,33 @@ public class ContactSearchPanel extends
 			UiUtils.addComponent(layout, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			layout.addComponent(new Button("Search", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
+			layout.addComponent(new Button("Search",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-				@Override
-				public void buttonClick(ClickEvent event) {
-					searchCriteria = new ContactSearchCriteria();
-					searchCriteria.setSaccountid(new NumberSearchField(
-							SearchField.AND, AppContext.getAccountId()));
-					searchCriteria.setContactName(new StringSearchField(
-							SearchField.AND, (String) nameField.getValue()));
-					ContactSearchPanel.this.notifySearchHandler(searchCriteria);
-				}
-			}));
+						@Override
+						public void buttonClick(ClickEvent event) {
+							searchCriteria = new ContactSearchCriteria();
+							searchCriteria.setSaccountid(new NumberSearchField(
+									SearchField.AND, AppContext.getAccountId()));
+							searchCriteria
+									.setContactName(new StringSearchField(
+											SearchField.AND, (String) nameField
+													.getValue()));
+
+							if (myItemCheckbox.booleanValue()) {
+								searchCriteria
+										.setAccountName(new StringSearchField(
+												SearchField.AND,
+												(String) nameField.getValue()));
+							} else {
+								searchCriteria.setAssignUsers(null);
+							}
+
+							ContactSearchPanel.this
+									.notifySearchHandler(searchCriteria);
+						}
+					}));
 
 			layout.addComponent(new Button("Cancel",
 					new Button.ClickListener() {
@@ -180,8 +198,7 @@ public class ContactSearchPanel extends
 			accountnameField = (TextField) gridLayout.addComponent(
 					new TextField(), "Account Name", 0, 2);
 			assignUserField = (UserListSelect) gridLayout.addComponent(
-					new UserListSelect(),
-					"Assign User", 0, 3);
+					new UserListSelect(), "Assign User", 0, 3);
 
 			anyEmailField = (TextField) gridLayout.addComponent(
 					new TextField(), "Any Email", 1, 0);
@@ -190,8 +207,7 @@ public class ContactSearchPanel extends
 			stateField = (TextField) gridLayout.addComponent(new TextField(),
 					"State", 1, 2);
 			countryField = (CountryListSelect) gridLayout.addComponent(
-					new CountryListSelect(),
-					"Country", 1, 3);
+					new CountryListSelect(), "Country", 1, 3);
 
 			anyPhoneField = (TextField) gridLayout.addComponent(
 					new TextField(), "Any Phone", 2, 0);
@@ -200,8 +216,7 @@ public class ContactSearchPanel extends
 			postalCodeField = (TextField) gridLayout.addComponent(
 					new TextField(), "Postal Code", 2, 2);
 			leadSourceField = (LeadSourceListSelect) gridLayout.addComponent(
-					new LeadSourceListSelect(),
-					"Lead Source", 2, 3);
+					new LeadSourceListSelect(), "Lead Source", 2, 3);
 
 			return gridLayout.getLayout();
 		}
@@ -212,16 +227,106 @@ public class ContactSearchPanel extends
 			buttonControls.setSpacing(true);
 			buttonControls.addComponent(new Button("Search",
 					new Button.ClickListener() {
-
+						
+						@SuppressWarnings({ "unchecked"})
 						@Override
 						public void buttonClick(ClickEvent event) {
 							searchCriteria = new ContactSearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
-							searchCriteria
-									.setContactName(new StringSearchField(
-											SearchField.AND,
-											(String) firstnameField.getValue()));
+
+							if (StringUtil
+									.isNotNullOrEmpty((String) firstnameField
+											.getValue())) {
+								searchCriteria
+										.setFirstname(new StringSearchField(
+												SearchField.AND,
+												(String) firstnameField
+														.getValue()));
+							}
+
+							if (StringUtil
+									.isNotNullOrEmpty((String) lastnameField
+											.getValue())) {
+								searchCriteria
+										.setLastname(new StringSearchField(
+												SearchField.AND,
+												(String) lastnameField
+														.getValue()));
+							}
+
+							if (StringUtil
+									.isNotNullOrEmpty((String) accountnameField
+											.getValue())) {
+								searchCriteria
+										.setAccountName(new StringSearchField(
+												SearchField.AND,
+												(String) accountnameField
+														.getValue()));
+							}
+
+							Collection<String> assignUsers = (Collection<String>) assignUserField
+									.getValue();
+							if (assignUsers != null && assignUsers.size() > 0) {
+								searchCriteria
+										.setAssignUsers(new SetSearchField<String>(
+												SearchField.AND, assignUsers));
+							}
+
+							if (StringUtil
+									.isNotNullOrEmpty((String) anyEmailField
+											.getValue())) {
+								searchCriteria.setAnyEmail(new StringSearchField(SearchField.AND, (String) anyEmailField
+										.getValue()));
+							}
+
+							if (StringUtil
+									.isNotNullOrEmpty((String) anyAddressField
+											.getValue())) {
+								searchCriteria.setAnyAddress(new StringSearchField(SearchField.AND, (String) anyAddressField
+										.getValue()));
+							}
+
+							if (StringUtil
+									.isNotNullOrEmpty((String) stateField
+											.getValue())) {
+								searchCriteria.setAnyState(new StringSearchField(SearchField.AND, (String) stateField
+										.getValue()));
+							}
+							
+							Collection<String> countries = (Collection<String>) countryField
+							.getValue();
+							if (countries != null && countries.size() > 0) {
+								searchCriteria.setCountries(new SetSearchField<String>(SearchField.AND, countries));
+							}
+
+							if (StringUtil
+									.isNotNullOrEmpty((String) anyPhoneField
+											.getValue())) {
+								searchCriteria.setAnyPhone(new StringSearchField(SearchField.AND, (String) anyPhoneField
+										.getValue()));
+							}
+
+							if (StringUtil
+									.isNotNullOrEmpty((String) cityField
+											.getValue())) {
+								searchCriteria.setAnyCity(new StringSearchField(SearchField.AND, (String) cityField
+										.getValue()));
+							}
+
+							if (StringUtil
+									.isNotNullOrEmpty((String) postalCodeField
+											.getValue())) {
+								searchCriteria.setAnyPostalCode(new StringSearchField(SearchField.AND, (String) postalCodeField
+										.getValue()));
+							}
+							
+							Collection<String> leadSources = (Collection<String>) leadSourceField
+							.getValue();
+							if (leadSources != null && leadSources.size() > 0) {
+								searchCriteria.setLeadSources(new SetSearchField<String>(SearchField.AND, leadSources));
+							}
+
 							ContactSearchPanel.this
 									.notifySearchHandler(searchCriteria);
 						}
@@ -233,7 +338,18 @@ public class ContactSearchPanel extends
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-
+							firstnameField.setValue("");
+							lastnameField.setValue("");
+							accountnameField.setValue("");
+							assignUserField.setValue(null);
+							anyEmailField.setValue("");
+							anyAddressField.setValue("");
+							stateField.setValue("");
+							countryField.setValue(null);
+							anyPhoneField.setValue("");
+							postalCodeField.setValue("");
+							cityField.setValue("");
+							leadSourceField.setValue(null);
 						}
 
 					}));
