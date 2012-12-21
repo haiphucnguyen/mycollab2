@@ -221,6 +221,16 @@
             <artifactId>extcos</artifactId>
             <version>0.4b</version>
         </dependency>
+        <dependency>
+            <groupId>org.jfree</groupId>
+            <artifactId>jfreechart</artifactId>
+            <version>1.0.14</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.xmlgraphics</groupId>
+            <artifactId>batik-svggen</artifactId>
+            <version>1.7</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

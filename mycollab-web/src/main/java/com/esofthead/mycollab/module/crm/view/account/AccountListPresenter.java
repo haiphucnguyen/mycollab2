@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
@@ -104,7 +106,24 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
 					@Override
 					public void onSelect(String id, String caption) {
 						if ("delete".equals(id)) {
-							deleteSelectedItems();
+							ConfirmDialog.show(view.getWindow(),
+									"Please Confirm:",
+									"Are you sure to delete selected items: ",
+									"Yes", "No", new ConfirmDialog.Listener() {
+										private static final long serialVersionUID = 1L;
+
+										@Override
+										public void onClose(ConfirmDialog dialog) {
+											if (dialog.isConfirmed()) {
+												System.out.println("Confirm");
+												deleteSelectedItems();
+											} else {
+												System.out.println("No");
+											}
+										}
+
+									});
+
 						} else if ("mail".equals(id)) {
 							view.getWidget().getWindow()
 									.addWindow(new MailFormWindow());
