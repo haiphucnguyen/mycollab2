@@ -17,14 +17,11 @@
  */
 package com.esofthead.mycollab.module.project.service.ibatis;
 
-import java.util.Dictionary;
-import java.util.Hashtable;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.core.AvailableDestinationNames;
 import com.esofthead.mycollab.core.EngroupException;
 import com.esofthead.mycollab.core.MessageDispatcher;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -69,18 +66,6 @@ public class ProjectServiceImpl extends
 	}
 
 	@Override
-	protected int internalRemoveWithSession(Integer primaryKey, String username) {
-		Project project = super.findByPrimaryKey(primaryKey);
-		if (messageDispatcher != null && project != null) {
-			Dictionary<String, Object> props = new Hashtable<String, Object>();
-			props.put("project", project);
-			messageDispatcher.dispatchObject(
-					AvailableDestinationNames.PROJECT_REMOVE, props);
-		}
-		return super.internalRemoveWithSession(primaryKey, username);
-	}
-
-	@Override
 	protected int internalUpdateWithSession(Project record, String username) {
 		super.internalUpdateWithSession(record, username);
 		PermissionExample ex = new PermissionExample();
@@ -107,13 +92,6 @@ public class ProjectServiceImpl extends
 		if (record.getOwner() != null && record.getOwner() != "") {
 			// set all project permissions to project owner
 			setAllPermissions(projectid, record.getOwner());
-		}
-
-		if (messageDispatcher != null) {
-			Dictionary<String, Object> props = new Hashtable<String, Object>();
-			props.put("project", record);
-			messageDispatcher.dispatchObject(
-					AvailableDestinationNames.PROJECT_ADD, props);
 		}
 
 		return projectid;

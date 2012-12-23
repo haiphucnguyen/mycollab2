@@ -25,7 +25,6 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.core.AvailableDestinationNames;
 import com.esofthead.mycollab.core.EngroupException;
 import com.esofthead.mycollab.core.MessageDispatcher;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -98,10 +97,6 @@ public class SecurityServiceImpl implements SecurityService {
 	private void notifyRegisterAccount(User user) {
 		Dictionary<String, Object> props = new Hashtable<String, Object>();
 		props.put("user", user);
-
-		// post message to save user topic
-		messageDispatcher.dispatchObject(
-				AvailableDestinationNames.REGISTER_ACCOUNT, props);
 	}
 
 	public void assignUserToRoleId(String username, int roleId) {
@@ -143,13 +138,6 @@ public class SecurityServiceImpl implements SecurityService {
 		User user = userService.findByPrimaryKey(username);
 		if (user != null) {
 			userService.remove(username);
-
-			Dictionary<String, Object> props = new Hashtable<String, Object>();
-			props.put("user", user);
-
-			// post message to topic delete user
-			messageDispatcher.dispatchObject(
-					AvailableDestinationNames.USER_REMOVE, props);
 		}
 	}
 
@@ -184,10 +172,6 @@ public class SecurityServiceImpl implements SecurityService {
 	private void notifySaveUser(User user) {
 		Dictionary<String, Object> props = new Hashtable<String, Object>();
 		props.put("user", user);
-
-		// post message to save user topic
-		messageDispatcher.dispatchObject(AvailableDestinationNames.USER_ADD,
-				props);
 	}
 
 	public void updateRole(Role role) {
