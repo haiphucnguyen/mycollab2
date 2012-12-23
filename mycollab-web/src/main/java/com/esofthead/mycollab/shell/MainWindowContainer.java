@@ -6,9 +6,11 @@ import com.esofthead.mycollab.core.EngroupException;
 import com.esofthead.mycollab.module.user.presenter.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
+import com.esofthead.mycollab.vaadin.mvp.View;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 
-public class MainWindowContainer extends Window {
+public class MainWindowContainer extends Window implements View{
 	private static final long serialVersionUID = 1L;
 
 	private final ShellController controller;
@@ -49,5 +51,10 @@ public class MainWindowContainer extends Window {
 		});
 
 		this.setContent(loginView.getWidget());
+	}
+
+	@Override
+	public ComponentContainer getWidget() {
+		return this;
 	}
 }
