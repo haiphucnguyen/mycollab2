@@ -2,41 +2,37 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
     xmlns:context="http://www.springframework.org/schema/context"
     xmlns="http://www.springframework.org/schema/beans"
+    xmlns:tx="http://www.springframework.org/schema/tx"
     xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
-	http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd" >
+		http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
-    <bean
-        id="dataSource"
-        class="com.esofthead.mycollab.test.DataSourceFactoryBean" />
+    <bean id="dataSource" class="com.esofthead.mycollab.test.DataSourceFactoryBean" />
 
-    <bean
-        id="migrationManager"
+    <bean id="txManager"
+        class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource" />
+    </bean>
+    
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <bean id="migrationManager"
         class="com.carbonfive.db.migration.DataSourceMigrationManager"
-        init-method="migrate" >
+        init-method="migrate">
 
         <constructor-arg ref="dataSource" />
     </bean>
 
-    <bean
-        id="sqlSessionFactory"
-        class="org.mybatis.spring.SqlSessionFactoryBean" >
+    <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
 
-        <property
-            name="dataSource"
-            ref="dataSource" />
+        <property name="dataSource" ref="dataSource" />
 
-        <property
-            name="typeAliasesPackage"
-            value="com.esofthead.mycollab" />
+        <property name="typeAliasesPackage" value="com.esofthead.mycollab" />
 
-        <property
-            name="mapperLocations"
-            value="classpath*:sqlMap/**/*.xml" />
+        <property name="mapperLocations" value="classpath*:sqlMap/**/*.xml" />
     </bean>
 
-    <bean
-        id="sqlMapClient"
-        class="org.mybatis.spring.SqlSessionTemplate" >
+    <bean id="sqlMapClient" class="org.mybatis.spring.SqlSessionTemplate">
 
         <constructor-arg ref="sqlSessionFactory" />
     </bean>

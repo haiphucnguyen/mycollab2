@@ -18,6 +18,7 @@
 package com.esofthead.mycollab.module.crm.service;
 
 import java.util.Arrays;
+import java.util.List;
 
 import org.junit.Assert;
 import org.junit.Test;
@@ -39,6 +40,7 @@ import com.esofthead.mycollab.test.EngroupClassRunner;
 @RunWith(EngroupClassRunner.class)
 @ContextConfiguration(locations = {
 		"classpath:META-INF/spring/audit-context.xml",
+		"classpath:META-INF/spring/common-context.xml",
 		"classpath:META-INF/spring/file-context.xml",
 		"classpath:META-INF/spring/crm-context.xml",
 		"classpath:META-INF/spring/crm-service-test-context.xml",
@@ -50,10 +52,18 @@ public class AccountServiceTest {
 	@DataSet
 	@Test
 	public void testSaveAccount() {
-		Account account = new Account();
-		account.setAccountname("aaa");
-		account.setSaccountid(1);
-		accountService.saveWithSession(account, null);
+			List accountList = accountService
+					.findPagableListByCriteria(new SearchRequest<AccountSearchCriteria>(
+							new AccountSearchCriteria(), 0, Integer.MAX_VALUE));
+			System.out.println("List: " + accountList.size());
+			Account account = new Account();
+			account.setAccountname("aaa");
+			account.setSaccountid(1);
+			accountService.saveWithSession(account, "aaa");
+			 accountList = accountService
+					.findPagableListByCriteria(new SearchRequest<AccountSearchCriteria>(
+							new AccountSearchCriteria(), 0, Integer.MAX_VALUE));
+			System.out.println("List: " + accountList.size());
 	}
 
 	@DataSet
@@ -95,8 +105,8 @@ public class AccountServiceTest {
 				new String[] { "hai79", "linhduong" }));
 		criteria.setIndustries(new SetSearchField<String>(SearchField.AND,
 				new String[] { "a", "b" }));
-		criteria.setTypes(new SetSearchField<String>(SearchField.AND, new String[] {
-				"a", "b" }));
+		criteria.setTypes(new SetSearchField<String>(SearchField.AND,
+				new String[] { "a", "b" }));
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND, 1));
 		return criteria;
 	}
@@ -167,7 +177,7 @@ public class AccountServiceTest {
 						new SearchRequest<AccountSearchCriteria>(criteria, 0,
 								Integer.MAX_VALUE)).size());
 	}
-	
+
 	@Test
 	@DataSet
 	public void tesSearchAnyCity() {
@@ -193,12 +203,13 @@ public class AccountServiceTest {
 						new SearchRequest<AccountSearchCriteria>(criteria, 0,
 								Integer.MAX_VALUE)).size());
 	}
-	
+
 	@Test
 	@DataSet
 	public void testAssignUserName() {
 		AccountSearchCriteria criteria = new AccountSearchCriteria();
-		criteria.setAssignUserName(new StringSearchField(SearchField.AND, "Nguyen Phuc Hai"));
+		criteria.setAssignUserName(new StringSearchField(SearchField.AND,
+				"Nguyen Phuc Hai"));
 		Assert.assertEquals(1, accountService.getTotalCount(criteria));
 		Assert.assertEquals(
 				1,

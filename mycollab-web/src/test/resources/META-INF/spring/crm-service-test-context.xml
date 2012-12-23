@@ -10,6 +10,8 @@
     <context:spring-configured />
 
     <context:component-scan base-package="com.esofthead.mycollab.module.crm.service" />
+    
+    <context:component-scan base-package="com.esofthead.mycollab.common.service" />
 
     <context:component-scan base-package="com.esofthead.mycollab.shared.audit.service" />
 

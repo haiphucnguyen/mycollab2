@@ -41,9 +41,8 @@ public class ProblemServiceImpl extends
 	}
 
 	@Override
-	protected int internalSaveWithSession(Problem record, String username) {
-		problemMapperExt.insertAndReturnKey(record);
-		int recordid = record.getId();
+	public int saveWithSession(Problem record, String username) {
+		int recordid = super.saveWithSession(record, username);
 		changeLogService.saveChangeLog(record.getProjectid(), username,
 				ChangeLogSource.PROBLEM, recordid, ChangeLogAction.CREATE,
 				record.getIssuename());

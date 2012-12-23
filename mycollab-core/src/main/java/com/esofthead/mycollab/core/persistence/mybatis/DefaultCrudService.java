@@ -18,6 +18,8 @@
 package com.esofthead.mycollab.core.persistence.mybatis;
 
 import java.io.Serializable;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -57,17 +59,23 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
 			e.printStackTrace();
 		}
 
-		if (username == null) {
+		ICrudGenericDAO<K, T> crudMapper = getCrudMapper();
+		Class<? extends ICrudGenericDAO> crudMapperClass = crudMapper
+				.getClass();
+		try {
+			Method method = crudMapperClass.getMethod("insertAndReturnKey",
+					record.getClass());
+			method.invoke(crudMapper, record);
+		} catch (Exception e) {
 			getCrudMapper().insert(record);
 			return -1;
-		} else {
-			return internalSaveWithSession(record, username);
 		}
-	}
 
-	protected int internalSaveWithSession(T record, String username) {
-		getCrudMapper().insert(record);
-		return -1;
+		try {
+			return (Integer) PropertyUtils.getProperty(record, "id");
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 
 	@Override

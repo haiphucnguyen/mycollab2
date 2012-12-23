@@ -43,8 +43,9 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriter
 import com.esofthead.mycollab.module.project.service.ProjectService;
 
 @Service
-public class ProjectServiceImpl extends DefaultService<Integer, Project, ProjectSearchCriteria>
-		implements ProjectService {
+public class ProjectServiceImpl extends
+		DefaultService<Integer, Project, ProjectSearchCriteria> implements
+		ProjectService {
 	@Autowired
 	private ProjectMapper projectMapper;
 
@@ -94,15 +95,14 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
 	}
 
 	@Override
-	protected int internalSaveWithSession(Project record, String username) {
+	public int saveWithSession(Project record, String username) {
 		if (isExistProjectHasSameName(record.getName())) {
 			throw new EngroupException("There is project has name "
 					+ record.getName()
 					+ " already. Please choose another project name");
 		}
 
-		projectMapperExt.insertAndReturnKey(record);
-		int projectid = record.getId();
+		int projectid = super.saveWithSession(record, username);
 
 		if (record.getOwner() != null && record.getOwner() != "") {
 			// set all project permissions to project owner
@@ -115,7 +115,7 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
 			messageDispatcher.dispatchObject(
 					AvailableDestinationNames.PROJECT_ADD, props);
 		}
-		
+
 		return projectid;
 	}
 

@@ -2,11 +2,17 @@ package com.esofthead.mybatis.plugin;
 
 import java.util.List;
 
-import org.mybatis.generator.api.GeneratedXmlFile;
+import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
+import org.mybatis.generator.api.dom.java.Interface;
+import org.mybatis.generator.api.dom.java.JavaVisibility;
+import org.mybatis.generator.api.dom.java.Method;
+import org.mybatis.generator.api.dom.java.Parameter;
+import org.mybatis.generator.api.dom.java.TopLevelClass;
 import org.mybatis.generator.api.dom.xml.Attribute;
 import org.mybatis.generator.api.dom.xml.Document;
-import org.mybatis.generator.api.dom.xml.Element;
+import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
 public class MyCollabModelFilePlugin extends
@@ -14,44 +20,84 @@ public class MyCollabModelFilePlugin extends
 
 	@Override
 	public boolean validate(List<String> args) {
-		System.out.println("AAA: " + args.size());
 		return true;
-	}
-
-	@Override
-	public boolean sqlMapGenerated(GeneratedXmlFile sqlMap,
-			IntrospectedTable introspectedTable) {
-		// TODO Auto-generated method stub
-		return super.sqlMapGenerated(sqlMap, introspectedTable);
 	}
 
 	@Override
 	public boolean sqlMapDocumentGenerated(Document document,
 			IntrospectedTable introspectedTable) {
+		if (isTableHasIdPrimaryKey(introspectedTable)) {
+			XmlElement element = new XmlElement("insert");
+			element.addAttribute(new Attribute("id", "insertAndReturnKey"));
+			element.addAttribute(new Attribute("type", introspectedTable
+					.getBaseRecordType()));
+			element.addAttribute(new Attribute("useGeneratedKeys", "true"));
+			element.addAttribute(new Attribute("keyProperty", "id"));
 
-		List<Element> elements = document.getRootElement().getElements();
-		for (Element element : elements) {
-			if (element instanceof XmlElement) {
-				if ("cache".equals(((XmlElement) element).getName())) {
-					System.out
-							.println("WARNING: cach element is existed in document");
-					return true;
+			TextElement commentElement = new TextElement(
+					"<!--WARNING - @mbggenerated-->");
+			element.addElement(commentElement);
+
+			StringBuffer sqlBuilder = new StringBuffer("insert into ").append(
+					introspectedTable
+							.getAliasedFullyQualifiedTableNameAtRuntime())
+					.append(" (");
+
+			StringBuffer valueSt = new StringBuffer("values (");
+
+			List<IntrospectedColumn> allColumns = introspectedTable
+					.getAllColumns();
+			for (int i = 0; i < allColumns.size(); i++) {
+
+				IntrospectedColumn column = allColumns.get(i);
+				sqlBuilder.append(column.getActualColumnName());
+
+				valueSt.append("#{").append(column.getActualColumnName())
+						.append(",jdbcType=").append(column.getJdbcTypeName())
+						.append("}");
+
+				if (i < allColumns.size() - 1) {
+					sqlBuilder.append(", ");
+					valueSt.append(", ");
 				}
 			}
-		}
+			sqlBuilder.append(") ");
+			sqlBuilder.append(valueSt.toString()).append(")");
 
-		XmlElement element = new XmlElement("cache");
-		element.addAttribute(new Attribute("type",
-				"org.mybatis.caches.ehcache.LoggingEhcache"));
-		document.getRootElement().addElement(0, element);
+			element.addElement(new TextElement(sqlBuilder.toString()));
+
+			document.getRootElement().addElement(element);
+		}
 
 		return true;
 	}
 
 	@Override
-	public boolean sqlMapInsertElementGenerated(XmlElement element,
-			IntrospectedTable introspectedTable) {
-		// TODO Auto-generated method stub
-		return super.sqlMapInsertElementGenerated(element, introspectedTable);
+	public boolean clientGenerated(Interface interfaze,
+			TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+
+		if (isTableHasIdPrimaryKey(introspectedTable)) {
+			Method method = new Method();
+			method.setVisibility(JavaVisibility.PUBLIC);
+			method.setName("insertAndReturnKey");
+			method.setReturnType(new FullyQualifiedJavaType("java.lang.Integer"));
+			method.addParameter(new Parameter(new FullyQualifiedJavaType(
+					introspectedTable.getBaseRecordType()), "value"));
+			interfaze.addMethod(method);
+		}
+
+		return true;
+	}
+
+	private boolean isTableHasIdPrimaryKey(IntrospectedTable introspectedTable) {
+		List<IntrospectedColumn> primaryKeys = introspectedTable
+				.getPrimaryKeyColumns();
+		if ((primaryKeys != null) && (primaryKeys.size() == 1)) {
+			IntrospectedColumn column = primaryKeys.get(0);
+			return (column.getFullyQualifiedJavaType().getFullyQualifiedName())
+					.equals("java.lang.Integer");
+		} else {
+			return false;
+		}
 	}
 }

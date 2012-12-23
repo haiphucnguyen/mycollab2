@@ -44,15 +44,6 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		if (username == null) {
-			getCrudMapper().insert(record);
-			return -1;
-		} else {
-			return internalSaveWithSession(record, username);
-		}
-	}
-
-	protected int internalSaveWithSession(T record, String username) {
 		getCrudMapper().insert(record);
 		return -1;
 	}

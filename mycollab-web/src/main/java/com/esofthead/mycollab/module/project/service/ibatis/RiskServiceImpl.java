@@ -17,9 +17,10 @@ import com.esofthead.mycollab.module.project.service.ChangeLogService;
 import com.esofthead.mycollab.module.project.service.RiskService;
 
 @Service
-public class RiskServiceImpl extends DefaultService<Integer, Risk, RiskSearchCriteria>
-		implements RiskService {
-	
+public class RiskServiceImpl extends
+		DefaultService<Integer, Risk, RiskSearchCriteria> implements
+		RiskService {
+
 	@Autowired
 	private RiskMapper riskMapper;
 
@@ -40,9 +41,8 @@ public class RiskServiceImpl extends DefaultService<Integer, Risk, RiskSearchCri
 	}
 
 	@Override
-	protected int internalSaveWithSession(Risk risk, String username) {
-		riskMapperExt.insertAndReturnKey(risk);
-		int riskid = risk.getId();
+	public int saveWithSession(Risk risk, String username) {
+		int riskid = super.saveWithSession(risk, username);
 		changeLogService.saveChangeLog(risk.getProjectid(), username,
 				ChangeLogSource.RISK, riskid, ChangeLogAction.CREATE,
 				risk.getRiskname());

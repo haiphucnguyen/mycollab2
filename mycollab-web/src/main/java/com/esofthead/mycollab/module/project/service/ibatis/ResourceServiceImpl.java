@@ -23,9 +23,10 @@ import com.esofthead.mycollab.module.project.service.PermissionService;
 import com.esofthead.mycollab.module.project.service.ResourceService;
 
 @Service
-public class ResourceServiceImpl extends DefaultService<Integer, Resource, ResourceSearchCriteria>
-		implements ResourceService {
-	
+public class ResourceServiceImpl extends
+		DefaultService<Integer, Resource, ResourceSearchCriteria> implements
+		ResourceService {
+
 	@Autowired
 	private ResourceMapper resourceMapper;
 
@@ -54,9 +55,8 @@ public class ResourceServiceImpl extends DefaultService<Integer, Resource, Resou
 	}
 
 	@Override
-	protected int internalSaveWithSession(Resource record, String username) {
-		resourceMapperExt.insertAndReturnKey(record);
-		int resourceid = record.getId();
+	public int saveWithSession(Resource record, String username) {
+		int resourceid = super.saveWithSession(record, username);
 		changeLogService.saveChangeLog(record.getProjectid(), username,
 				ChangeLogSource.RESOURCE, resourceid, ChangeLogAction.CREATE,
 				record.getResourcename());
@@ -87,7 +87,8 @@ public class ResourceServiceImpl extends DefaultService<Integer, Resource, Resou
 		if (resource.getId() == null) {
 			saveWithSession(resource, userSessionId);
 		} else {
-			Resource extResource = resourceMapper.selectByPrimaryKey(resource.getId());
+			Resource extResource = resourceMapper.selectByPrimaryKey(resource
+					.getId());
 			if (extResource != null) {
 				if (extResource.getUsername() != resource.getResourcename()) {
 					updateWithSession(resource, userSessionId);

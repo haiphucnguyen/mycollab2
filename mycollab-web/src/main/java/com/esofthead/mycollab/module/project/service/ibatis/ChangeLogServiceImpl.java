@@ -16,15 +16,14 @@ import com.esofthead.mycollab.module.project.service.ChangeLogService;
 
 @Service
 public class ChangeLogServiceImpl extends
-		DefaultService<Integer, ChangeLog, ChangeLogSearchCriteria> implements ChangeLogService {
+		DefaultService<Integer, ChangeLog, ChangeLogSearchCriteria> implements
+		ChangeLogService {
 
 	@Autowired
 	private ChangeLogMapper changeLogMapper;
-	
+
 	@Autowired
 	private ChangeLogMapperExt changeLogMapperExt;
-	
-	
 
 	@Override
 	public ICrudGenericDAO<Integer, ChangeLog> getCrudMapper() {
@@ -47,7 +46,7 @@ public class ChangeLogServiceImpl extends
 		changeLog.setLogaction(action);
 		changeLog.setSourcedesc(sourceDesc);
 		changeLog.setPosteddate(new GregorianCalendar().getTime());
-		this.internalSaveWithSession(changeLog, null);
+		this.saveWithSession(changeLog, null);
 	}
 
 }
