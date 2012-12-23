@@ -10,8 +10,6 @@ import com.esofthead.mycollab.module.crm.domain.criteria.QuoteSearchCriteria;
 public interface QuoteService extends
 		IDefaultService<Integer, Quote, QuoteSearchCriteria> {
 
-	int insertQuoteAndReturnKey(Quote quote);
-
 	void saveSimpleQuoteGroupProducts(int accountid, int quoteId,
 			List<SimpleQuoteGroupProduct> entity);
 

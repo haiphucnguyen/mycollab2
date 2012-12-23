@@ -74,7 +74,7 @@ public class SecurityServiceImpl implements SecurityService {
 		Account account = new Account();
 		account.setBillingplanid(billingAccountId);
 		account.setCreatedtime(new GregorianCalendar().getTime());
-		int accountid = billingAccountService.insertAndReturnKey(account);
+		int accountid = billingAccountService.saveWithSession(account, "");
 
 		user.setAccountid(accountid);
 		userService.save(user);
@@ -214,7 +214,7 @@ public class SecurityServiceImpl implements SecurityService {
 	@Override
 	public void removeByCriteria(UserSearchCriteria criteria) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 }

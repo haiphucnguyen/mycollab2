@@ -12,13 +12,13 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
-import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
 
 @RunWith(EngroupClassRunner.class)
 @ContextConfiguration(locations = {
 		"classpath:META-INF/spring/audit-context.xml",
+		"classpath:META-INF/spring/common-context.xml",
 		"classpath:META-INF/spring/file-context.xml",
 		"classpath:META-INF/spring/crm-context.xml",
 		"classpath:META-INF/spring/crm-service-test-context.xml",

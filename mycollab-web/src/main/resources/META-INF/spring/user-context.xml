@@ -12,12 +12,6 @@
 			value="com.esofthead.mycollab.module.user.dao.BillingAccountMapper" />
 	</bean>
 
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="billingAccountMapperExt">
-		<property name="sqlSessionTemplate" ref="sqlMapClient" />
-		<property name="mapperInterface"
-			value="com.esofthead.mycollab.module.user.dao.BillingAccountMapperExt" />
-	</bean>
-
 	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="billingPlanMapper">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"

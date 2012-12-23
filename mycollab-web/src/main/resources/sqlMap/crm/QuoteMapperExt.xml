@@ -210,30 +210,6 @@
        ]]>
     </sql>
 
-    <insert id="insertQuoteAndReturnKey" parameterType="Quote" useGeneratedKeys="true" keyProperty="id">
-       <![CDATA[
-        insert into m_crm_quote (subject, quotestage, 
-      opportunityid, validuntil, shipping, 
-      billaccount, billcontact, shipaccount, 
-      shipcontact, billingaddress, billingcity, 
-      billingstate, billingpostalcode, billingcountry, 
-      shippingaddress, shippingcity, shippingstate, 
-      shippingpostalcode, shippingcountry, description, 
-      paymentterm, originalpodate, purchaseordernum, 
-      createdTime, createdUser, sAccountId, 
-      assignUser, lastUpdatedTime)
-    values (#{subject,jdbcType=VARCHAR}, #{quotestage,jdbcType=VARCHAR}, 
-      #{opportunityid,jdbcType=INTEGER}, #{validuntil,jdbcType=TIMESTAMP}, #{shipping,jdbcType=VARCHAR}, 
-      #{billaccount,jdbcType=INTEGER}, #{billcontact,jdbcType=INTEGER}, #{shipaccount,jdbcType=INTEGER}, 
-      #{shipcontact,jdbcType=INTEGER}, #{billingaddress,jdbcType=VARCHAR}, #{billingcity,jdbcType=VARCHAR}, 
-      #{billingstate,jdbcType=VARCHAR}, #{billingpostalcode,jdbcType=VARCHAR}, #{billingcountry,jdbcType=VARCHAR}, 
-      #{shippingaddress,jdbcType=VARCHAR}, #{shippingcity,jdbcType=VARCHAR}, #{shippingstate,jdbcType=VARCHAR}, 
-      #{shippingpostalcode,jdbcType=VARCHAR}, #{shippingcountry,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{paymentterm,jdbcType=VARCHAR}, #{originalpodate,jdbcType=TIMESTAMP}, #{purchaseordernum,jdbcType=VARCHAR}, 
-      #{createdtime,jdbcType=TIMESTAMP}, #{createduser,jdbcType=VARCHAR}, #{saccountid,jdbcType=INTEGER}, 
-      #{assignuser,jdbcType=VARCHAR}, #{lastupdatedtime,jdbcType=TIMESTAMP})]]>
-    </insert>
-
     <select id="getTotalCount" resultType="int"
         parameterType="QuoteSearchCriteria">
         SELECT count(*) as totalCount FROM m_crm_quote

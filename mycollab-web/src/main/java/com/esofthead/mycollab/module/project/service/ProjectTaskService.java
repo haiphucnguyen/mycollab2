@@ -7,14 +7,8 @@ import com.esofthead.mycollab.core.persistence.IDefaultService;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 
-public interface ProjectTaskService extends IDefaultService<Integer, Task, TaskSearchCriteria>{
+public interface ProjectTaskService extends
+		IDefaultService<Integer, Task, TaskSearchCriteria> {
 
-    /**
-     * 
-     * @param task
-     * @return
-     */
-    int insertAndReturnKey(Task task);
-    
-    List<GroupItem> getTaskSummary(TaskSearchCriteria criteria);
+	List<GroupItem> getTaskSummary(TaskSearchCriteria criteria);
 }

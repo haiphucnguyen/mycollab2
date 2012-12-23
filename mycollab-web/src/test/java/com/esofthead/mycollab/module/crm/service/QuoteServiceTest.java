@@ -25,6 +25,7 @@ import com.esofthead.mycollab.test.EngroupClassRunner;
 @ContextConfiguration(locations = {
     "classpath:META-INF/spring/audit-context.xml",
     "classpath:META-INF/spring/file-context.xml",
+    "classpath:META-INF/spring/common-context.xml",
     "classpath:META-INF/spring/crm-context.xml",
     "classpath:META-INF/spring/crm-service-test-context.xml",
     "classpath:META-INF/spring/datasource-test-context.xml"})
@@ -84,7 +85,7 @@ public class QuoteServiceTest {
         quote.setBillingaddress("AAA");
         quote.setShippingaddress("BBB");
         quote.setSaccountid(1);
-        int quoteId = quoteService.insertQuoteAndReturnKey(quote);
+        int quoteId = quoteService.saveWithSession(quote, "");
         // quoteId = quoteService.insertQuoteAndReturnKey(quote);
         Assert.assertNotNull(quoteId);
         System.out.println("Quote " + quoteId);

@@ -4,13 +4,10 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
-import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 
 public interface BugMapperExt extends ISearchableDAO<BugSearchCriteria> {
-
-	void insertAndReturnKey(Bug bug);
 
 	SimpleBug getBugById(int bugid);
 

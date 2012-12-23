@@ -56,20 +56,4 @@
 			1=1 <include refid="com.esofthead.mycollab.module.project.dao.ResourceMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
-
-	<insert id="insert" parameterType="com.esofthead.mycollab.module.project.domain.Resource"
-		useGeneratedKeys="true" keyProperty="id">
-       <![CDATA[
-       insert into m_prj_resource (id, resourcename, bookingtype, 
-      notes, username, projectid, 
-      allocation, startdate, enddate, 
-      workingtimerate, overtimerate, roleid
-      )
-    values (#{id,jdbcType=INTEGER}, #{resourcename,jdbcType=VARCHAR}, #{bookingtype,jdbcType=VARCHAR}, 
-      #{notes,jdbcType=VARCHAR}, #{username,jdbcType=VARCHAR}, #{projectid,jdbcType=INTEGER}, 
-      #{allocation,jdbcType=INTEGER}, #{startdate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP}, 
-      #{workingtimerate,jdbcType=DOUBLE}, #{overtimerate,jdbcType=DOUBLE}, #{roleid,jdbcType=INTEGER}
-      )
-       ]]>
-	</insert>
 </mapper>

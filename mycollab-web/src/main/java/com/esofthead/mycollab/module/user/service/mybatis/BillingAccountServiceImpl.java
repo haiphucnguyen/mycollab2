@@ -6,7 +6,6 @@ import org.springframework.stereotype.Service;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
 import com.esofthead.mycollab.module.user.dao.BillingAccountMapper;
-import com.esofthead.mycollab.module.user.dao.BillingAccountMapperExt;
 import com.esofthead.mycollab.module.user.domain.Account;
 import com.esofthead.mycollab.module.user.service.BillingAccountService;
 
@@ -16,15 +15,6 @@ public class BillingAccountServiceImpl extends
 
 	@Autowired
 	private BillingAccountMapper billingAccountMapper;
-
-	@Autowired
-	private BillingAccountMapperExt billingAccountMapperExt;
-
-	@Override
-	public int insertAndReturnKey(Account account) {
-		billingAccountMapperExt.insertAndReturnKey(account);
-		return account.getId();
-	}
 
 	@Override
 	public ICrudGenericDAO<Integer, Account> getCrudMapper() {

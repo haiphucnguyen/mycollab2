@@ -8,40 +8,6 @@
 		<result column="accountName" jdbcType="VARCHAR" property="accountName" />
 	</resultMap>
 
-	<insert id="insertAndReturnKey" parameterType="com.esofthead.mycollab.module.project.domain.Project"
-	   useGeneratedKeys="true" keyProperty="id">
-		insert into m_prj_project (id,
-		name, owner,
-		account, priority, shortname,
-		planStartDate, planEndDate,
-		targetBudget,
-		homePage, actualBudget, projectType,
-		projectStatus,
-		description, defaultBillingRate,
-		actualStartDate, actualEndDate,
-		defaultOvertimeBillingRate,
-		currencyid, progress, sAccountId
-		)
-		values
-		(#{id,jdbcType=INTEGER}, #{name,jdbcType=VARCHAR},
-		#{owner,jdbcType=VARCHAR},
-		#{account,jdbcType=INTEGER},
-		#{priority,jdbcType=INTEGER}, #{shortname,jdbcType=VARCHAR},
-		#{planstartdate,jdbcType=TIMESTAMP},
-		#{planenddate,jdbcType=TIMESTAMP}, #{targetbudget,jdbcType=DOUBLE},
-		#{homepage,jdbcType=VARCHAR}, #{actualbudget,jdbcType=DOUBLE},
-		#{projecttype,jdbcType=VARCHAR},
-		#{projectstatus,jdbcType=VARCHAR},
-		#{description,jdbcType=VARCHAR},
-		#{defaultbillingrate,jdbcType=DOUBLE},
-		#{actualstartdate,jdbcType=TIMESTAMP},
-		#{actualenddate,jdbcType=TIMESTAMP},
-		#{defaultovertimebillingrate,jdbcType=DOUBLE},
-		#{currencyid,jdbcType=INTEGER}, #{progress,jdbcType=DOUBLE},
-		#{saccountid,jdbcType=INTEGER}
-		)
-	</insert>
-
 	<sql id="querySearchCriteria">
 		<if test="username != null">
             <![CDATA[

@@ -95,30 +95,6 @@
         </trim>
     </select>
 
-    <insert
-        id="insert"
-        keyProperty="id"
-        parameterType="com.esofthead.mycollab.module.project.domain.Problem"
-        useGeneratedKeys="true" >
-
-<![CDATA[
-        insert into m_prj_problem (id, issuename, description, 
-            projectid, raisedbyuser, assigntouser, 
-            impact, priority, status, 
-            dateraised, datedue, actualstartdate, 
-            actualenddate, level, resolution, 
-            problemsource, state, createdTime, lastUpdatedTime, type, typeid)
-        values (#{id,jdbcType=INTEGER}, #{issuename,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-            #{projectid,jdbcType=INTEGER}, #{raisedbyuser,jdbcType=VARCHAR}, #{assigntouser,jdbcType=VARCHAR}, 
-            #{impact,jdbcType=VARCHAR}, #{priority,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
-            #{dateraised,jdbcType=TIMESTAMP}, #{datedue,jdbcType=TIMESTAMP}, #{actualstartdate,jdbcType=TIMESTAMP}, 
-            #{actualenddate,jdbcType=TIMESTAMP}, #{level,jdbcType=DOUBLE}, #{resolution,jdbcType=VARCHAR}, 
-            #{problemsource,jdbcType=VARCHAR}, #{state,jdbcType=VARCHAR}, 
-            #{createdTime,jdbcType=TIMESTAMP}, #{lastUpdatedTime,jdbcType=TIMESTAMP}, {type,jdbcType=VARCHAR},
-            #{typeid,jdbcType=INTEGER})
-        ]]>
-    </insert>
-
     <select
         id="findProblemById"
         parameterType="java.lang.Integer"

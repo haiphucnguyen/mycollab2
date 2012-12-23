@@ -28,9 +28,9 @@ public class MyCollabModelFilePlugin extends
 			IntrospectedTable introspectedTable) {
 		if (isTableHasIdPrimaryKey(introspectedTable)) {
 			XmlElement element = new XmlElement("insert");
+			element.addAttribute(new Attribute("parameterType",
+					introspectedTable.getBaseRecordType()));
 			element.addAttribute(new Attribute("id", "insertAndReturnKey"));
-			element.addAttribute(new Attribute("type", introspectedTable
-					.getBaseRecordType()));
 			element.addAttribute(new Attribute("useGeneratedKeys", "true"));
 			element.addAttribute(new Attribute("keyProperty", "id"));
 

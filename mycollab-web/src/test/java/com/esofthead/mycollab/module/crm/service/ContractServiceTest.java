@@ -19,6 +19,7 @@ import com.esofthead.mycollab.test.EngroupClassRunner;
 @RunWith(EngroupClassRunner.class)
 @ContextConfiguration(locations = {
 		"classpath:META-INF/spring/audit-context.xml",
+		"classpath:META-INF/spring/common-context.xml",
 		"classpath:META-INF/spring/file-context.xml",
 		"classpath:META-INF/spring/crm-context.xml",
 		"classpath:META-INF/spring/crm-service-test-context.xml",

@@ -36,12 +36,6 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
 	}
 
 	@Override
-	public int insertAndReturnKey(Task task) {
-		taskMapperExt.insertAndReturnKey(task);
-		return task.getId();
-	}
-
-	@Override
 	public List<GroupItem> getTaskSummary(TaskSearchCriteria criteria) {
 		return taskMapperExt.getTaskSummary(criteria);
 	}

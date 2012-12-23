@@ -281,8 +281,7 @@ public class BugServiceImpl extends
 		bug.setLastupdatedtime(new GregorianCalendar().getTime());
 		bug.setResolveddate(null);
 
-		bugMapperExt.insertAndReturnKey(bug);
-		int bugid = bug.getId();
+		int bugid = super.saveWithSession(bug, username);
 		saveBugRelatedItems(bug);
 
 		changeLogService.saveChangeLog(bug.getProjectid(), username,

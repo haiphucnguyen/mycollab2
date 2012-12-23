@@ -65,26 +65,6 @@
 				refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
-
-	<insert id="insertAndReturnKey" parameterType="com.esofthead.mycollab.module.project.domain.Risk"
-		useGeneratedKeys="true" keyProperty="id">
-       <![CDATA[
-        insert into m_prj_risk (id, riskname, description, 
-      projectid, raisedbyuser, assigntouser, 
-      consequence, probalitity, status, 
-      dateraised, datedue, response, 
-      resolution, level, source, createdTime, lastUpdatedTime, type, typeid
-      )
-    values (#{id,jdbcType=INTEGER}, #{riskname,jdbcType=VARCHAR}, #{description,jdbcType=VARCHAR}, 
-      #{projectid,jdbcType=INTEGER}, #{raisedbyuser,jdbcType=VARCHAR}, #{assigntouser,jdbcType=VARCHAR}, 
-      #{consequence,jdbcType=VARCHAR}, #{probalitity,jdbcType=VARCHAR}, #{status,jdbcType=BIT}, 
-      #{dateraised,jdbcType=TIMESTAMP}, #{datedue,jdbcType=TIMESTAMP}, #{response,jdbcType=VARCHAR}, 
-      #{resolution,jdbcType=VARCHAR}, #{level,jdbcType=DOUBLE}, #{source,jdbcType=VARCHAR},
-      #{createdtime,jdbcType=TIMESTAMP}, #{lastupdatedtime,jdbcType=TIMESTAMP}, #{type,jdbcType=VARCHAR},
-      #{typeid,jdbcType=INTEGER}
-      )
-      ]]>
-	</insert>
     
     <select id="findRiskById" parameterType="java.lang.Integer"
         resultMap="RiskResult">

@@ -110,10 +110,4 @@ public class QuoteServiceImpl extends DefaultService<Integer, Quote, QuoteSearch
 		return result;
 	}
 
-	@Override
-	public int insertQuoteAndReturnKey(Quote quote) {
-		quoteMapperExt.insertQuoteAndReturnKey(quote);
-		return quote.getId();
-	}
-
 }

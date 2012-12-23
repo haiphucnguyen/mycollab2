@@ -24,30 +24,6 @@
 		<result column="resourcename" jdbcType="VARCHAR" property="resourcename" />
 	</resultMap>
 
-	<insert id="insert" parameterType="com.esofthead.mycollab.module.project.domain.Task"
-		useGeneratedKeys="true" keyProperty="id">
-		insert into m_prj_task (id, taskname, percentagecomplete,
-		startdate, enddate, priority,
-		duration, isestimated, projectid,
-		deadline, notes, taskindex,
-		predecessors, parenttask, actualStartDate,
-		actualEndDate, cost, actualCost,
-		ismilestone, createdTime, lastUpdatedTime)
-		values (#{id,jdbcType=INTEGER}, #{taskname,jdbcType=VARCHAR},
-		#{percentagecomplete,jdbcType=DOUBLE},
-		#{startdate,jdbcType=TIMESTAMP}, #{enddate,jdbcType=TIMESTAMP},
-		#{priority,jdbcType=INTEGER},
-		#{duration,jdbcType=DOUBLE}, #{isestimated,jdbcType=BIT}, #{projectid,jdbcType=INTEGER},
-		#{deadline,jdbcType=TIMESTAMP}, #{notes,jdbcType=VARCHAR},
-		#{taskindex,jdbcType=INTEGER},
-		#{predecessors,jdbcType=VARCHAR}, #{parenttask,jdbcType=INTEGER},
-		#{actualstartdate,jdbcType=TIMESTAMP},
-		#{actualenddate,jdbcType=TIMESTAMP}, #{cost,jdbcType=DOUBLE},
-		#{actualcost,jdbcType=DOUBLE},
-		#{ismilestone,jdbcType=BIT}, #{createdtime,jdbcType=TIMESTAMP}, 
-        #{lastupdatedtime,jdbcType=TIMESTAMP}))
-    </insert>
-
 	<sql id="querySearchCriteria">
 		<if test="username != null">
             <![CDATA[
