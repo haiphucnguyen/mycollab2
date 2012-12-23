@@ -8,8 +8,6 @@ import org.springframework.stereotype.Service;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
-import com.esofthead.mycollab.module.project.ChangeLogAction;
-import com.esofthead.mycollab.module.project.ChangeLogSource;
 import com.esofthead.mycollab.module.project.PermissionPaths;
 import com.esofthead.mycollab.module.project.dao.PermissionMapper;
 import com.esofthead.mycollab.module.project.dao.ResourceMapper;
@@ -18,7 +16,6 @@ import com.esofthead.mycollab.module.project.domain.Permission;
 import com.esofthead.mycollab.module.project.domain.PermissionExample;
 import com.esofthead.mycollab.module.project.domain.Resource;
 import com.esofthead.mycollab.module.project.domain.criteria.ResourceSearchCriteria;
-import com.esofthead.mycollab.module.project.service.ChangeLogService;
 import com.esofthead.mycollab.module.project.service.PermissionService;
 import com.esofthead.mycollab.module.project.service.ResourceService;
 
@@ -36,9 +33,6 @@ public class ResourceServiceImpl extends
 	@Autowired
 	private PermissionService permissionService;
 
-	@Autowired
-	private ChangeLogService changeLogService;
-
 	@Override
 	public ICrudGenericDAO<Integer, Resource> getCrudMapper() {
 		return resourceMapper;
@@ -52,33 +46,6 @@ public class ResourceServiceImpl extends
 	@Override
 	public List<String> getResourceNamesByProjectId(int projectId) {
 		return resourceMapperExt.getResourceNamesByProjectId(projectId);
-	}
-
-	@Override
-	public int saveWithSession(Resource record, String username) {
-		int resourceid = super.saveWithSession(record, username);
-		changeLogService.saveChangeLog(record.getProjectid(), username,
-				ChangeLogSource.RESOURCE, resourceid, ChangeLogAction.CREATE,
-				record.getResourcename());
-		addDefaultPermissions(record);
-		return resourceid;
-	}
-
-	@Override
-	protected int internalUpdateWithSession(Resource record, String username) {
-		changeLogService.saveChangeLog(record.getProjectid(), username,
-				ChangeLogSource.RESOURCE, record.getId(),
-				ChangeLogAction.UPDATE, record.getResourcename());
-		return super.internalUpdateWithSession(record, username);
-	}
-
-	@Override
-	protected int internalRemoveWithSession(Integer primaryKey, String username) {
-		Resource record = findByPrimaryKey(primaryKey);
-		changeLogService.saveChangeLog(record.getProjectid(), username,
-				ChangeLogSource.RESOURCE, record.getId(),
-				ChangeLogAction.DELETE, record.getResourcename());
-		return super.internalRemoveWithSession(primaryKey, username);
 	}
 
 	@Override

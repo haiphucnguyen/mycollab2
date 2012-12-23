@@ -73,7 +73,7 @@
               m_prj_task.predecessors, m_prj_task.parenttask, m_prj_project.name AS projectName,
               m_prj_task.actualStartDate, m_prj_task.actualEndDate, m_prj_task.cost, m_prj_task.actualCost,
               m_prj_task.ismilestone, m_prj_task.createdTime, m_prj_task.lastUpdatedTime,
-              (SELECT COUNT(*) FROM m_comment WHERE m_comment.commentid=concat('project-task-', m_prj_task.id)) AS numComments
+              (SELECT COUNT(*) FROM m_comment WHERE m_comment.type='Prj-Task' AND m_comment.typeid = m_prj_task.id) AS numComments
           FROM m_prj_task
               LEFT OUTER JOIN m_prj_project ON (m_prj_task.projectid = m_prj_project.id)          
         ]]>

@@ -4,17 +4,6 @@
 
 
     <!-- Spring DAO -->
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="changeLogMapper">
-        <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.project.dao.ChangeLogMapper" />
-    </bean>
-
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="changeLogMapperExt">
-        <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.project.dao.ChangeLogMapperExt" />
-    </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="messageMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />

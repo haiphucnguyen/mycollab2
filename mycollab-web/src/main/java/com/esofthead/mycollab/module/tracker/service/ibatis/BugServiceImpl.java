@@ -23,9 +23,6 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
-import com.esofthead.mycollab.module.project.ChangeLogAction;
-import com.esofthead.mycollab.module.project.ChangeLogSource;
-import com.esofthead.mycollab.module.project.service.ChangeLogService;
 import com.esofthead.mycollab.module.tracker.RelatedItemConstants;
 import com.esofthead.mycollab.module.tracker.dao.BugMapper;
 import com.esofthead.mycollab.module.tracker.dao.BugMapperExt;
@@ -81,9 +78,6 @@ public class BugServiceImpl extends
 	@Autowired
 	protected MonitorItemService monitorItemService;
 
-	@Autowired
-	protected ChangeLogService changeLogService;
-
 	@Override
 	public ICrudGenericDAO<Integer, Bug> getCrudMapper() {
 		return bugMapper;
@@ -97,9 +91,6 @@ public class BugServiceImpl extends
 	@Override
 	protected int internalRemoveWithSession(Integer primaryKey, String username) {
 		Bug bug = findByPrimaryKey(primaryKey);
-		changeLogService.saveChangeLog(bug.getProjectid(), username,
-				ChangeLogSource.DEFECT, primaryKey, ChangeLogAction.DELETE,
-				bug.getSummary());
 
 		RelatedItemExample ex = new RelatedItemExample();
 		ex.createCriteria()
@@ -124,9 +115,6 @@ public class BugServiceImpl extends
 
 	@Override
 	public int updateBug(String username, Bug bug, DefectComment comment) {
-		changeLogService.saveChangeLog(bug.getProjectid(), username,
-				ChangeLogSource.DEFECT, bug.getId(), ChangeLogAction.UPDATE,
-				bug.getSummary());
 		bug.setLastupdatedtime(new GregorianCalendar().getTime());
 		super.updateWithSession(bug, null);
 		return 0;
@@ -135,9 +123,6 @@ public class BugServiceImpl extends
 	@Override
 	public int updateBugExt(String username, final SimpleBug record,
 			final DefectComment comment) {
-		changeLogService.saveChangeLog(record.getProjectid(), username,
-				ChangeLogSource.DEFECT, record.getId(), ChangeLogAction.UPDATE,
-				record.getSummary());
 
 		SimpleBug oldValue = this.findBugById(record.getId());
 
@@ -283,10 +268,6 @@ public class BugServiceImpl extends
 
 		int bugid = super.saveWithSession(bug, username);
 		saveBugRelatedItems(bug);
-
-		changeLogService.saveChangeLog(bug.getProjectid(), username,
-				ChangeLogSource.DEFECT, bugid, ChangeLogAction.CREATE,
-				bug.getSummary());
 
 		// Send mail to all relate ones
 		// TODO: switch to schedule send email with Quartz

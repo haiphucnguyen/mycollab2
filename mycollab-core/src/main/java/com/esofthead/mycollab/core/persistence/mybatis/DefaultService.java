@@ -2,6 +2,7 @@ package com.esofthead.mycollab.core.persistence.mybatis;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
+import java.lang.reflect.Method;
 import java.util.GregorianCalendar;
 import java.util.List;
 
@@ -37,15 +38,34 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 	@Override
 	public int saveWithSession(T record, String username) {
 		try {
+			log.debug("Set createtime and lastupdatedtime if enable");
 			PropertyUtils.setProperty(record, "createdtime",
 					new GregorianCalendar().getTime());
 			PropertyUtils.setProperty(record, "lastupdatedtime",
 					new GregorianCalendar().getTime());
 		} catch (Exception e) {
-			e.printStackTrace();
 		}
-		getCrudMapper().insert(record);
-		return -1;
+
+		ICrudGenericDAO<K, T> crudMapper = getCrudMapper();
+		Class<? extends ICrudGenericDAO> crudMapperClass = crudMapper
+				.getClass();
+		try {
+			Method method = crudMapperClass.getMethod("insertAndReturnKey",
+					record.getClass());
+			method.invoke(crudMapper, record);
+			log.debug("Save bean and return key successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+			log.debug("Can not find default method insertAndReturnKey. Back to default save function.");
+			getCrudMapper().insert(record);
+			return -1;
+		}
+
+		try {
+			return (Integer) PropertyUtils.getProperty(record, "id");
+		} catch (Exception e) {
+			return -1;
+		}
 	}
 
 	@Override
@@ -100,7 +120,7 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 		try {
 			PropertyDescriptor[] propertyDescriptors = PropertyUtils
 					.getPropertyDescriptors(criteria);
-			
+
 			for (PropertyDescriptor descriptor : propertyDescriptors) {
 				String propName = descriptor.getName();
 				if ((descriptor.getPropertyType().getGenericSuperclass() == SearchField.class)
@@ -116,7 +136,7 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 		if (isValid) {
 			getSearchMapper().removeByCriteria(criteria);
 		}
-		
+
 	}
 
 	@Override

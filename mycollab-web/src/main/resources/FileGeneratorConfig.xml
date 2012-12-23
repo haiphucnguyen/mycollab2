@@ -6,6 +6,9 @@
 <generatorConfiguration>
 
     <context id="MySQL" targetRuntime="MyBatis3">
+        
+        <plugin type="com.esofthead.mybatis.plugin.MyCollabModelFilePlugin" />
+        
         <jdbcConnection driverClass="com.mysql.jdbc.Driver"
             connectionURL="jdbc:mysql://localhost:3306/mycollab" userId="root"
             password="esofthead321" />

@@ -18,7 +18,6 @@
 package com.esofthead.mycollab.core.persistence.mybatis;
 
 import java.io.Serializable;
-import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.util.GregorianCalendar;
 import java.util.List;

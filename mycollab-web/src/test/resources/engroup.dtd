@@ -62,7 +62,6 @@
     m_monitor_item*,
     m_pm_messages*,
     m_pm_sent_messages*,
-    m_prj_change_log*,
     m_prj_message*,
     m_prj_milestone*,
     m_prj_monitor*,
@@ -94,6 +93,7 @@
     m_tracker_related_item*,
     m_tracker_version*,
     s_account*,
+    s_activitystream*,
     s_billing_plan*,
     s_country*,
     s_currency*,
@@ -177,11 +177,11 @@
 <!ATTLIST m_comment
     id CDATA #REQUIRED
     comment CDATA #IMPLIED
-    owner CDATA #REQUIRED
-    posteddate CDATA #REQUIRED
-    commentid CDATA #REQUIRED
-    createdTime CDATA #IMPLIED
-    lastUpdatedTime CDATA #IMPLIED
+    createdUser CDATA #REQUIRED
+    createdTime CDATA #REQUIRED
+    type CDATA #IMPLIED
+    typeId CDATA #IMPLIED
+    sAccountId CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_account EMPTY>
@@ -1025,18 +1025,6 @@
     body CDATA #IMPLIED
 >
 
-<!ELEMENT m_prj_change_log EMPTY>
-<!ATTLIST m_prj_change_log
-    id CDATA #REQUIRED
-    projectid CDATA #REQUIRED
-    posteddate CDATA #IMPLIED
-    posteduser CDATA #IMPLIED
-    source CDATA #IMPLIED
-    sourceid CDATA #IMPLIED
-    logAction CDATA #IMPLIED
-    sourceDesc CDATA #IMPLIED
->
-
 <!ELEMENT m_prj_message EMPTY>
 <!ATTLIST m_prj_message
     id CDATA #REQUIRED
@@ -1354,6 +1342,9 @@
     cus_dbl_03 CDATA #IMPLIED
     projectid CDATA #REQUIRED
     resolveddate CDATA #IMPLIED
+    description CDATA #IMPLIED
+    estimateTime CDATA #IMPLIED
+    estimateRemainTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_tracker_component EMPTY>
@@ -1460,6 +1451,18 @@
     id CDATA #REQUIRED
     createdTime CDATA #IMPLIED
     billingPlanId CDATA #IMPLIED
+>
+
+<!ELEMENT s_activitystream EMPTY>
+<!ATTLIST s_activitystream
+    id CDATA #REQUIRED
+    sAccountId CDATA #REQUIRED
+    type CDATA #IMPLIED
+    typeId CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
+    action CDATA #IMPLIED
+    createdUser CDATA #IMPLIED
+    module CDATA #IMPLIED
 >
 
 <!ELEMENT s_billing_plan EMPTY>

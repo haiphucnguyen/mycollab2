@@ -40,7 +40,7 @@ import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
 @Service
-@Transactional("transactionManager")
+@Transactional
 public class AccountServiceImpl extends
 		DefaultService<Integer, Account, AccountSearchCriteria> implements
 		AccountService {

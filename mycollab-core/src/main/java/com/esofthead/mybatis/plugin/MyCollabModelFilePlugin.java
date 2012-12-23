@@ -50,9 +50,8 @@ public class MyCollabModelFilePlugin extends
 			for (int i = 0; i < allColumns.size(); i++) {
 
 				IntrospectedColumn column = allColumns.get(i);
-				sqlBuilder.append(column.getActualColumnName());
-
-				valueSt.append("#{").append(column.getActualColumnName())
+				System.out.println("Pro: " + column.getJavaProperty());
+				valueSt.append("#{").append(column.getJavaProperty())
 						.append(",jdbcType=").append(column.getJdbcTypeName())
 						.append("}");
 
@@ -68,6 +67,15 @@ public class MyCollabModelFilePlugin extends
 
 			document.getRootElement().addElement(element);
 		}
+
+		/*
+		 * XmlElement element = new XmlElement("cache");
+		 * element.addAttribute(new Attribute("type",
+		 * "org.mybatis.caches.ehcache.LoggingEhcache")); TextElement
+		 * commentElement = new TextElement("<!--WARNING - @mbggenerated-->");
+		 * element.addElement(commentElement);
+		 * document.getRootElement().addElement(element);
+		 */
 
 		return true;
 	}

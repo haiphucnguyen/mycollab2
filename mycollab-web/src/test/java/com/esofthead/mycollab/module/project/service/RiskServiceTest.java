@@ -57,6 +57,7 @@ public class RiskServiceTest {
 		record.setRiskname("New risk");
 		record.setDescription("aaa");
 		int newId = riskService.saveWithSession(record, "hainguyen");
+		System.out.println("Risk id: " + newId);
 
 		Risk risk = riskService.findByPrimaryKey(newId);
 		Assert.assertEquals("New risk", risk.getRiskname());

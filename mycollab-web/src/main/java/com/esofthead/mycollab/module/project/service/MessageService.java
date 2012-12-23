@@ -6,11 +6,4 @@ import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriter
 
 public interface MessageService extends
 		IDefaultService<Integer, Message, MessageSearchCriteria> {
-
-	/**
-	 * 
-	 * @param message
-	 * @return
-	 */
-	int saveMessageAndReturnId(Message message, String sessionId);
 }
