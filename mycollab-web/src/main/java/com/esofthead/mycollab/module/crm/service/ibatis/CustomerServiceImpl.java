@@ -22,7 +22,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import com.esofthead.mycollab.module.crm.dao.CustomerMapper;
 import com.esofthead.mycollab.module.crm.domain.Customer;
 import com.esofthead.mycollab.module.crm.service.CustomerService;

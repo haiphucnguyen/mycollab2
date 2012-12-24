@@ -15,28 +15,42 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.esofthead.mycollab.module.project.service;
+package com.esofthead.mycollab.core.persistence.service;
 
+import java.io.Serializable;
 import java.util.List;
 
-import com.esofthead.mycollab.core.persistence.service.IDefaultService;
-import com.esofthead.mycollab.module.project.domain.Project;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
+public interface ICrudService<K extends Serializable, T> extends IService {
 
-public interface ProjectService extends
-		IDefaultService<Integer, Project, ProjectSearchCriteria> {
+	int saveWithSession(T record, String userSessionId);
+
 	/**
 	 * 
-	 * @param name
+	 * @param record
+	 * @param userSessionId
 	 * @return
 	 */
-	boolean isExistProjectHasSameName(String name);
+	int updateWithSession(T record, String userSessionId);
+
+	/**
+	 * @param id
+	 * @return
+	 */
+	T findByPrimaryKey(K primaryKey);
 
 	/**
 	 * 
+	 * @param primaryKey
+	 * @param userSessionId
+	 * @return
+	 */
+	int removeWithSession(K primaryKey, String userSessionId);
+	
+	/**
+	 * 
+	 * @param primaryKeys
 	 * @param username
 	 * @return
 	 */
-	List<SimpleProject> getInvolvedProjectOfUser(String username);
+	void removeWithSession(List<K> primaryKeys, String username);
 }

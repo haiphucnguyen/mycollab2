@@ -6,7 +6,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
+import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.crm.dao.TargetGroupMapper;
 import com.esofthead.mycollab.module.crm.dao.TargetGroupMapperExt;
 import com.esofthead.mycollab.module.crm.domain.TargetGroup;

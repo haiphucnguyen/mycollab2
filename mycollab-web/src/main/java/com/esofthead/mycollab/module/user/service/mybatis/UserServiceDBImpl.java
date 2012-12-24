@@ -26,7 +26,7 @@ import org.springframework.stereotype.Service;
 import com.esofthead.mycollab.core.EngroupException;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
+import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.user.dao.RoleUserMapper;
 import com.esofthead.mycollab.module.user.dao.UserMapper;
 import com.esofthead.mycollab.module.user.dao.UserMapperExt;

@@ -4,7 +4,7 @@ import java.util.List;
 import java.util.Map;
 
 import com.esofthead.mycollab.common.domain.MonitorItem;
-import com.esofthead.mycollab.core.persistence.ICrudService;
+import com.esofthead.mycollab.core.persistence.service.ICrudService;
 
 public interface MonitorItemService extends ICrudService<Integer, MonitorItem> {
 	/**

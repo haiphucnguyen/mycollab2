@@ -15,35 +15,8 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.esofthead.mycollab.core.persistence;
+package com.esofthead.mycollab.core.persistence.service;
 
-import java.util.List;
+public interface IService {
 
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
-
-/**
- * Engroup serivice supports pagable/search data.
- * 
- * @param <S>
- */
-public interface ISearchableService<S extends SearchCriteria> extends IService {
-	/**
-	 * Get the total available items base on search criteria.
-	 * 
-	 * @param criteria
-	 * @return
-	 */
-	int getTotalCount(S criteria);
-
-	/**
-	 * 
-	 * @param criteria
-	 * @param skipNum
-	 * @param maxResult
-	 * @return
-	 */
-	List findPagableListByCriteria(SearchRequest<S> searchRequest);
-	
-	void removeByCriteria(S criteria);
 }

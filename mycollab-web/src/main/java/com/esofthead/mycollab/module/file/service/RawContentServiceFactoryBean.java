@@ -5,12 +5,10 @@ import java.util.Properties;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 import org.springframework.stereotype.Service;
 
 @Service(value = "rawContentService")
-@Configurable
 public class RawContentServiceFactoryBean extends
 		AbstractFactoryBean<RawContentService> {
 

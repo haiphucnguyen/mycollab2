@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.core.persistence;
+package com.esofthead.mycollab.core.persistence.service;
 
 import java.io.Serializable;
 

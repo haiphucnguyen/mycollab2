@@ -25,7 +25,7 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import com.esofthead.mycollab.shared.audit.dao.AuditLogMapper;
 import com.esofthead.mycollab.shared.audit.domain.AuditLog;
 import com.esofthead.mycollab.shared.audit.domain.AuditLogExample;

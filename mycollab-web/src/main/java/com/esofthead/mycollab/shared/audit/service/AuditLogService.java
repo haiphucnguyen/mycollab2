@@ -2,7 +2,7 @@ package com.esofthead.mycollab.shared.audit.service;
 
 import java.util.List;
 
-import com.esofthead.mycollab.core.persistence.ICrudService;
+import com.esofthead.mycollab.core.persistence.service.ICrudService;
 import com.esofthead.mycollab.shared.audit.domain.AuditLog;
 import com.esofthead.mycollab.shared.audit.domain.SimpleAuditLog;
 

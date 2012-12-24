@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.core.persistence.mybatis;
+package com.esofthead.mycollab.core.persistence.service;
 
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
@@ -15,7 +15,6 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
-import com.esofthead.mycollab.core.persistence.IDefaultService;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 
 public abstract class DefaultService<K extends Serializable, T, S extends SearchCriteria>

@@ -17,7 +17,7 @@
  */
 package com.esofthead.mycollab.module.crm.service;
 
-import com.esofthead.mycollab.core.persistence.IDefaultService;
+import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;

@@ -4,7 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import com.esofthead.mycollab.module.tracker.dao.RelatedItemMapper;
 import com.esofthead.mycollab.module.tracker.domain.RelatedItem;
 import com.esofthead.mycollab.module.tracker.service.RelatedItemService;

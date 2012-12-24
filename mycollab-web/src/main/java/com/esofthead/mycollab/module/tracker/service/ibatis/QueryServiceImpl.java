@@ -5,7 +5,7 @@ import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
+import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.tracker.dao.QueryMapper;
 import com.esofthead.mycollab.module.tracker.dao.QueryMapperExt;
 import com.esofthead.mycollab.module.tracker.domain.Query;

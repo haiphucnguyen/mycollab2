@@ -3,7 +3,7 @@ package com.esofthead.mycollab.common.service;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.Currency;
-import com.esofthead.mycollab.core.persistence.ICrudService;
+import com.esofthead.mycollab.core.persistence.service.ICrudService;
 
 public interface CurrencyService extends ICrudService<Integer, Currency> {
 	List<Currency> getCurrencies();

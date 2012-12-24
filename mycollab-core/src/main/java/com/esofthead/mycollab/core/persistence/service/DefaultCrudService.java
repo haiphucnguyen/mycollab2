@@ -15,7 +15,7 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.esofthead.mycollab.core.persistence.mybatis;
+package com.esofthead.mycollab.core.persistence.service;
 
 import java.io.Serializable;
 import java.lang.reflect.Method;
@@ -25,7 +25,6 @@ import java.util.List;
 import org.apache.commons.beanutils.PropertyUtils;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
-import com.esofthead.mycollab.core.persistence.ICrudService;
 
 /**
  * The generic class that serves the basic operations in data access layer:

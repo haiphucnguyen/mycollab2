@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.project.service;
 
 import java.util.List;
 
-import com.esofthead.mycollab.core.persistence.IDefaultService;
+import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.project.domain.Resource;
 import com.esofthead.mycollab.module.project.domain.criteria.ResourceSearchCriteria;
 

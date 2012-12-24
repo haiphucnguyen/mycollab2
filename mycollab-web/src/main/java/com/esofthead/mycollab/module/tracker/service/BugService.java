@@ -3,7 +3,7 @@ package com.esofthead.mycollab.module.tracker.service;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.core.persistence.IDefaultService;
+import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.DefectComment;
 import com.esofthead.mycollab.module.tracker.domain.History;

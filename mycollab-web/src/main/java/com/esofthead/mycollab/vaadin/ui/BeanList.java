@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.persistence.ISearchableService;
+import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
 

@@ -10,7 +10,7 @@ import com.esofthead.mycollab.common.domain.Currency;
 import com.esofthead.mycollab.common.domain.CurrencyExample;
 import com.esofthead.mycollab.common.service.CurrencyService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
-import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
+import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 
 @Service
 public class CurrencyServiceImpl extends DefaultCrudService<Integer, Currency>

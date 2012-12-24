@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.core.persistence.mybatis;
+package com.esofthead.mycollab.core.persistence.service;
 
 import java.util.List;
 
@@ -6,7 +6,6 @@ import org.apache.ibatis.session.RowBounds;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.persistence.ISearchableService;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 
 public abstract class DefaultSearchService<S extends SearchCriteria> implements

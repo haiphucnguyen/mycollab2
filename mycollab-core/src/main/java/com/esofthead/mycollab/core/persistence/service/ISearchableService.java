@@ -15,42 +15,35 @@
  *  See the License for the specific language governing permissions and
  *  limitations under the License.
  */
-package com.esofthead.mycollab.core.persistence;
+package com.esofthead.mycollab.core.persistence.service;
 
-import java.io.Serializable;
 import java.util.List;
 
-public interface ICrudService<K extends Serializable, T> extends IService {
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 
-	int saveWithSession(T record, String userSessionId);
+/**
+ * Engroup serivice supports pagable/search data.
+ * 
+ * @param <S>
+ */
+public interface ISearchableService<S extends SearchCriteria> extends IService {
+	/**
+	 * Get the total available items base on search criteria.
+	 * 
+	 * @param criteria
+	 * @return
+	 */
+	int getTotalCount(S criteria);
 
 	/**
 	 * 
-	 * @param record
-	 * @param userSessionId
+	 * @param criteria
+	 * @param skipNum
+	 * @param maxResult
 	 * @return
 	 */
-	int updateWithSession(T record, String userSessionId);
-
-	/**
-	 * @param id
-	 * @return
-	 */
-	T findByPrimaryKey(K primaryKey);
-
-	/**
-	 * 
-	 * @param primaryKey
-	 * @param userSessionId
-	 * @return
-	 */
-	int removeWithSession(K primaryKey, String userSessionId);
+	List findPagableListByCriteria(SearchRequest<S> searchRequest);
 	
-	/**
-	 * 
-	 * @param primaryKeys
-	 * @param username
-	 * @return
-	 */
-	void removeWithSession(List<K> primaryKeys, String username);
+	void removeByCriteria(S criteria);
 }
