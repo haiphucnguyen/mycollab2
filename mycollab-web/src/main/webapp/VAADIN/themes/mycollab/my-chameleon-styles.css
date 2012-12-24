@@ -195,7 +195,7 @@ td.v-datefield-calendarpanel-month,
 .v-tabsheet-scroller,
 .v-csslayout-toolbar,
 .v-menubar {
-	background-image: url(../chameleon/img/grad-light-top2.png);
+	/*background-image: url(../chameleon/img/grad-light-top2.png);*/
 	background-position: left top;
 	}
 

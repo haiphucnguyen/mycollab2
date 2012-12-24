@@ -101,40 +101,39 @@ public class AccountSearchPanel extends
 			myItemCheckbox = new CheckBox("My Items");
 			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
+			Button searchBtn = new Button("Search");
+			searchBtn.setStyleName("bluebtn");
+			searchBtn.addListener(new Button.ClickListener() {
 
-			basicSearchBody.addComponent(new Button("Search",
-					new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					searchCriteria = new AccountSearchCriteria();
+					searchCriteria.setSaccountid(new NumberSearchField(
+							SearchField.AND, AppContext.getAccountId()));
+					searchCriteria.setAccountname(new StringSearchField(
+							SearchField.AND, (String) nameField.getValue()));
+					if (myItemCheckbox.booleanValue()) {
+						searchCriteria.setAssignUserName(new StringSearchField(
+								SearchField.AND, AppContext.getUsername()));
+					} else {
+						searchCriteria.setAssignUser(null);
+					}
+					AccountSearchPanel.this.notifySearchHandler(searchCriteria);
+				}
+			});
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							searchCriteria = new AccountSearchCriteria();
-							searchCriteria.setSaccountid(new NumberSearchField(
-									SearchField.AND, AppContext.getAccountId()));
-							searchCriteria
-									.setAccountname(new StringSearchField(
-											SearchField.AND, (String) nameField
-													.getValue()));
-							if (myItemCheckbox.booleanValue()) {
-								searchCriteria
-										.setAssignUserName(new StringSearchField(
-												SearchField.AND, AppContext
-														.getUsername()));
-							} else {
-								searchCriteria.setAssignUser(null);
-							}
-							AccountSearchPanel.this
-									.notifySearchHandler(searchCriteria);
-						}
-					}));
+			basicSearchBody.addComponent(searchBtn);
 
-			basicSearchBody.addComponent(new Button("Cancel",
-					new Button.ClickListener() {
+			Button cancelBtn = new Button("Cancel");
+			cancelBtn.setStyleName("bluebtn");
+			cancelBtn.addListener(new Button.ClickListener() {
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							nameField.setValue("");
-						}
-					}));
+				@Override
+				public void buttonClick(ClickEvent event) {
+					nameField.setValue("");
+				}
+			});
+			basicSearchBody.addComponent(cancelBtn);
 
 			Button advancedSearchBtn = new Button("Advanced Search",
 					new Button.ClickListener() {
