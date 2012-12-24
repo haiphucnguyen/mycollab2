@@ -7,6 +7,8 @@ import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.Application;
+import com.vaadin.ui.Window;
+import com.vaadin.ui.Window.Notification;
 
 public class MyCollabApplication extends Application {
 
@@ -38,5 +40,15 @@ public class MyCollabApplication extends Application {
 		AppContext.clearAllVariables();
 		ViewManager.clearResources();
 		PresenterResolver.clearResources();
+	}
+
+	@Override
+	public void terminalError(com.vaadin.terminal.Terminal.ErrorEvent event) {
+		getMainWindow().showNotification(
+				"An internal error has occurred, please "
+						+ "contact the administrator!",
+				Notification.TYPE_ERROR_MESSAGE);
+
+		log.error("An uncaught exception occurred: ", event.getThrowable());
 	}
 }

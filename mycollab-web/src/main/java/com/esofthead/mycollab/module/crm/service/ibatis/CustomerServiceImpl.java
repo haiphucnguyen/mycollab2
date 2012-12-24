@@ -19,6 +19,7 @@ package com.esofthead.mycollab.module.crm.service.ibatis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultCrudService;
@@ -27,6 +28,7 @@ import com.esofthead.mycollab.module.crm.domain.Customer;
 import com.esofthead.mycollab.module.crm.service.CustomerService;
 
 @Service
+@Transactional
 public class CustomerServiceImpl extends DefaultCrudService<Integer, Customer>
 		implements CustomerService {
 

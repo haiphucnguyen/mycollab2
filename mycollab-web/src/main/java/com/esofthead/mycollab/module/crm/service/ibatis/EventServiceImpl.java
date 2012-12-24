@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.service.ibatis;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultSearchService;
@@ -10,6 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.EventService;
 
 @Service
+@Transactional
 public class EventServiceImpl extends DefaultSearchService<EventSearchCriteria>
 		implements EventService {
 
