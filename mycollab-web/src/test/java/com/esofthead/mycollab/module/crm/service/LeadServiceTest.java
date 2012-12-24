@@ -76,9 +76,9 @@ public class LeadServiceTest {
 	public void testSearchLeadName() {
 		LeadSearchCriteria criteria = new LeadSearchCriteria();
 		criteria.setLeadName(new StringSearchField(SearchField.AND, "Nguyen Hai"));
-		Assert.assertEquals(2, leadService.getTotalCount(criteria));
+		Assert.assertEquals(1, leadService.getTotalCount(criteria));
 		Assert.assertEquals(
-				2,
+				1,
 				leadService.findPagableListByCriteria(
 						new SearchRequest<LeadSearchCriteria>(criteria, 0,
 								Integer.MAX_VALUE)).size());
