@@ -21,6 +21,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -36,6 +37,7 @@ import com.esofthead.mycollab.module.crm.service.TargetService;
 
 @Service
 @Transactional
+@Traceable(module = "Crm", type = "Target")
 public class TargetServiceImpl extends
 		DefaultService<Integer, Target, TargetSearchCriteria> implements
 		TargetService {

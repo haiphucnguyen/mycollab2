@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultSearchService;
 import com.esofthead.mycollab.module.crm.dao.EventMapperExt;
@@ -12,6 +13,7 @@ import com.esofthead.mycollab.module.crm.service.EventService;
 
 @Service
 @Transactional
+@Traceable(module = "Crm", type = "Event")
 public class EventServiceImpl extends DefaultSearchService<EventSearchCriteria>
 		implements EventService {
 

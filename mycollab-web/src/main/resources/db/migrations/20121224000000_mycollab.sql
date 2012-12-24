@@ -1,0 +1,1 @@
+ALTER TABLE `s_activitystream` ADD COLUMN `nameField` VARCHAR(100) NULL;

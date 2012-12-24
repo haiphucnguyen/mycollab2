@@ -4,6 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -16,6 +17,7 @@ import com.esofthead.mycollab.module.file.service.AttachmentService;
 
 @Service
 @Transactional
+@Traceable(module = "Crm", type = "Meeting")
 public class NoteServiceImpl extends DefaultService<Integer, Note, NoteSearchCriteria>
 		implements NoteService {
 
