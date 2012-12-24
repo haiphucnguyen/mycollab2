@@ -52,18 +52,18 @@ public class AccountServiceTest {
 	@DataSet
 	@Test
 	public void testSaveAccount() {
-			List accountList = accountService
-					.findPagableListByCriteria(new SearchRequest<AccountSearchCriteria>(
-							new AccountSearchCriteria(), 0, Integer.MAX_VALUE));
-			System.out.println("List: " + accountList.size());
-			Account account = new Account();
-			account.setAccountname("aaa");
-			account.setSaccountid(1);
-			accountService.saveWithSession(account, "aaa");
-			 accountList = accountService
-					.findPagableListByCriteria(new SearchRequest<AccountSearchCriteria>(
-							new AccountSearchCriteria(), 0, Integer.MAX_VALUE));
-			System.out.println("List: " + accountList.size());
+		List accountList = accountService
+				.findPagableListByCriteria(new SearchRequest<AccountSearchCriteria>(
+						new AccountSearchCriteria(), 0, Integer.MAX_VALUE));
+		System.out.println("List: " + accountList.size());
+		Account account = new Account();
+		account.setAccountname("aaa");
+		account.setSaccountid(1);
+		accountService.saveWithSession(account, "aaa");
+		accountList = accountService
+				.findPagableListByCriteria(new SearchRequest<AccountSearchCriteria>(
+						new AccountSearchCriteria(), 0, Integer.MAX_VALUE));
+		System.out.println("List: " + accountList.size());
 	}
 
 	@DataSet

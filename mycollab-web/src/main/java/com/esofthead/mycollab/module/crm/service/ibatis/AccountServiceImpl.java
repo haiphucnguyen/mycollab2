@@ -20,10 +20,12 @@ package com.esofthead.mycollab.module.crm.service.ibatis;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.service.ActivityStreamService;
+import com.esofthead.mycollab.core.EngroupException;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.mybatis.DefaultService;
@@ -41,6 +43,7 @@ import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
 @Service
 @Transactional
+@Configurable
 public class AccountServiceImpl extends
 		DefaultService<Integer, Account, AccountSearchCriteria> implements
 		AccountService {
