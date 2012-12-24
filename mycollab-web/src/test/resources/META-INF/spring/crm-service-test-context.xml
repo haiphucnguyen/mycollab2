@@ -5,13 +5,10 @@
     xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
- 
+
     <context:annotation-config />
 
     <context:spring-configured />
-
-    <context:component-scan
-        base-package="com.esofthead.mycollab.common.interceptor.service" />
 
     <context:component-scan base-package="com.esofthead.mycollab.module.crm.service" />
 
@@ -22,6 +19,9 @@
 
     <context:component-scan base-package="com.esofthead.mycollab.module.file.service" />
 
-    <aop:aspectj-autoproxy/>
+    <aop:aspectj-autoproxy proxy-target-class="true"/>
+
+    <context:component-scan
+        base-package="com.esofthead.mycollab.common.interceptor.service" />
 
 </beans>

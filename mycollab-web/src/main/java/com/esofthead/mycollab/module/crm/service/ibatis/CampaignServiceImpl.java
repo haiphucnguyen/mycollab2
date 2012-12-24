@@ -18,8 +18,8 @@
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -36,7 +36,7 @@ import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
 @Service
-@Configurable
+@Transactional
 public class CampaignServiceImpl extends
 		DefaultService<Integer, Campaign, CampaignSearchCriteria> implements
 		CampaignService {
