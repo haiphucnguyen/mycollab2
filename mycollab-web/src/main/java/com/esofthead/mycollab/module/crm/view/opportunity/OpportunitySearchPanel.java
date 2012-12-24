@@ -1,7 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import java.util.Collection;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
@@ -115,6 +120,19 @@ public class OpportunitySearchPanel extends
 							searchCriteria = new OpportunitySearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
+							searchCriteria
+									.setOpportunityName(new StringSearchField(
+											SearchField.AND,
+											((String) nameField.getValue())
+													.trim()));
+
+							if (myItemCheckbox.booleanValue()) {
+								searchCriteria.	setAssignUsers(new SetSearchField<String>(SearchField.AND, new String[] {AppContext
+										.getUsername()}));
+							} else {
+								searchCriteria.setAssignUsers(null);
+							}
+
 							OpportunitySearchPanel.this
 									.notifySearchHandler(searchCriteria);
 						}
@@ -179,8 +197,9 @@ public class OpportunitySearchPanel extends
 
 			userField = (UserListSelect) gridLayout.addComponent(
 					new UserListSelect(), "Assigned to", 0, 1);
-			stageField = (OpportunitySalesStageListSelect) gridLayout.addComponent(
-					new OpportunitySalesStageListSelect(), "Sales Stage", 1, 1);
+			stageField = (OpportunitySalesStageListSelect) gridLayout
+					.addComponent(new OpportunitySalesStageListSelect(),
+							"Sales Stage", 1, 1);
 			sourceField = (LeadSourceListSelect) gridLayout.addComponent(
 					new LeadSourceListSelect(), "Lead Source", 2, 1);
 
@@ -194,11 +213,68 @@ public class OpportunitySearchPanel extends
 			buttonControls.addComponent(new Button("Search",
 					new Button.ClickListener() {
 
+						@SuppressWarnings("unchecked")
 						@Override
 						public void buttonClick(ClickEvent event) {
 							searchCriteria = new OpportunitySearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
+
+							if (StringUtil
+									.isNotNullOrEmpty((String) opportunityNameField
+											.getValue())) {
+								searchCriteria
+										.setOpportunityName(new StringSearchField(
+												SearchField.AND,
+												((String) opportunityNameField
+														.getValue()).trim()));
+							}
+							
+							//accountField
+//							if (StringUtil
+//									.isNotNullOrEmpty((String) opportunityNameField
+//											.getValue())) {
+//								searchCriteria
+//										.setOpportunityName(new StringSearchField(
+//												SearchField.AND,
+//												((String) opportunityNameField
+//														.getValue()).trim()));
+//							}
+							
+							if (StringUtil
+									.isNotNullOrEmpty((String) nextStepField
+											.getValue())) {
+								searchCriteria
+										.setNextStep(new StringSearchField(
+												SearchField.AND,
+												((String) nextStepField
+														.getValue()).trim()));
+							}
+							
+							Collection<String> assignUsers = (Collection<String>) userField
+							.getValue();
+							if (assignUsers != null && assignUsers.size() > 0) {
+								searchCriteria
+										.setAssignUsers(new SetSearchField<String>(
+												SearchField.AND, assignUsers));
+							}
+
+							Collection<String> saleStages = (Collection<String>) stageField
+							.getValue();
+							if (saleStages != null && saleStages.size() > 0) {
+								searchCriteria
+								.setSalesStages(new SetSearchField<String>(
+										SearchField.AND, saleStages));
+							}
+							
+							Collection<String> leadSources = (Collection<String>) sourceField
+							.getValue();
+							if (leadSources != null && leadSources.size() > 0) {
+								searchCriteria
+								.setLeadSources(new SetSearchField<String>(
+										SearchField.AND, leadSources));
+							}
+
 							OpportunitySearchPanel.this
 									.notifySearchHandler(searchCriteria);
 						}
@@ -210,7 +286,13 @@ public class OpportunitySearchPanel extends
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-
+							
+							opportunityNameField.setValue("");
+							//accountField.setValue(null);
+							nextStepField.setValue("");
+							userField.setValue(null);
+							stageField.setValue(null);
+							sourceField.setValue(null);
 						}
 
 					}));

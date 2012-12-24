@@ -113,10 +113,12 @@ public class AccountSearchPanel extends
 					searchCriteria.setAccountname(new StringSearchField(
 							SearchField.AND, (String) nameField.getValue()));
 					if (myItemCheckbox.booleanValue()) {
-						searchCriteria.setAssignUserName(new StringSearchField(
-								SearchField.AND, AppContext.getUsername()));
+						searchCriteria
+								.setAssignUser(new StringSearchField(
+										SearchField.AND, AppContext
+												.getUsername()));
 					} else {
-						searchCriteria.setAssignUser(null);
+						searchCriteria.setAssignUsers(null);
 					}
 					AccountSearchPanel.this.notifySearchHandler(searchCriteria);
 				}

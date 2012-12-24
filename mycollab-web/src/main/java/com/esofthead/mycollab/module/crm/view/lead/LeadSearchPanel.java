@@ -120,6 +120,12 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 									.setLeadName(new StringSearchField(
 											SearchField.AND, (String) nameField
 													.getValue()));
+							if (myItemCheckbox.booleanValue()) {
+								searchCriteria.	setAssignUsers(new SetSearchField<String>(SearchField.AND, new String[] {AppContext
+										.getUsername()}));
+							} else {
+								searchCriteria.setAssignUsers(null);
+							}
 							LeadSearchPanel.this
 									.notifySearchHandler(searchCriteria);
 						}
@@ -227,9 +233,9 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 											.getValue())) {
 								searchCriteria
 								.setFirstname(new StringSearchField(
-										SearchField.AND,
+										SearchField.AND, (
 										(String) firstnameField
-												.getValue()));
+												.getValue()).trim()));
 							}
 							
 							if (StringUtil
@@ -237,9 +243,9 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 											.getValue())) {
 								searchCriteria
 								.setLastname(new StringSearchField(
-										SearchField.AND,
+										SearchField.AND, (
 										(String) lastnameField
-												.getValue()));
+												.getValue()).trim()));
 							}
 							
 							if (StringUtil
@@ -247,9 +253,9 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 											.getValue())) {
 								searchCriteria
 								.setAccountName(new StringSearchField(
-										SearchField.AND,
+										SearchField.AND, (
 										(String) accountnameField
-												.getValue()));
+												.getValue()).trim()));
 							}
 							
 							Collection<String> statuses = (Collection<String>) statusField

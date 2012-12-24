@@ -1,8 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
+import java.util.Collection;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
@@ -74,7 +78,7 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 			numberField = (TextField) gridLayout.addComponent(new TextField(),
 					"Number", 0, 0);
 			subjectField = (TextField) gridLayout.addComponent(new TextField(),
-					"Account", 1, 0);
+					"Subject", 1, 0);
 			accountField = (AccountSelectionField) gridLayout.addComponent(
 					new AccountSelectionField(), "Account", 2, 0);
 
@@ -88,6 +92,7 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 			return gridLayout.getLayout();
 		}
 
+		@SuppressWarnings("serial")
 		@Override
 		public ComponentContainer constructFooter() {
 			HorizontalLayout buttonControls = new HorizontalLayout();
@@ -95,11 +100,67 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 			buttonControls.addComponent(new Button("Search",
 					new Button.ClickListener() {
 
+						@SuppressWarnings("unchecked")
 						@Override
 						public void buttonClick(ClickEvent event) {
 							searchCriteria = new CaseSearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
+							
+							if (StringUtil
+									.isNotNullOrEmpty((String) subjectField
+											.getValue())) {
+								searchCriteria
+										.setSubject(new StringSearchField(
+												SearchField.AND,
+												((String) subjectField
+														.getValue()).trim()));
+							}
+							
+//							if (StringUtil
+//									.isNotNullOrEmpty((String) subjectField
+//											.getValue())) {
+//								searchCriteria
+//										.setSubject(new StringSearchField(
+//												SearchField.AND,
+//												((String) subjectField
+//														.getValue()).trim()));
+//							}
+							
+//							if (StringUtil
+//									.isNotNullOrEmpty((String) subjectField
+//											.getValue())) {
+//								searchCriteria
+//										.setSubject(new StringSearchField(
+//												SearchField.AND,
+//												((String) subjectField
+//														.getValue()).trim()));
+//							}
+							
+							Collection<String> statuses = (Collection<String>) statusField
+							.getValue();
+							if (statuses != null && statuses.size() > 0) {
+								searchCriteria
+								.setStatuses(new SetSearchField<String>(
+										SearchField.AND, statuses));
+							}
+							
+							Collection<String> assignUsers = (Collection<String>) userField
+							.getValue();
+							if (assignUsers != null && assignUsers.size() > 0) {
+								searchCriteria
+								.setAssignUsers(new SetSearchField<String>(
+										SearchField.AND, assignUsers));
+							}
+							
+							Collection<String> priorities = (Collection<String>) priorityField
+							.getValue();
+							if (priorities != null && priorities.size() > 0) {
+								searchCriteria
+								.setPriorities(new SetSearchField<String>(
+										SearchField.AND, priorities));
+							}
+							
 							CaseSearchPanel.this
 									.notifySearchHandler(searchCriteria);
 						}
@@ -111,7 +172,12 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-
+							numberField.setValue("");
+							subjectField.setValue("");
+//							accountField;
+							statusField.setValue(null);
+							userField.setValue(null);
+							priorityField.setValue(null);
 						}
 
 					}));
@@ -199,8 +265,16 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
 							searchCriteria.setSubject(new StringSearchField(
-									SearchField.AND, (String) subjectField
-											.getValue()));
+									SearchField.AND, ((String) subjectField.getValue())
+									.trim()));
+							
+							if (myItemCheckbox.booleanValue()) {
+								searchCriteria.	setAssignUsers(new SetSearchField<String>(SearchField.AND, new String[] {AppContext
+										.getUsername()}));
+							} else {
+								searchCriteria.setAssignUsers(null);
+							}
+							
 							CaseSearchPanel.this
 									.notifySearchHandler(searchCriteria);
 						}

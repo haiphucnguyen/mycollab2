@@ -122,10 +122,8 @@ public class ContactSearchPanel extends
 													.getValue()));
 
 							if (myItemCheckbox.booleanValue()) {
-								searchCriteria
-										.setAccountName(new StringSearchField(
-												SearchField.AND,
-												(String) nameField.getValue()));
+								searchCriteria.	setAssignUsers(new SetSearchField<String>(SearchField.AND, new String[] {AppContext
+										.getUsername()}));
 							} else {
 								searchCriteria.setAssignUsers(null);
 							}
@@ -240,9 +238,9 @@ public class ContactSearchPanel extends
 											.getValue())) {
 								searchCriteria
 										.setFirstname(new StringSearchField(
-												SearchField.AND,
+												SearchField.AND,(
 												(String) firstnameField
-														.getValue()));
+														.getValue()).trim()));
 							}
 
 							if (StringUtil
@@ -250,9 +248,9 @@ public class ContactSearchPanel extends
 											.getValue())) {
 								searchCriteria
 										.setLastname(new StringSearchField(
-												SearchField.AND,
+												SearchField.AND,(
 												(String) lastnameField
-														.getValue()));
+														.getValue()).trim()));
 							}
 
 							if (StringUtil
@@ -260,9 +258,9 @@ public class ContactSearchPanel extends
 											.getValue())) {
 								searchCriteria
 										.setAccountName(new StringSearchField(
-												SearchField.AND,
+												SearchField.AND, (
 												(String) accountnameField
-														.getValue()));
+														.getValue()).trim()));
 							}
 
 							Collection<String> assignUsers = (Collection<String>) assignUserField
