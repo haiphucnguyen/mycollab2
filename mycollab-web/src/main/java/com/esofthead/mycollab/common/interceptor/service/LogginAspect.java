@@ -10,7 +10,7 @@ import org.springframework.stereotype.Component;
 @Configurable
 @Component
 public class LogginAspect {
-	@Before("execution(public * com.esofthead.mycollab..service..*.*(..))")
+	@Before("execution(public * com.esofthead.mycollab..service.ibatis..*.*(..))")
 	public void logBefore(JoinPoint joinPoint) {
 
 		System.out.println("hijacked : "
