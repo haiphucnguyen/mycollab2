@@ -13,6 +13,7 @@ import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent.GotoMainPage;
 import com.esofthead.mycollab.shell.events.ShellEvent.GotoProjectPage;
 import com.esofthead.mycollab.shell.events.ShellEvent.LogOut;
+import com.esofthead.mycollab.shell.view.MainViewImpl;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;

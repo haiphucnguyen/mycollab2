@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.shell;
+package com.esofthead.mycollab.shell.view;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.vaadin.ui.Label;

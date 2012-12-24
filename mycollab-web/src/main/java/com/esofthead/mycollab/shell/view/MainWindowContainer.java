@@ -1,10 +1,11 @@
-package com.esofthead.mycollab.shell;
+package com.esofthead.mycollab.shell.view;
 
 import org.vaadin.browsercookies.BrowserCookies;
 
 import com.esofthead.mycollab.core.EngroupException;
 import com.esofthead.mycollab.module.user.presenter.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
+import com.esofthead.mycollab.shell.ShellController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
