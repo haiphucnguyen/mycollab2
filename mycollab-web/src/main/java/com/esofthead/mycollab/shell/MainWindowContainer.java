@@ -7,9 +7,11 @@ import com.esofthead.mycollab.module.user.presenter.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 
+@ViewComponent
 public class MainWindowContainer extends Window implements View{
 	private static final long serialVersionUID = 1L;
 
