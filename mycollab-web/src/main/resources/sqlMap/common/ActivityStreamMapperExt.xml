@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt">
+
+    <resultMap id="SimpleActivityStreamResult"
+        extends="com.esofthead.mycollab.module.crm.dao.AccountMapper.BaseResultMap"
+        type="com.esofthead.mycollab.common.domain.SimpleActivityStream">
+
+        <collection property="comments"
+            columnPrefix="comment_"
+            ofType="com.esofthead.mycollab.common.domain.SimpleComment"
+            resultMap="com.esofthead.mycollab.common.dao.CommentMapperExt.BaseResultMap"/>
+    </resultMap>
+    
+    <sql id="querySearchCriteria" >
+        <if test="moduleSet != null" >
+            ${moduleSet.operation} s_activitystream.module IN
+            <foreach close=")" collection="moduleSet.values" item="module"
+                open="(" separator=",">
+                #{module}
+            </foreach>
+        </if>
+    </sql>    
+
+    <sql id="selectSimpleActivityStream">
+        <![CDATA[
+        SELECT s_activitystream.id, s_activitystream.sAccountId, s_activitystream.type, s_activitystream.typeId, 
+               s_activitystream.createdTime, s_activitystream.action, s_activitystream.createdUser, 
+               s_activitystream.module, m_comment.comment as comment_comment, m_comment.createdUser as comment_createdUser,
+               m_comment.createdTime as comment_createdTime, m_comment.type as comment_type, m_comment.typeid as comment_typeid,
+               m_comment.sAccountId as comment_sAccountId, 
+               concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as comment_ownerFullName
+        FROM s_activitystream
+        LEFT OUTER JOIN m_comment ON (s_activitystream.sAccountId = m_comment.sAccountId AND s_activitystream.id = m_comment.typeid AND m_comment.type='Common_ActivityStream')
+        LEFT OUTER JOIN s_user ON (m_comment.createdUser = s_user.username)
+        ]]>
+    </sql>
+    
+    <select id="findPagableListByCriteria" parameterType="ActivityStreamSearchCriteria"
+        resultMap="SimpleActivityStreamResult">
+        <include
+            refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.selectSimpleActivityStream" />
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include
+                refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
+        </trim>
+        <include refid="orderStatement"/>
+        
+    </select>
+    
+    <sql id="orderStatement">
+        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            s_activitystream.createdTime DESC
+        ]]>
+    </sql>
+
+    <select id="getTotalCount" parameterType="ActivityStreamSearchCriteria"
+        resultType="java.lang.Integer">
+        SELECT count(*) as totalCount FROM s_activitystream
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include
+                refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
+        </trim>
+    </select>
+</mapper>

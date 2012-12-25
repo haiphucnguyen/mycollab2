@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.common.interceptor.service;
 
+import java.lang.reflect.InvocationTargetException;
 import java.util.GregorianCalendar;
 
 import org.apache.commons.beanutils.PropertyUtils;
@@ -34,17 +35,9 @@ public class TraceableAspect {
 		Traceable traceableAnnotation = cls.getAnnotation(Traceable.class);
 		if (traceableAnnotation != null) {
 			try {
-				ActivityStream activity = new ActivityStream();
-				activity.setModule(traceableAnnotation.module());
-				activity.setType(traceableAnnotation.type());
-				activity.setTypeid((Integer) PropertyUtils.getProperty(bean,
-						traceableAnnotation.idField()));
-				activity.setCreatedtime(new GregorianCalendar().getTime());
-				activity.setAction(ActivityStreamConstants.ACTION_CREATE);
-				activity.setSaccountid((Integer) PropertyUtils.getProperty(
-						bean, "saccountid"));
-				activity.setNamefield((String) PropertyUtils.getProperty(bean,
-						traceableAnnotation.nameField()));
+				ActivityStream activity = constructActivity(
+						traceableAnnotation, bean,
+						ActivityStreamConstants.ACTION_CREATE);
 				activityStreamService.save(activity);
 			} catch (Exception e) {
 				log.error(
@@ -53,5 +46,44 @@ public class TraceableAspect {
 			}
 		}
 
+	}
+
+	@After("execution(public * com.esofthead.mycollab..service..*.updateWithSession(..)) && args(bean, username)")
+	public void traceUpdateActivity(JoinPoint joinPoint, Object bean,
+			String username) {
+
+		Advised advised = (Advised) joinPoint.getThis();
+		Class<?> cls = advised.getTargetSource().getTargetClass();
+
+		Traceable traceableAnnotation = cls.getAnnotation(Traceable.class);
+		if (traceableAnnotation != null) {
+			try {
+				ActivityStream activity = constructActivity(
+						traceableAnnotation, bean,
+						ActivityStreamConstants.ACTION_UPDATE);
+				activityStreamService.save(activity);
+			} catch (Exception e) {
+				log.error(
+						"Error when save activity for save action of service "
+								+ cls.getName(), e);
+			}
+		}
+	}
+
+	private ActivityStream constructActivity(Traceable traceableAnnotation,
+			Object bean, String action) throws IllegalAccessException,
+			InvocationTargetException, NoSuchMethodException {
+		ActivityStream activity = new ActivityStream();
+		activity.setModule(traceableAnnotation.module());
+		activity.setType(traceableAnnotation.type());
+		activity.setTypeid((Integer) PropertyUtils.getProperty(bean,
+				traceableAnnotation.idField()));
+		activity.setCreatedtime(new GregorianCalendar().getTime());
+		activity.setAction(action);
+		activity.setSaccountid((Integer) PropertyUtils.getProperty(bean,
+				"saccountid"));
+		activity.setNamefield((String) PropertyUtils.getProperty(bean,
+				traceableAnnotation.nameField()));
+		return activity;
 	}
 }

@@ -1,38 +1,82 @@
-<?xml version="1.0" encoding="UTF-8" ?>
+<?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
-<mapper namespace="com.esofthead.mycollab.module.tracker.dao.BugMapperExt">
-	<resultMap type="com.esofthead.mycollab.common.domain.GroupItem"
-		id="GroupItemResult">
-		<result column="groupid" jdbcType="VARCHAR" property="groupid" />
-		<result column="groupname" jdbcType="VARCHAR" property="groupname" />
-		<result column="value" jdbcType="INTEGER" property="value" />
-	</resultMap>
+<mapper namespace="com.esofthead.mycollab.module.tracker.dao.BugMapperExt" >
 
-	<resultMap type="com.esofthead.mycollab.module.tracker.domain.SimpleBug"
-		extends="com.esofthead.mycollab.module.tracker.dao.BugMapper.BaseResultMap" id="SimpleBugResult">
-		<result column="loguserFullName" jdbcType="VARCHAR" property="loguserFullName" />
-		<result column="assignuserFullName" jdbcType="VARCHAR"
-			property="assignuserFullName" />
-		<result column="projectname" jdbcType="VARCHAR" property="projectname" />
-                <collection property="affectedVersions" ofType="com.esofthead.mycollab.module.tracker.domain.Version" 
-                    resultMap="com.esofthead.mycollab.module.tracker.dao.VersionMapper.BaseResultMap" columnPrefix="affectedversion_"/>
-                 <collection property="fixedVersions" ofType="com.esofthead.mycollab.module.tracker.domain.Version" 
-                    resultMap="com.esofthead.mycollab.module.tracker.dao.VersionMapper.BaseResultMap" columnPrefix="fixedversion_"/>
-                 <collection property="components" ofType="com.esofthead.mycollab.module.tracker.domain.Component" 
-                    resultMap="com.esofthead.mycollab.module.tracker.dao.ComponentMapper.BaseResultMap" columnPrefix="component_"/>
-	</resultMap>
+    <resultMap
+        id="GroupItemResult"
+        type="com.esofthead.mycollab.common.domain.GroupItem" >
 
-	<sql id="querySearchCriteria">
-		<choose>
-			<when test="assignuser == ''">
-				AND m_tracker_bug.assignuser IS NULL
-	       </when>
-			<when test="assignuser != null">
-				AND m_tracker_bug.assignuser=#{assignuser.value}
-	       </when>
-		</choose>
-		<if test="involeduser != null">
-            <![CDATA[
+        <result
+            column="groupid"
+            jdbcType="VARCHAR"
+            property="groupid" />
+
+        <result
+            column="groupname"
+            jdbcType="VARCHAR"
+            property="groupname" />
+
+        <result
+            column="value"
+            jdbcType="INTEGER"
+            property="value" />
+    </resultMap>
+
+    <resultMap
+        id="SimpleBugResult"
+        extends="com.esofthead.mycollab.module.tracker.dao.BugMapper.BaseResultMap"
+        type="com.esofthead.mycollab.module.tracker.domain.SimpleBug" >
+
+        <result
+            column="loguserFullName"
+            jdbcType="VARCHAR"
+            property="loguserFullName" />
+
+        <result
+            column="assignuserFullName"
+            jdbcType="VARCHAR"
+            property="assignuserFullName" />
+
+        <result
+            column="projectname"
+            jdbcType="VARCHAR"
+            property="projectname" />
+
+        <collection
+            columnPrefix="affectedversion_"
+            ofType="com.esofthead.mycollab.module.tracker.domain.Version"
+            property="affectedVersions"
+            resultMap="com.esofthead.mycollab.module.tracker.dao.VersionMapper.BaseResultMap" />
+
+        <collection
+            columnPrefix="fixedversion_"
+            ofType="com.esofthead.mycollab.module.tracker.domain.Version"
+            property="fixedVersions"
+            resultMap="com.esofthead.mycollab.module.tracker.dao.VersionMapper.BaseResultMap" />
+
+        <collection
+            columnPrefix="component_"
+            ofType="com.esofthead.mycollab.module.tracker.domain.Component"
+            property="components"
+            resultMap="com.esofthead.mycollab.module.tracker.dao.ComponentMapper.BaseResultMap" />
+    </resultMap>
+
+    <sql id="querySearchCriteria" >
+
+        <choose>
+
+            <when test="assignuser == &apos;&apos;" >
+				AND m_tracker_bug.assignuser IS NULL
+            </when>
+
+            <when test="assignuser != null" >
+				AND m_tracker_bug.assignuser=#{assignuser.value}
+            </when>
+        </choose>
+
+        <if test="involeduser != null" >
+
+<![CDATA[
             ${involeduser.operation}
             (m_tracker_bug.assignuser=#{involeduser.value} OR m_tracker_bug.logby = #{involeduser.value} OR
             (SELECT COUNT(*) 
@@ -40,77 +84,99 @@
                 WHERE m_tracker_history.relatedbug = m_tracker_bug.id 
                 AND (m_tracker_history.assignuser=#{involeduser.value} OR m_tracker_history.logby=#{involeduser.value})) > 0)
             ]]>
-		</if>
-		<if test="summary != null">
-            <![CDATA[${summary.operation} m_tracker_bug.summary LIKE '%${summary.value}%']]>
-		</if>
-		<if test="detail != null">
-            <![CDATA[${detail.operation} m_tracker_bug.detail LIKE '%${detail.value}%']]>
-		</if>
-		<if test="environment != null">
-            <![CDATA[${environment.operation} m_tracker_bug.environment LIKE '%${environment.value}%']]>
-		</if>
-		<if test="loguser != null">
-            <![CDATA[${loguser.operation} m_tracker_bug.logby = #{loguser.value}]]>
-		</if>
-		<if test="postedDateFrom != null">
-            <![CDATA[${postedDateFrom.operation} m_tracker_bug.createdTime >= #{postedDateFrom.value,javaType=DATE}]]>
-		</if>
-		<if test="postedDateTo != null">
-            <![CDATA[${postedDateTo.operation} m_tracker_bug.createdTime <= #{postedDateTo.value,javaType=DATE}]]>
-		</if>
-		<if test="updatedDateFrom != null">
-            <![CDATA[${updatedDateFrom.operation} m_tracker_bug.lastUpdatedTime >= #{updatedDateFrom,javaType=DATE}]]>
-		</if>
-		<if test="updatedDateTo != null">
-            <![CDATA[${updatedDateTo.operation} m_tracker_bug.lastUpdatedTime <= #{updatedDateTo.value,javaType=DATE}]]>
-		</if>
-		<if test="dueDateFrom != null">
-            <![CDATA[${dueDateFrom.operation} m_tracker_bug.duedate >= #{dueDateFrom.value,javaType=DATE}]]>
-		</if>
-		<if test="dueDateTo != null">
-            <![CDATA[${dueDateTo.operation} m_tracker_bug.duedate <= #{dueDateTo.value,javaType=DATE}]]>
-		</if>
-		<if test="resolvedDateFrom != null">
-            <![CDATA[${resolvedDateFrom.operation} m_tracker_bug.resolveddate >= #{resolvedDateFrom.value,javaType=DATE}]]>
-		</if>
-		<if test="resolvedDateTo != null">
-            <![CDATA[${resolvedDateTo.operation} m_tracker_bug.resolveddate <= #{resolvedDateTo.value,javaType=DATE}]]>
-		</if>
-		<if test="projectid">
-			${projectid.operation} m_tracker_bug.projectid=#{projectid.value,javaType=INTEGER}
-		</if>
-		<if test="affectedversionids != null">
-			${affectedversionids.operation}
-			<foreach close=")" collection="affectedversionids.values" item="affectedversion"
-				open="(" separator="OR">
-                <![CDATA[
+        </if>
+
+        <if test="summary != null" >
+<![CDATA[${summary.operation} m_tracker_bug.summary LIKE '%${summary.value}%']]></if>
+
+        <if test="detail != null" >
+<![CDATA[${detail.operation} m_tracker_bug.detail LIKE '%${detail.value}%']]></if>
+
+        <if test="environment != null" >
+<![CDATA[${environment.operation} m_tracker_bug.environment LIKE '%${environment.value}%']]></if>
+
+        <if test="loguser != null" >
+<![CDATA[${loguser.operation} m_tracker_bug.logby = #{loguser.value}]]></if>
+
+        <if test="postedDateFrom != null" >
+<![CDATA[${postedDateFrom.operation} m_tracker_bug.createdTime >= #{postedDateFrom.value,javaType=DATE}]]></if>
+
+        <if test="postedDateTo != null" >
+<![CDATA[${postedDateTo.operation} m_tracker_bug.createdTime <= #{postedDateTo.value,javaType=DATE}]]></if>
+
+        <if test="updatedDateFrom != null" >
+<![CDATA[${updatedDateFrom.operation} m_tracker_bug.lastUpdatedTime >= #{updatedDateFrom,javaType=DATE}]]></if>
+
+        <if test="updatedDateTo != null" >
+<![CDATA[${updatedDateTo.operation} m_tracker_bug.lastUpdatedTime <= #{updatedDateTo.value,javaType=DATE}]]></if>
+
+        <if test="dueDateFrom != null" >
+<![CDATA[${dueDateFrom.operation} m_tracker_bug.duedate >= #{dueDateFrom.value,javaType=DATE}]]></if>
+
+        <if test="dueDateTo != null" >
+<![CDATA[${dueDateTo.operation} m_tracker_bug.duedate <= #{dueDateTo.value,javaType=DATE}]]></if>
+
+        <if test="resolvedDateFrom != null" >
+<![CDATA[${resolvedDateFrom.operation} m_tracker_bug.resolveddate >= #{resolvedDateFrom.value,javaType=DATE}]]></if>
+
+        <if test="resolvedDateTo != null" >
+<![CDATA[${resolvedDateTo.operation} m_tracker_bug.resolveddate <= #{resolvedDateTo.value,javaType=DATE}]]></if>
+
+        <if test="projectid" >
+			<![CDATA[${projectid.operation} m_tracker_bug.projectid=#{projectid.value,javaType=INTEGER}]]>
+        </if>
+
+        <if test="affectedversionids != null" >
+			${affectedversionids.operation}
+
+            <foreach
+                close=")"
+                collection="affectedversionids.values"
+                item="affectedversion"
+                open="("
+                separator="OR" >
+
+<![CDATA[
             (SELECT COUNT(*)
                 FROM m_tracker_related_item
                 WHERE m_tracker_related_item.type='1'
                     AND m_tracker_related_item.typeid=#{affectedversion,javaType=INTEGER}
                     AND m_tracker_related_item.refkey=concat('bug-', m_tracker_bug.id))> 0
                     ]]>
-			</foreach>
-		</if>
-		<if test="fixedversionids != null">
-			${fixedversionids.operation}
-			<foreach close=")" collection="fixedversionids.values" item="fixedversion"
-				open="(" separator="OR">
-                 <![CDATA[
+            </foreach>
+        </if>
+
+        <if test="fixedversionids != null" >
+			${fixedversionids.operation}
+
+            <foreach
+                close=")"
+                collection="fixedversionids.values"
+                item="fixedversion"
+                open="("
+                separator="OR" >
+
+<![CDATA[
                 (SELECT COUNT(*) 
                     FROM m_tracker_related_item
                     WHERE m_tracker_related_item.type='0'
                         AND m_tracker_related_item.typeid=#{fixedversion,javaType=INTEGER}
                         AND m_tracker_related_item.refkey=concat('bug-', m_tracker_bug.id))> 0
                 ]]>
-			</foreach>
-		</if>
-		<if test="versionids != null">
-			${versionids.operation}
-			<foreach close=")" collection="versionids.values" item="versionid"
-				open="(" separator="OR">
-                <![CDATA[
+            </foreach>
+        </if>
+
+        <if test="versionids != null" >
+			${versionids.operation}
+
+            <foreach
+                close=")"
+                collection="versionids.values"
+                item="versionid"
+                open="("
+                separator="OR" >
+
+<![CDATA[
                 (((SELECT COUNT(*) 
                     FROM m_tracker_related_item
                     WHERE m_tracker_related_item.type='0'
@@ -123,54 +189,85 @@
                         AND m_tracker_related_item.typeid=#{versionid,javaType=INTEGER}
                         AND m_tracker_related_item.refkey=concat('bug-', m_tracker_bug.id))> 0))
                 ]]>
-			</foreach>
-		</if>
-		<if test="componentids != null">
-			${componentids.operation}
-			<foreach close=")" collection="componentids.values" item="componentid"
-				open="(" separator="OR">
-                <![CDATA[
+            </foreach>
+        </if>
+
+        <if test="componentids != null" >
+			${componentids.operation}
+
+            <foreach
+                close=")"
+                collection="componentids.values"
+                item="componentid"
+                open="("
+                separator="OR" >
+
+<![CDATA[
                 (SELECT COUNT(*)
                     FROM m_tracker_related_item
                     WHERE m_tracker_related_item.type='2'
                         AND m_tracker_related_item.typeid=#{componentid,javaType=INTEGER}
                         AND m_tracker_related_item.refkey=concat('bug-', m_tracker_bug.id))> 0
                 ]]>
-			</foreach>
-		</if>
-		<if test="priorities != null">
-			${priorities.operation} m_tracker_bug.priority IN
-			<foreach close=")" collection="priorities.values" item="priorityitem"
-				open="(" separator=",">
-				#{priorityitem}
             </foreach>
+        </if>
 
-		</if>
-		<if test="statuses != null">
-			${statuses.operation} m_tracker_bug.status IN
-			<foreach close=")" collection="statuses.values" item="statusitem"
-				open="(" separator=",">
-				#{statusitem}
+        <if test="priorities != null" >
+			${priorities.operation} m_tracker_bug.priority IN
+
+            <foreach
+                close=")"
+                collection="priorities.values"
+                item="priorityitem"
+                open="("
+                separator="," >
+				#{priorityitem}
             </foreach>
-		</if>
-		<if test="resolutions != null">
-			${resolutions.operation} m_tracker_bug.resolution IN
-			<foreach close=")" collection="resolutions.values" item="resolutionitem"
-				open="(" separator=",">
-				#{resolutionitem}
+        </if>
+
+        <if test="statuses != null" >
+			${statuses.operation} m_tracker_bug.status IN
+
+            <foreach
+                close=")"
+                collection="statuses.values"
+                item="statusitem"
+                open="("
+                separator="," >
+				#{statusitem}
             </foreach>
-		</if>
-		<if test="severities != null">
-			${severities.operation} m_tracker_bug.severity IN
-			<foreach close=")" collection="severities.values" item="severityitem"
-				open="(" separator=",">
-				#{severityitem}
+        </if>
+
+        <if test="resolutions != null" >
+			${resolutions.operation} m_tracker_bug.resolution IN
+
+            <foreach
+                close=")"
+                collection="resolutions.values"
+                item="resolutionitem"
+                open="("
+                separator="," >
+				#{resolutionitem}
             </foreach>
-		</if>
-	</sql>
-    
-	<sql id="selectBug">
-        <![CDATA[
+        </if>
+
+        <if test="severities != null" >
+			${severities.operation} m_tracker_bug.severity IN
+
+            <foreach
+                close=")"
+                collection="severities.values"
+                item="severityitem"
+                open="("
+                separator="," >
+				#{severityitem}
+            </foreach>
+        </if>
+    </sql>
+
+    <sql id="selectBug" >
+
+<![CDATA[
           SELECT m_tracker_bug.id, m_tracker_bug.summary, m_tracker_bug.detail, m_tracker_bug.assignuser, m_tracker_bug.createdTime, 
                  m_tracker_bug.logby, m_tracker_bug.severity, m_tracker_bug.priority, m_tracker_bug.lastUpdatedTime,
                  m_tracker_bug.status, m_tracker_bug.duedate, m_tracker_bug.environment, m_tracker_bug.resolution,
@@ -205,115 +302,162 @@
                LEFT OUTER JOIN m_tracker_component AS component ON (component.id = relatedItem3.typeid)
                
         ]]>
-	</sql>
+    </sql>
 
-	<select id="getBugById" resultMap="SimpleBugResult" resultType="int">
+    <select
+        id="getBugById"
+        resultMap="SimpleBugResult"
+        resultType="int" >
+
         <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.selectBug" />
-        WHERE m_tracker_bug.id = #{bugid,javaType=INTEGER}
-	</select>
+        WHERE m_tracker_bug.id = #{bugid,javaType=INTEGER}
+    </select>
 
-	<select id="getTotalCount" resultType="int" parameterType="BugSearchCriteria">
-		SELECT count(*) as totalCount FROM m_tracker_bug
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
-		</trim>
-	</select>
+    <select
+        id="getTotalCount"
+        parameterType="BugSearchCriteria"
+        resultType="int" >
+		SELECT count(*) as totalCount FROM m_tracker_bug
 
-	<select id="findPagableListByCriteria" resultMap="SimpleBugResult"
-		parameterType="BugSearchCriteria">
-		<include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.selectBug" />
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+			1=1 
 
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
-		</trim>
+            <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+        </trim>
+    </select>
 
-		ORDER BY m_tracker_bug.lastUpdatedTime DESC
-	</select>
+    <select
+        id="findPagableListByCriteria"
+        parameterType="BugSearchCriteria"
+        resultMap="SimpleBugResult" >
 
-	<select id="getStatusSummary" resultMap="GroupItemResult"
-		parameterType="BugSearchCriteria">
+        <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.selectBug" />
+
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+			1=1 
+
+            <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+        </trim>
+		ORDER BY m_tracker_bug.lastUpdatedTime DESC
+    </select>
+
+    <select
+        id="getStatusSummary"
+        parameterType="BugSearchCriteria"
+        resultMap="GroupItemResult" >
 		SELECT m_tracker_bug.status AS groupid, COUNT(m_tracker_bug.status) AS
 		value, '' as groupname
-		FROM m_tracker_bug
+		FROM m_tracker_bug
 
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
-		</trim>
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+			1=1 
 
-		GROUP BY m_tracker_bug.status
-	</select>
+            <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+        </trim>
+		GROUP BY m_tracker_bug.status
+    </select>
 
-	<select id="getPrioritySummary" resultMap="GroupItemResult"
-		parameterType="BugSearchCriteria">
-        <![CDATA[
+    <select
+        id="getPrioritySummary"
+        parameterType="BugSearchCriteria"
+        resultMap="GroupItemResult" >
+
+<![CDATA[
         SELECT m_tracker_bug.priority AS groupid,
             COUNT(m_tracker_bug.priority) AS value, '' as groupname
         FROM m_tracker_bug
         ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
-		</trim>
 
-		GROUP BY m_tracker_bug.priority
-	</select>
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+			1=1 
 
-	<select id="getResolutionDefectsSummary" resultMap="GroupItemResult"
-		parameterType="BugSearchCriteria">
-        <![CDATA[
+            <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+        </trim>
+		GROUP BY m_tracker_bug.priority
+    </select>
+
+    <select
+        id="getResolutionDefectsSummary"
+        parameterType="BugSearchCriteria"
+        resultMap="GroupItemResult" >
+
+<![CDATA[
         SELECT m_tracker_bug.resolution AS groupid,
             COUNT(m_tracker_bug.resolution) AS value, '' as groupname
         FROM
             m_tracker_bug
         ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
-		</trim>
 
-		GROUP BY m_tracker_bug.resolution
-	</select>
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+			1=1 
 
-	<select id="getAssignedDefectsSummary" resultMap="GroupItemResult"
-		parameterType="BugSearchCriteria">
-        <![CDATA[
+            <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+        </trim>
+		GROUP BY m_tracker_bug.resolution
+    </select>
+
+    <select
+        id="getAssignedDefectsSummary"
+        parameterType="BugSearchCriteria"
+        resultMap="GroupItemResult" >
+
+<![CDATA[
         SELECT m_tracker_bug.assignuser AS groupid,
             COUNT(IFNULL(m_tracker_bug.assignuser,'')) AS value,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as groupname
         FROM m_tracker_bug
             LEFT OUTER JOIN s_user ON (m_tracker_bug.assignuser = s_user.username)
         ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
-		</trim>
 
-		GROUP BY m_tracker_bug.assignuser
-	</select>
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+			1=1 
 
-	<select id="getReporterDefectsSummary" resultMap="GroupItemResult"
-		parameterType="BugSearchCriteria">
-        <![CDATA[
+            <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+        </trim>
+		GROUP BY m_tracker_bug.assignuser
+    </select>
+
+    <select
+        id="getReporterDefectsSummary"
+        parameterType="BugSearchCriteria"
+        resultMap="GroupItemResult" >
+
+<![CDATA[
         SELECT m_tracker_bug.logby AS groupid,
             COUNT(IFNULL(m_tracker_bug.logby,'')) AS value,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as groupname
         FROM m_tracker_bug
             LEFT OUTER JOIN s_user ON (m_tracker_bug.logby = s_user.username)
         ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
-		</trim>
 
-		GROUP BY m_tracker_bug.logby
-	</select>
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+			1=1 
 
-	<select id="getComponentDefectsSummary" resultMap="GroupItemResult"
-		parameterType="BugSearchCriteria">
-        <![CDATA[
+            <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+        </trim>
+		GROUP BY m_tracker_bug.logby
+    </select>
+
+    <select
+        id="getComponentDefectsSummary"
+        parameterType="BugSearchCriteria"
+        resultMap="GroupItemResult" >
+
+<![CDATA[
         SELECT m_tracker_component.id AS groupid,
             COUNT(IFNULL(m_tracker_component.id,'')) AS value,
             m_tracker_component.componentname as groupname
@@ -322,26 +466,32 @@
         RIGHT OUTER JOIN m_tracker_component ON ((m_tracker_related_item.type = 2)
                 AND m_tracker_component.id = m_tracker_related_item.typeid)
         ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			<include
-				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
-		</trim>
 
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+
+            <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+        </trim>
 		GROUP BY m_tracker_component.id
 
-		UNION
-        <![CDATA[
+		UNION
+
+<![CDATA[
         SELECT 0 as groupid, COUNT(m_tracker_bug.id) as value, '' as groupname
             FROM m_tracker_bug
             WHERE (SELECT COUNT(*) FROM m_tracker_related_item WHERE m_tracker_related_item.type=2 AND CONCAT('bug-', m_tracker_bug.id) = m_tracker_related_item.refkey) = 0
         ]]>
-		<include
-			refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
-	</select>
 
-	<select id="getVersionDefectsSummary" resultMap="GroupItemResult"
-		parameterType="BugSearchCriteria">
-        <![CDATA[
+        <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+    </select>
+
+    <select
+        id="getVersionDefectsSummary"
+        parameterType="BugSearchCriteria"
+        resultMap="GroupItemResult" >
+
+<![CDATA[
         SELECT m_tracker_version.id AS groupid,
             COUNT(IFNULL(m_tracker_version.id,'')) AS value,
             m_tracker_version.versionname as groupname
@@ -350,21 +500,25 @@
         RIGHT OUTER JOIN m_tracker_version ON ((m_tracker_related_item.type = 0 || m_tracker_related_item.type =1)
                 AND m_tracker_version.id = m_tracker_related_item.typeid)
         ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
-		</trim>
 
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+			1=1 
+
+            <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+        </trim>
 		GROUP BY m_tracker_version.id
 
-		UNION
-        <![CDATA[       
+		UNION
+
+<![CDATA[       
         SELECT 0 as groupid, COUNT(m_tracker_bug.id) as value, '' as groupname
             FROM m_tracker_bug
             WHERE (SELECT COUNT(*) FROM m_tracker_related_item WHERE (m_tracker_related_item.type=0 OR m_tracker_related_item.type=1) AND CONCAT('bug-', m_tracker_bug.id) = m_tracker_related_item.refkey) = 0
         ]]>
-		<include
-			refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
 
-	</select>
+        <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
+    </select>
+
 </mapper>

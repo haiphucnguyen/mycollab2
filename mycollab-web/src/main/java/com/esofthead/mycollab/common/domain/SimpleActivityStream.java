@@ -1,15 +1,17 @@
 package com.esofthead.mycollab.common.domain;
 
+import java.util.List;
+
 public class SimpleActivityStream extends ActivityStream {
 	private static final long serialVersionUID = 1L;
-	
-	private String createUserFullName;
 
-	public String getCreateUserFullName() {
-		return createUserFullName;
+	private List<SimpleComment> comments;
+
+	public List<SimpleComment> getComments() {
+		return comments;
 	}
 
-	public void setCreateUserFullName(String createUserFullName) {
-		this.createUserFullName = createUserFullName;
+	public void setComments(List<SimpleComment> comments) {
+		this.comments = comments;
 	}
 }

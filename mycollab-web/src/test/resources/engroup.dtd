@@ -1463,6 +1463,7 @@
     action CDATA #IMPLIED
     createdUser CDATA #IMPLIED
     module CDATA #IMPLIED
+    nameField CDATA #IMPLIED
 >
 
 <!ELEMENT s_billing_plan EMPTY>
