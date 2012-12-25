@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
-import org.vaadin.teemu.ratingstars.RatingStars;
-
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -18,92 +16,92 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.teemu.ratingstars.RatingStars;
 
 @ViewComponent
 public class RiskReadViewImpl extends AbstractView implements RiskReadView {
-	private static final long serialVersionUID = 1L;
 
-	private SimpleRisk risk;
+    private static final long serialVersionUID = 1L;
+    private SimpleRisk risk;
+    private PreviewForm previewForm;
 
-	private PreviewForm previewForm;
+    public RiskReadViewImpl() {
+        super();
+        previewForm = new PreviewForm();
+        this.addComponent(previewForm);
+    }
 
-	public RiskReadViewImpl() {
-		super();
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
-	}
+    @Override
+    public void previewItem(SimpleRisk item) {
+        risk = item;
+        previewForm.setItemDataSource(new BeanItem<Risk>(item));
+    }
 
-	@Override
-	public void previewItem(SimpleRisk item) {
-		risk = item;
-		previewForm.setItemDataSource(new BeanItem<Risk>(item));
-	}
+    @Override
+    public SimpleRisk getItem() {
+        return risk;
+    }
 
-	@Override
-	public SimpleRisk getItem() {
-		return risk;
-	}
+    @Override
+    public HasPreviewFormHandlers<Risk> getPreviewFormHandlers() {
+        return previewForm;
+    }
 
-	@Override
-	public HasPreviewFormHandlers<Risk> getPreviewFormHandlers() {
-		return previewForm;
-	}
+    private class PreviewForm extends AdvancedPreviewBeanForm<Risk> {
 
-	private class PreviewForm extends AdvancedPreviewBeanForm<Risk> {
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-				private static final long serialVersionUID = 1L;
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+                private static final long serialVersionUID = 1L;
 
-				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
-					if (propertyId.equals("description")) {
-						return new FormViewField(risk.getDescription(),
-								Label.CONTENT_XHTML);
-					} else if (propertyId.equals("level")) {
-						RatingStars tinyRs = new RatingStars();
-						tinyRs.setValue(risk.getLevel());
-						tinyRs.setReadOnly(true);
-						return tinyRs;
-					} else if (propertyId.equals("status")) {
-						String statusVal = (risk.getStatus()) ? "Open"
-								: "Closed";
-						return new FormViewField(statusVal);
-					} else if (propertyId.equals("datedue")) {
-						return new FormViewField(AppContext.formatDate(risk
-								.getDatedue()));
-					} else if (propertyId.equals("raisedbyuser")) {
-						return new FormViewField(risk.getRaisedByUserFullName());
-					} else if (propertyId.equals("assigntouser")) {
-						return new FormViewField(risk
-								.getAssignedToUserFullName());
-					}
+                @Override
+                protected Field onCreateField(Item item, Object propertyId,
+                        Component uiContext) {
+                    if (propertyId.equals("description")) {
+                        return new FormViewField(risk.getDescription(),
+                                Label.CONTENT_XHTML);
+                    } else if (propertyId.equals("level")) {
+                        RatingStars tinyRs = new RatingStars();
+                        tinyRs.setValue(risk.getLevel());
+                        tinyRs.setReadOnly(true);
+                        return tinyRs;
+                    } else if (propertyId.equals("status")) {
+                        return new FormViewField(risk.getStatus());
+                    } else if (propertyId.equals("datedue")) {
+                        return new FormViewField(AppContext.formatDate(risk
+                                .getDatedue()));
+                    } else if (propertyId.equals("raisedbyuser")) {
+                        return new FormViewField(risk.getRaisedByUserFullName());
+                    } else if (propertyId.equals("assigntouser")) {
+                        return new FormViewField(risk
+                                .getAssignedToUserFullName());
+                    }
 
-					return null;
-				}
-			});
-			super.setItemDataSource(newDataSource);
-		}
+                    return null;
+                }
+            });
+            super.setItemDataSource(newDataSource);
+        }
 
-		class FormLayoutFactory extends RiskFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+        class FormLayoutFactory extends RiskFormLayoutFactory {
 
-			@Override
-			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<Risk>(PreviewForm.this))
-						.createButtonControls();
-			}
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
+            @Override
+            protected Layout createTopPanel() {
+                return (new PreviewFormControlsGenerator<Risk>(PreviewForm.this))
+                        .createButtonControls();
+            }
 
-				return relatedItemsPanel;
-			}
-		}
-	}
+            @Override
+            protected Layout createBottomPanel() {
+                VerticalLayout relatedItemsPanel = new VerticalLayout();
+
+                return relatedItemsPanel;
+            }
+        }
+    }
 }

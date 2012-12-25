@@ -1,22 +1,7 @@
 package com.esofthead.mycollab.module.tracker.service.ibatis;
 
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
-
 import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.core.EngroupException;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -46,302 +31,309 @@ import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.shared.audit.service.AuditLogService;
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.GregorianCalendar;
+import java.util.List;
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
 
 @Service
-public class BugServiceImpl extends
-		DefaultService<Integer, Bug, BugSearchCriteria> implements BugService {
+@Transactional
+@Traceable(module = "Project", nameField = "summary", type = "Bug")
+public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriteria> implements BugService {
 
-	@Autowired
-	protected BugMapper bugMapper;
+    @Autowired
+    protected BugMapper bugMapper;
+    @Autowired
+    protected BugMapperExt bugMapperExt;
+    @Autowired
+    protected ComponentMapperExt componentMapperExt;
+    @Autowired
+    protected HistoryMapper historyMapper;
+    @Autowired
+    protected MetaDataMapper metaDataMapper;
+    @Autowired
+    protected RelatedItemMapper relatedItemMapper;
+    @Autowired
+    protected AuditLogService auditLogService;
+    @Autowired
+    protected AttachmentService attachmentService;
+    @Autowired
+    protected MonitorItemService monitorItemService;
 
-	@Autowired
-	protected BugMapperExt bugMapperExt;
+    @Override
+    public ICrudGenericDAO<Integer, Bug> getCrudMapper() {
+        return bugMapper;
+    }
 
-	@Autowired
-	protected ComponentMapperExt componentMapperExt;
+    @Override
+    public ISearchableDAO<BugSearchCriteria> getSearchMapper() {
+        return bugMapperExt;
+    }
 
-	@Autowired
-	protected HistoryMapper historyMapper;
+    @Override
+    protected int internalRemoveWithSession(Integer primaryKey, String username) {
+        Bug bug = findByPrimaryKey(primaryKey);
 
-	@Autowired
-	protected MetaDataMapper metaDataMapper;
+        RelatedItemExample ex = new RelatedItemExample();
+        ex.createCriteria()
+                .andTypeIn(
+                Arrays.asList(RelatedItemConstants.AFFECTED_VERSION,
+                RelatedItemConstants.COMPONENT,
+                RelatedItemConstants.FIXED_VERSION))
+                .andRefkeyEqualTo("bug-" + primaryKey);
+        relatedItemMapper.deleteByExample(ex);
 
-	@Autowired
-	protected RelatedItemMapper relatedItemMapper;
+        // remove bug's attachments
+        String attachmentid = "defect-" + primaryKey;
+        // attachmentService.removeById(attachmentid);
 
-	@Autowired
-	protected AuditLogService auditLogService;
+        // notify watchers
+        String bugid = "defect-" + primaryKey;
 
-	@Autowired
-	protected AttachmentService attachmentService;
+        monitorItemService.deleteWatchingItems(bugid);
 
-	@Autowired
-	protected MonitorItemService monitorItemService;
+        return super.remove(primaryKey);
+    }
 
-	@Override
-	public ICrudGenericDAO<Integer, Bug> getCrudMapper() {
-		return bugMapper;
-	}
+    @Override
+    public int updateBug(String username, Bug bug, DefectComment comment) {
+        bug.setLastupdatedtime(new GregorianCalendar().getTime());
+        super.updateWithSession(bug, null);
+        return 0;
+    }
 
-	@Override
-	public ISearchableDAO<BugSearchCriteria> getSearchMapper() {
-		return bugMapperExt;
-	}
+    @Override
+    public int updateBugExt(String username, final SimpleBug record,
+            final DefectComment comment) {
 
-	@Override
-	protected int internalRemoveWithSession(Integer primaryKey, String username) {
-		Bug bug = findByPrimaryKey(primaryKey);
+        SimpleBug oldValue = this.findBugById(record.getId());
 
-		RelatedItemExample ex = new RelatedItemExample();
-		ex.createCriteria()
-				.andTypeIn(
-						Arrays.asList(RelatedItemConstants.AFFECTED_VERSION,
-								RelatedItemConstants.COMPONENT,
-								RelatedItemConstants.FIXED_VERSION))
-				.andRefkeyEqualTo("bug-" + primaryKey);
-		relatedItemMapper.deleteByExample(ex);
+        String refid = "bug-" + record.getId();
+        auditLogService.saveAuditLog(username, refid, (Object) oldValue,
+                (Object) record);
 
-		// remove bug's attachments
-		String attachmentid = "defect-" + primaryKey;
-		// attachmentService.removeById(attachmentid);
+        RelatedItemExample ex = new RelatedItemExample();
+        ex.createCriteria()
+                .andTypeidIn(
+                Arrays.asList(RelatedItemConstants.AFFECTED_VERSION,
+                RelatedItemConstants.FIXED_VERSION,
+                RelatedItemConstants.COMPONENT))
+                .andRefkeyEqualTo("bug-" + record.getId());
+        relatedItemMapper.deleteByExample(ex);
 
-		// notify watchers
-		String bugid = "defect-" + primaryKey;
+        saveBugRelatedItems(record);
 
-		monitorItemService.deleteWatchingItems(bugid);
+        record.setLastupdatedtime(new GregorianCalendar().getTime());
 
-		return super.remove(primaryKey);
-	}
+        if (record.getStatus() == "Resolved") {
+            record.setResolveddate(new GregorianCalendar().getTime());
+        }
 
-	@Override
-	public int updateBug(String username, Bug bug, DefectComment comment) {
-		bug.setLastupdatedtime(new GregorianCalendar().getTime());
-		super.updateWithSession(bug, null);
-		return 0;
-	}
+        return super.updateWithSession(record, null);
+    }
 
-	@Override
-	public int updateBugExt(String username, final SimpleBug record,
-			final DefectComment comment) {
+    @Override
+    public List<History> getHistoriesOfBug(int bugid) {
+        HistoryExample ex = new HistoryExample();
+        ex.createCriteria().andRelatedbugEqualTo(bugid);
+        return historyMapper.selectByExample(ex);
+    }
 
-		SimpleBug oldValue = this.findBugById(record.getId());
+    @Override
+    public List<MetaField> getProjectTrackerMetaData(int projectid) {
+        MetaDataExample ex = new MetaDataExample();
+        ex.createCriteria().andProjectidEqualTo(projectid);
+        List<MetaData> metadata = metaDataMapper.selectByExampleWithBLOBs(ex);
+        if (metadata == null || metadata.size() == 0) {
+            return null;
+        } else {
+            try {
+                return constructProjectMetaData(new InputSource(
+                        new StringReader(metadata.get(0).getXmlstring())));
+            } catch (Exception e) {
+                return null;
+            }
+        }
+    }
 
-		String refid = "bug-" + record.getId();
-		auditLogService.saveAuditLog(username, refid, (Object) oldValue,
-				(Object) record);
+    private List<MetaField> constructProjectMetaData(InputSource docSource) {
+        DocumentBuilderFactory builderFactory = DocumentBuilderFactory
+                .newInstance();
+        try {
+            builderFactory.setIgnoringComments(true);
+            builderFactory.setIgnoringElementContentWhitespace(true);
+            DocumentBuilder documentBuilder = builderFactory
+                    .newDocumentBuilder();
+            Document document = documentBuilder.parse(docSource);
 
-		RelatedItemExample ex = new RelatedItemExample();
-		ex.createCriteria()
-				.andTypeidIn(
-						Arrays.asList(RelatedItemConstants.AFFECTED_VERSION,
-								RelatedItemConstants.FIXED_VERSION,
-								RelatedItemConstants.COMPONENT))
-				.andRefkeyEqualTo("bug-" + record.getId());
-		relatedItemMapper.deleteByExample(ex);
+            return getFieldsFromDoc(document);
+        } catch (Exception e) {
+            throw new EngroupException("Error while constructing bug workflow.");
+        }
+    }
 
-		saveBugRelatedItems(record);
+    private List<MetaField> getFieldsFromDoc(Document document) {
+        List<MetaField> fields = new ArrayList<MetaField>();
+        NodeList elements = document.getElementsByTagName("fields");
+        if (elements.getLength() > 0) {
+            NodeList fieldNodes = ((Element) elements.item(0))
+                    .getElementsByTagName("field");
 
-		record.setLastupdatedtime(new GregorianCalendar().getTime());
+            for (int i = 0; i < fieldNodes.getLength(); i++) {
+                Element fieldnode = (Element) fieldNodes.item(i);
 
-		if (record.getStatus() == "Resolved") {
-			record.setResolveddate(new GregorianCalendar().getTime());
-		}
+                NodeList optionNodes = fieldnode.getElementsByTagName("option");
+                if (optionNodes == null || optionNodes.getLength() == 0) {
+                    MetaField field = new MetaField();
+                    field.setLabel(fieldnode.getAttribute("label"));
+                    field.setName(fieldnode.getAttribute("name"));
+                    fields.add(field);
+                } else {
+                    MetaOptionField field = new MetaOptionField();
+                    field.setLabel(fieldnode.getAttribute("label"));
+                    field.setName(fieldnode.getAttribute("name"));
+                    for (int j = 0; j < optionNodes.getLength(); j++) {
+                        Element option = (Element) optionNodes.item(j);
+                        String value = option.getAttribute("value");
+                        String label = option.getTextContent();
+                        field.putOption(label, value);
+                    }
+                    fields.add(field);
+                }
 
-		return super.updateWithSession(record, null);
-	}
+            }
+        }
+        return fields;
+    }
 
-	@Override
-	public List<History> getHistoriesOfBug(int bugid) {
-		HistoryExample ex = new HistoryExample();
-		ex.createCriteria().andRelatedbugEqualTo(bugid);
-		return historyMapper.selectByExample(ex);
-	}
+    private void saveBugRelatedItems(SimpleBug bug) {
+        if (bug.getAffectedVersions() != null) {
+            for (Version version : bug.getAffectedVersions()) {
+                RelatedItem relatedItem = new RelatedItem();
+                relatedItem.setTypeid(version.getId());
+                relatedItem.setType(RelatedItemConstants.AFFECTED_VERSION);
+                relatedItem.setRefkey("bug-" + bug.getId());
+                relatedItemMapper.insert(relatedItem);
+            }
+        }
 
-	@Override
-	public List<MetaField> getProjectTrackerMetaData(int projectid) {
-		MetaDataExample ex = new MetaDataExample();
-		ex.createCriteria().andProjectidEqualTo(projectid);
-		List<MetaData> metadata = metaDataMapper.selectByExampleWithBLOBs(ex);
-		if (metadata == null || metadata.size() == 0) {
-			return null;
-		} else {
-			try {
-				return constructProjectMetaData(new InputSource(
-						new StringReader(metadata.get(0).getXmlstring())));
-			} catch (Exception e) {
-				return null;
-			}
-		}
-	}
+        if (bug.getFixedVersions() != null) {
+            for (Version version : bug.getFixedVersions()) {
+                RelatedItem relatedItem = new RelatedItem();
+                relatedItem.setTypeid(version.getId());
+                relatedItem.setType(RelatedItemConstants.FIXED_VERSION);
+                relatedItem.setRefkey("bug-" + bug.getId());
+                relatedItemMapper.insert(relatedItem);
+            }
+        }
 
-	private List<MetaField> constructProjectMetaData(InputSource docSource) {
-		DocumentBuilderFactory builderFactory = DocumentBuilderFactory
-				.newInstance();
-		try {
-			builderFactory.setIgnoringComments(true);
-			builderFactory.setIgnoringElementContentWhitespace(true);
-			DocumentBuilder documentBuilder = builderFactory
-					.newDocumentBuilder();
-			Document document = documentBuilder.parse(docSource);
+        if (bug.getComponents() != null) {
+            for (Component component : bug.getComponents()) {
+                RelatedItem relatedItem = new RelatedItem();
+                relatedItem.setTypeid(component.getId());
+                relatedItem.setType(RelatedItemConstants.COMPONENT);
+                relatedItem.setRefkey("bug-" + bug.getId());
+                relatedItemMapper.insert(relatedItem);
+            }
+        }
 
-			return getFieldsFromDoc(document);
-		} catch (Exception e) {
-			throw new EngroupException("Error while constructing bug workflow.");
-		}
-	}
+    }
 
-	private List<MetaField> getFieldsFromDoc(Document document) {
-		List<MetaField> fields = new ArrayList<MetaField>();
-		NodeList elements = document.getElementsByTagName("fields");
-		if (elements.getLength() > 0) {
-			NodeList fieldNodes = ((Element) elements.item(0))
-					.getElementsByTagName("field");
+    @Override
+    public int saveBugExt(SimpleBug bug, String username) {
+        bug.setCreatedtime(new GregorianCalendar().getTime());
 
-			for (int i = 0; i < fieldNodes.getLength(); i++) {
-				Element fieldnode = (Element) fieldNodes.item(i);
+        // Force these fields are null to prevent client application eventually
+        // add them
+        bug.setLastupdatedtime(new GregorianCalendar().getTime());
+        bug.setResolveddate(null);
 
-				NodeList optionNodes = fieldnode.getElementsByTagName("option");
-				if (optionNodes == null || optionNodes.getLength() == 0) {
-					MetaField field = new MetaField();
-					field.setLabel(fieldnode.getAttribute("label"));
-					field.setName(fieldnode.getAttribute("name"));
-					fields.add(field);
-				} else {
-					MetaOptionField field = new MetaOptionField();
-					field.setLabel(fieldnode.getAttribute("label"));
-					field.setName(fieldnode.getAttribute("name"));
-					for (int j = 0; j < optionNodes.getLength(); j++) {
-						Element option = (Element) optionNodes.item(j);
-						String value = option.getAttribute("value");
-						String label = option.getTextContent();
-						field.putOption(label, value);
-					}
-					fields.add(field);
-				}
+        int bugid = super.saveWithSession(bug, username);
+        saveBugRelatedItems(bug);
 
-			}
-		}
-		return fields;
-	}
-
-	private void saveBugRelatedItems(SimpleBug bug) {
-		if (bug.getAffectedVersions() != null) {
-			for (Version version : bug.getAffectedVersions()) {
-				RelatedItem relatedItem = new RelatedItem();
-				relatedItem.setTypeid(version.getId());
-				relatedItem.setType(RelatedItemConstants.AFFECTED_VERSION);
-				relatedItem.setRefkey("bug-" + bug.getId());
-				relatedItemMapper.insert(relatedItem);
-			}
-		}
-
-		if (bug.getFixedVersions() != null) {
-			for (Version version : bug.getFixedVersions()) {
-				RelatedItem relatedItem = new RelatedItem();
-				relatedItem.setTypeid(version.getId());
-				relatedItem.setType(RelatedItemConstants.FIXED_VERSION);
-				relatedItem.setRefkey("bug-" + bug.getId());
-				relatedItemMapper.insert(relatedItem);
-			}
-		}
-
-		if (bug.getComponents() != null) {
-			for (Component component : bug.getComponents()) {
-				RelatedItem relatedItem = new RelatedItem();
-				relatedItem.setTypeid(component.getId());
-				relatedItem.setType(RelatedItemConstants.COMPONENT);
-				relatedItem.setRefkey("bug-" + bug.getId());
-				relatedItemMapper.insert(relatedItem);
-			}
-		}
-
-	}
-
-	@Override
-	public int saveBugExt(SimpleBug bug, String username) {
-		bug.setCreatedtime(new GregorianCalendar().getTime());
-
-		// Force these fields are null to prevent client application eventually
-		// add them
-		bug.setLastupdatedtime(new GregorianCalendar().getTime());
-		bug.setResolveddate(null);
-
-		int bugid = super.saveWithSession(bug, username);
-		saveBugRelatedItems(bug);
-
-		// Send mail to all relate ones
-		// TODO: switch to schedule send email with Quartz
+        // Send mail to all relate ones
+        // TODO: switch to schedule send email with Quartz
 		/*
-		 * new Thread(new Runnable() {
-		 * 
-		 * @Override public void run() { try { User user =
-		 * securityDelegate.findUserByUsername(bug .getAssignuser()); Email
-		 * email = new Email(); email.setFrom("noreply@esofthead.com");
-		 * email.setTo(new InternetAddress[] { new InternetAddress(
-		 * user.getEmail()) });
-		 * email.setSubject(String.format("[Bug %d] New %s", bugid,
-		 * bug.getSummary()));
-		 * 
-		 * Map parameters = new HashMap(); parameters.put("bugweblink",
-		 * "<TODO: insert bug web link here>"); parameters.put("summary",
-		 * bug.getSummary()); parameters.put("project", bug.getProjectname());
-		 * parameters.put("severity", bug.getSeverity());
-		 * parameters.put("priority", convertPriority(bug.getPriority()));
-		 * parameters.put("components", bug.getComponents());
-		 * parameters.put("versions", bug.getAffectedVersions());
-		 * parameters.put("assignedTo", bug.getAssignuser());
-		 * parameters.put("reportedBy", bug.getLogby());
-		 * parameters.put("description", bug.getDetail());
-		 * parameters.put("reason", "You are the assignee for the bug.");
-		 * 
-		 * mailSender.sendEmailWithTemplate(email,
-		 * "defect/create_new_defect.template", parameters); } catch (Exception
-		 * e) { log.error("Error while sending email", e); }
-		 * 
-		 * } }).start();
-		 */
-		return bugid;
-	}
+         * new Thread(new Runnable() {
+         * 
+         * @Override public void run() { try { User user =
+         * securityDelegate.findUserByUsername(bug .getAssignuser()); Email
+         * email = new Email(); email.setFrom("noreply@esofthead.com");
+         * email.setTo(new InternetAddress[] { new InternetAddress(
+         * user.getEmail()) });
+         * email.setSubject(String.format("[Bug %d] New %s", bugid,
+         * bug.getSummary()));
+         * 
+         * Map parameters = new HashMap(); parameters.put("bugweblink",
+         * "<TODO: insert bug web link here>"); parameters.put("summary",
+         * bug.getSummary()); parameters.put("project", bug.getProjectname());
+         * parameters.put("severity", bug.getSeverity());
+         * parameters.put("priority", convertPriority(bug.getPriority()));
+         * parameters.put("components", bug.getComponents());
+         * parameters.put("versions", bug.getAffectedVersions());
+         * parameters.put("assignedTo", bug.getAssignuser());
+         * parameters.put("reportedBy", bug.getLogby());
+         * parameters.put("description", bug.getDetail());
+         * parameters.put("reason", "You are the assignee for the bug.");
+         * 
+         * mailSender.sendEmailWithTemplate(email,
+         * "defect/create_new_defect.template", parameters); } catch (Exception
+         * e) { log.error("Error while sending email", e); }
+         * 
+         * } }).start();
+         */
+        return bugid;
+    }
 
-	@Override
-	public List<GroupItem> getStatusSummary(BugSearchCriteria criteria) {
-		return bugMapperExt.getStatusSummary(criteria);
-	}
+    @Override
+    public List<GroupItem> getStatusSummary(BugSearchCriteria criteria) {
+        return bugMapperExt.getStatusSummary(criteria);
+    }
 
-	@Override
-	public List<GroupItem> getPrioritySummary(BugSearchCriteria criteria) {
-		return bugMapperExt.getPrioritySummary(criteria);
-	}
+    @Override
+    public List<GroupItem> getPrioritySummary(BugSearchCriteria criteria) {
+        return bugMapperExt.getPrioritySummary(criteria);
+    }
 
-	@Override
-	public List<GroupItem> getAssignedDefectsSummary(BugSearchCriteria criteria) {
-		return bugMapperExt.getAssignedDefectsSummary(criteria);
-	}
+    @Override
+    public List<GroupItem> getAssignedDefectsSummary(BugSearchCriteria criteria) {
+        return bugMapperExt.getAssignedDefectsSummary(criteria);
+    }
 
-	@Override
-	public List<GroupItem> getReporterDefectsSummary(BugSearchCriteria criteria) {
-		return bugMapperExt.getReporterDefectsSummary(criteria);
-	}
+    @Override
+    public List<GroupItem> getReporterDefectsSummary(BugSearchCriteria criteria) {
+        return bugMapperExt.getReporterDefectsSummary(criteria);
+    }
 
-	@Override
-	public List<GroupItem> getResolutionDefectsSummary(
-			BugSearchCriteria criteria) {
-		return bugMapperExt.getResolutionDefectsSummary(criteria);
-	}
+    @Override
+    public List<GroupItem> getResolutionDefectsSummary(
+            BugSearchCriteria criteria) {
+        return bugMapperExt.getResolutionDefectsSummary(criteria);
+    }
 
-	@Override
-	public List<GroupItem> getComponentDefectsSummary(BugSearchCriteria criteria) {
-		return bugMapperExt.getComponentDefectsSummary(criteria);
-	}
+    @Override
+    public List<GroupItem> getComponentDefectsSummary(BugSearchCriteria criteria) {
+        return bugMapperExt.getComponentDefectsSummary(criteria);
+    }
 
-	@Override
-	public List<GroupItem> getVersionDefectsSummary(BugSearchCriteria criteria) {
-		return bugMapperExt.getVersionDefectsSummary(criteria);
-	}
+    @Override
+    public List<GroupItem> getVersionDefectsSummary(BugSearchCriteria criteria) {
+        return bugMapperExt.getVersionDefectsSummary(criteria);
+    }
 
-	@Override
-	public SimpleBug findBugById(int bugId) {
-		SimpleBug bug = bugMapperExt.getBugById(bugId);
-		return bug;
-	}
+    @Override
+    public SimpleBug findBugById(int bugId) {
+        SimpleBug bug = bugMapperExt.getBugById(bugId);
+        return bug;
+    }
 }

@@ -1,9 +1,21 @@
 package com.esofthead.mycollab.module.crm.view;
 
-public class CrmHomePresenter extends CrmGenericPresenter<CrmHomeView> {
-	private static final long serialVersionUID = 1L;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.vaadin.ui.ComponentContainer;
 
-	public CrmHomePresenter() {
-		super(CrmHomeView.class);
-	}
+public class CrmHomePresenter extends CrmGenericPresenter<CrmHomeView> {
+
+    private static final long serialVersionUID = 1L;
+
+    public CrmHomePresenter() {
+        super(CrmHomeView.class);
+    }
+
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        super.onGo(container, data);
+        
+        view.displayDashboard();
+    }
+    
 }

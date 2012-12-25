@@ -5,10 +5,8 @@ import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriter
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.View;
 
-public interface ProjectMessageListView extends View {
+public interface MessageListView extends View {
 	void setCriteria(MessageSearchCriteria criteria);
-	
-	void displayMessages();
 	
 	HasEditFormHandlers<Message> getEditFormHandlers();
 }

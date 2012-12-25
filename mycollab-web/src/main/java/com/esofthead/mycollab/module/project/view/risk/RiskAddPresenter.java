@@ -16,63 +16,64 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
-	private static final long serialVersionUID = 1L;
 
-	public RiskAddPresenter() {
-		super(RiskAddView.class);
-		bind();
-	}
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		RiskContainer riskContainer = (RiskContainer) container;
-		riskContainer.removeAllComponents();
-		riskContainer.addComponent(view.getWidget());
-		view.editItem((Risk) data.getParams());
-	}
+    public RiskAddPresenter() {
+        super(RiskAddView.class);
+        bind();
+    }
 
-	private void bind() {
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Risk>() {
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        RiskContainer riskContainer = (RiskContainer) container;
+        riskContainer.removeAllComponents();
+        riskContainer.addComponent(view.getWidget());
+        view.editItem((Risk) data.getParams());
+    }
 
-			@Override
-			public void onSave(final Risk risk) {
-				saveRisk(risk);
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new RiskEvent.GotoList(this, null));
-				}
-			}
+    private void bind() {
+        view.getEditFormHandlers().addFormHandler(new EditFormHandler<Risk>() {
+            @Override
+            public void onSave(final Risk risk) {
+                saveRisk(risk);
+                ViewState viewState = HistoryViewManager.back();
+                if (viewState instanceof NullViewState) {
+                    EventBus.getInstance().fireEvent(
+                            new RiskEvent.GotoList(this, null));
+                }
+            }
 
-			@Override
-			public void onCancel() {
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new RiskEvent.GotoList(this, null));
-				}
-			}
+            @Override
+            public void onCancel() {
+                ViewState viewState = HistoryViewManager.back();
+                if (viewState instanceof NullViewState) {
+                    EventBus.getInstance().fireEvent(
+                            new RiskEvent.GotoList(this, null));
+                }
+            }
 
-			@Override
-			public void onSaveAndNew(final Risk risk) {
-				saveRisk(risk);
-				EventBus.getInstance().fireEvent(
-						new RiskEvent.GotoAdd(this, null));
-			}
-		});
-	}
+            @Override
+            public void onSaveAndNew(final Risk risk) {
+                saveRisk(risk);
+                EventBus.getInstance().fireEvent(
+                        new RiskEvent.GotoAdd(this, null));
+            }
+        });
+    }
 
-	public void saveRisk(Risk risk) {
-		RiskService riskService = AppContext.getSpringBean(RiskService.class);
-		SimpleProject project = (SimpleProject) AppContext
-				.getVariable(ProjectContants.PROJECT_NAME);
-		risk.setProjectid(project.getId());
-		if (risk.getId() == null) {
-			riskService.saveWithSession(risk, AppContext.getUsername());
-		} else {
-			riskService.updateWithSession(risk, AppContext.getUsername());
-		}
+    public void saveRisk(Risk risk) {
+        RiskService riskService = AppContext.getSpringBean(RiskService.class);
+        SimpleProject project = (SimpleProject) AppContext
+                .getVariable(ProjectContants.PROJECT_NAME);
+        risk.setProjectid(project.getId());
+        risk.setSaccountid(AppContext.getAccountId());
+        
+        if (risk.getId() == null) {
+            riskService.saveWithSession(risk, AppContext.getUsername());
+        } else {
+            riskService.updateWithSession(risk, AppContext.getUsername());
+        }
 
-	}
-
+    }
 }

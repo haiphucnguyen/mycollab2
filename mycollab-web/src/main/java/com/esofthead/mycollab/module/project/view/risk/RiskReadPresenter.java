@@ -13,64 +13,63 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
-	private static final long serialVersionUID = 1L;
 
-	public RiskReadPresenter() {
-		super(RiskReadView.class);
-		bind();
-	}
+    private static final long serialVersionUID = 1L;
 
-	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
-				new PreviewFormHandlers<Risk>() {
+    public RiskReadPresenter() {
+        super(RiskReadView.class);
+        bind();
+    }
 
-					@Override
-					public void onEdit(Risk data) {
-						EventBus.getInstance().fireEvent(
-								new RiskEvent.GotoEdit(this, data));
-					}
+    private void bind() {
+        view.getPreviewFormHandlers().addFormHandler(
+                new PreviewFormHandlers<Risk>() {
+                    @Override
+                    public void onEdit(Risk data) {
+                        EventBus.getInstance().fireEvent(
+                                new RiskEvent.GotoEdit(this, data));
+                    }
 
-					@Override
-					public void onDelete(Risk data) {
-						RiskService riskService = AppContext
-								.getSpringBean(RiskService.class);
-						riskService.removeWithSession(data.getId(),
-								AppContext.getUsername());
-						EventBus.getInstance().fireEvent(
-								new RiskEvent.GotoList(this, null));
-					}
+                    @Override
+                    public void onDelete(Risk data) {
+                        RiskService riskService = AppContext
+                                .getSpringBean(RiskService.class);
+                        riskService.removeWithSession(data.getId(),
+                                AppContext.getUsername());
+                        EventBus.getInstance().fireEvent(
+                                new RiskEvent.GotoList(this, null));
+                    }
 
-					@Override
-					public void onClone(Risk data) {
-						Risk cloneData = (Risk) data.copy();
-						cloneData.setId(null);
-						EventBus.getInstance().fireEvent(
-								new RiskEvent.GotoEdit(this, cloneData));
-					}
+                    @Override
+                    public void onClone(Risk data) {
+                        Risk cloneData = (Risk) data.copy();
+                        cloneData.setId(null);
+                        EventBus.getInstance().fireEvent(
+                                new RiskEvent.GotoEdit(this, cloneData));
+                    }
 
-					@Override
-					public void onCancel() {
-						EventBus.getInstance().fireEvent(
-								new RiskEvent.GotoList(this, null));
-					}
-				});
-	}
+                    @Override
+                    public void onCancel() {
+                        EventBus.getInstance().fireEvent(
+                                new RiskEvent.GotoList(this, null));
+                    }
+                });
+    }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		RiskContainer riskContainer = (RiskContainer) container;
-		riskContainer.removeAllComponents();
-		riskContainer.addComponent(view.getWidget());
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        RiskContainer riskContainer = (RiskContainer) container;
+        riskContainer.removeAllComponents();
+        riskContainer.addComponent(view.getWidget());
 
-		if (data.getParams() instanceof Integer) {
-			RiskService riskService = AppContext
-					.getSpringBean(RiskService.class);
-			SimpleRisk risk = riskService.findRiskById((Integer) data
-					.getParams());
-			view.previewItem(risk);
-		} else {
-			throw new EngroupException("Unhanddle this case yet");
-		}
-	}
-
+        if (data.getParams() instanceof Integer) {
+            RiskService riskService = AppContext
+                    .getSpringBean(RiskService.class);
+            SimpleRisk risk = riskService.findRiskById((Integer) data
+                    .getParams());
+            view.previewItem(risk);
+        } else {
+            throw new EngroupException("Unhanddle this case yet");
+        }
+    }
 }

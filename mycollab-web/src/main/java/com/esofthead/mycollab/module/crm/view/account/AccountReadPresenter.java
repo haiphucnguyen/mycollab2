@@ -19,97 +19,94 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
-	private static final long serialVersionUID = 1L;
 
-	public AccountReadPresenter() {
-		super(AccountReadView.class);
-		bind();
-	}
+    private static final long serialVersionUID = 1L;
 
-	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
-				new PreviewFormHandlers<Account>() {
+    public AccountReadPresenter() {
+        super(AccountReadView.class);
+        bind();
+    }
 
-					@Override
-					public void onEdit(Account data) {
-						EventBus.getInstance().fireEvent(
-								new AccountEvent.GotoEdit(this, data));
-					}
+    private void bind() {
+        view.getPreviewFormHandlers().addFormHandler(
+                new PreviewFormHandlers<Account>() {
+                    @Override
+                    public void onEdit(Account data) {
+                        EventBus.getInstance().fireEvent(
+                                new AccountEvent.GotoEdit(this, data));
+                    }
 
-					@Override
-					public void onDelete(Account data) {
-						AccountService accountService = AppContext
-								.getSpringBean(AccountService.class);
-						accountService.removeWithSession(data.getId(),
-								AppContext.getUsername());
-						EventBus.getInstance().fireEvent(
-								new AccountEvent.GotoList(this, null));
-					}
+                    @Override
+                    public void onDelete(Account data) {
+                        AccountService accountService = AppContext
+                                .getSpringBean(AccountService.class);
+                        accountService.removeWithSession(data.getId(),
+                                AppContext.getUsername());
+                        EventBus.getInstance().fireEvent(
+                                new AccountEvent.GotoList(this, null));
+                    }
 
-					@Override
-					public void onClone(Account data) {
-						Account cloneData = (Account) data.copy();
-						cloneData.setId(null);
-						EventBus.getInstance().fireEvent(
-								new AccountEvent.GotoEdit(this, cloneData));
-					}
+                    @Override
+                    public void onClone(Account data) {
+                        Account cloneData = (Account) data.copy();
+                        cloneData.setId(null);
+                        EventBus.getInstance().fireEvent(
+                                new AccountEvent.GotoEdit(this, cloneData));
+                    }
 
-					@Override
-					public void onCancel() {
-						EventBus.getInstance().fireEvent(
-								new AccountEvent.GotoList(this, null));
-					}
-				});
+                    @Override
+                    public void onCancel() {
+                        EventBus.getInstance().fireEvent(
+                                new AccountEvent.GotoList(this, null));
+                    }
+                });
 
-		view.getRelatedContactHandlers().addRelatedListHandler(
-				new RelatedListHandler() {
+        view.getRelatedContactHandlers().addRelatedListHandler(
+                new RelatedListHandler() {
+                    @Override
+                    public void createNewRelatedItem() {
+                        Contact contact = new Contact();
+                        contact.setAccountid(view.getItem().getId());
+                        EventBus.getInstance().fireEvent(
+                                new ContactEvent.GotoEdit(this, contact));
+                    }
+                });
 
-					@Override
-					public void createNewRelatedItem() {
-						Contact contact = new Contact();
-						contact.setAccountid(view.getItem().getId());
-						EventBus.getInstance().fireEvent(
-								new ContactEvent.GotoEdit(this, contact));
-					}
-				});
+        view.getRelatedOpportunityHandlers().addRelatedListHandler(
+                new RelatedListHandler() {
+                    @Override
+                    public void createNewRelatedItem() {
+                        Opportunity opportunity = new Opportunity();
+                        opportunity.setAccountid(view.getItem().getId());
+                        EventBus.getInstance()
+                                .fireEvent(
+                                new OpportunityEvent.GotoEdit(this,
+                                opportunity));
+                    }
+                });
 
-		view.getRelatedOpportunityHandlers().addRelatedListHandler(
-				new RelatedListHandler() {
+        view.getRelatedLeadHandlers().addRelatedListHandler(
+                new RelatedListHandler() {
+                    @Override
+                    public void createNewRelatedItem() {
+                        Lead lead = new Lead();
+                        lead.setAccountname(view.getItem().getAccountname());
+                        EventBus.getInstance().fireEvent(
+                                new LeadEvent.GotoEdit(this, lead));
+                    }
+                });
+    }
 
-					@Override
-					public void createNewRelatedItem() {
-						Opportunity opportunity = new Opportunity();
-						opportunity.setAccountid(view.getItem().getId());
-						EventBus.getInstance()
-								.fireEvent(
-										new OpportunityEvent.GotoEdit(this,
-												opportunity));
-					}
-				});
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        super.onGo(container, data);
 
-		view.getRelatedLeadHandlers().addRelatedListHandler(
-				new RelatedListHandler() {
-
-					@Override
-					public void createNewRelatedItem() {
-						Lead lead = new Lead();
-						lead.setAccountname(view.getItem().getAccountname());
-						EventBus.getInstance().fireEvent(
-								new LeadEvent.GotoEdit(this, lead));
-					}
-				});
-	}
-
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		super.onGo(container, data);
-
-		if (data.getParams() instanceof Integer) {
-			AccountService accountService = AppContext
-					.getSpringBean(AccountService.class);
-			SimpleAccount account = accountService
-					.findAccountById((Integer) data.getParams());
-			view.previewItem((SimpleAccount) account);
-		}
-	}
+        if (data.getParams() instanceof Integer) {
+            AccountService accountService = AppContext
+                    .getSpringBean(AccountService.class);
+            SimpleAccount account = accountService
+                    .findAccountById((Integer) data.getParams());
+            view.previewItem((SimpleAccount) account);
+        }
+    }
 }

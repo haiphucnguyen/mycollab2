@@ -1,9 +1,5 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.RiskService;
@@ -18,170 +14,166 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class RiskListPresenter extends AbstractPresenter<RiskListView> implements
-		ListPresenter<RiskSearchCriteria> {
-	private static final long serialVersionUID = 1L;
-	
-	private RiskService riskService;
+        ListPresenter<RiskSearchCriteria> {
 
-	private RiskSearchCriteria searchCriteria;
+    private static final long serialVersionUID = 1L;
+    private RiskService riskService;
+    private RiskSearchCriteria searchCriteria;
+    private boolean isSelectAll = false;
 
-	private boolean isSelectAll = false;
+    public RiskListPresenter() {
+        super(RiskListView.class);
 
-	public RiskListPresenter() {
-		super(RiskListView.class);
-		
-		riskService = AppContext.getSpringBean(RiskService.class);
+        riskService = AppContext.getSpringBean(RiskService.class);
 
-		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
-			private static final long serialVersionUID = 1L;
+        view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public void move(int newPageNumber) {
-				pageChange();
-			}
+            @Override
+            public void move(int newPageNumber) {
+                pageChange();
+            }
 
-			@Override
-			public void displayItemChange(int numOfItems) {
-				pageChange();
-			}
+            @Override
+            public void displayItemChange(int numOfItems) {
+                pageChange();
+            }
 
-			private void pageChange() {
-				if (isSelectAll) {
-					selectAllItemsInCurrentPage();
-				}
+            private void pageChange() {
+                if (isSelectAll) {
+                    selectAllItemsInCurrentPage();
+                }
 
-				checkWhetherEnableTableActionControl();
-			}
-		});
+                checkWhetherEnableTableActionControl();
+            }
+        });
 
-		view.getSearchHandlers().addSearchHandler(
-				new SearchHandler<RiskSearchCriteria>() {
+        view.getSearchHandlers().addSearchHandler(
+                new SearchHandler<RiskSearchCriteria>() {
+                    @Override
+                    public void onSearch(RiskSearchCriteria criteria) {
+                        doSearch(criteria);
+                    }
+                });
 
-					@Override
-					public void onSearch(RiskSearchCriteria criteria) {
-						doSearch(criteria);
-					}
-				});
+        view.getOptionSelectionHandlers().addSelectionOptionHandler(
+                new SelectionOptionHandler() {
+                    @Override
+                    public void onSelectCurrentPage() {
+                        isSelectAll = false;
+                        selectAllItemsInCurrentPage();
 
-		view.getOptionSelectionHandlers().addSelectionOptionHandler(
-				new SelectionOptionHandler() {
+                        checkWhetherEnableTableActionControl();
+                    }
 
-					@Override
-					public void onSelectCurrentPage() {
-						isSelectAll = false;
-						selectAllItemsInCurrentPage();
+                    @Override
+                    public void onDeSelect() {
+                        Collection<SimpleRisk> currentDataList = view
+                                .getPagedBeanTable().getCurrentDataList();
+                        isSelectAll = false;
+                        for (SimpleRisk item : currentDataList) {
+                            item.setSelected(false);
+                            CheckBox checkBox = (CheckBox) item.getExtraData();
+                            checkBox.setValue(false);
+                        }
 
-						checkWhetherEnableTableActionControl();
-					}
+                        checkWhetherEnableTableActionControl();
 
-					@Override
-					public void onDeSelect() {
-						Collection<SimpleRisk> currentDataList = view
-								.getPagedBeanTable().getCurrentDataList();
-						isSelectAll = false;
-						for (SimpleRisk item : currentDataList) {
-							item.setSelected(false);
-							CheckBox checkBox = (CheckBox) item.getExtraData();
-							checkBox.setValue(false);
-						}
+                    }
 
-						checkWhetherEnableTableActionControl();
+                    @Override
+                    public void onSelectAll() {
+                        isSelectAll = true;
+                        selectAllItemsInCurrentPage();
+                    }
+                });
 
-					}
+        view.getPopupActionHandlers().addPopupActionHandler(
+                new PopupActionHandler() {
+                    @Override
+                    public void onSelect(String id, String caption) {
+                        if ("delete".equals(id)) {
+                            deleteSelectedItems();
+                        }
+                    }
+                });
 
-					@Override
-					public void onSelectAll() {
-						isSelectAll = true;
-						selectAllItemsInCurrentPage();
-					}
-				});
+        view.getSelectableItemHandlers().addSelectableItemHandler(
+                new SelectableItemHandler<SimpleRisk>() {
+                    @Override
+                    public void onSelect(SimpleRisk item) {
+                        isSelectAll = false;
+                        item.setSelected(!item.isSelected());
 
-		view.getPopupActionHandlers().addPopupActionHandler(
-				new PopupActionHandler() {
+                        checkWhetherEnableTableActionControl();
+                    }
+                });
+    }
 
-					@Override
-					public void onSelect(String id, String caption) {
-						if ("delete".equals(id)) {
-							deleteSelectedItems();
-						}
-					}
-				});
+    private void selectAllItemsInCurrentPage() {
+        Collection<SimpleRisk> currentDataList = view.getPagedBeanTable()
+                .getCurrentDataList();
+        for (SimpleRisk item : currentDataList) {
+            item.setSelected(true);
+            CheckBox checkBox = (CheckBox) item.getExtraData();
+            checkBox.setValue(true);
+        }
+    }
 
-		view.getSelectableItemHandlers().addSelectableItemHandler(
-				new SelectableItemHandler<SimpleRisk>() {
+    private void checkWhetherEnableTableActionControl() {
+        Collection<SimpleRisk> currentDataList = view.getPagedBeanTable()
+                .getCurrentDataList();
+        int countItems = 0;
+        for (SimpleRisk item : currentDataList) {
+            if (item.isSelected()) {
+                countItems++;
+            }
+        }
+        if (countItems > 0) {
+            view.enableActionControls(countItems);
+        } else {
+            view.disableActionControls();
+        }
+    }
 
-					@Override
-					public void onSelect(SimpleRisk item) {
-						isSelectAll = false;
-						item.setSelected(!item.isSelected());
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        RiskContainer riskContainer = (RiskContainer) container;
+        riskContainer.removeAllComponents();
+        riskContainer.addComponent(view.getWidget());
+        doSearch((RiskSearchCriteria) data.getParams());
+    }
 
-						checkWhetherEnableTableActionControl();
-					}
-				});
-	}
-	
-	private void selectAllItemsInCurrentPage() {
-		Collection<SimpleRisk> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		for (SimpleRisk item : currentDataList) {
-			item.setSelected(true);
-			CheckBox checkBox = (CheckBox) item.getExtraData();
-			checkBox.setValue(true);
-		}
-	}
+    @Override
+    public void doSearch(RiskSearchCriteria searchCriteria) {
+        this.searchCriteria = searchCriteria;
+        view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+        checkWhetherEnableTableActionControl();
+    }
 
-	private void checkWhetherEnableTableActionControl() {
-		Collection<SimpleRisk> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		int countItems = 0;
-		for (SimpleRisk item : currentDataList) {
-			if (item.isSelected()) {
-				countItems++;
-			}
-		}
-		if (countItems > 0) {
-			view.enableActionControls(countItems);
-		} else {
-			view.disableActionControls();
-		}
-	}
+    private void deleteSelectedItems() {
+        if (!isSelectAll) {
+            Collection<SimpleRisk> currentDataList = view
+                    .getPagedBeanTable().getCurrentDataList();
+            List<Integer> keyList = new ArrayList<Integer>();
+            for (SimpleRisk item : currentDataList) {
+                keyList.add(item.getId());
+            }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		RiskContainer riskContainer = (RiskContainer) container;
-		riskContainer.removeAllComponents();
-		riskContainer.addComponent(view.getWidget());
-		doSearch((RiskSearchCriteria) data.getParams());
-	}
+            if (keyList.size() > 0) {
+                riskService.removeWithSession(keyList,
+                        AppContext.getUsername());
+                doSearch(searchCriteria);
+            }
+        } else {
+            riskService.removeByCriteria(searchCriteria);
+            doSearch(searchCriteria);
+        }
 
-	@Override
-	public void doSearch(RiskSearchCriteria searchCriteria) {
-		this.searchCriteria = searchCriteria;
-		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
-		checkWhetherEnableTableActionControl();
-	}
-	
-	private void deleteSelectedItems() {
-		if (!isSelectAll) {
-			Collection<SimpleRisk> currentDataList = view
-					.getPagedBeanTable().getCurrentDataList();
-			List<Integer> keyList = new ArrayList<Integer>();
-			for (SimpleRisk item : currentDataList) {
-				keyList.add(item.getId());
-			}
-
-			if (keyList.size() > 0) {
-				riskService.removeWithSession(keyList,
-						AppContext.getUsername());
-				doSearch(searchCriteria);
-			}
-		} else {
-			riskService.removeByCriteria(searchCriteria);
-			doSearch(searchCriteria);
-		}
-
-	}
-
+    }
 }

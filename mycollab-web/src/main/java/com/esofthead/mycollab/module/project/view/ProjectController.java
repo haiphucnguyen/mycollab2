@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent.SaveProjectSucess;
@@ -26,264 +27,271 @@ import com.esofthead.mycollab.web.AppContext;
 
 public class ProjectController {
 
-	private ProjectMainContainer container;
+    private ProjectMainContainer container;
 
-	public ProjectController(ProjectMainContainer container) {
-		this.container = container;
-		bindProjectEvents();
-		bindRiskEvents();
-		bindProblemEvents();
-		bindBugEvents();
-	}
+    public ProjectController(ProjectMainContainer container) {
+        this.container = container;
+        bindProjectEvents();
+        bindRiskEvents();
+        bindProblemEvents();
+        bindBugEvents();
+        bindMessageEvents();
+    }
 
-	@SuppressWarnings("serial")
-	private void bindProjectEvents() {
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ProjectEvent.SaveProjectSucess>() {
+    @SuppressWarnings("serial")
+    private void bindProjectEvents() {
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<ProjectEvent.SaveProjectSucess>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return ProjectEvent.SaveProjectSucess.class;
+                    }
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return ProjectEvent.SaveProjectSucess.class;
-					}
+                    @Override
+                    public void handle(SaveProjectSucess event) {
+                        // TODO Auto-generated method stub
+                    }
+                });
 
-					@Override
-					public void handle(SaveProjectSucess event) {
-						// TODO Auto-generated method stub
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<ProjectEvent.GotoMyProject>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return ProjectEvent.GotoMyProject.class;
+                    }
 
-					}
-				});
+                    @Override
+                    public void handle(ProjectEvent.GotoMyProject event) {
+                        ProjectViewPresenter presenter = PresenterResolver
+                                .getPresenter(ProjectViewPresenter.class);
+                        SimpleProject project = (SimpleProject) event.getData();
+                        AppContext.putVariable(ProjectContants.PROJECT_NAME,
+                                project);
+                        presenter.go(container,
+                                new ScreenData<Project>(project));
+                    }
+                });
+    }
 
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ProjectEvent.GotoMyProject>() {
+    @SuppressWarnings("serial")
+    private void bindRiskEvents() {
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<RiskEvent.GotoAdd>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return RiskEvent.GotoAdd.class;
+                    }
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return ProjectEvent.GotoMyProject.class;
-					}
+                    @Override
+                    public void handle(RiskEvent.GotoAdd event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        ScreenData.Add<Risk> data = new ScreenData.Add<Risk>(
+                                new Risk());
+                        projectView.gotoRiskView(data);
+                    }
+                });
 
-					@Override
-					public void handle(ProjectEvent.GotoMyProject event) {
-						ProjectViewPresenter presenter = PresenterResolver
-								.getPresenter(ProjectViewPresenter.class);
-						SimpleProject project = (SimpleProject) event.getData();
-						AppContext.putVariable(ProjectContants.PROJECT_NAME,
-								project);
-						presenter.go(container,
-								new ScreenData<Project>(project));
-					}
-				});
-	}
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<RiskEvent.GotoEdit>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return RiskEvent.GotoEdit.class;
+                    }
 
-	@SuppressWarnings("serial")
-	private void bindRiskEvents() {
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<RiskEvent.GotoAdd>() {
+                    @Override
+                    public void handle(RiskEvent.GotoEdit event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        ScreenData.Edit<Risk> data = new ScreenData.Edit<Risk>(
+                                (Risk) event.getData());
+                        projectView.gotoRiskView(data);
+                    }
+                });
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return RiskEvent.GotoAdd.class;
-					}
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<RiskEvent.GotoRead>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return RiskEvent.GotoRead.class;
+                    }
 
-					@Override
-					public void handle(RiskEvent.GotoAdd event) {
-						ProjectView projectView = ViewManager
-								.getView(ProjectView.class);
-						ScreenData.Add<Risk> data = new ScreenData.Add<Risk>(
-								new Risk());
-						projectView.gotoRiskView(data);
-					}
-				});
+                    @Override
+                    public void handle(RiskEvent.GotoRead event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
+                                (Integer) event.getData());
+                        projectView.gotoRiskView(data);
+                    }
+                });
 
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<RiskEvent.GotoEdit>() {
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<RiskEvent.GotoList>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return RiskEvent.GotoList.class;
+                    }
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return RiskEvent.GotoEdit.class;
-					}
+                    @Override
+                    public void handle(RiskEvent.GotoList event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
 
-					@Override
-					public void handle(RiskEvent.GotoEdit event) {
-						ProjectView projectView = ViewManager
-								.getView(ProjectView.class);
-						ScreenData.Edit<Risk> data = new ScreenData.Edit<Risk>(
-								(Risk) event.getData());
-						projectView.gotoRiskView(data);
-					}
-				});
+                        SimpleProject project = (SimpleProject) AppContext
+                                .getVariable(ProjectContants.PROJECT_NAME);
 
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<RiskEvent.GotoRead>() {
+                        RiskSearchCriteria criteria = new RiskSearchCriteria();
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return RiskEvent.GotoRead.class;
-					}
+                        criteria.setProjectId(new NumberSearchField(
+                                SearchField.AND, project.getId()));
+                        projectView
+                                .gotoRiskView(new ScreenData.Search<RiskSearchCriteria>(
+                                criteria));
+                    }
+                });
+    }
 
-					@Override
-					public void handle(RiskEvent.GotoRead event) {
-						ProjectView projectView = ViewManager
-								.getView(ProjectView.class);
-						ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
-								(Integer) event.getData());
-						projectView.gotoRiskView(data);
-					}
-				});
+    @SuppressWarnings("serial")
+    private void bindProblemEvents() {
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<ProblemEvent.GotoAdd>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return ProblemEvent.GotoAdd.class;
+                    }
 
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<RiskEvent.GotoList>() {
+                    @Override
+                    public void handle(ProblemEvent.GotoAdd event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        ScreenData.Add<Problem> data = new ScreenData.Add<Problem>(
+                                new Problem());
+                        projectView.gotoProblemView(data);
+                    }
+                });
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return RiskEvent.GotoList.class;
-					}
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<ProblemEvent.GotoRead>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return ProblemEvent.GotoRead.class;
+                    }
 
-					@Override
-					public void handle(RiskEvent.GotoList event) {
-						ProjectView projectView = ViewManager
-								.getView(ProjectView.class);
+                    @Override
+                    public void handle(ProblemEvent.GotoRead event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
+                                (Integer) event.getData());
+                        projectView.gotoProblemView(data);
+                    }
+                });
 
-						SimpleProject project = (SimpleProject) AppContext
-								.getVariable(ProjectContants.PROJECT_NAME);
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<ProblemEvent.GotoList>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return ProblemEvent.GotoList.class;
+                    }
 
-						RiskSearchCriteria criteria = new RiskSearchCriteria();
+                    @Override
+                    public void handle(ProblemEvent.GotoList event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
 
-						criteria.setProjectId(new NumberSearchField(
-								SearchField.AND, project.getId()));
-						projectView
-								.gotoRiskView(new ScreenData.Search<RiskSearchCriteria>(
-										criteria));
-					}
-				});
-	}
+                        SimpleProject project = (SimpleProject) AppContext
+                                .getVariable(ProjectContants.PROJECT_NAME);
 
-	@SuppressWarnings("serial")
-	private void bindProblemEvents() {
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ProblemEvent.GotoAdd>() {
+                        ProblemSearchCriteria criteria = new ProblemSearchCriteria();
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return ProblemEvent.GotoAdd.class;
-					}
+                        criteria.setProjectId(new NumberSearchField(
+                                SearchField.AND, project.getId()));
+                        projectView
+                                .gotoProblemView(new ScreenData.Search<ProblemSearchCriteria>(
+                                criteria));
+                    }
+                });
+    }
 
-					@Override
-					public void handle(ProblemEvent.GotoAdd event) {
-						ProjectView projectView = ViewManager
-								.getView(ProjectView.class);
-						ScreenData.Add<Problem> data = new ScreenData.Add<Problem>(
-								new Problem());
-						projectView.gotoProblemView(data);
-					}
-				});
+    @SuppressWarnings("serial")
+    private void bindBugEvents() {
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<BugEvent.GotoAdd>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return BugEvent.GotoAdd.class;
+                    }
 
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ProblemEvent.GotoRead>() {
+                    @Override
+                    public void handle(BugEvent.GotoAdd event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        ScreenData.Add<SimpleBug> data = new ScreenData.Add<SimpleBug>(
+                                new SimpleBug());
+                        projectView.gotoBugView(data);
+                    }
+                });
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return ProblemEvent.GotoRead.class;
-					}
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<BugEvent.GotoRead>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return BugEvent.GotoRead.class;
+                    }
 
-					@Override
-					public void handle(ProblemEvent.GotoRead event) {
-						ProjectView projectView = ViewManager
-								.getView(ProjectView.class);
-						ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
-								(Integer) event.getData());
-						projectView.gotoProblemView(data);
-					}
-				});
+                    @Override
+                    public void handle(BugEvent.GotoRead event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
+                                (Integer) event.getData());
+                        projectView.gotoBugView(data);
+                    }
+                });
 
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ProblemEvent.GotoList>() {
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<BugEvent.GotoList>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return BugEvent.GotoList.class;
+                    }
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return ProblemEvent.GotoList.class;
-					}
+                    @Override
+                    public void handle(BugEvent.GotoList event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
 
-					@Override
-					public void handle(ProblemEvent.GotoList event) {
-						ProjectView projectView = ViewManager
-								.getView(ProjectView.class);
+                        SimpleProject project = (SimpleProject) AppContext
+                                .getVariable(ProjectContants.PROJECT_NAME);
 
-						SimpleProject project = (SimpleProject) AppContext
-								.getVariable(ProjectContants.PROJECT_NAME);
+                        BugSearchCriteria criteria = new BugSearchCriteria();
 
-						ProblemSearchCriteria criteria = new ProblemSearchCriteria();
+                        criteria.setProjectid(new NumberSearchField(
+                                SearchField.AND, project.getId()));
+                        projectView
+                                .gotoBugView(new ScreenData.Search<BugSearchCriteria>(
+                                criteria));
+                    }
+                });
+    }
 
-						criteria.setProjectId(new NumberSearchField(
-								SearchField.AND, project.getId()));
-						projectView
-								.gotoProblemView(new ScreenData.Search<ProblemSearchCriteria>(
-										criteria));
-					}
-				});
-	}
+    private void bindMessageEvents() {
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<MessageEvent.GotoRead>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return MessageEvent.GotoRead.class;
+                    }
 
-	@SuppressWarnings("serial")
-	private void bindBugEvents() {
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<BugEvent.GotoAdd>() {
-
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return BugEvent.GotoAdd.class;
-					}
-
-					@Override
-					public void handle(BugEvent.GotoAdd event) {
-						ProjectView projectView = ViewManager
-								.getView(ProjectView.class);
-						ScreenData.Add<SimpleBug> data = new ScreenData.Add<SimpleBug>(
-								new SimpleBug());
-						projectView.gotoBugView(data);
-					}
-				});
-
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<BugEvent.GotoRead>() {
-
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return BugEvent.GotoRead.class;
-					}
-
-					@Override
-					public void handle(BugEvent.GotoRead event) {
-						ProjectView projectView = ViewManager
-								.getView(ProjectView.class);
-						ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
-								(Integer) event.getData());
-						projectView.gotoBugView(data);
-					}
-				});
-
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<BugEvent.GotoList>() {
-
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return BugEvent.GotoList.class;
-					}
-
-					@Override
-					public void handle(BugEvent.GotoList event) {
-						ProjectView projectView = ViewManager
-								.getView(ProjectView.class);
-
-						SimpleProject project = (SimpleProject) AppContext
-								.getVariable(ProjectContants.PROJECT_NAME);
-
-						BugSearchCriteria criteria = new BugSearchCriteria();
-
-						criteria.setProjectid(new NumberSearchField(
-								SearchField.AND, project.getId()));
-						projectView
-								.gotoBugView(new ScreenData.Search<BugSearchCriteria>(
-										criteria));
-					}
-				});
-	}
+                    @Override
+                    public void handle(MessageEvent.GotoRead event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
+                                (Integer) event.getData());
+                        projectView.gotoMessageView(data);
+                    }
+                });
+    }
 }

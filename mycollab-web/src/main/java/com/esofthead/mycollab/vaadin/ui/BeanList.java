@@ -1,12 +1,11 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.util.List;
-
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.VerticalLayout;
+import java.util.List;
 
 public class BeanList<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
 		extends VerticalLayout {

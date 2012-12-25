@@ -5,7 +5,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
-public interface RiskReadView  extends IPreviewView<SimpleRisk> {
-	HasPreviewFormHandlers<Risk> getPreviewFormHandlers();
+public interface RiskReadView extends IPreviewView<SimpleRisk> {
 
+    HasPreviewFormHandlers<Risk> getPreviewFormHandlers();
 }

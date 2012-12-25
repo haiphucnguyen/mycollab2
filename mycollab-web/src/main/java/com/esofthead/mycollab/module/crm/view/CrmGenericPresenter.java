@@ -5,16 +5,17 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.vaadin.ui.ComponentContainer;
 
-public class CrmGenericPresenter<V extends View> extends AbstractPresenter<V>{
-private static final long serialVersionUID = 1L;
-	
-	public CrmGenericPresenter(Class<V> viewClass) {
-		super(viewClass);
-	}
+public class CrmGenericPresenter<V extends View> extends AbstractPresenter<V> {
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		CrmContainer crmContainer = (CrmContainer) container;
-		crmContainer.addView(view);
-	}
+    private static final long serialVersionUID = 1L;
+
+    public CrmGenericPresenter(Class<V> viewClass) {
+        super(viewClass);
+    }
+
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        CrmContainer crmContainer = (CrmContainer) container;
+        crmContainer.addView(view);
+    }
 }

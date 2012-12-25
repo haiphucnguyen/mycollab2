@@ -17,11 +17,7 @@
  */
 package com.esofthead.mycollab.module.project.service.ibatis;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
+import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.EngroupException;
 import com.esofthead.mycollab.core.MessageDispatcher;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -38,8 +34,14 @@ import com.esofthead.mycollab.module.project.domain.ProjectExample;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@Transactional
+@Traceable(module="Project", nameField="name", type="Project")
 public class ProjectServiceImpl extends
 		DefaultService<Integer, Project, ProjectSearchCriteria> implements
 		ProjectService {

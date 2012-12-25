@@ -5,6 +5,8 @@
     <resultMap id="SimpleActivityStreamResult"
         extends="com.esofthead.mycollab.module.crm.dao.AccountMapper.BaseResultMap"
         type="com.esofthead.mycollab.common.domain.SimpleActivityStream">
+        
+        <result column="createdUserFullName" jdbcType="VARCHAR" property="createdUserFullName" />
 
         <collection property="comments"
             columnPrefix="comment_"
@@ -29,10 +31,12 @@
                s_activitystream.module, m_comment.comment as comment_comment, m_comment.createdUser as comment_createdUser,
                m_comment.createdTime as comment_createdTime, m_comment.type as comment_type, m_comment.typeid as comment_typeid,
                m_comment.sAccountId as comment_sAccountId, 
-               concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as comment_ownerFullName
+               concat(comment_user.firstname, IFNULL(concat(' ', comment_user.middlename, ' '), ' '), comment_user.lastname) as comment_ownerFullName,
+               concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createdUserFullName
         FROM s_activitystream
+        LEFT OUTER JOIN s_user ON (s_user.username = s_activitystream.createdUser)
         LEFT OUTER JOIN m_comment ON (s_activitystream.sAccountId = m_comment.sAccountId AND s_activitystream.id = m_comment.typeid AND m_comment.type='Common_ActivityStream')
-        LEFT OUTER JOIN s_user ON (m_comment.createdUser = s_user.username)
+        LEFT OUTER JOIN s_user AS comment_user ON (m_comment.createdUser = comment_user.username)
         ]]>
     </sql>
     
