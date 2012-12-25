@@ -18,7 +18,7 @@ import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Case")
+@Traceable(module = "Crm", type = "Case", nameField="subject")
 public class CaseServiceImpl extends
 		DefaultService<Integer, Case, CaseSearchCriteria> implements
 		CaseService {

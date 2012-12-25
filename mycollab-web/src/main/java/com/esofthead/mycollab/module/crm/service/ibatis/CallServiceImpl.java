@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.crm.service.CallService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Call")
+@Traceable(module = "Crm", type = "Call", nameField = "subject")
 public class CallServiceImpl extends DefaultCrudService<Integer, Call>
 		implements CallService {
 

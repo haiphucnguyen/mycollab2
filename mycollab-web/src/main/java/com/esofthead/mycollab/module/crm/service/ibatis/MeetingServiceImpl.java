@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.crm.service.MeetingService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Meeting")
+@Traceable(module = "Crm", type = "Meeting", nameField="subject")
 public class MeetingServiceImpl extends DefaultCrudService<Integer, Meeting>
 		implements MeetingService {
 

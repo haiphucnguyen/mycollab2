@@ -38,7 +38,7 @@ import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Lead")
+@Traceable(module = "Crm", type = "Lead", nameField="lastname")
 public class LeadServiceImpl extends DefaultService<Integer, Lead, LeadSearchCriteria>
 		implements LeadService {
 	

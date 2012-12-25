@@ -43,6 +43,8 @@ public class TraceableAspect {
 				activity.setAction(ActivityStreamConstants.ACTION_CREATE);
 				activity.setSaccountid((Integer) PropertyUtils.getProperty(
 						bean, "saccountid"));
+				activity.setNamefield((String) PropertyUtils.getProperty(bean,
+						traceableAnnotation.nameField()));
 				activityStreamService.save(activity);
 			} catch (Exception e) {
 				log.error(

@@ -17,7 +17,7 @@ import com.esofthead.mycollab.module.file.service.AttachmentService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Meeting")
+@Traceable(module = "Crm", type = "Meeting", nameField="subject")
 public class NoteServiceImpl extends DefaultService<Integer, Note, NoteSearchCriteria>
 		implements NoteService {
 

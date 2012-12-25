@@ -38,13 +38,14 @@ import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Opportunity")
+@Traceable(module = "Crm", type = "Opportunity", nameField = "opportunityname")
 public class OpportunityServiceImpl extends
-		DefaultService<Integer, Opportunity, OpportunitySearchCriteria> implements OpportunityService {
+		DefaultService<Integer, Opportunity, OpportunitySearchCriteria>
+		implements OpportunityService {
 
 	@Autowired
 	private OpportunityMapper opportunityMapper;
-	
+
 	@Autowired
 	private OpportunityMapperExt opportunityMapperExt;
 

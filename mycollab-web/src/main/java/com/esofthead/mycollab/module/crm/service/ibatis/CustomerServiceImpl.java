@@ -30,13 +30,13 @@ import com.esofthead.mycollab.module.crm.service.CustomerService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Customer")
+@Traceable(module = "Crm", type = "Customer", nameField = "lastname")
 public class CustomerServiceImpl extends DefaultCrudService<Integer, Customer>
 		implements CustomerService {
 
 	@Autowired
 	private CustomerMapper customerMapper;
-	
+
 	@Override
 	public ICrudGenericDAO<Integer, Customer> getCrudMapper() {
 		return customerMapper;

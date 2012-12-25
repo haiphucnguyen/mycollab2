@@ -17,7 +17,7 @@ import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Product")
+@Traceable(module = "Crm", type = "Product", nameField="productname")
 public class ProductServiceImpl extends DefaultService<Integer, Product, ProductSearchCriteria>
 		implements ProductService {
 	

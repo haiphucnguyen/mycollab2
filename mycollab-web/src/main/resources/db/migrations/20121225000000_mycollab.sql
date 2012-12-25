@@ -1,0 +1,1 @@
+ALTER TABLE `s_activitystream` CHANGE COLUMN `nameField` `nameField` TEXT NULL DEFAULT NULL  ;

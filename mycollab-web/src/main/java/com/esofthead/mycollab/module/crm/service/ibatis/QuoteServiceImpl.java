@@ -26,13 +26,14 @@ import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Quote")
-public class QuoteServiceImpl extends DefaultService<Integer, Quote, QuoteSearchCriteria>
-		implements QuoteService {
+@Traceable(module = "Crm", type = "Quote", nameField = "subject")
+public class QuoteServiceImpl extends
+		DefaultService<Integer, Quote, QuoteSearchCriteria> implements
+		QuoteService {
 
 	@Autowired
 	private QuoteMapper quoteMapper;
-	
+
 	@Autowired
 	private QuoteMapperExt quoteMapperExt;
 
@@ -55,18 +56,14 @@ public class QuoteServiceImpl extends DefaultService<Integer, Quote, QuoteSearch
 		return quoteMapperExt;
 	}
 
-
 	@Override
 	public int updateWithSession(Quote record, String username) {
 		Quote oldValue = this.findByPrimaryKey(record.getId());
 		String refid = "crm-quote-" + record.getId();
-		auditLogService.saveAuditLog(
-				username, refid, (Object) oldValue,
+		auditLogService.saveAuditLog(username, refid, (Object) oldValue,
 				(Object) record);
 		return super.updateWithSession(record, username);
 	}
-
-	
 
 	public void setProductDAO(ProductMapper productDAO) {
 		this.productMapper = productDAO;
@@ -79,7 +76,7 @@ public class QuoteServiceImpl extends DefaultService<Integer, Quote, QuoteSearch
 
 		for (SimpleQuoteGroupProduct simpleQuoteGroupProduct : entity) {
 			QuoteGroupProduct quoteGroupProduct = simpleQuoteGroupProduct
-			.getQuoteGroupProduct();
+					.getQuoteGroupProduct();
 			quoteGroupProductService.insertQuoteGroupExt(quoteGroupProduct);
 
 			for (Product quoteProduct : simpleQuoteGroupProduct

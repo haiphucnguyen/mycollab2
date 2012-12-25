@@ -38,7 +38,7 @@ import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Campaign")
+@Traceable(module = "Crm", type = "Campaign", nameField="campaignname")
 public class CampaignServiceImpl extends
 		DefaultService<Integer, Campaign, CampaignSearchCriteria> implements
 		CampaignService {

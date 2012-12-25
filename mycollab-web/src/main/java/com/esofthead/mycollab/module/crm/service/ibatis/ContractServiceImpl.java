@@ -17,19 +17,19 @@ import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Contract")
-public class ContractServiceImpl extends DefaultService<Integer, Contract, ContractSearchCriteria>
-		implements ContractService {
+@Traceable(module = "Crm", type = "Contract", nameField = "contractname")
+public class ContractServiceImpl extends
+		DefaultService<Integer, Contract, ContractSearchCriteria> implements
+		ContractService {
 
 	@Autowired
 	private ContractMapper contractMapper;
-	
+
 	@Autowired
 	private ContractMapperExt contractMapperExt;
 
 	@Autowired
 	private AuditLogService auditLogService;
-	
 
 	@Override
 	public ICrudGenericDAO<Integer, Contract> getCrudMapper() {
@@ -45,8 +45,7 @@ public class ContractServiceImpl extends DefaultService<Integer, Contract, Contr
 	public int updateWithSession(Contract record, String username) {
 		Contract oldValue = this.findByPrimaryKey(record.getId());
 		String refid = "crm-contract-" + record.getId();
-		auditLogService.saveAuditLog(
-				username, refid, (Object) oldValue,
+		auditLogService.saveAuditLog(username, refid, (Object) oldValue,
 				(Object) record);
 		return super.updateWithSession(record, username);
 	}

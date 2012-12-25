@@ -14,5 +14,5 @@ public @interface Traceable {
 
 	String idField() default "id";
 
-//	String nameField();
+	String nameField();
 }

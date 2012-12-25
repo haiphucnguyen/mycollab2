@@ -16,17 +16,17 @@ import com.esofthead.mycollab.module.crm.service.ProductCatalogService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "ProductCatalog")
+@Traceable(module = "Crm", type = "ProductCatalog", nameField = "productname")
 public class ProductCatalogServiceImpl extends
-		DefaultService<Integer, ProductCatalog, ProductCatalogSearchCriteria> implements
-		ProductCatalogService {
+		DefaultService<Integer, ProductCatalog, ProductCatalogSearchCriteria>
+		implements ProductCatalogService {
 
 	@Autowired
 	private ProductCatalogMapper productCatalogMapper;
-	
+
 	@Autowired
 	private ProductCatalogMapperExt productCatalogMapperExt;
-	
+
 	@Override
 	public ICrudGenericDAO<Integer, ProductCatalog> getCrudMapper() {
 		return productCatalogMapper;

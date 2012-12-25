@@ -38,7 +38,7 @@ import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Contact")
+@Traceable(module = "Crm", type = "Contact", nameField = "lastname")
 public class ContactServiceImpl extends
 		DefaultService<Integer, Contact, ContactSearchCriteria> implements
 		ContactService {

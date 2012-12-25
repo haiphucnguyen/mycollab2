@@ -37,7 +37,7 @@ import com.esofthead.mycollab.module.crm.service.TargetService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Target")
+@Traceable(module = "Crm", type = "Target", nameField = "lastname")
 public class TargetServiceImpl extends
 		DefaultService<Integer, Target, TargetSearchCriteria> implements
 		TargetService {

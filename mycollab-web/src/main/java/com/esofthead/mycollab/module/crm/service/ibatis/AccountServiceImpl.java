@@ -42,7 +42,7 @@ import com.esofthead.mycollab.shared.audit.service.AuditLogService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Account")
+@Traceable(module = "Crm", type = "Account", nameField = "accountname")
 public class AccountServiceImpl extends
 		DefaultService<Integer, Account, AccountSearchCriteria> implements
 		AccountService {

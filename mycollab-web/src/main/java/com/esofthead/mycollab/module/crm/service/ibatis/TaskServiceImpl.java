@@ -34,7 +34,7 @@ import com.esofthead.mycollab.module.crm.service.TaskService;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Task")
+@Traceable(module = "Crm", type = "Task", nameField = "subject")
 public class TaskServiceImpl extends
 		DefaultService<Integer, Task, TaskSearchCriteria> implements
 		TaskService {
