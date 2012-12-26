@@ -15,63 +15,64 @@ import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class ProblemAddPresenter  extends AbstractPresenter<ProblemAddView> {
-	private static final long serialVersionUID = 1L;
+public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
 
-	public ProblemAddPresenter() {
-		super(ProblemAddView.class);
-		bind();
-	}
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		ProblemContainer problemContainer = (ProblemContainer) container;
-		problemContainer.addComponent(view.getWidget());
-		view.editItem((Problem) data.getParams());
-	}
+    public ProblemAddPresenter() {
+        super(ProblemAddView.class);
+        bind();
+    }
 
-	private void bind() {
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Problem>() {
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        ProblemContainer problemContainer = (ProblemContainer) container;
+        problemContainer.addComponent(view.getWidget());
+        view.editItem((Problem) data.getParams());
+    }
 
-			@Override
-			public void onSave(final Problem problem) {
-				saveProblem(problem);
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new ProblemEvent.GotoList(this, null));
-				}
-			}
+    private void bind() {
+        view.getEditFormHandlers().addFormHandler(new EditFormHandler<Problem>() {
+            @Override
+            public void onSave(final Problem problem) {
+                saveProblem(problem);
+                ViewState viewState = HistoryViewManager.back();
+                if (viewState instanceof NullViewState) {
+                    EventBus.getInstance().fireEvent(
+                            new ProblemEvent.GotoList(this, null));
+                }
+            }
 
-			@Override
-			public void onCancel() {
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new ProblemEvent.GotoList(this, null));
-				}
-			}
+            @Override
+            public void onCancel() {
+                ViewState viewState = HistoryViewManager.back();
+                if (viewState instanceof NullViewState) {
+                    EventBus.getInstance().fireEvent(
+                            new ProblemEvent.GotoList(this, null));
+                }
+            }
 
-			@Override
-			public void onSaveAndNew(final Problem problem) {
-				saveProblem(problem);
-				EventBus.getInstance().fireEvent(
-						new ProblemEvent.GotoAdd(this, null));
-			}
-		});
-	}
+            @Override
+            public void onSaveAndNew(final Problem problem) {
+                saveProblem(problem);
+                EventBus.getInstance().fireEvent(
+                        new ProblemEvent.GotoAdd(this, null));
+            }
+        });
+    }
 
-	public void saveProblem(Problem problem) {
-		ProblemService problemService = AppContext.getSpringBean(ProblemService.class);
-		SimpleProject project = (SimpleProject) AppContext
-				.getVariable(ProjectContants.PROJECT_NAME);
-		problem.setProjectid(project.getId());
-		if (problem.getId() == null) {
-			problemService.saveWithSession(problem, AppContext.getUsername());
-		} else {
-			problemService.updateWithSession(problem, AppContext.getUsername());
-		}
+    public void saveProblem(Problem problem) {
+        ProblemService problemService = AppContext.getSpringBean(ProblemService.class);
+        SimpleProject project = (SimpleProject) AppContext
+                .getVariable(ProjectContants.PROJECT_NAME);
+        problem.setProjectid(project.getId());
+        problem.setSaccountid(AppContext.getAccountId());
+        
+        if (problem.getId() == null) {
+            problemService.saveWithSession(problem, AppContext.getUsername());
+        } else {
+            problemService.updateWithSession(problem, AppContext.getUsername());
+        }
 
-	}
-
+    }
 }
