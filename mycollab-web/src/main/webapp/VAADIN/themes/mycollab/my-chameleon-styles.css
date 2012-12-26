@@ -608,7 +608,8 @@ td.v-datefield-calendarpanel-month,
 .v-popupview-popup a,
 .v-popupview,
 .sidebar-menu .v-label {
-	color: rgb(40,126,206);
+	/*color: rgb(40,126,206);*/
+	color: #0a58cd;
 	}
 
 .v-button-default,
@@ -669,7 +670,7 @@ td.v-datefield-calendarpanel-month,
 .v-panel-caption,
 .v-table-striped .v-table-row-odd,
 .sidebar-menu {
-	background: rgb(220,229,238);
+	/*background: rgb(220,229,238);*/
 	}
 
 .sidebar-menu .tab-selected,

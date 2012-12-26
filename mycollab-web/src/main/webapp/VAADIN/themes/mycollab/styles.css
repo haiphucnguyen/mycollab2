@@ -34,12 +34,22 @@ only screen and (max-device-width : 1024px) {
 input:focus, textarea:focus {
 	background-color: #FFFFFF;
     border-color: #1185DE;
-    box-shadow: 0 0 1px #1185DE inset;
+    /*box-shadow: 0 0 1px #1185DE inset;*/
+    box-shadow: 0 0 1px #0a58cd inset;
 }
 
 .v-app {
     /*background: #E1E1E1;*/
     background: #FFFFFF;
+}
+
+.v-app, .v-window, .v-popupview-popup, .v-tooltip, .v-app input, .v-app select, .v-app button, .v-app textarea, .v-window input, .v-window select, .v-window button, .v-window textarea, .v-popupview-popup input, .v-popupview-popup select, .v-popupview-popup button, .v-popupview-popup textarea, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu, .v-table-header-drag, .v-menubar-submenu, .v-drag-element {
+	font: 12px/18px "Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif !important;
+}
+
+.v-table-table th,
+.v-table-table td{
+	height: 30px;
 }
 
 .v-button-bluebtn {
@@ -77,7 +87,7 @@ input:focus, textarea:focus {
     white-space: normal;
 }
 .v-table-caption-container, .v-table-header-drag {
-	padding-top: .1em;
+	padding-top: 0px;
 }
 .v-ratingstars-wrapper {
 	border: 0px !important;
@@ -169,7 +179,8 @@ input:focus, textarea:focus {
 }
 
 .h-sidebar-menu .v-csslayout-container .v-button-link.isSelected .v-button-caption, .h-sidebar-menu .v-csslayout-container .v-button-link.isSelected .v-button-caption:hover {
-    color: #287ECE;
+    /*color: #287ECE;*/
+    color: #0a58cd;
 }
 .h-sidebar-menu .v-csslayout-container .v-button-link .v-button-caption:hover {
     color: #333;
