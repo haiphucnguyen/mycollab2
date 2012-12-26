@@ -43,6 +43,11 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
         return previewForm;
     }
 
+    @Override
+    public void doPrint() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     private class PreviewForm extends AdvancedPreviewBeanForm<Task> {
 
         private static final long serialVersionUID = 1L;

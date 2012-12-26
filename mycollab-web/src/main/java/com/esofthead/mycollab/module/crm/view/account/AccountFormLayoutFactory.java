@@ -17,6 +17,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
     private GridFormLayoutHelper informationLayout;
     private GridFormLayoutHelper addressLayout;
     private GridFormLayoutHelper descriptionLayout;
+    
     private String title;
     
     public AccountFormLayoutFactory(String title) {

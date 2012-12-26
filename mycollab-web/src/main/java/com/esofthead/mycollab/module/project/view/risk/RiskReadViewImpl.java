@@ -47,6 +47,11 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
         return previewForm;
     }
 
+    @Override
+    public void doPrint() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     private class PreviewForm extends AdvancedPreviewBeanForm<Risk> {
 
         private static final long serialVersionUID = 1L;

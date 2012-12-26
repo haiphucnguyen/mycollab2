@@ -25,4 +25,9 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 	public SimpleBug getItem() {
 		return bug;
 	}
+
+    @Override
+    public void doPrint() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

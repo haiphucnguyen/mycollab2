@@ -40,6 +40,11 @@ public class MeetingReadViewImpl extends AbstractView implements MeetingReadView
         return previewForm;
     }
 
+    @Override
+    public void doPrint() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     private class PreviewForm extends AdvancedPreviewBeanForm<Meeting> {
 
         private static final long serialVersionUID = 1L;

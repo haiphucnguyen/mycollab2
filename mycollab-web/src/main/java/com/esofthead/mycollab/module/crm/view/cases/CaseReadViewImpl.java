@@ -44,6 +44,11 @@ public class CaseReadViewImpl extends AbstractView implements CaseReadView {
         return previewForm;
     }
 
+    @Override
+    public void doPrint() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     private class PreviewForm extends AdvancedPreviewBeanForm<Case> {
 
         private static final long serialVersionUID = 1L;

@@ -14,12 +14,12 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class ContactReadViewImpl extends AbstractView implements
@@ -44,6 +44,11 @@ public class ContactReadViewImpl extends AbstractView implements
     @Override
     public HasPreviewFormHandlers<Contact> getPreviewFormHandlers() {
         return previewForm;
+    }
+
+    @Override
+    public void doPrint() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     private class PreviewForm extends AdvancedPreviewBeanForm<Contact> {

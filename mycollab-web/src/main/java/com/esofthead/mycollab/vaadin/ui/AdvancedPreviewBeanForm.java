@@ -1,55 +1,58 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
+import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
 import java.util.HashSet;
 import java.util.Set;
 
-import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
-import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
-
 public class AdvancedPreviewBeanForm<T> extends GenericForm implements
-		HasPreviewFormHandlers<T> {
-	private static final long serialVersionUID = 1L;
-	private Set<PreviewFormHandlers<T>> handlers;
+        HasPreviewFormHandlers<T> {
 
-	@Override
-	public void addFormHandler(PreviewFormHandlers<T> handler) {
-		if (handlers == null) {
-			handlers = new HashSet<PreviewFormHandlers<T>>();
-		}
+    private static final long serialVersionUID = 1L;
+    private Set<PreviewFormHandlers<T>> handlers;
 
-		handlers.add(handler);
-	}
+    @Override
+    public void addFormHandler(PreviewFormHandlers<T> handler) {
+        if (handlers == null) {
+            handlers = new HashSet<PreviewFormHandlers<T>>();
+        }
 
-	protected void fireEditForm(T bean) {
-		if (handlers != null) {
-			for (PreviewFormHandlers<T> handler : handlers) {
-				handler.onEdit(bean);
-			}
-		}
-	}
+        handlers.add(handler);
+    }
 
-	protected void fireCancelForm(T bean) {
-		if (handlers != null) {
-			for (PreviewFormHandlers<T> handler : handlers) {
-				handler.onCancel();
-			}
-		}
-	}
+    protected void fireEditForm(T bean) {
+        if (handlers != null) {
+            for (PreviewFormHandlers<T> handler : handlers) {
+                handler.onEdit(bean);
+            }
+        }
+    }
+    
+    protected void doPrint() {
+        
+    }
 
-	protected void fireDeleteForm(T bean) {
-		if (handlers != null) {
-			for (PreviewFormHandlers<T> handler : handlers) {
-				handler.onDelete(bean);
-			}
-		}
-	}
+    protected void fireCancelForm(T bean) {
+        if (handlers != null) {
+            for (PreviewFormHandlers<T> handler : handlers) {
+                handler.onCancel();
+            }
+        }
+    }
 
-	protected void fireCloneForm(T bean) {
-		if (handlers != null) {
-			for (PreviewFormHandlers<T> handler : handlers) {
-				handler.onClone(bean);
-			}
-		}
-	}
+    protected void fireDeleteForm(T bean) {
+        if (handlers != null) {
+            for (PreviewFormHandlers<T> handler : handlers) {
+                handler.onDelete(bean);
+            }
+        }
+    }
 
+    protected void fireCloneForm(T bean) {
+        if (handlers != null) {
+            for (PreviewFormHandlers<T> handler : handlers) {
+                handler.onClone(bean);
+            }
+        }
+    }
 }
