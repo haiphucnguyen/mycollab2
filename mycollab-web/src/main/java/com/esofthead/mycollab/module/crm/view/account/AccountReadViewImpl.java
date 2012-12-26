@@ -56,7 +56,7 @@ public class AccountReadViewImpl extends AbstractView implements
         window.executeJavaScript("print();");
 
         // Close the window automatically after printing
-//        window.executeJavaScript("self.close();");
+        window.executeJavaScript("self.close();");
     }
 
     @Override

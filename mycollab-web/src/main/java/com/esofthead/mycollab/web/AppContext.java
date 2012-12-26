@@ -1,19 +1,17 @@
 package com.esofthead.mycollab.web;
 
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.vaadin.Application;
+import com.vaadin.service.ApplicationContext.TransactionListener;
+import com.vaadin.terminal.gwt.server.WebApplicationContext;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.Map;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.vaadin.Application;
-import com.vaadin.service.ApplicationContext.TransactionListener;
-import com.vaadin.terminal.gwt.server.WebApplicationContext;
 
 public class AppContext implements TransactionListener, Serializable {
 	private static final long serialVersionUID = 1L;

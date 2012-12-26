@@ -26,6 +26,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -41,7 +42,10 @@ public class AccountPreview extends PrintPreview{
     private OpportunityListComp associateOpportunityList;
     private LeadListComp associateLeadList;
     
+    private boolean isControlEnable = false;
+    
     public AccountPreview(boolean enableButtonControls, PrintListener listener) {
+        this.isControlEnable = enableButtonControls;
         constructUI();
         if (listener != null) {
             addPrintListener(listener);
@@ -49,6 +53,7 @@ public class AccountPreview extends PrintPreview{
     }
     
     public AccountPreview(boolean enableButtonControls) {
+        this.isControlEnable = enableButtonControls;
         constructUI();
     }
     
@@ -166,8 +171,13 @@ public class AccountPreview extends PrintPreview{
 
             @Override
             protected Layout createTopPanel() {
-                return (new PreviewFormControlsGenerator<Account>(
+                if (isControlEnable) {
+                    return (new PreviewFormControlsGenerator<Account>(
                         PreviewForm.this)).createButtonControls();
+                } else {
+                    return new HorizontalLayout();
+                }
+                
             }
 
             @Override
