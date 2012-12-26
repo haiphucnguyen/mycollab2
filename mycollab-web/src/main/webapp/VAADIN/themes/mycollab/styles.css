@@ -771,35 +771,35 @@ input.v-textfield-errorField {
 
 /* Depot */
 .depotComp {
-	border: 1px solid #B7B7B7;
-	background-color: white;
+/* 	border: 1px solid #B7B7B7; */
+/* 	background-color: white; */
 	margin-top: 30px;
 }
 .depotComp .depotHeader {
-	margin: 5px 4px;
+	border-bottom: 1px solid #B7B7B7;
+	padding-bottom: 0.2em;
 }
 
 .depotComp .h2 {
 	font-size: 14px;
-/* 	border-bottom: 1px solid #B7B7B7; */
+	border: 0px;
 	color: #5E5E5E;
 	text-shadow: #F0F0F0 0 1px 0;
 	width: 500px !important;
 	font-weight: bold;
 /* 	margin-top: 30px; */
-	background: url('icons/16/depot_arrow_down.png') no-repeat 0 0 transparent;
+	background: url('icons/16/depot_arrow_down.png') no-repeat top right transparent;
 	cursor: pointer;
-	padding: 0 0 0 17px;
-	border: 0px;
+	padding: 0px;
 }
 .depotComp.collapsed .h2 {
-	background: url('icons/16/depot_arrow_right.png') no-repeat 0 0 transparent;
+	background: url('icons/16/depot_arrow_right.png') no-repeat top right transparent;
 }
 .depotComp.collapsed .depotContent {
 	padding: 0px;
 }
 .depotComp .depotContent {
-	padding: 0px 0px 10px;
+	padding: 5px 0px;
 }
 .addViewLayout .depotContent .v-button-link {
 	margin-bottom: 5px;
@@ -961,18 +961,26 @@ input.v-textfield-errorField {
 }
 .noteList .noteRow {
 	border: 1px solid #919191;
+	width: 898px;
+	background-color: #F9F9F9;
 }
 .noteList > div > div:first-child .noteRow {
 	border-bottom: 0px;
 }
 
 .noteList > div > div:nth-child(odd) .noteRow {
-	background-color: #dce5ee;
+	background-color: #DBDEE3;
+}
+
+.noteRow .noteContent {
+	padding-left: 10px;
 }
 
 .noteRow .metadata {
 	font-size: 11px;
 	color: #999;
+	text-align: right;
+	padding-right: 10px;
 }
 .menuContent .v-csslayout-projectTabContent {
 	margin-left: 15px;

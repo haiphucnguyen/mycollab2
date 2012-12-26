@@ -23,6 +23,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -45,8 +46,8 @@ public class NoteListItems extends Depot {
 	public NoteListItems(String title, String type, Integer typeid) {
 		super(title, new VerticalLayout());
 		this.setWidth("900px");
-		this.setSpacing(true);
-		this.setMargin(true);
+		this.setSpacing(false);
+		this.setMargin(false);
 
 		noteService = AppContext.getSpringBean(NoteService.class);
 		this.type = type;
@@ -88,28 +89,25 @@ public class NoteListItems extends Depot {
 
 		@Override
 		public Component generateRow(SimpleNote obj, int rowIndex) {
-			VerticalLayout noteLayout = new VerticalLayout();
-			noteLayout.setWidth("98%");
+			CssLayout noteLayout = new CssLayout();
 			noteLayout.setStyleName("noteRow");
 			if (obj.getSubject() != null && !obj.getSubject().equals("")) {
 				noteLayout.addComponent(new Label(obj.getSubject()));
 			}
 
 			Label noteContent = new Label(obj.getNote(), Label.CONTENT_XHTML);
-			noteContent.setWidth("98%");
+			noteContent.setStyleName("noteContent");
+			noteContent.setWidth("100%");
 			noteLayout.addComponent(noteContent);
-			noteLayout.setComponentAlignment(noteContent,
-					Alignment.MIDDLE_CENTER);
 
 			HorizontalLayout footer = new HorizontalLayout();
 			SimpleDateFormat df = new SimpleDateFormat("EEE MMM dd, hh:mm aa");
 			Label metadata = new Label("Posted by " + obj.getCreateduser()
 					+ " on " + df.format(obj.getCreatedtime()));
 			footer.addComponent(metadata);
-			metadata.setSizeUndefined();
+			footer.setWidth("100%");
 			metadata.setStyleName("metadata");
 			footer.setComponentAlignment(metadata, Alignment.MIDDLE_RIGHT);
-			footer.setWidth("99%");
 			noteLayout.addComponent(footer);
 
 			List<Attachment> attachments = obj.getAttachments();
@@ -144,7 +142,6 @@ public class NoteListItems extends Depot {
 			}
 			return noteLayout;
 		}
-
 	}
 
 	private class NoteEditor extends VerticalLayout {
