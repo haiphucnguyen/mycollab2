@@ -4,6 +4,7 @@ import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -11,43 +12,49 @@ import com.vaadin.ui.VerticalLayout;
 
 public abstract class OpportunityFormLayoutFactory implements
         IFormLayoutFactory {
-
+    
     private static final long serialVersionUID = 1L;
     protected GridFormLayoutHelper informationLayout;
     protected GridFormLayoutHelper descriptionLayout;
-
+    
+    private String title;
+    
+    public OpportunityFormLayoutFactory(String title) {
+        this.title = title;
+    }
+    
     @Override
     public Layout getLayout() {
-        AddViewLayout opportunityAddLayout = new AddViewLayout("Opportunity");
+        AddViewLayout opportunityAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/crm/opportunity.png"));
         opportunityAddLayout.addTopControls(createTopPanel());
-
+        
         VerticalLayout layout = new VerticalLayout();
         layout.setSpacing(true);
-
+        
         Label organizationHeader = new Label("Account Information");
         organizationHeader.setStyleName("h2");
         layout.addComponent(organizationHeader);
-
+        
         informationLayout = new GridFormLayoutHelper(2, 6);
         informationLayout.getLayout().setWidth("900px");
         layout.addComponent(informationLayout.getLayout());
-
+        
         descriptionLayout = new GridFormLayoutHelper(2, 1);
         descriptionLayout.getLayout().setWidth("900px");
         Label descHeader = new Label("Description");
         descHeader.setStyleName("h2");
         layout.addComponent(descHeader);
         layout.addComponent(descriptionLayout.getLayout());
-
+        
         opportunityAddLayout.addBody(layout);
         opportunityAddLayout.addBottomControls(createBottomPanel());
         return opportunityAddLayout;
     }
-
+    
     protected abstract Layout createTopPanel();
-
+    
     protected abstract Layout createBottomPanel();
-
+    
     @Override
     public void attachField(Object propertyId, Field field) {
         if (propertyId.equals("opportunityname")) {

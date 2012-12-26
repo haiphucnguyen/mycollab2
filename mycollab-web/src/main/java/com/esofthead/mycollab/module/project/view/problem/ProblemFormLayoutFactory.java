@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.view.problem;
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -10,35 +11,40 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 public abstract class ProblemFormLayoutFactory implements IFormLayoutFactory {
-
+    
     private static final long serialVersionUID = 1L;
     private GridFormLayoutHelper informationLayout;
-
+    private String title;
+    
+    public ProblemFormLayoutFactory(String title) {
+        this.title = title;
+    }
+    
     @Override
     public Layout getLayout() {
-        AddViewLayout accountAddLayout = new AddViewLayout("Problem");
-
+        AddViewLayout accountAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/project/problem.png"));
+        
         accountAddLayout.addTopControls(createTopPanel());
-
+        
         VerticalLayout layout = new VerticalLayout();
-
+        
         Label organizationHeader = new Label("Problem Information");
         organizationHeader.setStyleName("h2");
         layout.addComponent(organizationHeader);
-
+        
         informationLayout = new GridFormLayoutHelper(2, 7);
         informationLayout.getLayout().setWidth("900px");
         layout.addComponent(informationLayout.getLayout());
         layout.setComponentAlignment(informationLayout.getLayout(),
                 Alignment.BOTTOM_CENTER);
-
+        
         accountAddLayout.addBottomControls(createBottomPanel());
-
+        
         accountAddLayout.addBody(layout);
-
+        
         return accountAddLayout;
     }
-
+    
     @Override
     public void attachField(Object propertyId, Field field) {
         if (propertyId.equals("issuename")) {
@@ -66,8 +72,8 @@ public abstract class ProblemFormLayoutFactory implements IFormLayoutFactory {
             informationLayout.addComponent(field, "Resolution", 0, 6, 2, "100%");
         }
     }
-
+    
     protected abstract Layout createTopPanel();
-
+    
     protected abstract Layout createBottomPanel();
 }

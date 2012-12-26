@@ -21,92 +21,92 @@ import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class CampaignReadViewImpl extends AbstractView implements
-		CampaignReadView {
-	private static final long serialVersionUID = 1L;
+        CampaignReadView {
 
-	private PreviewForm previewForm;
+    private static final long serialVersionUID = 1L;
+    private PreviewForm previewForm;
+    private SimpleCampaign campaign;
 
-	private SimpleCampaign campaign;
+    public CampaignReadViewImpl() {
+        super();
+        previewForm = new PreviewForm();
+        this.addComponent(previewForm);
+    }
 
-	public CampaignReadViewImpl() {
-		super();
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
-	}
+    @Override
+    public void previewItem(SimpleCampaign campaign) {
+        this.campaign = campaign;
+        previewForm.setItemDataSource(new BeanItem<Campaign>(campaign));
+    }
 
-	@Override
-	public void previewItem(SimpleCampaign campaign) {
-		this.campaign = campaign;
-		previewForm.setItemDataSource(new BeanItem<Campaign>(campaign));
-	}
+    @Override
+    public HasPreviewFormHandlers<Campaign> getPreviewFormHandlers() {
+        return previewForm;
+    }
 
-	@Override
-	public HasPreviewFormHandlers<Campaign> getPreviewFormHandlers() {
-		return previewForm;
-	}
+    private class PreviewForm extends AdvancedPreviewBeanForm<Campaign> {
 
-	private class PreviewForm extends AdvancedPreviewBeanForm<Campaign> {
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		@SuppressWarnings("serial")
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+        @SuppressWarnings("serial")
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+                @Override
+                protected Field onCreateField(Item item, Object propertyId,
+                        Component uiContext) {
+                    if (propertyId.equals("assignuser")) {
+                        return new FormLinkViewField(campaign
+                                .getAssignUserFullName(),
+                                new Button.ClickListener() {
+                                    @Override
+                                    public void buttonClick(ClickEvent event) {
+                                    }
+                                });
+                    } else if (propertyId.equals("startdate")) {
+                        return new FormViewField(AppContext.formatDate(campaign
+                                .getStartdate()));
+                    } else if (propertyId.equals("enddate")) {
+                        return new FormViewField(AppContext.formatDate(campaign
+                                .getEnddate()));
+                    }
 
-				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
-					if (propertyId.equals("assignuser")) {
-						return new FormLinkViewField(campaign
-								.getAssignUserFullName(),
-								new Button.ClickListener() {
+                    return null;
+                }
+            });
+            super.setItemDataSource(newDataSource);
+        }
 
-									@Override
-									public void buttonClick(ClickEvent event) {
+        class FormLayoutFactory extends CampaignFormLayoutFactory {
 
-									}
-								});
-					} else if (propertyId.equals("startdate")) {
-						return new FormViewField(AppContext.formatDate(campaign
-								.getStartdate()));
-					} else if (propertyId.equals("enddate")) {
-						return new FormViewField(AppContext.formatDate(campaign
-								.getEnddate()));
-					}
+            private static final long serialVersionUID = 1L;
+            
+            public FormLayoutFactory() {
+                super(campaign.getCampaignname());
+            }
 
-					return null;
-				}
+            @Override
+            protected Layout createTopPanel() {
+                return (new PreviewFormControlsGenerator<Campaign>(
+                        PreviewForm.this)).createButtonControls();
+            }
 
-			});
-			super.setItemDataSource(newDataSource);
-		}
+            @Override
+            protected Layout createBottomPanel() {
+                VerticalLayout relatedItemsPanel = new VerticalLayout();
 
-		class FormLayoutFactory extends CampaignFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+                relatedItemsPanel.addComponent(new NoteListItems(
+                        "Notes", "Campaign", campaign.getId()));
 
-			@Override
-			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<Campaign>(
-						PreviewForm.this)).createButtonControls();
-			}
+                return relatedItemsPanel;
 
-			@Override
-			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
+            }
+        }
+    }
 
-				relatedItemsPanel.addComponent(new NoteListItems(
-						"Notes", "Campaign", campaign.getId()));
-				
-				return relatedItemsPanel;
-
-			}
-		}
-	}
-
-	@Override
-	public SimpleCampaign getItem() {
-		return campaign;
-	}
-
+    @Override
+    public SimpleCampaign getItem() {
+        return campaign;
+    }
 }

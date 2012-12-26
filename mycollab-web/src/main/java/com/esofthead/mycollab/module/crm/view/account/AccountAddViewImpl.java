@@ -19,92 +19,97 @@ import com.vaadin.ui.TextField;
 
 @ViewComponent
 public class AccountAddViewImpl extends AbstractView implements AccountAddView,
-		IFormAddView<Account> {
-	private static final long serialVersionUID = 1L;
+        IFormAddView<Account> {
 
-	private EditForm editForm;
+    private static final long serialVersionUID = 1L;
+    private EditForm editForm;
+    private Account account;
 
-	private Account account;
+    public AccountAddViewImpl() {
+        super();
+        editForm = new EditForm();
+        this.addComponent(editForm);
+    }
 
-	public AccountAddViewImpl() {
-		super();
-		editForm = new EditForm();
-		this.addComponent(editForm);
-	}
+    @Override
+    public void editItem(Account account) {
+        this.account = account;
+        editForm.setItemDataSource(new BeanItem<Account>(account));
+    }
 
-	@Override
-	public void editItem(Account account) {
-		this.account = account;
-		editForm.setItemDataSource(new BeanItem<Account>(account));
-	}
+    private class EditForm extends AdvancedEditBeanForm<Account> {
 
-	private class EditForm extends AdvancedEditBeanForm<Account> {
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
-		}
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new EditFormFieldFactory());
+            super.setItemDataSource(newDataSource);
+        }
 
-		class FormLayoutFactory extends AccountFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+        class FormLayoutFactory extends AccountFormLayoutFactory {
 
-			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<Account>(EditForm.this))
-						.createButtonControls();
-			}
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			protected Layout createTopPanel() {
-				return createButtonControls();
-			}
+            public FormLayoutFactory() {
+                super("Create Account");
+            }
 
-			@Override
-			protected Layout createBottomPanel() {
-				return createButtonControls();
-			}
-		}
+            private Layout createButtonControls() {
+                return (new EditFormControlsGenerator<Account>(EditForm.this))
+                        .createButtonControls();
+            }
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-			private static final long serialVersionUID = 1L;
+            @Override
+            protected Layout createTopPanel() {
+                return createButtonControls();
+            }
 
-			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+            @Override
+            protected Layout createBottomPanel() {
+                return createButtonControls();
+            }
+        }
 
-				if ("type".equals(propertyId)) {
-					AccountTypeComboBox accountTypeBox = new AccountTypeComboBox();
-					return accountTypeBox;
-				} else if ("industry".equals(propertyId)) {
-					IndustryComboBox accountIndustryBox = new IndustryComboBox();
-					return accountIndustryBox;
-				} else if ("assignuser".equals(propertyId)) {
-					UserComboBox userBox = new UserComboBox();
-					userBox.select(account.getAssignuser());
-					return userBox;
-				} else if ("description".equals(propertyId)) {
-					TextArea textArea = new TextArea("", "");
-					return textArea;
-				}
+        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
-				if (propertyId.equals("accountname")) {
-					TextField tf = new TextField();
-					tf.setNullRepresentation("");
-					tf.setRequired(true);
-					tf.setRequiredError("Please enter an Account Name");
-					return tf;
-				}
+            private static final long serialVersionUID = 1L;
 
-				return null;
-			}
-		}
-	}
+            @Override
+            protected Field onCreateField(Item item, Object propertyId,
+                    com.vaadin.ui.Component uiContext) {
 
-	@Override
-	public HasEditFormHandlers<Account> getEditFormHandlers() {
-		return editForm;
-	}
+                if ("type".equals(propertyId)) {
+                    AccountTypeComboBox accountTypeBox = new AccountTypeComboBox();
+                    return accountTypeBox;
+                } else if ("industry".equals(propertyId)) {
+                    IndustryComboBox accountIndustryBox = new IndustryComboBox();
+                    return accountIndustryBox;
+                } else if ("assignuser".equals(propertyId)) {
+                    UserComboBox userBox = new UserComboBox();
+                    userBox.select(account.getAssignuser());
+                    return userBox;
+                } else if ("description".equals(propertyId)) {
+                    TextArea textArea = new TextArea("", "");
+                    return textArea;
+                }
 
+                if (propertyId.equals("accountname")) {
+                    TextField tf = new TextField();
+                    tf.setNullRepresentation("");
+                    tf.setRequired(true);
+                    tf.setRequiredError("Please enter an Account Name");
+                    return tf;
+                }
+
+                return null;
+            }
+        }
+    }
+
+    @Override
+    public HasEditFormHandlers<Account> getEditFormHandlers() {
+        return editForm;
+    }
 }

@@ -20,92 +20,98 @@ import com.vaadin.ui.TextField;
 
 @ViewComponent
 public class CampaignAddViewImpl extends AbstractView implements
-		IFormAddView<Campaign>, CampaignAddView {
-	private static final long serialVersionUID = 1L;
+        IFormAddView<Campaign>, CampaignAddView {
 
-	private EditForm editForm;
+    private static final long serialVersionUID = 1L;
+    private EditForm editForm;
+    private Campaign campaign;
 
-	private Campaign campaign;
+    public CampaignAddViewImpl() {
+        super();
+        editForm = new EditForm();
+        this.addComponent(editForm);
+    }
 
-	public CampaignAddViewImpl() {
-		super();
-		editForm = new EditForm();
-		this.addComponent(editForm);
-	}
+    @Override
+    public void editItem(Campaign campaign) {
+        this.campaign = campaign;
+        editForm.setItemDataSource(new BeanItem<Campaign>(campaign));
+    }
 
-	@Override
-	public void editItem(Campaign campaign) {
-		this.campaign = campaign;
-		editForm.setItemDataSource(new BeanItem<Campaign>(campaign));
-	}
+    private class EditForm extends AdvancedEditBeanForm<Campaign> {
 
-	private class EditForm extends AdvancedEditBeanForm<Campaign> {
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
-		}
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new EditFormFieldFactory());
+            super.setItemDataSource(newDataSource);
+        }
 
-		class FormLayoutFactory extends CampaignFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+        class FormLayoutFactory extends CampaignFormLayoutFactory {
 
-			private HorizontalLayout createButtonControls() {
-				return (new EditFormControlsGenerator<Campaign>(EditForm.this))
-						.createButtonControls();
-			}
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			protected Layout createTopPanel() {
-				return createButtonControls();
-			}
+            public FormLayoutFactory() {
+                super("Create Campaign");
+            }
 
-			@Override
-			protected Layout createBottomPanel() {
-				return createButtonControls();
-			}
-		}
+            private HorizontalLayout createButtonControls() {
+                return (new EditFormControlsGenerator<Campaign>(EditForm.this))
+                        .createButtonControls();
+            }
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-			private static final long serialVersionUID = 1L;
+            @Override
+            protected Layout createTopPanel() {
+                return createButtonControls();
+            }
 
-			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+            @Override
+            protected Layout createBottomPanel() {
+                return createButtonControls();
+            }
+        }
 
-				if ("type".equals(propertyId)) {
-					CampaignTypeComboBox typeCombo = new CampaignTypeComboBox();
-					typeCombo.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-					return typeCombo;
-				} else if ("status".equals(propertyId)) {
-					CampaignStatusComboBox statusCombo = new CampaignStatusComboBox();
-					statusCombo.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-					return statusCombo;
-				} else if ("campaignname".equals(propertyId)) {
-					TextField tf = new TextField();
-					tf.setNullRepresentation("");
-					tf.setRequired(true);
-					tf.setRequiredError("Name must not be null");
-					return tf;
-				} else if ("description".equals(propertyId)) {
-					TextArea descArea = new TextArea();
-					descArea.setNullRepresentation("");
-					return descArea;
-				} else if ("assignuser".equals(propertyId)) {
-					UserComboBox userBox = new UserComboBox();
-					userBox.select(campaign.getAssignuser());
-					return userBox;
-				}
+        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
-				return null;
-			}
-		}
-	}
+            private static final long serialVersionUID = 1L;
 
-	@Override
-	public HasEditFormHandlers<Campaign> getEditFormHandlers() {
-		return editForm;
-	}
+            @Override
+            protected Field onCreateField(Item item, Object propertyId,
+                    com.vaadin.ui.Component uiContext) {
+
+                if ("type".equals(propertyId)) {
+                    CampaignTypeComboBox typeCombo = new CampaignTypeComboBox();
+                    typeCombo.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+                    return typeCombo;
+                } else if ("status".equals(propertyId)) {
+                    CampaignStatusComboBox statusCombo = new CampaignStatusComboBox();
+                    statusCombo.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+                    return statusCombo;
+                } else if ("campaignname".equals(propertyId)) {
+                    TextField tf = new TextField();
+                    tf.setNullRepresentation("");
+                    tf.setRequired(true);
+                    tf.setRequiredError("Name must not be null");
+                    return tf;
+                } else if ("description".equals(propertyId)) {
+                    TextArea descArea = new TextArea();
+                    descArea.setNullRepresentation("");
+                    return descArea;
+                } else if ("assignuser".equals(propertyId)) {
+                    UserComboBox userBox = new UserComboBox();
+                    userBox.select(campaign.getAssignuser());
+                    return userBox;
+                }
+
+                return null;
+            }
+        }
+    }
+
+    @Override
+    public HasEditFormHandlers<Campaign> getEditFormHandlers() {
+        return editForm;
+    }
 }

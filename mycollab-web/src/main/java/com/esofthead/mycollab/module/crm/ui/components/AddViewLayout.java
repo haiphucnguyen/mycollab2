@@ -10,24 +10,28 @@ import com.vaadin.ui.Label;
 public class AddViewLayout extends CustomLayout {
 
     private static final long serialVersionUID = 1L;
+    
     private final HorizontalLayout header;
+    
+    private Label titleLbl;
+    Embedded icon;
 
-    public AddViewLayout(String section) {
+    public AddViewLayout(String title, ThemeResource resource) {
         super("addView");
-        String sectionName = section.substring(0, 1).toUpperCase()
-                + section.substring(1).toLowerCase();
-        // this.setSizeUndefined();
+        String sectionName = title.substring(0, 1).toUpperCase()
+                + title.substring(1).toLowerCase();
+        
         this.header = new HorizontalLayout();
         this.header.setStyleName("addViewHeader");
         this.header.addStyleName("create" + sectionName + "header");
-        Embedded icon = new Embedded();
-        icon.setSource(new ThemeResource("icons/48/crm/"
-                + section.toLowerCase() + ".png"));
+        
+        icon= new Embedded();
+        icon.setSource(resource);
         this.header.addComponent(icon);
-        Label headerName = new Label("Create " + sectionName);
-        headerName.setWidth("100%");
-        headerName.setStyleName("headerName");
-        this.header.addComponent(headerName);
+        titleLbl = new Label(title);
+        titleLbl.setWidth("100%");
+        titleLbl.setStyleName("headerName");
+        this.header.addComponent(titleLbl);
         this.addComponent(header, "addViewHeader");
     }
 

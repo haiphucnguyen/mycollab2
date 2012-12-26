@@ -31,148 +31,148 @@ import com.vaadin.ui.Button.ClickEvent;
 
 @ViewComponent
 public class AccountReadViewImpl extends AbstractView implements
-		AccountReadView {
-	private static final long serialVersionUID = 1L;
+        AccountReadView {
 
-	private SimpleAccount account;
+    private static final long serialVersionUID = 1L;
+    private SimpleAccount account;
+    private PreviewForm previewForm;
+    private ContactListComp associateContactList;
+    private OpportunityListComp associateOpportunityList;
+    private LeadListComp associateLeadList;
 
-	private PreviewForm previewForm;
+    public AccountReadViewImpl() {
+        super();
+        previewForm = new PreviewForm();
 
-	private ContactListComp associateContactList;
+        associateContactList = new ContactListComp();
+        associateOpportunityList = new OpportunityListComp();
+        associateLeadList = new LeadListComp();
 
-	private OpportunityListComp associateOpportunityList;
+        this.addComponent(previewForm);
+    }
 
-	private LeadListComp associateLeadList;
+    @Override
+    public void previewItem(SimpleAccount item) {
+        account = item;
+        previewForm.setItemDataSource(new BeanItem<Account>(account));
+        displayAssociateContactList();
+        displayAssociateOpportunityList();
+        displayAssociateLeadList();
+    }
 
-	public AccountReadViewImpl() {
-		super();
-		previewForm = new PreviewForm();
+    private void displayAssociateContactList() {
+        ContactSearchCriteria criteria = new ContactSearchCriteria();
+        criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+                AppContext.getAccountId()));
+        criteria.setAccountId(new NumberSearchField(SearchField.AND, account
+                .getId()));
+        associateContactList.setSearchCriteria(criteria);
+    }
 
-		associateContactList = new ContactListComp();
-		associateOpportunityList = new OpportunityListComp();
-		associateLeadList = new LeadListComp();
+    private void displayAssociateOpportunityList() {
+        OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+        criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+                AppContext.getAccountId()));
+        criteria.setAccountId(new NumberSearchField(SearchField.AND, account
+                .getId()));
+        associateOpportunityList.setSearchCriteria(criteria);
+    }
 
-		this.addComponent(previewForm);
-	}
+    private void displayAssociateLeadList() {
+        LeadSearchCriteria criteria = new LeadSearchCriteria();
+        criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+                AppContext.getAccountId()));
+        criteria.setAccountName(new StringSearchField(SearchField.AND, account
+                .getAccountname()));
+        associateLeadList.setSearchCriteria(criteria);
+    }
 
-	@Override
-	public void previewItem(SimpleAccount item) {
-		account = item;
-		previewForm.setItemDataSource(new BeanItem<Account>(account));
-		displayAssociateContactList();
-		displayAssociateOpportunityList();
-		displayAssociateLeadList();
-	}
+    @Override
+    public HasPreviewFormHandlers<Account> getPreviewFormHandlers() {
+        return previewForm;
+    }
 
-	private void displayAssociateContactList() {
-		ContactSearchCriteria criteria = new ContactSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		criteria.setAccountId(new NumberSearchField(SearchField.AND, account
-				.getId()));
-		associateContactList.setSearchCriteria(criteria);
-	}
+    private class PreviewForm extends AdvancedPreviewBeanForm<Account> {
 
-	private void displayAssociateOpportunityList() {
-		OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		criteria.setAccountId(new NumberSearchField(SearchField.AND, account
-				.getId()));
-		associateOpportunityList.setSearchCriteria(criteria);
-	}
+        private static final long serialVersionUID = 1L;
 
-	private void displayAssociateLeadList() {
-		LeadSearchCriteria criteria = new LeadSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		criteria.setAccountName(new StringSearchField(SearchField.AND, account
-				.getAccountname()));
-		associateLeadList.setSearchCriteria(criteria);
-	}
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+                private static final long serialVersionUID = 1L;
 
-	@Override
-	public HasPreviewFormHandlers<Account> getPreviewFormHandlers() {
-		return previewForm;
-	}
+                @Override
+                protected Field onCreateField(Item item, Object propertyId,
+                        Component uiContext) {
+                    if (propertyId.equals("email")) {
+                        return new FormEmailLinkViewField(account.getEmail());
+                    } else if (propertyId.equals("assignuser")) {
+                        return new FormLinkViewField(account
+                                .getAssignUserFullName(),
+                                new Button.ClickListener() {
+                                    private static final long serialVersionUID = 1L;
 
-	private class PreviewForm extends AdvancedPreviewBeanForm<Account> {
-		private static final long serialVersionUID = 1L;
+                                    @Override
+                                    public void buttonClick(ClickEvent event) {
+                                        // TODO Auto-generated method stub
+                                    }
+                                });
+                    }
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-				private static final long serialVersionUID = 1L;
+                    return null;
+                }
+            });
+            super.setItemDataSource(newDataSource);
+        }
 
-				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
-					if (propertyId.equals("email")) {
-						return new FormEmailLinkViewField(account.getEmail());
-					} else if (propertyId.equals("assignuser")) {
-						return new FormLinkViewField(account
-								.getAssignUserFullName(),
-								new Button.ClickListener() {
-									private static final long serialVersionUID = 1L;
+        class FormLayoutFactory extends AccountFormLayoutFactory {
 
-									@Override
-									public void buttonClick(ClickEvent event) {
-										// TODO Auto-generated method stub
+            private static final long serialVersionUID = 1L;
 
-									}
-								});
-					}
+            public FormLayoutFactory() {
+                super(account.getAccountname());
+            }
 
-					return null;
-				}
-			});
-			super.setItemDataSource(newDataSource);
-		}
+            @Override
+            protected Layout createTopPanel() {
+                return (new PreviewFormControlsGenerator<Account>(
+                        PreviewForm.this)).createButtonControls();
+            }
 
-		class FormLayoutFactory extends AccountFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+            @Override
+            protected Layout createBottomPanel() {
+                VerticalLayout relatedItemsPanel = new VerticalLayout();
 
-			@Override
-			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<Account>(
-						PreviewForm.this)).createButtonControls();
-			}
+                relatedItemsPanel.addComponent(new NoteListItems(
+                        "Notes", "Account", account.getId()));
 
-			@Override
-			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
+                relatedItemsPanel.addComponent(associateContactList);
+                relatedItemsPanel.addComponent(associateOpportunityList);
+                relatedItemsPanel.addComponent(associateLeadList);
 
-				relatedItemsPanel.addComponent(new NoteListItems(
-						"Notes", "Account", account.getId()));
+                return relatedItemsPanel;
+            }
+        }
+    }
 
-				relatedItemsPanel.addComponent(associateContactList);
-				relatedItemsPanel.addComponent(associateOpportunityList);
-				relatedItemsPanel.addComponent(associateLeadList);
+    @Override
+    public SimpleAccount getItem() {
+        return account;
+    }
 
-				return relatedItemsPanel;
-			}
-		}
-	}
+    @Override
+    public IRelatedListHandlers getRelatedContactHandlers() {
+        return associateContactList;
+    }
 
-	@Override
-	public SimpleAccount getItem() {
-		return account;
-	}
+    @Override
+    public IRelatedListHandlers getRelatedOpportunityHandlers() {
+        return associateOpportunityList;
+    }
 
-	@Override
-	public IRelatedListHandlers getRelatedContactHandlers() {
-		return associateContactList;
-	}
-
-	@Override
-	public IRelatedListHandlers getRelatedOpportunityHandlers() {
-		return associateOpportunityList;
-	}
-
-	@Override
-	public IRelatedListHandlers getRelatedLeadHandlers() {
-		return associateLeadList;
-	}
-
+    @Override
+    public IRelatedListHandlers getRelatedLeadHandlers() {
+        return associateLeadList;
+    }
 }

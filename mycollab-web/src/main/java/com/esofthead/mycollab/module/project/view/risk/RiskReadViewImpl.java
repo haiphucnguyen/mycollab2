@@ -90,6 +90,10 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 
             private static final long serialVersionUID = 1L;
 
+            public FormLayoutFactory() {
+                super(risk.getRiskname());
+            }
+
             @Override
             protected Layout createTopPanel() {
                 return (new PreviewFormControlsGenerator<Risk>(PreviewForm.this))

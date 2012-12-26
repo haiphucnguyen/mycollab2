@@ -21,91 +21,95 @@ import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class TaskReadViewImpl extends AbstractView implements TaskReadView {
-	private static final long serialVersionUID = 1L;
 
-	private PreviewForm previewForm;
+    private static final long serialVersionUID = 1L;
+    private PreviewForm previewForm;
+    private SimpleTask task;
 
-	private SimpleTask task;
+    public TaskReadViewImpl() {
+        super();
+        previewForm = new PreviewForm();
+        this.addComponent(previewForm);
+    }
 
-	public TaskReadViewImpl() {
-		super();
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
-	}
+    @Override
+    public void previewItem(SimpleTask task) {
+        this.task = task;
+        previewForm.setItemDataSource(new BeanItem<Task>(task));
+    }
 
-	@Override
-	public void previewItem(SimpleTask task) {
-		this.task = task;
-		previewForm.setItemDataSource(new BeanItem<Task>(task));
-	}
+    @Override
+    public HasPreviewFormHandlers<Task> getPreviewFormHandlers() {
+        return previewForm;
+    }
 
-	@Override
-	public HasPreviewFormHandlers<Task> getPreviewFormHandlers() {
-		return previewForm;
-	}
+    private class PreviewForm extends AdvancedPreviewBeanForm<Task> {
 
-	private class PreviewForm extends AdvancedPreviewBeanForm<Task> {
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-				private static final long serialVersionUID = 1L;
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+                private static final long serialVersionUID = 1L;
 
-				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
-					if (propertyId.equals("assignuser")) {
-						return new FormLinkViewField(task
-								.getAssignUserFullName(),
-								new Button.ClickListener() {
-									private static final long serialVersionUID = 1L;
+                @Override
+                protected Field onCreateField(Item item, Object propertyId,
+                        Component uiContext) {
+                    if (propertyId.equals("assignuser")) {
+                        return new FormLinkViewField(task
+                                .getAssignUserFullName(),
+                                new Button.ClickListener() {
+                                    private static final long serialVersionUID = 1L;
 
-									@Override
-									public void buttonClick(ClickEvent event) {
-									}
-								});
-					} else if (propertyId.equals("startdate")) {
-						return new FormViewField(AppContext.formatDateTime(task
-								.getStartdate()));
-					} else if (propertyId.equals("duedate")) {
-						return new FormViewField(AppContext.formatDateTime(task
-								.getDuedate()));
-					} else if (propertyId.equals("contactid")) {
-						return new FormViewField(task.getContactName());
-					} else if (propertyId.equals("type")) {
-						return new RelatedReadItemField(task);
+                                    @Override
+                                    public void buttonClick(ClickEvent event) {
+                                    }
+                                });
+                    } else if (propertyId.equals("startdate")) {
+                        return new FormViewField(AppContext.formatDateTime(task
+                                .getStartdate()));
+                    } else if (propertyId.equals("duedate")) {
+                        return new FormViewField(AppContext.formatDateTime(task
+                                .getDuedate()));
+                    } else if (propertyId.equals("contactid")) {
+                        return new FormViewField(task.getContactName());
+                    } else if (propertyId.equals("type")) {
+                        return new RelatedReadItemField(task);
 
-					}
+                    }
 
-					return null;
-				}
+                    return null;
+                }
+            });
+            super.setItemDataSource(newDataSource);
+        }
 
-			});
-			super.setItemDataSource(newDataSource);
-		}
+        class FormLayoutFactory extends TaskFormLayoutFactory {
 
-		class FormLayoutFactory extends TaskFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<Task>(PreviewForm.this))
-						.createButtonControls();
-			}
+            public FormLayoutFactory() {
+                super(task.getSubject());
+            }
 
-			@Override
-			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
+            @Override
+            protected Layout createTopPanel() {
+                return (new PreviewFormControlsGenerator<Task>(PreviewForm.this))
+                        .createButtonControls();
+            }
 
-				return relatedItemsPanel;
-			}
-		}
-	}
+            @Override
+            protected Layout createBottomPanel() {
+                VerticalLayout relatedItemsPanel = new VerticalLayout();
 
-	@Override
-	public SimpleTask getItem() {
-		return task;
-	}
+                return relatedItemsPanel;
+            }
+        }
+    }
+
+    @Override
+    public SimpleTask getItem() {
+        return task;
+    }
 }
