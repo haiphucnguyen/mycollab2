@@ -1,9 +1,5 @@
 package com.esofthead.mycollab.module.project.view.problem;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProblemService;
@@ -18,170 +14,167 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
-		implements ListPresenter<ProblemSearchCriteria> {
-	private static final long serialVersionUID = 1L;
+        implements ListPresenter<ProblemSearchCriteria> {
 
-	private ProblemService problemService;
+    private static final long serialVersionUID = 1L;
+    private ProblemService problemService;
+    private ProblemSearchCriteria searchCriteria;
+    private boolean isSelectAll = false;
 
-	private ProblemSearchCriteria searchCriteria;
+    public ProblemListPresenter() {
+        super(ProblemListView.class);
 
-	private boolean isSelectAll = false;
+        problemService = AppContext.getSpringBean(ProblemService.class);
 
-	public ProblemListPresenter() {
-		super(ProblemListView.class);
+        view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+            private static final long serialVersionUID = 1L;
 
-		problemService = AppContext.getSpringBean(ProblemService.class);
+            @Override
+            public void move(int newPageNumber) {
+                pageChange();
+            }
 
-		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
-			private static final long serialVersionUID = 1L;
+            @Override
+            public void displayItemChange(int numOfItems) {
+                pageChange();
+            }
 
-			@Override
-			public void move(int newPageNumber) {
-				pageChange();
-			}
+            private void pageChange() {
+                if (isSelectAll) {
+                    selectAllItemsInCurrentPage();
+                }
 
-			@Override
-			public void displayItemChange(int numOfItems) {
-				pageChange();
-			}
+                checkWhetherEnableTableActionControl();
+            }
+        });
 
-			private void pageChange() {
-				if (isSelectAll) {
-					selectAllItemsInCurrentPage();
-				}
+        view.getSearchHandlers().addSearchHandler(
+                new SearchHandler<ProblemSearchCriteria>() {
+                    @Override
+                    public void onSearch(ProblemSearchCriteria criteria) {
+                        doSearch(criteria);
+                    }
+                });
 
-				checkWhetherEnableTableActionControl();
-			}
-		});
+        view.getOptionSelectionHandlers().addSelectionOptionHandler(
+                new SelectionOptionHandler() {
+                    @Override
+                    public void onSelectCurrentPage() {
+                        isSelectAll = false;
+                        selectAllItemsInCurrentPage();
 
-		view.getSearchHandlers().addSearchHandler(
-				new SearchHandler<ProblemSearchCriteria>() {
+                        checkWhetherEnableTableActionControl();
+                    }
 
-					@Override
-					public void onSearch(ProblemSearchCriteria criteria) {
-						doSearch(criteria);
-					}
-				});
+                    @Override
+                    public void onDeSelect() {
+                        Collection<SimpleProblem> currentDataList = view
+                                .getPagedBeanTable().getCurrentDataList();
+                        isSelectAll = false;
+                        for (SimpleProblem item : currentDataList) {
+                            item.setSelected(false);
+                            CheckBox checkBox = (CheckBox) item.getExtraData();
+                            checkBox.setValue(false);
+                        }
 
-		view.getOptionSelectionHandlers().addSelectionOptionHandler(
-				new SelectionOptionHandler() {
+                        checkWhetherEnableTableActionControl();
 
-					@Override
-					public void onSelectCurrentPage() {
-						isSelectAll = false;
-						selectAllItemsInCurrentPage();
+                    }
 
-						checkWhetherEnableTableActionControl();
-					}
+                    @Override
+                    public void onSelectAll() {
+                        isSelectAll = true;
+                        selectAllItemsInCurrentPage();
+                    }
+                });
 
-					@Override
-					public void onDeSelect() {
-						Collection<SimpleProblem> currentDataList = view
-								.getPagedBeanTable().getCurrentDataList();
-						isSelectAll = false;
-						for (SimpleProblem item : currentDataList) {
-							item.setSelected(false);
-							CheckBox checkBox = (CheckBox) item.getExtraData();
-							checkBox.setValue(false);
-						}
+        view.getPopupActionHandlers().addPopupActionHandler(
+                new PopupActionHandler() {
+                    @Override
+                    public void onSelect(String id, String caption) {
+                        if ("delete".equals(id)) {
+                            deleteSelectedItems();
+                        }
+                    }
+                });
 
-						checkWhetherEnableTableActionControl();
+        view.getSelectableItemHandlers().addSelectableItemHandler(
+                new SelectableItemHandler<SimpleProblem>() {
+                    @Override
+                    public void onSelect(SimpleProblem item) {
+                        isSelectAll = false;
+                        item.setSelected(!item.isSelected());
 
-					}
+                        checkWhetherEnableTableActionControl();
+                    }
+                });
+    }
 
-					@Override
-					public void onSelectAll() {
-						isSelectAll = true;
-						selectAllItemsInCurrentPage();
-					}
-				});
+    private void selectAllItemsInCurrentPage() {
+        Collection<SimpleProblem> currentDataList = view.getPagedBeanTable()
+                .getCurrentDataList();
+        for (SimpleProblem item : currentDataList) {
+            item.setSelected(true);
+            CheckBox checkBox = (CheckBox) item.getExtraData();
+            checkBox.setValue(true);
+        }
+    }
 
-		view.getPopupActionHandlers().addPopupActionHandler(
-				new PopupActionHandler() {
+    private void checkWhetherEnableTableActionControl() {
+        Collection<SimpleProblem> currentDataList = view.getPagedBeanTable()
+                .getCurrentDataList();
+        int countItems = 0;
+        for (SimpleProblem item : currentDataList) {
+            if (item.isSelected()) {
+                countItems++;
+            }
+        }
+        if (countItems > 0) {
+            view.enableActionControls(countItems);
+        } else {
+            view.disableActionControls();
+        }
+    }
 
-					@Override
-					public void onSelect(String id, String caption) {
-						if ("delete".equals(id)) {
-							deleteSelectedItems();
-						}
-					}
-				});
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        ProblemContainer problemContainer = (ProblemContainer) container;
+        problemContainer.removeAllComponents();;
+        problemContainer.addComponent(view.getWidget());
 
-		view.getSelectableItemHandlers().addSelectableItemHandler(
-				new SelectableItemHandler<SimpleProblem>() {
+        doSearch((ProblemSearchCriteria) data.getParams());
+    }
 
-					@Override
-					public void onSelect(SimpleProblem item) {
-						isSelectAll = false;
-						item.setSelected(!item.isSelected());
+    @Override
+    public void doSearch(ProblemSearchCriteria searchCriteria) {
+        this.searchCriteria = searchCriteria;
+        view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+        checkWhetherEnableTableActionControl();
+    }
 
-						checkWhetherEnableTableActionControl();
-					}
-				});
-	}
+    private void deleteSelectedItems() {
+        if (!isSelectAll) {
+            Collection<SimpleProblem> currentDataList = view.getPagedBeanTable()
+                    .getCurrentDataList();
+            List<Integer> keyList = new ArrayList<Integer>();
+            for (SimpleProblem item : currentDataList) {
+                keyList.add(item.getId());
+            }
 
-	private void selectAllItemsInCurrentPage() {
-		Collection<SimpleProblem> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		for (SimpleProblem item : currentDataList) {
-			item.setSelected(true);
-			CheckBox checkBox = (CheckBox) item.getExtraData();
-			checkBox.setValue(true);
-		}
-	}
+            if (keyList.size() > 0) {
+                problemService.removeWithSession(keyList,
+                        AppContext.getUsername());
+                doSearch(searchCriteria);
+            }
+        } else {
+            problemService.removeByCriteria(searchCriteria);
+            doSearch(searchCriteria);
+        }
 
-	private void checkWhetherEnableTableActionControl() {
-		Collection<SimpleProblem> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		int countItems = 0;
-		for (SimpleProblem item : currentDataList) {
-			if (item.isSelected()) {
-				countItems++;
-			}
-		}
-		if (countItems > 0) {
-			view.enableActionControls(countItems);
-		} else {
-			view.disableActionControls();
-		}
-	}
-
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		ProblemContainer problemContainer = (ProblemContainer) container;
-		problemContainer.addComponent(view.getWidget());
-
-		doSearch((ProblemSearchCriteria) data.getParams());
-	}
-
-	@Override
-	public void doSearch(ProblemSearchCriteria searchCriteria) {
-		this.searchCriteria = searchCriteria;
-		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
-		checkWhetherEnableTableActionControl();
-	}
-
-	private void deleteSelectedItems() {
-		if (!isSelectAll) {
-			Collection<SimpleProblem> currentDataList = view.getPagedBeanTable()
-					.getCurrentDataList();
-			List<Integer> keyList = new ArrayList<Integer>();
-			for (SimpleProblem item : currentDataList) {
-				keyList.add(item.getId());
-			}
-
-			if (keyList.size() > 0) {
-				problemService.removeWithSession(keyList,
-						AppContext.getUsername());
-				doSearch(searchCriteria);
-			}
-		} else {
-			problemService.removeByCriteria(searchCriteria);
-			doSearch(searchCriteria);
-		}
-
-	}
-
+    }
 }

@@ -27,6 +27,7 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         ProblemContainer problemContainer = (ProblemContainer) container;
+        problemContainer.removeAllComponents();
         problemContainer.addComponent(view.getWidget());
         view.editItem((Problem) data.getParams());
     }
@@ -67,7 +68,7 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
                 .getVariable(ProjectContants.PROJECT_NAME);
         problem.setProjectid(project.getId());
         problem.setSaccountid(AppContext.getAccountId());
-        
+
         if (problem.getId() == null) {
             problemService.saveWithSession(problem, AppContext.getUsername());
         } else {

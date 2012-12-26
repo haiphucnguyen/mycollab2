@@ -212,6 +212,23 @@ public class ProjectController {
                                 criteria));
                     }
                 });
+        
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<ProblemEvent.GotoEdit>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return ProblemEvent.GotoEdit.class;
+                    }
+
+                    @Override
+                    public void handle(ProblemEvent.GotoEdit event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        ScreenData.Edit<Problem> data = new ScreenData.Edit<Problem>(
+                                (Problem) event.getData());
+                        projectView.gotoProblemView(data);
+                    }
+                });
     }
 
     @SuppressWarnings("serial")

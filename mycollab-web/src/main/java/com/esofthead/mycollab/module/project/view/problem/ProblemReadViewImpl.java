@@ -89,9 +89,6 @@ public class ProblemReadViewImpl extends AbstractView implements ProblemReadView
             protected Layout createBottomPanel() {
                 VerticalLayout relatedItemsPanel = new VerticalLayout();
 
-                relatedItemsPanel.addComponent(new NoteListItems(
-                        "Notes", "Problem", problem.getId()));
-
                 return relatedItemsPanel;
             }
         }
