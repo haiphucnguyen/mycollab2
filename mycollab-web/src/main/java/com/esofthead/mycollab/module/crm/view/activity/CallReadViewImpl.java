@@ -21,108 +21,117 @@ import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class CallReadViewImpl extends AbstractView implements CallReadView {
-	private static final long serialVersionUID = 1L;
 
-	private PreviewForm previewForm;
+    private static final long serialVersionUID = 1L;
+    private PreviewForm previewForm;
+    private SimpleCall call;
 
-	private SimpleCall call;
+    public CallReadViewImpl() {
+        super();
+        previewForm = new PreviewForm();
+        this.addComponent(previewForm);
+    }
 
-	public CallReadViewImpl() {
-		super();
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
-	}
+    @Override
+    public void previewItem(SimpleCall call) {
+        this.call = call;
+        previewForm.setItemDataSource(new BeanItem<Call>(call));
+    }
 
-	@Override
-	public void previewItem(SimpleCall call) {
-		this.call = call;
-		previewForm.setItemDataSource(new BeanItem<Call>(call));
-	}
+    @Override
+    public HasPreviewFormHandlers<SimpleCall> getPreviewFormHandlers() {
+        return previewForm;
+    }
 
-	@Override
-	public HasPreviewFormHandlers<SimpleCall> getPreviewFormHandlers() {
-		return previewForm;
-	}
+    @Override
+    public void doPrint() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
-	private class PreviewForm extends AdvancedPreviewBeanForm<SimpleCall> {
-		private static final long serialVersionUID = 1L;
+    private class PreviewForm extends AdvancedPreviewBeanForm<SimpleCall> {
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-				private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
-					if (propertyId.equals("assignuser")) {
-						return new FormLinkViewField(call
-								.getAssignUserFullName(),
-								new Button.ClickListener() {
-									private static final long serialVersionUID = 1L;
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+                private static final long serialVersionUID = 1L;
 
-									@Override
-									public void buttonClick(ClickEvent event) {
-									}
-								});
-					} else if (propertyId.equals("type")) {
-						return new RelatedReadItemField(call);
-					} else if (propertyId.equals("status")) {
-						String value = call.getStatus() + " "
-								+ call.getCalltype();
-						FormViewField field = new FormViewField(value);
-						return field;
-					} else if (propertyId.equals("durationinseconds")) {
-						Integer duration = call.getDurationinseconds();
-						if (duration != null && duration != 0) {
-							int hours = duration / 3600;
-							int minutes = (duration % 3600) / 60;
-							StringBuffer value = new StringBuffer();
-							if (hours == 1) {
-								value.append("1 hour ");
-							} else if (hours >= 2) {
-								value.append(hours + " hours ");
-							}
+                @Override
+                protected Field onCreateField(Item item, Object propertyId,
+                        Component uiContext) {
+                    if (propertyId.equals("assignuser")) {
+                        return new FormLinkViewField(call
+                                .getAssignUserFullName(),
+                                new Button.ClickListener() {
+                                    private static final long serialVersionUID = 1L;
 
-							if (minutes > 0) {
-								value.append(minutes + " minutes");
-							}
+                                    @Override
+                                    public void buttonClick(ClickEvent event) {
+                                    }
+                                });
+                    } else if (propertyId.equals("type")) {
+                        return new RelatedReadItemField(call);
+                    } else if (propertyId.equals("status")) {
+                        String value = call.getStatus() + " "
+                                + call.getCalltype();
+                        FormViewField field = new FormViewField(value);
+                        return field;
+                    } else if (propertyId.equals("durationinseconds")) {
+                        Integer duration = call.getDurationinseconds();
+                        if (duration != null && duration != 0) {
+                            int hours = duration / 3600;
+                            int minutes = (duration % 3600) / 60;
+                            StringBuffer value = new StringBuffer();
+                            if (hours == 1) {
+                                value.append("1 hour ");
+                            } else if (hours >= 2) {
+                                value.append(hours + " hours ");
+                            }
 
-							return new FormViewField(value.toString());
-						} else {
-							return new FormViewField("");
-						}
-					} else if (propertyId.equals("startdate")) {
-						return new FormViewField(AppContext.formatDateTime(call
-								.getStartdate()));
-					}
+                            if (minutes > 0) {
+                                value.append(minutes + " minutes");
+                            }
 
-					return null;
-				}
-			});
-			super.setItemDataSource(newDataSource);
-		}
+                            return new FormViewField(value.toString());
+                        } else {
+                            return new FormViewField("");
+                        }
+                    } else if (propertyId.equals("startdate")) {
+                        return new FormViewField(AppContext.formatDateTime(call
+                                .getStartdate()));
+                    }
 
-		class FormLayoutFactory extends CallFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+                    return null;
+                }
+            });
+            super.setItemDataSource(newDataSource);
+        }
 
-			@Override
-			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<SimpleCall>(
-						PreviewForm.this)).createButtonControls();
-			}
+        class FormLayoutFactory extends CallFormLayoutFactory {
 
-			@Override
-			protected Layout createBottomPanel() {
-				return new VerticalLayout();
-			}
-		}
-	}
+            private static final long serialVersionUID = 1L;
 
-	@Override
-	public SimpleCall getItem() {
-		return call;
-	}
+            public FormLayoutFactory() {
+                super(call.getSubject());
+            }
 
+            @Override
+            protected Layout createTopPanel() {
+                return (new PreviewFormControlsGenerator<SimpleCall>(
+                        PreviewForm.this)).createButtonControls();
+            }
+
+            @Override
+            protected Layout createBottomPanel() {
+                return new VerticalLayout();
+            }
+        }
+    }
+
+    @Override
+    public SimpleCall getItem() {
+        return call;
+    }
 }

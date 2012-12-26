@@ -16,78 +16,84 @@ import com.vaadin.ui.TextArea;
 
 @ViewComponent
 public class BugAddViewImpl extends AbstractView implements BugAddView {
-	private static final long serialVersionUID = 1L;
 
-	private EditForm editForm;
+    private static final long serialVersionUID = 1L;
+    private EditForm editForm;
+    private SimpleBug bug;
 
-	private SimpleBug bug;
+    public BugAddViewImpl() {
+        super();
+        editForm = new EditForm();
+        this.addComponent(editForm);
+    }
 
-	public BugAddViewImpl() {
-		super();
-		editForm = new EditForm();
-		this.addComponent(editForm);
-	}
+    @Override
+    public void editItem(SimpleBug item) {
+        this.bug = item;
+        editForm.setItemDataSource(new BeanItem<Bug>(item));
+    }
 
-	@Override
-	public void editItem(SimpleBug item) {
-		this.bug = item;
-		editForm.setItemDataSource(new BeanItem<Bug>(item));
-	}
+    private class EditForm extends AdvancedEditBeanForm<SimpleBug> {
 
-	private class EditForm extends AdvancedEditBeanForm<SimpleBug> {
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
-		}
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new EditFormFieldFactory());
+            super.setItemDataSource(newDataSource);
+        }
 
-		class FormLayoutFactory extends BugAddFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+        class FormLayoutFactory extends BugAddFormLayoutFactory {
 
-			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<SimpleBug>(EditForm.this))
-						.createButtonControls();
-			}
+            private static final long serialVersionUID = 1L;
+            
+            public FormLayoutFactory() {
+                super("Create Bug");
+            }
 
-			@Override
-			protected Layout createTopPanel() {
-				return createButtonControls();
-			}
+            private Layout createButtonControls() {
+                return (new EditFormControlsGenerator<SimpleBug>(EditForm.this))
+                        .createButtonControls();
+            }
 
-			@Override
-			protected Layout createBottomPanel() {
-				return createButtonControls();
-			}
-		}
+            @Override
+            protected Layout createTopPanel() {
+                return createButtonControls();
+            }
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-			private static final long serialVersionUID = 1L;
+            @Override
+            protected Layout createBottomPanel() {
+                return createButtonControls();
+            }
+        }
 
-			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
-				if (propertyId.equals("environment")) {
-					TextArea field = new TextArea("", "");
-					field.setNullRepresentation("");
-					return field;
-				} else if (propertyId.equals("description")) {
-					TextArea field = new TextArea("", "");
-					field.setNullRepresentation("");
-					return field;
-				} else if (propertyId.equals("priority")) {
-					return new BugPriorityComboBox();
-				}
-				return null;
-			}
-		}
-	}
+            private static final long serialVersionUID = 1L;
 
-	@Override
-	public HasEditFormHandlers<SimpleBug> getEditFormHandlers() {
-		return editForm;
-	}
+            @Override
+            protected Field onCreateField(Item item, Object propertyId,
+                    com.vaadin.ui.Component uiContext) {
+
+                if (propertyId.equals("environment")) {
+                    TextArea field = new TextArea("", "");
+                    field.setNullRepresentation("");
+                    return field;
+                } else if (propertyId.equals("description")) {
+                    TextArea field = new TextArea("", "");
+                    field.setNullRepresentation("");
+                    return field;
+                } else if (propertyId.equals("priority")) {
+                    return new BugPriorityComboBox();
+                }
+                return null;
+            }
+        }
+    }
+
+    @Override
+    public HasEditFormHandlers<SimpleBug> getEditFormHandlers() {
+        return editForm;
+    }
 }

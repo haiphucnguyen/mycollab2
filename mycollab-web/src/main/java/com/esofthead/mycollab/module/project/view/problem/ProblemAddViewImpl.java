@@ -61,6 +61,10 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
         class FormLayoutFactory extends ProblemFormLayoutFactory {
 
             private static final long serialVersionUID = 1L;
+            
+            public FormLayoutFactory() {
+                super("Create Problem");
+            }
 
             private Layout createButtonControls() {
                 return (new EditFormControlsGenerator<Problem>(EditForm.this))
@@ -91,16 +95,14 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
                 } else if (propertyId.equals("raisedbyuser")) {
                     return new UserComboBox();
                 } else if (propertyId.equals("type")) {
-                    
                 } else if (propertyId.equals("assigntouser")) {
                     return new UserComboBox();
                 } else if (propertyId.equals("priority")) {
-                    
                 } else if (propertyId.equals("status")) {
                 } else if (propertyId.equals("level")) {
                 } else if (propertyId.equals("resolution")) {
                 }
-                
+
                 return null;
             }
         }

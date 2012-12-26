@@ -10,16 +10,16 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -55,6 +55,11 @@ public class MessageReadViewImpl extends AbstractView implements MessageReadView
         return message;
     }
 
+    @Override
+    public void doPrint() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
     private class PreviewForm extends AdvancedPreviewBeanForm<SimpleMessage> {
 
         @Override
@@ -76,24 +81,18 @@ public class MessageReadViewImpl extends AbstractView implements MessageReadView
 
         class FormLayoutFactory implements IFormLayoutFactory {
 
-            private GridFormLayoutHelper informationLayout;
-
             @Override
             public Layout getLayout() {
-                AddViewLayout riskAddLayout = new AddViewLayout("Risk");
+                AddViewLayout riskAddLayout = new AddViewLayout(message.getTitle(), new ThemeResource("icons/48/project/message.png"));
 
                 riskAddLayout.addTopControls(createTopPanel());
 
                 VerticalLayout layout = new VerticalLayout();
 
-                Label organizationHeader = new Label("Message Information");
-                organizationHeader.setStyleName("h2");
-                layout.addComponent(organizationHeader);
-
-                informationLayout = new GridFormLayoutHelper(1, 3);
-                informationLayout.getLayout().setWidth("100%");
-                layout.addComponent(informationLayout.getLayout());
-                layout.setComponentAlignment(informationLayout.getLayout(),
+                GridLayout bodyLayout = new GridLayout(1, 3);
+                bodyLayout.setWidth("100%");
+                layout.addComponent(bodyLayout);
+                layout.setComponentAlignment(bodyLayout,
                         Alignment.BOTTOM_CENTER);
 
                 riskAddLayout.addBottomControls(createBottomPanel());
@@ -113,11 +112,7 @@ public class MessageReadViewImpl extends AbstractView implements MessageReadView
 
             @Override
             public void attachField(Object propertyId, Field field) {
-                if (propertyId.equals("title")) {
-                    informationLayout.addComponent(field, "", 0, 0);
-                } else if (propertyId.equals("messagehtml")) {
-                    informationLayout.addComponent(field, "", 0, 1);
-                }
+                
             }
         }
     }

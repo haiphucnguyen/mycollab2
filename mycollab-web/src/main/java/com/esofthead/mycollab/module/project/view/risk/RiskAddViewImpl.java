@@ -24,7 +24,6 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
 
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
-    
     private Risk risk;
     private static Map<Integer, String> valueCaptions = new HashMap<Integer, String>(
             5);
@@ -63,6 +62,10 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
         class FormLayoutFactory extends RiskFormLayoutFactory {
 
             private static final long serialVersionUID = 1L;
+            
+            public FormLayoutFactory() {
+                super("Create Risk");
+            }
 
             private Layout createButtonControls() {
                 return (new EditFormControlsGenerator<Risk>(EditForm.this))

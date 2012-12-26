@@ -45,12 +45,16 @@ public class AccountServiceImpl extends DefaultService<Integer, Account, Account
 
     @Autowired
     protected AccountMapper accountMapper;
+    
     @Autowired
     protected AccountMapperExt accountMapperExt;
+    
     @Autowired
     protected TaskMapper taskMapper;
+    
     @Autowired
     protected AuditLogService auditLogService;
+    
     @Autowired
     protected ActivityStreamService activityStreamService;
 

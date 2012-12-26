@@ -23,101 +23,106 @@ import com.vaadin.ui.TextField;
 
 @ViewComponent
 public class ContactAddViewImpl extends AbstractView implements
-		IFormAddView<Contact>, ContactAddView {
-	private static final long serialVersionUID = 1L;
+        IFormAddView<Contact>, ContactAddView {
 
-	private EditForm editForm;
+    private static final long serialVersionUID = 1L;
+    private EditForm editForm;
+    private Contact contact;
 
-	private Contact contact;
+    public ContactAddViewImpl() {
+        super();
+        editForm = new EditForm();
+        this.addComponent(editForm);
+    }
 
-	public ContactAddViewImpl() {
-		super();
-		editForm = new EditForm();
-		this.addComponent(editForm);
-	}
+    @Override
+    public void editItem(Contact item) {
+        this.contact = item;
+        editForm.setItemDataSource(new BeanItem<Contact>(contact));
 
-	@Override
-	public void editItem(Contact item) {
-		this.contact = item;
-		editForm.setItemDataSource(new BeanItem<Contact>(contact));
+    }
 
-	}
+    @Override
+    public HasEditFormHandlers<Contact> getEditFormHandlers() {
+        return editForm;
+    }
 
-	@Override
-	public HasEditFormHandlers<Contact> getEditFormHandlers() {
-		return editForm;
-	}
+    private class EditForm extends AdvancedEditBeanForm<Contact> {
 
-	private class EditForm extends AdvancedEditBeanForm<Contact> {
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
-		}
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new EditFormFieldFactory());
+            super.setItemDataSource(newDataSource);
+        }
 
-		class FormLayoutFactory extends ContactFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+        class FormLayoutFactory extends ContactFormLayoutFactory {
 
-			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<Contact>(EditForm.this))
-						.createButtonControls();
-			}
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			protected Layout createTopPanel() {
-				return createButtonControls();
-			}
+            public FormLayoutFactory() {
+                super("Create Contact");
+            }
 
-			@Override
-			protected Layout createBottomPanel() {
-				return createButtonControls();
-			}
-		}
+            private Layout createButtonControls() {
+                return (new EditFormControlsGenerator<Contact>(EditForm.this))
+                        .createButtonControls();
+            }
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-			private static final long serialVersionUID = 1L;
+            @Override
+            protected Layout createTopPanel() {
+                return createButtonControls();
+            }
 
-			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+            @Override
+            protected Layout createBottomPanel() {
+                return createButtonControls();
+            }
+        }
 
-				if (propertyId.equals("leadsource")) {
-					LeadSourceComboBox leadSource = new LeadSourceComboBox();
-					return leadSource;
-				} else if (propertyId.equals("accountid")) {
-					AccountSelectionField accountField = new AccountSelectionField();
-					if (contact.getAccountid() != null) {
-						AccountService accountService = AppContext
-								.getSpringBean(AccountService.class);
-						SimpleAccount account = accountService
-								.findAccountById(contact.getAccountid());
-						if (account != null) {
-							accountField.setAccount(account);
-						}
-					}
-					return accountField;
-				} else if (propertyId.equals("lastname")) {
-					TextField tf = new TextField();
-					tf.setNullRepresentation("");
-					tf.setRequired(true);
-					tf.setRequiredError("Last name must not be null");
-					return tf;
-				} else if (propertyId.equals("description")) {
-					TextArea descArea = new TextArea();
-					descArea.setNullRepresentation("");
-					return descArea;
-				} else if (propertyId.equals("assignuser")) {
-					UserComboBox userBox = new UserComboBox();
-					userBox.select(contact.getAssignuser());
-					return userBox;
-				}
+        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
-				return null;
-			}
-		}
-	}
+            private static final long serialVersionUID = 1L;
 
+            @Override
+            protected Field onCreateField(Item item, Object propertyId,
+                    com.vaadin.ui.Component uiContext) {
+
+                if (propertyId.equals("leadsource")) {
+                    LeadSourceComboBox leadSource = new LeadSourceComboBox();
+                    return leadSource;
+                } else if (propertyId.equals("accountid")) {
+                    AccountSelectionField accountField = new AccountSelectionField();
+                    if (contact.getAccountid() != null) {
+                        AccountService accountService = AppContext
+                                .getSpringBean(AccountService.class);
+                        SimpleAccount account = accountService
+                                .findAccountById(contact.getAccountid());
+                        if (account != null) {
+                            accountField.setAccount(account);
+                        }
+                    }
+                    return accountField;
+                } else if (propertyId.equals("lastname")) {
+                    TextField tf = new TextField();
+                    tf.setNullRepresentation("");
+                    tf.setRequired(true);
+                    tf.setRequiredError("Last name must not be null");
+                    return tf;
+                } else if (propertyId.equals("description")) {
+                    TextArea descArea = new TextArea();
+                    descArea.setNullRepresentation("");
+                    return descArea;
+                } else if (propertyId.equals("assignuser")) {
+                    UserComboBox userBox = new UserComboBox();
+                    userBox.select(contact.getAssignuser());
+                    return userBox;
+                }
+
+                return null;
+            }
+        }
+    }
 }

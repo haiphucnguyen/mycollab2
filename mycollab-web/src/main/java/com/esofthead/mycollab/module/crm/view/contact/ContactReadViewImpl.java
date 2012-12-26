@@ -14,109 +14,114 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class ContactReadViewImpl extends AbstractView implements
-		ContactReadView {
-	private static final long serialVersionUID = 1L;
+        ContactReadView {
 
-	private PreviewForm previewForm;
+    private static final long serialVersionUID = 1L;
+    private PreviewForm previewForm;
+    private SimpleContact contact;
 
-	private SimpleContact contact;
+    public ContactReadViewImpl() {
+        super();
+        previewForm = new PreviewForm();
+        this.addComponent(previewForm);
+    }
 
-	public ContactReadViewImpl() {
-		super();
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
-	}
+    @Override
+    public void previewItem(SimpleContact item) {
+        this.contact = item;
+        previewForm.setItemDataSource(new BeanItem<SimpleContact>(contact));
+    }
 
-	@Override
-	public void previewItem(SimpleContact item) {
-		this.contact = item;
-		previewForm.setItemDataSource(new BeanItem<SimpleContact>(contact));
-	}
+    @Override
+    public HasPreviewFormHandlers<Contact> getPreviewFormHandlers() {
+        return previewForm;
+    }
 
-	@Override
-	public HasPreviewFormHandlers<Contact> getPreviewFormHandlers() {
-		return previewForm;
-	}
+    @Override
+    public void doPrint() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
-	private class PreviewForm extends AdvancedPreviewBeanForm<Contact> {
-		private static final long serialVersionUID = 1L;
+    private class PreviewForm extends AdvancedPreviewBeanForm<Contact> {
 
-		@SuppressWarnings("serial")
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+        private static final long serialVersionUID = 1L;
 
-				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
-					if (propertyId.equals("accountid")) {
-						return new FormLinkViewField(contact.getAccountName(),
-								new Button.ClickListener() {
+        @SuppressWarnings("serial")
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+                @Override
+                protected Field onCreateField(Item item, Object propertyId,
+                        Component uiContext) {
+                    if (propertyId.equals("accountid")) {
+                        return new FormLinkViewField(contact.getAccountName(),
+                                new Button.ClickListener() {
+                                    @Override
+                                    public void buttonClick(ClickEvent event) {
+                                        EventBus.getInstance()
+                                                .fireEvent(
+                                                new AccountEvent.GotoRead(
+                                                this,
+                                                contact.getAccountid()));
 
-									@Override
-									public void buttonClick(ClickEvent event) {
-										EventBus.getInstance()
-												.fireEvent(
-														new AccountEvent.GotoRead(
-																this,
-																contact.getAccountid()));
+                                    }
+                                });
+                    } else if (propertyId.equals("email")) {
+                        return new FormEmailLinkViewField(contact.getEmail());
+                    } else if (propertyId.equals("assignuser")) {
+                        return new FormLinkViewField(contact
+                                .getAssignUserFullName(),
+                                new Button.ClickListener() {
+                                    @Override
+                                    public void buttonClick(ClickEvent event) {
+                                        // TODO Auto-generated method stub
+                                    }
+                                });
+                    }
 
-									}
-								});
-					} else if (propertyId.equals("email")) {
-						return new FormEmailLinkViewField(contact.getEmail());
-					} else if (propertyId.equals("assignuser")) {
-						return new FormLinkViewField(contact
-								.getAssignUserFullName(),
-								new Button.ClickListener() {
+                    return null;
+                }
+            });
+            super.setItemDataSource(newDataSource);
+        }
 
-									@Override
-									public void buttonClick(ClickEvent event) {
-										// TODO Auto-generated method stub
+        class FormLayoutFactory extends ContactFormLayoutFactory {
 
-									}
-								});
-					}
+            private static final long serialVersionUID = 1L;
 
-					return null;
-				}
+            public FormLayoutFactory() {
+                super("Edit Contact");
+            }
 
-			});
-			super.setItemDataSource(newDataSource);
-		}
+            @Override
+            protected HorizontalLayout createTopPanel() {
+                return (new PreviewFormControlsGenerator<Contact>(
+                        PreviewForm.this)).createButtonControls();
+            }
 
-		class FormLayoutFactory extends ContactFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+            @Override
+            protected Layout createBottomPanel() {
+                VerticalLayout relatedItemsPanel = new VerticalLayout();
 
-			@Override
-			protected HorizontalLayout createTopPanel() {
-				return (new PreviewFormControlsGenerator<Contact>(
-						PreviewForm.this)).createButtonControls();
-			}
+                relatedItemsPanel.addComponent(new NoteListItems("Notes",
+                        "Contact", contact.getId()));
+                return relatedItemsPanel;
+            }
+        }
+    }
 
-			@Override
-			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
-
-				relatedItemsPanel.addComponent(new NoteListItems("Notes",
-						"Contact", contact.getId()));
-				return relatedItemsPanel;
-			}
-		}
-	}
-
-	@Override
-	public SimpleContact getItem() {
-		return contact;
-	}
+    @Override
+    public SimpleContact getItem() {
+        return contact;
+    }
 }

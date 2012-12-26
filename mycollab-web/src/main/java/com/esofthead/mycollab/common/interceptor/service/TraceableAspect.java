@@ -1,8 +1,10 @@
 package com.esofthead.mycollab.common.interceptor.service;
 
+import com.esofthead.mycollab.common.ActivityStreamConstants;
+import com.esofthead.mycollab.common.domain.ActivityStream;
+import com.esofthead.mycollab.common.service.ActivityStreamService;
 import java.lang.reflect.InvocationTargetException;
 import java.util.GregorianCalendar;
-
 import org.apache.commons.beanutils.PropertyUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -13,77 +15,73 @@ import org.springframework.aop.framework.Advised;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.common.ActivityStreamConstants;
-import com.esofthead.mycollab.common.domain.ActivityStream;
-import com.esofthead.mycollab.common.service.ActivityStreamService;
-
 @Aspect
 @Component
 public class TraceableAspect {
-	private static Logger log = LoggerFactory.getLogger(TraceableAspect.class);
 
-	@Autowired
-	private ActivityStreamService activityStreamService;
+    private static Logger log = LoggerFactory.getLogger(TraceableAspect.class);
+    @Autowired
+    private ActivityStreamService activityStreamService;
 
-	@After("execution(public * com.esofthead.mycollab..service..*.saveWithSession(..)) && args(bean, username)")
-	public void traceSaveActivity(JoinPoint joinPoint, Object bean,
-			String username) {
+    @After("execution(public * com.esofthead.mycollab..service..*.saveWithSession(..)) && args(bean, username)")
+    public void traceSaveActivity(JoinPoint joinPoint, Object bean,
+            String username) {
 
-		Advised advised = (Advised) joinPoint.getThis();
-		Class<?> cls = advised.getTargetSource().getTargetClass();
+        Advised advised = (Advised) joinPoint.getThis();
+        Class<?> cls = advised.getTargetSource().getTargetClass();
 
-		Traceable traceableAnnotation = cls.getAnnotation(Traceable.class);
-		if (traceableAnnotation != null) {
-			try {
-				ActivityStream activity = constructActivity(
-						traceableAnnotation, bean,
-						ActivityStreamConstants.ACTION_CREATE);
-				activityStreamService.save(activity);
-			} catch (Exception e) {
-				log.error(
-						"Error when save activity for save action of service "
-								+ cls.getName(), e);
-			}
-		}
+        Traceable traceableAnnotation = cls.getAnnotation(Traceable.class);
+        if (traceableAnnotation != null) {
+            try {
+                ActivityStream activity = constructActivity(
+                        traceableAnnotation, bean,
+                        ActivityStreamConstants.ACTION_CREATE);
+                activityStreamService.save(activity);
+            } catch (Exception e) {
+                log.error(
+                        "Error when save activity for save action of service "
+                        + cls.getName(), e);
+            }
+        }
 
-	}
+    }
 
-	@After("execution(public * com.esofthead.mycollab..service..*.updateWithSession(..)) && args(bean, username)")
-	public void traceUpdateActivity(JoinPoint joinPoint, Object bean,
-			String username) {
+    @After("execution(public * com.esofthead.mycollab..service..*.updateWithSession(..)) && args(bean, username)")
+    public void traceUpdateActivity(JoinPoint joinPoint, Object bean,
+            String username) {
 
-		Advised advised = (Advised) joinPoint.getThis();
-		Class<?> cls = advised.getTargetSource().getTargetClass();
+        Advised advised = (Advised) joinPoint.getThis();
+        Class<?> cls = advised.getTargetSource().getTargetClass();
 
-		Traceable traceableAnnotation = cls.getAnnotation(Traceable.class);
-		if (traceableAnnotation != null) {
-			try {
-				ActivityStream activity = constructActivity(
-						traceableAnnotation, bean,
-						ActivityStreamConstants.ACTION_UPDATE);
-				activityStreamService.save(activity);
-			} catch (Exception e) {
-				log.error(
-						"Error when save activity for save action of service "
-								+ cls.getName(), e);
-			}
-		}
-	}
+        Traceable traceableAnnotation = cls.getAnnotation(Traceable.class);
+        if (traceableAnnotation != null) {
+            try {
+                ActivityStream activity = constructActivity(
+                        traceableAnnotation, bean,
+                        ActivityStreamConstants.ACTION_UPDATE);
+                activityStreamService.save(activity);
+            } catch (Exception e) {
+                log.error(
+                        "Error when save activity for save action of service "
+                        + cls.getName(), e);
+            }
+        }
+    }
 
-	private ActivityStream constructActivity(Traceable traceableAnnotation,
-			Object bean, String action) throws IllegalAccessException,
-			InvocationTargetException, NoSuchMethodException {
-		ActivityStream activity = new ActivityStream();
-		activity.setModule(traceableAnnotation.module());
-		activity.setType(traceableAnnotation.type());
-		activity.setTypeid((Integer) PropertyUtils.getProperty(bean,
-				traceableAnnotation.idField()));
-		activity.setCreatedtime(new GregorianCalendar().getTime());
-		activity.setAction(action);
-		activity.setSaccountid((Integer) PropertyUtils.getProperty(bean,
-				"saccountid"));
-		activity.setNamefield((String) PropertyUtils.getProperty(bean,
-				traceableAnnotation.nameField()));
-		return activity;
-	}
+    private ActivityStream constructActivity(Traceable traceableAnnotation,
+            Object bean, String action) throws IllegalAccessException,
+            InvocationTargetException, NoSuchMethodException {
+        ActivityStream activity = new ActivityStream();
+        activity.setModule(traceableAnnotation.module());
+        activity.setType(traceableAnnotation.type());
+        activity.setTypeid((Integer) PropertyUtils.getProperty(bean,
+                traceableAnnotation.idField()));
+        activity.setCreatedtime(new GregorianCalendar().getTime());
+        activity.setAction(action);
+        activity.setSaccountid((Integer) PropertyUtils.getProperty(bean,
+                "saccountid"));
+        activity.setNamefield((String) PropertyUtils.getProperty(bean,
+                traceableAnnotation.nameField()));
+        return activity;
+    }
 }

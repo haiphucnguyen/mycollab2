@@ -24,115 +24,122 @@ import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class OpportunityReadViewImpl extends AbstractView implements
-		OpportunityReadView {
-	private static final long serialVersionUID = 1L;
+        OpportunityReadView {
 
-	private PreviewForm previewForm;
+    private static final long serialVersionUID = 1L;
+    private PreviewForm previewForm;
+    private SimpleOpportunity opportunity;
 
-	private SimpleOpportunity opportunity;
+    public OpportunityReadViewImpl() {
+        super();
+        previewForm = new PreviewForm();
+        this.addComponent(previewForm);
+    }
 
-	public OpportunityReadViewImpl() {
-		super();
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
-	}
+    @Override
+    public void previewItem(SimpleOpportunity item) {
+        this.opportunity = item;
+        previewForm.setItemDataSource(new BeanItem<Opportunity>(opportunity));
+    }
 
-	@Override
-	public void previewItem(SimpleOpportunity item) {
-		this.opportunity = item;
-		previewForm.setItemDataSource(new BeanItem<Opportunity>(opportunity));
-	}
+    @Override
+    public HasPreviewFormHandlers<Opportunity> getPreviewFormHandlers() {
+        return previewForm;
+    }
 
-	@Override
-	public HasPreviewFormHandlers<Opportunity> getPreviewFormHandlers() {
-		return previewForm;
-	}
+    @Override
+    public void doPrint() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
-	private class PreviewForm extends AdvancedPreviewBeanForm<Opportunity> {
-		private static final long serialVersionUID = 1L;
+    private class PreviewForm extends AdvancedPreviewBeanForm<Opportunity> {
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-				private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
-					Field field = null;
-					if (propertyId.equals("accountid")) {
-						field = new FormLinkViewField(opportunity
-								.getAccountName(), new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+                private static final long serialVersionUID = 1L;
 
-							@Override
-							public void buttonClick(ClickEvent event) {
-								EventBus.getInstance().fireEvent(
-										new AccountEvent.GotoRead(this,
-												opportunity.getAccountid()));
-							}
-						});
-					} else if (propertyId.equals("campaignid")) {
-						field = new FormLinkViewField(opportunity
-								.getCampaignName(), new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+                @Override
+                protected Field onCreateField(Item item, Object propertyId,
+                        Component uiContext) {
+                    Field field = null;
+                    if (propertyId.equals("accountid")) {
+                        field = new FormLinkViewField(opportunity
+                                .getAccountName(), new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
-							@Override
-							public void buttonClick(ClickEvent event) {
-								EventBus.getInstance().fireEvent(
-										new CampaignEvent.GotoRead(this,
-												opportunity.getCampaignid()));
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                EventBus.getInstance().fireEvent(
+                                        new AccountEvent.GotoRead(this,
+                                        opportunity.getAccountid()));
+                            }
+                        });
+                    } else if (propertyId.equals("campaignid")) {
+                        field = new FormLinkViewField(opportunity
+                                .getCampaignName(), new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
-							}
-						});
-					} else if (propertyId.equals("assignuser")) {
-						field = new FormLinkViewField(opportunity
-								.getAssignUserFullName(),
-								new Button.ClickListener() {
-									private static final long serialVersionUID = 1L;
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                EventBus.getInstance().fireEvent(
+                                        new CampaignEvent.GotoRead(this,
+                                        opportunity.getCampaignid()));
 
-									@Override
-									public void buttonClick(ClickEvent event) {
-										// TODO Auto-generated method stub
+                            }
+                        });
+                    } else if (propertyId.equals("assignuser")) {
+                        field = new FormLinkViewField(opportunity
+                                .getAssignUserFullName(),
+                                new Button.ClickListener() {
+                                    private static final long serialVersionUID = 1L;
 
-									}
-								});
-					} else if (propertyId.equals("expectedcloseddate")) {
-						field = new FormViewField(
-								AppContext.formatDate(opportunity
-										.getExpectedcloseddate()));
-					}
-					return field;
-				}
+                                    @Override
+                                    public void buttonClick(ClickEvent event) {
+                                        // TODO Auto-generated method stub
+                                    }
+                                });
+                    } else if (propertyId.equals("expectedcloseddate")) {
+                        field = new FormViewField(
+                                AppContext.formatDate(opportunity
+                                .getExpectedcloseddate()));
+                    }
+                    return field;
+                }
+            });
+            super.setItemDataSource(newDataSource);
+        }
 
-			});
-			super.setItemDataSource(newDataSource);
-		}
+        class FormLayoutFactory extends OpportunityFormLayoutFactory {
 
-		class FormLayoutFactory extends OpportunityFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
+            
+            public FormLayoutFactory() {
+                super("Edit Opportunity");
+            }
 
-			@Override
-			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<Opportunity>(
-						PreviewForm.this)).createButtonControls();
-			}
+            @Override
+            protected Layout createTopPanel() {
+                return (new PreviewFormControlsGenerator<Opportunity>(
+                        PreviewForm.this)).createButtonControls();
+            }
 
-			@Override
-			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
+            @Override
+            protected Layout createBottomPanel() {
+                VerticalLayout relatedItemsPanel = new VerticalLayout();
 
-				relatedItemsPanel.addComponent(new NoteListItems("Notes",
-						"Opportunity", opportunity.getId()));
-				return relatedItemsPanel;
-			}
-		}
-	}
+                relatedItemsPanel.addComponent(new NoteListItems("Notes",
+                        "Opportunity", opportunity.getId()));
+                return relatedItemsPanel;
+            }
+        }
+    }
 
-	@Override
-	public SimpleOpportunity getItem() {
-		return opportunity;
-	}
-
+    @Override
+    public SimpleOpportunity getItem() {
+        return opportunity;
+    }
 }

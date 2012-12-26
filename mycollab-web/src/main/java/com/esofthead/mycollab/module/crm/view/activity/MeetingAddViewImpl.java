@@ -24,114 +24,120 @@ import com.vaadin.ui.TextField;
 
 @ViewComponent
 public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
-	private static final long serialVersionUID = 1L;
 
-	private EditForm editForm;
+    private static final long serialVersionUID = 1L;
+    private EditForm editForm;
+    private Meeting meeting;
 
-	private Meeting meeting;
+    public MeetingAddViewImpl() {
+        super();
+        editForm = new EditForm();
+        this.addComponent(editForm);
+    }
 
-	public MeetingAddViewImpl() {
-		super();
-		editForm = new EditForm();
-		this.addComponent(editForm);
-	}
+    @Override
+    public void editItem(Meeting item) {
+        this.meeting = item;
+        editForm.setItemDataSource(new BeanItem<Meeting>(meeting));
+    }
 
-	@Override
-	public void editItem(Meeting item) {
-		this.meeting = item;
-		editForm.setItemDataSource(new BeanItem<Meeting>(meeting));
-	}
+    private class EditForm extends AdvancedEditBeanForm<Meeting> {
 
-	private class EditForm extends AdvancedEditBeanForm<Meeting> {
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public void setItemDataSource(Item newDataSource,
-				Collection<?> propertyIds) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource, propertyIds);
-		}
+        @Override
+        public void setItemDataSource(Item newDataSource,
+                Collection<?> propertyIds) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new EditFormFieldFactory());
+            super.setItemDataSource(newDataSource, propertyIds);
+        }
 
-		private class FormLayoutFactory extends MeetingFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+        private class FormLayoutFactory extends MeetingFormLayoutFactory {
 
-			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<Meeting>(EditForm.this))
-						.createButtonControls();
-			}
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			protected Layout createTopPanel() {
-				return createButtonControls();
-			}
+            public FormLayoutFactory() {
+                super("Create Meeting");
+            }
 
-			@Override
-			protected Layout createBottomPanel() {
-				return createButtonControls();
-			}
-		}
+            private Layout createButtonControls() {
+                return (new EditFormControlsGenerator<Meeting>(EditForm.this))
+                        .createButtonControls();
+            }
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-			private static final long serialVersionUID = 1L;
+            @Override
+            protected Layout createTopPanel() {
+                return createButtonControls();
+            }
 
-			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
-				if (propertyId.equals("subject")) {
-					TextField tf = new TextField();
-					tf.setNullRepresentation("");
-					tf.setRequired(true);
-					tf.setRequiredError("Subject must not be null");
-					return tf;
-				} else if (propertyId.equals("status")) {
-					return new MeetingStatusComboBox();
-				} else if (propertyId.equals("startdate")) {
-					return new PopupDateField();
-				} else if (propertyId.equals("enddate")) {
-					return new PopupDateField();
-				} else if (propertyId.equals("description")) {
-					TextArea descArea = new TextArea();
-					descArea.setNullRepresentation("");
-					return descArea;
-				} else if (propertyId.equals("type")) {
-					RelatedEditItemField field = new RelatedEditItemField(
-							new String[] { "Account", "Campaign", "Contact",
-									"Lead", "Opportunity", "Case" }, meeting);
-					field.setType(meeting.getType());
-					return field;
-				} else if (propertyId.equals("isrecurrence")) {
+            @Override
+            protected Layout createBottomPanel() {
+                return createButtonControls();
+            }
+        }
 
-				}
-				return null;
-			}
-		}
-	}
+        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
-	@Override
-	public HasEditFormHandlers<Meeting> getEditFormHandlers() {
-		return editForm;
-	}
+            private static final long serialVersionUID = 1L;
 
-	private class RecurringSettingPanel extends CustomField {
-		public RecurringSettingPanel() {
-			CheckBox isRecurringBox = new CheckBox();
-		}
+            @Override
+            protected Field onCreateField(Item item, Object propertyId,
+                    com.vaadin.ui.Component uiContext) {
+                if (propertyId.equals("subject")) {
+                    TextField tf = new TextField();
+                    tf.setNullRepresentation("");
+                    tf.setRequired(true);
+                    tf.setRequiredError("Subject must not be null");
+                    return tf;
+                } else if (propertyId.equals("status")) {
+                    return new MeetingStatusComboBox();
+                } else if (propertyId.equals("startdate")) {
+                    return new PopupDateField();
+                } else if (propertyId.equals("enddate")) {
+                    return new PopupDateField();
+                } else if (propertyId.equals("description")) {
+                    TextArea descArea = new TextArea();
+                    descArea.setNullRepresentation("");
+                    return descArea;
+                } else if (propertyId.equals("type")) {
+                    RelatedEditItemField field = new RelatedEditItemField(
+                            new String[]{"Account", "Campaign", "Contact",
+                                "Lead", "Opportunity", "Case"}, meeting);
+                    field.setType(meeting.getType());
+                    return field;
+                } else if (propertyId.equals("isrecurrence")) {
+                }
+                return null;
+            }
+        }
+    }
 
-		@Override
-		public Class<?> getType() {
-			return Object.class;
-		}
-	}
+    @Override
+    public HasEditFormHandlers<Meeting> getEditFormHandlers() {
+        return editForm;
+    }
 
-	private class MeetingStatusComboBox extends ValueComboBox {
-		private static final long serialVersionUID = 1L;
+    private class RecurringSettingPanel extends CustomField {
 
-		public MeetingStatusComboBox() {
-			super();
-			setCaption(null);
-			this.loadData(new String[] { "Planned", "Held", "Not Held" });
-		}
-	}
+        public RecurringSettingPanel() {
+            CheckBox isRecurringBox = new CheckBox();
+        }
 
+        @Override
+        public Class<?> getType() {
+            return Object.class;
+        }
+    }
+
+    private class MeetingStatusComboBox extends ValueComboBox {
+
+        private static final long serialVersionUID = 1L;
+
+        public MeetingStatusComboBox() {
+            super();
+            setCaption(null);
+            this.loadData(new String[]{"Planned", "Held", "Not Held"});
+        }
+    }
 }

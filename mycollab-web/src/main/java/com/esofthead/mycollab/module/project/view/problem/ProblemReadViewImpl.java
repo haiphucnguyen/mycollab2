@@ -18,73 +18,82 @@ import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class ProblemReadViewImpl extends AbstractView implements ProblemReadView {
-	private static final long serialVersionUID = 1L;
 
-	private SimpleProblem problem;
+    private static final long serialVersionUID = 1L;
+    private SimpleProblem problem;
+    private PreviewForm previewForm;
 
-	private PreviewForm previewForm;
-	
-	public ProblemReadViewImpl() {
-		super();
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
-	}
+    public ProblemReadViewImpl() {
+        super();
+        previewForm = new PreviewForm();
+        this.addComponent(previewForm);
+    }
 
-	@Override
-	public void previewItem(SimpleProblem item) {
-		problem = item;
-		previewForm.setItemDataSource(new BeanItem<Problem>(item));
-	}
+    @Override
+    public void previewItem(SimpleProblem item) {
+        problem = item;
+        previewForm.setItemDataSource(new BeanItem<Problem>(item));
+    }
 
-	@Override
-	public SimpleProblem getItem() {
-		return problem;
-	}
+    @Override
+    public SimpleProblem getItem() {
+        return problem;
+    }
 
-	@Override
-	public HasPreviewFormHandlers<Problem> getPreviewFormHandlers() {
-		return previewForm;
-	}
-	
-	private class PreviewForm extends AdvancedPreviewBeanForm<Problem> {
-		private static final long serialVersionUID = 1L;
+    @Override
+    public HasPreviewFormHandlers<Problem> getPreviewFormHandlers() {
+        return previewForm;
+    }
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-				private static final long serialVersionUID = 1L;
+    @Override
+    public void doPrint() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
-				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
-					
+    private class PreviewForm extends AdvancedPreviewBeanForm<Problem> {
 
-					return null;
-				}
-			});
-			super.setItemDataSource(newDataSource);
-		}
-		
-		class FormLayoutFactory extends ProblemFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-			@Override
-			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<Problem>(
-						PreviewForm.this)).createButtonControls();
-			}
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+                private static final long serialVersionUID = 1L;
 
-			@Override
-			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
+                @Override
+                protected Field onCreateField(Item item, Object propertyId,
+                        Component uiContext) {
 
-				relatedItemsPanel.addComponent(new NoteListItems(
-						"Notes", "Problem", problem.getId()));
 
-				return relatedItemsPanel;
-			}
-		}
-	}
+                    return null;
+                }
+            });
+            super.setItemDataSource(newDataSource);
+        }
 
+        class FormLayoutFactory extends ProblemFormLayoutFactory {
+
+            private static final long serialVersionUID = 1L;
+
+            public FormLayoutFactory() {
+                super(problem.getIssuename());
+            }
+
+            @Override
+            protected Layout createTopPanel() {
+                return (new PreviewFormControlsGenerator<Problem>(
+                        PreviewForm.this)).createButtonControls();
+            }
+
+            @Override
+            protected Layout createBottomPanel() {
+                VerticalLayout relatedItemsPanel = new VerticalLayout();
+
+                relatedItemsPanel.addComponent(new NoteListItems(
+                        "Notes", "Problem", problem.getId()));
+
+                return relatedItemsPanel;
+            }
+        }
+    }
 }

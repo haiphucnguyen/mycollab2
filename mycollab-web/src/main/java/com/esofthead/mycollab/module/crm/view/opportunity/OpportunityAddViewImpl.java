@@ -58,6 +58,10 @@ public class OpportunityAddViewImpl extends AbstractView implements
         class FormLayoutFactory extends OpportunityFormLayoutFactory {
 
             private static final long serialVersionUID = 1L;
+            
+            public FormLayoutFactory() {
+                super("Create Opportunity");
+            }
 
             private Layout createButtonControls() {
                 return (new EditFormControlsGenerator<Opportunity>(

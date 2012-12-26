@@ -22,96 +22,104 @@ import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class CaseReadViewImpl extends AbstractView implements CaseReadView {
-	private static final long serialVersionUID = 1L;
 
-	private SimpleCase cases;
+    private static final long serialVersionUID = 1L;
+    private SimpleCase cases;
+    private PreviewForm previewForm;
 
-	private PreviewForm previewForm;
+    public CaseReadViewImpl() {
+        super();
+        previewForm = new PreviewForm();
+        this.addComponent(previewForm);
+    }
 
-	public CaseReadViewImpl() {
-		super();
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
-	}
+    @Override
+    public void previewItem(SimpleCase item) {
+        cases = item;
+        previewForm.setItemDataSource(new BeanItem<Case>(cases));
+    }
 
-	@Override
-	public void previewItem(SimpleCase item) {
-		cases = item;
-		previewForm.setItemDataSource(new BeanItem<Case>(cases));
-	}
+    @Override
+    public HasPreviewFormHandlers<Case> getPreviewFormHandlers() {
+        return previewForm;
+    }
 
-	@Override
-	public HasPreviewFormHandlers<Case> getPreviewFormHandlers() {
-		return previewForm;
-	}
+    @Override
+    public void doPrint() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
-	private class PreviewForm extends AdvancedPreviewBeanForm<Case> {
-		private static final long serialVersionUID = 1L;
+    private class PreviewForm extends AdvancedPreviewBeanForm<Case> {
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-				private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
-					if (propertyId.equals("accountid")) {
-						return new FormLinkViewField(cases.getAccountName(),
-								new Button.ClickListener() {
-									private static final long serialVersionUID = 1L;
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+                private static final long serialVersionUID = 1L;
 
-									@Override
-									public void buttonClick(ClickEvent event) {
-										EventBus.getInstance().fireEvent(
-												new AccountEvent.GotoRead(this,
-														cases.getAccountid()));
+                @Override
+                protected Field onCreateField(Item item, Object propertyId,
+                        Component uiContext) {
+                    if (propertyId.equals("accountid")) {
+                        return new FormLinkViewField(cases.getAccountName(),
+                                new Button.ClickListener() {
+                                    private static final long serialVersionUID = 1L;
 
-									}
-								});
-					} else if (propertyId.equals("email")) {
-						return new FormEmailLinkViewField(cases.getEmail());
-					} else if (propertyId.equals("assignuser")) {
-						return new FormLinkViewField(cases.getAssignUserFullName(), new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+                                    @Override
+                                    public void buttonClick(ClickEvent event) {
+                                        EventBus.getInstance().fireEvent(
+                                                new AccountEvent.GotoRead(this,
+                                                cases.getAccountid()));
 
-							@Override
-							public void buttonClick(ClickEvent event) {
-								// TODO Auto-generated method stub
-								
-							}
-						});
-					}
+                                    }
+                                });
+                    } else if (propertyId.equals("email")) {
+                        return new FormEmailLinkViewField(cases.getEmail());
+                    } else if (propertyId.equals("assignuser")) {
+                        return new FormLinkViewField(cases.getAssignUserFullName(), new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
-					return null;
-				}
-			});
-			super.setItemDataSource(newDataSource);
-		}
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                // TODO Auto-generated method stub
+                            }
+                        });
+                    }
 
-		class FormLayoutFactory extends CaseFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+                    return null;
+                }
+            });
+            super.setItemDataSource(newDataSource);
+        }
 
-			@Override
-			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<Case>(PreviewForm.this))
-						.createButtonControls();
-			}
+        class FormLayoutFactory extends CaseFormLayoutFactory {
 
-			@Override
-			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
-				relatedItemsPanel.addComponent(new NoteListItems(
-						"Notes", "Case", cases.getId()));
-				return relatedItemsPanel;
-			}
-		}
-	}
+            private static final long serialVersionUID = 1L;
 
-	@Override
-	public SimpleCase getItem() {
-		return cases;
-	}
+            public FormLayoutFactory() {
+                super(cases.getSubject());
+            }
 
+            @Override
+            protected Layout createTopPanel() {
+                return (new PreviewFormControlsGenerator<Case>(PreviewForm.this))
+                        .createButtonControls();
+            }
+
+            @Override
+            protected Layout createBottomPanel() {
+                VerticalLayout relatedItemsPanel = new VerticalLayout();
+                relatedItemsPanel.addComponent(new NoteListItems(
+                        "Notes", "Case", cases.getId()));
+                return relatedItemsPanel;
+            }
+        }
+    }
+
+    @Override
+    public SimpleCase getItem() {
+        return cases;
+    }
 }

@@ -17,73 +17,82 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class MeetingReadViewImpl  extends AbstractView implements MeetingReadView {
-	private static final long serialVersionUID = 1L;
+public class MeetingReadViewImpl extends AbstractView implements MeetingReadView {
 
-	private PreviewForm previewForm;
+    private static final long serialVersionUID = 1L;
+    private PreviewForm previewForm;
+    private SimpleMeeting meeting;
 
-	private SimpleMeeting meeting;
+    public MeetingReadViewImpl() {
+        super();
+        previewForm = new PreviewForm();
+        this.addComponent(previewForm);
+    }
 
-	public MeetingReadViewImpl() {
-		super();
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
-	}
+    @Override
+    public void previewItem(SimpleMeeting meeting) {
+        this.meeting = meeting;
+        previewForm.setItemDataSource(new BeanItem<Meeting>(meeting));
+    }
 
-	@Override
-	public void previewItem(SimpleMeeting meeting) {
-		this.meeting = meeting;
-		previewForm.setItemDataSource(new BeanItem<Meeting>(meeting));
-	}
+    @Override
+    public HasPreviewFormHandlers<Meeting> getPreviewFormHandlers() {
+        return previewForm;
+    }
 
-	@Override
-	public HasPreviewFormHandlers<Meeting> getPreviewFormHandlers() {
-		return previewForm;
-	}
+    @Override
+    public void doPrint() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 
-	private class PreviewForm extends AdvancedPreviewBeanForm<Meeting> {
-		private static final long serialVersionUID = 1L;
+    private class PreviewForm extends AdvancedPreviewBeanForm<Meeting> {
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-				private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
-					if (propertyId.equals("type")) {
-						return new RelatedReadItemField(meeting);
-					}
-					
-					return null;
-				}
-			});
-			super.setItemDataSource(newDataSource);
-		}
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+                private static final long serialVersionUID = 1L;
 
-		class FormLayoutFactory extends MeetingFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+                @Override
+                protected Field onCreateField(Item item, Object propertyId,
+                        Component uiContext) {
+                    if (propertyId.equals("type")) {
+                        return new RelatedReadItemField(meeting);
+                    }
 
-			@Override
-			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<Meeting>(
-						PreviewForm.this)).createButtonControls();
-			}
+                    return null;
+                }
+            });
+            super.setItemDataSource(newDataSource);
+        }
 
-			@Override
-			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
+        class FormLayoutFactory extends MeetingFormLayoutFactory {
 
-				return relatedItemsPanel;
-			}
-		}
-	}
+            private static final long serialVersionUID = 1L;
 
-	@Override
-	public SimpleMeeting getItem() {
-		return meeting;
-	}
+            public FormLayoutFactory() {
+                super(meeting.getSubject());
+            }
 
+            @Override
+            protected Layout createTopPanel() {
+                return (new PreviewFormControlsGenerator<Meeting>(
+                        PreviewForm.this)).createButtonControls();
+            }
+
+            @Override
+            protected Layout createBottomPanel() {
+                VerticalLayout relatedItemsPanel = new VerticalLayout();
+
+                return relatedItemsPanel;
+            }
+        }
+    }
+
+    @Override
+    public SimpleMeeting getItem() {
+        return meeting;
+    }
 }
