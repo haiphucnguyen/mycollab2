@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
@@ -8,8 +10,10 @@ import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
 import com.esofthead.mycollab.module.crm.ui.components.BasicSearchLayout;
 import com.esofthead.mycollab.module.crm.ui.components.GenericSearchPanel;
+import com.esofthead.mycollab.module.crm.view.contact.ContactSearchPanel;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.DateSelectionField;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -143,8 +147,8 @@ public class CampaignSearchPanel extends GenericSearchPanel<CampaignSearchCriter
     private class CampaignAdvancedSearchLayout extends AdvancedSearchLayout {
 
         private TextField nameField;
-        private DateField startDateField;
-        private DateField endDateField;
+        private DateSelectionField startDateField;
+        private DateSelectionField endDateField;
         private CampaignTypeListSelect typeField;
         private CampaignStatusListSelect statusField;
         private UserListSelect assignUserField;
@@ -164,11 +168,11 @@ public class CampaignSearchPanel extends GenericSearchPanel<CampaignSearchCriter
 
             nameField = (TextField) gridLayout.addComponent(new TextField(),
                     "Name", 0, 0);
-            startDateField = (DateField) gridLayout.addComponent(
-                    new DateField(), "Start Date", 1, 0);
+            startDateField = (DateSelectionField) gridLayout.addComponent(
+                    new DateSelectionField(), "Start Date", 1, 0);
             startDateField.setDateFormat("yyyy-MM-dd");
 
-            endDateField = (DateField) gridLayout.addComponent(new DateField(),
+            endDateField = (DateSelectionField) gridLayout.addComponent(new DateSelectionField(),
                     "End Date", 2, 0);
             endDateField.setDateFormat("yyyy-MM-dd");
 
@@ -192,7 +196,22 @@ public class CampaignSearchPanel extends GenericSearchPanel<CampaignSearchCriter
                             searchCriteria = new CampaignSearchCriteria();
                             searchCriteria.setSaccountid(new NumberSearchField(
                                     SearchField.AND, AppContext.getAccountId()));
-
+                            
+                            SearchField startDate = startDateField.getValues();
+                            if (startDate != null && (startDate instanceof DateSearchField)) {
+                            	searchCriteria.setStartDate((DateSearchField) startDate);
+                            } else if (startDate != null && (startDate instanceof RangeDateSearchField)) {
+                            	searchCriteria.setStartDateRange((RangeDateSearchField) startDate);
+                            }
+                            
+                            SearchField endDate = endDateField.getValues();
+                            if (endDate != null && (endDate instanceof DateSearchField)) {
+                            	searchCriteria.setStartDate((DateSearchField) endDate);
+                            } else if (endDate != null && (endDate instanceof RangeDateSearchField)) {
+                            	searchCriteria.setStartDateRange((RangeDateSearchField) endDate);
+                            }
+                            
+                            CampaignSearchPanel.this.notifySearchHandler(searchCriteria);
                         }
                     }));
 
