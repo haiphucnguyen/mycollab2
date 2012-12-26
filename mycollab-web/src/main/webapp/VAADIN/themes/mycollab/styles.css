@@ -1,5 +1,10 @@
 @import "my-chameleon-styles.css";
-
+@font-face
+{
+	font-family: "Lucida Sans Unicode";
+	src: url('fonts/lsansuni.ttf'),
+	     url('fonts/lsansuni.eot'); /* IE9+ */
+}
 @media only screen and (max-width : 1024px),
 only screen and (max-device-width : 1024px) {  
 	.crmContainer {
