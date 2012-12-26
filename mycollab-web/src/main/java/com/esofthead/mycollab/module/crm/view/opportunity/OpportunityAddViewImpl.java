@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
+import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
@@ -25,110 +26,115 @@ import com.vaadin.ui.TextField;
 
 @ViewComponent
 public class OpportunityAddViewImpl extends AbstractView implements
-		IFormAddView<Opportunity>, OpportunityAddView {
-	private static final long serialVersionUID = 1L;
+        IFormAddView<Opportunity>, OpportunityAddView {
 
-	private EditForm editForm;
+    private static final long serialVersionUID = 1L;
+    private EditForm editForm;
+    private Opportunity opportunity;
 
-	private Opportunity opportunity;
+    public OpportunityAddViewImpl() {
+        super();
+        editForm = new EditForm();
+        this.addComponent(editForm);
+    }
 
-	public OpportunityAddViewImpl() {
-		super();
-		editForm = new EditForm();
-		this.addComponent(editForm);
-	}
+    @Override
+    public void editItem(Opportunity item) {
+        this.opportunity = item;
+        editForm.setItemDataSource(new BeanItem<Opportunity>(opportunity));
+    }
 
-	@Override
-	public void editItem(Opportunity item) {
-		this.opportunity = item;
-		editForm.setItemDataSource(new BeanItem<Opportunity>(opportunity));
-	}
+    private class EditForm extends AdvancedEditBeanForm<Opportunity> {
 
-	private class EditForm extends AdvancedEditBeanForm<Opportunity> {
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource);
-		}
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new EditFormFieldFactory());
+            super.setItemDataSource(newDataSource);
+        }
 
-		class FormLayoutFactory extends OpportunityFormLayoutFactory {
-			private static final long serialVersionUID = 1L;
+        class FormLayoutFactory extends OpportunityFormLayoutFactory {
 
-			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<Opportunity>(
-						EditForm.this)).createButtonControls();
-			}
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			protected Layout createTopPanel() {
-				return createButtonControls();
-			}
+            private Layout createButtonControls() {
+                return (new EditFormControlsGenerator<Opportunity>(
+                        EditForm.this)).createButtonControls();
+            }
 
-			@Override
-			protected Layout createBottomPanel() {
-				return createButtonControls();
-			}
-		}
+            @Override
+            protected Layout createTopPanel() {
+                return createButtonControls();
+            }
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-			private static final long serialVersionUID = 1L;
+            @Override
+            protected Layout createBottomPanel() {
+                return createButtonControls();
+            }
+        }
 
-			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
-				if (propertyId.equals("campaignid")) {
-					CampaignSelectionField campaignField = new CampaignSelectionField();
-					if (opportunity.getCampaignid() != null) {
-						CampaignService campaignService = AppContext
-								.getSpringBean(CampaignService.class);
-						SimpleCampaign campaign = campaignService
-								.findCampaignById(opportunity.getCampaignid());
-						if (campaign != null) {
-							campaignField.setCampaign(campaign);
-						}
-					}
-					return campaignField;
-				} else if (propertyId.equals("accountid")) {
-					AccountSelectionField accountField = new AccountSelectionField();
-					accountField.setRequired(true);
-					if (opportunity.getAccountid() != null) {
-						AccountService accountService = AppContext
-								.getSpringBean(AccountService.class);
-						SimpleAccount account = accountService
-								.findAccountById(opportunity.getAccountid());
-						if (account != null) {
-							accountField.setAccount(account);
-						}
-					}
-					return accountField;
-				} else if (propertyId.equals("opportunityname")) {
-					TextField tf = new TextField();
-					tf.setNullRepresentation("");
-					tf.setRequired(true);
-					tf.setRequiredError("Name must not be null");
-					return tf;
-				} else if (propertyId.equals("salesstage")) {
-					return new OpportunitySalesStageComboBox();
-				} else if (propertyId.equals("opportunitytype")) {
-					return new OpportunityTypeComboBox();
-				} else if (propertyId.equals("source")) {
-					return new LeadSourceComboBox();
-				} else if (propertyId.equals("description")) {
-					TextArea descArea = new TextArea();
-					descArea.setNullRepresentation("");
-					return descArea;
-				}
+        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
-				return null;
-			}
-		}
-	}
+            private static final long serialVersionUID = 1L;
 
-	@Override
-	public HasEditFormHandlers<Opportunity> getEditFormHandlers() {
-		return editForm;
-	}
+            @Override
+            protected Field onCreateField(Item item, Object propertyId,
+                    com.vaadin.ui.Component uiContext) {
+                if (propertyId.equals("campaignid")) {
+                    CampaignSelectionField campaignField = new CampaignSelectionField();
+                    if (opportunity.getCampaignid() != null) {
+                        CampaignService campaignService = AppContext
+                                .getSpringBean(CampaignService.class);
+                        SimpleCampaign campaign = campaignService
+                                .findCampaignById(opportunity.getCampaignid());
+                        if (campaign != null) {
+                            campaignField.setCampaign(campaign);
+                        }
+                    }
+                    return campaignField;
+                } else if (propertyId.equals("accountid")) {
+                    AccountSelectionField accountField = new AccountSelectionField();
+                    accountField.setRequired(true);
+                    if (opportunity.getAccountid() != null) {
+                        AccountService accountService = AppContext
+                                .getSpringBean(AccountService.class);
+                        SimpleAccount account = accountService
+                                .findAccountById(opportunity.getAccountid());
+                        if (account != null) {
+                            accountField.setAccount(account);
+                        }
+                    }
+                    return accountField;
+                } else if (propertyId.equals("opportunityname")) {
+                    TextField tf = new TextField();
+                    tf.setNullRepresentation("");
+                    tf.setRequired(true);
+                    tf.setRequiredError("Name must not be null");
+                    return tf;
+                } else if (propertyId.equals("salesstage")) {
+                    return new OpportunitySalesStageComboBox();
+                } else if (propertyId.equals("opportunitytype")) {
+                    return new OpportunityTypeComboBox();
+                } else if (propertyId.equals("source")) {
+                    return new LeadSourceComboBox();
+                } else if (propertyId.equals("description")) {
+                    TextArea descArea = new TextArea();
+                    descArea.setNullRepresentation("");
+                    return descArea;
+                } else if (propertyId.equals("assignuser")) {
+                    UserComboBox userBox = new UserComboBox();
+                    return userBox;
+                }
+
+                return null;
+            }
+        }
+    }
+
+    @Override
+    public HasEditFormHandlers<Opportunity> getEditFormHandlers() {
+        return editForm;
+    }
 }
