@@ -7,6 +7,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
@@ -117,6 +118,7 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 														.getValue()).trim()));
 							}
 							
+							//Search Number
 //							if (StringUtil
 //									.isNotNullOrEmpty((String) subjectField
 //											.getValue())) {
@@ -127,15 +129,16 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 //														.getValue()).trim()));
 //							}
 							
-//							if (StringUtil
-//									.isNotNullOrEmpty((String) subjectField
-//											.getValue())) {
-//								searchCriteria
-//										.setSubject(new StringSearchField(
-//												SearchField.AND,
-//												((String) subjectField
-//														.getValue()).trim()));
-//							}
+							SimpleAccount account = accountField.getAccount();
+							if (StringUtil
+									.isNotNullOrEmpty((String) account
+											.getAccountname())) {
+								searchCriteria
+										.setAccountName(new StringSearchField(
+												SearchField.AND,
+												account
+												.getAccountname()));
+							}
 							
 							Collection<String> statuses = (Collection<String>) statusField
 							.getValue();
@@ -174,7 +177,7 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 						public void buttonClick(ClickEvent event) {
 							numberField.setValue("");
 							subjectField.setValue("");
-//							accountField;
+							accountField.clearValue();
 							statusField.setValue(null);
 							userField.setValue(null);
 							priorityField.setValue(null);
