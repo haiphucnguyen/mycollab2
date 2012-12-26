@@ -1,0 +1,1 @@
+ALTER TABLE `m_comment` CHANGE COLUMN `typeId` `typeId` INT NULL DEFAULT NULL  ;

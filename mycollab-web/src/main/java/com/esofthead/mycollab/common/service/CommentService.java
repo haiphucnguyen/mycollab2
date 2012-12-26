@@ -1,8 +1,9 @@
 package com.esofthead.mycollab.common.service;
 
 import com.esofthead.mycollab.common.domain.Comment;
-import com.esofthead.mycollab.core.persistence.service.ICrudService;
+import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
+import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 
-public interface CommentService extends ICrudService<Integer, Comment> {
+public interface CommentService extends IDefaultService<Integer, Comment, CommentSearchCriteria> {
 
 }

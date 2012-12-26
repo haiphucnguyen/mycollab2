@@ -119,7 +119,7 @@
 
     <sql id="selectSimpleAccount">
         <![CDATA[
-        select m_crm_account.id, m_crm_account.accountName, m_crm_account.website, m_crm_account.phoneOffice, 
+        SELECT m_crm_account.id, m_crm_account.accountName, m_crm_account.website, m_crm_account.phoneOffice, 
                m_crm_account.fax, m_crm_account.alternatePhone, m_crm_account.annualRevenue, m_crm_account.billingAddress, 
                m_crm_account.city, m_crm_account.postalCode, m_crm_account.countryId, m_crm_account.description, m_crm_account.state, 
                m_crm_account.email, m_crm_account.ownership, m_crm_account.shippingAddress, m_crm_account.shippingCity, m_crm_account.shippingPostalCode, 

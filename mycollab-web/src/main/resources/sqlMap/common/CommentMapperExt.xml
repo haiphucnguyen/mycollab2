@@ -12,5 +12,43 @@
             jdbcType="VARCHAR"
             property="ownerFullName" />
     </resultMap>
+    
+    <sql id="querySearchCriteria">
+        <if test="type != null ">
+            <![CDATA[${type.operation} m_comment.type = '${type.value}' ]]>
+        </if>
+        <if test="typeid != null ">
+            <![CDATA[${typeid.operation} m_comment.typeid = ${typeid.value} ]]>
+        </if>
+    </sql>
+    
+    <sql id="selectSimpleComment">
+        <![CDATA[
+            SELECT m_comment.id, m_comment.comment, m_comment.createdUser, m_comment.createdTime, 
+                   m_comment.type, m_comment.typeId, m_comment.sAccountId,
+                   concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as ownerFullName
+                FROM m_comment
+                LEFT OUTER JOIN s_user ON m_comment.createdUser = s_user.username
+        ]]>
+    </sql>
+    
+    <sql id="orderStatement">
+        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            createdTime DESC
+        ]]>
+    </sql>
+
+    <select id="findPagableListByCriteria" parameterType="CommentSearchCriteria"
+        resultMap="BaseResultMap">
+        <include
+            refid="com.esofthead.mycollab.common.dao.CommentMapperExt.selectSimpleComment" />
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include
+                refid="com.esofthead.mycollab.common.dao.CommentMapperExt.querySearchCriteria" />
+        </trim>
+        <include refid="orderStatement"/>
+        
+    </select>        
 
 </mapper>

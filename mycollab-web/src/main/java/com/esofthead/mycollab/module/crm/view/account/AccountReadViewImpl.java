@@ -39,11 +39,9 @@ public class AccountReadViewImpl extends AbstractView implements
 
         AccountPreview printView = new AccountPreview(false);
         printView.previewItem(getItem());
-        // Have some content to print
         window.addComponent(printView);
 
-        // Add the printing window as a new application-level
-        // window
+        // Add the printing window as a new application-level window
         getApplication().addWindow(window);
 
         // Open it as a popup window with no decorations

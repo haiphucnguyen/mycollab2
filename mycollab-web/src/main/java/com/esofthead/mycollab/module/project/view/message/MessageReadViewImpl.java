@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.message;
 
+import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -64,14 +66,17 @@ public class MessageReadViewImpl extends AbstractView implements MessageReadView
 
         @Override
         public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new MessageReadViewImpl.PreviewForm.FormLayoutFactory());
+            this.setFormLayoutFactory(new FormLayoutFactory());
             this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
                 private static final long serialVersionUID = 1L;
 
                 @Override
                 protected Field onCreateField(Item item, Object propertyId,
                         Component uiContext) {
-
+                    if (propertyId.equals("messagehtml")) {
+                        return new FormViewField(message.getMessagehtml());
+                    } else if (propertyId.equals("posteddate")) {
+                    }
 
                     return null;
                 }
@@ -81,6 +86,8 @@ public class MessageReadViewImpl extends AbstractView implements MessageReadView
 
         class FormLayoutFactory implements IFormLayoutFactory {
 
+            private GridLayout bodyLayout;
+
             @Override
             public Layout getLayout() {
                 AddViewLayout riskAddLayout = new AddViewLayout(message.getTitle(), new ThemeResource("icons/48/project/message.png"));
@@ -89,7 +96,7 @@ public class MessageReadViewImpl extends AbstractView implements MessageReadView
 
                 VerticalLayout layout = new VerticalLayout();
 
-                GridLayout bodyLayout = new GridLayout(1, 3);
+                bodyLayout = new GridLayout(1, 2);
                 bodyLayout.setWidth("100%");
                 layout.addComponent(bodyLayout);
                 layout.setComponentAlignment(bodyLayout,
@@ -107,12 +114,16 @@ public class MessageReadViewImpl extends AbstractView implements MessageReadView
             }
 
             protected Layout createBottomPanel() {
-                return new HorizontalLayout();
+                return new CommentListDepot(CommentTypeConstants.PRJ_MESSAGE, message.getId());
             }
 
             @Override
             public void attachField(Object propertyId, Field field) {
-                
+                if (propertyId.equals("messagehtml")) {
+                    bodyLayout.addComponent(field, 0, 0);
+                } else if (propertyId.equals("posteddate")) {
+                    bodyLayout.addComponent(field, 0, 1);
+                }
             }
         }
     }

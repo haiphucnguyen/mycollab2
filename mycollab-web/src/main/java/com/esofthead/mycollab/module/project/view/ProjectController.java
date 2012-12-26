@@ -212,7 +212,7 @@ public class ProjectController {
                                 criteria));
                     }
                 });
-        
+
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<ProblemEvent.GotoEdit>() {
                     @Override

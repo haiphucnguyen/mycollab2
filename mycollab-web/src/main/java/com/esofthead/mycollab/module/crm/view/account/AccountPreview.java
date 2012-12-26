@@ -34,16 +34,15 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author haiphucnguyen
  */
-public class AccountPreview extends PrintPreview{
-    
+public class AccountPreview extends PrintPreview {
+
     private SimpleAccount account;
     private PreviewForm previewForm;
     private ContactListComp associateContactList;
     private OpportunityListComp associateOpportunityList;
     private LeadListComp associateLeadList;
-    
     private boolean isControlEnable = false;
-    
+
     public AccountPreview(boolean enableButtonControls, PrintListener listener) {
         this.isControlEnable = enableButtonControls;
         constructUI();
@@ -51,12 +50,12 @@ public class AccountPreview extends PrintPreview{
             addPrintListener(listener);
         }
     }
-    
+
     public AccountPreview(boolean enableButtonControls) {
         this.isControlEnable = enableButtonControls;
         constructUI();
     }
-    
+
     private void constructUI() {
         previewForm = new PreviewForm();
 
@@ -66,7 +65,7 @@ public class AccountPreview extends PrintPreview{
 
         this.addComponent(previewForm);
     }
-    
+
     public void previewItem(SimpleAccount item) {
         account = item;
         previewForm.setItemDataSource(new BeanItem<Account>(account));
@@ -94,7 +93,7 @@ public class AccountPreview extends PrintPreview{
     public LeadListComp getAssociateLeadList() {
         return associateLeadList;
     }
-    
+
     private void displayAssociateContactList() {
         ContactSearchCriteria criteria = new ContactSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(SearchField.AND,
@@ -121,7 +120,7 @@ public class AccountPreview extends PrintPreview{
                 .getAccountname()));
         associateLeadList.setSearchCriteria(criteria);
     }
-    
+
     private class PreviewForm extends AdvancedPreviewBeanForm<Account> {
 
         private static final long serialVersionUID = 1L;
@@ -173,11 +172,11 @@ public class AccountPreview extends PrintPreview{
             protected Layout createTopPanel() {
                 if (isControlEnable) {
                     return (new PreviewFormControlsGenerator<Account>(
-                        PreviewForm.this)).createButtonControls();
+                            PreviewForm.this)).createButtonControls();
                 } else {
                     return new HorizontalLayout();
                 }
-                
+
             }
 
             @Override

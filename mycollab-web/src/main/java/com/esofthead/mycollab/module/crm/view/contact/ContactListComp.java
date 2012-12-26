@@ -25,109 +25,106 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 
 public class ContactListComp extends Depot implements IRelatedListHandlers {
-	private static final long serialVersionUID = 1L;
 
-	private PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact> tableItem;
+    private static final long serialVersionUID = 1L;
+    private PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact> tableItem;
+    private Set<RelatedListHandler> handlers;
 
-	private Set<RelatedListHandler> handlers;
+    public ContactListComp() {
+        super("Contacts", new VerticalLayout());
+        this.setWidth("900px");
+        initUI();
+    }
 
-	public ContactListComp() {
-		super("Contacts", new VerticalLayout());
-		this.setWidth("900px");
-		initUI();
-	}
+    @SuppressWarnings("serial")
+    private void initUI() {
+        VerticalLayout contentContainer = (VerticalLayout) content;
+        contentContainer.setSpacing(true);
 
-	@SuppressWarnings("serial")
-	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) content;
-		contentContainer.setSpacing(true);
+        Button createBtn = new Button("New Contact",
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-		Button createBtn = new Button("New Contact",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        fireRelatedListHandler();
+                    }
+                });
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						fireRelatedListHandler();
-					}
-				});
+        createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+        createBtn.setStyleName(BaseTheme.BUTTON_LINK);
+        contentContainer.addComponent(createBtn);
 
-		createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
-		createBtn.setStyleName(BaseTheme.BUTTON_LINK);
-		contentContainer.addComponent(createBtn);
+        tableItem = new PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>(
+                AppContext.getSpringBean(ContactService.class),
+                SimpleContact.class,
+                new String[]{"contactName", "title", "email", "officephone",
+                    "assignUserFullName"},
+                new String[]{"Name", "Title", "Email", "Office Phone", "User"});
 
-		tableItem = new PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>(
-				AppContext.getSpringBean(ContactService.class),
-				SimpleContact.class,
-				new String[] { "contactName", "title", "email", "officephone",
-						"assignUserFullName" },
-				new String[] { "Name", "Title", "Email", "Office Phone", "User" });
+        tableItem.addGeneratedColumn("contactName", new ColumnGenerator() {
+            @Override
+            public Object generateCell(Table source, Object itemId,
+                    Object columnId) {
+                final SimpleContact contact = tableItem.getBeanByIndex(itemId);
+                ButtonLink b = new ButtonLink(contact.getContactName(),
+                        new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
-		tableItem.addGeneratedColumn("contactName", new ColumnGenerator() {
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                EventBus.getInstance().fireEvent(
+                                        new ContactEvent.GotoRead(this, contact
+                                        .getId()));
+                            }
+                        });
+                return b;
+            }
+        });
 
-			@Override
-			public Object generateCell(Table source, Object itemId,
-					Object columnId) {
-				final SimpleContact contact = tableItem.getBeanByIndex(itemId);
-				ButtonLink b = new ButtonLink(contact.getContactName(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("email", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-							@Override
-							public void buttonClick(ClickEvent event) {
-								EventBus.getInstance().fireEvent(
-										new ContactEvent.GotoRead(this, contact
-												.getId()));
-							}
-						});
-				return b;
-			}
-		});
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    Object itemId, Object columnId) {
+                SimpleContact contact = tableItem.getBeanByIndex(itemId);
+                return new EmailLink(contact.getEmail());
 
-		tableItem.addGeneratedColumn("email", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+            }
+        });
 
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					Object itemId, Object columnId) {
-				SimpleContact contact = tableItem.getBeanByIndex(itemId);
-				return new EmailLink(contact.getEmail());
+        tableItem.setColumnExpandRatio("contactName", 1.0f);
+        tableItem.setColumnWidth("title", UIConstants.TABLE_X_LABEL_WIDTH);
+        tableItem.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
+        tableItem
+                .setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
+        tableItem.setColumnWidth("assignUserFullName",
+                UIConstants.TABLE_X_LABEL_WIDTH);
 
-			}
-		});
+        tableItem.setWidth("100%");
+        contentContainer.addComponent(tableItem);
 
-		tableItem.setColumnExpandRatio("contactName", 1.0f);
-		tableItem.setColumnWidth("title", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
-		tableItem
-				.setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("assignUserFullName",
-				UIConstants.TABLE_X_LABEL_WIDTH);
+    }
 
-		tableItem.setWidth("100%");
-		contentContainer.addComponent(tableItem);
+    public void setSearchCriteria(ContactSearchCriteria searchCriteria) {
+        tableItem.setSearchCriteria(searchCriteria);
+    }
 
-	}
+    private void fireRelatedListHandler() {
+        if (handlers != null) {
+            for (RelatedListHandler handler : handlers) {
+                handler.createNewRelatedItem();
+            }
+        }
+    }
 
-	public void setSearchCriteria(ContactSearchCriteria searchCriteria) {
-		tableItem.setSearchCriteria(searchCriteria);
-	}
+    @Override
+    public void addRelatedListHandler(RelatedListHandler handler) {
+        if (handlers == null) {
+            handlers = new HashSet<RelatedListHandler>();
+        }
 
-	private void fireRelatedListHandler() {
-		if (handlers != null) {
-			for (RelatedListHandler handler : handlers) {
-				handler.createNewRelatedItem();
-			}
-		}
-	}
-
-	@Override
-	public void addRelatedListHandler(RelatedListHandler handler) {
-		if (handlers == null) {
-			handlers = new HashSet<RelatedListHandler>();
-		}
-
-		handlers.add(handler);
-	}
-
+        handlers.add(handler);
+    }
 }
