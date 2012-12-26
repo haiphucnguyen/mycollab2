@@ -63,16 +63,16 @@
             </foreach>
 		</if>
         <if test="startDate != null">
-            ${startDate.operation} m_crm_campaign.startDate ${startDate.comparision} #{startDate.value}
+            ${startDate.operation} CAST(m_crm_campaign.startDate AS DATE ) ${startDate.comparision} #{startDate.value}
         </if> 
          <if test="endDate != null">
-            ${endDate.operation} m_crm_campaign.endDate ${endDate.comparision} #{endDate.value}
+            ${endDate.operation} CAST(m_crm_campaign.endDate AS DATE ) ${endDate.comparision} #{endDate.value}
         </if>  
         <if test="startDateRange != null">
-            ${startDateRange.operation} m_crm_campaign.startDate BETWEEN #{startDateRange.from} AND #{startDateRange.to}
+            ${startDateRange.operation} CAST(m_crm_campaign.startDate AS DATE ) BETWEEN #{startDateRange.from} AND #{startDateRange.to}
         </if> 
         <if test="endDateRange != null">
-            ${endDateRange.operation} m_crm_campaign.endDate BETWEEN #{endDateRange.from} AND #{endDateRange.to}
+            ${endDateRange.operation} CAST(m_crm_campaign.endDate AS DATE ) BETWEEN #{endDateRange.from} AND #{endDateRange.to}
         </if> 	
 		<if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_campaign.sAccountId = #{saccountid.value, javaType=INTEGER}]]>
@@ -140,18 +140,18 @@
 				#{user}
             </foreach>
 		</if>
-		 <if test="startDate != null">
-            ${startDate.operation} m_crm_campaign.startDate ${startDate.comparision} #{startDate.value}
+		<if test="startDate != null">
+            ${startDate.operation} CAST(m_crm_campaign.startDate AS DATE ) ${startDate.comparision} #{startDate.value}
         </if> 
          <if test="endDate != null">
-            ${endDate.operation} m_crm_campaign.endDate ${endDate.comparision} #{endDate.value}
+            ${endDate.operation} CAST(m_crm_campaign.endDate AS DATE ) ${endDate.comparision} #{endDate.value}
         </if>  
         <if test="startDateRange != null">
-            ${startDateRange.operation} m_crm_campaign.startDate BETWEEN #{startDateRange.from} AND #{startDateRange.to}
+            ${startDateRange.operation} CAST(m_crm_campaign.startDate AS DATE ) BETWEEN #{startDateRange.from} AND #{startDateRange.to}
         </if> 
         <if test="endDateRange != null">
-            ${endDateRange.operation} m_crm_campaign.endDate BETWEEN #{endDateRange.from} AND #{endDateRange.to}
-        </if> 
+            ${endDateRange.operation} CAST(m_crm_campaign.endDate AS DATE ) BETWEEN #{endDateRange.from} AND #{endDateRange.to}
+        </if>
 		<if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_campaign.sAccountId = #{saccountid.value, javaType=INTEGER}]]>
 		</if>
