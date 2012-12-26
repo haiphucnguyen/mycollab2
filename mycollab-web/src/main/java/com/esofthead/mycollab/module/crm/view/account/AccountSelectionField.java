@@ -24,7 +24,7 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 
 	private TextField accountName;
 
-	private SimpleAccount account;
+	private SimpleAccount account = new SimpleAccount();
 
 	private Embedded browseBtn;
 	private Embedded clearBtn;
@@ -63,8 +63,7 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 
 			@Override
 			public void click(ClickEvent event) {
-				accountName.setValue("");
-				AccountSelectionField.this.getWrappedField().setValue(null);
+				clearValue();
 			}
 		});
 		layout.addComponent(clearBtn);
@@ -93,10 +92,20 @@ public class AccountSelectionField extends FieldWrapper<Account> implements
 			}
 		});
 	}
+	
+	public void clearValue() {
+		accountName.setValue("");
+		AccountSelectionField.this.getWrappedField().setValue(null);
+		this.account = new SimpleAccount();
+	}
 
 	public void setAccount(SimpleAccount account) {
 		this.account = account;
 		accountName.setValue(account.getAccountname());
+	}
+	
+	public SimpleAccount getAccount() {
+		return account;
 	}
 
 	@Override

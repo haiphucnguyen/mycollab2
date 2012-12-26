@@ -7,6 +7,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
@@ -230,16 +231,16 @@ public class OpportunitySearchPanel extends
 														.getValue()).trim()));
 							}
 							
-							//accountField
-//							if (StringUtil
-//									.isNotNullOrEmpty((String) opportunityNameField
-//											.getValue())) {
-//								searchCriteria
-//										.setOpportunityName(new StringSearchField(
-//												SearchField.AND,
-//												((String) opportunityNameField
-//														.getValue()).trim()));
-//							}
+							SimpleAccount account = accountField.getAccount();
+							if (StringUtil
+									.isNotNullOrEmpty((String) account
+											.getAccountname())) {
+								searchCriteria
+										.setAccountName(new StringSearchField(
+												SearchField.AND,
+												account
+												.getAccountname()));
+							}
 							
 							if (StringUtil
 									.isNotNullOrEmpty((String) nextStepField
@@ -288,7 +289,7 @@ public class OpportunitySearchPanel extends
 						public void buttonClick(ClickEvent event) {
 							
 							opportunityNameField.setValue("");
-							//accountField.setValue(null);
+							accountField.clearValue();
 							nextStepField.setValue("");
 							userField.setValue(null);
 							stageField.setValue(null);
