@@ -11,83 +11,87 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 
 public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
-	private static final long serialVersionUID = 1L;
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Field createField(Item item, Object propertyId,
-			com.vaadin.ui.Component uiContext) {
+    private static final long serialVersionUID = 1L;
 
-		Field field = onCreateField(item, propertyId, uiContext);
-		if (field == null) {
-			Object bean = ((BeanItem<Object>) item).getBean();
+    @SuppressWarnings("unchecked")
+    @Override
+    public Field createField(Item item, Object propertyId,
+            com.vaadin.ui.Component uiContext) {
 
-			try {
-				String propertyValue = BeanUtils.getProperty(bean,
-						(String) propertyId);
-				field = new FormViewField(propertyValue);
-			} catch (Exception e) {
-				e.printStackTrace();
-				field = new FormViewField("Error");
-			}
-		}
+        Field field = onCreateField(item, propertyId, uiContext);
+        if (field == null) {
+            Object bean = ((BeanItem<Object>) item).getBean();
 
-		return field;
-	}
+            try {
+                String propertyValue = BeanUtils.getProperty(bean,
+                        (String) propertyId);
+                field = new FormViewField(propertyValue);
+            } catch (Exception e) {
+                e.printStackTrace();
+                field = new FormViewField("Error");
+            }
+        }
 
-	protected Field onCreateField(Item item, Object propertyId,
-			com.vaadin.ui.Component uiContext) {
-		return null;
-	}
+        return field;
+    }
 
-	public static class FormViewField extends CustomField {
-		private static final long serialVersionUID = 1L;
+    protected Field onCreateField(Item item, Object propertyId,
+            com.vaadin.ui.Component uiContext) {
+        return null;
+    }
 
-		public FormViewField(String value) {
-			this(value, Label.CONTENT_DEFAULT);
-		}
+    public static class FormViewField extends CustomField {
 
-		public FormViewField(String value, int contentMode) {
-			Label l = new Label();
-			l.setWidth("100%");
-			l.setContentMode(contentMode);
-			this.setCompositionRoot(l);
-			l.setValue(value);
-		}
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public Class<?> getType() {
-			return String.class;
-		}
-	}
+        public FormViewField(String value) {
+            this(value, Label.CONTENT_DEFAULT);
+        }
 
-	public static class FormLinkViewField extends CustomField {
-		private static final long serialVersionUID = 1L;
+        public FormViewField(String value, int contentMode) {
+            Label l = new Label();
+            l.setWidth("100%");
+            l.setContentMode(contentMode);
+            this.setCompositionRoot(l);
+            l.setValue(value);
+        }
 
-		public FormLinkViewField(String value, Button.ClickListener listener) {
-			ButtonLink l = new ButtonLink(value, listener);
-			l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			this.setCompositionRoot(l);
-		}
+        @Override
+        public Class<?> getType() {
+            return String.class;
+        }
+    }
 
-		@Override
-		public Class<?> getType() {
-			return String.class;
-		}
-	}
+    public static class FormLinkViewField extends CustomField {
 
-	public static class FormEmailLinkViewField extends CustomField {
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		public FormEmailLinkViewField(String email) {
-			EmailLink l = new EmailLink(email);
-			l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			this.setCompositionRoot(l);
-		}
+        public FormLinkViewField(String value, Button.ClickListener listener) {
+            ButtonLink l = new ButtonLink(value, listener);
+            l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+            this.setCompositionRoot(l);
+        }
 
-		@Override
-		public Class<?> getType() {
-			return String.class;
-		}
-	}
+        @Override
+        public Class<?> getType() {
+            return String.class;
+        }
+    }
+
+    public static class FormEmailLinkViewField extends CustomField {
+
+        private static final long serialVersionUID = 1L;
+
+        public FormEmailLinkViewField(String email) {
+            EmailLink l = new EmailLink(email);
+            l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+            this.setCompositionRoot(l);
+        }
+
+        @Override
+        public Class<?> getType() {
+            return String.class;
+        }
+    }
 }

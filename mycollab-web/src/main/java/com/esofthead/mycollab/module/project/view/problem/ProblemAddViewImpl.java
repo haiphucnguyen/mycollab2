@@ -9,13 +9,16 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.RichTextEditor;
+import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
+import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import java.util.HashMap;
 import java.util.Map;
+import org.vaadin.teemu.ratingstars.RatingStars;
 
 @ViewComponent
 public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
@@ -98,9 +101,47 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
                 } else if (propertyId.equals("assigntouser")) {
                     return new UserComboBox();
                 } else if (propertyId.equals("priority")) {
+                    ValueComboBox box = new ValueComboBox();
+                    box.loadData(new String[]{"High", "Medium", "Low"});
+                    return box;
                 } else if (propertyId.equals("status")) {
+                    ValueComboBox box = new ValueComboBox();
+                    box.loadData(new String[]{"Open", "Closed"});
+                    return box;
                 } else if (propertyId.equals("level")) {
+                    final RatingStars ratingField = new RatingStars();
+                    ratingField.setMaxValue(5);
+                    ratingField.setImmediate(true);
+                    ratingField.setDescription("Problem level");
+                    ratingField.setValueCaption(valueCaptions.values().toArray(
+                            new String[5]));
+
+                    ratingField.addListener(new Property.ValueChangeListener() {
+                        private static final long serialVersionUID = -3277119031169194273L;
+
+                        @Override
+                        public void valueChange(Property.ValueChangeEvent event) {
+                            Double value = (Double) event.getProperty()
+                                    .getValue();
+                            RatingStars changedRs = (RatingStars) event
+                                    .getProperty();
+
+                            // reset value captions
+                            changedRs.setValueCaption(valueCaptions.values()
+                                    .toArray(new String[5]));
+                            // set "Your Rating" caption
+                            if (value == null) {
+                                changedRs.setValue(1);
+                            } else {
+                                changedRs.setValueCaption(
+                                        (int) Math.round(value), "Your Rating");
+                            }
+
+                        }
+                    });
+                    return ratingField;
                 } else if (propertyId.equals("resolution")) {
+                    return new RichTextEditor();
                 }
 
                 return null;

@@ -123,6 +123,7 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
                     ratingField.addListener(new Property.ValueChangeListener() {
                         private static final long serialVersionUID = -3277119031169194273L;
 
+                        @Override
                         public void valueChange(Property.ValueChangeEvent event) {
                             Double value = (Double) event.getProperty()
                                     .getValue();
