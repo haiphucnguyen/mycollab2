@@ -12,6 +12,8 @@ public class UIConstants {
 	public static String DEFAULT_2XCONTROL_HEIGHT = "400px";
 	
 	public static int TABLE_CONTROL_WIDTH = 22;
+        
+        public static int TABLE_S_LABEL_WIDTH = 60;
 	
 	public static int TABLE_M_LABEL_WIDTH = 120;
 	

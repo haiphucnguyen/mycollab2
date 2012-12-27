@@ -1,12 +1,16 @@
-package com.esofthead.mycollab.module.project.view.risk;
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.ui.components.BasicSearchLayout;
 import com.esofthead.mycollab.module.crm.ui.components.GenericSearchPanel;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
-import com.esofthead.mycollab.module.project.events.RiskEvent;
+import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
+import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -14,7 +18,6 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
@@ -22,13 +25,17 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
 
-public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
+/**
+ *
+ * @author haiphucnguyen
+ */
+public class MilestoneSearchPanel extends GenericSearchPanel<MilestoneSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
     private SimpleProject project;
-    protected RiskSearchCriteria searchCriteria;
+    protected MilestoneSearchCriteria searchCriteria;
 
-    public RiskSearchPanel() {
+    public MilestoneSearchPanel() {
         this.project = (SimpleProject) AppContext.getVariable("project");
     }
 
@@ -40,7 +47,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 
     private void createBasicSearchLayout() {
 
-        this.setCompositionRoot(new RiskBasicSearchLayout());
+        this.setCompositionRoot(new MilestoneSearchPanel.MilestoneBasicSearchLayout());
     }
 
     private HorizontalLayout createSearchTopPanel() {
@@ -48,7 +55,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
         layout.setWidth("100%");
         layout.setSpacing(true);
 
-        Label searchtitle = new Label("Search Risks");
+        Label searchtitle = new Label("Search Milestones");
         searchtitle.setStyleName(Reindeer.LABEL_H2);
         layout.addComponent(searchtitle);
 
@@ -57,9 +64,9 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
                     private static final long serialVersionUID = 1L;
 
                     @Override
-                    public void buttonClick(ClickEvent event) {
+                    public void buttonClick(Button.ClickEvent event) {
                         EventBus.getInstance().fireEvent(
-                                new RiskEvent.GotoAdd(this, null));
+                                new MilestoneEvent.GotoAdd(this, null));
                     }
                 });
         createBtn.setStyleName("link");
@@ -70,7 +77,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
         return layout;
     }
 
-    private class RiskBasicSearchLayout extends BasicSearchLayout {
+    private class MilestoneBasicSearchLayout extends BasicSearchLayout {
 
         private static final long serialVersionUID = 1L;
         private TextField nameField;
@@ -99,12 +106,12 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
                         private static final long serialVersionUID = 1L;
 
                         @Override
-                        public void buttonClick(ClickEvent event) {
-                            searchCriteria = new RiskSearchCriteria();
+                        public void buttonClick(Button.ClickEvent event) {
+                            searchCriteria = new MilestoneSearchCriteria();
                             searchCriteria.setProjectId(new NumberSearchField(
                                     SearchField.AND, project.getId()));
 
-                            RiskSearchPanel.this
+                            MilestoneSearchPanel.this
                                     .notifySearchHandler(searchCriteria);
                         }
                     }));
@@ -114,12 +121,11 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
                         private static final long serialVersionUID = 1L;
 
                         @Override
-                        public void buttonClick(ClickEvent event) {
+                        public void buttonClick(Button.ClickEvent event) {
                             nameField.setValue("");
                         }
                     }));
             return basicSearchBody;
         }
     }
-
 }

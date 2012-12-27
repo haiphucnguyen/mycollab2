@@ -14,13 +14,16 @@
     <sql id="querySearchCriteria" >
 
         <if test="assignUser != null" >
-            <![CDATA[${assignUser.operation} m_prj_milestone.owner = #{assignUser.value}]]>
+            <![CDATA[${assignUser.operation} m_prj_milestone.owner = ${assignUser.value}]]>
         </if>
         <if test="completedField != null" >
-            <![CDATA[${completedField.operation} m_prj_milestone.iscompleted IS #{completedField.value}]]>
+            <![CDATA[${completedField.operation} m_prj_milestone.iscompleted IS ${completedField.value}]]>
         </if>
         <if test="flag != null" >
-            <![CDATA[${flag.operation} m_prj_milestone.flag = #{flag.value}]]>
+            <![CDATA[${flag.operation} m_prj_milestone.flag = ${flag.value}]]>
+        </if>
+        <if test="projectId != null" >
+            <![CDATA[${projectId.operation} m_prj_milestone.projectid = ${projectId.value}]]>
         </if>
     </sql>
     
@@ -65,5 +68,13 @@
 
             <include refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.querySearchCriteria" />
         </trim>
+    </select>
+    
+    <select id="findMilestoneById" parameterType="java.lang.Integer"
+                resultMap="MilestoneResult">
+        <include
+            refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.selectMilestone" />
+
+        WHERE m_prj_milestone.id=#{milestoneId, javaType=INTEGER}
     </select>
 </mapper>    

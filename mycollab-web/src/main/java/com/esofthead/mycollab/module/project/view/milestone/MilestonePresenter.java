@@ -38,19 +38,19 @@ public class MilestonePresenter  extends AbstractPresenter<MilestoneContainer> {
         view.removeAllComponents();
 
         if (data instanceof ScreenData.Search) {
-            log.debug("Go to risk list view");
+            log.debug("Go to milestone list view");
             MilestoneListPresenter presenter = PresenterResolver
                     .getPresenter(MilestoneListPresenter.class);
             presenter.go(view, data);
 
         } else if (data instanceof ScreenData.Add
                 || data instanceof ScreenData.Edit) {
-            log.debug("Go to risk add view");
+            log.debug("Go to milestone add view");
             MilestoneAddPresenter presenter = PresenterResolver
                     .getPresenter(MilestoneAddPresenter.class);
             presenter.go(view, data);
         } else if (data instanceof ScreenData.Preview) {
-            log.debug("Go to risk preview view");
+            log.debug("Go to milestone preview view");
             MilestoneReadPresenter presenter = PresenterResolver
                     .getPresenter(MilestoneReadPresenter.class);
             presenter.go(view, data);

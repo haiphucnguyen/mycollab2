@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.BooleanSearchField;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
@@ -18,6 +19,8 @@ public class MilestoneSearchCriteria extends SearchCriteria{
     private StringSearchField assignUser;
     
     private StringSearchField flag;
+    
+    private NumberSearchField projectId;
 
     public BooleanSearchField getCompletedField() {
         return completedField;
@@ -41,6 +44,14 @@ public class MilestoneSearchCriteria extends SearchCriteria{
 
     public void setFlag(StringSearchField flag) {
         this.flag = flag;
+    }
+
+    public NumberSearchField getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(NumberSearchField projectId) {
+        this.projectId = projectId;
     }
     
 }

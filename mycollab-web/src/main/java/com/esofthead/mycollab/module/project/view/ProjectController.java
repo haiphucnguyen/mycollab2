@@ -3,14 +3,17 @@ package com.esofthead.mycollab.module.project.view;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.MessageEvent;
+import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent.SaveProjectSucess;
@@ -36,6 +39,7 @@ public class ProjectController {
         bindProblemEvents();
         bindBugEvents();
         bindMessageEvents();
+        bindMilestoneEvents();
     }
 
     @SuppressWarnings("serial")
@@ -308,6 +312,84 @@ public class ProjectController {
                         ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
                                 (Integer) event.getData());
                         projectView.gotoMessageView(data);
+                    }
+                });
+    }
+
+    private void bindMilestoneEvents() {
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<MilestoneEvent.GotoAdd>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return MilestoneEvent.GotoAdd.class;
+                    }
+
+                    @Override
+                    public void handle(MilestoneEvent.GotoAdd event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        ScreenData.Add<Milestone> data = new ScreenData.Add<Milestone>(
+                                new Milestone());
+                        projectView.gotoMilestoneView(data);
+                    }
+                });
+
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<MilestoneEvent.GotoRead>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return MilestoneEvent.GotoRead.class;
+                    }
+
+                    @Override
+                    public void handle(MilestoneEvent.GotoRead event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
+                                (Integer) event.getData());
+                        projectView.gotoMilestoneView(data);
+                    }
+                });
+
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<MilestoneEvent.GotoList>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return MilestoneEvent.GotoList.class;
+                    }
+
+                    @Override
+                    public void handle(MilestoneEvent.GotoList event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+
+                        SimpleProject project = (SimpleProject) AppContext
+                                .getVariable(ProjectContants.PROJECT_NAME);
+
+                        MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
+
+                        criteria.setProjectId(new NumberSearchField(
+                                SearchField.AND, project.getId()));
+                        projectView
+                                .gotoMilestoneView(new ScreenData.Search<MilestoneSearchCriteria>(
+                                criteria));
+                    }
+                });
+
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<MilestoneEvent.GotoEdit>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return MilestoneEvent.GotoEdit.class;
+                    }
+
+                    @Override
+                    public void handle(MilestoneEvent.GotoEdit event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        ScreenData.Edit<Milestone> data = new ScreenData.Edit<Milestone>(
+                                (Milestone) event.getData());
+                        projectView.gotoMilestoneView(data);
                     }
                 });
     }

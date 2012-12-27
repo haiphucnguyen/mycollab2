@@ -1,0 +1,1 @@
+ALTER TABLE `m_prj_milestone` CHANGE COLUMN `startdate` `startdate` DATETIME NULL  , CHANGE COLUMN `enddate` `enddate` DATETIME NULL  , CHANGE COLUMN `iscompleted` `iscompleted` TINYINT(1) NULL DEFAULT '1'  ;

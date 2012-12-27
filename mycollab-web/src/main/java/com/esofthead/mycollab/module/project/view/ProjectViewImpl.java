@@ -4,7 +4,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
@@ -12,7 +12,7 @@ import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
-import com.esofthead.mycollab.module.project.view.milestone.ProjectMilestonePresenter;
+import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
 import com.esofthead.mycollab.module.project.view.task.ProjectTaskPresenter;
@@ -47,7 +47,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     private final CssLayout mySpaceArea = new CssLayout();
     private final HorizontalLayout topPanel;
     private MessagePresenter messagePresenter;
-    private ProjectMilestonePresenter milestonesPresenter;
+    private MilestonePresenter milestonesPresenter;
     private ProjectTaskPresenter taskPresenter;
     private BugPresenter bugPresenter;
     private ProblemPresenter problemPresenter;
@@ -101,8 +101,13 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
                 if ("Messages".equals(caption)) {
                     messagePresenter.go(ProjectViewImpl.this, null);
                 } else if ("Milestones".equals(caption)) {
-                    milestonesPresenter.go(ProjectViewImpl.this,
-                            new ScreenData<SimpleProject>(project));
+                    MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
+                    SimpleProject project = (SimpleProject) AppContext
+                            .getVariable(ProjectContants.PROJECT_NAME);
+                    searchCriteria.setProjectId(new NumberSearchField(
+                            SearchField.AND, project.getId()));
+                    gotoMilestoneView(new ScreenData.Search<MilestoneSearchCriteria>(
+                            searchCriteria));
                 } else if ("Tasks".equals(caption)) {
                     taskPresenter.go(ProjectViewImpl.this,
                             new ScreenData<SimpleProject>(project));
@@ -149,6 +154,10 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         bugPresenter.go(ProjectViewImpl.this, data);
     }
 
+    public void gotoMilestoneView(ScreenData data) {
+        milestonesPresenter.go(ProjectViewImpl.this, data);
+    }
+
     private Component constructProjectDashboardComponent() {
         return new ProjectDashboardViewImpl();
     }
@@ -161,7 +170,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
     private Component constructProjectMilestoneComponent() {
         milestonesPresenter = PresenterResolver
-                .getPresenter(ProjectMilestonePresenter.class);
+                .getPresenter(MilestonePresenter.class);
         return milestonesPresenter.getView();
     }
 
