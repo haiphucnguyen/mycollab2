@@ -36,6 +36,7 @@ public class PreviewFormControlsGenerator<T> {
                         previewForm.fireEditForm(item);
                     }
                 });
+        editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         editButtons.addComponent(editBtn);
         editButtons.setComponentAlignment(editBtn, Alignment.MIDDLE_CENTER);
         
@@ -51,7 +52,7 @@ public class PreviewFormControlsGenerator<T> {
                         previewForm.fireDeleteForm(item);
                     }
                 });
-        
+        deleteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         editButtons.addComponent(deleteBtn);
         editButtons.setComponentAlignment(deleteBtn, Alignment.MIDDLE_CENTER);
         
@@ -67,7 +68,7 @@ public class PreviewFormControlsGenerator<T> {
                         previewForm.fireCloneForm(item);
                     }
                 });
-        
+        cloneBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         editButtons.addComponent(cloneBtn);
         editButtons.setComponentAlignment(cloneBtn, Alignment.MIDDLE_CENTER);
         

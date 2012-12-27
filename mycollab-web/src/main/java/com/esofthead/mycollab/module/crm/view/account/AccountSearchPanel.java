@@ -103,7 +103,7 @@ public class AccountSearchPanel extends
 			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 			Button searchBtn = new Button("Search");
-			searchBtn.setStyleName("bluebtn");
+			                 searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			searchBtn.addListener(new Button.ClickListener() {
 
 				@Override
@@ -209,7 +209,8 @@ public class AccountSearchPanel extends
 		public ComponentContainer constructFooter() {
 			HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
-			buttonControls.addComponent(new Button("Search",
+                        
+                        Button searchBtn = new Button("Search",
 					new Button.ClickListener() {
 
 						@SuppressWarnings({ "unchecked", "rawtypes" })
@@ -299,9 +300,12 @@ public class AccountSearchPanel extends
 
 						}
 
-					}));
+					});
+                        
+			buttonControls.addComponent(searchBtn);
+                        searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
-			buttonControls.addComponent(new Button("Clear",
+                        Button clearBtn = new Button("Clear",
 					new Button.ClickListener() {
 
 						@Override
@@ -317,7 +321,9 @@ public class AccountSearchPanel extends
 							userField.setValue(null);
 						}
 
-					}));
+					});
+                        clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			buttonControls.addComponent(clearBtn);
 
 			Button basicSearchBtn = new Button("Basic Search",
 					new Button.ClickListener() {

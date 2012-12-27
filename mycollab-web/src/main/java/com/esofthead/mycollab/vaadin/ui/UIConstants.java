@@ -21,7 +21,9 @@ public class UIConstants {
 	
 	public static int TABLE_EMAIL_WIDTH = 200;
 	
-	public static int TABLE_DATE_WIDTH = 140;
+	public static int TABLE_DATE_WIDTH = 110;
 	
 	public static int TABLE_DATE_TIME_WIDTH = 140;
+        
+        public static String THEME_BLUE_LINK = "bluebtn";
 }

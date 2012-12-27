@@ -14,6 +14,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
@@ -76,12 +77,15 @@ public class MilestoneReadViewImpl extends AbstractView implements MilestoneRead
                     
                     if (propertyId.equals("owner")) {
                         return new FormLinkViewField(milestone.getOwnerFullName(), new Button.ClickListener() {
-
                             @Override
                             public void buttonClick(ClickEvent event) {
                                 //TODO: add link to user view
                             }
                         });
+                    } else if (propertyId.equals("startdate")) {
+                        return new FormViewField(AppContext.formatDate(milestone.getStartdate()));
+                    } else if (propertyId.equals("enddate")) {
+                        return new FormViewField(AppContext.formatDate(milestone.getEnddate()));
                     }
                     return null;
                 }

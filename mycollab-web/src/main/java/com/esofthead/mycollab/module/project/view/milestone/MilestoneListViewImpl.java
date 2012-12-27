@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
@@ -114,6 +115,36 @@ public class MilestoneListViewImpl extends AbstractView implements MilestoneList
                 b.addStyleName("medium-text");
                 return b;
 
+            }
+        });
+        
+        tableItem.addGeneratedColumn("startdate", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    Object itemId, Object columnId) {
+                final SimpleMilestone milestone = tableItem
+                        .getBeanByIndex(itemId);
+                Label l = new Label();
+
+                l.setValue(AppContext.formatDate(milestone.getStartdate()));
+                return l;
+            }
+        });
+        
+        tableItem.addGeneratedColumn("enddate", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    Object itemId, Object columnId) {
+                final SimpleMilestone milestone = tableItem
+                        .getBeanByIndex(itemId);
+                Label l = new Label();
+
+                l.setValue(AppContext.formatDate(milestone.getEnddate()));
+                return l;
             }
         });
 
