@@ -31,103 +31,98 @@ import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class ProblemListViewImpl extends AbstractView implements
-		ProblemListView {
+        ProblemListView {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    private final ProblemSearchPanel problemSearchPanel;
+    private SelectionOptionButton selectOptionButton;
+    private PagedBeanTable2<ProblemService, ProblemSearchCriteria, SimpleProblem> tableItem;
+    private final VerticalLayout problemListLayout;
+    private PopupButtonControl tableActionControls;
+    private final Label selectedItemsNumberLabel = new Label();
 
-	private final ProblemSearchPanel problemSearchPanel;
+    public ProblemListViewImpl() {
+        this.setSpacing(true);
 
-	private SelectionOptionButton selectOptionButton;
+        problemSearchPanel = new ProblemSearchPanel();
+        this.addComponent(problemSearchPanel);
 
-	private PagedBeanTable2<ProblemService, ProblemSearchCriteria, SimpleProblem> tableItem;
+        problemListLayout = new VerticalLayout();
+        problemListLayout.setSpacing(true);
+        this.addComponent(problemListLayout);
 
-	private final VerticalLayout problemListLayout;
+        generateDisplayTable();
+    }
 
-	private PopupButtonControl tableActionControls;
+    private void generateDisplayTable() {
+        tableItem = new PagedBeanTable2<ProblemService, ProblemSearchCriteria, SimpleProblem>(
+                AppContext.getSpringBean(ProblemService.class),
+                SimpleProblem.class, new String[]{"selected", "issuename",
+                    "assignedUserFullName", "datedue", "level"},
+                new String[]{"", "Name", "Assigned to", "Due Date", "Level"});
 
-	private final Label selectedItemsNumberLabel = new Label();
+        tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-	public ProblemListViewImpl() {
-		this.setSpacing(true);
+            @Override
+            public Object generateCell(final Table source, final Object itemId,
+                    Object columnId) {
+                final CheckBox cb = new CheckBox("", false);
+                cb.setImmediate(true);
+                cb.addListener(new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-		problemSearchPanel = new ProblemSearchPanel();
-		this.addComponent(problemSearchPanel);
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        SimpleProblem account = tableItem
+                                .getBeanByIndex(itemId);
+                        tableItem.fireSelectItemEvent(account);
 
-		problemListLayout = new VerticalLayout();
-		problemListLayout.setSpacing(true);
-		this.addComponent(problemListLayout);
+                    }
+                });
 
-		generateDisplayTable();
-	}
+                SimpleProblem account = tableItem.getBeanByIndex(itemId);
+                account.setExtraData(cb);
+                return cb;
+            }
+        });
 
-	private void generateDisplayTable() {
-		tableItem = new PagedBeanTable2<ProblemService, ProblemSearchCriteria, SimpleProblem>(
-				AppContext.getSpringBean(ProblemService.class),
-				SimpleProblem.class, new String[] { "selected", "issuename",
-						"assignedUserFullName", "datedue", "level" },
-				new String[] { "", "Name", "Assigned to", "Due Date", "Level" });
+        tableItem.addGeneratedColumn("issuename", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+                final SimpleProblem problem = tableItem.getBeanByIndex(itemId);
+                ButtonLink b = new ButtonLink(problem.getIssuename(),
+                        new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
-			@Override
-			public Object generateCell(final Table source, final Object itemId,
-					Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
-				cb.setImmediate(true);
-				cb.addListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                EventBus.getInstance().fireEvent(
+                                        new ProblemEvent.GotoRead(this, problem
+                                        .getId()));
+                            }
+                        });
+                b.addStyleName("medium-text");
+                return b;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						SimpleProblem account = tableItem
-								.getBeanByIndex(itemId);
-						tableItem.fireSelectItemEvent(account);
+            }
+        });
 
-					}
-				});
+        tableItem.addGeneratedColumn("datedue", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-				SimpleProblem account = tableItem.getBeanByIndex(itemId);
-				account.setExtraData(cb);
-				return cb;
-			}
-		});
-
-		tableItem.addGeneratedColumn("issuename", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					final Object itemId, Object columnId) {
-				final SimpleProblem problem = tableItem.getBeanByIndex(itemId);
-				ButtonLink b = new ButtonLink(problem.getIssuename(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								EventBus.getInstance().fireEvent(
-										new ProblemEvent.GotoRead(this, problem
-												.getId()));
-							}
-						});
-				return b;
-
-			}
-		});
-
-		tableItem.addGeneratedColumn("datedue", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					Object itemId, Object columnId) {
-				final SimpleProblem item = tableItem.getBeanByIndex(itemId);
-				Label l = new Label();
-				l.setValue(AppContext.formatDate(item.getDatedue()));
-				return l;
-			}
-		});
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    Object itemId, Object columnId) {
+                final SimpleProblem item = tableItem.getBeanByIndex(itemId);
+                Label l = new Label();
+                l.setValue(AppContext.formatDate(item.getDatedue()));
+                return l;
+            }
+        });
 //
 //		tableItem.addGeneratedColumn("level", new ColumnGenerator() {
 //			private static final long serialVersionUID = 1L;
@@ -144,71 +139,70 @@ public class ProblemListViewImpl extends AbstractView implements
 //			}
 //		});
 
-		tableItem.setColumnExpandRatio("issuename", 1);
-		tableItem.setColumnWidth("assignedUserFullName",
-				UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("level", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("datedue", UIConstants.TABLE_DATE_WIDTH);
+        tableItem.setColumnExpandRatio("issuename", 1);
+        tableItem.setColumnWidth("assignedUserFullName",
+                UIConstants.TABLE_X_LABEL_WIDTH);
+        tableItem.setColumnWidth("level", UIConstants.TABLE_X_LABEL_WIDTH);
+        tableItem.setColumnWidth("datedue", UIConstants.TABLE_DATE_WIDTH);
 
-		tableItem.setWidth("100%");
+        tableItem.setWidth("100%");
 
-		problemListLayout.addComponent(constructTableActionControls());
-		problemListLayout.addComponent(tableItem);
-	}
+        problemListLayout.addComponent(constructTableActionControls());
+        problemListLayout.addComponent(tableItem);
+    }
 
-	@Override
-	public HasSearchHandlers<ProblemSearchCriteria> getSearchHandlers() {
-		return problemSearchPanel;
-	}
+    @Override
+    public HasSearchHandlers<ProblemSearchCriteria> getSearchHandlers() {
+        return problemSearchPanel;
+    }
 
-	private ComponentContainer constructTableActionControls() {
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
+    private ComponentContainer constructTableActionControls() {
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSpacing(true);
 
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		layout.addComponent(selectOptionButton);
+        selectOptionButton = new SelectionOptionButton(tableItem);
+        layout.addComponent(selectOptionButton);
 
-		tableActionControls = new PopupButtonControl("delete", "Delete");
-		tableActionControls.addOptionItem("mail", "Mail");
-		tableActionControls.addOptionItem("export", "Export");
+        tableActionControls = new PopupButtonControl("delete", "Delete");
+        tableActionControls.addOptionItem("mail", "Mail");
+        tableActionControls.addOptionItem("export", "Export");
 
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
-				Alignment.MIDDLE_CENTER);
-		return layout;
-	}
+        layout.addComponent(tableActionControls);
+        layout.addComponent(selectedItemsNumberLabel);
+        layout.setComponentAlignment(selectedItemsNumberLabel,
+                Alignment.MIDDLE_CENTER);
+        return layout;
+    }
 
-	@Override
-	public void enableActionControls(int numOfSelectedItems) {
-		tableActionControls.setEnabled(true);
-		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
-	}
+    @Override
+    public void enableActionControls(int numOfSelectedItems) {
+        tableActionControls.setEnabled(true);
+        selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+    }
 
-	@Override
-	public void disableActionControls() {
-		tableActionControls.setEnabled(false);
-		selectedItemsNumberLabel.setValue("");
-	}
+    @Override
+    public void disableActionControls() {
+        tableActionControls.setEnabled(false);
+        selectedItemsNumberLabel.setValue("");
+    }
 
-	@Override
-	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return selectOptionButton;
-	}
+    @Override
+    public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+        return selectOptionButton;
+    }
 
-	@Override
-	public HasPopupActionHandlers getPopupActionHandlers() {
-		return tableActionControls;
-	}
+    @Override
+    public HasPopupActionHandlers getPopupActionHandlers() {
+        return tableActionControls;
+    }
 
-	@Override
-	public HasSelectableItemHandlers<SimpleProblem> getSelectableItemHandlers() {
-		return tableItem;
-	}
+    @Override
+    public HasSelectableItemHandlers<SimpleProblem> getSelectableItemHandlers() {
+        return tableItem;
+    }
 
-	@Override
-	public IPagedBeanTable<ProblemService, ProblemSearchCriteria, SimpleProblem> getPagedBeanTable() {
-		return tableItem;
-	}
-
+    @Override
+    public IPagedBeanTable<ProblemService, ProblemSearchCriteria, SimpleProblem> getPagedBeanTable() {
+        return tableItem;
+    }
 }

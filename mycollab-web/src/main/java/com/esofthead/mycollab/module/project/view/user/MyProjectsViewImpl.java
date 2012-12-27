@@ -23,71 +23,70 @@ import com.vaadin.ui.VerticalLayout;
 @ViewComponent
 public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
 
-	private PagedBeanTable2<ProjectService, ProjectSearchCriteria, SimpleProject> tableItem;
+    private PagedBeanTable2<ProjectService, ProjectSearchCriteria, SimpleProject> tableItem;
+    private ProjectSearchPanel searchPanel;
+    private VerticalLayout listLayout;
 
-	private ProjectSearchPanel searchPanel;
+    public MyProjectsViewImpl() {
+        this.setSpacing(true);
+        this.setMargin(true);
 
-	private VerticalLayout listLayout;
+        searchPanel = new ProjectSearchPanel();
+        this.addComponent(searchPanel);
 
-	public MyProjectsViewImpl() {
-		this.setSpacing(true);
-		this.setMargin(true);
+        listLayout = new VerticalLayout();
+        listLayout.setSpacing(true);
+        this.addComponent(listLayout);
 
-		searchPanel = new ProjectSearchPanel();
-		this.addComponent(searchPanel);
+        generateDisplayTable();
+    }
 
-		listLayout = new VerticalLayout();
-		listLayout.setSpacing(true);
-		this.addComponent(listLayout);
+    private void generateDisplayTable() {
+        tableItem = new PagedBeanTable2<ProjectService, ProjectSearchCriteria, SimpleProject>(
+                AppContext.getSpringBean(ProjectService.class),
+                SimpleProject.class, new String[]{"name", "accountName",
+                    "projecttype", "projectstatus"}, new String[]{
+                    "Name", "Account", "Type", "Status"});
 
-		generateDisplayTable();
-	}
+        tableItem.addGeneratedColumn("name", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-	private void generateDisplayTable() {
-		tableItem = new PagedBeanTable2<ProjectService, ProjectSearchCriteria, SimpleProject>(
-				AppContext.getSpringBean(ProjectService.class),
-				SimpleProject.class, new String[] { "name", "accountName",
-						"projecttype", "projectstatus" }, new String[] {
-						"Name", "Account", "Type", "Status" });
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+                final SimpleProject project = tableItem.getBeanByIndex(itemId);
+                ButtonLink b = new ButtonLink(project.getName(),
+                        new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
-		tableItem.addGeneratedColumn("name", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                EventBus.getInstance().fireEvent(
+                                        new ProjectEvent.GotoMyProject(this,
+                                        project));
+                            }
+                        });
+                b.addStyleName("medium-text");
+                return b;
 
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					final Object itemId, Object columnId) {
-				final SimpleProject project = tableItem.getBeanByIndex(itemId);
-				ButtonLink b = new ButtonLink(project.getName(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+            }
+        });
 
-							@Override
-							public void buttonClick(ClickEvent event) {
-								EventBus.getInstance().fireEvent(
-										new ProjectEvent.GotoMyProject(this,
-												project));
-							}
-						});
-				return b;
+        tableItem.setWidth("100%");
 
-			}
-		});
+        tableItem.setColumnExpandRatio("name", 1f);
+        tableItem
+                .setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
+        tableItem
+                .setColumnWidth("projecttype", UIConstants.TABLE_M_LABEL_WIDTH);
+        tableItem.setColumnWidth("projectstatus",
+                UIConstants.TABLE_M_LABEL_WIDTH);
 
-		tableItem.setWidth("100%");
+        listLayout.addComponent(tableItem);
+    }
 
-		tableItem.setColumnExpandRatio("name", 1f);
-		tableItem
-				.setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem
-				.setColumnWidth("projecttype", UIConstants.TABLE_M_LABEL_WIDTH);
-		tableItem.setColumnWidth("projectstatus",
-				UIConstants.TABLE_M_LABEL_WIDTH);
-
-		listLayout.addComponent(tableItem);
-	}
-
-	@Override
-	public IPagedBeanTable<ProjectService, ProjectSearchCriteria, SimpleProject> getPagedBeanTable() {
-		return tableItem;
-	}
+    @Override
+    public IPagedBeanTable<ProjectService, ProjectSearchCriteria, SimpleProject> getPagedBeanTable() {
+        return tableItem;
+    }
 }
