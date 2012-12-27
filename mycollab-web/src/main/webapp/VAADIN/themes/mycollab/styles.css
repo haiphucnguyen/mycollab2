@@ -284,7 +284,7 @@ input.v-textfield[type="text"], textarea.v-textarea, .v-filterselect {
 #topNavigation .navSeparator {
     display: block;
     float: left;
-    border-left: solid 1px #222;
+    border-left: solid 1px #D2D2D2;
     border-right: solid 1px #444;
     height: 20px;
     width: 0;
