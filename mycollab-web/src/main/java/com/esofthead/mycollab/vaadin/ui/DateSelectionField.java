@@ -139,14 +139,14 @@ public class DateSelectionField extends GridLayout{
 	
 	
 	private RangeDateSearchField getLastNumberDays(int duration) {
-		Date fDate = DateTimeUtils.subtractDayDuration(new Date(), duration);
+		Date fDate = DateTimeUtils.subtractOrAddDayDuration(new Date(), duration);
 		Date tDate = new Date();
 		return new RangeDateSearchField(fDate, tDate);
 	}
 	
 	private RangeDateSearchField getNextNumberDays(int duration) {
 		Date fDate = new Date();
-		Date tDate = DateTimeUtils.addDayDuration(new Date(), duration);
+		Date tDate = DateTimeUtils.subtractOrAddDayDuration(new Date(), duration);
 		return new RangeDateSearchField(fDate, tDate);
 	}
 	
@@ -156,7 +156,7 @@ public class DateSelectionField extends GridLayout{
 		int monthMaxDays = c.getActualMaximum(Calendar.DAY_OF_MONTH);
 		c.set(Calendar.getInstance().get(Calendar.YEAR), monthDuration, 1);
 		Date fDate = c.getTime();
-		Date tDate = DateTimeUtils.addDayDuration(new Date(), monthMaxDays);
+		Date tDate = DateTimeUtils.subtractOrAddDayDuration(new Date(), monthMaxDays);
 		return new RangeDateSearchField(fDate, tDate);
 	}
 	

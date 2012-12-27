@@ -85,7 +85,7 @@ public class CampaignServiceTest {
 	public void testSearchStartDateRangeNext7Days() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
 		Date startDate = DateTimeUtils.getDateByString("2012-12-20");
-		Date endDate = DateTimeUtils.addDayDuration(DateTimeUtils.getDateByString("2012-12-21"), 7);
+		Date endDate = DateTimeUtils.subtractOrAddDayDuration(DateTimeUtils.getDateByString("2012-12-21"), 7);
 		criteria.setStartDateRange(new RangeDateSearchField(startDate, endDate));
 		Assert.assertEquals(1, campaignService.getTotalCount(criteria));
 		Assert.assertEquals(
@@ -99,7 +99,7 @@ public class CampaignServiceTest {
 	@DataSet
 	public void testSearchStartDateRangeLast7Days() {
 		CampaignSearchCriteria criteria = new CampaignSearchCriteria();
-		Date startDate = DateTimeUtils.subtractDayDuration(DateTimeUtils.getDateByString("2012-12-21"), 7);
+		Date startDate = DateTimeUtils.subtractOrAddDayDuration(DateTimeUtils.getDateByString("2012-12-21"), -7);
 		Date endDate = DateTimeUtils.getDateByString("2012-12-21");
 		criteria.setStartDateRange(new RangeDateSearchField(startDate, endDate));
 		Assert.assertEquals(4, campaignService.getTotalCount(criteria));

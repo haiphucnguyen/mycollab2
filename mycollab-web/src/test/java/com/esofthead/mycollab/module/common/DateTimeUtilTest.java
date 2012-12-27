@@ -3,7 +3,9 @@ package com.esofthead.mycollab.module.common;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 
 import junit.framework.Assert;
 
@@ -16,7 +18,7 @@ public class DateTimeUtilTest {
 	@Test
 	public void testAddDayDuration() {
 		Date dateTest = DateTimeUtils.getDateByString("2012-12-20");
-		Date date = DateTimeUtils.addDayDuration(dateTest, 2);
+		Date date = DateTimeUtils.subtractOrAddDayDuration(dateTest, 2);
 		Date dateTestResult = DateTimeUtils.getDateByString("2012-12-22");
 		Assert.assertEquals(dateTestResult, date);
 	}
@@ -24,8 +26,8 @@ public class DateTimeUtilTest {
 	@Test
 	public void testSubtractDayDuration() {
 		Date dateTest = DateTimeUtils.getDateByString("2012-12-20");
-		Date date = DateTimeUtils.subtractDayDuration(dateTest, 2);
-		Date dateTestResult = DateTimeUtils.getDateByString("2012-12-18");
+		Date date = DateTimeUtils.subtractOrAddDayDuration(dateTest, -30);
+		Date dateTestResult = DateTimeUtils.getDateByString("2012-11-20");
 		Assert.assertEquals(dateTestResult, date);
 	}
 	
