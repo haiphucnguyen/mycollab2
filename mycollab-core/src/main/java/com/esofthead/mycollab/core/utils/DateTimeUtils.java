@@ -3,6 +3,7 @@ package com.esofthead.mycollab.core.utils;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.TimeZone;
@@ -96,12 +97,22 @@ public class DateTimeUtils {
 		return "";
 	}
 	
-	public static Date addDayDuration(Date date, int duration) {
-		return new Date(date.getTime() + duration*24*60*60*1000);
-	}
-	
-	public static Date subtractDayDuration(Date date, int duration) {
-		return new Date(date.getTime() - duration*24*60*60*1000);
+	/**
+	 * 
+	 * @param date
+	 * @param duration 
+	 * Example:
+	 * Date date = subtractOrAddDayDuration(new Date(), -2); // Result: the last 2 days
+	 * 
+	 * Date date = subtractOrAddDayDuration(new Date(), 2); // Result: the next 2 days
+	 * @return
+	 */
+	public static Date subtractOrAddDayDuration(Date date, int duration) {
+		Calendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		cal.add(Calendar.DAY_OF_MONTH, duration);
+		Date dateExpect = cal.getTime();
+		return dateExpect;
 	}
 	
 	public static Date getDateByString(String strDate) {
