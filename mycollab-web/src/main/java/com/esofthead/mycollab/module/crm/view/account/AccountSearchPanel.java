@@ -99,6 +99,7 @@ public class AccountSearchPanel extends
 			UiUtils.addComponent(basicSearchBody, nameField,
 					Alignment.MIDDLE_CENTER);
 			myItemCheckbox = new CheckBox("My Items");
+			myItemCheckbox.setWidth("75px");
 			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 			Button searchBtn = new Button("Search");
@@ -113,10 +114,8 @@ public class AccountSearchPanel extends
 					searchCriteria.setAccountname(new StringSearchField(
 							SearchField.AND, (String) nameField.getValue()));
 					if (myItemCheckbox.booleanValue()) {
-						searchCriteria
-								.setAssignUser(new StringSearchField(
-										SearchField.AND, AppContext
-												.getUsername()));
+						searchCriteria.setAssignUser(new StringSearchField(
+								SearchField.AND, AppContext.getUsername()));
 					} else {
 						searchCriteria.setAssignUsers(null);
 					}

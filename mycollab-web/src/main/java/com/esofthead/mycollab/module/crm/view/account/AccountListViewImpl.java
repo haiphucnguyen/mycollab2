@@ -87,7 +87,7 @@ public class AccountListViewImpl extends AbstractView implements
 
 					}
 				});
-				
+
 				SimpleAccount account = tableItem.getBeanByIndex(itemId);
 				account.setExtraData(cb);
 				return cb;
@@ -137,6 +137,7 @@ public class AccountListViewImpl extends AbstractView implements
 		tableItem.setColumnWidth("assignuser", UIConstants.TABLE_X_LABEL_WIDTH);
 
 		tableItem.setWidth("100%");
+		tableItem.setStyleName("list-view");
 
 		accountListLayout.addComponent(constructTableActionControls());
 		accountListLayout.addComponent(tableItem);

@@ -88,6 +88,20 @@ input:focus, textarea:focus {
     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1);
 }
 
+.v-button-link.medium-text .v-button-caption {
+	font-size: 14px;
+}
+
+.list-view .v-table-header td, .list-view .v-table-header-wrap {
+	height: 22px;
+}
+
+.list-view .v-table-header .v-table-resizer {
+	height: 1.8em;
+}
+.list-view .v-table-header .v-table-caption-container {
+	padding-top: 2px;
+}
 .v-table-cell-wrapper {
     white-space: normal;
 }
