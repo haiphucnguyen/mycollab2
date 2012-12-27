@@ -202,21 +202,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
         PopupButton projectPopupBtn = new PopupButton(project.getName());
         BeanList<ProjectService, ProjectSearchCriteria, SimpleProject> projectList = new BeanList<ProjectService, ProjectSearchCriteria, SimpleProject>(
-                AppContext.getSpringBean(ProjectService.class),
-                new BeanList.RowDisplayHandler<SimpleProject>() {
-                    @Override
-                    public Component generateRow(final SimpleProject obj, int rowIndex) {
-                        Button projectLink = new Button(obj.getName(), new Button.ClickListener() {
-
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, obj));
-                            }
-                        });
-                        projectLink.setStyleName("link");
-                        return projectLink;
-                    }
-                });
+                AppContext.getSpringBean(ProjectService.class), ProjectRowDisplayHandler.class);
         projectList.setWidth("200px");
 
         ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
@@ -226,6 +212,21 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         projectPopupBtn.addComponent(projectList);
 
         topPanel.addComponent(projectPopupBtn);
+    }
+
+    public static class ProjectRowDisplayHandler implements BeanList.RowDisplayHandler<SimpleProject> {
+
+        @Override
+        public Component generateRow(final SimpleProject obj, int rowIndex) {
+            Button projectLink = new Button(obj.getName(), new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, obj));
+                }
+            });
+            projectLink.setStyleName("link");
+            return projectLink;
+        }
     }
 
     @Override

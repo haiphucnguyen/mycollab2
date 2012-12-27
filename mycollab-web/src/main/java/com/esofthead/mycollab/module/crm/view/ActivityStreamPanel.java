@@ -26,14 +26,14 @@ public class ActivityStreamPanel extends Panel {
     public ActivityStreamPanel() {
         super("Activity Channels");
         
-        activityStreamList = new BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), new ActivityStreamRowDisplayHandler());
+        activityStreamList = new BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), ActivityStreamRowDisplayHandler.class);
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
         searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{"Crm"}));
         activityStreamList.setSearchCriteria(searchCriteria);
         this.addComponent(activityStreamList);
     }
     
-    class ActivityStreamRowDisplayHandler implements BeanPagedList.RowDisplayHandler<SimpleActivityStream> {
+    public static class ActivityStreamRowDisplayHandler implements BeanPagedList.RowDisplayHandler<SimpleActivityStream> {
 
         @Override
         public Component generateRow(SimpleActivityStream obj, int rowIndex) {

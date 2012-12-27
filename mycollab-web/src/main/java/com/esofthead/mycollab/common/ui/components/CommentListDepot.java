@@ -40,7 +40,7 @@ public class CommentListDepot extends Depot implements ReloadableComponent{
 
         contentContainer.addComponent(new CommentInput(this, type, typeid));
         
-        commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(AppContext.getSpringBean(CommentService.class), new CommentRowDisplayHandler());
+        commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(AppContext.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);
         contentContainer.addComponent(commentList);
         displayCommentList();
     }

@@ -75,7 +75,7 @@ public class NoteListItems extends Depot {
         contentContainer.addComponent(createBtn);
 
         noteList = new BeanList<NoteService, NoteSearchCriteria, SimpleNote>(
-                noteService, new NoteRowDisplayHandler());
+                noteService, NoteRowDisplayHandler.class);
         noteList.setStyleName("noteList");
         contentContainer.addComponent(noteList);
         displayNotes();
@@ -87,7 +87,7 @@ public class NoteListItems extends Depot {
         noteList.setSearchCriteria(searchCriteria);
     }
 
-    private static class NoteRowDisplayHandler implements
+    public static class NoteRowDisplayHandler implements
             RowDisplayHandler<SimpleNote>, ReloadableComponent{
         
         private CssLayout noteLayout;
@@ -175,7 +175,7 @@ public class NoteListItems extends Depot {
                 }
             }
             
-            commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(AppContext.getSpringBean(CommentService.class), new CommentRowDisplayHandler());
+            commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(AppContext.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);
             commentList.setMargin(true);
             noteLayout.addComponent(commentList);
             displayComments();

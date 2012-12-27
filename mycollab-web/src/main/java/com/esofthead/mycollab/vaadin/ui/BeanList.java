@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.core.EngroupException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
@@ -12,10 +13,10 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 
     private static final long serialVersionUID = 1L;
     private SearchService searchService;
-    private RowDisplayHandler<T> rowDisplayHandler;
+    private Class<? extends RowDisplayHandler<T>> rowDisplayHandler;
 
     public BeanList(SearchService searchService,
-            RowDisplayHandler<T> rowDisplayHandler) {
+            Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
         this.searchService = searchService;
         this.rowDisplayHandler = rowDisplayHandler;
     }
@@ -29,12 +30,17 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
         List<T> currentListData = searchService
                 .findPagableListByCriteria(searchRequest);
         int i = 0;
-        for (T item : currentListData) {
-            Component row = rowDisplayHandler.generateRow(item, i);
-            this.addComponent(row);
-            i++;
+        try {
+            for (T item : currentListData) {
+                RowDisplayHandler<T> rowHandler = rowDisplayHandler.newInstance();
+                Component row = rowHandler.generateRow(item, i);
+                this.addComponent(row);
+                i++;
+            }
+        } catch (Exception e) {
+            throw new EngroupException(e);
         }
-        
+
         return currentListData.size();
     }
 
