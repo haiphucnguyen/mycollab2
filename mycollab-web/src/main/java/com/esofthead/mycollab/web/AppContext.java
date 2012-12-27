@@ -14,113 +14,116 @@ import org.slf4j.LoggerFactory;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class AppContext implements TransactionListener, Serializable {
-	private static final long serialVersionUID = 1L;
 
-	private static Logger log = LoggerFactory.getLogger(AppContext.class);
+    private static final long serialVersionUID = 1L;
+    private static Logger log = LoggerFactory.getLogger(AppContext.class);
+    private Application app;
+    private SimpleUser session;
+    private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
+    private Map<String, Object> variables = new HashMap<String, Object>();
 
-	private Application app;
+    public AppContext(Application application) {
+        this.app = application;
 
-	private SimpleUser session;
+        // It's usable from now on in the current request
+        instance.set(this);
+    }
 
-	private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
+    @Override
+    public void transactionStart(Application application, Object transactionData) {
+        // Set this data instance of this application
+        // as the one active in the current thread.
+        if (this.app == application) {
+            instance.set(this);
+        }
 
-	private Map<String, Object> variables = new HashMap<String, Object>();
+        log.debug("Transaction start: " + transactionData);
+    }
 
-	public AppContext(Application application) {
-		this.app = application;
+    @Override
+    public void transactionEnd(Application application, Object transactionData) {
+        // Clear the reference to avoid potential problems
+        if (this.app == application) {
+            instance.set(null);
+        }
 
-		// It's usable from now on in the current request
-		instance.set(this);
-	}
+        log.debug("Transaction end: " + transactionData);
+    }
 
-	@Override
-	public void transactionStart(Application application, Object transactionData) {
-		// Set this data instance of this application
-		// as the one active in the current thread.
-		if (this.app == application) {
-			instance.set(this);
-		}
+    public static void setSession(SimpleUser userSession) {
+        instance.get().session = userSession;
+    }
 
-		log.debug("Transaction start: " + transactionData);
-	}
+    public static SimpleUser getSession() {
+        return instance.get().session;
+    }
 
-	@Override
-	public void transactionEnd(Application application, Object transactionData) {
-		// Clear the reference to avoid potential problems
-		if (this.app == application) {
-			instance.set(null);
-		}
+    public static Integer getAccountId() {
+        return instance.get().session.getAccountid();
+    }
 
-		log.debug("Transaction end: " + transactionData);
-	}
+    public static String getUsername() {
+        return instance.get().session.getUsername();
+    }
 
-	public static void setSession(SimpleUser userSession) {
-		instance.get().session = userSession;
-	}
+    public static Application getApplication() {
+        return instance.get().app;
+    }
 
-	public static SimpleUser getSession() {
-		return instance.get().session;
-	}
+    public static <T> T getSpringBean(Class<T> requiredType) {
+        WebApplicationContext context = (WebApplicationContext) instance.get().app
+                .getContext();
 
-	public static Integer getAccountId() {
-		return instance.get().session.getAccountid();
-	}
+        org.springframework.web.context.WebApplicationContext springContext = WebApplicationContextUtils
+                .getRequiredWebApplicationContext(context.getHttpSession()
+                .getServletContext());
 
-	public static String getUsername() {
-		return instance.get().session.getUsername();
-	}
+        return springContext.getBean(requiredType);
+    }
 
-	public static Application getApplication() {
-		return instance.get().app;
-	}
+    public static void putVariable(String key, Object value) {
+        instance.get().variables.put(key, value);
+    }
 
-	public static <T> T getSpringBean(Class<T> requiredType) {
-		WebApplicationContext context = (WebApplicationContext) instance.get().app
-				.getContext();
+    public static Object getVariable(String key) {
+        return instance.get().variables.get(key);
+    }
 
-		org.springframework.web.context.WebApplicationContext springContext = WebApplicationContextUtils
-				.getRequiredWebApplicationContext(context.getHttpSession()
-						.getServletContext());
+    static void clearAllVariables() {
+        if (instance.get() != null) {
+            instance.get().variables.clear();
+        }
 
-		return springContext.getBean(requiredType);
-	}
+    }
+    private static SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
+            "MM/dd/yyyy hh:mm a");
+    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+            "MM/dd/yyyy");
+    private static SimpleDateFormat df = new SimpleDateFormat("EEE MMM dd, hh:mm aa");
 
-	public static void putVariable(String key, Object value) {
-		instance.get().variables.put(key, value);
-	}
+    public static String formatDateTime(Date date) {
+        if (date == null) {
+            return "";
+        }
+        return simpleDateTimeFormat.format(date);
+    }
 
-	public static Object getVariable(String key) {
-		return instance.get().variables.get(key);
-	}
+    public static String formatDate(Date date) {
+        if (date == null) {
+            return "";
+        }
+        return simpleDateFormat.format(date);
+    }
 
-	static void clearAllVariables() {
-		if (instance.get() != null) {
-			instance.get().variables.clear();
-		}
-		
-	}
+    public static String getDateTimeFormat() {
+        return "MM/dd/yyyy hh:mm a";
+    }
 
-	private static SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
-			"MM/dd/yyyy hh:mm a");
+    public static String formatDateToHumanRead(Date date) {
+        if (date == null) {
+            return "";
+        }
+        return df.format(date);
 
-	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-			"MM/dd/yyyy");
-
-	public static String formatDateTime(Date date) {
-		if (date == null) {
-			return "";
-		}
-		return simpleDateTimeFormat.format(date);
-	}
-
-	public static String formatDate(Date date) {
-		if (date == null) {
-			return "";
-		}
-		return simpleDateFormat.format(date);
-	}
-
-	public static String getDateTimeFormat() {
-		return "MM/dd/yyyy hh:mm a";
-	}
+    }
 }

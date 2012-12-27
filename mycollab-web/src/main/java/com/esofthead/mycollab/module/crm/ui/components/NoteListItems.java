@@ -19,6 +19,7 @@ import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.RichTextEditor;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -133,15 +134,12 @@ public class NoteListItems extends Depot {
             replyBtn.setStyleName("link");
             footer.addComponent(replyBtn);
             footer.setComponentAlignment(replyBtn, Alignment.MIDDLE_LEFT);
-            
-            
-            SimpleDateFormat df = new SimpleDateFormat("EEE MMM dd, hh:mm aa");
             Label metadata = new Label("Posted by " + note.getCreateUserFullName()
-                    + " on " + df.format(note.getCreatedtime()));
+                    + " on " + AppContext.formatDateToHumanRead(note.getCreatedtime()));
             footer.addComponent(metadata);
             
             metadata.setStyleName("metadata");
-            footer.setComponentAlignment(metadata, Alignment.MIDDLE_RIGHT);
+            footer.setComponentAlignment(metadata, Alignment.MIDDLE_LEFT);
             noteLayout.addComponent(footer);
 
             List<Attachment> attachments = note.getAttachments();
@@ -250,6 +248,7 @@ public class NoteListItems extends Depot {
                     addCreateBtn();
                 }
             });
+            saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
             controls.addComponent(saveBtn);
 
             Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
@@ -260,6 +259,7 @@ public class NoteListItems extends Depot {
                     addCreateBtn();
                 }
             });
+            cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
             controls.addComponent(cancelBtn);
 
             this.addComponent(controls);
