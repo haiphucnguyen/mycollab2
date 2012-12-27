@@ -6,6 +6,7 @@ package com.esofthead.mycollab.common.ui.components;
 
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -44,6 +45,7 @@ public class CommentInput extends VerticalLayout {
         this.addComponent(commentArea);
         
         HorizontalLayout controlsLayout = new HorizontalLayout();
+        controlsLayout.setSpacing(true);
         this.addComponent(controlsLayout);
         this.setComponentAlignment(controlsLayout, Alignment.MIDDLE_RIGHT);
 
@@ -79,6 +81,7 @@ public class CommentInput extends VerticalLayout {
                 component.reload();
             }
         });
+        newCommentBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         controlsLayout.addComponent(newCommentBtn);
         controlsLayout.setComponentAlignment(newCommentBtn, Alignment.MIDDLE_RIGHT);
 

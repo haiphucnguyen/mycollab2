@@ -94,7 +94,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
             UiUtils.addComponent(basicSearchBody, myItemCheckbox,
                     Alignment.MIDDLE_CENTER);
 
-            basicSearchBody.addComponent(new Button("Search",
+            Button searchBtn = new Button("Search",
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 
@@ -107,9 +107,11 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
                             RiskSearchPanel.this
                                     .notifySearchHandler(searchCriteria);
                         }
-                    }));
+                    });
+            searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            basicSearchBody.addComponent(searchBtn);
 
-            basicSearchBody.addComponent(new Button("Clear",
+            Button clearBtn = new Button("Clear",
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 
@@ -117,7 +119,9 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
                         public void buttonClick(ClickEvent event) {
                             nameField.setValue("");
                         }
-                    }));
+                    });
+            clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            basicSearchBody.addComponent(clearBtn);
             return basicSearchBody;
         }
     }

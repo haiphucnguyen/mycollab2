@@ -14,6 +14,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.RichTextEditor;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -158,7 +159,7 @@ public class MessageListViewImpl extends AbstractView implements
             HorizontalLayout controls = new HorizontalLayout();
             controls.setSpacing(true);
 
-            controls.addComponent(new Button("Save",
+            Button saveBtn = new Button("Save",
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 
@@ -177,9 +178,11 @@ public class MessageListViewImpl extends AbstractView implements
                             message.setSaccountid(AppContext.getAccountId());
                             fireSaveItem(message);
                         }
-                    }));
+                    });
+            saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            controls.addComponent(saveBtn);
 
-            controls.addComponent(new Button("Cancel",
+            Button cancelBtn = new Button("Cancel",
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 
@@ -187,7 +190,9 @@ public class MessageListViewImpl extends AbstractView implements
                         public void buttonClick(ClickEvent event) {
                             createBasicLayout();
                         }
-                    }));
+                    });
+            cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            controls.addComponent(cancelBtn);
 
             this.addComponent(controls);
         }
