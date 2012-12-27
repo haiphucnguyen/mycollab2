@@ -1,7 +1,7 @@
 package com.esofthead.mybatis.plugin;
 
 import java.util.List;
-
+import javax.sound.midi.SysexMessage;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -15,97 +15,99 @@ import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class MyCollabModelFilePlugin extends
-		org.mybatis.generator.api.PluginAdapter {
+public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAdapter {
 
-	@Override
-	public boolean validate(List<String> args) {
-		return true;
-	}
+    @Override
+    public boolean validate(List<String> args) {
+        return true;
+    }
 
-	@Override
-	public boolean sqlMapDocumentGenerated(Document document,
-			IntrospectedTable introspectedTable) {
-		if (isTableHasIdPrimaryKey(introspectedTable)) {
-			XmlElement element = new XmlElement("insert");
-			element.addAttribute(new Attribute("parameterType",
-					introspectedTable.getBaseRecordType()));
-			element.addAttribute(new Attribute("id", "insertAndReturnKey"));
-			element.addAttribute(new Attribute("useGeneratedKeys", "true"));
-			element.addAttribute(new Attribute("keyProperty", "id"));
+    @Override
+    public boolean sqlMapDocumentGenerated(Document document,
+            IntrospectedTable introspectedTable) {
+        if (isTableHasIdPrimaryKey(introspectedTable)) {
+            XmlElement element = new XmlElement("insert");
+            element.addAttribute(new Attribute("parameterType",
+                    introspectedTable.getBaseRecordType()));
+            element.addAttribute(new Attribute("id", "insertAndReturnKey"));
+            element.addAttribute(new Attribute("useGeneratedKeys", "true"));
+            element.addAttribute(new Attribute("keyProperty", "id"));
 
-			TextElement commentElement = new TextElement(
-					"<!--WARNING - @mbggenerated-->");
-			element.addElement(commentElement);
+            TextElement commentElement = new TextElement(
+                    "<!--WARNING - @mbggenerated-->");
+            element.addElement(commentElement);
 
-			StringBuffer sqlBuilder = new StringBuffer("insert into ").append(
-					introspectedTable
-							.getAliasedFullyQualifiedTableNameAtRuntime())
-					.append(" (");
+            StringBuffer sqlBuilder = new StringBuffer("insert into ").append(
+                    introspectedTable
+                    .getAliasedFullyQualifiedTableNameAtRuntime())
+                    .append(" (");
 
-			StringBuffer valueSt = new StringBuffer("values (");
+            StringBuffer valueSt = new StringBuffer("values (");
 
-			List<IntrospectedColumn> allColumns = introspectedTable
-					.getAllColumns();
-			for (int i = 0; i < allColumns.size(); i++) {
+            List<IntrospectedColumn> allColumns = introspectedTable
+                    .getAllColumns();
+            for (int i = 0; i < allColumns.size(); i++) {
 
-				IntrospectedColumn column = allColumns.get(i);
-				System.out.println("Pro: " + column.getJavaProperty());
-				valueSt.append("#{").append(column.getJavaProperty())
-						.append(",jdbcType=").append(column.getJdbcTypeName())
-						.append("}");
+                IntrospectedColumn column = allColumns.get(i);
+                sqlBuilder.append(column.getActualColumnName());
+                
+                valueSt.append("#{").append(column.getJavaProperty())
+                        .append(",jdbcType=").append(column.getJdbcTypeName())
+                        .append("}");
 
-				if (i < allColumns.size() - 1) {
-					sqlBuilder.append(", ");
-					valueSt.append(", ");
-				}
-			}
-			sqlBuilder.append(") ");
-			sqlBuilder.append(valueSt.toString()).append(")");
+                if (i < allColumns.size() - 1) {
+                    sqlBuilder.append(", ");
+                    valueSt.append(", ");
+                }
+            }
+            sqlBuilder.append(") ");
+            sqlBuilder.append(valueSt.toString()).append(")");
+            
+            System.out.println("Generate insert statement " + sqlBuilder.toString());
 
-			element.addElement(new TextElement(sqlBuilder.toString()));
+            element.addElement(new TextElement(sqlBuilder.toString()));
 
-			document.getRootElement().addElement(element);
-		}
+            document.getRootElement().addElement(element);
+        }
 
-		/*
-		 * XmlElement element = new XmlElement("cache");
-		 * element.addAttribute(new Attribute("type",
-		 * "org.mybatis.caches.ehcache.LoggingEhcache")); TextElement
-		 * commentElement = new TextElement("<!--WARNING - @mbggenerated-->");
-		 * element.addElement(commentElement);
-		 * document.getRootElement().addElement(element);
-		 */
+        /*
+         * XmlElement element = new XmlElement("cache");
+         * element.addAttribute(new Attribute("type",
+         * "org.mybatis.caches.ehcache.LoggingEhcache")); TextElement
+         * commentElement = new TextElement("<!--WARNING - @mbggenerated-->");
+         * element.addElement(commentElement);
+         * document.getRootElement().addElement(element);
+         */
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public boolean clientGenerated(Interface interfaze,
-			TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+    @Override
+    public boolean clientGenerated(Interface interfaze,
+            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
 
-		if (isTableHasIdPrimaryKey(introspectedTable)) {
-			Method method = new Method();
-			method.setVisibility(JavaVisibility.PUBLIC);
-			method.setName("insertAndReturnKey");
-			method.setReturnType(new FullyQualifiedJavaType("java.lang.Integer"));
-			method.addParameter(new Parameter(new FullyQualifiedJavaType(
-					introspectedTable.getBaseRecordType()), "value"));
-			interfaze.addMethod(method);
-		}
+        if (isTableHasIdPrimaryKey(introspectedTable)) {
+            Method method = new Method();
+            method.setVisibility(JavaVisibility.PUBLIC);
+            method.setName("insertAndReturnKey");
+            method.setReturnType(new FullyQualifiedJavaType("java.lang.Integer"));
+            method.addParameter(new Parameter(new FullyQualifiedJavaType(
+                    introspectedTable.getBaseRecordType()), "value"));
+            interfaze.addMethod(method);
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	private boolean isTableHasIdPrimaryKey(IntrospectedTable introspectedTable) {
-		List<IntrospectedColumn> primaryKeys = introspectedTable
-				.getPrimaryKeyColumns();
-		if ((primaryKeys != null) && (primaryKeys.size() == 1)) {
-			IntrospectedColumn column = primaryKeys.get(0);
-			return (column.getFullyQualifiedJavaType().getFullyQualifiedName())
-					.equals("java.lang.Integer");
-		} else {
-			return false;
-		}
-	}
+    private boolean isTableHasIdPrimaryKey(IntrospectedTable introspectedTable) {
+        List<IntrospectedColumn> primaryKeys = introspectedTable
+                .getPrimaryKeyColumns();
+        if ((primaryKeys != null) && (primaryKeys.size() == 1)) {
+            IntrospectedColumn column = primaryKeys.get(0);
+            return (column.getFullyQualifiedJavaType().getFullyQualifiedName())
+                    .equals("java.lang.Integer");
+        } else {
+            return false;
+        }
+    }
 }
