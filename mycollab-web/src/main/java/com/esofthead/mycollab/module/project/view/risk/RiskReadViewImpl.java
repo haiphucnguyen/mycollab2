@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
+import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -15,7 +17,6 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.VerticalLayout;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
 @ViewComponent
@@ -110,9 +111,7 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 
             @Override
             protected Layout createBottomPanel() {
-                VerticalLayout relatedItemsPanel = new VerticalLayout();
-
-                return relatedItemsPanel;
+                return new CommentListDepot(CommentTypeConstants.PRJ_RISK, risk.getId());
             }
         }
     }
