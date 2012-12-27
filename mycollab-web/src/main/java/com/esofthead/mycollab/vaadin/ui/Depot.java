@@ -15,6 +15,8 @@ public class Depot extends VerticalLayout {
 	private boolean isOpenned = true;
 
 	protected HorizontalLayout header;
+        
+        private Label headerLbl;
 
 	protected Component content;
 
@@ -25,7 +27,7 @@ public class Depot extends VerticalLayout {
 		this.content = component;
 		this.addComponent(header);
 
-		Label headerLbl = new Label(title);
+		headerLbl = new Label(title);
 		headerLbl.setStyleName("h2");
 		header.addComponent(headerLbl);
 		header.addListener(new LayoutClickListener() {
@@ -52,4 +54,8 @@ public class Depot extends VerticalLayout {
 		this.addComponent(customComp);
 		this.setComponentAlignment(customComp, Alignment.MIDDLE_LEFT);
 	}
+        
+        public void setTitle(String title) {
+            headerLbl.setValue(title);
+        }
 }

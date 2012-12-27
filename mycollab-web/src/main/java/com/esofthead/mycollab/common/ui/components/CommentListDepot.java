@@ -4,7 +4,6 @@
  */
 package com.esofthead.mycollab.common.ui.components;
 
-import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
 import com.esofthead.mycollab.common.service.CommentService;
@@ -13,20 +12,13 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.Label;
-import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
-import java.util.GregorianCalendar;
 
 /**
  *
  * @author haiphucnguyen
  */
-public class CommentListDepot extends Depot {
+public class CommentListDepot extends Depot implements ReloadableComponent{
 
     private String type;
     private int typeid;
@@ -46,7 +38,7 @@ public class CommentListDepot extends Depot {
         VerticalLayout contentContainer = (VerticalLayout) content;
         contentContainer.setSpacing(true);
 
-        contentContainer.addComponent(new CommentTextAreaInput());
+        contentContainer.addComponent(new CommentInput(this, type, typeid));
         
         commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(AppContext.getSpringBean(CommentService.class), new CommentRowDisplayHandler());
         contentContainer.addComponent(commentList);
@@ -57,51 +49,17 @@ public class CommentListDepot extends Depot {
         CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
         searchCriteria.setType(new StringSearchField(type));
         searchCriteria.setTypeid(new NumberSearchField(typeid));
-        commentList.setSearchCriteria(searchCriteria);
+        int numComments = commentList.setSearchCriteria(searchCriteria);
+        this.setTitle("Comments (" + numComments + ")");
     }
-    
-    private static class CommentRowDisplayHandler implements BeanList.RowDisplayHandler<SimpleComment> {
 
-        @Override
-        public Component generateRow(SimpleComment obj, int rowIndex) {
-            return new Label("aa");
-        }
-        
+    @Override
+    public void reload() {
+        displayCommentList();
     }
-    
-    private class CommentTextAreaInput extends VerticalLayout {
-        private TextArea commentArea;
-        
-        public CommentTextAreaInput() {
-            this.setWidth("600px");
-            this.setSpacing(true);
-            
-            commentArea = new TextArea();
-            commentArea.setWidth("100%");
-            this.addComponent(commentArea);
-            
-            Button newCommentBtn = new Button("Post", new Button.ClickListener() {
 
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    Comment comment = new Comment();
-                    comment.setComment((String)commentArea.getValue());
-                    comment.setCreatedtime(new GregorianCalendar().getTime());
-                    comment.setCreateduser(AppContext.getUsername());
-                    comment.setSaccountid(AppContext.getAccountId());
-                    comment.setType(type);
-                    comment.setTypeid(typeid);
-                    
-                    CommentService commentService = AppContext.getSpringBean(CommentService.class);
-                    commentService.saveWithSession(comment, AppContext.getUsername());
-                    
-                    //save success, clear comment area and load list comments again
-                    commentArea.setValue("");
-                    displayCommentList();
-                }
-            });
-            this.addComponent(newCommentBtn);
-            this.setComponentAlignment(newCommentBtn, Alignment.MIDDLE_RIGHT);
-        }
+    @Override
+    public void cancel() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
