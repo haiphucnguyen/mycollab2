@@ -15,11 +15,16 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.MessageMapperExt" />
     </bean>
+    
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="milestoneMapper">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.MilestoneMapper" />
+    </bean>
 
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectMonitorMapper">
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="milestoneMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.project.dao.ProjectMonitorMapper" />
+            value="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt" />
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="permissionMapper">

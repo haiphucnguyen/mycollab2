@@ -18,80 +18,79 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class CampaignSelectionWindow extends Window {
-	private static final long serialVersionUID = 1L;
 
-	private CampaignSearchCriteria searchCriteria;
+    private static final long serialVersionUID = 1L;
+    private CampaignSearchCriteria searchCriteria;
+    private PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign> tableItem;
+    private FieldSelection fieldSelection;
 
-	private PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign> tableItem;
+    public CampaignSelectionWindow(FieldSelection fieldSelection) {
+        super("Campaign Name Lookup");
 
-	private FieldSelection fieldSelection;
+        this.fieldSelection = fieldSelection;
+    }
 
-	public CampaignSelectionWindow(FieldSelection fieldSelection) {
-		super("Campaign Name Lookup");
+    public void show() {
+        searchCriteria = new CampaignSearchCriteria();
+        searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+                AppContext.getAccountId()));
 
-		this.fieldSelection = fieldSelection;
-	}
+        VerticalLayout layout = new VerticalLayout();
+        layout.setSpacing(true);
 
-	public void show() {
-		searchCriteria = new CampaignSearchCriteria();
-		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
+        createCampaignList();
+        layout.addComponent(createSearchPanel());
+        layout.addComponent(tableItem);
+        this.setContent(layout);
 
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
+        tableItem.setSearchCriteria(searchCriteria);
+    }
 
-		createCampaignList();
-		layout.addComponent(createSearchPanel());
-		layout.addComponent(tableItem);
-		this.setContent(layout);
+    private ComponentContainer createSearchPanel() {
+        GridFormLayoutHelper layout = new GridFormLayoutHelper(3, 2);
 
-		tableItem.setSearchCriteria(searchCriteria);
-	}
+        return layout.getLayout();
+    }
 
-	private ComponentContainer createSearchPanel() {
-		GridFormLayoutHelper layout = new GridFormLayoutHelper(3, 2);
+    private void createCampaignList() {
+        tableItem = new PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign>(
+                AppContext.getSpringBean(CampaignService.class),
+                SimpleCampaign.class, new String[]{"campaignname", "type",
+                    "status", "startdate", "enddate"},
+                new String[]{"Campaign", "Type", "Status", "Start Date",
+                    "End Date"});
+        tableItem.setWidth("100%");
+        tableItem.setHeight("200px");
 
-		return layout.getLayout();
-	}
+        tableItem.setColumnWidth("campaignname", 250);
+        tableItem.setColumnWidth("type", 150);
+        tableItem.setColumnWidth("status", 150);
+        tableItem.setColumnWidth("startdate", 120);
+        tableItem.setColumnWidth("enddate", 120);
 
-	private void createCampaignList() {
-		tableItem = new PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign>(
-				AppContext.getSpringBean(CampaignService.class),
-				SimpleCampaign.class, new String[] { "campaignname", "type",
-						"status", "startdate", "enddate" },
-				new String[] { "Campaign", "Type", "Status", "Start Date",
-						"End Date" });
-		tableItem.setWidth("100%");
-		tableItem.setHeight("200px");
+        tableItem.addGeneratedColumn("campaignname", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-		tableItem.setColumnWidth("campaignname", 250);
-		tableItem.setColumnWidth("type", 150);
-		tableItem.setColumnWidth("status", 150);
-		tableItem.setColumnWidth("startdate", 120);
-		tableItem.setColumnWidth("enddate", 120);
+            public com.vaadin.ui.Component generateCell(final Table source,
+                    final Object itemId, Object columnId) {
+                final SimpleCampaign campaign = tableItem
+                        .getBeanByIndex(itemId);
+                Button b = new Button(campaign.getCampaignname(),
+                        new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
-		tableItem.addGeneratedColumn("campaignname", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			public com.vaadin.ui.Component generateCell(final Table source,
-					final Object itemId, Object columnId) {
-				final SimpleCampaign campaign = tableItem
-						.getBeanByIndex(itemId);
-				Button b = new Button(campaign.getCampaignname(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								fieldSelection.fireValueChange(campaign);
-								CampaignSelectionWindow.this.getParent()
-										.removeWindow(
-												CampaignSelectionWindow.this);
-							}
-						});
-				b.setStyleName("link");
-				return b;
-			}
-		});
-	}
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                fieldSelection.fireValueChange(campaign);
+                                CampaignSelectionWindow.this.getParent()
+                                        .removeWindow(
+                                        CampaignSelectionWindow.this);
+                            }
+                        });
+                b.setStyleName("link");
+                b.addStyleName("medium-text");
+                return b;
+            }
+        });
+    }
 }

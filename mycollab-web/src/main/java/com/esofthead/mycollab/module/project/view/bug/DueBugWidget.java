@@ -35,7 +35,7 @@ public class DueBugWidget extends Panel {
         this.addComponent(dataList);
     }
 
-    public class BugRowDisplayHandler implements RowDisplayHandler<SimpleBug> {
+    public static class BugRowDisplayHandler implements RowDisplayHandler<SimpleBug> {
 
         @Override
         public Component generateRow(final SimpleBug obj, int rowIndex) {

@@ -18,75 +18,73 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class OpportunitySelectionWindow extends Window {
-	private static final long serialVersionUID = 1L;
 
-	private OpportunitySearchCriteria searchCriteria;
+    private static final long serialVersionUID = 1L;
+    private OpportunitySearchCriteria searchCriteria;
+    private PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> tableItem;
+    private FieldSelection fieldSelection;
 
-	private PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> tableItem;
+    public OpportunitySelectionWindow(FieldSelection fieldSelection) {
+        super("Opportunity Name Lookup");
 
-	private FieldSelection fieldSelection;
+        this.fieldSelection = fieldSelection;
+    }
 
-	public OpportunitySelectionWindow(FieldSelection fieldSelection) {
-		super("Opportunity Name Lookup");
+    public void show() {
+        searchCriteria = new OpportunitySearchCriteria();
+        searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+                AppContext.getAccountId()));
 
-		this.fieldSelection = fieldSelection;
-	}
+        VerticalLayout layout = new VerticalLayout();
+        layout.setSpacing(true);
 
-	public void show() {
-		searchCriteria = new OpportunitySearchCriteria();
-		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
+        createOpportunityList();
+        layout.addComponent(createSearchPanel());
+        layout.addComponent(tableItem);
+        this.setContent(layout);
 
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
+        tableItem.setSearchCriteria(searchCriteria);
+    }
 
-		createOpportunityList();
-		layout.addComponent(createSearchPanel());
-		layout.addComponent(tableItem);
-		this.setContent(layout);
+    private ComponentContainer createSearchPanel() {
+        GridFormLayoutHelper layout = new GridFormLayoutHelper(3, 2);
 
-		tableItem.setSearchCriteria(searchCriteria);
-	}
+        return layout.getLayout();
+    }
 
-	private ComponentContainer createSearchPanel() {
-		GridFormLayoutHelper layout = new GridFormLayoutHelper(3, 2);
+    private void createOpportunityList() {
+        tableItem = new PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>(
+                AppContext.getSpringBean(OpportunityService.class),
+                SimpleOpportunity.class, new String[]{"opportunityname",
+                    "accountName", "salesstage", "assignUserFullName"},
+                new String[]{"Name", "Account Name", "Sales Stage", "User"});
+        tableItem.setWidth("100%");
+        tableItem.setHeight("200px");
 
-		return layout.getLayout();
-	}
+        tableItem.addGeneratedColumn("opportunityname", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-	private void createOpportunityList() {
-		tableItem = new PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>(
-				AppContext.getSpringBean(OpportunityService.class),
-				SimpleOpportunity.class, new String[] { "opportunityname",
-						"accountName", "salesstage", "assignUserFullName" },
-				new String[] { "Name", "Account Name", "Sales Stage", "User" });
-		tableItem.setWidth("100%");
-		tableItem.setHeight("200px");
+            public com.vaadin.ui.Component generateCell(final Table source,
+                    final Object itemId, Object columnId) {
+                final SimpleOpportunity opportunity = tableItem
+                        .getBeanByIndex(itemId);
+                Button b = new Button(opportunity.getOpportunityname(),
+                        new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
-		tableItem.addGeneratedColumn("opportunityname", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			public com.vaadin.ui.Component generateCell(final Table source,
-					final Object itemId, Object columnId) {
-				final SimpleOpportunity opportunity = tableItem
-						.getBeanByIndex(itemId);
-				Button b = new Button(opportunity.getOpportunityname(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								fieldSelection.fireValueChange(opportunity);
-								OpportunitySelectionWindow.this
-										.getParent()
-										.removeWindow(
-												OpportunitySelectionWindow.this);
-							}
-						});
-				b.setStyleName("link");
-				return b;
-			}
-		});
-	}
-
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                fieldSelection.fireValueChange(opportunity);
+                                OpportunitySelectionWindow.this
+                                        .getParent()
+                                        .removeWindow(
+                                        OpportunitySelectionWindow.this);
+                            }
+                        });
+                b.setStyleName("link");
+                b.addStyleName("medium-text");
+                return b;
+            }
+        });
+    }
 }

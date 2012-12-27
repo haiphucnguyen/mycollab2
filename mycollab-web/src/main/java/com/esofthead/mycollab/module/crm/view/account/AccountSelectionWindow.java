@@ -21,90 +21,88 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class AccountSelectionWindow extends Window {
-	private static final long serialVersionUID = 1L;
 
-	private AccountSearchCriteria searchCriteria;
+    private static final long serialVersionUID = 1L;
+    private AccountSearchCriteria searchCriteria;
+    private PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount> tableItem;
+    private FieldSelection fieldSelection;
 
-	private PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount> tableItem;
+    public AccountSelectionWindow(FieldSelection fieldSelection) {
+        super("Account Name Lookup");
+        this.setWidth("600px");
 
-	private FieldSelection fieldSelection;
+        this.fieldSelection = fieldSelection;
+    }
 
-	public AccountSelectionWindow(FieldSelection fieldSelection) {
-		super("Account Name Lookup");
-		this.setWidth("600px");
+    public void show() {
+        searchCriteria = new AccountSearchCriteria();
+        searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+                AppContext.getAccountId()));
 
-		this.fieldSelection = fieldSelection;
-	}
+        VerticalLayout layout = new VerticalLayout();
+        layout.setSpacing(true);
+        layout.setMargin(true);
 
-	public void show() {
-		searchCriteria = new AccountSearchCriteria();
-		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
+        createAccountList();
 
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
-		layout.setMargin(true);
+        layout.addComponent(createSearchPanel());
+        layout.addComponent(tableItem);
+        this.setContent(layout);
 
-		createAccountList();
+        tableItem.setSearchCriteria(searchCriteria);
+        center();
+    }
 
-		layout.addComponent(createSearchPanel());
-		layout.addComponent(tableItem);
-		this.setContent(layout);
+    private ComponentContainer createSearchPanel() {
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSpacing(true);
 
-		tableItem.setSearchCriteria(searchCriteria);
-		center();
-	}
+        TextField valueField = new TextField();
+        layout.addComponent(valueField);
 
-	private ComponentContainer createSearchPanel() {
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
+        ValueComboBox group = new ValueComboBox(false, new String[]{
+                    "Organization Name", "Billing City", "Webiste", "Phone",
+                    "Assigned To"});
+        layout.addComponent(group);
 
-		TextField valueField = new TextField();
-		layout.addComponent(valueField);
+        Button searchBtn = new Button("Search");
+        layout.addComponent(searchBtn);
+        return layout;
+    }
 
-		ValueComboBox group = new ValueComboBox(false, new String[] {
-				"Organization Name", "Billing City", "Webiste", "Phone",
-				"Assigned To" });
-		layout.addComponent(group);
+    private void createAccountList() {
+        tableItem = new PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>(
+                AppContext.getSpringBean(AccountService.class),
+                SimpleAccount.class, new String[]{"accountname", "city",
+                    "assignuser"}, new String[]{"Name", "City",
+                    "Assign User"});
+        tableItem.setWidth("100%");
 
-		Button searchBtn = new Button("Search");
-		layout.addComponent(searchBtn);
-		return layout;
-	}
+        tableItem.setColumnExpandRatio("accountname", 1.0f);
+        tableItem.setColumnWidth("city", 150);
+        tableItem.setColumnWidth("assignuser", 150);
 
-	private void createAccountList() {
-		tableItem = new PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>(
-				AppContext.getSpringBean(AccountService.class),
-				SimpleAccount.class, new String[] { "accountname", "city",
-						"assignuser" }, new String[] { "Name", "City",
-						"Assign User" });
-		tableItem.setWidth("100%");
+        tableItem.addGeneratedColumn("accountname", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-		tableItem.setColumnExpandRatio("accountname", 1.0f);
-		tableItem.setColumnWidth("city", 150);
-		tableItem.setColumnWidth("assignuser", 150);
+            public com.vaadin.ui.Component generateCell(final Table source,
+                    final Object itemId, Object columnId) {
+                final SimpleAccount account = tableItem.getBeanByIndex(itemId);
+                ButtonLink b = new ButtonLink(account.getAccountname(),
+                        new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
-		tableItem.addGeneratedColumn("accountname", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			public com.vaadin.ui.Component generateCell(final Table source,
-					final Object itemId, Object columnId) {
-				final SimpleAccount account = tableItem.getBeanByIndex(itemId);
-				ButtonLink b = new ButtonLink(account.getAccountname(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								fieldSelection.fireValueChange(account);
-								AccountSelectionWindow.this.getParent()
-										.removeWindow(
-												AccountSelectionWindow.this);
-							}
-						});
-				return b;
-			}
-		});
-	}
-
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                fieldSelection.fireValueChange(account);
+                                AccountSelectionWindow.this.getParent()
+                                        .removeWindow(
+                                        AccountSelectionWindow.this);
+                            }
+                        });
+                b.addStyleName("medium-text");
+                return b;
+            }
+        });
+    }
 }

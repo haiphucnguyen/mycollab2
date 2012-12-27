@@ -31,195 +31,191 @@ import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class EventListViewImpl extends AbstractView implements EventListView {
-	private static final long serialVersionUID = 1L;
 
-	private final EventSearchPanel eventSearchPanel;
+    private static final long serialVersionUID = 1L;
+    private final EventSearchPanel eventSearchPanel;
+    private SelectionOptionButton selectOptionButton;
+    private PagedBeanTable2<EventService, EventSearchCriteria, SimpleEvent> tableItem;
+    private final VerticalLayout eventListLayout;
+    private PopupButtonControl tableActionControls;
+    private final Label selectedItemsNumberLabel = new Label();
 
-	private SelectionOptionButton selectOptionButton;
+    public EventListViewImpl() {
+        this.setSpacing(true);
 
-	private PagedBeanTable2<EventService, EventSearchCriteria, SimpleEvent> tableItem;
+        eventSearchPanel = new EventSearchPanel();
+        this.addComponent(eventSearchPanel);
 
-	private final VerticalLayout eventListLayout;
+        eventListLayout = new VerticalLayout();
+        eventListLayout.setSpacing(true);
+        this.addComponent(eventListLayout);
 
-	private PopupButtonControl tableActionControls;
+        generateDisplayTable();
+    }
 
-	private final Label selectedItemsNumberLabel = new Label();
+    private void generateDisplayTable() {
+        tableItem = new PagedBeanTable2<EventService, EventSearchCriteria, SimpleEvent>(
+                AppContext.getSpringBean(EventService.class),
+                SimpleEvent.class, new String[]{"selected", "status",
+                    "eventType", "subject", "startDate", "endDate"},
+                new String[]{"", "Status", "Type", "Subject", "Start Date",
+                    "End Date"});
 
-	public EventListViewImpl() {
-		this.setSpacing(true);
+        tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-		eventSearchPanel = new EventSearchPanel();
-		this.addComponent(eventSearchPanel);
+            @Override
+            public Object generateCell(final Table source, final Object itemId,
+                    Object columnId) {
+                final CheckBox cb = new CheckBox("", false);
+                cb.setImmediate(true);
+                cb.addListener(new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-		eventListLayout = new VerticalLayout();
-		eventListLayout.setSpacing(true);
-		this.addComponent(eventListLayout);
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        SimpleEvent simpleEvent = tableItem
+                                .getBeanByIndex(itemId);
+                        tableItem.fireSelectItemEvent(simpleEvent);
 
-		generateDisplayTable();
-	}
+                    }
+                });
 
-	private void generateDisplayTable() {
-		tableItem = new PagedBeanTable2<EventService, EventSearchCriteria, SimpleEvent>(
-				AppContext.getSpringBean(EventService.class),
-				SimpleEvent.class, new String[] { "selected", "status",
-						"eventType", "subject", "startDate", "endDate" },
-				new String[] { "", "Status", "Type", "Subject", "Start Date",
-						"End Date" });
+                SimpleEvent simpleEvent = tableItem.getBeanByIndex(itemId);
+                simpleEvent.setExtraData(cb);
+                return cb;
+            }
+        });
 
-		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("startDate", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			public Object generateCell(final Table source, final Object itemId,
-					Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
-				cb.setImmediate(true);
-				cb.addListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    Object itemId, Object columnId) {
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						SimpleEvent simpleEvent = tableItem
-								.getBeanByIndex(itemId);
-						tableItem.fireSelectItemEvent(simpleEvent);
+                final SimpleEvent event = tableItem.getBeanByIndex(itemId);
+                Label l = new Label();
+                l.setValue(AppContext.formatDateTime(event.getStartDate()));
+                return l;
+            }
+        });
 
-					}
-				});
-				
-				SimpleEvent simpleEvent = tableItem.getBeanByIndex(itemId);
-				simpleEvent.setExtraData(cb);
-				return cb;
-			}
-		});
+        tableItem.addGeneratedColumn("endDate", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-		tableItem.addGeneratedColumn("startDate", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    Object itemId, Object columnId) {
+                final SimpleEvent event = tableItem.getBeanByIndex(itemId);
+                Label l = new Label();
+                l.setValue(AppContext.formatDateTime(event.getEndDate()));
+                return l;
+            }
+        });
 
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					Object itemId, Object columnId) {
-				
-				final SimpleEvent event = tableItem.getBeanByIndex(itemId);
-				Label l = new Label();
-				l.setValue(AppContext.formatDateTime(event.getStartDate()));
-				return l;
-			}
-		});
+        tableItem.addGeneratedColumn("subject", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-		tableItem.addGeneratedColumn("endDate", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+                final SimpleEvent simpleEvent = tableItem
+                        .getBeanByIndex(itemId);
+                ButtonLink b = new ButtonLink(simpleEvent.getSubject(),
+                        new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					Object itemId, Object columnId) {
-				final SimpleEvent event = tableItem.getBeanByIndex(itemId);
-				Label l = new Label();
-				l.setValue(AppContext.formatDateTime(event.getEndDate()));
-				return l;
-			}
-		});
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                if ("Task".equals(simpleEvent.getEventType())) {
+                                    EventBus.getInstance().fireEvent(
+                                            new ActivityEvent.TaskRead(this,
+                                            simpleEvent.getId()));
+                                } else if ("Meeting".equals(simpleEvent
+                                        .getEventType())) {
+                                    EventBus.getInstance().fireEvent(
+                                            new ActivityEvent.MeetingRead(this,
+                                            simpleEvent.getId()));
+                                } else if ("Call".equals(simpleEvent
+                                        .getEventType())) {
+                                    EventBus.getInstance().fireEvent(
+                                            new ActivityEvent.CallRead(this,
+                                            simpleEvent.getId()));
+                                }
+                            }
+                        });
+                b.addStyleName("medium-text");
+                return b;
 
-		tableItem.addGeneratedColumn("subject", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+            }
+        });
 
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					final Object itemId, Object columnId) {
-				final SimpleEvent simpleEvent = tableItem
-						.getBeanByIndex(itemId);
-				ButtonLink b = new ButtonLink(simpleEvent.getSubject(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+        tableItem.setColumnExpandRatio("subject", 1);
+        tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+        tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
+        tableItem.setColumnWidth("eventType", UIConstants.TABLE_M_LABEL_WIDTH);
+        tableItem.setColumnWidth("startDate", UIConstants.TABLE_DATE_TIME_WIDTH);
+        tableItem.setColumnWidth("endDate", UIConstants.TABLE_DATE_TIME_WIDTH);
 
-							@Override
-							public void buttonClick(ClickEvent event) {
-								if ("Task".equals(simpleEvent.getEventType())) {
-									EventBus.getInstance().fireEvent(
-											new ActivityEvent.TaskRead(this,
-													simpleEvent.getId()));
-								} else if ("Meeting".equals(simpleEvent
-										.getEventType())) {
-									EventBus.getInstance().fireEvent(
-											new ActivityEvent.MeetingRead(this,
-													simpleEvent.getId()));
-								} else if ("Call".equals(simpleEvent
-										.getEventType())) {
-									EventBus.getInstance().fireEvent(
-											new ActivityEvent.CallRead(this,
-													simpleEvent.getId()));
-								}
-							}
-						});
-				return b;
+        tableItem.setWidth("100%");
 
-			}
-		});
+        eventListLayout.addComponent(constructTableActionControls());
+        eventListLayout.addComponent(tableItem);
+    }
 
-		tableItem.setColumnExpandRatio("subject", 1);
-		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-		tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
-		tableItem.setColumnWidth("eventType", UIConstants.TABLE_M_LABEL_WIDTH);
-		tableItem.setColumnWidth("startDate", UIConstants.TABLE_DATE_TIME_WIDTH);
-		tableItem.setColumnWidth("endDate", UIConstants.TABLE_DATE_TIME_WIDTH);
+    @Override
+    public HasSearchHandlers<EventSearchCriteria> getSearchHandlers() {
+        return eventSearchPanel;
+    }
 
-		tableItem.setWidth("100%");
+    private ComponentContainer constructTableActionControls() {
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSpacing(true);
 
-		eventListLayout.addComponent(constructTableActionControls());
-		eventListLayout.addComponent(tableItem);
-	}
+        selectOptionButton = new SelectionOptionButton(tableItem);
+        layout.addComponent(selectOptionButton);
 
-	@Override
-	public HasSearchHandlers<EventSearchCriteria> getSearchHandlers() {
-		return eventSearchPanel;
-	}
+        tableActionControls = new PopupButtonControl("delete", "Delete");
+        tableActionControls.addOptionItem("mail", "Mail");
+        tableActionControls.addOptionItem("export", "Export");
 
-	private ComponentContainer constructTableActionControls() {
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
+        layout.addComponent(tableActionControls);
+        layout.addComponent(selectedItemsNumberLabel);
+        layout.setComponentAlignment(selectedItemsNumberLabel,
+                Alignment.MIDDLE_CENTER);
+        return layout;
+    }
 
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		layout.addComponent(selectOptionButton);
+    @Override
+    public void enableActionControls(int numOfSelectedItems) {
+        tableActionControls.setEnabled(true);
+        selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+    }
 
-		tableActionControls = new PopupButtonControl("delete", "Delete");
-		tableActionControls.addOptionItem("mail", "Mail");
-		tableActionControls.addOptionItem("export", "Export");
+    @Override
+    public void disableActionControls() {
+        tableActionControls.setEnabled(false);
+        selectedItemsNumberLabel.setValue("");
+    }
 
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
-				Alignment.MIDDLE_CENTER);
-		return layout;
-	}
+    @Override
+    public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+        return selectOptionButton;
+    }
 
-	@Override
-	public void enableActionControls(int numOfSelectedItems) {
-		tableActionControls.setEnabled(true);
-		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
-	}
+    @Override
+    public HasPopupActionHandlers getPopupActionHandlers() {
+        return tableActionControls;
+    }
 
-	@Override
-	public void disableActionControls() {
-		tableActionControls.setEnabled(false);
-		selectedItemsNumberLabel.setValue("");
-	}
+    @Override
+    public HasSelectableItemHandlers<SimpleEvent> getSelectableItemHandlers() {
+        return tableItem;
+    }
 
-	@Override
-	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return selectOptionButton;
-	}
-
-	@Override
-	public HasPopupActionHandlers getPopupActionHandlers() {
-		return tableActionControls;
-	}
-
-	@Override
-	public HasSelectableItemHandlers<SimpleEvent> getSelectableItemHandlers() {
-		return tableItem;
-	}
-
-	@Override
-	public IPagedBeanTable<EventService, EventSearchCriteria, SimpleEvent> getPagedBeanTable() {
-		return tableItem;
-	}
+    @Override
+    public IPagedBeanTable<EventService, EventSearchCriteria, SimpleEvent> getPagedBeanTable() {
+        return tableItem;
+    }
 }

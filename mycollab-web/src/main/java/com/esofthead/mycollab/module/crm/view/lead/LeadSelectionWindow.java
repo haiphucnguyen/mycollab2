@@ -18,72 +18,70 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class LeadSelectionWindow extends Window {
-	private static final long serialVersionUID = 1L;
 
-	private LeadSearchCriteria searchCriteria;
+    private static final long serialVersionUID = 1L;
+    private LeadSearchCriteria searchCriteria;
+    private PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead> tableItem;
+    private FieldSelection fieldSelection;
 
-	private PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead> tableItem;
+    public LeadSelectionWindow(FieldSelection fieldSelection) {
+        super("Lead Name Lookup");
 
-	private FieldSelection fieldSelection;
+        this.fieldSelection = fieldSelection;
+    }
 
-	public LeadSelectionWindow(FieldSelection fieldSelection) {
-		super("Lead Name Lookup");
+    public void show() {
+        searchCriteria = new LeadSearchCriteria();
+        searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+                AppContext.getAccountId()));
 
-		this.fieldSelection = fieldSelection;
-	}
+        VerticalLayout layout = new VerticalLayout();
+        layout.setSpacing(true);
 
-	public void show() {
-		searchCriteria = new LeadSearchCriteria();
-		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
+        createLeadList();
+        layout.addComponent(createSearchPanel());
+        layout.addComponent(tableItem);
+        this.setContent(layout);
 
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
+        tableItem.setSearchCriteria(searchCriteria);
+    }
 
-		createLeadList();
-		layout.addComponent(createSearchPanel());
-		layout.addComponent(tableItem);
-		this.setContent(layout);
+    private ComponentContainer createSearchPanel() {
+        GridFormLayoutHelper layout = new GridFormLayoutHelper(3, 2);
 
-		tableItem.setSearchCriteria(searchCriteria);
-	}
+        return layout.getLayout();
+    }
 
-	private ComponentContainer createSearchPanel() {
-		GridFormLayoutHelper layout = new GridFormLayoutHelper(3, 2);
+    private void createLeadList() {
+        tableItem = new PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>(
+                AppContext.getSpringBean(LeadService.class), SimpleLead.class,
+                new String[]{"leadName", "status", "accountname",
+                    "assignUserFullName"}, new String[]{"Name",
+                    "Status", "Account Name", "Assign User"});
+        tableItem.setWidth("100%");
+        tableItem.setHeight("200px");
 
-		return layout.getLayout();
-	}
+        tableItem.addGeneratedColumn("leadName", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-	private void createLeadList() {
-		tableItem = new PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>(
-				AppContext.getSpringBean(LeadService.class), SimpleLead.class,
-				new String[] { "leadName", "status", "accountname",
-						"assignUserFullName" }, new String[] { "Name",
-						"Status", "Account Name", "Assign User" });
-		tableItem.setWidth("100%");
-		tableItem.setHeight("200px");
+            public com.vaadin.ui.Component generateCell(final Table source,
+                    final Object itemId, Object columnId) {
+                final SimpleLead lead = tableItem.getBeanByIndex(itemId);
+                Button b = new Button(lead.getLeadName(),
+                        new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
-		tableItem.addGeneratedColumn("leadName", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			public com.vaadin.ui.Component generateCell(final Table source,
-					final Object itemId, Object columnId) {
-				final SimpleLead lead = tableItem.getBeanByIndex(itemId);
-				Button b = new Button(lead.getLeadName(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								fieldSelection.fireValueChange(lead);
-								LeadSelectionWindow.this.getParent()
-										.removeWindow(LeadSelectionWindow.this);
-							}
-						});
-				b.setStyleName("link");
-				return b;
-			}
-		});
-	}
-
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                fieldSelection.fireValueChange(lead);
+                                LeadSelectionWindow.this.getParent()
+                                        .removeWindow(LeadSelectionWindow.this);
+                            }
+                        });
+                b.setStyleName("link");
+                b.addStyleName("medium-text");
+                return b;
+            }
+        });
+    }
 }

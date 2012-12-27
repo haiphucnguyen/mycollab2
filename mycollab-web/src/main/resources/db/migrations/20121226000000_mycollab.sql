@@ -1,0 +1,1 @@
+ALTER TABLE `m_prj_milestone` ADD COLUMN `sAccountId` INT NOT NULL;

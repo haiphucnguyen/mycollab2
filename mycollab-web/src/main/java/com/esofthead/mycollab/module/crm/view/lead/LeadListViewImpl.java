@@ -33,172 +33,167 @@ import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class LeadListViewImpl extends AbstractView implements LeadListView {
-	private static final long serialVersionUID = 1L;
 
-	private final LeadSearchPanel leadSearchPanel;
+    private static final long serialVersionUID = 1L;
+    private final LeadSearchPanel leadSearchPanel;
+    private SelectionOptionButton selectOptionButton;
+    private PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead> tableItem;
+    private final VerticalLayout accountListLayout;
+    private PopupButtonControl tableActionControls;
+    private final Label selectedItemsNumberLabel = new Label();
 
-	private SelectionOptionButton selectOptionButton;
+    public LeadListViewImpl() {
+        this.setSpacing(true);
 
-	private PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead> tableItem;
+        leadSearchPanel = new LeadSearchPanel();
+        this.addComponent(leadSearchPanel);
 
-	private final VerticalLayout accountListLayout;
+        accountListLayout = new VerticalLayout();
+        accountListLayout.setSpacing(true);
+        this.addComponent(accountListLayout);
 
-	private PopupButtonControl tableActionControls;
+        generateDisplayTable();
+    }
 
-	private final Label selectedItemsNumberLabel = new Label();
+    @SuppressWarnings("serial")
+    private void generateDisplayTable() {
+        tableItem = new PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>(
+                AppContext.getSpringBean(LeadService.class), SimpleLead.class,
+                new String[]{"selected", "leadName", "status", "accountname",
+                    "officephone", "email", "assignUserFullName"},
+                new String[]{"", "Name", "Status", "Account Name",
+                    "Office Phone", "Email", "Assign User"});
 
-	public LeadListViewImpl() {
-		this.setSpacing(true);
+        tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-		leadSearchPanel = new LeadSearchPanel();
-		this.addComponent(leadSearchPanel);
+            @Override
+            public Object generateCell(final Table source, final Object itemId,
+                    Object columnId) {
+                final CheckBox cb = new CheckBox("", false);
+                cb.setImmediate(true);
+                cb.addListener(new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-		accountListLayout = new VerticalLayout();
-		accountListLayout.setSpacing(true);
-		this.addComponent(accountListLayout);
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        SimpleLead lead = tableItem.getBeanByIndex(itemId);
+                        tableItem.fireSelectItemEvent(lead);
 
-		generateDisplayTable();
-	}
+                    }
+                });
 
-	@SuppressWarnings("serial")
-	private void generateDisplayTable() {
-		tableItem = new PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>(
-				AppContext.getSpringBean(LeadService.class), SimpleLead.class,
-				new String[] { "selected", "leadName", "status", "accountname",
-						"officephone", "email", "assignUserFullName" },
-				new String[] { "", "Name", "Status", "Account Name",
-						"Office Phone", "Email", "Assign User" });
+                SimpleLead lead = tableItem.getBeanByIndex(itemId);
+                lead.setExtraData(cb);
+                return cb;
+            }
+        });
 
-		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+        tableItem.addGeneratedColumn("leadName", new ColumnGenerator() {
+            @Override
+            public Object generateCell(Table source, Object itemId,
+                    Object columnId) {
+                final SimpleLead lead = tableItem.getBeanByIndex(itemId);
+                ButtonLink b = new ButtonLink(lead.getLeadName(),
+                        new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
-			@Override
-			public Object generateCell(final Table source, final Object itemId,
-					Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
-				cb.setImmediate(true);
-				cb.addListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                EventBus.getInstance().fireEvent(
+                                        new LeadEvent.GotoRead(this, lead
+                                        .getId()));
+                            }
+                        });
+                b.addStyleName("medium-text");
+                return b;
+            }
+        });
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						SimpleLead lead = tableItem.getBeanByIndex(itemId);
-						tableItem.fireSelectItemEvent(lead);
+        tableItem.addGeneratedColumn("email", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-					}
-				});
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    Object itemId, Object columnId) {
+                final SimpleLead lead = tableItem.getBeanByIndex(itemId);
+                Link l = new Link();
+                l.setResource(new ExternalResource("mailto:" + lead.getEmail()));
+                l.setCaption(lead.getEmail());
+                return l;
 
-				SimpleLead lead = tableItem.getBeanByIndex(itemId);
-				lead.setExtraData(cb);
-				return cb;
-			}
-		});
+            }
+        });
 
-		tableItem.addGeneratedColumn("leadName", new ColumnGenerator() {
+        tableItem.setWidth("100%");
 
-			@Override
-			public Object generateCell(Table source, Object itemId,
-					Object columnId) {
-				final SimpleLead lead = tableItem.getBeanByIndex(itemId);
-				ButtonLink b = new ButtonLink(lead.getLeadName(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+        tableItem.setColumnExpandRatio("leadName", 1.0f);
 
-							@Override
-							public void buttonClick(ClickEvent event) {
-								EventBus.getInstance().fireEvent(
-										new LeadEvent.GotoRead(this, lead
-												.getId()));
-							}
-						});
-				return b;
-			}
-		});
+        tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+        tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
+        tableItem
+                .setColumnWidth("accountname", UIConstants.TABLE_X_LABEL_WIDTH);
+        tableItem
+                .setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
+        tableItem.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
+        tableItem.setColumnWidth("assignuser", UIConstants.TABLE_X_LABEL_WIDTH);
 
-		tableItem.addGeneratedColumn("email", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+        accountListLayout.addComponent(constructTableActionControls());
+        accountListLayout.addComponent(tableItem);
+    }
 
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					Object itemId, Object columnId) {
-				final SimpleLead lead = tableItem.getBeanByIndex(itemId);
-				Link l = new Link();
-				l.setResource(new ExternalResource("mailto:" + lead.getEmail()));
-				l.setCaption(lead.getEmail());
-				return l;
+    @Override
+    public HasSearchHandlers<LeadSearchCriteria> getSearchHandlers() {
+        return leadSearchPanel;
+    }
 
-			}
-		});
+    private ComponentContainer constructTableActionControls() {
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSpacing(true);
 
-		tableItem.setWidth("100%");
+        selectOptionButton = new SelectionOptionButton(tableItem);
+        layout.addComponent(selectOptionButton);
 
-		tableItem.setColumnExpandRatio("leadName", 1.0f);
+        tableActionControls = new PopupButtonControl("delete", "Delete");
+        tableActionControls.addOptionItem("mail", "Mail");
+        tableActionControls.addOptionItem("export", "Export");
 
-		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-		tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
-		tableItem
-				.setColumnWidth("accountname", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem
-				.setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
-		tableItem.setColumnWidth("assignuser", UIConstants.TABLE_X_LABEL_WIDTH);
+        layout.addComponent(tableActionControls);
+        layout.addComponent(selectedItemsNumberLabel);
+        layout.setComponentAlignment(selectedItemsNumberLabel,
+                Alignment.MIDDLE_CENTER);
+        return layout;
+    }
 
-		accountListLayout.addComponent(constructTableActionControls());
-		accountListLayout.addComponent(tableItem);
-	}
+    @Override
+    public void enableActionControls(int numOfSelectedItems) {
+        tableActionControls.setEnabled(true);
+        selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+    }
 
-	@Override
-	public HasSearchHandlers<LeadSearchCriteria> getSearchHandlers() {
-		return leadSearchPanel;
-	}
+    @Override
+    public void disableActionControls() {
+        tableActionControls.setEnabled(false);
+        selectedItemsNumberLabel.setValue("");
+    }
 
-	private ComponentContainer constructTableActionControls() {
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
+    @Override
+    public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+        return selectOptionButton;
+    }
 
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		layout.addComponent(selectOptionButton);
+    @Override
+    public HasPopupActionHandlers getPopupActionHandlers() {
+        return tableActionControls;
+    }
 
-		tableActionControls = new PopupButtonControl("delete", "Delete");
-		tableActionControls.addOptionItem("mail", "Mail");
-		tableActionControls.addOptionItem("export", "Export");
+    @Override
+    public HasSelectableItemHandlers<SimpleLead> getSelectableItemHandlers() {
+        return tableItem;
+    }
 
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
-				Alignment.MIDDLE_CENTER);
-		return layout;
-	}
-
-	@Override
-	public void enableActionControls(int numOfSelectedItems) {
-		tableActionControls.setEnabled(true);
-		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
-	}
-
-	@Override
-	public void disableActionControls() {
-		tableActionControls.setEnabled(false);
-		selectedItemsNumberLabel.setValue("");
-	}
-
-	@Override
-	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return selectOptionButton;
-	}
-
-	@Override
-	public HasPopupActionHandlers getPopupActionHandlers() {
-		return tableActionControls;
-	}
-
-	@Override
-	public HasSelectableItemHandlers<SimpleLead> getSelectableItemHandlers() {
-		return tableItem;
-	}
-
-	@Override
-	public IPagedBeanTable<LeadService, LeadSearchCriteria, SimpleLead> getPagedBeanTable() {
-		return tableItem;
-	}
+    @Override
+    public IPagedBeanTable<LeadService, LeadSearchCriteria, SimpleLead> getPagedBeanTable() {
+        return tableItem;
+    }
 }

@@ -18,73 +18,71 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class CaseSelectionWindow extends Window {
-	private static final long serialVersionUID = 1L;
 
-	private CaseSearchCriteria searchCriteria;
+    private static final long serialVersionUID = 1L;
+    private CaseSearchCriteria searchCriteria;
+    private PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase> tableItem;
+    private FieldSelection fieldSelection;
 
-	private PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase> tableItem;
+    public CaseSelectionWindow(FieldSelection fieldSelection) {
+        super("Case Name Lookup");
 
-	private FieldSelection fieldSelection;
+        this.fieldSelection = fieldSelection;
+    }
 
-	public CaseSelectionWindow(FieldSelection fieldSelection) {
-		super("Case Name Lookup");
+    public void show() {
+        searchCriteria = new CaseSearchCriteria();
+        searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+                AppContext.getAccountId()));
 
-		this.fieldSelection = fieldSelection;
-	}
+        VerticalLayout layout = new VerticalLayout();
+        layout.setSpacing(true);
 
-	public void show() {
-		searchCriteria = new CaseSearchCriteria();
-		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
+        createCaseList();
+        layout.addComponent(createSearchPanel());
+        layout.addComponent(tableItem);
+        this.setContent(layout);
 
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
+        tableItem.setSearchCriteria(searchCriteria);
+    }
 
-		createCaseList();
-		layout.addComponent(createSearchPanel());
-		layout.addComponent(tableItem);
-		this.setContent(layout);
+    private ComponentContainer createSearchPanel() {
+        GridFormLayoutHelper layout = new GridFormLayoutHelper(3, 2);
 
-		tableItem.setSearchCriteria(searchCriteria);
-	}
+        return layout.getLayout();
+    }
 
-	private ComponentContainer createSearchPanel() {
-		GridFormLayoutHelper layout = new GridFormLayoutHelper(3, 2);
+    private void createCaseList() {
+        tableItem = new PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase>(
+                AppContext.getSpringBean(CaseService.class), SimpleCase.class,
+                new String[]{"subject", "accountName", "priority", "status",
+                    "assignUserFullName"}, new String[]{"Subject",
+                    "Account Name", "Priority", "Status", "Assigned To"});
+        tableItem.setWidth("100%");
+        tableItem.setHeight("200px");
 
-		return layout.getLayout();
-	}
+        tableItem.addGeneratedColumn("subject", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-	private void createCaseList() {
-		tableItem = new PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase>(
-				AppContext.getSpringBean(CaseService.class), SimpleCase.class,
-				new String[] { "subject", "accountName", "priority", "status",
-						"assignUserFullName" }, new String[] { "Subject",
-						"Account Name", "Priority", "Status", "Assigned To" });
-		tableItem.setWidth("100%");
-		tableItem.setHeight("200px");
+            public com.vaadin.ui.Component generateCell(final Table source,
+                    final Object itemId, Object columnId) {
+                final SimpleCase cases = tableItem
+                        .getBeanByIndex(itemId);
+                Button b = new Button(cases.getSubject(),
+                        new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
 
-		tableItem.addGeneratedColumn("subject", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			public com.vaadin.ui.Component generateCell(final Table source,
-					final Object itemId, Object columnId) {
-				final SimpleCase cases = tableItem
-						.getBeanByIndex(itemId);
-				Button b = new Button(cases.getSubject(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								fieldSelection.fireValueChange(cases);
-								CaseSelectionWindow.this.getParent()
-										.removeWindow(CaseSelectionWindow.this);
-							}
-						});
-				b.setStyleName("link");
-				return b;
-			}
-		});
-	}
-
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                fieldSelection.fireValueChange(cases);
+                                CaseSelectionWindow.this.getParent()
+                                        .removeWindow(CaseSelectionWindow.this);
+                            }
+                        });
+                b.setStyleName("link");
+                b.addStyleName("medium-text");
+                return b;
+            }
+        });
+    }
 }
