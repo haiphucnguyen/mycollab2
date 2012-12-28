@@ -13,6 +13,4 @@ import com.esofthead.mycollab.core.persistence.service.ICrudService;
  */
 public interface UserPreferenceService extends ICrudService<Integer, UserPreference> {
     UserPreference getPreferenceOfUser(String username);
-    
-    void updateLastTimeAccessed(UserPreference pref);
 }

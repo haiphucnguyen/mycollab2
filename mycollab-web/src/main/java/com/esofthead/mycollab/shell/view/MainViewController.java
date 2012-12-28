@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.shell.view;
 
+import com.esofthead.mycollab.module.crm.view.CrmPresenter;
 import com.esofthead.mycollab.module.project.view.ProjectPresenter;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -26,6 +27,22 @@ public class MainViewController {
     }
 
     private void bind() {
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<ShellEvent.GotoCrmPage>() {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return ShellEvent.GotoCrmPage.class;
+                    }
+
+                    @Override
+                    public void handle(ShellEvent.GotoCrmPage event) {
+                        CrmPresenter crmPresenter = PresenterResolver.getPresenter(CrmPresenter.class);
+                        crmPresenter.go(container);
+                    }
+                });
+        
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<ShellEvent.GotoProjectPage>() {
                     private static final long serialVersionUID = 1L;

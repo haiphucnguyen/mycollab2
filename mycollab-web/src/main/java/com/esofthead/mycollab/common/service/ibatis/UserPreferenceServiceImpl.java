@@ -56,12 +56,5 @@ public class UserPreferenceServiceImpl extends DefaultCrudService<Integer, UserP
         
         return pref;
     }
-
-    @Override
-    public void updateLastTimeAccessed(UserPreference pref) {
-        UserPreferenceExample ex = new UserPreferenceExample();
-        pref.setLastaccessedtime(new GregorianCalendar().getTime());
-        userPreferenceMapper.updateByPrimaryKey(pref);
-    }
     
 }

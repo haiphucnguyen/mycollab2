@@ -25,4 +25,18 @@ public class ShellEvent {
             super(source, data);
         }
     }
+    
+    public static class GotoCrmPage extends ApplicationEvent {
+
+        public GotoCrmPage(Object source, Object data) {
+            super(source, data);
+        }
+    }
+    
+    public static class GotoConsolePage extends ApplicationEvent {
+
+        public GotoConsolePage(Object source, Object data) {
+            super(source, data);
+        }
+    }
 }

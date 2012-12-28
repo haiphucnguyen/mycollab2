@@ -1,9 +1,5 @@
 package com.esofthead.mycollab.module.crm.view;
 
-import java.util.Iterator;
-
-import org.vaadin.hene.popupbutton.PopupButton;
-
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
@@ -25,192 +21,179 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.VerticalLayout;
+import java.util.Iterator;
+import org.vaadin.hene.popupbutton.PopupButton;
 
 @ViewComponent
 public class CrmContainer extends AbstractView {
-	private static final long serialVersionUID = 1L;
 
-	private static String ACCOUNT_LIST = "Accounts";
+    private static final long serialVersionUID = 1L;
+    private static String ACCOUNT_LIST = "Accounts";
+    private static String NEW_ACCOUNT_ITEM = "New Account";
+    private static String NEW_CASE_ITEM = "New Case";
+    private static String CASE_LIST = "Cases";
+    private static String CONTACT_LIST = "Contacts";
+    private static String NEW_CONTACT_ITEM = "New Contact";
+    private static String CAMPAIGN_LIST = "Campaigns";
+    private static String NEW_CAMPAIGN_ITEM = "New Campaign";
+    private static String LEAD_LIST = "Leads";
+    private static String NEW_LEAD_ITEM = "New Lead";
+    private static String OPPORTUNITY_LIST = "Opportunities";
+    private static String NEW_OPPORTUNITY_ITEM = "New Opportunity";
+    private static String ACTIVITIES_LIST = "Activities";
+    private final VerticalLayout currentView;
+    private final PopupButton addBtn;
+    private final CssLayout toolbar;
 
-	private static String NEW_ACCOUNT_ITEM = "New Account";
+    public CrmContainer() {
+        new CrmController(this);
+        CustomLayout container = new CustomLayout("crmContainer");
+        container.setStyleName("crmContainer");
 
-	private static String NEW_CASE_ITEM = "New Case";
+        container.setWidth("100%");
+        NavigatorItemListener listener = new NavigatorItemListener();
 
-	private static String CASE_LIST = "Cases";
+        toolbar = new CssLayout();
 
-	private static String CONTACT_LIST = "Contacts";
+        Button homeBtn = new Button(null, listener);
+        homeBtn.setStyleName("link");
+        homeBtn.setIcon(new ThemeResource("icons/16/home.png"));
+        toolbar.addComponent(homeBtn);
 
-	private static String NEW_CONTACT_ITEM = "New Contact";
+        Button accountList = new Button(ACCOUNT_LIST, listener);
+        accountList.setStyleName("link");
+        toolbar.addComponent(accountList);
 
-	private static String CAMPAIGN_LIST = "Campaigns";
+        Button contactList = new Button(CONTACT_LIST, listener);
+        contactList.setStyleName("link");
+        toolbar.addComponent(contactList);
 
-	private static String NEW_CAMPAIGN_ITEM = "New Campaign";
+        Button campaignList = new Button(CAMPAIGN_LIST, listener);
+        campaignList.setStyleName("link");
+        toolbar.addComponent(campaignList);
 
-	private static String LEAD_LIST = "Leads";
+        Button leadList = new Button(LEAD_LIST, listener);
+        leadList.setStyleName("link");
+        toolbar.addComponent(leadList);
 
-	private static String NEW_LEAD_ITEM = "New Lead";
+        Button opportunityList = new Button(OPPORTUNITY_LIST, listener);
+        opportunityList.setStyleName("link");
+        toolbar.addComponent(opportunityList);
 
-	private static String OPPORTUNITY_LIST = "Opportunities";
+        Button caseList = new Button(CASE_LIST, listener);
+        caseList.setStyleName("link");
+        toolbar.addComponent(caseList);
 
-	private static String NEW_OPPORTUNITY_ITEM = "New Opportunity";
+        Button activitiesList = new Button(ACTIVITIES_LIST, listener);
+        activitiesList.setStyleName("link");
+        toolbar.addComponent(activitiesList);
 
-	private static String ACTIVITIES_LIST = "Activities";
+        toolbar.setStyleName("h-sidebar-menu");
 
-	private final VerticalLayout currentView;
+        addBtn = new PopupButton("Add");
+        GridLayout addBtnLayout = new GridLayout(3, 2);
+        addBtnLayout.setMargin(true);
+        addBtnLayout.setWidth("300px");
+        addBtnLayout.setSpacing(true);
 
-	private final PopupButton addBtn;
+        ButtonLink newAccountBtn = new ButtonLink(NEW_ACCOUNT_ITEM, listener);
+        addBtnLayout.addComponent(newAccountBtn);
 
-	private final CssLayout toolbar;
+        ButtonLink newContactBtn = new ButtonLink(NEW_CONTACT_ITEM, listener);
+        addBtnLayout.addComponent(newContactBtn);
 
-	public CrmContainer() {
-		new CrmController(this);
-		CustomLayout container = new CustomLayout("crmContainer");
-		container.setStyleName("crmContainer");
+        ButtonLink newCampaignBtn = new ButtonLink(NEW_CAMPAIGN_ITEM, listener);
+        addBtnLayout.addComponent(newCampaignBtn);
 
-		container.setWidth("100%");
-		NavigatorItemListener listener = new NavigatorItemListener();
+        ButtonLink newOpportunityBtn = new ButtonLink(NEW_OPPORTUNITY_ITEM,
+                listener);
+        addBtnLayout.addComponent(newOpportunityBtn);
 
-		toolbar = new CssLayout();
+        ButtonLink newLeadBtn = new ButtonLink(NEW_LEAD_ITEM, listener);
+        addBtnLayout.addComponent(newLeadBtn);
 
-		Button homeBtn = new Button(null, listener);
-		homeBtn.setStyleName("link");
-		homeBtn.setIcon(new ThemeResource("icons/16/home.png"));
-		toolbar.addComponent(homeBtn);
+        addBtnLayout.addComponent(new ButtonLink(NEW_CASE_ITEM, listener));
 
-		Button accountList = new Button(ACCOUNT_LIST, listener);
-		accountList.setStyleName("link");
-		toolbar.addComponent(accountList);
+        addBtn.addComponent(addBtnLayout);
+        addBtn.setStyleName("link");
+        toolbar.addComponent(addBtn);
 
-		Button contactList = new Button(CONTACT_LIST, listener);
-		contactList.setStyleName("link");
-		toolbar.addComponent(contactList);
+        container.addComponent(toolbar, "crmToolbar");
 
-		Button campaignList = new Button(CAMPAIGN_LIST, listener);
-		campaignList.setStyleName("link");
-		toolbar.addComponent(campaignList);
+        currentView = new VerticalLayout();
+        container.addComponent(currentView, "currentView");
+        this.addComponent(container);
+        this.setComponentAlignment(container, Alignment.MIDDLE_CENTER);
 
-		Button leadList = new Button(LEAD_LIST, listener);
-		leadList.setStyleName("link");
-		toolbar.addComponent(leadList);
+        EventBus.getInstance().fireEvent(new CrmEvent.GotoHome(this, null));
+    }
 
-		Button opportunityList = new Button(OPPORTUNITY_LIST, listener);
-		opportunityList.setStyleName("link");
-		toolbar.addComponent(opportunityList);
+    public void addView(View view) {
+        currentView.removeAllComponents();
+        currentView.addComponent(view.getWidget());
+    }
 
-		Button caseList = new Button(CASE_LIST, listener);
-		caseList.setStyleName("link");
-		toolbar.addComponent(caseList);
+    private class NavigatorItemListener implements Button.ClickListener {
 
-		Button activitiesList = new Button(ACTIVITIES_LIST, listener);
-		activitiesList.setStyleName("link");
-		toolbar.addComponent(activitiesList);
+        private static final long serialVersionUID = 1L;
 
-		toolbar.setStyleName("h-sidebar-menu");
+        @Override
+        public void buttonClick(ClickEvent event) {
+            String caption = event.getButton().getCaption();
 
-		addBtn = new PopupButton("Add");
-		GridLayout addBtnLayout = new GridLayout(3, 2);
-		addBtnLayout.setMargin(true);
-		addBtnLayout.setWidth("300px");
-		addBtnLayout.setSpacing(true);
+            if (caption == null) {
+                EventBus.getInstance().fireEvent(
+                        new CrmEvent.GotoHome(this, null));
+            } else if (NEW_ACCOUNT_ITEM.equals(caption)) {
+                EventBus.getInstance().fireEvent(
+                        new AccountEvent.GotoAdd(this, null));
+            } else if (ACCOUNT_LIST.equals(caption)) {
+                EventBus.getInstance().fireEvent(
+                        new AccountEvent.GotoList(this, null));
+            } else if (NEW_CAMPAIGN_ITEM.equals(caption)) {
+                EventBus.getInstance().fireEvent(
+                        new CampaignEvent.GotoAdd(this, null));
+            } else if (CAMPAIGN_LIST.equals(caption)) {
+                EventBus.getInstance().fireEvent(
+                        new CampaignEvent.GotoList(this, null));
+            } else if (NEW_CASE_ITEM.equals(caption)) {
+                EventBus.getInstance().fireEvent(
+                        new CaseEvent.GotoAdd(this, null));
+            } else if (CASE_LIST.equals(caption)) {
+                EventBus.getInstance().fireEvent(
+                        new CaseEvent.GotoList(this, null));
+            } else if (CONTACT_LIST.equals(caption)) {
+                EventBus.getInstance().fireEvent(
+                        new ContactEvent.GotoList(this, null));
+            } else if (NEW_CONTACT_ITEM.equals(caption)) {
+                EventBus.getInstance().fireEvent(
+                        new ContactEvent.GotoAdd(this, null));
+            } else if (NEW_LEAD_ITEM.equals(caption)) {
+                EventBus.getInstance().fireEvent(
+                        new LeadEvent.GotoAdd(this, null));
+            } else if (LEAD_LIST.equals(caption)) {
+                EventBus.getInstance().fireEvent(
+                        new LeadEvent.GotoList(this, null));
+            } else if (NEW_OPPORTUNITY_ITEM.equals(caption)) {
+                EventBus.getInstance().fireEvent(
+                        new OpportunityEvent.GotoAdd(this, null));
+            } else if (OPPORTUNITY_LIST.equals(caption)) {
+                EventBus.getInstance().fireEvent(
+                        new OpportunityEvent.GotoList(this, null));
+            } else if (ACTIVITIES_LIST.equals(caption)) {
+                EventBus.getInstance().fireEvent(
+                        new ActivityEvent.GotoCalendar(this, null));
+            }
 
-		ButtonLink newAccountBtn = new ButtonLink(NEW_ACCOUNT_ITEM, listener);
-		addBtnLayout.addComponent(newAccountBtn);
+            addBtn.setPopupVisible(false);
 
-		ButtonLink newContactBtn = new ButtonLink(NEW_CONTACT_ITEM, listener);
-		addBtnLayout.addComponent(newContactBtn);
+            for (Iterator<com.vaadin.ui.Component> it = toolbar
+                    .getComponentIterator(); it.hasNext();) {
+                Button btn = (Button) it.next();
+                btn.removeStyleName("isSelected");
+            }
 
-		ButtonLink newCampaignBtn = new ButtonLink(NEW_CAMPAIGN_ITEM, listener);
-		addBtnLayout.addComponent(newCampaignBtn);
-
-		ButtonLink newOpportunityBtn = new ButtonLink(NEW_OPPORTUNITY_ITEM,
-				listener);
-		addBtnLayout.addComponent(newOpportunityBtn);
-
-		ButtonLink newLeadBtn = new ButtonLink(NEW_LEAD_ITEM, listener);
-		addBtnLayout.addComponent(newLeadBtn);
-
-		addBtnLayout.addComponent(new ButtonLink(NEW_CASE_ITEM, listener));
-
-		addBtn.addComponent(addBtnLayout);
-		addBtn.setStyleName("link");
-		toolbar.addComponent(addBtn);
-
-		container.addComponent(toolbar, "crmToolbar");
-
-		currentView = new VerticalLayout();
-		container.addComponent(currentView, "currentView");
-		this.addComponent(container);
-		this.setComponentAlignment(container, Alignment.MIDDLE_CENTER);
-
-		EventBus.getInstance().fireEvent(new CrmEvent.GotoHome(this, null));
-	}
-
-	public void addView(View view) {
-		currentView.removeAllComponents();
-		currentView.addComponent(view.getWidget());
-	}
-
-	private class NavigatorItemListener implements Button.ClickListener {
-		private static final long serialVersionUID = 1L;
-
-		@Override
-		public void buttonClick(ClickEvent event) {
-			String caption = event.getButton().getCaption();
-
-			if (caption == null) {
-				EventBus.getInstance().fireEvent(
-						new CrmEvent.GotoHome(this, null));
-			} else if (NEW_ACCOUNT_ITEM.equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new AccountEvent.GotoAdd(this, null));
-			} else if (ACCOUNT_LIST.equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new AccountEvent.GotoList(this, null));
-			} else if (NEW_CAMPAIGN_ITEM.equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new CampaignEvent.GotoAdd(this, null));
-			} else if (CAMPAIGN_LIST.equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new CampaignEvent.GotoList(this, null));
-			} else if (NEW_CASE_ITEM.equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new CaseEvent.GotoAdd(this, null));
-			} else if (CASE_LIST.equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new CaseEvent.GotoList(this, null));
-			} else if (CONTACT_LIST.equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new ContactEvent.GotoList(this, null));
-			} else if (NEW_CONTACT_ITEM.equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new ContactEvent.GotoAdd(this, null));
-			} else if (NEW_LEAD_ITEM.equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new LeadEvent.GotoAdd(this, null));
-			} else if (LEAD_LIST.equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new LeadEvent.GotoList(this, null));
-			} else if (NEW_OPPORTUNITY_ITEM.equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new OpportunityEvent.GotoAdd(this, null));
-			} else if (OPPORTUNITY_LIST.equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new OpportunityEvent.GotoList(this, null));
-			} else if (ACTIVITIES_LIST.equals(caption)) {
-				EventBus.getInstance().fireEvent(
-						new ActivityEvent.GotoCalendar(this, null));
-			}
-			
-			addBtn.setPopupVisible(false);
-
-			for (Iterator<com.vaadin.ui.Component> it = toolbar
-					.getComponentIterator(); it.hasNext();) {
-				Button btn = (Button) it.next();
-				btn.removeStyleName("isSelected");
-			}
-
-			event.getButton().addStyleName("isSelected");
-		}
-	}
-
+            event.getButton().addStyleName("isSelected");
+        }
+    }
 }

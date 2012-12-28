@@ -59,10 +59,22 @@ public class AppContext implements TransactionListener, Serializable {
             try {
                 UserPreference pref = instance.get().session.getPreference();
                 UserPreferenceService prefService = AppContext.getSpringBean(UserPreferenceService.class);
-                prefService.updateLastTimeAccessed(pref);
+                pref.setLastaccessedtime(new GregorianCalendar().getTime());
+                prefService.updateWithSession(pref, AppContext.getUsername());
             } catch (Exception e) {
-                log.error("There is error when try to update user preference");
+                log.error("There is error when try to update user preference", e);
             }
+        }
+    }
+
+    public static void updateLastModuleVisit(String moduleName) {
+        try {
+            UserPreference pref = instance.get().session.getPreference();
+            UserPreferenceService prefService = AppContext.getSpringBean(UserPreferenceService.class);
+            pref.setLastmodulevisit(moduleName);
+            prefService.updateWithSession(pref, AppContext.getUsername());
+        } catch (Exception e) {
+            log.error("There is error when try to update user preference for last module visit", e);
         }
     }
 

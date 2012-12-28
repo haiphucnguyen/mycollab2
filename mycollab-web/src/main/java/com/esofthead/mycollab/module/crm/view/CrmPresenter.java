@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.module.project.view;
+package com.esofthead.mycollab.module.crm.view;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.shell.view.MainView;
@@ -15,16 +15,17 @@ import com.vaadin.ui.ComponentContainer;
  *
  * @author haiphucnguyen
  */
-public class ProjectPresenter extends AbstractPresenter<ProjectContainer> {
-    public ProjectPresenter() {
-        super(ProjectContainer.class);
+public class CrmPresenter extends AbstractPresenter<CrmContainer> {
+
+    public CrmPresenter() {
+        super(CrmContainer.class);
     }
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         MainView mainView = (MainView) container;
         mainView.addView(view);
-        view.gotoProjectPage();
-        AppContext.updateLastModuleVisit(ModuleNameConstants.PRJ);
+        
+        AppContext.updateLastModuleVisit(ModuleNameConstants.CRM);
     }
 }
