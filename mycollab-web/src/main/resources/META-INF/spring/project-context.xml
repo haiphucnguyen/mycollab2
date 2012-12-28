@@ -96,6 +96,16 @@
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.TaskMapperExt" />
     </bean>
+    
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectTaskListMapper">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.TaskListMapper" />
+    </bean>
+    
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectTaskListMapperExt">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.TaskListMapperExt" />
+    </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="taskResourceMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />

@@ -5,7 +5,10 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
+import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.TaskList;
+import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -13,6 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
@@ -25,6 +29,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -34,6 +39,8 @@ public class TaskListWindow extends Window {
 
     private TaskList taskList;
     private TaskListForm taskListForm;
+    
+    private boolean willNotifyToReloadTaskList = false;
 
     public TaskListWindow() {
         this.setWidth("800px");
@@ -41,7 +48,21 @@ public class TaskListWindow extends Window {
         taskListForm = new TaskListForm();
         taskListForm.setItemDataSource(new BeanItem(taskList));
         this.addComponent(taskListForm);
+        
         center();
+        this.addListener(new Window.CloseListener() {
+
+            @Override
+            public void windowClose(CloseEvent e) {
+                if (willNotifyToReloadTaskList) {
+                    notifyToReloadTaskList();
+                }
+            }
+        });
+    }
+    
+    private void notifyToReloadTaskList() {
+        
     }
 
     private class TaskListForm extends AdvancedEditBeanForm<TaskList> {
@@ -83,7 +104,9 @@ public class TaskListWindow extends Window {
                     @Override
                     public void buttonClick(ClickEvent event) {
                         if (TaskListForm.this.validateForm(taskList)) {
-                            
+                            saveTaskList();
+                            TaskListWindow.this.close();
+                            notifyToReloadTaskList();
                         }
                     }
                 });
@@ -94,7 +117,9 @@ public class TaskListWindow extends Window {
                     @Override
                     public void buttonClick(ClickEvent event) {
                         if (TaskListForm.this.validateForm(taskList)) {
-                            
+                            saveTaskList();
+                            taskList = new TaskList();
+                            willNotifyToReloadTaskList = true;
                         }
                     }
                 });
@@ -111,6 +136,16 @@ public class TaskListWindow extends Window {
                 layout.addComponent(cancelBtn);
 
                 return layout;
+            }
+
+            private void saveTaskList() {
+                ProjectTaskListService taskListService = AppContext.getSpringBean(ProjectTaskListService.class);
+                taskList.setSaccountid(AppContext.getAccountId());
+                taskList.setCreatedtime(new GregorianCalendar().getTime());
+                
+                SimpleProject prj = (SimpleProject)AppContext.getVariable(ProjectContants.PROJECT_NAME);
+                taskList.setProjectid(prj.getId());
+                taskListService.saveWithSession(taskList, AppContext.getUsername());
             }
 
             @Override
