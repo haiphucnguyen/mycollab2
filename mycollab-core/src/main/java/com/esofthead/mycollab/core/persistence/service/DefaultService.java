@@ -76,14 +76,14 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 			e.printStackTrace();
 		}
 		if (username == null) {
-			return getCrudMapper().updateByPrimaryKey(record);
+			return getCrudMapper().updateByPrimaryKeySelective(record);
 		} else {
 			return internalUpdateWithSession(record, username);
 		}
 	}
 
 	protected int internalUpdateWithSession(T record, String username) {
-		return getCrudMapper().updateByPrimaryKey(record);
+		return getCrudMapper().updateByPrimaryKeySelective(record);
 	}
 
 	@Override
