@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.user.ui.components;
 
-import java.util.List;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -11,33 +9,35 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.ComboBox;
+import java.util.List;
 
 public class UserComboBox extends ComboBox {
-	private static final long serialVersionUID = 1L;
 
-	@SuppressWarnings("unchecked")
-	public UserComboBox() {
-		super();
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+    private static final long serialVersionUID = 1L;
 
-		UserSearchCriteria criteria = new UserSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
+    @SuppressWarnings("unchecked")
+    public UserComboBox() {
+        super();
+        this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
 
-		UserService userService = AppContext.getSpringBean(UserService.class);
-		List<SimpleUser> userList = userService
-				.findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
-						criteria, 0, Integer.MAX_VALUE));
+        UserSearchCriteria criteria = new UserSearchCriteria();
+        criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+                AppContext.getAccountId()));
 
-		BeanContainer<String, SimpleUser> beanItem = new BeanContainer<String, SimpleUser>(
-				SimpleUser.class);
-		beanItem.setBeanIdProperty("username");
+        UserService userService = AppContext.getSpringBean(UserService.class);
+        List<SimpleUser> userList = userService
+                .findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
+                criteria, 0, Integer.MAX_VALUE));
 
-		for (SimpleUser user : userList) {
-			beanItem.addBean(user);
-		}
+        BeanContainer<String, SimpleUser> beanItem = new BeanContainer<String, SimpleUser>(
+                SimpleUser.class);
+        beanItem.setBeanIdProperty("username");
 
-		this.setContainerDataSource(beanItem);
-		this.setItemCaptionPropertyId("displayname");
-	}
+        for (SimpleUser user : userList) {
+            beanItem.addBean(user);
+        }
+
+        this.setContainerDataSource(beanItem);
+        this.setItemCaptionPropertyId("displayname");
+    }
 }

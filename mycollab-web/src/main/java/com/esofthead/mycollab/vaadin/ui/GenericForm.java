@@ -12,7 +12,6 @@ public class GenericForm extends Form {
     public static String CANCEL_ACTION = "Cancel";
     public static String DELETE_ACTION = "Delete";
     public static String CLONE_ACTION = "Clone";
-    
     private IFormLayoutFactory factory;
 
     public GenericForm() {

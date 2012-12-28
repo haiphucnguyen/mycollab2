@@ -18,76 +18,75 @@ import de.steinwedel.vaadin.MessageBox.ButtonType;
 
 @SuppressWarnings("serial")
 public class AdvancedEditBeanForm<T> extends GenericForm implements
-		HasEditFormHandlers<T> {
-	private final Validator validation;
+        HasEditFormHandlers<T> {
 
-	private List<EditFormHandler<T>> editFormHandlers;
+    private final Validator validation;
+    private List<EditFormHandler<T>> editFormHandlers;
 
-	public AdvancedEditBeanForm() {
-		validation = AppContext.getSpringBean(LocalValidatorFactoryBean.class);
-	}
+    public AdvancedEditBeanForm() {
+        validation = AppContext.getSpringBean(LocalValidatorFactoryBean.class);
+    }
 
-	public AdvancedEditBeanForm(IFormLayoutFactory factory) {
-		this();
-		this.setFormLayoutFactory(factory);
-	}
+    public AdvancedEditBeanForm(IFormLayoutFactory factory) {
+        this();
+        this.setFormLayoutFactory(factory);
+    }
 
-	protected boolean validateForm(Object data) {
-		for (Object propertyId : this.getItemPropertyIds()) {
-			this.getField(propertyId).removeStyleName("errorField");
-		}
-		Set<ConstraintViolation<Object>> violations = validation.validate(data);
-		if (violations.size() > 0) {
-			StringBuffer errorMsg = new StringBuffer();
+    protected boolean validateForm(Object data) {
+        for (Object propertyId : this.getItemPropertyIds()) {
+            this.getField(propertyId).removeStyleName("errorField");
+        }
+        Set<ConstraintViolation<Object>> violations = validation.validate(data);
+        if (violations.size() > 0) {
+            StringBuffer errorMsg = new StringBuffer();
 
-			for (@SuppressWarnings("rawtypes")
-			ConstraintViolation violation : violations) {
-				errorMsg.append(violation.getMessage()).append("<br/>");
-				this.getField(violation.getPropertyPath().toString())
-						.addStyleName("errorField");
-			}
+            for (@SuppressWarnings("rawtypes") ConstraintViolation violation : violations) {
+                errorMsg.append(violation.getMessage()).append("<br/>");
+                this.getField(violation.getPropertyPath().toString())
+                        .addStyleName("errorField");
+            }
 
-			MessageBox mb = new MessageBox(getWindow(), "Error!",
-					MessageBox.Icon.ERROR, errorMsg.toString(),
-					new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
-			mb.show();
+            MessageBox mb = new MessageBox(getWindow(), "Error!",
+                    MessageBox.Icon.ERROR, errorMsg.toString(),
+                    new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
+            mb.show();
 
-			return false;
-		}
+            return false;
+        }
 
-		return true;
-	}
+        return true;
+    }
 
-	@Override
-	public void addFormHandler(EditFormHandler<T> editFormHandler) {
-		if (editFormHandlers == null) {
-			editFormHandlers = new ArrayList<EditFormHandler<T>>();
-		}
+    @Override
+    public void addFormHandler(EditFormHandler<T> editFormHandler) {
+        if (editFormHandlers == null) {
+            editFormHandlers = new ArrayList<EditFormHandler<T>>();
+        }
 
-		editFormHandlers.add(editFormHandler);
-	}
+        editFormHandlers.add(editFormHandler);
+    }
 
-	protected void fireSaveForm(T bean) {
-		if (editFormHandlers != null) {
-			for (EditFormHandler<T> editFormHandler : editFormHandlers) {
-				editFormHandler.onSave(bean);
-			}
-		}
-	}
+    protected void fireSaveForm(T bean) {
+        if (editFormHandlers != null) {
+            for (EditFormHandler<T> editFormHandler : editFormHandlers) {
+                editFormHandler.onSave(bean);
+            }
+        }
+    }
 
-	protected void fireSaveAndNewForm(T bean) {
-		if (editFormHandlers != null) {
-			for (EditFormHandler<T> editFormHandler : editFormHandlers) {
-				editFormHandler.onSaveAndNew(bean);
-			}
-		}
-	}
+    protected void fireSaveAndNewForm(T bean) {
+        if (editFormHandlers != null) {
+            for (EditFormHandler<T> editFormHandler : editFormHandlers) {
+                editFormHandler.onSaveAndNew(bean);
+            }
+        }
+    }
 
-	protected void fireCancelForm() {
-		if (editFormHandlers != null) {
-			for (EditFormHandler<T> editFormHandler : editFormHandlers) {
-				editFormHandler.onCancel();
-			}
-		}
-	}
+    protected void fireCancelForm() {
+        if (editFormHandlers != null) {
+            for (EditFormHandler<T> editFormHandler : editFormHandlers) {
+                editFormHandler.onCancel();
+            }
+        }
+    }
 }

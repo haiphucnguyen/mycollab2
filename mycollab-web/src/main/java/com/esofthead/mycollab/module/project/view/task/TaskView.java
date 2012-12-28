@@ -2,6 +2,5 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.vaadin.mvp.View;
 
-public interface ProjectTaskView extends View {
-
+public interface TaskView extends View {
 }

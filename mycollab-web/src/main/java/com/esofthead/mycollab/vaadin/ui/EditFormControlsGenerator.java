@@ -1,12 +1,11 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.io.Serializable;
-
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
+import java.io.Serializable;
 
 public class EditFormControlsGenerator<T> implements Serializable {
 

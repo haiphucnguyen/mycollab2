@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
-import com.esofthead.mycollab.module.project.view.task.ProjectTaskPresenter;
+import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -48,7 +48,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     private final HorizontalLayout topPanel;
     private MessagePresenter messagePresenter;
     private MilestonePresenter milestonesPresenter;
-    private ProjectTaskPresenter taskPresenter;
+    private TaskPresenter taskPresenter;
     private BugPresenter bugPresenter;
     private ProblemPresenter problemPresenter;
     private RiskPresenter riskPresenter;
@@ -187,7 +187,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
     private Component constructTaskDashboardComponent() {
         taskPresenter = PresenterResolver
-                .getPresenter(ProjectTaskPresenter.class);
+                .getPresenter(TaskPresenter.class);
         return taskPresenter.getView();
     }
 
