@@ -16,7 +16,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 
 	@Override
 	public void onGo(ComponentContainer container, ScreenData<?> data) {
-		ProjectMainContainer prjContainer = (ProjectMainContainer) container;
+		ProjectContainer prjContainer = (ProjectContainer) container;
 		prjContainer.removeAllComponents();
 		prjContainer.addComponent((Component) view);
 		prjContainer.setComponentAlignment((Component) view,

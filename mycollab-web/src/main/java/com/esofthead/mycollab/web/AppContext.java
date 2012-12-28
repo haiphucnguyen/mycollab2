@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.web;
 
+import com.esofthead.mycollab.common.domain.UserPreference;
+import com.esofthead.mycollab.common.service.UserPreferenceService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext.TransactionListener;
@@ -7,6 +9,7 @@ import com.vaadin.terminal.gwt.server.WebApplicationContext;
 import java.io.Serializable;
 import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
@@ -16,11 +19,13 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 public class AppContext implements TransactionListener, Serializable {
 
     private static final long serialVersionUID = 1L;
+    private static int UPDATE_TIME_DURATION = 300000;
     private static Logger log = LoggerFactory.getLogger(AppContext.class);
     private Application app;
     private SimpleUser session;
     private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
     private Map<String, Object> variables = new HashMap<String, Object>();
+    private long lastAccessTime = new GregorianCalendar().getTimeInMillis();
 
     public AppContext(Application application) {
         this.app = application;
@@ -48,6 +53,17 @@ public class AppContext implements TransactionListener, Serializable {
         }
 
         log.debug("Transaction end: " + transactionData);
+
+        long currentTime = new GregorianCalendar().getTimeInMillis();
+        if (currentTime - lastAccessTime > UPDATE_TIME_DURATION) {
+            try {
+                UserPreference pref = instance.get().session.getPreference();
+                UserPreferenceService prefService = AppContext.getSpringBean(UserPreferenceService.class);
+                prefService.updateLastTimeAccessed(pref);
+            } catch (Exception e) {
+                log.error("There is error when try to update user preference");
+            }
+        }
     }
 
     public static void setSession(SimpleUser userSession) {
@@ -64,6 +80,10 @@ public class AppContext implements TransactionListener, Serializable {
 
     public static String getUsername() {
         return instance.get().session.getUsername();
+    }
+
+    public static UserPreference getUserPreference() {
+        return instance.get().session.getPreference();
     }
 
     public static Application getApplication() {

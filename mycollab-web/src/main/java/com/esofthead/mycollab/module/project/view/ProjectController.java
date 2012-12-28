@@ -30,9 +30,9 @@ import com.esofthead.mycollab.web.AppContext;
 
 public class ProjectController {
 
-    private ProjectMainContainer container;
+    private ProjectContainer container;
 
-    public ProjectController(ProjectMainContainer container) {
+    public ProjectController(ProjectContainer container) {
         this.container = container;
         bindProjectEvents();
         bindRiskEvents();
