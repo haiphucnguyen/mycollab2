@@ -12,42 +12,40 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
-public class ProjectSearchPanel extends
-		GenericSearchPanel<ProjectSearchCriteria> {
-	private static final long serialVersionUID = 1L;
+public class ProjectSearchPanel extends GenericSearchPanel<ProjectSearchCriteria> {
 
-	private ProjectSearchCriteria searchCriteria;
+    private static final long serialVersionUID = 1L;
+    private ProjectSearchCriteria searchCriteria;
 
-	public ProjectSearchPanel() {
-	}
+    public ProjectSearchPanel() {
+    }
 
-	@Override
-	public void attach() {
-		super.attach();
+    @Override
+    public void attach() {
+        super.attach();
 
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setWidth("100%");
-		layout.setSpacing(true);
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setWidth("100%");
+        layout.setSpacing(true);
 
-		Label searchtitle = new Label("Your Projects");
-		searchtitle.setStyleName(Reindeer.LABEL_H2);
-		layout.addComponent(searchtitle);
+        Label searchtitle = new Label("Your Projects");
+        searchtitle.setStyleName(Reindeer.LABEL_H2);
+        layout.addComponent(searchtitle);
 
-		Button createProjectBtn = new Button("Create",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+        Button createProjectBtn = new Button("Create",
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getWindow().addWindow(new ProjectAddWindow());
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        getWindow().addWindow(new ProjectAddWindow());
 
-					}
+                    }
+                });
+        createProjectBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+        createProjectBtn.setStyleName(BaseTheme.BUTTON_LINK);
 
-				});
-		createProjectBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
-		createProjectBtn.setStyleName(BaseTheme.BUTTON_LINK);
-
-		UiUtils.addComponent(layout, createProjectBtn, Alignment.MIDDLE_RIGHT);
-		this.setCompositionRoot(layout);
-	}
+        UiUtils.addComponent(layout, createProjectBtn, Alignment.MIDDLE_RIGHT);
+        this.setCompositionRoot(layout);
+    }
 }

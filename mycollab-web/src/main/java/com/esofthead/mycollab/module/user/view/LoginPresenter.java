@@ -1,12 +1,15 @@
-package com.esofthead.mycollab.module.user.presenter;
+package com.esofthead.mycollab.module.user.view;
 
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
 import com.esofthead.mycollab.core.EngroupException;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.module.user.events.UserEvent;
+import com.esofthead.mycollab.module.user.events.UserEvent.PlainLogin;
 import com.esofthead.mycollab.module.user.service.SecurityService;
-import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -19,7 +22,22 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 
     public LoginPresenter() {
         super(LoginView.class);
-        view.setPresenter(this);
+        bind();
+    }
+
+    private void bind() {
+        view.addViewListener(new ApplicationEventListener<UserEvent.PlainLogin>() {
+            @Override
+            public Class<? extends ApplicationEvent> getEventType() {
+                return UserEvent.PlainLogin.class;
+            }
+
+            @Override
+            public void handle(PlainLogin event) {
+                String[] data = (String[]) event.getData();
+                doLogin(data[0], data[1]);
+            }
+        });
     }
 
     public void doLogin(String username, String password) {

@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.module.user.view;
 
 import com.esofthead.mycollab.core.EngroupException;
-import com.esofthead.mycollab.module.user.presenter.LoginPresenter;
+import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -18,14 +18,9 @@ import com.vaadin.ui.TextField;
 public class LoginViewImpl extends AbstractView implements LoginView {
 
     private static final long serialVersionUID = 1L;
-    private LoginPresenter loginPresenter;
 
     public LoginViewImpl() {
         this.addComponent(new LoginForm());
-    }
-
-    public void setPresenter(LoginPresenter presenter) {
-        this.loginPresenter = presenter;
     }
 
     private class LoginForm extends Form {
@@ -58,11 +53,7 @@ public class LoginViewImpl extends AbstractView implements LoginView {
                 @Override
                 public void buttonClick(ClickEvent event) {
                     try {
-                        LoginViewImpl.this.loginPresenter.doLogin(
-                                (String) LoginForm.this.usernameField
-                                .getValue(),
-                                (String) LoginForm.this.passwordField
-                                .getValue());
+                        LoginViewImpl.this.fireEvent(new UserEvent.PlainLogin(LoginViewImpl.this, new String[]{(String) usernameField.getValue(), (String) passwordField.getValue()}));
                     } catch (EngroupException e) {
                         LoginForm.this.setComponentError(new UserError(e
                                 .getMessage()));
@@ -72,7 +63,7 @@ public class LoginViewImpl extends AbstractView implements LoginView {
                     }
                 }
             });
-            
+
             loginBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
             custom.addComponent(loginBtn, "loginButton");
 

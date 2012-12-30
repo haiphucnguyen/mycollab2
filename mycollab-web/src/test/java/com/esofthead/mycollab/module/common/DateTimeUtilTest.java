@@ -10,22 +10,23 @@ import junit.framework.Assert;
 import org.junit.Test;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.test.util.DateTimeUtilsForTest;
 
 public class DateTimeUtilTest {
 	
 	@Test
 	public void testAddDayDuration() {
-		Date dateTest = DateTimeUtils.getDateByString("2012-12-20");
-		Date date = DateTimeUtils.subtractOrAddDayDuration(dateTest, 2);
-		Date dateTestResult = DateTimeUtils.getDateByString("2012-12-22");
+		Date dateTest = DateTimeUtilsForTest.getDateByString("2012-12-20");
+		Date date = DateTimeUtilsForTest.subtractOrAddDayDuration(dateTest, 2);
+		Date dateTestResult = DateTimeUtilsForTest.getDateByString("2012-12-22");
 		Assert.assertEquals(dateTestResult, date);
 	}
 	
 	@Test
 	public void testSubtractDayDuration() {
-		Date dateTest = DateTimeUtils.getDateByString("2012-12-20");
-		Date date = DateTimeUtils.subtractOrAddDayDuration(dateTest, -30);
-		Date dateTestResult = DateTimeUtils.getDateByString("2012-11-20");
+		Date dateTest = DateTimeUtilsForTest.getDateByString("2012-12-20");
+		Date date = DateTimeUtilsForTest.subtractOrAddDayDuration(dateTest, -30);
+		Date dateTestResult = DateTimeUtilsForTest.getDateByString("2012-11-20");
 		Assert.assertEquals(dateTestResult, date);
 	}
 	

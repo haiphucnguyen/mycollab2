@@ -42,6 +42,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 public class ProjectViewImpl extends AbstractView implements ProjectView {
 
     private static Logger log = LoggerFactory.getLogger(ProjectViewImpl.class);
+    
     private final HorizontalLayout root;
     private final DetachedTabs myProjectTab;
     private final CssLayout mySpaceArea = new CssLayout();

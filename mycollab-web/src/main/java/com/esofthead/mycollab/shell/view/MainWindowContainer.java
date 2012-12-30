@@ -1,9 +1,10 @@
 package com.esofthead.mycollab.shell.view;
 
 import com.esofthead.mycollab.core.EngroupException;
-import com.esofthead.mycollab.module.user.presenter.LoginPresenter;
+import com.esofthead.mycollab.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.shell.ShellController;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -57,5 +58,10 @@ public class MainWindowContainer extends Window implements View {
     @Override
     public ComponentContainer getWidget() {
         return this;
+    }
+
+    @Override
+    public void addViewListener(ApplicationEventListener listener) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

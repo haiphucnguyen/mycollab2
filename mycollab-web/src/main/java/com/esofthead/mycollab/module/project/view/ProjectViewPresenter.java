@@ -8,20 +8,20 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 
 public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
-	private static final long serialVersionUID = 1L;
 
-	public ProjectViewPresenter() {
-		super(ProjectView.class);
-	}
+    private static final long serialVersionUID = 1L;
 
-	@Override
-	public void onGo(ComponentContainer container, ScreenData<?> data) {
-		ProjectContainer prjContainer = (ProjectContainer) container;
-		prjContainer.removeAllComponents();
-		prjContainer.addComponent((Component) view);
-		prjContainer.setComponentAlignment((Component) view,
-				Alignment.TOP_CENTER);
-		view.displayProject((SimpleProject) data.getParams());
-	}
+    public ProjectViewPresenter() {
+        super(ProjectView.class);
+    }
 
+    @Override
+    public void onGo(ComponentContainer container, ScreenData<?> data) {
+        ProjectContainer prjContainer = (ProjectContainer) container;
+        prjContainer.removeAllComponents();
+        prjContainer.addComponent((Component) view);
+        prjContainer.setComponentAlignment((Component) view,
+                Alignment.TOP_CENTER);
+        view.displayProject((SimpleProject) data.getParams());
+    }
 }

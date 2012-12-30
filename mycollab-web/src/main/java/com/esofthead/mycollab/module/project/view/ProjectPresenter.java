@@ -16,6 +16,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class ProjectPresenter extends AbstractPresenter<ProjectContainer> {
+
     public ProjectPresenter() {
         super(ProjectContainer.class);
     }

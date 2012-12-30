@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.shell;
 
-import com.esofthead.mycollab.module.user.presenter.LoginPresenter;
+import com.esofthead.mycollab.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent.GotoMainPage;
@@ -54,7 +54,10 @@ public class ShellController implements Serializable {
                                 + "$" + AppContext.getSession().getPassword(),
                                 expiryDate);
 
-                        ((Window) container).setContent(mainView);
+                        if (mainView.getParent() == null) {
+                            ((Window) container).setContent(mainView);
+                        }
+                        
                         mainViewPresenter.go(container);
                     }
                 });
