@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <name>mycollab-parent</name>
     <groupId>com.esofthead.mycollab</groupId>
@@ -64,6 +64,12 @@
             <groupId>net.sf.ehcache</groupId>
             <artifactId>ehcache-core</artifactId>
             <version>2.6.0</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>joda-time</groupId>
+            <artifactId>joda-time</artifactId>
+            <version>2.1</version>
         </dependency>
 
         <dependency>
@@ -193,11 +199,11 @@
                 </configuration>
             </plugin>
             <!-- <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>aspectj-maven-plugin</artifactId> 
-                <configuration> <source>${javaVersion}</source> <target>${javaVersion}</target> 
-                <aspectLibraries> <aspectLibrary> <groupId>org.springframework</groupId> 
-                <artifactId>spring-aspects</artifactId> </aspectLibrary> </aspectLibraries> 
-                </configuration> <executions> <execution> <goals> <goal>compile</goal> </goals> 
-                </execution> </executions> </plugin> -->
+            <configuration> <source>${javaVersion}</source> <target>${javaVersion}</target> 
+            <aspectLibraries> <aspectLibrary> <groupId>org.springframework</groupId> 
+            <artifactId>spring-aspects</artifactId> </aspectLibrary> </aspectLibraries> 
+            </configuration> <executions> <execution> <goals> <goal>compile</goal> </goals> 
+            </execution> </executions> </plugin> -->
             <plugin>
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
