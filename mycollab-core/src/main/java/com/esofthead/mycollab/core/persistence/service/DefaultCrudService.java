@@ -16,14 +16,12 @@
  */
 package com.esofthead.mycollab.core.persistence.service;
 
+import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.GregorianCalendar;
 import java.util.List;
-
 import org.apache.commons.beanutils.PropertyUtils;
-
-import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 
 /**
  * The generic class that serves the basic operations in data access layer:
@@ -53,7 +51,6 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
             PropertyUtils.setProperty(record, "lastupdatedtime",
                     new GregorianCalendar().getTime());
         } catch (Exception e) {
-            e.printStackTrace();
         }
 
         ICrudGenericDAO<K, T> crudMapper = getCrudMapper();
@@ -82,7 +79,6 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
                 PropertyUtils.setProperty(record, "lastupdatedtime",
                         new GregorianCalendar().getTime());
             } catch (Exception e) {
-                e.printStackTrace();
             }
             return getCrudMapper().updateByPrimaryKeySelective(record);
         } else {
@@ -95,7 +91,6 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
             PropertyUtils.setProperty(record, "lastupdatedtime",
                     new GregorianCalendar().getTime());
         } catch (Exception e) {
-            e.printStackTrace();
         }
         return getCrudMapper().updateByPrimaryKeySelective(record);
     }

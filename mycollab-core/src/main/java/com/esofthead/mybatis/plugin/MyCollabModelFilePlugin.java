@@ -1,7 +1,8 @@
 package com.esofthead.mybatis.plugin;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
 import java.util.List;
-import javax.sound.midi.SysexMessage;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -42,7 +43,7 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
                     .getAliasedFullyQualifiedTableNameAtRuntime())
                     .append(" (");
 
-            StringBuffer valueSt = new StringBuffer("values (");
+            StringBuilder valueSt = new StringBuilder("values (");
 
             List<IntrospectedColumn> allColumns = introspectedTable
                     .getAllColumns();
@@ -50,7 +51,7 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
 
                 IntrospectedColumn column = allColumns.get(i);
                 sqlBuilder.append(column.getActualColumnName());
-                
+
                 valueSt.append("#{").append(column.getJavaProperty())
                         .append(",jdbcType=").append(column.getJdbcTypeName())
                         .append("}");
@@ -62,7 +63,7 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
             }
             sqlBuilder.append(") ");
             sqlBuilder.append(valueSt.toString()).append(")");
-            
+
             System.out.println("Generate insert statement " + sqlBuilder.toString());
 
             element.addElement(new TextElement(sqlBuilder.toString()));
@@ -89,6 +90,7 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
         if (isTableHasIdPrimaryKey(introspectedTable)) {
             Method method = new Method();
             method.setVisibility(JavaVisibility.PUBLIC);
+            context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
             method.setName("insertAndReturnKey");
             method.setReturnType(new FullyQualifiedJavaType("java.lang.Integer"));
             method.addParameter(new Parameter(new FullyQualifiedJavaType(
@@ -97,6 +99,16 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
         }
 
         return true;
+    }
+
+    @Override
+    public boolean modelGetterMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+        return true;
+    }
+
+    @Override
+    public boolean modelSetterMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+        return super.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn, introspectedTable, modelClassType);
     }
 
     private boolean isTableHasIdPrimaryKey(IntrospectedTable introspectedTable) {
