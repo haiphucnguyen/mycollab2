@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.esofthead.mycollab.core.EngroupException;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
@@ -38,7 +38,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
                 i++;
             }
         } catch (Exception e) {
-            throw new EngroupException(e);
+            throw new MyCollabException(e);
         }
 
         return currentListData.size();

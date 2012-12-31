@@ -7,24 +7,24 @@ import com.vaadin.ui.Label;
 
 @ViewComponent
 public class BugReadViewImpl extends AbstractView implements BugReadView {
-	private static final long serialVersionUID = 1L;
 
-	private SimpleBug bug;
-	
-	public BugReadViewImpl() {
-		super();
-	}
+    private static final long serialVersionUID = 1L;
+    private SimpleBug bug;
 
-	@Override
-	public void previewItem(SimpleBug item) {
-		bug = item;
-		this.addComponent(new Label("Preview bug"));
-	}
+    public BugReadViewImpl() {
+        super();
+    }
 
-	@Override
-	public SimpleBug getItem() {
-		return bug;
-	}
+    @Override
+    public void previewItem(SimpleBug item) {
+        bug = item;
+        this.addComponent(new Label("Preview bug"));
+    }
+
+    @Override
+    public SimpleBug getItem() {
+        return bug;
+    }
 
     @Override
     public void doPrint() {

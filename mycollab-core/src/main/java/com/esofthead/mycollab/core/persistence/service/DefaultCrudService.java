@@ -18,7 +18,6 @@ package com.esofthead.mycollab.core.persistence.service;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import java.io.Serializable;
-import java.lang.reflect.Method;
 import java.util.GregorianCalendar;
 import java.util.List;
 import org.apache.commons.beanutils.PropertyUtils;
@@ -52,24 +51,15 @@ public abstract class DefaultCrudService<K extends Serializable, T> implements
                     new GregorianCalendar().getTime());
         } catch (Exception e) {
         }
-
-        ICrudGenericDAO<K, T> crudMapper = getCrudMapper();
-        Class<? extends ICrudGenericDAO> crudMapperClass = crudMapper
-                .getClass();
+        
+        int result = getCrudMapper().insertAndReturnKey(record);
         try {
-            Method method = crudMapperClass.getMethod("insertAndReturnKey",
-                    record.getClass());
-            method.invoke(crudMapper, record);
+            result = (Integer)PropertyUtils.getProperty(record, "id");
         } catch (Exception e) {
-            getCrudMapper().insert(record);
-            return -1;
+            result = 1;
         }
-
-        try {
-            return (Integer) PropertyUtils.getProperty(record, "id");
-        } catch (Exception e) {
-            return -1;
-        }
+        
+        return result;
     }
 
     @Override

@@ -1,21 +1,18 @@
 package com.esofthead.mycollab.core.persistence.service;
 
-import java.beans.PropertyDescriptor;
-import java.io.Serializable;
-import java.lang.reflect.Method;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import org.apache.commons.beanutils.PropertyUtils;
-import org.apache.ibatis.session.RowBounds;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import java.beans.PropertyDescriptor;
+import java.io.Serializable;
+import java.util.GregorianCalendar;
+import java.util.List;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.apache.ibatis.session.RowBounds;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class DefaultService<K extends Serializable, T, S extends SearchCriteria>
         implements IDefaultService<K, T, S> {
@@ -48,22 +45,15 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
         ICrudGenericDAO<K, T> crudMapper = getCrudMapper();
         Class<? extends ICrudGenericDAO> crudMapperClass = crudMapper
                 .getClass();
+        
+        int result = getCrudMapper().insertAndReturnKey(record);
         try {
-            Method method = crudMapperClass.getMethod("insertAndReturnKey",
-                    record.getClass());
-            method.invoke(crudMapper, record);
-            log.debug("Save bean and return key successfully");
+            result = (Integer)PropertyUtils.getProperty(record, "id");
         } catch (Exception e) {
-            log.debug("Can not find default method insertAndReturnKey. Back to default save function.");
-            getCrudMapper().insert(record);
-            return -1;
+            result = 1;
         }
-
-        try {
-            return (Integer) PropertyUtils.getProperty(record, "id");
-        } catch (Exception e) {
-            return -1;
-        }
+        
+        return result;
     }
 
     @Override

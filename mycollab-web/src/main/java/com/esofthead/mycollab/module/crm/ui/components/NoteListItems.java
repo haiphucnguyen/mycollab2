@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.crm.domain.Note;
 import com.esofthead.mycollab.module.crm.domain.SimpleNote;
 import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.NoteService;
+import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
@@ -32,7 +33,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
-import java.text.SimpleDateFormat;
 import java.util.GregorianCalendar;
 import java.util.List;
 import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
@@ -89,8 +89,8 @@ public class NoteListItems extends Depot {
     }
 
     public static class NoteRowDisplayHandler implements
-            RowDisplayHandler<SimpleNote>, ReloadableComponent{
-        
+            RowDisplayHandler<SimpleNote>, ReloadableComponent {
+
         private CssLayout noteLayout;
         private BeanList<CommentService, CommentSearchCriteria, SimpleComment> commentList;
         private CommentInput commentInput;
@@ -100,10 +100,10 @@ public class NoteListItems extends Depot {
         @Override
         public Component generateRow(final SimpleNote note, int rowIndex) {
             this.note = note;
-            
+
             noteLayout = new CssLayout();
             noteLayout.setStyleName("noteRow");
-            
+
             if (note.getSubject() != null && !note.getSubject().equals("")) {
                 noteLayout.addComponent(new Label(note.getSubject()));
             }
@@ -117,9 +117,8 @@ public class NoteListItems extends Depot {
             footer.setSpacing(true);
             footer.setMargin(true);
             footer.setWidth("100%");
-            
-            replyBtn = new Button("Reply", new Button.ClickListener() {
 
+            replyBtn = new Button("Reply", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
                     int compIndex = noteLayout.getComponentIndex(commentList);
@@ -130,14 +129,14 @@ public class NoteListItems extends Depot {
                     }
                 }
             });
-            
+
             replyBtn.setStyleName("link");
             footer.addComponent(replyBtn);
             footer.setComponentAlignment(replyBtn, Alignment.MIDDLE_LEFT);
             Label metadata = new Label("Posted by " + note.getCreateUserFullName()
                     + " on " + AppContext.formatDateToHumanRead(note.getCreatedtime()));
             footer.addComponent(metadata);
-            
+
             metadata.setStyleName("metadata");
             footer.setComponentAlignment(metadata, Alignment.MIDDLE_LEFT);
             noteLayout.addComponent(footer);
@@ -172,14 +171,14 @@ public class NoteListItems extends Depot {
                     noteLayout.addComponent(attachmentLayout);
                 }
             }
-            
+
             commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(AppContext.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);
             commentList.setMargin(true);
             noteLayout.addComponent(commentList);
             displayComments();
             return noteLayout;
         }
-        
+
         private void displayComments() {
             CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
             searchCriteria.setType(new StringSearchField(CommentTypeConstants.CRM_NOTE));
@@ -205,8 +204,6 @@ public class NoteListItems extends Depot {
             }
         }
     }
-    
-    
 
     private class NoteEditor extends VerticalLayout {
 
@@ -243,7 +240,7 @@ public class NoteListItems extends Depot {
                     note.setCreatedtime(new GregorianCalendar().getTime());
                     note.setLastupdatedtime(new GregorianCalendar().getTime());
                     int noteid = noteService.insertNoteExt(note);
-                    attachments.saveContentsToRepo("crm-note", noteid);
+                    attachments.saveContentsToRepo(AttachmentConstants.CRM_NOTE_TYPE, noteid);
                     displayNotes();
                     addCreateBtn();
                 }

@@ -28,6 +28,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.teemu.ratingstars.RatingStars;
 
 @ViewComponent
 public class ProblemListViewImpl extends AbstractView implements
@@ -123,21 +124,21 @@ public class ProblemListViewImpl extends AbstractView implements
                 return l;
             }
         });
-//
-//		tableItem.addGeneratedColumn("level", new ColumnGenerator() {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public com.vaadin.ui.Component generateCell(Table source,
-//					Object itemId, Object columnId) {
-//				final SimpleProblem item = tableItem.getBeanByIndex(itemId);
-//				RatingStars tinyRs = new RatingStars();
-//				tinyRs.setValue(item.getLevel());
-//				tinyRs.setStyleName("tiny");
-//				tinyRs.setReadOnly(true);
-//				return tinyRs;
-//			}
-//		});
+
+        tableItem.addGeneratedColumn("level", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    Object itemId, Object columnId) {
+                final SimpleProblem item = tableItem.getBeanByIndex(itemId);
+                RatingStars tinyRs = new RatingStars();
+                tinyRs.setValue(item.getLevel());
+                tinyRs.setStyleName("tiny");
+                tinyRs.setReadOnly(true);
+                return tinyRs;
+            }
+        });
 
         tableItem.setColumnExpandRatio("issuename", 1);
         tableItem.setColumnWidth("assignedUserFullName",

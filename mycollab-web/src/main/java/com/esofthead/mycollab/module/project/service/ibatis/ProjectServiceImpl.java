@@ -18,7 +18,7 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
-import com.esofthead.mycollab.core.EngroupException;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.MessageDispatcher;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -84,7 +84,7 @@ public class ProjectServiceImpl extends
 	@Override
 	public int saveWithSession(Project record, String username) {
 		if (isExistProjectHasSameName(record.getName())) {
-			throw new EngroupException("There is project has name "
+			throw new MyCollabException("There is project has name "
 					+ record.getName()
 					+ " already. Please choose another project name");
 		}

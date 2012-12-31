@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.user.view;
 
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
-import com.esofthead.mycollab.core.EngroupException;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.module.user.events.UserEvent.PlainLogin;
@@ -52,7 +52,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
             AppContext.setSession(authentication);
             EventBus.getInstance().fireEvent(
                     new ShellEvent.GotoMainPage(this, null));
-        } catch (EngroupException e) {
+        } catch (MyCollabException e) {
             throw e;
         }
     }

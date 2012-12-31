@@ -26,7 +26,6 @@ Any value defined here will override the pom.xml file value but is only applicab
             <config-file>src/main/resources/META-INF/spring/project-context.xml</config-file>
             <config-file>src/main/resources/META-INF/spring/tracker-context.xml</config-file>
             <config-file>src/main/resources/META-INF/spring/user-context.xml</config-file>
-            <config-file>src/test/resources/META-INF/spring/common-service-test-context.xml.xml</config-file>
         </config-files>
         <config-file-groups/>
     </spring-data>

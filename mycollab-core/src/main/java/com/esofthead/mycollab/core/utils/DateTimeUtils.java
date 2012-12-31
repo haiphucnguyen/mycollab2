@@ -1,11 +1,15 @@
 package com.esofthead.mycollab.core.utils;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import org.joda.time.DateTime;
+import org.joda.time.DateTimeZone;
+import org.joda.time.LocalDateTime;
 
 public class DateTimeUtils {
 
@@ -15,7 +19,7 @@ public class DateTimeUtils {
         try {
             date = df.parse(df.format(value.getTime()));
         } catch (ParseException e) {
-            e.printStackTrace();
+            throw new MyCollabException(e);
         }
         return date;
     }
@@ -113,6 +117,14 @@ public class DateTimeUtils {
         Date dateExpect = cal.getTime();
         return dateExpect;
     }
-
     
+    public static DateTime convertJodaTimezone(Date date, String destTz) {
+        DateTime srcDateTime = new DateTime(date);
+        DateTime dstDateTime = srcDateTime.withZone(DateTimeZone.forID(destTz));
+        return dstDateTime;
+    }
+    
+    public static void main(String[] args) {
+        System.out.println(convertJodaTimezone(new GregorianCalendar().getTime(), "UTC").toLocalDateTime().toDate());
+    }
 }

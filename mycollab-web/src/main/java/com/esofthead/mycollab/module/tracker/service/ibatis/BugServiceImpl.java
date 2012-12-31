@@ -3,7 +3,7 @@ package com.esofthead.mycollab.module.tracker.service.ibatis;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.common.service.MonitorItemService;
-import com.esofthead.mycollab.core.EngroupException;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -38,6 +38,8 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -51,6 +53,8 @@ import org.xml.sax.InputSource;
 @Traceable(module = "Project", nameField = "summary", type = "Bug")
 public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriteria> implements BugService {
 
+    private static Logger log = LoggerFactory.getLogger(BugServiceImpl.class);
+            
     @Autowired
     protected BugMapper bugMapper;
     @Autowired
@@ -178,7 +182,7 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
 
             return getFieldsFromDoc(document);
         } catch (Exception e) {
-            throw new EngroupException("Error while constructing bug workflow.");
+            throw new MyCollabException("Error while constructing bug workflow.");
         }
     }
 
@@ -260,38 +264,6 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
 
         int bugid = super.saveWithSession(bug, username);
         saveBugRelatedItems(bug);
-
-        // Send mail to all relate ones
-        // TODO: switch to schedule send email with Quartz
-		/*
-         * new Thread(new Runnable() {
-         * 
-         * @Override public void run() { try { User user =
-         * securityDelegate.findUserByUsername(bug .getAssignuser()); Email
-         * email = new Email(); email.setFrom("noreply@esofthead.com");
-         * email.setTo(new InternetAddress[] { new InternetAddress(
-         * user.getEmail()) });
-         * email.setSubject(String.format("[Bug %d] New %s", bugid,
-         * bug.getSummary()));
-         * 
-         * Map parameters = new HashMap(); parameters.put("bugweblink",
-         * "<TODO: insert bug web link here>"); parameters.put("summary",
-         * bug.getSummary()); parameters.put("project", bug.getProjectname());
-         * parameters.put("severity", bug.getSeverity());
-         * parameters.put("priority", convertPriority(bug.getPriority()));
-         * parameters.put("components", bug.getComponents());
-         * parameters.put("versions", bug.getAffectedVersions());
-         * parameters.put("assignedTo", bug.getAssignuser());
-         * parameters.put("reportedBy", bug.getLogby());
-         * parameters.put("description", bug.getDetail());
-         * parameters.put("reason", "You are the assignee for the bug.");
-         * 
-         * mailSender.sendEmailWithTemplate(email,
-         * "defect/create_new_defect.template", parameters); } catch (Exception
-         * e) { log.error("Error while sending email", e); }
-         * 
-         * } }).start();
-         */
         return bugid;
     }
 

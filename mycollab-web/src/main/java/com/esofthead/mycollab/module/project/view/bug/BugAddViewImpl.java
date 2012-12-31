@@ -6,6 +6,8 @@ import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.AttachmentUploadField;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormAttachmentUploadField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
@@ -20,6 +22,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
     private SimpleBug bug;
+    private FormAttachmentUploadField attachmentUploadField;
 
     public BugAddViewImpl() {
         super();
@@ -31,6 +34,11 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
     public void editItem(SimpleBug item) {
         this.bug = item;
         editForm.setItemDataSource(new BeanItem<Bug>(item));
+    }
+
+    @Override
+    public AttachmentUploadField getAttachUploadField() {
+        return attachmentUploadField;
     }
 
     private class EditForm extends AdvancedEditBeanForm<SimpleBug> {
@@ -47,7 +55,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
         class FormLayoutFactory extends BugAddFormLayoutFactory {
 
             private static final long serialVersionUID = 1L;
-            
+
             public FormLayoutFactory() {
                 super("Create Bug");
             }
@@ -86,6 +94,9 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
                     return field;
                 } else if (propertyId.equals("priority")) {
                     return new BugPriorityComboBox();
+                } else if (propertyId.equals("id")) {
+                    attachmentUploadField = new FormAttachmentUploadField();
+                    return attachmentUploadField;
                 }
                 return null;
             }

@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
-import com.esofthead.mycollab.core.EngroupException;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
@@ -69,7 +69,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
                     .getParams());
             view.previewItem(risk);
         } else {
-            throw new EngroupException("Unhanddle this case yet");
+            throw new MyCollabException("Unhanddle this case yet");
         }
     }
 }

@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.milestone;
 
-import com.esofthead.mycollab.core.EngroupException;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
@@ -77,7 +77,7 @@ public class MilestoneReadPresenter extends AbstractPresenter<MilestoneReadView>
                     .getParams());
             view.previewItem(risk);
         } else {
-            throw new EngroupException("Unhanddle this case yet");
+            throw new MyCollabException("Unhanddle this case yet");
         }
     }
 }

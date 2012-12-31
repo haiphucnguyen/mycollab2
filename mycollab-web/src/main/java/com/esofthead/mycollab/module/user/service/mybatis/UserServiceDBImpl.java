@@ -23,7 +23,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.core.EngroupException;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -69,7 +69,7 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
 
 		List<User> users = userMapper.selectByExample(ex);
 		if (users != null && users.size() > 0) {
-			throw new EngroupException(
+			throw new MyCollabException(
 					"There is exist user has the same username or email already.");
 		}
 

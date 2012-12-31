@@ -62,7 +62,7 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
         class FormLayoutFactory extends RiskFormLayoutFactory {
 
             private static final long serialVersionUID = 1L;
-            
+
             public FormLayoutFactory() {
                 super("Create Risk");
             }

@@ -25,7 +25,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.core.EngroupException;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.MessageDispatcher;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.user.RoleConstants;
@@ -102,7 +102,7 @@ public class SecurityServiceImpl implements SecurityService {
 	public void assignUserToRoleId(String username, int roleId) {
 		// Assign role to user in database
 		if (roleService.findByPrimaryKey(roleId) == null) {
-			throw new EngroupException("There is no role id " + roleId);
+			throw new MyCollabException("There is no role id " + roleId);
 		}
 		userService.assignUserToRoleId(username, roleId);
 	}
@@ -116,7 +116,7 @@ public class SecurityServiceImpl implements SecurityService {
 
 		if (user != null && password != null) {
 			if (!password.equals(user.getPassword())) {
-				throw new EngroupException("Password is error");
+				throw new MyCollabException("Password is error");
 			}
 			List<Role> roles = roleService.findRolesOfUser(username);
 
@@ -125,7 +125,7 @@ public class SecurityServiceImpl implements SecurityService {
 
 			return result;
 		} else {
-			throw new EngroupException("No user " + username + " is existed");
+			throw new MyCollabException("No user " + username + " is existed");
 		}
 
 	}

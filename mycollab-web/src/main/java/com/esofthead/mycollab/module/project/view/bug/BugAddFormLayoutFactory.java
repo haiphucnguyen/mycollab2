@@ -15,36 +15,36 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
     private static final long serialVersionUID = 1L;
     private GridFormLayoutHelper informationLayout;
     private String title;
-    
+
     public BugAddFormLayoutFactory(String title) {
         this.title = title;
     }
-    
+
     @Override
     public Layout getLayout() {
         AddViewLayout bugAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/project/bug.png"));
-        
+
         bugAddLayout.addTopControls(createTopPanel());
-        
+
         VerticalLayout layout = new VerticalLayout();
-        
+
         Label organizationHeader = new Label("Bug Information");
         organizationHeader.setStyleName("h2");
         layout.addComponent(organizationHeader);
-        
+
         informationLayout = new GridFormLayoutHelper(2, 7);
         informationLayout.getLayout().setWidth("100%");
         layout.addComponent(informationLayout.getLayout());
         layout.setComponentAlignment(informationLayout.getLayout(),
                 Alignment.BOTTOM_CENTER);
-        
+
         bugAddLayout.addBottomControls(createBottomPanel());
-        
+
         bugAddLayout.addBody(layout);
-        
+
         return bugAddLayout;
     }
-    
+
     @Override
     public void attachField(Object propertyId, Field field) {
         if (propertyId.equals("summary")) {
@@ -65,11 +65,13 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
             informationLayout.addComponent(field, "Environment", 0, 4, 2, "100%");
         } else if (propertyId.equals("description")) {
             informationLayout.addComponent(field, "Description", 0, 5, 2, "100%");
+        } else if (propertyId.equals("id")) {//add attachment box
+            informationLayout.addComponent(field, "Attachment", 0, 6);
         }
-        
+
     }
-    
+
     protected abstract Layout createTopPanel();
-    
+
     protected abstract Layout createBottomPanel();
 }

@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.message;
 
-import com.esofthead.mycollab.core.EngroupException;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -35,7 +35,7 @@ public class MessageReadPresenter extends AbstractPresenter<MessageReadView> {
                     .getParams());
             view.previewItem(message);
         } else {
-            throw new EngroupException("Unhanddle this case yet");
+            throw new MyCollabException("Unhanddle this case yet");
         }
     }
     

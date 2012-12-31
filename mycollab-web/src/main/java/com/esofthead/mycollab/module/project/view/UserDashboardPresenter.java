@@ -14,9 +14,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class UserDashboardPresenter extends AbstractPresenter<UserDashboardView> {
-    
+
     public UserDashboardPresenter() {
-    super(UserDashboardView.class);    
+        super(UserDashboardView.class);
     }
 
     @Override
@@ -25,5 +25,4 @@ public class UserDashboardPresenter extends AbstractPresenter<UserDashboardView>
         prjContainer.removeAllComponents();
         prjContainer.addComponent((Component) view);
     }
-    
 }

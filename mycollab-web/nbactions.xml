@@ -53,4 +53,12 @@
                 <goal>gwt:compile</goal>
             </goals>
         </action>
+        <action>
+            <actionName>CUSTOM-Download sources and javadoc</actionName>
+            <displayName>Download sources and javadoc</displayName>
+            <goals>
+                <goal>dependency:resolve</goal>
+                <goal>-Dclassifier=sources</goal>
+            </goals>
+        </action>
     </actions>

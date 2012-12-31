@@ -16,23 +16,39 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
+import com.vaadin.ui.VerticalLayout;
 
-public class DueBugWidget extends Panel {
+public class DueBugWidget extends VerticalLayout {
 
     private static final long serialVersionUID = 1L;
+    
+    private BugSearchCriteria searchCriteria;
     private BeanList<BugService, BugSearchCriteria, SimpleBug> dataList;
 
     public DueBugWidget() {
-        super("Due Bug");
+        initUI();
+    }
+    
+    private void initUI() {
+        
     }
 
     public void setSearchCriteria(BugSearchCriteria searchCriteria) {
+        this.searchCriteria = searchCriteria;
         dataList = new BeanList<BugService, BugSearchCriteria, SimpleBug>(
                 AppContext.getSpringBean(BugService.class),
                 BugRowDisplayHandler.class);
         dataList.setSearchCriteria(searchCriteria);
         this.addComponent(dataList);
+        
+        Button moreBtn = new Button("More ...", new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                throw new UnsupportedOperationException("Not supported yet.");
+            }
+        });
+        this.addComponent(moreBtn);
     }
 
     public static class BugRowDisplayHandler implements RowDisplayHandler<SimpleBug> {
@@ -40,6 +56,7 @@ public class DueBugWidget extends Panel {
         @Override
         public Component generateRow(final SimpleBug obj, int rowIndex) {
             GridLayout layout = new GridLayout(2, 2);
+            layout.setWidth("100%");
             layout.setSpacing(true);
             layout.addComponent(new Embedded(null, new ThemeResource(
                     "icons/22/bug.png")), 0, 0, 0, 1);
@@ -55,7 +72,8 @@ public class DueBugWidget extends Panel {
                         }
                     });
             layout.addComponent(defectLink);
-            layout.addComponent(new Label(obj.getDescription()));
+            layout.setColumnExpandRatio(1, 1.0f);
+            layout.addComponent(new Label(obj.getDescription()), 1, 1, 1, 1);
             return layout;
         }
     }

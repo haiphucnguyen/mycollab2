@@ -10,11 +10,13 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
+import org.vaadin.teemu.ratingstars.RatingStars;
 
 @ViewComponent
 public class ProblemReadViewImpl extends AbstractView implements ProblemReadView {
@@ -64,6 +66,19 @@ public class ProblemReadViewImpl extends AbstractView implements ProblemReadView
                 protected Field onCreateField(Item item, Object propertyId,
                         Component uiContext) {
 
+                    if (propertyId.equals("raisedbyuser")) {
+                        return new FormViewField(problem.getRaisedByUserFullName());
+                    } else if (propertyId.equals("assigntouser")) {
+                        return new FormViewField(problem.getAssignedUserFullName());
+                    } else if (propertyId.equals("level")) {
+                        RatingStars tinyRs = new RatingStars();
+                        tinyRs.setValue(problem.getLevel());
+                        tinyRs.setReadOnly(true);
+                        return tinyRs;
+                    } else if (propertyId.equals("datedue")) {
+                        return new FormViewField(AppContext.formatDate(problem
+                                .getDatedue()));
+                    }
 
                     return null;
                 }

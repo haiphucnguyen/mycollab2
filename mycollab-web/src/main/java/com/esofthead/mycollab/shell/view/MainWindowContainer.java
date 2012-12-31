@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.shell.view;
 
-import com.esofthead.mycollab.core.EngroupException;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.shell.ShellController;
@@ -41,7 +41,7 @@ public class MainWindowContainer extends Window implements View {
                                 try {
                                     presenter.doLogin(loginParams[0],
                                             loginParams[1]);
-                                } catch (EngroupException e) {
+                                } catch (MyCollabException e) {
                                     throw e;
                                 }
                             }

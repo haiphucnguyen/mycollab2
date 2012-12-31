@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.user.view;
 
-import com.esofthead.mycollab.core.EngroupException;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -54,12 +54,12 @@ public class LoginViewImpl extends AbstractView implements LoginView {
                 public void buttonClick(ClickEvent event) {
                     try {
                         LoginViewImpl.this.fireEvent(new UserEvent.PlainLogin(LoginViewImpl.this, new String[]{(String) usernameField.getValue(), (String) passwordField.getValue()}));
-                    } catch (EngroupException e) {
+                    } catch (MyCollabException e) {
                         LoginForm.this.setComponentError(new UserError(e
                                 .getMessage()));
 
                     } catch (Exception e) {
-                        throw new EngroupException(e);
+                        throw new MyCollabException(e);
                     }
                 }
             });
