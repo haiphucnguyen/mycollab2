@@ -14,87 +14,94 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
 public class BugDashboardViewImpl extends AbstractView implements
-		BugDashboardView {
-	private VerticalLayout leftColumn, rightColumn;
+        BugDashboardView {
 
-	public BugDashboardViewImpl() {
-		super();
-		initUI();
-	}
+    private VerticalLayout leftColumn, rightColumn;
 
-	private void initUI() {
-		HorizontalLayout header = new HorizontalLayout();
-		header.setWidth("100%");
+    public BugDashboardViewImpl() {
+        super();
+        initUI();
+    }
 
-		Label title = new Label("Bug Dashboard");
-		title.setStyleName("h2");
-		header.addComponent(title);
-		header.setExpandRatio(title, 1.0f);
+    private void initUI() {
+        HorizontalLayout header = new HorizontalLayout();
+        header.setWidth("100%");
 
-		Button createBtn = new Button("Create", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+        Label title = new Label("Bug Dashboard");
+        title.setStyleName("h2");
+        header.addComponent(title);
+        header.setExpandRatio(title, 1.0f);
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new BugEvent.GotoAdd(this, null));
-			}
-		});
-		createBtn.setStyleName("link");
-		createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
-		header.addComponent(createBtn);
-		header.setComponentAlignment(createBtn, Alignment.MIDDLE_RIGHT);
+        Button createBtn = new Button("Create", new Button.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-		this.addComponent(header);
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(
+                        new BugEvent.GotoAdd(this, null));
+            }
+        });
+        createBtn.setStyleName("link");
+        createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+        header.addComponent(createBtn);
+        header.setComponentAlignment(createBtn, Alignment.MIDDLE_RIGHT);
 
-		HorizontalLayout body = new HorizontalLayout();
-		body.setWidth("100%");
-		body.setSpacing(true);
+        this.addComponent(header);
 
-		leftColumn = new VerticalLayout();
-		leftColumn.setSpacing(true);
-		body.addComponent(leftColumn);
+        HorizontalLayout body = new HorizontalLayout();
+        body.setWidth("100%");
+        body.setSpacing(true);
 
-		rightColumn = new VerticalLayout();
-		rightColumn.setSpacing(true);
-		body.addComponent(rightColumn);
+        leftColumn = new VerticalLayout();
+        leftColumn.setSpacing(true);
+        body.addComponent(leftColumn);
 
-		this.addComponent(body);
-	}
+        rightColumn = new VerticalLayout();
+        rightColumn.setSpacing(true);
+        body.addComponent(rightColumn);
 
-	@Override
-	public void attach() {
-		super.attach();
-		leftColumn.removeAllComponents();
-		rightColumn.removeAllComponents();
+        this.addComponent(body);
+    }
 
-		DueBugWidget dueBugWidget = new DueBugWidget();
-		leftColumn.addComponent(dueBugWidget);
+    @Override
+    public void attach() {
+        super.attach();
+        leftColumn.removeAllComponents();
+        rightColumn.removeAllComponents();
 
-		UpdateBugWidget updateBugWidget = new UpdateBugWidget();
-		leftColumn.addComponent(updateBugWidget);
-		leftColumn.addComponent(new VersionSummaryWidget());
+        BugDisplayWidget dueBugWidget = new BugDisplayWidget("Due Bugs");
+        leftColumn.addComponent(dueBugWidget);
 
-		rightColumn.addComponent(new PrioritySummaryWidget());
-		rightColumn.addComponent(new StatusSummaryWidget());
-		rightColumn.addComponent(new AssignBugSummaryWidget());
-		rightColumn.addComponent(new ComponentSummaryWidget());
+        BugDisplayWidget updateBugWidget = new BugDisplayWidget("Updated Bug Recently");
+        leftColumn.addComponent(updateBugWidget);
+        leftColumn.addComponent(new VersionSummaryWidget());
 
-		SimpleProject project = (SimpleProject) AppContext
-				.getVariable(ProjectContants.PROJECT_NAME);
-		BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
-		dueDefectsCriteria.setProjectid(new NumberSearchField(project.getId()));
-		dueDefectsCriteria.setResolutions(new SetSearchField<String>(
-				new String[] { BugResolutionConstants.UNRESOLVED }));
-		dueBugWidget.setSearchCriteria(dueDefectsCriteria);
+        rightColumn.addComponent(new PrioritySummaryWidget());
+        rightColumn.addComponent(new StatusSummaryWidget());
+        rightColumn.addComponent(new AssignBugSummaryWidget());
+        rightColumn.addComponent(new ComponentSummaryWidget());
 
-	}
+        //Due bug search criteria
+        SimpleProject project = (SimpleProject) AppContext
+                .getVariable(ProjectContants.PROJECT_NAME);
+        
+        BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
+        dueDefectsCriteria.setProjectid(new NumberSearchField(project.getId()));
+        dueDefectsCriteria.setResolutions(new SetSearchField<String>(
+                new String[]{BugResolutionConstants.UNRESOLVED}));
+        dueBugWidget.setSearchCriteria(dueDefectsCriteria);
+        
+        BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
+        recentDefectsCriteria.setProjectid(new NumberSearchField(project.getId()));
+        updateBugWidget.setSearchCriteria(recentDefectsCriteria);
+
+    }
 }

@@ -19,22 +19,22 @@ package com.esofthead.mycollab.core;
 /**
  * @author hai
  */
-public class EngroupException extends RuntimeException {
+public class MyCollabException extends RuntimeException {
 
     private static final long serialVersionUID = 1L;
 
     /**
      * @param message
      */
-    public EngroupException(final String message) {
+    public MyCollabException(final String message) {
         super(message);
     }
 
-    public EngroupException(final Throwable e) {
+    public MyCollabException(final Throwable e) {
         super(e);
     }
 
-    public EngroupException(String message, Throwable e) {
+    public MyCollabException(String message, Throwable e) {
         super(message, e);
     }
 }

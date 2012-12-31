@@ -27,11 +27,13 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -42,7 +44,6 @@ import org.vaadin.hene.popupbutton.PopupButton;
 public class ProjectViewImpl extends AbstractView implements ProjectView {
 
     private static Logger log = LoggerFactory.getLogger(ProjectViewImpl.class);
-    
     private final HorizontalLayout root;
     private final DetachedTabs myProjectTab;
     private final CssLayout mySpaceArea = new CssLayout();
@@ -202,13 +203,16 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         this.project = project;
 
         topPanel.removeAllComponents();
-        topPanel.addComponent(new Button("Home", new Button.ClickListener() {
+        Button homeBtn = new Button("", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(
                         new ShellEvent.GotoProjectPage(this, null));
             }
-        }));
+        });
+        homeBtn.setIcon(new ThemeResource("icons/24/project/home.png"));
+        homeBtn.setStyleName("link");
+        topPanel.addComponent(homeBtn);
 
         PopupButton projectPopupBtn = new PopupButton(project.getName());
         BeanList<ProjectService, ProjectSearchCriteria, SimpleProject> projectList = new BeanList<ProjectService, ProjectSearchCriteria, SimpleProject>(

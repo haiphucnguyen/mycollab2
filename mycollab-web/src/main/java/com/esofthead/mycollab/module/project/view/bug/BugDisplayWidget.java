@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -18,37 +19,34 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-public class DueBugWidget extends VerticalLayout {
+public class BugDisplayWidget extends VerticalLayout {
 
     private static final long serialVersionUID = 1L;
-    
+    public static int MAX_ITEM_DISPLAY = 10;
     private BugSearchCriteria searchCriteria;
     private BeanList<BugService, BugSearchCriteria, SimpleBug> dataList;
 
-    public DueBugWidget() {
-        initUI();
-    }
-    
-    private void initUI() {
-        
+    public BugDisplayWidget(String title) {
+        Label titleLbl = new Label(title);
+        this.addComponent(titleLbl);
+        dataList = new BeanList<BugService, BugSearchCriteria, SimpleBug>(
+                AppContext.getSpringBean(BugService.class),
+                BugRowDisplayHandler.class);
+        this.addComponent(dataList);
+
+        Button moreBtn = new Button("More ...", new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+            }
+        });
+        this.addComponent(moreBtn);
     }
 
     public void setSearchCriteria(BugSearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
-        dataList = new BeanList<BugService, BugSearchCriteria, SimpleBug>(
-                AppContext.getSpringBean(BugService.class),
-                BugRowDisplayHandler.class);
-        dataList.setSearchCriteria(searchCriteria);
-        this.addComponent(dataList);
-        
-        Button moreBtn = new Button("More ...", new Button.ClickListener() {
+        SearchRequest<BugSearchCriteria> searchRequest = new SearchRequest<BugSearchCriteria>(searchCriteria, 0, MAX_ITEM_DISPLAY);
+        dataList.setSearchRequest(searchRequest);
 
-            @Override
-            public void buttonClick(ClickEvent event) {
-                throw new UnsupportedOperationException("Not supported yet.");
-            }
-        });
-        this.addComponent(moreBtn);
     }
 
     public static class BugRowDisplayHandler implements RowDisplayHandler<SimpleBug> {
@@ -59,7 +57,7 @@ public class DueBugWidget extends VerticalLayout {
             layout.setWidth("100%");
             layout.setSpacing(true);
             layout.addComponent(new Embedded(null, new ThemeResource(
-                    "icons/22/bug.png")), 0, 0, 0, 1);
+                    "icons/22/project/bug.png")), 0, 0, 0, 1);
 
             ButtonLink defectLink = new ButtonLink(obj.getSummary(),
                     new Button.ClickListener() {

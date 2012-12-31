@@ -23,10 +23,13 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
 
     @SuppressWarnings("unchecked")
     public int setSearchCriteria(S searchCriteria) {
-        this.removeAllComponents();
-
         SearchRequest<S> searchRequest = new SearchRequest<S>(searchCriteria,
                 0, Integer.MAX_VALUE);
+        return setSearchRequest(searchRequest);
+    }
+
+    public int setSearchRequest(SearchRequest<S> searchRequest) {
+        this.removeAllComponents();
         List<T> currentListData = searchService
                 .findPagableListByCriteria(searchRequest);
         int i = 0;
