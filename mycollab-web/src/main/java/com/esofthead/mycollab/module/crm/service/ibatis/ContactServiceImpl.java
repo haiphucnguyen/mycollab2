@@ -34,7 +34,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.TaskExample;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
-import com.esofthead.mycollab.shared.audit.service.AuditLogService;
+import com.esofthead.mycollab.common.service.AuditLogService;
 
 @Service
 @Transactional

@@ -22,7 +22,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleQuoteGroupProduct;
 import com.esofthead.mycollab.module.crm.domain.criteria.QuoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.QuoteGroupProductService;
 import com.esofthead.mycollab.module.crm.service.QuoteService;
-import com.esofthead.mycollab.shared.audit.service.AuditLogService;
+import com.esofthead.mycollab.common.service.AuditLogService;
 
 @Service
 @Transactional

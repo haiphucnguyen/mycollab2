@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.crm.dao.ContractMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Contract;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContractSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContractService;
-import com.esofthead.mycollab.shared.audit.service.AuditLogService;
+import com.esofthead.mycollab.common.service.AuditLogService;
 
 @Service
 @Transactional

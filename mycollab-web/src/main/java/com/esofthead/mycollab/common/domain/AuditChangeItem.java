@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.shared.audit.domain;
+package com.esofthead.mycollab.common.domain;
 
 public class AuditChangeItem {
 	private String field;

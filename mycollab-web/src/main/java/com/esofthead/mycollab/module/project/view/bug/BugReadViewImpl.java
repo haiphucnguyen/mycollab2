@@ -15,9 +15,11 @@ import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class BugReadViewImpl extends AbstractView implements BugReadView {
@@ -50,6 +52,10 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
     }
 
     private class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
+        
+        private BugHistoryList historyList;
+        
+        private BugCommentList commentList;
 
         @Override
         public void setItemDataSource(Item newDataSource) {
@@ -126,7 +132,20 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                 
                 informationLayout = new GridFormLayoutHelper(4, 9);
                 taskListAddLayout.addBody(informationLayout.getLayout());
+                
+                taskListAddLayout.addBottomControls(createBottomLayout());
                 return taskListAddLayout;
+            }
+            
+            private ComponentContainer createBottomLayout() {
+                VerticalLayout bottomLayout = new VerticalLayout();
+                historyList = new BugHistoryList();
+                bottomLayout.addComponent(historyList);
+                
+                commentList = new BugCommentList();
+                bottomLayout.addComponent(commentList);
+                
+                return bottomLayout;
             }
 
             @Override

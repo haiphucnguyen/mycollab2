@@ -34,7 +34,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.TaskExample;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
-import com.esofthead.mycollab.shared.audit.service.AuditLogService;
+import com.esofthead.mycollab.common.service.AuditLogService;
 
 @Service
 @Transactional

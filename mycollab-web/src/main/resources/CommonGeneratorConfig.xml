@@ -67,6 +67,9 @@
             domainObjectName="UserPreference"
             schema="mycollab"
             tableName="s_user_preference" />
+        
+        <table schema="mycollab" tableName="m_audit_log"
+               domainObjectName="AuditLog" />
     </context>
 
 </generatorConfiguration>

@@ -251,9 +251,6 @@
                     </dependency>
                 </dependencies>
                 <executions>
-                    <!-- <execution> <id>Audit Artifacts Generator</id> <phase>compile</phase> 
-                    <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/AuditGeneratorConfig.xml</configurationFile> 
-                    <overwrite>true</overwrite> </configuration> </execution> -->
                     <!-- <execution> <id>User Artifacts Generator</id> <phase>compile</phase> 
                     <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
                     <overwrite>true</overwrite> </configuration> </execution> -->
@@ -266,7 +263,8 @@
                      <!--<execution> <id>Common Artifacts Generator</id> 
                     <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
                     <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile> 
-                    <overwrite>true</overwrite> </configuration> </execution> 
+                    <overwrite>true</overwrite> </configuration> </execution> -->
+                    <!--
                     <execution> <id>Project Artifacts Generator</id> 
                     <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
                     <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile> 
