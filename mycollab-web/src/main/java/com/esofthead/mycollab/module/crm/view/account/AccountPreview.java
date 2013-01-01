@@ -160,6 +160,13 @@ public class AccountPreview extends PrintPreview {
             AccountPreview.this.firePrintListeners();;
         }
 
+        @Override
+        protected void showHistory() {
+            super.showHistory();
+        }
+        
+        
+
         class FormLayoutFactory extends AccountFormLayoutFactory {
 
             private static final long serialVersionUID = 1L;

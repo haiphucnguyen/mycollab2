@@ -76,6 +76,18 @@ public class PreviewFormControlsGenerator<T> {
         layout.setComponentAlignment(editButtons, Alignment.MIDDLE_CENTER);
         layout.setExpandRatio(editButtons, 1.0f);
         
+        Button historyBtn = new Button(null, new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                previewForm.showHistory();
+            }
+        });
+        historyBtn.setIcon(new ThemeResource("icons/16/history.png"));
+        historyBtn.setStyleName("link");
+        layout.addComponent(historyBtn);
+        layout.setComponentAlignment(historyBtn, Alignment.MIDDLE_RIGHT);
+        
         Button printBtn = new Button(null, new Button.ClickListener() {
 
             @Override

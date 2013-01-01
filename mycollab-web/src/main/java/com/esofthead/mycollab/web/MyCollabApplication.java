@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.web;
 
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.Application;
@@ -36,6 +37,7 @@ public class MyCollabApplication extends Application {
         AppContext.clearAllVariables();
         ViewManager.clearResources();
         PresenterResolver.clearResources();
+        EventBus.getInstance().clear();
     }
 
     @Override

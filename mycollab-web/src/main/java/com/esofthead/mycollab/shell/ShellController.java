@@ -24,9 +24,7 @@ import org.vaadin.browsercookies.BrowserCookies;
 public class ShellController implements Serializable {
 
     private static final long serialVersionUID = 1L;
-    
     private static Logger log = LoggerFactory.getLogger(ShellController.class);
-    
     private final ComponentContainer container;
 
     public ShellController(ComponentContainer container) {
@@ -62,7 +60,7 @@ public class ShellController implements Serializable {
                         if (mainView.getParent() == null || mainView.getParent() == container) {
                             ((Window) container).setContent(mainView);
                         } else {
-                           log.debug("Do nothing. The main view parent is " + mainView.getParent() + " --- " + container);
+                            log.debug("Do nothing. The main view parent is " + mainView.getParent() + " --- " + container);
                         }
                     }
                 });

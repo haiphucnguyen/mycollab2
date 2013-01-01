@@ -31,6 +31,10 @@ public class AdvancedPreviewBeanForm<T> extends GenericForm implements
     protected void doPrint() {
         
     }
+    
+    protected void showHistory() {
+        
+    }
 
     protected void fireCancelForm(T bean) {
         if (handlers != null) {
