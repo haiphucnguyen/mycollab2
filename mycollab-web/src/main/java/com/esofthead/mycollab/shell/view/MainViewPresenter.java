@@ -20,7 +20,7 @@ import org.slf4j.LoggerFactory;
  * @author haiphucnguyen
  */
 public class MainViewPresenter extends AbstractPresenter<MainView> {
-    
+
     private static Logger log = LoggerFactory.getLogger(MainViewPresenter.class);
 
     public MainViewPresenter() {

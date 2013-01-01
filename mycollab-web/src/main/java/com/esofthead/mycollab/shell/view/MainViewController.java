@@ -42,7 +42,7 @@ public class MainViewController {
                         crmPresenter.go(container);
                     }
                 });
-        
+
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<ShellEvent.GotoProjectPage>() {
                     private static final long serialVersionUID = 1L;

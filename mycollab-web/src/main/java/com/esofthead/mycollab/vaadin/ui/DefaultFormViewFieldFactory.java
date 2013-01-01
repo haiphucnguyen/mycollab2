@@ -1,12 +1,14 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.module.crm.ui.components.AttachmentPanel;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
+import java.util.Date;
 import org.apache.commons.beanutils.BeanUtils;
 import org.vaadin.addon.customfield.CustomField;
 
@@ -28,7 +30,6 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
                         (String) propertyId);
                 field = new FormViewField(propertyValue);
             } catch (Exception e) {
-                e.printStackTrace();
                 field = new FormViewField("Error");
             }
         }
@@ -61,6 +62,22 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
         public Class<?> getType() {
             return String.class;
         }
+    }
+    
+    public static class FormDateViewField extends CustomField {
+        
+        public FormDateViewField(Date date) {
+            Label l = new Label();
+            l.setWidth("100%");
+            l.setValue(AppContext.formatDate(date));
+            this.setCompositionRoot(l);
+        }
+
+        @Override
+        public Class<?> getType() {
+            return Object.class;
+        }
+        
     }
     
     public static class FormLinkViewField extends CustomField {

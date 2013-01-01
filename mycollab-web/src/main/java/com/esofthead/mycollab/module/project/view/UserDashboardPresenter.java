@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.project.view;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 
@@ -24,5 +25,6 @@ public class UserDashboardPresenter extends AbstractPresenter<UserDashboardView>
         ProjectContainer prjContainer = (ProjectContainer) container;
         prjContainer.removeAllComponents();
         prjContainer.addComponent((Component) view);
+        prjContainer.setComponentAlignment(view, Alignment.TOP_CENTER);
     }
 }

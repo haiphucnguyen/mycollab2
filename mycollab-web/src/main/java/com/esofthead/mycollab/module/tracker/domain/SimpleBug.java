@@ -1,79 +1,72 @@
 package com.esofthead.mycollab.module.tracker.domain;
 
+import com.esofthead.mycollab.module.file.domain.Attachment;
 import java.util.List;
 
-import com.esofthead.mycollab.module.file.domain.Attachment;
-
 public class SimpleBug extends Bug {
-	private static final long serialVersionUID = 1L;
 
-	private String loguserFullName;
+    private static final long serialVersionUID = 1L;
+    private String loguserFullName;
+    private String assignuserFullName;
+    private String projectname;
+    private List<Version> affectedVersions;
+    private List<Version> fixedVersions;
+    private List<Component> components;
+    private List<Attachment> attachments;
 
-	private String assignuserFullName;
-	
-	private String projectname;
+    public String getProjectname() {
+        return projectname;
+    }
 
-	private List<Version> affectedVersions;
+    public void setProjectname(String projectname) {
+        this.projectname = projectname;
+    }
 
-	private List<Version> fixedVersions;
+    public String getLoguserFullName() {
+        return loguserFullName;
+    }
 
-	private List<Component> components;
+    public void setLoguserFullName(String loguserFullName) {
+        this.loguserFullName = loguserFullName;
+    }
 
-	private List<Attachment> attachments;
+    public String getAssignuserFullName() {
+        return assignuserFullName;
+    }
 
-	public String getProjectname() {
-		return projectname;
-	}
+    public void setAssignuserFullName(String assignuserFullName) {
+        this.assignuserFullName = assignuserFullName;
+    }
 
-	public void setProjectname(String projectname) {
-		this.projectname = projectname;
-	}
+    public List<Version> getAffectedVersions() {
+        return affectedVersions;
+    }
 
-	public String getLoguserFullName() {
-		return loguserFullName;
-	}
+    public void setAffectedVersions(List<Version> affectedVersions) {
+        this.affectedVersions = affectedVersions;
+    }
 
-	public void setLoguserFullName(String loguserFullName) {
-		this.loguserFullName = loguserFullName;
-	}
+    public List<Version> getFixedVersions() {
+        return fixedVersions;
+    }
 
-	public String getAssignuserFullName() {
-		return assignuserFullName;
-	}
+    public void setFixedVersions(List<Version> fixedVersions) {
+        this.fixedVersions = fixedVersions;
+    }
 
-	public void setAssignuserFullName(String assignuserFullName) {
-		this.assignuserFullName = assignuserFullName;
-	}
+    public List<Component> getComponents() {
+        return components;
+    }
 
-	public List<Version> getAffectedVersions() {
-		return affectedVersions;
-	}
+    public void setComponents(List<Component> components) {
+        this.components = components;
+    }
 
-	public void setAffectedVersions(List<Version> affectedVersions) {
-		this.affectedVersions = affectedVersions;
-	}
+    public List<Attachment> getAttachments() {
+        return attachments;
+    }
 
-	public List<Version> getFixedVersions() {
-		return fixedVersions;
-	}
-
-	public void setFixedVersions(List<Version> fixedVersions) {
-		this.fixedVersions = fixedVersions;
-	}
-
-	public List<Component> getComponents() {
-		return components;
-	}
-
-	public void setComponents(List<Component> components) {
-		this.components = components;
-	}
-
-	public List<Attachment> getAttachments() {
-		return attachments;
-	}
-
-	public void setAttachments(List<Attachment> attachments) {
-		this.attachments = attachments;
-	}
+    public void setAttachments(List<Attachment> attachments) {
+        this.attachments = attachments;
+    }
 }
