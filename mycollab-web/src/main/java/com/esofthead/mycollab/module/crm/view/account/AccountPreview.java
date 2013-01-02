@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.contact.ContactListComp;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListComp;
@@ -175,7 +176,8 @@ public class AccountPreview extends VerticalLayout {
 
         @Override
         protected void showHistory() {
-            
+            HistoryLogWindow historyLog = new HistoryLogWindow();
+            getWindow().addWindow(historyLog);
         }
 
         class FormLayoutFactory extends AccountFormLayoutFactory {

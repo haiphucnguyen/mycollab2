@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.tracker.service.ibatis;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
+import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -30,7 +31,6 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.common.service.AuditLogService;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -119,13 +119,6 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
     @Override
     public int updateBugExt(String username, final SimpleBug record,
             final DefectComment comment) {
-
-        SimpleBug oldValue = this.findBugById(record.getId());
-
-        String refid = "bug-" + record.getId();
-        auditLogService.saveAuditLog(username, refid, (Object) oldValue,
-                (Object) record);
-
         RelatedItemExample ex = new RelatedItemExample();
         ex.createCriteria()
                 .andTypeidIn(
@@ -139,7 +132,7 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
 
         record.setLastupdatedtime(new GregorianCalendar().getTime());
 
-        if (record.getStatus() == "Resolved") {
+        if ("Resolved".equals(record.getStatus())) {
             record.setResolveddate(new GregorianCalendar().getTime());
         }
 

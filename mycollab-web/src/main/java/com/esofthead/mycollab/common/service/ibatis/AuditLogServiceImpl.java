@@ -42,25 +42,10 @@ public class AuditLogServiceImpl extends DefaultCrudService<Integer, AuditLog>
     }
 
     @Override
-    public List<SimpleAuditLog> getAuditLog(String refid) {
-        AuditLogExample ex = new AuditLogExample();
-        ex.createCriteria().andRefidEqualTo(refid);
-        List<AuditLog> logs = auditLogMapper
-                .selectByExampleWithBLOBs(ex);
-        List<SimpleAuditLog> result = new ArrayList<SimpleAuditLog>();
-        for (AuditLog log : logs) {
-            SimpleAuditLog simpleLog = new SimpleAuditLog(log);
-            result.add(simpleLog);
-        }
-        return result;
-    }
-
-    @Override
-    public void saveAuditLog(String username, String refid, Object oldObj,
+    public void saveAuditLog(String username, String type, int typeid, Object oldObj,
             Object newObj) {
         AuditLog auditLog = new AuditLog();
         auditLog.setPosteduser(username);
-        auditLog.setRefid(refid);
 
         auditLog.setPosteddate(new GregorianCalendar().getTime());
         auditLog.setChangeset(AuditLogUtil.getChangeSet(oldObj, newObj));

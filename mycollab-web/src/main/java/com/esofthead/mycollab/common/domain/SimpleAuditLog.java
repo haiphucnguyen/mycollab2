@@ -14,15 +14,7 @@ public class SimpleAuditLog extends AuditLog {
 
     private List<AuditChangeItem> changeItems;
 
-    public SimpleAuditLog(AuditLog auditLog) {
-        this.setChangeset(auditLog.getChangeset());
-        this.setId(auditLog.getId());
-        this.setObjectClass(auditLog.getObjectClass());
-        this.setPosteddate(auditLog.getPosteddate());
-        this.setPosteduser(auditLog.getPosteduser());
-        this.setRefid(auditLog.getRefid());
-
-        setChangeItems();
+    public SimpleAuditLog() {
     }
 
     public List<AuditChangeItem> getChangeItems() {

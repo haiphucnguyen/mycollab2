@@ -1,12 +1,5 @@
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
-import java.util.ArrayList;
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -22,93 +15,80 @@ import com.esofthead.mycollab.module.crm.domain.SimpleQuoteGroupProduct;
 import com.esofthead.mycollab.module.crm.domain.criteria.QuoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.QuoteGroupProductService;
 import com.esofthead.mycollab.module.crm.service.QuoteService;
-import com.esofthead.mycollab.common.service.AuditLogService;
+import java.util.ArrayList;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "Quote", nameField = "subject")
-public class QuoteServiceImpl extends
-		DefaultService<Integer, Quote, QuoteSearchCriteria> implements
-		QuoteService {
+public class QuoteServiceImpl extends DefaultService<Integer, Quote, QuoteSearchCriteria> implements
+        QuoteService {
 
-	@Autowired
-	private QuoteMapper quoteMapper;
+    @Autowired
+    private QuoteMapper quoteMapper;
+    @Autowired
+    private QuoteMapperExt quoteMapperExt;
+    @Autowired
+    private QuoteGroupProductService quoteGroupProductService;
+    @Autowired
+    private ProductMapper productMapper;
 
-	@Autowired
-	private QuoteMapperExt quoteMapperExt;
+    @Override
+    public ICrudGenericDAO<Integer, Quote> getCrudMapper() {
+        return quoteMapper;
+    }
 
-	@Autowired
-	private QuoteGroupProductService quoteGroupProductService;
+    @Override
+    public ISearchableDAO<QuoteSearchCriteria> getSearchMapper() {
+        return quoteMapperExt;
+    }
 
-	@Autowired
-	private ProductMapper productMapper;
+    public void setProductDAO(ProductMapper productDAO) {
+        this.productMapper = productDAO;
+    }
 
-	@Autowired
-	private AuditLogService auditLogService;
+    @Override
+    public void saveSimpleQuoteGroupProducts(int accountid, int quoteId,
+            List<SimpleQuoteGroupProduct> entity) {
+        quoteGroupProductService.deleteQuoteGroupByQuoteId(quoteId);
 
-	@Override
-	public ICrudGenericDAO<Integer, Quote> getCrudMapper() {
-		return quoteMapper;
-	}
+        for (SimpleQuoteGroupProduct simpleQuoteGroupProduct : entity) {
+            QuoteGroupProduct quoteGroupProduct = simpleQuoteGroupProduct
+                    .getQuoteGroupProduct();
+            quoteGroupProductService.insertQuoteGroupExt(quoteGroupProduct);
 
-	@Override
-	public ISearchableDAO<QuoteSearchCriteria> getSearchMapper() {
-		return quoteMapperExt;
-	}
+            for (Product quoteProduct : simpleQuoteGroupProduct
+                    .getQuoteProducts()) {
+                // quoteProduct.setAccountid(accountid);
+                quoteProduct.setGroupid(quoteGroupProduct.getId());
+                quoteProduct.setStatus("Quoted");
+                productMapper.insert(quoteProduct);
+            }
+        }
+    }
 
-	@Override
-	public int updateWithSession(Quote record, String username) {
-		Quote oldValue = this.findByPrimaryKey(record.getId());
-		String refid = "crm-quote-" + record.getId();
-		auditLogService.saveAuditLog(username, refid, (Object) oldValue,
-				(Object) record);
-		return super.updateWithSession(record, username);
-	}
+    @Override
+    public List<SimpleQuoteGroupProduct> getListSimpleQuoteGroupProducts(
+            int quoteId) {
+        List<QuoteGroupProduct> quoteGroupProducts = quoteGroupProductService
+                .findQuoteGroupByQuoteId(quoteId);
 
-	public void setProductDAO(ProductMapper productDAO) {
-		this.productMapper = productDAO;
-	}
+        List<SimpleQuoteGroupProduct> result = new ArrayList<SimpleQuoteGroupProduct>();
+        for (QuoteGroupProduct quoteGroupProduct : quoteGroupProducts) {
+            SimpleQuoteGroupProduct simpleQuoteGroupProduct = new SimpleQuoteGroupProduct();
+            simpleQuoteGroupProduct.setQuoteGroupProduct(quoteGroupProduct);
 
-	@Override
-	public void saveSimpleQuoteGroupProducts(int accountid, int quoteId,
-			List<SimpleQuoteGroupProduct> entity) {
-		quoteGroupProductService.deleteQuoteGroupByQuoteId(quoteId);
-
-		for (SimpleQuoteGroupProduct simpleQuoteGroupProduct : entity) {
-			QuoteGroupProduct quoteGroupProduct = simpleQuoteGroupProduct
-					.getQuoteGroupProduct();
-			quoteGroupProductService.insertQuoteGroupExt(quoteGroupProduct);
-
-			for (Product quoteProduct : simpleQuoteGroupProduct
-					.getQuoteProducts()) {
-				// quoteProduct.setAccountid(accountid);
-				quoteProduct.setGroupid(quoteGroupProduct.getId());
-				quoteProduct.setStatus("Quoted");
-				productMapper.insert(quoteProduct);
-			}
-		}
-	}
-
-	@Override
-	public List<SimpleQuoteGroupProduct> getListSimpleQuoteGroupProducts(
-			int quoteId) {
-		List<QuoteGroupProduct> quoteGroupProducts = quoteGroupProductService
-				.findQuoteGroupByQuoteId(quoteId);
-
-		List<SimpleQuoteGroupProduct> result = new ArrayList<SimpleQuoteGroupProduct>();
-		for (QuoteGroupProduct quoteGroupProduct : quoteGroupProducts) {
-			SimpleQuoteGroupProduct simpleQuoteGroupProduct = new SimpleQuoteGroupProduct();
-			simpleQuoteGroupProduct.setQuoteGroupProduct(quoteGroupProduct);
-
-			ProductExample quoteProductEx = new ProductExample();
-			quoteProductEx.createCriteria().andGroupidEqualTo(
-					quoteGroupProduct.getId());
-			List<Product> quoteProducts = productMapper
-					.selectByExample(quoteProductEx);
-			simpleQuoteGroupProduct.setQuoteProducts(quoteProducts);
-			result.add(simpleQuoteGroupProduct);
-		}
-		return result;
-	}
-
+            ProductExample quoteProductEx = new ProductExample();
+            quoteProductEx.createCriteria().andGroupidEqualTo(
+                    quoteGroupProduct.getId());
+            List<Product> quoteProducts = productMapper
+                    .selectByExample(quoteProductEx);
+            simpleQuoteGroupProduct.setQuoteProducts(quoteProducts);
+            result.add(simpleQuoteGroupProduct);
+        }
+        return result;
+    }
 }

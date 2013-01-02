@@ -260,7 +260,7 @@
                     <!-- <execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
                     <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
                     <overwrite>true</overwrite> </configuration> </execution> -->
-                     <!--<execution> <id>Common Artifacts Generator</id> 
+                    <!-- <execution> <id>Common Artifacts Generator</id> 
                     <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
                     <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile> 
                     <overwrite>true</overwrite> </configuration> </execution> -->
