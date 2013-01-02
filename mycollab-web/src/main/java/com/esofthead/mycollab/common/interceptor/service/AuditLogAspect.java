@@ -5,6 +5,11 @@
 package com.esofthead.mycollab.common.interceptor.service;
 
 import com.esofthead.mycollab.common.service.AuditLogService;
+import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.service.ibatis.AccountServiceImpl;
+import java.io.Serializable;
+import java.lang.reflect.Field;
+import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
 import org.apache.commons.beanutils.MethodUtils;
@@ -17,6 +22,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.aop.framework.Advised;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
 /**
@@ -25,6 +31,7 @@ import org.springframework.stereotype.Component;
  */
 @Aspect
 @Component
+@Configurable
 public class AuditLogAspect {
 
     private static Logger log = LoggerFactory.getLogger(AuditLogAspect.class);
@@ -48,7 +55,8 @@ public class AuditLogAspect {
 
                 //get old value
                 Object service = advised.getTargetSource().getTarget();
-                Object oldValue = MethodUtils.invokeExactMethod(service, "findByPrimaryKey", typeid);
+                Method findMethod = cls.getMethod("findByPrimaryKey", new Class[]{Serializable.class});
+                Object oldValue = findMethod.invoke(service, typeid);
                 String key = bean.toString() + auditAnnotation.type() + typeid;
 
                 caches.put(key, oldValue);

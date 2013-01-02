@@ -69,7 +69,8 @@ public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, Audit
 
         static public String getChangeSet(Object oldObj, Object newObj) {
             Class cl = oldObj.getClass();
-            Field[] declaredFields = cl.getFields();
+            log.debug("Audit bean class: " + cl.getName() + " " + oldObj + " " + newObj);
+            Field[] declaredFields = cl.getDeclaredFields();
 
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory
                     .newInstance();
@@ -86,6 +87,7 @@ public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, Audit
             document.appendChild(changesetElement);
 
             for (int i = 0; i < declaredFields.length; i++) {
+                log.debug("Check field: " + declaredFields[i].getName());
                 Field field = declaredFields[i];
                 String fieldname = field.getName();
                 String setterMethod = "set"
@@ -96,8 +98,6 @@ public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, Audit
                         + fieldname.substring(1);
                 try {
                     Method getMethod = cl.getMethod(getterMethod, null);
-                    Method setMethod = cl.getMethod(setterMethod,
-                            new Class[]{field.getType()});
 
                     Object oldProp = getMethod.invoke(oldObj, null);
                     Object newProp = getMethod.invoke(newObj, null);

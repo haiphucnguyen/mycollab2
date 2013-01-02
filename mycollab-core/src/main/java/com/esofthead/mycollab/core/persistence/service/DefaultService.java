@@ -27,6 +27,7 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
         return getCrudMapper().deleteByPrimaryKey(primaryKey);
     }
 
+    @Override
     public T findByPrimaryKey(K primaryKey) {
         return (T) getCrudMapper().selectByPrimaryKey(primaryKey);
     }
