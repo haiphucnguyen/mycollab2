@@ -149,6 +149,10 @@ public class AppContext implements TransactionListener, Serializable {
         }
         return simpleDateFormat.format(date);
     }
+    
+    public static String getDateFormat() {
+        return "MM/dd/yyyy";
+    }
 
     public static String getDateTimeFormat() {
         return "MM/dd/yyyy hh:mm a";

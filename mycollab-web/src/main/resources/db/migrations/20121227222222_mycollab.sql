@@ -1,6 +1,3 @@
-ALTER TABLE `m_prj_task_list` DROP FOREIGN KEY `PK_m_prj_task_list_1` ;
-ALTER TABLE `m_prj_task_list` DROP INDEX `PK_m_prj_task_list_1_idx` ;
-
 ALTER TABLE `m_prj_task_list` CHANGE COLUMN `projectid` `projectid` INT(11) UNSIGNED NOT NULL  , 
   ADD CONSTRAINT `PK_m_prj_task_list_1`
   FOREIGN KEY (`projectid` )
