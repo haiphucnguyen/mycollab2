@@ -1,16 +1,13 @@
 package com.esofthead.mycollab.module.common;
 
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.test.util.DateTimeUtilsForTest;
 import java.text.DateFormat;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
-
 import junit.framework.Assert;
-
 import org.junit.Test;
-
-import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.test.util.DateTimeUtilsForTest;
 
 public class DateTimeUtilTest {
 	

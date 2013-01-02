@@ -1,13 +1,11 @@
 package com.esofthead.mycollab.module.common;
 
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Test;
-
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.utils.ParsingUtils;
 import com.esofthead.mycollab.utils.ParsingUtils.InvalidEmailException;
+import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
 
 public class MailParsingTest {
 	

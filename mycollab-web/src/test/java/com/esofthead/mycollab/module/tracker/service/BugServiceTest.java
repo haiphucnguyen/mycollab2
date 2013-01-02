@@ -1,15 +1,5 @@
 package com.esofthead.mycollab.module.tracker.service;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
-
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -22,10 +12,17 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(EngroupClassRunner.class)
 @ContextConfiguration(locations = {
-    "classpath:META-INF/spring/audit-context.xml",
     "classpath:META-INF/spring/common-context.xml",
     "classpath:META-INF/spring/file-context.xml",
     "classpath:META-INF/spring/project-context.xml",
@@ -197,7 +194,7 @@ public class BugServiceTest {
         List<GroupItem> groupitems = bugService.getStatusSummary(criteria);
         Assert.assertEquals(1, groupitems.size());
     }
-    
+
     @Test
     @DataSet
     public void testSaveBug() {
@@ -207,9 +204,9 @@ public class BugServiceTest {
         bug.setProjectid(1);
         int bugId = bugService.saveWithSession(bug, "admin");
         Assert.assertTrue((bugId > 0));
-        
+
         System.out.println("bugid: " + bugId);
-        
+
         bug = bugService.findBugById(bugId);
         Assert.assertEquals("summary4", bug.getSummary());
     }

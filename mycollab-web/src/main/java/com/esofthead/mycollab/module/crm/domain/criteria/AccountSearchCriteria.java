@@ -44,6 +44,8 @@ public class AccountSearchCriteria extends SearchCriteria {
 	private StringSearchField anyAddress;
 
 	private StringSearchField anyMail;
+        
+        private NumberSearchField saccountid;
 	
 	public StringSearchField getAnyMail() {
 		return anyMail;
@@ -60,8 +62,6 @@ public class AccountSearchCriteria extends SearchCriteria {
 	public void setAnyAddress(StringSearchField anyAddress) {
 		this.anyAddress = anyAddress;
 	}
-
-	private NumberSearchField saccountid;
 
 	public StringSearchField getAccountname() {
 		return accountname;

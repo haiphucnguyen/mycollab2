@@ -6,7 +6,8 @@
     <m_prj_project
         id="1"
         name="a"
-        sAccountId="1" />
+        sAccountId="1" />
+
 
     <s_user
         accountId="1"
@@ -28,18 +29,18 @@
         projectid="1"
         raisedbyuser="user2"
         problemsource="source"
-        status="true" />
+        status="a"  sAccountId="1"/>
 
     <m_prj_problem
         id="2"
         description="aaa"
         issuename="b"
-        projectid="1" />
+        projectid="1"  sAccountId="1"/>
 
     <m_prj_problem
         id="3"
         description="aaa"
         issuename="c"
-        projectid="1" />
+        projectid="1"  sAccountId="1"/>
 
 </dataset>

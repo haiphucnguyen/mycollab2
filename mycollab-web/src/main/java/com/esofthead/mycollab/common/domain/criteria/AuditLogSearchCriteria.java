@@ -17,7 +17,7 @@ public class AuditLogSearchCriteria extends SearchCriteria {
     
     private NumberSearchField typeid;
     
-    private NumberSearchField sAccountId;
+    private NumberSearchField saccountid;
 
     public StringSearchField getType() {
         return type;
@@ -35,11 +35,11 @@ public class AuditLogSearchCriteria extends SearchCriteria {
         this.typeid = typeid;
     }
 
-    public NumberSearchField getsAccountId() {
-        return sAccountId;
+    public NumberSearchField getSaccountid() {
+        return saccountid;
     }
 
-    public void setsAccountId(NumberSearchField sAccountId) {
-        this.sAccountId = sAccountId;
+    public void setSaccountid(NumberSearchField saccountid) {
+        this.saccountid = saccountid;
     }
 }

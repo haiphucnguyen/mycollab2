@@ -32,7 +32,6 @@ import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(EngroupClassRunner.class)
 @ContextConfiguration(locations = {
-    "classpath:META-INF/spring/audit-context.xml",
     "classpath:META-INF/spring/common-context.xml",
     "classpath:META-INF/spring/common-service-test-context.xml",
     "classpath:META-INF/spring/datasource-test-context.xml"})

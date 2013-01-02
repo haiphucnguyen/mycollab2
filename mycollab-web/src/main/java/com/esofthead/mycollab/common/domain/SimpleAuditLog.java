@@ -13,6 +13,8 @@ import org.xml.sax.InputSource;
 public class SimpleAuditLog extends AuditLog {
 
     private List<AuditChangeItem> changeItems;
+    
+    private String postedUserFullName;
 
     public SimpleAuditLog() {
     }
@@ -23,6 +25,14 @@ public class SimpleAuditLog extends AuditLog {
 
     public void setChangeItems(List<AuditChangeItem> changeItems) {
         this.changeItems = changeItems;
+    }
+
+    public String getPostedUserFullName() {
+        return postedUserFullName;
+    }
+
+    public void setPostedUserFullName(String postedUserFullName) {
+        this.postedUserFullName = postedUserFullName;
     }
 
     private void setChangeItems() {
