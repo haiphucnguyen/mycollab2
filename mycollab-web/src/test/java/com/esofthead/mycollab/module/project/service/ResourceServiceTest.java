@@ -6,6 +6,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.domain.criteria.ResourceSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
+import com.esofthead.mycollab.test.ServiceTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -14,14 +15,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(EngroupClassRunner.class)
-@ContextConfiguration(locations = {
-    "classpath:META-INF/spring/common-context.xml",
-    "classpath:META-INF/spring/file-context.xml",
-    "classpath:META-INF/spring/tracker-context.xml",
-    "classpath:META-INF/spring/project-context.xml",
-    "classpath:META-INF/spring/project-service-test-context.xml",
-    "classpath:META-INF/spring/datasource-test-context.xml"})
-public class ResourceServiceTest {
+@ContextConfiguration(locations = {"classpath:META-INF/spring/service-test-context.xml"})
+public class ResourceServiceTest extends ServiceTest{
 
     @Autowired
     protected ResourceService resourceService;

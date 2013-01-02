@@ -6,6 +6,6 @@ import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 
 public interface AuditLogService extends IDefaultService<Integer, AuditLog, AuditLogSearchCriteria> {
 
-    void saveAuditLog(String username, String type, int typeid, Object oldObj,
+    void saveAuditLog(String username, String module, String type, int typeid, int sAccountId, Object oldObj,
             Object newObj);
 }

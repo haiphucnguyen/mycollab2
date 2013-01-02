@@ -26,6 +26,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
+import com.esofthead.mycollab.test.ServiceTest;
 import com.esofthead.mycollab.test.util.DateTimeUtilsForTest;
 import java.util.Date;
 import junit.framework.Assert;
@@ -35,13 +36,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(EngroupClassRunner.class)
-@ContextConfiguration(locations = {
-    "classpath:META-INF/spring/common-context.xml",
-    "classpath:META-INF/spring/file-context.xml",
-    "classpath:META-INF/spring/crm-context.xml",
-    "classpath:META-INF/spring/crm-service-test-context.xml",
-    "classpath:META-INF/spring/datasource-test-context.xml"})
-public class CampaignServiceTest {
+@ContextConfiguration(locations = {"classpath:META-INF/spring/service-test-context.xml"})
+public class CampaignServiceTest extends ServiceTest{
 
     @Autowired
     protected CampaignService campaignService;

@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleQuoteGroupProduct;
 import com.esofthead.mycollab.module.crm.domain.criteria.QuoteSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
+import com.esofthead.mycollab.test.ServiceTest;
 import java.util.ArrayList;
 import java.util.List;
 import org.junit.Assert;
@@ -20,13 +21,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(EngroupClassRunner.class)
-@ContextConfiguration(locations = {
-    "classpath:META-INF/spring/file-context.xml",
-    "classpath:META-INF/spring/common-context.xml",
-    "classpath:META-INF/spring/crm-context.xml",
-    "classpath:META-INF/spring/crm-service-test-context.xml",
-    "classpath:META-INF/spring/datasource-test-context.xml"})
-public class QuoteServiceTest {
+@ContextConfiguration(locations = {"classpath:META-INF/spring/service-test-context.xml"})
+public class QuoteServiceTest extends ServiceTest{
 
     @Autowired
     protected QuoteService quoteService;

@@ -33,43 +33,44 @@ import org.w3c.dom.Element;
 @Service
 public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, AuditLogSearchCriteria>
         implements AuditLogService {
-    
+
     private static Logger log = LoggerFactory.getLogger(AuditLogServiceImpl.class);
     @Autowired
     protected AuditLogMapper auditLogMapper;
-    
     @Autowired
     protected AuditLogMapperExt auditLogMapperExt;
-    
+
     @Override
     public ICrudGenericDAO<Integer, AuditLog> getCrudMapper() {
         return auditLogMapper;
     }
-    
+
     @Override
     public ISearchableDAO<AuditLogSearchCriteria> getSearchMapper() {
         return auditLogMapperExt;
     }
-    
+
     @Override
-    public void saveAuditLog(String username, String type, int typeid, Object oldObj,
+    public void saveAuditLog(String username, String module, String type, int typeid, int sAccountId, Object oldObj,
             Object newObj) {
         AuditLog auditLog = new AuditLog();
         auditLog.setPosteduser(username);
+        auditLog.setModule(module);
         auditLog.setType(type);
         auditLog.setTypeid(typeid);
+        auditLog.setSaccountid(sAccountId);
         auditLog.setPosteddate(new GregorianCalendar().getTime());
         auditLog.setChangeset(AuditLogUtil.getChangeSet(oldObj, newObj));
         auditLog.setObjectClass(oldObj.getClass().getName());
         auditLogMapper.insert(auditLog);
     }
-    
+
     public static class AuditLogUtil {
-        
+
         static public String getChangeSet(Object oldObj, Object newObj) {
             Class cl = oldObj.getClass();
             Field[] declaredFields = cl.getFields();
-            
+
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory
                     .newInstance();
             Document document;
@@ -80,10 +81,10 @@ public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, Audit
             } catch (ParserConfigurationException e1) {
                 return "";
             }
-            
+
             Element changesetElement = document.createElement("changeset");
             document.appendChild(changesetElement);
-            
+
             for (int i = 0; i < declaredFields.length; i++) {
                 Field field = declaredFields[i];
                 String fieldname = field.getName();
@@ -97,10 +98,10 @@ public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, Audit
                     Method getMethod = cl.getMethod(getterMethod, null);
                     Method setMethod = cl.getMethod(setterMethod,
                             new Class[]{field.getType()});
-                    
+
                     Object oldProp = getMethod.invoke(oldObj, null);
                     Object newProp = getMethod.invoke(newObj, null);
-                    
+
                     if (newProp != null) {
                         if (oldProp == null) {
                             Element changelogElement = document
@@ -139,7 +140,7 @@ public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, Audit
             // convert xml document to string
             return getStringFromDocument(document);
         }
-        
+
         static private String formatDateW3C(Date date) {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
             String text = df.format(date);

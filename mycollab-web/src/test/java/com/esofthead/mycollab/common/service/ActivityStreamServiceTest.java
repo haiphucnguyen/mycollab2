@@ -23,6 +23,7 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
+import com.esofthead.mycollab.test.ServiceTest;
 import java.util.List;
 import org.junit.Assert;
 import org.junit.Test;
@@ -31,11 +32,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(EngroupClassRunner.class)
-@ContextConfiguration(locations = {
-    "classpath:META-INF/spring/common-context.xml",
-    "classpath:META-INF/spring/common-service-test-context.xml",
-    "classpath:META-INF/spring/datasource-test-context.xml"})
-public class ActivityStreamServiceTest {
+@ContextConfiguration(locations = {"classpath:META-INF/spring/service-test-context.xml"})
+public class ActivityStreamServiceTest extends ServiceTest{
 
     @Autowired
     protected ActivityStreamService activityStreamService;

@@ -13,6 +13,8 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
  * @author haiphucnguyen
  */
 public class AuditLogSearchCriteria extends SearchCriteria {
+    private StringSearchField module;
+    
     private StringSearchField type;
     
     private NumberSearchField typeid;
@@ -41,5 +43,13 @@ public class AuditLogSearchCriteria extends SearchCriteria {
 
     public void setSaccountid(NumberSearchField saccountid) {
         this.saccountid = saccountid;
+    }
+    
+    public StringSearchField getModule() {
+        return module;
+    }
+
+    public void setModule(StringSearchField module) {
+        this.module = module;
     }
 }
