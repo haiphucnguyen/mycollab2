@@ -253,6 +253,22 @@ public class ProjectController {
                         projectView.gotoBugView(data);
                     }
                 });
+        
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<BugEvent.GotoEdit>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return BugEvent.GotoEdit.class;
+                    }
+
+                    @Override
+                    public void handle(BugEvent.GotoEdit event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        ScreenData.Edit<SimpleBug> data = new ScreenData.Edit<SimpleBug>((SimpleBug)event.getData());
+                        projectView.gotoBugView(data);
+                    }
+                });
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<BugEvent.GotoRead>() {

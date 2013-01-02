@@ -1,7 +1,10 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
+import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
@@ -20,11 +23,15 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ViewComponent
 public class BugReadViewImpl extends AbstractView implements BugReadView {
 
     private static final long serialVersionUID = 1L;
+    private static Logger log = LoggerFactory.getLogger(BugReadViewImpl.class);
+    
     private SimpleBug bug;
     private BugPreviewForm previewForm;
 
@@ -37,18 +44,13 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 
     @Override
     public void previewItem(SimpleBug item) {
-        bug = item;
-        previewForm.setItemDataSource(new BeanItem<SimpleBug>(item));
+        this.bug = item;
+        previewForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
     }
 
     @Override
     public SimpleBug getItem() {
         return bug;
-    }
-
-    @Override
-    public void doPrint() {
-        throw new UnsupportedOperationException("Not supported yet.");
     }
 
     private class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
@@ -106,7 +108,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        
+                        EventBus.getInstance().fireEvent(new BugEvent.GotoEdit(BugReadViewImpl.this, bug));
+                        log.debug("Fire edit bug: " + BeanUtility.printBeanObj(bug));
                     }
                 });
                 editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

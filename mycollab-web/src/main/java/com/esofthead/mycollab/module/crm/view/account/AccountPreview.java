@@ -19,22 +19,23 @@ import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListComp;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.PrintPreview;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 /**
  *
  * @author haiphucnguyen
  */
-public class AccountPreview extends PrintPreview {
+public class AccountPreview extends VerticalLayout {
 
     private SimpleAccount account;
     private PreviewForm previewForm;
@@ -42,14 +43,6 @@ public class AccountPreview extends PrintPreview {
     private OpportunityListComp associateOpportunityList;
     private LeadListComp associateLeadList;
     private boolean isControlEnable = false;
-
-    public AccountPreview(boolean enableButtonControls, PrintListener listener) {
-        this.isControlEnable = enableButtonControls;
-        constructUI();
-        if (listener != null) {
-            addPrintListener(listener);
-        }
-    }
 
     public AccountPreview(boolean enableButtonControls) {
         this.isControlEnable = enableButtonControls;
@@ -157,15 +150,33 @@ public class AccountPreview extends PrintPreview {
 
         @Override
         protected void doPrint() {
-            AccountPreview.this.firePrintListeners();;
+            // Create a window that contains what you want to print
+            Window window = new Window("Window to Print");
+
+            AccountPreview printView = new AccountPreview(false);
+            printView.previewItem(account);
+            window.addComponent(printView);
+
+            // Add the printing window as a new application-level window
+            getApplication().addWindow(window);
+
+            // Open it as a popup window with no decorations
+            getWindow().open(new ExternalResource(window.getURL()),
+                    "_blank", 1100, 200, // Width and height 
+                    Window.BORDER_NONE); // No decorations
+
+            // Print automatically when the window opens.
+            // This call will block until the print dialog exits!
+            window.executeJavaScript("print();");
+
+            // Close the window automatically after printing
+            window.executeJavaScript("self.close();");
         }
 
         @Override
         protected void showHistory() {
-            super.showHistory();
+            
         }
-        
-        
 
         class FormLayoutFactory extends AccountFormLayoutFactory {
 

@@ -57,11 +57,6 @@ public class MessageReadViewImpl extends AbstractView implements MessageReadView
         return message;
     }
 
-    @Override
-    public void doPrint() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     private class PreviewForm extends AdvancedPreviewBeanForm<SimpleMessage> {
 
         @Override

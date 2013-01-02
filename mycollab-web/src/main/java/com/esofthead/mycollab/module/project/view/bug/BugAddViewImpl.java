@@ -1,7 +1,9 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -15,11 +17,15 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ViewComponent
 public class BugAddViewImpl extends AbstractView implements BugAddView {
 
     private static final long serialVersionUID = 1L;
+    private static Logger log = LoggerFactory.getLogger(BugAddViewImpl.class);
+    
     private EditForm editForm;
     private SimpleBug bug;
     private FormAttachmentUploadField attachmentUploadField;
@@ -34,6 +40,8 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
     public void editItem(SimpleBug item) {
         this.bug = item;
         editForm.setItemDataSource(new BeanItem<Bug>(item));
+        log.debug("Edit bean: " + BeanUtility.printBeanObj(item));
+        
     }
 
     @Override
@@ -94,6 +102,8 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
                     return field;
                 } else if (propertyId.equals("priority")) {
                     return new BugPriorityComboBox();
+                } else if (propertyId.equals("assignuser")) {
+                    return new UserComboBox();
                 } else if (propertyId.equals("id")) {
                     attachmentUploadField = new FormAttachmentUploadField();
                     return attachmentUploadField;

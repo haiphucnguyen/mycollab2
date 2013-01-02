@@ -42,11 +42,6 @@ public class LeadReadViewImpl extends AbstractView implements LeadReadView {
         return previewForm;
     }
 
-    @Override
-    public void doPrint() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     private class PreviewForm extends AdvancedPreviewBeanForm<Lead> {
 
         private static final long serialVersionUID = 1L;

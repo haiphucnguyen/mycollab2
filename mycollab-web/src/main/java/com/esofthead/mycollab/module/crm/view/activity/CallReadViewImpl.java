@@ -43,11 +43,6 @@ public class CallReadViewImpl extends AbstractView implements CallReadView {
         return previewForm;
     }
 
-    @Override
-    public void doPrint() {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-
     private class PreviewForm extends AdvancedPreviewBeanForm<SimpleCall> {
 
         private static final long serialVersionUID = 1L;

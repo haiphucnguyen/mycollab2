@@ -85,6 +85,7 @@ public class PreviewFormControlsGenerator<T> {
         });
         historyBtn.setIcon(new ThemeResource("icons/16/history.png"));
         historyBtn.setStyleName("link");
+        historyBtn.setDescription("Show history log");
         layout.addComponent(historyBtn);
         layout.setComponentAlignment(historyBtn, Alignment.MIDDLE_RIGHT);
         
@@ -98,6 +99,7 @@ public class PreviewFormControlsGenerator<T> {
         
         printBtn.setIcon(new ThemeResource("icons/16/print.png"));
         printBtn.setStyleName("link");
+        printBtn.setDescription("Print this page");
         layout.addComponent(printBtn);
         layout.setComponentAlignment(printBtn, Alignment.MIDDLE_RIGHT);
         return layout;
