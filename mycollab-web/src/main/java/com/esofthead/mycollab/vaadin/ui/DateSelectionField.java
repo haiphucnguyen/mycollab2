@@ -34,7 +34,7 @@ public class DateSelectionField extends GridLayout{
 	
 	public DateSelectionField() {
 		
-		setDateWidth(80);
+		setDateWidth(120);
 		this.setSpacing(true);
 		dateSelectionBox = new DateSelectionComboBox();
 		dateSelectionBox.setFilteringMode(Filtering.FILTERINGMODE_OFF);
@@ -68,7 +68,7 @@ public class DateSelectionField extends GridLayout{
 		} else if (filterStr.equals(DateSelectionComboBox.BEFORE)) {
 			addOneDate();
 		} else if (filterStr.equals(DateSelectionComboBox.ISBETWEEN)) {
-			addTwoDate();
+			addRangeDate();
 		}
 	}
 	
@@ -193,7 +193,7 @@ public class DateSelectionField extends GridLayout{
 		dateEnd.setWidth(width, Sizeable.UNITS_PIXELS);
 	}
 	
-	private void addTwoDate() {
+	private void addRangeDate() {
 		this.setRows(2);
 		HorizontalLayout hLayout = new HorizontalLayout();
 		hLayout.setSpacing(true);
