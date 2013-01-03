@@ -26,137 +26,137 @@ import com.vaadin.ui.Window;
 @SuppressWarnings("serial")
 public class ContactPreview extends VerticalLayout {
 
-	private PreviewForm previewForm;
-	private SimpleContact contact;
-	private boolean isControlEnable = false;
+    private PreviewForm previewForm;
+    private SimpleContact contact;
+    private boolean isControlEnable = false;
 
-	public ContactPreview(Boolean enableButtonControl) {
-		this.isControlEnable = enableButtonControl;
-		constructUI();
-	}
+    public ContactPreview(Boolean enableButtonControl) {
+        this.isControlEnable = enableButtonControl;
+        constructUI();
+    }
 
-	private void constructUI() {
-		previewForm = new PreviewForm();
+    private void constructUI() {
+        previewForm = new PreviewForm();
 
-		this.addComponent(previewForm);
-	}
+        this.addComponent(previewForm);
+    }
 
-	public void previewItem(SimpleContact item) {
-		contact = item;
-		previewForm.setItemDataSource(new BeanItem<SimpleContact>(contact));
-	}
+    public void previewItem(SimpleContact item) {
+        contact = item;
+        previewForm.setItemDataSource(new BeanItem<SimpleContact>(contact));
+    }
 
-	public SimpleContact getContact() {
-		return contact;
-	}
+    public SimpleContact getContact() {
+        return contact;
+    }
 
-	public AdvancedPreviewBeanForm<Contact> getPreviewForm() {
-		return previewForm;
-	}
+    public AdvancedPreviewBeanForm<Contact> getPreviewForm() {
+        return previewForm;
+    }
 
-	public class PreviewForm extends AdvancedPreviewBeanForm<Contact> {
+    public class PreviewForm extends AdvancedPreviewBeanForm<Contact> {
 
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-				@Override
-				protected Field onCreateField(Item item, Object propertyId,
-						Component uiContext) {
-					if (propertyId.equals("accountid")) {
-						return new FormLinkViewField(contact.getAccountName(),
-								new Button.ClickListener() {
-									@Override
-									public void buttonClick(ClickEvent event) {
-										EventBus.getInstance()
-												.fireEvent(
-														new AccountEvent.GotoRead(
-																this,
-																contact.getAccountid()));
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+                @Override
+                protected Field onCreateField(Item item, Object propertyId,
+                        Component uiContext) {
+                    if (propertyId.equals("accountid")) {
+                        return new FormLinkViewField(contact.getAccountName(),
+                                new Button.ClickListener() {
+                                    @Override
+                                    public void buttonClick(ClickEvent event) {
+                                        EventBus.getInstance()
+                                                .fireEvent(
+                                                new AccountEvent.GotoRead(
+                                                this,
+                                                contact.getAccountid()));
 
-									}
-								});
-					} else if (propertyId.equals("email")) {
-						return new FormEmailLinkViewField(contact.getEmail());
-					} else if (propertyId.equals("assignuser")) {
-						return new FormLinkViewField(contact
-								.getAssignUserFullName(),
-								new Button.ClickListener() {
-									@Override
-									public void buttonClick(ClickEvent event) {
-										// TODO Auto-generated method stub
-									}
-								});
-					}
+                                    }
+                                });
+                    } else if (propertyId.equals("email")) {
+                        return new FormEmailLinkViewField(contact.getEmail());
+                    } else if (propertyId.equals("assignuser")) {
+                        return new FormLinkViewField(contact
+                                .getAssignUserFullName(),
+                                new Button.ClickListener() {
+                                    @Override
+                                    public void buttonClick(ClickEvent event) {
+                                        // TODO Auto-generated method stub
+                                    }
+                                });
+                    }
 
-					return null;
-				}
-			});
-			super.setItemDataSource(newDataSource);
-		}
+                    return null;
+                }
+            });
+            super.setItemDataSource(newDataSource);
+        }
 
-		protected void doPrint() {
-			// Create a window that contains what you want to print
-			Window window = new Window("Window to Print");
+        protected void doPrint() {
+            // Create a window that contains what you want to print
+            Window window = new Window("Window to Print");
 
-			ContactPreview printView = new ContactPreview(false);
-			printView.previewItem(contact);
-			window.addComponent(printView);
+            ContactPreview printView = new ContactPreview(false);
+            printView.previewItem(contact);
+            window.addComponent(printView);
 
-			// Add the printing window as a new application-level window
-			getApplication().addWindow(window);
+            // Add the printing window as a new application-level window
+            getApplication().addWindow(window);
 
-			// Open it as a popup window with no decorations
-			getWindow().open(new ExternalResource(window.getURL()), "_blank",
-					1100, 200, // Width and height
-					Window.BORDER_NONE); // No decorations
+            // Open it as a popup window with no decorations
+            getWindow().open(new ExternalResource(window.getURL()), "_blank",
+                    1100, 200, // Width and height
+                    Window.BORDER_NONE); // No decorations
 
-			// Print automatically when the window opens.
-			// This call will block until the print dialog exits!
-			window.executeJavaScript("print();");
+            // Print automatically when the window opens.
+            // This call will block until the print dialog exits!
+            window.executeJavaScript("print();");
 
-			// Close the window automatically after printing
-			window.executeJavaScript("self.close();");
-		}
+            // Close the window automatically after printing
+            window.executeJavaScript("self.close();");
+        }
 
-		@Override
-		protected void showHistory() {
-			HistoryLogWindow historyLog = new HistoryLogWindow(
-					ModuleNameConstants.CRM, CrmTypeConstants.CONTACT,
-					contact.getId());
+        @Override
+        protected void showHistory() {
+            HistoryLogWindow historyLog = new HistoryLogWindow(
+                    ModuleNameConstants.CRM, CrmTypeConstants.CONTACT,
+                    contact.getId());
 
-			getWindow().addWindow(historyLog);
-		}
+            getWindow().addWindow(historyLog);
+        }
 
-		class FormLayoutFactory extends ContactFormLayoutFactory {
+        class FormLayoutFactory extends ContactFormLayoutFactory {
 
-			private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-			public FormLayoutFactory() {
-				super("Edit Contact");
-			}
+            public FormLayoutFactory() {
+                super("Edit Contact");
+            }
 
-			@Override
-			protected HorizontalLayout createTopPanel() {
-				if (isControlEnable) {
-					return (new PreviewFormControlsGenerator<Contact>(
-							PreviewForm.this)).createButtonControls();
-				} else {
-					return new HorizontalLayout();
-				}
+            @Override
+            protected HorizontalLayout createTopPanel() {
+                if (isControlEnable) {
+                    return (new PreviewFormControlsGenerator<Contact>(
+                            PreviewForm.this)).createButtonControls();
+                } else {
+                    return new HorizontalLayout();
+                }
 
-			}
+            }
 
-			@Override
-			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
+            @Override
+            protected Layout createBottomPanel() {
+                VerticalLayout relatedItemsPanel = new VerticalLayout();
 
-				relatedItemsPanel.addComponent(new NoteListItems("Notes",
-						"Contact", contact.getId()));
-				return relatedItemsPanel;
-			}
-		}
-	}
+                relatedItemsPanel.addComponent(new NoteListItems("Notes",
+                        "Contact", contact.getId()));
+                return relatedItemsPanel;
+            }
+        }
+    }
 }

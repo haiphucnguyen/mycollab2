@@ -5,14 +5,10 @@
 package com.esofthead.mycollab.common.interceptor.service;
 
 import com.esofthead.mycollab.common.service.AuditLogService;
-import com.esofthead.mycollab.module.crm.domain.Account;
-import com.esofthead.mycollab.module.crm.service.ibatis.AccountServiceImpl;
 import java.io.Serializable;
-import java.lang.reflect.Field;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
-import org.apache.commons.beanutils.MethodUtils;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
