@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -17,6 +18,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "Case", nameField = "subject")
+@Auditable(module = "Crm", type = "Case")
 public class CaseServiceImpl extends DefaultService<Integer, Case, CaseSearchCriteria> implements
         CaseService {
 

@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -33,6 +34,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "Contact", nameField = "lastname")
+@Auditable(module = "Crm", type = "Contact")
 public class ContactServiceImpl extends DefaultService<Integer, Contact, ContactSearchCriteria> implements
         ContactService {
 

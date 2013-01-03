@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -16,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "Product", nameField = "productname")
+@Auditable(module = "Crm", type = "Product")
 public class ProductServiceImpl extends DefaultService<Integer, Product, ProductSearchCriteria>
         implements ProductService {
 

@@ -37,7 +37,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "Account", nameField = "accountname")
-@Auditable(module = "Crm", type="Account")
+@Auditable(module = "Crm", type = "Account")
 public class AccountServiceImpl extends DefaultService<Integer, Account, AccountSearchCriteria> implements
         AccountService {
 

@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -33,12 +34,12 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "Campaign", nameField = "campaignname")
+@Auditable(module = "Crm", type = "Campaign")
 public class CampaignServiceImpl extends DefaultService<Integer, Campaign, CampaignSearchCriteria> implements
         CampaignService {
-    
+
     @Autowired
     private CampaignMapper campaignMapper;
-    
     @Autowired
     private CampaignMapperExt campaignMapperExt;
 

@@ -1,11 +1,5 @@
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 import com.esofthead.mycollab.module.crm.dao.QuoteGroupProductMapper;
@@ -13,6 +7,10 @@ import com.esofthead.mycollab.module.crm.dao.QuoteGroupProductMapperExt;
 import com.esofthead.mycollab.module.crm.domain.QuoteGroupProduct;
 import com.esofthead.mycollab.module.crm.domain.QuoteGroupProductExample;
 import com.esofthead.mycollab.module.crm.service.QuoteGroupProductService;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional

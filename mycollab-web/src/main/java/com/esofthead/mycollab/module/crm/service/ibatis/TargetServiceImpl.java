@@ -17,10 +17,7 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -34,10 +31,14 @@ import com.esofthead.mycollab.module.crm.domain.Target;
 import com.esofthead.mycollab.module.crm.domain.TaskExample;
 import com.esofthead.mycollab.module.crm.domain.criteria.TargetSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.TargetService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "Target", nameField = "lastname")
+@Auditable(module = "Crm", type = "Target")
 public class TargetServiceImpl extends
 		DefaultService<Integer, Target, TargetSearchCriteria> implements
 		TargetService {

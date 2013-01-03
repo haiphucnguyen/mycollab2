@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -35,6 +36,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "Opportunity", nameField = "opportunityname")
+@Auditable(module = "Crm", type = "Opportunity")
 public class OpportunityServiceImpl extends DefaultService<Integer, Opportunity, OpportunitySearchCriteria>
         implements OpportunityService {
 

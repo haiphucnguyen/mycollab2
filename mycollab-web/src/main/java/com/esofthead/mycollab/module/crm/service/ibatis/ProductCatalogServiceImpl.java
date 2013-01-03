@@ -1,9 +1,6 @@
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-
+import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -13,10 +10,14 @@ import com.esofthead.mycollab.module.crm.dao.ProductCatalogMapperExt;
 import com.esofthead.mycollab.module.crm.domain.ProductCatalog;
 import com.esofthead.mycollab.module.crm.domain.criteria.ProductCatalogSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ProductCatalogService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "ProductCatalog", nameField = "productname")
+@Auditable(module = "Crm", type = "ProductCatalog")
 public class ProductCatalogServiceImpl extends
 		DefaultService<Integer, ProductCatalog, ProductCatalogSearchCriteria>
 		implements ProductCatalogService {
