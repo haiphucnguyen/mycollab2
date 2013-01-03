@@ -1,7 +1,4 @@
-package com.esofthead.mycollab.module.crm.view.contact;
-
-import java.util.HashSet;
-import java.util.Set;
+package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
@@ -23,14 +20,16 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
+import java.util.HashSet;
+import java.util.Set;
 
-public class ContactListComp extends Depot implements IRelatedListHandlers {
+public class AccountContactListComp extends Depot implements IRelatedListHandlers {
 
     private static final long serialVersionUID = 1L;
     private PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact> tableItem;
     private Set<RelatedListHandler> handlers;
 
-    public ContactListComp() {
+    public AccountContactListComp() {
         super("Contacts", new VerticalLayout());
         this.setWidth("900px");
         initUI();
@@ -59,8 +58,8 @@ public class ContactListComp extends Depot implements IRelatedListHandlers {
                 AppContext.getSpringBean(ContactService.class),
                 SimpleContact.class,
                 new String[]{"contactName", "title", "email", "officephone",
-                    "assignUserFullName"},
-                new String[]{"Name", "Title", "Email", "Office Phone", "User"});
+                    "assignUserFullName", "id"},
+                new String[]{"Name", "Title", "Email", "Office Phone", "User", "Action"});
 
         tableItem.addGeneratedColumn("contactName", new ColumnGenerator() {
             @Override
@@ -79,6 +78,23 @@ public class ContactListComp extends Depot implements IRelatedListHandlers {
                             }
                         });
                 return b;
+            }
+        });
+        
+        tableItem.addGeneratedColumn("id", new ColumnGenerator() {
+            @Override
+            public Object generateCell(Table source, Object itemId,
+                    Object columnId) {
+                Button deleteBtn = new Button(null, new Button.ClickListener() {
+
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                throw new UnsupportedOperationException("Not supported yet.");
+                            }
+                        });
+                deleteBtn.setStyleName("link");
+                deleteBtn.setIcon(new ThemeResource("icons/16/delete.png"));
+                return deleteBtn;
             }
         });
 

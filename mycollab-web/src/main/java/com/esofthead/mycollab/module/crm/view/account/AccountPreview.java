@@ -16,9 +16,6 @@ import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
-import com.esofthead.mycollab.module.crm.view.contact.ContactListComp;
-import com.esofthead.mycollab.module.crm.view.lead.LeadListComp;
-import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListComp;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
@@ -42,9 +39,9 @@ public class AccountPreview extends VerticalLayout {
 
     private SimpleAccount account;
     private PreviewForm previewForm;
-    private ContactListComp associateContactList;
-    private OpportunityListComp associateOpportunityList;
-    private LeadListComp associateLeadList;
+    private AccountContactListComp associateContactList;
+    private AccountOpportunityListComp associateOpportunityList;
+    private AccountLeadListComp associateLeadList;
     private boolean isControlEnable = false;
 
     public AccountPreview(boolean enableButtonControls) {
@@ -55,9 +52,9 @@ public class AccountPreview extends VerticalLayout {
     private void constructUI() {
         previewForm = new PreviewForm();
 
-        associateContactList = new ContactListComp();
-        associateOpportunityList = new OpportunityListComp();
-        associateLeadList = new LeadListComp();
+        associateContactList = new AccountContactListComp();
+        associateOpportunityList = new AccountOpportunityListComp();
+        associateLeadList = new AccountLeadListComp();
 
         this.addComponent(previewForm);
     }
@@ -78,15 +75,15 @@ public class AccountPreview extends VerticalLayout {
         return previewForm;
     }
 
-    public ContactListComp getAssociateContactList() {
+    public AccountContactListComp getAssociateContactList() {
         return associateContactList;
     }
 
-    public OpportunityListComp getAssociateOpportunityList() {
+    public AccountOpportunityListComp getAssociateOpportunityList() {
         return associateOpportunityList;
     }
 
-    public LeadListComp getAssociateLeadList() {
+    public AccountLeadListComp getAssociateLeadList() {
         return associateLeadList;
     }
 

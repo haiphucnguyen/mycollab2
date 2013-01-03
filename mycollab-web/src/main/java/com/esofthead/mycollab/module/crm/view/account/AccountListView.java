@@ -12,17 +12,17 @@ import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 
 public interface AccountListView extends View {
 
-	void enableActionControls(int numOfSelectedItem);
+    void enableActionControls(int numOfSelectedItem);
 
-	void disableActionControls();
+    void disableActionControls();
 
-	HasSearchHandlers<AccountSearchCriteria> getSearchHandlers();
+    HasSearchHandlers<AccountSearchCriteria> getSearchHandlers();
 
-	HasSelectionOptionHandlers getOptionSelectionHandlers();
+    HasSelectionOptionHandlers getOptionSelectionHandlers();
 
-	HasPopupActionHandlers getPopupActionHandlers();
+    HasPopupActionHandlers getPopupActionHandlers();
 
-	HasSelectableItemHandlers<SimpleAccount> getSelectableItemHandlers();
+    HasSelectableItemHandlers<SimpleAccount> getSelectableItemHandlers();
 
-	IPagedBeanTable<AccountService, AccountSearchCriteria, SimpleAccount> getPagedBeanTable();
+    IPagedBeanTable<AccountService, AccountSearchCriteria, SimpleAccount> getPagedBeanTable();
 }
