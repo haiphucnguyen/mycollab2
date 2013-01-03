@@ -25,7 +25,7 @@ import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.module.crm.Constants;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.dao.TargetMapper;
 import com.esofthead.mycollab.module.crm.dao.TargetMapperExt;
 import com.esofthead.mycollab.module.crm.dao.TaskMapper;
@@ -64,7 +64,7 @@ public class TargetServiceImpl extends
 	public int remove(Integer primaryKey) {
 		int result = super.remove(primaryKey);
 		TaskExample ex = new TaskExample();
-		ex.createCriteria().andTypeEqualTo(Constants.TARGET)
+		ex.createCriteria().andTypeEqualTo(CrmTypeConstants.TARGET)
 				.andTypeidEqualTo(primaryKey);
 		taskMapper.deleteByExample(ex);
 		return result;

@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.crm;
 
-public class Constants {
+public class CrmTypeConstants {
 	public static String ACCOUNT = "Account";
 	
 	public static String CAMPAIGN = "Campaign";

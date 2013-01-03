@@ -4,9 +4,11 @@
  */
 package com.esofthead.mycollab.module.crm.view.account;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
@@ -176,7 +178,8 @@ public class AccountPreview extends VerticalLayout {
 
         @Override
         protected void showHistory() {
-            HistoryLogWindow historyLog = new HistoryLogWindow();
+            HistoryLogWindow historyLog = new HistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.ACCOUNT, account.getId());
+
             getWindow().addWindow(historyLog);
         }
 

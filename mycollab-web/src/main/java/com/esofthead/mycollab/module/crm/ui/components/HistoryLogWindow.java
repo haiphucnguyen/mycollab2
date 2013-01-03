@@ -12,9 +12,18 @@ import com.vaadin.ui.Window;
  */
 public class HistoryLogWindow extends Window{
     
-    public HistoryLogWindow() {
+    private String module;
+    
+    private String type;
+    
+    private int typeid;
+    
+    public HistoryLogWindow(String module, String type, int typeid) {
         super("Change Log");
-        
         this.setWidth("600px");
+        
+        this.module = module;
+        this.type = type;
+        this.typeid = typeid;
     }
 }

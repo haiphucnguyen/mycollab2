@@ -69,7 +69,6 @@ public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, Audit
 
         static public String getChangeSet(Object oldObj, Object newObj) {
             Class cl = oldObj.getClass();
-            log.debug("Audit bean class: " + cl.getName() + " " + oldObj + " " + newObj);
             Field[] declaredFields = cl.getDeclaredFields();
 
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory
@@ -87,7 +86,6 @@ public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, Audit
             document.appendChild(changesetElement);
 
             for (int i = 0; i < declaredFields.length; i++) {
-                log.debug("Check field: " + declaredFields[i].getName());
                 Field field = declaredFields[i];
                 String fieldname = field.getName();
                 String setterMethod = "set"
