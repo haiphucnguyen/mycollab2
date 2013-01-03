@@ -1,12 +1,5 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.util.Collection;
-import java.util.HashMap;
-import java.util.HashSet;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
-
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
@@ -31,6 +24,12 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
+import java.util.Collection;
+import java.util.HashMap;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Map;
+import java.util.Set;
 
 public class PagedBeanTable2<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
         extends VerticalLayout implements IPagedBeanTable<SearchService, S, T> {
@@ -83,6 +82,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
         columnWidths.put(propertyId, width);
     }
 
+    @Override
     public void setSearchCriteria(S searchCriteria) {
         searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
                 SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);

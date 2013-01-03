@@ -20,6 +20,7 @@ public class SimpleAuditLog extends AuditLog {
     }
 
     public List<AuditChangeItem> getChangeItems() {
+        setChangeItems();
         return changeItems;
     }
 

@@ -25,7 +25,7 @@
     <sql id="selectSimpleAuditLog">
         <![CDATA[
         SELECT m_audit_log.id, m_audit_log.object_class, m_audit_log.posteddate, m_audit_log.posteduser, m_audit_log.createdTime, m_audit_log.lastUpdatedTime, 
-            m_audit_log.sAccountId, m_audit_log.type, m_audit_log.typeid, m_audit_log.module,
+            m_audit_log.sAccountId, m_audit_log.type, m_audit_log.typeid, m_audit_log.module, m_audit_log.changeset,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as postedUserFullName
         FROM m_audit_log
         LEFT OUTER JOIN s_user ON (s_user.username = m_audit_log.posteduser)
