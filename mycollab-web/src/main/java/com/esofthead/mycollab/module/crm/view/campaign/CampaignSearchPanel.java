@@ -184,11 +184,11 @@ public class CampaignSearchPanel extends
 					"Name", 0, 0);
 			startDateField = (DateSelectionField) gridLayout.addComponent(
 					new DateSelectionField(), "Start Date", 1, 0);
-			startDateField.setDateFormat("yyyy-MM-dd");
+			startDateField.setDateFormat(AppContext.getDateFormat());
 
 			endDateField = (DateSelectionField) gridLayout.addComponent(
 					new DateSelectionField(), "End Date", 2, 0);
-			endDateField.setDateFormat("yyyy-MM-dd");
+			endDateField.setDateFormat(AppContext.getDateFormat());
 
 			typeField = (CampaignTypeListSelect) gridLayout.addComponent(
 					new CampaignTypeListSelect(), "Type", 0, 1);
