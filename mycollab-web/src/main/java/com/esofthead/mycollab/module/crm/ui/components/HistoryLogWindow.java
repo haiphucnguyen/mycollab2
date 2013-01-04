@@ -114,7 +114,7 @@ public class HistoryLogWindow extends Window {
                     }
                     
                     if (fieldName.equals("lastupdatedtime")) {
-                    	strDate = item.getOldvalue();
+                    	strDate = item.getNewvalue();
                     }
                 }
 
