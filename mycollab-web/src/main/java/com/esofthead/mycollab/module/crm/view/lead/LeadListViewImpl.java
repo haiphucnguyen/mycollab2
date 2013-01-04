@@ -37,7 +37,7 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
     private static final long serialVersionUID = 1L;
     private final LeadSearchPanel leadSearchPanel;
     private SelectionOptionButton selectOptionButton;
-    private PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead> tableItem;
+    private LeadTableDisplay tableItem;
     private final VerticalLayout accountListLayout;
     private PopupButtonControl tableActionControls;
     private final Label selectedItemsNumberLabel = new Label();
@@ -57,86 +57,11 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 
     @SuppressWarnings("serial")
     private void generateDisplayTable() {
-        tableItem = new PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>(
-                AppContext.getSpringBean(LeadService.class), SimpleLead.class,
+        tableItem = new LeadTableDisplay(
                 new String[]{"selected", "leadName", "status", "accountname",
                     "officephone", "email", "assignUserFullName"},
                 new String[]{"", "Name", "Status", "Account Name",
                     "Office Phone", "Email", "Assign User"});
-
-        tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public Object generateCell(final Table source, final Object itemId,
-                    Object columnId) {
-                final CheckBox cb = new CheckBox("", false);
-                cb.setImmediate(true);
-                cb.addListener(new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        SimpleLead lead = tableItem.getBeanByIndex(itemId);
-                        tableItem.fireSelectItemEvent(lead);
-
-                    }
-                });
-
-                SimpleLead lead = tableItem.getBeanByIndex(itemId);
-                lead.setExtraData(cb);
-                return cb;
-            }
-        });
-
-        tableItem.addGeneratedColumn("leadName", new ColumnGenerator() {
-            @Override
-            public Object generateCell(Table source, Object itemId,
-                    Object columnId) {
-                final SimpleLead lead = tableItem.getBeanByIndex(itemId);
-                ButtonLink b = new ButtonLink(lead.getLeadName(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                EventBus.getInstance().fireEvent(
-                                        new LeadEvent.GotoRead(this, lead
-                                        .getId()));
-                            }
-                        });
-                b.addStyleName("medium-text");
-                return b;
-            }
-        });
-
-        tableItem.addGeneratedColumn("email", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    Object itemId, Object columnId) {
-                final SimpleLead lead = tableItem.getBeanByIndex(itemId);
-                Link l = new Link();
-                l.setResource(new ExternalResource("mailto:" + lead.getEmail()));
-                l.setCaption(lead.getEmail());
-                return l;
-
-            }
-        });
-
-        tableItem.setWidth("100%");
-
-        tableItem.setColumnExpandRatio("leadName", 1.0f);
-
-        tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-        tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
-        tableItem
-                .setColumnWidth("accountname", UIConstants.TABLE_X_LABEL_WIDTH);
-        tableItem
-                .setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
-        tableItem.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
-        tableItem.setColumnWidth("assignuser", UIConstants.TABLE_X_LABEL_WIDTH);
 
         accountListLayout.addComponent(constructTableActionControls());
         accountListLayout.addComponent(tableItem);
