@@ -3,7 +3,7 @@
 <mapper namespace="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt">
 
     <resultMap id="SimpleActivityStreamResult"
-        extends="com.esofthead.mycollab.module.crm.dao.AccountMapper.BaseResultMap"
+        extends="com.esofthead.mycollab.common.dao.ActivityStreamMapper.BaseResultMap"
         type="com.esofthead.mycollab.common.domain.SimpleActivityStream">
         
         <result column="createdUserFullName" jdbcType="VARCHAR" property="createdUserFullName" />

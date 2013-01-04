@@ -18,4 +18,6 @@ public class CrmTypeConstants {
 	public static String PRODUCT = "Product";
 	
 	public static String CASE = "Case";
+        
+        
 }

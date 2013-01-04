@@ -175,7 +175,7 @@ public class AccountPreview extends VerticalLayout {
 
         @Override
         protected void showHistory() {
-            HistoryLogWindow historyLog = new HistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.ACCOUNT, account.getId());
+            AccountHistoryLogWindow historyLog = new AccountHistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.ACCOUNT, account.getId());
             getWindow().addWindow(historyLog);
         }
 
