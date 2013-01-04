@@ -26,6 +26,8 @@ public class CampaignSelectionWindow extends Window {
 
     public CampaignSelectionWindow(FieldSelection fieldSelection) {
         super("Campaign Name Lookup");
+        
+        this.setWidth("1035px");
 
         this.fieldSelection = fieldSelection;
     }
@@ -37,6 +39,7 @@ public class CampaignSelectionWindow extends Window {
 
         VerticalLayout layout = new VerticalLayout();
         layout.setSpacing(true);
+        layout.setMargin(true);
 
         createCampaignList();
         layout.addComponent(createSearchPanel());
@@ -44,6 +47,7 @@ public class CampaignSelectionWindow extends Window {
         this.setContent(layout);
 
         tableItem.setSearchCriteria(searchCriteria);
+        center();
     }
 
     private ComponentContainer createSearchPanel() {
@@ -60,13 +64,12 @@ public class CampaignSelectionWindow extends Window {
                 new String[]{"Campaign", "Type", "Status", "Start Date",
                     "End Date"});
         tableItem.setWidth("100%");
-        tableItem.setHeight("200px");
 
         tableItem.setColumnWidth("campaignname", 250);
         tableItem.setColumnWidth("type", 150);
         tableItem.setColumnWidth("status", 150);
-        tableItem.setColumnWidth("startdate", 120);
-        tableItem.setColumnWidth("enddate", 120);
+        tableItem.setColumnWidth("startdate", 190);
+        tableItem.setColumnWidth("enddate", 190);
 
         tableItem.addGeneratedColumn("campaignname", new ColumnGenerator() {
             private static final long serialVersionUID = 1L;

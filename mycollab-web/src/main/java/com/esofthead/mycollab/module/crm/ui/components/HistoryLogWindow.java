@@ -10,6 +10,7 @@ import com.esofthead.mycollab.common.domain.criteria.AuditLogSearchCriteria;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
@@ -19,6 +20,8 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Window;
+
+import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -27,6 +30,7 @@ import java.util.Map;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class HistoryLogWindow extends Window {
 
     public static final String DEFAULT_FIELD = "default";
@@ -66,6 +70,7 @@ public class HistoryLogWindow extends Window {
         criteria.setTypeid(new NumberSearchField(typeid));
         logTable.setSearchCriteria(criteria);
         this.addComponent(logTable);
+        center();
     }
 
     public void generateFieldDisplayHandler(String fieldname, String displayName) {
@@ -91,7 +96,9 @@ public class HistoryLogWindow extends Window {
                 gridLayout.setWidth("100%");
 
                 int visibleRows = 0;
-
+                
+                String strDate = "";
+                
                 for (int i = 0; i < changeItems.size(); i++) {
                     AuditChangeItem item = changeItems.get(i);
                     String fieldName = item.getField();
@@ -105,6 +112,10 @@ public class HistoryLogWindow extends Window {
                         gridLayout.addComponent(fieldDisplayHandler.getFormat().formatField(item.getNewvalue()), 2, visibleRows + 2);
                         visibleRows++;
                     }
+                    
+                    if (fieldName.equals("lastupdatedtime")) {
+                    	strDate = item.getNewvalue();
+                    }
                 }
 
                 if (visibleRows == 0) {
@@ -112,6 +123,7 @@ public class HistoryLogWindow extends Window {
                 } else {
                     HorizontalLayout header = new HorizontalLayout();
                     header.setWidth("100%");
+                    header.setSpacing(true);
                     Button userLink = new Button(log.getPostedUserFullName(), new Button.ClickListener() {
                         @Override
                         public void buttonClick(ClickEvent event) {
@@ -121,7 +133,9 @@ public class HistoryLogWindow extends Window {
 
                     userLink.setStyleName("link");
                     header.addComponent(userLink);
-                    header.addComponent(new Label("made changes - date here"));
+                    Label lbDate = new Label("changed " + DateTimeUtils.getStringDateFromMilestone(DateTimeUtils.getDateByStringWithFormatW3C(strDate), new Date()));
+                    lbDate.setWidth("500px");
+                    header.addComponent(lbDate);
                     gridLayout.addComponent(header, 0, 0, 2, 0);
 
                     gridLayout.addComponent(new Label("Field"), 0, 1);
@@ -160,7 +174,8 @@ public class HistoryLogWindow extends Window {
             return displayName;
         }
 
-        public void setDisplayName(String displayName) {
+        @SuppressWarnings("unused")
+		public void setDisplayName(String displayName) {
             this.displayName = displayName;
         }
 
@@ -168,7 +183,8 @@ public class HistoryLogWindow extends Window {
             return format;
         }
 
-        public void setFormat(HistoryFieldFormat format) {
+        @SuppressWarnings("unused")
+		public void setFormat(HistoryFieldFormat format) {
             this.format = format;
         }
     }
