@@ -126,7 +126,7 @@ public class ContactListViewImpl extends AbstractView implements
                             public void buttonClick(ClickEvent event) {
                                 EventBus.getInstance().fireEvent(
                                         new AccountEvent.GotoRead(this, contact
-                                        .getAccountid()));
+                                        .getAccountId()));
                             }
                         });
                 return b;

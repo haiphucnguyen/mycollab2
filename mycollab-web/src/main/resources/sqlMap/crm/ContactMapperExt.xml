@@ -1,28 +1,29 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.ContactMapperExt">
-	<resultMap extends="com.esofthead.mycollab.module.crm.dao.ContactMapper.BaseResultMap"
-		id="SimpleContactResult" type="com.esofthead.mycollab.module.crm.domain.SimpleContact">
-		<result column="assignUserFullName" jdbcType="VARCHAR"
-			property="assignUserFullName" />
-		<result column="accountName" jdbcType="VARCHAR" property="accountName" />
-	</resultMap>
+    <resultMap extends="com.esofthead.mycollab.module.crm.dao.ContactMapper.BaseResultMap"
+                   id="SimpleContactResult" type="com.esofthead.mycollab.module.crm.domain.SimpleContact">
+        <result column="assignUserFullName" jdbcType="VARCHAR"
+                        property="assignUserFullName" />
+        <result column="accountName" jdbcType="VARCHAR" property="accountName" />
+        <result column="accountId" jdbcType="VARCHAR" property="accountId" />
+    </resultMap>
 
-	<sql id="querySearchCriteria">
-		<if test="contactName != null">
-			<![CDATA[
-				${contactName.operation} (concat (m_crm_contact.firstname, ' ', m_crm_contact.lastname) like '%${contactName.value}%' )
-			]]>
-		</if>
-		<if test="accountName != null">
-			${accountName.operation} (m_crm_account.accountName like '%${accountName.value}%')
-        </if>
-		<if test="accountId != null">
+    <sql id="querySearchCriteria">
+        <if test="contactName != null">
             <![CDATA[
-                ${accountId.operation} m_crm_contact.accountId = #{accountId.value,javaType=INTEGER}
-                ]]>
-		</if>
-		<if test="opportunityId != null">
+                ${contactName.operation} (concat (m_crm_contact.firstname, ' ', m_crm_contact.lastname) like '%${contactName.value}%' )
+            ]]>
+        </if>
+        <if test="accountName != null">
+            <![CDATA[${accountName.operation} (m_crm_account.accountName like '%${accountName.value}%')]]>
+        </if>
+        <if test="accountId != null">
+            <![CDATA[
+                ${accountId.operation} m_crm_account.id = #{accountId.value,javaType=INTEGER}
+            ]]>
+        </if>
+        <if test="opportunityId != null">
             <![CDATA[${opportunityId.operation}
                 (SELECT COUNT(*) 
                     FROM m_crm_type_relationship, m_crm_opportunity
@@ -30,8 +31,8 @@
                         AND m_crm_type_relationship.type2id=m_crm_opportunity.id 
                         AND m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER}) > 0
              ]]>
-		</if>
-		<if test="contractId != null">
+        </if>
+        <if test="contractId != null">
             <![CDATA[
                 ${contractId.operation}
                 (SELECT COUNT(*) 
@@ -41,8 +42,8 @@
                         AND m_crm_contract.id=m_crm_type_relationship.type1id
                         AND m_crm_contract.id=#{contractId.value,javaType=INTEGER}) > 0
             ]]>
-		</if>
-		<if test="caseId != null">
+        </if>
+        <if test="caseId != null">
             <![CDATA[
                 ${caseId.operation}
                 (SELECT COUNT(*) 
@@ -52,8 +53,8 @@
                         AND m_crm_case.id=m_crm_type_relationship.type1id
                         AND m_crm_case.id=#{caseId.value,javaType=INTEGER}) > 0
             ]]>
-		</if>
-		<if test="targetListId != null">
+        </if>
+        <if test="targetListId != null">
             <![CDATA[
                 ${targetListId.operation}
                 (SELECT COUNT(*) 
@@ -63,100 +64,102 @@
                      AND m_crm_target_list.id=m_crm_type_relationship.type1id
                      AND m_crm_target_list.id=#{targetListId.value,javaType=INTEGER}) > 0
             ]]>
-		</if>
-		<if test="assignUserName != null">
+        </if>
+        <if test="assignUserName != null">
             <![CDATA[
             ${assignUserName.operation}
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) like '%${assignUserName.value}%'
             ]]>
-		</if>
-		<if test="assignUsers != null">
-           	${assignUsers.operation} m_crm_contact.assignUser IN
-           	<foreach close=")" collection="assignUsers.values" item="assignUser"
-           			open="(" separator=",">
-           			#{assignUser}
-           	</foreach>
-		</if>
-		<if test="saccountid != null">
+        </if>
+        <if test="assignUsers != null">
+            <![CDATA[${assignUsers.operation} m_crm_contact.assignUser IN ]]>
+            <foreach close=")" collection="assignUsers.values" item="assignUser"
+                         open="(" separator=",">
+                <![CDATA[#{assignUser}]]>
+            </foreach>
+        </if>
+        <if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_contact.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
-		</if>
-		<if test="firstname != null">
+        </if>
+        <if test="firstname != null">
             <![CDATA[${firstname.operation} m_crm_contact.firstname like '%${firstname.value}%']]>
-		</if>
-		<if test="lastname != null">
+        </if>
+        <if test="lastname != null">
             <![CDATA[${lastname.operation} m_crm_contact.lastname like '%${lastname.value}%']]>
-		</if>
-		<if test="anyEmail != null">
+        </if>
+        <if test="anyEmail != null">
             <![CDATA[${anyEmail.operation} m_crm_contact.email like '%${anyEmail.value}%']]>
-		</if>
-		<if test="anyAddress != null">
+        </if>
+        <if test="anyAddress != null">
             <![CDATA[${anyAddress.operation} m_crm_contact.primAddress like '%${anyAddress.value}%' OR m_crm_contact.otherAddress like '%${anyAddress.value}%']]>
-		</if>
-		<if test="anyState != null">
+        </if>
+        <if test="anyState != null">
             <![CDATA[${anyState.operation} m_crm_contact.primState like '%${anyState.value}%' OR m_crm_contact.otherState like '%${anyState.value}%']]>
-		</if>
-		<if test="countries != null">
-            ${countries.operation} m_crm_contact.primCountry IN
-           	<foreach close=")" collection="countries.values" item="priCountry"
-           			open="(" separator=",">
-           			#{priCountry}
-           	</foreach>
-           	OR m_crm_contact.otherCountry IN
-       		<foreach close=")" collection="countries.values" item="otherCountry"
-          			open="(" separator=",">
-          			#{otherCountry}
-           	</foreach>
-		</if>
-		<if test="anyPhone != null">
+        </if>
+        <if test="countries != null">
+            <![CDATA[${countries.operation} m_crm_contact.primCountry IN]]>
+            <foreach close=")" collection="countries.values" item="priCountry"
+                         open="(" separator=",">
+                #{priCountry}
+            </foreach>
+            OR m_crm_contact.otherCountry IN
+            <foreach close=")" collection="countries.values" item="otherCountry"
+                         open="(" separator=",">
+                #{otherCountry}
+            </foreach>
+        </if>
+        <if test="anyPhone != null">
             <![CDATA[${anyPhone.operation} m_crm_contact.officePhone like '%${anyPhone.value}%' 
             							OR m_crm_contact.mobile like '%${anyPhone.value}%'
             							OR m_crm_contact.homePhone like '%${anyPhone.value}%'
             							OR m_crm_contact.otherPhone like '%${anyPhone.value}%'
             							OR m_crm_contact.assistantPhone like '%${anyPhone.value}%']]>
-		</if>
-		<if test="anyCity != null">
+        </if>
+        <if test="anyCity != null">
             <![CDATA[${anyCity.operation} m_crm_contact.primCity like '%${anyCity.value}%' OR m_crm_contact.otherCity like '%${anyCity.value}%']]>
-		</if>
-		<if test="anyPostalCode != null">
+        </if>
+        <if test="anyPostalCode != null">
             <![CDATA[${anyPostalCode.operation} m_crm_contact.primPostalCode like '%${anyPostalCode.value}%' OR m_crm_contact.otherPostalCode like '%${anyPostalCode.value}%']]>
-		</if>
-		<if test="leadSources != null">
-             ${leadSources.operation} m_crm_contact.leadSource IN
-           	<foreach close=")" collection="leadSources.values" item="leadSource"
-           			open="(" separator=",">
-           			#{leadSource}
-           	</foreach>
-		</if>
-	</sql>
+        </if>
+        <if test="leadSources != null">
+            ${leadSources.operation} m_crm_contact.leadSource IN
+            <foreach close=")" collection="leadSources.values" item="leadSource"
+                         open="(" separator=",">
+                #{leadSource}
+            </foreach>
+        </if>
+    </sql>
 
 
-	<sql id="queryTotalCountSearchCriteria">
-	    <if test="accountName != null">
+    <sql id="queryTotalCountSearchCriteria">
+        <if test="accountName != null">
             <![CDATA[
             ${accountName.operation}
             (SELECT COUNT(*)
-            FROM m_crm_account 
+            FROM m_crm_account, m_crm_accounts_contacts
             WHERE
-                m_crm_account.accountName like '%${accountName.value}%' AND
-                m_crm_account.id=m_crm_contact.accountId) > 0
+                m_crm_accounts_contacts.accountId = m_crm_account.id
+                AND m_crm_accounts_contacts.contactId = m_crm_contact.id
+                AND m_crm_account.accountName like '%${accountName.value}%') > 0
                 ]]>
         </if>
-		<if test="contactName != null">
-			<![CDATA[
-				${contactName.operation} (concat (m_crm_contact.firstname, ' ', m_crm_contact.lastname) like '%${contactName.value}%')
-			]]>
-		</if>
+        <if test="contactName != null">
+            <![CDATA[
+                ${contactName.operation} (concat (m_crm_contact.firstname, ' ', m_crm_contact.lastname) like '%${contactName.value}%')
+            ]]>
+        </if>
 		
-		<if test="accountId != null">
+        <if test="accountId != null">
             <![CDATA[
                 ${accountId.operation}
                 (SELECT COUNT(*) 
-                FROM m_crm_account 
+                FROM m_crm_account, m_crm_accounts_contacts 
                 WHERE m_crm_account.id = #{accountId.value,javaType=INTEGER} 
-                    AND m_crm_account.id=m_crm_contact.accountId) > 0
+                    AND m_crm_contact.id = m_crm_accounts_contacts.contactId
+                    AND m_crm_account.id = m_crm_accounts_contacts.accountId) > 0
                 ]]>
-		</if>
-		<if test="opportunityId != null">
+        </if>
+        <if test="opportunityId != null">
             <![CDATA[
                 ${opportunityId.operation}
                 (SELECT COUNT(*) 
@@ -166,8 +169,8 @@
                     AND m_crm_type_relationship.type2id=m_crm_opportunity.id 
                     AND m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER}) > 0
              ]]>
-		</if>
-		<if test="contractId != null">
+        </if>
+        <if test="contractId != null">
             <![CDATA[
                 ${contractId.operation}
                 (SELECT COUNT(*) 
@@ -177,8 +180,8 @@
                      AND m_crm_contract.id=m_crm_type_relationship.type1id
                      AND m_crm_contract.id=#{contractId.value,javaType=INTEGER}) > 0
             ]]>
-		</if>
-		<if test="caseId != null">
+        </if>
+        <if test="caseId != null">
             <![CDATA[
                 ${caseId.operation}
                 (SELECT COUNT(*) 
@@ -188,8 +191,8 @@
                      AND m_crm_case.id=m_crm_type_relationship.type1id
                      AND m_crm_case.id=#{caseId.value,javaType=INTEGER}) > 0
             ]]>
-		</if>
-		<if test="targetListId != null">
+        </if>
+        <if test="targetListId != null">
             <![CDATA[
                 ${targetListId.operation}
                 (SELECT COUNT(*) 
@@ -199,77 +202,77 @@
                      AND m_crm_target_list.id=m_crm_type_relationship.type1id
                      AND m_crm_target_list.id=#{targetListId.value,javaType=INTEGER}) > 0
             ]]>
-		</if>
-		<if test="assignUserName != null">
+        </if>
+        <if test="assignUserName != null">
             <![CDATA[
                 ${assignUserName.operation}
                 (SELECT COUNT(*) FROM s_user AS user
                 WHERE m_crm_contact.assignUser = user.username 
                    AND (concat(user.firstname, IFNULL(concat(' ', user.middlename, ' '), ' '), user.lastname) like '%${assignUserName.value}%') ) > 0
             ]]>
-		</if>
-		<if test="assignUsers != null">
-           	${assignUsers.operation} m_crm_contact.assignUser IN
-           	<foreach close=")" collection="assignUsers.values" item="assignUser"
-           			open="(" separator=",">
-           			#{assignUser}
-           	</foreach>
-		</if>
-		<if test="saccountid != null">
+        </if>
+        <if test="assignUsers != null">
+            ${assignUsers.operation} m_crm_contact.assignUser IN
+            <foreach close=")" collection="assignUsers.values" item="assignUser"
+                         open="(" separator=",">
+                #{assignUser}
+            </foreach>
+        </if>
+        <if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_contact.sAccountId = #{saccountid.value,javaType=int}]]>
-		</if>
-		<if test="firstname != null">
+        </if>
+        <if test="firstname != null">
             <![CDATA[${firstname.operation} m_crm_contact.firstname like '%${firstname.value}%']]>
-		</if>
-		<if test="lastname != null">
+        </if>
+        <if test="lastname != null">
             <![CDATA[${lastname.operation} m_crm_contact.lastname like '%${lastname.value}%']]>
-		</if>
-		<if test="anyEmail != null">
+        </if>
+        <if test="anyEmail != null">
             <![CDATA[${anyEmail.operation} m_crm_contact.email like '%${anyEmail.value}%']]>
-		</if>
-		<if test="anyAddress != null">
+        </if>
+        <if test="anyAddress != null">
             <![CDATA[${anyAddress.operation} m_crm_contact.primAddress like '%${anyAddress.value}%' OR m_crm_contact.otherAddress like '%${anyAddress.value}%']]>
-		</if>
-		<if test="anyState != null">
+        </if>
+        <if test="anyState != null">
             <![CDATA[${anyState.operation} m_crm_contact.primState like '%${anyState.value}%' OR m_crm_contact.otherState like '%${anyState.value}%']]>
-		</if>
-		<if test="countries != null">
+        </if>
+        <if test="countries != null">
             ${countries.operation} m_crm_contact.primCountry IN
-           	<foreach close=")" collection="countries.values" item="priCountry"
-           			open="(" separator=",">
-           			#{priCountry}
-           	</foreach>
-           	OR m_crm_contact.otherCountry IN
-       		<foreach close=")" collection="countries.values" item="otherCountry"
-          			open="(" separator=",">
-          			#{otherCountry}
-           	</foreach>
-		</if>
-		<if test="anyPhone != null">
+            <foreach close=")" collection="countries.values" item="priCountry"
+                         open="(" separator=",">
+                #{priCountry}
+            </foreach>
+            OR m_crm_contact.otherCountry IN
+            <foreach close=")" collection="countries.values" item="otherCountry"
+                         open="(" separator=",">
+                #{otherCountry}
+            </foreach>
+        </if>
+        <if test="anyPhone != null">
             <![CDATA[${anyPhone.operation} m_crm_contact.officePhone like '%${anyPhone.value}%' 
             							OR m_crm_contact.mobile like '%${anyPhone.value}%'
             							OR m_crm_contact.homePhone like '%${anyPhone.value}%'
             							OR m_crm_contact.otherPhone like '%${anyPhone.value}%'
             							OR m_crm_contact.assistantPhone like '%${anyPhone.value}%']]>
-		</if>
-		<if test="anyCity != null">
+        </if>
+        <if test="anyCity != null">
             <![CDATA[${anyCity.operation} m_crm_contact.primCity like '%${anyCity.value}%' OR m_crm_contact.otherCity like '%${anyCity.value}%']]>
-		</if>
-		<if test="anyPostalCode != null">
+        </if>
+        <if test="anyPostalCode != null">
             <![CDATA[${anyPostalCode.operation} m_crm_contact.primPostalCode like '%${anyPostalCode.value}%' OR m_crm_contact.otherPostalCode like '%${anyPostalCode.value}%']]>
-		</if>
-		<if test="leadSources != null">
-             ${leadSources.operation} m_crm_contact.leadSource IN
-           	<foreach close=")" collection="leadSources.values" item="leadSource"
-           			open="(" separator=",">
-           			#{leadSource}
-           	</foreach>
-		</if>
-	</sql>
+        </if>
+        <if test="leadSources != null">
+            ${leadSources.operation} m_crm_contact.leadSource IN
+            <foreach close=")" collection="leadSources.values" item="leadSource"
+                         open="(" separator=",">
+                #{leadSource}
+            </foreach>
+        </if>
+    </sql>
 
-	<sql id="selectSimpleContact">
+    <sql id="selectSimpleContact">
         <![CDATA[
-        SELECT m_crm_contact.id, m_crm_contact.prefix, m_crm_contact.firstname, m_crm_contact.lastname, m_crm_contact.accountId, 
+        SELECT m_crm_contact.id, m_crm_contact.prefix, m_crm_contact.firstname, m_crm_contact.lastname, m_crm_account.id AS accountId, 
                m_crm_contact.leadSource, m_crm_contact.campaignId, m_crm_contact.isCallable, m_crm_contact.officePhone, m_crm_contact.mobile, 
                m_crm_contact.homePhone, m_crm_contact.otherPhone, m_crm_contact.fax, m_crm_contact.birthday, m_crm_contact.assistant, 
                m_crm_contact.primAddress, m_crm_contact.primCity, m_crm_contact.primState, m_crm_contact.primPostalCode, m_crm_contact.primCountry, 
@@ -277,21 +280,23 @@
                m_crm_contact.description, m_crm_contact.title, m_crm_contact.assistantPhone, m_crm_contact.email, m_crm_contact.department, 
                m_crm_contact.createdTime, m_crm_contact.createdUser, m_crm_contact.sAccountId, m_crm_contact.assignUser, 
                concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName,
-               m_crm_account.accountName, m_crm_account.lastUpdatedTime
+               m_crm_account.accountName, m_crm_contact.lastUpdatedTime
 
         FROM m_crm_contact 
-               LEFT OUTER JOIN m_crm_account ON (m_crm_contact.accountId = m_crm_account.id) 
+               LEFT OUTER JOIN m_crm_accounts_contacts ON (m_crm_contact.id = m_crm_accounts_contacts.contactId)
+               LEFT OUTER JOIN m_crm_account ON (m_crm_accounts_contacts.accountId = m_crm_account.id) 
                LEFT OUTER JOIN s_user ON (m_crm_contact.assignUser = s_user.username)
         ]]>
-	</sql>
+    </sql>
 
-	<select id="getTotalCount" resultType="int"
-		parameterType="ContactSearchCriteria">
-		SELECT count(*) as totalCount FROM m_crm_contact
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.queryTotalCountSearchCriteria" />
-		</trim>
-	</select>
+    <select id="getTotalCount" resultType="int"
+                parameterType="ContactSearchCriteria">
+        SELECT count(*) as totalCount FROM m_crm_contact
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.queryTotalCountSearchCriteria" />
+        </trim>
+    </select>
     
     <delete id="removeByCriteria" parameterType="ContactSearchCriteria">
         DELETE FROM m_crm_contact
@@ -301,25 +306,27 @@
     </delete>
     
     <sql id="orderStatement">
-        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        ORDER BY 
+        <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[
             m_crm_contact.lastUpdatedTime DESC
         ]]>
     </sql>
 
-	<select id="findPagableListByCriteria" resultMap="SimpleContactResult"
-		parameterType="ContactSearchCriteria">
-		<include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.selectSimpleContact" />
-		<trim prefix="WHERE" prefixOverrides="AND |OR ">
-			1=1 <include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.querySearchCriteria" />
-		</trim>
+    <select id="findPagableListByCriteria" resultMap="SimpleContactResult"
+                parameterType="ContactSearchCriteria">
+        <include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.selectSimpleContact" />
+        <trim prefix="WHERE" prefixOverrides="AND |OR ">
+            1=1 
+            <include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.querySearchCriteria" />
+        </trim>
         <include refid="orderStatement"/>
-	</select>
+    </select>
 
-	<select id="findContactById" parameterType="int"
-		resultMap="SimpleContactResult">
-		<include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.selectSimpleContact" />
+    <select id="findContactById" parameterType="int"
+                resultMap="SimpleContactResult">
+        <include refid="com.esofthead.mycollab.module.crm.dao.ContactMapperExt.selectSimpleContact" />
 
-		WHERE m_crm_contact.id=#{contactId,javaType=INTEGER}
-	</select>
+        WHERE m_crm_contact.id=#{contactId,javaType=INTEGER}
+    </select>
 </mapper>

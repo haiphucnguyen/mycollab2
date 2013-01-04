@@ -5,6 +5,7 @@ import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
@@ -65,8 +66,8 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                 new RelatedListHandler() {
                     @Override
                     public void createNewRelatedItem() {
-                        Contact contact = new Contact();
-                        contact.setAccountid(view.getItem().getId());
+                        SimpleContact contact = new SimpleContact();
+                        contact.setAccountId(view.getItem().getId());
                         EventBus.getInstance().fireEvent(
                                 new ContactEvent.GotoEdit(this, contact));
                     }

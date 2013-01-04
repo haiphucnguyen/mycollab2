@@ -2,13 +2,13 @@ package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -23,11 +23,11 @@ import com.vaadin.ui.TextField;
 
 @ViewComponent
 public class ContactAddViewImpl extends AbstractView implements
-        IFormAddView<Contact>, ContactAddView {
+        ContactAddView {
 
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
-    private Contact contact;
+    private SimpleContact contact;
 
     public ContactAddViewImpl() {
         super();
@@ -36,18 +36,18 @@ public class ContactAddViewImpl extends AbstractView implements
     }
 
     @Override
-    public void editItem(Contact item) {
+    public void editItem(SimpleContact item) {
         this.contact = item;
         editForm.setItemDataSource(new BeanItem<Contact>(contact));
 
     }
 
     @Override
-    public HasEditFormHandlers<Contact> getEditFormHandlers() {
+    public HasEditFormHandlers<SimpleContact> getEditFormHandlers() {
         return editForm;
     }
 
-    private class EditForm extends AdvancedEditBeanForm<Contact> {
+    private class EditForm extends AdvancedEditBeanForm<SimpleContact> {
 
         private static final long serialVersionUID = 1L;
 
@@ -67,7 +67,7 @@ public class ContactAddViewImpl extends AbstractView implements
             }
 
             private Layout createButtonControls() {
-                return (new EditFormControlsGenerator<Contact>(EditForm.this))
+                return (new EditFormControlsGenerator<SimpleContact>(EditForm.this))
                         .createButtonControls();
             }
 
@@ -93,13 +93,13 @@ public class ContactAddViewImpl extends AbstractView implements
                 if (propertyId.equals("leadsource")) {
                     LeadSourceComboBox leadSource = new LeadSourceComboBox();
                     return leadSource;
-                } else if (propertyId.equals("accountid")) {
+                } else if (propertyId.equals("accountId")) {
                     AccountSelectionField accountField = new AccountSelectionField();
-                    if (contact.getAccountid() != null) {
+                    if (contact.getAccountId() != null) {
                         AccountService accountService = AppContext
                                 .getSpringBean(AccountService.class);
                         SimpleAccount account = accountService
-                                .findAccountById(contact.getAccountid());
+                                .findAccountById(contact.getAccountId());
                         if (account != null) {
                             accountField.setAccount(account);
                         }

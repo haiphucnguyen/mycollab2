@@ -47,6 +47,16 @@
             domainObjectName="Account"
             schema="mycollab"
             tableName="m_crm_account" />
+        
+        <table
+            domainObjectName="AccountContact"
+            schema="mycollab"
+            tableName="m_crm_accounts_contacts" />
+        
+        <table
+            domainObjectName="AccountOpportunity"
+            schema="mycollab"
+            tableName="m_crm_accounts_opportunities" />
 
         <table
             domainObjectName="CrmActivityStream"
@@ -77,6 +87,11 @@
             domainObjectName="Contact"
             schema="mycollab"
             tableName="m_crm_contact" />
+        
+        <table
+            domainObjectName="ContactCase"
+            schema="mycollab"
+            tableName="m_crm_contacts_cases" />
 
         <table
             domainObjectName="Contract"
@@ -102,6 +117,11 @@
             domainObjectName="Opportunity"
             schema="mycollab"
             tableName="m_crm_opportunity" />
+        
+        <table
+            domainObjectName="OpportunityContact"
+            schema="mycollab"
+            tableName="m_crm_opportunities_contacts" />
 
         <table
             domainObjectName="Note"

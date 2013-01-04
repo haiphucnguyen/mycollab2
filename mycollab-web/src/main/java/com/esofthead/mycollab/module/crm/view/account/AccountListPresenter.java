@@ -1,11 +1,5 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.vaadin.dialogs.ConfirmDialog;
-
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
@@ -21,187 +15,180 @@ import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+import org.vaadin.dialogs.ConfirmDialog;
 
 public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
-		implements ListPresenter<AccountSearchCriteria> {
-	private static final long serialVersionUID = 1L;
+        implements ListPresenter<AccountSearchCriteria> {
 
-	private AccountService accountService;
+    private static final long serialVersionUID = 1L;
+    private AccountService accountService;
+    private AccountSearchCriteria searchCriteria;
+    private boolean isSelectAll = false;
 
-	private AccountSearchCriteria searchCriteria;
+    public AccountListPresenter() {
+        super(AccountListView.class);
+        accountService = AppContext.getSpringBean(AccountService.class);
 
-	private boolean isSelectAll = false;
+        view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+            private static final long serialVersionUID = 1L;
 
-	public AccountListPresenter() {
-		super(AccountListView.class);
-		accountService = AppContext.getSpringBean(AccountService.class);
+            @Override
+            public void move(int newPageNumber) {
+                pageChange();
+            }
 
-		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
-			private static final long serialVersionUID = 1L;
+            @Override
+            public void displayItemChange(int numOfItems) {
+                pageChange();
+            }
 
-			@Override
-			public void move(int newPageNumber) {
-				pageChange();
-			}
+            private void pageChange() {
+                if (isSelectAll) {
+                    selectAllItemsInCurrentPage();
+                }
 
-			@Override
-			public void displayItemChange(int numOfItems) {
-				pageChange();
-			}
+                checkWhetherEnableTableActionControl();
+            }
+        });
 
-			private void pageChange() {
-				if (isSelectAll) {
-					selectAllItemsInCurrentPage();
-				}
+        view.getSearchHandlers().addSearchHandler(
+                new SearchHandler<AccountSearchCriteria>() {
+                    @Override
+                    public void onSearch(AccountSearchCriteria criteria) {
+                        doSearch(criteria);
+                    }
+                });
 
-				checkWhetherEnableTableActionControl();
-			}
-		});
+        view.getOptionSelectionHandlers().addSelectionOptionHandler(
+                new SelectionOptionHandler() {
+                    @Override
+                    public void onSelectCurrentPage() {
+                        isSelectAll = false;
+                        selectAllItemsInCurrentPage();
 
-		view.getSearchHandlers().addSearchHandler(
-				new SearchHandler<AccountSearchCriteria>() {
+                        checkWhetherEnableTableActionControl();
+                    }
 
-					@Override
-					public void onSearch(AccountSearchCriteria criteria) {
-						doSearch(criteria);
-					}
-				});
+                    @Override
+                    public void onDeSelect() {
+                        Collection<SimpleAccount> currentDataList = view
+                                .getPagedBeanTable().getCurrentDataList();
+                        isSelectAll = false;
+                        for (SimpleAccount item : currentDataList) {
+                            item.setSelected(false);
+                            CheckBox checkBox = (CheckBox) item.getExtraData();
+                            checkBox.setValue(false);
+                        }
 
-		view.getOptionSelectionHandlers().addSelectionOptionHandler(
-				new SelectionOptionHandler() {
+                        checkWhetherEnableTableActionControl();
 
-					@Override
-					public void onSelectCurrentPage() {
-						isSelectAll = false;
-						selectAllItemsInCurrentPage();
+                    }
 
-						checkWhetherEnableTableActionControl();
-					}
+                    @Override
+                    public void onSelectAll() {
+                        isSelectAll = true;
+                        selectAllItemsInCurrentPage();
+                    }
+                });
 
-					@Override
-					public void onDeSelect() {
-						Collection<SimpleAccount> currentDataList = view
-								.getPagedBeanTable().getCurrentDataList();
-						isSelectAll = false;
-						for (SimpleAccount item : currentDataList) {
-							item.setSelected(false);
-							CheckBox checkBox = (CheckBox) item.getExtraData();
-							checkBox.setValue(false);
-						}
+        view.getPopupActionHandlers().addPopupActionHandler(
+                new PopupActionHandler() {
+                    @Override
+                    public void onSelect(String id, String caption) {
+                        if ("delete".equals(id)) {
+                            ConfirmDialog.show(view.getWindow(),
+                                    "Please Confirm:",
+                                    "Are you sure to delete selected items: ",
+                                    "Yes", "No", new ConfirmDialog.Listener() {
+                                private static final long serialVersionUID = 1L;
 
-						checkWhetherEnableTableActionControl();
+                                @Override
+                                public void onClose(ConfirmDialog dialog) {
+                                    if (dialog.isConfirmed()) {
+                                        deleteSelectedItems();
+                                    } 
+                                }
+                            });
 
-					}
+                        } else if ("mail".equals(id)) {
+                            view.getWidget().getWindow()
+                                    .addWindow(new MailFormWindow());
+                        }
+                    }
+                });
 
-					@Override
-					public void onSelectAll() {
-						isSelectAll = true;
-						selectAllItemsInCurrentPage();
-					}
-				});
+        view.getSelectableItemHandlers().addSelectableItemHandler(
+                new SelectableItemHandler<SimpleAccount>() {
+                    @Override
+                    public void onSelect(SimpleAccount item) {
+                        isSelectAll = false;
+                        item.setSelected(!item.isSelected());
 
-		view.getPopupActionHandlers().addPopupActionHandler(
-				new PopupActionHandler() {
+                        checkWhetherEnableTableActionControl();
+                    }
+                });
+    }
 
-					@Override
-					public void onSelect(String id, String caption) {
-						if ("delete".equals(id)) {
-							ConfirmDialog.show(view.getWindow(),
-									"Please Confirm:",
-									"Are you sure to delete selected items: ",
-									"Yes", "No", new ConfirmDialog.Listener() {
-										private static final long serialVersionUID = 1L;
+    private void selectAllItemsInCurrentPage() {
+        Collection<SimpleAccount> currentDataList = view.getPagedBeanTable()
+                .getCurrentDataList();
+        for (SimpleAccount item : currentDataList) {
+            item.setSelected(true);
+            CheckBox checkBox = (CheckBox) item.getExtraData();
+            checkBox.setValue(true);
+        }
+    }
 
-										@Override
-										public void onClose(ConfirmDialog dialog) {
-											if (dialog.isConfirmed()) {
-												System.out.println("Confirm");
-												deleteSelectedItems();
-											} else {
-												System.out.println("No");
-											}
-										}
+    private void checkWhetherEnableTableActionControl() {
+        Collection<SimpleAccount> currentDataList = view.getPagedBeanTable()
+                .getCurrentDataList();
+        int countItems = 0;
+        for (SimpleAccount item : currentDataList) {
+            if (item.isSelected()) {
+                countItems++;
+            }
+        }
+        if (countItems > 0) {
+            view.enableActionControls(countItems);
+        } else {
+            view.disableActionControls();
+        }
+    }
 
-									});
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        super.onGo(container, data);
+        doSearch((AccountSearchCriteria) data.getParams());
+    }
 
-						} else if ("mail".equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
-						}
-					}
-				});
+    @Override
+    public void doSearch(AccountSearchCriteria searchCriteria) {
+        this.searchCriteria = searchCriteria;
+        view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+        checkWhetherEnableTableActionControl();
+    }
 
-		view.getSelectableItemHandlers().addSelectableItemHandler(
-				new SelectableItemHandler<SimpleAccount>() {
+    private void deleteSelectedItems() {
+        if (!isSelectAll) {
+            Collection<SimpleAccount> currentDataList = view
+                    .getPagedBeanTable().getCurrentDataList();
+            List<Integer> keyList = new ArrayList<Integer>();
+            for (SimpleAccount item : currentDataList) {
+                keyList.add(item.getId());
+            }
 
-					@Override
-					public void onSelect(SimpleAccount item) {
-						isSelectAll = false;
-						item.setSelected(!item.isSelected());
+            if (keyList.size() > 0) {
+                accountService.removeWithSession(keyList,
+                        AppContext.getUsername());
+                doSearch(searchCriteria);
+            }
+        } else {
+            accountService.removeByCriteria(searchCriteria);
+            doSearch(searchCriteria);
+        }
 
-						checkWhetherEnableTableActionControl();
-					}
-				});
-	}
-
-	private void selectAllItemsInCurrentPage() {
-		Collection<SimpleAccount> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		for (SimpleAccount item : currentDataList) {
-			item.setSelected(true);
-			CheckBox checkBox = (CheckBox) item.getExtraData();
-			checkBox.setValue(true);
-		}
-	}
-
-	private void checkWhetherEnableTableActionControl() {
-		Collection<SimpleAccount> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		int countItems = 0;
-		for (SimpleAccount item : currentDataList) {
-			if (item.isSelected()) {
-				countItems++;
-			}
-		}
-		if (countItems > 0) {
-			view.enableActionControls(countItems);
-		} else {
-			view.disableActionControls();
-		}
-	}
-
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		super.onGo(container, data);
-		doSearch((AccountSearchCriteria) data.getParams());
-	}
-
-	@Override
-	public void doSearch(AccountSearchCriteria searchCriteria) {
-		this.searchCriteria = searchCriteria;
-		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
-		checkWhetherEnableTableActionControl();
-	}
-
-	private void deleteSelectedItems() {
-		if (!isSelectAll) {
-			Collection<SimpleAccount> currentDataList = view
-					.getPagedBeanTable().getCurrentDataList();
-			List<Integer> keyList = new ArrayList<Integer>();
-			for (SimpleAccount item : currentDataList) {
-				keyList.add(item.getId());
-			}
-
-			if (keyList.size() > 0) {
-				accountService.removeWithSession(keyList,
-						AppContext.getUsername());
-				doSearch(searchCriteria);
-			}
-		} else {
-			accountService.removeByCriteria(searchCriteria);
-			doSearch(searchCriteria);
-		}
-
-	}
-
+    }
 }

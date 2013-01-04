@@ -65,7 +65,7 @@ public class ContactPreview extends VerticalLayout {
                 @Override
                 protected Field onCreateField(Item item, Object propertyId,
                         Component uiContext) {
-                    if (propertyId.equals("accountid")) {
+                    if (propertyId.equals("accountId")) {
                         return new FormLinkViewField(contact.getAccountName(),
                                 new Button.ClickListener() {
                                     @Override
@@ -74,7 +74,7 @@ public class ContactPreview extends VerticalLayout {
                                                 .fireEvent(
                                                 new AccountEvent.GotoRead(
                                                 this,
-                                                contact.getAccountid()));
+                                                contact.getAccountId()));
 
                                     }
                                 });

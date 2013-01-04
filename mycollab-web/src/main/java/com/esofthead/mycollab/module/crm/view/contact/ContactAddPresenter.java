@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
-import com.esofthead.mycollab.module.crm.domain.Contact;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
@@ -14,63 +14,63 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
-	private static final long serialVersionUID = 1L;
 
-	public ContactAddPresenter() {
-		super(ContactAddView.class);
-		bind();
-	}
+    private static final long serialVersionUID = 1L;
 
-	private void bind() {
-		view.getEditFormHandlers().addFormHandler(
-				new EditFormHandler<Contact>() {
+    public ContactAddPresenter() {
+        super(ContactAddView.class);
+        bind();
+    }
 
-					@Override
-					public void onSave(final Contact account) {
-						saveContact(account);
-						ViewState viewState = HistoryViewManager.back();
+    private void bind() {
+        view.getEditFormHandlers().addFormHandler(
+                new EditFormHandler<SimpleContact>() {
+                    @Override
+                    public void onSave(final SimpleContact contact) {
+                        saveContact(contact);
+                        ViewState viewState = HistoryViewManager.back();
 
-						if (viewState instanceof NullViewState) {
-							EventBus.getInstance().fireEvent(
-									new ContactEvent.GotoList(this, null));
-						}
+                        if (viewState instanceof NullViewState) {
+                            EventBus.getInstance().fireEvent(
+                                    new ContactEvent.GotoList(this, null));
+                        }
 
-					}
+                    }
 
-					@Override
-					public void onCancel() {
-						ViewState viewState = HistoryViewManager.back();
-						if (viewState instanceof NullViewState) {
-							EventBus.getInstance().fireEvent(
-									new ContactEvent.GotoList(this, null));
-						}
-					}
+                    @Override
+                    public void onCancel() {
+                        ViewState viewState = HistoryViewManager.back();
+                        if (viewState instanceof NullViewState) {
+                            EventBus.getInstance().fireEvent(
+                                    new ContactEvent.GotoList(this, null));
+                        }
+                    }
 
-					@Override
-					public void onSaveAndNew(final Contact contact) {
-						saveContact(contact);
-						EventBus.getInstance().fireEvent(
-								new ContactEvent.GotoAdd(this, null));
-					}
-				});
-	}
+                    @Override
+                    public void onSaveAndNew(final SimpleContact contact) {
+                        saveContact(contact);
+                        EventBus.getInstance().fireEvent(
+                                new ContactEvent.GotoAdd(this, null));
+                    }
+                });
+    }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		super.onGo(container, data);
-		view.editItem((Contact) data.getParams());
-	}
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        super.onGo(container, data);
+        view.editItem((SimpleContact) data.getParams());
+    }
 
-	public void saveContact(Contact contact) {
-		ContactService contactService = AppContext
-				.getSpringBean(ContactService.class);
+    public void saveContact(SimpleContact contact) {
+        ContactService contactService = AppContext
+                .getSpringBean(ContactService.class);
 
-		contact.setSaccountid(AppContext.getAccountId());
-		if (contact.getId() == null) {
-			contactService.saveWithSession(contact, AppContext.getUsername());
-		} else {
-			contactService.updateWithSession(contact, AppContext.getUsername());
-		}
+        contact.setSaccountid(AppContext.getAccountId());
+        if (contact.getId() == null) {
+            contactService.saveWithSession(contact, AppContext.getUsername());
+        } else {
+            contactService.updateWithSession(contact, AppContext.getUsername());
+        }
 
-	}
+    }
 }

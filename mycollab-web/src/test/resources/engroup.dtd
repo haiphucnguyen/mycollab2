@@ -7,15 +7,19 @@
     m_colla_workgroup_user*,
     m_comment*,
     m_crm_account*,
+    m_crm_accounts_contacts*,
+    m_crm_accounts_opportunities*,
     m_crm_call*,
     m_crm_campaign*,
     m_crm_case*,
     m_crm_contact*,
+    m_crm_contacts_cases*,
     m_crm_contract*,
     m_crm_customer*,
     m_crm_lead*,
     m_crm_meeting*,
     m_crm_note*,
+    m_crm_opportunities_contacts*,
     m_crm_opportunity*,
     m_crm_product*,
     m_crm_product_catalog*,
@@ -127,6 +131,7 @@
     sAccountId CDATA #REQUIRED
     type CDATA #REQUIRED
     typeid CDATA #REQUIRED
+    module CDATA #REQUIRED
 >
 
 <!ELEMENT m_colla_workgroup EMPTY>
@@ -219,6 +224,22 @@
     lastUpdatedTime CDATA #IMPLIED
 >
 
+<!ELEMENT m_crm_accounts_contacts EMPTY>
+<!ATTLIST m_crm_accounts_contacts
+    id CDATA #REQUIRED
+    accountId CDATA #REQUIRED
+    contactId CDATA #REQUIRED
+    createdTime CDATA #IMPLIED
+>
+
+<!ELEMENT m_crm_accounts_opportunities EMPTY>
+<!ATTLIST m_crm_accounts_opportunities
+    id CDATA #REQUIRED
+    accountId CDATA #REQUIRED
+    opportunityId CDATA #REQUIRED
+    createdTime CDATA #IMPLIED
+>
+
 <!ELEMENT m_crm_call EMPTY>
 <!ATTLIST m_crm_call
     id CDATA #REQUIRED
@@ -291,7 +312,6 @@
     prefix CDATA #IMPLIED
     firstname CDATA #IMPLIED
     lastname CDATA #REQUIRED
-    accountId CDATA #IMPLIED
     leadSource CDATA #IMPLIED
     campaignId CDATA #IMPLIED
     isCallable CDATA #IMPLIED
@@ -322,6 +342,14 @@
     otherPostalCode CDATA #IMPLIED
     otherCountry CDATA #IMPLIED
     lastUpdatedTime CDATA #IMPLIED
+>
+
+<!ELEMENT m_crm_contacts_cases EMPTY>
+<!ATTLIST m_crm_contacts_cases
+    id CDATA #REQUIRED
+    contactId CDATA #REQUIRED
+    caseId CDATA #REQUIRED
+    createdTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_contract EMPTY>
@@ -448,6 +476,14 @@
     createdUser CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
     lastUpdatedTime CDATA #IMPLIED
+>
+
+<!ELEMENT m_crm_opportunities_contacts EMPTY>
+<!ATTLIST m_crm_opportunities_contacts
+    id CDATA #REQUIRED
+    opportunityId CDATA #REQUIRED
+    contactId CDATA #REQUIRED
+    createdTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_opportunity EMPTY>

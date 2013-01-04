@@ -7,7 +7,6 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import java.beans.PropertyDescriptor;
 import java.io.Serializable;
-import java.util.GregorianCalendar;
 import java.util.List;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.apache.ibatis.session.RowBounds;
@@ -19,7 +18,7 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 
     private static Logger log = LoggerFactory.getLogger(DefaultService.class);
 
-    public abstract ICrudGenericDAO<K, T> getCrudMapper();
+    public abstract ICrudGenericDAO getCrudMapper();
 
     public abstract ISearchableDAO<S> getSearchMapper();
 
@@ -34,36 +33,20 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 
     @Override
     public int saveWithSession(T record, String username) {
-        try {
-            log.debug("Set createtime and lastupdatedtime if enable");
-            PropertyUtils.setProperty(record, "createdtime",
-                    new GregorianCalendar().getTime());
-            PropertyUtils.setProperty(record, "lastupdatedtime",
-                    new GregorianCalendar().getTime());
-        } catch (Exception e) {
-        }
-
         ICrudGenericDAO<K, T> crudMapper = getCrudMapper();
         Class<? extends ICrudGenericDAO> crudMapperClass = crudMapper
                 .getClass();
-        
-        int result = getCrudMapper().insertAndReturnKey(record);
+
+        getCrudMapper().insertAndReturnKey(record);
         try {
-            result = (Integer)PropertyUtils.getProperty(record, "id");
+            return (Integer) PropertyUtils.getProperty(record, "id");
         } catch (Exception e) {
-            result = 1;
+            return 1;
         }
-        
-        return result;
     }
 
     @Override
     public int updateWithSession(T record, String username) {
-        try {
-            PropertyUtils.setProperty(record, "lastupdatedtime",
-                    new GregorianCalendar().getTime());
-        } catch (Exception e) {
-        }
         if (username == null) {
             return getCrudMapper().updateByPrimaryKeySelective(record);
         } else {

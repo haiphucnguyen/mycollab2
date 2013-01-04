@@ -21,12 +21,16 @@ import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.crm.dao.AccountContactMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapperExt;
+import com.esofthead.mycollab.module.crm.domain.AccountContact;
+import com.esofthead.mycollab.module.crm.domain.AccountContactExample;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
+import java.util.GregorianCalendar;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -35,13 +39,15 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Traceable(module = "Crm", type = "Contact", nameField = "lastname")
 @Auditable(module = "Crm", type = "Contact")
-public class ContactServiceImpl extends DefaultService<Integer, Contact, ContactSearchCriteria> implements
+public class ContactServiceImpl extends DefaultService<Integer, SimpleContact, ContactSearchCriteria> implements
         ContactService {
 
     @Autowired
     private ContactMapper contactMapper;
     @Autowired
     private ContactMapperExt contactMapperExt;
+    @Autowired
+    private AccountContactMapper accountContactMapper;
 
     @Override
     public ICrudGenericDAO<Integer, Contact> getCrudMapper() {
@@ -54,7 +60,58 @@ public class ContactServiceImpl extends DefaultService<Integer, Contact, Contact
     }
 
     @Override
+    public int saveWithSession(SimpleContact record, String username) {
+        int contactId = super.saveWithSession(record, username);
+
+        if (record.getAccountId() != null) {
+            AccountContact accountContactRel = new AccountContact();
+            accountContactRel.setAccountid(record.getAccountId());
+            accountContactRel.setContactid(contactId);
+            accountContactRel.setCreatedtime(new GregorianCalendar().getTime());
+            accountContactMapper.insert(accountContactRel);
+        }
+        return contactId;
+    }
+
+    @Override
+    public int updateWithSession(SimpleContact record, String username) {
+        return super.updateWithSession(record, username);
+    }
+
+    @Override
     public SimpleContact findContactById(int contactId) {
         return contactMapperExt.findContactById(contactId);
+    }
+
+    @Override
+    public SimpleContact findByPrimaryKey(Integer primaryKey) {
+        return findContactById(primaryKey);
+    }
+
+    @Override
+    public void postUpdate(SimpleContact oldValue, SimpleContact newValue) {
+        if (oldValue.getAccountId() != newValue.getAccountId()) {
+            if (oldValue.getAccountId() == null) {
+                AccountContact accountContactRel = new AccountContact();
+                accountContactRel.setAccountid(newValue.getAccountId());
+                accountContactRel.setContactid(newValue.getId());
+                accountContactRel.setCreatedtime(new GregorianCalendar().getTime());
+                accountContactMapper.insert(accountContactRel);
+            } else {
+                AccountContactExample ex = new AccountContactExample();
+                ex.createCriteria().andAccountidEqualTo(oldValue.getAccountId());
+                ex.createCriteria().andContactidEqualTo(oldValue.getId());
+                accountContactMapper.deleteByExample(ex);
+
+
+                if (newValue.getAccountId() != null) {
+                    AccountContact accountContactRel = new AccountContact();
+                    accountContactRel.setAccountid(newValue.getAccountId());
+                    accountContactRel.setContactid(newValue.getId());
+                    accountContactRel.setCreatedtime(new GregorianCalendar().getTime());
+                    accountContactMapper.insert(accountContactRel);
+                }
+            }
+        }
     }
 }

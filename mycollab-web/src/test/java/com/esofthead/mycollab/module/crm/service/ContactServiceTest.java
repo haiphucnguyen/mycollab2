@@ -33,7 +33,7 @@ import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(EngroupClassRunner.class)
 @ContextConfiguration(locations = {"classpath:META-INF/spring/service-test-context.xml"})
-public class ContactServiceTest extends ServiceTest{
+public class ContactServiceTest extends ServiceTest {
 
     @Autowired
     protected ContactService contactService;
@@ -58,7 +58,7 @@ public class ContactServiceTest extends ServiceTest{
         ContactSearchCriteria criteria = new ContactSearchCriteria();
         criteria.setAssignUserName(new StringSearchField(SearchField.AND,
                 "Duong"));
-        criteria.setOpportunityId(new NumberSearchField(SearchField.AND, 1));
+//        criteria.setOpportunityId(new NumberSearchField(SearchField.AND, 1));
         criteria.setAccountName(new StringSearchField(SearchField.AND, "x"));
         criteria.setContactName(new StringSearchField(SearchField.AND, "Hai"));
         criteria.setSaccountid(new NumberSearchField(SearchField.AND, 1));

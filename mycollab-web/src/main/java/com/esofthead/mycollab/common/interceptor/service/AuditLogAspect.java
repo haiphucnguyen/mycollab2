@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.common.interceptor.service;
 
 import com.esofthead.mycollab.common.service.AuditLogService;
+import com.esofthead.mycollab.core.persistence.service.IPostUpdateHandler;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -81,6 +82,11 @@ public class AuditLogAspect {
                 int sAccountId = (Integer) PropertyUtils.getProperty(bean, "saccountid");
                 Object oldValue = caches.get(key);
                 if (oldValue != null) {
+                    if (cls.isAssignableFrom(IPostUpdateHandler.class)) {
+                        Object service = advised.getTargetSource().getTarget();
+                        ((IPostUpdateHandler) service).postUpdate(oldValue, bean);
+                    }
+
                     log.debug("Save audit log for service " + bean);
                     auditLogService.saveAuditLog(username, auditAnnotation.module(), auditAnnotation.type(), typeid, sAccountId, oldValue, bean);
                     caches.remove(key);

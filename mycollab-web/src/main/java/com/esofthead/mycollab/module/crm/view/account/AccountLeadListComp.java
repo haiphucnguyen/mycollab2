@@ -20,9 +20,9 @@ import com.vaadin.ui.Link;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.BaseTheme;
 import java.util.HashSet;
 import java.util.Set;
+import org.vaadin.hene.splitbutton.SplitButton;
 
 public class AccountLeadListComp extends Depot implements IRelatedListHandlers {
 
@@ -42,18 +42,28 @@ public class AccountLeadListComp extends Depot implements IRelatedListHandlers {
         VerticalLayout contentContainer = (VerticalLayout) content;
         contentContainer.setSpacing(true);
 
-        Button createBtn = new Button("New Lead", new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
+        SplitButton controlsBtn = new SplitButton();
+        controlsBtn.addStyleName(SplitButton.STYLE_CHAMELEON);
+        controlsBtn.setCaption("New Lead");
+        controlsBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+        controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
             @Override
-            public void buttonClick(ClickEvent event) {
+            public void splitButtonClick(SplitButton.SplitButtonClickEvent event) {
                 fireRelatedListHandler();
             }
         });
+        Button selectBtn = new Button("Select from existing leads", new Button.ClickListener() {
 
-        createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
-        createBtn.setStyleName(BaseTheme.BUTTON_LINK);
-        contentContainer.addComponent(createBtn);
+            @Override
+            public void buttonClick(ClickEvent event) {
+                
+            }
+        });
+        selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
+        selectBtn.setStyleName("link");
+        controlsBtn.addComponent(selectBtn);
+        
+        contentContainer.addComponent(controlsBtn);
 
         tableItem = new PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>(
                 AppContext.getSpringBean(LeadService.class), SimpleLead.class,

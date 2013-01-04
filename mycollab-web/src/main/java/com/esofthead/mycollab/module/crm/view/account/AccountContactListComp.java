@@ -16,6 +16,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
@@ -41,6 +42,7 @@ public class AccountContactListComp extends Depot implements IRelatedListHandler
         contentContainer.setSpacing(true);
         
         SplitButton controlsBtn = new SplitButton();
+        controlsBtn.addStyleName(SplitButton.STYLE_CHAMELEON);
         controlsBtn.setCaption("New Contact");
         controlsBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
         controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
@@ -93,6 +95,18 @@ public class AccountContactListComp extends Depot implements IRelatedListHandler
             @Override
             public Object generateCell(Table source, Object itemId,
                     Object columnId) {
+                HorizontalLayout controlLayout = new HorizontalLayout();
+                Button editBtn = new Button(null, new Button.ClickListener() {
+
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                throw new UnsupportedOperationException("Not supported yet.");
+                            }
+                        });
+                editBtn.setStyleName("link");
+                editBtn.setIcon(new ThemeResource("icons/16/edit.png"));
+                controlLayout.addComponent(editBtn);
+                
                 Button deleteBtn = new Button(null, new Button.ClickListener() {
 
                             @Override
@@ -102,7 +116,8 @@ public class AccountContactListComp extends Depot implements IRelatedListHandler
                         });
                 deleteBtn.setStyleName("link");
                 deleteBtn.setIcon(new ThemeResource("icons/16/delete.png"));
-                return deleteBtn;
+                controlLayout.addComponent(deleteBtn);
+                return controlLayout;
             }
         });
 
