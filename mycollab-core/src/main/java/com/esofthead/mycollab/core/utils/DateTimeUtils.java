@@ -23,6 +23,16 @@ public class DateTimeUtils {
         }
         return date;
     }
+    
+    public static Date getDateByStringWithFormatW3C(String strDate) {
+    	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
+    	try {
+			return formatter.parse(strDate);
+		} catch (ParseException e) {
+			e.printStackTrace();
+		}
+		return new Date();
+    }
 
     private static String[] getArrayDate(Date date) {
         SimpleDateFormat lv_formatter = new SimpleDateFormat(
@@ -125,6 +135,7 @@ public class DateTimeUtils {
     }
     
     public static void main(String[] args) {
-        System.out.println(convertJodaTimezone(new GregorianCalendar().getTime(), "UTC").toLocalDateTime().toDate());
+    	System.out.println(getDateByStringWithFormatW3C("2013-01-04T16:43:50+07:00").toString());
+        //System.out.println(convertJodaTimezone(new GregorianCalendar().getTime(), "UTC").toLocalDateTime().toDate());
     }
 }

@@ -77,6 +77,7 @@ public class AccountSelectionWindow extends Window {
                     "assignuser"}, new String[]{"Name", "City",
                     "Assign User"});
         tableItem.setWidth("100%");
+        tableItem.setHeight("200px");
 
         tableItem.setColumnExpandRatio("accountname", 1.0f);
         tableItem.setColumnWidth("city", 150);
