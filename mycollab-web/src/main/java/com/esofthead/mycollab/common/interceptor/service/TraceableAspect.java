@@ -34,7 +34,7 @@ public class TraceableAspect {
         if (traceableAnnotation != null) {
             try {
                 ActivityStream activity = constructActivity(
-                        traceableAnnotation, bean,
+                        traceableAnnotation, bean, username,
                         ActivityStreamConstants.ACTION_CREATE);
                 activityStreamService.save(activity);
             } catch (Exception e) {
@@ -57,7 +57,7 @@ public class TraceableAspect {
         if (traceableAnnotation != null) {
             try {
                 ActivityStream activity = constructActivity(
-                        traceableAnnotation, bean,
+                        traceableAnnotation, bean, username,
                         ActivityStreamConstants.ACTION_UPDATE);
                 activityStreamService.save(activity);
             } catch (Exception e) {
@@ -69,7 +69,7 @@ public class TraceableAspect {
     }
 
     private ActivityStream constructActivity(Traceable traceableAnnotation,
-            Object bean, String action) throws IllegalAccessException,
+            Object bean, String username, String action) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException {
         ActivityStream activity = new ActivityStream();
         activity.setModule(traceableAnnotation.module());
@@ -80,6 +80,7 @@ public class TraceableAspect {
         activity.setAction(action);
         activity.setSaccountid((Integer) PropertyUtils.getProperty(bean,
                 "saccountid"));
+        activity.setCreateduser(username);
         activity.setNamefield((String) PropertyUtils.getProperty(bean,
                 traceableAnnotation.nameField()));
         return activity;

@@ -93,7 +93,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
     private void doSearch() {
         totalCount = searchService.getTotalCount(searchRequest
                 .getSearchCriteria());
-        int totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
+        totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
         if (searchRequest.getCurrentPage() > totalPage) {
             searchRequest.setCurrentPage(totalPage);
         }
