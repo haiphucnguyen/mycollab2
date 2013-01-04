@@ -20,7 +20,6 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Window;
-
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -43,7 +42,6 @@ public class HistoryLogWindow extends Window {
         defaultFieldHandlers.put(DEFAULT_FIELD, new DefaultHistoryFieldFormat());
         defaultFieldHandlers.put(DATE_FIELD, new DateHistoryFieldFormat());
     }
-    
     protected BeanList<AuditLogService, AuditLogSearchCriteria, SimpleAuditLog> logTable;
     protected Map<String, FieldDisplayHandler> fieldsFormat = new HashMap<String, FieldDisplayHandler>();
     private String module;
@@ -80,7 +78,7 @@ public class HistoryLogWindow extends Window {
     public void generateFieldDisplayHandler(String fieldname, String displayName, HistoryFieldFormat format) {
         fieldsFormat.put(fieldname, new FieldDisplayHandler(displayName, format));
     }
-    
+
     public void generateFieldDisplayHandler(String fieldname, String displayName, String formatName) {
         fieldsFormat.put(fieldname, new FieldDisplayHandler(displayName, defaultFieldHandlers.get(formatName)));
     }
@@ -96,9 +94,9 @@ public class HistoryLogWindow extends Window {
                 gridLayout.setWidth("100%");
 
                 int visibleRows = 0;
-                
+
                 String strDate = "";
-                
+
                 for (int i = 0; i < changeItems.size(); i++) {
                     AuditChangeItem item = changeItems.get(i);
                     String fieldName = item.getField();
@@ -112,9 +110,9 @@ public class HistoryLogWindow extends Window {
                         gridLayout.addComponent(fieldDisplayHandler.getFormat().formatField(item.getNewvalue()), 2, visibleRows + 2);
                         visibleRows++;
                     }
-                    
+
                     if (fieldName.equals("lastupdatedtime")) {
-                    	strDate = item.getNewvalue();
+                        strDate = item.getNewvalue();
                     }
                 }
 
@@ -175,7 +173,7 @@ public class HistoryLogWindow extends Window {
         }
 
         @SuppressWarnings("unused")
-		public void setDisplayName(String displayName) {
+        public void setDisplayName(String displayName) {
             this.displayName = displayName;
         }
 
@@ -184,7 +182,7 @@ public class HistoryLogWindow extends Window {
         }
 
         @SuppressWarnings("unused")
-		public void setFormat(HistoryFieldFormat format) {
+        public void setFormat(HistoryFieldFormat format) {
             this.format = format;
         }
     }

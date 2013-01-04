@@ -9,7 +9,6 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import org.joda.time.DateTime;
 import org.joda.time.DateTimeZone;
-import org.joda.time.LocalDateTime;
 
 public class DateTimeUtils {
 
@@ -132,10 +131,5 @@ public class DateTimeUtils {
         DateTime srcDateTime = new DateTime(date);
         DateTime dstDateTime = srcDateTime.withZone(DateTimeZone.forID(destTz));
         return dstDateTime;
-    }
-    
-    public static void main(String[] args) {
-    	System.out.println(getDateByStringWithFormatW3C("2013-01-04T16:43:50+07:00").toString());
-        //System.out.println(convertJodaTimezone(new GregorianCalendar().getTime(), "UTC").toLocalDateTime().toDate());
     }
 }

@@ -21,7 +21,7 @@ public class CampaignSelectionWindow extends Window {
 
     private static final long serialVersionUID = 1L;
     private CampaignSearchCriteria searchCriteria;
-    private PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign> tableItem;
+    private CampaignTableDisplay tableItem;
     private FieldSelection fieldSelection;
 
     public CampaignSelectionWindow(FieldSelection fieldSelection) {
@@ -57,19 +57,11 @@ public class CampaignSelectionWindow extends Window {
     }
 
     private void createCampaignList() {
-        tableItem = new PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign>(
-                AppContext.getSpringBean(CampaignService.class),
-                SimpleCampaign.class, new String[]{"campaignname", "type",
+        tableItem = new CampaignTableDisplay(new String[]{"campaignname", "type",
                     "status", "startdate", "enddate"},
                 new String[]{"Campaign", "Type", "Status", "Start Date",
                     "End Date"});
         tableItem.setWidth("100%");
-
-        tableItem.setColumnWidth("campaignname", 250);
-        tableItem.setColumnWidth("type", 150);
-        tableItem.setColumnWidth("status", 150);
-        tableItem.setColumnWidth("startdate", 190);
-        tableItem.setColumnWidth("enddate", 190);
 
         tableItem.addGeneratedColumn("campaignname", new ColumnGenerator() {
             private static final long serialVersionUID = 1L;

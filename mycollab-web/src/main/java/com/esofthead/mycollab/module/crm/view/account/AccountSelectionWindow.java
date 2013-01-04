@@ -4,10 +4,8 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
@@ -24,7 +22,7 @@ public class AccountSelectionWindow extends Window {
 
     private static final long serialVersionUID = 1L;
     private AccountSearchCriteria searchCriteria;
-    private PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount> tableItem;
+    private AccountTableDisplay tableItem;
     private FieldSelection fieldSelection;
 
     public AccountSelectionWindow(FieldSelection fieldSelection) {
@@ -71,17 +69,11 @@ public class AccountSelectionWindow extends Window {
     }
 
     private void createAccountList() {
-        tableItem = new PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount>(
-                AppContext.getSpringBean(AccountService.class),
-                SimpleAccount.class, new String[]{"accountname", "city",
+        tableItem = new AccountTableDisplay(new String[]{"accountname", "city",
                     "assignuser"}, new String[]{"Name", "City",
                     "Assign User"});
         tableItem.setWidth("100%");
         tableItem.setHeight("200px");
-
-        tableItem.setColumnExpandRatio("accountname", 1.0f);
-        tableItem.setColumnWidth("city", 150);
-        tableItem.setColumnWidth("assignuser", 150);
 
         tableItem.addGeneratedColumn("accountname", new ColumnGenerator() {
             private static final long serialVersionUID = 1L;
