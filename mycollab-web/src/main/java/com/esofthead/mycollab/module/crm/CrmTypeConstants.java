@@ -19,5 +19,9 @@ public class CrmTypeConstants {
 	
 	public static String CASE = "Case";
         
+        public static String TASK = "Task";
         
+        public static String MEETING = "Meeting";
+        
+        public static String CALL = "Call";
 }

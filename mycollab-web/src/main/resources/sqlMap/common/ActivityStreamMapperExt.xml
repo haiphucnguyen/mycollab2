@@ -3,7 +3,7 @@
 <mapper namespace="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt">
 
     <resultMap id="SimpleActivityStreamResult"
-        extends="com.esofthead.mycollab.common.dao.ActivityStreamMapper.BaseResultMap"
+        extends="com.esofthead.mycollab.common.dao.ActivityStreamMapper.ResultMapWithBLOBs"
         type="com.esofthead.mycollab.common.domain.SimpleActivityStream">
         
         <result column="createdUserFullName" jdbcType="VARCHAR" property="createdUserFullName" />
@@ -27,7 +27,7 @@
     <sql id="selectSimpleActivityStream">
         <![CDATA[
         SELECT s_activitystream.id, s_activitystream.sAccountId, s_activitystream.type, s_activitystream.typeId, 
-               s_activitystream.createdTime, s_activitystream.action, s_activitystream.createdUser, 
+               s_activitystream.createdTime, s_activitystream.action, s_activitystream.createdUser, s_activitystream.nameField,
                s_activitystream.module, m_comment.comment as comment_comment, m_comment.createdUser as comment_createdUser,
                m_comment.createdTime as comment_createdTime, m_comment.type as comment_type, m_comment.typeid as comment_typeid,
                m_comment.sAccountId as comment_sAccountId, 
