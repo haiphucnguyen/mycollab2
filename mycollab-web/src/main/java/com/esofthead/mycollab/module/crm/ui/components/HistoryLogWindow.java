@@ -29,13 +29,23 @@ import java.util.Map;
  */
 public class HistoryLogWindow extends Window {
 
+    public static final String DEFAULT_FIELD = "default";
+    public static final String DATE_FIELD = "date";
+    public static final String DATETIME_FIELD = "datetime";
+    private static Map<String, HistoryFieldFormat> defaultFieldHandlers;
+
+    static {
+        defaultFieldHandlers = new HashMap<String, HistoryFieldFormat>();
+        defaultFieldHandlers.put(DEFAULT_FIELD, new DefaultHistoryFieldFormat());
+        defaultFieldHandlers.put(DATE_FIELD, new DateHistoryFieldFormat());
+    }
+    
     protected BeanList<AuditLogService, AuditLogSearchCriteria, SimpleAuditLog> logTable;
     protected Map<String, FieldDisplayHandler> fieldsFormat = new HashMap<String, FieldDisplayHandler>();
-
     private String module;
     private String type;
     private int typeid;
-            
+
     public HistoryLogWindow(String module, String type, int typeid) {
         super("Change Log");
         this.setWidth("700px");
@@ -57,8 +67,6 @@ public class HistoryLogWindow extends Window {
         logTable.setSearchCriteria(criteria);
         this.addComponent(logTable);
     }
-    
-    
 
     public void generateFieldDisplayHandler(String fieldname, String displayName) {
         fieldsFormat.put(fieldname, new FieldDisplayHandler(displayName));
@@ -66,6 +74,10 @@ public class HistoryLogWindow extends Window {
 
     public void generateFieldDisplayHandler(String fieldname, String displayName, HistoryFieldFormat format) {
         fieldsFormat.put(fieldname, new FieldDisplayHandler(displayName, format));
+    }
+    
+    public void generateFieldDisplayHandler(String fieldname, String displayName, String formatName) {
+        fieldsFormat.put(fieldname, new FieldDisplayHandler(displayName, defaultFieldHandlers.get(formatName)));
     }
 
     public class HistoryLogRowDisplay implements BeanList.RowDisplayHandler<SimpleAuditLog> {
@@ -83,7 +95,7 @@ public class HistoryLogWindow extends Window {
                 for (int i = 0; i < changeItems.size(); i++) {
                     AuditChangeItem item = changeItems.get(i);
                     String fieldName = item.getField();
-                    
+
                     System.out.print("Field name: " + fieldName + " " + fieldsFormat.size());
 
                     FieldDisplayHandler fieldDisplayHandler = fieldsFormat.get(fieldName);
@@ -177,6 +189,14 @@ public class HistoryLogWindow extends Window {
         @Override
         public Component formatField(String value) {
             return new Label(value);
+        }
+    }
+
+    public static class DateHistoryFieldFormat implements HistoryFieldFormat {
+
+        @Override
+        public Component formatField(String value) {
+            throw new UnsupportedOperationException("Not supported yet.");
         }
     }
 }
