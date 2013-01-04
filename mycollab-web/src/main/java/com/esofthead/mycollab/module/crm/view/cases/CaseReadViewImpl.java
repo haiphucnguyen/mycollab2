@@ -24,97 +24,27 @@ import com.vaadin.ui.VerticalLayout;
 public class CaseReadViewImpl extends AbstractView implements CaseReadView {
 
     private static final long serialVersionUID = 1L;
-    private SimpleCase cases;
-    private PreviewForm previewForm;
 
+    private CasePreview casePreview;
+    
     public CaseReadViewImpl() {
         super();
-        previewForm = new PreviewForm();
-        this.addComponent(previewForm);
+        casePreview = new CasePreview(true);
+        this.addComponent(casePreview);
     }
 
     @Override
     public void previewItem(SimpleCase item) {
-        cases = item;
-        previewForm.setItemDataSource(new BeanItem<Case>(cases));
+    	casePreview.previewItem(item);
     }
 
     @Override
     public HasPreviewFormHandlers<Case> getPreviewFormHandlers() {
-        return previewForm;
-    }
-
-    private class PreviewForm extends AdvancedPreviewBeanForm<Case> {
-
-        private static final long serialVersionUID = 1L;
-
-        @Override
-        public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                protected Field onCreateField(Item item, Object propertyId,
-                        Component uiContext) {
-                    if (propertyId.equals("accountid")) {
-                        return new FormLinkViewField(cases.getAccountName(),
-                                new Button.ClickListener() {
-                                    private static final long serialVersionUID = 1L;
-
-                                    @Override
-                                    public void buttonClick(ClickEvent event) {
-                                        EventBus.getInstance().fireEvent(
-                                                new AccountEvent.GotoRead(this,
-                                                cases.getAccountid()));
-
-                                    }
-                                });
-                    } else if (propertyId.equals("email")) {
-                        return new FormEmailLinkViewField(cases.getEmail());
-                    } else if (propertyId.equals("assignuser")) {
-                        return new FormLinkViewField(cases.getAssignUserFullName(), new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                // TODO Auto-generated method stub
-                            }
-                        });
-                    }
-
-                    return null;
-                }
-            });
-            super.setItemDataSource(newDataSource);
-        }
-
-        class FormLayoutFactory extends CaseFormLayoutFactory {
-
-            private static final long serialVersionUID = 1L;
-
-            public FormLayoutFactory() {
-                super(cases.getSubject());
-            }
-
-            @Override
-            protected Layout createTopPanel() {
-                return (new PreviewFormControlsGenerator<Case>(PreviewForm.this))
-                        .createButtonControls();
-            }
-
-            @Override
-            protected Layout createBottomPanel() {
-                VerticalLayout relatedItemsPanel = new VerticalLayout();
-                relatedItemsPanel.addComponent(new NoteListItems(
-                        "Notes", "Case", cases.getId()));
-                return relatedItemsPanel;
-            }
-        }
+        return casePreview.getPreviewForm();
     }
 
     @Override
     public SimpleCase getItem() {
-        return cases;
+        return casePreview.getCase();
     }
 }
