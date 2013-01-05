@@ -22,7 +22,7 @@
         SELECT m_crm_call.id, m_crm_call.subject, m_crm_call.startDate, m_crm_call.durationInSeconds, 
             m_crm_call.calltype, m_crm_call.type, m_crm_call.typeid, m_crm_call.lastUpdatedTime, 
             m_crm_call.createdTime, m_crm_call.createdUser, m_crm_call.assignUser, m_crm_call.description, 
-            m_crm_call.contactId, m_crm_call.sAccountId, m_crm_call.status, 
+            m_crm_call.contactId, m_crm_call.sAccountId, m_crm_call.status, m_crm_call.isClosed,
             m_crm_call.purpose, m_crm_call.result,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as assignUserFullName
         FROM m_crm_call
@@ -34,6 +34,47 @@
         <include refid="com.esofthead.mycollab.module.crm.dao.CallMapperExt.selectSimpleCall" />
 
         WHERE m_crm_call.id=#{callId,javaType=INTEGER}
+    </select>
+    
+    <sql id="querySearchCriteria">
+        <if test="saccountid != null">
+            <![CDATA[${saccountid.operation} m_crm_call.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+        </if>
+        <if test="assignUsers != null">
+            ${assignUsers.operation} m_crm_call.assignUser IN
+            <foreach close=")" collection="assignUsers.values" item="user"
+                open="(" separator=",">
+                #{user}
+            </foreach>
+        </if>
+    </sql>
+    
+    <sql id="orderStatement">
+        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            m_crm_call.lastUpdatedTime DESC
+        ]]>
+    </sql>
+    
+    <select id="findPagableListByCriteria" parameterType="CallSearchCriteria"
+        resultMap="SimpleCallResult">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.CallMapperExt.selectSimpleCall" />
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include
+                refid="com.esofthead.mycollab.module.crm.dao.CallMapperExt.querySearchCriteria" />
+        </trim>
+        <include refid="orderStatement"/>
+        
+    </select>
+
+    <select id="getTotalCount" parameterType="CallSearchCriteria"
+        resultType="java.lang.Integer">
+        SELECT count(*) as totalCount FROM m_crm_call
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include
+                refid="com.esofthead.mycollab.module.crm.dao.CallMapperExt.querySearchCriteria" />
+        </trim>
     </select>
 
 </mapper>

@@ -1,25 +1,24 @@
 package com.esofthead.mycollab.module.crm.domain;
 
-public class SimpleCall extends Call{
-	private static final long serialVersionUID = 1L;
-	
-	private String relatedTo;
-	
-	private String assignUserFullName;
+public class SimpleCall extends Call {
 
-	public String getRelatedTo() {
-		return relatedTo;
-	}
+    private static final long serialVersionUID = 1L;
+    private String relatedTo;
+    private String assignUserFullName;
 
-	public void setRelatedTo(String relatedTo) {
-		this.relatedTo = relatedTo;
-	}
+    public String getRelatedTo() {
+        return relatedTo;
+    }
 
-	public String getAssignUserFullName() {
-		return assignUserFullName;
-	}
+    public void setRelatedTo(String relatedTo) {
+        this.relatedTo = relatedTo;
+    }
 
-	public void setAssignUserFullName(String assignUserFullName) {
-		this.assignUserFullName = assignUserFullName;
-	}
+    public String getAssignUserFullName() {
+        return assignUserFullName;
+    }
+
+    public void setAssignUserFullName(String assignUserFullName) {
+        this.assignUserFullName = assignUserFullName;
+    }
 }

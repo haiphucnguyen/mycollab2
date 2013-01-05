@@ -28,7 +28,7 @@
             m_crm_meeting.startDate, m_crm_meeting.endDate, m_crm_meeting.lastUpdatedTime, m_crm_meeting.createdTime, 
             m_crm_meeting.createdUser, m_crm_meeting.sAccountId, m_crm_meeting.location, m_crm_meeting.description, 
             m_crm_meeting.isRecurrence, m_crm_meeting.recurrenceType, m_crm_meeting.recurrenceStartDate, 
-            m_crm_meeting.recurrenceEndDate, m_crm_meeting.contactType, m_crm_meeting.contactTypeId,
+            m_crm_meeting.recurrenceEndDate, m_crm_meeting.contactType, m_crm_meeting.contactTypeId, m_crm_meeting.isClosed,
             concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createdUserFullName
         FROM m_crm_meeting
             LEFT OUTER JOIN s_user ON (m_crm_meeting.createdUser = s_user.username) 
@@ -40,4 +40,46 @@
 
         WHERE m_crm_meeting.id=#{meetingId,javaType=INTEGER}
     </select>
+    
+    <sql id="querySearchCriteria">
+        <if test="saccountid != null">
+            <![CDATA[${saccountid.operation} m_crm_meeting.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+        </if>
+        <if test="assignUsers != null">
+            ${assignUsers.operation} m_crm_meeting.createdUser IN
+            <foreach close=")" collection="assignUsers.values" item="user"
+                open="(" separator=",">
+                #{user}
+            </foreach>
+        </if>
+    </sql>
+    
+    <sql id="orderStatement">
+        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            m_crm_meeting.lastUpdatedTime DESC
+        ]]>
+    </sql>
+    
+    <select id="findPagableListByCriteria" parameterType="MeetingSearchCriteria"
+        resultMap="SimpleMeetingResult">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.selectSimpleMeeting" />
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include
+                refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.querySearchCriteria" />
+        </trim>
+        <include refid="orderStatement"/>
+        
+    </select>
+
+    <select id="getTotalCount" parameterType="MeetingSearchCriteria"
+        resultType="java.lang.Integer">
+        SELECT count(*) as totalCount FROM m_crm_meeting
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include
+                refid="com.esofthead.mycollab.module.crm.dao.MeetingMapperExt.querySearchCriteria" />
+        </trim>
+    </select>
+    
 </mapper>
