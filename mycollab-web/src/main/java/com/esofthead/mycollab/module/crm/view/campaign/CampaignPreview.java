@@ -24,34 +24,34 @@ import com.vaadin.ui.Window;
 
 @SuppressWarnings("serial")
 public class CampaignPreview extends VerticalLayout {
-	
-	private PreviewForm previewForm;
+
+    private PreviewForm previewForm;
     private SimpleCampaign campaign;
     private boolean isControlEnable = false;
-    
+
     public CampaignPreview(boolean enableButtonControls) {
-    	isControlEnable = enableButtonControls;
-    	constructUI();
+        isControlEnable = enableButtonControls;
+        constructUI();
     }
-    
+
     private void constructUI() {
         previewForm = new PreviewForm();
         this.addComponent(previewForm);
     }
-    
+
     public void previewItem(SimpleCampaign campaign) {
         this.campaign = campaign;
         previewForm.setItemDataSource(new BeanItem<Campaign>(campaign));
     }
-    
+
     public SimpleCampaign getCampaign() {
-    	return campaign;
+        return campaign;
     }
-    
+
     public AdvancedPreviewBeanForm<Campaign> getPreviewForm() {
-    	return previewForm;
+        return previewForm;
     }
-    
+
     private class PreviewForm extends AdvancedPreviewBeanForm<Campaign> {
 
         private static final long serialVersionUID = 1L;
@@ -84,7 +84,7 @@ public class CampaignPreview extends VerticalLayout {
             });
             super.setItemDataSource(newDataSource);
         }
-        
+
         @Override
         protected void doPrint() {
             // Create a window that contains what you want to print
@@ -119,19 +119,19 @@ public class CampaignPreview extends VerticalLayout {
         class FormLayoutFactory extends CampaignFormLayoutFactory {
 
             private static final long serialVersionUID = 1L;
-            
+
             public FormLayoutFactory() {
                 super(campaign.getCampaignname());
             }
 
             @Override
             protected Layout createTopPanel() {
-            	if (isControlEnable) {
-            		 return (new PreviewFormControlsGenerator<Campaign>(
-                             PreviewForm.this)).createButtonControls();
-            	} else {
-            		return new HorizontalLayout();
-            	}
+                if (isControlEnable) {
+                    return (new PreviewFormControlsGenerator<Campaign>(
+                            PreviewForm.this)).createButtonControls();
+                } else {
+                    return new HorizontalLayout();
+                }
             }
 
             @Override
@@ -146,6 +146,4 @@ public class CampaignPreview extends VerticalLayout {
             }
         }
     }
-
-
 }

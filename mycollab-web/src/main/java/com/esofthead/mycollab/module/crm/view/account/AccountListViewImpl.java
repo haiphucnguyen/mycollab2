@@ -2,13 +2,17 @@ package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -48,6 +52,21 @@ public class AccountListViewImpl extends AbstractView implements
                     "city", "phoneoffice", "email", "assignUserFullName"},
                 new String[]{"", "Name", "City", "Phone Office",
                     "Email Address", "Assign User"});
+
+        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+            @Override
+            public Class<? extends ApplicationEvent> getEventType() {
+                return TableClickEvent.class;
+            }
+
+            @Override
+            public void handle(TableClickEvent event) {
+                SimpleAccount account = (SimpleAccount) event.getData();
+                if ("accountname".equals(event.getFieldName())) {
+                    EventBus.getInstance().fireEvent(new AccountEvent.GotoRead(AccountListViewImpl.this, account.getId()));
+                }
+            }
+        });
 
         accountListLayout.addComponent(constructTableActionControls());
         accountListLayout.addComponent(tableItem);

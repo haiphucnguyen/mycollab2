@@ -77,9 +77,7 @@ public class AccountTableDisplay extends PagedBeanTable2<AccountService, Account
 
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
-                                EventBus.getInstance().fireEvent(
-                                        new AccountEvent.GotoRead(this, account
-                                        .getId()));
+                                fireTableEvent(new TableClickEvent(AccountTableDisplay.this, account, "accountname"));
                             }
                         });
                 b.addStyleName("medium-text");

@@ -6,9 +6,7 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -68,9 +66,7 @@ public class CampaignTableDisplay extends PagedBeanTable2<CampaignService, Campa
 
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
-                                EventBus.getInstance().fireEvent(
-                                        new CampaignEvent.GotoRead(this,
-                                        campaign.getId()));
+                                fireTableEvent(new TableClickEvent(CampaignTableDisplay.this, campaign, "campaignname"));
                             }
                         });
                 b.addStyleName("medium-text");
@@ -78,7 +74,7 @@ public class CampaignTableDisplay extends PagedBeanTable2<CampaignService, Campa
 
             }
         });
-        
+
         this.addGeneratedColumn("startdate", new Table.ColumnGenerator() {
             private static final long serialVersionUID = 1L;
 

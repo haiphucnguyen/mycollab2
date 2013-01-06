@@ -4,16 +4,13 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.CampaignService;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -26,7 +23,7 @@ public class CampaignSelectionWindow extends Window {
 
     public CampaignSelectionWindow(FieldSelection fieldSelection) {
         super("Campaign Name Lookup");
-        
+
         this.setWidth("1035px");
 
         this.fieldSelection = fieldSelection;
@@ -63,28 +60,19 @@ public class CampaignSelectionWindow extends Window {
                     "End Date"});
         tableItem.setWidth("100%");
 
-        tableItem.addGeneratedColumn("campaignname", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+            @Override
+            public Class<? extends ApplicationEvent> getEventType() {
+                return TableClickEvent.class;
+            }
 
-            public com.vaadin.ui.Component generateCell(final Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleCampaign campaign = tableItem
-                        .getBeanByIndex(itemId);
-                Button b = new Button(campaign.getCampaignname(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                fieldSelection.fireValueChange(campaign);
-                                CampaignSelectionWindow.this.getParent()
-                                        .removeWindow(
-                                        CampaignSelectionWindow.this);
-                            }
-                        });
-                b.setStyleName("link");
-                b.addStyleName("medium-text");
-                return b;
+            @Override
+            public void handle(TableClickEvent event) {
+                SimpleCampaign campaign = (SimpleCampaign) event.getData();
+                fieldSelection.fireValueChange(campaign);
+                CampaignSelectionWindow.this.getParent()
+                        .removeWindow(
+                        CampaignSelectionWindow.this);
             }
         });
     }

@@ -2,13 +2,17 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.CampaignService;
+import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -49,6 +53,21 @@ public class CampaignListViewImpl extends AbstractView implements
                     "enddate", "assignUserFullName"}, new String[]{"",
                     "Campaign", "Status", "Type", "Expected Revenue",
                     "End Date", "Assign User"});
+
+        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+            @Override
+            public Class<? extends ApplicationEvent> getEventType() {
+                return TableClickEvent.class;
+            }
+
+            @Override
+            public void handle(TableClickEvent event) {
+                SimpleCampaign campaign = (SimpleCampaign) event.getData();
+                if ("campaignname".equals(event.getFieldName())) {
+                    EventBus.getInstance().fireEvent(new CampaignEvent.GotoRead(CampaignListViewImpl.this, campaign.getId()));
+                }
+            }
+        });
 
         campainListLayout.addComponent(constructTableActionControls());
         campainListLayout.addComponent(tableItem);

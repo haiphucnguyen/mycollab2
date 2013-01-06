@@ -4,16 +4,15 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -75,26 +74,21 @@ public class AccountSelectionWindow extends Window {
         tableItem.setWidth("100%");
         tableItem.setHeight("200px");
 
-        tableItem.addGeneratedColumn("accountname", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+            @Override
+            public Class<? extends ApplicationEvent> getEventType() {
+                return TableClickEvent.class;
+            }
 
-            public com.vaadin.ui.Component generateCell(final Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleAccount account = tableItem.getBeanByIndex(itemId);
-                ButtonLink b = new ButtonLink(account.getAccountname(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                fieldSelection.fireValueChange(account);
-                                AccountSelectionWindow.this.getParent()
-                                        .removeWindow(
-                                        AccountSelectionWindow.this);
-                            }
-                        });
-                b.addStyleName("medium-text");
-                return b;
+            @Override
+            public void handle(TableClickEvent event) {
+                SimpleAccount account = (SimpleAccount) event.getData();
+                if ("accountname".equals(event.getFieldName())) {
+                    fieldSelection.fireValueChange(account);
+                    AccountSelectionWindow.this.getParent()
+                            .removeWindow(
+                            AccountSelectionWindow.this);
+                }
             }
         });
     }

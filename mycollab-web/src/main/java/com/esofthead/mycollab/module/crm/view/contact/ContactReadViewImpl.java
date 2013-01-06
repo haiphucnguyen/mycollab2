@@ -12,11 +12,11 @@ public class ContactReadViewImpl extends AbstractView implements
 
     private static final long serialVersionUID = 1L;
     
-    ContactPreview contactPreview;
+    ContactPreviewBuilder contactPreview;
 
     public ContactReadViewImpl() {
         super();
-        contactPreview = new ContactPreview(true);
+        contactPreview = new ContactPreviewBuilder.ReadView();
         this.addComponent(contactPreview);
     }
 

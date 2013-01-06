@@ -11,27 +11,26 @@ public class CampaignReadViewImpl extends AbstractView implements
         CampaignReadView {
 
     private static final long serialVersionUID = 1L;
+    private CampaignPreview campaignPreview;
 
-    private CampaignPreview _campaignPreview;
-    
     public CampaignReadViewImpl() {
         super();
-        _campaignPreview = new CampaignPreview(true);
-        this.addComponent(_campaignPreview);
+        campaignPreview = new CampaignPreview(true);
+        this.addComponent(campaignPreview);
     }
 
     @Override
     public void previewItem(SimpleCampaign campaign) {
-        _campaignPreview.previewItem(campaign);
+        campaignPreview.previewItem(campaign);
     }
 
     @Override
     public HasPreviewFormHandlers<Campaign> getPreviewFormHandlers() {
-        return _campaignPreview.getPreviewForm();
+        return campaignPreview.getPreviewForm();
     }
 
     @Override
     public SimpleCampaign getItem() {
-        return _campaignPreview.getCampaign();
+        return campaignPreview.getCampaign();
     }
 }
