@@ -201,7 +201,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
     }
 
     @Override
-    public IPagedBeanTable<RiskService, RiskSearchCriteria, SimpleRisk> getPagedBeanTable() {
+    public IPagedBeanTable<RiskSearchCriteria, SimpleRisk> getPagedBeanTable() {
         return tableItem;
     }
 }

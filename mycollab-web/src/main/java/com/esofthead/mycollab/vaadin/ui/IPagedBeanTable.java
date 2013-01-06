@@ -1,16 +1,40 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.util.Collection;
-
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.persistence.service.ISearchableService;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
+import com.vaadin.ui.Component;
+import com.vaadin.ui.Table;
+import java.util.Collection;
 
-public interface IPagedBeanTable<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
-		extends HasSelectableItemHandlers<T>, HasPagableHandlers {
-	
-	void setSearchCriteria(S searchCriteria);
+public interface IPagedBeanTable<S extends SearchCriteria, T>
+        extends HasSelectableItemHandlers<T>, HasPagableHandlers, Component {
 
-	Collection<T> getCurrentDataList();
+    void setSearchCriteria(S searchCriteria);
+
+    Collection<T> getCurrentDataList();
+    
+    void addTableListener(ApplicationEventListener<? extends ApplicationEvent> listener);
+    
+    void addGeneratedColumn(Object id, Table.ColumnGenerator generatedColumn);
+    
+    void setColumnExpandRatio(Object propertyId, float expandRation);
+    
+    void setColumnWidth(Object propertyId, int width);
+
+    public static class TableClickEvent extends ApplicationEvent {
+
+        private String fieldName;
+
+        public TableClickEvent(IPagedBeanTable source, Object data, String fieldName) {
+            super(source, data);
+            this.fieldName = fieldName;
+        }
+
+        public String getFieldName() {
+            return fieldName;
+        }
+    }
 }

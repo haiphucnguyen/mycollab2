@@ -226,7 +226,7 @@ public class ContactListViewImpl extends AbstractView implements
     }
 
     @Override
-    public IPagedBeanTable<ContactService, ContactSearchCriteria, SimpleContact> getPagedBeanTable() {
+    public IPagedBeanTable<ContactSearchCriteria, SimpleContact> getPagedBeanTable() {
         return tableItem;
     }
 }

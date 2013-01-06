@@ -86,7 +86,7 @@ public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
     }
 
     @Override
-    public IPagedBeanTable<ProjectService, ProjectSearchCriteria, SimpleProject> getPagedBeanTable() {
+    public IPagedBeanTable<ProjectSearchCriteria, SimpleProject> getPagedBeanTable() {
         return tableItem;
     }
 }

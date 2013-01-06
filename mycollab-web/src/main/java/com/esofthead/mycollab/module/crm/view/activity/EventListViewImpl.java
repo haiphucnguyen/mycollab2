@@ -215,7 +215,7 @@ public class EventListViewImpl extends AbstractView implements EventListView {
     }
 
     @Override
-    public IPagedBeanTable<EventService, EventSearchCriteria, SimpleEvent> getPagedBeanTable() {
+    public IPagedBeanTable<EventSearchCriteria, SimpleEvent> getPagedBeanTable() {
         return tableItem;
     }
 }

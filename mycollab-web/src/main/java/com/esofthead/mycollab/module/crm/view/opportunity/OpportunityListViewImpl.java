@@ -4,7 +4,6 @@ import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
-import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
@@ -12,27 +11,16 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
-import org.springframework.context.ApplicationEvent;
-import org.springframework.context.ApplicationListener;
 
 @ViewComponent
 public class OpportunityListViewImpl extends AbstractView implements
@@ -68,7 +56,7 @@ public class OpportunityListViewImpl extends AbstractView implements
                 new String[]{"", "Name", "Account Name", "Sales Stage",
                     "Amount", "Close", "User"});
 
-        tableItem.addTableListener(new ApplicationEventListener<PagedBeanTable2.TableClickEvent>() {
+        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override
             public Class<? extends com.esofthead.mycollab.vaadin.events.ApplicationEvent> getEventType() {
                 return TableClickEvent.class;
@@ -144,7 +132,7 @@ public class OpportunityListViewImpl extends AbstractView implements
     }
 
     @Override
-    public IPagedBeanTable<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> getPagedBeanTable() {
+    public IPagedBeanTable<OpportunitySearchCriteria, SimpleOpportunity> getPagedBeanTable() {
         return tableItem;
     }
 }

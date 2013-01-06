@@ -113,7 +113,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
         associateLeadList.setSearchCriteria(criteria);
     }
 
-    private class AccountFormFieldFactory extends DefaultFormViewFieldFactory {
+    protected class AccountFormFieldFactory extends DefaultFormViewFieldFactory {
 
         private static final long serialVersionUID = 1L;
 
@@ -228,7 +228,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
                 @Override
                 public void setItemDataSource(Item newDataSource) {
                     this.setFormLayoutFactory(new FormLayoutFactory());
-                    super.setFormFieldFactory(new AccountFormFieldFactory());
+                    this.setFormFieldFactory(new AccountFormFieldFactory());
                     super.setItemDataSource(newDataSource);
                 }
             };

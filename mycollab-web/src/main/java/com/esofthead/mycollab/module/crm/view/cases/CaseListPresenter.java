@@ -1,9 +1,5 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CaseService;
@@ -18,167 +14,163 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
-		implements ListPresenter<CaseSearchCriteria> {
-	private static final long serialVersionUID = 1L;
+        implements ListPresenter<CaseSearchCriteria> {
 
-	private CaseService caseService;
+    private static final long serialVersionUID = 1L;
+    private CaseService caseService;
+    private CaseSearchCriteria searchCriteria;
+    private boolean isSelectAll = false;
 
-	private CaseSearchCriteria searchCriteria;
+    public CaseListPresenter() {
+        super(CaseListView.class);
+        caseService = AppContext.getSpringBean(CaseService.class);
 
-	private boolean isSelectAll = false;
+        view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+            private static final long serialVersionUID = 1L;
 
-	public CaseListPresenter() {
-		super(CaseListView.class);
-		caseService = AppContext.getSpringBean(CaseService.class);
+            @Override
+            public void move(int newPageNumber) {
+                pageChange();
+            }
 
-		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
-			private static final long serialVersionUID = 1L;
+            @Override
+            public void displayItemChange(int numOfItems) {
+                pageChange();
+            }
 
-			@Override
-			public void move(int newPageNumber) {
-				pageChange();
-			}
+            private void pageChange() {
+                if (isSelectAll) {
+                    selectAllItemsInCurrentPage();
+                }
 
-			@Override
-			public void displayItemChange(int numOfItems) {
-				pageChange();
-			}
+                checkWhetherEnableTableActionControl();
+            }
+        });
 
-			private void pageChange() {
-				if (isSelectAll) {
-					selectAllItemsInCurrentPage();
-				}
+        view.getSearchHandlers().addSearchHandler(
+                new SearchHandler<CaseSearchCriteria>() {
+                    @Override
+                    public void onSearch(CaseSearchCriteria criteria) {
+                        doSearch(criteria);
+                    }
+                });
 
-				checkWhetherEnableTableActionControl();
-			}
-		});
+        view.getOptionSelectionHandlers().addSelectionOptionHandler(
+                new SelectionOptionHandler() {
+                    @Override
+                    public void onSelectCurrentPage() {
+                        isSelectAll = false;
+                        selectAllItemsInCurrentPage();
 
-		view.getSearchHandlers().addSearchHandler(
-				new SearchHandler<CaseSearchCriteria>() {
+                        checkWhetherEnableTableActionControl();
+                    }
 
-					@Override
-					public void onSearch(CaseSearchCriteria criteria) {
-						doSearch(criteria);
-					}
-				});
+                    @Override
+                    public void onDeSelect() {
+                        Collection<SimpleCase> currentDataList = view
+                                .getPagedBeanTable().getCurrentDataList();
+                        isSelectAll = false;
+                        for (SimpleCase item : currentDataList) {
+                            item.setSelected(false);
+                            CheckBox checkBox = (CheckBox) item.getExtraData();
+                            checkBox.setValue(false);
+                        }
 
-		view.getOptionSelectionHandlers().addSelectionOptionHandler(
-				new SelectionOptionHandler() {
+                        checkWhetherEnableTableActionControl();
 
-					@Override
-					public void onSelectCurrentPage() {
-						isSelectAll = false;
-						selectAllItemsInCurrentPage();
+                    }
 
-						checkWhetherEnableTableActionControl();
-					}
+                    @Override
+                    public void onSelectAll() {
+                        isSelectAll = true;
+                        selectAllItemsInCurrentPage();
+                    }
+                });
 
-					@Override
-					public void onDeSelect() {
-						Collection<SimpleCase> currentDataList = view
-								.getPagedBeanTable().getCurrentDataList();
-						isSelectAll = false;
-						for (SimpleCase item : currentDataList) {
-							item.setSelected(false);
-							CheckBox checkBox = (CheckBox) item.getExtraData();
-							checkBox.setValue(false);
-						}
+        view.getPopupActionHandlers().addPopupActionHandler(
+                new PopupActionHandler() {
+                    @Override
+                    public void onSelect(String id, String caption) {
+                        if ("delete".equals(id)) {
+                            deleteSelectedItems();
+                        }
+                    }
+                });
 
-						checkWhetherEnableTableActionControl();
+        view.getSelectableItemHandlers().addSelectableItemHandler(
+                new SelectableItemHandler<SimpleCase>() {
+                    @Override
+                    public void onSelect(SimpleCase item) {
+                        isSelectAll = false;
+                        item.setSelected(!item.isSelected());
 
-					}
+                        checkWhetherEnableTableActionControl();
+                    }
+                });
+    }
 
-					@Override
-					public void onSelectAll() {
-						isSelectAll = true;
-						selectAllItemsInCurrentPage();
-					}
-				});
+    private void selectAllItemsInCurrentPage() {
+        Collection<SimpleCase> currentDataList = view.getPagedBeanTable()
+                .getCurrentDataList();
+        for (SimpleCase item : currentDataList) {
+            item.setSelected(true);
+            CheckBox checkBox = (CheckBox) item.getExtraData();
+            checkBox.setValue(true);
+        }
+    }
 
-		view.getPopupActionHandlers().addPopupActionHandler(
-				new PopupActionHandler() {
+    private void checkWhetherEnableTableActionControl() {
+        Collection<SimpleCase> currentDataList = view.getPagedBeanTable()
+                .getCurrentDataList();
+        int countItems = 0;
+        for (SimpleCase item : currentDataList) {
+            if (item.isSelected()) {
+                countItems++;
+            }
+        }
+        if (countItems > 0) {
+            view.enableActionControls(countItems);
+        } else {
+            view.disableActionControls();
+        }
+    }
 
-					@Override
-					public void onSelect(String id, String caption) {
-						if ("delete".equals(id)) {
-							deleteSelectedItems();
-						}
-					}
-				});
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        super.onGo(container, data);
+        doSearch((CaseSearchCriteria) data.getParams());
+    }
 
-		view.getSelectableItemHandlers().addSelectableItemHandler(
-				new SelectableItemHandler<SimpleCase>() {
+    @Override
+    public void doSearch(CaseSearchCriteria searchCriteria) {
+        this.searchCriteria = searchCriteria;
+        view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+        checkWhetherEnableTableActionControl();
+    }
 
-					@Override
-					public void onSelect(SimpleCase item) {
-						isSelectAll = false;
-						item.setSelected(!item.isSelected());
+    private void deleteSelectedItems() {
+        if (!isSelectAll) {
+            Collection<SimpleCase> currentDataList = view.getPagedBeanTable()
+                    .getCurrentDataList();
+            List<Integer> keyList = new ArrayList<Integer>();
+            for (SimpleCase item : currentDataList) {
+                keyList.add(item.getId());
+            }
 
-						checkWhetherEnableTableActionControl();
-					}
-				});
-	}
+            if (keyList.size() > 0) {
+                caseService
+                        .removeWithSession(keyList, AppContext.getUsername());
+                doSearch(searchCriteria);
+            }
+        } else {
+            caseService.removeByCriteria(searchCriteria);
+            doSearch(searchCriteria);
+        }
 
-	private void selectAllItemsInCurrentPage() {
-		Collection<SimpleCase> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		for (SimpleCase item : currentDataList) {
-			item.setSelected(true);
-			CheckBox checkBox = (CheckBox) item.getExtraData();
-			checkBox.setValue(true);
-		}
-	}
-
-	private void checkWhetherEnableTableActionControl() {
-		Collection<SimpleCase> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		int countItems = 0;
-		for (SimpleCase item : currentDataList) {
-			if (item.isSelected()) {
-				countItems++;
-			}
-		}
-		if (countItems > 0) {
-			view.enableActionControls(countItems);
-		} else {
-			view.disableActionControls();
-		}
-	}
-
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		super.onGo(container, data);
-		doSearch((CaseSearchCriteria) data.getParams());
-	}
-
-	@Override
-	public void doSearch(CaseSearchCriteria searchCriteria) {
-		this.searchCriteria = searchCriteria;
-		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
-		checkWhetherEnableTableActionControl();
-	}
-
-	private void deleteSelectedItems() {
-		if (!isSelectAll) {
-			Collection<SimpleCase> currentDataList = view.getPagedBeanTable()
-					.getCurrentDataList();
-			List<Integer> keyList = new ArrayList<Integer>();
-			for (SimpleCase item : currentDataList) {
-				keyList.add(item.getId());
-			}
-
-			if (keyList.size() > 0) {
-				caseService
-						.removeWithSession(keyList, AppContext.getUsername());
-				doSearch(searchCriteria);
-			}
-		} else {
-			caseService.removeByCriteria(searchCriteria);
-			doSearch(searchCriteria);
-		}
-
-	}
-
+    }
 }

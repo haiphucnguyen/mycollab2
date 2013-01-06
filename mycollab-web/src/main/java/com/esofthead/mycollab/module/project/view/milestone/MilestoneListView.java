@@ -6,7 +6,6 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
-import com.esofthead.mycollab.module.project.service.MilestoneService;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
@@ -32,5 +31,5 @@ public interface MilestoneListView extends View {
 
     HasSelectableItemHandlers<SimpleMilestone> getSelectableItemHandlers();
 
-    IPagedBeanTable<MilestoneService, MilestoneSearchCriteria, SimpleMilestone> getPagedBeanTable();
+    IPagedBeanTable<MilestoneSearchCriteria, SimpleMilestone> getPagedBeanTable();
 }

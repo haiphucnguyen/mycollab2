@@ -11,44 +11,42 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class MyProjectsPresenter extends AbstractPresenter<MyProjectsView>
-		implements ListPresenter2<ProjectSearchCriteria> {
-	private static final long serialVersionUID = 1L;
+        implements ListPresenter2<ProjectSearchCriteria> {
 
-	private ProjectService projectService;
-	private ProjectSearchCriteria searchCriteria;
+    private static final long serialVersionUID = 1L;
+    private ProjectService projectService;
+    private ProjectSearchCriteria searchCriteria;
 
-	public MyProjectsPresenter() {
-		super(MyProjectsView.class);
+    public MyProjectsPresenter() {
+        super(MyProjectsView.class);
 
-		projectService = AppContext.getSpringBean(ProjectService.class);
-		bind();
-	}
+        projectService = AppContext.getSpringBean(ProjectService.class);
+        bind();
+    }
 
-	private void bind() {
-	}
+    private void bind() {
+    }
 
-	@Override
-	public void doSearch(ProjectSearchCriteria searchCriteria) {
-		this.searchCriteria = searchCriteria;
-		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
-		checkWhetherEnableTableActionControl();
+    @Override
+    public void doSearch(ProjectSearchCriteria searchCriteria) {
+        this.searchCriteria = searchCriteria;
+        view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+        checkWhetherEnableTableActionControl();
 
-	}
+    }
 
-	private void checkWhetherEnableTableActionControl() {
+    private void checkWhetherEnableTableActionControl() {
+    }
 
-	}
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+    }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-
-	}
-
-	@Override
-	public void doDefaultSearch() {
-		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		doSearch(criteria);
-	}
+    @Override
+    public void doDefaultSearch() {
+        ProjectSearchCriteria criteria = new ProjectSearchCriteria();
+        criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+                AppContext.getAccountId()));
+        doSearch(criteria);
+    }
 }

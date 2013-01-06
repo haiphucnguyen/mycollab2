@@ -203,7 +203,7 @@ public class ProblemListViewImpl extends AbstractView implements
     }
 
     @Override
-    public IPagedBeanTable<ProblemService, ProblemSearchCriteria, SimpleProblem> getPagedBeanTable() {
+    public IPagedBeanTable<ProblemSearchCriteria, SimpleProblem> getPagedBeanTable() {
         return tableItem;
     }
 }

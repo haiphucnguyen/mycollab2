@@ -104,7 +104,7 @@ public class AccountListViewImpl extends AbstractView implements
     }
 
     @Override
-    public IPagedBeanTable<AccountService, AccountSearchCriteria, SimpleAccount> getPagedBeanTable() {
+    public IPagedBeanTable<AccountSearchCriteria, SimpleAccount> getPagedBeanTable() {
         return tableItem;
     }
 }

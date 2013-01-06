@@ -2,7 +2,6 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
@@ -10,19 +9,19 @@ import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 
-public interface BugListView  extends View {
-	void enableActionControls(int numOfSelectedItem);
+public interface BugListView extends View {
 
-	void disableActionControls();
+    void enableActionControls(int numOfSelectedItem);
 
-	HasSearchHandlers<BugSearchCriteria> getSearchHandlers();
+    void disableActionControls();
 
-	HasSelectionOptionHandlers getOptionSelectionHandlers();
+    HasSearchHandlers<BugSearchCriteria> getSearchHandlers();
 
-	HasPopupActionHandlers getPopupActionHandlers();
+    HasSelectionOptionHandlers getOptionSelectionHandlers();
 
-	HasSelectableItemHandlers<SimpleBug> getSelectableItemHandlers();
+    HasPopupActionHandlers getPopupActionHandlers();
 
-	IPagedBeanTable<BugService, BugSearchCriteria, SimpleBug> getPagedBeanTable();
+    HasSelectableItemHandlers<SimpleBug> getSelectableItemHandlers();
 
+    IPagedBeanTable<BugSearchCriteria, SimpleBug> getPagedBeanTable();
 }

@@ -1,29 +1,40 @@
-package com.esofthead.mycollab.module.crm.view.account;
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
+import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
+import com.esofthead.mycollab.module.crm.view.RelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityRelatedListComp;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityTableDisplay;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
+import java.util.HashSet;
+import java.util.Set;
 import org.vaadin.hene.splitbutton.SplitButton;
 
-public class AccountOpportunityListComp extends OpportunityRelatedListComp {
+/**
+ *
+ * @author haiphucnguyen
+ */
+public class ContactOpportunityListComp extends OpportunityRelatedListComp {
 
     private static final long serialVersionUID = 1L;
 
-    public AccountOpportunityListComp() {
+    public ContactOpportunityListComp() {
         super();
-
         initUI();
     }
 
@@ -43,7 +54,7 @@ public class AccountOpportunityListComp extends OpportunityRelatedListComp {
         });
         Button selectBtn = new Button("Select from existing opportunities", new Button.ClickListener() {
             @Override
-            public void buttonClick(ClickEvent event) {
+            public void buttonClick(Button.ClickEvent event) {
             }
         });
         selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
@@ -57,14 +68,14 @@ public class AccountOpportunityListComp extends OpportunityRelatedListComp {
                     "assignUserFullName", "id"}, new String[]{"Name",
                     "Sales Stage", "Amount", "Close", "User", "Action"});
 
-        tableItem.addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
+        tableItem.addTableListener(new ApplicationEventListener<PagedBeanTable2.TableClickEvent>() {
             @Override
             public Class<? extends ApplicationEvent> getEventType() {
-                return IPagedBeanTable.TableClickEvent.class;
+                return PagedBeanTable2.TableClickEvent.class;
             }
 
             @Override
-            public void handle(IPagedBeanTable.TableClickEvent event) {
+            public void handle(PagedBeanTable2.TableClickEvent event) {
                 SimpleOpportunity opportunity = (SimpleOpportunity) event.getData();
                 if ("opportunityname".equals(event.getFieldName())) {
                     EventBus.getInstance().fireEvent(
@@ -74,14 +85,14 @@ public class AccountOpportunityListComp extends OpportunityRelatedListComp {
             }
         });
 
-        tableItem.addGeneratedColumn("id", new ColumnGenerator() {
+        tableItem.addGeneratedColumn("id", new Table.ColumnGenerator() {
             @Override
             public Object generateCell(Table source, Object itemId,
                     Object columnId) {
                 HorizontalLayout controlLayout = new HorizontalLayout();
                 Button editBtn = new Button(null, new Button.ClickListener() {
                     @Override
-                    public void buttonClick(ClickEvent event) {
+                    public void buttonClick(Button.ClickEvent event) {
                         throw new UnsupportedOperationException("Not supported yet.");
                     }
                 });
@@ -91,7 +102,7 @@ public class AccountOpportunityListComp extends OpportunityRelatedListComp {
 
                 Button deleteBtn = new Button(null, new Button.ClickListener() {
                     @Override
-                    public void buttonClick(ClickEvent event) {
+                    public void buttonClick(Button.ClickEvent event) {
                         throw new UnsupportedOperationException("Not supported yet.");
                     }
                 });

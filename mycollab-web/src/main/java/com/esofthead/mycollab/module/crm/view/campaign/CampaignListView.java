@@ -2,7 +2,6 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
@@ -12,17 +11,17 @@ import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 
 public interface CampaignListView extends View {
 
-	void enableActionControls(int numOfSelectedItem);
+    void enableActionControls(int numOfSelectedItem);
 
-	void disableActionControls();
-	
-	HasSelectableItemHandlers<SimpleCampaign> getSelectableItemHandlers();
+    void disableActionControls();
 
-	HasSearchHandlers<CampaignSearchCriteria> getSearchHandlers();
+    HasSelectableItemHandlers<SimpleCampaign> getSelectableItemHandlers();
 
-	HasSelectionOptionHandlers getOptionSelectionHandlers();
+    HasSearchHandlers<CampaignSearchCriteria> getSearchHandlers();
 
-	HasPopupActionHandlers getPopupActionHandlers();
-	
-	IPagedBeanTable<CampaignService, CampaignSearchCriteria, SimpleCampaign> getPagedBeanTable();
+    HasSelectionOptionHandlers getOptionSelectionHandlers();
+
+    HasPopupActionHandlers getPopupActionHandlers();
+
+    IPagedBeanTable<CampaignSearchCriteria, SimpleCampaign> getPagedBeanTable();
 }

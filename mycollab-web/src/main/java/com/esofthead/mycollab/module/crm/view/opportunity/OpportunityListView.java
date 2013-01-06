@@ -2,7 +2,6 @@ package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
-import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
@@ -12,7 +11,7 @@ import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 
 public interface OpportunityListView extends View {
 
-	IPagedBeanTable<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> getPagedBeanTable();
+	IPagedBeanTable<OpportunitySearchCriteria, SimpleOpportunity> getPagedBeanTable();
 
 	void enableActionControls(int numOfSelectedItem);
 

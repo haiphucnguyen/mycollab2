@@ -24,5 +24,5 @@ public interface AccountListView extends View {
 
     HasSelectableItemHandlers<SimpleAccount> getSelectableItemHandlers();
 
-    IPagedBeanTable<AccountService, AccountSearchCriteria, SimpleAccount> getPagedBeanTable();
+    IPagedBeanTable<AccountSearchCriteria, SimpleAccount> getPagedBeanTable();
 }

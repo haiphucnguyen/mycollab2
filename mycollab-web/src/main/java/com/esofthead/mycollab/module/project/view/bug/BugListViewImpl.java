@@ -24,105 +24,98 @@ import com.vaadin.ui.VerticalLayout;
 @ViewComponent
 public class BugListViewImpl extends AbstractView implements BugListView {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    private final BugSearchPanel problemSearchPanel;
+    private SelectionOptionButton selectOptionButton;
+    private PagedBeanTable2<BugService, BugSearchCriteria, SimpleBug> tableItem;
+    private final VerticalLayout problemListLayout;
+    private PopupButtonControl tableActionControls;
+    private final Label selectedItemsNumberLabel = new Label();
 
-	private final BugSearchPanel problemSearchPanel;
+    public BugListViewImpl() {
+        this.setSpacing(true);
 
-	private SelectionOptionButton selectOptionButton;
+        problemSearchPanel = new BugSearchPanel();
+        this.addComponent(problemSearchPanel);
 
-	private PagedBeanTable2<BugService, BugSearchCriteria, SimpleBug> tableItem;
+        problemListLayout = new VerticalLayout();
+        problemListLayout.setSpacing(true);
+        this.addComponent(problemListLayout);
 
-	private final VerticalLayout problemListLayout;
+        generateDisplayTable();
+    }
 
-	private PopupButtonControl tableActionControls;
+    private void generateDisplayTable() {
+        tableItem = new PagedBeanTable2<BugService, BugSearchCriteria, SimpleBug>(
+                AppContext.getSpringBean(BugService.class),
+                SimpleBug.class, new String[]{"selected", "issuename",
+                    "assignedUserFullName", "datedue", "level"},
+                new String[]{"", "Name", "Assigned to", "Due Date", "Level"});
 
-	private final Label selectedItemsNumberLabel = new Label();
+        tableItem.setColumnExpandRatio("issuename", 1);
+        tableItem.setColumnWidth("assignedUserFullName",
+                UIConstants.TABLE_X_LABEL_WIDTH);
+        tableItem.setColumnWidth("level", UIConstants.TABLE_X_LABEL_WIDTH);
+        tableItem.setColumnWidth("datedue", UIConstants.TABLE_DATE_WIDTH);
 
-	public BugListViewImpl() {
-		this.setSpacing(true);
+        tableItem.setWidth("100%");
 
-		problemSearchPanel = new BugSearchPanel();
-		this.addComponent(problemSearchPanel);
+        problemListLayout.addComponent(constructTableActionControls());
+        problemListLayout.addComponent(tableItem);
+    }
 
-		problemListLayout = new VerticalLayout();
-		problemListLayout.setSpacing(true);
-		this.addComponent(problemListLayout);
+    @Override
+    public HasSearchHandlers<BugSearchCriteria> getSearchHandlers() {
+        return problemSearchPanel;
+    }
 
-		generateDisplayTable();
-	}
+    private ComponentContainer constructTableActionControls() {
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSpacing(true);
 
-	private void generateDisplayTable() {
-		tableItem = new PagedBeanTable2<BugService, BugSearchCriteria, SimpleBug>(
-				AppContext.getSpringBean(BugService.class),
-				SimpleBug.class, new String[] { "selected", "issuename",
-						"assignedUserFullName", "datedue", "level" },
-				new String[] { "", "Name", "Assigned to", "Due Date", "Level" });
+        selectOptionButton = new SelectionOptionButton(tableItem);
+        layout.addComponent(selectOptionButton);
 
-		tableItem.setColumnExpandRatio("issuename", 1);
-		tableItem.setColumnWidth("assignedUserFullName",
-				UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("level", UIConstants.TABLE_X_LABEL_WIDTH);
-		tableItem.setColumnWidth("datedue", UIConstants.TABLE_DATE_WIDTH);
+        tableActionControls = new PopupButtonControl("delete", "Delete");
+        tableActionControls.addOptionItem("mail", "Mail");
+        tableActionControls.addOptionItem("export", "Export");
 
-		tableItem.setWidth("100%");
+        layout.addComponent(tableActionControls);
+        layout.addComponent(selectedItemsNumberLabel);
+        layout.setComponentAlignment(selectedItemsNumberLabel,
+                Alignment.MIDDLE_CENTER);
+        return layout;
+    }
 
-		problemListLayout.addComponent(constructTableActionControls());
-		problemListLayout.addComponent(tableItem);
-	}
+    @Override
+    public void enableActionControls(int numOfSelectedItems) {
+        tableActionControls.setEnabled(true);
+        selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+    }
 
-	@Override
-	public HasSearchHandlers<BugSearchCriteria> getSearchHandlers() {
-		return problemSearchPanel;
-	}
+    @Override
+    public void disableActionControls() {
+        tableActionControls.setEnabled(false);
+        selectedItemsNumberLabel.setValue("");
+    }
 
-	private ComponentContainer constructTableActionControls() {
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
+    @Override
+    public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+        return selectOptionButton;
+    }
 
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		layout.addComponent(selectOptionButton);
+    @Override
+    public HasPopupActionHandlers getPopupActionHandlers() {
+        return tableActionControls;
+    }
 
-		tableActionControls = new PopupButtonControl("delete", "Delete");
-		tableActionControls.addOptionItem("mail", "Mail");
-		tableActionControls.addOptionItem("export", "Export");
+    @Override
+    public HasSelectableItemHandlers<SimpleBug> getSelectableItemHandlers() {
+        return tableItem;
+    }
 
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
-				Alignment.MIDDLE_CENTER);
-		return layout;
-	}
-
-	@Override
-	public void enableActionControls(int numOfSelectedItems) {
-		tableActionControls.setEnabled(true);
-		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
-	}
-
-	@Override
-	public void disableActionControls() {
-		tableActionControls.setEnabled(false);
-		selectedItemsNumberLabel.setValue("");
-	}
-
-	@Override
-	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return selectOptionButton;
-	}
-
-	@Override
-	public HasPopupActionHandlers getPopupActionHandlers() {
-		return tableActionControls;
-	}
-
-	@Override
-	public HasSelectableItemHandlers<SimpleBug> getSelectableItemHandlers() {
-		return tableItem;
-	}
-
-	@Override
-	public IPagedBeanTable<BugService, BugSearchCriteria, SimpleBug> getPagedBeanTable() {
-		return tableItem;
-	}
-
+    @Override
+    public IPagedBeanTable<BugSearchCriteria, SimpleBug> getPagedBeanTable() {
+        return tableItem;
+    }
 }

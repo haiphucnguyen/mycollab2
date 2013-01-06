@@ -105,7 +105,7 @@ public class CampaignListViewImpl extends AbstractView implements
     }
 
     @Override
-    public IPagedBeanTable<CampaignService, CampaignSearchCriteria, SimpleCampaign> getPagedBeanTable() {
+    public IPagedBeanTable<CampaignSearchCriteria, SimpleCampaign> getPagedBeanTable() {
         return tableItem;
     }
 }

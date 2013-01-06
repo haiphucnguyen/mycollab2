@@ -221,7 +221,7 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
     }
 
     @Override
-    public IPagedBeanTable<CaseService, CaseSearchCriteria, SimpleCase> getPagedBeanTable() {
+    public IPagedBeanTable<CaseSearchCriteria, SimpleCase> getPagedBeanTable() {
         return tableItem;
     }
 }

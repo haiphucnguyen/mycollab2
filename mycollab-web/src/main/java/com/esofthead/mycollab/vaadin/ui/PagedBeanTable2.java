@@ -36,7 +36,7 @@ import java.util.Map;
 import java.util.Set;
 
 public class PagedBeanTable2<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
-        extends VerticalLayout implements IPagedBeanTable<SearchService, S, T> {
+        extends VerticalLayout implements IPagedBeanTable<S, T> {
 
     private static final long serialVersionUID = 1L;
     private String[] visibleColumns;
@@ -76,14 +76,17 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
         this.addComponent(createControls());
     }
 
+    @Override
     public void addGeneratedColumn(Object id, ColumnGenerator generatedColumn) {
         columnGenerators.put(id, generatedColumn);
     }
 
+    @Override
     public void setColumnExpandRatio(Object propertyId, float expandRation) {
         columnExpandId = propertyId;
     }
 
+    @Override
     public void setColumnWidth(Object propertyId, int width) {
         columnWidths.put(propertyId, width);
     }
@@ -436,6 +439,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
     }
     
+    @Override
     public void addTableListener(ApplicationEventListener<? extends ApplicationEvent> listener) {
         if (map == null) {
             map = new HashMap<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>>();
@@ -467,17 +471,4 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
             }
         } 
     }
-    
-    public static class TableClickEvent extends ApplicationEvent {
-        private String fieldName;
-        
-        public TableClickEvent(IPagedBeanTable source, Object data, String fieldName) {
-            super(source, data);
-            this.fieldName = fieldName;
-        }
-
-        public String getFieldName() {
-            return fieldName;
-        }
-    } 
 }
