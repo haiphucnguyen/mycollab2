@@ -92,6 +92,7 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView,
                     return userBox;
                 } else if ("description".equals(propertyId)) {
                     TextArea textArea = new TextArea("", "");
+                    textArea.setNullRepresentation("");
                     return textArea;
                 }
 

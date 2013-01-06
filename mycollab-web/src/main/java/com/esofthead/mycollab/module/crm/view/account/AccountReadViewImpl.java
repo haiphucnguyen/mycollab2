@@ -12,11 +12,11 @@ public class AccountReadViewImpl extends AbstractView implements
         AccountReadView {
 
     private static final long serialVersionUID = 1L;
-    private AccountPreview accountPreview;
+    private AccountPreviewBuilder accountPreview;
 
     public AccountReadViewImpl() {
         super();
-        accountPreview = new AccountPreview(true);
+        accountPreview = new AccountPreviewBuilder.ReadView();
         this.addComponent(accountPreview);
     }
 

@@ -97,6 +97,7 @@ public class ContactPreview extends VerticalLayout {
             super.setItemDataSource(newDataSource);
         }
 
+        @Override
         protected void doPrint() {
             // Create a window that contains what you want to print
             Window window = new Window("Window to Print");

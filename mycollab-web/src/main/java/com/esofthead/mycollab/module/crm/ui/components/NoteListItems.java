@@ -40,12 +40,16 @@ import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
 public class NoteListItems extends Depot {
 
     private static final long serialVersionUID = 1L;
-    private final String type;
-    private final Integer typeid;
+    private String type;
+    private Integer typeid;
     private BeanList<NoteService, NoteSearchCriteria, SimpleNote> noteList;
     private final NoteService noteService;
     private NoteEditor noteEditor;
     private Button createBtn;
+    
+    public NoteListItems(String title) {
+        this(title, "", 0);
+    }
 
     public NoteListItems(String title, String type, Integer typeid) {
         super(title, new VerticalLayout());
@@ -58,6 +62,13 @@ public class NoteListItems extends Depot {
         this.typeid = typeid;
 
         initUI();
+    }
+    
+
+    public void showNotes(String type, int typeid) {
+        this.type = type;
+        this.typeid = typeid;
+        displayNotes();
     }
 
     private void initUI() {

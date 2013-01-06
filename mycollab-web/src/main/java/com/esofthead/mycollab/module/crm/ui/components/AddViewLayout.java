@@ -18,12 +18,10 @@ public class AddViewLayout extends CustomLayout {
 
     public AddViewLayout(String title, ThemeResource resource) {
         super("addView");
-        String sectionName = title.substring(0, 1).toUpperCase()
-                + title.substring(1).toLowerCase();
         
         this.header = new HorizontalLayout();
         this.header.setStyleName("addViewHeader");
-        this.header.addStyleName("create" + sectionName + "header");
+        this.header.addStyleName("create item header");
         
         icon= new Embedded();
         icon.setSource(resource);
@@ -33,6 +31,10 @@ public class AddViewLayout extends CustomLayout {
         titleLbl.setStyleName("headerName");
         this.header.addComponent(titleLbl);
         this.addComponent(header, "addViewHeader");
+    }
+    
+    public void setTitle(String title) {
+        titleLbl.setValue(title);
     }
 
     public void addTopControls(ComponentContainer topControls) {
