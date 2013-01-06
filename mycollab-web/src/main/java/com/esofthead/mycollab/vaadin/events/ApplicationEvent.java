@@ -9,35 +9,33 @@ import java.util.EventObject;
  */
 public class ApplicationEvent extends EventObject {
 
-	private static final long serialVersionUID = 4160622600954681059L;
+    private static final long serialVersionUID = 4160622600954681059L;
+    private String name;
+    private Object data;
 
-	private String name;
+    public ApplicationEvent(Object source) {
+        this(source, "", null);
+    }
 
-	private Object data;
+    public ApplicationEvent(Object source, String name) {
+        this(source, name, null);
+    }
 
-	public ApplicationEvent(Object source) {
-		this(source, "", null);
-	}
+    public ApplicationEvent(Object source, Object data) {
+        this(source, "", data);
+    }
 
-	public ApplicationEvent(Object source, String name) {
-		this(source, name, null);
-	}
+    public ApplicationEvent(Object source, String name, Object data) {
+        super(source);
+        this.name = name;
+        this.data = data;
+    }
 
-	public ApplicationEvent(Object source, Object data) {
-		this(source, "", data);
-	}
+    public String getName() {
+        return name;
+    }
 
-	public ApplicationEvent(Object source, String name, Object data) {
-		super(source);
-		this.name = name;
-		this.data = data;
-	}
-
-	public String getName() {
-		return name;
-	}
-
-	public Object getData() {
-		return data;
-	}
+    public Object getData() {
+        return data;
+    }
 }

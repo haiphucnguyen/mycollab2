@@ -4,16 +4,14 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
-import com.esofthead.mycollab.module.crm.service.OpportunityService;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -21,7 +19,7 @@ public class OpportunitySelectionWindow extends Window {
 
     private static final long serialVersionUID = 1L;
     private OpportunitySearchCriteria searchCriteria;
-    private PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> tableItem;
+    private OpportunityTableDisplay tableItem;
     private FieldSelection fieldSelection;
 
     public OpportunitySelectionWindow(FieldSelection fieldSelection) {
@@ -53,37 +51,29 @@ public class OpportunitySelectionWindow extends Window {
     }
 
     private void createOpportunityList() {
-        tableItem = new PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>(
-                AppContext.getSpringBean(OpportunityService.class),
-                SimpleOpportunity.class, new String[]{"opportunityname",
+        tableItem = new OpportunityTableDisplay(new String[]{"opportunityname",
                     "accountName", "salesstage", "assignUserFullName"},
                 new String[]{"Name", "Account Name", "Sales Stage", "User"});
         tableItem.setWidth("100%");
         tableItem.setHeight("200px");
 
-        tableItem.addGeneratedColumn("opportunityname", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+        tableItem.addTableListener(new ApplicationEventListener<PagedBeanTable2.TableClickEvent>() {
+            @Override
+            public Class<? extends ApplicationEvent> getEventType() {
+                return TableClickEvent.class;
+            }
 
-            public com.vaadin.ui.Component generateCell(final Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleOpportunity opportunity = tableItem
-                        .getBeanByIndex(itemId);
-                Button b = new Button(opportunity.getOpportunityname(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                fieldSelection.fireValueChange(opportunity);
-                                OpportunitySelectionWindow.this
-                                        .getParent()
-                                        .removeWindow(
-                                        OpportunitySelectionWindow.this);
-                            }
-                        });
-                b.setStyleName("link");
-                b.addStyleName("medium-text");
-                return b;
+            @Override
+            public void handle(TableClickEvent event) {
+                SimpleOpportunity opportunity = (SimpleOpportunity) event.getData();
+                if ("opportunityname".equals(
+                        event.getFieldName())) {
+                    fieldSelection.fireValueChange(opportunity);
+                    OpportunitySelectionWindow.this
+                            .getParent()
+                            .removeWindow(
+                            OpportunitySelectionWindow.this);
+                }
             }
         });
     }

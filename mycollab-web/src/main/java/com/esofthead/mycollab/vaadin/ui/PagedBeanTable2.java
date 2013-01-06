@@ -3,6 +3,8 @@ package com.esofthead.mycollab.vaadin.ui;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.vaadin.data.Container;
@@ -27,6 +29,8 @@ import com.vaadin.ui.themes.Reindeer;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Iterator;
+import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
@@ -55,8 +59,10 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
     private Object columnExpandId;
     private Object sortColumnId;
     private boolean isAscending = true;
+    
     private Map<Object, ColumnGenerator> columnGenerators = new HashMap<Object, Table.ColumnGenerator>();
     private Map<Object, Integer> columnWidths = new HashMap<Object, Integer>();
+     private Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> map;
 
     public PagedBeanTable2(SearchService searchService, Class<T> type,
             final String[] visibleColumns, String[] columnHeaders) {
@@ -429,4 +435,49 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
         pagableHandlers.add(handler);
 
     }
+    
+    public void addTableListener(ApplicationEventListener<? extends ApplicationEvent> listener) {
+        if (map == null) {
+            map = new HashMap<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>>();
+        }
+
+        Set<ApplicationEventListener<?>> listenerSet = map.get(listener
+                .getEventType());
+        if (listenerSet == null) {
+            listenerSet = new LinkedHashSet<ApplicationEventListener<?>>();
+            map.put(listener.getEventType(), listenerSet);
+        }
+
+        listenerSet.add(listener);
+    }
+
+    protected void fireTableEvent(ApplicationEvent event) {
+
+        Class<? extends ApplicationEvent> eventType = event.getClass();
+
+        Set<ApplicationEventListener<?>> eventSet = map.get(eventType);
+        if (eventSet != null) {
+            Iterator<ApplicationEventListener<?>> listenerSet = map.get(eventType).iterator();
+
+            while (listenerSet.hasNext()) {
+                ApplicationEventListener<?> listener = listenerSet.next();
+                @SuppressWarnings("unchecked")
+                ApplicationEventListener<ApplicationEvent> l = (ApplicationEventListener<ApplicationEvent>) listener;
+                l.handle(event);
+            }
+        } 
+    }
+    
+    public static class TableClickEvent extends ApplicationEvent {
+        private String fieldName;
+        
+        public TableClickEvent(IPagedBeanTable source, Object data, String fieldName) {
+            super(source, data);
+            this.fieldName = fieldName;
+        }
+
+        public String getFieldName() {
+            return fieldName;
+        }
+    } 
 }

@@ -5,6 +5,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriter
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -14,6 +15,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -29,6 +31,8 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
+import org.springframework.context.ApplicationEvent;
+import org.springframework.context.ApplicationListener;
 
 @ViewComponent
 public class OpportunityListViewImpl extends AbstractView implements
@@ -37,7 +41,7 @@ public class OpportunityListViewImpl extends AbstractView implements
     private static final long serialVersionUID = 1L;
     private final OpportunitySearchPanel opportunitySeachPanel;
     private SelectionOptionButton selectOptionButton;
-    private PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> tableItem;
+    private OpportunityTableDisplay tableItem;
     private final VerticalLayout accountListLayout;
     private PopupButtonControl tableActionControls;
     private final Label selectedItemsNumberLabel = new Label();
@@ -57,113 +61,33 @@ public class OpportunityListViewImpl extends AbstractView implements
 
     @SuppressWarnings("serial")
     private void generateDisplayTable() {
-        tableItem = new PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity>(
-                AppContext.getSpringBean(OpportunityService.class),
-                SimpleOpportunity.class, new String[]{"selected",
+        tableItem = new OpportunityTableDisplay(
+                new String[]{"selected",
                     "opportunityname", "accountName", "salesstage",
                     "amount", "expectedcloseddate", "assignUserFullName"},
                 new String[]{"", "Name", "Account Name", "Sales Stage",
                     "Amount", "Close", "User"});
 
-        tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+        tableItem.addTableListener(new ApplicationEventListener<PagedBeanTable2.TableClickEvent>() {
+            @Override
+            public Class<? extends com.esofthead.mycollab.vaadin.events.ApplicationEvent> getEventType() {
+                return TableClickEvent.class;
+            }
 
             @Override
-            public Object generateCell(final Table source, final Object itemId,
-                    Object columnId) {
-                final CheckBox cb = new CheckBox("", false);
-                cb.setImmediate(true);
-                cb.addListener(new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        SimpleOpportunity opportunity = tableItem
-                                .getBeanByIndex(itemId);
-                        tableItem.fireSelectItemEvent(opportunity);
-                    }
-                });
-
-                SimpleOpportunity opportunity = tableItem
-                        .getBeanByIndex(itemId);
-                opportunity.setExtraData(cb);
-                return cb;
+            public void handle(TableClickEvent event) {
+                SimpleOpportunity opportunity = (SimpleOpportunity) event.getData();
+                if (event.getFieldName().equals("opportunityname")) {
+                    EventBus.getInstance().fireEvent(
+                            new OpportunityEvent.GotoRead(this,
+                            opportunity.getId()));
+                } else if (event.getFieldName().equals("accountname")) {
+                    EventBus.getInstance().fireEvent(
+                            new AccountEvent.GotoRead(this,
+                            opportunity.getAccountid()));
+                }
             }
         });
-
-        tableItem.addGeneratedColumn("opportunityname", new ColumnGenerator() {
-            @Override
-            public Object generateCell(Table source, Object itemId,
-                    Object columnId) {
-                final SimpleOpportunity opportunity = tableItem
-                        .getBeanByIndex(itemId);
-                ButtonLink b = new ButtonLink(opportunity.getOpportunityname(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                EventBus.getInstance().fireEvent(
-                                        new OpportunityEvent.GotoRead(this,
-                                        opportunity.getId()));
-                            }
-                        });
-                b.addStyleName("medium-text");
-                return b;
-            }
-        });
-
-        tableItem.addGeneratedColumn("accountName", new ColumnGenerator() {
-            @Override
-            public Object generateCell(Table source, Object itemId,
-                    Object columnId) {
-                final SimpleOpportunity opportunity = tableItem
-                        .getBeanByIndex(itemId);
-                ButtonLink b = new ButtonLink(opportunity.getAccountName(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                EventBus.getInstance().fireEvent(
-                                        new AccountEvent.GotoRead(this,
-                                        opportunity.getAccountid()));
-                            }
-                        });
-                return b;
-            }
-        });
-
-        tableItem.addGeneratedColumn("expectedcloseddate",
-                new ColumnGenerator() {
-                    private static final long serialVersionUID = 1L;
-
-                    @Override
-                    public com.vaadin.ui.Component generateCell(Table source,
-                            Object itemId, Object columnId) {
-                        final SimpleOpportunity opportunity = tableItem
-                                .getBeanByIndex(itemId);
-                        Label l = new Label();
-                        l.setValue(AppContext.formatDateTime(opportunity
-                                .getExpectedcloseddate()));
-                        return l;
-                    }
-                });
-
-        tableItem.setWidth("100%");
-
-        tableItem.setColumnExpandRatio("opportunityname", 1.0f);
-
-        tableItem
-                .setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
-        tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-        tableItem.setColumnWidth("salesstage", UIConstants.TABLE_M_LABEL_WIDTH);
-        tableItem.setColumnWidth("amount", UIConstants.TABLE_M_LABEL_WIDTH);
-        tableItem.setColumnWidth("expectedcloseddate",
-                UIConstants.TABLE_DATE_TIME_WIDTH);
-        tableItem.setColumnWidth("assignUserFullName",
-                UIConstants.TABLE_X_LABEL_WIDTH);
-        tableItem.setColumnWidth("createdtime", UIConstants.TABLE_DATE_TIME_WIDTH);
 
         accountListLayout.addComponent(constructTableActionControls());
         accountListLayout.addComponent(tableItem);
