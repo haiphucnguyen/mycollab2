@@ -12,11 +12,11 @@ public class OpportunityReadViewImpl extends AbstractView implements
 
     private static final long serialVersionUID = 1L;
 
-    private OpportunityPreview _opportunityPreview;
+    private OpportunityPreviewBuilder _opportunityPreview;
     
     public OpportunityReadViewImpl() {
         super();
-        _opportunityPreview = new OpportunityPreview(true);
+        _opportunityPreview = new OpportunityPreviewBuilder(true);
         this.addComponent(_opportunityPreview);
     }
 

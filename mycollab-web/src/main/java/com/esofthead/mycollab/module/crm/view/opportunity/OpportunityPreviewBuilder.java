@@ -26,13 +26,13 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 @SuppressWarnings("serial")
-public class OpportunityPreview extends VerticalLayout {
+public class OpportunityPreviewBuilder extends VerticalLayout {
 
 	private PreviewForm previewForm;
     private SimpleOpportunity opportunity;
     private boolean isControlEnable = false;
     
-    public OpportunityPreview(boolean enableButtonControls) {
+    public OpportunityPreviewBuilder(boolean enableButtonControls) {
     	isControlEnable = enableButtonControls;
     	constructUI();
     }
@@ -121,7 +121,7 @@ public class OpportunityPreview extends VerticalLayout {
             // Create a window that contains what you want to print
             Window window = new Window("Window to Print");
 
-            OpportunityPreview printView = new OpportunityPreview(false);
+            OpportunityPreviewBuilder printView = new OpportunityPreviewBuilder(false);
             printView.previewItem(opportunity);
             window.addComponent(printView);
 
