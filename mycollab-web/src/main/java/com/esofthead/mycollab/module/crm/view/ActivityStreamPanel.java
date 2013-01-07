@@ -11,6 +11,7 @@ import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteri
 import com.esofthead.mycollab.common.service.ActivityStreamService;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
@@ -23,6 +24,7 @@ import com.esofthead.mycollab.vaadin.ui.BeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -36,21 +38,21 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class ActivityStreamPanel extends Panel {
-
+    
     private BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
-
+    
     public ActivityStreamPanel() {
         super("Activity Channels");
-
+        
         activityStreamList = new BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), ActivityStreamRowDisplayHandler.class);
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
         searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{ModuleNameConstants.CRM}));
         activityStreamList.setSearchCriteria(searchCriteria);
         this.addComponent(activityStreamList);
     }
-
+    
     public static class ActivityStreamRowDisplayHandler implements BeanPagedList.RowDisplayHandler<SimpleActivityStream> {
-
+        
         @Override
         public Component generateRow(SimpleActivityStream activityStream, int rowIndex) {
             VerticalLayout layout = new VerticalLayout();
@@ -60,26 +62,34 @@ public class ActivityStreamPanel extends Panel {
             header.addComponent(userLink);
             
             StringBuilder action = new StringBuilder();
-
+            
             if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream.getAction())) {
                 action.append("create a new ");
             } else if (ActivityStreamConstants.ACTION_UPDATE.equals(activityStream.getAction())) {
                 action.append("update ");
             }
-
+            
             action.append(activityStream.getType());
-            header.addComponent(new Label(action.toString()));
+            Label actionLbl = new Label(action.toString());
+            header.addComponent(actionLbl);
+            header.setComponentAlignment(actionLbl, Alignment.MIDDLE_CENTER);
             header.addComponent(new ActivitylLink(activityStream.getType(), activityStream.getNamefield(), activityStream.getTypeid()));
             layout.addComponent(header);
+            
+            HorizontalLayout body = new HorizontalLayout();
+            Label dateLbl = new Label(DateTimeUtils.getStringDateFromNow(activityStream.getCreatedtime()));
+            body.addComponent(dateLbl);
+            
+            layout.addComponent(body);
             return layout;
         }
     }
-
+    
     private static class ActivitylLink extends Button {
-
+        
         public ActivitylLink(final String type, final String fieldName, final int typeid) {
             super(fieldName);
-
+            
             if (CrmTypeConstants.ACCOUNT.equals(type)) {
                 this.setIcon(new ThemeResource("icons/16/crm/account.png"));
             } else if (CrmTypeConstants.CAMPAIGN.equals(type)) {
@@ -99,7 +109,7 @@ public class ActivityStreamPanel extends Panel {
             } else if (CrmTypeConstants.CALL.equals(type)) {
                 this.setIcon(new ThemeResource("icons/16/crm/call.png"));
             }
-
+            
             this.setStyleName("link");
             this.addListener(new Button.ClickListener() {
                 @Override

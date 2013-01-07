@@ -4,7 +4,7 @@ public class ProjectContants {
 
     public static final String PROJECT_NAME = "project";
     
-    public static final String PROJECT = "Rroject";
+    public static final String PROJECT = "Project";
     
     public static final String MESSAGE = "Message";
     

@@ -11,6 +11,7 @@ import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteri
 import com.esofthead.mycollab.common.service.ActivityStreamService;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.MessageEvent;
@@ -27,19 +28,17 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  *
  * @author haiphucnguyen
  */
-public class ActivityStreamPanel extends Panel {
+public class ActivityStreamPanel extends VerticalLayout {
 
     private BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
 
     public ActivityStreamPanel() {
-        super("Activity Channels");
 
         activityStreamList = new BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), ActivityStreamRowDisplayHandler.class);
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
@@ -73,6 +72,12 @@ public class ActivityStreamPanel extends Panel {
             header.setComponentAlignment(actionLbl, Alignment.MIDDLE_CENTER);
             header.addComponent(new ActivitylLink(activityStream.getType(), activityStream.getNamefield(), activityStream.getTypeid()));
             layout.addComponent(header);
+
+            HorizontalLayout body = new HorizontalLayout();
+            Label dateLbl = new Label(DateTimeUtils.getStringDateFromNow(activityStream.getCreatedtime()));
+            body.addComponent(dateLbl);
+
+            layout.addComponent(body);
             return layout;
         }
     }
@@ -81,8 +86,6 @@ public class ActivityStreamPanel extends Panel {
 
         public ActivitylLink(final String type, final String fieldName, final int typeid) {
             super(fieldName);
-            
-            System.out.println("Type: " + type + "---" + typeid);
 
             if (ProjectContants.PROJECT.equals(type)) {
                 this.setIcon(new ThemeResource("icons/16/project/project.png"));
@@ -108,13 +111,12 @@ public class ActivityStreamPanel extends Panel {
                     } else if (ProjectContants.MESSAGE.equals(type)) {
                         EventBus.getInstance().fireEvent(new MessageEvent.GotoRead(this, typeid));
                     } else if (ProjectContants.MILESTONE.equals(type)) {
-                         EventBus.getInstance().fireEvent(new MilestoneEvent.GotoRead(this, typeid));
+                        EventBus.getInstance().fireEvent(new MilestoneEvent.GotoRead(this, typeid));
                     } else if (ProjectContants.PROBLEM.equals(type)) {
-                         EventBus.getInstance().fireEvent(new ProblemEvent.GotoRead(this, typeid));
+                        EventBus.getInstance().fireEvent(new ProblemEvent.GotoRead(this, typeid));
                     } else if (ProjectContants.RISK.equals(type)) {
                         EventBus.getInstance().fireEvent(new RiskEvent.GotoRead(this, typeid));
                     } else if (ProjectContants.TASK.equals(type)) {
-                        
                     } else if (ProjectContants.TASK_LIST.equals(type)) {
                     }
                 }
