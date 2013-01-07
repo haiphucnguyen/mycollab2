@@ -135,7 +135,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 
                 @Override
                 protected void showHistory() {
-                    HistoryLogWindow historyLog = new HistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.CAMPAIGN, campaign.getId());
+                	CampaignHistoryLogWindow historyLog = new CampaignHistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.CAMPAIGN, campaign.getId());
                     getWindow().addWindow(historyLog);
                 }
             };

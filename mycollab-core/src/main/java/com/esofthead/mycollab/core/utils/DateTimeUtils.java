@@ -12,124 +12,104 @@ import org.joda.time.DateTimeZone;
 
 public class DateTimeUtils {
 
-    public static Date convertDate(Date value) {
-        DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
-        Date date = new Date();
-        try {
-            date = df.parse(df.format(value.getTime()));
-        } catch (ParseException e) {
-            throw new MyCollabException(e);
-        }
-        return date;
-    }
-    
-    public static Date getDateByStringWithFormatW3C(String strDate) {
-    	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
-    	try {
+	public static Date convertDate(Date value) {
+		DateFormat df = new SimpleDateFormat("yyyy-MM-dd");
+		Date date = new Date();
+		try {
+			date = df.parse(df.format(value.getTime()));
+		} catch (ParseException e) {
+			throw new MyCollabException(e);
+		}
+		return date;
+	}
+
+	public static Date getDateByStringWithFormatW3C(String strDate) {
+		SimpleDateFormat formatter = new SimpleDateFormat(
+				"yyyy-MM-dd'T'HH:mm:ss");
+		try {
 			return formatter.parse(strDate);
 		} catch (ParseException e) {
 			e.printStackTrace();
 		}
 		return new Date();
-    }
+	}
 
-    private static String[] getArrayDate(Date date) {
-        SimpleDateFormat lv_formatter = new SimpleDateFormat(
-                "yyyy:MM:dd:HH:mm:ss");
-        String dateFormat = lv_formatter.format(date
-                .getTime());
-        String[] strPlit = dateFormat.split(":");
+	public static String getStringDateFromNow(Date dateTime) {
+		StringBuffer sb = new StringBuffer();
+		Date current = Calendar.getInstance().getTime();
+		long diffInSeconds = (current.getTime() - dateTime.getTime()) / 1000;
 
-        return strPlit;
-    }
+		long sec = (diffInSeconds >= 60 ? diffInSeconds % 60 : diffInSeconds);
+		long min = (diffInSeconds = (diffInSeconds / 60)) >= 60 ? diffInSeconds % 60
+				: diffInSeconds;
+		long hrs = (diffInSeconds = (diffInSeconds / 60)) >= 24 ? diffInSeconds % 24
+				: diffInSeconds;
+		long days = (diffInSeconds = (diffInSeconds / 24)) >= 30 ? diffInSeconds % 30
+				: diffInSeconds;
+		long months = (diffInSeconds = (diffInSeconds / 30)) >= 12 ? diffInSeconds % 12
+				: diffInSeconds;
+		long years = (diffInSeconds = (diffInSeconds / 12));
 
-    public static String getStringDateFromMilestone(Date date, Date milestoneDate) {
-        String[] strPlit = getArrayDate(date);
+		if (years > 0) {
+			sb.append((years == 1) ? "a year" : (years + " years"));
+			if (years <= 6 && months > 0) {
+				sb.append(" and ");
+				sb.append((months == 1) ? "a month" : (months + " months"));
+			}
+		} else if (months > 0) {
+			sb.append((months == 1) ? "a month" : (months + " months"));
+			if (months <= 6 && days > 0) {
+				sb.append(" and ");
+				sb.append((days == 1) ? "a day" : (days + " days"));
+			}
+		} else if (days > 0) {
+			sb.append((days == 1) ? "a day" : (days + " days"));
+			if (days <= 3 && hrs > 0) {
+				sb.append(" and ");
+				sb.append((hrs == 1) ? "an hour" : (hrs + " hours"));
+			}
+		} else if (hrs > 0) {
+			sb.append((hrs == 1) ? "an hour" : (hrs + " hours"));
+			if (min > 1) {
+				sb.append(" and " + min + " minutes");
+			}
+		} else if (min > 0) {
+			sb.append((min == 1) ? "a minute" : (min + " minutes"));
+			if (sec > 1) {
+				sb.append(" and " + sec + " seconds");
+			}
+		} else {
+			sb.append((sec == 1) ? "about a second"
+					: ("about " + sec + " seconds"));
+		}
 
-        int year = Integer.parseInt(strPlit[0]);
-        int month = Integer.parseInt(strPlit[1]);
-        int day = Integer.parseInt(strPlit[2]);
-        int hour = Integer.parseInt(strPlit[3]);
-        int minute = Integer.parseInt(strPlit[4]);
-        int second = Integer.parseInt(strPlit[5]);
+		sb.append(" ago");
 
-        String[] strPlitCurrent = getArrayDate(milestoneDate);//getArrayDate(new GregorianCalendar().getTime());
-        int yearCurrent = Integer.parseInt(strPlitCurrent[0]);
-        int monthCurrent = Integer.parseInt(strPlitCurrent[1]);
-        int dayCurrent = Integer.parseInt(strPlitCurrent[2]);
-        int hourCurrent = Integer.parseInt(strPlitCurrent[3]);
-        int minuteCurrent = Integer.parseInt(strPlitCurrent[4]);
-        int secondCurrent = Integer.parseInt(strPlitCurrent[5]);
+		return sb.toString();
+	}
 
-        int numYear = yearCurrent - year;
-        int numMonth = monthCurrent - month;
-        int numDay = dayCurrent - day;
-        int numHour = hourCurrent - hour;
-        int numMinute = minuteCurrent - minute;
-        int numSecond = secondCurrent - second;
+	/**
+	 * 
+	 * @param date
+	 * @param duration
+	 *            Example: Date date = subtractOrAddDayDuration(new Date(), -2);
+	 *            // Result: the last 2 days
+	 * 
+	 *            Date date = subtractOrAddDayDuration(new Date(), 2); //
+	 *            Result: the next 2 days
+	 * @return
+	 */
+	public static Date subtractOrAddDayDuration(Date date, int duration) {
+		Calendar cal = new GregorianCalendar();
+		cal.setTime(date);
+		cal.add(Calendar.DAY_OF_MONTH, duration);
+		Date dateExpect = cal.getTime();
+		return dateExpect;
+	}
 
-        String nextInstruction = "the next ";
-
-        if (numYear > 0) {
-            return (numYear > 1) ? (numYear + " years ago") : (numYear + " year ago");
-        } else if (numYear < 0) {
-            return (numYear < -1) ? (nextInstruction + numYear + " year") : (nextInstruction + numYear + " year");
-        }
-
-        if (numMonth > 0 && numMonth < 12) {
-            return (numMonth > 1) ? (numMonth + " months ago") : (numMonth + " months ago");
-        } else if (numMonth < 0) {
-            return (numMonth < -1) ? (nextInstruction + numMonth + " months") : (nextInstruction + numMonth + " month");
-        }
-
-        if (numDay > 0) {
-            return (numDay > 1) ? (numDay + " days ago") : (numDay + " day ago");
-        } else if (numDay < 0) {
-            return (numDay < -1) ? (nextInstruction + numDay + " days") : (nextInstruction + numDay + " day");
-        }
-
-        if (numHour > 0 && numHour < 24) {
-            return (numHour > 1) ? (numHour + " hours ago") : (numHour + " hour ago");
-        } else if (numHour < 0) {
-            return (numHour < -1) ? (nextInstruction + numHour + " hours") : (nextInstruction + numHour + " hour");
-        }
-
-        if (numMinute > 0 && numMinute < 60) {
-            return (numMinute > 1) ? (numMinute + " minutes ago") : (numMinute + " minute ago");
-        } else if (numMinute < 0) {
-            return (numMinute < -1) ? (nextInstruction + numMinute + " minutes") : (nextInstruction + numMinute + " minute");
-        }
-
-        if (numSecond > 0 && numSecond < 60) {
-            return (numSecond > 1) ? (numSecond + " seconds ago") : (numSecond + " second ago");
-        } else if (numSecond < 0) {
-            return (numSecond > 1) ? (nextInstruction + numSecond + " seconds") : (nextInstruction + numSecond + " second");
-        }
-
-        return "";
-    }
-
-    /**
-     *
-     * @param date
-     * @param duration Example: Date date = subtractOrAddDayDuration(new Date(),
-     * -2); // Result: the last 2 days
-     *
-     * Date date = subtractOrAddDayDuration(new Date(), 2); // Result: the next
-     * 2 days
-     * @return
-     */
-    public static Date subtractOrAddDayDuration(Date date, int duration) {
-        Calendar cal = new GregorianCalendar();
-        cal.setTime(date);
-        cal.add(Calendar.DAY_OF_MONTH, duration);
-        Date dateExpect = cal.getTime();
-        return dateExpect;
-    }
-    
-    public static DateTime convertJodaTimezone(Date date, String destTz) {
-        DateTime srcDateTime = new DateTime(date);
-        DateTime dstDateTime = srcDateTime.withZone(DateTimeZone.forID(destTz));
-        return dstDateTime;
-    }
+	public static DateTime convertJodaTimezone(Date date, String destTz) {
+		DateTime srcDateTime = new DateTime(date);
+		DateTime dstDateTime = srcDateTime.withZone(DateTimeZone.forID(destTz));
+		return dstDateTime;
+	}
 }
