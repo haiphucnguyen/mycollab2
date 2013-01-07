@@ -8,9 +8,13 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -23,7 +27,7 @@ public class LeadSelectionWindow extends Window {
 
     public LeadSelectionWindow(FieldSelection fieldSelection) {
         super("Lead Name Lookup");
-
+        this.setWidth("800px");
         this.fieldSelection = fieldSelection;
     }
 
@@ -41,12 +45,26 @@ public class LeadSelectionWindow extends Window {
         this.setContent(layout);
 
         tableItem.setSearchCriteria(searchCriteria);
+        center();
     }
 
     private ComponentContainer createSearchPanel() {
-        GridFormLayoutHelper layout = new GridFormLayoutHelper(3, 2);
+    	HorizontalLayout layout = new HorizontalLayout();
+        
+        layout.setSpacing(true);
 
-        return layout.getLayout();
+        TextField valueField = new TextField();
+        layout.addComponent(valueField);
+        
+        ValueComboBox group = new ValueComboBox(false, new String[]{
+                "Name", "Email", "Phone",
+                "Assigned To"});
+	    layout.addComponent(group);
+	
+	    Button searchBtn = new Button("Search");
+	    layout.addComponent(searchBtn);
+        
+        return layout;
     }
 
     private void createLeadList() {
@@ -54,7 +72,6 @@ public class LeadSelectionWindow extends Window {
                     "assignUserFullName"}, new String[]{"Name",
                     "Status", "Account Name", "Assign User"});
         tableItem.setWidth("100%");
-        tableItem.setHeight("200px");
 
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override

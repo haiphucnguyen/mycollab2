@@ -8,9 +8,13 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -48,9 +52,22 @@ public class CampaignSelectionWindow extends Window {
     }
 
     private ComponentContainer createSearchPanel() {
-        GridFormLayoutHelper layout = new GridFormLayoutHelper(3, 2);
+        HorizontalLayout layout = new HorizontalLayout();
+        
+        layout.setSpacing(true);
 
-        return layout.getLayout();
+        TextField valueField = new TextField();
+        layout.addComponent(valueField);
+        
+        ValueComboBox group = new ValueComboBox(false, new String[]{
+                "Name", "Type", "Status",
+                "Assigned To"});
+	    layout.addComponent(group);
+	
+	    Button searchBtn = new Button("Search");
+	    layout.addComponent(searchBtn);
+        
+        return layout;
     }
 
     private void createCampaignList() {
