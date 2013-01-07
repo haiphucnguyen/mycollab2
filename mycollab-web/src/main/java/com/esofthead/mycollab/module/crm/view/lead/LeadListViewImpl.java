@@ -2,6 +2,10 @@ package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
@@ -48,6 +52,21 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
                     "officephone", "email", "assignUserFullName"},
                 new String[]{"", "Name", "Status", "Account Name",
                     "Office Phone", "Email", "Assign User"});
+
+        tableItem.addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
+            @Override
+            public Class<? extends ApplicationEvent> getEventType() {
+                return IPagedBeanTable.TableClickEvent.class;
+            }
+
+            @Override
+            public void handle(IPagedBeanTable.TableClickEvent event) {
+                SimpleLead lead = (SimpleLead) event.getData();
+                if ("leadName".equals(event.getFieldName())) {
+                    EventBus.getInstance().fireEvent(new LeadEvent.GotoRead(LeadListViewImpl.this, lead.getId()));
+                }
+            }
+        });
 
         accountListLayout.addComponent(constructTableActionControls());
         accountListLayout.addComponent(tableItem);

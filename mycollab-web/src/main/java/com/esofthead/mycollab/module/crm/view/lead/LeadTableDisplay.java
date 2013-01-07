@@ -64,9 +64,7 @@ public class LeadTableDisplay extends PagedBeanTable2<LeadService, LeadSearchCri
 
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
-                                EventBus.getInstance().fireEvent(
-                                        new LeadEvent.GotoRead(this, lead
-                                        .getId()));
+                                fireTableEvent(new TableClickEvent(LeadTableDisplay.this, lead, "leadName"));
                             }
                         });
                 b.addStyleName("medium-text");

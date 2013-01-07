@@ -5,8 +5,12 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.LeadService;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
@@ -21,7 +25,7 @@ public class LeadSelectionWindow extends Window {
 
     private static final long serialVersionUID = 1L;
     private LeadSearchCriteria searchCriteria;
-    private PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead> tableItem;
+    private LeadTableDisplay tableItem;
     private FieldSelection fieldSelection;
 
     public LeadSelectionWindow(FieldSelection fieldSelection) {
@@ -53,34 +57,26 @@ public class LeadSelectionWindow extends Window {
     }
 
     private void createLeadList() {
-        tableItem = new PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead>(
-                AppContext.getSpringBean(LeadService.class), SimpleLead.class,
-                new String[]{"leadName", "status", "accountname",
+        tableItem = new LeadTableDisplay(new String[]{"leadName", "status", "accountname",
                     "assignUserFullName"}, new String[]{"Name",
                     "Status", "Account Name", "Assign User"});
         tableItem.setWidth("100%");
         tableItem.setHeight("200px");
 
-        tableItem.addGeneratedColumn("leadName", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+            @Override
+            public Class<? extends ApplicationEvent> getEventType() {
+                return TableClickEvent.class;
+            }
 
-            public com.vaadin.ui.Component generateCell(final Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleLead lead = tableItem.getBeanByIndex(itemId);
-                Button b = new Button(lead.getLeadName(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                fieldSelection.fireValueChange(lead);
-                                LeadSelectionWindow.this.getParent()
-                                        .removeWindow(LeadSelectionWindow.this);
-                            }
-                        });
-                b.setStyleName("link");
-                b.addStyleName("medium-text");
-                return b;
+            @Override
+            public void handle(TableClickEvent event) {
+                SimpleLead lead = (SimpleLead) event.getData();
+                if ("leadName".equals(event.getFieldName())) {
+                    fieldSelection.fireValueChange(lead);
+                    LeadSelectionWindow.this.getParent()
+                            .removeWindow(LeadSelectionWindow.this);
+                }
             }
         });
     }
