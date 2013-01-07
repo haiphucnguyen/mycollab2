@@ -16,7 +16,7 @@ public class OpportunityReadViewImpl extends AbstractView implements
     
     public OpportunityReadViewImpl() {
         super();
-        opportunityPreview = new OpportunityPreviewBuilder(true);
+        opportunityPreview = new OpportunityPreviewBuilder.ReadView();
         this.addComponent(opportunityPreview);
     }
 
