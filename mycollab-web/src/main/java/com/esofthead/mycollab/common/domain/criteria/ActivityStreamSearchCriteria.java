@@ -4,13 +4,23 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 
 public class ActivityStreamSearchCriteria extends SearchCriteria {
-	private SetSearchField<String> moduleSet;
 
-	public SetSearchField<String> getModuleSet() {
-		return moduleSet;
-	}
+    private SetSearchField<String> moduleSet;
+    private SetSearchField<Integer> extraTypeIds;
 
-	public void setModuleSet(SetSearchField<String> moduleSet) {
-		this.moduleSet = moduleSet;
-	}
+    public SetSearchField<String> getModuleSet() {
+        return moduleSet;
+    }
+
+    public void setModuleSet(SetSearchField<String> moduleSet) {
+        this.moduleSet = moduleSet;
+    }
+
+    public SetSearchField<Integer> getExtraTypeIds() {
+        return extraTypeIds;
+    }
+
+    public void setExtraTypeIds(SetSearchField<Integer> extraTypeIds) {
+        this.extraTypeIds = extraTypeIds;
+    }
 }

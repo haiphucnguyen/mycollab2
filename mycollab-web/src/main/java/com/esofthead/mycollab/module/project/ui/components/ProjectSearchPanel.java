@@ -2,6 +2,8 @@ package com.esofthead.mycollab.module.project.ui.components;
 
 import com.esofthead.mycollab.module.crm.ui.components.GenericSearchPanel;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
+import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -38,7 +40,7 @@ public class ProjectSearchPanel extends GenericSearchPanel<ProjectSearchCriteria
 
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        getWindow().addWindow(new ProjectAddWindow());
+                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoAdd(ProjectSearchPanel.this, null));
 
                     }
                 });

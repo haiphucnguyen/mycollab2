@@ -4,10 +4,15 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
+import com.esofthead.mycollab.module.project.domain.Project;
+import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
+import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
+
 /**
  *
  * @author haiphucnguyen
  */
-public interface ProjectAddView {
+public interface ProjectAddView  extends IFormAddView<Project> {
+	HasEditFormHandlers<Project> getEditFormHandlers();
     
 }

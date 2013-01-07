@@ -13,13 +13,18 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.web.AppContext;
+import com.ibm.icu.text.DateFormat;
+import com.ibm.icu.text.SimpleDateFormat;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Window;
+
+import java.text.ParseException;
 import java.util.Date;
 import java.util.HashMap;
 import java.util.List;
@@ -105,7 +110,7 @@ public class HistoryLogWindow extends Window {
 
                     FieldDisplayHandler fieldDisplayHandler = fieldsFormat.get(fieldName);
                     if (fieldDisplayHandler != null) {
-                        gridLayout.addComponent(new Label(fieldDisplayHandler.getDisplayName()), 0, visibleRows + 2);
+                    	gridLayout.addComponent(new Label(fieldDisplayHandler.getDisplayName()), 0, visibleRows + 2);
                         gridLayout.addComponent(fieldDisplayHandler.getFormat().formatField(item.getOldvalue()), 1, visibleRows + 2);
                         gridLayout.addComponent(fieldDisplayHandler.getFormat().formatField(item.getNewvalue()), 2, visibleRows + 2);
                         visibleRows++;
@@ -131,7 +136,7 @@ public class HistoryLogWindow extends Window {
 
                     userLink.setStyleName("link");
                     header.addComponent(userLink);
-                    Label lbDate = new Label("changed " + DateTimeUtils.getStringDateFromMilestone(DateTimeUtils.getDateByStringWithFormatW3C(strDate), new Date()));
+                    Label lbDate = new Label("changed " + DateTimeUtils.getStringDateFromNow(DateTimeUtils.getDateByStringWithFormatW3C(strDate)));
                     lbDate.setWidth("500px");
                     header.addComponent(lbDate);
                     gridLayout.addComponent(header, 0, 0, 2, 0);
@@ -210,7 +215,8 @@ public class HistoryLogWindow extends Window {
 
         @Override
         public Component formatField(String value) {
-            throw new UnsupportedOperationException("Not supported yet.");
+        	Date formatDate = DateTimeUtils.getDateByStringWithFormatW3C(value);
+        	return new Label(AppContext.formatDate(formatDate));
         }
     }
 }

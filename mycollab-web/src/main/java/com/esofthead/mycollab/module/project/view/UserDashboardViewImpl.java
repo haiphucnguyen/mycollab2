@@ -1,17 +1,21 @@
 package com.esofthead.mycollab.module.project.view;
 
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.view.user.MyDefectsPresenter;
 import com.esofthead.mycollab.module.project.view.user.MyFeedsPresenter;
 import com.esofthead.mycollab.module.project.view.user.MyProjectsPresenter;
 import com.esofthead.mycollab.module.project.view.user.MyTasksPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
@@ -108,7 +112,11 @@ public class UserDashboardViewImpl extends AbstractView implements
                 Button btn = event.getSource();
                 String caption = btn.getCaption();
                 if ("My Projects".equals(caption)) {
-                    gotoMyProjectList();
+                    ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
+                    //TODO: wrong search criteria
+
+                    gotoMyProjectList(new ScreenData.Search<ProjectSearchCriteria>(
+                            searchCriteria));
                 } else if ("My Feeds".equals(caption)) {
                     gotoMyFeeds();
                 } else if ("My Tasks".equals(caption)) {
@@ -145,12 +153,8 @@ public class UserDashboardViewImpl extends AbstractView implements
     }
 
     @Override
-    public void gotoMyProjectList() {
-        com.vaadin.ui.Component myProjectComponent = mySpaceTabs
-                .selectTab("My Projects");
-        if (myProjectComponent != null) {
-            myProjectPresenter.doDefaultSearch();
-        }
+    public void gotoMyProjectList(ScreenData data) {
+        myProjectPresenter.go(this, data);
     }
 
     @Override
@@ -174,5 +178,11 @@ public class UserDashboardViewImpl extends AbstractView implements
         if (component != null) {
         }
 
+    }
+
+    @Override
+    public Component gotoSubView(String name) {
+        View component = (View) mySpaceTabs.selectTab(name);
+        return component;
     }
 }

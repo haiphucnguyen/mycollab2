@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.crm.view;
 
 import com.esofthead.mycollab.common.ActivityStreamConstants;
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.common.service.ActivityStreamService;
@@ -43,7 +44,7 @@ public class ActivityStreamPanel extends Panel {
 
         activityStreamList = new BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), ActivityStreamRowDisplayHandler.class);
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-        searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{"Crm"}));
+        searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{ModuleNameConstants.CRM}));
         activityStreamList.setSearchCriteria(searchCriteria);
         this.addComponent(activityStreamList);
     }
@@ -55,7 +56,9 @@ public class ActivityStreamPanel extends Panel {
             VerticalLayout layout = new VerticalLayout();
             HorizontalLayout header = new HorizontalLayout();
             header.setSpacing(true);
-            header.addComponent(new UserLink(activityStream.getCreateduser(), activityStream.getCreatedUserFullName()));
+            UserLink userLink = new UserLink(activityStream.getCreateduser(), activityStream.getCreatedUserFullName());
+            header.addComponent(userLink);
+            
             StringBuilder action = new StringBuilder();
 
             if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream.getAction())) {

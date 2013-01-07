@@ -6,7 +6,6 @@ import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
-import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -143,7 +142,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 
         @Override
         protected void showHistory() {
-            HistoryLogWindow historyLog = new HistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.OPPORTUNITY, opportunity.getId());
+            OpportunityHistoryLogWindow historyLog = new OpportunityHistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.OPPORTUNITY, opportunity.getId());
             getWindow().addWindow(historyLog);
         }
 

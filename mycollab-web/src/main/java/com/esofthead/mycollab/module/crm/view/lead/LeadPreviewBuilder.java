@@ -138,8 +138,8 @@ public class LeadPreviewBuilder extends VerticalLayout {
 
                 @Override
                 protected void showHistory() {
-                    HistoryLogWindow historyLog = new HistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.LEAD, lead.getId());
-                    getWindow().addWindow(historyLog);
+                	 LeadHistoryLogWindow historyLog = new LeadHistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.LEAD, lead.getId());
+                     getWindow().addWindow(historyLog);
                 }
             };
 

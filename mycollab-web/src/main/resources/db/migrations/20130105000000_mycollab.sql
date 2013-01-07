@@ -1,0 +1,1 @@
+ALTER TABLE `s_activitystream` ADD COLUMN `extraTypeId` INT UNSIGNED NULL;

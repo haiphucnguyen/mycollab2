@@ -1,5 +1,22 @@
 package com.esofthead.mycollab.module.project;
 
 public class ProjectContants {
-	public static String PROJECT_NAME = "project";
+
+    public static final String PROJECT_NAME = "project";
+    
+    public static final String PROJECT = "Rroject";
+    
+    public static final String MESSAGE = "Message";
+    
+    public static final String MILESTONE = "Milestone";
+    
+    public static final String TASK_LIST = "TaskList";
+    
+    public static final String TASK = "Task";
+    
+    public static final String PROBLEM = "Problem";
+    
+    public static final String RISK = "Risk";
+    
+    
 }

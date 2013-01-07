@@ -5,7 +5,8 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 
 @SuppressWarnings("serial")
 public class ProjectPriorityComboBox extends ValueComboBox {
-	public ProjectPriorityComboBox() {
-		this.loadData(ProjectDataTypeFactory.getProjectPriorityList());
-	}
+
+    public ProjectPriorityComboBox() {
+        this.loadData(ProjectDataTypeFactory.getProjectPriorityList());
+    }
 }

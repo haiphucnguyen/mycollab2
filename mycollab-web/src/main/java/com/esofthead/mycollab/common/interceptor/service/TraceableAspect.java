@@ -18,18 +18,18 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class TraceableAspect {
-
+    
     private static Logger log = LoggerFactory.getLogger(TraceableAspect.class);
     @Autowired
     private ActivityStreamService activityStreamService;
-
+    
     @After("execution(public * com.esofthead.mycollab..service..*.saveWithSession(..)) && args(bean, username)")
     public void traceSaveActivity(JoinPoint joinPoint, Object bean,
             String username) {
-
+        
         Advised advised = (Advised) joinPoint.getThis();
         Class<?> cls = advised.getTargetSource().getTargetClass();
-
+        
         Traceable traceableAnnotation = cls.getAnnotation(Traceable.class);
         if (traceableAnnotation != null) {
             try {
@@ -43,16 +43,16 @@ public class TraceableAspect {
                         + cls.getName(), e);
             }
         }
-
+        
     }
-
+    
     @After("execution(public * com.esofthead.mycollab..service..*.updateWithSession(..)) && args(bean, username)")
     public void traceUpdateActivity(JoinPoint joinPoint, Object bean,
             String username) {
-
+        
         Advised advised = (Advised) joinPoint.getThis();
         Class<?> cls = advised.getTargetSource().getTargetClass();
-
+        
         Traceable traceableAnnotation = cls.getAnnotation(Traceable.class);
         if (traceableAnnotation != null) {
             try {
@@ -67,10 +67,11 @@ public class TraceableAspect {
             }
         }
     }
-
+    
     private ActivityStream constructActivity(Traceable traceableAnnotation,
             Object bean, String username, String action) throws IllegalAccessException,
             InvocationTargetException, NoSuchMethodException {
+        
         ActivityStream activity = new ActivityStream();
         activity.setModule(traceableAnnotation.module());
         activity.setType(traceableAnnotation.type());
@@ -83,6 +84,11 @@ public class TraceableAspect {
         activity.setCreateduser(username);
         activity.setNamefield((String) PropertyUtils.getProperty(bean,
                 traceableAnnotation.nameField()));
+        
+        if (!"".equals(traceableAnnotation.extraFieldName())) {
+            Integer extraTypeId = (Integer) PropertyUtils.getProperty(bean, traceableAnnotation.extraFieldName());
+            activity.setExtratypeid(extraTypeId);
+        }
         return activity;
     }
 }
