@@ -13,6 +13,7 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
+import com.esofthead.mycollab.module.project.view.people.UserPresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
@@ -28,6 +29,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
@@ -37,6 +39,7 @@ import com.vaadin.ui.VerticalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.hene.splitbutton.SplitButton;
 
 @SuppressWarnings("serial")
 @ViewComponent
@@ -54,6 +57,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     private BugPresenter bugPresenter;
     private ProblemPresenter problemPresenter;
     private RiskPresenter riskPresenter;
+    private UserPresenter userPresenter;
+    
     private SimpleProject project;
 
     public ProjectViewImpl() {
@@ -61,6 +66,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         this.setMargin(false);
 
         topPanel = new HorizontalLayout();
+        topPanel.setWidth("100%");
+        topPanel.setMargin(true);
         this.addComponent(topPanel);
 
         root = new HorizontalLayout();
@@ -92,7 +99,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         myProjectTab.addTab(constructProjectBugComponent(), "Bugs");
         myProjectTab.addTab(constructProjectRiskComponent(), "Risks");
         myProjectTab.addTab(constructProjectProblemComponent(), "Problems");
-        myProjectTab.addTab(constructProjectDashboardComponent(), "Calendar");
+        myProjectTab.addTab(constructProjectUsers(), "Users & Group");
 
         myProjectTab
                 .addTabChangedListener(new DetachedTabs.TabChangedListener() {
@@ -135,13 +142,22 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
                             searchCriteria));
                 } else if ("Dashboard".equals(caption)) {
                     gotoDashboard();
+                } else if ("Users & Group".equals(caption)) {
+                    gotoUsersAndGroup();
                 }
             }
         });
     }
 
+    @Override
     public void gotoDashboard() {
         dashboardPresenter.go(ProjectViewImpl.this);
+    }
+    
+    
+    @Override
+    public void gotoUsersAndGroup() {
+        userPresenter.go(ProjectViewImpl.this);
     }
 
     @SuppressWarnings("rawtypes")
@@ -169,6 +185,11 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     private Component constructProjectDashboardComponent() {
         dashboardPresenter = PresenterResolver.getPresenter(ProjectDashboardPresenter.class);
         return dashboardPresenter.getView();
+    }
+    
+    private Component constructProjectUsers() {
+        userPresenter = PresenterResolver.getPresenter(UserPresenter.class);
+        return userPresenter.getView();
     }
 
     private Component constructProjectMessageComponent() {
@@ -210,6 +231,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         this.project = project;
 
         topPanel.removeAllComponents();
+        
+        HorizontalLayout projectControls = new HorizontalLayout();
         Button homeBtn = new Button("", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
@@ -219,7 +242,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         });
         homeBtn.setIcon(new ThemeResource("icons/24/project/home.png"));
         homeBtn.setStyleName("link");
-        topPanel.addComponent(homeBtn);
+        projectControls.addComponent(homeBtn);
 
         PopupButton projectPopupBtn = new PopupButton(project.getName());
         BeanList<ProjectService, ProjectSearchCriteria, SimpleProject> projectList = new BeanList<ProjectService, ProjectSearchCriteria, SimpleProject>(
@@ -232,7 +255,33 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         projectList.setSearchCriteria(searchCriteria);
         projectPopupBtn.addComponent(projectList);
 
-        topPanel.addComponent(projectPopupBtn);
+        projectControls.addComponent(projectPopupBtn);
+        projectControls.setComponentAlignment(projectPopupBtn, Alignment.MIDDLE_CENTER);
+        topPanel.addComponent(projectControls);
+        
+        SplitButton controlsBtn = new SplitButton();
+        controlsBtn.addStyleName(SplitButton.STYLE_CHAMELEON);
+        controlsBtn.setCaption("Edit Project");
+        controlsBtn.setIcon(new ThemeResource("icons/16/edit.png"));
+        controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
+            @Override
+            public void splitButtonClick(SplitButton.SplitButtonClickEvent event) {
+                
+            }
+        });
+        Button selectBtn = new Button("View Project Detail", new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                
+            }
+        });
+        selectBtn.setIcon(new ThemeResource("icons/16/view.png"));
+        selectBtn.setStyleName("link");
+        controlsBtn.addComponent(selectBtn);
+        
+        topPanel.addComponent(controlsBtn);
+        topPanel.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
     }
 
     public static class ProjectRowDisplayHandler implements BeanList.RowDisplayHandler<SimpleProject> {

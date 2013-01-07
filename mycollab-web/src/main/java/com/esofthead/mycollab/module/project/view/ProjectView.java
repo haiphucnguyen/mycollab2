@@ -9,6 +9,7 @@ public interface ProjectView extends View {
 	void displayProject(SimpleProject project);
         
         void gotoDashboard();
+        void gotoUsersAndGroup();
 
         void gotoMessageView(ScreenData data);
         void gotoMilestoneView(ScreenData data);

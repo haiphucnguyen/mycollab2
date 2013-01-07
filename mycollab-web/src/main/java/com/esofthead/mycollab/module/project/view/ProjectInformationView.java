@@ -4,7 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -50,7 +49,7 @@ public class ProjectInformationView extends VerticalLayout {
 
     private Component constructProjectInformationView() {
         VerticalLayout projectLayout = new VerticalLayout();
-        GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(2, 3);
+        GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(2, 5);
         gridLayout.getLayout().setWidth("100%");
 
         Label descLbl = new Label();
@@ -58,19 +57,37 @@ public class ProjectInformationView extends VerticalLayout {
             descLbl.setValue(project.getDescription());
         }
         gridLayout.addComponent(descLbl, "Description", 0, 0, 2, "100%");
+        
+        Label priorityLbl = new Label();
+        if (project.getPriority() != null) {
+            priorityLbl.setValue(project.getPriority());
+        }
+        gridLayout.addComponent(priorityLbl, "Priority", 0, 1);
+        
+        Label statusLbl = new Label();
+        if (project.getProjectstatus() != null) {
+            statusLbl.setValue(project.getProjectstatus());
+        }
+        gridLayout.addComponent(statusLbl, "Status", 0, 2);
+        
+        Label typeLbl = new Label();
+        if (project.getProjecttype() != null) {
+            typeLbl.setValue(project.getProjecttype());
+        }
+        gridLayout.addComponent(typeLbl, "Type", 1, 2);
 
         Label planStartDate = new Label(AppContext.formatDate(project.getPlanstartdate()));
-        gridLayout.addComponent(planStartDate, "Plan Start Date", 0, 1);
+        gridLayout.addComponent(planStartDate, "Plan Start Date", 0, 3);
 
         Label actualStartDate = new Label(AppContext.formatDate(project.getActualstartdate()));
-        gridLayout.addComponent(actualStartDate, "Actual Start Date", 1, 1);
+        gridLayout.addComponent(actualStartDate, "Actual Start Date", 1, 3);
 
         Label planEndDate = new Label(AppContext.formatDate(project.getPlanenddate()));
-        gridLayout.addComponent(planEndDate, "Plan End Date", 0, 2);
+        gridLayout.addComponent(planEndDate, "Plan End Date", 0, 4);
 
 
         Label actualEndDate = new Label(AppContext.formatDate(project.getActualenddate()));
-        gridLayout.addComponent(actualEndDate, "Actual End Date", 1, 1);
+        gridLayout.addComponent(actualEndDate, "Actual End Date", 1, 4);
 
         projectLayout.addComponent(gridLayout.getLayout());
         return projectLayout;
