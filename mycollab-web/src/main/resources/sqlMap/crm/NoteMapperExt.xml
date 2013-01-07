@@ -1,584 +1,64 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.NoteMapperExt">
-	<resultMap extends="com.esofthead.mycollab.module.crm.dao.NoteMapper.BaseResultMap"
-		id="SimpleNoteResult" type="com.esofthead.mycollab.module.crm.domain.SimpleNote">
-		<result column="contactName" jdbcType="VARCHAR" property="contactName" />
-		<result column="createUserFullName" jdbcType="VARCHAR"
-			property="createUserFullName" />
+    <resultMap extends="com.esofthead.mycollab.module.crm.dao.NoteMapper.BaseResultMap"
+                   id="SimpleNoteResult" type="com.esofthead.mycollab.module.crm.domain.SimpleNote">
+        <result column="contactName" jdbcType="VARCHAR" property="contactName" />
+        <result column="createUserFullName" jdbcType="VARCHAR"
+                        property="createUserFullName" />
         <collection property="attachments" ofType="com.esofthead.mycollab.module.file.domain.Attachment" 
-            resultMap="com.esofthead.mycollab.module.file.dao.AttachmentMapper.BaseResultMap" columnPrefix="attach_"/>
-	</resultMap>
+                    resultMap="com.esofthead.mycollab.module.file.dao.AttachmentMapper.BaseResultMap" columnPrefix="attach_"/>
+    </resultMap>
 
-	<insert id="insertNoteExt" parameterType="Note"
-		useGeneratedKeys="true" keyProperty="id">
-        <![CDATA[
-        insert into m_crm_note (contactid, subject, 
-            note, type, typeid, 
-            username, attachmentpath, createdTime, 
-            createdUser, sAccountId, lastupdatedtime)
-        values (#{contactid,jdbcType=INTEGER}, #{subject,jdbcType=VARCHAR}, 
-            #{note,jdbcType=VARCHAR}, #{type,jdbcType=VARCHAR}, #{typeid,jdbcType=INTEGER}, 
-            #{username,jdbcType=VARCHAR}, #{attachmentpath,jdbcType=VARCHAR}, #{createdtime,jdbcType=TIMESTAMP}, 
-            #{createduser,jdbcType=VARCHAR}, #{saccountid,jdbcType=INTEGER}, #{lastupdatedtime,jdbcType=TIMESTAMP})
-        ]]>
-	</insert>
-
-	<sql id="queryTotalCountSearchCriteria">
-		<if test="subject != null">
-            <![CDATA[${subject.operation} m_crm_note.subject like '%${subject.value}%']]>
-		</if>
-		<if test="username != null">
-            <![CDATA[${username.operation} (SELECT COUNT(*) FROM s_user WHERE
-                 s_user.username LIKE '%${username.value}%' AND m_crm_note.username = s_user.username) > 0
-                 ]]>
-		</if>
-		<if test="contact != null">
-            <![CDATA[
-            ${contact.operation}
-            (SELECT COUNT(*) 
-            FROM m_crm_contact 
-            WHERE m_crm_note.contactid=m_crm_contact.id AND
-                concat(m_crm_contact.firstname, m_crm_contact.lastname) like '%${contact.value}%') > 0]]>
-		</if>
-		<if test="contactId != null">
-            <![CDATA[
-                ${contactId.operation}
-                (SELECT COUNT(*) 
-                FROM m_crm_contact 
-                WHERE m_crm_contact.id=#{contactId.value,javaType=INTEGER} 
-                    AND m_crm_note.typeid=m_crm_contact.id 
-                    AND m_crm_note.type='Contact') > 0
-                ]]>
-		</if>
-		<if test="campaignId != null">
-            <![CDATA[
-                ${campaignId.operation}
-                (SELECT COUNT(*) 
-                FROM m_crm_campaign 
-                WHERE m_crm_campaign.id=#{campaignId.value,javaType=INTEGER} 
-                    AND m_crm_note.typeid=m_crm_campaign.id 
-                    AND m_crm_note.type='Campaign') > 0
-                ]]>
-		</if>
-		<if test="accountId != null">
-            <![CDATA[
-                ${accountId.operation}
-                (SELECT COUNT(*) 
-                FROM m_crm_account 
-                WHERE m_crm_account.id=#{accountId.value,javaType=INTEGER} 
-                    AND m_crm_note.typeid=m_crm_account.id 
-                    AND m_crm_note.type='Account') > 0
-                ]]>
-		</if>
-		<if test="targetId != null">
-            <![CDATA[
-                ${targetId.operation}
-                (SELECT COUNT(*) from m_crm_target WHERE
-                m_crm_target.id=#{targetId.value,javaType=INTEGER} 
-                    AND m_crm_note.typeid=m_crm_target.id 
-                    AND m_crm_note.type='Target') > 0
-                ]]>
-		</if>
-		<if test="leadId != null">
-            <![CDATA[
-                ${leadId.operation}
-                (SELECT COUNT(*) 
-                FROM m_crm_lead 
-                WHERE m_crm_lead.id=#{leadId.value,javaType=INTEGER} 
-                    AND m_crm_note.typeid=m_crm_lead.id 
-                    AND m_crm_note.type='Lead') > 0
-                ]]>
-		</if>
-		<if test="opportunityId != null">
-            <![CDATA[
-                ${opportunityId.operation}
-                (SELECT COUNT(*) 
-                FROM m_crm_opportunity 
-                WHERE m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER} 
-                    AND m_crm_note.typeid=m_crm_opportunity.id 
-                    AND m_crm_note.type='Opportunity') > 0
-                ]]>
-		</if>
-		<if test="quoteId != null">
-            <![CDATA[
-            ${quoteId.operation}
-            (SELECT COUNT(*) 
-            FROM m_crm_quote 
-            WHERE m_crm_quote.id=#{quoteId.value,javaType=INTEGER} 
-                AND m_crm_note.typeid=m_crm_quote.id 
-                AND m_crm_note.type='Quote') > 0
-            ]]>
-		</if>
-		<if test="productId != null">
-            <![CDATA[
-            ${productId.operation}
-            (SELECT COUNT(*) 
-            FROM m_crm_product 
-            WHERE m_crm_product.id=#{productId.value,javaType=INTEGER} 
-                AND m_crm_note.typeid=m_crm_product.id 
-                AND m_crm_note.type='Product') > 0
-            ]]>
-		</if>
-		<if test="caseId != null">
-            <![CDATA[
-            ${caseId.operation}
-            (SELECT COUNT(*) 
-             FROM m_crm_case 
-             WHERE m_crm_case.id=#{caseId.value,javaType=INTEGER} 
-                 AND m_crm_note.typeid=m_crm_case.id 
-                 AND m_crm_note.type='Case') > 0
-            ]]>
-		</if>
-		<if test="contractId != null">
-            <![CDATA[
-            ${contractId.operation}
-            (SELECT COUNT(*) 
-             FROM m_crm_contract 
-             WHERE m_crm_contract.id=#{contractId.value,javaType=INTEGER} 
-                 AND m_crm_note.typeid=m_crm_contract.id 
-                 AND m_crm_contract.type='Contract') > 0
-            ]]>
-		</if>
-		<if test="type != null">
-			${type.operation} m_crm_note.type = #{type.value}
+    <sql id="querySearchCriteria">
+		
+        <if test="type != null">
+            ${type.operation} m_crm_note.type = #{type.value}
         </if>
-		<if test="assignUser != null">
-            <![CDATA[
-            ${assignUser.operation}
-            (SELECT COUNT(*) 
-                FROM s_user 
-                WHERE m_crm_note.username = s_user.username
-                AND (concat(user.firstname, IFNULL(concat(' ', user.middlename, ' '), ' '), user.lastname) LIKE '%${assignUser.value}%') ) > 0
-            ]]>
-		</if>
-		<if test="saccountid != null">
-            <![CDATA[${saccountid.operation} m_crm_note.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
-		</if>
-	</sql>
-
-	<sql id="querySearchCriteria">
-		<if test="subject != null">
-            <![CDATA[${subject.operation} m_crm_note.subject like '%${subject.value}%']]>
-		</if>
-		<if test="username != null">
-            <![CDATA[
-            ${username.operation}
-            (SELECT COUNT(*)
-            FROM s_user 
-            WHERE s_user.username LIKE '%${username.value}%'
-                AND m_crm_note.username = user.username) > 0
-            ]]>
-		</if>
-		<if test="contact != null">
-            <![CDATA[
-            ${contact.operation}
-            (SELECT COUNT(*)
-            FROM m_crm_contact 
-            WHERE m_crm_note.contactid=m_crm_contact.id 
-                AND concat(m_crm_contact.firstname, m_crm_contact.lastname) like '%${contact.value}%') > 0
-            ]]>
-		</if>
-		<if test="contactId != null">
-            <![CDATA[
-                ${contactId.operation}
-                (SELECT COUNT(*) 
-                FROM m_crm_contact 
-                WHERE m_crm_contact.id=#{contactId.value,javaType=INTEGER} 
-                    AND m_crm_note.typeid=m_crm_contact.id 
-                    AND m_crm_note.type='Contact') > 0
-                ]]>
-		</if>
-		<if test="campaignId != null">
-            <![CDATA[
-                ${campaignId.operation}
-                (SELECT COUNT(*) 
-                FROM m_crm_campaign 
-                WHERE m_crm_campaign.id=#{campaignId.value,javaType=INTEGER} 
-                    AND m_crm_note.typeid=m_crm_campaign.id 
-                    AND m_crm_note.type='Campaign') > 0
-                ]]>
-		</if>
-		<if test="accountId != null">
-            <![CDATA[
-                ${accountId.operation}
-                (SELECT COUNT(*) 
-                FROM m_crm_account 
-                WHERE m_crm_account.id=#{accountId.value,javaType=INTEGER} 
-                    AND m_crm_note.typeid=m_crm_account.id 
-                    AND m_crm_note.type='Account') > 0
-                ]]>
-		</if>
-		<if test="targetId != null">
-            <![CDATA[
-                ${targetId.operation}
-                (SELECT COUNT(*) 
-                FROM m_crm_target 
-                WHERE m_crm_target.id=#{targetId.value,javaType=INTEGER} 
-                    AND m_crm_note.typeid=m_crm_target.id 
-                    AND m_crm_note.type='Target') > 0
-                    ]]>
-		</if>
-		<if test="leadId != null">
-            <![CDATA[
-                ${leadId.operation}
-                (SELECT COUNT(*) 
-                FROM m_crm_lead 
-                WHERE m_crm_lead.id=#{leadId.value,javaType=INTEGER} 
-                    AND m_crm_note.typeid=m_crm_lead.id 
-                    AND m_crm_note.type='Lead') > 0
-                ]]>
-		</if>
-		<if test="opportunityId != null">
-            <![CDATA[
-                ${opportunityId.operation}
-                (SELECT COUNT(*) 
-                FROM m_crm_opportunity 
-                WHERE m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER} 
-                    AND m_crm_note.typeid=m_crm_opportunity.id 
-                    AND m_crm_note.type='Opportunity') > 0
-                ]]>
-		</if>
-		<if test="quoteId != null">
-            <![CDATA[
-            ${quoteId.operation}
-            (SELECT COUNT(*) 
-            FROM m_crm_quote 
-            WHERE m_crm_quote.id=#{quoteId.value,javaType=INTEGER} 
-                AND m_crm_note.typeid=m_crm_quote.id 
-                AND m_crm_note.type='Quote') > 0
-            ]]>
-		</if>
-		<if test="productId != null">
-            <![CDATA[
-            ${productId.operation}
-            (SELECT COUNT(*) 
-            FROM m_crm_product 
-            WHERE m_crm_product.id=#{productId.value,javaType=INTEGER} 
-                AND m_crm_note.typeid=m_crm_product.id 
-                AND m_crm_note.type='Product') > 0
-            ]]>
-		</if>
-		<if test="caseId != null">
-            <![CDATA[
-            ${caseId.operation}
-            (SELECT COUNT(*) 
-             FROM m_crm_case 
-             WHERE m_crm_case.id=#{caseId.value,javaType=INTEGER} 
-                 AND m_crm_note.typeid=m_crm_case.id 
-                 AND m_crm_note.type='Case') > 0
-            ]]>
-		</if>
-		<if test="contractId != null">
-            <![CDATA[
-            ${contractId.operation}
-            (SELECT COUNT(*) 
-             FROM m_crm_contract 
-             WHERE m_crm_contract.id=#{contractId.value,javaType=INTEGER} 
-                 AND m_crm_note.typeid=m_crm_contract.id 
-                 AND m_crm_contract.type='Contract') > 0
-            ]]>
-		</if>
-		<if test="type != null">
-			${type.operation} m_crm_note.type = #{type.value}
+        <if test="typeid != null">
+            ${type.operation} m_crm_note.typeid = ${typeid.value}
         </if>
-		<if test="assignUser != null">
-            <![CDATA[
-            ${assignUser.operation}
-            (SELECT COUNT(*) 
-                WHERE m_crm_note.username = s_user.username
-                AND (concat(user.firstname, IFNULL(concat(' ', user.middlename, ' '), ' '), user.lastname) LIKE '%${assignUser.value}%') ) > 0
-            ]]>
-		</if>
-		<if test="saccountid != null">
-            <![CDATA[${saccountid.operation} m_crm_note.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
-		</if>
-	</sql>
-
-	<select id="getTotalCount" resultType="int" parameterType="NoteSearchCriteria">
-		SELECT count(*) as totalCount FROM m_crm_note
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.queryTotalCountSearchCriteria" />
-		</trim>
-	</select>
+    </sql>
     
-    <delete id="removeByCriteria" parameterType="NoteSearchCriteria">
-        DELETE FROM m_crm_note
-        <if test="_parameter != null">
-            <include refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.queryTotalCountSearchCriteria" />
-        </if>
-    </delete>
+    <sql id="selectSimpleNote">
+        <![CDATA[
+        SELECT m_crm_note.id, m_crm_note.subject, m_crm_note.note, m_crm_note.type, m_crm_note.typeid, m_crm_note.createdTime, 
+            m_crm_note.createdUser, m_crm_note.sAccountId, m_crm_note.lastUpdatedTime,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
+            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
+            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
+            m_attachment.typeid as attach_typeid
+        FROM m_crm_note
+            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
+            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
+        ]]>
+    </sql>
     
     <sql id="orderStatement">
         ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[
-            lastUpdatedTime DESC
+            m_crm_note.createdTime DESC
         ]]>
     </sql>
-
-	<select id="findPagableListByCriteria" resultMap="SimpleNoteResult"
-		parameterType="NoteSearchCriteria">
-        <![CDATA[
-        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
-            m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
-            concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
-            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
-            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
-            m_attachment.typeid as attach_typeid
-        FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
-            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
-            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
-            INNER JOIN m_crm_contact as contact2 ON (m_crm_note.type='Contact' AND m_crm_note.typeid=contact2.id )
-        ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>)
-        
-
-		UNION ALL
-        <![CDATA[
-        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
-            m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
-            concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
-            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
-            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
-            m_attachment.typeid as attach_typeid
-        FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
-            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
-            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
-            INNER JOIN m_crm_account ON (m_crm_note.type='Account' AND m_crm_note.typeid=m_crm_account.id )
-        ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>)
-
-		UNION ALL
-        <![CDATA[
-        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
-            m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
-            concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
-            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
-            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
-            m_attachment.typeid as attach_typeid
-        FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
-            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
-            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
-            INNER JOIN m_crm_campaign ON (m_crm_note.type='Campaign' AND m_crm_note.typeid=m_crm_campaign.id)
-        ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>)
-        
-
-		UNION ALL
-        <![CDATA[
-        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
-            m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
-            concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
-            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
-            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
-            m_attachment.typeid as attach_typeid
-        FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
-            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
-            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
-            INNER JOIN m_crm_contact as contact2 ON (m_crm_note.type='Contact' AND m_crm_note.typeid=contact2.id )
-        ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>)
-        
-
-		UNION ALL
-        <![CDATA[
-        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
-            m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
-            concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
-            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
-            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
-            m_attachment.typeid as attach_typeid
-        FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
-            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
-            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
-            INNER JOIN m_crm_target ON (m_crm_note.type='Target' AND m_crm_note.typeid=m_crm_target.id)
-        ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>)
-        
-
-		UNION ALL
-        <![CDATA[
-        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
-            m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
-            concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
-            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
-            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
-            m_attachment.typeid as attach_typeid
-        FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
-            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
-            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
-            INNER JOIN m_crm_lead ON (m_crm_note.type='Lead' AND m_crm_note.typeid=m_crm_lead.id)
-        ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>)
-        
-
-		UNION ALL
-        <![CDATA[
-        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
-            m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
-            concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
-            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
-            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
-            m_attachment.typeid as attach_typeid
-        FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
-            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
-            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
-            INNER JOIN m_crm_opportunity ON (m_crm_note.type = 'Opportunity' AND m_crm_note.typeid=m_crm_opportunity.id)
-        ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>)
-        
-
-		UNION ALL
-        <![CDATA[
-        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
-            m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
-            concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
-            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
-            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
-            m_attachment.typeid as attach_typeid
-        FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
-            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
-            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
-            INNER JOIN m_crm_quote ON (m_crm_note.type = 'Quote' AND m_crm_note.typeid=m_crm_quote.id)
-        ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>)
-        
-
-		UNION ALL
-        <![CDATA[
-        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
-            m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
-            concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
-            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
-            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
-            m_attachment.typeid as attach_typeid
-        FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
-            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
-            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
-            INNER JOIN m_crm_product ON (m_crm_note.type = 'Product' AND m_crm_note.typeid=m_crm_product.id)
-        ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>)
-        
-
-		UNION ALL
-        <![CDATA[
-        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
-            m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
-            concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
-            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
-            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
-            m_attachment.typeid as attach_typeid
-        FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
-            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
-            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
-            INNER JOIN m_crm_case ON (m_crm_note.type = 'Case' AND m_crm_note.typeid=m_crm_case.id)
-        ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>)
-        
-
-		UNION ALL
-        <![CDATA[
-        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
-            m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
-            concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
-            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
-            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
-            m_attachment.typeid as attach_typeid
-        FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
-            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
-            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
-            INNER JOIN m_crm_contract ON (m_crm_note.type = 'Contract' AND m_crm_note.typeid=m_crm_contract.id)
-        ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-		</trim>)
-        
-
-		UNION ALL
-        <![CDATA[
-        (SELECT m_crm_note.id, m_crm_note.contactid, m_crm_note.subject, m_crm_note.note, 
-            m_crm_note.type, m_crm_note.typeid, m_crm_note.username, m_crm_note.attachmentpath,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createUserFullName,
-            concat(m_crm_contact.prefix, ', ', m_crm_contact.firstname, ' ', m_crm_contact.lastname) as contactName,
-            m_crm_note.createdTime, m_crm_note.createdUser, m_crm_note.lastUpdatedTime,
-            m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
-            m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
-            m_attachment.typeid as attach_typeid
-        FROM m_crm_note
-            LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
-            LEFT OUTER JOIN m_crm_contact ON (m_crm_contact.id = m_crm_note.contactid) 
-            LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
-        ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
-			AND ((m_crm_note.type IS NULL) OR (m_crm_note.typeid IS NULL))
-		</trim>)
+    
+    <select id="findPagableListByCriteria" parameterType="NoteSearchCriteria"
+        resultMap="SimpleNoteResult">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.selectSimpleNote" />
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include
+                refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
+        </trim>
         <include refid="orderStatement"/>
-	</select>
+        
+    </select>
+
+    <select id="getTotalCount" parameterType="NoteSearchCriteria"
+        resultType="java.lang.Integer">
+        SELECT count(*) as totalCount FROM m_crm_note
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include
+                refid="com.esofthead.mycollab.module.crm.dao.NoteMapperExt.querySearchCriteria" />
+        </trim>
+    </select>
 </mapper>

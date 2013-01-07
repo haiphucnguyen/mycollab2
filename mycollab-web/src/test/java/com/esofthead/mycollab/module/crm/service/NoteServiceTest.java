@@ -52,8 +52,7 @@ public class NoteServiceTest extends ServiceTest{
         Note note = new Note();
         note.setSubject("subject");
         note.setSaccountid(1);
-        int noteid = noteService.insertNoteExt(note);
-        System.out.println("Noteid: " + note.getId() + "--" + noteid);
+        noteService.saveWithSession(note, "admin");
         Assert.assertNotNull(note.getId());
     }
 

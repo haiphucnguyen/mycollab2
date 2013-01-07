@@ -10,6 +10,7 @@ import com.esofthead.mycollab.common.ui.components.ReloadableComponent;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.crm.domain.Note;
 import com.esofthead.mycollab.module.crm.domain.SimpleNote;
 import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
@@ -21,6 +22,8 @@ import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.RichTextEditor;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatar;
+import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -44,9 +47,8 @@ public class NoteListItems extends Depot {
     private Integer typeid;
     private BeanList<NoteService, NoteSearchCriteria, SimpleNote> noteList;
     private final NoteService noteService;
-    private NoteEditor noteEditor;
     private Button createBtn;
-    
+
     public NoteListItems(String title) {
         this(title, "", 0);
     }
@@ -63,7 +65,6 @@ public class NoteListItems extends Depot {
 
         initUI();
     }
-    
 
     public void showNotes(String type, int typeid) {
         this.type = type;
@@ -96,13 +97,13 @@ public class NoteListItems extends Depot {
     private void displayNotes() {
         NoteSearchCriteria searchCriteria = new NoteSearchCriteria();
         searchCriteria.setType(new StringSearchField(SearchField.AND, type));
+        searchCriteria.setTypeid(new NumberSearchField(typeid));
         noteList.setSearchCriteria(searchCriteria);
     }
 
     public static class NoteRowDisplayHandler implements
             RowDisplayHandler<SimpleNote>, ReloadableComponent {
-
-        private CssLayout noteLayout;
+        private VerticalLayout noteContentLayout;
         private BeanList<CommentService, CommentSearchCriteria, SimpleComment> commentList;
         private CommentInput commentInput;
         private SimpleNote note;
@@ -112,17 +113,31 @@ public class NoteListItems extends Depot {
         public Component generateRow(final SimpleNote note, int rowIndex) {
             this.note = note;
 
-            noteLayout = new CssLayout();
-            noteLayout.setStyleName("noteRow");
+            HorizontalLayout noteContainer = new HorizontalLayout();
+            noteContainer.addComponent(new UserAvatar(note.getCreateduser(), note.getCreateUserFullName()));
+            
+            noteContentLayout = new VerticalLayout();
+            noteContainer.addComponent(noteContentLayout);
 
             if (note.getSubject() != null && !note.getSubject().equals("")) {
-                noteLayout.addComponent(new Label(note.getSubject()));
+                noteContentLayout.addComponent(new Label(note.getSubject()));
             }
 
+            HorizontalLayout noteHeader = new HorizontalLayout();
+            
+            UserLink userLink = new UserLink(note.getCreateduser(), note.getCreateUserFullName());
+            noteHeader.addComponent(userLink);
+            noteHeader.setComponentAlignment(userLink, Alignment.MIDDLE_LEFT);
+            
+            Label timeLbl = new Label(" - " + DateTimeUtils.getStringDateFromNow(note.getCreatedtime()));
+            noteHeader.addComponent(timeLbl);
+            noteHeader.setComponentAlignment(timeLbl, Alignment.MIDDLE_LEFT);
+            
+            noteContentLayout.addComponent(noteHeader);
+            
             Label noteContent = new Label(note.getNote(), Label.CONTENT_XHTML);
-            noteContent.setStyleName("noteContent");
             noteContent.setWidth("100%");
-            noteLayout.addComponent(noteContent);
+            noteContentLayout.addComponent(noteContent);
 
             HorizontalLayout footer = new HorizontalLayout();
             footer.setSpacing(true);
@@ -132,10 +147,10 @@ public class NoteListItems extends Depot {
             replyBtn = new Button("Reply", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    int compIndex = noteLayout.getComponentIndex(commentList);
+                    int compIndex = noteContentLayout.getComponentIndex(commentList);
                     if (compIndex >= 0) {
                         commentInput = new CommentInput(NoteRowDisplayHandler.this, CommentTypeConstants.CRM_NOTE, note.getId(), true);
-                        noteLayout.addComponent(commentInput, compIndex);
+                        noteContentLayout.addComponent(commentInput, compIndex);
                         replyBtn.setVisible(false);
                     }
                 }
@@ -144,13 +159,7 @@ public class NoteListItems extends Depot {
             replyBtn.setStyleName("link");
             footer.addComponent(replyBtn);
             footer.setComponentAlignment(replyBtn, Alignment.MIDDLE_LEFT);
-            Label metadata = new Label("Posted by " + note.getCreateUserFullName()
-                    + " on " + AppContext.formatDateToHumanRead(note.getCreatedtime()));
-            footer.addComponent(metadata);
-
-            metadata.setStyleName("metadata");
-            footer.setComponentAlignment(metadata, Alignment.MIDDLE_LEFT);
-            noteLayout.addComponent(footer);
+            noteContentLayout.addComponent(footer);
 
             List<Attachment> attachments = note.getAttachments();
             if (attachments != null && !attachments.isEmpty()) {
@@ -179,15 +188,15 @@ public class NoteListItems extends Depot {
                             new ThemeResource("icons/16/download.png"));
                     attachmentLayout.addComponent(downloadBtn);
 
-                    noteLayout.addComponent(attachmentLayout);
+                    noteContentLayout.addComponent(attachmentLayout);
                 }
             }
 
             commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(AppContext.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);
             commentList.setMargin(true);
-            noteLayout.addComponent(commentList);
+            noteContentLayout.addComponent(commentList);
             displayComments();
-            return noteLayout;
+            return noteContainer;
         }
 
         private void displayComments() {
@@ -206,9 +215,9 @@ public class NoteListItems extends Depot {
         @Override
         public void cancel() {
             if (commentInput != null) {
-                int compIndex = noteLayout.getComponentIndex(commentInput);
+                int compIndex = noteContentLayout.getComponentIndex(commentInput);
                 if (compIndex >= 0) {
-                    noteLayout.removeComponent(commentInput);
+                    noteContentLayout.removeComponent(commentInput);
                     commentInput = null;
                     replyBtn.setVisible(true);
                 }

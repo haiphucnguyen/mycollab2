@@ -5,9 +5,13 @@
 package com.esofthead.mycollab.common.ui.components;
 
 import com.esofthead.mycollab.common.domain.SimpleComment;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.UserAvatar;
+import com.esofthead.mycollab.vaadin.ui.UserLink;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -19,12 +23,25 @@ public class CommentRowDisplayHandler implements BeanList.RowDisplayHandler<Simp
     
     @Override
     public Component generateRow(SimpleComment comment, int rowIndex) {
-        VerticalLayout layout = new VerticalLayout();
-        Label header = new Label(comment.getOwnerFullName() + " said on " + AppContext.formatDateToHumanRead(comment.getCreatedtime()));
-        layout.addComponent(header);
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.addComponent(new UserAvatar(comment.getCreateduser(), comment.getOwnerFullName()));
+        
+        VerticalLayout contentLayout = new VerticalLayout();
+        layout.addComponent(contentLayout);
+        
+        HorizontalLayout commentHeader = new HorizontalLayout();
+        UserLink userLink = new UserLink(comment.getCreateduser(), comment.getOwnerFullName());
+        commentHeader.addComponent(userLink);
+        commentHeader.setComponentAlignment(userLink, Alignment.MIDDLE_LEFT);
+        
+        Label dateLbl = new Label("commented on " + DateTimeUtils.getStringDateFromNow(comment.getCreatedtime()));
+        commentHeader.addComponent(dateLbl);
+        commentHeader.setComponentAlignment(dateLbl, Alignment.MIDDLE_LEFT);
+        
+        contentLayout.addComponent(commentHeader);
         
         Label content = new Label(comment.getComment());
-        layout.addComponent(content);
+        contentLayout.addComponent(content);
         return layout;
     }
 }

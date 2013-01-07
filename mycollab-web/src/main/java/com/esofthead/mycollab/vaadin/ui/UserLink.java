@@ -10,16 +10,15 @@ import com.vaadin.ui.Button;
  *
  * @author haiphucnguyen
  */
-public class UserLink extends Button{
+public class UserLink extends Button {
+
     public UserLink(final String username, final String displayName) {
         super(displayName, new Button.ClickListener() {
-
             @Override
             public void buttonClick(ClickEvent event) {
-                
             }
         });
-        
+
         this.setStyleName("link");
     }
 }

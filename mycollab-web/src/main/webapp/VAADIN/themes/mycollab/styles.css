@@ -972,38 +972,6 @@ input.v-textfield-errorField {
 }
 /* End Calendar */
 
-/* Note List */
-.depotContent .noteList {
-	margin-top: 5px;
-}
-.noteList .noteRow {
-	border: 1px solid #919191;
-	width: 898px;
-	background-color: #F9F9F9;
-}
-.noteList > div > div:first-child .noteRow {
-	border-bottom: 0px;
-}
-
-.noteList > div > div:nth-child(odd) .noteRow {
-	background-color: #DBDEE3;
-}
-
-.noteRow .noteContent {
-	padding-left: 10px;
-}
-
-.noteRow .metadata {
-	font-size: 11px;
-	color: #999;
-	text-align: right;
-	padding-right: 10px;
-}
-.menuContent .v-csslayout-projectTabContent {
-	margin-left: 15px;
-}
-
-/* End Note List */
 
 /* Tabsheet Styles */
 .v-table-cell-wrapper {
