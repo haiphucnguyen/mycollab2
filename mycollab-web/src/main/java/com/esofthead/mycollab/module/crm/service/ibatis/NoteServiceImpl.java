@@ -41,10 +41,4 @@ public class NoteServiceImpl extends DefaultService<Integer, Note, NoteSearchCri
     public int remove(Integer primaryKey) {
         return super.remove(primaryKey);
     }
-
-    @Override
-    public int insertNoteExt(Note note) {
-        noteMapperExt.insertNoteExt(note);
-        return note.getId();
-    }
 }

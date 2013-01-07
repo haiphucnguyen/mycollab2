@@ -103,6 +103,7 @@ public class NoteListItems extends Depot {
 
     public static class NoteRowDisplayHandler implements
             RowDisplayHandler<SimpleNote>, ReloadableComponent {
+
         private VerticalLayout noteContentLayout;
         private BeanList<CommentService, CommentSearchCriteria, SimpleComment> commentList;
         private CommentInput commentInput;
@@ -115,7 +116,7 @@ public class NoteListItems extends Depot {
 
             HorizontalLayout noteContainer = new HorizontalLayout();
             noteContainer.addComponent(new UserAvatar(note.getCreateduser(), note.getCreateUserFullName()));
-            
+
             noteContentLayout = new VerticalLayout();
             noteContainer.addComponent(noteContentLayout);
 
@@ -124,17 +125,17 @@ public class NoteListItems extends Depot {
             }
 
             HorizontalLayout noteHeader = new HorizontalLayout();
-            
+
             UserLink userLink = new UserLink(note.getCreateduser(), note.getCreateUserFullName());
             noteHeader.addComponent(userLink);
             noteHeader.setComponentAlignment(userLink, Alignment.MIDDLE_LEFT);
-            
+
             Label timeLbl = new Label(" - " + DateTimeUtils.getStringDateFromNow(note.getCreatedtime()));
             noteHeader.addComponent(timeLbl);
             noteHeader.setComponentAlignment(timeLbl, Alignment.MIDDLE_LEFT);
-            
+
             noteContentLayout.addComponent(noteHeader);
-            
+
             Label noteContent = new Label(note.getNote(), Label.CONTENT_XHTML);
             noteContent.setWidth("100%");
             noteContentLayout.addComponent(noteContent);
@@ -259,7 +260,7 @@ public class NoteListItems extends Depot {
                     note.setTypeid(typeid);
                     note.setCreatedtime(new GregorianCalendar().getTime());
                     note.setLastupdatedtime(new GregorianCalendar().getTime());
-                    int noteid = noteService.insertNoteExt(note);
+                    int noteid = noteService.saveWithSession(note, AppContext.getUsername());
                     attachments.saveContentsToRepo(AttachmentConstants.CRM_NOTE_TYPE, noteid);
                     displayNotes();
                     addCreateBtn();
