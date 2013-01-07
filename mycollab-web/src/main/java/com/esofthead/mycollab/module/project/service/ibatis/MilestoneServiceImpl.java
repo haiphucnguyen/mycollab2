@@ -24,7 +24,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Traceable(module = "Project", type = "Milestone", nameField = "name")
+@Traceable(module = "Project", type = "Milestone", nameField = "name", extraFieldName = "projectid")
 public class MilestoneServiceImpl extends DefaultService<Integer, Milestone, MilestoneSearchCriteria> implements
         MilestoneService {
 

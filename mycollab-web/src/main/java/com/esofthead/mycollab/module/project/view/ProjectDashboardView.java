@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.module.project.view;
 
-public interface ProjectDashboardView {
+import com.esofthead.mycollab.vaadin.mvp.View;
 
+public interface ProjectDashboardView extends View {
+
+    void displayDashboard();
 }

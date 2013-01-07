@@ -17,32 +17,29 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-@Traceable(module="Project", nameField="title", type="Message")
+@Traceable(module = "Project", nameField = "title", type = "Message", extraFieldName = "projectid")
 public class MessageServiceImpl extends DefaultService<Integer, Message, MessageSearchCriteria>
-		implements MessageService {
+        implements MessageService {
 
-	@Autowired
-	private AttachmentService attachmentService;
-	
-	@Autowired
-	private MessageMapper messageMapper;
+    @Autowired
+    private AttachmentService attachmentService;
+    @Autowired
+    private MessageMapper messageMapper;
+    @Autowired
+    private MessageMapperExt messageMapperExt;
 
-	@Autowired
-	private MessageMapperExt messageMapperExt;
+    @Override
+    public ICrudGenericDAO<Integer, Message> getCrudMapper() {
+        return messageMapper;
+    }
 
-	@Override
-	public ICrudGenericDAO<Integer, Message> getCrudMapper() {
-		return messageMapper;
-	}
-
-	@Override
-	public ISearchableDAO<MessageSearchCriteria> getSearchMapper() {
-		return messageMapperExt;
-	}
+    @Override
+    public ISearchableDAO<MessageSearchCriteria> getSearchMapper() {
+        return messageMapperExt;
+    }
 
     @Override
     public SimpleMessage findMessageById(int messageId) {
         return messageMapperExt.findMessageById(messageId);
     }
-
 }

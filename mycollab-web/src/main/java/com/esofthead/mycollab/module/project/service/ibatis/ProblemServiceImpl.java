@@ -16,30 +16,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-@Traceable(module="Project", nameField="issuename", type="Problem")
-public class ProblemServiceImpl extends
-		DefaultService<Integer, Problem, ProblemSearchCriteria> implements
-		ProblemService {
+@Traceable(module = "Project", nameField = "issuename", type = "Problem", extraFieldName = "projectid")
+public class ProblemServiceImpl extends DefaultService<Integer, Problem, ProblemSearchCriteria> implements
+        ProblemService {
 
-	@Autowired
-	private ProblemMapper problemMapper;
+    @Autowired
+    private ProblemMapper problemMapper;
+    @Autowired
+    private ProblemMapperExt problemMapperExt;
 
-	@Autowired
-	private ProblemMapperExt problemMapperExt;
+    @Override
+    public ICrudGenericDAO<Integer, Problem> getCrudMapper() {
+        return problemMapper;
+    }
 
-	@Override
-	public ICrudGenericDAO<Integer, Problem> getCrudMapper() {
-		return problemMapper;
-	}
+    @Override
+    public ISearchableDAO<ProblemSearchCriteria> getSearchMapper() {
+        return problemMapperExt;
+    }
 
-	@Override
-	public ISearchableDAO<ProblemSearchCriteria> getSearchMapper() {
-		return problemMapperExt;
-	}
-
-	@Override
-	public SimpleProblem findProblemById(Integer problemId) {
-		return problemMapperExt.findProblemById(problemId);
-	}
-
+    @Override
+    public SimpleProblem findProblemById(Integer problemId) {
+        return problemMapperExt.findProblemById(problemId);
+    }
 }

@@ -33,7 +33,6 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -48,6 +47,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     private final DetachedTabs myProjectTab;
     private final CssLayout mySpaceArea = new CssLayout();
     private final HorizontalLayout topPanel;
+    private ProjectDashboardPresenter dashboardPresenter;
     private MessagePresenter messagePresenter;
     private MilestonePresenter milestonesPresenter;
     private TaskPresenter taskPresenter;
@@ -133,9 +133,15 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
                             .go(ProjectViewImpl.this,
                             new ScreenData.Search<ProblemSearchCriteria>(
                             searchCriteria));
+                } else if ("Dashboard".equals(caption)) {
+                    gotoDashboard();
                 }
             }
         });
+    }
+
+    public void gotoDashboard() {
+        dashboardPresenter.go(ProjectViewImpl.this);
     }
 
     @SuppressWarnings("rawtypes")
@@ -161,7 +167,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     }
 
     private Component constructProjectDashboardComponent() {
-        return new ProjectDashboardViewImpl();
+        dashboardPresenter = PresenterResolver.getPresenter(ProjectDashboardPresenter.class);
+        return dashboardPresenter.getView();
     }
 
     private Component constructProjectMessageComponent() {

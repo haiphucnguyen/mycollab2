@@ -7,6 +7,8 @@ import com.vaadin.ui.Component;
 
 public interface ProjectView extends View {
 	void displayProject(SimpleProject project);
+        
+        void gotoDashboard();
 
         void gotoMessageView(ScreenData data);
         void gotoMilestoneView(ScreenData data);

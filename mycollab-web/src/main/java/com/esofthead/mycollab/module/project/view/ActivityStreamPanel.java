@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.module.crm.view;
+package com.esofthead.mycollab.module.project.view;
 
 import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.ModuleNameConstants;
@@ -12,19 +12,13 @@ import com.esofthead.mycollab.common.service.ActivityStreamService;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.module.crm.events.CampaignEvent;
-import com.esofthead.mycollab.module.crm.events.CaseEvent;
-import com.esofthead.mycollab.module.crm.events.ContactEvent;
-import com.esofthead.mycollab.module.crm.events.LeadEvent;
-import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
-import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.vaadin.ui.BeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -42,9 +36,12 @@ public class ActivityStreamPanel extends Panel {
     public ActivityStreamPanel() {
         super("Activity Channels");
 
-        activityStreamList = new BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), ActivityStreamRowDisplayHandler.class);
+        activityStreamList = new BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), com.esofthead.mycollab.module.crm.view.ActivityStreamPanel.ActivityStreamRowDisplayHandler.class);
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-        searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{ModuleNameConstants.CRM}));
+        searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{ModuleNameConstants.PRJ}));
+
+        SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
+        searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(project.getId()));
         activityStreamList.setSearchCriteria(searchCriteria);
         this.addComponent(activityStreamList);
     }
@@ -101,23 +98,7 @@ public class ActivityStreamPanel extends Panel {
             this.setStyleName("link");
             this.addListener(new Button.ClickListener() {
                 @Override
-                public void buttonClick(ClickEvent event) {
-                    if (CrmTypeConstants.ACCOUNT.equals(type)) {
-                        EventBus.getInstance().fireEvent(new AccountEvent.GotoRead(this, typeid));
-                    } else if (CrmTypeConstants.CAMPAIGN.equals(type)) {
-                        EventBus.getInstance().fireEvent(new CampaignEvent.GotoRead(this, typeid));
-                    } else if (CrmTypeConstants.CASE.equals(type)) {
-                        EventBus.getInstance().fireEvent(new CaseEvent.GotoRead(this, typeid));
-                    } else if (CrmTypeConstants.CONTACT.equals(type)) {
-                        EventBus.getInstance().fireEvent(new ContactEvent.GotoRead(this, typeid));
-                    } else if (CrmTypeConstants.LEAD.equals(type)) {
-                        EventBus.getInstance().fireEvent(new LeadEvent.GotoRead(this, typeid));
-                    } else if (CrmTypeConstants.OPPORTUNITY.equals(type)) {
-                        EventBus.getInstance().fireEvent(new OpportunityEvent.GotoRead(this, typeid));
-                    } else if (CrmTypeConstants.TASK.equals(type)) {
-                    } else if (CrmTypeConstants.MEETING.equals(type)) {
-                    } else if (CrmTypeConstants.CALL.equals(type)) {
-                    }
+                public void buttonClick(Button.ClickEvent event) {
                 }
             });
         }

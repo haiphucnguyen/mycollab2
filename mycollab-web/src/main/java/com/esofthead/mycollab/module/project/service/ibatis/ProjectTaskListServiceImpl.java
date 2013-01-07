@@ -23,7 +23,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Traceable(module = "Project", type = "TaskList", nameField = "name")
+@Traceable(module = "Project", type = "TaskList", nameField = "name", extraFieldName = "projectid")
 public class ProjectTaskListServiceImpl extends DefaultService<Integer, TaskList, TaskListSearchCriteria> implements
         ProjectTaskListService {
 

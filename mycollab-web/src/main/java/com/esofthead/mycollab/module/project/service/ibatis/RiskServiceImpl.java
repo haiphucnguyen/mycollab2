@@ -16,29 +16,27 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-@Traceable(module="Project", nameField="riskname", type="Risk")
-public class RiskServiceImpl extends
-		DefaultService<Integer, Risk, RiskSearchCriteria> implements
-		RiskService {
+@Traceable(module = "Project", nameField = "riskname", type = "Risk", extraFieldName = "projectid")
+public class RiskServiceImpl extends DefaultService<Integer, Risk, RiskSearchCriteria> implements
+        RiskService {
 
-	@Autowired
-	private RiskMapper riskMapper;
+    @Autowired
+    private RiskMapper riskMapper;
+    @Autowired
+    private RiskMapperExt riskMapperExt;
 
-	@Autowired
-	private RiskMapperExt riskMapperExt;
+    @Override
+    public ICrudGenericDAO<Integer, Risk> getCrudMapper() {
+        return riskMapper;
+    }
 
-	@Override
-	public ICrudGenericDAO<Integer, Risk> getCrudMapper() {
-		return riskMapper;
-	}
+    @Override
+    public ISearchableDAO<RiskSearchCriteria> getSearchMapper() {
+        return riskMapperExt;
+    }
 
-	@Override
-	public ISearchableDAO<RiskSearchCriteria> getSearchMapper() {
-		return riskMapperExt;
-	}
-
-	@Override
-	public SimpleRisk findRiskById(int riskId) {
-		return riskMapperExt.findRiskById(riskId);
-	}
+    @Override
+    public SimpleRisk findRiskById(int riskId) {
+        return riskMapperExt.findRiskById(riskId);
+    }
 }
