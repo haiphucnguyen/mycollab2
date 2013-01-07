@@ -42,14 +42,15 @@ public class UserInformationViewImpl extends AbstractView implements
         User currentUser = AppContext.getSession();
         formItem = new EditForm();
         formItem.setItemDataSource(new BeanItem<User>(currentUser));
-        this.addComponent(formItem);
-        this.addComponent(viewLayout);
+        viewLayout.addComponent(formItem);
         this.setStyleName("userInfoContainer");
         displayUserAvatar();
+        
+        this.addComponent(viewLayout);
     }
-    
+
     private void displayUserAvatar() {
-        CropField cropField = new CropField(new ThemeResource("icons/user_avatar_256_256.png"));
+        CropField cropField = new CropField(new ThemeResource("icons/default_user_avatar_256_256.png"));
         viewLayout.addComponent(cropField);
     }
 

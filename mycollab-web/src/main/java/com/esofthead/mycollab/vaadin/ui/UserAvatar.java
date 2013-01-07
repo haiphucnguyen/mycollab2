@@ -14,7 +14,7 @@ import com.vaadin.ui.Button;
 public class UserAvatar extends Button {
 
     public UserAvatar(String username, String displayName) {
-        this.setIcon(new ThemeResource("icons/default_user_avatar_64_64.png"));
+        this.setIcon(new ThemeResource("icons/default_user_avatar_48_48.png"));
         this.setStyleName("link");
     }
 }

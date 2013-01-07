@@ -51,6 +51,7 @@
             <goals>
                 <goal>vaadin:update-widgetset</goal>
                 <goal>gwt:compile</goal>
+                <goal>-Dgwt.compiler.force=true</goal>
             </goals>
         </action>
         <action>

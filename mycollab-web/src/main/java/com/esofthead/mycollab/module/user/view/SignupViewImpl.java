@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.user.view;
 
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.SecurityService;
 import com.vaadin.data.Item;
@@ -20,6 +18,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
+import org.springframework.beans.factory.annotation.Autowired;
 
 
 public class SignupViewImpl extends Window {

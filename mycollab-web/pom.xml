@@ -162,11 +162,6 @@
         </dependency>
         <dependency>
             <groupId>org.vaadin.addons</groupId>
-            <artifactId>mycollab-wizard</artifactId>
-            <version>1.0-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
             <artifactId>vaadin-calendar-agpl-3.0</artifactId>
             <version>1.2.1</version>
         </dependency>

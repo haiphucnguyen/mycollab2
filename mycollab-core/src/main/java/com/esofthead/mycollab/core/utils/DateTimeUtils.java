@@ -7,8 +7,6 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
-import org.joda.time.DateTime;
-import org.joda.time.DateTimeZone;
 
 public class DateTimeUtils {
 
@@ -105,11 +103,5 @@ public class DateTimeUtils {
 		cal.add(Calendar.DAY_OF_MONTH, duration);
 		Date dateExpect = cal.getTime();
 		return dateExpect;
-	}
-
-	public static DateTime convertJodaTimezone(Date date, String destTz) {
-		DateTime srcDateTime = new DateTime(date);
-		DateTime dstDateTime = srcDateTime.withZone(DateTimeZone.forID(destTz));
-		return dstDateTime;
 	}
 }
