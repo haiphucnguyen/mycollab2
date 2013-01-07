@@ -4,7 +4,6 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
-import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
@@ -112,7 +111,7 @@ public class CampaignPreview extends VerticalLayout {
 
         @Override
         protected void showHistory() {
-            HistoryLogWindow historyLog = new HistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.CAMPAIGN, campaign.getId());
+            CampaignHistoryLogWindow historyLog = new CampaignHistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.CAMPAIGN, campaign.getId());
             getWindow().addWindow(historyLog);
         }
 

@@ -11,26 +11,26 @@ public class LeadReadViewImpl extends AbstractView implements LeadReadView {
 
     private static final long serialVersionUID = 1L;
 
-    private LeadPreview _leadPreview;
+    private LeadPreview leadPreview;
     
     public LeadReadViewImpl() {
         super();
-        _leadPreview = new LeadPreview(true);
-        this.addComponent(_leadPreview);
+        leadPreview = new LeadPreview(true);
+        this.addComponent(leadPreview);
     }
 
     @Override
     public void previewItem(SimpleLead lead) {
-        _leadPreview.previewItem(lead);
+        leadPreview.previewItem(lead);
     }
 
     @Override
     public HasPreviewFormHandlers<Lead> getPreviewFormHandlers() {
-        return _leadPreview.getPreviewForm();
+        return leadPreview.getPreviewForm();
     }
 
     @Override
     public SimpleLead getItem() {
-        return _leadPreview.getLead();
+        return leadPreview.getLead();
     }
 }

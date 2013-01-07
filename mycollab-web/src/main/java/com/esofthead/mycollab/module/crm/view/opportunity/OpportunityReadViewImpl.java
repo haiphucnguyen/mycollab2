@@ -12,26 +12,26 @@ public class OpportunityReadViewImpl extends AbstractView implements
 
     private static final long serialVersionUID = 1L;
 
-    private OpportunityPreview _opportunityPreview;
+    private OpportunityPreview opportunityPreview;
     
     public OpportunityReadViewImpl() {
         super();
-        _opportunityPreview = new OpportunityPreview(true);
-        this.addComponent(_opportunityPreview);
+        opportunityPreview = new OpportunityPreview(true);
+        this.addComponent(opportunityPreview);
     }
 
     @Override
     public void previewItem(SimpleOpportunity item) {
-    	_opportunityPreview.previewItem(item);
+    	opportunityPreview.previewItem(item);
     }
 
     @Override
     public HasPreviewFormHandlers<Opportunity> getPreviewFormHandlers() {
-        return _opportunityPreview.getPreviewForm();
+        return opportunityPreview.getPreviewForm();
     }
 
     @Override
     public SimpleOpportunity getItem() {
-        return _opportunityPreview.getOpportunity();
+        return opportunityPreview.getOpportunity();
     }
 }

@@ -5,7 +5,6 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -124,7 +123,7 @@ public class CasePreview extends VerticalLayout {
 
 			@Override
 			protected void showHistory() {
-				HistoryLogWindow historyLog = new HistoryLogWindow(
+				CaseHistoryLogWindow historyLog = new CaseHistoryLogWindow(
 						ModuleNameConstants.CRM, CrmTypeConstants.CASE,
 						cases.getId());
 

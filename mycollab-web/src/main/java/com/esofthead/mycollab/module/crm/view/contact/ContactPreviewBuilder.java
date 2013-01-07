@@ -10,7 +10,6 @@ import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriter
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
-import com.esofthead.mycollab.module.crm.view.account.AccountHistoryLogWindow;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
@@ -154,7 +153,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 
                 @Override
                 protected void showHistory() {
-                    AccountHistoryLogWindow historyLog = new AccountHistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.CONTACT, contact.getId());
+                    ContactHistoryLogWindow historyLog = new ContactHistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.CONTACT, contact.getId());
                     getWindow().addWindow(historyLog);
                 }
             };

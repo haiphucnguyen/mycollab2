@@ -16,6 +16,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -105,7 +106,7 @@ public class HistoryLogWindow extends Window {
 
                     FieldDisplayHandler fieldDisplayHandler = fieldsFormat.get(fieldName);
                     if (fieldDisplayHandler != null) {
-                        gridLayout.addComponent(new Label(fieldDisplayHandler.getDisplayName()), 0, visibleRows + 2);
+                    	gridLayout.addComponent(new Label(fieldDisplayHandler.getDisplayName()), 0, visibleRows + 2);
                         gridLayout.addComponent(fieldDisplayHandler.getFormat().formatField(item.getOldvalue()), 1, visibleRows + 2);
                         gridLayout.addComponent(fieldDisplayHandler.getFormat().formatField(item.getNewvalue()), 2, visibleRows + 2);
                         visibleRows++;
@@ -210,7 +211,10 @@ public class HistoryLogWindow extends Window {
 
         @Override
         public Component formatField(String value) {
-            throw new UnsupportedOperationException("Not supported yet.");
+        	DateField dateField = new DateField("", DateTimeUtils.getDateByStringWithFormatW3C(value));
+        	dateField.setDateFormat(AppContext.getDateFormat());
+        	dateField.setResolution(DateField.RESOLUTION_DAY);
+        	return dateField;
         }
     }
 }
