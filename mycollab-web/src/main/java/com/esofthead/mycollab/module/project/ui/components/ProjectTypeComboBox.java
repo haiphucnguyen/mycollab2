@@ -5,7 +5,8 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 
 @SuppressWarnings("serial")
 public class ProjectTypeComboBox extends ValueComboBox {
-	public ProjectTypeComboBox() {
-		this.loadData(ProjectDataTypeFactory.getProjectTypeList());
-	}
+
+    public ProjectTypeComboBox() {
+        this.loadData(ProjectDataTypeFactory.getProjectTypeList());
+    }
 }

@@ -56,8 +56,8 @@ public class ProjectAddWindow extends Window {
 				int projectId = projectService.saveWithSession(project,
 						AppContext.getUsername());
 
-				EventBus.getInstance().fireEvent(
-						new ProjectEvent.SaveProjectSucess(this, projectId));
+//				EventBus.getInstance().fireEvent(
+//						new ProjectEvent.SaveProjectSucess(this, projectId));
 			}
 
 			@Override

@@ -1,8 +1,5 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
-import org.apache.commons.beanutils.PropertyUtils;
-import org.vaadin.addon.customfield.CustomField;
-
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
@@ -13,126 +10,120 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
+import org.apache.commons.beanutils.PropertyUtils;
+import org.vaadin.addon.customfield.CustomField;
 
 public class RelatedEditItemField extends CustomField implements FieldSelection {
-	private static final long serialVersionUID = 1L;
 
-	private Object bean;
+    private static final long serialVersionUID = 1L;
+    private Object bean;
+    private RelatedItemComboBox relatedItemComboBox;
+    private TextField itemField;
+    private Embedded browseBtn;
+    private Embedded clearBtn;
 
-	private RelatedItemComboBox relatedItemComboBox;
+    public RelatedEditItemField(String[] types, Object bean) {
+        this.bean = bean;
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSpacing(true);
 
-	private TextField itemField;
-	private Embedded browseBtn;
-	private Embedded clearBtn;
+        relatedItemComboBox = new RelatedItemComboBox(types);
+        layout.addComponent(relatedItemComboBox);
 
-	public RelatedEditItemField(String[] types, Object bean) {
-		this.bean = bean;
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
+        itemField = new TextField();
+        itemField.setEnabled(true);
+        layout.addComponent(itemField);
+        layout.setComponentAlignment(itemField, Alignment.MIDDLE_LEFT);
 
-		relatedItemComboBox = new RelatedItemComboBox(types);
-		layout.addComponent(relatedItemComboBox);
+        browseBtn = new Embedded(null, new ThemeResource(
+                "icons/16/browseItem.png"));
+        browseBtn.addListener(new MouseEvents.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-		itemField = new TextField();
-		itemField.setEnabled(true);
-		layout.addComponent(itemField);
-		layout.setComponentAlignment(itemField, Alignment.MIDDLE_LEFT);
+            @Override
+            public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
+                String type = (String) relatedItemComboBox.getValue();
+                if ("Task".equals(type)) {
+                } else if ("MileStone".equals(type)) {
+                } else if ("Bug".equals(type)) {
+                } else {
+                    relatedItemComboBox.focus();
+                }
+            }
+        });
 
-		browseBtn = new Embedded(null, new ThemeResource(
-				"icons/16/browseItem.png"));
-		browseBtn.addListener(new MouseEvents.ClickListener() {
-			private static final long serialVersionUID = 1L;
+        layout.addComponent(browseBtn);
+        layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
 
-			@Override
-			public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
-				String type = (String) relatedItemComboBox.getValue();
-				if ("Task".equals(type)) {
+        clearBtn = new Embedded(null, new ThemeResource(
+                "icons/16/clearItem.png"));
+        clearBtn.addListener(new MouseEvents.ClickListener() {
+            private static final long serialVersionUID = 1L;
 
-				} else if ("MileStone".equals(type)) {
+            @Override
+            public void click(ClickEvent event) {
+                try {
+                    PropertyUtils.setProperty(RelatedEditItemField.this.bean,
+                            "type", "");
+                    PropertyUtils.setProperty(RelatedEditItemField.this.bean,
+                            "typeid", null);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+            }
+        });
 
-				} else if ("Bug".equals(type)) {
+        layout.addComponent(clearBtn);
+        layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
 
-				} else {
-					relatedItemComboBox.focus();
-				}
-			}
-		});
+        this.setCompositionRoot(layout);
+    }
 
-		layout.addComponent(browseBtn);
-		layout.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
+    @Override
+    public Class<?> getType() {
+        return (new String[2]).getClass();
+    }
 
-		clearBtn = new Embedded(null, new ThemeResource(
-				"icons/16/clearItem.png"));
-		clearBtn.addListener(new MouseEvents.ClickListener() {
-			private static final long serialVersionUID = 1L;
+    private class RelatedItemComboBox extends ValueComboBox {
 
-			@Override
-			public void click(ClickEvent event) {
-				try {
-					PropertyUtils.setProperty(RelatedEditItemField.this.bean,
-							"type", "");
-					PropertyUtils.setProperty(RelatedEditItemField.this.bean,
-							"typeid", null);
-				} catch (Exception e) {
-					e.printStackTrace();
-				}
-			}
-		});
+        private static final long serialVersionUID = 1L;
 
-		layout.addComponent(clearBtn);
-		layout.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
+        public RelatedItemComboBox(String[] types) {
+            super();
+            setCaption(null);
+            this.setWidth("100px");
+            this.loadData(types);
+        }
+    }
 
-		this.setCompositionRoot(layout);
-	}
+    public void setType(String type) {
+        relatedItemComboBox.select(type);
+        try {
+            Integer typeid = (Integer) PropertyUtils
+                    .getProperty(bean, "typeid");
+            if (typeid != null) {
+                if ("Task".equals(type)) {
+                } else if ("MileStone".equals(type)) {
+                } else if ("Bug".equals(type)) {
+                }
+            }
 
-	@Override
-	public Class<?> getType() {
-		return (new String[2]).getClass();
-	}
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 
-	private class RelatedItemComboBox extends ValueComboBox {
-		private static final long serialVersionUID = 1L;
-
-		public RelatedItemComboBox(String[] types) {
-			super();
-			setCaption(null);
-			this.setWidth("100px");
-			this.loadData(types);
-		}
-	}
-
-	public void setType(String type) {
-		relatedItemComboBox.select(type);
-		try {
-			Integer typeid = (Integer) PropertyUtils
-					.getProperty(bean, "typeid");
-			if (typeid != null) {
-				if ("Task".equals(type)) {
-
-				} else if ("MileStone".equals(type)) {
-
-				} else if ("Bug".equals(type)) {
-
-				}
-			}
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
-	@Override
-	public void fireValueChange(Object data) {
-		try {
-			if (data instanceof SimpleTask) {
-				PropertyUtils.setProperty(bean, "type", "Task");
-				PropertyUtils.setProperty(bean, "typeid",
-						((SimpleTask) data).getId());
-				itemField.setValue(((SimpleTask) data).getTaskname());
-			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-
+    @Override
+    public void fireValueChange(Object data) {
+        try {
+            if (data instanceof SimpleTask) {
+                PropertyUtils.setProperty(bean, "type", "Task");
+                PropertyUtils.setProperty(bean, "typeid",
+                        ((SimpleTask) data).getId());
+                itemField.setValue(((SimpleTask) data).getTaskname());
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
 }

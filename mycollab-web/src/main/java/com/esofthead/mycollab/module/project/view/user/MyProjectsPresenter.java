@@ -1,52 +1,46 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.esofthead.mycollab.module.project.view.user;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
-import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.view.UserDashboardView;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.mvp.ListPresenter2;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class MyProjectsPresenter extends AbstractPresenter<MyProjectsView>
-        implements ListPresenter2<ProjectSearchCriteria> {
-
-    private static final long serialVersionUID = 1L;
-    private ProjectService projectService;
-    private ProjectSearchCriteria searchCriteria;
+/**
+ *
+ * @author haiphucnguyen
+ */
+public class MyProjectsPresenter extends AbstractPresenter<MyProjectsContainer> {
 
     public MyProjectsPresenter() {
-        super(MyProjectsView.class);
-
-        projectService = AppContext.getSpringBean(ProjectService.class);
-        bind();
+        super(MyProjectsContainer.class);
     }
-
-    private void bind() {
-    }
-
+    
     @Override
-    public void doSearch(ProjectSearchCriteria searchCriteria) {
-        this.searchCriteria = searchCriteria;
-        view.getPagedBeanTable().setSearchCriteria(searchCriteria);
-        checkWhetherEnableTableActionControl();
-
-    }
-
-    private void checkWhetherEnableTableActionControl() {
+    public void go(ComponentContainer container, ScreenData<?> data) {
+        super.go(container, data, false);
     }
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-    }
+        UserDashboardView projectViewContainer = (UserDashboardView) container;
+        projectViewContainer.gotoSubView("Risks");
 
-    @Override
-    public void doDefaultSearch() {
-        ProjectSearchCriteria criteria = new ProjectSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-                AppContext.getAccountId()));
-        doSearch(criteria);
+        view.removeAllComponents();
+
+        if (data instanceof ScreenData.Search) {
+            MyProjectsListPresenter presenter = PresenterResolver
+                    .getPresenter(MyProjectsListPresenter.class);
+            presenter.go(view, data);
+
+        } else if (data instanceof ScreenData.Add) {
+            ProjectAddPresenter presenter = PresenterResolver
+                    .getPresenter(ProjectAddPresenter.class);
+            presenter.go(view, data);
+        } 
     }
 }

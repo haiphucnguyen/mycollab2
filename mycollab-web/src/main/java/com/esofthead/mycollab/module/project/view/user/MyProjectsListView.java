@@ -5,7 +5,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriter
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 
-public interface MyProjectsView extends View {
+public interface MyProjectsListView extends View {
 
     IPagedBeanTable<ProjectSearchCriteria, SimpleProject> getPagedBeanTable();
 }

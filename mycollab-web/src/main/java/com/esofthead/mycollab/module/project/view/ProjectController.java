@@ -16,7 +16,6 @@ import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
-import com.esofthead.mycollab.module.project.events.ProjectEvent.SaveProjectSucess;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -45,15 +44,19 @@ public class ProjectController {
     @SuppressWarnings("serial")
     private void bindProjectEvents() {
         EventBus.getInstance().addListener(
-                new ApplicationEventListener<ProjectEvent.SaveProjectSucess>() {
+                new ApplicationEventListener<ProjectEvent.GotoAdd>() {
                     @Override
                     public Class<? extends ApplicationEvent> getEventType() {
-                        return ProjectEvent.SaveProjectSucess.class;
+                        return ProjectEvent.GotoAdd.class;
                     }
 
                     @Override
-                    public void handle(SaveProjectSucess event) {
-                        // TODO Auto-generated method stub
+                    public void handle(ProjectEvent.GotoAdd event) {
+                        UserDashboardView projectView = ViewManager
+                                .getView(UserDashboardView.class);
+                        ScreenData.Add<Project> data = new ScreenData.Add<Project>(
+                                new Project());
+                        projectView.gotoMyProjectList(data);
                     }
                 });
 
@@ -253,7 +256,7 @@ public class ProjectController {
                         projectView.gotoBugView(data);
                     }
                 });
-        
+
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<BugEvent.GotoEdit>() {
                     @Override
@@ -265,7 +268,7 @@ public class ProjectController {
                     public void handle(BugEvent.GotoEdit event) {
                         ProjectView projectView = ViewManager
                                 .getView(ProjectView.class);
-                        ScreenData.Edit<SimpleBug> data = new ScreenData.Edit<SimpleBug>((SimpleBug)event.getData());
+                        ScreenData.Edit<SimpleBug> data = new ScreenData.Edit<SimpleBug>((SimpleBug) event.getData());
                         projectView.gotoBugView(data);
                     }
                 });

@@ -21,13 +21,13 @@ import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class MyProjectsViewImpl extends AbstractView implements MyProjectsView {
+public class MyProjectsListViewImpl extends AbstractView implements MyProjectsListView {
 
     private PagedBeanTable2<ProjectService, ProjectSearchCriteria, SimpleProject> tableItem;
     private ProjectSearchPanel searchPanel;
     private VerticalLayout listLayout;
 
-    public MyProjectsViewImpl() {
+    public MyProjectsListViewImpl() {
         this.setSpacing(true);
         this.setMargin(true);
 
