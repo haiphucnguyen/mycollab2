@@ -25,11 +25,18 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
         informationLayout = new ContactInformationLayout();
         AddViewLayout contactAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/crm/contact.png"));
 
-        
-        contactAddLayout.addTopControls(createTopPanel());
+        Layout topPanel = createTopPanel();
+        if (topPanel != null) {
+            contactAddLayout.addTopControls(topPanel);
+        }
 
         contactAddLayout.addBody(informationLayout.getLayout());
-        contactAddLayout.addBottomControls(createBottomPanel());
+        
+        Layout bottomPanel = createBottomPanel();
+        if (bottomPanel != null) {
+            
+        }contactAddLayout.addBottomControls(bottomPanel);
+        
         return contactAddLayout;
     }
 
@@ -39,6 +46,7 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 
     @Override
     public void attachField(Object propertyId, Field field) {
+        informationLayout.attachField(propertyId, field);
     }
 
     public static class ContactInformationLayout implements IFormLayoutFactory {
