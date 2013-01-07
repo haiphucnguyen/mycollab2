@@ -387,7 +387,7 @@ body.v-ie7 .v-menubar-submenu,
 .v-accordion-opaque div.v-accordion-item-open,
 .v-table-scrollposition,
 .v-table-body {
-	background-color: rgb(249,249,249);
+	background-color: transparent;
 	}
 
 /* Base font size and color */
@@ -594,7 +594,7 @@ td.v-datefield-calendarpanel-month,
 .v-accordion-item-caption,
 .v-accordion-item-open,
 .v-menubar-separator span {
-	border-color: rgb(199,199,199);
+	border-color: #8F8F8F;
 	}
 
 /* Alternate colors */
