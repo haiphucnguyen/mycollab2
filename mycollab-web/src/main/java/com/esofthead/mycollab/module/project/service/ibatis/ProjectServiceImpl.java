@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.service.ibatis;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.MessageDispatcher;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -23,6 +24,7 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.project.PermissionPaths;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.dao.PermissionMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMapperExt;
@@ -40,7 +42,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-@Traceable(module = "Project", nameField = "name", type = "Project", extraFieldName="id")
+@Traceable(module = ModuleNameConstants.PRJ, nameField = "name", type = ProjectContants.PROJECT, extraFieldName = "id")
 public class ProjectServiceImpl extends DefaultService<Integer, Project, ProjectSearchCriteria> implements
         ProjectService {
 

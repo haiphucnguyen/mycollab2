@@ -4,10 +4,12 @@
  */
 package com.esofthead.mycollab.module.project.service.ibatis;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.dao.TaskListMapper;
 import com.esofthead.mycollab.module.project.dao.TaskListMapperExt;
 import com.esofthead.mycollab.module.project.domain.TaskList;
@@ -23,7 +25,7 @@ import org.springframework.transaction.annotation.Transactional;
  */
 @Service
 @Transactional
-@Traceable(module = "Project", type = "TaskList", nameField = "name", extraFieldName = "projectid")
+@Traceable(module = ModuleNameConstants.PRJ, type = ProjectContants.TASK_LIST, nameField = "name", extraFieldName = "projectid")
 public class ProjectTaskListServiceImpl extends DefaultService<Integer, TaskList, TaskListSearchCriteria> implements
         ProjectTaskListService {
 

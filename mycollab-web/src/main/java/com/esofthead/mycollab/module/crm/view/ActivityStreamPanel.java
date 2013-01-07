@@ -56,7 +56,9 @@ public class ActivityStreamPanel extends Panel {
             VerticalLayout layout = new VerticalLayout();
             HorizontalLayout header = new HorizontalLayout();
             header.setSpacing(true);
-            header.addComponent(new UserLink(activityStream.getCreateduser(), activityStream.getCreatedUserFullName()));
+            UserLink userLink = new UserLink(activityStream.getCreateduser(), activityStream.getCreatedUserFullName());
+            header.addComponent(userLink);
+            
             StringBuilder action = new StringBuilder();
 
             if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream.getAction())) {
