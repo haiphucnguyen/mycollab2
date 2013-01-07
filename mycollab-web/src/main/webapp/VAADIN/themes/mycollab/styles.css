@@ -554,6 +554,9 @@ input.v-textfield-errorField {
 .addViewLayout .addNewControl {
 	margin: 10px auto 0px;	
 }
+.addViewHeader {
+	margin-bottom: 15px;
+}
 .addViewLayout .addViewHeader .headerName {
 	font-size: 16px;
 	font-weight: bold;
@@ -1002,6 +1005,29 @@ input.v-textfield-errorField {
 
 /* End Note List */
 
+/* Tabsheet Styles */
 .v-table-cell-wrapper {
 white-space: normal;
 }
+.v-tabsheet-content {
+	border: 0px;
+}
+.v-tabsheet-tabitem .v-caption {
+	border-style: solid;
+	border-width: 1px 1px 0px 1px;
+	border-color: #8F8F8F;
+	background-color: #BCBCBC;
+	border-radius: 3px 3px 0px 0px;
+	line-height: 1.6em;
+}
+.v-tabsheet-tabitem .v-caption:hover {
+	background-color: #cbcbcb;
+}
+.v-tabsheet-tabitem.v-tabsheet-tabitem-selected .v-caption {
+	border-color: #F1F1F1;
+	background-color: #F1F1F1;
+}
+.v-tabsheet-tabitem-selected {
+	border-radius: 3px 3px 0px 0px;
+}
+/* End Tabsheet Styles */
