@@ -6,9 +6,7 @@ package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.service.LeadService;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -64,9 +62,7 @@ public class LeadTableDisplay extends PagedBeanTable2<LeadService, LeadSearchCri
 
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
-                                EventBus.getInstance().fireEvent(
-                                        new LeadEvent.GotoRead(this, lead
-                                        .getId()));
+                                fireTableEvent(new TableClickEvent(LeadTableDisplay.this, lead, "leadName"));
                             }
                         });
                 b.addStyleName("medium-text");

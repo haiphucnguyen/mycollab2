@@ -69,10 +69,13 @@ public class CampaignSelectionWindow extends Window {
             @Override
             public void handle(TableClickEvent event) {
                 SimpleCampaign campaign = (SimpleCampaign) event.getData();
-                fieldSelection.fireValueChange(campaign);
-                CampaignSelectionWindow.this.getParent()
-                        .removeWindow(
-                        CampaignSelectionWindow.this);
+                if ("campaignname".equals(event.getFieldName())) {
+                    fieldSelection.fireValueChange(campaign);
+                    CampaignSelectionWindow.this.getParent()
+                            .removeWindow(
+                            CampaignSelectionWindow.this);
+                }
+
             }
         });
     }

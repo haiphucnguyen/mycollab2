@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.module.crm.view.campaign;
+package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.vaadin.ui.VerticalLayout;
@@ -11,8 +11,10 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author haiphucnguyen
  */
-public class CampaignAccountListComp extends Depot{
-    public CampaignAccountListComp() {
-        super("Accounts", new VerticalLayout());
+public class LeadCampaignListComp extends Depot{
+    
+    public LeadCampaignListComp() {
+        super("Campaigns", new VerticalLayout());
     }
+    
 }

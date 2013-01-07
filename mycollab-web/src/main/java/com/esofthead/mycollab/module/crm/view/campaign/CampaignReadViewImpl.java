@@ -11,11 +11,11 @@ public class CampaignReadViewImpl extends AbstractView implements
         CampaignReadView {
 
     private static final long serialVersionUID = 1L;
-    private CampaignPreview campaignPreview;
+    private CampaignPreviewBuilder campaignPreview;
 
     public CampaignReadViewImpl() {
         super();
-        campaignPreview = new CampaignPreview(true);
+        campaignPreview = new CampaignPreviewBuilder.ReadView();
         this.addComponent(campaignPreview);
     }
 
