@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.message;
 
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
@@ -16,6 +17,8 @@ import com.esofthead.mycollab.vaadin.ui.PagedBeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.RichTextEditor;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.esofthead.mycollab.vaadin.ui.UserAvatar;
+import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
@@ -66,34 +69,48 @@ public class MessageListViewImpl extends AbstractView implements
             RowDisplayHandler<SimpleMessage> {
 
         @Override
-        public Component generateRow(final SimpleMessage obj, int rowIndex) {
+        public Component generateRow(final SimpleMessage message, int rowIndex) {
+            HorizontalLayout messageLayout = new HorizontalLayout();
+            messageLayout.addComponent(new UserAvatar(message.getPosteduser(), message.getFullPostedUserName()));
+            
             VerticalLayout rowLayout = new VerticalLayout();
-            Button title = new Button(obj.getTitle(),
+            Button title = new Button(message.getTitle(),
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 
                         @Override
                         public void buttonClick(ClickEvent event) {
-                            EventBus.getInstance().fireEvent(new MessageEvent.GotoRead(MessageListViewImpl.this, obj.getId()));
+                            EventBus.getInstance().fireEvent(new MessageEvent.GotoRead(MessageListViewImpl.this, message.getId()));
                         }
                     });
             title.setStyleName("link");
 
             rowLayout.addComponent(title);
 
-            Label messageInfo = new Label();
-            messageInfo.setValue("Posted by " + obj.getFullPostedUserName()
-                    + " on " + obj.getPosteddate());
-
-            rowLayout.addComponent(messageInfo);
-
-            rowLayout.addComponent(new Label(obj.getMessage(),
+            rowLayout.addComponent(new Label(message.getMessage(),
                     Label.CONTENT_XHTML));
 
             HorizontalLayout footer = new HorizontalLayout();
-            footer.addComponent(new Label(obj.getCommentsCount() + " comments"));
+            Label commentCountLbl = new Label(message.getCommentsCount() + " comments");
+            footer.addComponent(commentCountLbl);
+            footer.setComponentAlignment(commentCountLbl, Alignment.MIDDLE_CENTER);
+            
+            Label separator = new Label("  |  ");
+            footer.addComponent(separator);
+            footer.setComponentAlignment(separator, Alignment.MIDDLE_CENTER);
+            
+            UserLink userLink = new UserLink(message.getPosteduser(), message.getFullPostedUserName());
+            footer.addComponent(userLink);
+            footer.setComponentAlignment(userLink, Alignment.MIDDLE_CENTER);
+            
+            Label timePostLbl = new Label(" wrote on " + DateTimeUtils.getStringDateFromNow(message.getPosteddate()));
+            footer.addComponent(timePostLbl);
+            footer.setComponentAlignment(timePostLbl, Alignment.MIDDLE_CENTER);
+            
             rowLayout.addComponent(footer);
-            return rowLayout;
+            
+            messageLayout.addComponent(rowLayout);
+            return messageLayout;
         }
     }
 
