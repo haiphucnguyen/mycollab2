@@ -6,8 +6,14 @@ package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.VerticalLayout;
 
@@ -26,6 +32,20 @@ public class LeadListDashlet extends Depot {
                     "officephone", "email"},
                 new String[]{"Name", "Title",
                     "Office Phone", "Email"});
+        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+            @Override
+            public Class<? extends ApplicationEvent> getEventType() {
+                return TableClickEvent.class;
+            }
+
+            @Override
+            public void handle(TableClickEvent event) {
+                SimpleLead lead = (SimpleLead) event.getData();
+                if ("leadName".equals(event.getFieldName())) {
+                    EventBus.getInstance().fireEvent(new LeadEvent.GotoRead(LeadListDashlet.this, lead.getId()));
+                }
+            }
+        });
         this.content.addComponent(tableItem);
     }
 
