@@ -10,26 +10,26 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 public class LeadReadViewImpl extends AbstractView implements LeadReadView {
 
     private static final long serialVersionUID = 1L;
-    private LeadPreviewBuilder _leadPreview;
+    private LeadPreviewBuilder leadPreview;
 
     public LeadReadViewImpl() {
         super();
-        _leadPreview = new LeadPreviewBuilder.ReadView();
-        this.addComponent(_leadPreview);
+        leadPreview = new LeadPreviewBuilder.ReadView();
+        this.addComponent(leadPreview);
     }
 
     @Override
     public void previewItem(SimpleLead lead) {
-        _leadPreview.previewItem(lead);
+        leadPreview.previewItem(lead);
     }
 
     @Override
     public HasPreviewFormHandlers<Lead> getPreviewFormHandlers() {
-        return _leadPreview.getPreviewForm();
+        return leadPreview.getPreviewForm();
     }
 
     @Override
     public SimpleLead getItem() {
-        return _leadPreview.getLead();
+        return leadPreview.getLead();
     }
 }
