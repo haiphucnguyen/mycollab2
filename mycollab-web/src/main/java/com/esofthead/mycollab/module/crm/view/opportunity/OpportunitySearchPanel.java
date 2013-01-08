@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import java.util.Collection;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -28,283 +30,286 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
-import java.util.Collection;
 
 @SuppressWarnings("serial")
-public class OpportunitySearchPanel extends GenericSearchPanel<OpportunitySearchCriteria> {
+public class OpportunitySearchPanel extends
+		GenericSearchPanel<OpportunitySearchCriteria> {
 
-    protected OpportunitySearchCriteria searchCriteria;
+	protected OpportunitySearchCriteria searchCriteria;
 
-    public OpportunitySearchPanel() {
-        searchCriteria = new OpportunitySearchCriteria();
-    }
+	public OpportunitySearchPanel() {
+		searchCriteria = new OpportunitySearchCriteria();
+	}
 
-    @Override
-    public void attach() {
-        createBasicSearchLayout();
-    }
+	@Override
+	public void attach() {
+		createBasicSearchLayout();
+	}
 
-    private void createBasicSearchLayout() {
-        OpportunityBasicSearchLayout layout = new OpportunityBasicSearchLayout();
-        this.setCompositionRoot(layout);
-    }
+	private void createBasicSearchLayout() {
+		OpportunityBasicSearchLayout layout = new OpportunityBasicSearchLayout();
+		this.setCompositionRoot(layout);
+	}
 
-    private void createAdvancedSearchLayout() {
-        OpportunityAdvancedSearchLayout layout = new OpportunityAdvancedSearchLayout();
-        this.setCompositionRoot(layout);
-    }
+	private void createAdvancedSearchLayout() {
+		OpportunityAdvancedSearchLayout layout = new OpportunityAdvancedSearchLayout();
+		this.setCompositionRoot(layout);
+	}
 
-    private HorizontalLayout createSearchTopPanel() {
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setWidth("100%");
-        layout.setSpacing(true);
+	private HorizontalLayout createSearchTopPanel() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setWidth("100%");
+		layout.setSpacing(true);
 
-        Label searchtitle = new Label("Search");
-        searchtitle.setStyleName(Reindeer.LABEL_H2);
-        layout.addComponent(searchtitle);
+		Label searchtitle = new Label("Search");
+		searchtitle.setStyleName(Reindeer.LABEL_H2);
+		layout.addComponent(searchtitle);
 
-        Button createAccountBtn = new Button("Create",
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+		Button createAccountBtn = new Button("Create",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        EventBus.getInstance().fireEvent(
-                                new OpportunityEvent.GotoAdd(
-                                OpportunitySearchPanel.this, null));
-                    }
-                });
-        createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
-        createAccountBtn.setStyleName(BaseTheme.BUTTON_LINK);
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new OpportunityEvent.GotoAdd(
+										OpportunitySearchPanel.this, null));
+					}
+				});
+		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createAccountBtn.setStyleName(BaseTheme.BUTTON_LINK);
 
-        UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
+		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
 
-        return layout;
-    }
+		return layout;
+	}
 
-    private class OpportunityBasicSearchLayout extends BasicSearchLayout {
+	private class OpportunityBasicSearchLayout extends BasicSearchLayout {
 
-        private static final long serialVersionUID = 1L;
-        private TextField nameField;
-        private CheckBox myItemCheckbox;
+		private static final long serialVersionUID = 1L;
+		private TextField nameField;
+		private CheckBox myItemCheckbox;
 
-        public OpportunityBasicSearchLayout() {
-            super();
-        }
+		public OpportunityBasicSearchLayout() {
+			super();
+		}
 
-        @Override
-        public ComponentContainer constructHeader() {
-            return createSearchTopPanel();
-        }
+		@Override
+		public ComponentContainer constructHeader() {
+			return createSearchTopPanel();
+		}
 
-        @Override
-        public ComponentContainer constructBody() {
-            HorizontalLayout layout = new HorizontalLayout();
-            layout.setSpacing(true);
-            layout.addComponent(new Label("Name"));
-            nameField = new TextField();
-            nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-            UiUtils.addComponent(layout, nameField, Alignment.MIDDLE_CENTER);
-            myItemCheckbox = new CheckBox("My Items");
-            UiUtils.addComponent(layout, myItemCheckbox,
-                    Alignment.MIDDLE_CENTER);
+		@Override
+		public ComponentContainer constructBody() {
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.setSpacing(true);
+			layout.addComponent(new Label("Name"));
+			nameField = new TextField();
+			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			UiUtils.addComponent(layout, nameField, Alignment.MIDDLE_CENTER);
+			myItemCheckbox = new CheckBox("My Items");
+			UiUtils.addComponent(layout, myItemCheckbox,
+					Alignment.MIDDLE_CENTER);
 
-            layout.addComponent(new Button("Search",
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+			Button searchBtn = new Button("Search");
+			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            searchCriteria = new OpportunitySearchCriteria();
-                            searchCriteria.setSaccountid(new NumberSearchField(
-                                    SearchField.AND, AppContext.getAccountId()));
-                            searchCriteria
-                                    .setOpportunityName(new StringSearchField(
-                                    SearchField.AND,
-                                    ((String) nameField.getValue())
-                                    .trim()));
+			searchBtn.addListener(new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					searchCriteria = new OpportunitySearchCriteria();
+					searchCriteria.setSaccountid(new NumberSearchField(
+							SearchField.AND, AppContext.getAccountId()));
 
-                            if (myItemCheckbox.booleanValue()) {
-                                searchCriteria.setAssignUsers(new SetSearchField<String>(SearchField.AND, new String[]{AppContext
-                                            .getUsername()}));
-                            } else {
-                                searchCriteria.setAssignUsers(null);
-                            }
+					if (StringUtil.isNotNullOrEmpty(nameField.getValue()
+							.toString().trim())) {
+						searchCriteria
+								.setOpportunityName(new StringSearchField(
+										SearchField.AND, ((String) nameField
+												.getValue()).trim()));
+					}
 
-                            OpportunitySearchPanel.this
-                                    .notifySearchHandler(searchCriteria);
-                        }
-                    }));
+					if (myItemCheckbox.booleanValue()) {
+						searchCriteria
+								.setAssignUsers(new SetSearchField<String>(
+										SearchField.AND,
+										new String[] { AppContext.getUsername() }));
+					} else {
+						searchCriteria.setAssignUsers(null);
+					}
 
-            layout.addComponent(new Button("Cancel",
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+					OpportunitySearchPanel.this
+							.notifySearchHandler(searchCriteria);
+				}
+			});
+			layout.addComponent(searchBtn);
 
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            nameField.setValue("");
-                        }
-                    }));
+			Button cancelBtn = new Button("Cancel");
+			cancelBtn.setStyleName("bluebtn");
+			cancelBtn.addListener(new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					nameField.setValue("");
+				}
+			});
+			layout.addComponent(cancelBtn);
 
-            Button advancedSearchBtn = new Button("Advanced Search",
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+			Button advancedSearchBtn = new Button("Advanced Search",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            OpportunitySearchPanel.this
-                                    .createAdvancedSearchLayout();
-                        }
-                    });
-            advancedSearchBtn.setStyleName("link");
-            UiUtils.addComponent(layout, advancedSearchBtn,
-                    Alignment.MIDDLE_CENTER);
-            return layout;
-        }
-    }
+						@Override
+						public void buttonClick(ClickEvent event) {
+							OpportunitySearchPanel.this
+									.createAdvancedSearchLayout();
+						}
+					});
+			advancedSearchBtn.setStyleName("link");
+			UiUtils.addComponent(layout, advancedSearchBtn,
+					Alignment.MIDDLE_CENTER);
+			return layout;
+		}
+	}
 
-    private class OpportunityAdvancedSearchLayout extends AdvancedSearchLayout {
+	private class OpportunityAdvancedSearchLayout extends AdvancedSearchLayout {
 
-        private static final long serialVersionUID = 1L;
-        private TextField opportunityNameField;
-        private AccountSelectionField accountField;
-        private TextField nextStepField;
-        private UserListSelect userField;
-        private OpportunitySalesStageListSelect stageField;
-        private LeadSourceListSelect sourceField;
+		private static final long serialVersionUID = 1L;
+		private TextField opportunityNameField;
+		private AccountSelectionField accountField;
+		private TextField nextStepField;
+		private UserListSelect userField;
+		private OpportunitySalesStageListSelect stageField;
+		private LeadSourceListSelect sourceField;
 
-        public OpportunityAdvancedSearchLayout() {
-            super();
-        }
+		public OpportunityAdvancedSearchLayout() {
+			super();
+		}
 
-        @Override
-        public ComponentContainer constructHeader() {
-            return createSearchTopPanel();
-        }
+		@Override
+		public ComponentContainer constructHeader() {
+			return createSearchTopPanel();
+		}
 
-        @Override
-        public ComponentContainer constructBody() {
-            GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 2);
+		@Override
+		public ComponentContainer constructBody() {
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 2);
 
-            opportunityNameField = (TextField) gridLayout.addComponent(
-                    new TextField(), "Name", 0, 0);
-            accountField = (AccountSelectionField) gridLayout.addComponent(
-                    new AccountSelectionField(), "Account", 1, 0);
-            nextStepField = (TextField) gridLayout.addComponent(
-                    new TextField(), "Next Step", 2, 0);
+			opportunityNameField = (TextField) gridLayout.addComponent(
+					new TextField(), "Name", 0, 0);
+			accountField = (AccountSelectionField) gridLayout.addComponent(
+					new AccountSelectionField(), "Account", 1, 0);
+			nextStepField = (TextField) gridLayout.addComponent(
+					new TextField(), "Next Step", 2, 0);
 
-            userField = (UserListSelect) gridLayout.addComponent(
-                    new UserListSelect(), "Assigned to", 0, 1);
-            stageField = (OpportunitySalesStageListSelect) gridLayout
-                    .addComponent(new OpportunitySalesStageListSelect(),
-                    "Sales Stage", 1, 1);
-            sourceField = (LeadSourceListSelect) gridLayout.addComponent(
-                    new LeadSourceListSelect(), "Lead Source", 2, 1);
+			userField = (UserListSelect) gridLayout.addComponent(
+					new UserListSelect(), "Assigned to", 0, 1);
+			stageField = (OpportunitySalesStageListSelect) gridLayout
+					.addComponent(new OpportunitySalesStageListSelect(),
+							"Sales Stage", 1, 1);
+			sourceField = (LeadSourceListSelect) gridLayout.addComponent(
+					new LeadSourceListSelect(), "Lead Source", 2, 1);
 
-            return gridLayout.getLayout();
-        }
+			return gridLayout.getLayout();
+		}
 
-        @Override
-        public ComponentContainer constructFooter() {
-            HorizontalLayout buttonControls = new HorizontalLayout();
-            buttonControls.setSpacing(true);
-            buttonControls.addComponent(new Button("Search",
-                    new Button.ClickListener() {
-                        @SuppressWarnings("unchecked")
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            searchCriteria = new OpportunitySearchCriteria();
-                            searchCriteria.setSaccountid(new NumberSearchField(
-                                    SearchField.AND, AppContext.getAccountId()));
+		@Override
+		public ComponentContainer constructFooter() {
+			HorizontalLayout buttonControls = new HorizontalLayout();
+			buttonControls.setSpacing(true);
 
-                            if (StringUtil
-                                    .isNotNullOrEmpty((String) opportunityNameField
-                                    .getValue())) {
-                                searchCriteria
-                                        .setOpportunityName(new StringSearchField(
-                                        SearchField.AND,
-                                        ((String) opportunityNameField
-                                        .getValue()).trim()));
-                            }
+			Button searchBtn = new Button("Search", new Button.ClickListener() {
+				@SuppressWarnings({ "unchecked" })
+				@Override
+				public void buttonClick(ClickEvent event) {
+					searchCriteria = new OpportunitySearchCriteria();
+					searchCriteria.setSaccountid(new NumberSearchField(
+							SearchField.AND, AppContext.getAccountId()));
 
-                            SimpleAccount account = accountField.getAccount();
-                            if (StringUtil
-                                    .isNotNullOrEmpty((String) account
-                                    .getAccountname())) {
-                                searchCriteria
-                                        .setAccountName(new StringSearchField(
-                                        SearchField.AND,
-                                        account
-                                        .getAccountname()));
-                            }
+					if (StringUtil
+							.isNotNullOrEmpty((String) opportunityNameField
+									.getValue())) {
+						searchCriteria
+								.setOpportunityName(new StringSearchField(
+										SearchField.AND,
+										((String) opportunityNameField
+												.getValue()).trim()));
+					}
 
-                            if (StringUtil
-                                    .isNotNullOrEmpty((String) nextStepField
-                                    .getValue())) {
-                                searchCriteria
-                                        .setNextStep(new StringSearchField(
-                                        SearchField.AND,
-                                        ((String) nextStepField
-                                        .getValue()).trim()));
-                            }
+					SimpleAccount account = accountField.getAccount();
+					if (StringUtil.isNotNullOrEmpty((String) account
+							.getAccountname())) {
+						searchCriteria.setAccountName(new StringSearchField(
+								SearchField.AND, account.getAccountname()));
+					}
 
-                            Collection<String> assignUsers = (Collection<String>) userField
-                                    .getValue();
-                            if (assignUsers != null && assignUsers.size() > 0) {
-                                searchCriteria
-                                        .setAssignUsers(new SetSearchField<String>(
-                                        SearchField.AND, assignUsers));
-                            }
+					if (StringUtil.isNotNullOrEmpty((String) nextStepField
+							.getValue())) {
+						searchCriteria.setNextStep(new StringSearchField(
+								SearchField.AND, ((String) nextStepField
+										.getValue()).trim()));
+					}
 
-                            Collection<String> saleStages = (Collection<String>) stageField
-                                    .getValue();
-                            if (saleStages != null && saleStages.size() > 0) {
-                                searchCriteria
-                                        .setSalesStages(new SetSearchField<String>(
-                                        SearchField.AND, saleStages));
-                            }
+					Collection<String> assignUsers = (Collection<String>) userField
+							.getValue();
+					if (assignUsers != null && assignUsers.size() > 0) {
+						searchCriteria
+								.setAssignUsers(new SetSearchField<String>(
+										SearchField.AND, assignUsers));
+					}
 
-                            Collection<String> leadSources = (Collection<String>) sourceField
-                                    .getValue();
-                            if (leadSources != null && leadSources.size() > 0) {
-                                searchCriteria
-                                        .setLeadSources(new SetSearchField<String>(
-                                        SearchField.AND, leadSources));
-                            }
+					Collection<String> saleStages = (Collection<String>) stageField
+							.getValue();
+					if (saleStages != null && saleStages.size() > 0) {
+						searchCriteria
+								.setSalesStages(new SetSearchField<String>(
+										SearchField.AND, saleStages));
+					}
 
-                            OpportunitySearchPanel.this
-                                    .notifySearchHandler(searchCriteria);
-                        }
-                    }));
+					Collection<String> leadSources = (Collection<String>) sourceField
+							.getValue();
+					if (leadSources != null && leadSources.size() > 0) {
+						searchCriteria
+								.setLeadSources(new SetSearchField<String>(
+										SearchField.AND, leadSources));
+					}
 
-            buttonControls.addComponent(new Button("Clear",
-                    new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(ClickEvent event) {
+					OpportunitySearchPanel.this
+							.notifySearchHandler(searchCriteria);
 
-                            opportunityNameField.setValue("");
-                            accountField.clearValue();
-                            nextStepField.setValue("");
-                            userField.setValue(null);
-                            stageField.setValue(null);
-                            sourceField.setValue(null);
-                        }
-                    }));
+				}
+			});
 
-            Button basicSearchBtn = new Button("Basic Search",
-                    new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            OpportunitySearchPanel.this
-                                    .createBasicSearchLayout();
+			buttonControls.addComponent(searchBtn);
+			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
-                        }
-                    });
-            basicSearchBtn.setStyleName("link");
-            UiUtils.addComponent(buttonControls, basicSearchBtn,
-                    Alignment.MIDDLE_CENTER);
+			Button clearBtn = new Button("Clear", new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					opportunityNameField.setValue("");
+					accountField.clearValue();
+					nextStepField.setValue("");
+					userField.setValue(null);
+					stageField.setValue(null);
+					sourceField.setValue(null);
+				}
+			});
+			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			buttonControls.addComponent(clearBtn);
 
-            return buttonControls;
-        }
-    }
+			Button basicSearchBtn = new Button("Basic Search",
+					new Button.ClickListener() {
+						@Override
+						public void buttonClick(ClickEvent event) {
+							OpportunitySearchPanel.this
+									.createBasicSearchLayout();
+
+						}
+					});
+			basicSearchBtn.setStyleName("link");
+			UiUtils.addComponent(buttonControls, basicSearchBtn,
+					Alignment.MIDDLE_CENTER);
+
+			return buttonControls;
+		}
+	}
 }
