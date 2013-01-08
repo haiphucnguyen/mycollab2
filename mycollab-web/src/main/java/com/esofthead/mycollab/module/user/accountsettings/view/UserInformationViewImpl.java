@@ -32,21 +32,19 @@ public class UserInformationViewImpl extends AbstractView implements
 
     public UserInformationViewImpl() {
         super();
-        formItem = new EditForm();
         viewLayout = new HorizontalLayout();
+        this.setStyleName("userInfoContainer");
+        this.addComponent(viewLayout);
     }
 
     @Override
     public void attach() {
-        this.removeAllComponents();
+        viewLayout.removeAllComponents();
         User currentUser = AppContext.getSession();
         formItem = new EditForm();
         formItem.setItemDataSource(new BeanItem<User>(currentUser));
         viewLayout.addComponent(formItem);
-        this.setStyleName("userInfoContainer");
         displayUserAvatar();
-        
-        this.addComponent(viewLayout);
     }
 
     private void displayUserAvatar() {
@@ -64,8 +62,8 @@ public class UserInformationViewImpl extends AbstractView implements
 
             VerticalLayout layout = new VerticalLayout();
 
-            Label informationHeader = new Label("User Informations");
-            informationHeader.setStyleName("h1");
+            Label informationHeader = new Label("User Information");
+            informationHeader.setStyleName("h2");
             layout.addComponent(informationHeader);
 
             informationLayout = new GridFormLayoutHelper(1, 9);
@@ -126,9 +124,6 @@ public class UserInformationViewImpl extends AbstractView implements
             } else if (propertyId.equals("lastname")) {
                 field.setSizeUndefined();
                 informationLayout.addComponent(field, "Last Name", 0, 1);
-            } else if (propertyId.equals("middlename")) {
-                field.setSizeUndefined();
-                informationLayout.addComponent(field, "Middle Name", 0, 2);
             } else if (propertyId.equals("nickname")) {
                 field.setSizeUndefined();
                 informationLayout.addComponent(field, "Nickname", 0, 3);

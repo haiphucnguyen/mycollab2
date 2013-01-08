@@ -117,6 +117,11 @@ public class AppContext implements TransactionListener, Serializable {
 
         return springContext.getBean(requiredType);
     }
+    
+    public static boolean isAdmin() {
+        Byte flag = instance.get().session.getIsadmin();
+        return (flag != null && flag == SimpleUser.ADMIN_VAL);
+    }
 
     public static void putVariable(String key, Object value) {
         instance.get().variables.put(key, value);

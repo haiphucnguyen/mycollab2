@@ -23,6 +23,8 @@ public class SimpleUser extends User {
     public static final String ACTIVE_STATUS = "active";
     public static final String INACTION_STATUS = "inactive";
     public static final String PENDING_STATUS = "pending";
+    
+    public static final int ADMIN_VAL = 1;
 
     public String getDisplayName() {
         return getFirstname() + " " + getLastname();
