@@ -108,7 +108,7 @@ public class AccountSearchPanel extends GenericSearchPanel<AccountSearchCriteria
                     searchCriteria.setSaccountid(new NumberSearchField(
                             SearchField.AND, AppContext.getAccountId()));
                     searchCriteria.setAccountname(new StringSearchField(
-                            SearchField.AND, (String) nameField.getValue()));
+                            SearchField.AND, ((String) nameField.getValue()).trim()));
                     if (myItemCheckbox.booleanValue()) {
                         searchCriteria.setAssignUser(new StringSearchField(
                                 SearchField.AND, AppContext.getUsername()));

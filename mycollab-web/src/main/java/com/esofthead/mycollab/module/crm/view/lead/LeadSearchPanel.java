@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import java.util.Collection;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -26,7 +28,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
-import java.util.Collection;
 
 @SuppressWarnings("serial")
 public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
@@ -105,37 +106,45 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 			UiUtils.addComponent(layout, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
 
-			layout.addComponent(new Button("Search",
-					new Button.ClickListener() {
+			Button searchBtn = new Button("Search");
+			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							searchCriteria = new LeadSearchCriteria();
-							searchCriteria.setSaccountid(new NumberSearchField(
-									SearchField.AND, AppContext.getAccountId()));
-							searchCriteria
-									.setLeadName(new StringSearchField(
-											SearchField.AND, (String) nameField
-													.getValue()));
-							if (myItemCheckbox.booleanValue()) {
-								searchCriteria.	setAssignUsers(new SetSearchField<String>(SearchField.AND, new String[] {AppContext
-										.getUsername()}));
-							} else {
-								searchCriteria.setAssignUsers(null);
-							}
-							LeadSearchPanel.this
-									.notifySearchHandler(searchCriteria);
-						}
-					}));
+			searchBtn.addListener(new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					searchCriteria = new LeadSearchCriteria();
+					searchCriteria.setSaccountid(new NumberSearchField(
+							SearchField.AND, AppContext.getAccountId()));
 
-			layout.addComponent(new Button("Cancel",
-					new Button.ClickListener() {
+					if (StringUtil.isNotNullOrEmpty(nameField.getValue()
+							.toString().trim())) {
+						searchCriteria.setLeadName(new StringSearchField(
+								SearchField.AND, (String) nameField.getValue()));
+					}
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							nameField.setValue("");
-						}
-					}));
+					if (myItemCheckbox.booleanValue()) {
+						searchCriteria
+								.setAssignUsers(new SetSearchField<String>(
+										SearchField.AND,
+										new String[] { AppContext.getUsername() }));
+					} else {
+						searchCriteria.setAssignUsers(null);
+					}
+
+					LeadSearchPanel.this.notifySearchHandler(searchCriteria);
+				}
+			});
+			layout.addComponent(searchBtn);
+
+			Button cancelBtn = new Button("Cancel");
+			cancelBtn.setStyleName("bluebtn");
+			cancelBtn.addListener(new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					nameField.setValue("");
+				}
+			});
+			layout.addComponent(cancelBtn);
 
 			Button advancedSearchBtn = new Button("Advanced Search",
 					new Button.ClickListener() {
@@ -215,128 +224,127 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 		public ComponentContainer constructFooter() {
 			HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
-			buttonControls.addComponent(new Button("Search",
-					new Button.ClickListener() {
 
-						@SuppressWarnings("unchecked")
-						@Override
-						public void buttonClick(ClickEvent event) {
-							searchCriteria = new LeadSearchCriteria();
-							searchCriteria.setSaccountid(new NumberSearchField(
-									SearchField.AND, AppContext.getAccountId()));
-							
-							if (StringUtil
-									.isNotNullOrEmpty((String) firstnameField
-											.getValue())) {
-								searchCriteria
-								.setFirstname(new StringSearchField(
-										SearchField.AND, (
-										(String) firstnameField
-												.getValue()).trim()));
-							}
-							
-							if (StringUtil
-									.isNotNullOrEmpty((String) lastnameField
-											.getValue())) {
-								searchCriteria
-								.setLastname(new StringSearchField(
-										SearchField.AND, (
-										(String) lastnameField
-												.getValue()).trim()));
-							}
-							
-							if (StringUtil
-									.isNotNullOrEmpty((String) accountnameField
-											.getValue())) {
-								searchCriteria
-								.setAccountName(new StringSearchField(
-										SearchField.AND, (
-										(String) accountnameField
-												.getValue()).trim()));
-							}
-							
-							Collection<String> statuses = (Collection<String>) statusField
+			Button searchBtn = new Button("Search", new Button.ClickListener() {
+				@SuppressWarnings({ "unchecked" })
+				@Override
+				public void buttonClick(ClickEvent event) {
+					searchCriteria = new LeadSearchCriteria();
+					searchCriteria.setSaccountid(new NumberSearchField(
+							SearchField.AND, AppContext.getAccountId()));
+
+					if (StringUtil.isNotNullOrEmpty((String) firstnameField
+							.getValue())) {
+						searchCriteria.setFirstname(new StringSearchField(
+								SearchField.AND, ((String) firstnameField
+										.getValue()).trim()));
+					}
+
+					if (StringUtil.isNotNullOrEmpty((String) lastnameField
+							.getValue())) {
+						searchCriteria.setLastname(new StringSearchField(
+								SearchField.AND, ((String) lastnameField
+										.getValue()).trim()));
+					}
+
+					if (StringUtil.isNotNullOrEmpty((String) accountnameField
+							.getValue())) {
+						searchCriteria.setAccountName(new StringSearchField(
+								SearchField.AND, ((String) accountnameField
+										.getValue()).trim()));
+					}
+
+					Collection<String> statuses = (Collection<String>) statusField
 							.getValue();
-							if (statuses != null && statuses.size() > 0) {
-								searchCriteria.setStatuses(new SetSearchField<String>(SearchField.AND, statuses));
-							}
-							
-							if (StringUtil
-									.isNotNullOrEmpty((String) anyEmailField
-											.getValue())) {
-								searchCriteria.setAnyEmail(new StringSearchField(SearchField.AND, (String) anyEmailField.getValue()));
-							}
-							
-							if (StringUtil
-									.isNotNullOrEmpty((String) anyAddressField
-											.getValue())) {
-								searchCriteria.setAnyAddress(new StringSearchField(SearchField.AND, (String) anyAddressField.getValue()));
-							}
-							
-							if (StringUtil
-									.isNotNullOrEmpty((String) countryField
-											.getValue())) {
-								searchCriteria.setAnyCountry(new StringSearchField(SearchField.AND, (String) countryField.getValue()));
-							}
-							
-							Collection<String> sources = (Collection<String>) sourceField
+					if (statuses != null && statuses.size() > 0) {
+						searchCriteria.setStatuses(new SetSearchField<String>(
+								SearchField.AND, statuses));
+					}
+
+					if (StringUtil.isNotNullOrEmpty((String) anyEmailField
+							.getValue())) {
+						searchCriteria.setAnyEmail(new StringSearchField(
+								SearchField.AND, (String) anyEmailField
+										.getValue()));
+					}
+
+					if (StringUtil.isNotNullOrEmpty((String) anyAddressField
+							.getValue())) {
+						searchCriteria.setAnyAddress(new StringSearchField(
+								SearchField.AND, (String) anyAddressField
+										.getValue()));
+					}
+
+					if (StringUtil.isNotNullOrEmpty((String) countryField
+							.getValue())) {
+						searchCriteria.setAnyCountry(new StringSearchField(
+								SearchField.AND, (String) countryField
+										.getValue()));
+					}
+
+					Collection<String> sources = (Collection<String>) sourceField
 							.getValue();
-							if (sources != null && sources.size() > 0) {
-								searchCriteria.setSources(new SetSearchField<String>(SearchField.AND, sources));
-							}
-							
-							if (StringUtil
-									.isNotNullOrEmpty((String) anyPhoneField
-											.getValue())) {
-								searchCriteria.setAnyPhone(new StringSearchField(SearchField.AND, (String) anyPhoneField.getValue()));
-							}
-							
-							if (StringUtil
-									.isNotNullOrEmpty((String) cityField
-											.getValue())) {
-								searchCriteria.setAnyCity(new StringSearchField(SearchField.AND, (String) cityField.getValue()));
-							}
-							
-							if (StringUtil
-									.isNotNullOrEmpty((String) stateField
-											.getValue())) {
-								searchCriteria.setAnyState(new StringSearchField(SearchField.AND, (String) stateField.getValue()));
-							}
-							
-							Collection<String> users = (Collection<String>) userField
+					if (sources != null && sources.size() > 0) {
+						searchCriteria.setSources(new SetSearchField<String>(
+								SearchField.AND, sources));
+					}
+
+					if (StringUtil.isNotNullOrEmpty((String) anyPhoneField
+							.getValue())) {
+						searchCriteria.setAnyPhone(new StringSearchField(
+								SearchField.AND, (String) anyPhoneField
+										.getValue()));
+					}
+
+					if (StringUtil.isNotNullOrEmpty((String) cityField
+							.getValue())) {
+						searchCriteria.setAnyCity(new StringSearchField(
+								SearchField.AND, (String) cityField.getValue()));
+					}
+
+					if (StringUtil.isNotNullOrEmpty((String) stateField
+							.getValue())) {
+						searchCriteria.setAnyState(new StringSearchField(
+								SearchField.AND, (String) stateField.getValue()));
+					}
+
+					Collection<String> users = (Collection<String>) userField
 							.getValue();
-							if (users != null && users.size() > 0) {
-								searchCriteria.setAssignUsers(new SetSearchField<String>(SetSearchField.AND, users));
-							}
-							
-							LeadSearchPanel.this
-									.notifySearchHandler(searchCriteria);
-						}
+					if (users != null && users.size() > 0) {
+						searchCriteria
+								.setAssignUsers(new SetSearchField<String>(
+										SetSearchField.AND, users));
+					}
 
-					}));
+					LeadSearchPanel.this.notifySearchHandler(searchCriteria);
 
-			buttonControls.addComponent(new Button("Clear",
-					new Button.ClickListener() {
+				}
+			});
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							firstnameField.setValue("");
-							lastnameField.setValue("");
-							accountnameField.setValue("");
-							statusField.setValue(null);
+			buttonControls.addComponent(searchBtn);
+			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
-							anyEmailField.setValue("");
-							anyAddressField.setValue("");
-							countryField.setValue(null);
-							sourceField.setValue(null);
+			Button clearBtn = new Button("Clear", new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					firstnameField.setValue("");
+					lastnameField.setValue("");
+					accountnameField.setValue("");
+					statusField.setValue(null);
 
-							anyPhoneField.setValue("");
-							cityField.setValue("");
-							stateField.setValue("");
-							userField.setValue(null);
-						}
+					anyEmailField.setValue("");
+					anyAddressField.setValue("");
+					countryField.setValue(null);
+					sourceField.setValue(null);
 
-					}));
+					anyPhoneField.setValue("");
+					cityField.setValue("");
+					stateField.setValue("");
+					userField.setValue(null);
+				}
+			});
+			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			buttonControls.addComponent(clearBtn);
 
 			Button basicSearchBtn = new Button("Basic Search",
 					new Button.ClickListener() {

@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import java.util.Collection;
+
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
@@ -28,7 +30,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
-import java.util.Collection;
 
 @SuppressWarnings("serial")
 public class CampaignSearchPanel extends
@@ -107,38 +108,47 @@ public class CampaignSearchPanel extends
 			myItemCheckbox = new CheckBox("My Items");
 			UiUtils.addComponent(layout, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
+			
+			Button searchBtn = new Button("Search");
+			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
-			layout.addComponent(new Button("Search",
-					new Button.ClickListener() {
-						@Override
-						public void buttonClick(ClickEvent event) {
-							searchCriteria = new CampaignSearchCriteria();
-							searchCriteria.setSaccountid(new NumberSearchField(
-									SearchField.AND, AppContext.getAccountId()));
-							searchCriteria
-									.setCampaignName(new StringSearchField(
-											SearchField.AND, (String) nameField
-													.getValue()));
-							
-							if (myItemCheckbox.booleanValue()) {
-								searchCriteria.	setAssignUsers(new SetSearchField<String>(SearchField.AND, new String[] {AppContext
-										.getUsername()}));
-							} else {
-								searchCriteria.setAssignUsers(null);
-							}
-							
-							CampaignSearchPanel.this
-									.notifySearchHandler(searchCriteria);
-						}
-					}));
+			searchBtn.addListener(new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					searchCriteria = new CampaignSearchCriteria();
+					searchCriteria.setSaccountid(new NumberSearchField(
+							SearchField.AND, AppContext.getAccountId()));
+					
+					if (StringUtil.isNotNullOrEmpty(nameField
+							.getValue().toString().trim())) {
+						searchCriteria
+						.setCampaignName(new StringSearchField(
+								SearchField.AND, (String) nameField
+										.getValue()));
+					}
+					
+					if (myItemCheckbox.booleanValue()) {
+						searchCriteria.	setAssignUsers(new SetSearchField<String>(SearchField.AND, new String[] {AppContext
+								.getUsername()}));
+					} else {
+						searchCriteria.setAssignUsers(null);
+					}
+					
+					CampaignSearchPanel.this
+							.notifySearchHandler(searchCriteria);
+				}
+			});
+			layout.addComponent(searchBtn);
 
-			layout.addComponent(new Button("Cancel",
-					new Button.ClickListener() {
-						@Override
-						public void buttonClick(ClickEvent event) {
-							nameField.setValue("");
-						}
-					}));
+			Button cancelBtn = new Button("Cancel");
+			cancelBtn.setStyleName("bluebtn");
+			cancelBtn.addListener(new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					nameField.setValue("");
+				}
+			});
+			layout.addComponent(cancelBtn);
 
 			Button advancedSearchBtn = new Button("Advanced Search",
 					new Button.ClickListener() {
@@ -200,87 +210,86 @@ public class CampaignSearchPanel extends
 		public ComponentContainer constructFooter() {
 			HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
-			buttonControls.addComponent(new Button("Search",
-					new Button.ClickListener() {
-						@SuppressWarnings("unchecked")
-						@Override
-						public void buttonClick(ClickEvent event) {
-							searchCriteria = new CampaignSearchCriteria();
-							searchCriteria.setSaccountid(new NumberSearchField(
-									SearchField.AND, AppContext.getAccountId()));
+			
+			Button searchBtn = new Button("Search", new Button.ClickListener() {
+				@SuppressWarnings({ "unchecked" })
+				@Override
+				public void buttonClick(ClickEvent event) {
+					searchCriteria = new CampaignSearchCriteria();
+					searchCriteria.setSaccountid(new NumberSearchField(
+							SearchField.AND, AppContext.getAccountId()));
 
-							if (StringUtil.isNotNullOrEmpty((String) nameField
-									.getValue())) {
-								searchCriteria
-										.setCampaignName(new StringSearchField(
-												SearchField.AND,
-												((String) nameField.getValue())
-														.trim()));
-							}
+					if (StringUtil.isNotNullOrEmpty((String) nameField
+							.getValue())) {
+						searchCriteria.setCampaignName(new StringSearchField(
+								SearchField.AND,
+								((String) nameField.getValue()).trim()));
+					}
 
-							SearchField startDate = startDateField.getValue();
-							if (startDate != null
-									&& (startDate instanceof DateSearchField)) {
-								searchCriteria
-										.setStartDate((DateSearchField) startDate);
-							} else if (startDate != null
-									&& (startDate instanceof RangeDateSearchField)) {
-								searchCriteria
-										.setStartDateRange((RangeDateSearchField) startDate);
-							}
+					SearchField startDate = startDateField.getValue();
+					if (startDate != null
+							&& (startDate instanceof DateSearchField)) {
+						searchCriteria
+								.setStartDate((DateSearchField) startDate);
+					} else if (startDate != null
+							&& (startDate instanceof RangeDateSearchField)) {
+						searchCriteria
+								.setStartDateRange((RangeDateSearchField) startDate);
+					}
 
-							SearchField endDate = endDateField.getValue();
-							if (endDate != null
-									&& (endDate instanceof DateSearchField)) {
-								searchCriteria
-										.setStartDate((DateSearchField) endDate);
-							} else if (endDate != null
-									&& (endDate instanceof RangeDateSearchField)) {
-								searchCriteria
-										.setStartDateRange((RangeDateSearchField) endDate);
-							}
+					SearchField endDate = endDateField.getValue();
+					if (endDate != null && (endDate instanceof DateSearchField)) {
+						searchCriteria.setStartDate((DateSearchField) endDate);
+					} else if (endDate != null
+							&& (endDate instanceof RangeDateSearchField)) {
+						searchCriteria
+								.setStartDateRange((RangeDateSearchField) endDate);
+					}
 
-							Collection<String> types = (Collection<String>) typeField
-									.getValue();
-							if (types != null && types.size() > 0) {
-								searchCriteria
-										.setTypes(new SetSearchField<String>(
-												SearchField.AND, types));
-							}
+					Collection<String> types = (Collection<String>) typeField
+							.getValue();
+					if (types != null && types.size() > 0) {
+						searchCriteria.setTypes(new SetSearchField<String>(
+								SearchField.AND, types));
+					}
 
-							Collection<String> statuses = (Collection<String>) statusField
-									.getValue();
-							if (statuses != null && statuses.size() > 0) {
-								searchCriteria
-										.setStatuses(new SetSearchField<String>(
-												SearchField.AND, statuses));
-							}
+					Collection<String> statuses = (Collection<String>) statusField
+							.getValue();
+					if (statuses != null && statuses.size() > 0) {
+						searchCriteria.setStatuses(new SetSearchField<String>(
+								SearchField.AND, statuses));
+					}
 
-							Collection<String> assignUsers = (Collection<String>) assignUserField
-									.getValue();
-							if (assignUsers != null && assignUsers.size() > 0) {
-								searchCriteria
-										.setAssignUsers(new SetSearchField<String>(
-												SearchField.AND, assignUsers));
-							}
+					Collection<String> assignUsers = (Collection<String>) assignUserField
+							.getValue();
+					if (assignUsers != null && assignUsers.size() > 0) {
+						searchCriteria
+								.setAssignUsers(new SetSearchField<String>(
+										SearchField.AND, assignUsers));
+					}
 
-							CampaignSearchPanel.this
-									.notifySearchHandler(searchCriteria);
-						}
-					}));
+					CampaignSearchPanel.this
+							.notifySearchHandler(searchCriteria);
 
-			buttonControls.addComponent(new Button("Clear",
-					new Button.ClickListener() {
-						@Override
-						public void buttonClick(ClickEvent event) {
-							nameField.setValue("");
-							startDateField.setDefaultSelection();
-							endDateField.setDefaultSelection();
-							typeField.setValue(null);
-							statusField.setValue(null);
-							assignUserField.setValue(null);
-						}
-					}));
+				}
+			});
+
+			buttonControls.addComponent(searchBtn);
+			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+
+			Button clearBtn = new Button("Clear", new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					nameField.setValue("");
+					startDateField.setDefaultSelection();
+					endDateField.setDefaultSelection();
+					typeField.setValue(null);
+					statusField.setValue(null);
+					assignUserField.setValue(null);
+				}
+			});
+			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			buttonControls.addComponent(clearBtn);
 
 			Button basicSearchBtn = new Button("Basic Search",
 					new Button.ClickListener() {
