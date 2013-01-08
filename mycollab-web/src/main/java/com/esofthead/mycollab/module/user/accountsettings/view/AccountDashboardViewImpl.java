@@ -1,8 +1,10 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
+import com.esofthead.mycollab.module.project.view.UserDashboardViewImpl;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.ui.Button;
@@ -12,78 +14,90 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-@ViewComponent 
+@ViewComponent
 public class AccountDashboardViewImpl extends AbstractView implements
-		AccountDashboardView {
+        AccountDashboardView {
 
-	private final HorizontalLayout root;
-	private final DetachedTabs accountTab;
-	private final CssLayout accountSpace = new CssLayout();
+    private final HorizontalLayout root;
+    private final DetachedTabs accountTab;
+    private final CssLayout accountSpace = new CssLayout();
+    
+    private AccountController controller = new AccountController(this);
 
-	public AccountDashboardViewImpl() {
-		this.setStyleName("accountViewContainer");
-		this.setMargin(false);
-		root = new HorizontalLayout();
+    public AccountDashboardViewImpl() {
+        this.setStyleName("accountViewContainer");
+        this.setMargin(false);
+        root = new HorizontalLayout();
 
-		accountSpace.setSizeFull();
-		accountTab = new DetachedTabs.Vertical(accountSpace);
-		accountTab.setWidth("200px");
-		accountTab.setHeight(null);
+        accountSpace.setSizeFull();
+        accountTab = new DetachedTabs.Vertical(accountSpace);
+        accountTab.setWidth("200px");
+        accountTab.setHeight(null);
 
-		VerticalLayout menu = new VerticalLayout();
-		menu.setSizeFull();
-		menu.setStyleName("sidebar-menu");
+        VerticalLayout menu = new VerticalLayout();
+        menu.setSizeFull();
+        menu.setStyleName("sidebar-menu");
 
-		menu.addComponent(accountTab);
-		root.addComponent(menu);
-		root.addComponent(accountSpace);
+        menu.addComponent(accountTab);
+        root.addComponent(menu);
+        root.addComponent(accountSpace);
 
-		buildComponents();
+        buildComponents();
 
-		this.addComponent(root);
-	}
+        this.addComponent(root);
+    }
 
-	private void buildComponents() {
-		accountTab.addTab(constructUserInformationComponent(),
-				"User Information");
-		accountTab.addTab(constructAccountSettingsComponent(),
-				"Account Settings");
+    private void buildComponents() {
+        accountTab.addTab(constructUserInformationComponent(),
+                "User Information");
+        accountTab.addTab(constructAccountSettingsComponent(),
+                "Account Settings");
+        
+        if (AppContext.isAdmin()) {
+            accountTab.addTab(constructUserPermissionComponent(), "Users & Permissions");
+        }
 
-		accountTab.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+        accountTab.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+            @Override
+            public void tabChanged(TabChangedEvent event) {
+                Button btn = event.getSource();
+                String caption = btn.getCaption();
+                if ("User Information".equals(caption)) {
+                    gotoUserInformation();
+                } else if ("Account Settings".equals(caption)) {
+                    gotoAccountSettings();
+                } else if ("Users & Permissions".equals(caption)) {
+                    UserPermissionManagementPresenter presenter = PresenterResolver.getPresenter(UserPermissionManagementPresenter.class);
+                    presenter.go(AccountDashboardViewImpl.this, null);
+                }
+            }
+        });
+    }
 
-			@Override
-			public void tabChanged(TabChangedEvent event) {
-				Button btn = event.getSource();
-				String caption = btn.getCaption();
-				if ("User Information".equals(caption)) {
-					gotoUserInformation();
-				} else if ("Account Settings".equals(caption)) {
-					gotoAccountSettings();
-				}
-			}
-		});
-	}
+    private ComponentContainer constructAccountSettingsComponent() {
+        AccountSettingsPresenter presenter = PresenterResolver
+                .getPresenter(AccountSettingsPresenter.class);
+        return presenter.getView();
+    }
 
-	private ComponentContainer constructAccountSettingsComponent() {
-		AccountSettingsPresenter presenter = PresenterResolver
-				.getPresenter(AccountSettingsPresenter.class);
-		return presenter.getView();
-	}
+    private ComponentContainer constructUserInformationComponent() {
+        UserInformationPresenter presenter = PresenterResolver
+                .getPresenter(UserInformationPresenter.class);
+        return presenter.getView();
+    }
 
-	private ComponentContainer constructUserInformationComponent() {
-		UserInformationPresenter presenter = PresenterResolver
-				.getPresenter(UserInformationPresenter.class);
-		return presenter.getView();
-	}
+    private ComponentContainer constructUserPermissionComponent() {
+        UserPermissionManagementPresenter presenter = PresenterResolver.getPresenter(UserPermissionManagementPresenter.class);
+        return presenter.getView();
+    }
 
-	@Override
-	public void gotoUserInformation() {
-		accountTab.selectTab("User Information");
-	}
+    @Override
+    public void gotoUserInformation() {
+        accountTab.selectTab("User Information");
+    }
 
-	@Override
-	public void gotoAccountSettings() {
-		accountTab.selectTab("Account Settings");
-	}
-
+    @Override
+    public void gotoAccountSettings() {
+        accountTab.selectTab("Account Settings");
+    }
 }

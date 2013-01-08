@@ -8,6 +8,7 @@ import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
@@ -19,6 +20,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
@@ -32,21 +34,18 @@ public class UserInformationViewImpl extends AbstractView implements
 
     public UserInformationViewImpl() {
         super();
-        formItem = new EditForm();
         viewLayout = new HorizontalLayout();
+        this.setStyleName("userInfoContainer");
+        formItem = new EditForm();
+        viewLayout.addComponent(formItem);
+        this.addComponent(viewLayout);
     }
 
     @Override
     public void attach() {
-        this.removeAllComponents();
         User currentUser = AppContext.getSession();
-        formItem = new EditForm();
         formItem.setItemDataSource(new BeanItem<User>(currentUser));
-        viewLayout.addComponent(formItem);
-        this.setStyleName("userInfoContainer");
         displayUserAvatar();
-        
-        this.addComponent(viewLayout);
     }
 
     private void displayUserAvatar() {
@@ -57,33 +56,12 @@ public class UserInformationViewImpl extends AbstractView implements
     private static class EditForm extends AdvancedEditBeanForm<User> {
 
         private static final long serialVersionUID = 1L;
-        protected GridFormLayoutHelper informationLayout;
 
-        public EditForm() {
-            super();
-
-            VerticalLayout layout = new VerticalLayout();
-
-            Label informationHeader = new Label("User Informations");
-            informationHeader.setStyleName("h1");
-            layout.addComponent(informationHeader);
-
-            informationLayout = new GridFormLayoutHelper(1, 9);
-            layout.addComponent(informationLayout.getLayout());
-            layout.setComponentAlignment(informationLayout.getLayout(),
-                    Alignment.MIDDLE_LEFT);
-
-            this.setWriteThrough(true);
-            this.setInvalidCommitted(false);
-
-            HorizontalLayout userInfoControls = createButtonControls();
-            layout.addComponent(userInfoControls);
-            layout.setComponentAlignment(userInfoControls,
-                    Alignment.BOTTOM_CENTER);
-
-            setLayout(layout);
-
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
             this.setFormFieldFactory(new EditFormFieldFactory());
+            super.setItemDataSource(newDataSource);
         }
 
         private HorizontalLayout createButtonControls() {
@@ -114,41 +92,58 @@ public class UserInformationViewImpl extends AbstractView implements
             return layout;
         }
 
-        /*
-         * Override to get control over where fields are placed.
-         */
-        @Override
-        protected void attachField(Object propertyId, Field field) {
+        private class FormLayoutFactory implements IFormLayoutFactory {
 
-            if (propertyId.equals("firstname")) {
-                field.setSizeUndefined();
-                informationLayout.addComponent(field, "First Name", 0, 0);
-            } else if (propertyId.equals("lastname")) {
-                field.setSizeUndefined();
-                informationLayout.addComponent(field, "Last Name", 0, 1);
-            } else if (propertyId.equals("middlename")) {
-                field.setSizeUndefined();
-                informationLayout.addComponent(field, "Middle Name", 0, 2);
-            } else if (propertyId.equals("nickname")) {
-                field.setSizeUndefined();
-                informationLayout.addComponent(field, "Nickname", 0, 3);
-            } else if (propertyId.equals("dateofbirth")) {
-                field.setSizeUndefined();
-                informationLayout.addComponent(field, "Birthday", 0, 4);
-            } else if (propertyId.equals("email")) {
-                field.setSizeUndefined();
-                informationLayout.addComponent(field, "Email", 0, 5);
-            } else if (propertyId.equals("website")) {
-                field.setSizeUndefined();
-                informationLayout.addComponent(field, "Website", 0, 6);
-            } else if (propertyId.equals("displayname")) {
-                field.setSizeUndefined();
-                informationLayout.addComponent(field, "Display Name", 0, 7);
-            } else if (propertyId.equals("company")) {
-                field.setSizeUndefined();
-                informationLayout.addComponent(field, "Company", 0, 8);
+            protected GridFormLayoutHelper informationLayout;
+            
+            @Override
+            public Layout getLayout() {
+                VerticalLayout layout = new VerticalLayout();
+
+                Label informationHeader = new Label("User Information");
+                informationHeader.setStyleName("h2");
+                layout.addComponent(informationHeader);
+
+                informationLayout = new GridFormLayoutHelper(1, 9);
+                layout.addComponent(informationLayout.getLayout());
+                layout.setComponentAlignment(informationLayout.getLayout(),
+                        Alignment.MIDDLE_LEFT);
+
+                HorizontalLayout userInfoControls = createButtonControls();
+                layout.addComponent(userInfoControls);
+                layout.setComponentAlignment(userInfoControls,
+                        Alignment.BOTTOM_CENTER);
+                return layout;
             }
 
+            @Override
+            public void attachField(Object propertyId, Field field) {
+                if (propertyId.equals("firstname")) {
+                    field.setSizeUndefined();
+                    informationLayout.addComponent(field, "First Name", 0, 0);
+                } else if (propertyId.equals("lastname")) {
+                    field.setSizeUndefined();
+                    informationLayout.addComponent(field, "Last Name", 0, 1);
+                } else if (propertyId.equals("nickname")) {
+                    field.setSizeUndefined();
+                    informationLayout.addComponent(field, "Nickname", 0, 3);
+                } else if (propertyId.equals("dateofbirth")) {
+                    field.setSizeUndefined();
+                    informationLayout.addComponent(field, "Birthday", 0, 4);
+                } else if (propertyId.equals("email")) {
+                    field.setSizeUndefined();
+                    informationLayout.addComponent(field, "Email", 0, 5);
+                } else if (propertyId.equals("website")) {
+                    field.setSizeUndefined();
+                    informationLayout.addComponent(field, "Website", 0, 6);
+                } else if (propertyId.equals("displayname")) {
+                    field.setSizeUndefined();
+                    informationLayout.addComponent(field, "Display Name", 0, 7);
+                } else if (propertyId.equals("company")) {
+                    field.setSizeUndefined();
+                    informationLayout.addComponent(field, "Company", 0, 8);
+                }
+            }
         }
 
         private class EditFormFieldFactory extends DefaultEditFormFieldFactory {

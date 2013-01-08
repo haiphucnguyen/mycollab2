@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
-import java.util.Collection;
-
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
@@ -11,12 +9,10 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
-import com.esofthead.mycollab.module.crm.ui.components.AdvancedSearchLayout;
-import com.esofthead.mycollab.module.crm.ui.components.BasicSearchLayout;
-import com.esofthead.mycollab.module.crm.ui.components.GenericSearchPanel;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DateSelectionField;
+import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
@@ -32,6 +28,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
+import java.util.Collection;
 
 @SuppressWarnings("serial")
 public class CampaignSearchPanel extends

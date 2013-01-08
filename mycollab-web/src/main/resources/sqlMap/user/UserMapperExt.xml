@@ -3,67 +3,49 @@
 <mapper namespace="com.esofthead.mycollab.module.user.dao.UserMapperExt">
     <cache type="org.mybatis.caches.ehcache.LoggingEhcache"/>
         
-	<resultMap extends="com.esofthead.mycollab.module.user.dao.UserMapper.BaseResultMap"
-		id="SimpleUserResult" type="com.esofthead.mycollab.module.user.domain.SimpleUser">
-		<result column="userId" jdbcType="VARCHAR" property="userId" />
-		<result column="country" jdbcType="VARCHAR" property="country" />
-	</resultMap>
+    <resultMap extends="com.esofthead.mycollab.module.user.dao.UserMapper.BaseResultMap"
+                   id="SimpleUserResult" type="com.esofthead.mycollab.module.user.domain.SimpleUser">
+        <result column="displayName" jdbcType="VARCHAR" property="displayName" />
+        <result column="lastAccessedTime" jdbcType="TIMESTAMP" property="lastAccessedTime"/>
+    </resultMap>
 
-	<sql id="querySearchCriteria">
-		<if test="displayName != null">
+    <sql id="querySearchCriteria">
+        <if test="displayName != null">
           <![CDATA[
             ${displayName.operation} (concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) like '%${displayName.value}%')
             ]]>
-		</if>
-		<if test="saccountid != null">
+        </if>
+        <if test="username != null">
+          <![CDATA[
+            ${username.operation} s_user.username = #{username.value}
+            ]]>
+        </if>
+        <if test="saccountid != null">
             <![CDATA[${saccountid.operation} accountId = #{saccountid.value,javaType=INTEGER}]]>
-		</if>
-	</sql>
+        </if>
+    </sql>
 
-	<select id="getTotalCount" resultType="int" parameterType="UserSearchCriteria">
-		SELECT count(*) as totalCount FROM s_user
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include refid="com.esofthead.mycollab.module.user.dao.UserMapperExt.querySearchCriteria" />
-		</trim>
-	</select>
+    <select id="getTotalCount" resultType="int" parameterType="UserSearchCriteria">
+        SELECT count(*) as totalCount FROM s_user
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include refid="com.esofthead.mycollab.module.user.dao.UserMapperExt.querySearchCriteria" />
+        </trim>
+    </select>
 
-	<select id="findPagableListByCriteria" resultMap="SimpleUserResult"
-		parameterType="UserSearchCriteria">
+    <select id="findPagableListByCriteria" resultMap="SimpleUserResult"
+                parameterType="UserSearchCriteria">
         <![CDATA[
-        SELECT s_user.username, s_user.firstname, s_user.middlename, s_user.lastname, 
-               s_user.nickname, s_user.dateofbirth, s_user.password, s_user.email, 
-               s_user.website, s_user.displayname, s_user.registeredTime, 
-               s_user.active, s_user.lastAccessedTime, s_country.countryname as country 
+        SELECT s_user.username, s_user.firstname, s_user.lastname, s_user.nickname, s_user.dateofbirth, s_user.password, s_user.email, 
+                s_user.website, s_user.registeredTime, s_user.accountId, s_user.countryid, s_user.company, 
+                s_user_preference.lastAccessedTime,
+                s_user.timezoneid, s_user.registrationSource, s_user.isAdmin, s_user.registerStatus, s_country.countryname as country 
         FROM s_user LEFT OUTER JOIN s_country ON (s_user.countryid=s_country.id)   
+                LEFT OUTER JOIN s_user_preference ON (s_user.username = s_user_preference.username)
         ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include refid="com.esofthead.mycollab.module.user.dao.UserMapperExt.querySearchCriteria" />
-		</trim>
-	</select>
-
-	<select id="findRolesByUser" resultMap="com.esofthead.mycollab.module.user.dao.RoleMapper.BaseResultMap"
-		parameterType="java.lang.String">
-        <![CDATA[
-        SELECT s_roles.rolename, s_roles.id, s_roles.sAccountId, s_roles.description        
-        FROM s_roles, s_roleuser 
-        WHERE s_roles.id = s_roleuser.roleid AND s_roleuser.username=#{username}
-        ]]>
-	</select>
-
-	<select id="selectRoleOfUser" resultMap="com.esofthead.mycollab.module.user.dao.RoleMapper.BaseResultMap">
-       <![CDATA[
-        SELECT s_roles.rolename, s_roles.id, s_roles.sAccountId, s_roles.description        
-        FROM s_roles, s_roleuser 
-        WHERE s_roles.id = s_roleuser.roleid AND s_roleuser.username=#{value}
-       ]]>
-	</select>
-
-	<select id="getFriendsOfUser" parameterType="map"
-		resultType="com.esofthead.mycollab.module.user.domain.UserInfo">
-       <![CDATA[
-        SELECT s_user.username, CONCAT(s_user.firstname, IFNULL(CONCAT(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS fullname
-        FROM s_user
-        WHERE s_user.accountId=#{accountId,javaType=INTEGER} AND s_user.username <> #{username}
-       ]]>
-	</select>
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include refid="com.esofthead.mycollab.module.user.dao.UserMapperExt.querySearchCriteria" />
+        </trim>
+    </select>
 </mapper>

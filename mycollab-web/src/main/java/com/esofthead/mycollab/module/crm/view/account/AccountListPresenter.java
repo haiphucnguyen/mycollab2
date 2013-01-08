@@ -159,12 +159,6 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
-        doSearch((AccountSearchCriteria) data.getParams());
-    }
-
-    @Override
     public void doSearch(AccountSearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
         view.getPagedBeanTable().setSearchCriteria(searchCriteria);
@@ -190,5 +184,11 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
             doSearch(searchCriteria);
         }
 
+    }
+    
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        super.onGo(container, data);
+        doSearch((AccountSearchCriteria) data.getParams());
     }
 }

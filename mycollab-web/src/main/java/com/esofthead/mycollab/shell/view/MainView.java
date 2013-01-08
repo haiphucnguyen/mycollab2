@@ -73,7 +73,7 @@ public final class MainView extends AbstractView {
         layout.addComponent(serviceMenu, "serviceMenu");
 
         final PopupButton accountMenu = new PopupButton(AppContext.getSession()
-                .getDisplayname());
+                .getDisplayName());
         accountMenu.setStyleName("link");
         VerticalLayout accLayout = new VerticalLayout();
         accLayout.setWidth("120px");
@@ -99,7 +99,7 @@ public final class MainView extends AbstractView {
         Button signoutBtn = new Button("Sign out", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                AppContext.setSession(new SimpleUser());
+                AppContext.setSession(null, null);
                 EventBus.getInstance().fireEvent(
                         new ShellEvent.LogOut(this, null));
             }

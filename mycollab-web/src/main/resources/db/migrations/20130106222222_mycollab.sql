@@ -1,0 +1,1 @@
+ALTER TABLE `s_user` DROP COLUMN `displayname` ;

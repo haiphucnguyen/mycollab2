@@ -16,81 +16,29 @@
  */
 package com.esofthead.mycollab.module.user.domain;
 
-import com.esofthead.mycollab.common.domain.UserPreference;
-import java.util.List;
+import java.util.Date;
 
 public class SimpleUser extends User {
 
     private static final long serialVersionUID = 1L;
     
-    private List<Role> roles;
-    private UserPreference preference;
-    private String userId;
-    private String country;
+    public static final String ACTIVE_STATUS = "active";
+    public static final String INACTION_STATUS = "inactive";
+    public static final String PENDING_STATUS = "pending";
+    
+    public static final int ADMIN_VAL = 1;
+    
+    private Date lastAccessedTime;
 
-    public SimpleUser() {
+    public Date getLastAccessedTime() {
+        return lastAccessedTime;
     }
 
-    public SimpleUser(User user) {
-        this.setUsername(user.getUsername());
-        this.setUserId(user.getUsername());
-        this.setDisplayname(user.getDisplayname());
-        this.setFirstname(user.getFirstname());
-        this.setMiddlename(user.getMiddlename());
-        this.setLastname(user.getLastname());
-        this.setEmail(user.getEmail());
-        this.setPassword(user.getPassword());
-        this.setAccountid(user.getAccountid());
-        this.setCompany(user.getCompany());
-        this.setTimezoneid(user.getTimezoneid());
+    public void setLastAccessedTime(Date lastAccessedTime) {
+        this.lastAccessedTime = lastAccessedTime;
     }
 
-    public List<Role> getRoles() {
-        return roles;
-    }
-
-    public void setRoles(List<Role> roles) {
-        this.roles = roles;
-    }
-
-    public String getUserId() {
-        return userId;
-    }
-
-    public void setUserId(String userId) {
-        this.userId = userId;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public UserPreference getPreference() {
-        return preference;
-    }
-
-    public void setPreference(UserPreference preference) {
-        this.preference = preference;
-    }
-
-    @Override
-    public String getDisplayname() {
-        String displayName = super.getDisplayname();
-        if (displayName != null) {
-            return displayName;
-        } else {
-            String firstname = getFirstname();
-            String lastname = getLastname();
-
-            if (firstname != null && lastname != null) {
-                return firstname + " " + lastname;
-            } else {
-                return getUsername();
-            }
-        }
+    public String getDisplayName() {
+        return getFirstname() + " " + getLastname();
     }
 }

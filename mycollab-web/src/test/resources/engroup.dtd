@@ -106,6 +106,7 @@
     s_roleuser*,
     s_title*,
     s_user*,
+    s_user_permission*,
     s_user_preference*,
     schema_version*)>
 
@@ -259,6 +260,7 @@
     status CDATA #IMPLIED
     purpose CDATA #IMPLIED
     result CDATA #IMPLIED
+    isClosed CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_campaign EMPTY>
@@ -460,6 +462,7 @@
     recurrenceEndDate CDATA #IMPLIED
     contactType CDATA #IMPLIED
     contactTypeId CDATA #IMPLIED
+    isClosed CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_note EMPTY>
@@ -675,6 +678,7 @@
     priority CDATA #IMPLIED
     type CDATA #IMPLIED
     lastUpdatedTime CDATA #IMPLIED
+    isClosed CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_type_relationship EMPTY>
@@ -1077,6 +1081,7 @@
     createdTime CDATA #IMPLIED
     lastUpdatedTime CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
+    isStick CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_milestone EMPTY>
@@ -1511,6 +1516,7 @@
     createdUser CDATA #IMPLIED
     module CDATA #IMPLIED
     nameField CDATA #IMPLIED
+    extraTypeId CDATA #IMPLIED
 >
 
 <!ELEMENT s_billing_plan EMPTY>
@@ -1540,9 +1546,10 @@
 <!ELEMENT s_role_permission EMPTY>
 <!ATTLIST s_role_permission
     id CDATA #REQUIRED
-    pathid CDATA #REQUIRED
-    isAuthorz CDATA #REQUIRED
+    module CDATA #REQUIRED
+    hasPermission CDATA #REQUIRED
     roleid CDATA #REQUIRED
+    type CDATA #REQUIRED
 >
 
 <!ELEMENT s_roles EMPTY>
@@ -1577,15 +1584,23 @@
     password CDATA #IMPLIED
     email CDATA #IMPLIED
     website CDATA #IMPLIED
-    displayname CDATA #IMPLIED
     registeredTime CDATA #IMPLIED
-    active CDATA #IMPLIED
     lastAccessedTime CDATA #IMPLIED
     accountId CDATA #REQUIRED
     countryid CDATA #IMPLIED
     company CDATA #IMPLIED
     timezoneid CDATA #IMPLIED
     registrationSource CDATA #IMPLIED
+    registerStatus CDATA #IMPLIED
+>
+
+<!ELEMENT s_user_permission EMPTY>
+<!ATTLIST s_user_permission
+    Id CDATA #REQUIRED
+    module CDATA #REQUIRED
+    type CDATA #REQUIRED
+    hasPermission CDATA #REQUIRED
+    username CDATA #REQUIRED
 >
 
 <!ELEMENT s_user_preference EMPTY>

@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
-import com.esofthead.mycollab.module.crm.ui.components.GenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
