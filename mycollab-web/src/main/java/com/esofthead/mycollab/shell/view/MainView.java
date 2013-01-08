@@ -2,7 +2,6 @@ package com.esofthead.mycollab.shell.view;
 
 import com.esofthead.mycollab.module.crm.view.CrmContainer;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountDashboardView;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -11,6 +10,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -48,10 +48,8 @@ public final class MainView extends AbstractView {
                     @Override
                     public void buttonClick(ClickEvent event) {
                         serviceMenu.setPopupVisible(false);
-                        CrmContainer crmContainer = ViewManager
-                                .getView(CrmContainer.class);
-                        bodyLayout.removeAllComponents();
-                        bodyLayout.addComponent(crmContainer);
+                        EventBus.getInstance().fireEvent(
+                                new ShellEvent.GotoCrmPage(this, null));
                     }
                 });
         crmLink.setStyleName("link");
@@ -116,8 +114,9 @@ public final class MainView extends AbstractView {
 
     public void addView(View view) {
         bodyLayout.removeAllComponents();
-        bodyLayout.addComponent(view.getWidget());
-        bodyLayout.setComponentAlignment(view.getWidget(),
+        LazyLoadWrapper comp = new LazyLoadWrapper(view.getWidget());
+        bodyLayout.addComponent(comp);
+        bodyLayout.setComponentAlignment(comp,
                 Alignment.MIDDLE_CENTER);
     }
 }
