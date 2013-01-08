@@ -115,11 +115,10 @@ public class OpportunityTableDisplay extends PagedBeanTable2<OpportunityService,
 
         this.setColumnExpandRatio("opportunityname", 1.0f);
 
-        this
-                .setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
         this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
         this.setColumnWidth("salesstage", UIConstants.TABLE_M_LABEL_WIDTH);
         this.setColumnWidth("amount", UIConstants.TABLE_M_LABEL_WIDTH);
+        this.setColumnExpandRatio("accountName", 0.5f);
         this.setColumnWidth("expectedcloseddate",
                 UIConstants.TABLE_DATE_TIME_WIDTH);
         this.setColumnWidth("assignUserFullName",
