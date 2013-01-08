@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
-import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -16,7 +15,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-@Traceable(module = "Crm", type = "Note", nameField = "subject")
 public class NoteServiceImpl extends DefaultService<Integer, Note, NoteSearchCriteria>
         implements NoteService {
 

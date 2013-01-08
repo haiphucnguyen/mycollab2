@@ -12,6 +12,7 @@ import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.util.BeanItemContainer;
 import com.vaadin.data.validator.IntegerValidator;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -55,6 +56,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
     private SearchService searchService;
     private List<T> currentListData;
     private Class<T> type;
+    private LazyLoadWrapper tableLazyLoadContainer;
     private Table tableItem;
     private Object columnExpandId;
     private Object sortColumnId;
@@ -115,6 +117,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
         this.setTotalPage(totalPage);
 
         tableItem = new Table();
+        tableLazyLoadContainer = new LazyLoadWrapper(tableItem);
         tableItem.addStyleName("striped");
         tableItem.setWidth("100%");
         tableItem.setSortDisabled(true);
@@ -186,10 +189,10 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
         tableItem.setColumnHeaders(columnHeaders);
 
         Component component0 = this.getComponent(0);
-        if (component0 instanceof Table) {
-            this.replaceComponent(component0, tableItem);
+        if (component0 instanceof LazyLoadWrapper) {
+            this.replaceComponent(component0, tableLazyLoadContainer);
         } else {
-            this.addComponent(tableItem, 0);
+            this.addComponent(tableLazyLoadContainer, 0);
         }
     }
 

@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.crm.view.activity.MeetingListDashlet;
 import com.esofthead.mycollab.module.crm.view.lead.LeadListDashlet;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
@@ -18,6 +19,7 @@ public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
     private MeetingListDashlet meetingDashlet;
     private CallListDashlet callDashlet;
     private LeadListDashlet leadDashlet;
+    private ActivityStreamPanel activityStreamPanel;
 
     public CrmHomeViewImpl() {
         this.setSpacing(true);
@@ -34,17 +36,18 @@ public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
         callDashlet = new CallListDashlet();
         leadDashlet = new LeadListDashlet();
 
-        myAssignmentsLayout.addComponent(accountDashlet);
-        myAssignmentsLayout.addComponent(meetingDashlet);
-        myAssignmentsLayout.addComponent(callDashlet);
-        myAssignmentsLayout.addComponent(leadDashlet);
+        myAssignmentsLayout.addComponent(new LazyLoadWrapper(accountDashlet));
+        myAssignmentsLayout.addComponent(new LazyLoadWrapper(meetingDashlet));
+        myAssignmentsLayout.addComponent(new LazyLoadWrapper(callDashlet));
+        myAssignmentsLayout.addComponent(new LazyLoadWrapper(leadDashlet));
 
         layout.addComponent(myAssignmentsLayout);
 
         VerticalLayout streamsLayout = new VerticalLayout();
         streamsLayout.setWidth("410px");
-        ActivityStreamPanel activityStreamPanel = new ActivityStreamPanel();
+        activityStreamPanel = new ActivityStreamPanel();
         activityStreamPanel.setWidth("400px");
+        streamsLayout.addComponent(new LazyLoadWrapper(activityStreamPanel));
         layout.addComponent(streamsLayout);
         layout.setComponentAlignment(streamsLayout, Alignment.MIDDLE_RIGHT);
 
@@ -59,5 +62,6 @@ public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
         meetingDashlet.display();
         callDashlet.display();
         leadDashlet.display();
+        activityStreamPanel.display();
     }
 }

@@ -167,6 +167,11 @@
         </dependency>
         <dependency>
             <groupId>org.vaadin.addons</groupId>
+            <artifactId>lazyloadwrapper</artifactId>
+            <version>1.0.2</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
             <artifactId>ckeditor-wrapper-for-vaadin</artifactId>
             <version>1.7.0</version>
         </dependency>
@@ -252,7 +257,7 @@
                     <!-- ><execution> <id>File Artifacts Generator</id> <phase>compile</phase> 
                     <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile> 
                     <overwrite>true</overwrite> </configuration> </execution> -->
-                     <!--<execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
+                    <!--<execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
                     <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
                     <overwrite>true</overwrite> </configuration> </execution> -->
                     <!-- <execution> <id>Common Artifacts Generator</id> 
