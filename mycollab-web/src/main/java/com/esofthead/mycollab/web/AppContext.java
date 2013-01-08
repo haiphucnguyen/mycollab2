@@ -26,7 +26,7 @@ public class AppContext implements TransactionListener, Serializable {
     private UserPreference userPreference;
     private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
     private Map<String, Object> variables = new HashMap<String, Object>();
-    private long lastAccessTime = new GregorianCalendar().getTimeInMillis();
+    private long lastAccessTime = 0;
 
     public AppContext(Application application) {
         this.app = application;
@@ -48,26 +48,29 @@ public class AppContext implements TransactionListener, Serializable {
 
     @Override
     public void transactionEnd(Application application, Object transactionData) {
-        // Clear the reference to avoid potential problems
-        if (this.app == application) {
-            instance.set(null);
-        }
-
         log.debug("Transaction end: " + transactionData);
 
         long currentTime = new GregorianCalendar().getTimeInMillis();
         if (currentTime - lastAccessTime > UPDATE_TIME_DURATION) {
             try {
-                if (instance.get() != null) {
+                if (instance.get() != null && instance.get().userPreference != null) {
                     UserPreference pref = instance.get().userPreference;
                     UserPreferenceService prefService = AppContext.getSpringBean(UserPreferenceService.class);
                     pref.setLastaccessedtime(new GregorianCalendar().getTime());
                     prefService.updateWithSession(pref, AppContext.getUsername());
+                    
+                    lastAccessTime = currentTime;
+                    log.debug("Update last access time of user " + AppContext.getUsername());
                 }
 
             } catch (Exception e) {
                 log.error("There is error when try to update user preference", e);
             }
+        }
+        
+        // Clear the reference to avoid potential problems
+        if (this.app == application) {
+            instance.set(null);
         }
     }
 

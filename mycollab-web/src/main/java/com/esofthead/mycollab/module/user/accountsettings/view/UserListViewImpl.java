@@ -31,6 +31,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class UserListViewImpl extends AbstractView implements UserListView {
+
     private static final long serialVersionUID = 1L;
     private final UserSearchPanel searchPanel;
     private SelectionOptionButton selectOptionButton;
@@ -53,8 +54,8 @@ public class UserListViewImpl extends AbstractView implements UserListView {
     }
 
     private void generateDisplayTable() {
-        tableItem = new UserTableDisplay(new String[]{"selected", "username"},
-                new String[]{"", "User Name"});
+        tableItem = new UserTableDisplay(new String[]{"selected", "displayName", "username", "email", "lastAccessedTime"},
+                new String[]{"", "Name", "User Name", "Email", "Last Accessed Time"});
 
         tableItem.addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
             @Override
@@ -65,7 +66,7 @@ public class UserListViewImpl extends AbstractView implements UserListView {
             @Override
             public void handle(IPagedBeanTable.TableClickEvent event) {
                 SimpleUser user = (SimpleUser) event.getData();
-                if ("username".equals(event.getFieldName())) {
+                if (("username".equals(event.getFieldName()) || ("displayName".equals(event.getFieldName())))) {
                     EventBus.getInstance().fireEvent(new UserEvent.GotoRead(UserListViewImpl.this, user.getUsername()));
                 }
             }

@@ -4,14 +4,18 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
 /**
@@ -71,6 +75,55 @@ public class UserTableDisplay extends PagedBeanTable2<UserService, UserSearchCri
             }
         });
         
+        this.addGeneratedColumn("displayName", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+                final SimpleUser user = UserTableDisplay.this.getBeanByIndex(itemId);
+                ButtonLink b = new ButtonLink(user.getDisplayName(),
+                        new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void buttonClick(Button.ClickEvent event) {
+                                fireTableEvent(new TableClickEvent(UserTableDisplay.this, user, "displayName"));
+                            }
+                        });
+                b.addStyleName("medium-text");
+                return b;
+
+            }
+        });
+        
+        this.addGeneratedColumn("email", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    Object itemId, Object columnId) {
+                SimpleUser user = UserTableDisplay.this.getBeanByIndex(itemId);
+                return new EmailLink(user.getEmail());
+            }
+        });
+        
+        this.addGeneratedColumn("lastAccessedTime", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+                final SimpleUser user = UserTableDisplay.this.getBeanByIndex(itemId);
+                Label dateLbl = new Label(DateTimeUtils.getStringDateFromNow(user.getLastAccessedTime()));
+                return dateLbl;
+            }
+        });
+        
         this.setColumnExpandRatio("username", 1);
+        this.setColumnWidth("displayName", UIConstants.TABLE_X_LABEL_WIDTH);
+        this.setColumnWidth("username", UIConstants.TABLE_M_LABEL_WIDTH);
+        this.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
+        this.setColumnWidth("lastAccessedTime", UIConstants.TABLE_DATE_TIME_WIDTH);
     }
 }

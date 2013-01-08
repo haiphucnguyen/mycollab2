@@ -12,12 +12,6 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class UserContainer extends AbstractView {
+public class UserReadViewImpl extends AbstractView implements UserReadView{
     
-    private UserController controller;
-    
-    public UserContainer() {
-        controller = new UserController(this);
-        this.setWidth("900px");
-    }
 }

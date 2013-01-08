@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.module.user.domain;
 
+import java.util.Date;
+
 public class SimpleUser extends User {
 
     private static final long serialVersionUID = 1L;
@@ -25,6 +27,16 @@ public class SimpleUser extends User {
     public static final String PENDING_STATUS = "pending";
     
     public static final int ADMIN_VAL = 1;
+    
+    private Date lastAccessedTime;
+
+    public Date getLastAccessedTime() {
+        return lastAccessedTime;
+    }
+
+    public void setLastAccessedTime(Date lastAccessedTime) {
+        this.lastAccessedTime = lastAccessedTime;
+    }
 
     public String getDisplayName() {
         return getFirstname() + " " + getLastname();

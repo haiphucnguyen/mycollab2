@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
+import com.esofthead.mycollab.module.project.view.UserDashboardViewImpl;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -20,6 +21,8 @@ public class AccountDashboardViewImpl extends AbstractView implements
     private final HorizontalLayout root;
     private final DetachedTabs accountTab;
     private final CssLayout accountSpace = new CssLayout();
+    
+    private AccountController controller = new AccountController(this);
 
     public AccountDashboardViewImpl() {
         this.setStyleName("accountViewContainer");
@@ -63,6 +66,9 @@ public class AccountDashboardViewImpl extends AbstractView implements
                     gotoUserInformation();
                 } else if ("Account Settings".equals(caption)) {
                     gotoAccountSettings();
+                } else if ("Users & Permissions".equals(caption)) {
+                    UserPermissionManagementPresenter presenter = PresenterResolver.getPresenter(UserPermissionManagementPresenter.class);
+                    presenter.go(AccountDashboardViewImpl.this, null);
                 }
             }
         });

@@ -21,7 +21,9 @@ public class UserPermissionManagementViewImpl extends AbstractView implements Us
     private RolePresenter rolePresenter;
 
     public UserPermissionManagementViewImpl() {
+        this.setWidth("100%");
         tabContainer = new TabSheet();
+        tabContainer.setWidth("100%");
         constructTabs();
         this.addComponent(tabContainer);
     }

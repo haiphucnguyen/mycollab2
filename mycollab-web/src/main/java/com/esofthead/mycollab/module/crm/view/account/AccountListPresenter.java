@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
@@ -160,12 +159,6 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
     }
 
     @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
-        doSearch((AccountSearchCriteria) data.getParams());
-    }
-
-    @Override
     public void doSearch(AccountSearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
         view.getPagedBeanTable().setSearchCriteria(searchCriteria);
@@ -191,5 +184,11 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
             doSearch(searchCriteria);
         }
 
+    }
+    
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        super.onGo(container, data);
+        doSearch((AccountSearchCriteria) data.getParams());
     }
 }

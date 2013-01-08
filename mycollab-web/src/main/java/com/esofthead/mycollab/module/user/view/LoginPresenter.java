@@ -15,10 +15,14 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class LoginPresenter extends AbstractPresenter<LoginView> {
 
     private static final long serialVersionUID = 1L;
+    
+    private static Logger log = LoggerFactory.getLogger(LoginPresenter.class);
 
     public LoginPresenter() {
         super(LoginView.class);
@@ -48,6 +52,9 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
                     username, password);
             UserPreferenceService preferenceService = AppContext.getSpringBean(UserPreferenceService.class);
             UserPreference pref = preferenceService.getPreferenceOfUser(username);
+            
+            log.debug("Login to system successfully. Save user and preference " + pref + " to session");
+            
             AppContext.setSession(user, pref);
             EventBus.getInstance().fireEvent(
                     new ShellEvent.GotoMainPage(this, null));

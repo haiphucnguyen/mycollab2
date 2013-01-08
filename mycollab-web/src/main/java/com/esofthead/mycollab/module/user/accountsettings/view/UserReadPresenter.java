@@ -12,17 +12,13 @@ import com.vaadin.ui.ComponentContainer;
  *
  * @author haiphucnguyen
  */
-public class UserAddPresenter extends AbstractPresenter<UserAddView> {
-
-    public UserAddPresenter() {
-        super(UserAddView.class);
+public class UserReadPresenter extends AbstractPresenter<UserReadView> {
+    public UserReadPresenter() {
+        super(UserReadView.class);
     }
-    
+
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        UserContainer userContainer = (UserContainer)container;
-        userContainer.removeAllComponents();
-        userContainer.addComponent(view.getWidget()); 
-   }
-    
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }
