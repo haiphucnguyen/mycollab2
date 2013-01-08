@@ -13,36 +13,40 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 @ViewComponent
 public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
-    
-    public CrmHomeViewImpl() {
-        this.setSpacing(true);
-        this.setMargin(true);
-    }
-    
-    @Override
-    public void displayDashboard() {
-        this.removeAllComponents();
-        
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setSpacing(true);
-        layout.setWidth("100%");
-        
-        VerticalLayout myAssignmentsLayout = new VerticalLayout();
-        myAssignmentsLayout.addComponent(new AccountListDashlet());
-        myAssignmentsLayout.addComponent(new MeetingListDashlet());
-        myAssignmentsLayout.addComponent(new CallListDashlet());
-        myAssignmentsLayout.addComponent(new LeadListDashlet());
-        
-        layout.addComponent(myAssignmentsLayout);
-        
-        VerticalLayout streamsLayout = new VerticalLayout();
-        streamsLayout.setWidth("400px");
-        streamsLayout.addComponent(new ActivityStreamPanel());
-        layout.addComponent(streamsLayout);
-        layout.setComponentAlignment(streamsLayout, Alignment.MIDDLE_RIGHT);
-        
-        layout.setExpandRatio(myAssignmentsLayout, 1.0f);
-        
-        this.addComponent(layout);
-    }
+
+	public CrmHomeViewImpl() {
+		this.setSpacing(true);
+		this.setMargin(false);
+	}
+
+	@Override
+	public void displayDashboard() {
+		this.removeAllComponents();
+
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
+		layout.setWidth("100%");
+
+		VerticalLayout myAssignmentsLayout = new VerticalLayout();
+		myAssignmentsLayout.addComponent(new AccountListDashlet());
+		myAssignmentsLayout.addComponent(new MeetingListDashlet());
+		myAssignmentsLayout.addComponent(new CallListDashlet());
+		myAssignmentsLayout.addComponent(new LeadListDashlet());
+
+		layout.addComponent(myAssignmentsLayout);
+
+		VerticalLayout streamsLayout = new VerticalLayout();
+		streamsLayout.setWidth("410px");
+		ActivityStreamPanel activityStreamPanel = new ActivityStreamPanel();
+		activityStreamPanel.setWidth("400px");
+		streamsLayout.addComponent(activityStreamPanel);
+		streamsLayout.setComponentAlignment(activityStreamPanel,
+				Alignment.MIDDLE_RIGHT);
+		layout.addComponent(streamsLayout);
+		layout.setComponentAlignment(streamsLayout, Alignment.MIDDLE_RIGHT);
+
+		layout.setExpandRatio(myAssignmentsLayout, 1.0f);
+
+		this.addComponent(layout);
+	}
 }
