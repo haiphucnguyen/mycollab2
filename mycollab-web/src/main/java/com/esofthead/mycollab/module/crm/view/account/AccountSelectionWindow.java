@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
-import java.util.Collection;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -9,7 +7,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
@@ -22,7 +20,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -37,7 +34,6 @@ public class AccountSelectionWindow extends Window {
 	public AccountSelectionWindow(FieldSelection fieldSelection) {
 		super("Account Name Lookup");
 		this.setWidth("600px");
-
 		this.fieldSelection = fieldSelection;
 	}
 
@@ -60,18 +56,25 @@ public class AccountSelectionWindow extends Window {
 		center();
 	}
 
-	private TextField valueField;
-	private UserListSelect userField;
+	private TextField textValueField;
+	private UserComboBox userBox;
 	private GridLayout layoutSearchPane;
 
 	private void addTextFieldSearch() {
-		valueField = new TextField();
-		layoutSearchPane.addComponent(valueField, 0, 0);
+		textValueField = new TextField();
+		layoutSearchPane.addComponent(textValueField, 0, 0);
 	}
 
 	private void addUserListSelectField() {
-		userField = new UserListSelect();
-		layoutSearchPane.addComponent(userField, 0, 0, 0, 2);
+		userBox = new UserComboBox();
+		userBox.setImmediate(true);
+		layoutSearchPane.addComponent(userBox, 0, 0);
+	}
+	
+	private void removeComponents() {
+		layoutSearchPane.removeComponent(0, 0);
+		userBox = null;
+		textValueField = null;
 	}
 
 	@SuppressWarnings("serial")
@@ -79,17 +82,15 @@ public class AccountSelectionWindow extends Window {
 		layoutSearchPane = new GridLayout(3, 3);
 		layoutSearchPane.setSpacing(true);
 
-		userField = new UserListSelect();
-
 		final ValueComboBox group = new ValueComboBox(false, new String[] {
 				"Name", "Email", "Website", "Phone", "Assigned to" });
+		group.select("Name");
 		group.setImmediate(true);
 		group.addListener(new Property.ValueChangeListener() {
 
 			@Override
 			public void valueChange(ValueChangeEvent event) {
-
-				layoutSearchPane.removeComponent(0, 0);
+				removeComponents();
 				String searchType = (String) group.getValue();
 				if (searchType.equals("Name")) {
 					addTextFieldSearch();
@@ -104,59 +105,65 @@ public class AccountSelectionWindow extends Window {
 				}
 			}
 		});
+		
 		layoutSearchPane.addComponent(group, 1, 0);
+		
+		addTextFieldSearch(); 
 
 		Button searchBtn = new Button("Search");
 		searchBtn.addListener(new Button.ClickListener() {
 
-			@SuppressWarnings({ "unchecked", "rawtypes" })
 			@Override
 			public void buttonClick(ClickEvent event) {
-				String searchType = (String) group.getValue();
 				searchCriteria = new AccountSearchCriteria();
 				searchCriteria.setSaccountid(new NumberSearchField(
 						SearchField.AND, AppContext.getAccountId()));
-				String strSearch = (String) valueField.getValue();
-				if (StringUtil.isNotNullOrEmpty(strSearch)) {
-					if (StringUtil.isNotNullOrEmpty(searchType)) {
+				
+				String searchType = (String) group.getValue();
+				if (StringUtil.isNotNullOrEmpty(searchType)) {
+					
+					if (textValueField != null) {
+						String strSearch = (String) textValueField.getValue();
+						if (StringUtil.isNotNullOrEmpty(strSearch)) {
 
-						if (searchType.equals("Name")) {
-							searchCriteria
-									.setAccountname(new StringSearchField(
-											SearchField.AND, strSearch));
-						} else if (searchType.equals("Email")) {
-							searchCriteria.setAnyMail(new StringSearchField(
-									SearchField.AND, strSearch));
-						} else if (searchType.equals("Website")) {
-							searchCriteria.setWebsite(new StringSearchField(
-									SearchField.AND, strSearch));
-						} else if (searchType.equals("Phone")) {
-							searchCriteria.setAnyPhone(new StringSearchField(
-									SearchField.AND, strSearch));
+							if (searchType.equals("Name")) {
+								searchCriteria
+										.setAccountname(new StringSearchField(
+												SearchField.AND, strSearch));
+							} else if (searchType.equals("Email")) {
+								searchCriteria.setAnyMail(new StringSearchField(
+										SearchField.AND, strSearch));
+							} else if (searchType.equals("Website")) {
+								searchCriteria.setWebsite(new StringSearchField(
+										SearchField.AND, strSearch));
+							} else if (searchType.equals("Phone")) {
+								searchCriteria.setAnyPhone(new StringSearchField(
+										SearchField.AND, strSearch));
+							}
 						}
 					}
 					
-					Collection<String> users = (Collection<String>) userField
-							.getValue();
-					if (users != null && users.size() > 0) {
-						searchCriteria.setAssignUsers(new SetSearchField(
-								SearchField.AND, users));
+					if (userBox != null) {
+						String user = (String) userBox.getValue();
+						if (StringUtil.isNotNullOrEmpty(user)) {
+							searchCriteria.setAssignUsers(new SetSearchField<String>(SearchField.AND, new String[]{user}));
+						}
 					}
 				}
 
 				tableItem.setSearchCriteria(searchCriteria);
 			}
 		});
-		layoutSearchPane.addComponent(searchBtn, 2, 0, 2, 2);
+		layoutSearchPane.addComponent(searchBtn, 2, 0);
 		return layoutSearchPane;
 	}
 
+	@SuppressWarnings("serial")
 	private void createAccountList() {
 		tableItem = new AccountTableDisplay(new String[] { "accountname",
 				"city", "assignuser" }, new String[] { "Name", "City",
 				"Assign User" });
 		tableItem.setWidth("100%");
-
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					@Override
