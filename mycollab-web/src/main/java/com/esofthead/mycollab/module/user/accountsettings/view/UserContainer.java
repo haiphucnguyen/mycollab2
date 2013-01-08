@@ -6,15 +6,12 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.ui.Label;
 
 /**
  *
  * @author haiphucnguyen
  */
 @ViewComponent
-public class UserListViewImpl extends AbstractView implements UserListView {
-    public UserListViewImpl() {
-        this.addComponent(new Label("User list"));
-    }
+public class UserContainer extends AbstractView{
+    
 }

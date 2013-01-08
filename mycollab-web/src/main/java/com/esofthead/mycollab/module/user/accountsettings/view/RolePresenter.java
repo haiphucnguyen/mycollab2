@@ -12,17 +12,15 @@ import com.vaadin.ui.ComponentContainer;
  *
  * @author haiphucnguyen
  */
-public class UserListPresenter extends AbstractPresenter<UserListView> {
-
-    public UserListPresenter() {
-        super(UserListView.class);
+public class RolePresenter extends AbstractPresenter<RoleContainer> {
+    public RolePresenter() {
+        super(RoleContainer.class);
     }
-    
+
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        UserContainer userContainer = (UserContainer)container;
-        userContainer.removeAllComponents();
-        userContainer.addComponent(view.getWidget());
+        throw new UnsupportedOperationException("Not supported yet.");
     }
+    
     
 }
