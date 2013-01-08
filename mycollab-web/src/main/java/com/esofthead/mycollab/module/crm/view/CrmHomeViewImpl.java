@@ -49,7 +49,7 @@ public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
         activityStreamPanel.setWidth("400px");
         streamsLayout.addComponent(new LazyLoadWrapper(activityStreamPanel));
         layout.addComponent(streamsLayout);
-        layout.setComponentAlignment(streamsLayout, Alignment.MIDDLE_RIGHT);
+        layout.setComponentAlignment(streamsLayout, Alignment.TOP_RIGHT);
 
         layout.setExpandRatio(myAssignmentsLayout, 1.0f);
 

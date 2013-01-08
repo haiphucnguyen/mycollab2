@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.vaadin.events;
 
+import com.esofthead.mycollab.web.AppContext;
 import java.io.Serializable;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -13,12 +14,18 @@ import org.slf4j.LoggerFactory;
 @SuppressWarnings("serial")
 public class EventBus implements Serializable {
 
+    private static final String EVENT_BUS_VAL = "eventBusVal";
+    
     private Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> map = new HashMap<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>>();
     private final Logger log = LoggerFactory.getLogger(EventBus.class);
-    private static EventBus instance = new EventBus();
 
     public static EventBus getInstance() {
-        return instance;
+        EventBus eventBus = (EventBus)AppContext.getVariable(EVENT_BUS_VAL);
+        if (eventBus == null) {
+            eventBus = new EventBus();
+            AppContext.putVariable(EVENT_BUS_VAL, eventBus);
+        }
+        return eventBus;
     }
 
     public void addListener(ApplicationEventListener<?> listener) {

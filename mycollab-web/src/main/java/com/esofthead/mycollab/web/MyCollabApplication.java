@@ -23,8 +23,8 @@ public class MyCollabApplication extends Application {
     @Override
     public void init() {
         setTheme("mycollab");
-        this.setMainWindow(ViewManager.getView(MainWindowContainer.class));
         AppContext sessionData = new AppContext(this);
+        this.setMainWindow(ViewManager.getView(MainWindowContainer.class));
 
         // Register it as a listener in the application context
         this.getContext().addTransactionListener(sessionData);

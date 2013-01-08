@@ -21,10 +21,12 @@ public class AppContext implements TransactionListener, Serializable {
     private static final long serialVersionUID = 1L;
     private static int UPDATE_TIME_DURATION = 300000;
     private static Logger log = LoggerFactory.getLogger(AppContext.class);
+    private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
+    
     private Application app;
     private SimpleUser session;
     private UserPreference userPreference;
-    private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
+    
     private Map<String, Object> variables = new HashMap<String, Object>();
     private long lastAccessTime = 0;
 

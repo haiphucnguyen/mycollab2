@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
+import java.util.Map;
 import java.util.Set;
 import java.util.WeakHashMap;
 import net.sf.extcos.ComponentQuery;
@@ -10,9 +12,10 @@ import org.slf4j.LoggerFactory;
 
 class ViewManagerImpl extends ViewManager {
 
+    public static final String VIEW_MANAGER_VAL = "viewMap";
+    
     private static Logger log = LoggerFactory.getLogger(ViewManagerImpl.class);
     private Set<Class<?>> viewClasses;
-    private WeakHashMap<Class<?>, Object> viewMap = new WeakHashMap<Class<?>, Object>();
 
     public ViewManagerImpl() {
         ComponentScanner scanner = new ComponentScanner();
@@ -32,6 +35,12 @@ class ViewManagerImpl extends ViewManager {
     @Override
     protected <T extends View> T getViewInstance(final Class<T> viewClass) {
         try {
+            Map<Class<?>, Object> viewMap = (Map<Class<?>, Object>)AppContext.getVariable(VIEW_MANAGER_VAL);
+            if (viewMap == null) {
+                viewMap = new WeakHashMap<Class<?>, Object>();
+                AppContext.putVariable(VIEW_MANAGER_VAL, viewMap);
+            }
+            
             T value = (T) viewMap.get(viewClass);
             if (value != null) {
                 log.debug("Get implementation of view " + viewClass.getName()
@@ -94,6 +103,9 @@ class ViewManagerImpl extends ViewManager {
 
     @Override
     protected void resetResources() {
-        viewMap.clear();
+        Map<Class<?>, Object> viewMap = (Map<Class<?>, Object>)AppContext.getVariable(VIEW_MANAGER_VAL);
+        if (viewMap != null) {
+            viewMap.clear();
+        }
     }
 }
