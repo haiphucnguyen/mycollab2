@@ -1,9 +1,5 @@
 package com.esofthead.mycollab.module.user.ui.components;
 
-import java.util.List;
-
-import org.springframework.beans.factory.annotation.Autowired;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -13,42 +9,45 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanContainer;
 import com.vaadin.ui.ListSelect;
+import java.util.List;
+import org.springframework.beans.factory.annotation.Autowired;
 
 public @SuppressWarnings("serial")
 class UserListSelect extends ListSelect {
-	@Autowired
-	private UserService userService;
 
-	public UserListSelect() {
-		super("username");
-		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
-		this.setMultiSelect(true);
-	}
+    @Autowired
+    private UserService userService;
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public void attach() {
-		super.attach();
-		this.removeAllItems();
-		UserSearchCriteria criteria = new UserSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
+    public UserListSelect() {
+        super("username");
+        this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+        this.setMultiSelect(true);
+    }
 
-		UserService userService = AppContext.getSpringBean(UserService.class);
-		List<SimpleUser> userList = userService
-				.findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
-						criteria, 0, Integer.MAX_VALUE));
+    @SuppressWarnings("unchecked")
+    @Override
+    public void attach() {
+        super.attach();
+        this.removeAllItems();
+        UserSearchCriteria criteria = new UserSearchCriteria();
+        criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+                AppContext.getAccountId()));
 
-		BeanContainer<String, SimpleUser> beanItem = new BeanContainer<String, SimpleUser>(
-				SimpleUser.class);
-		beanItem.setBeanIdProperty("username");
+        UserService userService = AppContext.getSpringBean(UserService.class);
+        List<SimpleUser> userList = userService
+                .findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
+                criteria, 0, Integer.MAX_VALUE));
 
-		for (SimpleUser user : userList) {
-			beanItem.addBean(user);
-		}
+        BeanContainer<String, SimpleUser> beanItem = new BeanContainer<String, SimpleUser>(
+                SimpleUser.class);
+        beanItem.setBeanIdProperty("username");
 
-		this.setContainerDataSource(beanItem);
-		this.setItemCaptionPropertyId("displayname");
-		this.setRows(4);
-	}
+        for (SimpleUser user : userList) {
+            beanItem.addBean(user);
+        }
+
+        this.setContainerDataSource(beanItem);
+        this.setItemCaptionPropertyId("displayName");
+        this.setRows(4);
+    }
 }

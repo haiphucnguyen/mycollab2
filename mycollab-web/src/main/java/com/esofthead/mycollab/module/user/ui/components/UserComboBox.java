@@ -38,6 +38,6 @@ public class UserComboBox extends ComboBox {
         }
 
         this.setContainerDataSource(beanItem);
-        this.setItemCaptionPropertyId("displayname");
+        this.setItemCaptionPropertyId("displayName");
     }
 }
