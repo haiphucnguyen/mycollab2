@@ -13,25 +13,30 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 @ViewComponent
 public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
+    private AccountListDashlet accountDashlet;
+    private MeetingListDashlet meetingDashlet;
+    private CallListDashlet callDashlet;
+    private LeadListDashlet leadDashlet;
     
     public CrmHomeViewImpl() {
         this.setSpacing(true);
         this.setMargin(true);
-    }
-    
-    @Override
-    public void displayDashboard() {
-        this.removeAllComponents();
         
         HorizontalLayout layout = new HorizontalLayout();
         layout.setSpacing(true);
         layout.setWidth("100%");
         
         VerticalLayout myAssignmentsLayout = new VerticalLayout();
-        myAssignmentsLayout.addComponent(new AccountListDashlet());
-        myAssignmentsLayout.addComponent(new MeetingListDashlet());
-        myAssignmentsLayout.addComponent(new CallListDashlet());
-        myAssignmentsLayout.addComponent(new LeadListDashlet());
+        
+        accountDashlet = new AccountListDashlet();
+        meetingDashlet = new MeetingListDashlet();
+        callDashlet = new CallListDashlet();
+        leadDashlet = new LeadListDashlet();
+        
+        myAssignmentsLayout.addComponent(accountDashlet);
+        myAssignmentsLayout.addComponent(meetingDashlet);
+        myAssignmentsLayout.addComponent(callDashlet);
+        myAssignmentsLayout.addComponent(leadDashlet);
         
         layout.addComponent(myAssignmentsLayout);
         
@@ -44,5 +49,13 @@ public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
         layout.setExpandRatio(myAssignmentsLayout, 1.0f);
         
         this.addComponent(layout);
+    }
+    
+    @Override
+    public void displayDashboard() {
+        accountDashlet.display();
+        meetingDashlet.display();
+        callDashlet.display();
+        leadDashlet.display();
     }
 }

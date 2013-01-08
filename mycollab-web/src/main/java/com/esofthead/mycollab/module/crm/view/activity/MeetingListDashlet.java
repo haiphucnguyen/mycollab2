@@ -26,10 +26,8 @@ public class MeetingListDashlet extends Depot {
         this.content.addComponent(tableItem);
     }
 
-    @Override
-    public void attach() {
-        super.attach();
-
+    
+    public void display() {
         MeetingSearchCriteria criteria = new MeetingSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
         criteria.setAssignUsers(new SetSearchField<String>(new String[]{AppContext.getUsername()}));

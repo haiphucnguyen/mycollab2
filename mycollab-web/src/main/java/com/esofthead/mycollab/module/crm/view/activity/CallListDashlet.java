@@ -26,10 +26,7 @@ public class CallListDashlet extends Depot {
         this.content.addComponent(tableItem);
     }
 
-    @Override
-    public void attach() {
-        super.attach();
-
+    public void display() {
         CallSearchCriteria criteria = new CallSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
         criteria.setAssignUsers(new SetSearchField<String>(new String[]{AppContext.getUsername()}));

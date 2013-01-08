@@ -48,11 +48,8 @@ public class AccountListDashlet extends Depot {
         });
         this.content.addComponent(tableItem);
     }
-
-    @Override
-    public void attach() {
-        super.attach();
-
+    
+    public void display() {
         AccountSearchCriteria criteria = new AccountSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
         criteria.setAssignUser(new StringSearchField(AppContext.getUsername()));

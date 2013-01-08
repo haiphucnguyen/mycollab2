@@ -49,10 +49,7 @@ public class LeadListDashlet extends Depot {
         this.content.addComponent(tableItem);
     }
 
-    @Override
-    public void attach() {
-        super.attach();
-
+    public void display() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
         criteria.setAssignUsers(new SetSearchField<String>(new String[]{AppContext.getUsername()}));
