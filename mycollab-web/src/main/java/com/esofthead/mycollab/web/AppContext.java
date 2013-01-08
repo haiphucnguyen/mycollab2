@@ -23,6 +23,7 @@ public class AppContext implements TransactionListener, Serializable {
     private static Logger log = LoggerFactory.getLogger(AppContext.class);
     private Application app;
     private SimpleUser session;
+    private UserPreference userPreference;
     private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
     private Map<String, Object> variables = new HashMap<String, Object>();
     private long lastAccessTime = new GregorianCalendar().getTimeInMillis();
@@ -58,7 +59,7 @@ public class AppContext implements TransactionListener, Serializable {
         if (currentTime - lastAccessTime > UPDATE_TIME_DURATION) {
             try {
                 if (instance.get() != null) {
-                    UserPreference pref = instance.get().session.getPreference();
+                    UserPreference pref = instance.get().userPreference;
                     UserPreferenceService prefService = AppContext.getSpringBean(UserPreferenceService.class);
                     pref.setLastaccessedtime(new GregorianCalendar().getTime());
                     prefService.updateWithSession(pref, AppContext.getUsername());
@@ -72,7 +73,7 @@ public class AppContext implements TransactionListener, Serializable {
 
     public static void updateLastModuleVisit(String moduleName) {
         try {
-            UserPreference pref = instance.get().session.getPreference();
+            UserPreference pref = instance.get().userPreference;
             UserPreferenceService prefService = AppContext.getSpringBean(UserPreferenceService.class);
             pref.setLastmodulevisit(moduleName);
             prefService.updateWithSession(pref, AppContext.getUsername());
@@ -81,8 +82,9 @@ public class AppContext implements TransactionListener, Serializable {
         }
     }
 
-    public static void setSession(SimpleUser userSession) {
+    public static void setSession(SimpleUser userSession, UserPreference userPreference) {
         instance.get().session = userSession;
+        instance.get().userPreference = userPreference;
     }
 
     public static SimpleUser getSession() {
@@ -98,7 +100,7 @@ public class AppContext implements TransactionListener, Serializable {
     }
 
     public static UserPreference getUserPreference() {
-        return instance.get().session.getPreference();
+        return instance.get().userPreference;
     }
 
     public static Application getApplication() {

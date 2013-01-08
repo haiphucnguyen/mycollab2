@@ -1,19 +1,18 @@
 /**
- * Engroup - Enterprise Groupware Platform
- * Copyright (C) 2007-2009 eSoftHead Company <engroup@esofthead.com>
- * http://www.esofthead.com
+ * Engroup - Enterprise Groupware Platform Copyright (C) 2007-2009 eSoftHead
+ * Company <engroup@esofthead.com> http://www.esofthead.com
  *
- *  Licensed under the GPL, Version 3.0 (the "License");
- *  you may not use this file except in compliance with the License.
- *  You may obtain a copy of the License at
+ * Licensed under the GPL, Version 3.0 (the "License"); you may not use this
+ * file except in compliance with the License. You may obtain a copy of the
+ * License at
  *
- *      http://www.gnu.org/licenses/gpl.html
+ * http://www.gnu.org/licenses/gpl.html
  *
- *  Unless required by applicable law or agreed to in writing, software
- *  distributed under the License is distributed on an "AS IS" BASIS,
- *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
- *  See the License for the specific language governing permissions and
- *  limitations under the License.
+ * Unless required by applicable law or agreed to in writing, software
+ * distributed under the License is distributed on an "AS IS" BASIS, WITHOUT
+ * WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied. See the
+ * License for the specific language governing permissions and limitations under
+ * the License.
  */
 package com.esofthead.mycollab.module.user.domain.criteria;
 
@@ -22,23 +21,32 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class UserSearchCriteria extends SearchCriteria {
-	private StringSearchField displayName;
 
-	private NumberSearchField saccountid;
+    private StringSearchField displayName;
+    private StringSearchField username;
+    private NumberSearchField saccountid;
 
-	public StringSearchField getDisplayName() {
-		return displayName;
-	}
+    public StringSearchField getDisplayName() {
+        return displayName;
+    }
 
-	public void setDisplayName(StringSearchField displayName) {
-		this.displayName = displayName;
-	}
+    public void setDisplayName(StringSearchField displayName) {
+        this.displayName = displayName;
+    }
 
-	public NumberSearchField getSaccountid() {
-		return saccountid;
-	}
+    public NumberSearchField getSaccountid() {
+        return saccountid;
+    }
 
-	public void setSaccountid(NumberSearchField saccountid) {
-		this.saccountid = saccountid;
-	}
+    public void setSaccountid(NumberSearchField saccountid) {
+        this.saccountid = saccountid;
+    }
+
+    public StringSearchField getUsername() {
+        return username;
+    }
+
+    public void setUsername(StringSearchField username) {
+        this.username = username;
+    }
 }
