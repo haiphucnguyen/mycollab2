@@ -37,7 +37,7 @@ public class OpportunitySelectionWindow extends Window {
 
     public OpportunitySelectionWindow(FieldSelection fieldSelection) {
         super("Opportunity Name Lookup");
-        this.setWidth("800px");
+        this.setWidth("1035px");
         this.fieldSelection = fieldSelection;
     }
 
@@ -164,8 +164,8 @@ public class OpportunitySelectionWindow extends Window {
 
     private void createOpportunityList() {
         tableItem = new OpportunityTableDisplay(new String[]{"opportunityname",
-                    "accountName", "salesstage", "assignUserFullName"},
-                new String[]{"Name", "Account Name", "Sales Stage", "User"});
+                    "salesstage", "assignUserFullName", "accountName"},
+                new String[]{"Name", "Sales Stage", "User", "Account Name"});
         tableItem.setWidth("100%");
 
         tableItem.addTableListener(new ApplicationEventListener<PagedBeanTable2.TableClickEvent>() {
