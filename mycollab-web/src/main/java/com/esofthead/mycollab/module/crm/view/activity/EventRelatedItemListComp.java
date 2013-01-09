@@ -25,11 +25,11 @@ public class EventRelatedItemListComp extends RelatedListComp<EventSearchCriteri
         VerticalLayout contentContainer = (VerticalLayout) content;
         contentContainer.setSpacing(true);
         
-        Button newBtn = new Button("New Opportunity", new Button.ClickListener() {
+        Button newBtn = new Button("New Task", new Button.ClickListener() {
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                fireRelatedListHandler();
+                fireRelatedListHandler("task");
             }
         });
         newBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));

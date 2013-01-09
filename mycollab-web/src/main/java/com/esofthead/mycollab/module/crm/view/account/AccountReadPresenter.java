@@ -66,7 +66,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
         view.getRelatedContactHandlers().addRelatedListHandler(
                 new RelatedListHandler() {
                     @Override
-                    public void createNewRelatedItem() {
+                    public void createNewRelatedItem(String itemId) {
                         SimpleContact contact = new SimpleContact();
                         contact.setAccountId(view.getItem().getId());
                         EventBus.getInstance().fireEvent(
@@ -77,7 +77,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
         view.getRelatedOpportunityHandlers().addRelatedListHandler(
                 new RelatedListHandler() {
                     @Override
-                    public void createNewRelatedItem() {
+                    public void createNewRelatedItem(String itemId) {
                         Opportunity opportunity = new Opportunity();
                         opportunity.setAccountid(view.getItem().getId());
                         EventBus.getInstance()
@@ -90,7 +90,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
         view.getRelatedLeadHandlers().addRelatedListHandler(
                 new RelatedListHandler() {
                     @Override
-                    public void createNewRelatedItem() {
+                    public void createNewRelatedItem(String itemId) {
                         Lead lead = new Lead();
                         lead.setAccountname(view.getItem().getAccountname());
                         EventBus.getInstance().fireEvent(
@@ -101,7 +101,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
         view.getRelatedCaseHandlers().addRelatedListHandler(
                 new RelatedListHandler() {
                     @Override
-                    public void createNewRelatedItem() {
+                    public void createNewRelatedItem(String itemId) {
                         Case cases = new Case();
                         cases.setAccountid(view.getItem().getId());
                         EventBus.getInstance().fireEvent(

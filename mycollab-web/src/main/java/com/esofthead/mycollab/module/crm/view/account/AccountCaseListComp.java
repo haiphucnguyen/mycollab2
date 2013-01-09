@@ -38,7 +38,7 @@ public class AccountCaseListComp extends RelatedListComp<CaseSearchCriteria> {
         Button newBtn = new Button("New Case", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                fireRelatedListHandler();
+                fireRelatedListHandler("");
             }
         });
         newBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));

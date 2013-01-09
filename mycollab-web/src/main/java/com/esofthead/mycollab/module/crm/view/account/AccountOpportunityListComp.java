@@ -32,7 +32,7 @@ public class AccountOpportunityListComp extends RelatedListComp<OpportunitySearc
 
             @Override
             public void buttonClick(ClickEvent event) {
-                fireRelatedListHandler();
+                fireRelatedListHandler("");
             }
         });
         newBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
