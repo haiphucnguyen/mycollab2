@@ -26,163 +26,164 @@ import com.vaadin.ui.VerticalLayout;
 @SuppressWarnings("serial")
 @ViewComponent
 public class UserDashboardViewImpl extends AbstractView implements
-        UserDashboardView {
+		UserDashboardView {
 
-    private final HorizontalLayout root;
-    private final DetachedTabs mySpaceTabs;
-    private final CssLayout mySpaceArea = new CssLayout();
-    private final DetachedTabs calendarToolTabs;
-    private MyProjectsPresenter myProjectPresenter;
-    private MyFeedsPresenter myFeedsPresenter;
-    private MyTasksPresenter myTasksPresenter;
-    private MyDefectsPresenter myDefectsPresenter;
+	private final HorizontalLayout root;
+	private final DetachedTabs mySpaceTabs;
+	private final CssLayout mySpaceArea = new CssLayout();
+	private final DetachedTabs calendarToolTabs;
+	private MyProjectsPresenter myProjectPresenter;
+	private MyFeedsPresenter myFeedsPresenter;
+	private MyTasksPresenter myTasksPresenter;
+	private MyDefectsPresenter myDefectsPresenter;
 
-    public UserDashboardViewImpl() {
-        this.setStyleName("projectDashboardView");
-        this.setMargin(false);
-        root = new HorizontalLayout();
-        root.setStyleName("menuContent");
-        root.setWidth("100%");
+	public UserDashboardViewImpl() {
+		this.setStyleName("projectDashboardView");
+		this.setMargin(false);
+		root = new HorizontalLayout();
+		root.setStyleName("menuContent");
+		root.setWidth("100%");
 
-        mySpaceArea.setWidth("100%");
-        mySpaceTabs = new DetachedTabs.Vertical(mySpaceArea);
-        mySpaceTabs.setWidth("200px");
-        mySpaceTabs.setHeight(null);
+		mySpaceArea.setWidth("100%");
+		mySpaceArea.setStyleName("project-dashboard");
+		mySpaceTabs = new DetachedTabs.Vertical(mySpaceArea);
+		mySpaceTabs.setWidth("200px");
+		mySpaceTabs.setHeight(null);
 
-        calendarToolTabs = new DetachedTabs.Vertical(mySpaceArea);
-        calendarToolTabs.setSizeFull();
-        calendarToolTabs.setHeight(null);
+		calendarToolTabs = new DetachedTabs.Vertical(mySpaceArea);
+		calendarToolTabs.setSizeFull();
+		calendarToolTabs.setHeight(null);
 
-        VerticalLayout menu = new VerticalLayout();
-        menu.setWidth("200px");
-        menu.setStyleName("sidebar-menu");
+		VerticalLayout menu = new VerticalLayout();
+		menu.setWidth("200px");
+		menu.setStyleName("sidebar-menu");
 
-        Label myHome = new Label("My Home");
-        myHome.setStyleName("sectionHeader");
-        menu.addComponent(myHome);
-        menu.addComponent(mySpaceTabs);
-        Label calendar = new Label("Calendar");
-        calendar.setStyleName("sectionHeader");
-        menu.addComponent(calendar);
-        menu.addComponent(calendarToolTabs);
+		Label myHome = new Label("My Home");
+		myHome.setStyleName("sectionHeader");
+		menu.addComponent(myHome);
+		menu.addComponent(mySpaceTabs);
+		Label calendar = new Label("Calendar");
+		calendar.setStyleName("sectionHeader");
+		menu.addComponent(calendar);
+		menu.addComponent(calendarToolTabs);
 
-        mySpaceTabs.setStyleName("hide-selection");
-        calendarToolTabs.setStyleName("hide-selection");
-        menu.addListener(new LayoutClickListener() {
-            @Override
-            public void layoutClick(LayoutClickEvent event) {
-                if (!root.getComponent(1).equals(mySpaceArea)) {
-                    root.replaceComponent(root.getComponent(1), mySpaceArea);
-                    root.setExpandRatio(root.getComponent(1), 1.0f);
-                }
-                if (event.getChildComponent() == mySpaceTabs) {
-                    calendarToolTabs.setStyleName("hide-selection");
-                    mySpaceTabs.setStyleName("");
-                } else if (event.getChildComponent() == calendarToolTabs) {
-                    mySpaceTabs.setStyleName("hide-selection");
-                    calendarToolTabs.setStyleName("");
-                }
-            }
-        });
+		mySpaceTabs.setStyleName("hide-selection");
+		calendarToolTabs.setStyleName("hide-selection");
+		menu.addListener(new LayoutClickListener() {
+			@Override
+			public void layoutClick(LayoutClickEvent event) {
+				if (!root.getComponent(1).equals(mySpaceArea)) {
+					root.replaceComponent(root.getComponent(1), mySpaceArea);
+					root.setExpandRatio(root.getComponent(1), 1.0f);
+				}
+				if (event.getChildComponent() == mySpaceTabs) {
+					calendarToolTabs.setStyleName("hide-selection");
+					mySpaceTabs.setStyleName("");
+				} else if (event.getChildComponent() == calendarToolTabs) {
+					mySpaceTabs.setStyleName("hide-selection");
+					calendarToolTabs.setStyleName("");
+				}
+			}
+		});
 
-        root.addComponent(menu);
+		root.addComponent(menu);
 
-        buildComponents();
-        showWelcomeScreen();
+		buildComponents();
+		showWelcomeScreen();
 
-        this.addComponent(root);
-    }
+		this.addComponent(root);
+	}
 
-    private void showWelcomeScreen() {
-        CustomLayout welcome = new CustomLayout("projectWelcomeScreen");
-        welcome.setSizeFull();
-        root.addComponent(welcome);
-    }
+	private void showWelcomeScreen() {
+		CustomLayout welcome = new CustomLayout("projectWelcomeScreen");
+		welcome.setSizeFull();
+		root.addComponent(welcome);
+	}
 
-    private void buildComponents() {
-        mySpaceTabs.addTab(constructMyFeedsComponents(), "My Feeds");
-        mySpaceTabs.addTab(constructMyProjectsComponents(), "My Projects");
-        mySpaceTabs.addTab(constructMyTasksComponents(), "My Tasks");
-        mySpaceTabs.addTab(constructMyBugsComponents(), "My Bugs");
+	private void buildComponents() {
+		mySpaceTabs.addTab(constructMyFeedsComponents(), "My Feeds");
+		mySpaceTabs.addTab(constructMyProjectsComponents(), "My Projects");
+		mySpaceTabs.addTab(constructMyTasksComponents(), "My Tasks");
+		mySpaceTabs.addTab(constructMyBugsComponents(), "My Bugs");
 
-        mySpaceTabs
-                .addTabChangedListener(new DetachedTabs.TabChangedListener() {
-            @Override
-            public void tabChanged(TabChangedEvent event) {
-                Button btn = event.getSource();
-                String caption = btn.getCaption();
-                if ("My Projects".equals(caption)) {
-                    ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
-                    //TODO: wrong search criteria
+		mySpaceTabs
+				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+					@Override
+					public void tabChanged(TabChangedEvent event) {
+						Button btn = event.getSource();
+						String caption = btn.getCaption();
+						if ("My Projects".equals(caption)) {
+							ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
+							// TODO: wrong search criteria
 
-                    gotoMyProjectList(new ScreenData.Search<ProjectSearchCriteria>(
-                            searchCriteria));
-                } else if ("My Feeds".equals(caption)) {
-                    gotoMyFeeds();
-                } else if ("My Tasks".equals(caption)) {
-                    gotoMyTasks();
-                } else if ("My Bugs".equals(caption)) {
-                    gotoMyBugs();
-                }
-            }
-        });
-    }
+							gotoMyProjectList(new ScreenData.Search<ProjectSearchCriteria>(
+									searchCriteria));
+						} else if ("My Feeds".equals(caption)) {
+							gotoMyFeeds();
+						} else if ("My Tasks".equals(caption)) {
+							gotoMyTasks();
+						} else if ("My Bugs".equals(caption)) {
+							gotoMyBugs();
+						}
+					}
+				});
+	}
 
-    private ComponentContainer constructMyFeedsComponents() {
-        myFeedsPresenter = PresenterResolver
-                .getPresenter(MyFeedsPresenter.class);
-        return myFeedsPresenter.getView();
-    }
+	private ComponentContainer constructMyFeedsComponents() {
+		myFeedsPresenter = PresenterResolver
+				.getPresenter(MyFeedsPresenter.class);
+		return myFeedsPresenter.getView();
+	}
 
-    private ComponentContainer constructMyProjectsComponents() {
-        myProjectPresenter = PresenterResolver
-                .getPresenter(MyProjectsPresenter.class);
-        return myProjectPresenter.getView();
-    }
+	private ComponentContainer constructMyProjectsComponents() {
+		myProjectPresenter = PresenterResolver
+				.getPresenter(MyProjectsPresenter.class);
+		return myProjectPresenter.getView();
+	}
 
-    private ComponentContainer constructMyTasksComponents() {
-        myTasksPresenter = PresenterResolver
-                .getPresenter(MyTasksPresenter.class);
-        return myTasksPresenter.getView();
-    }
+	private ComponentContainer constructMyTasksComponents() {
+		myTasksPresenter = PresenterResolver
+				.getPresenter(MyTasksPresenter.class);
+		return myTasksPresenter.getView();
+	}
 
-    private ComponentContainer constructMyBugsComponents() {
-        myDefectsPresenter = PresenterResolver
-                .getPresenter(MyDefectsPresenter.class);
-        return myDefectsPresenter.getView();
-    }
+	private ComponentContainer constructMyBugsComponents() {
+		myDefectsPresenter = PresenterResolver
+				.getPresenter(MyDefectsPresenter.class);
+		return myDefectsPresenter.getView();
+	}
 
-    @Override
-    public void gotoMyProjectList(ScreenData data) {
-        myProjectPresenter.go(this, data);
-    }
+	@Override
+	public void gotoMyProjectList(ScreenData data) {
+		myProjectPresenter.go(this, data);
+	}
 
-    @Override
-    public void gotoMyFeeds() {
-        com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Feeds");
-        if (component != null) {
-        }
-    }
+	@Override
+	public void gotoMyFeeds() {
+		com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Feeds");
+		if (component != null) {
+		}
+	}
 
-    @Override
-    public void gotoMyTasks() {
-        com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Tasks");
-        if (component != null) {
-        }
+	@Override
+	public void gotoMyTasks() {
+		com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Tasks");
+		if (component != null) {
+		}
 
-    }
+	}
 
-    @Override
-    public void gotoMyBugs() {
-        com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Bugs");
-        if (component != null) {
-        }
+	@Override
+	public void gotoMyBugs() {
+		com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Bugs");
+		if (component != null) {
+		}
 
-    }
+	}
 
-    @Override
-    public Component gotoSubView(String name) {
-        View component = (View) mySpaceTabs.selectTab(name);
-        return component;
-    }
+	@Override
+	public Component gotoSubView(String name) {
+		View component = (View) mySpaceTabs.selectTab(name);
+		return component;
+	}
 }
