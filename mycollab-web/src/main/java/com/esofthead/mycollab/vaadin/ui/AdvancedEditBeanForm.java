@@ -38,7 +38,7 @@ public class AdvancedEditBeanForm<T> extends GenericForm implements
         }
         Set<ConstraintViolation<Object>> violations = validation.validate(data);
         if (violations.size() > 0) {
-            StringBuffer errorMsg = new StringBuffer();
+            StringBuilder errorMsg = new StringBuilder();
 
             for (@SuppressWarnings("rawtypes") ConstraintViolation violation : violations) {
                 errorMsg.append(violation.getMessage()).append("<br/>");

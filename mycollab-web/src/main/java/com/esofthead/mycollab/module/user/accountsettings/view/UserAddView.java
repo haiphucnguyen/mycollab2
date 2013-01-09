@@ -4,12 +4,15 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
+import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 
 /**
  *
  * @author haiphucnguyen
  */
-public interface UserAddView extends View{
-    
+public interface UserAddView extends IFormAddView<User> {
+
+    HasEditFormHandlers<User> getEditFormHandlers();
 }

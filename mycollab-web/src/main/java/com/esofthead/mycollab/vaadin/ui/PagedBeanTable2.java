@@ -20,6 +20,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.ComboBox;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
@@ -61,10 +62,9 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
     private Object columnExpandId;
     private Object sortColumnId;
     private boolean isAscending = true;
-    
     private Map<Object, ColumnGenerator> columnGenerators = new HashMap<Object, Table.ColumnGenerator>();
     private Map<Object, Integer> columnWidths = new HashMap<Object, Integer>();
-     private Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> map;
+    private Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> map;
 
     public PagedBeanTable2(SearchService searchService, Class<T> type,
             final String[] visibleColumns, String[] columnHeaders) {
@@ -72,7 +72,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
         this.visibleColumns = visibleColumns;
         this.columnHeaders = columnHeaders;
         this.type = type;
-        
+
         this.setStyleName("list-view");
 
         this.addComponent(createControls());
@@ -117,9 +117,9 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
         this.setTotalPage(totalPage);
 
         tableItem = new Table();
-        tableLazyLoadContainer = new LazyLoadWrapper(tableItem);
+        CustomComponent tableWrap = new CustomComponent(tableItem);
+        tableLazyLoadContainer = new LazyLoadWrapper(tableWrap);
         tableItem.addStyleName("striped");
-        tableItem.setWidth("100%");
         tableItem.setSortDisabled(true);
 
         // set column generator
@@ -187,6 +187,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
         tableItem.setContainerDataSource(container);
         tableItem.setVisibleColumns(visibleColumns);
         tableItem.setColumnHeaders(columnHeaders);
+        tableItem.setWidth("100%");
 
         Component component0 = this.getComponent(0);
         if (component0 instanceof LazyLoadWrapper) {
@@ -441,7 +442,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
         pagableHandlers.add(handler);
 
     }
-    
+
     @Override
     public void addTableListener(ApplicationEventListener<? extends ApplicationEvent> listener) {
         if (map == null) {
@@ -472,6 +473,6 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
                 ApplicationEventListener<ApplicationEvent> l = (ApplicationEventListener<ApplicationEvent>) listener;
                 l.handle(event);
             }
-        } 
+        }
     }
 }

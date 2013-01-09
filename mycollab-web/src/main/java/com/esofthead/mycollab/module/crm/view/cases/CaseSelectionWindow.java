@@ -7,24 +7,23 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
-import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.CaseService;
+import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
-import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -32,13 +31,13 @@ public class CaseSelectionWindow extends Window {
 
 	private static final long serialVersionUID = 1L;
 	private CaseSearchCriteria searchCriteria;
-	private PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase> tableItem;
+	private CaseTableDisplay tableItem;
 	private FieldSelection fieldSelection;
 
 	public CaseSelectionWindow(FieldSelection fieldSelection) {
 		super("Case Name Lookup");
 
-		this.setWidth("1035px");
+		this.setWidth("900px");
 
 		this.fieldSelection = fieldSelection;
 	}
@@ -68,12 +67,14 @@ public class CaseSelectionWindow extends Window {
 	private void addTextFieldSearch() {
 		textValueField = new TextField();
 		layoutSearchPane.addComponent(textValueField, 0, 0);
+		layoutSearchPane.setComponentAlignment(textValueField, Alignment.MIDDLE_CENTER);
 	}
 
 	private void addUserListSelectField() {
 		userBox = new UserComboBox();
 		userBox.setImmediate(true);
 		layoutSearchPane.addComponent(userBox, 0, 0);
+		layoutSearchPane.setComponentAlignment(userBox, Alignment.MIDDLE_CENTER);
 	}
 
 	private void removeComponents() {
@@ -110,7 +111,7 @@ public class CaseSelectionWindow extends Window {
 		});
 
 		layoutSearchPane.addComponent(group, 1, 0);
-
+		layoutSearchPane.setComponentAlignment(group, Alignment.MIDDLE_CENTER);
 		addTextFieldSearch();
 
 		Button searchBtn = new Button("Search");
@@ -161,37 +162,36 @@ public class CaseSelectionWindow extends Window {
 			}
 		});
 		layoutSearchPane.addComponent(searchBtn, 2, 0);
+		layoutSearchPane.setComponentAlignment(searchBtn, Alignment.MIDDLE_CENTER);
 		return layoutSearchPane;
 	}
 
+	@SuppressWarnings("serial")
 	private void createCaseList() {
-		tableItem = new PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase>(
-				AppContext.getSpringBean(CaseService.class), SimpleCase.class,
-				new String[] { "subject", "accountName", "priority", "status",
-						"assignUserFullName" }, new String[] { "Subject",
-						"Account Name", "Priority", "Status", "Assigned To" });
+		tableItem = new CaseTableDisplay(new String[] { "subject", "accountName", "priority", "status",
+		"assignUserFullName" }, new String[] { "Subject",
+				"Account Name", "Priority", "Status", "Assigned To" });
 		tableItem.setWidth("100%");
+		
+		tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return TableClickEvent.class;
+			}
 
-		tableItem.addGeneratedColumn("subject", new ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			public com.vaadin.ui.Component generateCell(final Table source,
-					final Object itemId, Object columnId) {
-				final SimpleCase cases = tableItem.getBeanByIndex(itemId);
-				Button b = new Button(cases.getSubject(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
-
-							@Override
-							public void buttonClick(ClickEvent event) {
-								fieldSelection.fireValueChange(cases);
-								CaseSelectionWindow.this.getParent()
-										.removeWindow(CaseSelectionWindow.this);
-							}
-						});
-				b.setStyleName("link");
-				b.addStyleName("medium-text");
-				return b;
+			@Override
+			public void handle(TableClickEvent event) {
+				SimpleCase cases = (SimpleCase) event.getData();
+				if ("subject".equals(event.getFieldName())) {
+					EventBus.getInstance()
+							.fireEvent(
+									new CaseEvent.GotoRead(this, cases
+											.getId()));
+				} else if ("accountName".equals(event.getFieldName())) {
+					fieldSelection.fireValueChange(cases);
+					CaseSelectionWindow.this.getParent()
+							.removeWindow(CaseSelectionWindow.this);
+				}
 			}
 		});
 	}

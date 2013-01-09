@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.ui.components;
+package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.ComponentContainer;

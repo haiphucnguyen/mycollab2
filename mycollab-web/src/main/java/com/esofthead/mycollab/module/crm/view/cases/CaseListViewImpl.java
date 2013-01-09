@@ -4,224 +4,135 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
-import com.esofthead.mycollab.module.crm.service.CaseService;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class CaseListViewImpl extends AbstractView implements CaseListView {
 
-    private static final long serialVersionUID = 1L;
-    private final CaseSearchPanel searchPanel;
-    private SelectionOptionButton selectOptionButton;
-    private PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase> tableItem;
-    private final VerticalLayout listLayout;
-    private PopupButtonControl tableActionControls;
-    private final Label selectedItemsNumberLabel = new Label();
+	private static final long serialVersionUID = 1L;
+	private final CaseSearchPanel searchPanel;
+	private SelectionOptionButton selectOptionButton;
+	private CaseTableDisplay tableItem;
+	private final VerticalLayout listLayout;
+	private PopupButtonControl tableActionControls;
+	private final Label selectedItemsNumberLabel = new Label();
 
-    public CaseListViewImpl() {
-        this.setSpacing(true);
+	public CaseListViewImpl() {
+		this.setSpacing(true);
 
-        searchPanel = new CaseSearchPanel();
-        this.addComponent(searchPanel);
+		searchPanel = new CaseSearchPanel();
+		this.addComponent(searchPanel);
 
-        listLayout = new VerticalLayout();
-        listLayout.setSpacing(true);
-        this.addComponent(listLayout);
+		listLayout = new VerticalLayout();
+		listLayout.setSpacing(true);
+		this.addComponent(listLayout);
 
-        generateDisplayTable();
-    }
+		generateDisplayTable();
+	}
 
-    private void generateDisplayTable() {
-        tableItem = new PagedBeanTable2<CaseService, CaseSearchCriteria, SimpleCase>(
-                AppContext.getSpringBean(CaseService.class), SimpleCase.class,
-                new String[]{"selected", "subject", "accountName",
-                    "priority", "status", "assignUserFullName",
-                    "createdtime"}, new String[]{"", "Subject",
-                    "Account Name", "Priority", "Status", "Assigned To",
-                    "Date Created"});
+	@SuppressWarnings("serial")
+	private void generateDisplayTable() {
+		tableItem = new CaseTableDisplay(new String[] { "selected", "subject", "accountName",
+				"priority", "status", "assignUserFullName",
+		"createdtime" }, new String[] { "", "Subject",
+		"Account Name", "Priority", "Status", "Assigned To",
+		"Date Created" });
 
-        tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+		tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return TableClickEvent.class;
+					}
 
-            @Override
-            public Object generateCell(final Table source, final Object itemId,
-                    Object columnId) {
-                final CheckBox cb = new CheckBox("", false);
-                cb.setImmediate(true);
-                cb.addListener(new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+					@Override
+					public void handle(TableClickEvent event) {
+						SimpleCase cases = (SimpleCase) event.getData();
+						if ("subject".equals(event.getFieldName())) {
+							EventBus.getInstance()
+									.fireEvent(
+											new CaseEvent.GotoRead(this, cases
+													.getId()));
+						} else if ("accountName".equals(event.getFieldName())) {
+							EventBus.getInstance().fireEvent(
+									new AccountEvent.GotoRead(this, cases
+											.getAccountid()));
+						}
+					}
+				});
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        SimpleCase cases = tableItem
-                                .getBeanByIndex(itemId);
-                        tableItem.fireSelectItemEvent(cases);
+		listLayout.addComponent(constructTableActionControls());
+		listLayout.addComponent(tableItem);
+	}
 
-                    }
-                });
+	@Override
+	public HasSearchHandlers<CaseSearchCriteria> getSearchHandlers() {
+		return searchPanel;
+	}
 
-                SimpleCase cases = tableItem
-                        .getBeanByIndex(itemId);
-                cases.setExtraData(cb);
-                return cb;
-            }
-        });
+	private ComponentContainer constructTableActionControls() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
 
-        tableItem.addGeneratedColumn("subject", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+		selectOptionButton = new SelectionOptionButton(tableItem);
+		layout.addComponent(selectOptionButton);
 
-            @Override
-            public Object generateCell(Table source, Object itemId,
-                    Object columnId) {
-                final SimpleCase cases = tableItem
-                        .getBeanByIndex(itemId);
-                ButtonLink b = new ButtonLink(cases.getSubject(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
+		tableActionControls = new PopupButtonControl("delete", "Delete");
+		tableActionControls.addOptionItem("mail", "Mail");
+		tableActionControls.addOptionItem("export", "Export");
 
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                EventBus.getInstance().fireEvent(
-                                        new CaseEvent.GotoRead(this, cases
-                                        .getId()));
-                            }
-                        });
-                b.addStyleName("medium-text");
-                return b;
-            }
-        });
+		layout.addComponent(tableActionControls);
+		layout.addComponent(selectedItemsNumberLabel);
+		layout.setComponentAlignment(selectedItemsNumberLabel,
+				Alignment.MIDDLE_CENTER);
+		return layout;
+	}
 
-        tableItem.addGeneratedColumn("accountName", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+	@Override
+	public void enableActionControls(int numOfSelectedItems) {
+		tableActionControls.setEnabled(true);
+		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+	}
 
-            @Override
-            public Object generateCell(Table source, Object itemId,
-                    Object columnId) {
-                final SimpleCase cases = tableItem
-                        .getBeanByIndex(itemId);
-                ButtonLink b = new ButtonLink(cases.getAccountName(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
+	@Override
+	public void disableActionControls() {
+		tableActionControls.setEnabled(false);
+		selectedItemsNumberLabel.setValue("");
+	}
 
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                EventBus.getInstance().fireEvent(
-                                        new AccountEvent.GotoRead(this, cases
-                                        .getAccountid()));
-                            }
-                        });
-                return b;
-            }
-        });
+	@Override
+	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+		return selectOptionButton;
+	}
 
-        tableItem.addGeneratedColumn("createdtime", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+	@Override
+	public HasPopupActionHandlers getPopupActionHandlers() {
+		return tableActionControls;
+	}
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    Object itemId, Object columnId) {
-                final SimpleCase cases = tableItem
-                        .getBeanByIndex(itemId);
-                Label l = new Label();
+	@Override
+	public HasSelectableItemHandlers<SimpleCase> getSelectableItemHandlers() {
+		return tableItem;
+	}
 
-                l.setValue(AppContext.formatDateTime(cases.getCreatedtime()));
-                return l;
-            }
-        });
-
-        tableItem.setColumnExpandRatio("subject", 1);
-        tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-        tableItem
-                .setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
-        tableItem.setColumnWidth("billingCountry",
-                UIConstants.TABLE_X_LABEL_WIDTH);
-        tableItem.setColumnWidth("priority", UIConstants.TABLE_M_LABEL_WIDTH);
-        tableItem.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
-        tableItem.setColumnWidth("assignUserFullName",
-                UIConstants.TABLE_X_LABEL_WIDTH);
-        tableItem.setColumnWidth("createdtime", UIConstants.TABLE_DATE_TIME_WIDTH);
-
-        tableItem.setWidth("100%");
-
-        listLayout.addComponent(constructTableActionControls());
-        listLayout.addComponent(tableItem);
-    }
-
-    @Override
-    public HasSearchHandlers<CaseSearchCriteria> getSearchHandlers() {
-        return searchPanel;
-    }
-
-    private ComponentContainer constructTableActionControls() {
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setSpacing(true);
-
-        selectOptionButton = new SelectionOptionButton(tableItem);
-        layout.addComponent(selectOptionButton);
-
-        tableActionControls = new PopupButtonControl("delete", "Delete");
-        tableActionControls.addOptionItem("mail", "Mail");
-        tableActionControls.addOptionItem("export", "Export");
-
-        layout.addComponent(tableActionControls);
-        layout.addComponent(selectedItemsNumberLabel);
-        layout.setComponentAlignment(selectedItemsNumberLabel,
-                Alignment.MIDDLE_CENTER);
-        return layout;
-    }
-
-    @Override
-    public void enableActionControls(int numOfSelectedItems) {
-        tableActionControls.setEnabled(true);
-        selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
-    }
-
-    @Override
-    public void disableActionControls() {
-        tableActionControls.setEnabled(false);
-        selectedItemsNumberLabel.setValue("");
-    }
-
-    @Override
-    public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-        return selectOptionButton;
-    }
-
-    @Override
-    public HasPopupActionHandlers getPopupActionHandlers() {
-        return tableActionControls;
-    }
-
-    @Override
-    public HasSelectableItemHandlers<SimpleCase> getSelectableItemHandlers() {
-        return tableItem;
-    }
-
-    @Override
-    public IPagedBeanTable<CaseSearchCriteria, SimpleCase> getPagedBeanTable() {
-        return tableItem;
-    }
+	@Override
+	public IPagedBeanTable<CaseSearchCriteria, SimpleCase> getPagedBeanTable() {
+		return tableItem;
+	}
 }
