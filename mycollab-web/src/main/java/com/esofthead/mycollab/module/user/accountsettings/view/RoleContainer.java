@@ -12,6 +12,11 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class RoleContainer extends AbstractView{
+public class RoleContainer extends AbstractView {
+    private RoleController controller;
     
+    public RoleContainer() {
+        controller = new RoleController(this);
+        this.setWidth("900px");
+    }
 }

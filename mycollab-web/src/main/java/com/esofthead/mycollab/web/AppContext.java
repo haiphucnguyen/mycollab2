@@ -133,7 +133,10 @@ public class AppContext implements TransactionListener, Serializable {
     }
 
     public static Object getVariable(String key) {
-        return instance.get().variables.get(key);
+        if (instance.get() != null) {
+            return instance.get().variables.get(key);
+        }
+        return null;
     }
 
     static void clearAllVariables() {

@@ -1,26 +1,27 @@
 package com.esofthead.mycollab.module.user.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
-public class RoleSearchCriteria {
-	private StringSearchField username;
-	
-	private NumberSearchField accountid;
+public class RoleSearchCriteria extends SearchCriteria {
 
-	public StringSearchField getUsername() {
-		return username;
-	}
+    private StringSearchField username;
+    private NumberSearchField sAccountid;
 
-	public void setUsername(StringSearchField username) {
-		this.username = username;
-	}
+    public StringSearchField getUsername() {
+        return username;
+    }
 
-	public NumberSearchField getAccountid() {
-		return accountid;
-	}
+    public void setUsername(StringSearchField username) {
+        this.username = username;
+    }
 
-	public void setAccountid(NumberSearchField accountid) {
-		this.accountid = accountid;
-	}
+    public NumberSearchField getsAccountid() {
+        return sAccountid;
+    }
+
+    public void setsAccountid(NumberSearchField sAccountid) {
+        this.sAccountid = sAccountid;
+    }
 }
