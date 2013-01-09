@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;

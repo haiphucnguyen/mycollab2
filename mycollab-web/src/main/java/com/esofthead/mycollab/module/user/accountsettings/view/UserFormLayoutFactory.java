@@ -68,6 +68,8 @@ public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
 
             informationLayout = new GridFormLayoutHelper(2, 6);
             informationLayout.getLayout().setWidth("900px");
+            
+            layout.addComponent(informationLayout.getLayout());
             return layout;
         }
 
