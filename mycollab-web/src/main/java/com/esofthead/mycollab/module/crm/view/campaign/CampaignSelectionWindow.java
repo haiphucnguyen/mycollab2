@@ -17,6 +17,7 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
@@ -65,12 +66,14 @@ public class CampaignSelectionWindow extends Window {
 	private void addTextFieldSearch() {
 		textValueField = new TextField();
 		layoutSearchPane.addComponent(textValueField, 0, 0);
+		layoutSearchPane.setComponentAlignment(textValueField, Alignment.MIDDLE_CENTER);
 	}
 
 	private void addDateFieldSearch() {
 		dateSearchField = new DateSelectionField();
 		dateSearchField.setDateFormat(AppContext.getDateFormat());
 		layoutSearchPane.addComponent(dateSearchField, 0, 0);
+		layoutSearchPane.setComponentAlignment(dateSearchField, Alignment.MIDDLE_CENTER);
 	}
 
 	private void removeComponents() {
@@ -105,7 +108,7 @@ public class CampaignSelectionWindow extends Window {
 		});
 
 		layoutSearchPane.addComponent(group, 1, 0);
-
+		layoutSearchPane.setComponentAlignment(group, Alignment.MIDDLE_CENTER);
 		addTextFieldSearch();
 
 		Button searchBtn = new Button("Search");
@@ -164,15 +167,16 @@ public class CampaignSelectionWindow extends Window {
 			}
 		});
 		layoutSearchPane.addComponent(searchBtn, 2, 0);
+		layoutSearchPane.setComponentAlignment(searchBtn, Alignment.MIDDLE_CENTER);
 		return layoutSearchPane;
 	}
 
+	@SuppressWarnings("serial")
 	private void createCampaignList() {
 		tableItem = new CampaignTableDisplay(new String[] { "campaignname",
 				"type", "status", "startdate", "enddate" }, new String[] {
 				"Campaign", "Type", "Status", "Start Date", "End Date" });
 		tableItem.setWidth("100%");
-
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					@Override

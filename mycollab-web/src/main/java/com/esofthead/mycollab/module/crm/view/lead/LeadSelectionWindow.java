@@ -16,6 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
@@ -62,12 +63,14 @@ public class LeadSelectionWindow extends Window {
 	private void addTextFieldSearch() {
 		textValueField = new TextField();
 		layoutSearchPane.addComponent(textValueField, 0, 0);
+		layoutSearchPane.setComponentAlignment(textValueField, Alignment.MIDDLE_CENTER);
 	}
 
 	private void addUserListSelectField() {
 		userBox = new UserComboBox();
 		userBox.setImmediate(true);
 		layoutSearchPane.addComponent(userBox, 0, 0);
+		layoutSearchPane.setComponentAlignment(userBox, Alignment.MIDDLE_CENTER);
 	}
 	
 	private void removeComponents() {
@@ -104,7 +107,7 @@ public class LeadSelectionWindow extends Window {
 		});
 		
 		layoutSearchPane.addComponent(group, 1, 0);
-		
+		layoutSearchPane.setComponentAlignment(group, Alignment.MIDDLE_CENTER);
 		addTextFieldSearch(); 
 
 		Button searchBtn = new Button("Search");
@@ -149,6 +152,7 @@ public class LeadSelectionWindow extends Window {
 			}
 		});
 		layoutSearchPane.addComponent(searchBtn, 2, 0);
+		layoutSearchPane.setComponentAlignment(searchBtn, Alignment.MIDDLE_CENTER);
 		return layoutSearchPane;
 	}
 
@@ -158,7 +162,6 @@ public class LeadSelectionWindow extends Window {
                     "assignUserFullName", "accountname"}, new String[]{"Name",
                     "Status", "Assign User", "Account name"});
         tableItem.setWidth("100%");
-
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override
             public Class<? extends ApplicationEvent> getEventType() {

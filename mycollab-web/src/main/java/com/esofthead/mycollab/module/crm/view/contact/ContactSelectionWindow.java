@@ -7,23 +7,21 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.EmailLink;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.Table;
-import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -32,13 +30,12 @@ public class ContactSelectionWindow extends Window {
 
     private static final long serialVersionUID = 1L;
     private ContactSearchCriteria searchCriteria;
-    private PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact> tableItem;
+    private ContactTableDisplay tableItem;
     private FieldSelection fieldSelection;
 
     public ContactSelectionWindow(FieldSelection fieldSelection) {
         super("Contact Name Lookup");
-        this.setWidth("1035px");
-
+        this.setWidth("900px");
         this.fieldSelection = fieldSelection;
     }
 
@@ -67,12 +64,14 @@ public class ContactSelectionWindow extends Window {
     private void addTextFieldSearch() {
         textValueField = new TextField();
         layoutSearchPane.addComponent(textValueField, 0, 0);
+        layoutSearchPane.setComponentAlignment(textValueField, Alignment.MIDDLE_CENTER);
     }
 
     private void addUserListSelectField() {
         userBox = new UserComboBox();
         userBox.setImmediate(true);
         layoutSearchPane.addComponent(userBox, 0, 0);
+        layoutSearchPane.setComponentAlignment(userBox, Alignment.MIDDLE_CENTER);
     }
 
     private void removeComponents() {
@@ -108,7 +107,7 @@ public class ContactSelectionWindow extends Window {
         });
 
         layoutSearchPane.addComponent(group, 1, 0);
-
+        layoutSearchPane.setComponentAlignment(group, Alignment.MIDDLE_CENTER);
         addTextFieldSearch();
 
         Button searchBtn = new Button("Search");
@@ -152,17 +151,16 @@ public class ContactSelectionWindow extends Window {
             }
         });
         layoutSearchPane.addComponent(searchBtn, 2, 0);
+        layoutSearchPane.setComponentAlignment(searchBtn, Alignment.MIDDLE_CENTER);
         return layoutSearchPane;
     }
 
-    private void createAccountList() {
-        tableItem = new PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>(
-                AppContext.getSpringBean(ContactService.class),
-                SimpleContact.class, new String[]{"contactName",
+    @SuppressWarnings("serial")
+	private void createAccountList() {
+        tableItem = new ContactTableDisplay(new String[]{"contactName",
                     "officephone", "email", "assignUserFullName"},
                 new String[]{"Name", "Phone", "Email", "Assign User"});
         tableItem.setWidth("100%");
-
         tableItem.setColumnExpandRatio("contactName", 1.0f);
         tableItem
                 .setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
@@ -170,41 +168,24 @@ public class ContactSelectionWindow extends Window {
         tableItem.setColumnWidth("assignUserFullName",
                 UIConstants.TABLE_X_LABEL_WIDTH);
 
-        tableItem.addGeneratedColumn("contactName", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+        
+	    tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+			@Override
+			public Class<? extends ApplicationEvent> getEventType() {
+				return TableClickEvent.class;
+			}
+	
+			@Override
+			public void handle(TableClickEvent event) {
+				SimpleContact contact = (SimpleContact) event.getData();
+				if ("contactName".equals(event.getFieldName())) {
+					 fieldSelection.fireValueChange(contact);
+                     ContactSelectionWindow.this.getParent()
+                             .removeWindow(
+                             ContactSelectionWindow.this);
+				}
+			}
+		});
 
-            public com.vaadin.ui.Component generateCell(final Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleContact contact = tableItem
-                        .getBeanByIndex(itemId);
-                ButtonLink b = new ButtonLink(contact.getContactName(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                fieldSelection.fireValueChange(contact);
-                                ContactSelectionWindow.this.getParent()
-                                        .removeWindow(
-                                        ContactSelectionWindow.this);
-                            }
-                        });
-                b.addStyleName("medium-text");
-                return b;
-            }
-        });
-
-        tableItem.addGeneratedColumn("email", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    Object itemId, Object columnId) {
-                SimpleContact contact = tableItem
-                        .getBeanByIndex(itemId);
-                return new EmailLink(contact.getEmail());
-
-            }
-        });
     }
 }
