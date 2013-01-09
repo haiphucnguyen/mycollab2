@@ -12,64 +12,64 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
-    
+
     private static final long serialVersionUID = 1L;
     private String title;
     private AccountInformationLayout informationLayout;
-    
+
     public AccountFormLayoutFactory(String title) {
         this.title = title;
     }
-    
+
     @Override
     public Layout getLayout() {
         AddViewLayout accountAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/crm/account.png"));
-        
+
         Layout topPanel = createTopPanel();
         if (topPanel != null) {
             accountAddLayout.addTopControls(topPanel);
         }
-        
+
         informationLayout = new AccountInformationLayout();
         accountAddLayout.addBody(informationLayout.getLayout());
-        
+
         Layout bottomPanel = createBottomPanel();
         if (bottomPanel != null) {
             accountAddLayout.addBottomControls(bottomPanel);
         }
-        
+
         return accountAddLayout;
     }
-    
+
     protected abstract Layout createTopPanel();
-    
+
     protected abstract Layout createBottomPanel();
-    
+
     @Override
     public void attachField(Object propertyId, Field field) {
         informationLayout.attachField(propertyId, field);
     }
-    
+
     public static class AccountInformationLayout implements IFormLayoutFactory {
-        
+
         private VerticalLayout layout;
         private GridFormLayoutHelper informationLayout;
         private GridFormLayoutHelper addressLayout;
         private GridFormLayoutHelper descriptionLayout;
-        
+
         @Override
         public Layout getLayout() {
             layout = new VerticalLayout();
             Label organizationHeader = new Label("Account Information");
             organizationHeader.setStyleName("h2");
             layout.addComponent(organizationHeader);
-            
+
             informationLayout = new GridFormLayoutHelper(2, 6);
             informationLayout.getLayout().setWidth("900px");
             layout.addComponent(informationLayout.getLayout());
             layout.setComponentAlignment(informationLayout.getLayout(),
                     Alignment.BOTTOM_CENTER);
-            
+
             addressLayout = new GridFormLayoutHelper(2, 4);
             Label addressHeader = new Label("Address Information");
             addressHeader.setStyleName("h2");
@@ -78,7 +78,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
             layout.addComponent(addressLayout.getLayout());
             layout.setComponentAlignment(addressLayout.getLayout(),
                     Alignment.BOTTOM_CENTER);
-            
+
             descriptionLayout = new GridFormLayoutHelper(2, 1);
             Label descHeader = new Label("Description");
             descHeader.setStyleName("h2");
@@ -87,7 +87,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
             layout.addComponent(descriptionLayout.getLayout());
             return layout;
         }
-        
+
         @Override
         public void attachField(Object propertyId, Field field) {
             informationLayout.addComponent(propertyId.equals("accountname"), field,
@@ -114,7 +114,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
                     "Assign User", 0, 5);
             informationLayout.addComponent(propertyId.equals("annualrevenue"),
                     field, "Annual Revenue", 1, 5);
-            
+
             addressLayout.addComponent(propertyId.equals("billingaddress"), field,
                     "Billing Address", 0, 0);
             addressLayout.addComponent(propertyId.equals("shippingaddress"), field,
@@ -131,7 +131,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
                     "Postal Code", 0, 3);
             addressLayout.addComponent(propertyId.equals("shippingpostalcode"),
                     field, "Shipping Postal Code", 1, 3);
-            
+
             if (propertyId.equals("description")) {
                 field.setSizeUndefined();
                 descriptionLayout.addComponent(field, "Description", 0, 0, 2,
