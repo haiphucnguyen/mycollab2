@@ -6,7 +6,7 @@ package com.esofthead.mycollab.module.project.view.message;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
-import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
+import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;

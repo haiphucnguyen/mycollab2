@@ -14,56 +14,56 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class TaskAddPresenter extends CrmGenericPresenter<TaskAddView> {
-	private static final long serialVersionUID = 1L;
 
-	public TaskAddPresenter(TaskAddView view) {
-		super(TaskAddView.class);
+    private static final long serialVersionUID = 1L;
 
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Task>() {
+    public TaskAddPresenter(TaskAddView view) {
+        super(TaskAddView.class);
 
-			@Override
-			public void onSave(final Task item) {
-				save(item);
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.GotoTodoList(this, null));
-				}
-			}
+        view.getEditFormHandlers().addFormHandler(new EditFormHandler<Task>() {
+            @Override
+            public void onSave(final Task item) {
+                save(item);
+                ViewState viewState = HistoryViewManager.back();
+                if (viewState instanceof NullViewState) {
+                    EventBus.getInstance().fireEvent(
+                            new ActivityEvent.GotoTodoList(this, null));
+                }
+            }
 
-			@Override
-			public void onCancel() {
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.GotoTodoList(this, null));
-				}
-			}
+            @Override
+            public void onCancel() {
+                ViewState viewState = HistoryViewManager.back();
+                if (viewState instanceof NullViewState) {
+                    EventBus.getInstance().fireEvent(
+                            new ActivityEvent.GotoTodoList(this, null));
+                }
+            }
 
-			@Override
-			public void onSaveAndNew(final Task item) {
-				save(item);
-				EventBus.getInstance().fireEvent(
-						new ActivityEvent.TaskAdd(this, null));
-			}
-		});
-	}
+            @Override
+            public void onSaveAndNew(final Task item) {
+                save(item);
+                EventBus.getInstance().fireEvent(
+                        new ActivityEvent.TaskAdd(this, null));
+            }
+        });
+    }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		super.onGo(container, data);
-		view.editItem((Task) data.getParams());
-	}
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        super.onGo(container, data);
+        view.editItem((Task) data.getParams());
+    }
 
-	public void save(Task item) {
-		TaskService taskService = AppContext.getSpringBean(TaskService.class);
+    public void save(Task item) {
+        TaskService taskService = AppContext.getSpringBean(TaskService.class);
 
-		item.setSaccountid(AppContext.getAccountId());
-		if (item.getId() == null) {
-			taskService.saveWithSession(item, AppContext.getUsername());
-		} else {
-			taskService.updateWithSession(item, AppContext.getUsername());
-		}
+        item.setSaccountid(AppContext.getAccountId());
+        if (item.getId() == null) {
+            taskService.saveWithSession(item, AppContext.getUsername());
+        } else {
+            taskService.updateWithSession(item, AppContext.getUsername());
+        }
 
-	}
+    }
 }

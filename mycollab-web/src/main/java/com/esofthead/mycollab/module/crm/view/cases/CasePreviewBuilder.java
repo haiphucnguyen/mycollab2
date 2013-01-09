@@ -5,7 +5,7 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.module.crm.ui.components.AddViewLayout;
+import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.account.AccountFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.account.AccountHistoryLogWindow;

@@ -20,6 +20,8 @@ public class EditFormControlsGenerator<T> implements Serializable {
         HorizontalLayout layout = new HorizontalLayout();
         layout.setSpacing(true);
         layout.setStyleName("addNewControl");
+        
+        
         Button saveBtn = new Button(GenericForm.SAVE_ACTION,
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;

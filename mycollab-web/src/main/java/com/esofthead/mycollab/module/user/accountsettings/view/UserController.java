@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -17,13 +18,14 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
  * @author haiphucnguyen
  */
 public class UserController {
+
     private UserContainer container;
-    
+
     public UserController(UserContainer container) {
         this.container = container;
         bindUserEvents();
     }
-    
+
     private void bindUserEvents() {
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<UserEvent.GotoAdd>() {
@@ -38,6 +40,22 @@ public class UserController {
                                 .getPresenter(UserAddPresenter.class);
                         presenter.go(container, new ScreenData.Add<User>(
                                 new User()));
+                    }
+                });
+
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<UserEvent.GotoRead>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return UserEvent.GotoRead.class;
+                    }
+
+                    @Override
+                    public void handle(UserEvent.GotoRead event) {
+                        UserReadPresenter presenter = PresenterResolver
+                                .getPresenter(UserReadPresenter.class);
+                        presenter.go(container, new ScreenData.Preview<SimpleUser>(
+                                (SimpleUser) event.getData()));
                     }
                 });
     }
