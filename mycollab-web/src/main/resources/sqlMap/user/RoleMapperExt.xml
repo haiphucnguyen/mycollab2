@@ -4,7 +4,7 @@
     <sql id="querySearchCriteria">
         <if test="sAccountId != null">
           <![CDATA[
-            ${sAccountId.operation} s_roles.sAccountId = #{sAccountId.value}
+            ${sAccountId.operation} s_roles.sAccountId = ${sAccountId.value}
             ]]>
         </if>
     </sql>

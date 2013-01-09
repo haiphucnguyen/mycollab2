@@ -16,12 +16,13 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
+import java.io.Serializable;
 
 /**
  *
  * @author haiphucnguyen
  */
-public class UserController {
+public class UserController implements Serializable {
 
     private UserContainer container;
 

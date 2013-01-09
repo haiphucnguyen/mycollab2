@@ -14,4 +14,6 @@ public interface AccountReadView extends IPreviewView<SimpleAccount> {
 	IRelatedListHandlers getRelatedOpportunityHandlers();
 
 	IRelatedListHandlers getRelatedLeadHandlers();
+        
+        IRelatedListHandlers getRelatedCaseHandlers();
 }

@@ -1,25 +1,32 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.esofthead.mycollab.module.crm.view.account;
 
-import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
-import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
-import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.crm.domain.SimpleCase;
+import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
-import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityTableDisplay;
+import com.esofthead.mycollab.module.crm.view.cases.CaseTableDisplay;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
-public class AccountOpportunityListComp extends RelatedListComp<OpportunitySearchCriteria> {
+/**
+ *
+ * @author haiphucnguyen
+ */
+public class AccountCaseListComp extends RelatedListComp<CaseSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
 
-    public AccountOpportunityListComp() {
-        super("Opportunities");
+    public AccountCaseListComp() {
+        super("Cases");
 
         initUI();
     }
@@ -27,11 +34,10 @@ public class AccountOpportunityListComp extends RelatedListComp<OpportunitySearc
     private void initUI() {
         VerticalLayout contentContainer = (VerticalLayout) content;
         contentContainer.setSpacing(true);
-        
-        Button newBtn = new Button("New Opportunity", new Button.ClickListener() {
 
+        Button newBtn = new Button("New Case", new Button.ClickListener() {
             @Override
-            public void buttonClick(ClickEvent event) {
+            public void buttonClick(Button.ClickEvent event) {
                 fireRelatedListHandler();
             }
         });
@@ -39,10 +45,10 @@ public class AccountOpportunityListComp extends RelatedListComp<OpportunitySearc
 
         contentContainer.addComponent(newBtn);
 
-        tableItem = new OpportunityTableDisplay(new String[]{"opportunityname",
-                    "salesstage", "amount", "expectedcloseddate",
-                    "assignUserFullName", "id"}, new String[]{"Name",
-                    "Sales Stage", "Amount", "Close", "User", "Action"});
+        tableItem = new CaseTableDisplay(new String[]{"subject",
+                    "priority", "status", "assignUserFullName",
+                    "createdtime"}, new String[]{"Subject", "Priority", "Status", "Assigned To",
+                    "Date Created"});
 
         tableItem.addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
             @Override
@@ -52,11 +58,11 @@ public class AccountOpportunityListComp extends RelatedListComp<OpportunitySearc
 
             @Override
             public void handle(IPagedBeanTable.TableClickEvent event) {
-                SimpleOpportunity opportunity = (SimpleOpportunity) event.getData();
-                if ("opportunityname".equals(event.getFieldName())) {
+                SimpleCase cases = (SimpleCase) event.getData();
+                if ("subject".equals(event.getFieldName())) {
                     EventBus.getInstance().fireEvent(
-                            new OpportunityEvent.GotoRead(this,
-                            opportunity.getId()));
+                            new CaseEvent.GotoRead(this,
+                            cases.getId()));
                 }
             }
         });

@@ -87,7 +87,7 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
                         @Override
                         public void buttonClick(Button.ClickEvent event) {
                             searchCriteria = new RoleSearchCriteria();
-                            searchCriteria.setsAccountid(new NumberSearchField(AppContext.getAccountId()));
+                            searchCriteria.setsAccountId(new NumberSearchField(AppContext.getAccountId()));
 
                             RoleSearchPanel.this
                                     .notifySearchHandler(searchCriteria);

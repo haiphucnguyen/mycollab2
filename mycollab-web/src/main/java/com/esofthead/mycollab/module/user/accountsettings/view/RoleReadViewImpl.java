@@ -15,6 +15,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -23,7 +24,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class RoleReadViewImpl  extends AbstractView implements RoleReadView {
+public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 
     private static final long serialVersionUID = 1L;
     private PreviewForm previewForm;
@@ -81,9 +82,12 @@ public class RoleReadViewImpl  extends AbstractView implements RoleReadView {
 
             @Override
             protected Layout createBottomPanel() {
-                VerticalLayout relatedItemsPanel = new VerticalLayout();
+                VerticalLayout permissionsPanel = new VerticalLayout();
+                Label organizationHeader = new Label("Permissions");
+                organizationHeader.setStyleName("h2");
+                permissionsPanel.addComponent(organizationHeader);
 
-                return relatedItemsPanel;
+                return permissionsPanel;
             }
         }
     }
@@ -92,5 +96,4 @@ public class RoleReadViewImpl  extends AbstractView implements RoleReadView {
     public Role getItem() {
         return role;
     }
-    
 }

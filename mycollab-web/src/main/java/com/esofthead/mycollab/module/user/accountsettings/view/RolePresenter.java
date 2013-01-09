@@ -27,7 +27,7 @@ public class RolePresenter extends AbstractPresenter<RoleContainer> {
         if (data == null) {
             RoleListPresenter listPresenter = PresenterResolver.getPresenter(RoleListPresenter.class);
             RoleSearchCriteria criteria = new RoleSearchCriteria();
-            criteria.setsAccountid(new NumberSearchField(AppContext.getAccountId()));
+            criteria.setsAccountId(new NumberSearchField(AppContext.getAccountId()));
             listPresenter.go(view.getWidget(), new ScreenData.Search<RoleSearchCriteria>(criteria));
         }
     }

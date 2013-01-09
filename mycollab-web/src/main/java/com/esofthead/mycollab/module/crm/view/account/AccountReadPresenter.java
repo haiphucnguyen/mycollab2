@@ -1,12 +1,13 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.domain.Account;
-import com.esofthead.mycollab.module.crm.domain.Contact;
+import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
@@ -94,6 +95,17 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                         lead.setAccountname(view.getItem().getAccountname());
                         EventBus.getInstance().fireEvent(
                                 new LeadEvent.GotoEdit(this, lead));
+                    }
+                });
+        
+        view.getRelatedCaseHandlers().addRelatedListHandler(
+                new RelatedListHandler() {
+                    @Override
+                    public void createNewRelatedItem() {
+                        Case cases = new Case();
+                        cases.setAccountid(view.getItem().getId());
+                        EventBus.getInstance().fireEvent(
+                                new CaseEvent.GotoEdit(this, cases));
                     }
                 });
     }
