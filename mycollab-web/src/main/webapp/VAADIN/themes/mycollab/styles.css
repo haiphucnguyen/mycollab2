@@ -31,9 +31,9 @@ only screen and (max-device-width : 1024px) {
 	.accountViewContainer {
 		margin: 20px auto;
 	}
-	.menuContent .v-csslayout-projectTabContent {
-		min-width: 900px;
-	}
+/* 	.menuContent .v-csslayout-projectTabContent { */
+/* 		min-width: 900px; */
+/* 	} */
 }
 
 input:focus, textarea:focus {
@@ -651,11 +651,10 @@ input.v-textfield-errorField {
 	background-image: -o-linear-gradient(top,#F3F3F3,#DDDDDD);
 	background-image: linear-gradient(top,#F3F3F3,#DDDDDD);
 	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#f3f3f3',EndColorStr='#dddddd');
-	padding: 10px;
 	box-shadow: #BFBFBF 0px 1px 2px 1px;
 	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px;
+	border-top-right-radius: 0px;
+	border-bottom-right-radius: 0px;
 	border-bottom-left-radius: 5px;
 	border: 1px solid #8F8F8F;
 	max-width: 1130px;
@@ -680,6 +679,10 @@ input.v-textfield-errorField {
 	border-color: #CCC;
 	border-width: 0px 1px 0px 0px;
 	background: none; 
+}
+
+.projectDashboardView .v-csslayout-sidebar-menu .v-csslayout-margin {
+	margin: 10px 0px 10px 10px;
 }
 
 .projectDashboardView .sidebar-menu .v-label.sectionHeader{
@@ -713,8 +716,48 @@ input.v-textfield-errorField {
 	padding: 0px;
 }
 .v-csslayout-project-dashboard .v-csslayout-margin {
-	border: 1px solid #CCCCCC;
+	border-color:#8f8f8f;
+	border-style: solid;
+	border-width: 0px 0px 0px 1px;
 	background-color: #FFF;
+}
+.projectDashboardView .v-tabsheet-tabitem-selected {
+	background-color: #F3F3F3;
+}
+.projectDashboardView .v-tabsheet-tabitem.v-tabsheet-tabitem-selected .v-caption {
+	background-color: #F3F3F3;
+}
+.projectDashboardView .v-tabsheet-content {
+	background-color: #F3F3F3;
+}
+.projectDashboardView .addViewLayout {
+	border: none;
+	background: none;
+	box-shadow: none;
+	margin: 0px;
+}
+.projectDashboardView .addViewLayout .v-label-h2 {
+	padding: .67em 0 .33em 0;
+}
+.projectDashboardView .v-horizontallayout-menuContent > div > div:nth-child(2) {
+	background: url('icons/tabcontent-bg.png') repeat-y 0 0 #FFFFFF;
+}
+.v-csslayout-projectTabContent {
+	height: 100%;
+}
+.v-csslayout-projectTabContent .v-csslayout-margin {
+	padding: 10px;
+	border-style: solid;
+	border-color: #8f8f8f;
+	border-width: 1px 0px 0px 1px;
+	background-color: #fff;
+	height: 100%;
+}
+.projectDashboardView .v-csslayout-projectTabContent .basicSearch {
+	border:none;
+	background: none;
+	box-shadow: none;
+	padding: 0px;
 }
 /* End Project Management */
 
