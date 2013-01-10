@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
@@ -9,6 +10,7 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -45,6 +47,12 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
         Button selectBtn = new Button("Select from existing contacts", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
+                AccountContactSelectionWindow contactsWindow = new AccountContactSelectionWindow(AccountContactListComp.this);
+                ContactSearchCriteria criteria = new ContactSearchCriteria();
+                criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+                
+                getWindow().addWindow(contactsWindow);
+                contactsWindow.setSearchCriteria(criteria);
             }
         });
         selectBtn.setIcon(new ThemeResource("icons/16/select.png"));

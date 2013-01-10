@@ -36,7 +36,9 @@ public class ContactTableDisplay extends PagedBeanTable2<ContactService, Contact
                         SimpleContact contact = ContactTableDisplay.this
                                 .getBeanByIndex(itemId);
                         ContactTableDisplay.this.fireSelectItemEvent(contact);
-
+                        fireTableEvent(new TableClickEvent(
+                                ContactTableDisplay.this, contact,
+                                "selected"));
                     }
                 });
                 SimpleContact contact = ContactTableDisplay.this

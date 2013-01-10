@@ -47,4 +47,9 @@ public class RelatedListComp<S extends SearchCriteria> extends Depot implements 
 
         handlers.add(handler);
     }
+    
+    public void fireSelectedItems(Set selectedItems) {
+        System.out.println("Selected items: " + selectedItems.size());
+                
+    }
 }

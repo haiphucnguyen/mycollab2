@@ -129,7 +129,9 @@ public class AppContext implements TransactionListener, Serializable {
     }
 
     public static void putVariable(String key, Object value) {
-        instance.get().variables.put(key, value);
+        if (instance.get() != null) {
+            instance.get().variables.put(key, value);
+        }
     }
 
     public static Object getVariable(String key) {

@@ -1,9 +1,5 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.EventService;
@@ -18,6 +14,9 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
 
 public class EventListPresenter extends AbstractPresenter<EventListView>
 		implements ListPresenter<EventSearchCriteria> {

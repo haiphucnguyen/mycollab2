@@ -162,9 +162,6 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
         }
     }
 
-    /**
-     *
-     */
     public static class ReadView extends AccountPreviewBuilder {
 
         private final TabSheet tabContainer;
@@ -175,6 +172,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
         public ReadView() {
             accountAddLayout = new AddViewLayout("", new ThemeResource(
                     "icons/48/crm/account.png"));
+            accountAddLayout.addStyleName("preview");
             this.addComponent(accountAddLayout);
 
             tabContainer = new TabSheet();
