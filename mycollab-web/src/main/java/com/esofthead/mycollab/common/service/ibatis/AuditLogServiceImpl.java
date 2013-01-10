@@ -8,9 +8,10 @@ import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import java.beans.BeanInfo;
+import java.beans.Introspector;
+import java.beans.PropertyDescriptor;
 import java.io.StringWriter;
-import java.lang.reflect.Field;
-import java.lang.reflect.Method;
 import java.text.DateFormat;
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -23,6 +24,7 @@ import javax.xml.transform.TransformerException;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.dom.DOMSource;
 import javax.xml.transform.stream.StreamResult;
+import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -69,7 +71,6 @@ public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, Audit
 
         static public String getChangeSet(Object oldObj, Object newObj) {
             Class cl = oldObj.getClass();
-            Field[] declaredFields = cl.getDeclaredFields();
 
             DocumentBuilderFactory builderFactory = DocumentBuilderFactory
                     .newInstance();
@@ -84,22 +85,15 @@ public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, Audit
 
             Element changesetElement = document.createElement("changeset");
             document.appendChild(changesetElement);
-
-            for (int i = 0; i < declaredFields.length; i++) {
-                Field field = declaredFields[i];
-                String fieldname = field.getName();
-                String setterMethod = "set"
-                        + (char) (fieldname.charAt(0) + 'A' - 'a')
-                        + fieldname.substring(1);
-                String getterMethod = "get"
-                        + (char) (fieldname.charAt(0) + 'A' - 'a')
-                        + fieldname.substring(1);
-                try {
-                    Method getMethod = cl.getMethod(getterMethod, null);
-
-                    Object oldProp = getMethod.invoke(oldObj, null);
-                    Object newProp = getMethod.invoke(newObj, null);
-
+            try {
+                BeanInfo beanInfo = Introspector.getBeanInfo(cl,
+                        Object.class);
+                
+                for (PropertyDescriptor propertyDescriptor : beanInfo
+                    .getPropertyDescriptors()) {
+                    String fieldname = propertyDescriptor.getName();
+                    Object oldProp = PropertyUtils.getProperty(oldObj, fieldname);
+                    Object newProp = PropertyUtils.getProperty(newObj, fieldname);
                     if (newProp != null) {
                         if (oldProp == null) {
                             Element changelogElement = document
@@ -115,24 +109,25 @@ public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, Audit
                                         .createElement("changelog");
                                 changelogElement.setAttribute("field",
                                         fieldname);
-                                if (field.getType() == Date.class) {
-                                    changelogElement.setAttribute("newvalue",
-                                            formatDateW3C((Date) newProp));
-                                    changelogElement.setAttribute("oldvalue",
-                                            formatDateW3C((Date) oldProp));
-                                } else {
-                                    changelogElement.setAttribute("newvalue",
-                                            newProp.toString());
-                                    changelogElement.setAttribute("oldvalue",
-                                            oldProp.toString());
-                                }
+//                                if (field.getType() == Date.class) {
+//                                    changelogElement.setAttribute("newvalue",
+//                                            formatDateW3C((Date) newProp));
+//                                    changelogElement.setAttribute("oldvalue",
+//                                            formatDateW3C((Date) oldProp));
+//                                } else {
+//                                    changelogElement.setAttribute("newvalue",
+//                                            newProp.toString());
+//                                    changelogElement.setAttribute("oldvalue",
+//                                            oldProp.toString());
+//                                }
                                 changesetElement.appendChild(changelogElement);
                             }
                         }
                     }
-                } catch (Exception e) {
-                    log.error("There is error when convert changeset", e);
                 }
+            } catch (Exception e) {
+                log.error("There is error when convert changeset", e);
+                return "";
             }
 
             // convert xml document to string
