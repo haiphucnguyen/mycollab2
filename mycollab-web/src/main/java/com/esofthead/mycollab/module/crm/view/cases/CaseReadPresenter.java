@@ -9,8 +9,8 @@ import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.service.CaseService;
+import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
-import com.esofthead.mycollab.module.crm.view.RelatedListHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -61,7 +61,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
                 });
 
         view.getRelatedActivityHandlers().addRelatedListHandler(
-                new RelatedListHandler() {
+                new AbstractRelatedListHandler() {
                     @Override
                     public void createNewRelatedItem(String itemId) {
                         if (itemId.equals("task")) {
