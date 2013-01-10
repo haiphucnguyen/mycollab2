@@ -6,25 +6,26 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.TextField;
 
 public class DefaultEditFormFieldFactory extends DefaultFieldFactory {
-	private static final long serialVersionUID = 1L;
 
-	@Override
-	public Field createField(Item item, Object propertyId,
-			com.vaadin.ui.Component uiContext) {
-		Field field = onCreateField(item, propertyId, uiContext);
-		if (field == null) {
-			field = super.createField(item, propertyId, uiContext);
-			if (field instanceof TextField) {
-				((TextField) field).setNullRepresentation("");
-				((TextField) field).setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-				((TextField) field).setCaption(null);
-			}
-		}
-		return field;
-	}
+    private static final long serialVersionUID = 1L;
 
-	protected Field onCreateField(Item item, Object propertyId,
-			com.vaadin.ui.Component uiContext) {
-		return null;
-	}
+    @Override
+    public Field createField(Item item, Object propertyId,
+            com.vaadin.ui.Component uiContext) {
+        Field field = onCreateField(item, propertyId, uiContext);
+        if (field == null) {
+            field = super.createField(item, propertyId, uiContext);
+            if (field instanceof TextField) {
+                ((TextField) field).setNullRepresentation("");
+                ((TextField) field).setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+                ((TextField) field).setCaption(null);
+            }
+        }
+        return field;
+    }
+
+    protected Field onCreateField(Item item, Object propertyId,
+            com.vaadin.ui.Component uiContext) {
+        return null;
+    }
 }

@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.project.view.user;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
@@ -42,7 +43,7 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
         layout.addComponent(organizationHeader);
 
         informationLayout = new GridFormLayoutHelper(2, 2);
-        informationLayout.getLayout().setWidth("100%");
+        informationLayout.getLayout().setWidth("900px");
         layout.addComponent(informationLayout.getLayout());
         layout.setComponentAlignment(informationLayout.getLayout(),
                 Alignment.BOTTOM_CENTER);
@@ -52,7 +53,7 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
         layout.addComponent(financialHeader);
 
         financialLayout = new GridFormLayoutHelper(2, 3);
-        financialLayout.getLayout().setWidth("100%");
+        financialLayout.getLayout().setWidth("900px");
         layout.addComponent(financialLayout.getLayout());
         layout.setComponentAlignment(financialLayout.getLayout(),
                 Alignment.BOTTOM_CENTER);
@@ -62,7 +63,7 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
         layout.addComponent(descHeader);
 
         descriptionLayout = new GridFormLayoutHelper(2, 1);
-        descriptionLayout.getLayout().setWidth("100%");
+        descriptionLayout.getLayout().setWidth("900px");
         layout.addComponent(descriptionLayout.getLayout());
         layout.setComponentAlignment(descriptionLayout.getLayout(),
                 Alignment.BOTTOM_CENTER);
@@ -98,7 +99,8 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
         } else if (propertyId.equals("defaultovertimebillingrate")) {
             financialLayout.addComponent(field, "Overtime Rate", 1, 2);
         } else if (propertyId.equals("description")) {
-            descriptionLayout.addComponent(field, "Description", 0, 0, 2, "100%");
+            descriptionLayout.addComponent(field, "Description", 0, 0, 2,
+                    UIConstants.DEFAULT_2XCONTROL_WIDTH);
         }
     }
 

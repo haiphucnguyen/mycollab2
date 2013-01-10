@@ -8,10 +8,9 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
-import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
+import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
@@ -41,7 +40,7 @@ public class LeadPreviewBuilder extends VerticalLayout {
     protected void initRelatedComponent() {
         associateCampaignList = new LeadCampaignListComp();
         noteListItems = new NoteListItems("Notes");
-        associateActivityList = new EventRelatedItemListComp(CrmTypeConstants.LEAD, true);
+        associateActivityList = new EventRelatedItemListComp(true);
     }
 
     public void previewItem(SimpleLead lead) {

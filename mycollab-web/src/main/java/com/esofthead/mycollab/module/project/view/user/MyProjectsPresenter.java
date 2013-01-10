@@ -28,7 +28,7 @@ public class MyProjectsPresenter extends AbstractPresenter<MyProjectsContainer> 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         UserDashboardView projectViewContainer = (UserDashboardView) container;
-        projectViewContainer.gotoSubView("Risks");
+        projectViewContainer.gotoSubView("My Projects");
 
         view.removeAllComponents();
 

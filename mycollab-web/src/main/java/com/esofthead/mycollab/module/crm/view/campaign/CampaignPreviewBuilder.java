@@ -46,7 +46,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
         associateAccountList = new CampaignAccountListComp();
         associateContactList = new CampaignContactListComp();
         associateLeadList = new CampaignLeadListComp();
-        associateActivityList = new EventRelatedItemListComp(CrmTypeConstants.CAMPAIGN, true);
+        associateActivityList = new EventRelatedItemListComp(true);
         noteListItems = new NoteListItems("Notes");
     }
     

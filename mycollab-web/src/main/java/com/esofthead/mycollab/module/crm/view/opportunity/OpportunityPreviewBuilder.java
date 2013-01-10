@@ -44,7 +44,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
     protected void initRelatedComponent() {
         associateContactList = new OpportunityContactListComp();
         associateLeadList = new OpportunityLeadListComp();
-        associateActivityList = new EventRelatedItemListComp(CrmTypeConstants.OPPORTUNITY, true);
+        associateActivityList = new EventRelatedItemListComp(true);
         noteListItems = new NoteListItems("Notes");
     }
 

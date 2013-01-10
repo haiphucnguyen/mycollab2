@@ -45,7 +45,7 @@ public class CasePreviewBuilder extends VerticalLayout {
     protected void initRelatedComponent() {
         associateContactList = new CaseContactListComp();
         associateEventList = new CaseEventsListComp();
-        associateActivityList = new EventRelatedItemListComp(CrmTypeConstants.CASE, true);
+        associateActivityList = new EventRelatedItemListComp(true);
         noteListItems = new NoteListItems("Notes");
     }
 

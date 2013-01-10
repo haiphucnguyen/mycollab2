@@ -1,9 +1,9 @@
 package com.esofthead.mycollab.module.project.ui.components;
 
-import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -30,7 +30,7 @@ public class ProjectSearchPanel extends GenericSearchPanel<ProjectSearchCriteria
         layout.setWidth("100%");
         layout.setSpacing(true);
 
-        Label searchtitle = new Label("Your Projects");
+        Label searchtitle = new Label("Search Projects");
         searchtitle.setStyleName(Reindeer.LABEL_H2);
         layout.addComponent(searchtitle);
 

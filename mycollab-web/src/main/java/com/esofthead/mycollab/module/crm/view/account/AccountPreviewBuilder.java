@@ -51,7 +51,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
     protected void initRelatedComponent() {
         associateContactList = new AccountContactListComp();
-        associateActivityList = new EventRelatedItemListComp(CrmTypeConstants.ACCOUNT, true);
+        associateActivityList = new EventRelatedItemListComp(true);
         associateOpportunityList = new AccountOpportunityListComp();
         associateLeadList = new AccountLeadListComp();
         associateCaseList = new AccountCaseListComp();

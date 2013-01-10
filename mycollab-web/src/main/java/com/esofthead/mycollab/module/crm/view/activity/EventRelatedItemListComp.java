@@ -25,8 +25,8 @@ public class EventRelatedItemListComp extends RelatedListComp<EventSearchCriteri
 
     private boolean allowCreateNew;
 
-    public EventRelatedItemListComp(String title, boolean allowCreateNew) {
-        super(title);
+    public EventRelatedItemListComp(boolean allowCreateNew) {
+        super("Activities");
 
         this.allowCreateNew = allowCreateNew;
 

@@ -51,7 +51,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
     }
 
     @SuppressWarnings("serial")
-	public static class AccountInformationLayout implements IFormLayoutFactory {
+    public static class AccountInformationLayout implements IFormLayoutFactory {
 
         private VerticalLayout layout;
         private GridFormLayoutHelper informationLayout;
@@ -136,8 +136,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
             if (propertyId.equals("description")) {
                 field.setSizeUndefined();
                 descriptionLayout.addComponent(field, "Description", 0, 0, 2,
-                        UIConstants.DEFAULT_2XCONTROL_WIDTH,
-                        UIConstants.DEFAULT_2XCONTROL_HEIGHT);
+                        UIConstants.DEFAULT_2XCONTROL_WIDTH);
             }
         }
     }

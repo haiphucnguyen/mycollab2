@@ -42,7 +42,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 
     protected void initRelatedComponent() {
         associateOpportunityList = new ContactOpportunityListComp();
-        associateActivityList = new EventRelatedItemListComp(CrmTypeConstants.CONTACT, true);
+        associateActivityList = new EventRelatedItemListComp(true);
         noteListItems = new NoteListItems("Notes");
     }
 

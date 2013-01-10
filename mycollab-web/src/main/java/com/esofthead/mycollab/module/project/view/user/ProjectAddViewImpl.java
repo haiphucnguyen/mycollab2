@@ -86,7 +86,9 @@ public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
             protected Field onCreateField(Item item, Object propertyId,
                     com.vaadin.ui.Component uiContext) {
                 if (propertyId.equals("description")) {
-                   return new RichTextEditor(); 
+                   RichTextEditor field = new RichTextEditor(); 
+                   field.setHeight("350px");
+                   return field;
                 }
                 return null;
             }
