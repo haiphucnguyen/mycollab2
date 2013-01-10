@@ -1,18 +1,24 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
+import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.account.AccountFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.account.AccountHistoryLogWindow;
+import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
@@ -34,16 +40,31 @@ public class CasePreviewBuilder extends VerticalLayout {
     protected CaseContactListComp associateContactList;
     protected CaseEventsListComp associateEventList;
     protected NoteListItems noteListItems;
+    protected EventRelatedItemListComp associateActivityList;
 
     protected void initRelatedComponent() {
         associateContactList = new CaseContactListComp();
         associateEventList = new CaseEventsListComp();
+        associateActivityList = new EventRelatedItemListComp(CrmTypeConstants.CASE, true);
         noteListItems = new NoteListItems("Notes");
     }
 
     public void previewItem(SimpleCase item) {
         cases = item;
         previewForm.setItemDataSource(new BeanItem<SimpleCase>(cases));
+        displayActivities();
+    }
+    
+    public void displayActivities() {
+        EventSearchCriteria criteria = new EventSearchCriteria();
+        criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+        criteria.setType(new StringSearchField(SearchField.AND, CrmTypeConstants.CASE));
+        criteria.setTypeid(new NumberSearchField(cases.getId()));
+        associateActivityList.setSearchCriteria(criteria);
+    }
+
+    public EventRelatedItemListComp getAssociateActivityList() {
+        return associateActivityList;
     }
 
     public SimpleCase getCase() {
@@ -153,9 +174,8 @@ public class CasePreviewBuilder extends VerticalLayout {
 
             tabContainer.addTab(accountInformation, "Case Information");
 
-
-
             relatedItemsContainer = new VerticalLayout();
+            relatedItemsContainer.addComponent(associateActivityList);
             relatedItemsContainer.addComponent(associateEventList);
             relatedItemsContainer.addComponent(associateContactList);
             tabContainer.addTab(relatedItemsContainer, "More Information");
@@ -203,6 +223,7 @@ public class CasePreviewBuilder extends VerticalLayout {
 
                 relatedItemsPanel.addComponent(noteListItems);
 
+                relatedItemsPanel.addComponent(associateActivityList);
                 relatedItemsPanel.addComponent(associateEventList);
                 relatedItemsPanel.addComponent(associateContactList);
 

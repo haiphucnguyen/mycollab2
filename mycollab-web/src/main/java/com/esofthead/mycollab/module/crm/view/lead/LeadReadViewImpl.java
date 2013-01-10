@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -31,5 +32,10 @@ public class LeadReadViewImpl extends AbstractView implements LeadReadView {
     @Override
     public SimpleLead getItem() {
         return leadPreview.getLead();
+    }
+
+    @Override
+    public IRelatedListHandlers getRelatedActivityHandlers() {
+        return leadPreview.getAssociateActivityList();
     }
 }

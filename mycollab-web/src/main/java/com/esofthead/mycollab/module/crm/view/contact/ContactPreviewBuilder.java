@@ -3,14 +3,17 @@ package com.esofthead.mycollab.module.crm.view.contact;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
+import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
@@ -34,10 +37,12 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
     protected AdvancedPreviewBeanForm<Contact> previewForm;
     protected SimpleContact contact;
     protected ContactOpportunityListComp associateOpportunityList;
+    protected EventRelatedItemListComp associateActivityList;
     protected NoteListItems noteListItems;
 
     protected void initRelatedComponent() {
         associateOpportunityList = new ContactOpportunityListComp();
+        associateActivityList = new EventRelatedItemListComp(CrmTypeConstants.CONTACT, true);
         noteListItems = new NoteListItems("Notes");
     }
 
@@ -45,8 +50,18 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
         contact = item;
         previewForm.setItemDataSource(new BeanItem<SimpleContact>(contact));
         displayNotes();
+        displayActivities();
         displayAssociateOpportunityList();
     }
+
+    public ContactOpportunityListComp getAssociateOpportunityList() {
+        return associateOpportunityList;
+    }
+
+    public EventRelatedItemListComp getAssociateActivityList() {
+        return associateActivityList;
+    }
+    
 
     public SimpleContact getContact() {
         return contact;
@@ -58,6 +73,14 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 
     private void displayNotes() {
         noteListItems.showNotes(CrmTypeConstants.ACCOUNT, contact.getId());
+    }
+    
+    public void displayActivities() {
+        EventSearchCriteria criteria = new EventSearchCriteria();
+        criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+        criteria.setType(new StringSearchField(SearchField.AND, CrmTypeConstants.CONTACT));
+        criteria.setTypeid(new NumberSearchField(contact.getId()));
+        associateActivityList.setSearchCriteria(criteria);
     }
 
     private void displayAssociateOpportunityList() {
@@ -167,9 +190,8 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 
             tabContainer.addTab(accountInformation, "Contact Information");
 
-
-
             relatedItemsContainer = new VerticalLayout();
+            relatedItemsContainer.addComponent(associateActivityList);
             relatedItemsContainer.addComponent(associateOpportunityList);
             tabContainer.addTab(relatedItemsContainer, "More Information");
 
@@ -212,6 +234,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
                 relatedItemsPanel.setWidth("100%");
 
                 relatedItemsPanel.addComponent(noteListItems);
+                relatedItemsPanel.addComponent(associateActivityList);
                 relatedItemsPanel.addComponent(associateOpportunityList);
 
                 return relatedItemsPanel;

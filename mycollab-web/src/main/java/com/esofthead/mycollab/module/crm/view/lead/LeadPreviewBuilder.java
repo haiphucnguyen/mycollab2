@@ -1,15 +1,21 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
+import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
@@ -29,20 +35,35 @@ public class LeadPreviewBuilder extends VerticalLayout {
     protected AdvancedPreviewBeanForm<Lead> previewForm;
     protected SimpleLead lead;
     protected LeadCampaignListComp associateCampaignList;
+    protected EventRelatedItemListComp associateActivityList;
     protected NoteListItems noteListItems;
 
     protected void initRelatedComponent() {
         associateCampaignList = new LeadCampaignListComp();
         noteListItems = new NoteListItems("Notes");
+        associateActivityList = new EventRelatedItemListComp(CrmTypeConstants.LEAD, true);
     }
 
     public void previewItem(SimpleLead lead) {
         this.lead = lead;
         previewForm.setItemDataSource(new BeanItem<Lead>(lead));
+        displayActivities();
     }
 
     public SimpleLead getLead() {
         return lead;
+    }
+    
+    public void displayActivities() {
+        EventSearchCriteria criteria = new EventSearchCriteria();
+        criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+        criteria.setType(new StringSearchField(SearchField.AND, CrmTypeConstants.LEAD));
+        criteria.setTypeid(new NumberSearchField(lead.getId()));
+        associateActivityList.setSearchCriteria(criteria);
+    }
+
+    public EventRelatedItemListComp getAssociateActivityList() {
+        return associateActivityList;
     }
 
     public AdvancedPreviewBeanForm<Lead> getPreviewForm() {
@@ -138,8 +159,8 @@ public class LeadPreviewBuilder extends VerticalLayout {
 
                 @Override
                 protected void showHistory() {
-                	 LeadHistoryLogWindow historyLog = new LeadHistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.LEAD, lead.getId());
-                     getWindow().addWindow(historyLog);
+                    LeadHistoryLogWindow historyLog = new LeadHistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.LEAD, lead.getId());
+                    getWindow().addWindow(historyLog);
                 }
             };
 
@@ -155,6 +176,7 @@ public class LeadPreviewBuilder extends VerticalLayout {
 
 
             relatedItemsContainer = new VerticalLayout();
+            relatedItemsContainer.addComponent(associateActivityList);
             relatedItemsContainer.addComponent(associateCampaignList);
             tabContainer.addTab(relatedItemsContainer, "More Information");
 
@@ -198,6 +220,7 @@ public class LeadPreviewBuilder extends VerticalLayout {
 
                 relatedItemsPanel.addComponent(noteListItems);
 
+                relatedItemsPanel.addComponent(associateActivityList);
                 relatedItemsPanel.addComponent(associateCampaignList);
 
                 return relatedItemsPanel;
