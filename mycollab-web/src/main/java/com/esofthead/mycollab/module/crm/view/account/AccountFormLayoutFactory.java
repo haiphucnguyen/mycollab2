@@ -50,7 +50,8 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
         informationLayout.attachField(propertyId, field);
     }
 
-    public static class AccountInformationLayout implements IFormLayoutFactory {
+    @SuppressWarnings("serial")
+	public static class AccountInformationLayout implements IFormLayoutFactory {
 
         private VerticalLayout layout;
         private GridFormLayoutHelper informationLayout;
