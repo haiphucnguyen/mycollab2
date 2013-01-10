@@ -17,8 +17,8 @@ import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.AccountService;
+import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
-import com.esofthead.mycollab.module.crm.view.RelatedListHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -69,7 +69,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                 });
 
         view.getRelatedContactHandlers().addRelatedListHandler(
-                new RelatedListHandler() {
+                new AbstractRelatedListHandler() {
                     @Override
                     public void createNewRelatedItem(String itemId) {
                         SimpleContact contact = new SimpleContact();
@@ -80,7 +80,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                 });
 
         view.getRelatedOpportunityHandlers().addRelatedListHandler(
-                new RelatedListHandler() {
+                new AbstractRelatedListHandler() {
                     @Override
                     public void createNewRelatedItem(String itemId) {
                         Opportunity opportunity = new Opportunity();
@@ -93,7 +93,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                 });
 
         view.getRelatedLeadHandlers().addRelatedListHandler(
-                new RelatedListHandler() {
+                new AbstractRelatedListHandler() {
                     @Override
                     public void createNewRelatedItem(String itemId) {
                         Lead lead = new Lead();
@@ -104,7 +104,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                 });
 
         view.getRelatedCaseHandlers().addRelatedListHandler(
-                new RelatedListHandler() {
+                new AbstractRelatedListHandler() {
                     @Override
                     public void createNewRelatedItem(String itemId) {
                         Case cases = new Case();
@@ -115,7 +115,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                 });
 
         view.getRelatedActivityHandlers().addRelatedListHandler(
-                new RelatedListHandler() {
+                new AbstractRelatedListHandler() {
                     @Override
                     public void createNewRelatedItem(String itemId) {
                         if (itemId.equals("task")) {

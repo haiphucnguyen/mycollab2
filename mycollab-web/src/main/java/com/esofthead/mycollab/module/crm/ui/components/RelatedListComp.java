@@ -20,7 +20,6 @@ import java.util.Set;
 public class RelatedListComp<S extends SearchCriteria> extends Depot implements IRelatedListHandlers {
 
     protected Set<RelatedListHandler> handlers;
-    
     protected IPagedBeanTable<S, ?> tableItem;
 
     public RelatedListComp(String title) {
@@ -35,7 +34,7 @@ public class RelatedListComp<S extends SearchCriteria> extends Depot implements 
             }
         }
     }
-    
+
     public void setSearchCriteria(S criteria) {
         tableItem.setSearchCriteria(criteria);
     }
