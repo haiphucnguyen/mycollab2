@@ -21,26 +21,26 @@
     <sql id="querySearchCriteria" >
 
         <if test="problemname != null" >
-			${problemname.operation} m_prj_problem.issuename LIKE
-			'%${problemname.value}%'
+            ${problemname.operation} m_prj_problem.issuename LIKE
+            '%${problemname.value}%'
 
         </if>
 
         <if test="projectId != null" >
-			${projectId.operation} m_prj_problem.projectid =
-			#{projectId.value,javaType=INTEGER}
+            ${projectId.operation} m_prj_problem.projectid =
+            #{projectId.value,javaType=INTEGER}
 
         </if>
 
         <if test="raisedByUser != null" >
-			${raisedByUser.operation} m_prj_problem.raisedbyuser =
-			#{raisedByUser.value}
+            ${raisedByUser.operation} m_prj_problem.raisedbyuser =
+            #{raisedByUser.value}
 
         </if>
 
         <if test="assignToUser != null" >
-			${assignToUser.operation} m_prj_problem.assigntouser =
-			#{assignToUser.value}
+            ${assignToUser.operation} m_prj_problem.assigntouser =
+            #{assignToUser.value}
 
         </if>
     </sql>
@@ -67,13 +67,13 @@
         id="getTotalCount"
         parameterType="ProblemSearchCriteria"
         resultType="int" >
-		SELECT count(*) as totalCount FROM m_prj_problem
+        SELECT count(*) as totalCount FROM m_prj_problem
 
 
         <trim
             prefix="WHERE"
             prefixOverrides="AND | OR " >
-			1=1 
+            1=1 
 
             <include refid="com.esofthead.mycollab.module.project.dao.ProblemMapperExt.querySearchCriteria" />
         </trim>
@@ -89,7 +89,7 @@
         <trim
             prefix="WHERE"
             prefixOverrides="AND | OR " >
-			1=1 
+            1=1 
 
             <include refid="com.esofthead.mycollab.module.project.dao.ProblemMapperExt.querySearchCriteria" />
         </trim>

@@ -11,7 +11,8 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
  *
  * @author haiphucnguyen
  */
-public class TaskListSearchCriteria extends SearchCriteria{
+public class TaskListSearchCriteria extends SearchCriteria {
+
     private NumberSearchField projectId;
 
     public NumberSearchField getProjectId() {
@@ -21,5 +22,4 @@ public class TaskListSearchCriteria extends SearchCriteria{
     public void setProjectId(NumberSearchField projectId) {
         this.projectId = projectId;
     }
-    
 }

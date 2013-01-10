@@ -17,5 +17,6 @@ public class TaskPresenter extends AbstractPresenter<TaskView> {
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         ProjectView projectViewContainer = (ProjectView) container;
         view = (TaskView) projectViewContainer.gotoSubView("Tasks");
+        view.displayTakLists();
     }
 }

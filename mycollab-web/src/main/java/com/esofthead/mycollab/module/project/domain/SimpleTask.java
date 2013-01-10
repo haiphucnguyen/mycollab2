@@ -1,10 +1,10 @@
 package com.esofthead.mycollab.module.project.domain;
 
 public class SimpleTask extends Task {
-	private static final long serialVersionUID = 1L;
 
-	private String projectName;
-    
+    private static final long serialVersionUID = 1L;
+    private String projectName;
+    private String taskListName;
     private int numComments;
 
     public int getNumComments() {
@@ -21,5 +21,13 @@ public class SimpleTask extends Task {
 
     public void setProjectName(String projectName) {
         this.projectName = projectName;
+    }
+
+    public String getTaskListName() {
+        return taskListName;
+    }
+
+    public void setTaskListName(String taskListName) {
+        this.taskListName = taskListName;
     }
 }

@@ -13,6 +13,5 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
  * @author haiphucnguyen
  */
 public interface ProjectTaskListService extends
-		IDefaultService<Integer, TaskList, TaskListSearchCriteria>{
-    
+        IDefaultService<Integer, TaskList, TaskListSearchCriteria> {
 }

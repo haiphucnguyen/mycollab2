@@ -7,63 +7,68 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class TaskSearchCriteria extends SearchCriteria {
-	private StringSearchField username;
 
-	private BooleanSearchField iscompleted;
+    private StringSearchField username;
+    private BooleanSearchField iscompleted;
+    private BooleanSearchField ismilestone;
+    private NumberSearchField projectid;
+    private DateTimeSearchField greaterThan;
+    private DateTimeSearchField lessThan;
+    private NumberSearchField taskListId;
 
-	private BooleanSearchField ismilestone;
+    public StringSearchField getUsername() {
+        return username;
+    }
 
-	private NumberSearchField projectid;
-	
-	private DateTimeSearchField greaterThan;
-	
-	private DateTimeSearchField lessThan;
+    public void setUsername(StringSearchField username) {
+        this.username = username;
+    }
 
-	public StringSearchField getUsername() {
-		return username;
-	}
+    public BooleanSearchField getIscompleted() {
+        return iscompleted;
+    }
 
-	public void setUsername(StringSearchField username) {
-		this.username = username;
-	}
-	
-	public BooleanSearchField getIscompleted() {
-		return iscompleted;
-	}
+    public void setIscompleted(BooleanSearchField iscompleted) {
+        this.iscompleted = iscompleted;
+    }
 
-	public void setIscompleted(BooleanSearchField iscompleted) {
-		this.iscompleted = iscompleted;
-	}
+    public BooleanSearchField getIsmilestone() {
+        return ismilestone;
+    }
 
-	public BooleanSearchField getIsmilestone() {
-		return ismilestone;
-	}
+    public void setIsmilestone(BooleanSearchField ismilestone) {
+        this.ismilestone = ismilestone;
+    }
 
-	public void setIsmilestone(BooleanSearchField ismilestone) {
-		this.ismilestone = ismilestone;
-	}
+    public NumberSearchField getProjectid() {
+        return projectid;
+    }
 
-	public NumberSearchField getProjectid() {
-		return projectid;
-	}
+    public void setProjectid(NumberSearchField projectid) {
+        this.projectid = projectid;
+    }
 
-	public void setProjectid(NumberSearchField projectid) {
-		this.projectid = projectid;
-	}
+    public DateTimeSearchField getLessThan() {
+        return lessThan;
+    }
 
-	public DateTimeSearchField getLessThan() {
-		return lessThan;
-	}
+    public void setLessThan(DateTimeSearchField lessThan) {
+        this.lessThan = lessThan;
+    }
 
-	public void setLessThan(DateTimeSearchField lessThan) {
-		this.lessThan = lessThan;
-	}
+    public DateTimeSearchField getGreaterThan() {
+        return greaterThan;
+    }
 
-	public DateTimeSearchField getGreaterThan() {
-		return greaterThan;
-	}
+    public void setGreaterThan(DateTimeSearchField greaterThan) {
+        this.greaterThan = greaterThan;
+    }
 
-	public void setGreaterThan(DateTimeSearchField greaterThan) {
-		this.greaterThan = greaterThan;
-	}
+    public NumberSearchField getTaskListId() {
+        return taskListId;
+    }
+
+    public void setTaskListId(NumberSearchField taskListId) {
+        this.taskListId = taskListId;
+    }
 }

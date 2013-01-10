@@ -3,4 +3,5 @@ package com.esofthead.mycollab.module.project.view.task;
 import com.esofthead.mycollab.vaadin.mvp.View;
 
 public interface TaskView extends View {
+    void displayTakLists();
 }
