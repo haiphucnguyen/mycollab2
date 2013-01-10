@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.view.risk;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
@@ -102,7 +103,15 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
                             searchCriteria = new RiskSearchCriteria();
                             searchCriteria.setProjectId(new NumberSearchField(
                                     SearchField.AND, project.getId()));
-
+                            searchCriteria.setRiskname(new StringSearchField(nameField.getValue().toString().trim()));
+                            
+                            if (myItemCheckbox.booleanValue()) {
+                                searchCriteria.setAssignToUser(new StringSearchField(
+                                        SearchField.AND, AppContext.getUsername()));
+                            } else {
+                                searchCriteria.setAssignToUser(null);
+                            }
+                            
                             RiskSearchPanel.this
                                     .notifySearchHandler(searchCriteria);
                         }

@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.view.problem;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
@@ -102,6 +103,15 @@ public class ProblemSearchPanel extends GenericSearchPanel<ProblemSearchCriteria
                             searchCriteria = new ProblemSearchCriteria();
                             searchCriteria.setProjectId(new NumberSearchField(
                                     SearchField.AND, project.getId()));
+                            
+                            searchCriteria.setProblemname(new StringSearchField(nameField.getValue().toString().trim()));
+                            
+                            if (myItemCheckbox.booleanValue()) {
+                                searchCriteria.setAssignToUser(new StringSearchField(
+                                        SearchField.AND, AppContext.getUsername()));
+                            } else {
+                                searchCriteria.setAssignToUser(null);
+                            }
 
                             ProblemSearchPanel.this
                                     .notifySearchHandler(searchCriteria);
