@@ -2,8 +2,10 @@ package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.domain.Call;
 import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.Lead;
+import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
@@ -122,7 +124,15 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                             task.setTypeid(view.getItem().getId());
                             EventBus.getInstance().fireEvent(new ActivityEvent.TaskEdit(AccountReadPresenter.this, task));
                         } else if (itemId.equals("meeting")) {
-                            
+                            Meeting meeting = new Meeting();
+                            meeting.setType(CrmTypeConstants.ACCOUNT);
+                            meeting.setTypeid(view.getItem().getId());
+                            EventBus.getInstance().fireEvent(new ActivityEvent.MeetingEdit(AccountReadPresenter.this, meeting));
+                        } else if (itemId.equals("call")) {
+                            Call call = new Call();
+                            call.setType(CrmTypeConstants.ACCOUNT);
+                            call.setTypeid(view.getItem().getId());
+                            EventBus.getInstance().fireEvent(new ActivityEvent.CallEdit(AccountReadPresenter.this, call));
                         }
                     }
                 });

@@ -69,6 +69,16 @@
         <if test='endDate != null'>
             <![CDATA[${endDate.operation} startdate ${endDate.comparision} #{endDate.value,javaType=DATE}]]>
         </if>
+        
+        <if test='saccountid != null'>
+            <![CDATA[${saccountid.operation} sAccountId = ${saccountid.value} ]]>
+        </if>
+        <if test='type != null'>
+            <![CDATA[${type.operation} type = #{type.value} ]]>
+        </if>
+        <if test='typeid != null'>
+            <![CDATA[${typeid.operation} typeid = ${typeid.value} ]]>
+        </if>
     </sql>
     
     <sql id="queryCallSearchCriteria" >
@@ -78,6 +88,15 @@
         <if test='endDate != null'>
             <![CDATA[${endDate.operation} startdate ${endDate.comparision} #{endDate.value,javaType=DATE}]]>
         </if>
+        <if test='saccountid != null'>
+            <![CDATA[${saccountid.operation} sAccountId = ${saccountid.value} ]]>
+        </if>
+        <if test='type != null'>
+            <![CDATA[${type.operation} type = #{type.value} ]]>
+        </if>
+        <if test='typeid != null'>
+            <![CDATA[${typeid.operation} typeid = ${typeid.value} ]]>
+        </if>
     </sql>
     
     <sql id="queryMeetingSearchCriteria" >
@@ -86,6 +105,15 @@
         </if>    
         <if test='endDate != null'>
             <![CDATA[${endDate.operation} startdate ${endDate.comparision} #{endDate.value,javaType=DATE}]]>
+        </if>
+        <if test='saccountid != null'>
+            <![CDATA[${saccountid.operation} sAccountId = ${saccountid.value} ]]>
+        </if>
+        <if test='type != null'>
+            <![CDATA[${type.operation} type = #{type.value} ]]>
+        </if>
+        <if test='typeid != null'>
+            <![CDATA[${typeid.operation} typeid = ${typeid.value} ]]>
         </if>
     </sql>
 

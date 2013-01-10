@@ -39,7 +39,7 @@ import com.vaadin.ui.Window;
  * @author haiphucnguyen
  */
 public abstract class AccountPreviewBuilder extends VerticalLayout {
-    
+
     protected SimpleAccount account;
     protected AdvancedPreviewBeanForm<Account> previewForm;
     protected AccountContactListComp associateContactList;
@@ -48,7 +48,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
     protected AccountCaseListComp associateCaseList;
     protected EventRelatedItemListComp associateActivityList;
     protected NoteListItems noteListItems;
-    
+
     protected void initRelatedComponent() {
         associateContactList = new AccountContactListComp();
         associateActivityList = new EventRelatedItemListComp(CrmTypeConstants.ACCOUNT, true);
@@ -57,7 +57,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
         associateCaseList = new AccountCaseListComp();
         noteListItems = new NoteListItems("Notes");
     }
-    
+
     public void previewItem(SimpleAccount item) {
         account = item;
         previewForm.setItemDataSource(new BeanItem<Account>(account));
@@ -68,27 +68,27 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
         displayAssociateOpportunityList();
         displayAssociateLeadList();
     }
-    
+
     public SimpleAccount getAccount() {
         return account;
     }
-    
+
     public AdvancedPreviewBeanForm<Account> getPreviewForm() {
         return previewForm;
     }
-    
+
     public AccountContactListComp getAssociateContactList() {
         return associateContactList;
     }
-    
+
     public AccountOpportunityListComp getAssociateOpportunityList() {
         return associateOpportunityList;
     }
-    
+
     public AccountLeadListComp getAssociateLeadList() {
         return associateLeadList;
     }
-    
+
     public AccountCaseListComp getAssociateCaseList() {
         return associateCaseList;
     }
@@ -96,8 +96,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
     public EventRelatedItemListComp getAssociateActivityList() {
         return associateActivityList;
     }
-    
-    
+
     public void displayActivities() {
         EventSearchCriteria criteria = new EventSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
@@ -105,11 +104,11 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
         criteria.setTypeid(new NumberSearchField(account.getId()));
         associateActivityList.setSearchCriteria(criteria);
     }
-    
+
     private void displayNotes() {
         noteListItems.showNotes(CrmTypeConstants.ACCOUNT, account.getId());
     }
-    
+
     private void displayAssociateContactList() {
         ContactSearchCriteria criteria = new ContactSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(SearchField.AND,
@@ -118,7 +117,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
                 .getId()));
         associateContactList.setSearchCriteria(criteria);
     }
-    
+
     private void displayAssociateOpportunityList() {
         OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
         criteria.setSaccountid(new NumberSearchField(SearchField.AND,
@@ -127,7 +126,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
                 .getId()));
         associateOpportunityList.setSearchCriteria(criteria);
     }
-    
+
     private void displayAssociateLeadList() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(SearchField.AND,
@@ -136,7 +135,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
                 .getAccountname()));
         associateLeadList.setSearchCriteria(criteria);
     }
-    
+
     private void displayAssociateCaseList() {
         CaseSearchCriteria criteria = new CaseSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(SearchField.AND,
@@ -144,11 +143,11 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
         criteria.setAccountId(new NumberSearchField(account.getId()));
         associateCaseList.setSearchCriteria(criteria);
     }
-    
+
     protected class AccountFormFieldFactory extends DefaultFormViewFieldFactory {
-        
+
         private static final long serialVersionUID = 1L;
-        
+
         @Override
         protected Field onCreateField(Item item, Object propertyId,
                 Component uiContext) {
@@ -158,7 +157,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
             } else if (propertyId.equals("assignuser")) {
                 return new UserLinkViewField(account.getAssignuser(), account.getAssignUserFullName());
             }
-            
+
             return null;
         }
     }
@@ -167,20 +166,21 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
      *
      */
     public static class ReadView extends AccountPreviewBuilder {
-        
+
         private final TabSheet tabContainer;
         private final VerticalLayout accountInformation;
         private final VerticalLayout relatedItemsContainer;
         private final AddViewLayout accountAddLayout;
-        
+
         public ReadView() {
             accountAddLayout = new AddViewLayout("", new ThemeResource(
                     "icons/48/crm/account.png"));
             this.addComponent(accountAddLayout);
-            
+
             tabContainer = new TabSheet();
+
             initRelatedComponent();
-            
+
             previewForm = new AdvancedPreviewBeanForm<Account>() {
                 @Override
                 public void setItemDataSource(Item newDataSource) {
@@ -189,12 +189,12 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
                     super.setItemDataSource(newDataSource);
                     accountAddLayout.setTitle(account.getAccountname());
                 }
-                
+
                 @Override
                 protected void doPrint() {
                     // Create a window that contains what you want to print
                     Window window = new Window("Window to Print");
-                    
+
                     AccountPreviewBuilder printView = new AccountPreviewBuilder.PrintView();
                     printView.previewItem(account);
                     window.addComponent(printView);
@@ -214,7 +214,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
                     // Close the window automatically after printing
                     window.executeJavaScript("self.close();");
                 }
-                
+
                 @Override
                 protected void showHistory() {
                     AccountHistoryLogWindow historyLog = new AccountHistoryLogWindow(
@@ -223,7 +223,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
                     getWindow().addWindow(historyLog);
                 }
             };
-            
+
             accountInformation = new VerticalLayout();
             accountInformation.setMargin(true);
             Layout actionControls = new PreviewFormControlsGenerator<Account>(
@@ -231,9 +231,9 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
             accountInformation.addComponent(actionControls);
             accountInformation.addComponent(previewForm);
             accountInformation.addComponent(noteListItems);
-            
+
             tabContainer.addTab(accountInformation, "Account Information");
-            
+
             relatedItemsContainer = new VerticalLayout();
             relatedItemsContainer.setMargin(true);
             relatedItemsContainer.addComponent(associateActivityList);
@@ -242,7 +242,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
             relatedItemsContainer.addComponent(associateCaseList);
             relatedItemsContainer.addComponent(associateLeadList);
             tabContainer.addTab(relatedItemsContainer, "More Information");
-            
+
             accountAddLayout.addBody(tabContainer);
         }
     }
@@ -251,7 +251,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
      *
      */
     public static class PrintView extends AccountPreviewBuilder {
-        
+
         public PrintView() {
             previewForm = new AdvancedPreviewBeanForm<Account>() {
                 @Override
@@ -262,35 +262,35 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
                 }
             };
             initRelatedComponent();
-            
+
             this.addComponent(previewForm);
         }
-        
+
         class FormLayoutFactory extends AccountFormLayoutFactory {
-            
+
             private static final long serialVersionUID = 1L;
-            
+
             public FormLayoutFactory() {
                 super(account.getAccountname());
             }
-            
+
             @Override
             protected Layout createTopPanel() {
                 return null;
             }
-            
+
             @Override
             protected Layout createBottomPanel() {
                 VerticalLayout relatedItemsPanel = new VerticalLayout();
                 relatedItemsPanel.setWidth("100%");
-                
+
                 relatedItemsPanel.addComponent(noteListItems);
                 relatedItemsPanel.addComponent(associateActivityList);
                 relatedItemsPanel.addComponent(associateContactList);
                 relatedItemsPanel.addComponent(associateOpportunityList);
                 relatedItemsPanel.addComponent(associateCaseList);
                 relatedItemsPanel.addComponent(associateLeadList);
-                
+
                 return relatedItemsPanel;
             }
         }
