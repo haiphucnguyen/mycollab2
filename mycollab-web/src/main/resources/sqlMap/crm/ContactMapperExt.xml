@@ -20,7 +20,7 @@
         </if>
         <if test="accountId != null">
             <![CDATA[
-                ${accountId.operation} m_crm_account.id = #{accountId.value,javaType=INTEGER}
+                ${accountId.operation} m_crm_account.id ${accountId.compareOperator} #{accountId.value,javaType=INTEGER}
             ]]>
         </if>
         <if test="opportunityId != null">
@@ -154,7 +154,7 @@
                 ${accountId.operation}
                 (SELECT COUNT(*) 
                 FROM m_crm_account, m_crm_accounts_contacts 
-                WHERE m_crm_account.id = #{accountId.value,javaType=INTEGER} 
+                WHERE m_crm_account.id ${accountId.compareOperator} #{accountId.value,javaType=INTEGER} 
                     AND m_crm_contact.id = m_crm_accounts_contacts.contactId
                     AND m_crm_account.id = m_crm_accounts_contacts.accountId) > 0
                 ]]>

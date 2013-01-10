@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.crm.ui.components;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.module.crm.view.RelatedListHandler;
@@ -27,10 +28,18 @@ public class RelatedListComp<S extends SearchCriteria> extends Depot implements 
         this.setWidth("900px");
     }
 
-    protected void fireRelatedListHandler(String itemId) {
+    protected void fireNewRelatedItem(String itemId) {
         if (handlers != null) {
             for (RelatedListHandler handler : handlers) {
                 handler.createNewRelatedItem(itemId);
+            }
+        }
+    }
+
+    protected void fireSelectedRelatedItems(Set selectedItems) {
+        if (handlers != null) {
+            for (RelatedListHandler handler : handlers) {
+                handler.selectAssociateItems(selectedItems);
             }
         }
     }
@@ -47,9 +56,8 @@ public class RelatedListComp<S extends SearchCriteria> extends Depot implements 
 
         handlers.add(handler);
     }
-    
-    public void fireSelectedItems(Set selectedItems) {
-        System.out.println("Selected items: " + selectedItems.size());
-                
+
+    public void setSelectedItems(Set selectedItems) {
+        throw new MyCollabException("Must be override by support class");
     }
 }

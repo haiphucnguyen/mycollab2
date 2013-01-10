@@ -24,6 +24,8 @@ import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import java.util.List;
+import java.util.Set;
 
 public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 
@@ -76,6 +78,11 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                         contact.setAccountId(view.getItem().getId());
                         EventBus.getInstance().fireEvent(
                                 new ContactEvent.GotoEdit(this, contact));
+                    }
+
+                    @Override
+                    public void selectAssociateItems(Set items) {
+                        super.selectAssociateItems(items);
                     }
                 });
 

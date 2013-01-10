@@ -44,7 +44,7 @@ public class ContactOpportunityListComp extends RelatedListComp<OpportunitySearc
         controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
             @Override
             public void splitButtonClick(SplitButton.SplitButtonClickEvent event) {
-                fireRelatedListHandler("");
+                fireNewRelatedItem("");
             }
         });
         Button selectBtn = new Button("Select from existing opportunities", new Button.ClickListener() {

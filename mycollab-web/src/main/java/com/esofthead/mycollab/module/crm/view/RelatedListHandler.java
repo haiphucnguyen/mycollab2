@@ -1,10 +1,10 @@
 package com.esofthead.mycollab.module.crm.view;
 
-import java.util.List;
+import java.util.Set;
 
-public interface RelatedListHandler<T> {
+public interface RelatedListHandler {
 
     void createNewRelatedItem(String itemId);
     
-    void associateSelectItem(List<T> items);
+    void selectAssociateItems(Set items);
 }

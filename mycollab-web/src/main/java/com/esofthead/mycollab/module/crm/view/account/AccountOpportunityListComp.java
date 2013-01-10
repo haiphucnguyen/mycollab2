@@ -31,7 +31,7 @@ public class AccountOpportunityListComp extends RelatedListComp<OpportunitySearc
         Button newBtn = new Button("New Opportunity", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                fireRelatedListHandler("");
+                fireNewRelatedItem("");
             }
         });
         newBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));

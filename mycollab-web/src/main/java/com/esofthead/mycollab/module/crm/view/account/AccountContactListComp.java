@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
@@ -18,30 +20,47 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
+import java.util.Set;
 import org.vaadin.hene.splitbutton.SplitButton;
 
 public class AccountContactListComp extends RelatedListComp<ContactSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
+    private Account account;
 
     public AccountContactListComp() {
         super("Contacts");
         initUI();
     }
 
+    public void displayContacts(Account account) {
+        this.account = account;
+        loadContacts();
+    }
+    
+    private void loadContacts() {
+        ContactSearchCriteria criteria = new ContactSearchCriteria();
+        criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+                AppContext.getAccountId()));
+        criteria.setAccountId(new NumberSearchField(SearchField.AND, account
+                .getId()));
+        this.setSearchCriteria(criteria);
+    }
+    
+
     @SuppressWarnings("serial")
     private void initUI() {
         VerticalLayout contentContainer = (VerticalLayout) content;
         contentContainer.setSpacing(true);
 
-        SplitButton controlsBtn = new SplitButton();
+        final SplitButton controlsBtn = new SplitButton();
         controlsBtn.addStyleName(SplitButton.STYLE_CHAMELEON);
         controlsBtn.setCaption("New Contact");
         controlsBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
         controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
             @Override
             public void splitButtonClick(SplitButton.SplitButtonClickEvent event) {
-                fireRelatedListHandler("");
+                fireNewRelatedItem("");
             }
         });
         Button selectBtn = new Button("Select from existing contacts", new Button.ClickListener() {
@@ -50,9 +69,9 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
                 AccountContactSelectionWindow contactsWindow = new AccountContactSelectionWindow(AccountContactListComp.this);
                 ContactSearchCriteria criteria = new ContactSearchCriteria();
                 criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-                
                 getWindow().addWindow(contactsWindow);
                 contactsWindow.setSearchCriteria(criteria);
+                controlsBtn.setPopupVisible(false);
             }
         });
         selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
@@ -114,4 +133,13 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
         contentContainer.addComponent(tableItem);
 
     }
+
+    @Override
+    public void setSelectedItems(Set selectedItems) {
+        fireSelectedRelatedItems(selectedItems);
+        
+        loadContacts();
+    }
+    
+    
 }

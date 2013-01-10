@@ -16,6 +16,8 @@ public class AccountContactSelectionWindow extends RelatedItemSelectionWindow<Co
 
     public AccountContactSelectionWindow(AccountContactListComp associateContactList) {
         super("Contacts", associateContactList);
+        
+        this.setWidth("900px");
     }
 
     @Override

@@ -12,7 +12,6 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
-import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
@@ -63,7 +62,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
         previewForm.setItemDataSource(new BeanItem<Account>(account));
         displayNotes();
         displayActivities();
-        displayAssociateContactList();
+        associateContactList.displayContacts(account);
         displayAssociateCaseList();
         displayAssociateOpportunityList();
         displayAssociateLeadList();
@@ -107,15 +106,6 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
     private void displayNotes() {
         noteListItems.showNotes(CrmTypeConstants.ACCOUNT, account.getId());
-    }
-
-    private void displayAssociateContactList() {
-        ContactSearchCriteria criteria = new ContactSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-                AppContext.getAccountId()));
-        criteria.setAccountId(new NumberSearchField(SearchField.AND, account
-                .getId()));
-        associateContactList.setSearchCriteria(criteria);
     }
 
     private void displayAssociateOpportunityList() {

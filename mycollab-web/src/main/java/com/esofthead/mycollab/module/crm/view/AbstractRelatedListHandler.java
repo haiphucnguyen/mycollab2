@@ -4,16 +4,16 @@
  */
 package com.esofthead.mycollab.module.crm.view;
 
-import java.util.List;
+import java.util.Set;
 
 /**
  *
  * @author haiphucnguyen
  */
-public abstract class AbstractRelatedListHandler<T> implements RelatedListHandler<T> {
+public abstract class AbstractRelatedListHandler implements RelatedListHandler {
 
     @Override
-    public void associateSelectItem(List<T> items) {
+    public void selectAssociateItems(Set items) {
         
     }
     

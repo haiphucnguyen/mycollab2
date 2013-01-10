@@ -42,7 +42,7 @@ public class EventRelatedItemListComp extends RelatedListComp<EventSearchCriteri
             Button newTaskBtn = new Button("New Task", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
-                    fireRelatedListHandler("task");
+                    fireNewRelatedItem("task");
                 }
             });
             newTaskBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
@@ -51,7 +51,7 @@ public class EventRelatedItemListComp extends RelatedListComp<EventSearchCriteri
             Button newCallBtn = new Button("New Call", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
-                    fireRelatedListHandler("call");
+                    fireNewRelatedItem("call");
                 }
             });
             newCallBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
@@ -60,7 +60,7 @@ public class EventRelatedItemListComp extends RelatedListComp<EventSearchCriteri
             Button newMeetingBtn = new Button("New Meeting", new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
-                    fireRelatedListHandler("call");
+                    fireNewRelatedItem("call");
                 }
             });
             newMeetingBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));

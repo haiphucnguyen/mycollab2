@@ -62,7 +62,7 @@ public abstract class RelatedItemSelectionWindow<S extends SearchCriteria> exten
         super.close();
         
         if (!selectedItems.isEmpty()) {
-            relatedListComp.fireSelectedItems(selectedItems);
+            relatedListComp.setSelectedItems(selectedItems);
         }
     }
     
