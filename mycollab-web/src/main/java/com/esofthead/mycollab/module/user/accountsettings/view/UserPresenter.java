@@ -17,11 +17,11 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class UserPresenter extends AbstractPresenter<UserContainer> {
-    
+
     public UserPresenter() {
         super(UserContainer.class);
     }
-    
+
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         if (data == null) {

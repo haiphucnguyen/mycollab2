@@ -5,8 +5,9 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
+import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
-import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityRelatedListComp;
+import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityTableDisplay;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -23,12 +24,12 @@ import org.vaadin.hene.splitbutton.SplitButton;
  *
  * @author haiphucnguyen
  */
-public class ContactOpportunityListComp extends OpportunityRelatedListComp {
+public class ContactOpportunityListComp extends RelatedListComp<OpportunitySearchCriteria> {
 
     private static final long serialVersionUID = 1L;
 
     public ContactOpportunityListComp() {
-        super();
+        super("Opportunities");
         initUI();
     }
 
@@ -43,7 +44,7 @@ public class ContactOpportunityListComp extends OpportunityRelatedListComp {
         controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
             @Override
             public void splitButtonClick(SplitButton.SplitButtonClickEvent event) {
-                fireRelatedListHandler();
+                fireRelatedListHandler("");
             }
         });
         Button selectBtn = new Button("Select from existing opportunities", new Button.ClickListener() {

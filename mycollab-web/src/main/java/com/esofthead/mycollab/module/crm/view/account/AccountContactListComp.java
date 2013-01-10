@@ -3,16 +3,12 @@ package com.esofthead.mycollab.module.crm.view.account;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
-import com.esofthead.mycollab.module.crm.service.ContactService;
-import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
-import com.esofthead.mycollab.module.crm.view.RelatedListHandler;
+import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
+import com.esofthead.mycollab.module.crm.view.contact.ContactTableDisplay;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.EmailLink;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -20,19 +16,14 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
-import java.util.HashSet;
-import java.util.Set;
 import org.vaadin.hene.splitbutton.SplitButton;
 
-public class AccountContactListComp extends Depot implements IRelatedListHandlers {
+public class AccountContactListComp extends RelatedListComp<ContactSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
-    private PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact> tableItem;
-    private Set<RelatedListHandler> handlers;
 
     public AccountContactListComp() {
-        super("Contacts", new VerticalLayout());
-        this.setWidth("900px");
+        super("Contacts");
         initUI();
     }
 
@@ -40,7 +31,7 @@ public class AccountContactListComp extends Depot implements IRelatedListHandler
     private void initUI() {
         VerticalLayout contentContainer = (VerticalLayout) content;
         contentContainer.setSpacing(true);
-        
+
         SplitButton controlsBtn = new SplitButton();
         controlsBtn.addStyleName(SplitButton.STYLE_CHAMELEON);
         controlsBtn.setCaption("New Contact");
@@ -48,122 +39,71 @@ public class AccountContactListComp extends Depot implements IRelatedListHandler
         controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
             @Override
             public void splitButtonClick(SplitButton.SplitButtonClickEvent event) {
-                fireRelatedListHandler();
+                fireRelatedListHandler("");
             }
         });
         Button selectBtn = new Button("Select from existing contacts", new Button.ClickListener() {
-
             @Override
             public void buttonClick(ClickEvent event) {
-                
             }
         });
         selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
         selectBtn.setStyleName("link");
         controlsBtn.addComponent(selectBtn);
-        
+
         contentContainer.addComponent(controlsBtn);
 
-        tableItem = new PagedBeanTable2<ContactService, ContactSearchCriteria, SimpleContact>(
-                AppContext.getSpringBean(ContactService.class),
-                SimpleContact.class,
-                new String[]{"contactName", "title", "email", "officephone",
-                    "assignUserFullName", "id"},
-                new String[]{"Name", "Title", "Email", "Office Phone", "User", "Action"});
+        tableItem = new ContactTableDisplay(
+                new String[]{"contactName", "title", "email", "officephone", "id"},
+                new String[]{"Name", "Title", "Email", "Office Phone", "Action"});
 
-        tableItem.addGeneratedColumn("contactName", new ColumnGenerator() {
+        tableItem.addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
             @Override
-            public Object generateCell(Table source, Object itemId,
-                    Object columnId) {
-                final SimpleContact contact = tableItem.getBeanByIndex(itemId);
-                ButtonLink b = new ButtonLink(contact.getContactName(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
+            public Class<? extends ApplicationEvent> getEventType() {
+                return IPagedBeanTable.TableClickEvent.class;
+            }
 
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                EventBus.getInstance().fireEvent(
-                                        new ContactEvent.GotoRead(this, contact
-                                        .getId()));
-                            }
-                        });
-                return b;
+            @Override
+            public void handle(IPagedBeanTable.TableClickEvent event) {
+                SimpleContact contact = (SimpleContact) event.getData();
+                if ("contactName".equals(event.getFieldName())) {
+                    EventBus.getInstance().fireEvent(
+                            new ContactEvent.GotoRead(
+                            AccountContactListComp.this, contact
+                            .getId()));
+                }
             }
         });
-        
+
+
         tableItem.addGeneratedColumn("id", new ColumnGenerator() {
             @Override
             public Object generateCell(Table source, Object itemId,
                     Object columnId) {
                 HorizontalLayout controlLayout = new HorizontalLayout();
                 Button editBtn = new Button(null, new Button.ClickListener() {
-
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                throw new UnsupportedOperationException("Not supported yet.");
-                            }
-                        });
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        throw new UnsupportedOperationException("Not supported yet.");
+                    }
+                });
                 editBtn.setStyleName("link");
                 editBtn.setIcon(new ThemeResource("icons/16/edit.png"));
                 controlLayout.addComponent(editBtn);
-                
-                Button deleteBtn = new Button(null, new Button.ClickListener() {
 
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                throw new UnsupportedOperationException("Not supported yet.");
-                            }
-                        });
+                Button deleteBtn = new Button(null, new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        throw new UnsupportedOperationException("Not supported yet.");
+                    }
+                });
                 deleteBtn.setStyleName("link");
                 deleteBtn.setIcon(new ThemeResource("icons/16/delete.png"));
                 controlLayout.addComponent(deleteBtn);
                 return controlLayout;
             }
         });
-
-        tableItem.addGeneratedColumn("email", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    Object itemId, Object columnId) {
-                SimpleContact contact = tableItem.getBeanByIndex(itemId);
-                return new EmailLink(contact.getEmail());
-
-            }
-        });
-
-        tableItem.setColumnExpandRatio("contactName", 1.0f);
-        tableItem.setColumnWidth("title", UIConstants.TABLE_X_LABEL_WIDTH);
-        tableItem.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
-        tableItem
-                .setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
-        tableItem.setColumnWidth("assignUserFullName",
-                UIConstants.TABLE_X_LABEL_WIDTH);
-
-        tableItem.setWidth("100%");
         contentContainer.addComponent(tableItem);
 
-    }
-
-    public void setSearchCriteria(ContactSearchCriteria searchCriteria) {
-        tableItem.setSearchCriteria(searchCriteria);
-    }
-
-    private void fireRelatedListHandler() {
-        if (handlers != null) {
-            for (RelatedListHandler handler : handlers) {
-                handler.createNewRelatedItem();
-            }
-        }
-    }
-
-    @Override
-    public void addRelatedListHandler(RelatedListHandler handler) {
-        if (handlers == null) {
-            handlers = new HashSet<RelatedListHandler>();
-        }
-
-        handlers.add(handler);
     }
 }

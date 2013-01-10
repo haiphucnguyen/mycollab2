@@ -11,6 +11,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -25,6 +26,7 @@ public class AccountTableDisplay extends PagedBeanTable2<AccountService, Account
     public AccountTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
         super(AppContext.getSpringBean(AccountService.class),
                 SimpleAccount.class, visibleColumns, columnHeaders);
+
         this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
             private static final long serialVersionUID = 1L;
 
@@ -84,13 +86,28 @@ public class AccountTableDisplay extends PagedBeanTable2<AccountService, Account
             }
         });
 
+        this.addGeneratedColumn("assignUserFullName", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+                final SimpleAccount account = AccountTableDisplay.this.getBeanByIndex(itemId);
+                UserLink b = new UserLink(account.getAssignuser(), account.getAssignUserFullName());
+                return b;
+
+            }
+        });
+
+
+
         this.setColumnExpandRatio("accountname", 1);
         this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
         this.setColumnWidth("city", UIConstants.TABLE_X_LABEL_WIDTH);
         this
-                .setColumnWidth("phoneoffice", UIConstants.TABLE_X_LABEL_WIDTH);
+                .setColumnWidth("phoneoffice", UIConstants.TABLE_M_LABEL_WIDTH);
         this.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
-        this.setColumnWidth("assignuser", UIConstants.TABLE_X_LABEL_WIDTH);
+        this.setColumnWidth("assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
 
         this.setWidth("100%");
     }

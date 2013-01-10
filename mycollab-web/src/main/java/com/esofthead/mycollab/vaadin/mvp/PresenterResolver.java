@@ -31,6 +31,8 @@ public class PresenterResolver {
 
     public static void clearResources() {
         Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>)AppContext.getVariable(PRESENTER_VAL);
-        presenterMap.clear();
+        if (presenterMap != null) {
+           presenterMap.clear(); 
+        }
     }
 }

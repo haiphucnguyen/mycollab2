@@ -22,7 +22,7 @@ import java.util.Collection;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class UserAddViewImpl  extends AbstractView implements UserAddView {
+public class UserAddViewImpl extends AbstractView implements UserAddView {
 
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
@@ -55,7 +55,7 @@ public class UserAddViewImpl  extends AbstractView implements UserAddView {
         private class FormLayoutFactory extends UserFormLayoutFactory {
 
             private static final long serialVersionUID = 1L;
-            
+
             public FormLayoutFactory() {
                 super("Create User");
             }
@@ -83,7 +83,7 @@ public class UserAddViewImpl  extends AbstractView implements UserAddView {
             @Override
             protected Field onCreateField(Item item, Object propertyId,
                     com.vaadin.ui.Component uiContext) {
-                
+
                 return null;
             }
         }

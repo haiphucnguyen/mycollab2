@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.domain.criteria;
 
+import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
@@ -9,10 +10,12 @@ public class EventSearchCriteria extends SearchCriteria {
 
     private NumberSearchField saccountid;
     private StringSearchField subject;
-    private StringSearchField relatedTo;
     private StringSearchField assignUser;
     private DateTimeSearchField startDate;
     private DateTimeSearchField endDate;
+    private StringSearchField type;
+    private NumberSearchField typeid;
+    private BooleanSearchField isClosed;
 
     public NumberSearchField getSaccountid() {
         return saccountid;
@@ -28,14 +31,6 @@ public class EventSearchCriteria extends SearchCriteria {
 
     public void setSubject(StringSearchField subject) {
         this.subject = subject;
-    }
-
-    public StringSearchField getRelatedTo() {
-        return relatedTo;
-    }
-
-    public void setRelatedTo(StringSearchField relatedTo) {
-        this.relatedTo = relatedTo;
     }
 
     public StringSearchField getAssignUser() {
@@ -60,5 +55,29 @@ public class EventSearchCriteria extends SearchCriteria {
 
     public void setEndDate(DateTimeSearchField endDate) {
         this.endDate = endDate;
+    }
+
+    public StringSearchField getType() {
+        return type;
+    }
+
+    public void setType(StringSearchField type) {
+        this.type = type;
+    }
+
+    public NumberSearchField getTypeid() {
+        return typeid;
+    }
+
+    public void setTypeid(NumberSearchField typeid) {
+        this.typeid = typeid;
+    }
+
+    public BooleanSearchField getIsClosed() {
+        return isClosed;
+    }
+
+    public void setIsClosed(BooleanSearchField isClosed) {
+        this.isClosed = isClosed;
     }
 }

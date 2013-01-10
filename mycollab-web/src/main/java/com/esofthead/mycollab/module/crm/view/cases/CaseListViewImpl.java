@@ -49,11 +49,11 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 
 	@SuppressWarnings("serial")
 	private void generateDisplayTable() {
-		tableItem = new CaseTableDisplay(new String[] { "selected", "subject", "accountName",
-				"priority", "status", "assignUserFullName",
-		"createdtime" }, new String[] { "", "Subject",
-		"Account Name", "Priority", "Status", "Assigned To",
-		"Date Created" });
+		tableItem = new CaseTableDisplay(new String[]{"selected", "subject", "accountName",
+                            "priority", "status", "assignUserFullName",
+                            "createdtime"}, new String[]{"", "Subject",
+                            "Account Name", "Priority", "Status", "Assigned To",
+                            "Date Created"});
 
 		tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					@Override

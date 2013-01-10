@@ -1,8 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import java.util.Collection;
-
 import com.esofthead.mycollab.module.crm.CrmDataTypeFactory;
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.service.ContactService;
@@ -24,6 +23,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import java.util.Collection;
 
 @ViewComponent
 public class TaskAddViewImpl extends AbstractView implements TaskAddView {
@@ -123,9 +123,10 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
                     return tf;
                 } else if (propertyId.equals("type")) {
                     RelatedEditItemField field = new RelatedEditItemField(new String[]{
-                                "Account", "Campaign", "Contact", "Lead",
-                                "Opportunity", "Case"}, task);
+                                CrmTypeConstants.ACCOUNT, CrmTypeConstants.CAMPAIGN, CrmTypeConstants.CONTACT, CrmTypeConstants.LEAD,
+                                CrmTypeConstants.OPPORTUNITY, CrmTypeConstants.CASE}, task);
                     field.setType(task.getType());
+                    
                     return field;
                 } else if (propertyId.equals("assignuser")) {
                     UserComboBox userBox = new UserComboBox();

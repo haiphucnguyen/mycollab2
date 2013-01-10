@@ -1,12 +1,18 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
-import com.esofthead.mycollab.module.crm.domain.Contact;
+import com.esofthead.mycollab.module.crm.domain.Call;
+import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.Lead;
+import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.events.ActivityEvent;
+import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
@@ -65,7 +71,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
         view.getRelatedContactHandlers().addRelatedListHandler(
                 new RelatedListHandler() {
                     @Override
-                    public void createNewRelatedItem() {
+                    public void createNewRelatedItem(String itemId) {
                         SimpleContact contact = new SimpleContact();
                         contact.setAccountId(view.getItem().getId());
                         EventBus.getInstance().fireEvent(
@@ -76,7 +82,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
         view.getRelatedOpportunityHandlers().addRelatedListHandler(
                 new RelatedListHandler() {
                     @Override
-                    public void createNewRelatedItem() {
+                    public void createNewRelatedItem(String itemId) {
                         Opportunity opportunity = new Opportunity();
                         opportunity.setAccountid(view.getItem().getId());
                         EventBus.getInstance()
@@ -89,11 +95,45 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
         view.getRelatedLeadHandlers().addRelatedListHandler(
                 new RelatedListHandler() {
                     @Override
-                    public void createNewRelatedItem() {
+                    public void createNewRelatedItem(String itemId) {
                         Lead lead = new Lead();
                         lead.setAccountname(view.getItem().getAccountname());
                         EventBus.getInstance().fireEvent(
                                 new LeadEvent.GotoEdit(this, lead));
+                    }
+                });
+
+        view.getRelatedCaseHandlers().addRelatedListHandler(
+                new RelatedListHandler() {
+                    @Override
+                    public void createNewRelatedItem(String itemId) {
+                        Case cases = new Case();
+                        cases.setAccountid(view.getItem().getId());
+                        EventBus.getInstance().fireEvent(
+                                new CaseEvent.GotoEdit(this, cases));
+                    }
+                });
+
+        view.getRelatedActivityHandlers().addRelatedListHandler(
+                new RelatedListHandler() {
+                    @Override
+                    public void createNewRelatedItem(String itemId) {
+                        if (itemId.equals("task")) {
+                            Task task = new Task();
+                            task.setType(CrmTypeConstants.ACCOUNT);
+                            task.setTypeid(view.getItem().getId());
+                            EventBus.getInstance().fireEvent(new ActivityEvent.TaskEdit(AccountReadPresenter.this, task));
+                        } else if (itemId.equals("meeting")) {
+                            Meeting meeting = new Meeting();
+                            meeting.setType(CrmTypeConstants.ACCOUNT);
+                            meeting.setTypeid(view.getItem().getId());
+                            EventBus.getInstance().fireEvent(new ActivityEvent.MeetingEdit(AccountReadPresenter.this, meeting));
+                        } else if (itemId.equals("call")) {
+                            Call call = new Call();
+                            call.setType(CrmTypeConstants.ACCOUNT);
+                            call.setTypeid(view.getItem().getId());
+                            EventBus.getInstance().fireEvent(new ActivityEvent.CallEdit(AccountReadPresenter.this, call));
+                        }
                     }
                 });
     }

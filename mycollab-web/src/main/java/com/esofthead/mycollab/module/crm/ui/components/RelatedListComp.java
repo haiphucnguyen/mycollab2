@@ -28,10 +28,10 @@ public class RelatedListComp<S extends SearchCriteria> extends Depot implements 
         this.setWidth("900px");
     }
 
-    protected void fireRelatedListHandler() {
+    protected void fireRelatedListHandler(String itemId) {
         if (handlers != null) {
             for (RelatedListHandler handler : handlers) {
-                handler.createNewRelatedItem();
+                handler.createNewRelatedItem(itemId);
             }
         }
     }

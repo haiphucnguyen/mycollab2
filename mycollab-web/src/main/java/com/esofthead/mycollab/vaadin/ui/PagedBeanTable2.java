@@ -117,6 +117,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
         this.setTotalPage(totalPage);
 
         tableItem = new Table();
+        tableItem.setWidth("100%");
         CustomComponent tableWrap = new CustomComponent(tableItem);
         tableLazyLoadContainer = new LazyLoadWrapper(tableWrap);
         tableItem.addStyleName("striped");

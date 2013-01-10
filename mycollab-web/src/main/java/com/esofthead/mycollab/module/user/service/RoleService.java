@@ -17,8 +17,8 @@
 package com.esofthead.mycollab.module.user.service;
 
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
-import com.esofthead.mycollab.module.project.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.domain.Role;
+import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 
 /**
  * @author hpnguyen

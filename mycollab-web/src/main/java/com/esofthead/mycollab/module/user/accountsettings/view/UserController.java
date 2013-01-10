@@ -6,12 +6,6 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.module.crm.domain.Account;
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.module.crm.view.account.AccountAddPresenter;
-import com.esofthead.mycollab.module.crm.view.account.AccountListPresenter;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
@@ -22,12 +16,13 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
+import java.io.Serializable;
 
 /**
  *
  * @author haiphucnguyen
  */
-public class UserController {
+public class UserController implements Serializable {
 
     private UserContainer container;
 

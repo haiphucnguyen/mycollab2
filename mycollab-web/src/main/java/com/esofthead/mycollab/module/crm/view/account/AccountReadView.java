@@ -7,11 +7,16 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
 public interface AccountReadView extends IPreviewView<SimpleAccount> {
-	HasPreviewFormHandlers<Account> getPreviewFormHandlers();
 
-	IRelatedListHandlers getRelatedContactHandlers();
+    HasPreviewFormHandlers<Account> getPreviewFormHandlers();
 
-	IRelatedListHandlers getRelatedOpportunityHandlers();
+    IRelatedListHandlers getRelatedContactHandlers();
 
-	IRelatedListHandlers getRelatedLeadHandlers();
+    IRelatedListHandlers getRelatedOpportunityHandlers();
+
+    IRelatedListHandlers getRelatedLeadHandlers();
+
+    IRelatedListHandlers getRelatedCaseHandlers();
+
+    IRelatedListHandlers getRelatedActivityHandlers();
 }
