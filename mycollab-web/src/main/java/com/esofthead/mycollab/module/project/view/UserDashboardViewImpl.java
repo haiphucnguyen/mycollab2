@@ -21,7 +21,6 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
@@ -47,14 +46,14 @@ public class UserDashboardViewImpl extends AbstractView implements
 		mySpaceArea.setWidth("100%");
 		mySpaceArea.setStyleName("project-dashboard");
 		mySpaceTabs = new DetachedTabs.Vertical(mySpaceArea);
-		mySpaceTabs.setWidth("200px");
+		mySpaceTabs.setSizeFull();
 		mySpaceTabs.setHeight(null);
 
 		calendarToolTabs = new DetachedTabs.Vertical(mySpaceArea);
 		calendarToolTabs.setSizeFull();
 		calendarToolTabs.setHeight(null);
 
-		VerticalLayout menu = new VerticalLayout();
+		CssLayout menu = new CssLayout();
 		menu.setWidth("200px");
 		menu.setStyleName("sidebar-menu");
 
@@ -87,6 +86,8 @@ public class UserDashboardViewImpl extends AbstractView implements
 		});
 
 		root.addComponent(menu);
+		root.addComponent(mySpaceArea);
+		root.setExpandRatio(mySpaceArea, 1.0f);
 
 		buildComponents();
 		showWelcomeScreen();
