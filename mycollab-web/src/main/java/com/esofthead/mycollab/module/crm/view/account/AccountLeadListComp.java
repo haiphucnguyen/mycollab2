@@ -53,10 +53,9 @@ public class AccountLeadListComp extends RelatedListComp<LeadSearchCriteria> {
         contentContainer.addComponent(controlsBtn);
 
         tableItem = new LeadTableDisplay(
-                new String[]{"leadName", "status", "officephone", "email",
-                    "assignuser", "id"}, new String[]{"Name", "Status",
-                    "Office Phone", "Email", "Assign User", "Action"});
-        
+                new String[]{"leadName", "status", "officephone", "email", "id"}, new String[]{"Name", "Status",
+                    "Office Phone", "Email", "Action"});
+
         tableItem.addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
             @Override
             public Class<? extends ApplicationEvent> getEventType() {
@@ -68,8 +67,8 @@ public class AccountLeadListComp extends RelatedListComp<LeadSearchCriteria> {
                 SimpleLead lead = (SimpleLead) event.getData();
                 if ("leadName".equals(event.getFieldName())) {
                     EventBus.getInstance().fireEvent(
-                                        new LeadEvent.GotoRead(this, lead
-                                        .getId()));
+                            new LeadEvent.GotoRead(this, lead
+                            .getId()));
                 }
             }
         });
@@ -89,7 +88,7 @@ public class AccountLeadListComp extends RelatedListComp<LeadSearchCriteria> {
                 return deleteBtn;
             }
         });
-        
+
         contentContainer.addComponent(tableItem);
     }
 }

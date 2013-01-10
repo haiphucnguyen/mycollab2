@@ -54,4 +54,9 @@ public class AccountReadViewImpl extends AbstractView implements
     public IRelatedListHandlers getRelatedCaseHandlers() {
         return accountPreview.getAssociateCaseList();
     }
+
+    @Override
+    public IRelatedListHandlers getRelatedActivityHandlers() {
+        return accountPreview.getAssociateActivityList();
+    }
 }

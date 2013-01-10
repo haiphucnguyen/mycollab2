@@ -1,9 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import java.util.Collection;
-
-import org.vaadin.addon.customfield.CustomField;
-
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Call;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
@@ -24,6 +21,8 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import java.util.Collection;
+import org.vaadin.addon.customfield.CustomField;
 
 @ViewComponent
 public class CallAddViewImpl extends AbstractView implements CallAddView {
@@ -59,7 +58,7 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
         private class FormLayoutFactory extends CallFormLayoutFactory {
 
             private static final long serialVersionUID = 1L;
-            
+
             public FormLayoutFactory() {
                 super("Create Call");
             }
@@ -115,8 +114,8 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
                     return field;
                 } else if (propertyId.equals("type")) {
                     RelatedEditItemField field = new RelatedEditItemField(
-                            new String[]{"Account", "Campaign", "Contact",
-                                "Lead", "Opportunity", "Case"}, call);
+                            new String[]{CrmTypeConstants.ACCOUNT, CrmTypeConstants.CAMPAIGN, CrmTypeConstants.CONTACT, CrmTypeConstants.LEAD,
+                                CrmTypeConstants.OPPORTUNITY, CrmTypeConstants.CASE}, call);
                     field.setType(call.getType());
                     return field;
                 } else if (propertyId.equals("startdate")) {

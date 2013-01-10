@@ -36,7 +36,7 @@ public class DateTimeUtils {
         if (dateTime == null) {
             return "";
         }
-        StringBuffer sb = new StringBuffer();
+        StringBuilder sb = new StringBuilder();
         Date current = Calendar.getInstance().getTime();
         long diffInSeconds = (current.getTime() - dateTime.getTime()) / 1000;
 

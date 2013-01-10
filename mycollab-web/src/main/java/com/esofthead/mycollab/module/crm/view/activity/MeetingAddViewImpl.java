@@ -1,9 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import java.util.Collection;
-
-import org.vaadin.addon.customfield.CustomField;
-
+import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
@@ -21,6 +18,8 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import java.util.Collection;
+import org.vaadin.addon.customfield.CustomField;
 
 @ViewComponent
 public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
@@ -102,8 +101,8 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
                     return descArea;
                 } else if (propertyId.equals("type")) {
                     RelatedEditItemField field = new RelatedEditItemField(
-                            new String[]{"Account", "Campaign", "Contact",
-                                "Lead", "Opportunity", "Case"}, meeting);
+                            new String[]{CrmTypeConstants.ACCOUNT, CrmTypeConstants.CAMPAIGN, CrmTypeConstants.CONTACT, CrmTypeConstants.LEAD,
+                                CrmTypeConstants.OPPORTUNITY, CrmTypeConstants.CASE}, meeting);
                     field.setType(meeting.getType());
                     return field;
                 } else if (propertyId.equals("isrecurrence")) {

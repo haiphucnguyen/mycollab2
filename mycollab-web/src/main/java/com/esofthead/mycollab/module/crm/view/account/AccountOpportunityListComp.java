@@ -27,9 +27,8 @@ public class AccountOpportunityListComp extends RelatedListComp<OpportunitySearc
     private void initUI() {
         VerticalLayout contentContainer = (VerticalLayout) content;
         contentContainer.setSpacing(true);
-        
-        Button newBtn = new Button("New Opportunity", new Button.ClickListener() {
 
+        Button newBtn = new Button("New Opportunity", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 fireRelatedListHandler("");
@@ -40,9 +39,8 @@ public class AccountOpportunityListComp extends RelatedListComp<OpportunitySearc
         contentContainer.addComponent(newBtn);
 
         tableItem = new OpportunityTableDisplay(new String[]{"opportunityname",
-                    "salesstage", "amount", "expectedcloseddate",
-                    "assignUserFullName", "id"}, new String[]{"Name",
-                    "Sales Stage", "Amount", "Close", "User", "Action"});
+                    "salesstage", "amount", "expectedcloseddate", "id"}, new String[]{"Name",
+                    "Sales Stage", "Amount", "Close", "Action"});
 
         tableItem.addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
             @Override

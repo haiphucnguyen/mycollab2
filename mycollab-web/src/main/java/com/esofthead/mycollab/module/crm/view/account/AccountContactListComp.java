@@ -31,7 +31,7 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
     private void initUI() {
         VerticalLayout contentContainer = (VerticalLayout) content;
         contentContainer.setSpacing(true);
-        
+
         SplitButton controlsBtn = new SplitButton();
         controlsBtn.addStyleName(SplitButton.STYLE_CHAMELEON);
         controlsBtn.setCaption("New Contact");
@@ -43,22 +43,19 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
             }
         });
         Button selectBtn = new Button("Select from existing contacts", new Button.ClickListener() {
-
             @Override
             public void buttonClick(ClickEvent event) {
-                
             }
         });
         selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
         selectBtn.setStyleName("link");
         controlsBtn.addComponent(selectBtn);
-        
+
         contentContainer.addComponent(controlsBtn);
 
         tableItem = new ContactTableDisplay(
-                new String[]{"contactName", "title", "email", "officephone",
-                    "assignUserFullName", "id"},
-                new String[]{"Name", "Title", "Email", "Office Phone", "User", "Action"});
+                new String[]{"contactName", "title", "email", "officephone", "id"},
+                new String[]{"Name", "Title", "Email", "Office Phone", "Action"});
 
         tableItem.addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
             @Override
@@ -74,34 +71,32 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
                             new ContactEvent.GotoRead(
                             AccountContactListComp.this, contact
                             .getId()));
-                } 
+                }
             }
         });
 
-        
+
         tableItem.addGeneratedColumn("id", new ColumnGenerator() {
             @Override
             public Object generateCell(Table source, Object itemId,
                     Object columnId) {
                 HorizontalLayout controlLayout = new HorizontalLayout();
                 Button editBtn = new Button(null, new Button.ClickListener() {
-
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                throw new UnsupportedOperationException("Not supported yet.");
-                            }
-                        });
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        throw new UnsupportedOperationException("Not supported yet.");
+                    }
+                });
                 editBtn.setStyleName("link");
                 editBtn.setIcon(new ThemeResource("icons/16/edit.png"));
                 controlLayout.addComponent(editBtn);
-                
-                Button deleteBtn = new Button(null, new Button.ClickListener() {
 
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                throw new UnsupportedOperationException("Not supported yet.");
-                            }
-                        });
+                Button deleteBtn = new Button(null, new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        throw new UnsupportedOperationException("Not supported yet.");
+                    }
+                });
                 deleteBtn.setStyleName("link");
                 deleteBtn.setIcon(new ThemeResource("icons/16/delete.png"));
                 controlLayout.addComponent(deleteBtn);
