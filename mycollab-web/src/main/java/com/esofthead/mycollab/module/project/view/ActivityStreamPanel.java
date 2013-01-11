@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
+import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
@@ -118,6 +119,7 @@ public class ActivityStreamPanel extends VerticalLayout {
                         EventBus.getInstance().fireEvent(new RiskEvent.GotoRead(this, typeid));
                     } else if (ProjectContants.TASK.equals(type)) {
                     } else if (ProjectContants.TASK_LIST.equals(type)) {
+                        EventBus.getInstance().fireEvent(new TaskListEvent.GotoRead(this, typeid));
                     }
                 }
             });

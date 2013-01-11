@@ -1,7 +1,11 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
@@ -45,6 +49,21 @@ public class BugListViewImpl extends AbstractView implements BugListView {
         tableItem = new BugTableDisplay(new String[]{"selected", "summary",
                     "assignuserFullName", "severity", "resolution", "duedate"},
                 new String[]{"", "Summary", "Assigned User", "Severity", "Resolution", "Due Date"});
+
+        tableItem.addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
+            @Override
+            public Class<? extends ApplicationEvent> getEventType() {
+                return IPagedBeanTable.TableClickEvent.class;
+            }
+
+            @Override
+            public void handle(IPagedBeanTable.TableClickEvent event) {
+                SimpleBug bug = (SimpleBug) event.getData();
+                if ("summary".equals(event.getFieldName())) {
+                    EventBus.getInstance().fireEvent(new BugEvent.GotoRead(BugListViewImpl.this, bug.getId()));
+                }
+            }
+        });
 
         problemListLayout.addComponent(constructTableActionControls());
         problemListLayout.addComponent(tableItem);
