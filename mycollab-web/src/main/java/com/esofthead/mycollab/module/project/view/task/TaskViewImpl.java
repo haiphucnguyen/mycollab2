@@ -5,7 +5,6 @@ import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
-import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
@@ -77,7 +76,7 @@ public class TaskViewImpl extends AbstractView implements
     @Override
     public void displayTakLists() {
         TaskListSearchCriteria criteria = new TaskListSearchCriteria();
-        SimpleProject project = (SimpleProject)AppContext.getVariable(ProjectContants.PROJECT_NAME);
+        SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
         criteria.setProjectId(new NumberSearchField(project.getId()));
         taskLists.setSearchCriteria(criteria);
     }
@@ -95,39 +94,51 @@ public class TaskViewImpl extends AbstractView implements
         }
     }
 
-    private static class TaskListDepot extends Depot {
+    static class TaskListDepot extends Depot {
 
         private SimpleTaskList taskList;
-        
         private BeanList<ProjectTaskService, TaskSearchCriteria, SimpleTask> taskDisplay;
-        
+        private Button createTaskBtn;
+
         public TaskListDepot(SimpleTaskList taskListParam) {
             super(taskListParam.getName(), new VerticalLayout());
-            
-            final VerticalLayout contentContainer = (VerticalLayout)this.content;
-                    
-            
+
+            final VerticalLayout contentContainer = (VerticalLayout) this.content;
+
             this.taskList = taskListParam;
-            
+
             taskDisplay = new BeanList<ProjectTaskService, TaskSearchCriteria, SimpleTask>(AppContext.getSpringBean(ProjectTaskService.class), TaskRowDisplayHandler.class);
             contentContainer.addComponent(taskDisplay);
-            
-            Button createTaskBtn = new Button("Add Task", new Button.ClickListener() {
 
+            createTaskBtn = new Button("Add Task", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
                     Component comp = contentContainer.getComponent(0);
-                    if (!(comp instanceof TaskQuickAddComponent)) {
-                        TaskQuickAddComponent taskAddView = new TaskQuickAddComponent();
+                    if (!(comp instanceof TaskAddPopup)) {
+                        TaskAddPopup taskAddView = new TaskAddPopup(TaskListDepot.this, taskList);
                         contentContainer.addComponent(taskAddView, 0);
+                        contentContainer.removeComponent(createTaskBtn);
                     }
                 }
             });
-            
+
             contentContainer.addComponent(createTaskBtn);
         }
+
+        public void saveTaskSuccess(SimpleTask task) {
+            taskDisplay.insertItemOnTop(task);
+        }
+
+        public void closeTaskAdd() {
+            this.addComponent(createTaskBtn);
+            final VerticalLayout contentContainer = (VerticalLayout) this.content;
+            Component comp = contentContainer.getComponent(0);
+            if (comp instanceof TaskAddPopup) {
+                contentContainer.removeComponent(comp);
+            }
+        }
     }
-    
+
     public static class TaskRowDisplayHandler implements BeanList.RowDisplayHandler<SimpleTask> {
 
         @Override
