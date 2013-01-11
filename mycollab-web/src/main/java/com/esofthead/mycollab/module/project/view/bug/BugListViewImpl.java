@@ -2,19 +2,15 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
@@ -27,7 +23,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
     private static final long serialVersionUID = 1L;
     private final BugSearchPanel problemSearchPanel;
     private SelectionOptionButton selectOptionButton;
-    private PagedBeanTable2<BugService, BugSearchCriteria, SimpleBug> tableItem;
+    private BugTableDisplay tableItem;
     private final VerticalLayout problemListLayout;
     private PopupButtonControl tableActionControls;
     private final Label selectedItemsNumberLabel = new Label();
@@ -46,19 +42,9 @@ public class BugListViewImpl extends AbstractView implements BugListView {
     }
 
     private void generateDisplayTable() {
-        tableItem = new PagedBeanTable2<BugService, BugSearchCriteria, SimpleBug>(
-                AppContext.getSpringBean(BugService.class),
-                SimpleBug.class, new String[]{"selected", "issuename",
-                    "assignedUserFullName", "datedue", "level"},
-                new String[]{"", "Name", "Assigned to", "Due Date", "Level"});
-
-        tableItem.setColumnExpandRatio("issuename", 1);
-        tableItem.setColumnWidth("assignedUserFullName",
-                UIConstants.TABLE_X_LABEL_WIDTH);
-        tableItem.setColumnWidth("level", UIConstants.TABLE_X_LABEL_WIDTH);
-        tableItem.setColumnWidth("datedue", UIConstants.TABLE_DATE_WIDTH);
-
-        tableItem.setWidth("100%");
+        tableItem = new BugTableDisplay(new String[]{"selected", "summary",
+                    "assignuserFullName", "severity", "resolution", "duedate"},
+                new String[]{"", "Summary", "Assigned User", "Severity", "Resolution", "Due Date"});
 
         problemListLayout.addComponent(constructTableActionControls());
         problemListLayout.addComponent(tableItem);
