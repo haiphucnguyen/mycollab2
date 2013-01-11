@@ -82,12 +82,9 @@ public class BugDashboardViewImpl extends AbstractView implements
 
         BugDisplayWidget updateBugWidget = new BugDisplayWidget("Updated Bug Recently");
         leftColumn.addComponent(updateBugWidget);
-        leftColumn.addComponent(new VersionSummaryWidget());
 
         rightColumn.addComponent(new PrioritySummaryWidget());
         rightColumn.addComponent(new StatusSummaryWidget());
-        rightColumn.addComponent(new AssignBugSummaryWidget());
-        rightColumn.addComponent(new ComponentSummaryWidget());
 
         //Due bug search criteria
         SimpleProject project = (SimpleProject) AppContext

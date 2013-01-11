@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
@@ -37,6 +38,7 @@ public class BugDisplayWidget extends VerticalLayout {
         Button moreBtn = new Button("More ...", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(new BugEvent.GotoList(BugDisplayWidget.this, new ScreenData.Search<BugSearchCriteria>(searchCriteria)));
             }
         });
         this.addComponent(moreBtn);

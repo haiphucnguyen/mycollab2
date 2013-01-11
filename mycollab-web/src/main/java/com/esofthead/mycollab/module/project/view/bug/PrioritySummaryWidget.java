@@ -12,6 +12,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import java.awt.Color;
+import java.awt.GradientPaint;
 import java.util.List;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
@@ -55,6 +56,10 @@ public class PrioritySummaryWidget extends VerticalLayout {
 
         BarRenderer br = (BarRenderer) plot.getRenderer();
         br.setItemMargin(.2);
+        final GradientPaint gp0 = new GradientPaint(
+                0.0f, 0.0f, Color.blue,
+                0.0f, 0.0f, Color.lightGray);
+        br.setSeriesPaint(0, gp0);
 
         // set the range axis to display integers only...
         final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
