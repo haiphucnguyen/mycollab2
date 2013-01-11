@@ -22,6 +22,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
@@ -40,6 +41,10 @@ public class TaskAddPopup extends CustomComponent {
         this.taskList = taskList;
 
         VerticalLayout taskLayout = new VerticalLayout();
+        taskLayout.setSpacing(true);
+        
+        Label titleLbl = new Label("Add New Task");
+        taskLayout.addComponent(titleLbl);
         
         task = new SimpleTask();
         taskContainer = new TabSheet();
@@ -49,6 +54,7 @@ public class TaskAddPopup extends CustomComponent {
         taskLayout.addComponent(taskContainer);
         
         HorizontalLayout controlsLayout = new HorizontalLayout();
+        controlsLayout.setSpacing(true);
         Button saveBtn = new Button("Save", new Button.ClickListener() {
 
             @Override

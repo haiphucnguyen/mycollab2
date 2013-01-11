@@ -5,6 +5,7 @@ public class SimpleTask extends Task {
     private static final long serialVersionUID = 1L;
     private String projectName;
     private String taskListName;
+    private String assignUserFullName;
     private int numComments;
 
     public int getNumComments() {
@@ -29,5 +30,13 @@ public class SimpleTask extends Task {
 
     public void setTaskListName(String taskListName) {
         this.taskListName = taskListName;
+    }
+
+    public String getAssignUserFullName() {
+        return assignUserFullName;
+    }
+
+    public void setAssignUserFullName(String assignUserFullName) {
+        this.assignUserFullName = assignUserFullName;
     }
 }
