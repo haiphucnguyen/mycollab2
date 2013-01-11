@@ -13,7 +13,7 @@
     </parent>
     <packaging>war</packaging>
     <properties>
-        <vaadinVersion>6.8.6</vaadinVersion>
+        <vaadinVersion>6.8.7</vaadinVersion>
         <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
         <gwtversion>2.3.0</gwtversion>
     </properties>
@@ -94,6 +94,11 @@
             <groupId>org.vaadin.addons</groupId>
             <artifactId>ratingstars</artifactId>
             <version>1.4</version>
+        </dependency>
+        <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>dragdroplayouts</artifactId>
+            <version>0.8.1</version>
         </dependency>
         <dependency>
             <groupId>org.vaadin.addons</groupId>

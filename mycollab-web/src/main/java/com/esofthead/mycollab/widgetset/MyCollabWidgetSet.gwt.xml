@@ -51,4 +51,6 @@
     <inherits name="com.davengo.web.vaadin.crop.widgetset.CropWidgetset" />
 
     <inherits name="com.vaadin.lazyloadwrapper.widgetset.LazyLoadWrapperWidgetset" />
+
+    <inherits name="fi.jasoft.dragdroplayouts.DragDropLayoutsWidgetSet" />
 </module>
