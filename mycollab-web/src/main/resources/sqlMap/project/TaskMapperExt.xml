@@ -1,33 +1,17 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.project.dao.TaskMapperExt">
-	<resultMap type="com.esofthead.mycollab.common.domain.GroupItem"
-		id="GroupItemResult">
-		<result column="groupid" jdbcType="VARCHAR" property="groupid" />
-		<result column="groupname" jdbcType="VARCHAR" property="groupname" />
-		<result column="value" jdbcType="INTEGER" property="value" />
-	</resultMap>
 
-	<resultMap extends="com.esofthead.mycollab.module.project.dao.TaskMapper.BaseResultMap"
-		id="TaskResult" type="com.esofthead.mycollab.module.project.domain.SimpleTask">
-		<result column="projectName" property="projectName" jdbcType="VARCHAR" />
-		<result column="numComments" property="numComments" jdbcType="INTEGER" />
-                <result column="taskListName" property="taskListName" jdbcType="INTEGER" />
+    <resultMap extends="com.esofthead.mycollab.module.project.dao.TaskMapper.BaseResultMap"
+               id="TaskResult" type="com.esofthead.mycollab.module.project.domain.SimpleTask">
+        <result column="projectName" property="projectName" jdbcType="VARCHAR" />
+        <result column="numComments" property="numComments" jdbcType="INTEGER" />
+        <result column="taskListName" property="taskListName" jdbcType="INTEGER" />
                 
-	</resultMap>
+    </resultMap>
 
-	<resultMap id="TaskAssignmentResult"
-		type="com.esofthead.mycollab.module.project.domain.SimpleTaskResource">
-		<result column="id" jdbcType="INTEGER" property="id" />
-		<result column="taskid" jdbcType="INTEGER" property="taskid" />
-		<result column="resourceid" jdbcType="INTEGER" property="resourceid" />
-		<result column="unit" jdbcType="INTEGER" property="unit" />
-		<result column="taskname" jdbcType="VARCHAR" property="taskname" />
-		<result column="resourcename" jdbcType="VARCHAR" property="resourcename" />
-	</resultMap>
-
-	<sql id="querySearchCriteria">
-		<if test="username != null">
+    <sql id="querySearchCriteria">
+        <if test="username != null">
             <![CDATA[
             ${username.operation}
             (SELECT COUNT(*) 
@@ -37,37 +21,37 @@
                 AND m_prj_resource.username = s_user.username
                 AND s_user.username='$username.value$') > 0
             ]]>
-		</if>
+        </if>
 
-		<if test="iscompleted != null">
+        <if test="iscompleted != null">
                 <![CDATA[
                     ${iscompleted.operation} (m_prj_task.percentagecomplete = 100) IS ${iscompleted.value}
                 ]]>
-		</if>
+        </if>
 
-		<if test="ismilestone != null">
+        <if test="ismilestone != null">
             <![CDATA[
                 ${ismilestone.operation} m_prj_task.ismilestone IS ${ismilestone.value}
             ]]>
-		</if>
-		<if test="projectid != null">
+        </if>
+        <if test="projectid != null">
             <![CDATA[
                 ${projectid.operation} m_prj_task.projectid=#{projectid.value,javaType=INTEGER}
             ]]>
-		</if>
-		<if test="lessThan != null">
+        </if>
+        <if test="lessThan != null">
           <![CDATA[
               ${lessThan.operation} m_prj_task.startdate < #{lessThan.value,javaType=DATE}
           ]]>
-		</if>
-		<if test="greaterThan != null">
+        </if>
+        <if test="greaterThan != null">
           <![CDATA[
               ${greaterThan.operation} m_prj_task.startdate > #{greaterThan.value,javaType=DATE}
           ]]>
-		</if>
-	</sql>
+        </if>
+    </sql>
 
-	<sql id="selectTask">
+    <sql id="selectTask">
         <![CDATA[
           SELECT m_prj_task.id, m_prj_task.taskname, m_prj_task.percentagecomplete, m_prj_task.startdate, 
               m_prj_task.enddate, m_prj_task.priority, m_prj_task.duration, m_prj_task.isestimated,
@@ -82,63 +66,25 @@
               LEFT OUTER JOIN m_prj_project ON (m_prj_task.projectid = m_prj_project.id) 
               LEFT OUTER JOIN m_prj_task_list ON (m_prj_task_list.id = m_prj_task.tasklistid)
         ]]>
-	</sql>
+    </sql>
 
-	<select id="getTotalCount" resultType="int"
-		parameterType="TaskSearchCriteria">
-		SELECT count(*) as totalCount FROM m_prj_task
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria" />
-		</trim>
-	</select>
+    <select id="getTotalCount" resultType="int"
+            parameterType="TaskSearchCriteria">
+        SELECT count(*) as totalCount FROM m_prj_task
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria" />
+        </trim>
+    </select>
 
-	<select id="findPagableListByCriteria" resultMap="TaskResult"
-		parameterType="TaskSearchCriteria">
-		<include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.selectTask" />
+    <select id="findPagableListByCriteria" resultMap="TaskResult"
+            parameterType="TaskSearchCriteria">
+        <include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.selectTask" />
 
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria" />
-		</trim>
-		ORDER BY m_prj_task.startdate DESC, m_prj_task.enddate DESC
-	</select>
-
-	<select id="getTaskAssignments" parameterType="java.lang.Integer"
-		resultMap="TaskAssignmentResult">
-        <![CDATA[
-        SELECT  m_prj_task_resource.id, m_prj_task_resource.taskid, m_prj_task_resource.resourceid, 
-                m_prj_task_resource.unit, m_prj_task.taskname, m_prj_resource.resourcename
-            FROM m_prj_task_resource, m_prj_task, m_prj_resource
-            WHERE m_prj_task_resource.taskid=m_prj_task.id
-                AND m_prj_task.projectid=#{projectid,javaType=INTEGER}
-                AND m_prj_task_resource.resourceid=m_prj_resource.id
-        ]]>
-	</select>
-
-	<select id="getTaskSummary"
-		parameterType="TaskSearchCriteria"
-		resultMap="GroupItemResult">
-        <![CDATA[
-        SELECT  m_prj_resource.username AS groupid, COUNT(m_prj_task_resource.id) AS value,
-                concat(user.firstname, IFNULL(concat(' ', user.middlename, ' '), ' '), user.lastname) AS groupname
-            FROM m_prj_resource
-            INNER JOIN s_user AS user ON (user.username=m_prj_resource.username)
-            INNER JOIN m_prj_task_resource ON (m_prj_task_resource.resourceid=m_prj_resource.id)
-            INNER JOIN m_prj_task ON (m_prj_task_resource.taskid=m_prj_task.id)                
-        ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria" />
-		</trim>
-		GROUP BY m_prj_resource.username
-
-		UNION
-        <![CDATA[
-        SELECT  '0' AS groupid, COUNT(m_prj_task.id) AS value,
-                'Unassigned' AS groupname
-            FROM m_prj_task LEFT OUTER JOIN m_prj_task_resource ON (m_prj_task_resource.taskid != m_prj_task.id)
-                
-        ]]>
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria" />
-		</trim>
-	</select>
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria" />
+        </trim>
+        ORDER BY m_prj_task.startdate DESC, m_prj_task.enddate DESC
+    </select>
 </mapper>

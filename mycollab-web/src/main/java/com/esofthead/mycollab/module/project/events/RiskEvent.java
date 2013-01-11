@@ -4,8 +4,8 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 
 @SuppressWarnings("serial")
 public class RiskEvent {
-	
-	   public static class Save extends ApplicationEvent {
+
+    public static class Save extends ApplicationEvent {
 
         public Save(Object source, Object data) {
             super(source, data);

@@ -44,11 +44,6 @@
         </javaClientGenerator>
 
         <table
-            domainObjectName="ChangeLog"
-            schema="mycollab"
-            tableName="m_prj_change_log" />
-
-        <table
             domainObjectName="Message"
             schema="mycollab"
             tableName="m_prj_message" />
@@ -57,11 +52,6 @@
             domainObjectName="Milestone"
             schema="mycollab"
             tableName="m_prj_milestone" />
-
-        <table
-            domainObjectName="ProjectMonitor"
-            schema="mycollab"
-            tableName="m_prj_monitor" />
 
         <table
             domainObjectName="Permission"
@@ -77,11 +67,6 @@
             domainObjectName="Project"
             schema="mycollab"
             tableName="m_prj_project" />
-
-        <table
-            domainObjectName="Resource"
-            schema="mycollab"
-            tableName="m_prj_resource" />
 
         <table
             domainObjectName="Risk"
@@ -102,11 +87,6 @@
             domainObjectName="TaskList"
             schema="mycollab"
             tableName="m_prj_task_list" />
-
-        <table
-            domainObjectName="TaskResource"
-            schema="mycollab"
-            tableName="m_prj_task_resource" />
     </context>
 
 </generatorConfiguration>

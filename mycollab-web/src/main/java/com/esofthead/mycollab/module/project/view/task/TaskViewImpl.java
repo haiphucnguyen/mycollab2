@@ -5,6 +5,7 @@ import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
+import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
@@ -48,7 +49,7 @@ public class TaskViewImpl extends AbstractView implements
         Button newTaskBtn = new Button("New Task", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                TaskListWindow taskListWindow = new TaskListWindow();
+                TaskListWindow taskListWindow = new TaskListWindow(TaskViewImpl.this);
                 TaskViewImpl.this.getWindow().addWindow(taskListWindow);
             }
         });
@@ -59,7 +60,7 @@ public class TaskViewImpl extends AbstractView implements
         Button newTaskListBtn = new Button("New Task List", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                TaskListWindow taskListWindow = new TaskListWindow();
+                TaskListWindow taskListWindow = new TaskListWindow(TaskViewImpl.this);
                 TaskViewImpl.this.getWindow().addWindow(taskListWindow);
             }
         });
@@ -79,6 +80,11 @@ public class TaskViewImpl extends AbstractView implements
         SimpleProject project = (SimpleProject)AppContext.getVariable(ProjectContants.PROJECT_NAME);
         criteria.setProjectId(new NumberSearchField(project.getId()));
         taskLists.setSearchCriteria(criteria);
+    }
+
+    @Override
+    public void insertTaskList(SimpleTaskList taskList) {
+        taskLists.insertItemOnTop(taskList);
     }
 
     public static class TaskListRowDisplayHandler implements BeanList.RowDisplayHandler<SimpleTaskList> {

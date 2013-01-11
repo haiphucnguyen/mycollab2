@@ -30,6 +30,32 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
         this(null, searchService, rowDisplayHandler);
     }
 
+    public void insertItemOnTop(T item) {
+        RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
+        Component row = rowHandler.generateRow(item, 0);
+        if (row != null) {
+            this.addComponent(row, 0);
+        }
+    }
+
+    private RowDisplayHandler<T> constructRowndisplayHandler() {
+        RowDisplayHandler<T> rowHandler = null;
+
+        try {
+
+            if (rowDisplayHandler.getEnclosingClass() != null && !Modifier.isStatic(rowDisplayHandler.getModifiers())) {
+
+                Constructor constructor = rowDisplayHandler.getDeclaredConstructor(rowDisplayHandler.getEnclosingClass());
+                rowHandler = (RowDisplayHandler<T>) constructor.newInstance(parentComponent);
+            } else {
+                rowHandler = rowDisplayHandler.newInstance();
+            }
+            return rowHandler;
+        } catch (Exception e) {
+            throw new MyCollabException(e);
+        }
+    }
+
     @SuppressWarnings("unchecked")
     public int setSearchCriteria(S searchCriteria) {
         SearchRequest<S> searchRequest = new SearchRequest<S>(searchCriteria,
@@ -44,16 +70,8 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
         int i = 0;
         try {
             for (T item : currentListData) {
-                RowDisplayHandler<T> rowHandler = null;
 
-                if (rowDisplayHandler.getEnclosingClass() != null && !Modifier.isStatic(rowDisplayHandler.getModifiers())) {
-
-                    Constructor constructor = rowDisplayHandler.getDeclaredConstructor(rowDisplayHandler.getEnclosingClass());
-                    rowHandler = (RowDisplayHandler<T>) constructor.newInstance(parentComponent);
-                } else {
-                    rowHandler = rowDisplayHandler.newInstance();
-                }
-
+                RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
                 Component row = rowHandler.generateRow(item, i);
                 if (row != null) {
                     this.addComponent(row);

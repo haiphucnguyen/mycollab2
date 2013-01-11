@@ -1,6 +1,6 @@
 <beans xmlns="http://www.springframework.org/schema/beans"
-    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd">
 
 
     <!-- Spring DAO -->
@@ -13,7 +13,7 @@
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="messageMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.project.dao.MessageMapperExt" />
+                  value="com.esofthead.mycollab.module.project.dao.MessageMapperExt" />
     </bean>
     
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="milestoneMapper">
@@ -24,13 +24,13 @@
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="milestoneMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt" />
+                  value="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt" />
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="permissionMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.project.dao.PermissionMapper" />
+                  value="com.esofthead.mycollab.module.project.dao.PermissionMapper" />
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="problemMapper">
@@ -41,7 +41,7 @@
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="problemMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.project.dao.ProblemMapperExt" />
+                  value="com.esofthead.mycollab.module.project.dao.ProblemMapperExt" />
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectMapper">
@@ -52,19 +52,7 @@
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.project.dao.ProjectMapperExt" />
-    </bean>
-
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="resourceMapper">
-        <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.project.dao.ResourceMapper" />
-    </bean>
-
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="resourceMapperExt">
-        <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.project.dao.ResourceMapperExt" />
+                  value="com.esofthead.mycollab.module.project.dao.ProjectMapperExt" />
     </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="riskMapper">
@@ -105,12 +93,6 @@
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectTaskListMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.TaskListMapperExt" />
-    </bean>
-
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="taskResourceMapper">
-        <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.project.dao.TaskResourceMapper" />
     </bean>
 
 </beans>
