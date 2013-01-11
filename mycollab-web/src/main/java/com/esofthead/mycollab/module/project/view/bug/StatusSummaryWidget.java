@@ -1,10 +1,19 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.JFreeChartWrapper;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import java.awt.Color;
 import java.awt.GradientPaint;
+import java.util.List;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.axis.CategoryAxis;
@@ -84,41 +93,35 @@ public class StatusSummaryWidget extends Panel {
     }
     
     private CategoryDataset createDataset() {
-        
-        // row keys...
-        final String series1 = "First";
-        final String series2 = "Second";
-        final String series3 = "Third";
-
-        // column keys...
-        final String category1 = "Category 1";
-        final String category2 = "Category 2";
-        final String category3 = "Category 3";
-        final String category4 = "Category 4";
-        final String category5 = "Category 5";
-
         // create the dataset...
         final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
 
-        dataset.addValue(1.0, series1, category1);
-        dataset.addValue(4.0, series1, category2);
-        dataset.addValue(3.0, series1, category3);
-        dataset.addValue(5.0, series1, category4);
-        dataset.addValue(5.0, series1, category5);
+        BugService bugService = AppContext.getSpringBean(BugService.class);
 
-        dataset.addValue(5.0, series2, category1);
-        dataset.addValue(7.0, series2, category2);
-        dataset.addValue(6.0, series2, category3);
-        dataset.addValue(8.0, series2, category4);
-        dataset.addValue(4.0, series2, category5);
+        SimpleProject project = (SimpleProject) AppContext
+                .getVariable(ProjectContants.PROJECT_NAME);
+        BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
+        recentDefectsCriteria.setProjectid(new NumberSearchField(project.getId()));
+        List<GroupItem> groupItems = bugService.getStatusSummary(recentDefectsCriteria);
 
-        dataset.addValue(4.0, series3, category1);
-        dataset.addValue(3.0, series3, category2);
-        dataset.addValue(2.0, series3, category3);
-        dataset.addValue(3.0, series3, category4);
-        dataset.addValue(6.0, series3, category5);
-        
+        final String series1 = "Bug";
+        String[] bugPriorities = ProjectDataTypeFactory.getBugStatusList();
+        for (String status : bugPriorities) {
+            boolean isFound = false;
+            for (GroupItem item : groupItems) {
+                if (status.equals(item.getGroupid())) {
+                    dataset.setValue(item.getValue(), series1, status);
+                    isFound = true;
+                    break;
+                }
+            }
+
+            if (!isFound) {
+                dataset.setValue(0, series1, status);
+            }
+        }
+
+
         return dataset;
-        
     }
 }
