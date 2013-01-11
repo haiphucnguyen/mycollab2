@@ -26,8 +26,8 @@ public class AttachmentPanel extends VerticalLayout {
     private MultiFileUpload multiFileUpload;
 
     public AttachmentPanel() {
-
         contentService = AppContext.getSpringBean(ContentService.class);
+        this.setSpacing(true);
 
         multiFileUpload = new MultiFileUpload() {
             private static final long serialVersionUID = 1L;
@@ -62,7 +62,6 @@ public class AttachmentPanel extends VerticalLayout {
                 return receiver;
             }
         };
-        multiFileUpload.setCaption("Attachments");
         this.addComponent(multiFileUpload);
     }
 
@@ -71,7 +70,7 @@ public class AttachmentPanel extends VerticalLayout {
     }
 
     public void saveContentsToRepo(String type, Integer typeid) {
-        if (fileStores != null) {
+        if (fileStores != null && !fileStores.isEmpty()) {
             attachmentService = AppContext
                     .getSpringBean(AttachmentService.class);
 

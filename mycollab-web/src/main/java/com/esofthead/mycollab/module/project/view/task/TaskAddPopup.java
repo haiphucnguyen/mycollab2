@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.module.crm.ui.components.AttachmentPanel;
+import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -25,21 +27,26 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 /**
  *
  * @author haiphucnguyen
  */
 public class TaskAddPopup extends CustomComponent {
-
+    
+    private static Logger log = LoggerFactory.getLogger(TaskAddPopup.class);
     private TabSheet taskContainer;
     private TaskList taskList;
     private SimpleTask task;
-
+    private TaskNoteLayout taskNoteComponent;
+    
     public TaskAddPopup(final TaskViewImpl.TaskListDepot taskListDepot, final TaskList taskList) {
         this.taskList = taskList;
-
+        
         VerticalLayout taskLayout = new VerticalLayout();
         taskLayout.setSpacing(true);
         
@@ -49,29 +56,32 @@ public class TaskAddPopup extends CustomComponent {
         task = new SimpleTask();
         taskContainer = new TabSheet();
         taskContainer.addTab(new TaskInformationLayout(), "Information");
-        taskContainer.addTab(new TaskNoteLayout(), "Note & Attachments");
+        
+        taskNoteComponent = new TaskNoteLayout();
+        taskContainer.addTab(taskNoteComponent, "Note & Attachments");
         
         taskLayout.addComponent(taskContainer);
         
         HorizontalLayout controlsLayout = new HorizontalLayout();
         controlsLayout.setSpacing(true);
         Button saveBtn = new Button("Save", new Button.ClickListener() {
-
             @Override
             public void buttonClick(ClickEvent event) {
                 taskListDepot.closeTaskAdd();
                 ProjectTaskService taskService = AppContext.getSpringBean(ProjectTaskService.class);
-                SimpleProject project = (SimpleProject)AppContext.getVariable(ProjectContants.PROJECT_NAME);
+                SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
                 task.setTasklistid(taskList.getId());
                 task.setProjectid(project.getId());
+                task.setNotes(taskNoteComponent.getNote());
                 taskService.saveWithSession(task, AppContext.getUsername());
+                
+                taskNoteComponent.saveContentsToRepo(task.getId());
                 taskListDepot.saveTaskSuccess(task);
             }
         });
         controlsLayout.addComponent(saveBtn);
         
         Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-
             @Override
             public void buttonClick(ClickEvent event) {
                 taskListDepot.closeTaskAdd();
@@ -80,26 +90,49 @@ public class TaskAddPopup extends CustomComponent {
         
         controlsLayout.addComponent(cancelBtn);
         taskLayout.addComponent(controlsLayout);
-
+        
         this.setCompositionRoot(taskLayout);
     }
-
+    
     private class TaskInformationLayout extends AdvancedEditBeanForm<Task> {
-
+        
         public TaskInformationLayout() {
             this.setFormLayoutFactory(new FormLayoutFactory());
             this.setFormFieldFactory(new EditFormFieldFactory());
             this.setItemDataSource(new BeanItem<Task>(task));
         }
     }
-
+    
     private class TaskNoteLayout extends VerticalLayout {
+        
+        private TextArea noteArea;
+        private AttachmentPanel attachmentPanel;
+        
+        public TaskNoteLayout() {
+            this.setSpacing(true);
+            this.setMargin(true);
+            noteArea = new TextArea();
+            noteArea.setWidth("800px");
+            noteArea.setHeight("200px");
+            this.addComponent(noteArea);
+            
+            attachmentPanel = new AttachmentPanel();
+            this.addComponent(attachmentPanel);
+        }
+        
+        public String getNote() {
+            return (String) noteArea.getValue();
+        }
+        
+        void saveContentsToRepo(Integer typeid) {
+            attachmentPanel.saveContentsToRepo(AttachmentConstants.PROJECT_TASK_TYPE, typeid);
+        }
     }
-
+    
     private class FormLayoutFactory implements IFormLayoutFactory {
-
+        
         private GridFormLayoutHelper informationLayout;
-
+        
         @Override
         public Layout getLayout() {
             informationLayout = new GridFormLayoutHelper(2, 4);
@@ -107,7 +140,7 @@ public class TaskAddPopup extends CustomComponent {
             layout.addComponent(informationLayout.getLayout());
             return layout;
         }
-
+        
         @Override
         public void attachField(Object propertyId, Field field) {
             if (propertyId.equals("taskname")) {
@@ -127,11 +160,11 @@ public class TaskAddPopup extends CustomComponent {
             }
         }
     }
-
+    
     private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
+        
         private static final long serialVersionUID = 1L;
-
+        
         @Override
         protected Field onCreateField(Item item, Object propertyId,
                 com.vaadin.ui.Component uiContext) {
