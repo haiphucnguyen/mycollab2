@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
@@ -13,5 +14,16 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  */
 @ViewComponent
 public class TaskReadViewImpl extends AbstractView implements TaskReadView {
+
+    private SimpleTask task;
+    
+    @Override
+    public void previewItem(SimpleTask item) {
+    }
+
+    @Override
+    public SimpleTask getItem() {
+        return task;
+    }
     
 }

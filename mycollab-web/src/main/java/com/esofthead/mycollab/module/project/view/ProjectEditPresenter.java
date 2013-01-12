@@ -20,6 +20,7 @@ public class ProjectEditPresenter extends AbstractPresenter<ProjectEditView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        ProjectView projectViewContainer = (ProjectView) container;
+        projectViewContainer.gotoSubView("Dashboard");
     }
 }

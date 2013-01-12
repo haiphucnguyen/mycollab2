@@ -44,7 +44,7 @@ public class TaskAddPopup extends CustomComponent {
     private SimpleTask task;
     private TaskNoteLayout taskNoteComponent;
     
-    public TaskAddPopup(final TaskViewImpl.TaskListDepot taskListDepot, final TaskList taskList) {
+    public TaskAddPopup(final TaskListDisplayViewImpl.TaskListDepot taskListDepot, final TaskList taskList) {
         this.taskList = taskList;
         
         VerticalLayout taskLayout = new VerticalLayout();

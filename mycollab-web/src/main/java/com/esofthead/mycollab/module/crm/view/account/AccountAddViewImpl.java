@@ -18,8 +18,7 @@ import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 
 @ViewComponent
-public class AccountAddViewImpl extends AbstractView implements AccountAddView,
-        IFormAddView<Account> {
+public class AccountAddViewImpl extends AbstractView implements AccountAddView {
 
     private static final long serialVersionUID = 1L;
     private EditForm editForm;

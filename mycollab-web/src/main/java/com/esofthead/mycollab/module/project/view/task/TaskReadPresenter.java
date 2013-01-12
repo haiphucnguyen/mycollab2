@@ -19,6 +19,9 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        TaskContainer taskContainer = (TaskContainer) container;
+        taskContainer.removeAllComponents();
+        
+        taskContainer.addComponent(view.getWidget());
     }
 }

@@ -1,13 +1,9 @@
 package com.esofthead.mycollab.module.project.view;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.vaadin.hene.popupbutton.PopupButton;
-import org.vaadin.hene.splitbutton.SplitButton;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
@@ -21,6 +17,7 @@ import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.people.UserPresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
+import com.esofthead.mycollab.module.project.view.task.TaskListDisplayPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -40,6 +37,10 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.hene.splitbutton.SplitButton;
 
 @SuppressWarnings("serial")
 @ViewComponent
@@ -235,8 +236,9 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     }
 
     @Override
-    public void displayProject(SimpleProject project) {
+    public void displayProject(final SimpleProject project) {
         this.project = project;
+        gotoDashboard();
 
         topPanel.removeAllComponents();
 
@@ -278,12 +280,15 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
             @Override
             public void splitButtonClick(
                     SplitButton.SplitButtonClickEvent event) {
+                ProjectEditPresenter prjEditPresenter = PresenterResolver.getPresenter(ProjectEditPresenter.class);
+                prjEditPresenter.go(ProjectViewImpl.this, new ScreenData.Edit<Project>(project));
             }
         });
         Button selectBtn = new Button("View Project Detail",
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
+                        gotoDashboard();
                     }
                 });
         selectBtn.setIcon(new ThemeResource("icons/16/view.png"));

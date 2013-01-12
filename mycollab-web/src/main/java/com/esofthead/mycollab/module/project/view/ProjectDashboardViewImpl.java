@@ -15,10 +15,11 @@ public class ProjectDashboardViewImpl extends AbstractView implements ProjectDas
         this.setMargin(true);
         
         prjView = new ProjectInformationComponent();
-        activityPanel = new ActivityStreamComponent();
-        
-        this.addComponent(activityPanel);
         this.addComponent(prjView);
+        
+        activityPanel = new ActivityStreamComponent();
+        this.addComponent(activityPanel);
+        
     }
 
     @Override

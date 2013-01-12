@@ -38,11 +38,11 @@ import java.util.GregorianCalendar;
  */
 public class TaskListWindow extends Window {
 
-    private TaskView taskView;
+    private TaskListDisplayView taskView;
     private SimpleTaskList taskList;
     private TaskListWindow.TaskListForm taskListForm;
 
-    public TaskListWindow(TaskView taskView) {
+    public TaskListWindow(TaskListDisplayView taskView) {
         this.setWidth("800px");
         this.taskView = taskView;
         taskList = new SimpleTaskList();

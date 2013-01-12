@@ -19,7 +19,7 @@ public class TaskListReadViewImpl extends AbstractView implements TaskListReadVi
 
     @Override
     public void previewItem(SimpleTaskList item) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        
     }
 
     @Override

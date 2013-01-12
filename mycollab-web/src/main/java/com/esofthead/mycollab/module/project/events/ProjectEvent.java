@@ -11,10 +11,10 @@ public class ProjectEvent {
             super(source, data);
         }
     }
+    
+    public static class GotoEdit extends ApplicationEvent {
 
-    public static class Save extends ApplicationEvent {
-
-        public Save(Object source, Object data) {
+        public GotoEdit(Object source, Object data) {
             super(source, data);
         }
     }

@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanPagedList;
@@ -45,7 +46,7 @@ public class ActivityStreamComponent extends Panel {
         activityStreamList = new BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), ActivityStreamRowDisplayHandler.class);
         this.addComponent(activityStreamList);
     }
-    
+
     public void showProjectFeeds() {
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
         searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{ModuleNameConstants.PRJ}));
@@ -122,6 +123,7 @@ public class ActivityStreamComponent extends Panel {
                     } else if (ProjectContants.RISK.equals(type)) {
                         EventBus.getInstance().fireEvent(new RiskEvent.GotoRead(this, typeid));
                     } else if (ProjectContants.TASK.equals(type)) {
+                        EventBus.getInstance().fireEvent(new TaskEvent.GotoRead(this, typeid));
                     } else if (ProjectContants.TASK_LIST.equals(type)) {
                         EventBus.getInstance().fireEvent(new TaskListEvent.GotoRead(this, typeid));
                     }

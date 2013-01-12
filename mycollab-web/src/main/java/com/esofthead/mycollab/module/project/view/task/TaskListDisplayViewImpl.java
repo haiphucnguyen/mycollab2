@@ -25,12 +25,12 @@ import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class TaskViewImpl extends AbstractView implements
-        TaskView {
+public class TaskListDisplayViewImpl extends AbstractView implements
+        TaskListDisplayView {
     
     private BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList> taskLists;
     
-    public TaskViewImpl() {
+    public TaskListDisplayViewImpl() {
         super();
         
         constructHeader();
@@ -48,8 +48,8 @@ public class TaskViewImpl extends AbstractView implements
         Button newTaskBtn = new Button("New Task", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                TaskListWindow taskListWindow = new TaskListWindow(TaskViewImpl.this);
-                TaskViewImpl.this.getWindow().addWindow(taskListWindow);
+                TaskListWindow taskListWindow = new TaskListWindow(TaskListDisplayViewImpl.this);
+                TaskListDisplayViewImpl.this.getWindow().addWindow(taskListWindow);
             }
         });
         newTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -59,8 +59,8 @@ public class TaskViewImpl extends AbstractView implements
         Button newTaskListBtn = new Button("New Task List", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                TaskListWindow taskListWindow = new TaskListWindow(TaskViewImpl.this);
-                TaskViewImpl.this.getWindow().addWindow(taskListWindow);
+                TaskListWindow taskListWindow = new TaskListWindow(TaskListDisplayViewImpl.this);
+                TaskListDisplayViewImpl.this.getWindow().addWindow(taskListWindow);
             }
         });
         newTaskListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

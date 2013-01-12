@@ -1,21 +1,15 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
-/**
- *
- * @author haiphucnguyen
- */
-public class TaskListReadPresenter extends AbstractPresenter<TaskListReadView> {
+public class TaskListDisplayPresenter extends AbstractPresenter<TaskListDisplayView> {
 
-    public TaskListReadPresenter() {
-        super(TaskListReadView.class);
+    private static final long serialVersionUID = 1L;
+
+    public TaskListDisplayPresenter() {
+        super(TaskListDisplayView.class);
     }
 
     @Override
@@ -24,5 +18,6 @@ public class TaskListReadPresenter extends AbstractPresenter<TaskListReadView> {
         taskContainer.removeAllComponents();
         
         taskContainer.addComponent(view.getWidget());
+        view.displayTakLists();
     }
 }

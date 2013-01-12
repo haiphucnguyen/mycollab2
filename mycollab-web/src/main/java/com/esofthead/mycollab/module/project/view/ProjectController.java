@@ -17,7 +17,10 @@ import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.view.task.TaskContainer;
+import com.esofthead.mycollab.module.project.view.task.TaskListDisplayView;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -94,7 +97,24 @@ public class ProjectController {
                     public void handle(TaskListEvent.GotoRead event) {
                         ProjectView projectView = ViewManager
                                 .getView(ProjectView.class);
-                        ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
+                        TaskContainer.PreviewTaskListData data = new TaskContainer.PreviewTaskListData(
+                                (Integer) event.getData());
+                        projectView.gotoTaskList(data);
+                    }
+                });
+
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<TaskEvent.GotoRead>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return TaskEvent.GotoRead.class;
+                    }
+
+                    @Override
+                    public void handle(TaskEvent.GotoRead event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        TaskContainer.PreviewTaskData data = new TaskContainer.PreviewTaskData(
                                 (Integer) event.getData());
                         projectView.gotoTaskList(data);
                     }
