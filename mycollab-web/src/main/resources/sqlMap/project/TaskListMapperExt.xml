@@ -65,4 +65,12 @@
             <include refid="com.esofthead.mycollab.module.project.dao.TaskListMapperExt.querySearchCriteria" />
         </trim>
     </select>
+    
+    <select id="findTaskListById" parameterType="java.lang.Integer"
+        resultMap="SimpleTaskListResult">
+        <include
+            refid="com.esofthead.mycollab.module.project.dao.TaskListMapperExt.selectTaskList" />
+
+        WHERE m_prj_task_list.id=#{taskListId, javaType=INTEGER}
+    </select>
 </mapper>

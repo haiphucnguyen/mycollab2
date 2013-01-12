@@ -24,5 +24,5 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 
 public interface AccountService extends
 		IDefaultService<Integer, Account, AccountSearchCriteria> {
-	SimpleAccount findAccountById(int accountId);
+	   SimpleAccount findAccountById(int accountId);
 }

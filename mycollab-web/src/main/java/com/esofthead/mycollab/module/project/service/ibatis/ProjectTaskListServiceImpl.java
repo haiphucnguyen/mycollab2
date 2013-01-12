@@ -12,6 +12,7 @@ import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.dao.TaskListMapper;
 import com.esofthead.mycollab.module.project.dao.TaskListMapperExt;
+import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
@@ -42,5 +43,10 @@ public class ProjectTaskListServiceImpl extends DefaultService<Integer, TaskList
     @Override
     public ISearchableDAO<TaskListSearchCriteria> getSearchMapper() {
         return projectTaskListMapperExt;
+    }
+
+    @Override
+    public SimpleTaskList findTaskListById(int taskListId) {
+        return projectTaskListMapperExt.findTaskListById(taskListId);
     }
 }

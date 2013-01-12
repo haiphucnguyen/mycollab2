@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.dao;
 
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 
 /**
@@ -12,5 +13,5 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
  * @author haiphucnguyen
  */
 public interface TaskListMapperExt extends ISearchableDAO<TaskListSearchCriteria>{
-    
+    SimpleTaskList findTaskListById(int taskListId);
 }

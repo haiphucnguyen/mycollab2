@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.service;
 
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
+import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 
@@ -14,4 +15,5 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
  */
 public interface ProjectTaskListService extends
         IDefaultService<Integer, TaskList, TaskListSearchCriteria> {
+    SimpleTaskList findTaskListById(int taskListId);
 }
