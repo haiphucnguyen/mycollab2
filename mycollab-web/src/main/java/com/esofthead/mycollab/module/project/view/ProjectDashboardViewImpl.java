@@ -7,15 +7,23 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 @ViewComponent
 public class ProjectDashboardViewImpl extends AbstractView implements ProjectDashboardView {
 
+    private ActivityStreamComponent activityPanel;
+    private ProjectInformationComponent prjView;
+    
     public ProjectDashboardViewImpl() {
         this.setSpacing(true);
         this.setMargin(true);
+        
+        prjView = new ProjectInformationComponent();
+        activityPanel = new ActivityStreamComponent();
+        
+        this.addComponent(activityPanel);
+        this.addComponent(prjView);
     }
 
     @Override
     public void displayDashboard() {
-        this.removeAllComponents();
-        this.addComponent(new ProjectInformationView());
-        
+        activityPanel.showProjectFeeds();
+        prjView.displayProjectInformation();
     }
 }

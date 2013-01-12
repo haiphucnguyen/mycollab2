@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
+import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -36,6 +37,7 @@ public class ProjectController {
         bindProjectEvents();
         bindRiskEvents();
         bindProblemEvents();
+        bindTaskListEvents();
         bindBugEvents();
         bindMessageEvents();
         bindMilestoneEvents();
@@ -76,6 +78,25 @@ public class ProjectController {
                                 project);
                         presenter.go(container,
                                 new ScreenData<Project>(project));
+                    }
+                });
+    }
+
+    private void bindTaskListEvents() {
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<TaskListEvent.GotoRead>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return TaskListEvent.GotoRead.class;
+                    }
+
+                    @Override
+                    public void handle(TaskListEvent.GotoRead event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
+                                (Integer) event.getData());
+                        projectView.gotoTaskList(data);
                     }
                 });
     }

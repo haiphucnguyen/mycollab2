@@ -29,26 +29,30 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  *
  * @author haiphucnguyen
  */
-public class ActivityStreamPanel extends VerticalLayout {
+public class ActivityStreamComponent extends Panel {
 
     private BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
 
-    public ActivityStreamPanel() {
-
+    public ActivityStreamComponent() {
+        super("Project Feeds");
         activityStreamList = new BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), ActivityStreamRowDisplayHandler.class);
+        this.addComponent(activityStreamList);
+    }
+    
+    public void showProjectFeeds() {
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
         searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{ModuleNameConstants.PRJ}));
 
         SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
         searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(project.getId()));
         activityStreamList.setSearchCriteria(searchCriteria);
-        this.addComponent(activityStreamList);
     }
 
     public static class ActivityStreamRowDisplayHandler implements BeanPagedList.RowDisplayHandler<SimpleActivityStream> {
