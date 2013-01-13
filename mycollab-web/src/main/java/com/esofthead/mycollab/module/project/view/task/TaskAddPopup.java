@@ -14,6 +14,8 @@ import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -23,6 +25,7 @@ import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.VerticalLayout;
@@ -94,9 +97,43 @@ public class TaskAddPopup extends CustomComponent {
     private class TaskInformationLayout extends AdvancedEditBeanForm<Task> {
         
         public TaskInformationLayout() {
-            this.setFormLayoutFactory(new TaskListFormLayoutFactory.TaskListInformationLayout());
+            this.setFormLayoutFactory(new TaskLayout());
             this.setFormFieldFactory(new EditFormFieldFactory());
             this.setItemDataSource(new BeanItem<Task>(task));
+        }
+    }
+    
+    private static class TaskLayout implements IFormLayoutFactory {
+
+        private GridFormLayoutHelper informationLayout;
+
+        @Override
+        public Layout getLayout() {
+            informationLayout = new GridFormLayoutHelper(2, 4);
+            VerticalLayout layout = new VerticalLayout();
+            layout.addComponent(informationLayout.getLayout());
+            return layout;
+        }
+
+        @Override
+        public void attachField(Object propertyId, Field field) {
+            if (propertyId.equals("taskname")) {
+                informationLayout.addComponent(field, "Task Name", 0, 0, 2, "100%");
+            } else if (propertyId.equals("startname")) {
+                informationLayout.addComponent(field, "Start Name", 0, 1);
+            } else if (propertyId.equals("enddate")) {
+                informationLayout.addComponent(field, "End Date", 0, 2);
+            } else if (propertyId.equals("actualstartdate")) {
+                informationLayout.addComponent(field, "Actual Start Date", 1, 1);
+            } else if (propertyId.equals("actualenddate")) {
+                informationLayout.addComponent(field, "Actual End Date", 1, 2);
+            } else if (propertyId.equals("deadline")) {
+                informationLayout.addComponent(field, "Is Deadline", 0, 3);
+            } else if (propertyId.equals("isestimated")) {
+                informationLayout.addComponent(field, "Is Estimated", 1, 3);
+            } else if (propertyId.equals("assignuser")) {
+                informationLayout.addComponent(field, "Assign", 0, 4);
+            } 
         }
     }
     

@@ -77,4 +77,12 @@
         </trim>
         ORDER BY m_prj_task.startdate DESC, m_prj_task.enddate DESC
     </select>
+    
+    <select id="findTaskById" parameterType="java.lang.Integer"
+        resultMap="TaskResult">
+        <include
+            refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.selectTask" />
+
+        WHERE m_prj_task.id=#{taskId, javaType=INTEGER}
+    </select>
 </mapper>

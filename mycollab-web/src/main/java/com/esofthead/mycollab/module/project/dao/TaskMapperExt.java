@@ -1,7 +1,10 @@
 package com.esofthead.mycollab.module.project.dao;
 
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 
 public interface TaskMapperExt extends ISearchableDAO<TaskSearchCriteria> {
+
+    SimpleTask findTaskById(int taskId);
 }
