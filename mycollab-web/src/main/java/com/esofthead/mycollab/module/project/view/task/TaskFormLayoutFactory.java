@@ -61,7 +61,7 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 
         @Override
         public Layout getLayout() {
-            informationLayout = new GridFormLayoutHelper(2, 4);
+            informationLayout = new GridFormLayoutHelper(2, 5);
             VerticalLayout layout = new VerticalLayout();
             layout.addComponent(informationLayout.getLayout());
             return layout;
