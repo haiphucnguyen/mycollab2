@@ -64,7 +64,7 @@ public class PrioritySummaryWidget extends VerticalLayout {
         BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
         recentDefectsCriteria.setProjectid(new NumberSearchField(project.getId()));
         List<GroupItem> groupItems = bugService.getPrioritySummary(recentDefectsCriteria);
-        
+
         String[] bugPriorities = ProjectDataTypeFactory.getBugPriorityList();
         for (String priority : bugPriorities) {
             boolean isFound = false;

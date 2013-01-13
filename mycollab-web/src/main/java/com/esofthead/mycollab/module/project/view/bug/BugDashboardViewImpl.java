@@ -11,6 +11,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -78,12 +79,16 @@ public class BugDashboardViewImpl extends AbstractView implements
         rightColumn.removeAllComponents();
 
         BugDisplayWidget dueBugWidget = new BugDisplayWidget("Due Bugs");
-        leftColumn.addComponent(dueBugWidget);
+        LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(dueBugWidget);
+        leftColumn.addComponent(dueBugWidgetWrapper);
 
         BugDisplayWidget updateBugWidget = new BugDisplayWidget("Updated Bug Recently");
-        leftColumn.addComponent(updateBugWidget);
+        LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(updateBugWidget);
+        leftColumn.addComponent(updateBugWidgetWrapper);
+
 
         rightColumn.addComponent(new PrioritySummaryWidget());
+        
         rightColumn.addComponent(new StatusSummaryWidget());
 
         //Due bug search criteria
