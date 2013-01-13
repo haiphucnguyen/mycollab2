@@ -12,16 +12,10 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import java.awt.Color;
-import java.awt.GradientPaint;
 import java.util.List;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 
 public class PrioritySummaryWidget extends VerticalLayout {
 
@@ -31,14 +25,11 @@ public class PrioritySummaryWidget extends VerticalLayout {
         this.addComponent(new Label("Priority"));
 
         // create the chart...
-        final JFreeChart chart = ChartFactory.createBarChart(
-                "", // chart title
-                "", // domain axis label
-                "", // range axis label
+        final JFreeChart chart = ChartFactory.createPieChart(
+                "Priority", // chart title
                 createDataset(), // data
-                PlotOrientation.HORIZONTAL, // orientation
-                false, // include legend
-                false, // tooltips?
+                true, // include legend
+                true, // tooltips?
                 false // URLs?
                 );
 
@@ -49,21 +40,6 @@ public class PrioritySummaryWidget extends VerticalLayout {
 
 
         // get a reference to the plot for further customisation...
-        final CategoryPlot plot = chart.getCategoryPlot();
-        plot.setBackgroundPaint(Color.lightGray);
-        plot.setDomainGridlinePaint(Color.white);
-        plot.setRangeGridlinePaint(Color.white);
-
-        BarRenderer br = (BarRenderer) plot.getRenderer();
-        br.setItemMargin(.2);
-        final GradientPaint gp0 = new GradientPaint(
-                0.0f, 0.0f, Color.blue,
-                0.0f, 0.0f, Color.lightGray);
-        br.setSeriesPaint(0, gp0);
-
-        // set the range axis to display integers only...
-        final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         // OPTIONAL CUSTOMISATION COMPLETED.
 
         JFreeChartWrapper wrapper = new JFreeChartWrapper(chart);
@@ -76,10 +52,10 @@ public class PrioritySummaryWidget extends VerticalLayout {
 
     }
 
-    private CategoryDataset createDataset() {
+    private DefaultPieDataset createDataset() {
 
         // create the dataset...
-        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        final DefaultPieDataset dataset = new DefaultPieDataset();
 
         BugService bugService = AppContext.getSpringBean(BugService.class);
 
@@ -88,21 +64,20 @@ public class PrioritySummaryWidget extends VerticalLayout {
         BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
         recentDefectsCriteria.setProjectid(new NumberSearchField(project.getId()));
         List<GroupItem> groupItems = bugService.getPrioritySummary(recentDefectsCriteria);
-
-        final String series1 = "Bug";
+        
         String[] bugPriorities = ProjectDataTypeFactory.getBugPriorityList();
         for (String priority : bugPriorities) {
             boolean isFound = false;
             for (GroupItem item : groupItems) {
                 if (priority.equals(item.getGroupid())) {
-                    dataset.setValue(item.getValue(), series1, priority);
+                    dataset.setValue(priority, item.getValue());
                     isFound = true;
                     break;
                 }
             }
 
             if (!isFound) {
-                dataset.setValue(0, series1, priority);
+                dataset.setValue(priority, 0);
             }
         }
 

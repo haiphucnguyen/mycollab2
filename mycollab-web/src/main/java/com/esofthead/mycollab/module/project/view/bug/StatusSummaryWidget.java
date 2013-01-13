@@ -12,16 +12,10 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import java.awt.Color;
-import java.awt.GradientPaint;
 import java.util.List;
 import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
-import org.jfree.chart.axis.NumberAxis;
-import org.jfree.chart.plot.CategoryPlot;
-import org.jfree.chart.plot.PlotOrientation;
-import org.jfree.chart.renderer.category.BarRenderer;
-import org.jfree.data.category.CategoryDataset;
-import org.jfree.data.category.DefaultCategoryDataset;
+import org.jfree.data.general.DefaultPieDataset;
 
 public class StatusSummaryWidget extends VerticalLayout {
 
@@ -31,14 +25,11 @@ public class StatusSummaryWidget extends VerticalLayout {
         this.addComponent(new Label("Status"));
 
         // create the chart...
-        final JFreeChart chart = ChartFactory.createBarChart(
-                "", // chart title
-                "", // domain axis label
-                "", // range axis label
+        final JFreeChart chart = ChartFactory.createPieChart(
+                "Status", // chart title
                 createDataset(), // data
-                PlotOrientation.HORIZONTAL, // orientation
-                false, // include legend
-                false, // tooltips?
+                true, // include legend
+                true, // tooltips?
                 false // URLs?
                 );
 
@@ -46,24 +37,6 @@ public class StatusSummaryWidget extends VerticalLayout {
 
         // set the background color for the chart...
         chart.setBackgroundPaint(Color.white);
-
-
-        // get a reference to the plot for further customisation...
-        final CategoryPlot plot = chart.getCategoryPlot();
-        plot.setBackgroundPaint(Color.lightGray);
-        plot.setDomainGridlinePaint(Color.white);
-        plot.setRangeGridlinePaint(Color.white);
-
-        BarRenderer br = (BarRenderer) plot.getRenderer();
-        br.setItemMargin(.2);
-        final GradientPaint gp0 = new GradientPaint(
-                0.0f, 0.0f, Color.blue,
-                0.0f, 0.0f, Color.lightGray);
-        br.setSeriesPaint(0, gp0);
-
-        // set the range axis to display integers only...
-        final NumberAxis rangeAxis = (NumberAxis) plot.getRangeAxis();
-        rangeAxis.setStandardTickUnits(NumberAxis.createIntegerTickUnits());
         // OPTIONAL CUSTOMISATION COMPLETED.
 
         JFreeChartWrapper wrapper = new JFreeChartWrapper(chart);
@@ -75,9 +48,9 @@ public class StatusSummaryWidget extends VerticalLayout {
         this.addComponent(wrapper);
     }
 
-    private CategoryDataset createDataset() {
+    private DefaultPieDataset createDataset() {
         // create the dataset...
-        final DefaultCategoryDataset dataset = new DefaultCategoryDataset();
+        final DefaultPieDataset dataset = new DefaultPieDataset();
 
         BugService bugService = AppContext.getSpringBean(BugService.class);
 
@@ -93,14 +66,14 @@ public class StatusSummaryWidget extends VerticalLayout {
             boolean isFound = false;
             for (GroupItem item : groupItems) {
                 if (status.equals(item.getGroupid())) {
-                    dataset.setValue(item.getValue(), series1, status);
+                    dataset.setValue(status, item.getValue());
                     isFound = true;
                     break;
                 }
             }
 
             if (!isFound) {
-                dataset.setValue(0, series1, status);
+                dataset.setValue(status, 0);
             }
         }
 
