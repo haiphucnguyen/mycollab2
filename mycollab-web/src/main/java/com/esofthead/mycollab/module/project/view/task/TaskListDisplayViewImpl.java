@@ -3,12 +3,9 @@ package com.esofthead.mycollab.module.project.view.task;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
-import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -21,21 +18,20 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
 public class TaskListDisplayViewImpl extends AbstractView implements
         TaskListDisplayView {
-    
+
     private BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList> taskLists;
-    
+
     public TaskListDisplayViewImpl() {
         super();
-        
+
         constructHeader();
     }
-    
+
     private void constructHeader() {
         HorizontalLayout header = new HorizontalLayout();
         header.setMargin(true);
@@ -44,7 +40,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
         Label headerLbl = new Label("All Tasks");
         header.addComponent(headerLbl);
         header.setExpandRatio(headerLbl, 1.0f);
-        
+
         Button newTaskBtn = new Button("New Task", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
@@ -55,7 +51,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
         newTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         header.addComponent(newTaskBtn);
         header.setComponentAlignment(newTaskBtn, Alignment.MIDDLE_RIGHT);
-        
+
         Button newTaskListBtn = new Button("New Task List", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
@@ -66,13 +62,13 @@ public class TaskListDisplayViewImpl extends AbstractView implements
         newTaskListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         header.addComponent(newTaskListBtn);
         header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
-        
+
         this.addComponent(header);
-        
+
         taskLists = new BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList>(AppContext.getSpringBean(ProjectTaskListService.class), TaskListRowDisplayHandler.class);
         this.addComponent(taskLists);
     }
-    
+
     @Override
     public void displayTakLists() {
         TaskListSearchCriteria criteria = new TaskListSearchCriteria();
@@ -80,75 +76,24 @@ public class TaskListDisplayViewImpl extends AbstractView implements
         criteria.setProjectId(new NumberSearchField(project.getId()));
         taskLists.setSearchCriteria(criteria);
     }
-    
+
     @Override
     public void insertTaskList(SimpleTaskList taskList) {
         taskLists.insertItemOnTop(taskList);
     }
-    
+
     public static class TaskListRowDisplayHandler implements BeanList.RowDisplayHandler<SimpleTaskList> {
-        
+
         @Override
         public Component generateRow(SimpleTaskList taskList, int rowIndex) {
             return new TaskListDepot(taskList);
         }
     }
-    
+
     static class TaskListDepot extends Depot {
-        
-        private SimpleTaskList taskList;
-        private BeanList<ProjectTaskService, TaskSearchCriteria, SimpleTask> taskDisplay;
-        private Button createTaskBtn;
-        
+
         public TaskListDepot(SimpleTaskList taskListParam) {
-            super(taskListParam.getName(), new VerticalLayout());
-            
-            final VerticalLayout contentContainer = (VerticalLayout) this.content;
-            contentContainer.setSpacing(true);
-            
-            this.taskList = taskListParam;
-            
-            taskDisplay = new BeanList<ProjectTaskService, TaskSearchCriteria, SimpleTask>(AppContext.getSpringBean(ProjectTaskService.class), TaskRowDisplayHandler.class);
-            TaskSearchCriteria taskCriteria = new TaskSearchCriteria();
-            taskCriteria.setTaskListId(new NumberSearchField(taskList.getId()));
-            taskDisplay.setSearchCriteria(taskCriteria);
-            
-            contentContainer.addComponent(taskDisplay);
-            
-            createTaskBtn = new Button("Add Task", new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    Component comp = contentContainer.getComponent(0);
-                    if (!(comp instanceof TaskAddPopup)) {
-                        TaskAddPopup taskAddView = new TaskAddPopup(TaskListDepot.this, taskList);
-                        contentContainer.addComponent(taskAddView, 0);
-                        contentContainer.removeComponent(createTaskBtn);
-                    }
-                }
-            });
-            
-            contentContainer.addComponent(createTaskBtn);
-        }
-        
-        public void saveTaskSuccess(SimpleTask task) {
-            taskDisplay.insertItemOnTop(task);
-        }
-        
-        public void closeTaskAdd() {
-            this.addComponent(createTaskBtn);
-            final VerticalLayout contentContainer = (VerticalLayout) this.content;
-            Component comp = contentContainer.getComponent(0);
-            if (comp instanceof TaskAddPopup) {
-                contentContainer.removeComponent(comp);
-            }
-        }
-    }
-    
-    public static class TaskRowDisplayHandler implements BeanList.RowDisplayHandler<SimpleTask> {
-        
-        @Override
-        public Component generateRow(SimpleTask task, int rowIndex) {
-            return new Label("Task: " + task.getTaskname());
+            super(taskListParam.getName(), new TaskDisplayComponent(taskListParam));
         }
     }
 }

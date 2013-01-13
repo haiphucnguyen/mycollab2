@@ -10,6 +10,7 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
@@ -85,9 +86,15 @@ public class TaskListReadViewImpl extends AbstractView implements TaskListReadVi
             @Override
             protected Layout createBottomPanel() {
                 VerticalLayout relatedItemsPanel = new VerticalLayout();
-
+                relatedItemsPanel.addComponent(new TaskDepot());
                 return relatedItemsPanel;
             }
+        }
+    }
+    
+    private class TaskDepot extends Depot {
+        public TaskDepot() {
+            super("Tasks", new TaskDisplayComponent(taskList));
         }
     }
 

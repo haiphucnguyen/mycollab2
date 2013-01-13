@@ -40,12 +40,10 @@ public class TaskAddPopup extends CustomComponent {
     
     private static Logger log = LoggerFactory.getLogger(TaskAddPopup.class);
     private TabSheet taskContainer;
-    private TaskList taskList;
     private SimpleTask task;
     private TaskNoteLayout taskNoteComponent;
     
-    public TaskAddPopup(final TaskListDisplayViewImpl.TaskListDepot taskListDepot, final TaskList taskList) {
-        this.taskList = taskList;
+    public TaskAddPopup(final TaskDisplayComponent taskDisplayComp, final TaskList taskList) {
         
         VerticalLayout taskLayout = new VerticalLayout();
         taskLayout.setSpacing(true);
@@ -67,16 +65,17 @@ public class TaskAddPopup extends CustomComponent {
         Button saveBtn = new Button("Save", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                taskListDepot.closeTaskAdd();
+                taskDisplayComp.closeTaskAdd();
                 ProjectTaskService taskService = AppContext.getSpringBean(ProjectTaskService.class);
                 SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
                 task.setTasklistid(taskList.getId());
                 task.setProjectid(project.getId());
+                task.setSaccountid(AppContext.getAccountId());
                 task.setNotes(taskNoteComponent.getNote());
                 taskService.saveWithSession(task, AppContext.getUsername());
                 
                 taskNoteComponent.saveContentsToRepo(task.getId());
-                taskListDepot.saveTaskSuccess(task);
+                taskDisplayComp.saveTaskSuccess(task);
             }
         });
         controlsLayout.addComponent(saveBtn);
@@ -84,7 +83,7 @@ public class TaskAddPopup extends CustomComponent {
         Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                taskListDepot.closeTaskAdd();
+                taskDisplayComp.closeTaskAdd();
             }
         });
         
