@@ -1,7 +1,5 @@
 package com.esofthead.mybatis.plugin;
 
-import java.util.Calendar;
-import java.util.GregorianCalendar;
 import java.util.List;
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
@@ -71,15 +69,6 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
             document.getRootElement().addElement(element);
         }
 
-        /*
-         * XmlElement element = new XmlElement("cache");
-         * element.addAttribute(new Attribute("type",
-         * "org.mybatis.caches.ehcache.LoggingEhcache")); TextElement
-         * commentElement = new TextElement("<!--WARNING - @mbggenerated-->");
-         * element.addElement(commentElement);
-         * document.getRootElement().addElement(element);
-         */
-
         return true;
     }
 
@@ -88,17 +77,32 @@ public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAda
             TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
 
         if (isTableHasIdPrimaryKey(introspectedTable)) {
-            Method method = new Method();
-            method.setVisibility(JavaVisibility.PUBLIC);
-            context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
-            method.setName("insertAndReturnKey");
-            method.setReturnType(new FullyQualifiedJavaType("java.lang.Integer"));
-            method.addParameter(new Parameter(new FullyQualifiedJavaType(
-                    introspectedTable.getBaseRecordType()), "value"));
-            interfaze.addMethod(method);
+            generateInsertAndReturnKeyMethod(interfaze, introspectedTable);
+
         }
 
         return true;
+    }
+
+    private void generateInsertAndReturnKeyMethod(Interface interfaze, IntrospectedTable introspectedTable) {
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        method.setName("insertAndReturnKey");
+        method.setReturnType(new FullyQualifiedJavaType("java.lang.Integer"));
+        method.addParameter(new Parameter(new FullyQualifiedJavaType(
+                introspectedTable.getBaseRecordType()), "value"));
+        interfaze.addMethod(method);
+    }
+    
+    private void generateRemoveMultipleKeys(Interface interfaze, IntrospectedTable introspectedTable) {
+        Method method = new Method();
+        method.setVisibility(JavaVisibility.PUBLIC);
+        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
+        method.setName("removeWithSession");
+        method.setReturnType(new FullyQualifiedJavaType("void"));
+        method.addParameter(new Parameter(new FullyQualifiedJavaType("java.util.List"), "primeKeys"));
+        interfaze.addMethod(method);
     }
 
     @Override

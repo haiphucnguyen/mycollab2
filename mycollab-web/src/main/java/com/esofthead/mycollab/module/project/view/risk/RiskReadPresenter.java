@@ -5,8 +5,8 @@ import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.service.RiskService;
+import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
@@ -23,7 +23,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 
     private void bind() {
         view.getPreviewFormHandlers().addFormHandler(
-                new PreviewFormHandlers<Risk>() {
+                new DefaultPreviewFormHandler<Risk>() {
                     @Override
                     public void onEdit(Risk data) {
                         EventBus.getInstance().fireEvent(

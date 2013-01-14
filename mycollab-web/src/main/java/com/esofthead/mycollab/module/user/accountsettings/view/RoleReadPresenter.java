@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.module.user.service.RoleService;
+import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -18,7 +19,7 @@ import com.vaadin.ui.ComponentContainer;
  *
  * @author haiphucnguyen
  */
-public class RoleReadPresenter  extends AbstractPresenter<RoleReadView> {
+public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
 
     public RoleReadPresenter() {
         super(RoleReadView.class);
@@ -28,7 +29,7 @@ public class RoleReadPresenter  extends AbstractPresenter<RoleReadView> {
 
     private void bind() {
         view.getPreviewFormHandlers().addFormHandler(
-                new PreviewFormHandlers<Role>() {
+                new DefaultPreviewFormHandler<Role>() {
                     @Override
                     public void onEdit(Role data) {
                         EventBus.getInstance().fireEvent(
@@ -71,5 +72,4 @@ public class RoleReadPresenter  extends AbstractPresenter<RoleReadView> {
             view.previewItem((Role) data.getParams());
         }
     }
-    
 }

@@ -5,60 +5,59 @@ import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
-	private static final long serialVersionUID = 1L;
 
-	public MeetingReadPresenter() {
-		super(MeetingReadView.class);
-		bind();
-	}
+    private static final long serialVersionUID = 1L;
 
-	private void bind() {
-		view.getPreviewFormHandlers().addFormHandler(
-				new PreviewFormHandlers<Meeting>() {
+    public MeetingReadPresenter() {
+        super(MeetingReadView.class);
+        bind();
+    }
 
-					@Override
-					public void onEdit(Meeting data) {
-						EventBus.getInstance().fireEvent(
-								new ActivityEvent.MeetingEdit(this, data));
-					}
+    private void bind() {
+        view.getPreviewFormHandlers().addFormHandler(
+                new DefaultPreviewFormHandler<Meeting>() {
+                    @Override
+                    public void onEdit(Meeting data) {
+                        EventBus.getInstance().fireEvent(
+                                new ActivityEvent.MeetingEdit(this, data));
+                    }
 
-					@Override
-					public void onDelete(Meeting data) {
-						MeetingService campaignService = AppContext
-								.getSpringBean(MeetingService.class);
-						campaignService.removeWithSession(data.getId(),
-								AppContext.getUsername());
-						EventBus.getInstance().fireEvent(
-								new ActivityEvent.GotoTodoList(this, null));
-					}
+                    @Override
+                    public void onDelete(Meeting data) {
+                        MeetingService campaignService = AppContext
+                                .getSpringBean(MeetingService.class);
+                        campaignService.removeWithSession(data.getId(),
+                                AppContext.getUsername());
+                        EventBus.getInstance().fireEvent(
+                                new ActivityEvent.GotoTodoList(this, null));
+                    }
 
-					@Override
-					public void onClone(Meeting data) {
-						Meeting cloneData = (Meeting) data.copy();
-						cloneData.setId(null);
-						EventBus.getInstance().fireEvent(
-								new ActivityEvent.MeetingEdit(this, cloneData));
-					}
+                    @Override
+                    public void onClone(Meeting data) {
+                        Meeting cloneData = (Meeting) data.copy();
+                        cloneData.setId(null);
+                        EventBus.getInstance().fireEvent(
+                                new ActivityEvent.MeetingEdit(this, cloneData));
+                    }
 
-					@Override
-					public void onCancel() {
-						EventBus.getInstance().fireEvent(
-								new ActivityEvent.GotoTodoList(this, null));
-					}
-				});
-	}
+                    @Override
+                    public void onCancel() {
+                        EventBus.getInstance().fireEvent(
+                                new ActivityEvent.GotoTodoList(this, null));
+                    }
+                });
+    }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		super.onGo(container, data);
-		view.previewItem((SimpleMeeting) data.getParams());
-	}
-
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        super.onGo(container, data);
+        view.previewItem((SimpleMeeting) data.getParams());
+    }
 }

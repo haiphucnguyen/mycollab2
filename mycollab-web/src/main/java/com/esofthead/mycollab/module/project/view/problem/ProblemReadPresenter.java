@@ -4,8 +4,8 @@ import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.service.ProblemService;
+import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
@@ -22,7 +22,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 
     private void bind() {
         view.getPreviewFormHandlers().addFormHandler(
-                new PreviewFormHandlers<Problem>() {
+                new DefaultPreviewFormHandler<Problem>() {
                     @Override
                     public void onEdit(Problem data) {
                         EventBus.getInstance().fireEvent(

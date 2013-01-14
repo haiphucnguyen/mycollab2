@@ -28,13 +28,13 @@ public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboar
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         ProjectView projectViewContainer = (ProjectView) container;
-        projectViewContainer.gotoSubView("Risks");
+        projectViewContainer.gotoSubView("Dashboard");
         
         view.removeAllComponents();
         
         if (data instanceof ScreenData.Add
                 || data instanceof ScreenData.Edit) {
-            ProjectAddPresenter presenter = PresenterResolver.getPresenter(ProjectAddPresenter.class);
+            ProjectEditPresenter presenter = PresenterResolver.getPresenter(ProjectEditPresenter.class);
             presenter.go(view, data);
         } else {
             ProjectSummaryPresenter presenter = PresenterResolver.getPresenter(ProjectSummaryPresenter.class);

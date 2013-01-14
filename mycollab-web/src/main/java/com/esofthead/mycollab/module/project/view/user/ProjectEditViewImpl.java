@@ -11,6 +11,6 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class ProjectEditViewImpl extends ProjectAddViewImpl implements ProjectAddView {
+public class ProjectEditViewImpl extends ProjectAddViewImpl implements ProjectEditView {
     
 }

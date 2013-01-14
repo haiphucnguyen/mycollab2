@@ -19,10 +19,10 @@ public class ProjectEditPresenter extends AbstractPresenter<ProjectEditView> {
     public ProjectEditPresenter() {
         super(ProjectEditView.class);
     }
-    
+
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        ProjectContainer projectViewContainer = (ProjectContainer) container;
+        ProjectDashboardContainer projectViewContainer = (ProjectDashboardContainer) container;
         projectViewContainer.removeAllComponents();
         projectViewContainer.addComponent(view.getWidget());
         view.editItem((Project) data.getParams());

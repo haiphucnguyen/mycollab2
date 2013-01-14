@@ -91,6 +91,37 @@ public class PreviewFormControlsGenerator<T> {
         layout.setComponentAlignment(editButtons, Alignment.MIDDLE_CENTER);
         layout.setExpandRatio(editButtons, 1.0f);
 
+        Button previousItem = new Button(null, new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                T item = ((BeanItem<T>) previewForm.getItemDataSource())
+                        .getBean();
+                previewForm.fireGotoPrevious(item);
+            }
+        });
+
+        previousItem.setIcon(new ThemeResource("icons/16/previous.png"));
+        previousItem.setStyleName("link");
+        previousItem.setDescription("Show previous item");
+        layout.addComponent(previousItem);
+        layout.setComponentAlignment(previousItem, Alignment.MIDDLE_RIGHT);
+
+        Button nextItemBtn = new Button(null, new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                T item = ((BeanItem<T>) previewForm.getItemDataSource())
+                        .getBean();
+                previewForm.fireGotoNextItem(item);
+            }
+        });
+
+        nextItemBtn.setIcon(new ThemeResource("icons/16/next.png"));
+        nextItemBtn.setStyleName("link");
+        nextItemBtn.setDescription("Show next item");
+        layout.addComponent(nextItemBtn);
+        layout.setComponentAlignment(nextItemBtn, Alignment.MIDDLE_RIGHT);
+
+
         Button historyBtn = new Button(null, new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {

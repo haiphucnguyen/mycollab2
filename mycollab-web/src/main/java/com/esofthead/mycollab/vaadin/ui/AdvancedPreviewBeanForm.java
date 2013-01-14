@@ -28,11 +28,11 @@ public class AdvancedPreviewBeanForm<T> extends GenericForm implements
             }
         }
     }
-    
+
     protected void doPrint() {
         throw new MyCollabException("This method must be override by sub classes");
     }
-    
+
     protected void showHistory() {
         throw new MyCollabException("This method must be override by sub classes");
     }
@@ -57,6 +57,22 @@ public class AdvancedPreviewBeanForm<T> extends GenericForm implements
         if (handlers != null) {
             for (PreviewFormHandlers<T> handler : handlers) {
                 handler.onClone(bean);
+            }
+        }
+    }
+
+    protected void fireGotoNextItem(T bean) {
+        if (handlers != null) {
+            for (PreviewFormHandlers<T> handler : handlers) {
+                handler.gotoNext(bean);
+            }
+        }
+    }
+
+    protected void fireGotoPrevious(T bean) {
+        if (handlers != null) {
+            for (PreviewFormHandlers<T> handler : handlers) {
+                handler.gotoPrevious(bean);
             }
         }
     }

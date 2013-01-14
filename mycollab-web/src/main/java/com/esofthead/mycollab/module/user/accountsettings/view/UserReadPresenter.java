@@ -8,8 +8,8 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
@@ -29,7 +29,7 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 
     private void bind() {
         view.getPreviewFormHandlers().addFormHandler(
-                new PreviewFormHandlers<User>() {
+                new DefaultPreviewFormHandler<User>() {
                     @Override
                     public void onEdit(User data) {
                         EventBus.getInstance().fireEvent(

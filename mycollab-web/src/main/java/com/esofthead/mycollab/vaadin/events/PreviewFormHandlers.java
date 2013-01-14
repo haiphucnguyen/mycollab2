@@ -1,11 +1,16 @@
 package com.esofthead.mycollab.vaadin.events;
 
 public interface PreviewFormHandlers<T> {
-	void onEdit(T data);
-	
-	void onDelete(T data);
-	
-	void onClone(T data);
 
-	void onCancel();
+    void gotoNext(T data);
+
+    void gotoPrevious(T data);
+
+    void onEdit(T data);
+
+    void onDelete(T data);
+
+    void onClone(T data);
+
+    void onCancel();
 }

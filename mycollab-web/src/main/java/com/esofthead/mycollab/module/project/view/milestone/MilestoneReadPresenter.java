@@ -9,8 +9,8 @@ import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
+import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
@@ -31,7 +31,7 @@ public class MilestoneReadPresenter extends AbstractPresenter<MilestoneReadView>
 
     private void bind() {
         view.getPreviewFormHandlers().addFormHandler(
-                new PreviewFormHandlers<Milestone>() {
+                new DefaultPreviewFormHandler<Milestone>() {
                     @Override
                     public void onEdit(Milestone data) {
                         EventBus.getInstance().fireEvent(

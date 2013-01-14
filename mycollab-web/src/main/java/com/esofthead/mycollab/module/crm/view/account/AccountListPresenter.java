@@ -189,7 +189,9 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
                     .getPagedBeanTable().getCurrentDataList();
             List<Integer> keyList = new ArrayList<Integer>();
             for (SimpleAccount item : currentDataList) {
-                keyList.add(item.getId());
+                if (item.isSelected()) {
+                    keyList.add(item.getId());
+                }
             }
 
             if (keyList.size() > 0) {

@@ -280,8 +280,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
             @Override
             public void splitButtonClick(
                     SplitButton.SplitButtonClickEvent event) {
-                ProjectEditPresenter prjEditPresenter = PresenterResolver.getPresenter(ProjectEditPresenter.class);
-                prjEditPresenter.go(ProjectViewImpl.this, new ScreenData.Edit<Project>(project));
+                gotoDashboard(new ScreenData.Edit<Project>(project));
             }
         });
         Button selectBtn = new Button("View Project Detail",
