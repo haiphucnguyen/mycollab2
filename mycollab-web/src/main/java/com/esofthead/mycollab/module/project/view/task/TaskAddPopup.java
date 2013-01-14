@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.module.crm.ui.components.AttachmentPanel;
+import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;

@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.crm.ui.components;
+package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.module.file.service.AttachmentService;

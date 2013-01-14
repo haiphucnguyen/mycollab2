@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.esofthead.mycollab.module.crm.ui.components.AttachmentPanel;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;

@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
+import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
@@ -232,7 +233,7 @@ public class NoteListItems extends Depot {
             super();
             this.setSpacing(true);
             this.setMargin(true);
-            this.setWidth("900px");
+            this.setWidth("600px");
             
             final AttachmentPanel attachments = new AttachmentPanel();
 
@@ -276,7 +277,7 @@ public class NoteListItems extends Depot {
             this.addComponent(controls);
 
             noteArea = new RichTextArea();
-            noteArea.setWidth("860px");
+            noteArea.setWidth("560px");
             this.addComponent(noteArea);
             
             this.addComponent(attachments);

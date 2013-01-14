@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view.message;
 
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
@@ -12,6 +13,7 @@ import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -71,7 +73,7 @@ public class MessageListViewImpl extends AbstractView implements
         public Component generateRow(final SimpleMessage message, int rowIndex) {
             HorizontalLayout messageLayout = new HorizontalLayout();
             messageLayout.addComponent(new UserAvatar(message.getPosteduser(), message.getFullPostedUserName()));
-            
+
             VerticalLayout rowLayout = new VerticalLayout();
             Button title = new Button(message.getTitle(),
                     new Button.ClickListener() {
@@ -93,21 +95,21 @@ public class MessageListViewImpl extends AbstractView implements
             Label commentCountLbl = new Label(message.getCommentsCount() + " comments");
             footer.addComponent(commentCountLbl);
             footer.setComponentAlignment(commentCountLbl, Alignment.MIDDLE_CENTER);
-            
+
             Label separator = new Label("  |  ");
             footer.addComponent(separator);
             footer.setComponentAlignment(separator, Alignment.MIDDLE_CENTER);
-            
+
             UserLink userLink = new UserLink(message.getPosteduser(), message.getFullPostedUserName());
             footer.addComponent(userLink);
             footer.setComponentAlignment(userLink, Alignment.MIDDLE_CENTER);
-            
+
             Label timePostLbl = new Label(" wrote on " + DateTimeUtils.getStringDateFromNow(message.getPosteddate()));
             footer.addComponent(timePostLbl);
             footer.setComponentAlignment(timePostLbl, Alignment.MIDDLE_CENTER);
-            
+
             rowLayout.addComponent(footer);
-            
+
             messageLayout.addComponent(rowLayout);
             return messageLayout;
         }
@@ -150,24 +152,14 @@ public class MessageListViewImpl extends AbstractView implements
 
             this.setSpacing(true);
 
-            HorizontalLayout titleLayout = new HorizontalLayout();
-            titleLayout.setSpacing(true);
-            Label titleLbl = new Label("Title: ");
-            final TextField titleField = new TextField();
-            titleField.setWidth("600px");
-            titleLayout.addComponent(titleLbl);
-            titleLayout.addComponent(titleField);
-
-            this.addComponent(titleLayout);
-
             final RichTextArea ckEditorTextField = new RichTextArea();
-            ckEditorTextField.setWidth("100%");
-            this.addComponent(ckEditorTextField);
+            final AttachmentPanel attachments = new AttachmentPanel();
+
 
             HorizontalLayout controls = new HorizontalLayout();
             controls.setSpacing(true);
 
-            Button saveBtn = new Button("Save",
+            Button saveBtn = new Button("Post",
                     new Button.ClickListener() {
                         private static final long serialVersionUID = 1L;
 
@@ -185,6 +177,7 @@ public class MessageListViewImpl extends AbstractView implements
                             message.setPosteduser(AppContext.getUsername());
                             message.setSaccountid(AppContext.getAccountId());
                             fireSaveItem(message);
+                            attachments.saveContentsToRepo(AttachmentConstants.PROJECT_MESSAGE, message.getId());
                         }
                     });
             saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -199,10 +192,24 @@ public class MessageListViewImpl extends AbstractView implements
                             createBasicLayout();
                         }
                     });
-            cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            cancelBtn.setStyleName("link");
             controls.addComponent(cancelBtn);
 
             this.addComponent(controls);
+            
+            HorizontalLayout titleLayout = new HorizontalLayout();
+            titleLayout.setSpacing(true);
+            Label titleLbl = new Label("Title: ");
+            final TextField titleField = new TextField();
+            titleField.setWidth("600px");
+            titleLayout.addComponent(titleLbl);
+            titleLayout.addComponent(titleField);
+
+            this.addComponent(titleLayout);
+
+            ckEditorTextField.setWidth("100%");
+            this.addComponent(ckEditorTextField);
+            this.addComponent(attachments);
         }
     }
 
