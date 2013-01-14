@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.file.ExportStreamResource;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -15,13 +16,22 @@ import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.Resource;
+import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
 public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
 		implements ListPresenter<ContactSearchCriteria> {
 	private static final long serialVersionUID = 1L;
+
+	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
+			"contactName", "title", "accountName", "email", "officephone",
+			"assignUserFullName" };
+	private static final String[] EXPORT_DISPLAY_NAMES = new String[] { "Name",
+			"Title", "Account Name", "Email", "Office Phone", "Assign User" };
 
 	private ContactService contactService;
 
@@ -94,6 +104,8 @@ public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
 					public void onSelectAll() {
 						isSelectAll = true;
 						selectAllItemsInCurrentPage();
+
+						checkWhetherEnableTableActionControl();
 					}
 				});
 
@@ -104,6 +116,32 @@ public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
 					public void onSelect(String id, String caption) {
 						if ("delete".equals(id)) {
 							deleteSelectedItems();
+						} else if ("mail".equals(id)) {
+							view.getWidget().getWindow()
+									.addWindow(new MailFormWindow());
+						} else if ("export".equals(id)) {
+							Resource res = null;
+
+							if (isSelectAll) {
+								res = new StreamResource(
+										new ExportStreamResource.AllItems<ContactSearchCriteria>(
+												EXPORT_VISIBLE_COLUMNS,
+												EXPORT_DISPLAY_NAMES,
+												AppContext
+														.getSpringBean(ContactService.class),
+												searchCriteria), "export.csv",
+										view.getApplication());
+							} else {
+								List tableData = view.getPagedBeanTable()
+										.getCurrentDataList();
+								res = new StreamResource(
+										new ExportStreamResource.ListData(
+												EXPORT_VISIBLE_COLUMNS,
+												EXPORT_DISPLAY_NAMES, tableData),
+										"export.csv", view.getApplication());
+							}
+
+							view.getWidget().getWindow().open(res, "_blank");
 						}
 					}
 				});

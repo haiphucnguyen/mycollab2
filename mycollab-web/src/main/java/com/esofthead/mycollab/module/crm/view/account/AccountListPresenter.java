@@ -98,6 +98,8 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
                     public void onSelectAll() {
                         isSelectAll = true;
                         selectAllItemsInCurrentPage();
+                        
+                        checkWhetherEnableTableActionControl();
                     }
                 });
 

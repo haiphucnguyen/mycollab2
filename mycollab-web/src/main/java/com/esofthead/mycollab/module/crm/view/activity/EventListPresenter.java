@@ -1,8 +1,11 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
+import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.module.crm.service.EventService;
+import com.esofthead.mycollab.module.file.ExportStreamResource;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -11,7 +14,10 @@ import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.Resource;
+import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import java.util.ArrayList;
@@ -21,6 +27,11 @@ import java.util.List;
 public class EventListPresenter extends AbstractPresenter<EventListView>
 		implements ListPresenter<EventSearchCriteria> {
 	private static final long serialVersionUID = 1L;
+
+	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
+			"status", "eventType", "subject", "startDate", "endDate" };
+	private static final String[] EXPORT_DISPLAY_NAMES = new String[] {
+			"Status", "Type", "Subject", "Start Date", "End Date" };
 
 	private EventService eventService;
 
@@ -93,6 +104,9 @@ public class EventListPresenter extends AbstractPresenter<EventListView>
 					public void onSelectAll() {
 						isSelectAll = true;
 						selectAllItemsInCurrentPage();
+
+						checkWhetherEnableTableActionControl();
+
 					}
 				});
 
@@ -103,6 +117,32 @@ public class EventListPresenter extends AbstractPresenter<EventListView>
 					public void onSelect(String id, String caption) {
 						if ("delete".equals(id)) {
 							deleteSelectedItems();
+						} else if ("mail".equals(id)) {
+							view.getWidget().getWindow()
+									.addWindow(new MailFormWindow());
+						} else if ("export".equals(id)) {
+							Resource res = null;
+
+							if (isSelectAll) {
+								res = new StreamResource(
+										new ExportStreamResource.AllItems<EventSearchCriteria>(
+												EXPORT_VISIBLE_COLUMNS,
+												EXPORT_DISPLAY_NAMES,
+												AppContext
+														.getSpringBean(EventService.class),
+												searchCriteria), "export.csv",
+										view.getApplication());
+							} else {
+								List tableData = view.getPagedBeanTable()
+										.getCurrentDataList();
+								res = new StreamResource(
+										new ExportStreamResource.ListData(
+												EXPORT_VISIBLE_COLUMNS,
+												EXPORT_DISPLAY_NAMES, tableData),
+										"export.csv", view.getApplication());
+							}
+
+							view.getWidget().getWindow().open(res, "_blank");
 						}
 					}
 				});
@@ -145,8 +185,6 @@ public class EventListPresenter extends AbstractPresenter<EventListView>
 			view.disableActionControls();
 		}
 	}
-	
-
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
