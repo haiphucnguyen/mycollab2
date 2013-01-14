@@ -8,14 +8,14 @@ import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class ProjectDashboardViewImpl extends AbstractView implements ProjectDashboardView {
+public class ProjectSummaryViewImpl extends AbstractView implements ProjectSummaryView {
 
     private ActivityStreamComponent activityPanel;
     private ProjectInformationComponent prjView;
     private ProjectMembersWidget membersWidget;
     private ProjectHighlightWidget highlightWidget;
     
-    public ProjectDashboardViewImpl() {
+    public ProjectSummaryViewImpl() {
         this.setSpacing(true);
         this.setMargin(true);
         

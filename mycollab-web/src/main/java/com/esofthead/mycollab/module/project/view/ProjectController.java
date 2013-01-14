@@ -20,7 +20,6 @@ import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.view.task.TaskContainer;
-import com.esofthead.mycollab.module.project.view.task.TaskListDisplayView;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -62,6 +61,25 @@ public class ProjectController {
                         ScreenData.Add<Project> data = new ScreenData.Add<Project>(
                                 new Project());
                         projectView.gotoMyProjectList(data);
+                    }
+                });
+        
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<ProjectEvent.GotoEdit>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return ProjectEvent.GotoEdit.class;
+                    }
+
+                    @Override
+                    public void handle(ProjectEvent.GotoEdit event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        
+                        SimpleProject project = (SimpleProject) event.getData();
+                        AppContext.putVariable(ProjectContants.PROJECT_NAME,
+                                project);
+                        projectView.gotoDashboard(new ScreenData.Edit<Project>(project));
                     }
                 });
 
