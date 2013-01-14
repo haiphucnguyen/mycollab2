@@ -2,12 +2,13 @@ package com.esofthead.mycollab.module.user.view;
 
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.data.validator.EmailValidator;
 import com.vaadin.data.validator.NullValidator;
-import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.UserError;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -18,9 +19,9 @@ import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.Window;
 
-public class SignupViewImpl extends Window {
+@ViewComponent
+public class SignupViewImpl extends AbstractView implements SignupView {
 
     private static final long serialVersionUID = 1L;
     private Form form;
@@ -28,7 +29,6 @@ public class SignupViewImpl extends Window {
 
     public SignupViewImpl() {
         super();
-        this.setName("signup");
         this.setCaption("Signup Form");
 
         form = new Form();
@@ -44,11 +44,12 @@ public class SignupViewImpl extends Window {
         HorizontalLayout formBtnBar = new HorizontalLayout();
         form.getFooter().addComponent(formBtnBar);
 
-        Button okBtn = new Button("Ok", form, "commit");
+        Button okBtn = new Button("OK", form, "commit");
         formBtnBar.addComponent(okBtn);
         okBtn.addListener(new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
+            @Override
             public void buttonClick(ClickEvent event) {
                 user.setUsername(user.getEmail());
                 try {
@@ -74,8 +75,6 @@ public class SignupViewImpl extends Window {
         cancelBtn.addListener(new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                SignupViewImpl.this.open(new ExternalResource(getApplication()
-                        .getURL()));
             }
         });
     }

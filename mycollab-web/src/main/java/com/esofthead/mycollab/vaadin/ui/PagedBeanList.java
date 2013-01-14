@@ -1,9 +1,5 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.util.HashSet;
-import java.util.List;
-import java.util.Set;
-
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
@@ -23,6 +19,9 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 public class PagedBeanList<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
         extends VerticalLayout implements HasPagableHandlers {

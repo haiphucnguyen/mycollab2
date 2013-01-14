@@ -2,6 +2,8 @@ package com.esofthead.mycollab.module.project.view;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
@@ -9,6 +11,8 @@ public class ProjectDashboardViewImpl extends AbstractView implements ProjectDas
 
     private ActivityStreamComponent activityPanel;
     private ProjectInformationComponent prjView;
+    private ProjectMembersWidget membersWidget;
+    private HighlightWidget highlightWidget;
     
     public ProjectDashboardViewImpl() {
         this.setSpacing(true);
@@ -17,14 +21,29 @@ public class ProjectDashboardViewImpl extends AbstractView implements ProjectDas
         prjView = new ProjectInformationComponent();
         this.addComponent(prjView);
         
-        activityPanel = new ActivityStreamComponent();
-        this.addComponent(activityPanel);
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setWidth("100%");
+        layout.setSpacing(true);
+        this.addComponent(layout);
         
+        activityPanel = new ActivityStreamComponent();
+        layout.addComponent(activityPanel);
+        
+        VerticalLayout rightPanel = new VerticalLayout();
+        rightPanel.setSpacing(true);
+        layout.addComponent(rightPanel);
+        
+        membersWidget = new ProjectMembersWidget();
+        highlightWidget = new HighlightWidget();
+        rightPanel.addComponent(membersWidget);
+        rightPanel.addComponent(highlightWidget);
     }
 
     @Override
     public void displayDashboard() {
         activityPanel.showProjectFeeds();
         prjView.displayProjectInformation();
+        membersWidget.showInformation();
+        highlightWidget.showInformation();
     }
 }
