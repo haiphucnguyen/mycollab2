@@ -112,6 +112,6 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
 
     @Override
     public void removeWithSession(List<K> primaryKeys, String username) {
-        throw new RuntimeException("Sub classes must override before call");
+        getCrudMapper().removeKeysWithSession(primaryKeys);
     }
 }

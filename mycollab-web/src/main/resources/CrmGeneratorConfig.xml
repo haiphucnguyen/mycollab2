@@ -57,17 +57,7 @@
             domainObjectName="AccountOpportunity"
             schema="mycollab"
             tableName="m_crm_accounts_opportunities" />
-
-        <table
-            domainObjectName="CrmActivityStream"
-            schema="mycollab"
-            tableName="m_crm_activitystream" />
-
-        <table
-            domainObjectName="AccountType"
-            schema="mycollab"
-            tableName="m_crm_accounttype" />
-
+        
         <table
             domainObjectName="Campaign"
             schema="mycollab"
@@ -142,11 +132,6 @@
             domainObjectName="Quote"
             schema="mycollab"
             tableName="m_crm_quote" />
-
-        <table
-            domainObjectName="QuoteGroupProduct"
-            schema="mycollab"
-            tableName="m_crm_quote_group_product" />
 
         <table
             domainObjectName="QuoteProduct"

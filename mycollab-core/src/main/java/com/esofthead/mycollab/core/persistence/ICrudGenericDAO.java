@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.core.persistence;
 
 import java.io.Serializable;
+import java.util.List;
 
 /**
  *
@@ -63,4 +64,8 @@ public interface ICrudGenericDAO<K extends Serializable, T> {
      * @return 
      */
     int insertAndReturnKey(T value);
+    
+    void removeKeysWithSession(List keys);
+    
+    
 }

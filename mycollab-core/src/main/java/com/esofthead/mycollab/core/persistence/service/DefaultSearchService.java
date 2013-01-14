@@ -1,35 +1,33 @@
 package com.esofthead.mycollab.core.persistence.service;
 
-import java.util.List;
-
-import org.apache.ibatis.session.RowBounds;
-
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import java.util.List;
+import org.apache.ibatis.session.RowBounds;
 
 public abstract class DefaultSearchService<S extends SearchCriteria> implements
-		ISearchableService<S> {
-	public abstract ISearchableDAO<S> getSearchMapper();
+        ISearchableService<S> {
 
-	@Override
-	public int getTotalCount(S criteria) {
-		return getSearchMapper().getTotalCount(criteria);
-	}
+    public abstract ISearchableDAO<S> getSearchMapper();
 
-	@Override
-	public List findPagableListByCriteria(SearchRequest<S> searchRequest) {
-		return getSearchMapper().findPagableListByCriteria(
-				searchRequest.getSearchCriteria(),
-				new RowBounds((searchRequest.getCurrentPage() - 1)
-						* searchRequest.getNumberOfItems(), searchRequest
-						.getNumberOfItems()));
-	}
+    @Override
+    public int getTotalCount(S criteria) {
+        return getSearchMapper().getTotalCount(criteria);
+    }
 
-	@Override
-	public void removeByCriteria(S criteria) {
-		getSearchMapper().removeByCriteria(criteria);
+    @Override
+    public List findPagableListByCriteria(SearchRequest<S> searchRequest) {
+        return getSearchMapper().findPagableListByCriteria(
+                searchRequest.getSearchCriteria(),
+                new RowBounds((searchRequest.getCurrentPage() - 1)
+                * searchRequest.getNumberOfItems(), searchRequest
+                .getNumberOfItems()));
+    }
 
-	}
+    @Override
+    public void removeByCriteria(S criteria) {
+        getSearchMapper().removeByCriteria(criteria);
 
+    }
 }
