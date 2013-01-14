@@ -193,7 +193,6 @@ public class NoteListItems extends Depot {
             }
 
             commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(AppContext.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);
-            commentList.setMargin(true);
             noteContentLayout.addComponent(commentList);
             displayComments();
             return noteContainer;

@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -28,7 +29,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 
     private void bind() {
         view.getPreviewFormHandlers().addFormHandler(
-                new PreviewFormHandlers<Lead>() {
+                new DefaultPreviewFormHandler<Lead>() {
                     @Override
                     public void onEdit(Lead data) {
                         EventBus.getInstance().fireEvent(
@@ -59,7 +60,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
                                 new LeadEvent.GotoList(this, null));
                     }
                 });
-        
+
         view.getRelatedActivityHandlers().addRelatedListHandler(
                 new AbstractRelatedListHandler() {
                     @Override

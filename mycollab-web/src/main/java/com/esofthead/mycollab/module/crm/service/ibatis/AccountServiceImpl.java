@@ -43,10 +43,8 @@ public class AccountServiceImpl extends DefaultService<Integer, Account, Account
 
     @Autowired
     protected AccountMapper accountMapper;
-    
     @Autowired
     protected AccountMapperExt accountMapperExt;
-    
     @Autowired
     protected TaskMapper taskMapper;
 
@@ -63,12 +61,5 @@ public class AccountServiceImpl extends DefaultService<Integer, Account, Account
     @Override
     public SimpleAccount findAccountById(int accountId) {
         return accountMapperExt.findAccountById(accountId);
-    }
-
-    @Override
-    public void removeWithSession(List<Integer> primaryKeys, String username) {
-        AccountExample ex = new AccountExample();
-        ex.createCriteria().andIdIn(primaryKeys);
-        accountMapper.deleteByExample(ex);
     }
 }

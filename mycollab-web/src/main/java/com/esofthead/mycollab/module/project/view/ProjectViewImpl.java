@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
@@ -18,8 +17,8 @@ import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.people.UserPresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
-import com.esofthead.mycollab.module.project.view.task.TaskListDisplayPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
+import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -145,7 +144,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
                             new ScreenData.Search<ProblemSearchCriteria>(
                             searchCriteria));
                 } else if ("Dashboard".equals(caption)) {
-                    gotoDashboard();
+                    gotoDashboard(null);
                 } else if ("Users & Group".equals(caption)) {
                     gotoUsersAndGroup();
                 }
@@ -154,8 +153,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     }
 
     @Override
-    public void gotoDashboard() {
-        dashboardPresenter.go(ProjectViewImpl.this);
+    public void gotoDashboard(ScreenData data) {
+        dashboardPresenter.go(ProjectViewImpl.this, data);
     }
 
     @Override
@@ -239,7 +238,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     @Override
     public void displayProject(final SimpleProject project) {
         this.project = project;
-        gotoDashboard();
+        gotoDashboard(null);
 
         topPanel.removeAllComponents();
 
@@ -258,7 +257,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         PopupButton projectPopupBtn = new PopupButton(project.getName());
         BeanList<ProjectService, ProjectSearchCriteria, SimpleProject> projectList = new BeanList<ProjectService, ProjectSearchCriteria, SimpleProject>(
                 AppContext.getSpringBean(ProjectService.class),
-                ProjectRowDisplayHandler.class);
+                ProjectViewImpl.ProjectRowDisplayHandler.class);
         projectList.setWidth("200px");
 
         ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
@@ -281,15 +280,14 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
             @Override
             public void splitButtonClick(
                     SplitButton.SplitButtonClickEvent event) {
-                ProjectEditPresenter prjEditPresenter = PresenterResolver.getPresenter(ProjectEditPresenter.class);
-                prjEditPresenter.go(ProjectViewImpl.this, new ScreenData.Edit<Project>(project));
+                gotoDashboard(new ScreenData.Edit<Project>(project));
             }
         });
         Button selectBtn = new Button("View Project Detail",
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        gotoDashboard();
+                        gotoDashboard(null);
                     }
                 });
         selectBtn.setIcon(new ThemeResource("icons/16/view.png"));
