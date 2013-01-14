@@ -4,6 +4,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.file.ExportStreamResource;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -13,6 +14,8 @@ import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.Resource;
+import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import java.util.ArrayList;
@@ -24,6 +27,10 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
         implements ListPresenter<AccountSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
+    private static final String[] EXPORT_VISIBLE_COLUMNS = new String[]{"accountname",
+        "city", "phoneoffice", "email", "assignUserFullName"};
+    private static final String[] EXPORT_DISPLAY_NAMES = new String[]{"Name", "City", "Phone Office",
+        "Email Address", "Assign User"};
     private AccountService accountService;
     private AccountSearchCriteria searchCriteria;
     private boolean isSelectAll = false;
@@ -109,7 +116,7 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
                                 public void onClose(ConfirmDialog dialog) {
                                     if (dialog.isConfirmed()) {
                                         deleteSelectedItems();
-                                    } 
+                                    }
                                 }
                             });
 
@@ -117,7 +124,16 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
                             view.getWidget().getWindow()
                                     .addWindow(new MailFormWindow());
                         } else if ("export".equals(id)) {
-                            
+                            Resource res = null;
+
+                            if (isSelectAll) {
+                                res = new StreamResource(new ExportStreamResource.AllItems<AccountSearchCriteria>(EXPORT_VISIBLE_COLUMNS, EXPORT_DISPLAY_NAMES, AppContext.getSpringBean(AccountService.class), searchCriteria), "export.csv", view.getApplication());
+                            } else {
+                                List tableData = view.getPagedBeanTable().getCurrentDataList();
+                                res = new StreamResource(new ExportStreamResource.ListData(EXPORT_VISIBLE_COLUMNS, EXPORT_DISPLAY_NAMES, tableData), "export.csv", view.getApplication());
+                            }
+
+                            view.getWidget().getWindow().open(res, "_blank");
                         }
                     }
                 });
@@ -187,7 +203,7 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
         }
 
     }
-    
+
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         super.onGo(container, data);

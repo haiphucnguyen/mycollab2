@@ -28,6 +28,7 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -418,11 +419,15 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
     @SuppressWarnings("unchecked")
     @Override
-    public Collection<T> getCurrentDataList() {
+    public List<T> getCurrentDataList() {
         BeanItemContainer<T> containerDataSource = (BeanItemContainer<T>) tableItem
                 .getContainerDataSource();
         Collection<T> itemIds = containerDataSource.getItemIds();
-        return itemIds;
+        if (itemIds instanceof List) {
+            return (List<T>)itemIds;
+        } else {
+            return new ArrayList<T>(itemIds);
+        }
     }
 
     @Override
