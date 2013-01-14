@@ -1,5 +1,6 @@
-package com.esofthead.mycollab.module.project.view;
+package com.esofthead.mycollab.module.project.view.user;
 
+import com.esofthead.mycollab.module.project.view.ProjectInformationComponent;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.ui.HorizontalLayout;
@@ -12,7 +13,7 @@ public class ProjectDashboardViewImpl extends AbstractView implements ProjectDas
     private ActivityStreamComponent activityPanel;
     private ProjectInformationComponent prjView;
     private ProjectMembersWidget membersWidget;
-    private HighlightWidget highlightWidget;
+    private ProjectHighlightWidget highlightWidget;
     
     public ProjectDashboardViewImpl() {
         this.setSpacing(true);
@@ -34,7 +35,7 @@ public class ProjectDashboardViewImpl extends AbstractView implements ProjectDas
         layout.addComponent(rightPanel);
         
         membersWidget = new ProjectMembersWidget();
-        highlightWidget = new HighlightWidget();
+        highlightWidget = new ProjectHighlightWidget();
         rightPanel.addComponent(membersWidget);
         rightPanel.addComponent(highlightWidget);
     }
