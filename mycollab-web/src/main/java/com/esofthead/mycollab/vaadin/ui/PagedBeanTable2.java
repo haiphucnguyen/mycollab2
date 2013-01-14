@@ -383,6 +383,12 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
         if (searchRequest != null) {
             searchRequest.setNumberOfItems(numOfItems);
             doSearch();
+            
+            if (pagableHandlers != null) {
+                for (PagableHandler handler : pagableHandlers) {
+                    handler.displayItemChange(numOfItems);
+                }
+            }
         }
     }
 

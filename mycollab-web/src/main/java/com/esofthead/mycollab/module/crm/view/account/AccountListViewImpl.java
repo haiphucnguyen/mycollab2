@@ -87,6 +87,7 @@ public class AccountListViewImpl extends AbstractView implements
         tableActionControls = new PopupButtonControl("delete", "Delete");
         tableActionControls.addOptionItem("mail", "Mail");
         tableActionControls.addOptionItem("export", "Export");
+        tableActionControls.setVisible(false);
 
         layout.addComponent(tableActionControls);
         layout.addComponent(selectedItemsNumberLabel);
@@ -97,13 +98,14 @@ public class AccountListViewImpl extends AbstractView implements
 
     @Override
     public void enableActionControls(int numOfSelectedItems) {
-        tableActionControls.setEnabled(true);
+        tableActionControls.setVisible(true);
         selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
     }
 
     @Override
     public void disableActionControls() {
-        tableActionControls.setEnabled(false);
+        tableActionControls.setVisible(false);
+        selectOptionButton.setSelectedChecbox(false);
         selectedItemsNumberLabel.setValue("");
     }
 
