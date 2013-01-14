@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
@@ -113,7 +115,19 @@ public class CampaignListPresenter extends
 					@Override
 					public void onSelect(String id, String caption) {
 						if ("delete".equals(id)) {
-							deleteSelectedItems();
+							ConfirmDialog.show(view.getWindow(),
+                                    "Please Confirm:",
+                                    "Are you sure to delete selected items: ",
+                                    "Yes", "No", new ConfirmDialog.Listener() {
+                                private static final long serialVersionUID = 1L;
+
+                                @Override
+                                public void onClose(ConfirmDialog dialog) {
+                                    if (dialog.isConfirmed()) {
+                                        deleteSelectedItems();
+                                    }
+                                }
+                            });
 						} else if ("mail".equals(id)) {
 							view.getWidget().getWindow()
 									.addWindow(new MailFormWindow());
@@ -198,14 +212,17 @@ public class CampaignListPresenter extends
 			Collection<SimpleCampaign> currentDataList = view
 					.getPagedBeanTable().getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
-			for (SimpleCampaign account : currentDataList) {
-				keyList.add(account.getId());
+			for (SimpleCampaign item : currentDataList) {
+				if (item.isSelected()) {
+					keyList.add(item.getId());
+				}
 			}
 
 			if (keyList.size() > 0) {
 				campaignService.removeWithSession(keyList,
 						AppContext.getUsername());
 				doSearch(searchCriteria);
+				checkWhetherEnableTableActionControl();
 			}
 		} else {
 			campaignService.removeByCriteria(searchCriteria);

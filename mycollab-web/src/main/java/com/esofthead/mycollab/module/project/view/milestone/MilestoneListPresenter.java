@@ -4,6 +4,9 @@
  */
 package com.esofthead.mycollab.module.project.view.milestone;
 
+import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
+import com.esofthead.mycollab.module.crm.service.LeadService;
+import com.esofthead.mycollab.module.file.ExportStreamResource;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
@@ -15,12 +18,17 @@ import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.Resource;
+import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
+
+import org.vaadin.dialogs.ConfirmDialog;
 
 /**
  *
@@ -30,6 +38,12 @@ public class MilestoneListPresenter extends AbstractPresenter<MilestoneListView>
         ListPresenter<MilestoneSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
+    
+    private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
+    	"name",
+        "iscompleted", "startdate", "enddate", "flag", "ownerFullName"};
+	private static final String[] EXPORT_DISPLAY_NAMES = new String[] {  "Name", "Status", "Start Date", "End Date", "Flag", "Responsible User"};
+	
     private MilestoneService milestoneService;
     private MilestoneSearchCriteria searchCriteria;
     private boolean isSelectAll = false;
@@ -98,6 +112,8 @@ public class MilestoneListPresenter extends AbstractPresenter<MilestoneListView>
                     public void onSelectAll() {
                         isSelectAll = true;
                         selectAllItemsInCurrentPage();
+                        
+                        checkWhetherEnableTableActionControl();
                     }
                 });
 
@@ -105,9 +121,47 @@ public class MilestoneListPresenter extends AbstractPresenter<MilestoneListView>
                 new PopupActionHandler() {
                     @Override
                     public void onSelect(String id, String caption) {
-                        if ("delete".equals(id)) {
-                            deleteSelectedItems();
-                        }
+                    	if ("delete".equals(id)) {
+							ConfirmDialog.show(view.getWindow(),
+                                    "Please Confirm:",
+                                    "Are you sure to delete selected items: ",
+                                    "Yes", "No", new ConfirmDialog.Listener() {
+                                private static final long serialVersionUID = 1L;
+
+                                @Override
+                                public void onClose(ConfirmDialog dialog) {
+                                    if (dialog.isConfirmed()) {
+                                        deleteSelectedItems();
+                                    }
+                                }
+                            });
+						} else if ("mail".equals(id)) {
+							view.getWidget().getWindow()
+									.addWindow(new MailFormWindow());
+						} else if ("export".equals(id)) {
+							Resource res = null;
+
+							if (isSelectAll) {
+								res = new StreamResource(
+										new ExportStreamResource.AllItems<MilestoneSearchCriteria>(
+												EXPORT_VISIBLE_COLUMNS,
+												EXPORT_DISPLAY_NAMES,
+												AppContext
+														.getSpringBean(MilestoneService.class),
+												searchCriteria), "export.csv",
+										view.getApplication());
+							} else {
+								List tableData = view.getPagedBeanTable()
+										.getCurrentDataList();
+								res = new StreamResource(
+										new ExportStreamResource.ListData(
+												EXPORT_VISIBLE_COLUMNS,
+												EXPORT_DISPLAY_NAMES, tableData),
+										"export.csv", view.getApplication());
+							}
+
+							view.getWidget().getWindow().open(res, "_blank");
+						}
                     }
                 });
 
@@ -170,13 +224,16 @@ public class MilestoneListPresenter extends AbstractPresenter<MilestoneListView>
                     .getPagedBeanTable().getCurrentDataList();
             List<Integer> keyList = new ArrayList<Integer>();
             for (SimpleMilestone item : currentDataList) {
-                keyList.add(item.getId());
+            	if (item.isSelected()) {
+            		keyList.add(item.getId());
+            	}
             }
 
             if (keyList.size() > 0) {
                 milestoneService.removeWithSession(keyList,
                         AppContext.getUsername());
                 doSearch(searchCriteria);
+                checkWhetherEnableTableActionControl();
             }
         } else {
             milestoneService.removeByCriteria(searchCriteria);

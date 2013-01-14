@@ -175,13 +175,13 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 
     @Override
     public void enableActionControls(int numOfSelectedItems) {
-        tableActionControls.setEnabled(true);
+        tableActionControls.setVisible(true);
         selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
     }
 
     @Override
     public void disableActionControls() {
-        tableActionControls.setEnabled(false);
+        tableActionControls.setVisible(false);
         selectedItemsNumberLabel.setValue("");
     }
 

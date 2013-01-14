@@ -24,6 +24,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
 		implements ListPresenter<CaseSearchCriteria> {
 
@@ -113,7 +115,19 @@ public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
 					@Override
 					public void onSelect(String id, String caption) {
 						if ("delete".equals(id)) {
-							deleteSelectedItems();
+							ConfirmDialog.show(view.getWindow(),
+                                    "Please Confirm:",
+                                    "Are you sure to delete selected items: ",
+                                    "Yes", "No", new ConfirmDialog.Listener() {
+                                private static final long serialVersionUID = 1L;
+
+                                @Override
+                                public void onClose(ConfirmDialog dialog) {
+                                    if (dialog.isConfirmed()) {
+                                        deleteSelectedItems();
+                                    }
+                                }
+                            });
 						} else if ("mail".equals(id)) {
 							view.getWidget().getWindow()
 									.addWindow(new MailFormWindow());
@@ -201,13 +215,16 @@ public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
 					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (SimpleCase item : currentDataList) {
-				keyList.add(item.getId());
+				if (item.isSelected()) {
+					keyList.add(item.getId());
+				}
 			}
 
 			if (keyList.size() > 0) {
 				caseService
 						.removeWithSession(keyList, AppContext.getUsername());
 				doSearch(searchCriteria);
+				checkWhetherEnableTableActionControl();
 			}
 		} else {
 			caseService.removeByCriteria(searchCriteria);
