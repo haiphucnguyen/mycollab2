@@ -14,7 +14,7 @@ public class AddViewLayout extends CustomLayout {
     private final HorizontalLayout header;
     
     private Label titleLbl;
-    Embedded icon;
+    private Embedded icon;
 
     public AddViewLayout(String title, ThemeResource resource) {
         super("addView");
@@ -32,6 +32,7 @@ public class AddViewLayout extends CustomLayout {
         this.header.addComponent(titleLbl);
         this.addComponent(header, "addViewHeader");
     }
+    
     
     public void setTitle(String title) {
         titleLbl.setValue(title);

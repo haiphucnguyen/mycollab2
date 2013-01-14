@@ -1,8 +1,10 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.data.Item;
+import com.vaadin.ui.AbstractTextField;
 import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
 public class DefaultEditFormFieldFactory extends DefaultFieldFactory {
@@ -19,6 +21,12 @@ public class DefaultEditFormFieldFactory extends DefaultFieldFactory {
                 ((TextField) field).setNullRepresentation("");
                 ((TextField) field).setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
                 ((TextField) field).setCaption(null);
+            }
+        } else {
+            if (field instanceof AbstractTextField) {
+                ((AbstractTextField)field).setNullRepresentation("");
+            } else if (field instanceof RichTextArea) {
+                ((RichTextArea)field).setNullRepresentation("");
             }
         }
         return field;

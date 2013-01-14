@@ -8,7 +8,6 @@ import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.RichTextEditor;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
@@ -16,6 +15,7 @@ import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.RichTextArea;
 import java.util.HashMap;
 import java.util.Map;
 import org.vaadin.teemu.ratingstars.RatingStars;
@@ -94,7 +94,7 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
                     com.vaadin.ui.Component uiContext) {
 
                 if (propertyId.equals("description")) {
-                    return new RichTextEditor();
+                    return new RichTextArea();
                 } else if (propertyId.equals("raisedbyuser")) {
                     return new UserComboBox();
                 } else if (propertyId.equals("type")) {
@@ -141,7 +141,7 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
                     });
                     return ratingField;
                 } else if (propertyId.equals("resolution")) {
-                    return new RichTextEditor();
+                    return new RichTextArea();
                 }
 
                 return null;

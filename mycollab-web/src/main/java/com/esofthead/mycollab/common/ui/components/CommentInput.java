@@ -12,7 +12,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextArea;
+import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.VerticalLayout;
 import java.util.GregorianCalendar;
 
@@ -22,7 +22,7 @@ import java.util.GregorianCalendar;
  */
 public class CommentInput extends VerticalLayout {
 
-    private TextArea commentArea;
+    private RichTextArea commentArea;
     private ReloadableComponent component;
     private String type;
     private Integer typeid;
@@ -40,7 +40,7 @@ public class CommentInput extends VerticalLayout {
         this.type = type;
         this.typeid = typeid;
 
-        commentArea = new TextArea();
+        commentArea = new RichTextArea();
         commentArea.setWidth("560px");
         this.addComponent(commentArea);
         

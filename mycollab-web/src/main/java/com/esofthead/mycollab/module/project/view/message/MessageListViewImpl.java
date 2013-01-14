@@ -14,7 +14,6 @@ import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList.RowDisplayHandler;
-import com.esofthead.mycollab.vaadin.ui.RichTextEditor;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatar;
@@ -28,12 +27,12 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
-import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
 
 @ViewComponent
 public class MessageListViewImpl extends AbstractView implements
@@ -161,15 +160,7 @@ public class MessageListViewImpl extends AbstractView implements
 
             this.addComponent(titleLayout);
 
-            CKEditorConfig config = new CKEditorConfig();
-            config.useCompactTags();
-            config.disableElementsPath();
-            config.setResizeDir(CKEditorConfig.RESIZE_DIR.HORIZONTAL);
-            config.disableSpellChecker();
-            config.setToolbarCanCollapse(false);
-            config.setWidth("100%");
-
-            final RichTextEditor ckEditorTextField = new RichTextEditor();
+            final RichTextArea ckEditorTextField = new RichTextArea();
             ckEditorTextField.setWidth("100%");
             this.addComponent(ckEditorTextField);
 

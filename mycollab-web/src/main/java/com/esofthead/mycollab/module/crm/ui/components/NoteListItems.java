@@ -20,7 +20,6 @@ import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.RichTextEditor;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatar;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
@@ -33,11 +32,11 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 import java.util.GregorianCalendar;
 import java.util.List;
-import org.vaadin.openesignforms.ckeditor.CKEditorTextField;
 
 public class NoteListItems extends Depot {
 
@@ -227,7 +226,7 @@ public class NoteListItems extends Depot {
     private class NoteEditor extends VerticalLayout {
 
         private static final long serialVersionUID = 1L;
-        private final CKEditorTextField noteArea;
+        private final RichTextArea noteArea;
 
         public NoteEditor() {
             super();
@@ -235,7 +234,7 @@ public class NoteListItems extends Depot {
             this.setMargin(true);
             this.setWidth("900px");
 
-            noteArea = new RichTextEditor();
+            noteArea = new RichTextArea();
             noteArea.setWidth("800px");
             this.addComponent(noteArea);
 

@@ -16,7 +16,6 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -27,34 +26,34 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class ProjectInformationComponent extends VerticalLayout {
-
+    
     private SimpleProject project;
     private ProjectDisplayInformation prjDisplay;
-
+    
     public ProjectInformationComponent() {
         prjDisplay = new BasicProjectInformation();
         this.addComponent(prjDisplay);
     }
-
+    
     public void displayProjectInformation() {
         project = (SimpleProject) AppContext
                 .getVariable(ProjectContants.PROJECT_NAME);
         prjDisplay.show();
     }
-
+    
     private interface ProjectDisplayInformation extends Component {
-
+        
         void show();
     }
-
+    
     private class BasicProjectInformation extends VerticalLayout implements ProjectDisplayInformation {
-
+        
         private Label projectDesc;
-
+        
         public BasicProjectInformation() {
             projectDesc = new Label();
             this.addComponent(projectDesc);
-
+            
             Button moreBtn = new Button("More ...", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
@@ -67,23 +66,22 @@ public class ProjectInformationComponent extends VerticalLayout {
             moreBtn.setStyleName("link");
             this.addComponent(moreBtn);
         }
-
+        
         @Override
         public void show() {
             projectDesc.setValue(project.getDescription());
         }
     }
-
+    
     private class DetailProjectInformation extends VerticalLayout implements ProjectDisplayInformation {
-
+        
         private PreviewForm previewForm;
-
+        
         public DetailProjectInformation() {
             previewForm = new PreviewForm();
             this.addComponent(previewForm);
             
             Button lessBtn = new Button("Less ...", new Button.ClickListener() {
-
                 @Override
                 public void buttonClick(ClickEvent event) {
                     ProjectInformationComponent.this.removeComponent(DetailProjectInformation.this);
@@ -96,43 +94,51 @@ public class ProjectInformationComponent extends VerticalLayout {
             lessBtn.setStyleName("link");
             this.addComponent(lessBtn);
         }
-
+        
         @Override
         public void show() {
             previewForm.setItemDataSource(new BeanItem(project));
         }
     }
-
+    
     private class PreviewForm extends AdvancedPreviewBeanForm<SimpleProject> {
-
+        
         private static final long serialVersionUID = 1L;
-
+        
         @Override
         public void setItemDataSource(Item newDataSource) {
             this.setFormLayoutFactory(new FormLayoutFactory());
             this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
                 private static final long serialVersionUID = 1L;
-
+                
                 @Override
                 protected Field onCreateField(Item item, Object propertyId,
                         Component uiContext) {
-
+                    if (propertyId.equals("planstartdate")) {
+                        return new FormViewField(AppContext.formatDate(project.getPlanstartdate()));
+                    } else if (propertyId.equals("planenddate")) {
+                        return new FormViewField(AppContext.formatDate(project.getPlanenddate()));
+                    } else if (propertyId.equals("actualstartdate")) {
+                        return new FormViewField(AppContext.formatDate(project.getActualstartdate()));
+                    } else if (propertyId.equals("actualenddate")) {
+                        return new FormViewField(AppContext.formatDate(project.getActualenddate()));
+                    }
                     return null;
                 }
             });
             super.setItemDataSource(newDataSource);
         }
-
+        
         class FormLayoutFactory implements IFormLayoutFactory {
-
+            
             private GridFormLayoutHelper gridLayout;
-
+            
             @Override
             public Layout getLayout() {
                 gridLayout = new GridFormLayoutHelper(2, 5);
                 return gridLayout.getLayout();
             }
-
+            
             @Override
             public void attachField(Object propertyId, Field field) {
                 if (propertyId.equals("description")) {
