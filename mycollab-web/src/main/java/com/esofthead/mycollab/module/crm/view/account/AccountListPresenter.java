@@ -116,6 +116,8 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
                         } else if ("mail".equals(id)) {
                             view.getWidget().getWindow()
                                     .addWindow(new MailFormWindow());
+                        } else if ("export".equals(id)) {
+                            
                         }
                     }
                 });
