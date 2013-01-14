@@ -4,19 +4,26 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Modifier;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class BeanList<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
-        extends VerticalLayout {
+        extends CustomComponent {
 
+    private static Logger log = LoggerFactory.getLogger(BeanList.class);
+    
     private static final long serialVersionUID = 1L;
     private Object parentComponent;
     private SearchService searchService;
     private Class<? extends RowDisplayHandler<T>> rowDisplayHandler;
+    private VerticalLayout contentLayout;
 
     public BeanList(Object parentComponent, SearchService searchService,
             Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
@@ -33,14 +40,13 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
     public void insertItemOnTop(T item) {
         RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
         Component row = rowHandler.generateRow(item, 0);
-        if (row != null) {
-            this.addComponent(row, 0);
+        if (row != null && contentLayout != null) {
+            contentLayout.addComponent(row, 0);
         }
     }
 
     private RowDisplayHandler<T> constructRowndisplayHandler() {
         RowDisplayHandler<T> rowHandler = null;
-
         try {
 
             if (rowDisplayHandler.getEnclosingClass() != null && !Modifier.isStatic(rowDisplayHandler.getModifiers())) {
@@ -64,7 +70,10 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
     }
 
     public int setSearchRequest(SearchRequest<S> searchRequest) {
-        this.removeAllComponents();
+        contentLayout = new VerticalLayout();
+        LazyLoadWrapper contentWrapper = new LazyLoadWrapper(contentLayout);
+        this.setCompositionRoot(contentWrapper);
+        
         List<T> currentListData = searchService
                 .findPagableListByCriteria(searchRequest);
         int i = 0;
@@ -74,14 +83,16 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
                 RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
                 Component row = rowHandler.generateRow(item, i);
                 if (row != null) {
-                    this.addComponent(row);
+                    contentLayout.addComponent(row);
                 }
 
                 i++;
             }
         } catch (Exception e) {
-            throw new MyCollabException(e);
+            log.error("Error while generate column display", e);
         }
+        
+        
 
         return currentListData.size();
     }

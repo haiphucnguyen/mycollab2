@@ -74,7 +74,6 @@ public class BugDashboardViewImpl extends AbstractView implements
 
     @Override
     public void attach() {
-        super.attach();
         leftColumn.removeAllComponents();
         rightColumn.removeAllComponents();
 
@@ -87,9 +86,9 @@ public class BugDashboardViewImpl extends AbstractView implements
         leftColumn.addComponent(updateBugWidgetWrapper);
 
 
-        rightColumn.addComponent(new PrioritySummaryWidget());
+        rightColumn.addComponent(new LazyLoadWrapper(new PrioritySummaryWidget()));
         
-        rightColumn.addComponent(new StatusSummaryWidget());
+        rightColumn.addComponent(new LazyLoadWrapper(new StatusSummaryWidget()));
 
         //Due bug search criteria
         SimpleProject project = (SimpleProject) AppContext

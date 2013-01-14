@@ -7,14 +7,14 @@ import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Table;
-import java.util.Collection;
+import java.util.List;
 
 public interface IPagedBeanTable<S extends SearchCriteria, T>
         extends HasSelectableItemHandlers<T>, HasPagableHandlers, Component {
 
     void setSearchCriteria(S searchCriteria);
 
-    Collection<T> getCurrentDataList();
+    List<T> getCurrentDataList();
     
     void addTableListener(ApplicationEventListener<? extends ApplicationEvent> listener);
     

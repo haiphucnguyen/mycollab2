@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.Application;
 import com.vaadin.terminal.ApplicationResource;
 import com.vaadin.terminal.DownloadStream;
@@ -101,7 +102,7 @@ public class JFreeChartWrapper extends Embedded {
     @Override
     public void attach() {
         super.attach();
-        AbstractWebApplicationContext context = (AbstractWebApplicationContext) getApplication()
+        AbstractWebApplicationContext context = (AbstractWebApplicationContext) AppContext.getApplication()
                 .getContext();
         if (mode == RenderingMode.AUTO) {
             if (context.getBrowser().isIE()
@@ -112,12 +113,12 @@ public class JFreeChartWrapper extends Embedded {
                 setRenderingMode(RenderingMode.SVG);
             }
         }
-        getApplication().addResource((ApplicationResource) getSource());
+        AppContext.getApplication().addResource((ApplicationResource) getSource());
     }
 
     @Override
     public void detach() {
-        getApplication().removeResource((ApplicationResource) getSource());
+        AppContext.getApplication().removeResource((ApplicationResource) getSource());
         super.detach();
     }
 
@@ -321,7 +322,7 @@ public class JFreeChartWrapper extends Embedded {
                 }
 
                 public Application getApplication() {
-                    return JFreeChartWrapper.this.getApplication();
+                    return AppContext.getApplication();
                 }
 
                 public int getBufferSize() {
