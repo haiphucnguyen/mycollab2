@@ -47,7 +47,6 @@ public class CommentInput extends VerticalLayout {
         HorizontalLayout controlsLayout = new HorizontalLayout();
         controlsLayout.setSpacing(true);
         this.addComponent(controlsLayout);
-        this.setComponentAlignment(controlsLayout, Alignment.MIDDLE_RIGHT);
 
         if (cancelButtonEnable) {
             Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
@@ -58,7 +57,6 @@ public class CommentInput extends VerticalLayout {
             });
             cancelBtn.setStyleName("link");
             controlsLayout.addComponent(cancelBtn);
-            controlsLayout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);
         }
 
 
@@ -83,7 +81,6 @@ public class CommentInput extends VerticalLayout {
         });
         newCommentBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         controlsLayout.addComponent(newCommentBtn);
-        controlsLayout.setComponentAlignment(newCommentBtn, Alignment.MIDDLE_RIGHT);
 
     }
 }

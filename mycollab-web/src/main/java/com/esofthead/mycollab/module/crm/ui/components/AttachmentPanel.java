@@ -4,6 +4,10 @@ import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.file.service.ContentService;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import java.io.File;
@@ -65,8 +69,26 @@ public class AttachmentPanel extends VerticalLayout {
         this.addComponent(multiFileUpload);
     }
 
-    private void displayFileName(String fileName) {
-        this.addComponent(new Label(fileName));
+    private void displayFileName(final String fileName) {
+        final HorizontalLayout fileAttachmentLayout = new HorizontalLayout();
+        Button removeBtn = new Button(null, new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                File file = fileStores.get(fileName);
+                if (file != null) {
+                    file.delete();
+                }
+                fileStores.remove(fileName);
+                AttachmentPanel.this.removeComponent(fileAttachmentLayout);
+            }
+        });
+        removeBtn.setIcon(new ThemeResource("icons/16/delete.png"));
+        removeBtn.setStyleName("link");
+        
+        fileAttachmentLayout.addComponent(new Label(fileName));
+        fileAttachmentLayout.addComponent(removeBtn);
+        this.addComponent(fileAttachmentLayout, 0);
     }
 
     public void saveContentsToRepo(String type, Integer typeid) {

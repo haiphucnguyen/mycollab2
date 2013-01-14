@@ -40,7 +40,7 @@ public class CommentRowDisplayHandler implements BeanList.RowDisplayHandler<Simp
         
         contentLayout.addComponent(commentHeader);
         
-        Label content = new Label(comment.getComment());
+        Label content = new Label(comment.getComment(), Label.CONTENT_XHTML);
         contentLayout.addComponent(content);
         return layout;
     }

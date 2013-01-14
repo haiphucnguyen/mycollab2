@@ -16,7 +16,6 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import java.util.List;
 import org.apache.commons.mail.EmailException;
-import org.vaadin.openesignforms.ckeditor.CKEditorConfig;
 
 public class MailFormWindow extends Window {
 
@@ -52,14 +51,6 @@ public class MailFormWindow extends Window {
 
         final TextField subject = new TextField();
         inputLayout.addComponent(subject, "Subject", 0, 3, 2, 1);
-
-        CKEditorConfig config = new CKEditorConfig();
-        config.useCompactTags();
-        config.disableElementsPath();
-        config.setResizeDir(CKEditorConfig.RESIZE_DIR.HORIZONTAL);
-        config.disableSpellChecker();
-        config.setToolbarCanCollapse(false);
-        config.setWidth("100%");
 
         final RichTextArea noteArea = new RichTextArea();
         noteArea.setWidth("800px");

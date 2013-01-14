@@ -177,11 +177,6 @@
         </dependency>
         <dependency>
             <groupId>org.vaadin.addons</groupId>
-            <artifactId>ckeditor-wrapper-for-vaadin</artifactId>
-            <version>1.7.0</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
             <artifactId>refresher</artifactId>
             <version>1.1.1</version>
         </dependency>

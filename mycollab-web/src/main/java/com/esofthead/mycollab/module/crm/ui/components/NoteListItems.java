@@ -233,17 +233,13 @@ public class NoteListItems extends Depot {
             this.setSpacing(true);
             this.setMargin(true);
             this.setWidth("900px");
-
-            noteArea = new RichTextArea();
-            noteArea.setWidth("800px");
-            this.addComponent(noteArea);
-
+            
             final AttachmentPanel attachments = new AttachmentPanel();
-            this.addComponent(attachments);
 
             HorizontalLayout controls = new HorizontalLayout();
             controls.setSpacing(true);
-            Button saveBtn = new Button("Save", new Button.ClickListener() {
+            
+            Button saveBtn = new Button("Post", new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
 
                 @Override
@@ -274,10 +270,18 @@ public class NoteListItems extends Depot {
                     addCreateBtn();
                 }
             });
-            cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            cancelBtn.setStyleName("link");
             controls.addComponent(cancelBtn);
 
             this.addComponent(controls);
+
+            noteArea = new RichTextArea();
+            noteArea.setWidth("860px");
+            this.addComponent(noteArea);
+            
+            this.addComponent(attachments);
+
+
         }
     }
 
