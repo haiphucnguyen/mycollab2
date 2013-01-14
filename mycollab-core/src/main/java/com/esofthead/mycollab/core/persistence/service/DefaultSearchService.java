@@ -30,4 +30,14 @@ public abstract class DefaultSearchService<S extends SearchCriteria> implements
         getSearchMapper().removeByCriteria(criteria);
 
     }
+
+    @Override
+    public Integer getNextItemKey(S criteria) {
+        return getSearchMapper().getNextItemKey(criteria);
+    }
+
+    @Override
+    public Integer getPreviousItemKey(S criteria) {
+        return getSearchMapper().getPreviousItemKey(criteria);
+    }
 }

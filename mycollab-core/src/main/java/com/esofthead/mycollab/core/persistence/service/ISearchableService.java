@@ -45,4 +45,8 @@ public interface ISearchableService<S extends SearchCriteria> extends IService {
     List findPagableListByCriteria(SearchRequest<S> searchRequest);
 
     void removeByCriteria(S criteria);
+    
+    Integer getNextItemKey(S criteria);
+    
+    Integer getPreviousItemKey(S criteria);
 }

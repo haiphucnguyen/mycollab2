@@ -29,7 +29,7 @@
         SELECT count(*) as totalCount FROM s_user
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1 
-            <include refid="com.esofthead.mycollab.module.user.dao.UserMapperExt.querySearchCriteria" />
+            <include refid="querySearchCriteria" />
         </trim>
     </select>
 
@@ -45,7 +45,7 @@
         ]]>
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1 
-            <include refid="com.esofthead.mycollab.module.user.dao.UserMapperExt.querySearchCriteria" />
+            <include refid="querySearchCriteria" />
         </trim>
     </select>
 </mapper>

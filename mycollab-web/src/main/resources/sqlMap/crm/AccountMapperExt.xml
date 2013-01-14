@@ -3,9 +3,9 @@
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.AccountMapperExt">
     
     <resultMap extends="com.esofthead.mycollab.module.crm.dao.AccountMapper.BaseResultMap"
-        id="SimpleAccountResult" type="com.esofthead.mycollab.module.crm.domain.SimpleAccount">
+               id="SimpleAccountResult" type="com.esofthead.mycollab.module.crm.domain.SimpleAccount">
         <result column="assignUserFullName" jdbcType="VARCHAR"
-            property="assignUserFullName" />
+                property="assignUserFullName" />
     </resultMap>
 
 
@@ -28,14 +28,14 @@
         <if test="types != null">
             ${types.operation} m_crm_account.type IN
             <foreach close=")" collection="types.values" item="type"
-                open="(" separator=",">
+                     open="(" separator=",">
                 #{type}
             </foreach>
         </if>
         <if test="industries != null">
             ${industries.operation} m_crm_account.industry IN
             <foreach close=")" collection="industries.values" item="industry"
-                open="(" separator=",">
+                     open="(" separator=",">
                 #{industry}
             </foreach>
         </if>
@@ -43,7 +43,7 @@
         <if test="assignUsers != null">
             ${assignUsers.operation} m_crm_account.assignuser IN
             <foreach close=")" collection="assignUsers.values" item="user"
-                open="(" separator=",">
+                     open="(" separator=",">
                 #{user}
             </foreach>
         </if>
@@ -66,6 +66,9 @@
     </sql>
 
     <sql id="queryTotalCountSearchCriteria">
+        <if test="id != null">
+            <![CDATA[${id.operation} m_crm_account.id ${id.compareOperator} #{id.value,javaType=INTEGER}]]>
+        </if>
         <if test="accountname != null">
              <![CDATA[${accountname.operation} m_crm_account.accountname LIKE '%${accountname.value}%']]>
         </if>
@@ -85,14 +88,14 @@
         <if test="types != null">
             ${types.operation} m_crm_account.type IN
             <foreach close=")" collection="types.values" item="type"
-                open="(" separator=",">
+                     open="(" separator=",">
                 #{type}
             </foreach>
         </if>
         <if test="industries != null">
             ${industries.operation} m_crm_account.industry IN
             <foreach close=")" collection="industries.values" item="industry"
-                open="(" separator=",">
+                     open="(" separator=",">
                 #{industry}
             </foreach>
         </if>
@@ -108,7 +111,7 @@
         <if test="assignUsers != null">
             ${assignUsers.operation} m_crm_account.assignUser IN
             <foreach close=")" collection="assignUsers.values" item="user"
-                open="(" separator=",">
+                     open="(" separator=",">
                 #{user}
             </foreach>
         </if>
@@ -134,18 +137,20 @@
     </sql>
     
     <sql id="orderStatement">
-        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        ORDER BY 
+        <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[
             m_crm_account.lastUpdatedTime DESC
         ]]>
     </sql>
 
     <select id="findPagableListByCriteria" parameterType="AccountSearchCriteria"
-        resultMap="SimpleAccountResult">
+            resultMap="SimpleAccountResult">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.selectSimpleAccount" />
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 <include
+            1=1 
+            <include
                 refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.querySearchCriteria" />
         </trim>
         <include refid="orderStatement"/>
@@ -153,10 +158,11 @@
     </select>
 
     <select id="getTotalCount" parameterType="AccountSearchCriteria"
-        resultType="java.lang.Integer">
+            resultType="java.lang.Integer">
         SELECT count(*) as totalCount FROM m_crm_account
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 <include
+            1=1 
+            <include
                 refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
         </trim>
     </select>
@@ -165,16 +171,38 @@
         DELETE FROM m_crm_account
         <if test="_parameter != null">
             <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1  <include refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
+                1=1  
+                <include refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria" />
             </trim>
         </if>
     </delete>
 
     <select id="findAccountById" parameterType="java.lang.Integer"
-        resultMap="SimpleAccountResult">
+            resultMap="SimpleAccountResult">
         <include
             refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.selectSimpleAccount" />
 
         WHERE m_crm_account.id=#{accountId, javaType=INTEGER}
     </select>
+    
+    <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MIN(id) FROM m_crm_account
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria"/>
+        </trim>
+    </select>
+    
+    <select id="getPreviousItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MAX(id) FROM m_crm_account
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.crm.dao.AccountMapperExt.queryTotalCountSearchCriteria"/>
+        </trim>
+    </select>
+    
 </mapper>

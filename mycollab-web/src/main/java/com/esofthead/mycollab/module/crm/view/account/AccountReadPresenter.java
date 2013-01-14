@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Call;
@@ -10,6 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.Task;
+import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
@@ -21,10 +23,10 @@ import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Window;
 import java.util.Set;
 
 public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
@@ -67,6 +69,39 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                     public void onCancel() {
                         EventBus.getInstance().fireEvent(
                                 new AccountEvent.GotoList(this, null));
+                    }
+
+                    @Override
+                    public void gotoNext(Account data) {
+                        AccountService accountService = AppContext
+                                .getSpringBean(AccountService.class);
+                        AccountSearchCriteria criteria = new AccountSearchCriteria();
+                        criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+                        criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.GREATHER));
+                        Integer nextId = accountService.getNextItemKey(criteria);
+                        if (nextId != null) {
+                            EventBus.getInstance().fireEvent(
+                                    new AccountEvent.GotoRead(this, nextId));
+                        } else {
+                            view.getWindow().showNotification("Information", "You are already in the last record", Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                        }
+
+                    }
+
+                    @Override
+                    public void gotoPrevious(Account data) {
+                        AccountService accountService = AppContext
+                                .getSpringBean(AccountService.class);
+                        AccountSearchCriteria criteria = new AccountSearchCriteria();
+                        criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+                        criteria.setId(new NumberSearchField(data.getId(), NumberSearchField.LESSTHAN));
+                        Integer nextId = accountService.getPreviousItemKey(criteria);
+                        if (nextId != null) {
+                            EventBus.getInstance().fireEvent(
+                                    new AccountEvent.GotoRead(this, nextId));
+                        } else {
+                            view.getWindow().showNotification("Information", "You are already in the first record", Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                        }
                     }
                 });
 

@@ -109,6 +109,16 @@ public abstract class DefaultService<K extends Serializable, T, S extends Search
         }
 
     }
+    
+    @Override
+    public Integer getNextItemKey(S criteria) {
+        return getSearchMapper().getNextItemKey(criteria);
+    }
+
+    @Override
+    public Integer getPreviousItemKey(S criteria) {
+        return getSearchMapper().getPreviousItemKey(criteria);
+    }
 
     @Override
     public void removeWithSession(List<K> primaryKeys, String username) {

@@ -13,7 +13,7 @@
         SELECT count(*) as totalCount FROM s_roles
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1 
-            <include refid="com.esofthead.mycollab.module.user.dao.RoleMapperExt.querySearchCriteria" />
+            <include refid="querySearchCriteria" />
         </trim>
     </select>
 
@@ -25,7 +25,7 @@
         ]]>
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1 
-            <include refid="com.esofthead.mycollab.module.user.dao.RoleMapperExt.querySearchCriteria" />
+            <include refid="querySearchCriteria" />
         </trim>
     </select>
 </mapper>
