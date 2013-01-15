@@ -2,8 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.module.user;
+package com.esofthead.mycollab.common.domain;
 
+import com.esofthead.mycollab.module.user.PermissionFlag;
 import java.util.HashMap;
 
 /**
@@ -11,6 +12,10 @@ import java.util.HashMap;
  * @author haiphucnguyen
  */
 public class PermissionMap extends HashMap<String, Integer> {
+    
+    public void addPath(String permissionItem, Integer value) {
+        this.put(permissionItem, value);
+    }
 
     public boolean canRead(String permissionItem) {
         Object value = this.get(permissionItem);

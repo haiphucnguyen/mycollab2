@@ -16,7 +16,7 @@
  */
 package com.esofthead.mycollab.module.user.domain;
 
-import com.esofthead.mycollab.module.user.PermissionMap;
+import com.esofthead.mycollab.common.domain.PermissionMap;
 import java.util.Date;
 
 public class SimpleUser extends User {

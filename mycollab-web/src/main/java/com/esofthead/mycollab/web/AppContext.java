@@ -2,7 +2,7 @@ package com.esofthead.mycollab.web;
 
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
-import com.esofthead.mycollab.module.user.PermissionMap;
+import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext.TransactionListener;

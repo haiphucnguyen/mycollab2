@@ -22,10 +22,10 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
-    
+
     public RoleAddPresenter() {
         super(RoleAddView.class);
-        
+
         view.getEditFormHandlers().addFormHandler(new EditFormHandler<Role>() {
             @Override
             public void onSave(final Role item) {
@@ -36,7 +36,7 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
                             new RoleEvent.GotoList(this, null));
                 }
             }
-            
+
             @Override
             public void onCancel() {
                 ViewState viewState = HistoryViewManager.back();
@@ -45,7 +45,7 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
                             new RoleEvent.GotoList(this, null));
                 }
             }
-            
+
             @Override
             public void onSaveAndNew(Role item) {
                 save(item);
@@ -54,19 +54,22 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
             }
         });
     }
-    
+
     public void save(Role item) {
         RoleService roleService = AppContext.getSpringBean(RoleService.class);
         item.setSaccountid(AppContext.getAccountId());
-        
+
         if (item.getId() == null) {
             roleService.saveWithSession(item, AppContext.getUsername());
         } else {
             roleService.updateWithSession(item, AppContext.getUsername());
         }
-        
+
+
+        roleService.savePermission(item.getId(), view.getPermissionMap());
+
     }
-    
+
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         RoleContainer roleContainer = (RoleContainer) container;

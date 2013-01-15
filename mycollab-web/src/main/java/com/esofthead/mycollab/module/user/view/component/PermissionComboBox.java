@@ -16,6 +16,7 @@ public class PermissionComboBox extends ComboBox {
     public PermissionComboBox() {
         super();
         this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+        this.setNullSelectionAllowed(false);
         
         BeanContainer<String, PermissionIdName> beanItem = new BeanContainer<String, PermissionIdName>(
                 PermissionIdName.class);
@@ -27,6 +28,7 @@ public class PermissionComboBox extends ComboBox {
         beanItem.addBean(new PermissionIdName(PermissionFlag.ADMIN, "Access"));
         
         this.setContainerDataSource(beanItem);
+        this.setValue(PermissionFlag.READ_ONLY);
     }
     
     public static class PermissionIdName {
