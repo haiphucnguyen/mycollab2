@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.Role;
+import com.esofthead.mycollab.module.user.view.component.PermissionComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -83,10 +84,10 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
                 organizationHeader.setStyleName("h2");
                 permissionsPanel.addComponent(organizationHeader);
 
-                for (String permissionPath : RolePermissionCollections.PERMISSIONS_ARR) {
+                for (String permissionPath : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
                     HorizontalLayout permissionPathLayout = new HorizontalLayout();
                     permissionPathLayout.addComponent(new Label(permissionPath));
-
+                    permissionPathLayout.addComponent(new PermissionComboBox());
                     permissionsPanel.addComponent(permissionPathLayout);
                 }
 

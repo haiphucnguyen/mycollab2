@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.user.domain;
 
+import com.esofthead.mycollab.module.user.PermissionMap;
 import java.util.Date;
 
 public class SimpleUser extends User {
@@ -29,6 +30,8 @@ public class SimpleUser extends User {
     public static final int ADMIN_VAL = 1;
     
     private Date lastAccessedTime;
+    
+    private PermissionMap permissionMaps;
 
     public Date getLastAccessedTime() {
         return lastAccessedTime;
@@ -40,5 +43,13 @@ public class SimpleUser extends User {
 
     public String getDisplayName() {
         return getFirstname() + " " + getLastname();
+    }
+
+    public PermissionMap getPermissionMaps() {
+        return permissionMaps;
+    }
+
+    public void setPermissionMaps(PermissionMap permissionMaps) {
+        this.permissionMaps = permissionMaps;
     }
 }

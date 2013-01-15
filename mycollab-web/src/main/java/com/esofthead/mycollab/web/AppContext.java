@@ -2,6 +2,7 @@ package com.esofthead.mycollab.web;
 
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
+import com.esofthead.mycollab.module.user.PermissionMap;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext.TransactionListener;
@@ -126,6 +127,33 @@ public class AppContext implements TransactionListener, Serializable {
     public static boolean isAdmin() {
         Byte flag = instance.get().session.getIsadmin();
         return (flag != null && flag == SimpleUser.ADMIN_VAL);
+    }
+    
+    public static boolean canRead(String permissionItem) {
+        PermissionMap permissionMap = instance.get().session.getPermissionMaps();
+        if (permissionMap == null) {
+            return false;
+        } else {
+            return permissionMap.canRead(permissionItem);
+        }
+    }
+    
+    public static boolean canWrite(String permissionItem) {
+        PermissionMap permissionMap = instance.get().session.getPermissionMaps();
+        if (permissionMap == null) {
+            return false;
+        } else {
+            return permissionMap.canWrite(permissionItem);
+        }
+    }
+    
+    public static boolean canAccess(String permissionItem) {
+        PermissionMap permissionMap = instance.get().session.getPermissionMaps();
+        if (permissionMap == null) {
+            return false;
+        } else {
+            return permissionMap.canAccess(permissionItem);
+        }
     }
 
     public static void putVariable(String key, Object value) {
