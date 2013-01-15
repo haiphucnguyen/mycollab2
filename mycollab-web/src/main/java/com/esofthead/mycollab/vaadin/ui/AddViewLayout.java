@@ -6,6 +6,7 @@ import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.TextField;
 
 public class AddViewLayout extends CustomLayout {
 
@@ -29,13 +30,21 @@ public class AddViewLayout extends CustomLayout {
         titleLbl = new Label(title);
         titleLbl.setWidth("100%");
         titleLbl.setStyleName("headerName");
+        titleLbl.setImmediate(true);
         this.header.addComponent(titleLbl);
         this.addComponent(header, "addViewHeader");
     }
     
     
     public void setTitle(String title) {
+    	System.out.println("title: " + title);
         titleLbl.setValue(title);
+    }
+    
+    public void setAbc(String title) {
+    	TextField f = new TextField();
+        this.header.addComponent(f);
+    	f.setValue(title);
     }
 
     public void addTopControls(ComponentContainer topControls) {

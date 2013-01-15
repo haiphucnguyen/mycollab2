@@ -119,16 +119,20 @@ public class MilestoneReadPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		MilestoneContainer riskContainer = (MilestoneContainer) container;
-		riskContainer.removeAllComponents();
-		riskContainer.addComponent(view.getWidget());
-
 		if (data.getParams() instanceof Integer) {
 			MilestoneService riskService = AppContext
 					.getSpringBean(MilestoneService.class);
 			SimpleMilestone risk = riskService.findMilestoneById((Integer) data
 					.getParams());
-			view.previewItem(risk);
+			if (risk != null) {
+				MilestoneContainer riskContainer = (MilestoneContainer) container;
+				riskContainer.removeAllComponents();
+				riskContainer.addComponent(view.getWidget());
+				view.previewItem(risk);
+            } else {
+                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                return;
+            }
 		} else {
 			throw new MyCollabException("Unhanddle this case yet");
 		}

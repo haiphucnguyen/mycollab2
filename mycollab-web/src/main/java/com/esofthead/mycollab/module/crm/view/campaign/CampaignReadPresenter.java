@@ -5,6 +5,7 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Call;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
@@ -140,14 +141,18 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
-
         if (data.getParams() instanceof Integer) {
             CampaignService campaignService = AppContext
                     .getSpringBean(CampaignService.class);
             SimpleCampaign campaign = campaignService
                     .findCampaignById((Integer) data.getParams());
-            view.previewItem(campaign);
+            if (campaign != null) {
+                super.onGo(container, data);
+                view.previewItem(campaign);
+            } else {
+                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                return;
+            }
         }
 
     }

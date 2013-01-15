@@ -10,6 +10,7 @@ public class ProblemSearchCriteria extends SearchCriteria {
     private NumberSearchField projectId;
     private StringSearchField raisedByUser;
     private StringSearchField assignToUser;
+    private NumberSearchField id;
 
     public StringSearchField getProblemname() {
         return problemname;
@@ -42,4 +43,12 @@ public class ProblemSearchCriteria extends SearchCriteria {
     public void setRaisedByUser(StringSearchField raisedByUser) {
         this.raisedByUser = raisedByUser;
     }
+
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
+
+	public NumberSearchField getId() {
+		return id;
+	}
 }

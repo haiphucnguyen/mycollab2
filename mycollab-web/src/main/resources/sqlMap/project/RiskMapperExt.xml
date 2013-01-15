@@ -11,6 +11,11 @@
 	</resultMap>
 
 	<sql id="querySearchCriteria">
+		
+		<if test="id != null">
+            <![CDATA[${id.operation} m_prj_risk.id ${id.compareOperator} #{id.value,javaType=INTEGER}]]>
+        </if>
+		
 		<if test="riskname != null">
 			${riskname.operation} m_prj_risk.riskname
 			LIKE
@@ -72,5 +77,25 @@
             refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.selectRisk" />
 
         WHERE m_prj_risk.id=#{riskId, javaType=INTEGER}
+    </select>
+    
+     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MIN(id) FROM m_prj_risk
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.querySearchCriteria"/>
+        </trim>
+    </select>
+    
+    <select id="getPreviousItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MAX(id) FROM m_prj_risk
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.querySearchCriteria"/>
+        </trim>
     </select>
 </mapper>

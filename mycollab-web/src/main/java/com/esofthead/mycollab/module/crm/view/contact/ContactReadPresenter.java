@@ -140,14 +140,18 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		super.onGo(container, data);
-
 		if (data.getParams() instanceof Integer) {
 			ContactService contactService = AppContext
 					.getSpringBean(ContactService.class);
 			SimpleContact contact = contactService
 					.findContactById((Integer) data.getParams());
-			view.previewItem(contact);
+			if (contact != null) {
+                super.onGo(container, data);
+                view.previewItem(contact);
+            } else {
+                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                return;
+            }
 		}
 
 	}

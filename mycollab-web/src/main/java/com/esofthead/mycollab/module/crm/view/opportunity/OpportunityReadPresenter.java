@@ -148,13 +148,18 @@ public class OpportunityReadPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		super.onGo(container, data);
 		if (data.getParams() instanceof Integer) {
 			OpportunityService opportunityService = AppContext
 					.getSpringBean(OpportunityService.class);
 			SimpleOpportunity opportunity = opportunityService
 					.findOpportunityById((Integer) data.getParams());
-			view.previewItem(opportunity);
+			if (opportunity != null) {
+                super.onGo(container, data);
+                view.previewItem(opportunity);
+            } else {
+                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                return;
+            }
 		}
 	}
 }

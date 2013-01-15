@@ -15,6 +15,8 @@ public class RiskSearchCriteria extends SearchCriteria {
 	private BooleanSearchField isCompleted;
 
 	private NumberSearchField projectId;
+	
+	 private NumberSearchField id;
 
 	public StringSearchField getRiskname() {
 		return riskname;
@@ -54,5 +56,13 @@ public class RiskSearchCriteria extends SearchCriteria {
 
 	public void setIsCompleted(BooleanSearchField isCompleted) {
 		this.isCompleted = isCompleted;
+	}
+
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
+
+	public NumberSearchField getId() {
+		return id;
 	}
 }

@@ -108,7 +108,12 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 					.getSpringBean(CallService.class);
 			SimpleCall call = callService.findCallById((Integer) data
 					.getParams());
-			view.previewItem(call);
+			if (call != null) {
+                view.previewItem(call);
+            } else {
+                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                return;
+            }
 		}
 		view.previewItem((SimpleCall) data.getParams());
 	}

@@ -132,13 +132,18 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
         if (data.getParams() instanceof Integer) {
             CaseService caseService = AppContext
                     .getSpringBean(CaseService.class);
             SimpleCase cases = caseService.findCaseById((Integer) data
                     .getParams());
-            view.previewItem(cases);
+            if (cases != null) {
+                super.onGo(container, data);
+                view.previewItem(cases);
+            } else {
+                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                return;
+            }
         }
     }
 }

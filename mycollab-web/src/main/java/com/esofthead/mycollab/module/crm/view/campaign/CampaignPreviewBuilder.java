@@ -113,6 +113,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
         
         public ReadView() {
             campaignAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/campaign.png"));
+            campaignAddLayout.addStyleName("preview");
             this.addComponent(campaignAddLayout);
             
             tabContainer = new TabSheet();
@@ -125,6 +126,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
                     this.setFormFieldFactory(new CampaignFormFieldFactory());
                     super.setItemDataSource(newDataSource);
                     campaignAddLayout.setTitle(campaign.getCampaignname());
+                    campaignAddLayout.setAbc(campaign.getCampaignname());
                 }
                 
                 @Override
