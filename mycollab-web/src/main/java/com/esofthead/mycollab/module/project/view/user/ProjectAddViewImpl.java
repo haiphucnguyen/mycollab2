@@ -4,12 +4,14 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
+import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -89,9 +91,17 @@ public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
                    RichTextArea field = new RichTextArea(); 
                    field.setHeight("350px");
                    return field;
-                }
+                } else if (propertyId.equals("projectstatus")) {
+                    return new ProjectStatusComboBox();
+                } 
                 return null;
             }
+        }
+    }
+    
+    private static class ProjectStatusComboBox extends ValueComboBox {
+        public ProjectStatusComboBox() {
+            this.loadData(ProjectDataTypeFactory.getProjectStatusList());
         }
     }
 }

@@ -84,8 +84,8 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
             informationLayout.addComponent(field, "Home Page", 1, 0);
         } else if (propertyId.equals("shortname")) {
             informationLayout.addComponent(field, "Short Name", 0, 1);
-        } else if (propertyId.equals("projecttype")) {
-            informationLayout.addComponent(field, "Type", 1, 1);
+        } else if (propertyId.equals("projectstatus")) {
+            informationLayout.addComponent(field, "Status", 1, 1);
         } else if (propertyId.equals("planstartdate")) {
             financialLayout.addComponent(field, "Plan Start Date", 0, 0);
         } else if (propertyId.equals("targetbudget")) {

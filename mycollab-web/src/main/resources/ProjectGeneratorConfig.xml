@@ -87,6 +87,11 @@
             domainObjectName="TaskList"
             schema="mycollab"
             tableName="m_prj_task_list" />
+        
+        <table
+            domainObjectName="ProjectMember"
+            schema="mycollab"
+            tableName="m_prj_member" />
     </context>
 
 </generatorConfiguration>
