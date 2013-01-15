@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.module.project.view.UserDashboardViewImpl;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -17,46 +18,45 @@ import com.vaadin.ui.VerticalLayout;
 @ViewComponent
 public class AccountDashboardViewImpl extends AbstractView implements
         AccountDashboardView {
-
+    
     private final HorizontalLayout root;
     private final DetachedTabs accountTab;
     private final CssLayout accountSpace = new CssLayout();
-    
     private AccountController controller = new AccountController(this);
-
+    
     public AccountDashboardViewImpl() {
         this.setStyleName("accountViewContainer");
         this.setMargin(false);
         root = new HorizontalLayout();
-
+        
         accountSpace.setSizeFull();
         accountTab = new DetachedTabs.Vertical(accountSpace);
         accountTab.setWidth("200px");
         accountTab.setHeight(null);
-
+        
         VerticalLayout menu = new VerticalLayout();
         menu.setSizeFull();
         menu.setStyleName("sidebar-menu");
-
+        
         menu.addComponent(accountTab);
         root.addComponent(menu);
         root.addComponent(accountSpace);
-
+        
         buildComponents();
-
+        
         this.addComponent(root);
     }
-
+    
     private void buildComponents() {
         accountTab.addTab(constructUserInformationComponent(),
                 "User Information");
         accountTab.addTab(constructAccountSettingsComponent(),
                 "Account Settings");
         
-        if (AppContext.isAdmin()) {
+        if (AppContext.canRead(RolePermissionCollections.USER_USER) || AppContext.canRead(RolePermissionCollections.USER_ROLE)) {
             accountTab.addTab(constructUserPermissionComponent(), "Users & Permissions");
         }
-
+        
         accountTab.addTabChangedListener(new DetachedTabs.TabChangedListener() {
             @Override
             public void tabChanged(TabChangedEvent event) {
@@ -73,29 +73,29 @@ public class AccountDashboardViewImpl extends AbstractView implements
             }
         });
     }
-
+    
     private ComponentContainer constructAccountSettingsComponent() {
         AccountSettingsPresenter presenter = PresenterResolver
                 .getPresenter(AccountSettingsPresenter.class);
         return presenter.getView();
     }
-
+    
     private ComponentContainer constructUserInformationComponent() {
         UserInformationPresenter presenter = PresenterResolver
                 .getPresenter(UserInformationPresenter.class);
         return presenter.getView();
     }
-
+    
     private ComponentContainer constructUserPermissionComponent() {
         UserPermissionManagementPresenter presenter = PresenterResolver.getPresenter(UserPermissionManagementPresenter.class);
         return presenter.getView();
     }
-
+    
     @Override
     public void gotoUserInformation() {
         accountTab.selectTab("User Information");
     }
-
+    
     @Override
     public void gotoAccountSettings() {
         accountTab.selectTab("Account Settings");

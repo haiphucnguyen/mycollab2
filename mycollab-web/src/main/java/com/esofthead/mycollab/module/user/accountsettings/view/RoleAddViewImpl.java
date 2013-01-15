@@ -93,7 +93,6 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
                 organizationHeader.setStyleName("h2");
                 permissionsPanel.addComponent(organizationHeader);
                 
-                VerticalLayout crmLayout = new VerticalLayout();
                 GridFormLayoutHelper crmFormHelper = new GridFormLayoutHelper(2, RolePermissionCollections.CRM_PERMISSIONS_ARR.length);
                 Depot crmHeader = new Depot("Customer Relationship Management", crmFormHelper.getLayout());
                 
@@ -144,6 +143,8 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
                     TextArea textArea = new TextArea();
                     textArea.setNullRepresentation("");
                     return textArea;
+                } else if (propertyId.equals("isadmin")) {
+                    
                 }
                 return null;
             }

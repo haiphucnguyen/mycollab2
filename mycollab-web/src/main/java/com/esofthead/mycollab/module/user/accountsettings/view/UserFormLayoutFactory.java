@@ -68,7 +68,7 @@ public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
 
             informationLayout = new GridFormLayoutHelper(2, 6);
             informationLayout.getLayout().setWidth("900px");
-            
+
             layout.addComponent(informationLayout.getLayout());
             return layout;
         }
@@ -85,6 +85,8 @@ public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
                 informationLayout.addComponent(field, "Birthday", 1, 1);
             } else if (propertyId.equals("email")) {
                 informationLayout.addComponent(field, "Email", 0, 2);
+            } else if (propertyId.equals("isadmin")) {
+                informationLayout.addComponent(field, "Is Admin", 1, 2);
             } else if (propertyId.equals("company")) {
                 informationLayout.addComponent(field, "Company", 0, 3);
             } else if (propertyId.equals("website")) {

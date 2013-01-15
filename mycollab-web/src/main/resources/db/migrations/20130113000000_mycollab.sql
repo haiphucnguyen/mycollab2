@@ -1,0 +1,1 @@
+ALTER TABLE `s_user` CHANGE COLUMN `isAdmin` `isAdmin` TINYINT(1) NULL DEFAULT NULL  ;

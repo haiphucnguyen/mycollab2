@@ -63,11 +63,6 @@
             tableName="s_user" />
 
         <table
-            domainObjectName="RoleUser"
-            schema="mycollab"
-            tableName="s_roleuser" />
-
-        <table
             domainObjectName="RolePermission"
             schema="mycollab"
             tableName="s_role_permission" />

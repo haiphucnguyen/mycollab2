@@ -5,11 +5,11 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.module.user.domain.Role;
+import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.PreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
@@ -68,8 +68,8 @@ public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
         roleContainer.removeAllComponents();
         roleContainer.addComponent(view.getWidget());
 
-        if (data.getParams() instanceof Role) {
-            view.previewItem((Role) data.getParams());
+        if (data.getParams() instanceof SimpleRole) {
+            view.previewItem((SimpleRole) data.getParams());
         }
     }
 }

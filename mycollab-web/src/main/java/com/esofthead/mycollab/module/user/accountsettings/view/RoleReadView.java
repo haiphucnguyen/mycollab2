@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.module.user.domain.Role;
+import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
@@ -12,7 +13,7 @@ import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
  *
  * @author haiphucnguyen
  */
-public interface RoleReadView  extends IPreviewView<Role> {
+public interface RoleReadView  extends IPreviewView<SimpleRole> {
 
     HasPreviewFormHandlers<Role> getPreviewFormHandlers();
     

@@ -1,8 +1,8 @@
 package com.esofthead.mycollab.web;
 
+import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
-import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext.TransactionListener;
@@ -122,11 +122,6 @@ public class AppContext implements TransactionListener, Serializable {
                 .getServletContext());
 
         return springContext.getBean(requiredType);
-    }
-    
-    public static boolean isAdmin() {
-        Byte flag = instance.get().session.getIsadmin();
-        return (flag != null && flag == SimpleUser.ADMIN_VAL);
     }
     
     public static boolean canRead(String permissionItem) {

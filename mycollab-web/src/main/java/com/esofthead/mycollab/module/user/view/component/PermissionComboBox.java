@@ -25,7 +25,7 @@ public class PermissionComboBox extends ComboBox {
         
         beanItem.addBean(new PermissionIdName(PermissionFlag.READ_ONLY, "Read Only"));
         beanItem.addBean(new PermissionIdName(PermissionFlag.READ_WRITE, "Read & Write"));
-        beanItem.addBean(new PermissionIdName(PermissionFlag.ADMIN, "Access"));
+        beanItem.addBean(new PermissionIdName(PermissionFlag.ACCESS, "Access"));
         
         this.setContainerDataSource(beanItem);
         this.setValue(PermissionFlag.READ_ONLY);

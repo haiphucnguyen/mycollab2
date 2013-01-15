@@ -4,11 +4,18 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
+import com.esofthead.mycollab.common.domain.PermissionMap;
+import com.esofthead.mycollab.module.user.PermissionFlag;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.Role;
+import com.esofthead.mycollab.module.user.domain.SimpleRole;
+import com.esofthead.mycollab.module.user.view.component.PermissionComboBox;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
@@ -28,7 +35,7 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 
     private static final long serialVersionUID = 1L;
     private PreviewForm previewForm;
-    private Role role;
+    private SimpleRole role;
 
     public RoleReadViewImpl() {
         super();
@@ -37,7 +44,7 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
     }
 
     @Override
-    public void previewItem(Role role) {
+    public void previewItem(SimpleRole role) {
         this.role = role;
         previewForm.setItemDataSource(new BeanItem<Role>(role));
     }
@@ -87,13 +94,44 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
                 organizationHeader.setStyleName("h2");
                 permissionsPanel.addComponent(organizationHeader);
 
+                PermissionMap permissionMap = role.getPermissionMap();
+
+                GridFormLayoutHelper crmFormHelper = new GridFormLayoutHelper(2, RolePermissionCollections.CRM_PERMISSIONS_ARR.length);
+                Depot crmHeader = new Depot("Customer Relationship Management", crmFormHelper.getLayout());
+
+                for (int i = 0; i < RolePermissionCollections.CRM_PERMISSIONS_ARR.length; i++) {
+                    String permissionPath = RolePermissionCollections.CRM_PERMISSIONS_ARR[i];
+                    crmFormHelper.addComponent(new Label(getValueFromPerPath(permissionMap, permissionPath)), permissionPath, 0, i);
+                }
+
+                permissionsPanel.addComponent(crmHeader);
+
+                GridFormLayoutHelper userFormHelper = new GridFormLayoutHelper(2, RolePermissionCollections.USER_PERMISSION_ARR.length);
+                Depot userHeader = new Depot("User Management", userFormHelper.getLayout());
+
+                for (int i = 0; i < RolePermissionCollections.USER_PERMISSION_ARR.length; i++) {
+                    String permissionPath = RolePermissionCollections.USER_PERMISSION_ARR[i];
+                    userFormHelper.addComponent(new Label(getValueFromPerPath(permissionMap, permissionPath)), permissionPath, 0, i);
+                }
+
+                permissionsPanel.addComponent(userHeader);
+
                 return permissionsPanel;
+            }
+
+            private String getValueFromPerPath(PermissionMap permissionMap, String permissionItem) {
+                Integer perVal = permissionMap.get(permissionItem);
+                if (perVal == null) {
+                    return "Undefined";
+                } else {
+                    return PermissionFlag.toString(perVal);
+                }
             }
         }
     }
 
     @Override
-    public Role getItem() {
+    public SimpleRole getItem() {
         return role;
     }
 }

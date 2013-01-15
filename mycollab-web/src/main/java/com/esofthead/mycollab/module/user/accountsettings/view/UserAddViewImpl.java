@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.view.component.RoleComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -13,9 +14,13 @@ import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import java.util.Collection;
+import org.vaadin.addon.customfield.CustomField;
 
 /**
  *
@@ -84,7 +89,33 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
             protected Field onCreateField(Item item, Object propertyId,
                     com.vaadin.ui.Component uiContext) {
 
+                if (propertyId.equals("isAdmin")) {
+                    return new AdminRoleSelectionField();
+                }
                 return null;
+            }
+        }
+
+        private class AdminRoleSelectionField extends CustomField {
+
+            private CheckBox isAdminCheck;
+            
+            public AdminRoleSelectionField() {
+                HorizontalLayout layout = new HorizontalLayout();
+                isAdminCheck = new CheckBox();
+                isAdminCheck.setValue(user.getIsadmin());
+                
+                if (!user.getIsadmin()) {
+                    this.addComponent(new Label("Role"));
+                    this.addComponent(new RoleComboBox());
+                }
+                
+                this.setCompositionRoot(layout);
+            }
+            
+            @Override
+            public Class<?> getType() {
+                return Object.class;
             }
         }
     }
