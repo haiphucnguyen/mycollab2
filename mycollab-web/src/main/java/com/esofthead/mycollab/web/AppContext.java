@@ -125,6 +125,10 @@ public class AppContext implements TransactionListener, Serializable {
     }
     
     public static boolean canRead(String permissionItem) {
+        if (isAdmin()) {
+            return true;
+        }
+        
         PermissionMap permissionMap = instance.get().session.getPermissionMaps();
         if (permissionMap == null) {
             return false;
@@ -133,7 +137,14 @@ public class AppContext implements TransactionListener, Serializable {
         }
     }
     
+    private static boolean isAdmin() {
+        return instance.get().session.getIsadmin();
+    }
+    
     public static boolean canWrite(String permissionItem) {
+        if (isAdmin()) {
+            return true;
+        }
         PermissionMap permissionMap = instance.get().session.getPermissionMaps();
         if (permissionMap == null) {
             return false;
@@ -143,6 +154,9 @@ public class AppContext implements TransactionListener, Serializable {
     }
     
     public static boolean canAccess(String permissionItem) {
+        if (isAdmin()) {
+            return true;
+        }
         PermissionMap permissionMap = instance.get().session.getPermissionMaps();
         if (permissionMap == null) {
             return false;

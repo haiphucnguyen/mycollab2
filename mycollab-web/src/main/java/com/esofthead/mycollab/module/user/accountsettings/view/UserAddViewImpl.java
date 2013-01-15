@@ -12,13 +12,18 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
+import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.Window;
 import java.util.Collection;
 import org.vaadin.addon.customfield.CustomField;
 
@@ -99,15 +104,56 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
         private class AdminRoleSelectionField extends CustomField {
 
             private CheckBox isAdminCheck;
+            private HorizontalLayout roleLayout;
+            private RoleComboBox roleComboBox;
             
             public AdminRoleSelectionField() {
                 HorizontalLayout layout = new HorizontalLayout();
-                isAdminCheck = new CheckBox();
+                
+                roleLayout = new HorizontalLayout();
+                roleLayout.addComponent(new Label("Role"));
+                roleComboBox = new RoleComboBox();
+                roleComboBox.addListener(new Property.ValueChangeListener() {
+
+                    @Override
+                    public void valueChange(Property.ValueChangeEvent event) {
+                        user.setRoleid((Integer)roleComboBox.getValue());
+                    }
+                });
+                
+                
+                roleLayout.addComponent(roleComboBox);
+                
+                isAdminCheck = new CheckBox(null);
+                isAdminCheck.setImmediate(true);
+                isAdminCheck.addListener(new Button.ClickListener() {
+
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        user.setIsadmin((Boolean)isAdminCheck.getValue());
+                        
+                        System.out.println("Admin Check: " + isAdminCheck.getValue());
+                        
+                        if (user.getIsadmin()) {
+                            user.setRoleid(null);
+                            AdminRoleSelectionField.this.removeComponent(roleLayout);
+                        } else {
+                            if (roleComboBox.getContainerPropertyIds().size() > 0) {
+                                AdminRoleSelectionField.this.addComponent(roleLayout);
+                            } else {
+                                 AppContext.getApplication().getMainWindow().showNotification("Information", "You must have at least one role to deselect admin checkbox", Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                                 isAdminCheck.setValue(Boolean.TRUE);
+                            }
+                        }
+                    }
+                    
+                });
+                
+                
                 isAdminCheck.setValue(user.getIsadmin());
                 
                 if (!user.getIsadmin()) {
-                    this.addComponent(new Label("Role"));
-                    this.addComponent(new RoleComboBox());
+                    this.addComponent(roleLayout);
                 }
                 
                 this.setCompositionRoot(layout);
