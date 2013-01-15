@@ -16,6 +16,8 @@ public class CallSearchCriteria extends SearchCriteria{
     private NumberSearchField saccountid;
     
     private SetSearchField<String> assignUsers;
+    
+    private NumberSearchField id;
 
     public NumberSearchField getSaccountid() {
         return saccountid;
@@ -32,4 +34,12 @@ public class CallSearchCriteria extends SearchCriteria{
     public void setAssignUsers(SetSearchField<String> assignUsers) {
         this.assignUsers = assignUsers;
     }
+
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
+
+	public NumberSearchField getId() {
+		return id;
+	}
 }

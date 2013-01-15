@@ -51,6 +51,8 @@ public class CampaignSearchCriteria extends SearchCriteria {
 	private RangeDateTimeSearchField startDateRange;
 	
 	private RangeDateTimeSearchField endDateRange;
+	
+	private NumberSearchField id;
 
 	public StringSearchField getCampaignName() {
 		return campaignName;
@@ -154,5 +156,13 @@ public class CampaignSearchCriteria extends SearchCriteria {
 
 	public void setEndDateRange(RangeDateTimeSearchField endDateRange) {
 		this.endDateRange = endDateRange;
+	}
+
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
+
+	public NumberSearchField getId() {
+		return id;
 	}
 }

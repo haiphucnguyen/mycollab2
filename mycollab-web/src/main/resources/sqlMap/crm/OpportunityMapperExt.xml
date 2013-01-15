@@ -84,6 +84,11 @@
     </sql>
 
     <sql id="queryTotalCountSearchCriteria">
+    
+    	<if test="id != null">
+            <![CDATA[${id.operation} m_crm_opportunity.id ${id.compareOperator} #{id.value,javaType=INTEGER}]]>
+        </if>
+    
         <if test="opportunityName != null">
             <![CDATA[${opportunityName.operation} m_crm_opportunity.opportunityName like '%${opportunityName.value}%']]>
         </if>
@@ -228,5 +233,25 @@
         <include refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.selectSimpleOpportunity" />
 
         WHERE m_crm_opportunity.id=#{opportunityId,javaType=INTEGER}
+    </select>
+    
+     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MIN(id) FROM m_crm_opportunity
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria"/>
+        </trim>
+    </select>
+    
+    <select id="getPreviousItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MAX(id) FROM m_crm_opportunity
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria"/>
+        </trim>
     </select>
 </mapper>

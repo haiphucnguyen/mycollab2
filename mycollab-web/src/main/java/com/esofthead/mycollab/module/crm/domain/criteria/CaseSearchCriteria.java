@@ -25,6 +25,8 @@ public class CaseSearchCriteria extends SearchCriteria {
 	private SetSearchField<String> assignUsers;
 
 	private NumberSearchField saccountid;
+	
+	 private NumberSearchField id;
 
 	public StringSearchField getSubject() {
 		return subject;
@@ -104,5 +106,13 @@ public class CaseSearchCriteria extends SearchCriteria {
 
 	public void setAssignUserName(StringSearchField assignUserName) {
 		this.assignUserName = assignUserName;
+	}
+
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
+
+	public NumberSearchField getId() {
+		return id;
 	}
 }

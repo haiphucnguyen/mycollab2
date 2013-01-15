@@ -62,6 +62,8 @@ public class LeadSearchCriteria extends SearchCriteria {
 	private StringSearchField anyState;
 	
 	private SetSearchField<String> statuses;
+	
+	private NumberSearchField id;
 
 	public StringSearchField getCampaignName() {
 		return campaignName;
@@ -221,6 +223,14 @@ public class LeadSearchCriteria extends SearchCriteria {
 
 	public SetSearchField<String> getStatuses() {
 		return statuses;
+	}
+
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
+
+	public NumberSearchField getId() {
+		return id;
 	}
 	
 }

@@ -112,6 +112,11 @@
 	</sql>
 
 	<sql id="queryTotalCountSearchCriteria">
+	
+		<if test="id != null">
+            <![CDATA[${id.operation} m_crm_lead.id ${id.compareOperator} #{id.value,javaType=INTEGER}]]>
+        </if>
+	
 		<if test="campaignName != null">
 		  ${campaignName.operation}
 			(SELECT COUNT(*)
@@ -265,4 +270,25 @@
 
 		WHERE m_crm_lead.id = #{leadId,javaType=INTEGER}
 	</select>
+	
+	 <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MIN(id) FROM m_crm_lead
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.queryTotalCountSearchCriteria"/>
+        </trim>
+    </select>
+    
+    <select id="getPreviousItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MAX(id) FROM m_crm_lead
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.crm.dao.LeadMapperExt.queryTotalCountSearchCriteria"/>
+        </trim>
+    </select>
+	
 </mapper>

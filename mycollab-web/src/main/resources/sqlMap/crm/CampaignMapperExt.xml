@@ -80,6 +80,11 @@
 	</sql>
 
 	<sql id="queryTotalCountSearchCriteria">
+	
+		<if test="id != null">
+            <![CDATA[${id.operation} m_crm_campaign.id ${id.compareOperator} #{id.value,javaType=INTEGER}]]>
+        </if>
+        
 		<if test="campaignName != null">
           <![CDATA[
           ${campaignName.operation} m_crm_campaign.campaignName like '%${campaignName.value}%']]>
@@ -211,4 +216,24 @@
 
 		WHERE m_crm_campaign.id=#{campaignId,javaType=INTEGER}
 	</select>
+	
+	<select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MIN(id) FROM m_crm_campaign
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.queryTotalCountSearchCriteria"/>
+        </trim>
+    </select>
+    
+    <select id="getPreviousItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MAX(id) FROM m_crm_campaign
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.queryTotalCountSearchCriteria"/>
+        </trim>
+    </select>
 </mapper>

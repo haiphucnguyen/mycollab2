@@ -65,6 +65,8 @@ public class ContactSearchCriteria extends SearchCriteria {
     
     private SetSearchField<String> leadSources;
     
+    private NumberSearchField id;
+    
 
 	public StringSearchField getContactName() {
 		return contactName;
@@ -232,5 +234,13 @@ public class ContactSearchCriteria extends SearchCriteria {
 
 	public SetSearchField<String> getLeadSources() {
 		return leadSources;
+	}
+
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
+
+	public NumberSearchField getId() {
+		return id;
 	}
 }

@@ -21,6 +21,8 @@ public class MilestoneSearchCriteria extends SearchCriteria{
     private StringSearchField flag;
     
     private NumberSearchField projectId;
+    
+    private NumberSearchField id;
 
     public BooleanSearchField getCompletedField() {
         return completedField;
@@ -53,5 +55,13 @@ public class MilestoneSearchCriteria extends SearchCriteria{
     public void setProjectId(NumberSearchField projectId) {
         this.projectId = projectId;
     }
+
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
+
+	public NumberSearchField getId() {
+		return id;
+	}
     
 }
