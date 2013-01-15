@@ -33,127 +33,128 @@ import org.vaadin.addon.customfield.CustomField;
  */
 @ViewComponent
 public class UserAddViewImpl extends AbstractView implements UserAddView {
-
+    
     private static final long serialVersionUID = 1L;
-    private EditForm editForm;
+    private UserAddViewImpl.EditForm editForm;
     private User user;
-
+    
     public UserAddViewImpl() {
         super();
-        editForm = new EditForm();
+        editForm = new UserAddViewImpl.EditForm();
         this.addComponent(editForm);
     }
-
+    
     @Override
     public void editItem(User item) {
         this.user = item;
         editForm.setItemDataSource(new BeanItem<User>(user));
     }
-
+    
     private class EditForm extends AdvancedEditBeanForm<User> {
-
+        
         private static final long serialVersionUID = 1L;
-
+        
         @Override
         public void setItemDataSource(Item newDataSource,
                 Collection<?> propertyIds) {
-            this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new EditFormFieldFactory());
+            this.setFormLayoutFactory(new UserAddViewImpl.EditForm.FormLayoutFactory());
+            this.setFormFieldFactory(new UserAddViewImpl.EditForm.EditFormFieldFactory());
             super.setItemDataSource(newDataSource, propertyIds);
         }
-
+        
         private class FormLayoutFactory extends UserFormLayoutFactory {
-
+            
             private static final long serialVersionUID = 1L;
-
+            
             public FormLayoutFactory() {
                 super("Create User");
             }
-
+            
             private Layout createButtonControls() {
-                return (new EditFormControlsGenerator<User>(EditForm.this))
+                return (new EditFormControlsGenerator<User>(UserAddViewImpl.EditForm.this))
                         .createButtonControls();
             }
-
+            
             @Override
             protected Layout createTopPanel() {
                 return createButtonControls();
             }
-
+            
             @Override
             protected Layout createBottomPanel() {
                 return createButtonControls();
             }
         }
-
+        
         private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
+            
             private static final long serialVersionUID = 1L;
-
+            
             @Override
             protected Field onCreateField(Item item, Object propertyId,
                     com.vaadin.ui.Component uiContext) {
-
-                if (propertyId.equals("isAdmin")) {
-                    return new AdminRoleSelectionField();
+                
+                if (propertyId.equals("isadmin")) {
+                    return new UserAddViewImpl.EditForm.AdminRoleSelectionField();
                 }
                 return null;
             }
         }
-
+        
         private class AdminRoleSelectionField extends CustomField {
-
+            
             private CheckBox isAdminCheck;
+            private HorizontalLayout layout;
             private HorizontalLayout roleLayout;
             private RoleComboBox roleComboBox;
             
             public AdminRoleSelectionField() {
-                HorizontalLayout layout = new HorizontalLayout();
+                layout = new HorizontalLayout();
+                layout.setSpacing(true);
                 
                 roleLayout = new HorizontalLayout();
+                roleLayout.setSpacing(true);
                 roleLayout.addComponent(new Label("Role"));
                 roleComboBox = new RoleComboBox();
                 roleComboBox.addListener(new Property.ValueChangeListener() {
-
                     @Override
                     public void valueChange(Property.ValueChangeEvent event) {
-                        user.setRoleid((Integer)roleComboBox.getValue());
+                        user.setRoleid((Integer) roleComboBox.getValue());
                     }
                 });
                 
                 
                 roleLayout.addComponent(roleComboBox);
                 
-                isAdminCheck = new CheckBox(null);
+                isAdminCheck = new CheckBox("");
                 isAdminCheck.setImmediate(true);
+                isAdminCheck.setWriteThrough(true);
                 isAdminCheck.addListener(new Button.ClickListener() {
-
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        user.setIsadmin((Boolean)isAdminCheck.getValue());
+                        user.setIsadmin((Boolean) isAdminCheck.getValue());
                         
                         System.out.println("Admin Check: " + isAdminCheck.getValue());
                         
                         if (user.getIsadmin()) {
                             user.setRoleid(null);
-                            AdminRoleSelectionField.this.removeComponent(roleLayout);
+                            layout.removeComponent(roleLayout);
                         } else {
                             if (roleComboBox.getContainerPropertyIds().size() > 0) {
-                                AdminRoleSelectionField.this.addComponent(roleLayout);
+                                layout.addComponent(roleLayout);
                             } else {
-                                 AppContext.getApplication().getMainWindow().showNotification("Information", "You must have at least one role to deselect admin checkbox", Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                                 isAdminCheck.setValue(Boolean.TRUE);
+                                AppContext.getApplication().getMainWindow().showNotification("Information", "You must have at least one role to deselect admin checkbox", Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                                isAdminCheck.setValue(Boolean.TRUE);
                             }
                         }
                     }
-                    
                 });
                 
                 
                 isAdminCheck.setValue(user.getIsadmin());
-                
+                layout.addComponent(isAdminCheck);
                 if (!user.getIsadmin()) {
-                    this.addComponent(roleLayout);
+                    layout.addComponent(roleLayout);
                 }
                 
                 this.setCompositionRoot(layout);
@@ -165,7 +166,7 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
             }
         }
     }
-
+    
     @Override
     public HasEditFormHandlers<User> getEditFormHandlers() {
         return editForm;

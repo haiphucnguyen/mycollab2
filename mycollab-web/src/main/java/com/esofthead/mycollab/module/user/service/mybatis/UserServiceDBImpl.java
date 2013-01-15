@@ -16,21 +16,25 @@
  */
 package com.esofthead.mycollab.module.user.service.mybatis;
 
+import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.user.AuthenticationException;
+import com.esofthead.mycollab.module.user.dao.RolePermissionMapper;
 import com.esofthead.mycollab.module.user.dao.UserMapper;
 import com.esofthead.mycollab.module.user.dao.UserMapperExt;
+import com.esofthead.mycollab.module.user.domain.RolePermission;
+import com.esofthead.mycollab.module.user.domain.RolePermissionExample;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
-import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.thoughtworks.xstream.XStream;
+import com.thoughtworks.xstream.io.xml.StaxDriver;
 import java.util.List;
-import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +46,8 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
     private UserMapper userMapper;
     @Autowired
     private UserMapperExt userMapperExt;
+    @Autowired
+    private RolePermissionMapper rolePermissionMapper;
 
     @Override
     public ICrudGenericDAO getCrudMapper() {
@@ -67,6 +73,19 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
                 throw new AuthenticationException("Invalid username or password");
             }
 
+            if (!user.getIsadmin()) {
+                if (user.getRoleid() != null) {
+                    RolePermissionExample ex = new RolePermissionExample();
+                    ex.createCriteria().andRoleidEqualTo(user.getRoleid());
+                    List roles = rolePermissionMapper.selectByExampleWithBLOBs(ex);
+                    if (roles != null && roles.size() > 0) {
+                        RolePermission rolePer = (RolePermission) roles.get(0);
+                        XStream xstream = new XStream(new StaxDriver());
+                        PermissionMap permissionMap = (PermissionMap) xstream.fromXML(rolePer.getRoleval());
+                        user.setPermissionMaps(permissionMap);
+                    }
+                }
+            }
             return user;
         }
     }
