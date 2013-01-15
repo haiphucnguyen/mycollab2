@@ -11,8 +11,8 @@ import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -83,13 +83,30 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
                 Label organizationHeader = new Label("Permissions");
                 organizationHeader.setStyleName("h2");
                 permissionsPanel.addComponent(organizationHeader);
+                
+                VerticalLayout crmLayout = new VerticalLayout();
+                Depot crmHeader = new Depot("Customer Relationship Management", crmLayout);
 
                 for (String permissionPath : RolePermissionCollections.CRM_PERMISSIONS_ARR) {
                     HorizontalLayout permissionPathLayout = new HorizontalLayout();
                     permissionPathLayout.addComponent(new Label(permissionPath));
                     permissionPathLayout.addComponent(new PermissionComboBox());
-                    permissionsPanel.addComponent(permissionPathLayout);
+                    crmLayout.addComponent(permissionPathLayout);
                 }
+                
+                permissionsPanel.addComponent(crmHeader);
+                
+                VerticalLayout userLayout = new VerticalLayout();
+                Depot userHeader = new Depot("User Management", userLayout);
+
+                for (String permissionPath : RolePermissionCollections.USER_PERMISSION_ARR) {
+                    HorizontalLayout permissionPathLayout = new HorizontalLayout();
+                    permissionPathLayout.addComponent(new Label(permissionPath));
+                    permissionPathLayout.addComponent(new PermissionComboBox());
+                    userLayout.addComponent(permissionPathLayout);
+                }
+                
+                permissionsPanel.addComponent(userHeader);
 
                 return permissionsPanel;
             }
@@ -109,13 +126,6 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
                 }
                 return null;
             }
-        }
-    }
-
-    private static class PermissionValueCommboBox extends ValueComboBox {
-
-        public PermissionValueCommboBox() {
-            super();
         }
     }
 

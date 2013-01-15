@@ -182,14 +182,19 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
 
         if (data.getParams() instanceof Integer) {
             AccountService accountService = AppContext
                     .getSpringBean(AccountService.class);
             SimpleAccount account = accountService
                     .findAccountById((Integer) data.getParams());
-            view.previewItem((SimpleAccount) account);
+            if (account != null) {
+                super.onGo(container, data);
+                view.previewItem((SimpleAccount) account);
+            } else {
+                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                return;
+            }
         }
     }
 }

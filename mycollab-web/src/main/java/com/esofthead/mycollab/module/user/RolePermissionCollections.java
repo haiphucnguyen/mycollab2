@@ -16,7 +16,7 @@ public class RolePermissionCollections {
     public static final String CRM_LEAD = "Lead";
     public static final String CRM_OPPORTUNITY = "Opportunity";
     public static final String CRM_CASE = "Case";
-    public static final String CRM_TASK = "CrmTask";
+    public static final String CRM_TASK = "Task";
     public static final String CRM_MEETING = "Meeting";
     public static final String CRM_CALL = "Call";
     public static final String USER_USER = "User";

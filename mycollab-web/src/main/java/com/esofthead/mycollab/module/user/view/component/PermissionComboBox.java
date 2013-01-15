@@ -19,14 +19,14 @@ public class PermissionComboBox extends ComboBox {
         
         BeanContainer<String, PermissionIdName> beanItem = new BeanContainer<String, PermissionIdName>(
                 PermissionIdName.class);
+        beanItem.setBeanIdProperty("id");
+        this.setItemCaptionPropertyId("displayName");
         
         beanItem.addBean(new PermissionIdName(PermissionFlag.READ_ONLY, "Read Only"));
         beanItem.addBean(new PermissionIdName(PermissionFlag.READ_WRITE, "Read & Write"));
         beanItem.addBean(new PermissionIdName(PermissionFlag.ADMIN, "Access"));
         
-        beanItem.setBeanIdProperty("id");
         this.setContainerDataSource(beanItem);
-        this.setItemCaptionPropertyId("displayName");
     }
     
     public static class PermissionIdName {
