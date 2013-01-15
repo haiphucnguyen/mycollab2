@@ -28,7 +28,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
     private static final long serialVersionUID = 1L;
     private PreviewForm previewForm;
-    private SimpleTask taskList;
+    private SimpleTask task;
 
     public TaskReadViewImpl() {
         super();
@@ -37,9 +37,9 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
     }
 
     @Override
-    public void previewItem(SimpleTask taskList) {
-        this.taskList = taskList;
-        previewForm.setItemDataSource(new BeanItem<Task>(taskList));
+    public void previewItem(SimpleTask task) {
+        this.task = task;
+        previewForm.setItemDataSource(new BeanItem<Task>(task));
     }
 
     @Override
@@ -60,8 +60,12 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
                 @Override
                 protected Field onCreateField(Item item, Object propertyId,
                         Component uiContext) {
-                    
 
+                    if (propertyId.equals("assignUserFullName")) {
+                        return new FormViewField(task.getAssignUserFullName());
+                    } else if (propertyId.equals("taskListName")) {
+                        return new FormViewField(task.getTaskListName());
+                    }
                     return null;
                 }
             });
@@ -73,7 +77,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
             private static final long serialVersionUID = 1L;
 
             public FormLayoutFactory() {
-                super(taskList.getTaskname());
+                super(task.getTaskname());
             }
 
             @Override
@@ -93,6 +97,6 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
     @Override
     public SimpleTask getItem() {
-        return taskList;
+        return task;
     }
 }

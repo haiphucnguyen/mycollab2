@@ -18,4 +18,11 @@ public class TaskListEvent {
             super(source, data);
         }
     }
+    
+    public static class GotoTaskListScreen extends ApplicationEvent {
+
+        public GotoTaskListScreen(Object source, Object data) {
+            super(source, data);
+        }
+    }
 }

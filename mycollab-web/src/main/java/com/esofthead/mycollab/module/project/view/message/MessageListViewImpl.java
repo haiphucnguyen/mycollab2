@@ -154,7 +154,7 @@ public class MessageListViewImpl extends AbstractView implements
 
             final RichTextArea ckEditorTextField = new RichTextArea();
             final AttachmentPanel attachments = new AttachmentPanel();
-
+            final TextField titleField = new TextField();
 
             HorizontalLayout controls = new HorizontalLayout();
             controls.setSpacing(true);
@@ -196,11 +196,11 @@ public class MessageListViewImpl extends AbstractView implements
             controls.addComponent(cancelBtn);
 
             this.addComponent(controls);
-            
+
             HorizontalLayout titleLayout = new HorizontalLayout();
             titleLayout.setSpacing(true);
             Label titleLbl = new Label("Title: ");
-            final TextField titleField = new TextField();
+
             titleField.setWidth("600px");
             titleLayout.addComponent(titleLbl);
             titleLayout.addComponent(titleField);

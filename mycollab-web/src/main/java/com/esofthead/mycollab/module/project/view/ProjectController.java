@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
@@ -40,6 +41,7 @@ public class ProjectController {
         bindRiskEvents();
         bindProblemEvents();
         bindTaskListEvents();
+        bindTaskEvents();
         bindBugEvents();
         bindMessageEvents();
         bindMilestoneEvents();
@@ -63,7 +65,7 @@ public class ProjectController {
                         projectView.gotoMyProjectList(data);
                     }
                 });
-        
+
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<ProjectEvent.GotoEdit>() {
                     @Override
@@ -75,7 +77,7 @@ public class ProjectController {
                     public void handle(ProjectEvent.GotoEdit event) {
                         ProjectView projectView = ViewManager
                                 .getView(ProjectView.class);
-                        
+
                         SimpleProject project = (SimpleProject) event.getData();
                         AppContext.putVariable(ProjectContants.PROJECT_NAME,
                                 project);
@@ -121,6 +123,25 @@ public class ProjectController {
                     }
                 });
 
+
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<TaskListEvent.GotoTaskListScreen>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return TaskListEvent.GotoTaskListScreen.class;
+                    }
+
+                    @Override
+                    public void handle(TaskListEvent.GotoTaskListScreen event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        projectView.gotoTaskList(null);
+                    }
+                });
+
+    }
+
+    private void bindTaskEvents() {
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<TaskEvent.GotoRead>() {
                     @Override
@@ -134,6 +155,40 @@ public class ProjectController {
                                 .getView(ProjectView.class);
                         TaskContainer.PreviewTaskData data = new TaskContainer.PreviewTaskData(
                                 (Integer) event.getData());
+                        projectView.gotoTaskList(data);
+                    }
+                });
+        
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<TaskEvent.GotoAdd>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return TaskEvent.GotoAdd.class;
+                    }
+
+                    @Override
+                    public void handle(TaskEvent.GotoAdd event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        TaskContainer.EditTaskData data = new TaskContainer.EditTaskData(
+                                (Task) event.getData());
+                        projectView.gotoTaskList(data);
+                    }
+                });
+        
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<TaskEvent.GotoEdit>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return TaskEvent.GotoEdit.class;
+                    }
+
+                    @Override
+                    public void handle(TaskEvent.GotoEdit event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        TaskContainer.EditTaskData data = new TaskContainer.EditTaskData(
+                                (Task) event.getData());
                         projectView.gotoTaskList(data);
                     }
                 });
