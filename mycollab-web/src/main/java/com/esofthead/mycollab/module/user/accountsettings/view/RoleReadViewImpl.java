@@ -122,7 +122,7 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
             private String getValueFromPerPath(PermissionMap permissionMap, String permissionItem) {
                 Integer perVal = permissionMap.get(permissionItem);
                 if (perVal == null) {
-                    return "Undefined";
+                    return "No Access";
                 } else {
                     return PermissionFlag.toString(perVal);
                 }

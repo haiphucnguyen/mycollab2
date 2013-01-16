@@ -17,6 +17,15 @@ public class PermissionMap extends HashMap<String, Integer> {
         this.put(permissionItem, value);
     }
 
+    public Integer getPermissionFlag(String permissionItem) {
+        Object value = this.get(permissionItem);
+        if (value == null) {
+            return PermissionFlag.NO_ACCESS;
+        }
+
+        return (Integer) value;
+    }
+
     public boolean canRead(String permissionItem) {
         Object value = this.get(permissionItem);
         if (value == null) {
