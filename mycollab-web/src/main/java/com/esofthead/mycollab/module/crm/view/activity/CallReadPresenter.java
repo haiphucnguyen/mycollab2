@@ -110,7 +110,9 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 					.getParams());
 			if (call != null) {
                 view.previewItem(call);
+                System.out.println("not null");
             } else {
+            	System.out.println("is  null");
                 AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
                 return;
             }

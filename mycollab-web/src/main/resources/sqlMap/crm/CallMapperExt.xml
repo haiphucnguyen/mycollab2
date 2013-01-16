@@ -37,6 +37,9 @@
     </select>
     
     <sql id="querySearchCriteria">
+     	<if test="id != null">
+            <![CDATA[${id.operation} m_crm_call.id ${id.compareOperator} #{id.value,javaType=INTEGER}]]>
+        </if>
         <if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_call.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
         </if>
@@ -74,6 +77,26 @@
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1 <include
                 refid="com.esofthead.mycollab.module.crm.dao.CallMapperExt.querySearchCriteria" />
+        </trim>
+    </select>
+    
+    <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MIN(id) FROM m_crm_call
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.crm.dao.CallMapperExt.querySearchCriteria"/>
+        </trim>
+    </select>
+    
+    <select id="getPreviousItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MAX(id) FROM m_crm_call
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.crm.dao.CallMapperExt.querySearchCriteria"/>
         </trim>
     </select>
 
