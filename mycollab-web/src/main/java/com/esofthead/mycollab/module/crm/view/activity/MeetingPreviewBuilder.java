@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedReadItemField;
 import com.esofthead.mycollab.module.crm.view.account.AccountHistoryLogWindow;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
@@ -117,7 +118,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 	            meetingInformation = new VerticalLayout();
 	            meetingInformation.setMargin(true);
 	            Layout actionControls = new PreviewFormControlsGenerator<Meeting>(
-	                    previewForm).createButtonControls();
+	                    previewForm).createButtonControls(RolePermissionCollections.CRM_MEETING);
 	            meetingInformation.addComponent(actionControls);
 	            meetingInformation.addComponent(previewForm);
 	            

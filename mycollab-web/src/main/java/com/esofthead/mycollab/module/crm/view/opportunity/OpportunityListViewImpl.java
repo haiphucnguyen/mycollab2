@@ -4,6 +4,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
@@ -16,7 +17,9 @@ import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -92,8 +95,11 @@ public class OpportunityListViewImpl extends AbstractView implements
 
         selectOptionButton = new SelectionOptionButton(tableItem);
         layout.addComponent(selectOptionButton);
+        
+        Button deleteBtn = new Button("Delete");
+        deleteBtn.setEnabled(AppContext.canAccess(RolePermissionCollections.CRM_OPPORTUNITY));
 
-        tableActionControls = new PopupButtonControl("delete", "Delete");
+        tableActionControls = new PopupButtonControl("delete", deleteBtn);
         tableActionControls.addOptionItem("mail", "Mail");
         tableActionControls.addOptionItem("export", "Export");
         tableActionControls.setVisible(false);

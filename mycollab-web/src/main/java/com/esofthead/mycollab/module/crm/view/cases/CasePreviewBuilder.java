@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.account.AccountFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.account.AccountHistoryLogWindow;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
@@ -167,7 +168,7 @@ public class CasePreviewBuilder extends VerticalLayout {
 
             accountInformation = new VerticalLayout();
             Layout actionControls = new PreviewFormControlsGenerator<Case>(
-                    previewForm).createButtonControls();
+                    previewForm).createButtonControls(RolePermissionCollections.CRM_CASE);
             accountInformation.addComponent(actionControls);
             accountInformation.addComponent(previewForm);
             accountInformation.addComponent(noteListItems);
