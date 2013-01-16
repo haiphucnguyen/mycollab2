@@ -63,6 +63,8 @@ public class ShellController implements Serializable {
                         } else {
                             log.debug("Do nothing. The main view parent is " + mainView.getParent() + " --- " + container);
                         }
+                        
+                        mainViewPresenter.go(container, null);
                     }
                 });
 
