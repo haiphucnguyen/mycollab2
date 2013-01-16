@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
@@ -215,7 +216,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
             accountInformation = new VerticalLayout();
             accountInformation.setMargin(true);
             Layout actionControls = new PreviewFormControlsGenerator<Account>(
-                    previewForm).createButtonControls();
+                    previewForm).createButtonControls(RolePermissionCollections.CRM_ACCOUNT);
             accountInformation.addComponent(actionControls);
             accountInformation.addComponent(previewForm);
             accountInformation.addComponent(noteListItems);

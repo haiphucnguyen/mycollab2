@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.Role;
+import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.view.component.PermissionComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -93,12 +94,22 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
                 organizationHeader.setStyleName("h2");
                 permissionsPanel.addComponent(organizationHeader);
                 
+                PermissionMap perMap;
+                if (role instanceof SimpleRole) {
+                    perMap = ((SimpleRole)role).getPermissionMap();
+                } else {
+                    perMap = new PermissionMap();
+                }
+                
                 GridFormLayoutHelper crmFormHelper = new GridFormLayoutHelper(2, RolePermissionCollections.CRM_PERMISSIONS_ARR.length);
                 Depot crmHeader = new Depot("Customer Relationship Management", crmFormHelper.getLayout());
                 
                 for (int i = 0; i < RolePermissionCollections.CRM_PERMISSIONS_ARR.length; i++) {
                     String permissionPath = RolePermissionCollections.CRM_PERMISSIONS_ARR[i];
                     PermissionComboBox permissionBox = new PermissionComboBox();
+                    
+                    Integer flag = perMap.getPermissionFlag(permissionPath);
+                    permissionBox.setValue(flag);
                     permissionControlsMap.put(permissionPath, permissionBox);
                     crmFormHelper.addComponent(permissionBox, permissionPath, 0, i);
                 }
@@ -111,6 +122,8 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
                 for (int i = 0; i < RolePermissionCollections.USER_PERMISSION_ARR.length; i++) {
                     String permissionPath = RolePermissionCollections.USER_PERMISSION_ARR[i];
                     PermissionComboBox permissionBox = new PermissionComboBox();
+                    Integer flag = perMap.getPermissionFlag(permissionPath);
+                    permissionBox.setValue(flag);
                     permissionControlsMap.put(permissionPath, permissionBox);
                     userFormHelper.addComponent(permissionBox, permissionPath, 0, i);
                 }

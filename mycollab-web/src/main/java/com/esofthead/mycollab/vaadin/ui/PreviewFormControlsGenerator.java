@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -14,8 +15,12 @@ public class PreviewFormControlsGenerator<T> {
     public PreviewFormControlsGenerator(AdvancedPreviewBeanForm<T> editForm) {
         this.previewForm = editForm;
     }
-
+    
     public HorizontalLayout createButtonControls() {
+        return createButtonControls(null);
+    }
+
+    public HorizontalLayout createButtonControls(String permissionItem) {
         HorizontalLayout layout = new HorizontalLayout();
         layout.setSpacing(true);
         layout.setStyleName("addNewControl");
@@ -146,6 +151,19 @@ public class PreviewFormControlsGenerator<T> {
         printBtn.setDescription("Print this page");
         layout.addComponent(printBtn);
         layout.setComponentAlignment(printBtn, Alignment.MIDDLE_RIGHT);
+        
+        if (permissionItem != null) {
+            boolean canRead = AppContext.canRead(permissionItem);
+            boolean canWrite = AppContext.canWrite(permissionItem);
+            boolean canAccess = AppContext.canAccess(permissionItem);
+            
+            backBtn.setEnabled(canRead);
+            editBtn.setEnabled(canWrite);
+            cloneBtn.setEnabled(canWrite);
+            deleteBtn.setEnabled(canAccess);
+            printBtn.setEnabled(canRead);
+            historyBtn.setEnabled(canRead);
+        }
         return layout;
     }
 }

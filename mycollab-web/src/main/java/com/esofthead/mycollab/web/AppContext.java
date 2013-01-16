@@ -135,6 +135,10 @@ public class AppContext implements TransactionListener, Serializable {
 		return springContext.getBean(requiredType);
 	}
 
+	private static boolean isAdmin() {
+		return instance.get().session.getIsadmin();
+	}
+
 	public static boolean canRead(String permissionItem) {
 		if (isAdmin()) {
 			return true;
@@ -142,17 +146,11 @@ public class AppContext implements TransactionListener, Serializable {
 
 		PermissionMap permissionMap = instance.get().session
 				.getPermissionMaps();
-		System.out.println("PERMAP : " + permissionMap);
 		if (permissionMap == null) {
 			return false;
 		} else {
 			return permissionMap.canRead(permissionItem);
 		}
-	}
-
-	private static boolean isAdmin() {
-		Boolean isAdmin = instance.get().session.getIsadmin();
-		return (isAdmin != null && isAdmin == Boolean.TRUE);
 	}
 
 	public static boolean canWrite(String permissionItem) {

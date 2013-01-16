@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableDisplay;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -54,6 +55,7 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
         contentContainer.setSpacing(true);
 
         final SplitButton controlsBtn = new SplitButton();
+        controlsBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CONTACT));
         controlsBtn.addStyleName(SplitButton.STYLE_CHAMELEON);
         controlsBtn.setCaption("New Contact");
         controlsBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
