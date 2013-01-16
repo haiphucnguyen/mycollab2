@@ -8,9 +8,9 @@ package com.esofthead.mycollab.module.project.domain;
  *
  * @author haiphucnguyen
  */
-public class SimpleTaskList extends TaskList{
+public class SimpleTaskList extends TaskList {
+
     private String milestoneName;
-    
     private String ownerFullName;
 
     public String getMilestoneName() {

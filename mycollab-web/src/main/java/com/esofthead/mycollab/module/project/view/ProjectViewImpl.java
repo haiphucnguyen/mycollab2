@@ -26,6 +26,7 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
@@ -272,7 +273,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         topPanel.addComponent(projectControls);
 
         SplitButton controlsBtn = new SplitButton();
-        controlsBtn.addStyleName(SplitButton.STYLE_CHAMELEON);
+        controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
         controlsBtn.setCaption("Edit Project");
         controlsBtn.setIcon(new ThemeResource("icons/16/edit.png"));
         controlsBtn

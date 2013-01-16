@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.Task;
+import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
@@ -122,6 +123,40 @@ public class ProjectController {
                         projectView.gotoTaskList(data);
                     }
                 });
+        
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<TaskListEvent.GotoEdit>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return TaskListEvent.GotoEdit.class;
+                    }
+
+                    @Override
+                    public void handle(TaskListEvent.GotoEdit event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        TaskContainer.EditTaskListData data = new TaskContainer.EditTaskListData(
+                                (TaskList) event.getData());
+                        projectView.gotoTaskList(data);
+                    }
+                });
+        
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<TaskListEvent.GotoAdd>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return TaskListEvent.GotoAdd.class;
+                    }
+
+                    @Override
+                    public void handle(TaskListEvent.GotoAdd event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        TaskContainer.AddTaskListData data = new TaskContainer.AddTaskListData(
+                                new TaskList());
+                        projectView.gotoTaskList(data);
+                    }
+                });
 
 
         EventBus.getInstance().addListener(
@@ -170,8 +205,8 @@ public class ProjectController {
                     public void handle(TaskEvent.GotoAdd event) {
                         ProjectView projectView = ViewManager
                                 .getView(ProjectView.class);
-                        TaskContainer.EditTaskData data = new TaskContainer.EditTaskData(
-                                (Task) event.getData());
+                        TaskContainer.AddTaskData data = new TaskContainer.AddTaskData(
+                                new Task());
                         projectView.gotoTaskList(data);
                     }
                 });

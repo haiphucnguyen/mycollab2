@@ -4,7 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
@@ -75,6 +74,5 @@ public class TaskAddPresenter extends AbstractPresenter<TaskAddView> {
         } else {
             taskService.updateWithSession(item, AppContext.getUsername());
         }
-
     }
 }

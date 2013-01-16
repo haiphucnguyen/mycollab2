@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.project.domain.Task;
+import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -20,6 +21,20 @@ public class TaskContainer extends AbstractView {
 
         public PreviewTaskListData(Integer taskListId) {
             super(taskListId);
+        }
+    }
+    
+    public static class EditTaskListData extends ScreenData.Edit<TaskList> {
+
+        public EditTaskListData(TaskList taskList) {
+            super(taskList);
+        }
+    }
+
+    public static class AddTaskListData extends ScreenData.Add<TaskList> {
+
+        public AddTaskListData(TaskList taskList) {
+            super(taskList);
         }
     }
 

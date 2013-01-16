@@ -19,6 +19,20 @@ public class TaskListEvent {
         }
     }
     
+    public static class GotoEdit extends ApplicationEvent {
+
+        public GotoEdit(Object source, Object data) {
+            super(source, data);
+        }
+    }
+    
+    public static class GotoAdd extends ApplicationEvent {
+
+        public GotoAdd(Object source, Object data) {
+            super(source, data);
+        }
+    }
+    
     public static class GotoTaskListScreen extends ApplicationEvent {
 
         public GotoTaskListScreen(Object source, Object data) {

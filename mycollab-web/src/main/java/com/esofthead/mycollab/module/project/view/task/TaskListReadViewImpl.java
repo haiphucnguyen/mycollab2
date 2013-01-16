@@ -6,6 +6,8 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
+import com.esofthead.mycollab.module.project.events.MilestoneEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -15,6 +17,8 @@ import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
@@ -61,7 +65,14 @@ public class TaskListReadViewImpl extends AbstractView implements TaskListReadVi
                 @Override
                 protected Field onCreateField(Item item, Object propertyId,
                         Component uiContext) {
-                    
+                    if (propertyId.equals("milestoneid")) {
+                        return new FormLinkViewField(taskList.getMilestoneName(), new Button.ClickListener() {
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                EventBus.getInstance().fireEvent(new MilestoneEvent.GotoRead(this, taskList.getMilestoneid()));
+                            }
+                        });
+                    }
 
                     return null;
                 }
@@ -91,8 +102,9 @@ public class TaskListReadViewImpl extends AbstractView implements TaskListReadVi
             }
         }
     }
-    
+
     private class TaskDepot extends Depot {
+
         public TaskDepot() {
             super("Tasks", new TaskDisplayComponent(taskList));
         }

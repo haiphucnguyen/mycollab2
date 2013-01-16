@@ -4,10 +4,16 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.module.project.domain.TaskList;
+import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
+import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
+
 /**
  *
  * @author haiphucnguyen
  */
-public interface TaskListAddView {
+public interface TaskListAddView extends IFormAddView<TaskList> {
+
+    HasEditFormHandlers<TaskList> getEditFormHandlers();
     
 }
