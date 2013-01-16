@@ -70,6 +70,8 @@ input:focus, textarea:focus {
     color: #FFFFFF !important;
     box-shadow:inset 0px 1px 0px 0px #97c4fe;
     text-shadow:1px 1px 0px #1570cd;
+    border-radius: 20px;
+    margin-right: 4px;
 }
 
 .v-button-bluebtn .v-button-wrap {
@@ -650,6 +652,13 @@ input.v-textfield-errorField {
 
 .accountViewContainer .v-nativebutton-tab-selected .v-nativebutton-caption, .accountViewContainer .tab-selected .v-nativebutton-caption {
 	background: #287ECE;
+	font-weight: bold;
+}
+
+.accountViewContainer .addViewLayout {
+	background: none;
+	box-shadow: none;
+	border: none;
 }
 
 /* End Account Settings */
@@ -723,6 +732,7 @@ input.v-textfield-errorField {
 
 .projectDashboardView .v-nativebutton-tab-selected .v-nativebutton-caption, .projectDashboardView .tab-selected .v-nativebutton-caption {
 	background: #287ECE;
+	font-weight: bold;
 }
 
 .projectDashboardView .v-label-h2, .v-label h2 {
@@ -1173,3 +1183,95 @@ white-space: normal;
 	border: none;
 }
 /* End Activity Stream Channel */
+
+/* Round border button */
+.v-button.v-button-round-border
+{
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fcfcfc), color-stop(1, #dcdcdc) );
+	background:-moz-linear-gradient( center top, #fcfcfc 5%, #dcdcdc 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfcfc', endColorstr='#dcdcdc');
+	background-image: -ms-linear-gradient(top,#fcfcfc,#dcdcdc);
+	background-image: -o-linear-gradient(top,#fcfcfc,#dcdcdc);
+	background-image: linear-gradient(top,#fcfcfc,#dcdcdc);
+	background-color:#fcfcfc;
+	-moz-border-radius:20px;
+	-webkit-border-radius:20px;
+	border-radius:20px;
+	border:1px solid rgb(143,143,143);
+	display:inline-block;
+	color: rgb(34,34,34);
+	font-family:arial;
+	font-size:13px;
+	font-weight:bold;
+	padding:2px 10px;
+	text-decoration:none;
+	text-shadow:1px 1px 0px #ffffff;
+/* 	margin: 4px; */
+}
+.v-button.v-button-round-border .v-button-wrap, .v-button.v-button-round-border:active .v-button-wrap {
+	border: none;
+	background: none;
+	padding: 2px 10px;
+}
+.v-button.v-button-round-border:hover {
+/* 	border: none; */
+/* 	-moz-box-shadow: 0px 0px 3px 3px rgb(10,88,205); */
+/* 	-webkit-box-shadow: 0px 0px 3px 3px rgb(10,88,205); */
+/* 	box-shadow: 0px 0px 3px 3px rgb(10,88,205); */
+	color: rgb(10, 88, 205);
+}
+/* End round border button */
+
+/* Split button */
+.v-splitbutton-esofthead .v-button-esofthead {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fcfcfc), color-stop(1, #dcdcdc) );
+	background:-moz-linear-gradient( center top, #fcfcfc 5%, #dcdcdc 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfcfc', endColorstr='#dcdcdc');
+	background-image: -ms-linear-gradient(top,#fcfcfc,#dcdcdc);
+	background-image: -o-linear-gradient(top,#fcfcfc,#dcdcdc);
+	background-image: linear-gradient(top,#fcfcfc,#dcdcdc);
+	border-radius: 25px 0px 0px 25px;
+	border-right: none;
+}
+.v-splitbutton-esofthead .v-button-esofthead:active {
+	background: none no-repeat 0 0 rgb(161,161,161);
+	border-color: rgb(171,171,171);
+}
+.v-splitbutton-esofthead .v-button.v-button-esofthead .v-button-wrap {
+	padding-right: 6px;
+	padding-left: 15px;
+}
+.v-splitbutton-esofthead .v-button.v-button-esofthead:active .v-button-wrap {
+	border: none;
+	padding: 4px 6px 4px 15px;
+}
+.v-splitbutton-esofthead .v-button-esofthead.v-popupbutton {
+	border-right:1px solid rgb(171,171,171);
+	border-radius: 0px 25px 25px 0px;
+}
+.v-splitbutton-esofthead .v-button-esofthead.v-popupbutton:focus {
+	border-left-color: rgb(171,171,171);
+}
+.v-splitbutton-esofthead .v-button.v-button-esofthead.v-popupbutton .v-button-wrap, .v-splitbutton-esofthead .v-button.v-button-esofthead.v-popupbutton:active .v-button-wrap {
+	padding: 4px 8px 4px 2px;
+}
+/* End Split button*/
+
+/* New Table Header */
+.v-table-header-wrap {
+	background: -moz-linear-gradient(center top , rgb(57, 71, 84) 5%, rgb(31, 40, 50) 100%) repeat scroll 0% 0% transparent;
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #394754), color-stop(1, #1f2832) );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#394754', endColorstr='#1f2832');
+	background-image: -ms-linear-gradient(top,#394754,#1f2832);
+	background-image: -o-linear-gradient(top,#394754,#1f2832);
+	background-image: linear-gradient(top,#394754,#1f2832);
+	border-radius: 3px 3px 0px 0px;
+}
+.v-table-header-wrap .v-table-caption-container {
+	text-shadow: none;
+	color: white;
+	font-weight: bold;
+	font-size: 11px;
+	cursor: pointer;
+}
+/* End New Table Header */

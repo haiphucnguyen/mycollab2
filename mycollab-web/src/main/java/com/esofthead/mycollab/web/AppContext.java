@@ -25,10 +25,10 @@ public class AppContext implements TransactionListener, Serializable {
     private static int UPDATE_TIME_DURATION = 300000;
     private static Logger log = LoggerFactory.getLogger(AppContext.class);
     private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
-    private Application app;
+    private final Application app;
     private SimpleUser session;
     private UserPreference userPreference;
-    private Map<String, Object> variables = new HashMap<String, Object>();
+    private final Map<String, Object> variables = new HashMap<String, Object>();
     private long lastAccessTime = 0;
 
     public AppContext(Application application) {
@@ -56,18 +56,23 @@ public class AppContext implements TransactionListener, Serializable {
         long currentTime = new GregorianCalendar().getTimeInMillis();
         if (currentTime - lastAccessTime > UPDATE_TIME_DURATION) {
             try {
-                if (instance.get() != null && instance.get().userPreference != null) {
+                if (instance.get() != null
+                        && instance.get().userPreference != null) {
                     UserPreference pref = instance.get().userPreference;
-                    UserPreferenceService prefService = AppContext.getSpringBean(UserPreferenceService.class);
+                    UserPreferenceService prefService = AppContext
+                            .getSpringBean(UserPreferenceService.class);
                     pref.setLastaccessedtime(new GregorianCalendar().getTime());
-                    prefService.updateWithSession(pref, AppContext.getUsername());
+                    prefService.updateWithSession(pref,
+                            AppContext.getUsername());
 
                     lastAccessTime = currentTime;
-                    log.debug("Update last access time of user " + AppContext.getUsername());
+                    log.debug("Update last access time of user "
+                            + AppContext.getUsername());
                 }
 
             } catch (Exception e) {
-                log.error("There is error when try to update user preference", e);
+                log.error("There is error when try to update user preference",
+                        e);
             }
         }
 
@@ -80,15 +85,19 @@ public class AppContext implements TransactionListener, Serializable {
     public static void updateLastModuleVisit(String moduleName) {
         try {
             UserPreference pref = instance.get().userPreference;
-            UserPreferenceService prefService = AppContext.getSpringBean(UserPreferenceService.class);
+            UserPreferenceService prefService = AppContext
+                    .getSpringBean(UserPreferenceService.class);
             pref.setLastmodulevisit(moduleName);
             prefService.updateWithSession(pref, AppContext.getUsername());
         } catch (Exception e) {
-            log.error("There is error when try to update user preference for last module visit", e);
+            log.error(
+                    "There is error when try to update user preference for last module visit",
+                    e);
         }
     }
 
-    public static void setSession(SimpleUser userSession, UserPreference userPreference) {
+    public static void setSession(SimpleUser userSession,
+            UserPreference userPreference) {
         instance.get().session = userSession;
         instance.get().userPreference = userPreference;
     }
@@ -133,7 +142,8 @@ public class AppContext implements TransactionListener, Serializable {
             return true;
         }
 
-        PermissionMap permissionMap = instance.get().session.getPermissionMaps();
+        PermissionMap permissionMap = instance.get().session
+                .getPermissionMaps();
         if (permissionMap == null) {
             return false;
         } else {
@@ -145,7 +155,8 @@ public class AppContext implements TransactionListener, Serializable {
         if (isAdmin()) {
             return true;
         }
-        PermissionMap permissionMap = instance.get().session.getPermissionMaps();
+        PermissionMap permissionMap = instance.get().session
+                .getPermissionMaps();
         if (permissionMap == null) {
             return false;
         } else {
@@ -157,7 +168,8 @@ public class AppContext implements TransactionListener, Serializable {
         if (isAdmin()) {
             return true;
         }
-        PermissionMap permissionMap = instance.get().session.getPermissionMaps();
+        PermissionMap permissionMap = instance.get().session
+                .getPermissionMaps();
         if (permissionMap == null) {
             return false;
         } else {
@@ -199,7 +211,8 @@ public class AppContext implements TransactionListener, Serializable {
             "MM/dd/yyyy hh:mm a");
     private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
             "MM/dd/yyyy");
-    private static SimpleDateFormat df = new SimpleDateFormat("EEE MMM dd, hh:mm aa");
+    private static SimpleDateFormat df = new SimpleDateFormat(
+            "EEE MMM dd, hh:mm aa");
 
     public static String formatDateTime(Date date) {
         if (date == null) {

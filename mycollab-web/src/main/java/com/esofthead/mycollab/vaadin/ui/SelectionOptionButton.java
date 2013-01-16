@@ -1,5 +1,10 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.util.HashSet;
+import java.util.Set;
+
+import org.vaadin.hene.splitbutton.SplitButton;
+
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
@@ -8,9 +13,6 @@ import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
-import java.util.HashSet;
-import java.util.Set;
-import org.vaadin.hene.splitbutton.SplitButton;
 
 public class SelectionOptionButton extends SplitButton implements
 		HasSelectionOptionHandlers {
@@ -19,22 +21,22 @@ public class SelectionOptionButton extends SplitButton implements
 	private boolean isSelectAll = false;
 	private boolean isSelected = false;
 	@SuppressWarnings("rawtypes")
-	private HasSelectableItemHandlers selectableItemHandlers;
+	private final HasSelectableItemHandlers selectableItemHandlers;
 	private static Resource selectIcon = new ThemeResource(
 			"icons/16/checkbox.png");
 	private static Resource unSelectIcon = new ThemeResource(
 			"icons/16/checkbox_empty.png");
 	private Set<SelectionOptionHandler> handlers;
-	private Button selectAllBtn;
-	private Button selectThisPageBtn;
-	private Button deSelectBtn;
+	private final Button selectAllBtn;
+	private final Button selectThisPageBtn;
+	private final Button deSelectBtn;
 
 	@SuppressWarnings("serial")
 	public SelectionOptionButton(
 			@SuppressWarnings("rawtypes") HasSelectableItemHandlers selectableItemHandlers) {
 		super();
 		this.selectableItemHandlers = selectableItemHandlers;
-		this.addStyleName(SplitButton.STYLE_CHAMELEON);
+		this.addStyleName("esofthead");
 		this.setIcon(unSelectIcon);
 
 		this.addClickListener(new SplitButtonClickListener() {
