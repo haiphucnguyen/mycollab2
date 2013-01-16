@@ -110,7 +110,7 @@ public class CampaignSearchPanel extends
 					Alignment.MIDDLE_CENTER);
 			
 			Button searchBtn = new Button("Search");
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 
 			searchBtn.addListener(new Button.ClickListener() {
 				@Override
@@ -140,8 +140,8 @@ public class CampaignSearchPanel extends
 			});
 			layout.addComponent(searchBtn);
 
-			Button cancelBtn = new Button("Cancel");
-			cancelBtn.setStyleName("bluebtn");
+			Button cancelBtn = new Button("Clear");
+			cancelBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			cancelBtn.addListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(ClickEvent event) {
@@ -275,7 +275,7 @@ public class CampaignSearchPanel extends
 			});
 
 			buttonControls.addComponent(searchBtn);
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 
 			Button clearBtn = new Button("Clear", new Button.ClickListener() {
 				@Override
@@ -288,7 +288,7 @@ public class CampaignSearchPanel extends
 					assignUserField.setValue(null);
 				}
 			});
-			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			buttonControls.addComponent(clearBtn);
 
 			Button basicSearchBtn = new Button("Basic Search",
