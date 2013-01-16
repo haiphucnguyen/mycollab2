@@ -22,15 +22,12 @@ import java.util.Date;
 public class SimpleUser extends User {
 
     private static final long serialVersionUID = 1L;
-    
     public static final String ACTIVE_STATUS = "active";
     public static final String INACTION_STATUS = "inactive";
     public static final String PENDING_STATUS = "pending";
-    
     public static final int ADMIN_VAL = 1;
-    
     private Date lastAccessedTime;
-    
+    private String roleName;
     private PermissionMap permissionMaps;
 
     public Date getLastAccessedTime() {
@@ -51,5 +48,13 @@ public class SimpleUser extends User {
 
     public void setPermissionMaps(PermissionMap permissionMaps) {
         this.permissionMaps = permissionMaps;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

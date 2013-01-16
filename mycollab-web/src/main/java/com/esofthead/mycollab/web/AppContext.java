@@ -4,7 +4,6 @@ import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.Application;

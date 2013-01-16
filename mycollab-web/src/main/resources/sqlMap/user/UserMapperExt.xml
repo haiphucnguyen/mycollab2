@@ -6,6 +6,7 @@
     <resultMap extends="com.esofthead.mycollab.module.user.dao.UserMapper.BaseResultMap"
                    id="SimpleUserResult" type="com.esofthead.mycollab.module.user.domain.SimpleUser">
         <result column="displayName" jdbcType="VARCHAR" property="displayName" />
+        <result column="roleName" jdbcType="VARCHAR" property="roleName" />
         <result column="lastAccessedTime" jdbcType="TIMESTAMP" property="lastAccessedTime"/>
     </resultMap>
 
@@ -38,10 +39,11 @@
         <![CDATA[
         SELECT s_user.username, s_user.firstname, s_user.lastname, s_user.nickname, s_user.dateofbirth, s_user.password, s_user.email, 
                 s_user.website, s_user.registeredTime, s_user.accountId, s_user.countryid, s_user.company, s_user.roleid,
-                s_user_preference.lastAccessedTime,
+                s_user_preference.lastAccessedTime, s_roles.rolename AS roleName,
                 s_user.timezoneid, s_user.registrationSource, s_user.isAdmin, s_user.registerStatus, s_country.countryname as country 
         FROM s_user LEFT OUTER JOIN s_country ON (s_user.countryid=s_country.id)   
                 LEFT OUTER JOIN s_user_preference ON (s_user.username = s_user_preference.username)
+                LEFT OUTER JOIN s_roles ON (s_roles.id = s_user.roleid)
         ]]>
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1 
