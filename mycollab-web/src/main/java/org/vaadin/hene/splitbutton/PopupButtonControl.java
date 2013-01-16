@@ -1,13 +1,13 @@
-package com.esofthead.mycollab.vaadin.ui;
+package org.vaadin.hene.splitbutton;
 
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 import java.util.HashSet;
 import java.util.Set;
-import org.vaadin.hene.splitbutton.SplitButton;
 
 public class PopupButtonControl extends SplitButton implements HasPopupActionHandlers {
 
@@ -15,17 +15,30 @@ public class PopupButtonControl extends SplitButton implements HasPopupActionHan
     private VerticalLayout selectContent;
     private Set<PopupActionHandler> handlers;
 
+    public PopupButtonControl(final String id, final Button button) {
+        super(button, new SplitButton.PopupButton());
+
+        this.addStyleName(SplitButton.STYLE_CHAMELEON);
+
+        initPopupButton(id, button.getCaption());
+    }
+
     public PopupButtonControl(final String id, final String defaultName) {
         super();
-        this.addStyleName(SplitButton.STYLE_CHAMELEON);
         this.setCaption(defaultName);
-        this.setData(id);
 
-        this.addClickListener(new SplitButtonClickListener() {
+        initPopupButton(id, defaultName);
+    }
+
+    private void initPopupButton(final String id, final String defaultName) {
+        this.setData(id);
+        this.addStyleName(SplitButton.STYLE_CHAMELEON);
+
+        this.addClickListener(new SplitButton.SplitButtonClickListener() {
             private static final long serialVersionUID = 1L;
 
             @Override
-            public void splitButtonClick(SplitButtonClickEvent event) {
+            public void splitButtonClick(SplitButton.SplitButtonClickEvent event) {
                 changeOption(id, defaultName);
                 PopupButtonControl.this.setPopupVisible(false);
             }
@@ -37,7 +50,11 @@ public class PopupButtonControl extends SplitButton implements HasPopupActionHan
     }
 
     public void addOptionItem(final String id, final String name) {
-        ButtonLink selectAllBtn = new ButtonLink(name,
+        this.addOptionItem(id, name, true);
+    }
+    
+    public void addOptionItem(final String id, final String name, boolean isEnable) {
+        ButtonLink optionBtn = new ButtonLink(name,
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
@@ -47,7 +64,8 @@ public class PopupButtonControl extends SplitButton implements HasPopupActionHan
                         PopupButtonControl.this.setPopupVisible(false);
                     }
                 });
-        selectContent.addComponent(selectAllBtn);
+        optionBtn.setEnabled(isEnable);
+        selectContent.addComponent(optionBtn);
     }
 
     private void changeOption(String id, String caption) {
