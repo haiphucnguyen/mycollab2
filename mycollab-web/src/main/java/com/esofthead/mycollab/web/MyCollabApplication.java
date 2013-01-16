@@ -2,7 +2,6 @@ package com.esofthead.mycollab.web;
 
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.Application;
 import com.vaadin.ui.Window.Notification;
@@ -24,7 +23,7 @@ public class MyCollabApplication extends Application {
     public void init() {
         setTheme("mycollab");
         AppContext sessionData = new AppContext(this);
-        this.setMainWindow(ViewManager.getView(MainWindowContainer.class));
+        this.setMainWindow(new MainWindowContainer());
 
         // Register it as a listener in the application context
         this.getContext().addTransactionListener(sessionData);
@@ -34,11 +33,12 @@ public class MyCollabApplication extends Application {
     public void close() {
         super.close();
         log.debug("Application is closed. Clean all resources");
-        AppContext.clearAllVariables();
-        ViewManager.clearResources();
-        PresenterResolver.clearResources();
+        AppContext.clearSession();
         EventBus.getInstance().clear();
+        AppContext.clearAllVariables();
     }
+    
+    
 
     @Override
     public void terminalError(com.vaadin.terminal.Terminal.ErrorEvent event) {

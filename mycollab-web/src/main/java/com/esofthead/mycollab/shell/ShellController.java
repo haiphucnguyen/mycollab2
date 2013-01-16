@@ -7,6 +7,7 @@ import com.esofthead.mycollab.shell.events.ShellEvent.GotoMainPage;
 import com.esofthead.mycollab.shell.events.ShellEvent.LogOut;
 import com.esofthead.mycollab.shell.view.MainView;
 import com.esofthead.mycollab.shell.view.MainViewPresenter;
+import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -86,8 +87,10 @@ public class ShellController implements Serializable {
                         LoginView loginView = presenter.getView();
                         loginView.addComponent(cookies);
                         cookies.setCookie("loginInfo", "", expiryDate);
+                        
+                        AppContext.clearSession();
 
-                        ((Window) container).setContent(loginView.getWidget());
+                        ((MainWindowContainer) container).setDefaultView();
                     }
                 });
     }

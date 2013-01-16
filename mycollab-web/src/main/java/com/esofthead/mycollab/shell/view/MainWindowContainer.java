@@ -12,7 +12,6 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 import org.vaadin.browsercookies.BrowserCookies;
 
-@ViewComponent
 public class MainWindowContainer extends Window implements View {
 
     private static final long serialVersionUID = 1L;
@@ -23,6 +22,10 @@ public class MainWindowContainer extends Window implements View {
 
         controller = new ShellController(this);
 
+        setDefaultView();
+    }
+    
+    public final void setDefaultView() {
         final LoginPresenter presenter = PresenterResolver
                 .getPresenter(LoginPresenter.class);
         LoginView loginView = presenter.getView();
@@ -51,7 +54,6 @@ public class MainWindowContainer extends Window implements View {
 
             }
         });
-
         this.setContent(loginView.getWidget());
     }
 
