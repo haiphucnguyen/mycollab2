@@ -7,6 +7,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedReadItemField;
 import com.esofthead.mycollab.module.crm.view.account.AccountFormLayoutFactory;
 import com.esofthead.mycollab.module.crm.view.account.AccountHistoryLogWindow;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
@@ -154,7 +155,7 @@ public class CallPreviewBuilder extends VerticalLayout {
 
 			callInformation = new VerticalLayout();
 			Layout actionControls = new PreviewFormControlsGenerator<SimpleCall>(
-					previewForm).createButtonControls();
+					previewForm).createButtonControls(RolePermissionCollections.CRM_CALL);
 			callInformation.addComponent(actionControls);
 			callInformation.addComponent(previewForm);
 

@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriter
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -183,7 +184,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 
             accountInformation = new VerticalLayout();
             Layout actionControls = new PreviewFormControlsGenerator<Contact>(
-                    previewForm).createButtonControls();
+                    previewForm).createButtonControls(RolePermissionCollections.CRM_CONTACT);
             accountInformation.addComponent(actionControls);
             accountInformation.addComponent(previewForm);
             accountInformation.addComponent(noteListItems);

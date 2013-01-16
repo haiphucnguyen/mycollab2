@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
@@ -161,7 +162,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
             
             campaignInformationLayout = new VerticalLayout();
             Layout actionControls = new PreviewFormControlsGenerator<Campaign>(
-                    previewForm).createButtonControls();
+                    previewForm).createButtonControls(RolePermissionCollections.CRM_CAMPAIGN);
             campaignInformationLayout.addComponent(actionControls);
             campaignInformationLayout.addComponent(previewForm);
             campaignInformationLayout.addComponent(noteListItems);
