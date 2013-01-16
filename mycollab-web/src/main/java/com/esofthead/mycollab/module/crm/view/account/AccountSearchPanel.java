@@ -124,7 +124,7 @@ public class AccountSearchPanel extends
 
 			basicSearchBody.addComponent(searchBtn);
 
-			Button cancelBtn = new Button("Cancel");
+			Button cancelBtn = new Button("Clear");
 			cancelBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			cancelBtn.addListener(new Button.ClickListener() {
 				@Override

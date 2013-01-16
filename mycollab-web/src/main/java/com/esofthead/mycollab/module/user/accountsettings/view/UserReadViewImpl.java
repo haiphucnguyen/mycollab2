@@ -14,6 +14,8 @@ import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
@@ -61,7 +63,21 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
                 protected Field onCreateField(Item item, Object propertyId,
                         Component uiContext) {
 
+                    if (propertyId.equals("email")) {
+                        return new FormEmailLinkViewField(user.getEmail());
+                    } else if (propertyId.equals("isadmin")) {
+                        if (user.getIsadmin() != null && user.getIsadmin() == Boolean.TRUE) {
+                            return new FormViewField("True");
+                        } else {
+                            return new FormLinkViewField(user.getRoleName(), new Button.ClickListener() {
 
+                                @Override
+                                public void buttonClick(ClickEvent event) {
+                                    
+                                }
+                            });
+                        }
+                    }
                     return null;
                 }
             });

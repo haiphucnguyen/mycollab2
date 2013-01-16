@@ -112,7 +112,7 @@ public class OpportunitySearchPanel extends
 					Alignment.MIDDLE_CENTER);
 
 			Button searchBtn = new Button("Search");
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 
 			searchBtn.addListener(new Button.ClickListener() {
 				@Override
@@ -144,8 +144,8 @@ public class OpportunitySearchPanel extends
 			});
 			layout.addComponent(searchBtn);
 
-			Button cancelBtn = new Button("Cancel");
-			cancelBtn.setStyleName("bluebtn");
+			Button cancelBtn = new Button("Clear");
+			cancelBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			cancelBtn.addListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(ClickEvent event) {
@@ -280,7 +280,7 @@ public class OpportunitySearchPanel extends
 			});
 
 			buttonControls.addComponent(searchBtn);
-			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 
 			Button clearBtn = new Button("Clear", new Button.ClickListener() {
 				@Override
@@ -293,7 +293,7 @@ public class OpportunitySearchPanel extends
 					sourceField.setValue(null);
 				}
 			});
-			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			buttonControls.addComponent(clearBtn);
 
 			Button basicSearchBtn = new Button("Basic Search",
