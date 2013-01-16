@@ -52,6 +52,8 @@ public class TaskSearchCriteria extends SearchCriteria {
     private NumberSearchField saccountid;
     
     private StringSearchField status;
+    
+    private NumberSearchField id;
 
 	public StringSearchField getSubject() {
 		return subject;
@@ -171,5 +173,13 @@ public class TaskSearchCriteria extends SearchCriteria {
 
 	public void setStatus(StringSearchField status) {
 		this.status = status;
+	}
+
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
+
+	public NumberSearchField getId() {
+		return id;
 	}
 }

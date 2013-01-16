@@ -117,6 +117,7 @@ public class EventListViewImpl extends AbstractView implements EventListView {
     public void disableActionControls() {
         tableActionControls.setVisible(false);
         selectedItemsNumberLabel.setValue("");
+        selectOptionButton.setSelectedChecbox(false);
     }
 
     @Override
