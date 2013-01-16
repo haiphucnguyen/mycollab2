@@ -26,11 +26,9 @@ public class AppContext implements TransactionListener, Serializable {
     private static int UPDATE_TIME_DURATION = 300000;
     private static Logger log = LoggerFactory.getLogger(AppContext.class);
     private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
-    
     private Application app;
     private SimpleUser session;
     private UserPreference userPreference;
-    
     private Map<String, Object> variables = new HashMap<String, Object>();
     private long lastAccessTime = 0;
 
@@ -64,7 +62,7 @@ public class AppContext implements TransactionListener, Serializable {
                     UserPreferenceService prefService = AppContext.getSpringBean(UserPreferenceService.class);
                     pref.setLastaccessedtime(new GregorianCalendar().getTime());
                     prefService.updateWithSession(pref, AppContext.getUsername());
-                    
+
                     lastAccessTime = currentTime;
                     log.debug("Update last access time of user " + AppContext.getUsername());
                 }
@@ -73,7 +71,7 @@ public class AppContext implements TransactionListener, Serializable {
                 log.error("There is error when try to update user preference", e);
             }
         }
-        
+
         // Clear the reference to avoid potential problems
         if (this.app == application) {
             instance.set(null);
@@ -126,24 +124,25 @@ public class AppContext implements TransactionListener, Serializable {
 
         return springContext.getBean(requiredType);
     }
-    
+
     public static boolean canRead(String permissionItem) {
         if (isAdmin()) {
             return true;
         }
-        
+
         PermissionMap permissionMap = instance.get().session.getPermissionMaps();
+        System.out.println("PERMAP : " + permissionMap);
         if (permissionMap == null) {
             return false;
         } else {
             return permissionMap.canRead(permissionItem);
         }
     }
-    
+
     private static boolean isAdmin() {
         return instance.get().session.getIsadmin();
     }
-    
+
     public static boolean canWrite(String permissionItem) {
         if (isAdmin()) {
             return true;
@@ -155,7 +154,7 @@ public class AppContext implements TransactionListener, Serializable {
             return permissionMap.canWrite(permissionItem);
         }
     }
-    
+
     public static boolean canAccess(String permissionItem) {
         if (isAdmin()) {
             return true;
@@ -180,7 +179,13 @@ public class AppContext implements TransactionListener, Serializable {
         }
         return null;
     }
-    
+
+    public static void removeVariable(String key) {
+        if (instance.get() != null) {
+            instance.get().variables.remove(key);
+        }
+    }
+
     public static void clearSession() {
         ViewManager.clearResources();
         PresenterResolver.clearResources();
@@ -211,7 +216,7 @@ public class AppContext implements TransactionListener, Serializable {
         }
         return simpleDateFormat.format(date);
     }
-    
+
     public static String getDateFormat() {
         return "MM/dd/yyyy";
     }

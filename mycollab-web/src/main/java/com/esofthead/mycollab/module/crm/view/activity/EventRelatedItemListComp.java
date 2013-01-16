@@ -8,10 +8,12 @@ import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -46,6 +48,7 @@ public class EventRelatedItemListComp extends RelatedListComp<EventSearchCriteri
                 }
             });
             newTaskBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+            newTaskBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_TASK));
             buttonControls.addComponent(newTaskBtn);
 
             Button newCallBtn = new Button("New Call", new Button.ClickListener() {
@@ -55,6 +58,7 @@ public class EventRelatedItemListComp extends RelatedListComp<EventSearchCriteri
                 }
             });
             newCallBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+            newCallBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CALL));
             buttonControls.addComponent(newCallBtn);
 
             Button newMeetingBtn = new Button("New Meeting", new Button.ClickListener() {
@@ -64,6 +68,7 @@ public class EventRelatedItemListComp extends RelatedListComp<EventSearchCriteri
                 }
             });
             newMeetingBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+            newMeetingBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_MEETING));
             buttonControls.addComponent(newMeetingBtn);
 
             contentContainer.addComponent(buttonControls);

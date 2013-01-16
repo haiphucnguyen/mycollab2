@@ -33,6 +33,7 @@ public class PresenterResolver {
         Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>)AppContext.getVariable(PRESENTER_VAL);
         if (presenterMap != null) {
            presenterMap.clear(); 
+           AppContext.removeVariable(PRESENTER_VAL);
         }
     }
 }

@@ -13,7 +13,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
-import com.esofthead.mycollab.vaadin.ui.PopupButtonControl;
+import org.vaadin.hene.splitbutton.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;

@@ -106,6 +106,7 @@ class ViewManagerImpl extends ViewManager {
         Map<Class<?>, Object> viewMap = (Map<Class<?>, Object>)AppContext.getVariable(VIEW_MANAGER_VAL);
         if (viewMap != null) {
             viewMap.clear();
+            AppContext.removeVariable(VIEW_MANAGER_VAL);
         }
     }
 }

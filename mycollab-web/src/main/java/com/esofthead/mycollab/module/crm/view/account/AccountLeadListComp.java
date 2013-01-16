@@ -5,10 +5,12 @@ import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.lead.LeadTableDisplay;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -35,6 +37,7 @@ public class AccountLeadListComp extends RelatedListComp<LeadSearchCriteria> {
         controlsBtn.addStyleName(SplitButton.STYLE_CHAMELEON);
         controlsBtn.setCaption("New Lead");
         controlsBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+        controlsBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_LEAD));
         controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
             @Override
             public void splitButtonClick(SplitButton.SplitButtonClickEvent event) {

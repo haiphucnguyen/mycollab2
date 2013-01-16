@@ -27,8 +27,13 @@ public class SimpleRole extends Role {
 
     public PermissionMap getPermissionMap() {
         if (permissionMap == null) {
-            XStream xstream = new XStream(new StaxDriver());
-            permissionMap = (PermissionMap) xstream.fromXML(permissionVal);
+
+            if (permissionVal == null || "".equals(permissionVal)) {
+                permissionMap = new PermissionMap();
+            } else {
+                XStream xstream = new XStream(new StaxDriver());
+                permissionMap = (PermissionMap) xstream.fromXML(permissionVal);
+            }
         }
         return permissionMap;
     }

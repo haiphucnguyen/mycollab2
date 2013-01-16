@@ -77,7 +77,6 @@ public class ShellController implements Serializable {
 
                     @Override
                     public void handle(LogOut event) {
-                        System.out.println("Logged out");
                         Calendar cal = Calendar.getInstance();
                         cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) - 1);
                         Date expiryDate = cal.getTime();
@@ -90,7 +89,7 @@ public class ShellController implements Serializable {
                         
                         AppContext.clearSession();
 
-                        ((MainWindowContainer) container).setDefaultView();
+                        ((MainWindowContainer) container).setDefaultView(false);
                     }
                 });
     }
