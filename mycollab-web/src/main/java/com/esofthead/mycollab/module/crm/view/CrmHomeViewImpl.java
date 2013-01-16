@@ -15,57 +15,57 @@ import com.vaadin.ui.VerticalLayout;
 @ViewComponent
 public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
 
-	private final AccountListDashlet accountDashlet;
-	private final MeetingListDashlet meetingDashlet;
-	private final CallListDashlet callDashlet;
-	private final LeadListDashlet leadDashlet;
-	private final ActivityStreamPanel activityStreamPanel;
+    private final AccountListDashlet accountDashlet;
+    private final MeetingListDashlet meetingDashlet;
+    private final CallListDashlet callDashlet;
+    private final LeadListDashlet leadDashlet;
+    private final ActivityStreamPanel activityStreamPanel;
 
-	public CrmHomeViewImpl() {
-		this.setSpacing(true);
-		this.setMargin(false);
+    public CrmHomeViewImpl() {
+        this.setSpacing(true);
+        this.setMargin(false);
 
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
-		layout.setWidth("100%");
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setSpacing(true);
+        layout.setWidth("100%");
 
-		VerticalLayout myAssignmentsLayout = new VerticalLayout();
+        VerticalLayout myAssignmentsLayout = new VerticalLayout();
 
-		accountDashlet = new AccountListDashlet();
-		meetingDashlet = new MeetingListDashlet();
-		callDashlet = new CallListDashlet();
-		leadDashlet = new LeadListDashlet();
+        accountDashlet = new AccountListDashlet();
+        meetingDashlet = new MeetingListDashlet();
+        callDashlet = new CallListDashlet();
+        leadDashlet = new LeadListDashlet();
 
-		myAssignmentsLayout.addComponent(new LazyLoadWrapper(accountDashlet));
-		myAssignmentsLayout.addComponent(new LazyLoadWrapper(meetingDashlet));
-		myAssignmentsLayout.addComponent(new LazyLoadWrapper(callDashlet));
-		myAssignmentsLayout.addComponent(new LazyLoadWrapper(leadDashlet));
+        myAssignmentsLayout.addComponent(new LazyLoadWrapper(accountDashlet));
+        myAssignmentsLayout.addComponent(new LazyLoadWrapper(meetingDashlet));
+        myAssignmentsLayout.addComponent(new LazyLoadWrapper(callDashlet));
+        myAssignmentsLayout.addComponent(new LazyLoadWrapper(leadDashlet));
 
-		layout.addComponent(myAssignmentsLayout);
+        layout.addComponent(myAssignmentsLayout);
 
-		VerticalLayout streamsLayout = new VerticalLayout();
-		streamsLayout.setWidth("410px");
-		activityStreamPanel = new ActivityStreamPanel();
-		activityStreamPanel.setWidth("400px");
-		LazyLoadWrapper activityLazyLoad = new LazyLoadWrapper(
-				activityStreamPanel);
-		streamsLayout.addComponent(activityLazyLoad);
-		streamsLayout.setComponentAlignment(activityLazyLoad,
-				Alignment.MIDDLE_RIGHT);
-		layout.addComponent(streamsLayout);
-		layout.setComponentAlignment(streamsLayout, Alignment.TOP_RIGHT);
+        VerticalLayout streamsLayout = new VerticalLayout();
+        streamsLayout.setWidth("410px");
+        activityStreamPanel = new ActivityStreamPanel();
+        activityStreamPanel.setWidth("400px");
+        LazyLoadWrapper activityLazyLoad = new LazyLoadWrapper(
+                activityStreamPanel);
+        streamsLayout.addComponent(activityLazyLoad);
+        streamsLayout.setComponentAlignment(activityLazyLoad,
+                Alignment.MIDDLE_RIGHT);
+        layout.addComponent(streamsLayout);
+        layout.setComponentAlignment(streamsLayout, Alignment.TOP_RIGHT);
 
-		layout.setExpandRatio(myAssignmentsLayout, 1.0f);
+        layout.setExpandRatio(myAssignmentsLayout, 1.0f);
 
-		this.addComponent(layout);
-	}
+        this.addComponent(layout);
+    }
 
-	@Override
-	public void displayDashboard() {
-		accountDashlet.display();
-		meetingDashlet.display();
-		callDashlet.display();
-		leadDashlet.display();
-		activityStreamPanel.display();
-	}
+    @Override
+    public void displayDashboard() {
+        accountDashlet.display();
+        meetingDashlet.display();
+        callDashlet.display();
+        leadDashlet.display();
+        activityStreamPanel.display();
+    }
 }

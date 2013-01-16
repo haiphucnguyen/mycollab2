@@ -35,6 +35,8 @@ import com.esofthead.mycollab.module.user.service.UserService;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -42,6 +44,8 @@ import org.springframework.stereotype.Service;
 public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCriteria>
         implements UserService {
 
+    private static Logger log = LoggerFactory.getLogger(UserServiceDBImpl.class);
+    
     @Autowired
     private UserMapper userMapper;
     @Autowired
@@ -73,8 +77,10 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
                 throw new AuthenticationException("Invalid username or password");
             }
 
+            log.debug("User " + username + " login to system successfully!");
             if (!user.getIsadmin()) {
                 if (user.getRoleid() != null) {
+                    log.debug("User " + username + " is not admin. Getting his role");
                     RolePermissionExample ex = new RolePermissionExample();
                     ex.createCriteria().andRoleidEqualTo(user.getRoleid());
                     List roles = rolePermissionMapper.selectByExampleWithBLOBs(ex);
@@ -83,7 +89,12 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
                         XStream xstream = new XStream(new StaxDriver());
                         PermissionMap permissionMap = (PermissionMap) xstream.fromXML(rolePer.getRoleval());
                         user.setPermissionMaps(permissionMap);
+                        log.debug("Find role match to user " + username);
+                    } else {
+                        log.debug("We can not find any role associate to user " + username);
                     }
+                } else {
+                    log.debug("User " + username + " has no any role");
                 }
             }
             return user;

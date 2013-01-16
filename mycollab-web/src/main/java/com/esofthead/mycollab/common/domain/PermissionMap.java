@@ -12,7 +12,7 @@ import java.util.HashMap;
  * @author haiphucnguyen
  */
 public class PermissionMap extends HashMap<String, Integer> {
-    
+
     public void addPath(String permissionItem, Integer value) {
         this.put(permissionItem, value);
     }

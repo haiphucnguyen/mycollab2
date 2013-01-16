@@ -131,6 +131,7 @@ public class AppContext implements TransactionListener, Serializable {
         }
 
         PermissionMap permissionMap = instance.get().session.getPermissionMaps();
+        System.out.println("PERMAP : " + permissionMap);
         if (permissionMap == null) {
             return false;
         } else {
