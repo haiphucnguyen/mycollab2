@@ -36,7 +36,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.themes.BaseTheme;
 import java.util.GregorianCalendar;
 import java.util.List;
 import org.vaadin.easyuploads.MultiFileUploadExt;

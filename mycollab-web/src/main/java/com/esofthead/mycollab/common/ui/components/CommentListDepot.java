@@ -42,8 +42,14 @@ public class CommentListDepot extends Depot implements ReloadableComponent{
         
         commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(AppContext.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);
         contentContainer.addComponent(commentList);
+    }
+
+    @Override
+    public void attach() {
         displayCommentList();
     }
+    
+    
     
     private void displayCommentList() {
         CommentSearchCriteria searchCriteria = new CommentSearchCriteria();

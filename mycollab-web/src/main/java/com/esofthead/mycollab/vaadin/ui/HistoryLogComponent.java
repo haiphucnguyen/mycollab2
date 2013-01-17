@@ -12,6 +12,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -112,12 +113,13 @@ public class HistoryLogComponent extends VerticalLayout {
                     header.setWidth("100%");
                     header.setSpacing(true);
                     UserLink userLink = new UserLink(log.getPosteduser(), log.getPostedUserFullName());
-
-                    userLink.setStyleName("link");
+                    
                     header.addComponent(userLink);
+                    header.setComponentAlignment(userLink, Alignment.MIDDLE_LEFT);
                     Label lbDate = new Label("changed " + DateTimeUtils.getStringDateFromNow(DateTimeUtils.getDateByStringWithFormatW3C(strDate)));
-                    lbDate.setWidth("500px");
                     header.addComponent(lbDate);
+                    header.setComponentAlignment(lbDate, Alignment.MIDDLE_LEFT);
+                    header.setExpandRatio(lbDate, 1.0f);
                     gridLayout.addComponent(header, 0, 0, 2, 0);
 
                     gridLayout.addComponent(new Label("Field"), 0, 1);

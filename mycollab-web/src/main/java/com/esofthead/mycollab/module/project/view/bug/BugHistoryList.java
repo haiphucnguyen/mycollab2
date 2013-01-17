@@ -23,6 +23,10 @@ public class BugHistoryList extends Depot {
 
         VerticalLayout contentContainer = (VerticalLayout) this.content;
         historyLogComponent = new HistoryLogComponent(ModuleNameConstants.PRJ, ProjectContants.BUG, bugId);
-        this.addComponent(historyLogComponent);
+        contentContainer.addComponent(historyLogComponent);
+        
+        historyLogComponent.generateFieldDisplayHandler("description", "Description");
+        historyLogComponent.generateFieldDisplayHandler("summary", "Summary");
+        historyLogComponent.generateFieldDisplayHandler("detail", "Detail");
     }
 }
