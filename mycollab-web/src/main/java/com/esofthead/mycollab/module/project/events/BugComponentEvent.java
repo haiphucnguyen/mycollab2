@@ -1,9 +1,16 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.esofthead.mycollab.module.project.events;
 
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 
-@SuppressWarnings("serial")
-public class RiskEvent {
+/**
+ *
+ * @author haiphucnguyen
+ */
+public class BugComponentEvent {
 
     public static class Search extends ApplicationEvent {
 

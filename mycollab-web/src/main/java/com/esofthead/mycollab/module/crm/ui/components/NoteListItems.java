@@ -17,21 +17,21 @@ import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.file.domain.Attachment;
+import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatar;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
@@ -144,35 +144,7 @@ public class NoteListItems extends Depot {
 
             List<Attachment> attachments = note.getAttachments();
             if (attachments != null && !attachments.isEmpty()) {
-
-                for (Attachment attachment : attachments) {
-                    String docName = attachment.getDocumentpath();
-                    int lastIndex = docName.lastIndexOf("/");
-                    if (lastIndex != -1) {
-                        docName = docName.substring(lastIndex + 1,
-                                docName.length());
-                    }
-
-                    HorizontalLayout attachmentLayout = new HorizontalLayout();
-                    attachmentLayout.setSpacing(true);
-                    attachmentLayout.setMargin(false, false, false, true);
-
-                    Embedded fileTypeIcon = new Embedded(null, UiUtils.getFileIconResource(docName));
-                    attachmentLayout.addComponent(fileTypeIcon);
-                    Label attachmentLink = new Label(docName);
-                    attachmentLayout.addComponent(attachmentLink);
-                    attachmentLayout.setComponentAlignment(attachmentLink, Alignment.MIDDLE_CENTER);
-
-                    Embedded trashBtn = new Embedded(null, new ThemeResource(
-                            "icons/16/trash.png"));
-                    attachmentLayout.addComponent(trashBtn);
-
-                    Embedded downloadBtn = new Embedded(null,
-                            new ThemeResource("icons/16/download.png"));
-                    attachmentLayout.addComponent(downloadBtn);
-
-                    noteContentLayout.addComponent(attachmentLayout);
-                }
+                noteContentLayout.addComponent(new LazyLoadWrapper(new AttachmentDisplayComponent(attachments)));
             }
 
             HorizontalLayout footer = new HorizontalLayout();

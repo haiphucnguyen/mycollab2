@@ -20,7 +20,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class AttachmentPanel extends VerticalLayout implements AttachmentDisplayComponent {
+public class AttachmentPanel extends VerticalLayout implements AttachmentUploadComponent {
     
     private static final long serialVersionUID = 1L;
     private static Logger log = LoggerFactory.getLogger(AttachmentPanel.class);

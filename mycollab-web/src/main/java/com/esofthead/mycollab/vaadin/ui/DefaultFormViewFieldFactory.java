@@ -7,9 +7,11 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 import java.util.Date;
 import org.apache.commons.beanutils.BeanUtils;
 import org.vaadin.addon.customfield.CustomField;
+import org.vaadin.easyuploads.MultiFileUploadExt;
 
 public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 
@@ -131,15 +133,21 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 
     public static class FormAttachmentUploadField extends CustomField implements AttachmentUploadField {
 
+        private MultiFileUploadExt uploadExt;
+        private AttachmentPanel attachmentPanel;
+        
         @Override
         public Class<?> getType() {
             return Object.class;
         }
-        private AttachmentPanel attachmentPanel;
-
+        
         public FormAttachmentUploadField() {
+            VerticalLayout layout = new VerticalLayout();
             attachmentPanel = new AttachmentPanel();
-            this.setCompositionRoot(attachmentPanel);
+            uploadExt = new MultiFileUploadExt(attachmentPanel);
+            layout.addComponent(attachmentPanel);
+            layout.addComponent(uploadExt);
+            this.setCompositionRoot(layout);
         }
 
         @Override

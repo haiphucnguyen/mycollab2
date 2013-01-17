@@ -4,21 +4,24 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.tracker.BugResolutionConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.hene.splitbutton.SplitButton;
 
 @SuppressWarnings("serial")
 @ViewComponent
@@ -40,20 +43,46 @@ public class BugDashboardViewImpl extends AbstractView implements
         title.setStyleName("h2");
         header.addComponent(title);
         header.setExpandRatio(title, 1.0f);
-
-        Button createBtn = new Button("Create", new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
-
+        
+        SplitButton controlsBtn = new SplitButton();
+        controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
+        controlsBtn.setCaption("Create Bug");
+        controlsBtn
+                .addClickListener(new SplitButton.SplitButtonClickListener() {
             @Override
-            public void buttonClick(ClickEvent event) {
+            public void splitButtonClick(
+                    SplitButton.SplitButtonClickEvent event) {
                 EventBus.getInstance().fireEvent(
                         new BugEvent.GotoAdd(this, null));
             }
         });
-        createBtn.setStyleName("link");
-        createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
-        header.addComponent(createBtn);
-        header.setComponentAlignment(createBtn, Alignment.MIDDLE_RIGHT);
+        
+        VerticalLayout btnControlsLayout = new VerticalLayout();
+        btnControlsLayout.setWidth("100px");
+        Button createComponentBtn = new Button("Create Component",
+                new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        EventBus.getInstance().fireEvent(new BugComponentEvent.GotoAdd(this, null));
+                    }
+                });
+        createComponentBtn.setStyleName("link");
+        btnControlsLayout.addComponent(createComponentBtn);
+        
+        Button createVersionBtn = new Button("Create Version",
+                new Button.ClickListener() {
+                    @Override
+                    public void buttonClick(ClickEvent event) {
+                        EventBus.getInstance().fireEvent(new BugVersionEvent.GotoAdd(this, null));
+                    }
+                });
+        createVersionBtn.setStyleName("link");
+        btnControlsLayout.addComponent(createVersionBtn);
+        controlsBtn.addComponent(btnControlsLayout);
+        
+        header.addComponent(controlsBtn);
+        
+        header.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 
         this.addComponent(header);
 

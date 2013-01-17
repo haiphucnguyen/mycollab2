@@ -4,7 +4,7 @@
  */
 package org.vaadin.easyuploads;
 
-import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
+import com.esofthead.mycollab.vaadin.ui.AttachmentUploadComponent;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
@@ -30,12 +30,12 @@ import java.util.logging.Logger;
  */
 public class MultiFileUploadExt extends CssLayout implements DropHandler {
 
-    private AttachmentDisplayComponent attachmentDisplayComponent;
+    private AttachmentUploadComponent attachmentDisplayComponent;
     private CssLayout progressBars = new CssLayout();
     private CssLayout uploads = new CssLayout();
     private String uploadButtonCaption = "Attach File(s)";
 
-    public MultiFileUploadExt(AttachmentDisplayComponent attachmentDisplayComponent) {
+    public MultiFileUploadExt(AttachmentUploadComponent attachmentDisplayComponent) {
         this.attachmentDisplayComponent = attachmentDisplayComponent;
         setWidth("200px");
         addComponent(progressBars);

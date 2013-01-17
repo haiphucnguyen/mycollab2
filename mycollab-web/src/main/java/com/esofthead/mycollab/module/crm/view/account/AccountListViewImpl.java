@@ -14,7 +14,6 @@ import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -24,6 +23,7 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 @ViewComponent
 public class AccountListViewImpl extends AbstractView implements
