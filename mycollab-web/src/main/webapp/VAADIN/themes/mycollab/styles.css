@@ -794,7 +794,7 @@ input.v-textfield-errorField {
 	box-shadow: none;
 	margin: 0px;
 }
-.projectDashboardView .addViewLayout .v-label-h2 {
+.projectDashboardView .addViewLayout .h2 {
 	padding: .67em 0 .33em 0;
 }
 .projectDashboardView .v-horizontallayout-menuContent > div > div:nth-child(2) {
@@ -803,7 +803,7 @@ input.v-textfield-errorField {
 .v-csslayout-projectTabContent {
 	height: 100%;
 }
-.v-csslayout-projectTabContent .v-csslayout-margin {
+.v-csslayout-projectTabContent > .v-csslayout-margin {
 	padding: 10px;
 	border-style: solid;
 	border-color: #8f8f8f;
@@ -918,12 +918,12 @@ input.v-textfield-errorField {
 	width: 500px !important;
 	font-weight: bold;
 /* 	margin-top: 30px; */
-	background: url('icons/16/depot_arrow_down.png') no-repeat top right transparent;
+	background: url('icons/16/depot_arrow_down.png') no-repeat bottom right transparent;
 	cursor: pointer;
 	padding: 0px;
 }
 .depotComp.collapsed .h2 {
-	background: url('icons/16/depot_arrow_right.png') no-repeat top right transparent;
+	background: url('icons/16/depot_arrow_right.png') no-repeat bottom right transparent;
 }
 .depotComp.collapsed .depotContent {
 	padding: 0px;
@@ -1356,3 +1356,25 @@ white-space: normal;
 }
 
 /* End Token Field */
+
+/* Messages */
+
+.message-header .user-name {
+	font-size: 15px;
+	font-weight: bold;
+	color: black;
+}
+.message-header .v-button-link.message-title {
+	margin: 1px 0px;
+}
+.message-header .v-button-link.message-title .v-button-caption {
+	text-decoration: none;
+	font-size: 14px;
+	color: black;
+}
+
+.message-header .v-button-link.message-title .v-button-wrap {
+	padding: 1px 0px;
+}
+
+/* End Messages */
