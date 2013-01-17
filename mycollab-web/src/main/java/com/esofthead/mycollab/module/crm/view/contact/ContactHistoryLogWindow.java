@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
+import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 @SuppressWarnings("serial")
 public class ContactHistoryLogWindow extends HistoryLogWindow {
@@ -20,7 +21,7 @@ public class ContactHistoryLogWindow extends HistoryLogWindow {
 		this.generateFieldDisplayHandler("mobile", "Mobile");
 		this.generateFieldDisplayHandler("homephone", "Home Phone");
 		this.generateFieldDisplayHandler("otherphone", "Other Phone");
-		this.generateFieldDisplayHandler("birthday", "Birthday", HistoryLogWindow.DATE_FIELD);
+		this.generateFieldDisplayHandler("birthday", "Birthday", HistoryLogComponent.DATE_FIELD);
 		this.generateFieldDisplayHandler("iscallable", "Callable");
 		this.generateFieldDisplayHandler("assignuser", "Assign User");
 		this.generateFieldDisplayHandler("primaddress", "Address");

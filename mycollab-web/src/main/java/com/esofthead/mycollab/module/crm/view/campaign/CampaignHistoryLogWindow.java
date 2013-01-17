@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.module.crm.ui.components.HistoryLogWindow;
+import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 
 /**
  *
@@ -15,8 +16,8 @@ public class CampaignHistoryLogWindow extends HistoryLogWindow {
     public CampaignHistoryLogWindow(String module, String type, int typeid) {
         super(module, type, typeid);
         this.generateFieldDisplayHandler("campaignname", "Name");
-        this.generateFieldDisplayHandler("startdate", "Start Date", HistoryLogWindow.DATE_FIELD);
-        this.generateFieldDisplayHandler("enddate", "End Date", HistoryLogWindow.DATE_FIELD);
+        this.generateFieldDisplayHandler("startdate", "Start Date", HistoryLogComponent.DATE_FIELD);
+        this.generateFieldDisplayHandler("enddate", "End Date", HistoryLogComponent.DATE_FIELD);
         this.generateFieldDisplayHandler("status", "Status");
         this.generateFieldDisplayHandler("type", "Type");
         this.generateFieldDisplayHandler("currencyid", "Currency");

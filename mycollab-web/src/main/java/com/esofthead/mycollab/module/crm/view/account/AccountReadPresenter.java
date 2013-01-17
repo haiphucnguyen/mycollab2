@@ -28,6 +28,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 import java.util.Set;
+import org.vaadin.dialogs.ConfirmDialog;
 
 public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 
@@ -48,13 +49,26 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                     }
 
                     @Override
-                    public void onDelete(Account data) {
-                        AccountService accountService = AppContext
-                                .getSpringBean(AccountService.class);
-                        accountService.removeWithSession(data.getId(),
-                                AppContext.getUsername());
-                        EventBus.getInstance().fireEvent(
-                                new AccountEvent.GotoList(this, null));
+                    public void onDelete(final Account data) {
+                        ConfirmDialog.show(view.getWindow(),
+                                "Please Confirm:",
+                                "Are you sure to delete account '" + data.getAccountname() + "' ?",
+                                "Yes", "No", new ConfirmDialog.Listener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void onClose(ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    AccountService accountService = AppContext
+                                            .getSpringBean(AccountService.class);
+                                    accountService.removeWithSession(data.getId(),
+                                            AppContext.getUsername());
+                                    EventBus.getInstance().fireEvent(
+                                            new AccountEvent.GotoList(this, null));
+                                }
+                            }
+                        });
+
                     }
 
                     @Override
