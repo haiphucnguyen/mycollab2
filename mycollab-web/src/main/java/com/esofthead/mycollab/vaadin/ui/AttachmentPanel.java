@@ -19,63 +19,24 @@ import java.util.HashMap;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.easyuploads.FileBuffer;
-import org.vaadin.easyuploads.MultiFileUploadExt;
 
-public class AttachmentPanel extends VerticalLayout {
-
+public class AttachmentPanel extends VerticalLayout implements AttachmentDisplayComponent {
+    
     private static final long serialVersionUID = 1L;
     private static Logger log = LoggerFactory.getLogger(AttachmentPanel.class);
     private Map<String, File> fileStores;
     private ContentService contentService;
     private AttachmentService attachmentService;
-    private MultiFileUploadExt multiFileUpload;
-
+    
     public AttachmentPanel() {
         contentService = AppContext.getSpringBean(ContentService.class);
         this.setSpacing(true);
-
-        multiFileUpload = new MultiFileUploadExt() {
-            private static final long serialVersionUID = 1L;
-
-            @Override
-            protected void handleFile(File file, String fileName,
-                    String mimeType, long length) {
-                if (fileStores == null) {
-                    fileStores = new HashMap<String, File>();
-                }
-
-                if (fileStores.containsKey(fileName)) {
-                    getWindow().showNotification(
-                            "File name " + fileName + " is already existed.");
-                } else {
-                    log.debug("Store file " + fileName + " in path "
-                            + file.getAbsolutePath() + " is exist: "
-                            + file.exists());
-                    fileStores.put(fileName, file);
-                    displayFileName(fileName);
-                }
-            }
-
-            @Override
-            protected FileBuffer createReceiver() {
-                FileBuffer receiver = super.createReceiver();
-                /*
-                 * Make receiver not to delete files after they have been
-                 * handled by #handleFile().
-                 */
-                receiver.setDeleteFiles(false);
-                return receiver;
-            }
-        };
-        this.addComponent(multiFileUpload);
     }
-
+    
     private void displayFileName(final String fileName) {
         final HorizontalLayout fileAttachmentLayout = new HorizontalLayout();
         fileAttachmentLayout.setSpacing(true);
         Button removeBtn = new Button(null, new Button.ClickListener() {
-
             @Override
             public void buttonClick(ClickEvent event) {
                 File file = fileStores.get(fileName);
@@ -98,12 +59,12 @@ public class AttachmentPanel extends VerticalLayout {
         fileAttachmentLayout.addComponent(removeBtn);
         this.addComponent(fileAttachmentLayout, 0);
     }
-
+    
     public void saveContentsToRepo(String type, Integer typeid) {
         if (fileStores != null && !fileStores.isEmpty()) {
             attachmentService = AppContext
                     .getSpringBean(AttachmentService.class);
-
+            
             for (String fileName : fileStores.keySet()) {
                 String filePath = type + "/" + typeid + "/" + fileName;
                 try {
@@ -120,6 +81,24 @@ public class AttachmentPanel extends VerticalLayout {
                     log.error("Error when attach content in UI", e);
                 }
             }
+        }
+    }
+    
+    @Override
+    public void receiveFile(File file, String fileName, String mimeType, long length) {
+        if (fileStores == null) {
+            fileStores = new HashMap<String, File>();
+        }
+        
+        if (fileStores.containsKey(fileName)) {
+            getWindow().showNotification(
+                    "File name " + fileName + " is already existed.");
+        } else {
+            log.debug("Store file " + fileName + " in path "
+                    + file.getAbsolutePath() + " is exist: "
+                    + file.exists());
+            fileStores.put(fileName, file);
+            displayFileName(fileName);
         }
     }
 }

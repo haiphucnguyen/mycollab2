@@ -39,6 +39,7 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.BaseTheme;
 import java.util.GregorianCalendar;
 import java.util.List;
+import org.vaadin.easyuploads.MultiFileUploadExt;
 
 public class NoteListItems extends Depot {
 
@@ -139,11 +140,11 @@ public class NoteListItems extends Depot {
             Label noteContent = new Label(note.getNote(), Label.CONTENT_XHTML);
             noteContent.setWidth("100%");
             noteContentLayout.addComponent(noteContent);
-            
+
 
             List<Attachment> attachments = note.getAttachments();
             if (attachments != null && !attachments.isEmpty()) {
-                
+
                 for (Attachment attachment : attachments) {
                     String docName = attachment.getDocumentpath();
                     int lastIndex = docName.lastIndexOf("/");
@@ -173,7 +174,7 @@ public class NoteListItems extends Depot {
                     noteContentLayout.addComponent(attachmentLayout);
                 }
             }
-            
+
             HorizontalLayout footer = new HorizontalLayout();
             footer.setSpacing(true);
             footer.setMargin(true);
@@ -238,11 +239,38 @@ public class NoteListItems extends Depot {
             this.setSpacing(true);
             this.setMargin(true);
             this.setWidth("600px");
-            
+
             final AttachmentPanel attachments = new AttachmentPanel();
+
+            noteArea = new RichTextArea();
+            noteArea.setWidth("560px");
+            this.addComponent(noteArea);
+            this.addComponent(attachments);
 
             HorizontalLayout controls = new HorizontalLayout();
             controls.setSpacing(true);
+            controls.setWidth("100%");
+            
+            MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
+            controls.addComponent(uploadExt);
+            controls.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
+            
+            Label emptySpace = new Label();
+            controls.addComponent(emptySpace);
+            controls.setExpandRatio(emptySpace, 1.0f);
+            
+
+            Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+                private static final long serialVersionUID = 1L;
+
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    addCreateBtn();
+                }
+            });
+            cancelBtn.setStyleName("link");
+            controls.addComponent(cancelBtn);
+            controls.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);
             
             Button saveBtn = new Button("Post", new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
@@ -266,27 +294,9 @@ public class NoteListItems extends Depot {
             });
             saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
             controls.addComponent(saveBtn);
-
-            Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
-
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    addCreateBtn();
-                }
-            });
-            cancelBtn.setStyleName("link");
-            controls.addComponent(cancelBtn);
+            controls.setComponentAlignment(saveBtn, Alignment.MIDDLE_RIGHT);
 
             this.addComponent(controls);
-
-            noteArea = new RichTextArea();
-            noteArea.setWidth("560px");
-            this.addComponent(noteArea);
-            
-            this.addComponent(attachments);
-
-
         }
     }
 
