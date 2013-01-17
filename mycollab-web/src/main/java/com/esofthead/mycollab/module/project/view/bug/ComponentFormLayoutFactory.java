@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.module.project.view.task;
+package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -16,33 +16,33 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author haiphucnguyen
  */
-public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
+public abstract class ComponentFormLayoutFactory implements IFormLayoutFactory {
 
     private String title;
-    private TaskInformationLayout informationLayout;
+    private ComponentInformationLayout informationLayout;
 
-    public TaskFormLayoutFactory(String title) {
+    public ComponentFormLayoutFactory(String title) {
         this.title = title;
     }
 
     @Override
     public Layout getLayout() {
-        AddViewLayout taskAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/project/task.png"));
+        AddViewLayout componentAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/project/component.png"));
 
         Layout topPanel = createTopPanel();
         if (topPanel != null) {
-            taskAddLayout.addTopControls(topPanel);
+            componentAddLayout.addTopControls(topPanel);
         }
 
-        informationLayout = new TaskInformationLayout();
-        taskAddLayout.addBody(informationLayout.getLayout());
+        informationLayout = new ComponentInformationLayout();
+        componentAddLayout.addBody(informationLayout.getLayout());
 
         Layout bottomPanel = createBottomPanel();
         if (bottomPanel != null) {
-            taskAddLayout.addBottomControls(bottomPanel);
+            componentAddLayout.addBottomControls(bottomPanel);
         }
 
-        return taskAddLayout;
+        return componentAddLayout;
     }
 
     @Override
@@ -55,7 +55,7 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
     protected abstract Layout createBottomPanel();
 
     @SuppressWarnings("serial")
-    public static class TaskInformationLayout implements IFormLayoutFactory {
+    public static class ComponentInformationLayout implements IFormLayoutFactory {
 
         private GridFormLayoutHelper informationLayout;
 
@@ -90,4 +90,5 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
             }
         }
     }
+    
 }

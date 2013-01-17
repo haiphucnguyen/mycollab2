@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.Presenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -26,24 +27,25 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
 
         view.removeAllComponents();
 
-        if (data instanceof ScreenData.Search) {
-            BugListPresenter presenter = PresenterResolver
-                    .getPresenter(BugListPresenter.class);
-            presenter.go(view, data);
+        Presenter presenter;
 
+        if (data instanceof ScreenData.Search) {
+            presenter = PresenterResolver
+                    .getPresenter(BugListPresenter.class);
         } else if (data instanceof ScreenData.Add
                 || data instanceof ScreenData.Edit) {
-            BugAddPresenter presenter = PresenterResolver
+            presenter = PresenterResolver
                     .getPresenter(BugAddPresenter.class);
-            presenter.go(view, data);
         } else if (data instanceof ScreenData.Preview) {
-            BugReadPresenter presenter = PresenterResolver
+            presenter = PresenterResolver
                     .getPresenter(BugReadPresenter.class);
-            presenter.go(view, data);
+        } else if (data instanceof BugContainer.AddComponentData) {
+            presenter = PresenterResolver.getPresenter(ComponentAddPresenter.class);
         } else {
-            BugDashboardPresenter presenter = PresenterResolver
+            presenter = PresenterResolver
                     .getPresenter(BugDashboardPresenter.class);
-            presenter.go(view, data);
         }
+
+        presenter.go(view, data);
     }
 }

@@ -58,7 +58,7 @@ public class BugDashboardViewImpl extends AbstractView implements
         });
         
         VerticalLayout btnControlsLayout = new VerticalLayout();
-        btnControlsLayout.setWidth("100px");
+        btnControlsLayout.setWidth("150px");
         Button createComponentBtn = new Button("Create Component",
                 new Button.ClickListener() {
                     @Override

@@ -17,42 +17,42 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 @ViewComponent
 public class TaskContainer extends AbstractView {
 
-    public static class PreviewTaskListData extends ScreenData.Edit<Integer> {
+    public static class PreviewTaskListData extends ScreenData<Integer> {
 
         public PreviewTaskListData(Integer taskListId) {
             super(taskListId);
         }
     }
     
-    public static class EditTaskListData extends ScreenData.Edit<TaskList> {
+    public static class EditTaskListData extends ScreenData<TaskList> {
 
         public EditTaskListData(TaskList taskList) {
             super(taskList);
         }
     }
 
-    public static class AddTaskListData extends ScreenData.Add<TaskList> {
+    public static class AddTaskListData extends ScreenData<TaskList> {
 
         public AddTaskListData(TaskList taskList) {
             super(taskList);
         }
     }
 
-    public static class PreviewTaskData extends ScreenData.Edit<Integer> {
+    public static class PreviewTaskData extends ScreenData<Integer> {
 
         public PreviewTaskData(Integer taskId) {
             super(taskId);
         }
     }
 
-    public static class EditTaskData extends ScreenData.Edit<Task> {
+    public static class EditTaskData extends ScreenData<Task> {
 
         public EditTaskData(Task task) {
             super(task);
         }
     }
 
-    public static class AddTaskData extends ScreenData.Add<Task> {
+    public static class AddTaskData extends ScreenData<Task> {
 
         public AddTaskData(Task task) {
             super(task);
