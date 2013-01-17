@@ -84,6 +84,7 @@ public class NoteListItems extends Depot {
             }
         });
 
+        createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
         createBtn.setStyleName(BaseTheme.BUTTON_LINK);
         contentContainer.addComponent(createBtn);

@@ -135,7 +135,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 
             private ComponentContainer createBottomLayout() {
                 VerticalLayout bottomLayout = new VerticalLayout();
-                historyList = new BugHistoryList();
+                historyList = new BugHistoryList(bug.getId());
                 bottomLayout.addComponent(historyList);
 
                 CommentListDepot commentList = new CommentListDepot(CommentTypeConstants.PRJ_BUG, bug.getId());

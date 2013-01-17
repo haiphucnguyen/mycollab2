@@ -16,6 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -66,8 +67,7 @@ public class AccountSearchPanel extends
 					}
 				});
 		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		// createAccountBtn.setIcon(new
-		// ThemeResource("icons/16/addRecord.png"));
+		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 
 		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
 

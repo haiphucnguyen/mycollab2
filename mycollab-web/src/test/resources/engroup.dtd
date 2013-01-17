@@ -66,10 +66,10 @@
     m_monitor_item*,
     m_pm_messages*,
     m_pm_sent_messages*,
+    m_prj_member*,
     m_prj_message*,
     m_prj_milestone*,
     m_prj_monitor*,
-    m_prj_news*,
     m_prj_permission*,
     m_prj_problem*,
     m_prj_project*,
@@ -1068,6 +1068,14 @@
     body CDATA #IMPLIED
 >
 
+<!ELEMENT m_prj_member EMPTY>
+<!ATTLIST m_prj_member
+    id CDATA #REQUIRED
+    username CDATA #REQUIRED
+    projectId CDATA #REQUIRED
+    joinDate CDATA #REQUIRED
+>
+
 <!ELEMENT m_prj_message EMPTY>
 <!ATTLIST m_prj_message
     id CDATA #REQUIRED
@@ -1082,6 +1090,7 @@
     lastUpdatedTime CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
     isStick CDATA #IMPLIED
+    isNews CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_milestone EMPTY>
@@ -1105,19 +1114,6 @@
     id CDATA #REQUIRED
     projectid CDATA #REQUIRED
     username CDATA #REQUIRED
->
-
-<!ELEMENT m_prj_news EMPTY>
-<!ATTLIST m_prj_news
-    id CDATA #REQUIRED
-    projectid CDATA #REQUIRED
-    title CDATA #REQUIRED
-    htmldescription CDATA #IMPLIED
-    source CDATA #IMPLIED
-    posteduser CDATA #IMPLIED
-    posteddate CDATA #IMPLIED
-    createdTime CDATA #IMPLIED
-    lastUpdatedTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_permission EMPTY>
@@ -1243,9 +1239,7 @@
     projectid CDATA #REQUIRED
     deadline CDATA #IMPLIED
     notes CDATA #IMPLIED
-    taskindex CDATA #REQUIRED
-    predecessors CDATA #IMPLIED
-    parenttask CDATA #IMPLIED
+    taskindex CDATA #IMPLIED
     actualStartDate CDATA #IMPLIED
     actualEndDate CDATA #IMPLIED
     cost CDATA #IMPLIED
@@ -1254,6 +1248,8 @@
     tasklistid CDATA #IMPLIED
     createdTime CDATA #IMPLIED
     lastUpdatedTime CDATA #IMPLIED
+    assignUser CDATA #IMPLIED
+    sAccountId CDATA #REQUIRED
 >
 
 <!ELEMENT m_prj_task_list EMPTY>
@@ -1546,10 +1542,8 @@
 <!ELEMENT s_role_permission EMPTY>
 <!ATTLIST s_role_permission
     id CDATA #REQUIRED
-    module CDATA #REQUIRED
-    hasPermission CDATA #REQUIRED
     roleid CDATA #REQUIRED
-    type CDATA #REQUIRED
+    roleVal CDATA #REQUIRED
 >
 
 <!ELEMENT s_roles EMPTY>
