@@ -5,8 +5,10 @@ import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.file.service.ContentService;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -18,7 +20,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.easyuploads.FileBuffer;
-import org.vaadin.easyuploads.MultiFileUpload;
+import org.vaadin.easyuploads.MultiFileUploadExt;
 
 public class AttachmentPanel extends VerticalLayout {
 
@@ -27,13 +29,13 @@ public class AttachmentPanel extends VerticalLayout {
     private Map<String, File> fileStores;
     private ContentService contentService;
     private AttachmentService attachmentService;
-    private MultiFileUpload multiFileUpload;
+    private MultiFileUploadExt multiFileUpload;
 
     public AttachmentPanel() {
         contentService = AppContext.getSpringBean(ContentService.class);
         this.setSpacing(true);
 
-        multiFileUpload = new MultiFileUpload() {
+        multiFileUpload = new MultiFileUploadExt() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -71,6 +73,7 @@ public class AttachmentPanel extends VerticalLayout {
 
     private void displayFileName(final String fileName) {
         final HorizontalLayout fileAttachmentLayout = new HorizontalLayout();
+        fileAttachmentLayout.setSpacing(true);
         Button removeBtn = new Button(null, new Button.ClickListener() {
 
             @Override
@@ -86,7 +89,12 @@ public class AttachmentPanel extends VerticalLayout {
         removeBtn.setIcon(new ThemeResource("icons/16/delete.png"));
         removeBtn.setStyleName("link");
         
-        fileAttachmentLayout.addComponent(new Label(fileName));
+        Embedded fileIcon = new Embedded(null, UiUtils.getFileIconResource(fileName));
+        fileAttachmentLayout.addComponent(fileIcon);
+        
+        Label fileLbl = new Label(fileName);
+        fileAttachmentLayout.addComponent(fileLbl);
+        fileAttachmentLayout.setComponentAlignment(fileLbl, Alignment.MIDDLE_CENTER);
         fileAttachmentLayout.addComponent(removeBtn);
         this.addComponent(fileAttachmentLayout, 0);
     }
