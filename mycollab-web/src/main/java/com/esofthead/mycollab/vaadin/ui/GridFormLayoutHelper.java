@@ -37,15 +37,20 @@ public class GridFormLayoutHelper implements Serializable {
 
     public Component addComponent(Component field, String caption, int columns,
             int rows, String width) {
-        Label l = new Label(caption + ":");
-        l.setSizeUndefined();
-        layout.addComponent(l, 2 * columns, rows + 1);
-        layout.setComponentAlignment(l, Alignment.TOP_RIGHT);
-
+    	if (caption != null) {
+    		Label l = new Label(caption + ":");
+            l.setSizeUndefined();
+            layout.addComponent(l, 2 * columns, rows + 1);
+            layout.setComponentAlignment(l, Alignment.TOP_RIGHT);
+    	}
         layout.addComponent(field, 2 * columns + 1, rows + 1);
         field.setCaption(null);
         field.setWidth(width);
         return field;
+    }
+    
+    public Component getComponent(int column, int row) {
+    	return layout.getComponent(2 * column + 1, row + 1);
     }
 
     public Component addComponent(Component field, String caption, int columns,
