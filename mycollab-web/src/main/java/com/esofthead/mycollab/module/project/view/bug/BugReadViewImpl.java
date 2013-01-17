@@ -95,7 +95,6 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                     @Override
                     public void buttonClick(ClickEvent event) {
                         EventBus.getInstance().fireEvent(new BugEvent.GotoEdit(BugReadViewImpl.this, bug));
-                        log.debug("Fire edit bug: " + BeanUtility.printBeanObj(bug));
                     }
                 });
                 editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
