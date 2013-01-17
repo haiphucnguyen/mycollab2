@@ -10,12 +10,15 @@ import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.VerticalLayout;
 import java.util.GregorianCalendar;
+import org.vaadin.easyuploads.MultiFileUploadExt;
 
 /**
  *
@@ -36,20 +39,39 @@ public class CommentInput extends VerticalLayout {
         this.setWidth("600px");
         this.setSpacing(true);
         this.setMargin(true);
-        
+
         this.component = component;
         this.type = type;
         this.typeid = typeid;
 
         commentArea = new RichTextArea();
         commentArea.setWidth("560px");
-        
+
         final AttachmentPanel attachments = new AttachmentPanel();
-        
+
         HorizontalLayout controlsLayout = new HorizontalLayout();
+        controlsLayout.setWidth("100%");
         controlsLayout.setSpacing(true);
-        this.addComponent(controlsLayout);
-        
+
+        MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
+        controlsLayout.addComponent(uploadExt);
+        controlsLayout.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
+
+        Label emptySpace = new Label();
+        controlsLayout.addComponent(emptySpace);
+        controlsLayout.setExpandRatio(emptySpace, 1.0f);
+
+        if (cancelButtonEnable) {
+            Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    component.cancel();
+                }
+            });
+            cancelBtn.setStyleName("link");
+            controlsLayout.addComponent(cancelBtn);
+        }
+
         Button newCommentBtn = new Button("Post", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
@@ -73,18 +95,8 @@ public class CommentInput extends VerticalLayout {
         newCommentBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         controlsLayout.addComponent(newCommentBtn);
 
-        if (cancelButtonEnable) {
-            Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    component.cancel();
-                }
-            });
-            cancelBtn.setStyleName("link");
-            controlsLayout.addComponent(cancelBtn);
-        }
-        
         this.addComponent(commentArea);
         this.addComponent(attachments);
+        this.addComponent(controlsLayout);
     }
 }

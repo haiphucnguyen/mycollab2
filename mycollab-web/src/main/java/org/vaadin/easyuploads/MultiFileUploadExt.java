@@ -4,6 +4,7 @@
  */
 package org.vaadin.easyuploads;
 
+import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
 import com.vaadin.event.dd.DragAndDropEvent;
 import com.vaadin.event.dd.DropHandler;
 import com.vaadin.event.dd.acceptcriteria.AcceptAll;
@@ -27,13 +28,15 @@ import java.util.logging.Logger;
  *
  * @author haiphucnguyen
  */
-public abstract class MultiFileUploadExt extends CssLayout implements DropHandler {
+public class MultiFileUploadExt extends CssLayout implements DropHandler {
 
+    private AttachmentDisplayComponent attachmentDisplayComponent;
     private CssLayout progressBars = new CssLayout();
     private CssLayout uploads = new CssLayout();
     private String uploadButtonCaption = "Attach File(s)";
 
-    public MultiFileUploadExt() {
+    public MultiFileUploadExt(AttachmentDisplayComponent attachmentDisplayComponent) {
+        this.attachmentDisplayComponent = attachmentDisplayComponent;
         setWidth("200px");
         addComponent(progressBars);
         uploads.setStyleName("v-multifileupload-uploads");
@@ -128,7 +131,6 @@ public abstract class MultiFileUploadExt extends CssLayout implements DropHandle
             }
         }
     }
-
     private FileFactory fileFactory;
 
     public FileFactory getFileFactory() {
@@ -149,6 +151,7 @@ public abstract class MultiFileUploadExt extends CssLayout implements DropHandle
                 return MultiFileUploadExt.this.getFileFactory();
             }
         };
+        receiver.setDeleteFiles(false);
         return receiver;
     }
 
@@ -163,7 +166,6 @@ public abstract class MultiFileUploadExt extends CssLayout implements DropHandle
             prepareDropZone();
         }
     }
-
     private DragAndDropWrapper dropZone;
 
     /**
@@ -201,13 +203,15 @@ public abstract class MultiFileUploadExt extends CssLayout implements DropHandle
         return false;
     }
 
-    abstract protected void handleFile(File file, String fileName,
-            String mimeType, long length);
+    protected void handleFile(File file, String fileName,
+            String mimeType, long length) {
+        attachmentDisplayComponent.receiveFile(file, fileName, mimeType, length);
+    }
 
     /**
      * A helper method to set DirectoryFileFactory with given pathname as
      * directory.
-     * 
+     *
      * @param file
      */
     public void setRootDirectory(String directoryWhereToUpload) {
@@ -232,7 +236,6 @@ public abstract class MultiFileUploadExt extends CssLayout implements DropHandle
             progressBars.addComponent(pi);
             final FileBuffer receiver = createReceiver();
             html5File.setStreamVariable(new StreamVariable() {
-
                 private String name;
                 private String mime;
 
