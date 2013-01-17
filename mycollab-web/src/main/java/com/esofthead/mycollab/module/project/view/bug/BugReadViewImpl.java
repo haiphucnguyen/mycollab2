@@ -1,6 +1,9 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -55,7 +58,6 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
     private class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
 
         private BugHistoryList historyList;
-        private BugCommentList commentList;
 
         @Override
         public void setItemDataSource(Item newDataSource) {
@@ -136,7 +138,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                 historyList = new BugHistoryList();
                 bottomLayout.addComponent(historyList);
 
-                commentList = new BugCommentList();
+                CommentListDepot commentList = new CommentListDepot(CommentTypeConstants.PRJ_BUG, bug.getId());
                 bottomLayout.addComponent(commentList);
 
                 return bottomLayout;
@@ -186,7 +188,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                 if (propertyId.equals("duedate")) {
                     return new FormDateViewField(bug.getDuedate());
                 } else if (propertyId.equals("id")) {
-                    
+                    return new FormAttachmentDisplayField(AttachmentConstants.PROJECT_BUG_TYPE, bug.getId());
                 }
                 return null;
             }

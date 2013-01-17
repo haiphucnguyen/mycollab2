@@ -4,6 +4,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
@@ -129,6 +130,24 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
     public static interface AttachmentUploadField extends Field {
 
         void saveContentsToRepo(String type, int typeId);
+    }
+    
+    public static class FormAttachmentDisplayField extends CustomField {
+
+        @Override
+        public Class<?> getType() {
+            return Object.class;
+        }
+        
+        public FormAttachmentDisplayField(String type, int typeid) {
+            Component comp = AttachmentDisplayComponent.getAttachmentDisplayComponent(type, typeid);
+            if (comp == null) {
+                this.setCompositionRoot(new Label());
+            } else {
+                this.setCompositionRoot(comp);
+            }
+        }
+        
     }
 
     public static class FormAttachmentUploadField extends CustomField implements AttachmentUploadField {

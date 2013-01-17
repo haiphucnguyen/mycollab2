@@ -9,13 +9,15 @@ package com.esofthead.mycollab.common;
  * @author haiphucnguyen
  */
 public class CommentTypeConstants {
-    public static String PRJ_MESSAGE = "Project-Message";
+    public static final String PRJ_BUG = "Project-Bug";
     
-    public static String PRJ_MILESTONE = "Project-Milestone";
+    public static final String PRJ_MESSAGE = "Project-Message";
     
-    public static String PRJ_RISK = "Project-Risk";
+    public static final String PRJ_MILESTONE = "Project-Milestone";
     
-    public static String PRJ_PROBLEM = "Project-Problem";
+    public static final String PRJ_RISK = "Project-Risk";
     
-    public static String CRM_NOTE = "Crm-Note";
+    public static final String PRJ_PROBLEM = "Project-Problem";
+    
+    public static final String CRM_NOTE = "Crm-Note";
 }
