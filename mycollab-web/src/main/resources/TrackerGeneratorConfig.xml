@@ -54,11 +54,6 @@
             tableName="m_tracker_component" />
 
         <table
-            domainObjectName="History"
-            schema="mycollab"
-            tableName="m_tracker_history" />
-
-        <table
             domainObjectName="MetaData"
             schema="mycollab"
             tableName="m_tracker_metadata" />

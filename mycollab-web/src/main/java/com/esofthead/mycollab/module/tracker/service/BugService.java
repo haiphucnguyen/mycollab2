@@ -3,8 +3,6 @@ package com.esofthead.mycollab.module.tracker.service;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
-import com.esofthead.mycollab.module.tracker.domain.DefectComment;
-import com.esofthead.mycollab.module.tracker.domain.History;
 import com.esofthead.mycollab.module.tracker.domain.MetaField;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -13,15 +11,7 @@ import java.util.List;
 public interface BugService extends
         IDefaultService<Integer, Bug, BugSearchCriteria> {
 
-    List<History> getHistoriesOfBug(int bugid);
-
     List<MetaField> getProjectTrackerMetaData(int projectid);
-
-    int saveBugExt(SimpleBug bug, String userSessionId);
-
-    int updateBug(String username, Bug bug, DefectComment comment);
-
-    int updateBugExt(String username, SimpleBug bug, DefectComment comment);
 
     SimpleBug findBugById(int bugid);
 

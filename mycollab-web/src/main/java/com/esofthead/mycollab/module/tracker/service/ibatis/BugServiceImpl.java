@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.tracker.service.ibatis;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.common.service.MonitorItemService;
@@ -9,32 +11,25 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.tracker.RelatedItemConstants;
 import com.esofthead.mycollab.module.tracker.dao.BugMapper;
 import com.esofthead.mycollab.module.tracker.dao.BugMapperExt;
 import com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt;
-import com.esofthead.mycollab.module.tracker.dao.HistoryMapper;
 import com.esofthead.mycollab.module.tracker.dao.MetaDataMapper;
 import com.esofthead.mycollab.module.tracker.dao.RelatedItemMapper;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
-import com.esofthead.mycollab.module.tracker.domain.Component;
-import com.esofthead.mycollab.module.tracker.domain.DefectComment;
-import com.esofthead.mycollab.module.tracker.domain.History;
-import com.esofthead.mycollab.module.tracker.domain.HistoryExample;
 import com.esofthead.mycollab.module.tracker.domain.MetaData;
 import com.esofthead.mycollab.module.tracker.domain.MetaDataExample;
 import com.esofthead.mycollab.module.tracker.domain.MetaField;
 import com.esofthead.mycollab.module.tracker.domain.MetaOptionField;
-import com.esofthead.mycollab.module.tracker.domain.RelatedItem;
 import com.esofthead.mycollab.module.tracker.domain.RelatedItemExample;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
-import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import java.io.StringReader;
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.GregorianCalendar;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -50,19 +45,17 @@ import org.xml.sax.InputSource;
 
 @Service
 @Transactional
-@Traceable(module = "Project", nameField = "summary", type = "Bug")
+@Traceable(module = ModuleNameConstants.PRJ, nameField = "summary", type = ProjectContants.BUG)
+@Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.BUG)
 public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriteria> implements BugService {
 
     private static Logger log = LoggerFactory.getLogger(BugServiceImpl.class);
-            
     @Autowired
     protected BugMapper bugMapper;
     @Autowired
     protected BugMapperExt bugMapperExt;
     @Autowired
     protected ComponentMapperExt componentMapperExt;
-    @Autowired
-    protected HistoryMapper historyMapper;
     @Autowired
     protected MetaDataMapper metaDataMapper;
     @Autowired
@@ -107,43 +100,6 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
         monitorItemService.deleteWatchingItems(bugid);
 
         return super.remove(primaryKey);
-    }
-
-    @Override
-    public int updateBug(String username, Bug bug, DefectComment comment) {
-        bug.setLastupdatedtime(new GregorianCalendar().getTime());
-        super.updateWithSession(bug, null);
-        return 0;
-    }
-
-    @Override
-    public int updateBugExt(String username, final SimpleBug record,
-            final DefectComment comment) {
-        RelatedItemExample ex = new RelatedItemExample();
-        ex.createCriteria()
-                .andTypeidIn(
-                Arrays.asList(RelatedItemConstants.AFFECTED_VERSION,
-                RelatedItemConstants.FIXED_VERSION,
-                RelatedItemConstants.COMPONENT))
-                .andRefkeyEqualTo("bug-" + record.getId());
-        relatedItemMapper.deleteByExample(ex);
-
-        saveBugRelatedItems(record);
-
-        record.setLastupdatedtime(new GregorianCalendar().getTime());
-
-        if ("Resolved".equals(record.getStatus())) {
-            record.setResolveddate(new GregorianCalendar().getTime());
-        }
-
-        return super.updateWithSession(record, null);
-    }
-
-    @Override
-    public List<History> getHistoriesOfBug(int bugid) {
-        HistoryExample ex = new HistoryExample();
-        ex.createCriteria().andRelatedbugEqualTo(bugid);
-        return historyMapper.selectByExample(ex);
     }
 
     @Override
@@ -213,51 +169,9 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
         return fields;
     }
 
-    private void saveBugRelatedItems(SimpleBug bug) {
-        if (bug.getAffectedVersions() != null) {
-            for (Version version : bug.getAffectedVersions()) {
-                RelatedItem relatedItem = new RelatedItem();
-                relatedItem.setTypeid(version.getId());
-                relatedItem.setType(RelatedItemConstants.AFFECTED_VERSION);
-                relatedItem.setRefkey("bug-" + bug.getId());
-                relatedItemMapper.insert(relatedItem);
-            }
-        }
-
-        if (bug.getFixedVersions() != null) {
-            for (Version version : bug.getFixedVersions()) {
-                RelatedItem relatedItem = new RelatedItem();
-                relatedItem.setTypeid(version.getId());
-                relatedItem.setType(RelatedItemConstants.FIXED_VERSION);
-                relatedItem.setRefkey("bug-" + bug.getId());
-                relatedItemMapper.insert(relatedItem);
-            }
-        }
-
-        if (bug.getComponents() != null) {
-            for (Component component : bug.getComponents()) {
-                RelatedItem relatedItem = new RelatedItem();
-                relatedItem.setTypeid(component.getId());
-                relatedItem.setType(RelatedItemConstants.COMPONENT);
-                relatedItem.setRefkey("bug-" + bug.getId());
-                relatedItemMapper.insert(relatedItem);
-            }
-        }
-
-    }
-
     @Override
-    public int saveBugExt(SimpleBug bug, String username) {
-        bug.setCreatedtime(new GregorianCalendar().getTime());
-
-        // Force these fields are null to prevent client application eventually
-        // add them
-        bug.setLastupdatedtime(new GregorianCalendar().getTime());
-        bug.setResolveddate(null);
-
-        int bugid = super.saveWithSession(bug, username);
-        saveBugRelatedItems(bug);
-        return bugid;
+    public int saveWithSession(Bug record, String username) {
+        return super.saveWithSession(record, username);
     }
 
     @Override

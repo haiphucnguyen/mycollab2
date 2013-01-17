@@ -91,15 +91,6 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                 buttonControls.addComponent(assignBtn);
                 buttonControls.setComponentAlignment(assignBtn, Alignment.MIDDLE_CENTER);
 
-                Button commentBtn = new Button("Comment", new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                    }
-                });
-                commentBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-                buttonControls.addComponent(commentBtn);
-                buttonControls.setComponentAlignment(commentBtn, Alignment.MIDDLE_CENTER);
-
                 Button editBtn = new Button("Edit", new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
