@@ -12,7 +12,6 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -48,19 +47,19 @@ public class HistoryLogComponent extends VerticalLayout {
         this.module = module;
         this.type = type;
         this.typeid = typeid;
+        
+        logTable = new BeanList<AuditLogService, AuditLogSearchCriteria, SimpleAuditLog>(this, AppContext.getSpringBean(AuditLogService.class), HistoryLogRowDisplay.class);
+        this.addComponent(logTable);
     }
 
     @Override
     public void attach() {
-        super.attach();
-        logTable = new BeanList<AuditLogService, AuditLogSearchCriteria, SimpleAuditLog>(this, AppContext.getSpringBean(AuditLogService.class), HistoryLogRowDisplay.class);
         AuditLogSearchCriteria criteria = new AuditLogSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
         criteria.setModule(new StringSearchField(module));
         criteria.setType(new StringSearchField(type));
         criteria.setTypeid(new NumberSearchField(typeid));
         logTable.setSearchCriteria(criteria);
-        this.addComponent(logTable);
     }
 
     public void generateFieldDisplayHandler(String fieldname, String displayName) {
@@ -112,12 +111,7 @@ public class HistoryLogComponent extends VerticalLayout {
                     HorizontalLayout header = new HorizontalLayout();
                     header.setWidth("100%");
                     header.setSpacing(true);
-                    Button userLink = new Button(log.getPostedUserFullName(), new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(Button.ClickEvent event) {
-                            throw new UnsupportedOperationException("Not supported yet.");
-                        }
-                    });
+                    UserLink userLink = new UserLink(log.getPosteduser(), log.getPostedUserFullName());
 
                     userLink.setStyleName("link");
                     header.addComponent(userLink);

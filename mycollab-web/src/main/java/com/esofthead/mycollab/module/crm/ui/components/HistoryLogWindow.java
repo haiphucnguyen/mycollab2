@@ -5,7 +5,6 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Window;
 
 /**
@@ -22,12 +21,7 @@ public class HistoryLogWindow extends Window {
         this.setWidth("700px");
 
         historyLogComponent = new HistoryLogComponent(module, type, typeid);
-    }
-
-    @Override
-    public void attach() {
-        super.attach();
-        this.addComponent(new LazyLoadWrapper(historyLogComponent));
+        this.addComponent(historyLogComponent);
         center();
     }
     

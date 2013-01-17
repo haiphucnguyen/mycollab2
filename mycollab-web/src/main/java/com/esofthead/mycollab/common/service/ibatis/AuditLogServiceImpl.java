@@ -88,41 +88,21 @@ public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, Audit
             try {
                 BeanInfo beanInfo = Introspector.getBeanInfo(cl,
                         Object.class);
-                
+
                 for (PropertyDescriptor propertyDescriptor : beanInfo
-                    .getPropertyDescriptors()) {
+                        .getPropertyDescriptors()) {
                     String fieldname = propertyDescriptor.getName();
-                    Object oldProp = PropertyUtils.getProperty(oldObj, fieldname);
-                    Object newProp = PropertyUtils.getProperty(newObj, fieldname);
-                    if (newProp != null) {
-                        if (oldProp == null) {
-                            Element changelogElement = document
-                                    .createElement("changelog");
-                            changelogElement.setAttribute("field", fieldname);
-                            changelogElement.setAttribute("newvalue",
-                                    newProp.toString());
-                            changelogElement.setAttribute("oldvalue", "");
-                            changesetElement.appendChild(changelogElement);
-                        } else {
-                            if (!newProp.toString().equals(oldProp.toString())) {
-                                Element changelogElement = document
-                                        .createElement("changelog");
-                                changelogElement.setAttribute("field",
-                                        fieldname);
-//                                if (field.getType() == Date.class) {
-//                                    changelogElement.setAttribute("newvalue",
-//                                            formatDateW3C((Date) newProp));
-//                                    changelogElement.setAttribute("oldvalue",
-//                                            formatDateW3C((Date) oldProp));
-//                                } else {
-//                                    changelogElement.setAttribute("newvalue",
-//                                            newProp.toString());
-//                                    changelogElement.setAttribute("oldvalue",
-//                                            oldProp.toString());
-//                                }
-                                changesetElement.appendChild(changelogElement);
-                            }
-                        }
+                    String oldProp = getValue(PropertyUtils.getProperty(oldObj, fieldname));
+                    String newProp = getValue(PropertyUtils.getProperty(newObj, fieldname));
+
+                    if (!oldProp.equals(newProp)) {
+                        Element changelogElement = document
+                                .createElement("changelog");
+                        changelogElement.setAttribute("field", fieldname);
+                        changelogElement.setAttribute("newvalue",
+                                newProp);
+                        changelogElement.setAttribute("oldvalue", oldProp);
+                        changesetElement.appendChild(changelogElement);
                     }
                 }
             } catch (Exception e) {
@@ -132,6 +112,18 @@ public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, Audit
 
             // convert xml document to string
             return getStringFromDocument(document);
+        }
+
+        static String getValue(Object obj) {
+            if (obj != null) {
+                if (obj instanceof Date) {
+                    return formatDateW3C((Date) obj);
+                } else {
+                    return obj.toString();
+                }
+            } else {
+                return "";
+            }
         }
 
         static private String formatDateW3C(Date date) {
