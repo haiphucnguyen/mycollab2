@@ -57,7 +57,6 @@ public class NoteListItems extends Depot {
     public NoteListItems(String title, String type, Integer typeid) {
         super(title, new VerticalLayout());
         this.setWidth("900px");
-        this.setSpacing(false);
         this.setMargin(false);
 
         noteService = AppContext.getSpringBean(NoteService.class);
@@ -75,6 +74,7 @@ public class NoteListItems extends Depot {
 
     private void initUI() {
         final VerticalLayout contentContainer = (VerticalLayout) content;
+        contentContainer.setSpacing(true);
         createBtn = new Button("New Note", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
 
@@ -86,7 +86,6 @@ public class NoteListItems extends Depot {
 
         createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
-        createBtn.setStyleName(BaseTheme.BUTTON_LINK);
         contentContainer.addComponent(createBtn);
 
         noteList = new BeanList<NoteService, NoteSearchCriteria, SimpleNote>(
