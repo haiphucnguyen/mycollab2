@@ -120,6 +120,7 @@ public class CasePreviewBuilder extends VerticalLayout {
 
         public ReadView() {
             accountAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/case.png"));
+            accountAddLayout.addStyleName("preview");
             this.addComponent(accountAddLayout);
 
             tabContainer = new TabSheet();
@@ -167,6 +168,7 @@ public class CasePreviewBuilder extends VerticalLayout {
             };
 
             accountInformation = new VerticalLayout();
+            accountInformation.setMargin(true);
             Layout actionControls = new PreviewFormControlsGenerator<Case>(
                     previewForm).createButtonControls(RolePermissionCollections.CRM_CASE);
             accountInformation.addComponent(actionControls);
@@ -176,6 +178,7 @@ public class CasePreviewBuilder extends VerticalLayout {
             tabContainer.addTab(accountInformation, "Case Information");
 
             relatedItemsContainer = new VerticalLayout();
+            relatedItemsContainer.setMargin(true);
             relatedItemsContainer.addComponent(associateActivityList);
             relatedItemsContainer.addComponent(associateEventList);
             relatedItemsContainer.addComponent(associateContactList);

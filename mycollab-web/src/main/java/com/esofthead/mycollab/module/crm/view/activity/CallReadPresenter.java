@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.Call;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
@@ -33,13 +35,30 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 					}
 
 					@Override
-					public void onDelete(SimpleCall data) {
-						CallService callService = AppContext
-								.getSpringBean(CallService.class);
-						callService.removeWithSession(data.getId(),
-								AppContext.getUsername());
-						EventBus.getInstance().fireEvent(
-								new ActivityEvent.GotoTodoList(this, null));
+					public void onDelete(final SimpleCall data) {
+						ConfirmDialog.show(
+								view.getWindow(),
+								"Please Confirm:",
+								"Are you sure to delete call '"
+										+ data.getSubject() + "' ?", "Yes",
+								"No", new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
+
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											CallService callService = AppContext
+													.getSpringBean(CallService.class);
+											callService.removeWithSession(
+													data.getId(),
+													AppContext.getUsername());
+											EventBus.getInstance()
+													.fireEvent(
+															new ActivityEvent.GotoTodoList(
+																	this, null));
+										}
+									}
+								});
 					}
 
 					@Override
@@ -109,13 +128,18 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 			SimpleCall call = callService.findCallById((Integer) data
 					.getParams());
 			if (call != null) {
-                view.previewItem(call);
-                System.out.println("not null");
-            } else {
-            	System.out.println("is  null");
-                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                return;
-            }
+				view.previewItem(call);
+				System.out.println("not null");
+			} else {
+				System.out.println("is  null");
+				AppContext
+						.getApplication()
+						.getMainWindow()
+						.showNotification("Information",
+								"The record is not existed",
+								Window.Notification.TYPE_HUMANIZED_MESSAGE);
+				return;
+			}
 		}
 		view.previewItem((SimpleCall) data.getParams());
 	}

@@ -18,5 +18,7 @@ public class ProjectContants {
     
     public static final String RISK = "Risk";
     
+    public static final String BUG = "Bug";
+    
     
 }

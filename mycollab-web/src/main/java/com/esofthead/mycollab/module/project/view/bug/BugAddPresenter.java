@@ -72,6 +72,7 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
         SimpleProject project = (SimpleProject) AppContext
                 .getVariable(ProjectContants.PROJECT_NAME);
         bug.setProjectid(project.getId());
+        bug.setSaccountid(AppContext.getAccountId());
         if (bug.getId() == null) {
             bug.setStatus(BugStatusConstants.OPEN);
             bug.setResolution(BugResolutionConstants.UNRESOLVED);
