@@ -74,14 +74,14 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        SimpleRisk account = tableItem.getBeanByIndex(itemId);
-                        tableItem.fireSelectItemEvent(account);
+                        SimpleRisk item = tableItem.getBeanByIndex(itemId);
+                        tableItem.fireSelectItemEvent(item);
 
                     }
                 });
 
-                SimpleRisk account = tableItem.getBeanByIndex(itemId);
-                account.setExtraData(cb);
+                SimpleRisk item = tableItem.getBeanByIndex(itemId);
+                item.setExtraData(cb);
                 return cb;
             }
         });
