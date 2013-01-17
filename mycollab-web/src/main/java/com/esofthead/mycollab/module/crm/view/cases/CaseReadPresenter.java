@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Call;
@@ -22,47 +24,63 @@ import com.vaadin.ui.Window;
 
 public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public CaseReadPresenter() {
-        super(CaseReadView.class);
-        bind();
-    }
+	public CaseReadPresenter() {
+		super(CaseReadView.class);
+		bind();
+	}
 
-    private void bind() {
-        view.getPreviewFormHandlers().addFormHandler(
-                new DefaultPreviewFormHandler<Case>() {
-                    @Override
-                    public void onEdit(Case data) {
-                        EventBus.getInstance().fireEvent(
-                                new CaseEvent.GotoEdit(this, data));
-                    }
+	private void bind() {
+		view.getPreviewFormHandlers().addFormHandler(
+				new DefaultPreviewFormHandler<Case>() {
+					@Override
+					public void onEdit(Case data) {
+						EventBus.getInstance().fireEvent(
+								new CaseEvent.GotoEdit(this, data));
+					}
 
-                    @Override
-                    public void onDelete(Case data) {
-                        CaseService caseService = AppContext
-                                .getSpringBean(CaseService.class);
-                        caseService.removeWithSession(data.getId(),
-                                AppContext.getUsername());
-                        EventBus.getInstance().fireEvent(
-                                new CaseEvent.GotoList(this, null));
-                    }
+					@Override
+					public void onDelete(final Case data) {
+						ConfirmDialog.show(
+								view.getWindow(),
+								"Please Confirm:",
+								"Are you sure to delete case '"
+										+ data.getSubject() + "' ?", "Yes",
+								"No", new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void onClone(Case data) {
-                        Case cloneData = (Case) data.copy();
-                        cloneData.setId(null);
-                        EventBus.getInstance().fireEvent(
-                                new CaseEvent.GotoEdit(this, cloneData));
-                    }
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											CaseService caseService = AppContext
+													.getSpringBean(CaseService.class);
+											caseService.removeWithSession(
+													data.getId(),
+													AppContext.getUsername());
+											EventBus.getInstance().fireEvent(
+													new CaseEvent.GotoList(
+															this, null));
+										}
+									}
+								});
+					}
 
-                    @Override
-                    public void onCancel() {
-                        EventBus.getInstance().fireEvent(
-                                new CaseEvent.GotoList(this, null));
-                    }
-                    
-                	@Override
+					@Override
+					public void onClone(Case data) {
+						Case cloneData = (Case) data.copy();
+						cloneData.setId(null);
+						EventBus.getInstance().fireEvent(
+								new CaseEvent.GotoEdit(this, cloneData));
+					}
+
+					@Override
+					public void onCancel() {
+						EventBus.getInstance().fireEvent(
+								new CaseEvent.GotoList(this, null));
+					}
+
+					@Override
 					public void gotoNext(Case data) {
 						CaseService caseService = AppContext
 								.getSpringBean(CaseService.class);
@@ -71,8 +89,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 								.getAccountId()));
 						criteria.setId(new NumberSearchField(data.getId(),
 								NumberSearchField.GREATHER));
-						Integer nextId = caseService
-								.getNextItemKey(criteria);
+						Integer nextId = caseService.getNextItemKey(criteria);
 						if (nextId != null) {
 							EventBus.getInstance().fireEvent(
 									new CaseEvent.GotoRead(this, nextId));
@@ -104,46 +121,57 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 						}
 					}
-                });
+				});
 
-        view.getRelatedActivityHandlers().addRelatedListHandler(
-                new AbstractRelatedListHandler() {
-                    @Override
-                    public void createNewRelatedItem(String itemId) {
-                        if (itemId.equals("task")) {
-                            Task task = new Task();
-                            task.setType(CrmTypeConstants.CASE);
-                            task.setTypeid(view.getItem().getId());
-                            EventBus.getInstance().fireEvent(new ActivityEvent.TaskEdit(CaseReadPresenter.this, task));
-                        } else if (itemId.equals("meeting")) {
-                            Meeting meeting = new Meeting();
-                            meeting.setType(CrmTypeConstants.CASE);
-                            meeting.setTypeid(view.getItem().getId());
-                            EventBus.getInstance().fireEvent(new ActivityEvent.MeetingEdit(CaseReadPresenter.this, meeting));
-                        } else if (itemId.equals("call")) {
-                            Call call = new Call();
-                            call.setType(CrmTypeConstants.CASE);
-                            call.setTypeid(view.getItem().getId());
-                            EventBus.getInstance().fireEvent(new ActivityEvent.CallEdit(CaseReadPresenter.this, call));
-                        }
-                    }
-                });
-    }
+		view.getRelatedActivityHandlers().addRelatedListHandler(
+				new AbstractRelatedListHandler() {
+					@Override
+					public void createNewRelatedItem(String itemId) {
+						if (itemId.equals("task")) {
+							Task task = new Task();
+							task.setType(CrmTypeConstants.CASE);
+							task.setTypeid(view.getItem().getId());
+							EventBus.getInstance().fireEvent(
+									new ActivityEvent.TaskEdit(
+											CaseReadPresenter.this, task));
+						} else if (itemId.equals("meeting")) {
+							Meeting meeting = new Meeting();
+							meeting.setType(CrmTypeConstants.CASE);
+							meeting.setTypeid(view.getItem().getId());
+							EventBus.getInstance().fireEvent(
+									new ActivityEvent.MeetingEdit(
+											CaseReadPresenter.this, meeting));
+						} else if (itemId.equals("call")) {
+							Call call = new Call();
+							call.setType(CrmTypeConstants.CASE);
+							call.setTypeid(view.getItem().getId());
+							EventBus.getInstance().fireEvent(
+									new ActivityEvent.CallEdit(
+											CaseReadPresenter.this, call));
+						}
+					}
+				});
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (data.getParams() instanceof Integer) {
-            CaseService caseService = AppContext
-                    .getSpringBean(CaseService.class);
-            SimpleCase cases = caseService.findCaseById((Integer) data
-                    .getParams());
-            if (cases != null) {
-                super.onGo(container, data);
-                view.previewItem(cases);
-            } else {
-                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                return;
-            }
-        }
-    }
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		if (data.getParams() instanceof Integer) {
+			CaseService caseService = AppContext
+					.getSpringBean(CaseService.class);
+			SimpleCase cases = caseService.findCaseById((Integer) data
+					.getParams());
+			if (cases != null) {
+				super.onGo(container, data);
+				view.previewItem(cases);
+			} else {
+				AppContext
+						.getApplication()
+						.getMainWindow()
+						.showNotification("Information",
+								"The record is not existed",
+								Window.Notification.TYPE_HUMANIZED_MESSAGE);
+				return;
+			}
+		}
+	}
 }

@@ -106,6 +106,7 @@ public class CallPreviewBuilder extends VerticalLayout {
 		public ReadView() {
 			callAddLayout = new AddViewLayout("", new ThemeResource(
 					"icons/48/crm/call.png"));
+			callAddLayout.addStyleName("preview");
 			this.addComponent(callAddLayout);
 
 			tabContainer = new TabSheet();
@@ -154,6 +155,7 @@ public class CallPreviewBuilder extends VerticalLayout {
 			};
 
 			callInformation = new VerticalLayout();
+			callInformation.setMargin(true);
 			Layout actionControls = new PreviewFormControlsGenerator<SimpleCall>(
 					previewForm).createButtonControls(RolePermissionCollections.CRM_CALL);
 			callInformation.addComponent(actionControls);

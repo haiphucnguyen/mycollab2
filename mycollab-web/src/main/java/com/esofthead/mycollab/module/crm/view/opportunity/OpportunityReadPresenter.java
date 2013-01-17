@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Call;
@@ -40,13 +42,30 @@ public class OpportunityReadPresenter extends
 					}
 
 					@Override
-					public void onDelete(Opportunity data) {
-						OpportunityService OpportunityService = AppContext
-								.getSpringBean(OpportunityService.class);
-						OpportunityService.removeWithSession(data.getId(),
-								AppContext.getUsername());
-						EventBus.getInstance().fireEvent(
-								new OpportunityEvent.GotoList(this, null));
+					public void onDelete(final Opportunity data) {
+						ConfirmDialog.show(
+								view.getWindow(),
+								"Please Confirm:",
+								"Are you sure to delete opportunity '"
+										+ data.getOpportunityname() + "' ?",
+								"Yes", "No", new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
+
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											OpportunityService OpportunityService = AppContext
+													.getSpringBean(OpportunityService.class);
+											OpportunityService.removeWithSession(
+													data.getId(),
+													AppContext.getUsername());
+											EventBus.getInstance()
+													.fireEvent(
+															new OpportunityEvent.GotoList(
+																	this, null));
+										}
+									}
+								});
 					}
 
 					@Override
@@ -154,12 +173,17 @@ public class OpportunityReadPresenter extends
 			SimpleOpportunity opportunity = opportunityService
 					.findOpportunityById((Integer) data.getParams());
 			if (opportunity != null) {
-                super.onGo(container, data);
-                view.previewItem(opportunity);
-            } else {
-                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                return;
-            }
+				super.onGo(container, data);
+				view.previewItem(opportunity);
+			} else {
+				AppContext
+						.getApplication()
+						.getMainWindow()
+						.showNotification("Information",
+								"The record is not existed",
+								Window.Notification.TYPE_HUMANIZED_MESSAGE);
+				return;
+			}
 		}
 	}
 }

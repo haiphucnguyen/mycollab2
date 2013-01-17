@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Call;
@@ -39,13 +41,26 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 					}
 
 					@Override
-					public void onDelete(Contact data) {
-						ContactService ContactService = AppContext
-								.getSpringBean(ContactService.class);
-						ContactService.removeWithSession(data.getId(),
-								AppContext.getUsername());
-						EventBus.getInstance().fireEvent(
-								new ContactEvent.GotoList(this, null));
+					public void onDelete(final Contact data) {
+						
+						ConfirmDialog.show(view.getWindow(),
+                                "Please Confirm:",
+                                "Are you sure to delete contact '" + data.getFirstname() + " " + data.getLastname() + "' ?",
+                                "Yes", "No", new ConfirmDialog.Listener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void onClose(ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+            						ContactService ContactService = AppContext
+            								.getSpringBean(ContactService.class);
+            						ContactService.removeWithSession(data.getId(),
+            								AppContext.getUsername());
+            						EventBus.getInstance().fireEvent(
+            								new ContactEvent.GotoList(this, null));
+                                }
+                            }
+                        });
 					}
 
 					@Override

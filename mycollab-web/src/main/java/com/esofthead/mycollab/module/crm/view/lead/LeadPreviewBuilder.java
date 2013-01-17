@@ -118,6 +118,7 @@ public class LeadPreviewBuilder extends VerticalLayout {
 
         public ReadView() {
             campaignAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/lead.png"));
+            campaignAddLayout.addStyleName("preview");
             this.addComponent(campaignAddLayout);
 
             tabContainer = new TabSheet();
@@ -165,6 +166,7 @@ public class LeadPreviewBuilder extends VerticalLayout {
             };
 
             campaignInformationLayout = new VerticalLayout();
+            campaignInformationLayout.setMargin(true);
             Layout actionControls = new PreviewFormControlsGenerator<Lead>(
                     previewForm).createButtonControls(RolePermissionCollections.CRM_LEAD);
             campaignInformationLayout.addComponent(actionControls);
@@ -176,6 +178,7 @@ public class LeadPreviewBuilder extends VerticalLayout {
 
 
             relatedItemsContainer = new VerticalLayout();
+            relatedItemsContainer.setMargin(true);
             relatedItemsContainer.addComponent(associateActivityList);
             relatedItemsContainer.addComponent(associateCampaignList);
             tabContainer.addTab(relatedItemsContainer, "More Information");

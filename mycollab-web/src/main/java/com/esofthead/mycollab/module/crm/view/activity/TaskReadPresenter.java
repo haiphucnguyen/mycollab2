@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
@@ -33,13 +35,30 @@ public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 					}
 
 					@Override
-					public void onDelete(Task data) {
-						TaskService taskService = AppContext
-								.getSpringBean(TaskService.class);
-						taskService.removeWithSession(data.getId(),
-								AppContext.getUsername());
-						EventBus.getInstance().fireEvent(
-								new ActivityEvent.GotoTodoList(this, null));
+					public void onDelete(final Task data) {
+						ConfirmDialog.show(
+								view.getWindow(),
+								"Please Confirm:",
+								"Are you sure to delete task '"
+										+ data.getSubject() + "' ?", "Yes",
+								"No", new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
+
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											TaskService taskService = AppContext
+													.getSpringBean(TaskService.class);
+											taskService.removeWithSession(
+													data.getId(),
+													AppContext.getUsername());
+											EventBus.getInstance()
+													.fireEvent(
+															new ActivityEvent.GotoTodoList(
+																	this, null));
+										}
+									}
+								});
 					}
 
 					@Override

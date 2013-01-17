@@ -114,6 +114,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
         
         public ReadView() {
             campaignAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/campaign.png"));
+            campaignAddLayout.addStyleName("preview");
             this.addComponent(campaignAddLayout);
             
             tabContainer = new TabSheet();
@@ -161,6 +162,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
             };
             
             campaignInformationLayout = new VerticalLayout();
+            campaignInformationLayout.setMargin(true);
             Layout actionControls = new PreviewFormControlsGenerator<Campaign>(
                     previewForm).createButtonControls(RolePermissionCollections.CRM_CAMPAIGN);
             campaignInformationLayout.addComponent(actionControls);
@@ -172,6 +174,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
             
             
             relatedItemsContainer = new VerticalLayout();
+            relatedItemsContainer.setMargin(true);
             relatedItemsContainer.addComponent(associateActivityList);
             relatedItemsContainer.addComponent(associateAccountList);
             relatedItemsContainer.addComponent(associateContactList);

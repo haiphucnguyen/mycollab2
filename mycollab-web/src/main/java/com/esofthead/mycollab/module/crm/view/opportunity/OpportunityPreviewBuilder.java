@@ -85,6 +85,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 
         public ReadView() {
             accountAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/opportunity.png"));
+            accountAddLayout.addStyleName("preview");
             this.addComponent(accountAddLayout);
 
             tabContainer = new TabSheet();
@@ -132,6 +133,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
             };
 
             accountInformation = new VerticalLayout();
+            accountInformation.setMargin(true);
             Layout actionControls = new PreviewFormControlsGenerator<Opportunity>(
                     previewForm).createButtonControls(RolePermissionCollections.CRM_OPPORTUNITY);
             accountInformation.addComponent(actionControls);
@@ -143,6 +145,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 
 
             relatedItemsContainer = new VerticalLayout();
+            relatedItemsContainer.setMargin(true);
             relatedItemsContainer.addComponent(associateActivityList);
             relatedItemsContainer.addComponent(associateContactList);
             relatedItemsContainer.addComponent(associateLeadList);

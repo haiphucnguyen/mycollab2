@@ -136,6 +136,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
         
         public ReadView() {
             accountAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/account.png"));
+            accountAddLayout.addStyleName("preview");
             this.addComponent(accountAddLayout);
 
             tabContainer = new TabSheet();
@@ -183,6 +184,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
             };
 
             accountInformation = new VerticalLayout();
+            accountInformation.setMargin(true);
             Layout actionControls = new PreviewFormControlsGenerator<Contact>(
                     previewForm).createButtonControls(RolePermissionCollections.CRM_CONTACT);
             accountInformation.addComponent(actionControls);
@@ -192,6 +194,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
             tabContainer.addTab(accountInformation, "Contact Information");
 
             relatedItemsContainer = new VerticalLayout();
+            relatedItemsContainer.setMargin(true);
             relatedItemsContainer.addComponent(associateActivityList);
             relatedItemsContainer.addComponent(associateOpportunityList);
             tabContainer.addTab(relatedItemsContainer, "More Information");

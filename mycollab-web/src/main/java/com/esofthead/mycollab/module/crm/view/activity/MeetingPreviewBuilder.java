@@ -68,6 +68,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 	        public ReadView() {
 	        	meetingAddLayout = new AddViewLayout("", new ThemeResource(
 	                    "icons/48/crm/meeting.png"));
+	        	meetingAddLayout.addStyleName("preview");
 	            this.addComponent(meetingAddLayout);
 	            
 	            tabContainer = new TabSheet();
@@ -117,6 +118,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 	            
 	            meetingInformation = new VerticalLayout();
 	            meetingInformation.setMargin(true);
+	            meetingInformation.setMargin(true);
 	            Layout actionControls = new PreviewFormControlsGenerator<Meeting>(
 	                    previewForm).createButtonControls(RolePermissionCollections.CRM_MEETING);
 	            meetingInformation.addComponent(actionControls);
@@ -125,6 +127,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 	            tabContainer.addTab(meetingInformation, "Meeting Information");
 	            
 	            relatedItemsContainer = new VerticalLayout();
+	            relatedItemsContainer.setMargin(true);
 	            relatedItemsContainer.setMargin(true);
 	            tabContainer.addTab(relatedItemsContainer, "More Information");
 	            

@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Call;
@@ -39,13 +41,29 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 					}
 
 					@Override
-					public void onDelete(Lead data) {
-						LeadService LeadService = AppContext
-								.getSpringBean(LeadService.class);
-						LeadService.removeWithSession(data.getId(),
-								AppContext.getUsername());
-						EventBus.getInstance().fireEvent(
-								new LeadEvent.GotoList(this, null));
+					public void onDelete(final Lead data) {
+						ConfirmDialog.show(
+								view.getWindow(),
+								"Please Confirm:",
+								"Are you sure to delete lead '"
+										+ data.getFirstname() + " " + data.getLastname() + "' ?", "Yes",
+								"No", new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
+
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											LeadService LeadService = AppContext
+													.getSpringBean(LeadService.class);
+											LeadService.removeWithSession(
+													data.getId(),
+													AppContext.getUsername());
+											EventBus.getInstance().fireEvent(
+													new LeadEvent.GotoList(
+															this, null));
+										}
+									}
+								});
 					}
 
 					@Override
@@ -144,12 +162,17 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 			SimpleLead lead = leadService.findLeadById((Integer) data
 					.getParams());
 			if (lead != null) {
-                super.onGo(container, data);
-                view.previewItem(lead);
-            } else {
-                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                return;
-            }
+				super.onGo(container, data);
+				view.previewItem(lead);
+			} else {
+				AppContext
+						.getApplication()
+						.getMainWindow()
+						.showNotification("Information",
+								"The record is not existed",
+								Window.Notification.TYPE_HUMANIZED_MESSAGE);
+				return;
+			}
 		}
 	}
 }

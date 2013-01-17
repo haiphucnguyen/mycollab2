@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
@@ -33,13 +35,30 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 					}
 
 					@Override
-					public void onDelete(Meeting data) {
-						MeetingService campaignService = AppContext
-								.getSpringBean(MeetingService.class);
-						campaignService.removeWithSession(data.getId(),
-								AppContext.getUsername());
-						EventBus.getInstance().fireEvent(
-								new ActivityEvent.GotoTodoList(this, null));
+					public void onDelete(final Meeting data) {
+						ConfirmDialog.show(
+								view.getWindow(),
+								"Please Confirm:",
+								"Are you sure to delete meeting '"
+										+ data.getSubject() + "' ?", "Yes",
+								"No", new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
+
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											MeetingService campaignService = AppContext
+													.getSpringBean(MeetingService.class);
+											campaignService.removeWithSession(
+													data.getId(),
+													AppContext.getUsername());
+											EventBus.getInstance()
+													.fireEvent(
+															new ActivityEvent.GotoTodoList(
+																	this, null));
+										}
+									}
+								});
 					}
 
 					@Override
