@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.crm.ui.components;
 
-import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.common.domain.criteria.CommentSearchCriteria;
@@ -18,10 +17,12 @@ import com.esofthead.mycollab.module.crm.domain.criteria.NoteSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.NoteService;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.file.domain.Attachment;
+import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatar;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
@@ -138,7 +139,41 @@ public class NoteListItems extends Depot {
             Label noteContent = new Label(note.getNote(), Label.CONTENT_XHTML);
             noteContent.setWidth("100%");
             noteContentLayout.addComponent(noteContent);
+            
 
+            List<Attachment> attachments = note.getAttachments();
+            if (attachments != null && !attachments.isEmpty()) {
+                
+                for (Attachment attachment : attachments) {
+                    String docName = attachment.getDocumentpath();
+                    int lastIndex = docName.lastIndexOf("/");
+                    if (lastIndex != -1) {
+                        docName = docName.substring(lastIndex + 1,
+                                docName.length());
+                    }
+
+                    HorizontalLayout attachmentLayout = new HorizontalLayout();
+                    attachmentLayout.setSpacing(true);
+                    attachmentLayout.setMargin(false, false, false, true);
+
+                    Embedded fileTypeIcon = new Embedded(null, UiUtils.getFileIconResource(docName));
+                    attachmentLayout.addComponent(fileTypeIcon);
+                    Label attachmentLink = new Label(docName);
+                    attachmentLayout.addComponent(attachmentLink);
+                    attachmentLayout.setComponentAlignment(attachmentLink, Alignment.MIDDLE_CENTER);
+
+                    Embedded trashBtn = new Embedded(null, new ThemeResource(
+                            "icons/16/trash.png"));
+                    attachmentLayout.addComponent(trashBtn);
+
+                    Embedded downloadBtn = new Embedded(null,
+                            new ThemeResource("icons/16/download.png"));
+                    attachmentLayout.addComponent(downloadBtn);
+
+                    noteContentLayout.addComponent(attachmentLayout);
+                }
+            }
+            
             HorizontalLayout footer = new HorizontalLayout();
             footer.setSpacing(true);
             footer.setMargin(true);
@@ -160,37 +195,6 @@ public class NoteListItems extends Depot {
             footer.addComponent(replyBtn);
             footer.setComponentAlignment(replyBtn, Alignment.MIDDLE_LEFT);
             noteContentLayout.addComponent(footer);
-
-            List<Attachment> attachments = note.getAttachments();
-            if (attachments != null && !attachments.isEmpty()) {
-                for (Attachment attachment : attachments) {
-                    String docName = attachment.getDocumentpath();
-                    int lastIndex = docName.lastIndexOf("/");
-                    if (lastIndex != -1) {
-                        docName = docName.substring(lastIndex + 1,
-                                docName.length());
-                    }
-
-                    HorizontalLayout attachmentLayout = new HorizontalLayout();
-
-                    Button attachmentLink = new Button(docName);
-                    attachmentLink.setStyleName(BaseTheme.BUTTON_LINK);
-                    attachmentLayout.addComponent(attachmentLink);
-
-                    attachmentLayout.setSpacing(true);
-                    attachmentLayout.setMargin(false, false, false, true);
-
-                    Embedded trashBtn = new Embedded(null, new ThemeResource(
-                            "icons/16/trash.png"));
-                    attachmentLayout.addComponent(trashBtn);
-
-                    Embedded downloadBtn = new Embedded(null,
-                            new ThemeResource("icons/16/download.png"));
-                    attachmentLayout.addComponent(downloadBtn);
-
-                    noteContentLayout.addComponent(attachmentLayout);
-                }
-            }
 
             commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(AppContext.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);
             noteContentLayout.addComponent(commentList);
