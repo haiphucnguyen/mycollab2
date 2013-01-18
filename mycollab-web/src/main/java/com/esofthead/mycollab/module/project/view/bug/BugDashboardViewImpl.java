@@ -142,14 +142,21 @@ public class BugDashboardViewImpl extends AbstractView implements
         LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(updateBugWidget);
         leftColumn.addComponent(updateBugWidgetWrapper);
 
+        SimpleProject project = (SimpleProject)AppContext.getVariable(ProjectContants.PROJECT_NAME);
 
-        rightColumn.addComponent(new LazyLoadWrapper(new PrioritySummaryWidget()));
+        PrioritySummaryWidget prioritySummaryWidget = new PrioritySummaryWidget();
+        rightColumn.addComponent(new LazyLoadWrapper(prioritySummaryWidget));
         
-        rightColumn.addComponent(new LazyLoadWrapper(new StatusSummaryWidget()));
-
-        //Due bug search criteria
-        SimpleProject project = (SimpleProject) AppContext
-                .getVariable(ProjectContants.PROJECT_NAME);
+        BugSearchCriteria prioritySearchCriteria = new BugSearchCriteria();
+        prioritySearchCriteria.setProjectid(new NumberSearchField(project.getId()));
+        prioritySummaryWidget.setSearchCriteria(prioritySearchCriteria);
+        
+        StatusSummaryWidget statusSummaryWidget = new StatusSummaryWidget();
+        rightColumn.addComponent(new LazyLoadWrapper(statusSummaryWidget));
+        
+        BugSearchCriteria statusSearchCriteria = new BugSearchCriteria();
+        statusSearchCriteria.setProjectid(new NumberSearchField(project.getId()));
+        statusSummaryWidget.setSearchCriteria(statusSearchCriteria);
         
         BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
         dueDefectsCriteria.setProjectid(new NumberSearchField(project.getId()));

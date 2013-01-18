@@ -20,7 +20,7 @@ import org.jfree.data.general.DefaultPieDataset;
 public class OpportunitySalesStageDashboard extends PieChartWrapper<OpportunitySearchCriteria> {
 
     public OpportunitySalesStageDashboard() {
-        super("Deals By Stage", 550, 400);
+        super("Deals By Stages", 500, 400);
     }
 
     @Override

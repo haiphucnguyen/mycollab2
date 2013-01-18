@@ -19,13 +19,11 @@ package com.esofthead.mycollab.module.crm.service.ibatis;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
-import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.crm.dao.OpportunityMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt;
-import com.esofthead.mycollab.module.crm.dao.TaskMapper;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
@@ -46,10 +44,6 @@ public class OpportunityServiceImpl extends DefaultService<Integer, Opportunity,
     private OpportunityMapper opportunityMapper;
     @Autowired
     private OpportunityMapperExt opportunityMapperExt;
-    @Autowired
-    private AuditLogService auditLogService;
-    @Autowired
-    private TaskMapper taskMapper;
 
     @Override
     public ICrudGenericDAO<Integer, Opportunity> getCrudMapper() {
@@ -69,5 +63,10 @@ public class OpportunityServiceImpl extends DefaultService<Integer, Opportunity,
     @Override
     public List<GroupItem> getSalesStageSummary(OpportunitySearchCriteria criteria) {
         return opportunityMapperExt.getSalesStageSummary(criteria);
+    }
+
+    @Override
+    public List<GroupItem> getLeadSourcesSummary(OpportunitySearchCriteria criteria) {
+        return opportunityMapperExt.getLeadSourcesSummary(criteria);
     }
 }

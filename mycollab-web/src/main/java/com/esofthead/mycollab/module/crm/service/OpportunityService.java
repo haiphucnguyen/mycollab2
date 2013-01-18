@@ -29,4 +29,6 @@ public interface OpportunityService extends
     SimpleOpportunity findOpportunityById(int opportunityId);
     
     List<GroupItem> getSalesStageSummary(OpportunitySearchCriteria criteria);
+    
+    List<GroupItem> getLeadSourcesSummary(OpportunitySearchCriteria criteria);
 }

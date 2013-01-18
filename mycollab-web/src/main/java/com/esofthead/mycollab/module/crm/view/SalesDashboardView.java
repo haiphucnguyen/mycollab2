@@ -12,6 +12,7 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
@@ -83,14 +84,18 @@ public class SalesDashboardView extends Depot {
         
         if ("OpportunitySalesStage".equals(reportName)) {
             OpportunitySalesStageDashboard salesStageDashboard = new OpportunitySalesStageDashboard();
-            bodyContent.addComponent(new LazyLoadWrapper(salesStageDashboard));
+            LazyLoadWrapper lazyComp = new LazyLoadWrapper(salesStageDashboard);
+            bodyContent.addComponent(lazyComp);
+            bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
             
             OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
             criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
             salesStageDashboard.setSearchCriteria(criteria);
         } else if ("OpportunityLeadSource".equals(reportName)) {
             OpportunityLeadSourceDashboard leadSourceDashboard = new OpportunityLeadSourceDashboard();
-            bodyContent.addComponent(leadSourceDashboard);
+            LazyLoadWrapper lazyComp = new LazyLoadWrapper(leadSourceDashboard);
+            bodyContent.addComponent(lazyComp);
+            bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
             
             OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
             criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));

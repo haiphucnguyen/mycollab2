@@ -25,6 +25,7 @@ public class Depot extends VerticalLayout {
 		header = new HorizontalLayout();
 		header.setStyleName("depotHeader");
 		header.setWidth("500px");
+                this.headerContent = headerElement;
 		this.bodyContent = component;
 		this.headerContent = header;
 		this.addComponent(header);
