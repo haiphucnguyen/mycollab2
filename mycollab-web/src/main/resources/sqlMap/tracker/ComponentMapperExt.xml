@@ -2,15 +2,15 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt">
 
-	<resultMap type="com.esofthead.mycollab.module.tracker.domain.SimpleComponent"
-		extends="com.esofthead.mycollab.module.tracker.dao.ComponentMapper.BaseResultMap"
-		id="SimpleComponentResult">
+    <resultMap type="com.esofthead.mycollab.module.tracker.domain.SimpleComponent"
+                   extends="com.esofthead.mycollab.module.tracker.dao.ComponentMapper.BaseResultMap"
+                   id="SimpleComponentResult">
 
-		<result column="userLeadFullName" jdbcType="VARCHAR" property="userLeadFullName" />
-	</resultMap>
+        <result column="userLeadFullName" jdbcType="VARCHAR" property="userLeadFullName" />
+    </resultMap>
 
-	<select id="getComponentByRefKey" parameterType="java.lang.String"
-		resultMap="com.esofthead.mycollab.module.tracker.dao.ComponentMapper.BaseResultMap">
+    <select id="getComponentByRefKey" parameterType="java.lang.String"
+                resultMap="com.esofthead.mycollab.module.tracker.dao.ComponentMapper.BaseResultMap">
         <![CDATA[
         SELECT m_tracker_component.id, m_tracker_component.projectid, m_tracker_component.componentname, 
                m_tracker_component.userlead, m_tracker_component.description,
@@ -20,15 +20,15 @@
               AND m_tracker_related_item.relateitemid=m_tracker_component.id
               AND m_tracker_related_item.type=2
               ]]>
-	</select>
+    </select>
 
-	<sql id="querySearchCriteria">
-		<if test="projectid != null">
-			${projectid.operation} m_tracker_component.projectid =
-			#{projectid.value,javaType=INTEGER}
+    <sql id="querySearchCriteria">
+        <if test="projectid != null">
+            ${projectid.operation} m_tracker_component.projectid =
+            #{projectid.value,javaType=INTEGER}
         </if>
-	</sql>
-	<sql id="selectComponents">
+    </sql>
+    <sql id="selectComponents">
         <![CDATA[
           SELECT m_tracker_component.id, m_tracker_component.projectid, m_tracker_component.componentname, 
                m_tracker_component.userlead, m_tracker_component.description,
@@ -37,26 +37,56 @@
         FROM m_tracker_component
         LEFT OUTER JOIN s_user ON (m_tracker_component.userlead=s_user.username)
         ]]>
-	</sql>
+    </sql>
 
-	<select id="getTotalCount" resultType="int" parameterType="ComponentSearchCriteria">
-		SELECT count(*) as totalCount FROM m_tracker_component
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt.querySearchCriteria" />
-		</trim>
-	</select>
+    <select id="getTotalCount" resultType="int" parameterType="ComponentSearchCriteria">
+        SELECT count(*) as totalCount FROM m_tracker_component
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include
+                refid="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt.querySearchCriteria" />
+        </trim>
+    </select>
 
-	<select id="findPagableList" resultMap="SimpleComponentResult"
-		parameterType="ComponentSearchCriteria">
-		<include
-			refid="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt.selectComponents" />
+    <select id="findPagableListByCriteria" resultMap="SimpleComponentResult"
+                parameterType="ComponentSearchCriteria">
+        <include
+            refid="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt.selectComponents" />
 
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt.querySearchCriteria" />
-		</trim>
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include
+                refid="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt.querySearchCriteria" />
+        </trim>
 
-		ORDER BY m_tracker_component.createdDate DESC
-	</select>
+        ORDER BY m_tracker_component.createdDate DESC
+    </select>
+        
+    <select id="findComponentById" parameterType="java.lang.Integer"
+                resultMap="SimpleComponentResult">
+        <include
+            refid="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt.selectComponents" />
+
+        WHERE m_tracker_component.id=#{componentId, javaType=INTEGER}
+    </select>
+    
+    <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MIN(id) FROM m_tracker_component
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt.querySearchCriteria"/>
+        </trim>
+    </select>
+    
+    <select id="getPreviousItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MAX(id) FROM m_tracker_component
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt.querySearchCriteria"/>
+        </trim>
+    </select>
 </mapper>

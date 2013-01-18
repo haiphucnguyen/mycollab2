@@ -20,6 +20,7 @@ import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -35,6 +36,7 @@ import org.vaadin.hene.splitbutton.PopupButtonControl;
  *
  * @author haiphucnguyen
  */
+@ViewComponent
 public class ComponentListViewImpl extends AbstractView implements ComponentListView {
 
     private static final long serialVersionUID = 1L;

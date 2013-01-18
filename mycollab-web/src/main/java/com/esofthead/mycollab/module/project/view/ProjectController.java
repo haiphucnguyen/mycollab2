@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.project.view.task.TaskContainer;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -126,7 +127,7 @@ public class ProjectController {
                         projectView.gotoTaskList(data);
                     }
                 });
-        
+
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<TaskListEvent.GotoEdit>() {
                     @Override
@@ -143,7 +144,7 @@ public class ProjectController {
                         projectView.gotoTaskList(data);
                     }
                 });
-        
+
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<TaskListEvent.GotoAdd>() {
                     @Override
@@ -196,7 +197,7 @@ public class ProjectController {
                         projectView.gotoTaskList(data);
                     }
                 });
-        
+
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<TaskEvent.GotoAdd>() {
                     @Override
@@ -213,7 +214,7 @@ public class ProjectController {
                         projectView.gotoTaskList(data);
                     }
                 });
-        
+
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<TaskEvent.GotoEdit>() {
                     @Override
@@ -466,7 +467,7 @@ public class ProjectController {
                                 criteria));
                     }
                 });
-        
+
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<BugComponentEvent.GotoAdd>() {
                     @Override
@@ -481,6 +482,42 @@ public class ProjectController {
                         BugContainer.AddComponentData data = new BugContainer.AddComponentData(
                                 new Component());
                         projectView.gotoBugView(data);
+                    }
+                });
+
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<BugComponentEvent.GotoRead>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return BugComponentEvent.GotoRead.class;
+                    }
+
+                    @Override
+                    public void handle(BugComponentEvent.GotoRead event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        BugContainer.ReadComponentData data = new BugContainer.ReadComponentData(
+                                (Integer) event.getData());
+                        projectView.gotoBugView(data);
+                    }
+                });
+
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<BugComponentEvent.GotoList>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return BugComponentEvent.GotoList.class;
+                    }
+
+                    @Override
+                    public void handle(BugComponentEvent.GotoList event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        SimpleProject project = (SimpleProject) AppContext
+                                .getVariable(ProjectContants.PROJECT_NAME);
+                        ComponentSearchCriteria criteria = new ComponentSearchCriteria();
+                        criteria.setProjectid(new NumberSearchField(project.getId()));
+                        projectView.gotoBugView(new BugContainer.SearchComponentData(criteria));
                     }
                 });
     }

@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt;
 import com.esofthead.mycollab.module.tracker.dao.RelatedItemMapper;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.RelatedItemExample;
+import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,8 @@ public class ComponentServiceImpl extends DefaultService<Integer, Component, Com
     public ISearchableDAO<ComponentSearchCriteria> getSearchMapper() {
         return componentMapperExt;
     }
+    
+    
 
     @Override
     public int remove(Integer primaryKey) {
@@ -47,5 +50,10 @@ public class ComponentServiceImpl extends DefaultService<Integer, Component, Com
         relatedItemMapper.deleteByExample(ex);
 
         return super.remove(primaryKey);
+    }
+
+    @Override
+    public SimpleComponent findComponentById(int componentId) {
+        return componentMapperExt.findComponentById(componentId);
     }
 }
