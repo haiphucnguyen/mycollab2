@@ -4,10 +4,16 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.module.tracker.domain.Version;
+import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
+import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
+
 /**
  *
  * @author haiphucnguyen
  */
-public class VersionReadView {
+public interface VersionReadView extends IPreviewView<Version> {
+
+    HasPreviewFormHandlers<Version> getPreviewFormHandlers();
     
 }

@@ -1,11 +1,19 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.esofthead.mycollab.module.tracker.dao;
 
-import java.util.List;
-
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.module.tracker.domain.Version;
+import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 
-public interface VersionMapperExt {
-	List<Version> getAffectedVersionsByRelatedRefKey(String refKey);
+/**
+ *
+ * @author haiphucnguyen
+ */
+public interface VersionMapperExt extends ISearchableDAO<VersionSearchCriteria> {
 
-	List<Version> getFixedVersionByRelatedRefKey(String refKey);
+    Version findVersionById(int versionId);
+    
 }

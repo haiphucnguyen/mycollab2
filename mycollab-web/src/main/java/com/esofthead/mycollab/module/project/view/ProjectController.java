@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
@@ -26,8 +27,10 @@ import com.esofthead.mycollab.module.project.view.bug.BugContainer;
 import com.esofthead.mycollab.module.project.view.task.TaskContainer;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
+import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -535,6 +538,76 @@ public class ProjectController {
                         ComponentSearchCriteria criteria = new ComponentSearchCriteria();
                         criteria.setProjectid(new NumberSearchField(project.getId()));
                         projectView.gotoBugView(new BugContainer.SearchComponentData(criteria));
+                    }
+                });
+        
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<BugVersionEvent.GotoAdd>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return BugVersionEvent.GotoAdd.class;
+                    }
+
+                    @Override
+                    public void handle(BugVersionEvent.GotoAdd event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        BugContainer.AddVersionData data = new BugContainer.AddVersionData(
+                                new Version());
+                        projectView.gotoBugView(data);
+                    }
+                });
+
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<BugVersionEvent.GotoEdit>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return BugVersionEvent.GotoEdit.class;
+                    }
+
+                    @Override
+                    public void handle(BugVersionEvent.GotoEdit event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        BugContainer.EditVersionData data = new BugContainer.EditVersionData(
+                                (Version) event.getData());
+                        projectView.gotoBugView(data);
+                    }
+                });
+
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<BugVersionEvent.GotoRead>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return BugVersionEvent.GotoRead.class;
+                    }
+
+                    @Override
+                    public void handle(BugVersionEvent.GotoRead event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        BugContainer.ReadVersionData data = new BugContainer.ReadVersionData(
+                                (Integer) event.getData());
+                        projectView.gotoBugView(data);
+                    }
+                });
+
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<BugVersionEvent.GotoList>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return BugVersionEvent.GotoList.class;
+                    }
+
+                    @Override
+                    public void handle(BugVersionEvent.GotoList event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        SimpleProject project = (SimpleProject) AppContext
+                                .getVariable(ProjectContants.PROJECT_NAME);
+                        VersionSearchCriteria criteria = new VersionSearchCriteria();
+                        criteria.setProjectId(new NumberSearchField(project.getId()));
+                        projectView.gotoBugView(new BugContainer.SearchVersionData(criteria));
                     }
                 });
     }

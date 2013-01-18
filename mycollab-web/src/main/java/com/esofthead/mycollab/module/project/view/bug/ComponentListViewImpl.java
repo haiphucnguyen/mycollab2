@@ -80,14 +80,14 @@ public class ComponentListViewImpl extends AbstractView implements ComponentList
 
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
-                        SimpleComponent account = tableItem.getBeanByIndex(itemId);
-                        tableItem.fireSelectItemEvent(account);
+                        SimpleComponent component = tableItem.getBeanByIndex(itemId);
+                        tableItem.fireSelectItemEvent(component);
 
                     }
                 });
 
-                SimpleComponent account = tableItem.getBeanByIndex(itemId);
-                account.setExtraData(cb);
+                SimpleComponent component = tableItem.getBeanByIndex(itemId);
+                component.setExtraData(cb);
                 return cb;
             }
         });
@@ -115,8 +115,6 @@ public class ComponentListViewImpl extends AbstractView implements ComponentList
 
             }
         });
-
-        
 
         tableItem.setColumnExpandRatio("componentname", 1);
         tableItem.setColumnWidth("description", UIConstants.TABLE_X_LABEL_WIDTH);

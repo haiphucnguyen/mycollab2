@@ -25,7 +25,7 @@ import com.vaadin.ui.Layout;
 @ViewComponent
 public class ComponentReadViewImpl extends AbstractView implements ComponentReadView {
     private static final long serialVersionUID = 1L;
-    private SimpleComponent risk;
+    private SimpleComponent component;
     private PreviewForm previewForm;
 
     public ComponentReadViewImpl() {
@@ -36,13 +36,13 @@ public class ComponentReadViewImpl extends AbstractView implements ComponentRead
 
     @Override
     public void previewItem(SimpleComponent item) {
-        risk = item;
+        component = item;
         previewForm.setItemDataSource(new BeanItem<SimpleComponent>(item));
     }
 
     @Override
     public SimpleComponent getItem() {
-        return risk;
+        return component;
     }
 
     @Override
@@ -75,7 +75,7 @@ public class ComponentReadViewImpl extends AbstractView implements ComponentRead
             private static final long serialVersionUID = 1L;
 
             public FormLayoutFactory() {
-                super(risk.getComponentname());
+                super(component.getComponentname());
             }
 
             @Override

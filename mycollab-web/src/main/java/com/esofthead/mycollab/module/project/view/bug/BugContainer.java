@@ -1,7 +1,9 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.tracker.domain.Component;
+import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
+import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -39,17 +41,17 @@ public class BugContainer extends AbstractView {
         }
     }
     
-    public static class AddVersionData extends ScreenData<Component> {
+    public static class AddVersionData extends ScreenData<Version> {
 
-        public AddVersionData(Component component) {
-            super(component);
+        public AddVersionData(Version version) {
+            super(version);
         }
     }
     
-    public static class EditVersionData extends ScreenData<Component> {
+    public static class EditVersionData extends ScreenData<Version> {
 
-        public EditVersionData(Component component) {
-            super(component);
+        public EditVersionData(Version version) {
+            super(version);
         }
     }
     
@@ -60,9 +62,9 @@ public class BugContainer extends AbstractView {
         }
     }
     
-    public static class SearchVersionData extends ScreenData<ComponentSearchCriteria> {
+    public static class SearchVersionData extends ScreenData<VersionSearchCriteria> {
 
-        public SearchVersionData(ComponentSearchCriteria criteria) {
+        public SearchVersionData(VersionSearchCriteria criteria) {
             super(criteria);
         }
     }

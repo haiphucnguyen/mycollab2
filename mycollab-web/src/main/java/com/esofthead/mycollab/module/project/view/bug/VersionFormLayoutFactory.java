@@ -61,7 +61,7 @@ public abstract class VersionFormLayoutFactory implements IFormLayoutFactory {
 
         @Override
         public Layout getLayout() {
-            informationLayout = new GridFormLayoutHelper(1, 2);
+            informationLayout = new GridFormLayoutHelper(1, 3);
             VerticalLayout layout = new VerticalLayout();
             layout.addComponent(informationLayout.getLayout());
             return layout;
@@ -73,6 +73,8 @@ public abstract class VersionFormLayoutFactory implements IFormLayoutFactory {
                 informationLayout.addComponent(field, "Version Name", 0, 0);
             } else if (propertyId.equals("description")) {
                 informationLayout.addComponent(field, "Description", 0, 1);
+            } else if (propertyId.equals("duedate")) {
+                informationLayout.addComponent(field, "Due Date", 0, 2);
             }
         }
     }
