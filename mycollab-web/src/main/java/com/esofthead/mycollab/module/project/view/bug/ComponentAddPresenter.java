@@ -58,16 +58,16 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
     }
 
     public void save(Component item) {
-        ComponentService taskService = AppContext.getSpringBean(ComponentService.class);
+        ComponentService componentService = AppContext.getSpringBean(ComponentService.class);
 
         SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
         item.setSaccountid(AppContext.getAccountId());
         item.setProjectid(project.getId());
 
         if (item.getId() == null) {
-            taskService.saveWithSession(item, AppContext.getUsername());
+            componentService.saveWithSession(item, AppContext.getUsername());
         } else {
-            taskService.updateWithSession(item, AppContext.getUsername());
+            componentService.updateWithSession(item, AppContext.getUsername());
         }
     }
 

@@ -4,10 +4,79 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.events.BugVersionEvent;
+import com.esofthead.mycollab.module.tracker.domain.Version;
+import com.esofthead.mycollab.module.tracker.service.VersionService;
+import com.esofthead.mycollab.vaadin.events.EditFormHandler;
+import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
+import com.esofthead.mycollab.vaadin.mvp.NullViewState;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.ComponentContainer;
+
 /**
  *
  * @author haiphucnguyen
  */
-public class VersionAddPresenter {
+public class VersionAddPresenter extends AbstractPresenter<VersionAddView> {
+
+    public VersionAddPresenter() {
+        super(VersionAddView.class);
+
+        view.getEditFormHandlers().addFormHandler(new EditFormHandler<Version>() {
+            @Override
+            public void onSave(final Version item) {
+                save(item);
+                ViewState viewState = HistoryViewManager.back();
+                if (viewState instanceof NullViewState) {
+                    EventBus.getInstance().fireEvent(
+                            new BugVersionEvent.GotoList(this, null));
+                }
+            }
+
+            @Override
+            public void onCancel() {
+                ViewState viewState = HistoryViewManager.back();
+                if (viewState instanceof NullViewState) {
+                    EventBus.getInstance().fireEvent(
+                            new BugVersionEvent.GotoList(this, null));
+                }
+            }
+
+            @Override
+            public void onSaveAndNew(final Version item) {
+                save(item);
+                EventBus.getInstance().fireEvent(
+                        new BugVersionEvent.GotoAdd(this, null));
+            }
+        });
+    }
+
+    public void save(Version item) {
+        VersionService versionService = AppContext.getSpringBean(VersionService.class);
+
+        SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
+        item.setSaccountid(AppContext.getAccountId());
+        item.setProjectid(project.getId());
+
+        if (item.getId() == null) {
+            versionService.saveWithSession(item, AppContext.getUsername());
+        } else {
+            versionService.updateWithSession(item, AppContext.getUsername());
+        }
+    }
+
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        BugContainer bugContainer = (BugContainer) container;
+        bugContainer.addComponent(view.getWidget());
+
+        view.editItem((Version) data.getParams());
+    }
     
 }
