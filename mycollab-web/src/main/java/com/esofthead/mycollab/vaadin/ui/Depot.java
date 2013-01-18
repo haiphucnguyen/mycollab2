@@ -43,16 +43,15 @@ public class Depot extends VerticalLayout {
 							isOpenned = !isOpenned;
 							if (isOpenned) {
 								content.setHeight("100%");
-								// header.removeStyleName("collapsed");
 								Depot.this.removeStyleName("collapsed");
 							} else {
 								content.setHeight("0px");
-								// header.addStyleName("collapsed");
 								Depot.this.addStyleName("collapsed");
 							}
 						}
 					});
 		}
+
 		headerElement.addStyleName("header-elements");
 		header.addComponent(headerElement);
 		header.setExpandRatio(headerElement, 1.0f);
