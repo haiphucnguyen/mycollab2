@@ -27,11 +27,8 @@ public class LeadListDashlet extends Depot {
 
     public LeadListDashlet() {
         super("My Leads", new VerticalLayout());
-        tableItem = new LeadTableDisplay(
-                new String[]{"leadName", "title",
-                    "officephone", "email"},
-                new String[]{"Name", "Title",
-                    "Office Phone", "Email"});
+        tableItem = new LeadTableDisplay(new String[]{"leadName", "officephone", "email"},
+                new String[]{"Name", "Phone", "Email"});
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override
             public Class<? extends ApplicationEvent> getEventType() {

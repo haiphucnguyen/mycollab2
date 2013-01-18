@@ -36,10 +36,12 @@ public class BeanPagedList<SearchService extends ISearchableService<S>, S extend
     private final SearchService searchService;
     private final VerticalLayout listContainer;
     private final Class<? extends BeanPagedList.RowDisplayHandler<T>> rowDisplayHandler;
+    private int defaultNumberSearchItems = 10;
 
     public BeanPagedList(
             SearchService searchService,
-            Class<? extends BeanPagedList.RowDisplayHandler<T>> rowDisplayHandler) {
+            Class<? extends BeanPagedList.RowDisplayHandler<T>> rowDisplayHandler, int defaultNumberSearchItems) {
+        this.defaultNumberSearchItems = defaultNumberSearchItems;
         this.searchService = searchService;
         this.rowDisplayHandler = rowDisplayHandler;
         listContainer = new VerticalLayout();
@@ -155,7 +157,7 @@ public class BeanPagedList<SearchService extends ISearchableService<S>, S extend
         listContainer.removeAllComponents();
 
         searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
-                SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
+                defaultNumberSearchItems);
         doSearch();
     }
 

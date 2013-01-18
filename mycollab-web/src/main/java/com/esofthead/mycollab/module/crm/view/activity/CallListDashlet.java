@@ -22,7 +22,7 @@ public class CallListDashlet extends Depot {
     public CallListDashlet() {
         super("My Calls", new VerticalLayout());
 
-        tableItem = new CallTableDisplay(new String[]{"subject", "relatedTo", "startdate", "status"}, new String[]{"Subject", "Related To", "Start Date", "Status"});
+        tableItem = new CallTableDisplay(new String[]{"subject", "startdate", "status"}, new String[]{"Subject", "Start Date", "Status"});
         this.content.addComponent(tableItem);
     }
 

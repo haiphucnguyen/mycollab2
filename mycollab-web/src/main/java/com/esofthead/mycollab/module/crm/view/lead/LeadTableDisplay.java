@@ -93,7 +93,7 @@ public class LeadTableDisplay extends PagedBeanTable2<LeadService, LeadSearchCri
         this.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
         this.setColumnWidth("title", UIConstants.TABLE_M_LABEL_WIDTH);
         this.setColumnExpandRatio("leadName", 1.0f);
-        this.setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);
+        this.setColumnWidth("officephone", UIConstants.TABLE_M_LABEL_WIDTH);
         this.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
         this.setColumnWidth("assignuser", UIConstants.TABLE_X_LABEL_WIDTH);
     }

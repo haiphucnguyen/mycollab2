@@ -27,10 +27,8 @@ public class AccountListDashlet extends Depot {
 
     public AccountListDashlet() {
         super("My Accounts", new VerticalLayout());
-        tableItem = new AccountTableDisplay(new String[]{"accountname",
-                    "city", "phoneoffice", "email"},
-                new String[]{"Name", "City", "Phone Office",
-                    "Email Address"});
+        tableItem = new AccountTableDisplay(new String[]{"accountname", "phoneoffice", "email"},
+                new String[]{"Name", "Phone", "Email"});
 
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override

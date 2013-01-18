@@ -5,7 +5,9 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 
 @SuppressWarnings("serial")
 public class OpportunitySalesStageComboBox extends ValueComboBox {
-	public OpportunitySalesStageComboBox() {
-		this.loadData(CrmDataTypeFactory.getOpportunitySalesStageList());
-	}
+
+    public OpportunitySalesStageComboBox() {
+        this.loadData(CrmDataTypeFactory.getOpportunitySalesStageList());
+        this.setNullSelectionAllowed(false);
+    }
 }
