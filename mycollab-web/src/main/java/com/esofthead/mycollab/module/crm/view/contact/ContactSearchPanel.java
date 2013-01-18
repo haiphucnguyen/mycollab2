@@ -1,14 +1,14 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import java.util.Collection;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
-import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
-import com.esofthead.mycollab.module.crm.view.account.AccountSearchPanel;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceListSelect;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -27,9 +27,7 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
-import java.util.Collection;
 
 @SuppressWarnings("serial")
 public class ContactSearchPanel extends
@@ -72,7 +70,7 @@ public class ContactSearchPanel extends
 					}
 				});
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
-		createAccountBtn.setStyleName(BaseTheme.BUTTON_LINK);
+		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
 		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
 

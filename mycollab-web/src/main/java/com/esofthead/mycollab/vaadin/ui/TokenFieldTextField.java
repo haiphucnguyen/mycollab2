@@ -15,8 +15,8 @@ public class TokenFieldTextField extends TokenField {
 		super();
 		
 		this.setStyleName(TokenField.STYLE_TOKENFIELD);
-		this.setWidth("300px");
-		this.setInputWidth("300px");
+		this.setWidth("550px");
+		this.setInputWidth("550px");
 		this.setRememberNewTokens(false);
 		this.setInputPrompt("example@abc.com");
 	}

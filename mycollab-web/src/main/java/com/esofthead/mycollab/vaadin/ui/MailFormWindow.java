@@ -28,9 +28,12 @@ public class MailFormWindow extends Window {
 
 	private static final long serialVersionUID = 1L;
 	private TokenFieldTextField tokenFieldMailTo;
-	private TokenFieldTextField tokenFieldMailCc;
-	private TokenFieldTextField tokenFieldMailBcc;
+	private TokenFieldTextField tokenFieldMailCc = new TokenFieldTextField();
+	private TokenFieldTextField tokenFieldMailBcc = new TokenFieldTextField();
 	private GridLayout inputLayout;
+	private Layout subjectField;
+	private Layout ccField;
+	private Layout bccField;
 	
 	private Button btnLinkCc;
 	private Button btnLinkBcc;
@@ -50,24 +53,21 @@ public class MailFormWindow extends Window {
 	}
 	
 	private void initLayout() {
-		this.setWidth("900px");
-		this.setHeight("500px");
+		this.setWidth("800px");
+		this.setHeight("530px");
 		initUI();
+		center();
 	}
 
-	private void checkToReInitCcBcc() {
-		if ((tokenFieldMailBcc == null) && (tokenFieldMailCc == null)) {
-			initButtonLinkCcBcc();
-		}
-	}
-	
 	@SuppressWarnings("serial")
 	private void initButtonLinkCcBcc() {
 		btnLinkCc = new Button("Add Cc");
+		btnLinkCc.setStyleName("link");
 		inputLayout.addComponent(btnLinkCc, 1, 0);
 		inputLayout.setComponentAlignment(btnLinkCc, Alignment.MIDDLE_CENTER);
 		
 		btnLinkBcc = new Button("Add Bcc");
+		btnLinkBcc.setStyleName("link");
 		inputLayout.addComponent(btnLinkBcc, 2, 0);
 		inputLayout.setComponentAlignment(btnLinkBcc, Alignment.MIDDLE_CENTER);
 		
@@ -103,16 +103,45 @@ public class MailFormWindow extends Window {
 	}
 
 	private void initUI() {
-		GridLayout mainLayout = new GridLayout(2, 5);
+		GridLayout mainLayout = new GridLayout(1, 5);
 		mainLayout.setWidth("100%");
-		HorizontalLayout hLayoutInput = new HorizontalLayout();
+		mainLayout.setMargin(true);
+		mainLayout.setSpacing(true);
 		
-		inputLayout = new GridLayout(4, 6);
+		inputLayout = new GridLayout(3, 4);
 		inputLayout.setSpacing(true);
 		inputLayout.setMargin(true);
+		inputLayout.setWidth("100%");
+		
+		
+		mainLayout.addComponent(inputLayout);
+		
+		tokenFieldMailTo = new TokenFieldTextField() ;
+		inputLayout.addComponent(createTextFieldMail("To:", tokenFieldMailTo), 0, 0);
+		
+		if (arrMail != null) {
+			for (int i = 0; i < arrMail.length; i++) {
+				tokenFieldMailTo.addToken(arrMail[i]);
+			}
+		}
+		
+		final TextField subject = new TextField();
+		subject.setWidth("550px");
+		subjectField = createTextFieldMail("Subject:", subject);
+		inputLayout.addComponent(subjectField, 0, 1);
+		
+		initButtonLinkCcBcc();
+		
+		ccField = createTextFieldMail("Cc:", tokenFieldMailCc);
+		bccField = createTextFieldMail("Bcc:", tokenFieldMailBcc);
+		
+		final RichTextArea noteArea = new RichTextArea();
+		noteArea.setWidth("100%");
+		mainLayout.addComponent(noteArea, 0, 1);
+		mainLayout.setComponentAlignment(noteArea, Alignment.MIDDLE_CENTER);
 
-		inputLayout.setWidth("600px");
-		hLayoutInput.addComponent(inputLayout);
+		HorizontalLayout controlsLayout = new HorizontalLayout();
+		controlsLayout.setWidth("100%");
 		
 		final AttachmentPanel attachments = new AttachmentPanel();
         
@@ -126,40 +155,13 @@ public class MailFormWindow extends Window {
 		
 		VerticalLayout attachmentLayout = new VerticalLayout();
 		attachmentLayout.setSpacing(true);
-		attachmentLayout.setMargin(true);
 		attachmentLayout.addComponent(attachedFilepanel);
 		attachmentLayout.addComponent(uploadExt);
-		hLayoutInput.addComponent(attachmentLayout);
 		
-		mainLayout.addComponent(hLayoutInput);
-		tokenFieldMailTo = new TokenFieldTextField() ;
-		inputLayout.addComponent(createTextFieldMail("To:", tokenFieldMailTo), 0, 0);
-		
-		if (arrMail != null) {
-			for (int i = 0; i < arrMail.length; i++) {
-				tokenFieldMailTo.addToken(arrMail[i]);
-			}
-		}
-		
-		initButtonLinkCcBcc();
-
-		final TextField subject = new TextField();
-		subject.setWidth("300px");
-		inputLayout.addComponent(createTextFieldMail("Subject:", subject), 0, 5);
-		
-		final RichTextArea noteArea = new RichTextArea();
-		noteArea.setWidth("100%");
-		mainLayout.addComponent(noteArea, 0, 1);
-		mainLayout.setComponentAlignment(noteArea, Alignment.MIDDLE_CENTER);
-
-		HorizontalLayout controlsLayout = new HorizontalLayout();
-		controlsLayout.setWidth("100%");
-		Label emptySpace = new Label("");
-		controlsLayout.addComponent(emptySpace);
-		controlsLayout.setExpandRatio(emptySpace, 1.0f);
+		controlsLayout.addComponent(attachmentLayout);
+		controlsLayout.setExpandRatio(attachmentLayout, 1.0f);
 
 		controlsLayout.setSpacing(true);
-		controlsLayout.setMargin(true);
 		Button sendBtn = new Button("Send", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -211,84 +213,94 @@ public class MailFormWindow extends Window {
 		this.setContent(mainLayout);
 	}
 	
-	private void buttonLinkCcClick(ClickEvent event) {
-		tokenFieldMailCc = new TokenFieldTextField();
-		
-		if (!isAddCc) {
-			btnLinkCc.setCaption("Remove Cc");
+	private void checkToReInitCcBcc() {
+		if ((!isAddCc) && (!isAddBcc)) {
 			inputLayout.removeComponent(btnLinkCc);
 			inputLayout.removeComponent(btnLinkBcc);
-			if (tokenFieldMailBcc == null) {
-				inputLayout.addComponent(createTextFieldMail("Cc:", tokenFieldMailCc), 0, 1);
-				
+			initButtonLinkCcBcc();
+			inputLayout.removeComponent(subjectField);
+			inputLayout.removeComponent(0,1);
+			inputLayout.addComponent(subjectField, 0, 1);
+		}
+	}
+	
+	private void buttonLinkCcClick(ClickEvent event) {
+		removeAllInputField();
+		if (!isAddCc) {
+			btnLinkCc.setCaption("Remove Cc");
+			if (!isAddBcc) {
+				inputLayout.addComponent(ccField, 0, 1);
 				inputLayout.addComponent(btnLinkCc, 1, 1);
 				inputLayout.addComponent(btnLinkBcc, 2, 1);
+				inputLayout.addComponent(subjectField, 0, 2);
 			} else {
-				inputLayout.addComponent(createTextFieldMail("Cc:", tokenFieldMailCc), 0, 2);
-				
-				inputLayout.addComponent(btnLinkCc, 1, 2);
-				inputLayout.addComponent(btnLinkBcc, 1, 1);
+				addFullInputFieldByOrder();
 			}
-			inputLayout.setComponentAlignment(btnLinkBcc, Alignment.MIDDLE_CENTER);
-			inputLayout.setComponentAlignment(btnLinkCc, Alignment.MIDDLE_CENTER);
 		} else {
 			btnLinkCc.setCaption("Add Cc");
-			tokenFieldMailCc = null;
-			inputLayout.removeComponent(tokenFieldMailCc);
-			inputLayout.removeComponent(btnLinkCc);
 			
-			if (tokenFieldMailBcc == null) {
-				inputLayout.removeComponent(0, 1);
-				inputLayout.removeComponent(2, 1);
-			} else {
-				inputLayout.removeComponent(0, 2);
+			if (isAddBcc) {
+				inputLayout.addComponent(bccField, 0, 1);
+				inputLayout.addComponent(btnLinkBcc, 1, 1);
+				inputLayout.addComponent(btnLinkCc, 2, 1);
+				inputLayout.addComponent(subjectField, 0, 2);
 			}
-			
 		}
+		
+		inputLayout.setComponentAlignment(btnLinkBcc, Alignment.MIDDLE_CENTER);
+		inputLayout.setComponentAlignment(btnLinkCc, Alignment.MIDDLE_CENTER);
 		
 		isAddCc = !isAddCc;
 		
 		checkToReInitCcBcc();
 	}
 	
+	private void addFullInputFieldByOrder() {
+		inputLayout.addComponent(ccField, 0, 1);
+		inputLayout.addComponent(btnLinkCc, 1, 1);
+		
+		inputLayout.addComponent(bccField, 0, 2);
+		inputLayout.addComponent(btnLinkBcc, 1, 2);
+		
+		inputLayout.addComponent(subjectField, 0, 3);
+	}
+	
+	private void removeAllInputField() {
+		inputLayout.removeComponent(btnLinkCc);
+		inputLayout.removeComponent(ccField);
+		inputLayout.removeComponent(subjectField);
+		inputLayout.removeComponent(bccField);
+		inputLayout.removeComponent(btnLinkBcc);
+	}
+	
 	private void butonLinkBccClick(ClickEvent event) {
-		tokenFieldMailBcc = new TokenFieldTextField();
+		
+		removeAllInputField();
 		
 		if (!isAddBcc) {
 			btnLinkBcc.setCaption("Remove Bcc");
 			
-			inputLayout.removeComponent(btnLinkCc);
-			inputLayout.removeComponent(btnLinkBcc);
-			
-			if (tokenFieldMailCc == null) {
-				inputLayout.addComponent(createTextFieldMail("Bcc:", tokenFieldMailBcc), 0, 1);
-				
+			if (!isAddCc) {
+				inputLayout.addComponent(bccField, 0, 1);
 				inputLayout.addComponent(btnLinkCc, 1, 1);
 				inputLayout.addComponent(btnLinkBcc, 2, 1);
+				inputLayout.addComponent(subjectField, 0, 2);
 			} else {
-				inputLayout.addComponent(createTextFieldMail("Bcc:", tokenFieldMailBcc), 0, 2);
-				
-				inputLayout.addComponent(btnLinkCc, 1, 1);
-				inputLayout.addComponent(btnLinkBcc, 1, 2);
+				addFullInputFieldByOrder();
 			}
-			inputLayout.setComponentAlignment(btnLinkBcc, Alignment.MIDDLE_CENTER);
-			inputLayout.setComponentAlignment(btnLinkCc, Alignment.MIDDLE_CENTER);
-			
 		} else {
 			btnLinkBcc.setCaption("Add Bcc");
-			tokenFieldMailBcc = null;
-			inputLayout.removeComponent(tokenFieldMailBcc);
-			inputLayout.removeComponent(btnLinkBcc);
 			
-			if (tokenFieldMailCc == null) {
-				inputLayout.removeComponent(0, 1);
-				inputLayout.removeComponent(2, 1);
-			} else {
-				inputLayout.removeComponent(0, 2);
+			if (isAddCc) {
+				inputLayout.addComponent(ccField, 0, 1);
+				inputLayout.addComponent(btnLinkCc, 1, 1);
+				inputLayout.addComponent(btnLinkBcc, 2, 1);
+				inputLayout.addComponent(subjectField, 0, 2);
 			}
 		}
-		checkToReInitCcBcc();
-		
+		inputLayout.setComponentAlignment(btnLinkBcc, Alignment.MIDDLE_CENTER);
+		inputLayout.setComponentAlignment(btnLinkCc, Alignment.MIDDLE_CENTER);
 		isAddBcc = !isAddBcc;
+		checkToReInitCcBcc();
 	}
 }

@@ -26,7 +26,6 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.themes.BaseTheme;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
@@ -74,7 +73,7 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 					}
 				});
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
-		createAccountBtn.setStyleName(BaseTheme.BUTTON_LINK);
+		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
 		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
 
