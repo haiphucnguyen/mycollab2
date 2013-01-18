@@ -43,7 +43,7 @@ public class LeadListDashlet extends Depot {
                 }
             }
         });
-        this.content.addComponent(tableItem);
+        this.bodyContent.addComponent(tableItem);
     }
 
     public void display() {

@@ -27,7 +27,7 @@ public class AccountOpportunityListComp extends RelatedListComp<OpportunitySearc
     }
 
     private void initUI() {
-        VerticalLayout contentContainer = (VerticalLayout) content;
+        VerticalLayout contentContainer = (VerticalLayout) bodyContent;
         contentContainer.setSpacing(true);
 
         Button newBtn = new Button("New Opportunity", new Button.ClickListener() {

@@ -34,7 +34,7 @@ public class ContactOpportunityListComp extends RelatedListComp<OpportunitySearc
     }
 
     private void initUI() {
-        VerticalLayout contentContainer = (VerticalLayout) content;
+        VerticalLayout contentContainer = (VerticalLayout) bodyContent;
         contentContainer.setSpacing(true);
 
         SplitButton controlsBtn = new SplitButton();

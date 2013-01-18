@@ -36,7 +36,7 @@ public class EventRelatedItemListComp extends RelatedListComp<EventSearchCriteri
     }
 
     private void initUI() {
-        VerticalLayout contentContainer = (VerticalLayout) content;
+        VerticalLayout contentContainer = (VerticalLayout) bodyContent;
         contentContainer.setSpacing(true);
 
         if (allowCreateNew) {

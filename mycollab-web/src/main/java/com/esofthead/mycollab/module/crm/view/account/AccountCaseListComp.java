@@ -34,7 +34,7 @@ public class AccountCaseListComp extends RelatedListComp<CaseSearchCriteria> {
     }
 
     private void initUI() {
-        VerticalLayout contentContainer = (VerticalLayout) content;
+        VerticalLayout contentContainer = (VerticalLayout) bodyContent;
         contentContainer.setSpacing(true);
 
         Button newBtn = new Button("New Case", new Button.ClickListener() {

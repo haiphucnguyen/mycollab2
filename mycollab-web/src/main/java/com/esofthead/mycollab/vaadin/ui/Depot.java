@@ -11,63 +11,65 @@ import com.vaadin.ui.VerticalLayout;
 
 public class Depot extends VerticalLayout {
 
-	private static final long serialVersionUID = 1L;
-	private boolean isOpenned = true;
-	protected HorizontalLayout header;
-	private final Label headerLbl;
-	protected ComponentContainer content;
+    private static final long serialVersionUID = 1L;
+    private boolean isOpenned = true;
+    protected HorizontalLayout header;
+    private final Label headerLbl;
+    protected ComponentContainer headerContent;
+    protected ComponentContainer bodyContent;
 
-	public Depot(String title, ComponentContainer headerElement,
-			ComponentContainer component) {
-		this.setStyleName("depotComp");
-		header = new HorizontalLayout();
-		header.setStyleName("depotHeader");
-		header.setWidth("500px");
-		this.content = component;
-		this.addComponent(header);
+    public Depot(String title, ComponentContainer headerElement,
+            ComponentContainer component) {
+        this.setStyleName("depotComp");
+        header = new HorizontalLayout();
+        header.setStyleName("depotHeader");
+        header.setWidth("500px");
+        this.bodyContent = component;
+        this.addComponent(header);
 
-		headerLbl = new Label(title);
-		headerLbl.setStyleName("h2");
-		headerLbl.setSizeUndefined();
-		header.addComponent(headerLbl);
-		if (headerElement == null) {
-			headerElement = new HorizontalLayout();
-			headerElement.setSizeFull();
-			headerElement.setStyleName("default-element");
-			((HorizontalLayout) headerElement)
-					.addListener(new LayoutClickListener() {
-						private static final long serialVersionUID = 1L;
+        headerLbl = new Label(title);
+        headerLbl.setStyleName("h2");
+        headerLbl.setSizeUndefined();
+        header.addComponent(headerLbl);
+        if (headerElement == null) {
+            this.headerContent = headerElement;
+            headerElement = new HorizontalLayout();
+            headerElement.setSizeFull();
+            headerElement.setStyleName("default-element");
+            ((HorizontalLayout) headerElement)
+                    .addListener(new LayoutClickListener() {
+                private static final long serialVersionUID = 1L;
 
-						@Override
-						public void layoutClick(LayoutClickEvent event) {
-							isOpenned = !isOpenned;
-							if (isOpenned) {
-								content.setHeight("100%");
-								Depot.this.removeStyleName("collapsed");
-							} else {
-								content.setHeight("0px");
-								Depot.this.addStyleName("collapsed");
-							}
-						}
-					});
-		}
+                @Override
+                public void layoutClick(LayoutClickEvent event) {
+                    isOpenned = !isOpenned;
+                    if (isOpenned) {
+                        bodyContent.setHeight("100%");
+                        Depot.this.removeStyleName("collapsed");
+                    } else {
+                        bodyContent.setHeight("0px");
+                        Depot.this.addStyleName("collapsed");
+                    }
+                }
+            });
+        }
 
-		headerElement.addStyleName("header-elements");
-		header.addComponent(headerElement);
-		header.setExpandRatio(headerElement, 1.0f);
+        headerElement.addStyleName("header-elements");
+        header.addComponent(headerElement);
+        header.setExpandRatio(headerElement, 1.0f);
 
-		CustomComponent customComp = new CustomComponent(component);
-		customComp.setWidth("100%");
-		customComp.setStyleName("depotContent");
-		this.addComponent(customComp);
-		this.setComponentAlignment(customComp, Alignment.MIDDLE_LEFT);
-	}
+        CustomComponent customComp = new CustomComponent(component);
+        customComp.setWidth("100%");
+        customComp.setStyleName("depotContent");
+        this.addComponent(customComp);
+        this.setComponentAlignment(customComp, Alignment.MIDDLE_LEFT);
+    }
 
-	public Depot(String title, ComponentContainer component) {
-		this(title, null, component);
-	}
+    public Depot(String title, ComponentContainer component) {
+        this(title, null, component);
+    }
 
-	public void setTitle(String title) {
-		headerLbl.setValue(title);
-	}
+    public void setTitle(String title) {
+        headerLbl.setValue(title);
+    }
 }

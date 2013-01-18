@@ -72,7 +72,7 @@ public class NoteListItems extends Depot {
     }
 
     private void initUI() {
-        final VerticalLayout contentContainer = (VerticalLayout) content;
+        final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
         contentContainer.setSpacing(true);
         createBtn = new Button("New Note", new Button.ClickListener() {
             private static final long serialVersionUID = 1L;
@@ -272,7 +272,7 @@ public class NoteListItems extends Depot {
     }
 
     private void addCreateBtn() {
-        VerticalLayout contentContainer = (VerticalLayout) content;
+        VerticalLayout contentContainer = (VerticalLayout) bodyContent;
         Component component = contentContainer.getComponent(0);
         if (component instanceof NoteEditor) {
             contentContainer.replaceComponent(component, createBtn);

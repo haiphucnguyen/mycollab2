@@ -51,7 +51,7 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
 
     @SuppressWarnings("serial")
     private void initUI() {
-        VerticalLayout contentContainer = (VerticalLayout) content;
+        VerticalLayout contentContainer = (VerticalLayout) bodyContent;
         contentContainer.setSpacing(true);
 
         final SplitButton controlsBtn = new SplitButton();

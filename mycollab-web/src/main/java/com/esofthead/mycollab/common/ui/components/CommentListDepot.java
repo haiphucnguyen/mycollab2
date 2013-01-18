@@ -35,7 +35,7 @@ public class CommentListDepot extends Depot implements ReloadableComponent{
     }
 
     private void initUI() {
-        VerticalLayout contentContainer = (VerticalLayout) content;
+        VerticalLayout contentContainer = (VerticalLayout) bodyContent;
         contentContainer.setSpacing(true);
 
         contentContainer.addComponent(new CommentInput(this, type, typeid));

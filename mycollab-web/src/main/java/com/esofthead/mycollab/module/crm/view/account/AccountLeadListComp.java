@@ -30,7 +30,7 @@ public class AccountLeadListComp extends RelatedListComp<LeadSearchCriteria> {
     }
 
     private void initUI() {
-        VerticalLayout contentContainer = (VerticalLayout) content;
+        VerticalLayout contentContainer = (VerticalLayout) bodyContent;
         contentContainer.setSpacing(true);
 
         SplitButton controlsBtn = new SplitButton();

@@ -21,7 +21,7 @@ public class BugHistoryList extends Depot {
     public BugHistoryList(int bugId) {
         super("History", new VerticalLayout());
 
-        VerticalLayout contentContainer = (VerticalLayout) this.content;
+        VerticalLayout contentContainer = (VerticalLayout) this.bodyContent;
         historyLogComponent = new HistoryLogComponent(ModuleNameConstants.PRJ, ProjectContants.BUG, bugId);
         contentContainer.addComponent(historyLogComponent);
         
