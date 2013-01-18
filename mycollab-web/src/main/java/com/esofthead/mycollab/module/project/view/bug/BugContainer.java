@@ -18,6 +18,13 @@ public class BugContainer extends AbstractView {
         }
     }
     
+    public static class EditComponentData extends ScreenData<Component> {
+
+        public EditComponentData(Component component) {
+            super(component);
+        }
+    }
+    
     public static class ReadComponentData extends ScreenData<Integer> {
 
         public ReadComponentData(Integer componentId) {
@@ -28,6 +35,34 @@ public class BugContainer extends AbstractView {
     public static class SearchComponentData extends ScreenData<ComponentSearchCriteria> {
 
         public SearchComponentData(ComponentSearchCriteria criteria) {
+            super(criteria);
+        }
+    }
+    
+    public static class AddVersionData extends ScreenData<Component> {
+
+        public AddVersionData(Component component) {
+            super(component);
+        }
+    }
+    
+    public static class EditVersionData extends ScreenData<Component> {
+
+        public EditVersionData(Component component) {
+            super(component);
+        }
+    }
+    
+    public static class ReadVersionData extends ScreenData<Integer> {
+
+        public ReadVersionData(Integer componentId) {
+            super(componentId);
+        }
+    }
+    
+    public static class SearchVersionData extends ScreenData<ComponentSearchCriteria> {
+
+        public SearchVersionData(ComponentSearchCriteria criteria) {
             super(criteria);
         }
     }

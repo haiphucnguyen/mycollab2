@@ -41,8 +41,12 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
                     .getPresenter(BugReadPresenter.class);
         } else if (data instanceof BugContainer.AddComponentData) {
             presenter = PresenterResolver.getPresenter(ComponentAddPresenter.class);
+        } else if (data instanceof BugContainer.EditComponentData) {
+            presenter = PresenterResolver.getPresenter(ComponentAddPresenter.class);
         } else if (data instanceof BugContainer.SearchComponentData) {
             presenter = PresenterResolver.getPresenter(ComponentListPresenter.class);
+        } else if (data instanceof BugContainer.ReadComponentData) {
+            presenter = PresenterResolver.getPresenter(ComponentReadPresenter.class);
         } else {
             presenter = PresenterResolver
                     .getPresenter(BugDashboardPresenter.class);
