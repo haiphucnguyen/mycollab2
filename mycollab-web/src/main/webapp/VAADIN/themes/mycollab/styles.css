@@ -909,7 +909,16 @@ input.v-textfield-errorField {
 	border-bottom: 1px solid #B7B7B7;
 	padding-bottom: 0.2em;
 }
-
+.depotComp .depot-title {
+	background: url('icons/16/depot_arrow_down.png') no-repeat top left transparent;
+	cursor: pointer;
+}
+.depotComp .depot-title .v-csslayout-margin {
+	margin-left: 18px;
+}
+.depotComp.collapsed .depot-title {
+	background: url('icons/16/depot_arrow_right.png') no-repeat top left transparent;
+}
 .depotComp .h2 {
 	font-size: 14px;
 	border: 0px;
@@ -920,14 +929,11 @@ input.v-textfield-errorField {
 /* 	margin-top: 30px; */
 	cursor: pointer;
 	padding: 0px;
+	
 }
-.depotComp .header-elements.default-element {
-	background: url('icons/16/depot_arrow_down.png') no-repeat bottom right transparent;
-	cursor: pointer;
+.depotComp .header-elements {
 }
-.depotComp.collapsed .header-elements.default-element {
-	background: url('icons/16/depot_arrow_right.png') no-repeat bottom right transparent;
-}
+
 .depotComp.collapsed .depotContent {
 	padding: 0px;
 }
