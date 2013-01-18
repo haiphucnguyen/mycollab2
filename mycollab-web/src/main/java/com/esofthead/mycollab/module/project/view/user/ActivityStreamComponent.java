@@ -14,6 +14,9 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.events.BugComponentEvent;
+import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
@@ -48,7 +51,7 @@ public class ActivityStreamComponent extends Panel {
 
     public void showProjectFeeds() {
         this.removeAllComponents();
-        
+
         activityStreamList = new BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), ActivityStreamRowDisplayHandler.class, 15);
         this.addComponent(new LazyLoadWrapper(activityStreamList));
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
@@ -110,6 +113,12 @@ public class ActivityStreamComponent extends Panel {
                 this.setIcon(new ThemeResource("icons/16/project/task.png"));
             } else if (ProjectContants.TASK_LIST.equals(type)) {
                 this.setIcon(new ThemeResource("icons/16/project/tasklist.png"));
+            } else if (ProjectContants.BUG.equals(type)) {
+                this.setIcon(new ThemeResource("icons/16/project/bug.png"));
+            } else if (ProjectContants.BUG_COMPONENT.equals(type)) {
+                this.setIcon(new ThemeResource("icons/16/project/component.png"));
+            } else if (ProjectContants.BUG_VERSION.equals(type)) {
+                this.setIcon(new ThemeResource("icons/16/project/version.png"));
             }
 
             this.setStyleName("link");
@@ -129,6 +138,12 @@ public class ActivityStreamComponent extends Panel {
                         EventBus.getInstance().fireEvent(new TaskEvent.GotoRead(this, typeid));
                     } else if (ProjectContants.TASK_LIST.equals(type)) {
                         EventBus.getInstance().fireEvent(new TaskListEvent.GotoRead(this, typeid));
+                    } else if (ProjectContants.BUG.equals(type)) {
+                        EventBus.getInstance().fireEvent(new BugEvent.GotoRead(this, typeid));
+                    } else if (ProjectContants.BUG_COMPONENT.equals(type)) {
+                        EventBus.getInstance().fireEvent(new BugComponentEvent.GotoRead(this, typeid));
+                    } else if (ProjectContants.BUG_VERSION.equals(type)) {
+                        EventBus.getInstance().fireEvent(new BugVersionEvent.GotoRead(this, typeid));
                     }
                 }
             });

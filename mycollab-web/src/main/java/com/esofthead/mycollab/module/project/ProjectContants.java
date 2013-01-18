@@ -20,5 +20,7 @@ public class ProjectContants {
     
     public static final String BUG = "Bug";
     
+    public static final String BUG_COMPONENT = "Component";
     
+    public static final String BUG_VERSION = "Version";
 }

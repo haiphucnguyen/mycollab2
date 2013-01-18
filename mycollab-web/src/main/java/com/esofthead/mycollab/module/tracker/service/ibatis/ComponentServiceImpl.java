@@ -1,9 +1,11 @@
 package com.esofthead.mycollab.module.tracker.service.ibatis;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.tracker.RelatedItemConstants;
 import com.esofthead.mycollab.module.tracker.dao.ComponentMapper;
 import com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt;
@@ -19,7 +21,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
-@Traceable(module = "Project", nameField = "componentname", type = "Component")
+@Traceable(module = ModuleNameConstants.PRJ, nameField = "componentname", type = ProjectContants.BUG_COMPONENT, extraFieldName = "projectid")
 public class ComponentServiceImpl extends DefaultService<Integer, Component, ComponentSearchCriteria> implements
         ComponentService {
 

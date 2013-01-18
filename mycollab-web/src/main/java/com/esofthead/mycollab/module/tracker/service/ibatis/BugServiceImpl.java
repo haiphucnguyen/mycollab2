@@ -45,7 +45,7 @@ import org.xml.sax.InputSource;
 
 @Service
 @Transactional
-@Traceable(module = ModuleNameConstants.PRJ, nameField = "summary", type = ProjectContants.BUG)
+@Traceable(module = ModuleNameConstants.PRJ, nameField = "summary", type = ProjectContants.BUG, extraFieldName = "projectid")
 @Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.BUG)
 public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriteria> implements BugService {
 
