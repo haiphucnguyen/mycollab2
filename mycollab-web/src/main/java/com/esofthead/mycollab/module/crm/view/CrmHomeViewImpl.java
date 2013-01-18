@@ -20,6 +20,8 @@ public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
     private final CallListDashlet callDashlet;
     private final LeadListDashlet leadDashlet;
     private final ActivityStreamPanel activityStreamPanel;
+    
+    private final SalesDashboardView salesDashboard;
 
     public CrmHomeViewImpl() {
         this.setSpacing(true);
@@ -46,7 +48,7 @@ public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
         VerticalLayout streamsLayout = new VerticalLayout();
         streamsLayout.setWidth("550px");
         
-        SalesDashboardView salesDashboard = new SalesDashboardView();
+        salesDashboard = new SalesDashboardView();
         streamsLayout.addComponent(new LazyLoadWrapper(salesDashboard));
         
         activityStreamPanel = new ActivityStreamPanel();
@@ -71,5 +73,6 @@ public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
         callDashlet.display();
         leadDashlet.display();
         activityStreamPanel.display();
+        salesDashboard.displayReport();
     }
 }

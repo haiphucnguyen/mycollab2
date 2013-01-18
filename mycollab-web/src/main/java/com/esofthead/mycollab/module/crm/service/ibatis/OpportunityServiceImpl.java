@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.common.service.AuditLogService;
@@ -29,6 +30,7 @@ import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -62,5 +64,10 @@ public class OpportunityServiceImpl extends DefaultService<Integer, Opportunity,
     @Override
     public SimpleOpportunity findOpportunityById(int opportunityId) {
         return opportunityMapperExt.findOpportunityById(opportunityId);
+    }
+
+    @Override
+    public List<GroupItem> getSalesStageSummary(OpportunitySearchCriteria criteria) {
+        return opportunityMapperExt.getSalesStageSummary(criteria);
     }
 }

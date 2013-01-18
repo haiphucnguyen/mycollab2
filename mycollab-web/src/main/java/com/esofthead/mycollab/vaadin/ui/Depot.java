@@ -32,7 +32,6 @@ public class Depot extends VerticalLayout {
         headerLbl.setSizeUndefined();
         header.addComponent(headerLbl);
         if (headerElement == null) {
-            this.headerContent = headerElement;
             headerElement = new HorizontalLayout();
             headerElement.setSizeFull();
             headerElement.setStyleName("default-element");
@@ -55,6 +54,7 @@ public class Depot extends VerticalLayout {
         }
 
         headerElement.addStyleName("header-elements");
+        this.headerContent = headerElement;
         header.addComponent(headerElement);
         header.setExpandRatio(headerElement, 1.0f);
 

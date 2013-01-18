@@ -59,8 +59,7 @@ public class StatusSummaryWidget extends VerticalLayout {
         BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
         recentDefectsCriteria.setProjectid(new NumberSearchField(project.getId()));
         List<GroupItem> groupItems = bugService.getStatusSummary(recentDefectsCriteria);
-
-        final String series1 = "Bug";
+        
         String[] bugPriorities = ProjectDataTypeFactory.getBugStatusList();
         for (String status : bugPriorities) {
             boolean isFound = false;

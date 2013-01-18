@@ -254,4 +254,25 @@
                 refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria"/>
         </trim>
     </select>
+    
+    <select
+        id="getSalesStageSummary"
+        parameterType="OpportunitySearchCriteria"
+        resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap" >
+		SELECT m_crm_opportunity.salesStage AS groupid, COUNT(m_crm_opportunity.salesStage) AS
+		value, '' as groupname
+		FROM m_crm_opportunity
+
+
+
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+			1=1 
+
+
+            <include refid="com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt.queryTotalCountSearchCriteria" />
+        </trim>
+		GROUP BY m_crm_opportunity.salesStage
+    </select>
 </mapper>

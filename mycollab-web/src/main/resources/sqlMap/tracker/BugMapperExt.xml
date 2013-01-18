@@ -1,27 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.esofthead.mycollab.module.tracker.dao.BugMapperExt" >
-
-    <resultMap
-        id="GroupItemResult"
-        type="com.esofthead.mycollab.common.domain.GroupItem" >
-
-        <result
-            column="groupid"
-            jdbcType="VARCHAR"
-            property="groupid" />
-
-        <result
-            column="groupname"
-            jdbcType="VARCHAR"
-            property="groupname" />
-
-        <result
-            column="value"
-            jdbcType="INTEGER"
-            property="value" />
-    </resultMap>
-
     <resultMap
         id="SimpleBugResult"
         extends="com.esofthead.mycollab.module.tracker.dao.BugMapper.BaseResultMap"
@@ -66,11 +45,15 @@
         <choose>
 
             <when test="assignuser == &apos;&apos;" >
-				AND m_tracker_bug.assignuser IS NULL
+				AND m_tracker_bug.assignuser IS NULL
+
+
             </when>
 
             <when test="assignuser != null" >
-				AND m_tracker_bug.assignuser=#{assignuser.value}
+				AND m_tracker_bug.assignuser=#{assignuser.value}
+
+
             </when>
         </choose>
 
@@ -123,11 +106,14 @@
 <![CDATA[${resolvedDateTo.operation} m_tracker_bug.resolveddate <= #{resolvedDateTo.value,javaType=DATE}]]></if>
 
         <if test="projectid" >
-			<![CDATA[${projectid.operation} m_tracker_bug.projectid=#{projectid.value,javaType=INTEGER}]]>
+			<![CDATA[${projectid.operation} m_tracker_bug.projectid=#{projectid.value,javaType=INTEGER}]]>
+
         </if>
 
         <if test="affectedversionids != null" >
-			${affectedversionids.operation}
+			${affectedversionids.operation}
+
+
 
             <foreach
                 close=")"
@@ -147,7 +133,9 @@
         </if>
 
         <if test="fixedversionids != null" >
-			${fixedversionids.operation}
+			${fixedversionids.operation}
+
+
 
             <foreach
                 close=")"
@@ -167,7 +155,9 @@
         </if>
 
         <if test="versionids != null" >
-			${versionids.operation}
+			${versionids.operation}
+
+
 
             <foreach
                 close=")"
@@ -193,7 +183,9 @@
         </if>
 
         <if test="componentids != null" >
-			${componentids.operation}
+			${componentids.operation}
+
+
 
             <foreach
                 close=")"
@@ -213,7 +205,9 @@
         </if>
 
         <if test="priorities != null" >
-			${priorities.operation} m_tracker_bug.priority IN
+			${priorities.operation} m_tracker_bug.priority IN
+
+
 
             <foreach
                 close=")"
@@ -221,12 +215,16 @@
                 item="priorityitem"
                 open="("
                 separator="," >
-				#{priorityitem}
+				#{priorityitem}
+
+
             </foreach>
         </if>
 
         <if test="statuses != null" >
-			${statuses.operation} m_tracker_bug.status IN
+			${statuses.operation} m_tracker_bug.status IN
+
+
 
             <foreach
                 close=")"
@@ -234,12 +232,16 @@
                 item="statusitem"
                 open="("
                 separator="," >
-				#{statusitem}
+				#{statusitem}
+
+
             </foreach>
         </if>
 
         <if test="resolutions != null" >
-			${resolutions.operation} m_tracker_bug.resolution IN
+			${resolutions.operation} m_tracker_bug.resolution IN
+
+
 
             <foreach
                 close=")"
@@ -247,12 +249,16 @@
                 item="resolutionitem"
                 open="("
                 separator="," >
-				#{resolutionitem}
+				#{resolutionitem}
+
+
             </foreach>
         </if>
 
         <if test="severities != null" >
-			${severities.operation} m_tracker_bug.severity IN
+			${severities.operation} m_tracker_bug.severity IN
+
+
 
             <foreach
                 close=")"
@@ -260,7 +266,9 @@
                 item="severityitem"
                 open="("
                 separator="," >
-				#{severityitem}
+				#{severityitem}
+
+
             </foreach>
         </if>
     </sql>
@@ -310,19 +318,24 @@
         resultType="int" >
 
         <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.selectBug" />
-        WHERE m_tracker_bug.id = #{bugid,javaType=INTEGER}
+        WHERE m_tracker_bug.id = #{bugid,javaType=INTEGER}
+
+
     </select>
 
     <select
         id="getTotalCount"
         parameterType="BugSearchCriteria"
         resultType="int" >
-		SELECT count(*) as totalCount FROM m_tracker_bug
+		SELECT count(*) as totalCount FROM m_tracker_bug
+
+
 
         <trim
             prefix="WHERE"
             prefixOverrides="AND | OR " >
-			1=1 
+			1=1 
+
 
             <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
         </trim>
@@ -338,35 +351,43 @@
         <trim
             prefix="WHERE"
             prefixOverrides="AND | OR " >
-			1=1 
+			1=1 
+
 
             <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
         </trim>
-		ORDER BY m_tracker_bug.lastUpdatedTime DESC
+		ORDER BY m_tracker_bug.lastUpdatedTime DESC
+
+
     </select>
 
     <select
         id="getStatusSummary"
         parameterType="BugSearchCriteria"
-        resultMap="GroupItemResult" >
+        resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap" >
 		SELECT m_tracker_bug.status AS groupid, COUNT(m_tracker_bug.status) AS
 		value, '' as groupname
-		FROM m_tracker_bug
+		FROM m_tracker_bug
+
+
 
         <trim
             prefix="WHERE"
             prefixOverrides="AND | OR " >
-			1=1 
+			1=1 
+
 
             <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
         </trim>
-		GROUP BY m_tracker_bug.status
+		GROUP BY m_tracker_bug.status
+
+
     </select>
 
     <select
         id="getPrioritySummary"
         parameterType="BugSearchCriteria"
-        resultMap="GroupItemResult" >
+        resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap" >
 
 <![CDATA[
         SELECT m_tracker_bug.priority AS groupid,
@@ -377,17 +398,20 @@
         <trim
             prefix="WHERE"
             prefixOverrides="AND | OR " >
-			1=1 
+			1=1 
+
 
             <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
         </trim>
-		GROUP BY m_tracker_bug.priority
+		GROUP BY m_tracker_bug.priority
+
+
     </select>
 
     <select
         id="getResolutionDefectsSummary"
         parameterType="BugSearchCriteria"
-        resultMap="GroupItemResult" >
+        resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap" >
 
 <![CDATA[
         SELECT m_tracker_bug.resolution AS groupid,
@@ -399,17 +423,20 @@
         <trim
             prefix="WHERE"
             prefixOverrides="AND | OR " >
-			1=1 
+			1=1 
+
 
             <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
         </trim>
-		GROUP BY m_tracker_bug.resolution
+		GROUP BY m_tracker_bug.resolution
+
+
     </select>
 
     <select
         id="getAssignedDefectsSummary"
         parameterType="BugSearchCriteria"
-        resultMap="GroupItemResult" >
+        resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap" >
 
 <![CDATA[
         SELECT m_tracker_bug.assignuser AS groupid,
@@ -422,17 +449,20 @@
         <trim
             prefix="WHERE"
             prefixOverrides="AND | OR " >
-			1=1 
+			1=1 
+
 
             <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
         </trim>
-		GROUP BY m_tracker_bug.assignuser
+		GROUP BY m_tracker_bug.assignuser
+
+
     </select>
 
     <select
         id="getReporterDefectsSummary"
         parameterType="BugSearchCriteria"
-        resultMap="GroupItemResult" >
+        resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap" >
 
 <![CDATA[
         SELECT m_tracker_bug.logby AS groupid,
@@ -445,17 +475,20 @@
         <trim
             prefix="WHERE"
             prefixOverrides="AND | OR " >
-			1=1 
+			1=1 
+
 
             <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
         </trim>
-		GROUP BY m_tracker_bug.logby
+		GROUP BY m_tracker_bug.logby
+
+
     </select>
 
     <select
         id="getComponentDefectsSummary"
         parameterType="BugSearchCriteria"
-        resultMap="GroupItemResult" >
+        resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap" >
 
 <![CDATA[
         SELECT m_tracker_component.id AS groupid,
@@ -475,7 +508,9 @@
         </trim>
 		GROUP BY m_tracker_component.id
 
-		UNION
+		UNION
+
+
 
 <![CDATA[
         SELECT 0 as groupid, COUNT(m_tracker_bug.id) as value, '' as groupname
@@ -489,7 +524,7 @@
     <select
         id="getVersionDefectsSummary"
         parameterType="BugSearchCriteria"
-        resultMap="GroupItemResult" >
+        resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap" >
 
 <![CDATA[
         SELECT m_tracker_version.id AS groupid,
@@ -504,13 +539,16 @@
         <trim
             prefix="WHERE"
             prefixOverrides="AND | OR " >
-			1=1 
+			1=1 
+
 
             <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
         </trim>
 		GROUP BY m_tracker_version.id
 
-		UNION
+		UNION
+
+
 
 <![CDATA[       
         SELECT 0 as groupid, COUNT(m_tracker_bug.id) as value, '' as groupname
