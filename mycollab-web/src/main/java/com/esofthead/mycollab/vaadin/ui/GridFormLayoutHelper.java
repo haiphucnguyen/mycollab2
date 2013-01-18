@@ -1,11 +1,12 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.io.Serializable;
+
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
-import java.io.Serializable;
 
 public class GridFormLayoutHelper implements Serializable {
 
