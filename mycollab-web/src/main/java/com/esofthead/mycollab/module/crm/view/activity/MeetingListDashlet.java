@@ -22,7 +22,7 @@ public class MeetingListDashlet extends Depot {
     public MeetingListDashlet() {
         super("My Meetings", new VerticalLayout());
 
-        tableItem = new MeetingTableDisplay(new String[]{"subject", "relatedTo", "startdate", "status"}, new String[]{"Subject", "Related To", "Start Date", "Status"});
+        tableItem = new MeetingTableDisplay(new String[]{"subject", "startdate", "status"}, new String[]{"Subject", "Start Date", "Status"});
         this.content.addComponent(tableItem);
     }
 

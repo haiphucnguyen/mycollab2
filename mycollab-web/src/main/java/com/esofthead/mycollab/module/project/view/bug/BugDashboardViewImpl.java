@@ -22,6 +22,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 import org.vaadin.hene.splitbutton.SplitButton;
+import org.vaadin.peter.buttongroup.ButtonGroup;
 
 @SuppressWarnings("serial")
 @ViewComponent
@@ -42,7 +43,34 @@ public class BugDashboardViewImpl extends AbstractView implements
         Label title = new Label("Bug Dashboard");
         title.setStyleName("h2");
         header.addComponent(title);
-        header.setExpandRatio(title, 1.0f);
+        header.setExpandRatio(title, 0.5f);
+        
+        ButtonGroup navButton = new ButtonGroup();
+        navButton.addButton(new Button("Bugs", new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(new BugEvent.GotoList(this, null));
+            }
+        }));
+        
+        navButton.addButton(new Button("Components", new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(new BugComponentEvent.GotoList(this, null));
+            }
+        }));
+        navButton.addButton(new Button("Versions", new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(new BugVersionEvent.GotoList(this, null));
+            }
+        }));
+        
+        header.addComponent(navButton);
+        header.setExpandRatio(navButton, 0.5f);
         
         SplitButton controlsBtn = new SplitButton();
         controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);

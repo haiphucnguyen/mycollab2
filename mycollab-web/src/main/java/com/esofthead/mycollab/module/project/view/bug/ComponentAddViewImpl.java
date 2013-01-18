@@ -26,7 +26,7 @@ public class ComponentAddViewImpl extends AbstractView implements ComponentAddVi
 
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
-    private Component task;
+    private Component component;
 
     public ComponentAddViewImpl() {
         super();
@@ -36,8 +36,8 @@ public class ComponentAddViewImpl extends AbstractView implements ComponentAddVi
 
     @Override
     public void editItem(Component item) {
-        this.task = item;
-        editForm.setItemDataSource(new BeanItem<Component>(task));
+        this.component = item;
+        editForm.setItemDataSource(new BeanItem<Component>(component));
     }
 
     private class EditForm extends AdvancedEditBeanForm<Component> {

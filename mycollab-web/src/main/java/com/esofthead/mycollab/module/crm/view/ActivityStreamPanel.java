@@ -50,7 +50,7 @@ public class ActivityStreamPanel extends Panel {
         this.removeAllComponents();
         activityStreamList = new BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
                 AppContext.getSpringBean(ActivityStreamService.class),
-                ActivityStreamRowDisplayHandler.class);
+                ActivityStreamRowDisplayHandler.class, 10);
         this.addComponent(new LazyLoadWrapper(activityStreamList));
         this.setStyleName("activity-panel");
         AbstractLayout panelLayout = (AbstractLayout) this.getContent();
