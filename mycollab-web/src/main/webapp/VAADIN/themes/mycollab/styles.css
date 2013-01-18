@@ -1387,3 +1387,53 @@ white-space: normal;
 }
 
 /* End Messages */
+
+/* Button Group */
+
+.v-buttongroup .v-button-left {
+	border-radius: 20px 0px 0px 20px;
+}
+
+.v-buttongroup .v-button.v-button-left .v-button-wrap {
+	padding: 4px 6px 0px 10px;
+}
+
+.v-buttongroup .v-button.v-button-left .v-button-wrap,
+.v-buttongroup .v-button.v-button-middle .v-button-wrap,
+.v-buttongroup .v-button.v-button-left.v-disabled .v-button-wrap,
+.v-buttongroup .v-button.v-button-middle.v-disabled .v-button-wrap,
+.v-buttongroup .v-button.v-button-left.v-disabled:active .v-button-wrap,
+.v-buttongroup .v-button.v-button-middle.v-disabled:active .v-button-wrap,
+.v-buttongroup .v-button.v-button-left.v-disabled:focus .v-button-wrap,
+.v-buttongroup .v-button.v-button-middle.v-disabled:focus .v-button-wrap {
+	background-position: left top;
+}
+
+.v-buttongroup .v-button.v-button-middle {
+	border-width: 1px 0px;
+	border-radius: 0px;
+}
+.v-buttongroup .v-button.v-button-right {
+	border-radius: 0px 20px 20px 0px;
+	border-left: 1px solid rgb(129, 129, 129);
+}
+.v-buttongroup .v-button:active .v-button-wrap {
+	border: none;
+}
+.v-buttongroup .v-button:focus .v-button-wrap {
+	background: none;
+}
+
+/* End Button Group */
+
+/* Multifiles Upload */
+
+.v-multifileupload-uploads .v-upload .v-button {
+	border: none;
+	background: url("icons/16/attachment.png") no-repeat center left transparent;
+	padding-left: 8px;	
+}
+.v-multifileupload-uploads .v-upload-immediate input {
+	cursor: pointer;
+}
+/* End Multifiles Upload */
