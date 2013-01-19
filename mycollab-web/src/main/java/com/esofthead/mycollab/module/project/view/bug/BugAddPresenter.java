@@ -4,6 +4,7 @@ import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.BugResolutionConstants;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -14,6 +15,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.AttachmentUploadField;
 import com.esofthead.mycollab.web.AppContext;
@@ -33,7 +35,14 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
         BugContainer bugContainer = (BugContainer) container;
         bugContainer.removeAllComponents();
         bugContainer.addComponent(view.getWidget());
-        view.editItem((SimpleBug) data.getParams());
+        
+        SimpleBug bug = (SimpleBug) data.getParams();
+        view.editItem(bug);
+        
+        ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
+        if (bug.getId() == null) {
+            
+        }
     }
     
     private void bind() {

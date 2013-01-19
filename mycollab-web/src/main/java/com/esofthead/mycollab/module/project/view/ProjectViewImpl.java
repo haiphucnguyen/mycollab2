@@ -7,10 +7,7 @@ import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
-import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
-import com.esofthead.mycollab.module.project.events.ProjectEvent;
-import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
@@ -19,18 +16,19 @@ import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
-import com.esofthead.mycollab.shell.events.ShellEvent;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.View;
-import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
+import com.lexaden.breadcrumb.Breadcrumb;
+import com.lexaden.breadcrumb.BreadcrumbLayout;
+import com.vaadin.terminal.Sizeable;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -40,7 +38,6 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.hene.popupbutton.PopupButton;
 import org.vaadin.hene.splitbutton.SplitButton;
 
 @SuppressWarnings("serial")
@@ -61,10 +58,13 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     private RiskPresenter riskPresenter;
     private UserPresenter userPresenter;
     private SimpleProject project;
+    private ProjectBreadcrumb breadCrumb;
 
     public ProjectViewImpl() {
         this.setStyleName("projectDashboardView");
         this.setMargin(false);
+
+        breadCrumb = ViewManager.getView(ProjectBreadcrumb.class);
 
         topPanel = new HorizontalLayout();
         topPanel.setWidth("100%");
@@ -244,33 +244,13 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         topPanel.removeAllComponents();
 
         HorizontalLayout projectControls = new HorizontalLayout();
-        Button homeBtn = new Button("", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBus.getInstance().fireEvent(
-                        new ShellEvent.GotoProjectPage(this, null));
-            }
-        });
-        homeBtn.setIcon(new ThemeResource("icons/24/project/home.png"));
-        homeBtn.setStyleName("link");
-        projectControls.addComponent(homeBtn);
 
-        PopupButton projectPopupBtn = new PopupButton(project.getName());
-        BeanList<ProjectService, ProjectSearchCriteria, SimpleProject> projectList = new BeanList<ProjectService, ProjectSearchCriteria, SimpleProject>(
-                AppContext.getSpringBean(ProjectService.class),
-                ProjectViewImpl.ProjectRowDisplayHandler.class);
-        projectList.setWidth("200px");
-
-        ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
-        searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-                AppContext.getAccountId()));
-        projectList.setSearchCriteria(searchCriteria);
-        projectPopupBtn.addComponent(projectList);
-
-        projectControls.addComponent(projectPopupBtn);
-        projectControls.setComponentAlignment(projectPopupBtn,
-                Alignment.MIDDLE_CENTER);
-        topPanel.addComponent(projectControls);
+        topPanel.addComponent(breadCrumb);
+        topPanel.setComponentAlignment(breadCrumb, Alignment.MIDDLE_LEFT);
+        topPanel.setExpandRatio(breadCrumb, 1.0f);
+        
+        breadCrumb.select(0);
+        breadCrumb.addLink(new Button(project.getName()));
 
         SplitButton controlsBtn = new SplitButton();
         controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
@@ -297,24 +277,6 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
         topPanel.addComponent(controlsBtn);
         topPanel.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
-    }
-
-    public static class ProjectRowDisplayHandler implements
-            BeanList.RowDisplayHandler<SimpleProject> {
-
-        @Override
-        public Component generateRow(final SimpleProject obj, int rowIndex) {
-            Button projectLink = new Button(obj.getName(),
-                    new Button.ClickListener() {
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            EventBus.getInstance().fireEvent(
-                                    new ProjectEvent.GotoMyProject(this, obj));
-                        }
-                    });
-            projectLink.setStyleName("link");
-            return projectLink;
-        }
     }
 
     @Override

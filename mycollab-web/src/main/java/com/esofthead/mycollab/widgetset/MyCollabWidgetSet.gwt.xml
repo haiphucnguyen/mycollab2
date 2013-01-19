@@ -40,7 +40,7 @@
 
     <inherits name="com.vaadin.addon.calendar.gwt.CalendarWidgetset" />
 
-    <inherits name="org.vaadin.openesignforms.ckeditor.widgetset.VaadinCKEditorWidgetset" />
+    
 
     <inherits name="com.github.wolfie.refresher.RefresherApplicationWidgetset" />
 
@@ -53,4 +53,6 @@
     <inherits name="com.vaadin.lazyloadwrapper.widgetset.LazyLoadWrapperWidgetset" />
 
     <inherits name="fi.jasoft.dragdroplayouts.DragDropLayoutsWidgetSet" />
+
+    <inherits name="com.lexaden.breadcrumb.BreadcrumbWidgetset" />
 </module>

@@ -175,6 +175,11 @@
             <artifactId>lazyloadwrapper</artifactId>
             <version>1.0.2</version>
         </dependency>
+        <dependency>                                              
+            <groupId>com.lexaden.components</groupId>
+            <artifactId>breadcrumb</artifactId>
+            <version>1.6.0</version>                                   
+        </dependency> 
         <dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>refresher</artifactId>

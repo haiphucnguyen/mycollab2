@@ -13,6 +13,7 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
@@ -56,9 +57,9 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
 
         final SplitButton controlsBtn = new SplitButton();
         controlsBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CONTACT));
-        controlsBtn.addStyleName(SplitButton.STYLE_CHAMELEON);
+        controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
         controlsBtn.setCaption("New Contact");
-        controlsBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+        controlsBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
         controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
             @Override
             public void splitButtonClick(SplitButton.SplitButtonClickEvent event) {

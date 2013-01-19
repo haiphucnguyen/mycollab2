@@ -9,12 +9,14 @@ import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
@@ -37,7 +39,16 @@ public class MilestoneAddPresenter  extends AbstractPresenter<MilestoneAddView> 
         MilestoneContainer milestoneContainer = (MilestoneContainer) container;
         milestoneContainer.removeAllComponents();
         milestoneContainer.addComponent(view.getWidget());
-        view.editItem((Milestone) data.getParams());
+        
+        Milestone milestone = (Milestone) data.getParams();
+        view.editItem(milestone);
+        
+        ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
+        if (milestone.getId() == null) {
+            breadcrumb.gotoMilestoneAdd();
+        } else {
+            breadcrumb.gotoMilestoneEdit(milestone);
+        }
     }
 
     private void bind() {

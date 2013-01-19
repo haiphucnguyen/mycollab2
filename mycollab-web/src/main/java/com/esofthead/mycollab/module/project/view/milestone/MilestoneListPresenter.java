@@ -4,12 +4,11 @@
  */
 package com.esofthead.mycollab.module.project.view.milestone;
 
-import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
-import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.file.ExportStreamResource;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -18,6 +17,7 @@ import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Resource;
@@ -27,7 +27,6 @@ import com.vaadin.ui.ComponentContainer;
 import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
-
 import org.vaadin.dialogs.ConfirmDialog;
 
 /**
@@ -209,6 +208,9 @@ public class MilestoneListPresenter extends AbstractPresenter<MilestoneListView>
         milestoneContainer.removeAllComponents();
         milestoneContainer.addComponent(view.getWidget());
         doSearch((MilestoneSearchCriteria) data.getParams());
+        
+        ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
+        breadcrumb.gotoMilestoneList();
     }
 
     @Override

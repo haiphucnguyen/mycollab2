@@ -15,8 +15,10 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
@@ -82,6 +84,7 @@ public class AccountListViewImpl extends AbstractView implements
 
     private ComponentContainer constructTableActionControls() {
         HorizontalLayout layout = new HorizontalLayout();
+        layout.setWidth("100%");
         layout.setSpacing(true);
 
         selectOptionButton = new SelectionOptionButton(tableItem);
@@ -99,6 +102,13 @@ public class AccountListViewImpl extends AbstractView implements
         layout.addComponent(selectedItemsNumberLabel);
         layout.setComponentAlignment(selectedItemsNumberLabel,
                 Alignment.MIDDLE_CENTER);
+        
+        layout.setExpandRatio(selectedItemsNumberLabel, 1.0f);
+        
+        Button reportBtn = new Button("Reports");
+        reportBtn.setIcon(new ThemeResource("icons/16/report.png"));
+        reportBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+        layout.addComponent(reportBtn);
         return layout;
     }
 

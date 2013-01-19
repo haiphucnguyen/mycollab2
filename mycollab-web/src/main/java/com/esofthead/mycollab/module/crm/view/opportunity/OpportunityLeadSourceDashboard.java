@@ -20,7 +20,7 @@ import org.jfree.data.general.DefaultPieDataset;
 public class OpportunityLeadSourceDashboard extends PieChartWrapper<OpportunitySearchCriteria> {
     
     public OpportunityLeadSourceDashboard() {
-        super("Deals By Sources", 500, 400);
+        super("Deals By Sources", 530, 400);
     }
     
     @Override

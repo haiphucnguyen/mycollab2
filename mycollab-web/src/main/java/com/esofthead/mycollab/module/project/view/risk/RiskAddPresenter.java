@@ -5,12 +5,14 @@ import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.service.RiskService;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
@@ -29,7 +31,15 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
         RiskContainer riskContainer = (RiskContainer) container;
         riskContainer.removeAllComponents();
         riskContainer.addComponent(view.getWidget());
-        view.editItem((Risk) data.getParams());
+        Risk risk = (Risk) data.getParams();
+        view.editItem(risk);
+        
+        ProjectBreadcrumb breadCrumb = ViewManager.getView(ProjectBreadcrumb.class);
+        if (risk.getId() == null) {
+            breadCrumb.gotoRiskAdd();
+        } else {
+            breadCrumb.gotoRiskEdit(risk);
+        }
     }
 
     private void bind() {
