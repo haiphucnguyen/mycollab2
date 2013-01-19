@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.file.ExportStreamResource;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -12,6 +13,7 @@ import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Resource;
@@ -197,6 +199,9 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
         bugContainer.addComponent(view.getWidget());
 
         doSearch((BugSearchCriteria) data.getParams());
+        
+        ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
+        breadcrumb.gotoBugList();
     }
 
     @Override

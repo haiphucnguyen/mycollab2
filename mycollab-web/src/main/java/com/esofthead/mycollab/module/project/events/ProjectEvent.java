@@ -11,7 +11,7 @@ public class ProjectEvent {
             super(source, data);
         }
     }
-    
+
     public static class GotoEdit extends ApplicationEvent {
 
         public GotoEdit(Object source, Object data) {
@@ -29,13 +29,6 @@ public class ProjectEvent {
     public static class GotoMyProject extends ApplicationEvent {
 
         public GotoMyProject(Object source, Object data) {
-            super(source, data);
-        }
-    }
-
-    public static class GotoMyProjectList extends ApplicationEvent {
-
-        public GotoMyProjectList(Object source, Object data) {
             super(source, data);
         }
     }

@@ -41,7 +41,9 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
         
         ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
         if (bug.getId() == null) {
-            
+            breadcrumb.gotoBugAdd();
+        } else {
+            breadcrumb.gotoBugEdit(bug);
         }
     }
     

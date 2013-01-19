@@ -9,14 +9,19 @@ import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
+import com.esofthead.mycollab.module.tracker.domain.Component;
+import com.esofthead.mycollab.module.tracker.domain.Version;
+import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.lexaden.breadcrumb.Breadcrumb;
 import com.lexaden.breadcrumb.BreadcrumbLayout;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -30,8 +35,14 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.setShowAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
         this.setHideAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
         this.setUseDefaultClickBehaviour(false);
-        this.addLink(new Button());
-        this.setLinkEnabled(false, 0);
+        this.addLink(new Button(null, new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(new ShellEvent.GotoProjectPage(this, null));
+            }
+        }));
+        
         this.setHeight(35, Sizeable.UNITS_PIXELS);
     }
     
@@ -127,6 +138,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
     public void gotoBugList() {
         this.select(1);
         this.addLink(new Button("Bugs"));
+        this.addLink(new Button("List"));
     }
     
     public void gotoBugAdd() {
@@ -147,6 +159,73 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.addLink(new Button("Bugs"));
         this.addLink(new Button(bug.getSummary()));
         this.addLink(new Button("Read"));
+    }
+    
+    public void gotoVersionList() {
+        this.select(1);
+        this.addLink(new Button("Bugs"));
+        this.addLink(new Button("Versions"));
+    }
+    
+    public void gotoVersionAdd() {
+        this.select(1);
+        this.addLink(new Button("Bugs"));
+        this.addLink(new Button("Versions"));
+        this.addLink(new Button("Add"));
+    }
+    
+    public void gotoVersionEdit(Version version) {
+        this.select(1);
+        this.addLink(new Button("Bugs"));
+        this.addLink(new Button("Versions"));
+        this.addLink(new Button(version.getVersionname()));
+        this.addLink(new Button("Edit"));
+    }
+    
+    public void gotoVersionRead(Version version) {
+        this.select(1);
+        this.addLink(new Button("Bugs"));
+        this.addLink(new Button("Versions"));
+        this.addLink(new Button(version.getVersionname()));
+        this.addLink(new Button("Read"));
+    }
+    
+    public void gotoComponentnList() {
+        this.select(1);
+        this.addLink(new Button("Bugs"));
+        this.addLink(new Button("Components"));
+    }
+    
+    public void gotoComponentAdd() {
+        this.select(1);
+        this.addLink(new Button("Bugs"));
+        this.addLink(new Button("Components"));
+        this.addLink(new Button("Add"));
+    }
+    
+    public void gotoComponentEdit(Component component) {
+        this.select(1);
+        this.addLink(new Button("Bugs"));
+        this.addLink(new Button("Components"));
+        this.addLink(new Button(component.getComponentname()));
+        this.addLink(new Button("Edit"));
+    }
+    
+    public void gotoComponentRead(Component component) {
+        this.select(1);
+        this.addLink(new Button("Bugs"));
+        this.addLink(new Button("Components"));
+        this.addLink(new Button(component.getComponentname()));
+        this.addLink(new Button("Read"));
+    }
+    
+    public void gotoProjectDashboard() {
+        this.select(1);
+    }
+    
+    public void gotoProjectEdit() {
+        this.select(1);
+        this.addLink(new Button("Edit"));
     }
 
     @Override

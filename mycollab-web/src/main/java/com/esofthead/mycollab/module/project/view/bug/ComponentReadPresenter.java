@@ -10,6 +10,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
@@ -18,6 +19,7 @@ import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
@@ -128,6 +130,9 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
                 riskContainer.removeAllComponents();
                 riskContainer.addComponent(view.getWidget());
                 view.previewItem(component);
+                
+                ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
+                breadcrumb.gotoComponentEdit(component);
             } else {
                 AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
                 return;

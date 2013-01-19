@@ -4,10 +4,12 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -32,13 +34,17 @@ public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboar
         
         view.removeAllComponents();
         
+        ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
+        
         if (data instanceof ScreenData.Add
                 || data instanceof ScreenData.Edit) {
             ProjectEditPresenter presenter = PresenterResolver.getPresenter(ProjectEditPresenter.class);
             presenter.go(view, data);
+            breadcrumb.gotoProjectEdit();
         } else {
             ProjectSummaryPresenter presenter = PresenterResolver.getPresenter(ProjectSummaryPresenter.class);
             presenter.go(view, data);
+            breadcrumb.gotoProjectDashboard();
         }
     }
 }

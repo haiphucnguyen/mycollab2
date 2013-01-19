@@ -239,11 +239,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     @Override
     public void displayProject(final SimpleProject project) {
         this.project = project;
-        gotoDashboard(null);
-
         topPanel.removeAllComponents();
-
-        HorizontalLayout projectControls = new HorizontalLayout();
 
         topPanel.addComponent(breadCrumb);
         topPanel.setComponentAlignment(breadCrumb, Alignment.MIDDLE_LEFT);
@@ -277,6 +273,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
         topPanel.addComponent(controlsBtn);
         topPanel.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
+        
+        gotoDashboard(null);
     }
 
     @Override
