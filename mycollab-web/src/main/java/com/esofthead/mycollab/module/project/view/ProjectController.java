@@ -397,6 +397,21 @@ public class ProjectController {
     @SuppressWarnings("serial")
     private void bindBugEvents() {
         EventBus.getInstance().addListener(
+                new ApplicationEventListener<BugEvent.GotoDashboard>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return BugEvent.GotoDashboard.class;
+                    }
+
+                    @Override
+                    public void handle(BugEvent.GotoDashboard event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        projectView.gotoBugView(null);
+                    }
+                });
+        
+        EventBus.getInstance().addListener(
                 new ApplicationEventListener<BugEvent.GotoAdd>() {
                     @Override
                     public Class<? extends ApplicationEvent> getEventType() {

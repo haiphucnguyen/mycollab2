@@ -8,6 +8,13 @@ import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.Risk;
+import com.esofthead.mycollab.module.project.events.BugComponentEvent;
+import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.events.BugVersionEvent;
+import com.esofthead.mycollab.module.project.events.MessageEvent;
+import com.esofthead.mycollab.module.project.events.MilestoneEvent;
+import com.esofthead.mycollab.module.project.events.ProblemEvent;
+import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.Version;
@@ -30,199 +37,318 @@ import com.vaadin.ui.ComponentContainer;
  */
 @ViewComponent
 public class ProjectBreadcrumb extends Breadcrumb implements View {
-    
+
     public ProjectBreadcrumb() {
         this.setShowAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
         this.setHideAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
         this.setUseDefaultClickBehaviour(false);
         this.addLink(new Button(null, new Button.ClickListener() {
-
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new ShellEvent.GotoProjectPage(this, null));
             }
         }));
-        
+
         this.setHeight(35, Sizeable.UNITS_PIXELS);
     }
-    
+
     public void gotoMessageList() {
         this.select(1);
         this.addLink(new Button("Messages"));
     }
-    
+
     public void gotoMessage(Message message) {
         this.select(1);
-        this.addLink(new Button("Messages"));
+        this.addLink(new Button("Messages", new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(new MessageEvent.GotoList(this, null));
+            }
+        }));
+        this.setLinkEnabled(true, 2);
         this.addLink(new Button(message.getTitle()));
     }
-    
+
     public void gotoRiskList() {
         this.select(1);
         this.addLink(new Button("Risks"));
     }
-    
+
     public void gotoRiskRead(Risk risk) {
         this.select(1);
-        this.addLink(new Button("Risks"));
+        this.addLink(new Button("Risks", new GotoRiskListListener()));
+        this.setLinkEnabled(true, 2);
         this.addLink(new Button(risk.getRiskname()));
     }
-    
-    public void gotoRiskEdit(Risk risk) {
+
+    public void gotoRiskEdit(final Risk risk) {
         this.select(1);
-        this.addLink(new Button("Risks"));
-        this.addLink(new Button(risk.getRiskname()));
+        this.addLink(new Button("Risks", new GotoRiskListListener()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button(risk.getRiskname(), new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(new RiskEvent.GotoRead(this, risk.getId()));
+            }
+        }));
         this.addLink(new Button("Edit"));
     }
-    
+
     public void gotoRiskAdd() {
         this.select(1);
-        this.addLink(new Button("Risks"));
+        this.addLink(new Button("Risks", new GotoRiskListListener()));
+        this.setLinkEnabled(true, 2);
         this.addLink(new Button("Add"));
     }
     
+    private static class GotoRiskListListener implements Button.ClickListener {
+
+        @Override
+        public void buttonClick(ClickEvent event) {
+            EventBus.getInstance().fireEvent(new RiskEvent.GotoList(this, null));
+        }
+        
+    }
+
     public void gotoMilestoneList() {
         this.select(1);
         this.addLink(new Button("Milestones"));
     }
-    
+
     public void gotoMilestoneRead(Milestone milestone) {
         this.select(1);
-        this.addLink(new Button("Milestones"));
+        this.addLink(new Button("Milestones", new GotoMilestoneListListener()));
+        this.setLinkEnabled(true, 2);
         this.addLink(new Button(milestone.getName()));
     }
-    
-    public void gotoMilestoneEdit(Milestone milestone) {
+
+    public void gotoMilestoneEdit(final Milestone milestone) {
         this.select(1);
-        this.addLink(new Button("Milestones"));
-        this.addLink(new Button(milestone.getName()));
+        this.addLink(new Button("Milestones", new GotoMilestoneListListener()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button(milestone.getName(), new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(new MilestoneEvent.GotoRead(this, milestone.getId()));
+            }
+        }));
         this.addLink(new Button("Edit"));
     }
-    
+
     public void gotoMilestoneAdd() {
         this.select(1);
-        this.addLink(new Button("Milestones"));
+        this.addLink(new Button("Milestones", new GotoMilestoneListListener()));
+        this.setLinkEnabled(true, 2);
         this.addLink(new Button("Add"));
     }
     
+    private static class GotoMilestoneListListener implements Button.ClickListener {
+
+        @Override
+        public void buttonClick(ClickEvent event) {
+            EventBus.getInstance().fireEvent(new MilestoneEvent.GotoList(this, null));
+        }
+        
+    }
+
     public void gotoProblemList() {
         this.select(1);
         this.addLink(new Button("Problems"));
     }
-    
+
     public void gotoProblemRead(Problem problem) {
         this.select(1);
-        this.addLink(new Button("Problems"));
+        this.addLink(new Button("Problems", new GotoProblemListListener()));
+        this.setLinkEnabled(true, 2);
         this.addLink(new Button(problem.getIssuename()));
     }
-    
-    public void gotoProblemEdit(Problem problem) {
+
+    public void gotoProblemEdit(final Problem problem) {
         this.select(1);
-        this.addLink(new Button("Problems"));
-        this.addLink(new Button(problem.getIssuename()));
+        this.addLink(new Button("Problems", new GotoProblemListListener()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button(problem.getIssuename(), new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(new ProblemEvent.GotoRead(this, problem.getId()));
+            }
+        }));
+        this.setLinkEnabled(true, 3);
         this.addLink(new Button("Edit"));
     }
-    
+
     public void gotoProblemAdd() {
         this.select(1);
-        this.addLink(new Button("Problems"));
+        this.addLink(new Button("Problems", new GotoProblemListListener()));
+        this.setLinkEnabled(true, 2);
         this.addLink(new Button("Add"));
     }
-    
+
+    private static class GotoProblemListListener implements Button.ClickListener {
+
+        @Override
+        public void buttonClick(ClickEvent event) {
+            EventBus.getInstance().fireEvent(new ProblemEvent.GotoList(this, null));
+        }
+    }
+
     public void gotoBugDashboard() {
         this.select(1);
         this.addLink(new Button("Bugs"));
-        this.addLink(new Button("Dashboard"));
     }
-    
+
     public void gotoBugList() {
         this.select(1);
-        this.addLink(new Button("Bugs"));
+        this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
+        this.setLinkEnabled(true, 2);
         this.addLink(new Button("List"));
     }
-    
+
     public void gotoBugAdd() {
         this.select(1);
-        this.addLink(new Button("Bugs"));
+        this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
+        this.setLinkEnabled(true, 2);
         this.addLink(new Button("Add"));
     }
-    
-    public void gotoBugEdit(Bug bug) {
+
+    public void gotoBugEdit(final Bug bug) {
         this.select(1);
-        this.addLink(new Button("Bugs"));
-        this.addLink(new Button(bug.getSummary()));
+        this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button(bug.getSummary(), new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(new BugEvent.GotoRead(this, bug.getId()));
+            }
+        }));
         this.addLink(new Button("Edit"));
     }
-    
+
     public void gotoBugRead(Bug bug) {
         this.select(1);
-        this.addLink(new Button("Bugs"));
+        this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
+        this.setLinkEnabled(true, 2);
         this.addLink(new Button(bug.getSummary()));
         this.addLink(new Button("Read"));
     }
-    
+
     public void gotoVersionList() {
         this.select(1);
-        this.addLink(new Button("Bugs"));
+        this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
+        this.setLinkEnabled(true, 2);
         this.addLink(new Button("Versions"));
     }
-    
+
     public void gotoVersionAdd() {
         this.select(1);
-        this.addLink(new Button("Bugs"));
-        this.addLink(new Button("Versions"));
+        this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button("Versions", new GotoVersionListener()));
+        this.setLinkEnabled(true, 3);
         this.addLink(new Button("Add"));
     }
-    
-    public void gotoVersionEdit(Version version) {
+
+    public void gotoVersionEdit(final Version version) {
         this.select(1);
-        this.addLink(new Button("Bugs"));
-        this.addLink(new Button("Versions"));
-        this.addLink(new Button(version.getVersionname()));
+        this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button("Versions", new GotoVersionListener()));
+        this.setLinkEnabled(true, 3);
+        this.addLink(new Button(version.getVersionname(), new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(new BugVersionEvent.GotoRead(this, version.getId()));
+            }
+        }));
         this.addLink(new Button("Edit"));
     }
-    
+
     public void gotoVersionRead(Version version) {
         this.select(1);
-        this.addLink(new Button("Bugs"));
-        this.addLink(new Button("Versions"));
+        this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button("Versions", new GotoVersionListener()));
+        this.setLinkEnabled(true, 3);
         this.addLink(new Button(version.getVersionname()));
         this.addLink(new Button("Read"));
     }
     
+    private class GotoVersionListener implements Button.ClickListener {
+
+        @Override
+        public void buttonClick(ClickEvent event) {
+            EventBus.getInstance().fireEvent(new BugVersionEvent.GotoList(this, null));
+        }
+    }
+
     public void gotoComponentnList() {
         this.select(1);
-        this.addLink(new Button("Bugs"));
+        this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
+        this.setLinkEnabled(true, 2);
         this.addLink(new Button("Components"));
     }
-    
+
     public void gotoComponentAdd() {
         this.select(1);
-        this.addLink(new Button("Bugs"));
-        this.addLink(new Button("Components"));
+        this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button("Components", new GotoComponentListener()));
+        this.setLinkEnabled(true, 3);
         this.addLink(new Button("Add"));
     }
-    
-    public void gotoComponentEdit(Component component) {
+
+    public void gotoComponentEdit(final Component component) {
         this.select(1);
-        this.addLink(new Button("Bugs"));
-        this.addLink(new Button("Components"));
-        this.addLink(new Button(component.getComponentname()));
+        this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button("Components", new GotoComponentListener()));
+        this.setLinkEnabled(true, 3);
+        this.addLink(new Button(component.getComponentname(), new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(new BugComponentEvent.GotoRead(this, component.getId()));
+            }
+        }));
+        this.setLinkEnabled(true, 4);
         this.addLink(new Button("Edit"));
     }
-    
+
     public void gotoComponentRead(Component component) {
         this.select(1);
-        this.addLink(new Button("Bugs"));
-        this.addLink(new Button("Components"));
+        this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button("Components", new GotoComponentListener()));
         this.addLink(new Button(component.getComponentname()));
         this.addLink(new Button("Read"));
     }
     
+    private static class GotoComponentListener implements Button.ClickListener {
+
+        @Override
+        public void buttonClick(ClickEvent event) {
+            EventBus.getInstance().fireEvent(new BugComponentEvent.GotoList(this, null));
+        }
+        
+    }
+
+    private static class GotoBugDashboardListener implements Button.ClickListener {
+
+        @Override
+        public void buttonClick(ClickEvent event) {
+            EventBus.getInstance().fireEvent(new BugEvent.GotoDashboard(this, null));
+        }
+    }
+
     public void gotoProjectDashboard() {
         this.select(1);
     }
-    
+
     public void gotoProjectEdit() {
         this.select(1);
         this.addLink(new Button("Edit"));
