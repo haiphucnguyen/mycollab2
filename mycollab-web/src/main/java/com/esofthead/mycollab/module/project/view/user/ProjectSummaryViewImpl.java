@@ -10,7 +10,7 @@ import com.vaadin.ui.VerticalLayout;
 @ViewComponent
 public class ProjectSummaryViewImpl extends AbstractView implements ProjectSummaryView {
 
-    private ActivityStreamComponent activityPanel;
+    private ProjectActivityStreamComponent activityPanel;
     private ProjectInformationComponent prjView;
     private ProjectMembersWidget membersWidget;
     private ProjectHighlightWidget highlightWidget;
@@ -27,7 +27,7 @@ public class ProjectSummaryViewImpl extends AbstractView implements ProjectSumma
         layout.setSpacing(true);
         this.addComponent(layout);
         
-        activityPanel = new ActivityStreamComponent();
+        activityPanel = new ProjectActivityStreamComponent();
         layout.addComponent(activityPanel);
         
         VerticalLayout rightPanel = new VerticalLayout();

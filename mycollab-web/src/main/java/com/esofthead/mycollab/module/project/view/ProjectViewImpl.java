@@ -246,7 +246,14 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         topPanel.setExpandRatio(breadCrumb, 1.0f);
         
         breadCrumb.select(0);
-        breadCrumb.addLink(new Button(project.getName()));
+        breadCrumb.addLink(new Button(project.getName(), new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                gotoDashboard(null);
+            }
+        }));
+        breadCrumb.setLinkEnabled(true, 1);
 
         SplitButton controlsBtn = new SplitButton();
         controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);

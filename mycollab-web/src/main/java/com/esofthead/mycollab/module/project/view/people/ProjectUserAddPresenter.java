@@ -8,6 +8,6 @@ package com.esofthead.mycollab.module.project.view.people;
  *
  * @author haiphucnguyen
  */
-public class ProjectRoleAddViewImpl {
+public class ProjectUserAddPresenter {
     
 }

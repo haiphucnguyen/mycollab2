@@ -4,12 +4,10 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
-
 /**
  *
  * @author haiphucnguyen
  */
-public interface UserInvitationView extends View{
+public class ProjectUserReadViewImpl {
     
 }
