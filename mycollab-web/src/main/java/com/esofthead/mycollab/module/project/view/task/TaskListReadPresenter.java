@@ -75,6 +75,7 @@ public class TaskListReadPresenter extends AbstractPresenter<TaskListReadView> {
                     .getSpringBean(ProjectTaskListService.class);
             SimpleTaskList taskgroup = taskService.findTaskListById((Integer) data
                     .getParams());
+            System.out.println("TASK GROUP: " + taskgroup);
             view.previewItem(taskgroup);
             
             ProjectBreadcrumb breadCrumb = ViewManager.getView(ProjectBreadcrumb.class);

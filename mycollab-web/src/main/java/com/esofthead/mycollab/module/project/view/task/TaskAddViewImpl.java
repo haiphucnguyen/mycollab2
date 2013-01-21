@@ -5,6 +5,8 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.project.domain.Task;
+import com.esofthead.mycollab.module.project.ui.components.ProjectTaskListComboBox;
+import com.esofthead.mycollab.module.project.ui.components.ProjectUserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -83,6 +85,11 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
             @Override
             protected Field onCreateField(Item item, Object propertyId,
                     com.vaadin.ui.Component uiContext) {
+                if (propertyId.equals("assignuser")) {
+                    return new ProjectUserComboBox();
+                } else if (propertyId.equals("tasklistid")) {
+                    return new ProjectTaskListComboBox();
+                }
                 return null;
             }
         }

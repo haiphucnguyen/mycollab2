@@ -21,6 +21,13 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
     }
 
     @Override
+    public void go(ComponentContainer container, ScreenData<?> data) {
+        super.go(container, data, false);
+    }
+    
+    
+
+    @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         ProjectView projectViewContainer = (ProjectView) container;
         projectViewContainer.gotoSubView("Tasks");

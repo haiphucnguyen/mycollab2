@@ -8,7 +8,8 @@ package com.esofthead.mycollab.module.project.domain;
  *
  * @author haiphucnguyen
  */
-public class SimpleMilestone extends Milestone{
+public class SimpleMilestone extends Milestone {
+
     private String ownerFullName;
 
     public String getOwnerFullName() {
