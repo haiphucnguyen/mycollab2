@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
+import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
@@ -34,9 +35,9 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 
@@ -44,19 +45,19 @@ import java.util.List;
  *
  * @author haiphucnguyen
  */
-public class ActivityStreamComponent extends Panel {
+public class ActivityStreamComponent extends Depot {
+    
+    private ProjectActivityStreamPagedList activityStreamList;
     
     public ActivityStreamComponent() {
-        super("User Feeds");
+        super("User Feeds", new VerticalLayout());
+        activityStreamList = new ProjectActivityStreamPagedList();
+        this.bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
+        this.addStyleName("activity-panel");
+        ((VerticalLayout) this.bodyContent).setMargin(false);
     }
 
-    private ProjectActivityStreamPagedList activityStreamList;
-
     public void showFeeds() {
-        this.removeAllComponents();
-
-        activityStreamList = new ProjectActivityStreamPagedList();
-        this.addComponent(new LazyLoadWrapper(activityStreamList));
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
         searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{ModuleNameConstants.PRJ}));
 
@@ -107,7 +108,10 @@ public class ActivityStreamComponent extends Panel {
 
         @Override
         public Component generateRow(ProjectActivityStream activityStream, int rowIndex) {
-            VerticalLayout layout = new VerticalLayout();
+            CssLayout layout = new CssLayout();
+            layout.setWidth("100%");
+            layout.setStyleName("activity-stream");
+            
             HorizontalLayout header = new HorizontalLayout();
             header.setSpacing(true);
             header.addComponent(new UserLink(activityStream.getCreateduser(), activityStream.getCreatedUserFullName()));
@@ -138,7 +142,8 @@ public class ActivityStreamComponent extends Panel {
             projectLink.setStyleName("link");
             layout.addComponent(header);
 
-            HorizontalLayout body = new HorizontalLayout();
+            CssLayout body = new CssLayout();
+            body.setStyleName("activity-date");
             Label dateLbl = new Label(DateTimeUtils.getStringDateFromNow(activityStream.getCreatedtime()));
             body.addComponent(dateLbl);
 

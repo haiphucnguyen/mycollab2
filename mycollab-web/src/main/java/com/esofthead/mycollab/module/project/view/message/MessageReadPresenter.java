@@ -19,6 +19,7 @@ import com.vaadin.ui.ComponentContainer;
  *
  * @author haiphucnguyen
  */
+
 public class MessageReadPresenter extends AbstractPresenter<MessageReadView> {
 
     public MessageReadPresenter() {
