@@ -1423,7 +1423,18 @@ white-space: normal;
 .v-buttongroup .v-button:focus .v-button-wrap {
 	background: none;
 }
-
+.v-buttongroup .v-button.v-button-left, .v-buttongroup .v-button.v-button-middle, .v-buttongroup .v-button.v-button-right {
+	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fcfcfc), color-stop(1, #dcdcdc) );
+	background:-moz-linear-gradient( center top, #fcfcfc 5%, #dcdcdc 100% );
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#fcfcfc', endColorstr='#dcdcdc');
+	background-image: -ms-linear-gradient(top,#fcfcfc,#dcdcdc);
+	background-image: -o-linear-gradient(top,#fcfcfc,#dcdcdc);
+	background-image: linear-gradient(top,#fcfcfc,#dcdcdc);
+}
+.v-buttongroup .v-button.v-button-left:active, .v-buttongroup .v-button.v-button-middle:active, .v-buttongroup .v-button.v-button-right:active,.v-buttongroup .v-button.v-button-left:focus, .v-buttongroup .v-button.v-button-middle:focus, .v-buttongroup .v-button.v-button-right:focus {
+	background: none no-repeat 0 0 rgb(161,161,161);
+	border-color: rgb(171,171,171);
+}
 /* End Button Group */
 
 /* Multifiles Upload */
@@ -1437,3 +1448,12 @@ white-space: normal;
 	cursor: pointer;
 }
 /* End Multifiles Upload */
+
+/* xBreadCrumb */
+.xbreadcrumbs li {
+	padding-bottom: 8px !important;
+}
+.xbreadcrumbs .v-link a span, .xbreadcrumbbutton .v-button-caption {
+	font-size: 13px !important;
+}
+/* End xBreadCrumb */
