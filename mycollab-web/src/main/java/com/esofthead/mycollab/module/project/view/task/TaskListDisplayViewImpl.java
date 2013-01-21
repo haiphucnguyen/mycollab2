@@ -99,6 +99,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
 
         private SimpleTaskList taskList;
         private PopupButton taskListFilterControl;
+        private PopupButton taskListActionControl;
 
         public TaskListDepot(SimpleTaskList taskListParam) {
             super(taskListParam.getName(), new HorizontalLayout(), new TaskDisplayComponent(taskListParam));
@@ -113,25 +114,35 @@ public class TaskListDisplayViewImpl extends AbstractView implements
             taskListFilterControl = new PopupButton("Filter");
             taskListFilterControl.addStyleName("link");
 
+            VerticalLayout filterBtnLayout = new VerticalLayout();
+            filterBtnLayout.setMargin(true);
+            filterBtnLayout.setSpacing(true);
+            filterBtnLayout.setWidth("200px");
+
+            Button allTasksFilterBtn = new Button("All Tasks");
+            allTasksFilterBtn.setStyleName("link");
+            filterBtnLayout.addComponent(allTasksFilterBtn);
+
+            Button activeTasksFilterBtn = new Button("Active Tasks Only");
+            activeTasksFilterBtn.setStyleName("link");
+            filterBtnLayout.addComponent(activeTasksFilterBtn);
+
+            Button archievedTasksFilterBtn = new Button("Archieved Tasks Only");
+            archievedTasksFilterBtn.setStyleName("link");
+            filterBtnLayout
+                    .addComponent(archievedTasksFilterBtn);
+            taskListFilterControl.addComponent(filterBtnLayout);
+            headerLayout.addComponent(taskListFilterControl);
+            
+            taskListActionControl = new PopupButton("Action");
+            taskListActionControl.addStyleName("link");
+            headerLayout.addComponent(taskListActionControl);
+            
             VerticalLayout actionBtnLayout = new VerticalLayout();
             actionBtnLayout.setMargin(true);
             actionBtnLayout.setSpacing(true);
             actionBtnLayout.setWidth("200px");
-
-            Button allTasksFilterBtn = new Button("All Tasks");
-            allTasksFilterBtn.setStyleName("link");
-            actionBtnLayout.addComponent(allTasksFilterBtn);
-
-            Button activeTasksFilterBtn = new Button("Active Tasks Only");
-            activeTasksFilterBtn.setStyleName("link");
-            actionBtnLayout.addComponent(activeTasksFilterBtn);
-
-            Button archievedTasksFilterBtn = new Button("Archieved Tasks Only");
-            archievedTasksFilterBtn.setStyleName("link");
-            actionBtnLayout
-                    .addComponent(archievedTasksFilterBtn);
-            taskListFilterControl.addComponent(actionBtnLayout);
-            headerLayout.addComponent(taskListFilterControl);
+            taskListActionControl.addComponent(actionBtnLayout);
 
             Button editBtn = new Button("Edit", new Button.ClickListener() {
                 @Override
@@ -140,7 +151,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
                 }
             });
             editBtn.setStyleName("link");
-            headerLayout.addComponent(editBtn);
+            actionBtnLayout.addComponent(editBtn);
 
 
             Button deleteBtn = new Button("Delete", new Button.ClickListener() {
@@ -167,7 +178,16 @@ public class TaskListDisplayViewImpl extends AbstractView implements
                 }
             });
             deleteBtn.setStyleName("link");
-            headerLayout.addComponent(deleteBtn);
+            actionBtnLayout.addComponent(deleteBtn);
+            
+            Button reOrder = new Button("Reorder", new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    
+                }
+            });
+            reOrder.setStyleName("link");
+            actionBtnLayout.addComponent(reOrder);
         }
     }
 }

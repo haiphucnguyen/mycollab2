@@ -6,13 +6,18 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
-import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -27,17 +32,44 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class TaskDisplayComponent extends VerticalLayout {
     
-    private BeanList<ProjectTaskService, TaskSearchCriteria, SimpleTask> taskDisplay;
+    private TaskTableDisplay taskDisplay;
+    private TaskList taskList;
     private Button createTaskBtn;
     
-    public TaskDisplayComponent(final TaskList taskList) {
+    public TaskDisplayComponent(final SimpleTaskList taskList) {
         this.setSpacing(true);
-        taskDisplay = new BeanList<ProjectTaskService, TaskSearchCriteria, SimpleTask>(AppContext.getSpringBean(ProjectTaskService.class), TaskRowDisplayHandler.class);
-        TaskSearchCriteria taskCriteria = new TaskSearchCriteria();
-        taskCriteria.setTaskListId(new NumberSearchField(taskList.getId()));
-        taskDisplay.setSearchCriteria(taskCriteria);
+        this.taskList = taskList;
         
+        GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(2, 2);
+        this.addComponent(layoutHelper.getLayout());
+        
+        Label descLbl = (Label)layoutHelper.addComponent(new Label(), "Description", 0, 0, 2, "100%");
+        descLbl.setValue(taskList.getDescription());
+        
+        Button userLink = (Button)layoutHelper.addComponent(new Button(taskList.getOwnerFullName()), "Responsible User", 0, 1);
+        userLink.setStyleName("link");
+        
+        Button milestoneLink = (Button)layoutHelper.addComponent(new Button(taskList.getMilestoneName()), "Milestone", 1, 1);
+        milestoneLink.setStyleName("link");
+        
+        taskDisplay = new TaskTableDisplay(new String[] {"taskname", "startdate", "deadline", "assignUserFullName"}, new String[]{"Task Name", "Start", "Due", "Owner"});
         this.addComponent(taskDisplay);
+        displayTasks();
+        
+        taskDisplay.addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
+            @Override
+            public Class<? extends ApplicationEvent> getEventType() {
+                return IPagedBeanTable.TableClickEvent.class;
+            }
+
+            @Override
+            public void handle(IPagedBeanTable.TableClickEvent event) {
+                SimpleTask task = (SimpleTask) event.getData();
+                if ("taskname".equals(event.getFieldName())) {
+                    EventBus.getInstance().fireEvent(new TaskEvent.GotoRead(TaskDisplayComponent.this, task.getId()));
+                }
+            }
+        });
         
         createTaskBtn = new Button("Add Task", new Button.ClickListener() {
             @Override
@@ -45,23 +77,29 @@ public class TaskDisplayComponent extends VerticalLayout {
                 Component comp = TaskDisplayComponent.this.getComponent(0);
                 if (!(comp instanceof TaskAddPopup)) {
                     TaskAddPopup taskAddView = new TaskAddPopup(TaskDisplayComponent.this, taskList);
-                    TaskDisplayComponent.this.addComponent(taskAddView, 0);
+                    TaskDisplayComponent.this.addComponent(taskAddView, 1);
                     TaskDisplayComponent.this.removeComponent(createTaskBtn);
                 }
             }
         });
         
-        createTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+        createTaskBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
         this.addComponent(createTaskBtn);
     }
     
+    private void displayTasks() {
+        TaskSearchCriteria taskCriteria = new TaskSearchCriteria();
+        taskCriteria.setTaskListId(new NumberSearchField(taskList.getId()));
+        taskDisplay.setSearchCriteria(taskCriteria);
+    }
+    
     public void saveTaskSuccess(SimpleTask task) {
-        taskDisplay.insertItemOnTop(task);
+       displayTasks();
     }
     
     public void closeTaskAdd() {
         this.addComponent(createTaskBtn);
-        Component comp = this.getComponent(0);
+        Component comp = this.getComponent(1);
         if (comp instanceof TaskAddPopup) {
             this.removeComponent(comp);
         }
