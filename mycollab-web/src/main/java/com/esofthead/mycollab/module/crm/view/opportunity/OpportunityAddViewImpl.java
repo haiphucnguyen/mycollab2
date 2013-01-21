@@ -60,7 +60,7 @@ public class OpportunityAddViewImpl extends AbstractView implements
             private static final long serialVersionUID = 1L;
             
             public FormLayoutFactory() {
-                super("Create Opportunity");
+                super((opportunity.getId() == null) ? "Create Opportunity" : opportunity.getOpportunityname());
             }
 
             private Layout createButtonControls() {

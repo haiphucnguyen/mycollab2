@@ -54,7 +54,7 @@ public class CaseAddViewImpl extends AbstractView implements CaseAddView {
             private static final long serialVersionUID = 1L;
 
             public FormLayoutFactory() {
-                super("Create Case");
+                super((cases.getId() == null) ? "Create Case" : cases.getSubject());
             }
 
             private Layout createButtonControls() {

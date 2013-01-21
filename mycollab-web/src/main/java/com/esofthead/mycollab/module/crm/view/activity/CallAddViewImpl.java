@@ -60,7 +60,7 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
             private static final long serialVersionUID = 1L;
 
             public FormLayoutFactory() {
-                super("Create Call");
+                super((call.getId() == null) ? "Create Call" : call.getSubject());
             }
 
             private Layout createButtonControls() {

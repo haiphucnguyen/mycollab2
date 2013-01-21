@@ -4,7 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
@@ -14,6 +13,7 @@ import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.components.ProjectUserComboBox;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -58,7 +58,8 @@ public class TaskAddPopup extends CustomComponent {
 
         task = new SimpleTask();
         taskContainer = new TabSheet();
-        taskContainer.addTab(new TaskInformationLayout(), "Information");
+        final TaskInformationLayout taskInformationLayout = new TaskInformationLayout();
+        taskContainer.addTab(taskInformationLayout, "Information");
 
         taskNoteComponent = new TaskNoteLayout();
         taskContainer.addTab(taskNoteComponent, "Note & Attachments");
@@ -70,17 +71,18 @@ public class TaskAddPopup extends CustomComponent {
         Button saveBtn = new Button("Save", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
-                taskDisplayComp.closeTaskAdd();
                 ProjectTaskService taskService = AppContext.getSpringBean(ProjectTaskService.class);
                 SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
                 task.setTasklistid(taskList.getId());
                 task.setProjectid(project.getId());
                 task.setSaccountid(AppContext.getAccountId());
                 task.setNotes(taskNoteComponent.getNote());
-                taskService.saveWithSession(task, AppContext.getUsername());
-
-                taskNoteComponent.saveContentsToRepo(task.getId());
-                taskDisplayComp.saveTaskSuccess(task);
+                if (taskInformationLayout.validateForm(task)) {
+                    taskService.saveWithSession(task, AppContext.getUsername());
+                    taskNoteComponent.saveContentsToRepo(task.getId());
+                    taskDisplayComp.saveTaskSuccess(task);
+                    taskDisplayComp.closeTaskAdd();
+                }
             }
         });
         saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

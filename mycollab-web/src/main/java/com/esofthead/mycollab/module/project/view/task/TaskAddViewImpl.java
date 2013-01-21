@@ -17,6 +17,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.RichTextArea;
 import java.util.Collection;
 
 /**
@@ -59,7 +60,7 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
             private static final long serialVersionUID = 1L;
             
             public FormLayoutFactory() {
-                super("Create Task");
+                super((task.getId() == null) ? "Create Task" : task.getTaskname());
             }
 
             private Layout createButtonControls() {
@@ -89,6 +90,10 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
                     return new ProjectUserComboBox();
                 } else if (propertyId.equals("tasklistid")) {
                     return new ProjectTaskListComboBox();
+                } else if (propertyId.equals("notes")) {
+                    RichTextArea richTextArea = new RichTextArea();
+                    richTextArea.setNullRepresentation("");
+                    return richTextArea;
                 }
                 return null;
             }

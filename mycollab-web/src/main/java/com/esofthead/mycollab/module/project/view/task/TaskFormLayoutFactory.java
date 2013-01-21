@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.project.view.task;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
@@ -61,7 +62,7 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 
         @Override
         public Layout getLayout() {
-            informationLayout = new GridFormLayoutHelper(2, 5);
+            informationLayout = new GridFormLayoutHelper(2, 6);
             VerticalLayout layout = new VerticalLayout();
             layout.addComponent(informationLayout.getLayout());
             return layout;
@@ -87,6 +88,10 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
                 informationLayout.addComponent(field, "Assign", 0, 4);
             } else if (propertyId.equals("tasklistid")) {
                 informationLayout.addComponent(field, "Task List", 1, 4);
+            } else if (propertyId.equals("notes")) {
+                field.setSizeUndefined();
+                informationLayout.addComponent(field, "Notes", 0, 5, 2,
+                        UIConstants.DEFAULT_2XCONTROL_WIDTH);
             }
         }
     }

@@ -54,7 +54,7 @@ public class CampaignAddViewImpl extends AbstractView implements
             private static final long serialVersionUID = 1L;
 
             public FormLayoutFactory() {
-                super("Create Campaign");
+                super((campaign.getId() == null) ? "Create Campaign" : campaign.getCampaignname());
             }
 
             private HorizontalLayout createButtonControls() {

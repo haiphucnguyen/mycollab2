@@ -1,20 +1,16 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Set;
-
-import javax.validation.ConstraintViolation;
-import javax.validation.Validator;
-
-import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
-
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.web.AppContext;
-
 import de.steinwedel.vaadin.MessageBox;
 import de.steinwedel.vaadin.MessageBox.ButtonType;
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Set;
+import javax.validation.ConstraintViolation;
+import javax.validation.Validator;
+import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
 
 @SuppressWarnings("serial")
 public class AdvancedEditBeanForm<T> extends GenericForm implements
@@ -32,7 +28,7 @@ public class AdvancedEditBeanForm<T> extends GenericForm implements
         this.setFormLayoutFactory(factory);
     }
 
-    protected boolean validateForm(Object data) {
+    public boolean validateForm(Object data) {
         for (Object propertyId : this.getItemPropertyIds()) {
             this.getField(propertyId).removeStyleName("errorField");
         }
@@ -46,7 +42,7 @@ public class AdvancedEditBeanForm<T> extends GenericForm implements
                         .addStyleName("errorField");
             }
 
-            MessageBox mb = new MessageBox(getWindow(), "Error!",
+            MessageBox mb = new MessageBox(AppContext.getApplication().getMainWindow(), "Error!",
                     MessageBox.Icon.ERROR, errorMsg.toString(),
                     new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
             mb.show();

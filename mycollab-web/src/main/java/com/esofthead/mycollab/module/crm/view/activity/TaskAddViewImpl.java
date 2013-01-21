@@ -61,7 +61,7 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
             private static final long serialVersionUID = 1L;
             
             public FormLayoutFactory() {
-                super("Create Task");
+                super((task.getId() == null) ? "Create Task" : task.getSubject());
             }
 
             private Layout createButtonControls() {
