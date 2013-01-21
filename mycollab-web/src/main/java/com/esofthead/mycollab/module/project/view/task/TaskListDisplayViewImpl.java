@@ -41,17 +41,6 @@ public class TaskListDisplayViewImpl extends AbstractView implements
         header.addComponent(headerLbl);
         header.setExpandRatio(headerLbl, 1.0f);
 
-        Button newTaskBtn = new Button("New Task", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                TaskListWindow taskListWindow = new TaskListWindow(TaskListDisplayViewImpl.this);
-                TaskListDisplayViewImpl.this.getWindow().addWindow(taskListWindow);
-            }
-        });
-        newTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-        header.addComponent(newTaskBtn);
-        header.setComponentAlignment(newTaskBtn, Alignment.MIDDLE_RIGHT);
-
         Button newTaskListBtn = new Button("New Task List", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
