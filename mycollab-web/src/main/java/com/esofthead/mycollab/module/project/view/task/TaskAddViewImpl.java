@@ -18,6 +18,8 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
+import com.vaadin.ui.TextField;
+
 import java.util.Collection;
 
 /**
@@ -95,6 +97,14 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
                     richTextArea.setNullRepresentation("");
                     return richTextArea;
                 }
+                
+                if ("name".equals(propertyId)) {
+               	 TextField tf = new TextField();
+                    tf.setNullRepresentation("");
+                    tf.setRequired(true);
+                    tf.setRequiredError("Please enter a Name");
+                    return tf;
+               }
                 return null;
             }
         }

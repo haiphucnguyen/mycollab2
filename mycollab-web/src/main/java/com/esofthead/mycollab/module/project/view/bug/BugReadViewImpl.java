@@ -3,9 +3,12 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
@@ -15,6 +18,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
@@ -28,6 +32,7 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.dialogs.ConfirmDialog;
 
 @ViewComponent
 public class BugReadViewImpl extends AbstractView implements BugReadView {
@@ -104,6 +109,23 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                 Button deleteBtn = new Button("Delete", new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
+                    	ConfirmDialog.show(AppContext.getApplication().getMainWindow(),
+                                "Please Confirm:",
+                                "Are you sure to delete this item '" + bug.getSummary() + "' ?",
+                                "Yes", "No", new ConfirmDialog.Listener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void onClose(ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    BugService bugService = AppContext
+                                            .getSpringBean(BugService.class);
+                                    bugService.removeWithSession(bug.getId(),
+                                            AppContext.getUsername());
+                                    EventBus.getInstance().fireEvent(new BugEvent.GotoList(BugReadViewImpl.this, bug));
+                                }
+                            }
+                        });
                     }
                 });
                 deleteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
