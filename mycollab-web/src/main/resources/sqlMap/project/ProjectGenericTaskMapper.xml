@@ -15,9 +15,58 @@
     
     <sql id="queryProblemSearchCriteria" >
     
+    	<if test='sAccountId != null'>
+            ${sAccountId.operation} m_prj_problem.sAccountId = #{sAccountId.value,javaType=INTEGER}
+        </if>
+        <if test='projectId != null'>
+            ${projectId.operation} m_prj_problem.projectid = #{projectId.value,javaType=INTEGER}
+        </if>
+    </sql>
+    
+    <sql id="queryRiskSearchCriteria" >
+    
+    	<if test='sAccountId != null'>
+            ${sAccountId.operation} m_prj_risk.sAccountId = #{sAccountId.value,javaType=INTEGER}
+        </if>
+        <if test='projectId != null'>
+            ${projectId.operation} m_prj_risk.projectid = #{projectId.value,javaType=INTEGER}
+        </if>
+    </sql>
+    
+    <sql id="queryBugSearchCriteria" >
+    <if test='sAccountId != null'>
+            ${sAccountId.operation} m_tracker_bug.sAccountId = #{sAccountId.value,javaType=INTEGER}
+        </if>
+        <if test='projectId != null'>
+            ${projectId.operation} m_tracker_bug.projectid = #{projectId.value,javaType=INTEGER}
+        </if>
+    	
+    </sql>
+    
+    <sql id="queryTaskSearchCriteria" >
+        <if test='sAccountId != null'>
+            ${sAccountId.operation} m_prj_task.sAccountId = #{sAccountId.value,javaType=INTEGER}
+        </if>
+        <if test='projectId != null'>
+            ${projectId.operation} m_prj_task.projectid = #{projectId.value,javaType=INTEGER}
+        </if>
     	
     </sql>
 
+    <sql id="selectGenericTaskFromRisk" >
+
+    <![CDATA[
+          SELECT m_prj_risk.riskname AS name, m_prj_risk.assigntouser AS assignUser,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS assignUserFullName,
+            m_prj_risk.datedue AS dueDate, m_prj_risk.projectid AS projectId, m_prj_project.name AS projectName, 
+            'Risk' AS type, m_prj_risk.id AS typeid, m_prj_risk.lastUpdatedTime AS lastUpdatedTime
+                 
+          FROM m_prj_risk
+              LEFT OUTER JOIN s_user ON (m_prj_risk.assigntouser=s_user.username)
+              LEFT OUTER JOIN m_prj_project ON (m_prj_risk.projectid=m_prj_project.id)
+        ]]>
+    </sql>
+    
     <sql id="selectGenericTaskFromProblem" >
 
     <![CDATA[
@@ -29,6 +78,34 @@
           FROM m_prj_problem
               LEFT OUTER JOIN s_user ON (m_prj_problem.assigntouser=s_user.username)
               LEFT OUTER JOIN m_prj_project ON (m_prj_problem.projectid=m_prj_project.id)
+        ]]>
+    </sql>
+    
+    <sql id="selectGenericTaskFromBug" >
+
+    <![CDATA[
+          SELECT m_tracker_bug.summary AS name, m_tracker_bug.assignuser AS assignUser,
+                concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS assignUserFullName,
+                m_tracker_bug.duedate AS dueDate, m_tracker_bug.projectid AS projectId, m_prj_project.name AS projectName,
+                'Bug' AS type, m_tracker_bug.id AS typeId, m_tracker_bug.lastUpdatedTime AS lastUpdatedTime
+                 
+          FROM m_tracker_bug
+              LEFT OUTER JOIN s_user ON (m_tracker_bug.assignuser=s_user.username)
+              LEFT OUTER JOIN m_prj_project ON (m_tracker_bug.projectid=m_prj_project.id)
+        ]]>
+    </sql>
+    
+    <sql id="selectGenericTaskFromTask" >
+
+        <![CDATA[
+          SELECT m_prj_task.taskname AS name, m_prj_task.assignUser AS assignUser,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS assignUserFullName,
+            m_prj_task.deadline AS dueDate, m_prj_task.projectid AS projectId, m_prj_project.name AS projectName,
+            'Task' AS type, m_prj_task.id AS typeid, m_prj_task.lastUpdatedTime AS lastUpdatedTime
+          
+          FROM m_prj_task
+            LEFT OUTER JOIN s_user ON (m_prj_task.assignUser=s_user.username)
+            LEFT OUTER JOIN m_prj_project ON (m_prj_task.projectid=m_prj_project.id)
         ]]>
     </sql>
 
@@ -48,6 +125,54 @@
         </trim>
     </select>
     
+    <select
+        id="getTotalCountFromRisk"
+        parameterType="ProjectGenericTaskSearchCriteria"
+        resultType="int" >
+        SELECT count(*) as totalCount FROM m_prj_risk
+
+
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+            1=1 
+
+            <include refid="queryRiskSearchCriteria" />
+        </trim>
+    </select>
+    
+    <select
+        id="getTotalCountFromBug"
+        parameterType="ProjectGenericTaskSearchCriteria"
+        resultType="int" >
+        SELECT count(*) as totalCount FROM m_tracker_bug
+
+
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+            1=1 
+
+            <include refid="queryBugSearchCriteria" />
+        </trim>
+    </select>
+    
+    <select
+        id="getTotalCountFromTask"
+        parameterType="ProjectGenericTaskSearchCriteria"
+        resultType="int" >
+        SELECT count(*) as totalCount FROM m_prj_task
+
+
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+            1=1 
+
+            <include refid="queryTaskSearchCriteria" />
+        </trim>
+    </select>
+    
     <sql id="orderStatement">
         ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[
@@ -60,12 +185,39 @@
         parameterType="ProjectGenericTaskSearchCriteria"
         resultMap="BaseResultMap">
 
-        <include
+        (<include
             refid="selectGenericTaskFromProblem" />
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1 <include
                 refid="queryProblemSearchCriteria" />
-        </trim>
+        </trim>)
+        
+        UNION
+        
+        (<include
+            refid="selectGenericTaskFromRisk" />
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include
+                refid="queryRiskSearchCriteria" />
+        </trim>)
+        
+        UNION
+        
+        (<include
+            refid="selectGenericTaskFromBug" />
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include
+                refid="queryBugSearchCriteria" />
+        </trim>)
+        
+        UNION
+        
+        (<include
+            refid="selectGenericTaskFromTask" />
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include
+                refid="queryTaskSearchCriteria" />
+        </trim>)
         
         <include refid="orderStatement"/>
     </select>

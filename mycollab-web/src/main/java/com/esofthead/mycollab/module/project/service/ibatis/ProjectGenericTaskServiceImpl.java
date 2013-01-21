@@ -18,17 +18,20 @@ import org.springframework.stereotype.Service;
  */
 @Service
 public class ProjectGenericTaskServiceImpl extends DefaultSearchService<ProjectGenericTaskSearchCriteria> implements ProjectGenericTaskService {
-
+    
     @Autowired
-    protected ProjectGenericTaskMapper projectGenericTaskMapper; 
+    protected ProjectGenericTaskMapper projectGenericTaskMapper;    
     
     @Override
     public ISearchableDAO<ProjectGenericTaskSearchCriteria> getSearchMapper() {
         return projectGenericTaskMapper;
     }
-
+    
     @Override
     public int getTotalCount(ProjectGenericTaskSearchCriteria criteria) {
-        return projectGenericTaskMapper.getTotalCountFromProblem(criteria);
+        return projectGenericTaskMapper.getTotalCountFromProblem(criteria) + 
+                projectGenericTaskMapper.getTotalCountFromRisk(criteria) +
+                projectGenericTaskMapper.getTotalCountFromBug(criteria) + 
+                projectGenericTaskMapper.getTotalCountFromTask(criteria);
     }
 }
