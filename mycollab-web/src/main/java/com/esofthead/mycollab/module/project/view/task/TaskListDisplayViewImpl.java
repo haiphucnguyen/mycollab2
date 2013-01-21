@@ -108,10 +108,18 @@ public class TaskListDisplayViewImpl extends AbstractView implements
             actionBtnLayout.setSpacing(true);
             actionBtnLayout.setWidth("200px");
 
-            actionBtnLayout.addComponent(new Button("All Tasks"));
-            actionBtnLayout.addComponent(new Button("Active Tasks Only"));
+            Button allTasksFilterBtn = new Button("All Tasks");
+            allTasksFilterBtn.setStyleName("link");
+            actionBtnLayout.addComponent(allTasksFilterBtn);
+            
+            Button activeTasksFilterBtn = new Button("Active Tasks Only");
+            activeTasksFilterBtn.setStyleName("link");
+            actionBtnLayout.addComponent(activeTasksFilterBtn);
+            
+            Button archievedTasksFilterBtn = new Button("Archieved Tasks Only");
+            archievedTasksFilterBtn.setStyleName("link");
             actionBtnLayout
-                    .addComponent(new Button("Archieved Tasks Only"));
+                    .addComponent(archievedTasksFilterBtn);
             taskListFilterControl.addComponent(actionBtnLayout);
             headerLayout.addComponent(taskListFilterControl);
 

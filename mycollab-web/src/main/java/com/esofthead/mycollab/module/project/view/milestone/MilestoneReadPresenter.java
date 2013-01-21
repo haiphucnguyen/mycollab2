@@ -47,9 +47,9 @@ public class MilestoneReadPresenter extends AbstractPresenter<MilestoneReadView>
 
                     @Override
                     public void onDelete(Milestone data) {
-                        MilestoneService riskService = AppContext
+                        MilestoneService milestoneService = AppContext
                                 .getSpringBean(MilestoneService.class);
-                        riskService.removeWithSession(data.getId(),
+                        milestoneService.removeWithSession(data.getId(),
                                 AppContext.getUsername());
                         EventBus.getInstance().fireEvent(
                                 new MilestoneEvent.GotoList(this, null));
