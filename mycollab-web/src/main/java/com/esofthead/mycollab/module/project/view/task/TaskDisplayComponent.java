@@ -6,16 +6,19 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
+import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -131,9 +134,28 @@ public class TaskDisplayComponent extends VerticalLayout {
         }
         
         @Override
-        public void showTask(SimpleTask task) {
-            Label taskLbl = new Label(task.getTaskname());
-            this.addComponent(taskLbl);
+        public void showTask(final SimpleTask task) {
+            TaskFormComponent previewForm = new TaskFormComponent() {
+
+                @Override
+                TaskFormLayoutFactory getFormLayoutFactory() {
+                    return new TaskFormLayoutFactory(task.getTaskname()) {
+
+                        @Override
+                        protected Layout createTopPanel() {
+                            return null;
+                        }
+
+                        @Override
+                        protected Layout createBottomPanel() {
+                            return null;
+                        }
+                    };
+                }
+            };
+            
+            this.addComponent(previewForm);
+            previewForm.setItemDataSource(new BeanItem<Task>(task));
             Button moreButton = new Button("Less ...", new Button.ClickListener() {
 
                 @Override
@@ -144,5 +166,7 @@ public class TaskDisplayComponent extends VerticalLayout {
             moreButton.setStyleName("link");
             this.addComponent(moreButton);
         }
+        
+        
     }
 }

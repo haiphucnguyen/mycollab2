@@ -41,7 +41,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
         return previewForm;
     }
 
-    private class PreviewForm extends TaskFormLayout {
+    private class PreviewForm extends TaskFormComponent {
 
         @Override
         TaskFormLayoutFactory getFormLayoutFactory() {

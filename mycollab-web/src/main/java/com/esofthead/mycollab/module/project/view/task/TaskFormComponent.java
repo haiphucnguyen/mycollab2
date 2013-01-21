@@ -21,7 +21,7 @@ import com.vaadin.ui.Field;
  *
  * @author haiphucnguyen
  */
-public abstract class TaskFormLayout extends AdvancedPreviewBeanForm<Task> {
+public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
 
     private SimpleTask task;
 

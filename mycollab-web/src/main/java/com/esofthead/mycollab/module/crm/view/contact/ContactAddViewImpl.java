@@ -63,7 +63,7 @@ public class ContactAddViewImpl extends AbstractView implements
             private static final long serialVersionUID = 1L;
 
             public FormLayoutFactory() {
-                super("Create Contact");
+                super((contact.getId() == null) ? "Create Contact" : contact.getContactName());
             }
 
             private Layout createButtonControls() {

@@ -26,6 +26,7 @@ public class LeadAddViewImpl extends AbstractView implements
 
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
+    private Lead lead;
 
     public LeadAddViewImpl() {
         super();
@@ -35,6 +36,7 @@ public class LeadAddViewImpl extends AbstractView implements
 
     @Override
     public void editItem(Lead item) {
+        this.lead = lead;
         editForm.setItemDataSource(new BeanItem<Lead>(item));
     }
 
@@ -55,7 +57,7 @@ public class LeadAddViewImpl extends AbstractView implements
             private static final long serialVersionUID = 1L;
 
             public FormLayoutFactory() {
-                super("Create Lead");
+                super((lead.getId() == null) ? "Create Lead" : lead.getLastname());
             }
 
             private Layout createButtonControls() {

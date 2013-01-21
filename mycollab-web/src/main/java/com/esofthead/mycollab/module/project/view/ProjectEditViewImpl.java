@@ -55,7 +55,7 @@ public class ProjectEditViewImpl extends AbstractView implements ProjectEditView
             private static final long serialVersionUID = 1L;
 
             public FormLayoutFactory() {
-                super("Create Project");
+                super((project.getId() == null) ? "Create Project" : project.getName());
             }
 
             private Layout createButtonControls() {

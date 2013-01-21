@@ -57,7 +57,7 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
             private static final long serialVersionUID = 1L;
 
             public FormLayoutFactory() {
-                super("Create Meeting");
+                super((meeting.getId() == null) ? "Create Meeting" : meeting.getSubject());
             }
 
             private Layout createButtonControls() {
