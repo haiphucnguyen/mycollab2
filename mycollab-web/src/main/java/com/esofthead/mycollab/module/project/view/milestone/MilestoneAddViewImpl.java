@@ -17,6 +17,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.TextField;
 
 /**
  *
@@ -84,10 +85,22 @@ public class MilestoneAddViewImpl extends AbstractView implements MilestoneAddVi
             protected Field onCreateField(Item item, Object propertyId,
                     com.vaadin.ui.Component uiContext) {
                 if (propertyId.equals("owner")) {
-                    return new UserComboBox();
+                    UserComboBox userbox = new UserComboBox();
+                    userbox.setRequired(true);
+                    userbox.setRequiredError("Please enter a Responesible User");
+                    return userbox;
                 } else if (propertyId.equals("flag")) {
                     return new ValueComboBox(false, "External", "Internal");
                 }
+                
+                if (propertyId.equals("name")) {
+                    TextField tf = new TextField();
+                    tf.setNullRepresentation("");
+                    tf.setRequired(true);
+                    tf.setRequiredError("Please enter a Name");
+                    return tf;
+                }
+                
                 return null;
             }
         }

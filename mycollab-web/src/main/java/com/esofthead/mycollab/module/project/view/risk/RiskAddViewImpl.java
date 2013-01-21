@@ -15,6 +15,8 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
+import com.vaadin.ui.TextField;
+
 import java.util.HashMap;
 import java.util.Map;
 import org.vaadin.teemu.ratingstars.RatingStars;
@@ -91,7 +93,11 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
             protected Field onCreateField(Item item, Object propertyId,
                     com.vaadin.ui.Component uiContext) {
                 if (propertyId.equals("description")) {
-                    return new RichTextArea();
+                    RichTextArea risk = new RichTextArea();
+                    risk.setRequired(true);
+                    risk.setNullRepresentation("");
+                    risk.setRequiredError("Please enter a Desciption");
+                    return risk;
                 } else if (propertyId.equals("raisedbyuser")) {
                     return new UserComboBox();
                 } else if (propertyId.equals("assigntouser")) {
@@ -145,6 +151,15 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
                     });
                     return ratingField;
                 }
+                
+                if (propertyId.equals("riskname")) {
+                    TextField tf = new TextField();
+                    tf.setNullRepresentation("");
+                    tf.setRequired(true);
+                    tf.setRequiredError("Please enter a Summary");
+                    return tf;
+                }
+                
                 return null;
             }
         }

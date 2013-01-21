@@ -31,6 +31,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TextArea;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -180,6 +181,12 @@ public class TaskAddPopup extends CustomComponent {
                 com.vaadin.ui.Component uiContext) {
             if (propertyId.equals("assignuser")) {
                 return new ProjectUserComboBox();
+            } else if (propertyId.equals("taskname")) {
+            	  TextField tf = new TextField();
+                  tf.setNullRepresentation("");
+                  tf.setRequired(true);
+                  tf.setRequiredError("Please enter a Task Name");
+                  return tf;
             }
             return null;
         }
