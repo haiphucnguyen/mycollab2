@@ -6,13 +6,13 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.ModuleNameConstants;
-import com.esofthead.mycollab.common.domain.SimpleActivityStream;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
-import com.esofthead.mycollab.common.service.ActivityStreamService;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
@@ -22,41 +22,86 @@ import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.ui.BeanPagedList;
+import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
+import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import java.util.List;
 
 /**
  *
  * @author haiphucnguyen
  */
 public class ActivityStreamComponent extends VerticalLayout {
-    private BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
-    
+
+    private ProjectActivityStreamPagedList activityStreamList;
+
     public void showFeeds() {
         this.removeAllComponents();
 
-        activityStreamList = new BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), ActivityStreamRowDisplayHandler.class, 15);
+        activityStreamList = new ProjectActivityStreamPagedList();
         this.addComponent(new LazyLoadWrapper(activityStreamList));
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
         searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{ModuleNameConstants.PRJ}));
-        
+
         activityStreamList.setSearchCriteria(searchCriteria);
     }
-    
-    public static class ActivityStreamRowDisplayHandler implements BeanPagedList.RowDisplayHandler<SimpleActivityStream> {
+
+    static class ProjectActivityStreamPagedList extends AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
+
+        private ProjectService projectService;
+        
+        public ProjectActivityStreamPagedList() {
+            super(ActivityStreamComponent.ActivityStreamRowDisplayHandler.class, 15);
+            
+            projectService = AppContext.getSpringBean(ProjectService.class);
+        }
 
         @Override
-        public Component generateRow(SimpleActivityStream activityStream, int rowIndex) {
+        public void doSearch() {
+            totalCount = projectService.getTotalActivityStream(searchRequest
+                    .getSearchCriteria());
+            totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
+            if (searchRequest.getCurrentPage() > totalPage) {
+                searchRequest.setCurrentPage(totalPage);
+            }
+
+            this.setCurrentPage(currentPage);
+            this.setTotalPage(totalPage);
+
+            List<ProjectActivityStream> currentListData = (List<ProjectActivityStream>)projectService
+                    .getProjectActivityStreams(searchRequest);
+            listContainer.removeAllComponents();
+            int i = 0;
+            try {
+                for (ProjectActivityStream item : currentListData) {
+                    AbstractBeanPagedList.RowDisplayHandler<ProjectActivityStream> rowHandler = (AbstractBeanPagedList.RowDisplayHandler<ProjectActivityStream>) rowDisplayHandler
+                            .newInstance();
+                    Component row = rowHandler.generateRow(item, i);
+                    listContainer.addComponent(row);
+                    i++;
+                }
+            } catch (Exception e) {
+                throw new MyCollabException(e);
+            }
+        }
+    }
+
+    public static class ActivityStreamRowDisplayHandler implements DefaultBeanPagedList.RowDisplayHandler<ProjectActivityStream> {
+
+        @Override
+        public Component generateRow(ProjectActivityStream activityStream, int rowIndex) {
             VerticalLayout layout = new VerticalLayout();
             HorizontalLayout header = new HorizontalLayout();
             header.setSpacing(true);
@@ -73,7 +118,16 @@ public class ActivityStreamComponent extends VerticalLayout {
             Label actionLbl = new Label(action.toString());
             header.addComponent(actionLbl);
             header.setComponentAlignment(actionLbl, Alignment.MIDDLE_CENTER);
-            header.addComponent(new ActivitylLink(activityStream.getType(), activityStream.getNamefield(), activityStream.getTypeid()));
+            header.addComponent(new ActivityStreamComponent.ActivitylLink(activityStream.getType(), activityStream.getNamefield(), activityStream.getTypeid()));
+            header.addComponent(new Label("in project "));
+            Button projectLink = new Button("aaa", new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    throw new UnsupportedOperationException("Not supported yet.");
+                }
+            });
+            header.addComponent(projectLink);
+            projectLink.setStyleName("link");
             layout.addComponent(header);
 
             HorizontalLayout body = new HorizontalLayout();

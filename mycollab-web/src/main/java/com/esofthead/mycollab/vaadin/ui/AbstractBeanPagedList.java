@@ -4,10 +4,8 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 import com.vaadin.data.validator.IntegerValidator;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -16,33 +14,31 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
-import java.util.List;
 
 /**
  *
  * @author haiphucnguyen
  */
-public class BeanPagedList<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
+public abstract class AbstractBeanPagedList <S extends SearchCriteria, T>
         extends VerticalLayout {
 
     private static final long serialVersionUID = 1L;
-    private int currentPage = 1;
-    private int totalPage = 1;
-    private int totalCount;
-    private SearchRequest<S> searchRequest;
+    
     private final Button first, previous, next, last;
     private final Label totalPagesLabel;
     private final TextField currentPageTextField;
-    private final SearchService searchService;
-    private final VerticalLayout listContainer;
-    private final Class<? extends BeanPagedList.RowDisplayHandler<T>> rowDisplayHandler;
     private int defaultNumberSearchItems = 10;
+    
+    protected final VerticalLayout listContainer;
+    protected final Class<? extends DefaultBeanPagedList.RowDisplayHandler<T>> rowDisplayHandler;
+    protected int currentPage = 1;
+    protected int totalPage = 1;
+    protected int totalCount;
+    protected SearchRequest<S> searchRequest;
 
-    public BeanPagedList(
-            SearchService searchService,
-            Class<? extends BeanPagedList.RowDisplayHandler<T>> rowDisplayHandler, int defaultNumberSearchItems) {
+    public AbstractBeanPagedList(
+            Class<? extends DefaultBeanPagedList.RowDisplayHandler<T>> rowDisplayHandler, int defaultNumberSearchItems) {
         this.defaultNumberSearchItems = defaultNumberSearchItems;
-        this.searchService = searchService;
         this.rowDisplayHandler = rowDisplayHandler;
         listContainer = new VerticalLayout();
         this.addComponent(listContainer);
@@ -71,7 +67,7 @@ public class BeanPagedList<SearchService extends ISearchableService<S>, S extend
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                pageChange(BeanPagedList.this.currentPage - 1);
+                pageChange(AbstractBeanPagedList.this.currentPage - 1);
             }
         });
         controlsLayout.addComponent(previous);
@@ -96,7 +92,7 @@ public class BeanPagedList<SearchService extends ISearchableService<S>, S extend
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                pageChange(BeanPagedList.this.currentPage + 1);
+                pageChange(AbstractBeanPagedList.this.currentPage + 1);
             }
         });
         controlsLayout.addComponent(next);
@@ -106,7 +102,7 @@ public class BeanPagedList<SearchService extends ISearchableService<S>, S extend
 
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                pageChange(BeanPagedList.this.totalPage);
+                pageChange(AbstractBeanPagedList.this.totalPage);
             }
         });
         controlsLayout.addComponent(last);
@@ -114,13 +110,13 @@ public class BeanPagedList<SearchService extends ISearchableService<S>, S extend
         this.addComponent(bottomLayout);
     }
 
-    private void setCurrentPage(int currentPage) {
+    protected void setCurrentPage(int currentPage) {
         this.currentPage = currentPage;
         currentPageTextField.setValue(currentPage);
         checkButtonStatus();
     }
 
-    private void setTotalPage(int totalPage) {
+    protected void setTotalPage(int totalPage) {
         this.totalPage = totalPage;
         totalPagesLabel.setValue(String.valueOf(totalPage));
         checkButtonStatus();
@@ -161,36 +157,11 @@ public class BeanPagedList<SearchService extends ISearchableService<S>, S extend
         doSearch();
     }
 
-    private void doSearch() {
-        totalCount = searchService.getTotalCount(searchRequest
-                .getSearchCriteria());
-        totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
-        if (searchRequest.getCurrentPage() > totalPage) {
-            searchRequest.setCurrentPage(totalPage);
-        }
+    abstract public void doSearch();
 
-        this.setCurrentPage(currentPage);
-        this.setTotalPage(totalPage);
-
-        List<T> currentListData = searchService
-                .findPagableListByCriteria(searchRequest);
-        listContainer.removeAllComponents();
-        int i = 0;
-        try {
-            for (T item : currentListData) {
-                BeanPagedList.RowDisplayHandler<T> rowHandler = rowDisplayHandler
-                        .newInstance();
-                Component row = rowHandler.generateRow(item, i);
-                listContainer.addComponent(row);
-                i++;
-            }
-        } catch (Exception e) {
-            throw new MyCollabException(e);
-        }
-    }
-
-    public interface RowDisplayHandler<T> {
+    public static interface RowDisplayHandler<T> {
 
         Component generateRow(T obj, int rowIndex);
     }
+    
 }

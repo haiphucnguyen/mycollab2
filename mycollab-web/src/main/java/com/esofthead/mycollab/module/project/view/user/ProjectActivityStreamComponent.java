@@ -24,7 +24,7 @@ import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.ui.BeanPagedList;
+import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
@@ -43,7 +43,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class ProjectActivityStreamComponent extends Panel {
 
-    private BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
+    private DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
 
     public ProjectActivityStreamComponent() {
         super("Project Feeds");
@@ -52,7 +52,7 @@ public class ProjectActivityStreamComponent extends Panel {
     public void showProjectFeeds() {
         this.removeAllComponents();
 
-        activityStreamList = new BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), ActivityStreamRowDisplayHandler.class, 15);
+        activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), ActivityStreamRowDisplayHandler.class, 15);
         this.addComponent(new LazyLoadWrapper(activityStreamList));
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
         searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{ModuleNameConstants.PRJ}));
@@ -62,7 +62,7 @@ public class ProjectActivityStreamComponent extends Panel {
         activityStreamList.setSearchCriteria(searchCriteria);
     }
 
-    public static class ActivityStreamRowDisplayHandler implements BeanPagedList.RowDisplayHandler<SimpleActivityStream> {
+    public static class ActivityStreamRowDisplayHandler implements DefaultBeanPagedList.RowDisplayHandler<SimpleActivityStream> {
 
         @Override
         public Component generateRow(SimpleActivityStream activityStream, int rowIndex) {

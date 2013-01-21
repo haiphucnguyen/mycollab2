@@ -161,9 +161,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 
     @Override
     public void gotoMyFeeds() {
-        com.vaadin.ui.Component component = mySpaceTabs.selectTab("My Feeds");
-        if (component != null) {
-        }
+        myFeedsPresenter.go(this, null);
     }
 
     @Override

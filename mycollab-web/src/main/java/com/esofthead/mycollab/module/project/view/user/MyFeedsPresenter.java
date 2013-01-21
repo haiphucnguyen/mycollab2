@@ -18,6 +18,7 @@ public class MyFeedsPresenter extends AbstractPresenter<MyFeedsView> {
         UserDashboardView projectViewContainer = (UserDashboardView) container;
         projectViewContainer.gotoSubView("My Feeds");
 
+        System.out.println("go to feeds");
         view.displayFeeds();
 
     }

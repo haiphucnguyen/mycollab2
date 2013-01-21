@@ -20,7 +20,7 @@ import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.ui.BeanPagedList;
+import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
@@ -40,11 +40,11 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class ActivityStreamPanel extends Depot {
 
-	private final BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
+	private final DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
 
 	public ActivityStreamPanel() {
 		super("Activity Channels", new VerticalLayout());
-		activityStreamList = new BeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
+		activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
 				AppContext.getSpringBean(ActivityStreamService.class),
 				ActivityStreamRowDisplayHandler.class, 10);
 		this.bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
@@ -60,7 +60,7 @@ public class ActivityStreamPanel extends Depot {
 	}
 
 	public static class ActivityStreamRowDisplayHandler implements
-			BeanPagedList.RowDisplayHandler<SimpleActivityStream> {
+			DefaultBeanPagedList.RowDisplayHandler<SimpleActivityStream> {
 
 		@Override
 		public Component generateRow(SimpleActivityStream activityStream,

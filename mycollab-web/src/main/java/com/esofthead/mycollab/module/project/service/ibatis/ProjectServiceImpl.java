@@ -17,9 +17,11 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.MessageDispatcher;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -31,11 +33,13 @@ import com.esofthead.mycollab.module.project.dao.ProjectMapperExt;
 import com.esofthead.mycollab.module.project.domain.Permission;
 import com.esofthead.mycollab.module.project.domain.PermissionExample;
 import com.esofthead.mycollab.module.project.domain.Project;
+import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.domain.ProjectExample;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import java.util.List;
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -69,7 +73,7 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
     protected int internalUpdateWithSession(Project record, String username) {
         super.internalUpdateWithSession(record, username);
         PermissionExample ex = new PermissionExample();
-        if (record.getOwner() != null && record.getOwner() != "") {
+        if (record.getOwner() != null && !"".equals(record.getOwner())) {
             ex.createCriteria().andProjectidEqualTo(record.getId())
                     .andUsernameEqualTo(record.getOwner());
             permissionMapper.deleteByExample(ex);
@@ -145,5 +149,17 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
     @Override
     public List<SimpleProject> getInvolvedProjectOfUser(String username) {
         return projectMapperExt.getInvolvedProjectOfUser(username);
+    }
+
+    @Override
+    public List<ProjectActivityStream> getProjectActivityStreams(SearchRequest<ActivityStreamSearchCriteria> searchRequest) {
+        return projectMapperExt.getProjectActivityStreams(searchRequest.getSearchCriteria(),
+                new RowBounds((searchRequest.getCurrentPage() - 1)
+                * searchRequest.getNumberOfItems(), searchRequest.getNumberOfItems()));
+    }
+
+    @Override
+    public int getTotalActivityStream(ActivityStreamSearchCriteria searchCriteria) {
+        return projectMapperExt.getTotalActivityStream(searchCriteria);
     }
 }
