@@ -10,7 +10,6 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -31,6 +30,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
         TaskListDisplayView {
 
     private BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList> taskLists;
+    private Button reOrderBtn;
 
     public TaskListDisplayViewImpl() {
         super();
@@ -47,6 +47,17 @@ public class TaskListDisplayViewImpl extends AbstractView implements
         header.addComponent(headerLbl);
         header.setExpandRatio(headerLbl, 1.0f);
 
+        reOrderBtn = new Button("Reorder", new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(new TaskListEvent.ReoderTaskList(this, null));
+            }
+        });
+        reOrderBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+        header.addComponent(reOrderBtn);
+        header.setComponentAlignment(reOrderBtn, Alignment.MIDDLE_RIGHT);
+
+
         Button newTaskListBtn = new Button("New Task List", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
@@ -59,8 +70,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
         header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
 
         this.addComponent(header);
-
-        taskLists = new BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList>(AppContext.getSpringBean(ProjectTaskListService.class), TaskListRowDisplayHandler.class);
+        taskLists = new BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList>(null, AppContext.getSpringBean(ProjectTaskListService.class), TaskListRowDisplayHandler.class);
         this.addComponent(taskLists);
     }
 
@@ -111,11 +121,11 @@ public class TaskListDisplayViewImpl extends AbstractView implements
             Button allTasksFilterBtn = new Button("All Tasks");
             allTasksFilterBtn.setStyleName("link");
             actionBtnLayout.addComponent(allTasksFilterBtn);
-            
+
             Button activeTasksFilterBtn = new Button("Active Tasks Only");
             activeTasksFilterBtn.setStyleName("link");
             actionBtnLayout.addComponent(activeTasksFilterBtn);
-            
+
             Button archievedTasksFilterBtn = new Button("Archieved Tasks Only");
             archievedTasksFilterBtn.setStyleName("link");
             actionBtnLayout

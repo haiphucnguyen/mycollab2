@@ -180,6 +180,22 @@ public class ProjectController {
                         projectView.gotoTaskList(null);
                     }
                 });
+        
+        EventBus.getInstance().addListener(
+                new ApplicationEventListener<TaskListEvent.ReoderTaskList>() {
+                    @Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return TaskListEvent.ReoderTaskList.class;
+                    }
+
+                    @Override
+                    public void handle(TaskListEvent.ReoderTaskList event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        TaskContainer.ReorderTaskListRequest data = new TaskContainer.ReorderTaskListRequest();
+                        projectView.gotoTaskList(data);
+                    }
+                });
 
     }
 

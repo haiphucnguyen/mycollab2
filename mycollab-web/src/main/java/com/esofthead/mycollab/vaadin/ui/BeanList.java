@@ -24,12 +24,21 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
     private SearchService searchService;
     private Class<? extends RowDisplayHandler<T>> rowDisplayHandler;
     private VerticalLayout contentLayout;
-
+    
     public BeanList(Object parentComponent, SearchService searchService,
             Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
+        this(parentComponent, searchService, rowDisplayHandler, new VerticalLayout());
+    }
+
+    public BeanList(Object parentComponent, SearchService searchService,
+            Class<? extends RowDisplayHandler<T>> rowDisplayHandler, VerticalLayout contentLayout) {
         this.parentComponent = parentComponent;
         this.searchService = searchService;
         this.rowDisplayHandler = rowDisplayHandler;
+        
+        this.contentLayout = contentLayout;
+        LazyLoadWrapper contentWrapper = new LazyLoadWrapper(contentLayout);
+        this.setCompositionRoot(contentWrapper);
     }
 
     public BeanList(SearchService searchService,
@@ -70,9 +79,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
     }
 
     public int setSearchRequest(SearchRequest<S> searchRequest) {
-        contentLayout = new VerticalLayout();
-        LazyLoadWrapper contentWrapper = new LazyLoadWrapper(contentLayout);
-        this.setCompositionRoot(contentWrapper);
+        contentLayout.removeAllComponents();
         
         List<T> currentListData = searchService
                 .findPagableListByCriteria(searchRequest);
@@ -91,8 +98,6 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
         } catch (Exception e) {
             log.error("Error while generate column display", e);
         }
-        
-        
 
         return currentListData.size();
     }

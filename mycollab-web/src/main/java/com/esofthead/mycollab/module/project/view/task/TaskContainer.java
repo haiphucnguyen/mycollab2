@@ -24,6 +24,13 @@ public class TaskContainer extends AbstractView {
         }
     }
     
+    public static class ReorderTaskListRequest extends ScreenData {
+
+        public ReorderTaskListRequest() {
+            super(null);
+        }
+    }
+    
     public static class EditTaskListData extends ScreenData<TaskList> {
 
         public EditTaskListData(TaskList taskList) {

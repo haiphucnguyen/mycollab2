@@ -204,6 +204,13 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.addLink(new Button("Task Assignments"));
     }
     
+    public void gotoTaskListReorder() {
+        this.select(1);
+        this.addLink(new Button("Task Assignments", new GotoTaskAssignmentDashboard()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button("Task Group: Reorder"));
+    }
+    
     public void gotoTaskGroupAdd() {
         this.select(1);
         this.addLink(new Button("Task Assignments", new GotoTaskAssignmentDashboard()));
