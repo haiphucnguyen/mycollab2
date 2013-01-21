@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -20,7 +21,9 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.hene.popupbutton.PopupButton;
 
 @SuppressWarnings("serial")
 @ViewComponent
@@ -85,6 +88,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
     static class TaskListDepot extends Depot {
 
         private SimpleTaskList taskList;
+        private PopupButton taskListFilterControl;
 
         public TaskListDepot(SimpleTaskList taskListParam) {
             super(taskListParam.getName(), new HorizontalLayout(), new TaskDisplayComponent(taskListParam));
@@ -95,6 +99,21 @@ public class TaskListDisplayViewImpl extends AbstractView implements
         private void initUI() {
             HorizontalLayout headerLayout = (HorizontalLayout) this.headerContent;
             headerLayout.setSpacing(true);
+
+            taskListFilterControl = new PopupButton("Filter");
+            taskListFilterControl.addStyleName("link");
+
+            VerticalLayout actionBtnLayout = new VerticalLayout();
+            actionBtnLayout.setMargin(true);
+            actionBtnLayout.setSpacing(true);
+            actionBtnLayout.setWidth("200px");
+
+            actionBtnLayout.addComponent(new Button("All Tasks"));
+            actionBtnLayout.addComponent(new Button("Active Tasks Only"));
+            actionBtnLayout
+                    .addComponent(new Button("Archieved Tasks Only"));
+            taskListFilterControl.addComponent(actionBtnLayout);
+            headerLayout.addComponent(taskListFilterControl);
 
             Button editBtn = new Button("Edit", new Button.ClickListener() {
                 @Override

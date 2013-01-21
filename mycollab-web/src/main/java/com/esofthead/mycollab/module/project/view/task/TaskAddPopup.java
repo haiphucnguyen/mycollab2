@@ -156,6 +156,7 @@ public class TaskAddPopup extends CustomComponent {
             this.addComponent(noteArea);
 
             attachmentPanel = new AttachmentPanel();
+            this.addComponent(attachmentPanel);
             MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachmentPanel);
             this.addComponent(uploadExt);
             this.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
