@@ -83,7 +83,7 @@
         </field>
     </bean>
 
-    <bean class="Campaign" ignore-annotations="true">
+    <bean class="Campaign" ignore-annotations="true" >
         <field name="campaignname">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Name must not be null</message>

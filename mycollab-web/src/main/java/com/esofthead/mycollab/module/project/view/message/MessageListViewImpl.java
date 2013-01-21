@@ -138,7 +138,7 @@ public class MessageListViewImpl extends AbstractView implements
                             createAddMessageLayout();
                         }
                     });
-            createAccountBtn.setStyleName("link");
+            createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
             createAccountBtn
                     .setIcon(new ThemeResource("icons/16/addRecord.png"));
 
