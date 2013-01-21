@@ -62,7 +62,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
                                 new RiskEvent.GotoAdd(this, null));
                     }
                 });
-        createBtn.setStyleName("link");
+        createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 
         UiUtils.addComponent(layout, createBtn, Alignment.MIDDLE_RIGHT);
@@ -116,7 +116,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
                                     .notifySearchHandler(searchCriteria);
                         }
                     });
-            searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
             basicSearchBody.addComponent(searchBtn);
 
             Button clearBtn = new Button("Clear",
@@ -128,7 +128,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
                             nameField.setValue("");
                         }
                     });
-            clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
             basicSearchBody.addComponent(clearBtn);
             return basicSearchBody;
         }

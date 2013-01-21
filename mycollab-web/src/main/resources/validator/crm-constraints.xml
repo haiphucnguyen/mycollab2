@@ -173,4 +173,18 @@
             </constraint>
         </field>
     </bean>
+    <bean class="Meeting" ignore-annotations="true">
+        <field name="subject">
+            <constraint annotation="javax.validation.constraints.NotNull">
+                <message>Subject must not be null</message>
+            </constraint>
+        </field>
+    </bean>
+     <bean class="Call" ignore-annotations="true">
+        <field name="subject">
+            <constraint annotation="javax.validation.constraints.NotNull">
+                <message>Subject must not be null</message>
+            </constraint>
+        </field>
+    </bean>
 </constraint-mappings>

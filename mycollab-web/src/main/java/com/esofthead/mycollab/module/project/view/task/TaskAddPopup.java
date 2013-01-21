@@ -16,6 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -78,6 +79,7 @@ public class TaskAddPopup extends CustomComponent {
                 taskDisplayComp.saveTaskSuccess(task);
             }
         });
+        saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         controlsLayout.addComponent(saveBtn);
         
         Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
@@ -87,6 +89,7 @@ public class TaskAddPopup extends CustomComponent {
             }
         });
         
+        cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         controlsLayout.addComponent(cancelBtn);
         taskLayout.addComponent(controlsLayout);
         

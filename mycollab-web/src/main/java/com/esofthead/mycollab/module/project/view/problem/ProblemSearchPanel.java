@@ -62,7 +62,7 @@ public class ProblemSearchPanel extends GenericSearchPanel<ProblemSearchCriteria
                                 new ProblemEvent.GotoAdd(this, null));
                     }
                 });
-        createAccountBtn.setStyleName("link");
+        createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 
         UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
@@ -117,7 +117,7 @@ public class ProblemSearchPanel extends GenericSearchPanel<ProblemSearchCriteria
                                     .notifySearchHandler(searchCriteria);
                         }
                     });
-            searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
             basicSearchBody.addComponent(searchBtn);
 
             Button clearBtn = new Button("Clear",
@@ -129,7 +129,7 @@ public class ProblemSearchPanel extends GenericSearchPanel<ProblemSearchCriteria
                             nameField.setValue("");
                         }
                     });
-            clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
             basicSearchBody.addComponent(clearBtn);
             return basicSearchBody;
         }

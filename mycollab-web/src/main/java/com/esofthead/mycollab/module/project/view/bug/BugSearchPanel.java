@@ -1,5 +1,10 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.module.crm.view.account.AccountSearchPanel;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -61,7 +66,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 								new BugEvent.GotoAdd(this, null));
 					}
 				});
-		createAccountBtn.setStyleName("link");
+		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 
 		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
@@ -80,6 +85,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			return createSearchTopPanel();
 		}
 
+		@SuppressWarnings("serial")
 		@Override
 		public ComponentContainer constructBody() {
 			HorizontalLayout basicSearchBody = new HorizontalLayout();
@@ -92,29 +98,31 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			myItemCheckbox = new CheckBox("My Items");
 			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
+			
+			Button searchBtn = new Button("Search");
+			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			searchBtn.addListener(new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					searchCriteria = new BugSearchCriteria();
 
-			basicSearchBody.addComponent(new Button("Search",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+					BugSearchPanel.this
+							.notifySearchHandler(searchCriteria);
+				}
+			});
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							searchCriteria = new BugSearchCriteria();
+			basicSearchBody.addComponent(searchBtn);
 
-							BugSearchPanel.this
-									.notifySearchHandler(searchCriteria);
-						}
-					}));
-
-			basicSearchBody.addComponent(new Button("Clear",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							nameField.setValue("");
-						}
-					}));
+			Button cancelBtn = new Button("Clear");
+			cancelBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			cancelBtn.addListener(new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					nameField.setValue("");
+				}
+			});
+			basicSearchBody.addComponent(cancelBtn);
+			
 			return basicSearchBody;
 		}
 	}

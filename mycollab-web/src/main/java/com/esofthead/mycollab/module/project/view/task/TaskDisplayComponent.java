@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -46,6 +47,7 @@ public class TaskDisplayComponent extends VerticalLayout {
             }
         });
         
+        createTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         this.addComponent(createTaskBtn);
     }
 
