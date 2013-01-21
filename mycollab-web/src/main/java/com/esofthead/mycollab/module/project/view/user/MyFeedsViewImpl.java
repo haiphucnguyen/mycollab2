@@ -11,7 +11,7 @@ public class MyFeedsViewImpl extends AbstractView implements MyFeedsView {
     
     private ActivityStreamComponent activityStreamComponent;
     
-    private ProjectTaskStatusComponent taskStatusComponent;
+    private TaskStatusComponent taskStatusComponent;
     
     public MyFeedsViewImpl() {
         HorizontalLayout layout = new HorizontalLayout();
@@ -20,7 +20,7 @@ public class MyFeedsViewImpl extends AbstractView implements MyFeedsView {
         layout.setMargin(true);
         
         activityStreamComponent = new ActivityStreamComponent();
-        taskStatusComponent = new ProjectTaskStatusComponent();
+        taskStatusComponent = new TaskStatusComponent();
         layout.addComponent(activityStreamComponent);
         layout.addComponent(taskStatusComponent);
         
