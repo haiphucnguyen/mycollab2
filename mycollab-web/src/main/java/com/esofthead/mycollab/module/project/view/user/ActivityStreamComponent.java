@@ -36,6 +36,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 import java.util.List;
 
@@ -43,7 +44,11 @@ import java.util.List;
  *
  * @author haiphucnguyen
  */
-public class ActivityStreamComponent extends VerticalLayout {
+public class ActivityStreamComponent extends Panel {
+    
+    public ActivityStreamComponent() {
+        super("User Feeds");
+    }
 
     private ProjectActivityStreamPagedList activityStreamList;
 
@@ -61,10 +66,10 @@ public class ActivityStreamComponent extends VerticalLayout {
     static class ProjectActivityStreamPagedList extends AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
 
         private ProjectService projectService;
-        
+
         public ProjectActivityStreamPagedList() {
             super(ActivityStreamComponent.ActivityStreamRowDisplayHandler.class, 15);
-            
+
             projectService = AppContext.getSpringBean(ProjectService.class);
         }
 
@@ -80,7 +85,7 @@ public class ActivityStreamComponent extends VerticalLayout {
             this.setCurrentPage(currentPage);
             this.setTotalPage(totalPage);
 
-            List<ProjectActivityStream> currentListData = (List<ProjectActivityStream>)projectService
+            List<ProjectActivityStream> currentListData = (List<ProjectActivityStream>) projectService
                     .getProjectActivityStreams(searchRequest);
             listContainer.removeAllComponents();
             int i = 0;
@@ -119,11 +124,14 @@ public class ActivityStreamComponent extends VerticalLayout {
             header.addComponent(actionLbl);
             header.setComponentAlignment(actionLbl, Alignment.MIDDLE_CENTER);
             header.addComponent(new ActivityStreamComponent.ActivitylLink(activityStream.getType(), activityStream.getNamefield(), activityStream.getTypeid()));
-            header.addComponent(new Label("in project "));
-            Button projectLink = new Button("aaa", new Button.ClickListener() {
+            
+            Label prjLabel = new Label("in project ");
+            header.addComponent(prjLabel);
+            header.setComponentAlignment(prjLabel, Alignment.MIDDLE_CENTER);
+            Button projectLink = new Button(activityStream.getProjectName(), new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    throw new UnsupportedOperationException("Not supported yet.");
+                    
                 }
             });
             header.addComponent(projectLink);

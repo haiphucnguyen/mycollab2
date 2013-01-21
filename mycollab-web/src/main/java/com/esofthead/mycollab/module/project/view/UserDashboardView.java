@@ -11,8 +11,4 @@ public interface UserDashboardView extends View {
     Component gotoSubView(String name);
 
     void gotoMyFeeds();
-
-    void gotoMyTasks();
-
-    void gotoMyBugs();
 }
