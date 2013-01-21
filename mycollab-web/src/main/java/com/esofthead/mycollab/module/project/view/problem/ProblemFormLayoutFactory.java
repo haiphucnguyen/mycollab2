@@ -33,7 +33,7 @@ public abstract class ProblemFormLayoutFactory implements IFormLayoutFactory {
         layout.addComponent(organizationHeader);
         
         informationLayout = new GridFormLayoutHelper(2, 7);
-        informationLayout.getLayout().setWidth("900px");
+        informationLayout.getLayout().setWidth("100%");
         layout.addComponent(informationLayout.getLayout());
         layout.setComponentAlignment(informationLayout.getLayout(),
                 Alignment.BOTTOM_CENTER);
