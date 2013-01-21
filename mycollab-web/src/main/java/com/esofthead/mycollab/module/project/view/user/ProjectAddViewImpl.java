@@ -61,12 +61,18 @@ public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
             private static final long serialVersionUID = 1L;
 
             public FormLayoutFactory() {
-                super("Create Project");
+                super((project.getId() == null) ? "Create Project" : project.getName());
             }
 
             private Layout createButtonControls() {
-                return (new EditFormControlsGenerator<Project>(ProjectAddViewImpl.EditForm.this))
+                if (project.getId() == null) {
+                    return (new EditFormControlsGenerator<Project>(ProjectAddViewImpl.EditForm.this))
                         .createButtonControls();
+                } else {
+                    return (new EditFormControlsGenerator<Project>(ProjectAddViewImpl.EditForm.this))
+                        .createButtonControls(true, false, true);
+                }
+                
             }
 
             @Override

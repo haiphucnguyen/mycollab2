@@ -5,7 +5,6 @@
 package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.module.project.domain.Project;
-import com.esofthead.mycollab.module.project.view.ProjectContainer;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
