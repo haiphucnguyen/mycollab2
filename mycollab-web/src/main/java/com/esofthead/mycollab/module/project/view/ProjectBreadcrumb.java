@@ -8,6 +8,8 @@ import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.Risk;
+import com.esofthead.mycollab.module.project.domain.Task;
+import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
@@ -15,6 +17,8 @@ import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.Version;
@@ -194,6 +198,78 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
             EventBus.getInstance().fireEvent(new ProblemEvent.GotoList(this, null));
         }
     }
+    
+    public void gotoTaskDashboard() {
+        this.select(1);
+        this.addLink(new Button("Task Assignments"));
+    }
+    
+    public void gotoTaskGroupAdd() {
+        this.select(1);
+        this.addLink(new Button("Task Assignments", new GotoTaskAssignmentDashboard()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button("Task Group: Add"));
+    }
+    
+    public void gotoTaskGroupRead(TaskList taskList) {
+        this.select(1);
+        this.addLink(new Button("Task Assignments", new GotoTaskAssignmentDashboard()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button("Task Group: " + taskList.getName()));
+    }
+    
+    public void gotoTaskGroupEdit(final TaskList taskList) {
+        this.select(1);
+        this.addLink(new Button("Task Assignments", new GotoTaskAssignmentDashboard()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button("Task Group: " + taskList.getName(), new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(new TaskListEvent.GotoRead(this, taskList.getId()));
+            }
+        }));
+        this.setLinkEnabled(true, 3);
+        this.addLink(new Button("Edit"));
+    }
+    
+    public void gotoTaskAdd() {
+        this.select(1);
+        this.addLink(new Button("Task Assignments", new GotoTaskAssignmentDashboard()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button("Task: Add"));
+    }
+    
+    public void gotoTaskRead(Task task) {
+        this.select(1);
+        this.addLink(new Button("Task Assignments", new GotoTaskAssignmentDashboard()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button("Task: " + task.getTaskname()));
+    }
+    
+    public void gotoTaskEdit(final Task task) {
+        this.select(1);
+        this.addLink(new Button("Task Assignments", new GotoTaskAssignmentDashboard()));
+        this.setLinkEnabled(true, 2);
+        this.addLink(new Button("Task: " + task.getTaskname(), new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                EventBus.getInstance().fireEvent(new TaskEvent.GotoRead(this, task.getId()));
+            }
+        }));
+        this.setLinkEnabled(true, 3);
+        this.addLink(new Button("Edit"));
+    }
+    
+    public class GotoTaskAssignmentDashboard implements Button.ClickListener {
+
+        @Override
+        public void buttonClick(ClickEvent event) {
+            EventBus.getInstance().fireEvent(new TaskListEvent.GotoTaskListScreen(this, null));
+        }
+        
+    }
 
     public void gotoBugDashboard() {
         this.select(1);
@@ -233,7 +309,6 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
         this.setLinkEnabled(true, 2);
         this.addLink(new Button(bug.getSummary()));
-        this.addLink(new Button("Read"));
     }
 
     public void gotoVersionList() {
@@ -275,7 +350,6 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.addLink(new Button("Versions", new GotoVersionListener()));
         this.setLinkEnabled(true, 3);
         this.addLink(new Button(version.getVersionname()));
-        this.addLink(new Button("Read"));
     }
     
     private class GotoVersionListener implements Button.ClickListener {
@@ -325,7 +399,6 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.setLinkEnabled(true, 2);
         this.addLink(new Button("Components", new GotoComponentListener()));
         this.addLink(new Button(component.getComponentname()));
-        this.addLink(new Button("Read"));
     }
     
     private static class GotoComponentListener implements Button.ClickListener {

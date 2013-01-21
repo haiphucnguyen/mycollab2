@@ -7,12 +7,14 @@ package com.esofthead.mycollab.module.project.view.task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
@@ -60,7 +62,15 @@ public class TaskListAddPresenter extends AbstractPresenter<TaskListAddView> {
         taskContainer.removeAllComponents();
 
         taskContainer.addComponent(view.getWidget());
-        view.editItem((TaskList) data.getParams());
+        TaskList taskList = (TaskList) data.getParams();
+        view.editItem(taskList);
+        
+        ProjectBreadcrumb breadCrumb = ViewManager.getView(ProjectBreadcrumb.class);
+        if (taskList.getId() == null) {
+            breadCrumb.gotoTaskGroupAdd();
+        } else {
+            breadCrumb.gotoTaskGroupEdit(taskList);
+        }
     }
 
     public void save(TaskList item) {

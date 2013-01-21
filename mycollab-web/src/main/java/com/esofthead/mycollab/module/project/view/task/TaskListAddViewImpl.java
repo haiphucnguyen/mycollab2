@@ -5,6 +5,8 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.project.domain.TaskList;
+import com.esofthead.mycollab.module.project.ui.components.ProjectMilestoneComboBox;
+import com.esofthead.mycollab.module.project.ui.components.ProjectUserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -15,6 +17,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.RichTextArea;
 import java.util.Collection;
 
 /**
@@ -56,7 +59,7 @@ public class TaskListAddViewImpl extends AbstractView implements TaskListAddView
             private static final long serialVersionUID = 1L;
             
             public FormLayoutFactory() {
-                super("Create TaskList");
+                super((taskList.getName() != null) ? taskList.getName() : "Create Task Group");
             }
 
             private Layout createButtonControls() {
@@ -82,6 +85,13 @@ public class TaskListAddViewImpl extends AbstractView implements TaskListAddView
             @Override
             protected Field onCreateField(Item item, Object propertyId,
                     com.vaadin.ui.Component uiContext) {
+                if ("owner".equals(propertyId)) {
+                    return new ProjectUserComboBox();
+                } else if ("milestoneid".equals(propertyId)) {
+                    return new ProjectMilestoneComboBox();
+                } else if ("description".equals(propertyId)) {
+                    return new RichTextArea();
+                }
                 return null;
             }
         }

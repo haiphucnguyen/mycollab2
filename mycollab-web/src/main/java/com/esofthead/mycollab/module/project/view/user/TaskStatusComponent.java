@@ -11,7 +11,6 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
@@ -19,6 +18,7 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -29,26 +29,23 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author haiphucnguyen
  */
-public class ProjectTaskStatusComponent extends Panel {
+public class TaskStatusComponent extends Panel {
     
     private DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
     
-    public ProjectTaskStatusComponent() {
-        super("My Openned Tasks");
+    public TaskStatusComponent() {
+        super("Openned Tasks");
     }
     
     public void showProjectTasksByStatus() {
         this.removeAllComponents();
         
-        taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>(AppContext.getSpringBean(ProjectGenericTaskService.class), TaskStatusComponent.ActivityStreamRowDisplayHandler.class, 15);
+        taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>(AppContext.getSpringBean(ProjectGenericTaskService.class), ActivityStreamRowDisplayHandler.class, 15);
         this.addComponent(new LazyLoadWrapper(taskList));
         ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
         searchCriteria.setsAccountId(new NumberSearchField(AppContext.getAccountId()));
         searchCriteria.setStatuses(new SetSearchField<String>(SearchField.AND, new String[]{ProjectGenericTaskSearchCriteria.OPEN_STATUS}));
         searchCriteria.setAssignUser(new StringSearchField(SearchField.AND, AppContext.getUsername()));
-        
-        SimpleProject project = (SimpleProject)AppContext.getVariable(ProjectContants.PROJECT_NAME);
-        searchCriteria.setProjectId(new NumberSearchField(project.getId()));
         taskList.setSearchCriteria(searchCriteria);
     }
     
@@ -63,13 +60,28 @@ public class ProjectTaskStatusComponent extends Panel {
             Button taskLink = new Button(genericTask.getName(), new Button.ClickListener() {
 
                 @Override
-                public void buttonClick(Button.ClickEvent event) {
+                public void buttonClick(ClickEvent event) {
                     
                 }
             });
             taskLink.setIcon(ProjectResources.getIconResource16size(genericTask.getType()));
             taskLink.setStyleName("link");
             header.addComponent(taskLink);
+            
+            Label projectLbl = new Label(" in project ");
+            header.addComponent(projectLbl);
+            header.setComponentAlignment(projectLbl, Alignment.MIDDLE_CENTER);
+            
+            Button projectLink = new Button(genericTask.getProjectName(), new Button.ClickListener() {
+
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    
+                }
+            });
+            projectLink.setIcon(ProjectResources.getIconResource16size(ProjectContants.PROJECT));
+            projectLink.setStyleName("link");
+            header.addComponent(projectLink);
             
             layout.addComponent(header);
             

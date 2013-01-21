@@ -72,6 +72,8 @@ public class TaskListReadViewImpl extends AbstractView implements TaskListReadVi
                                 EventBus.getInstance().fireEvent(new MilestoneEvent.GotoRead(this, taskList.getMilestoneid()));
                             }
                         });
+                    } else if (propertyId.equals("owner")) {
+                        return new UserLinkViewField(taskList.getOwner(), taskList.getOwnerFullName());
                     }
 
                     return null;

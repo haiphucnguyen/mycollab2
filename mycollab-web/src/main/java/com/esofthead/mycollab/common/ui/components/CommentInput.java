@@ -89,6 +89,7 @@ public class CommentInput extends VerticalLayout {
 
                 //save success, clear comment area and load list comments again
                 commentArea.setValue("");
+                attachments.removeAllAttachmentsDisplay();
                 component.reload();
             }
         });

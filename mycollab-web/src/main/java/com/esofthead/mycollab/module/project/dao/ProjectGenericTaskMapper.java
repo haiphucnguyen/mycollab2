@@ -13,4 +13,10 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskS
  */
 public interface ProjectGenericTaskMapper extends ISearchableDAO<ProjectGenericTaskSearchCriteria> {
     int getTotalCountFromProblem(ProjectGenericTaskSearchCriteria criteria);
+    
+    int getTotalCountFromRisk(ProjectGenericTaskSearchCriteria criteria);
+    
+    int getTotalCountFromBug(ProjectGenericTaskSearchCriteria criteria);
+    
+    int getTotalCountFromTask(ProjectGenericTaskSearchCriteria criteria);
 }

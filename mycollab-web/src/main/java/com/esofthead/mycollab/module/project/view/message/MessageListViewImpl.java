@@ -35,6 +35,7 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.GregorianCalendar;
 import java.util.HashSet;
 import java.util.Set;
+import org.vaadin.easyuploads.MultiFileUploadExt;
 
 @ViewComponent
 public class MessageListViewImpl extends AbstractView implements
@@ -156,8 +157,28 @@ public class MessageListViewImpl extends AbstractView implements
             final AttachmentPanel attachments = new AttachmentPanel();
             final TextField titleField = new TextField();
 
+            HorizontalLayout titleLayout = new HorizontalLayout();
+            titleLayout.setSpacing(true);
+            Label titleLbl = new Label("Title: ");
+
+            titleField.setWidth("600px");
+            titleLayout.addComponent(titleLbl);
+            titleLayout.addComponent(titleField);
+
+            this.addComponent(titleLayout);
+
+            ckEditorTextField.setWidth("100%");
+            this.addComponent(ckEditorTextField);
+            this.addComponent(attachments);
+
             HorizontalLayout controls = new HorizontalLayout();
+            controls.setWidth("100%");
             controls.setSpacing(true);
+
+            MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
+            controls.addComponent(uploadExt);
+            controls.setExpandRatio(uploadExt, 1.0f);
+            controls.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
 
             Button saveBtn = new Button("Post",
                     new Button.ClickListener() {
@@ -196,20 +217,6 @@ public class MessageListViewImpl extends AbstractView implements
             controls.addComponent(cancelBtn);
 
             this.addComponent(controls);
-
-            HorizontalLayout titleLayout = new HorizontalLayout();
-            titleLayout.setSpacing(true);
-            Label titleLbl = new Label("Title: ");
-
-            titleField.setWidth("600px");
-            titleLayout.addComponent(titleLbl);
-            titleLayout.addComponent(titleField);
-
-            this.addComponent(titleLayout);
-
-            ckEditorTextField.setWidth("100%");
-            this.addComponent(ckEditorTextField);
-            this.addComponent(attachments);
         }
     }
 

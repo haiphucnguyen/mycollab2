@@ -71,8 +71,8 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
         public void attachField(Object propertyId, Field field) {
             if (propertyId.equals("taskname")) {
                 informationLayout.addComponent(field, "Task Name", 0, 0, 2, "100%");
-            } else if (propertyId.equals("startname")) {
-                informationLayout.addComponent(field, "Start Name", 0, 1);
+            } else if (propertyId.equals("startdate")) {
+                informationLayout.addComponent(field, "Start Date", 0, 1);
             } else if (propertyId.equals("enddate")) {
                 informationLayout.addComponent(field, "End Date", 0, 2);
             } else if (propertyId.equals("actualstartdate")) {
@@ -80,7 +80,7 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
             } else if (propertyId.equals("actualenddate")) {
                 informationLayout.addComponent(field, "Actual End Date", 1, 2);
             } else if (propertyId.equals("deadline")) {
-                informationLayout.addComponent(field, "Is Deadline", 0, 3);
+                informationLayout.addComponent(field, "Deadline", 0, 3);
             } else if (propertyId.equals("isestimated")) {
                 informationLayout.addComponent(field, "Is Estimated", 1, 3);
             } else if (propertyId.equals("assignuser")) {

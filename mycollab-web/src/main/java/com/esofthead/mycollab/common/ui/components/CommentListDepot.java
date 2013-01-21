@@ -49,8 +49,6 @@ public class CommentListDepot extends Depot implements ReloadableComponent{
         displayCommentList();
     }
     
-    
-    
     private void displayCommentList() {
         CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
         searchCriteria.setType(new StringSearchField(type));

@@ -5,9 +5,12 @@ import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
+import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -18,6 +21,9 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
+import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.hene.popupbutton.PopupButton;
 
 @SuppressWarnings("serial")
 @ViewComponent
@@ -40,17 +46,6 @@ public class TaskListDisplayViewImpl extends AbstractView implements
         Label headerLbl = new Label("All Tasks");
         header.addComponent(headerLbl);
         header.setExpandRatio(headerLbl, 1.0f);
-
-        Button newTaskBtn = new Button("New Task", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                TaskListWindow taskListWindow = new TaskListWindow(TaskListDisplayViewImpl.this);
-                TaskListDisplayViewImpl.this.getWindow().addWindow(taskListWindow);
-            }
-        });
-        newTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-        header.addComponent(newTaskBtn);
-        header.setComponentAlignment(newTaskBtn, Alignment.MIDDLE_RIGHT);
 
         Button newTaskListBtn = new Button("New Task List", new Button.ClickListener() {
             @Override
@@ -92,8 +87,69 @@ public class TaskListDisplayViewImpl extends AbstractView implements
 
     static class TaskListDepot extends Depot {
 
+        private SimpleTaskList taskList;
+        private PopupButton taskListFilterControl;
+
         public TaskListDepot(SimpleTaskList taskListParam) {
-            super(taskListParam.getName(), new TaskDisplayComponent(taskListParam));
+            super(taskListParam.getName(), new HorizontalLayout(), new TaskDisplayComponent(taskListParam));
+            this.taskList = taskListParam;
+            initUI();
+        }
+
+        private void initUI() {
+            HorizontalLayout headerLayout = (HorizontalLayout) this.headerContent;
+            headerLayout.setSpacing(true);
+
+            taskListFilterControl = new PopupButton("Filter");
+            taskListFilterControl.addStyleName("link");
+
+            VerticalLayout actionBtnLayout = new VerticalLayout();
+            actionBtnLayout.setMargin(true);
+            actionBtnLayout.setSpacing(true);
+            actionBtnLayout.setWidth("200px");
+
+            actionBtnLayout.addComponent(new Button("All Tasks"));
+            actionBtnLayout.addComponent(new Button("Active Tasks Only"));
+            actionBtnLayout
+                    .addComponent(new Button("Archieved Tasks Only"));
+            taskListFilterControl.addComponent(actionBtnLayout);
+            headerLayout.addComponent(taskListFilterControl);
+
+            Button editBtn = new Button("Edit", new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    EventBus.getInstance().fireEvent(new TaskListEvent.GotoEdit(event, taskList));
+                }
+            });
+            editBtn.setStyleName("link");
+            headerLayout.addComponent(editBtn);
+
+
+            Button deleteBtn = new Button("Delete", new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    ConfirmDialog.show(TaskListDepot.this.getWindow(),
+                            "Please Confirm:",
+                            "Are you sure to delete task group '"
+                            + taskList.getName() + "' ?",
+                            "Yes", "No", new ConfirmDialog.Listener() {
+                        private static final long serialVersionUID = 1L;
+
+                        @Override
+                        public void onClose(ConfirmDialog dialog) {
+                            if (dialog.isConfirmed()) {
+                                ProjectTaskListService taskListService = AppContext.getSpringBean(ProjectTaskListService.class);
+                                taskListService.removeWithSession(taskList.getId(), AppContext.getUsername());
+                                EventBus.getInstance().fireEvent(
+                                        new TaskListEvent.GotoTaskListScreen(
+                                        this, null));
+                            }
+                        }
+                    });
+                }
+            });
+            deleteBtn.setStyleName("link");
+            headerLayout.addComponent(deleteBtn);
         }
     }
 }

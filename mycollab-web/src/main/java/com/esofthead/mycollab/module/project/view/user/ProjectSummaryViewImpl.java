@@ -13,7 +13,7 @@ public class ProjectSummaryViewImpl extends AbstractView implements ProjectSumma
     private ProjectActivityStreamComponent activityPanel;
     private ProjectInformationComponent prjView;
     private ProjectMembersWidget membersWidget;
-    private ProjectHighlightWidget highlightWidget;
+    private ProjectTaskStatusComponent highlightWidget;
     
     public ProjectSummaryViewImpl() {
         this.setSpacing(true);
@@ -35,7 +35,7 @@ public class ProjectSummaryViewImpl extends AbstractView implements ProjectSumma
         layout.addComponent(rightPanel);
         
         membersWidget = new ProjectMembersWidget();
-        highlightWidget = new ProjectHighlightWidget();
+        highlightWidget = new ProjectTaskStatusComponent();
         rightPanel.addComponent(membersWidget);
         rightPanel.addComponent(highlightWidget);
     }
@@ -45,6 +45,6 @@ public class ProjectSummaryViewImpl extends AbstractView implements ProjectSumma
         activityPanel.showProjectFeeds();
         prjView.displayProjectInformation();
         membersWidget.showInformation();
-        highlightWidget.showInformation();
+        highlightWidget.showProjectTasksByStatus();
     }
 }

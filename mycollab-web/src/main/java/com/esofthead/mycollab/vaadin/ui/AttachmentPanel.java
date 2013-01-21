@@ -60,6 +60,10 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
         this.addComponent(fileAttachmentLayout, 0);
     }
     
+    public void removeAllAttachmentsDisplay() {
+        this.removeAllComponents();
+    }
+    
     public void saveContentsToRepo(String type, Integer typeid) {
         if (fileStores != null && !fileStores.isEmpty()) {
             attachmentService = AppContext

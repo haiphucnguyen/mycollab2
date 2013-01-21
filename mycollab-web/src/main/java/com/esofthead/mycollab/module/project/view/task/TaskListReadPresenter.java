@@ -8,10 +8,12 @@ import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -71,9 +73,13 @@ public class TaskListReadPresenter extends AbstractPresenter<TaskListReadView> {
         if (data.getParams() instanceof Integer) {
             ProjectTaskListService taskService = AppContext
                     .getSpringBean(ProjectTaskListService.class);
-            SimpleTaskList task = taskService.findTaskListById((Integer) data
+            SimpleTaskList taskgroup = taskService.findTaskListById((Integer) data
                     .getParams());
-            view.previewItem(task);
+            System.out.println("TASK GROUP: " + taskgroup);
+            view.previewItem(taskgroup);
+            
+            ProjectBreadcrumb breadCrumb = ViewManager.getView(ProjectBreadcrumb.class);
+            breadCrumb.gotoTaskGroupRead(taskgroup);
         }
     }
 }
