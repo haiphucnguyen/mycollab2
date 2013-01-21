@@ -43,6 +43,11 @@
         <property name="mapperInterface"
                   value="com.esofthead.mycollab.module.project.dao.ProblemMapperExt" />
     </bean>
+    
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectGenericTaskMapper">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.ProjectGenericTaskMapper" />
+    </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />

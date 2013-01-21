@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.vaadin.ui.HorizontalLayout;
 
 @ViewComponent
 public class MyFeedsViewImpl extends AbstractView implements MyFeedsView {
@@ -10,13 +11,25 @@ public class MyFeedsViewImpl extends AbstractView implements MyFeedsView {
     
     private ActivityStreamComponent activityStreamComponent;
     
+    private ProjectTaskStatusComponent taskStatusComponent;
+    
     public MyFeedsViewImpl() {
+        HorizontalLayout layout = new HorizontalLayout();
+        layout.setWidth("100%");
+        layout.setSpacing(true);
+        layout.setMargin(true);
+        
         activityStreamComponent = new ActivityStreamComponent();
-        this.addComponent(activityStreamComponent);
+        taskStatusComponent = new ProjectTaskStatusComponent();
+        layout.addComponent(activityStreamComponent);
+        layout.addComponent(taskStatusComponent);
+        
+        this.addComponent(layout);
     }
     
     @Override
     public void displayFeeds() {
         activityStreamComponent.showFeeds();
+        taskStatusComponent.showProjectTasksByStatus();
     }
 }

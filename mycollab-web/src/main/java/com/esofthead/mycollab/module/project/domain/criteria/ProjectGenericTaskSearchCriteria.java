@@ -13,6 +13,10 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
  * @author haiphucnguyen
  */
 public class ProjectGenericTaskSearchCriteria extends SearchCriteria {
+    public static final String OPEN_STATUS = "Open";
+    
+    public static final String CLOSE_STATUS = "Closed";
+    
     private NumberSearchField sAccountId;
     
     private NumberSearchField projectId;

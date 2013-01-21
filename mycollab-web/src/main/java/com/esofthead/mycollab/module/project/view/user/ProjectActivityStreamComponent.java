@@ -13,6 +13,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -28,7 +29,6 @@ import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -99,29 +99,9 @@ public class ProjectActivityStreamComponent extends Panel {
         public ActivitylLink(final String type, final String fieldName, final int typeid) {
             super(fieldName);
 
-            if (ProjectContants.PROJECT.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/project/project.png"));
-            } else if (ProjectContants.MESSAGE.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/project/message.png"));
-            } else if (ProjectContants.MILESTONE.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/project/milestone.png"));
-            } else if (ProjectContants.PROBLEM.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/project/problem.png"));
-            } else if (ProjectContants.RISK.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/project/risk.png"));
-            } else if (ProjectContants.TASK.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/project/task.png"));
-            } else if (ProjectContants.TASK_LIST.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/project/tasklist.png"));
-            } else if (ProjectContants.BUG.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/project/bug.png"));
-            } else if (ProjectContants.BUG_COMPONENT.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/project/component.png"));
-            } else if (ProjectContants.BUG_VERSION.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/project/version.png"));
-            }
-
+            this.setIcon(ProjectResources.getIconResource16size(type));
             this.setStyleName("link");
+            
             this.addListener(new Button.ClickListener() {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {

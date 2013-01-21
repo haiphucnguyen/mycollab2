@@ -25,12 +25,10 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.module.project.PermissionPaths;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.dao.PermissionMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMapperExt;
-import com.esofthead.mycollab.module.project.domain.Permission;
 import com.esofthead.mycollab.module.project.domain.PermissionExample;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
@@ -77,7 +75,6 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
             ex.createCriteria().andProjectidEqualTo(record.getId())
                     .andUsernameEqualTo(record.getOwner());
             permissionMapper.deleteByExample(ex);
-            setAllPermissions(record.getId(), record.getOwner());
         }
 
         return 0;
@@ -95,47 +92,9 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
 
         if (record.getOwner() != null && record.getOwner() != "") {
             // set all project permissions to project owner
-            setAllPermissions(projectid, record.getOwner());
         }
 
         return projectid;
-    }
-
-    private void setAllPermissions(int projectid, String user) {
-        permissionMapper.insert(createPermission(projectid, user,
-                PermissionPaths.EDIT_MEMBERS));
-        permissionMapper.insert(createPermission(projectid, user,
-                PermissionPaths.EDIT_MESSAGES));
-        permissionMapper.insert(createPermission(projectid, user,
-                PermissionPaths.EDIT_PERMISSIONS));
-        permissionMapper.insert(createPermission(projectid, user,
-                PermissionPaths.EDIT_PROBLEMS));
-        permissionMapper.insert(createPermission(projectid, user,
-                PermissionPaths.EDIT_RISKS));
-        permissionMapper.insert(createPermission(projectid, user,
-                PermissionPaths.EDIT_TASKS));
-        permissionMapper.insert(createPermission(projectid, user,
-                PermissionPaths.VIEW_MEMBERS));
-        permissionMapper.insert(createPermission(projectid, user,
-                PermissionPaths.VIEW_MESSAGES));
-        permissionMapper.insert(createPermission(projectid, user,
-                PermissionPaths.VIEW_PERMISSIONS));
-        permissionMapper.insert(createPermission(projectid, user,
-                PermissionPaths.VIEW_PROBLEMS));
-        permissionMapper.insert(createPermission(projectid, user,
-                PermissionPaths.VIEW_RISKS));
-        permissionMapper.insert(createPermission(projectid, user,
-                PermissionPaths.VIEW_TASKS));
-    }
-
-    private Permission createPermission(int projectid, String user,
-            String permissionPath) {
-        Permission permission = new Permission();
-        permission.setCanaccess(true);
-        permission.setPathid(permissionPath);
-        permission.setProjectid(projectid);
-        permission.setUsername(user);
-        return permission;
     }
 
     @Override

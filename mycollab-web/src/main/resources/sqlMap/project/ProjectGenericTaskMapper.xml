@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esofthead.mycollab.module.project.dao.ProjectGenericTaskMapper" >
+    <resultMap id="BaseResultMap" type="com.esofthead.mycollab.module.project.domain.ProjectGenericTask">
+        <result column="name" jdbcType="VARCHAR" property="name" />
+        <result column="assignUser" jdbcType="VARCHAR" property="assignUser" />
+        <result column="assignUserFullName" jdbcType="VARCHAR" property="assignUserFullName" />
+        <result column="dueDate" jdbcType="TIMESTAMP" property="dueDate" />
+        <result column="projectId" jdbcType="INTEGER" property="projectId" />
+        <result column="projectName" jdbcType="VARCHAR" property="projectName" />
+        <result column="type" jdbcType="VARCHAR" property="type" />
+        <result column="typeId" jdbcType="INTEGER" property="typeId" />
+        <result column="lastUpdatedTime" jdbcType="TIMESTAMP" property="lastUpdatedTime" />
+    </resultMap>
+    
+    <sql id="queryProblemSearchCriteria" >
+    
+    	
+    </sql>
+
+    <sql id="selectGenericTaskFromProblem" >
+
+    <![CDATA[
+          SELECT m_prj_problem.issuename as name, m_prj_problem.assigntouser as assignUser, 
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS assignUserFullName,
+            m_prj_problem.datedue as dueDate, m_prj_problem.projectid as projectId, m_prj_project.name AS projectName,
+            'Problem' AS type, m_prj_problem.id AS typeId, m_prj_problem.lastUpdatedTime AS lastUpdatedTime
+                 
+          FROM m_prj_problem
+              LEFT OUTER JOIN s_user ON (m_prj_problem.assigntouser=s_user.username)
+              LEFT OUTER JOIN m_prj_project ON (m_prj_problem.projectid=m_prj_project.id)
+        ]]>
+    </sql>
+
+    <select
+        id="getTotalCountFromProblem"
+        parameterType="ProjectGenericTaskSearchCriteria"
+        resultType="int" >
+        SELECT count(*) as totalCount FROM m_prj_problem
+
+
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+            1=1 
+
+            <include refid="queryProblemSearchCriteria" />
+        </trim>
+    </select>
+    
+    <sql id="orderStatement">
+        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            lastUpdatedTime DESC
+        ]]>
+    </sql>
+
+    <select
+        id="findPagableListByCriteria"
+        parameterType="ProjectGenericTaskSearchCriteria"
+        resultMap="BaseResultMap">
+
+        <include
+            refid="selectGenericTaskFromProblem" />
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include
+                refid="queryProblemSearchCriteria" />
+        </trim>
+        
+        <include refid="orderStatement"/>
+    </select>
+</mapper>

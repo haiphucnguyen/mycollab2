@@ -11,13 +11,6 @@ import java.util.Date;
  * @author haiphucnguyen
  */
 public class ProjectGenericTask {
-    public static final String TASK = "task";
-    
-    public static final String BUG = "bug";
-    
-    public static final String PROBLEM = "problem";
-    
-    public static final String RISK = "risk";
     
     private String name;
     
@@ -34,6 +27,8 @@ public class ProjectGenericTask {
     private String type;
     
     private int typeId;
+    
+    private Date lastUpdatedTime;
 
     public String getName() {
         return name;
@@ -97,5 +92,13 @@ public class ProjectGenericTask {
 
     public void setTypeId(int typeId) {
         this.typeId = typeId;
+    }
+
+    public Date getLastUpdatedTime() {
+        return lastUpdatedTime;
+    }
+
+    public void setLastUpdatedTime(Date lastUpdatedTime) {
+        this.lastUpdatedTime = lastUpdatedTime;
     }
 }
