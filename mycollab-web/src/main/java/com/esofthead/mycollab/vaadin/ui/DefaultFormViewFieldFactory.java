@@ -1,5 +1,11 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.util.Date;
+
+import org.apache.commons.beanutils.BeanUtils;
+import org.vaadin.addon.customfield.CustomField;
+import org.vaadin.easyuploads.MultiFileUploadExt;
+
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -8,11 +14,8 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Link;
 import com.vaadin.ui.VerticalLayout;
-import java.util.Date;
-import org.apache.commons.beanutils.BeanUtils;
-import org.vaadin.addon.customfield.CustomField;
-import org.vaadin.easyuploads.MultiFileUploadExt;
 
 public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 
@@ -109,6 +112,24 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
         public Class<?> getType() {
             return Object.class;
         }
+    }
+    
+    public static class FormUrlLinkViewField extends CustomField {
+
+    	private static final long serialVersionUID = 1L;
+    	
+    	public FormUrlLinkViewField(String url) {
+    		url = (url == null) ? "" : url;
+    		Link link = new UrlLink(url);
+    		link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+    		this.setCompositionRoot(link);
+    	}
+    	
+		@Override
+		public Class<?> getType() {
+			return String.class;
+		}
+    	
     }
 
     public static class FormEmailLinkViewField extends CustomField {

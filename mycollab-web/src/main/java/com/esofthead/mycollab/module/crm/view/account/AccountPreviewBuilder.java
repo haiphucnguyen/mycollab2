@@ -147,6 +147,8 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
                         account.getEmail());
             } else if (propertyId.equals("assignuser")) {
                 return new UserLinkViewField(account.getAssignuser(), account.getAssignUserFullName());
+            } else if (propertyId.equals("website")) {
+            	return new DefaultFormViewFieldFactory.FormUrlLinkViewField(account.getWebsite());
             }
 
             return null;
@@ -155,6 +157,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
     public static class ReadView extends AccountPreviewBuilder {
 
+    	private static final long serialVersionUID = 1L;
         private final TabSheet tabContainer;
         private final VerticalLayout accountInformation;
         private final VerticalLayout relatedItemsContainer;
