@@ -11,13 +11,6 @@
                         jdbcType="VARCHAR" />
     </resultMap>
 
-    <resultMap type="com.esofthead.mycollab.common.domain.GroupItem"
-                   id="GroupItemResult">
-        <result column="groupid" jdbcType="VARCHAR" property="groupid" />
-        <result column="groupname" jdbcType="VARCHAR" property="groupname" />
-        <result column="value" jdbcType="INTEGER" property="value" />
-    </resultMap>
-
     <sql id="querySearchCriteria">
         <if test="id != null">
             ${id.operation} m_prj_message.id = #{id.value,javaType=INTEGER}

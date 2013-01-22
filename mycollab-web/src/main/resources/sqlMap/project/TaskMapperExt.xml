@@ -7,7 +7,7 @@
         <result column="projectName" property="projectName" jdbcType="VARCHAR" />
         <result column="numComments" property="numComments" jdbcType="INTEGER" />
         <result column="taskListName" property="taskListName" jdbcType="VARCHAR" />
-        <result column="assignUserFullName" property="assignUserFullName" jdbcType="VARCHAR" />        
+        <result column="assignUserFullName" property="assignUserFullName" jdbcType="VARCHAR" /> 
     </resultMap>
 
     <sql id="querySearchCriteria">

@@ -6,6 +6,7 @@
         <result column="contactName" jdbcType="VARCHAR" property="contactName" />
         <result column="createUserFullName" jdbcType="VARCHAR"
                         property="createUserFullName" />
+        
         <collection property="attachments" ofType="com.esofthead.mycollab.module.file.domain.Attachment" 
                     resultMap="com.esofthead.mycollab.module.file.dao.AttachmentMapper.BaseResultMap" columnPrefix="attach_"/>
     </resultMap>

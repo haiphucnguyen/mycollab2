@@ -169,6 +169,7 @@ public class NoteListItems extends Depot {
             noteContentLayout.addComponent(footer);
 
             commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(AppContext.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);
+            commentList.setWidth("700px");
             noteContentLayout.addComponent(commentList);
             displayComments();
             return noteContainer;
