@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import java.util.GregorianCalendar;
+
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
@@ -28,9 +30,9 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import java.util.GregorianCalendar;
 
 /**
  *
@@ -169,6 +171,15 @@ public class TaskListWindow extends Window {
                 } else if (propertyId.equals("milestoneid")) {
                     return new MilestoneComboBox();
                 }
+                
+                if ("name".equals(propertyId)) {
+               	 TextField tf = new TextField();
+                    tf.setNullRepresentation("");
+                    tf.setRequired(true);
+                    tf.setRequiredError("Please enter a Name");
+                    return tf;
+               }
+                
                 return null;
             }
         }

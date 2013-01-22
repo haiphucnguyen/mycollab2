@@ -43,7 +43,7 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 					public void onDelete(final Risk data) {
 
 						ConfirmDialog.show(view.getWindow(), "Please Confirm:",
-								"Are you sure to delete selected items: ",
+								"Are you sure to delete this item: " + data.getRiskname(),
 								"Yes", "No", new ConfirmDialog.Listener() {
 									private static final long serialVersionUID = 1L;
 

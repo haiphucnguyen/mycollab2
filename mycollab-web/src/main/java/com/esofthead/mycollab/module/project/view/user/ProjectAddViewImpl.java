@@ -18,6 +18,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
+import com.vaadin.ui.TextField;
 
 /**
  *
@@ -100,6 +101,15 @@ public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
                 } else if (propertyId.equals("projectstatus")) {
                     return new ProjectStatusComboBox();
                 } 
+                
+                if (propertyId.equals("name")) {
+                    TextField tf = new TextField();
+                    tf.setNullRepresentation("");
+                    tf.setRequired(true);
+                    tf.setRequiredError("Please enter a Name");
+                    return tf;
+                }
+                
                 return null;
             }
         }

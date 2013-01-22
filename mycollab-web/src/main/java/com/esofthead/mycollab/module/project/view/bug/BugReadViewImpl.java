@@ -1,10 +1,11 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
-import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -30,9 +31,6 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.vaadin.dialogs.ConfirmDialog;
 
 @ViewComponent
 public class BugReadViewImpl extends AbstractView implements BugReadView {
@@ -111,7 +109,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                     public void buttonClick(ClickEvent event) {
                     	ConfirmDialog.show(AppContext.getApplication().getMainWindow(),
                                 "Please Confirm:",
-                                "Are you sure to delete this item '" + bug.getSummary() + "' ?",
+                                "Are you sure to delete this item: " + bug.getSummary() + " ?",
                                 "Yes", "No", new ConfirmDialog.Listener() {
                             private static final long serialVersionUID = 1L;
 

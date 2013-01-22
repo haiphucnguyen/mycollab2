@@ -4,6 +4,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriter
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -45,7 +46,7 @@ public class ProjectSearchPanel extends GenericSearchPanel<ProjectSearchCriteria
                     }
                 });
         createProjectBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
-        createProjectBtn.setStyleName(BaseTheme.BUTTON_LINK);
+        createProjectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
         UiUtils.addComponent(layout, createProjectBtn, Alignment.MIDDLE_RIGHT);
         this.setCompositionRoot(layout);

@@ -50,7 +50,7 @@ public class MilestoneReadPresenter extends AbstractPresenter<MilestoneReadView>
                     @Override
                     public void onDelete(final Milestone data) {
                     	ConfirmDialog.show(view.getWindow(), "Please Confirm:",
-								"Are you sure to delete selected items: ",
+								"Are you sure to delete this item: " + data.getName(),
 								"Yes", "No", new ConfirmDialog.Listener() {
 									private static final long serialVersionUID = 1L;
 
