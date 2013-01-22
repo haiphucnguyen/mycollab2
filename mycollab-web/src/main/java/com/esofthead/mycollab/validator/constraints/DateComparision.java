@@ -1,3 +1,7 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.esofthead.mycollab.validator.constraints;
 
 import java.lang.annotation.Documented;
@@ -10,13 +14,20 @@ import java.lang.annotation.Target;
 import javax.validation.Constraint;
 import javax.validation.Payload;
 
+/**
+ *
+ * @author haiphucnguyen
+ */
 @Target({METHOD, FIELD, ANNOTATION_TYPE})
 @Retention(RUNTIME)
-@Constraint(validatedBy = PhoneNumberValidator.class)
+@Constraint(validatedBy = DateComparisionValidator.class)
 @Documented
-public @interface PhoneNumber {
-
+public @interface DateComparision {
     String message() default "{com.esofthead.mycollab.validator.constraints.PhoneNumber}";
+    
+    String firstDateField();
+    
+    String lastDateField();
 
     Class<?>[] groups() default {};
 

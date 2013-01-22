@@ -40,6 +40,13 @@ public class TaskListEvent {
         }
     }
     
+    public static class SaveReoderTaskList extends ApplicationEvent {
+
+        public SaveReoderTaskList(Object source, Object data) {
+            super(source, data);
+        }
+    }
+    
     public static class GotoTaskListScreen extends ApplicationEvent {
 
         public GotoTaskListScreen(Object source, Object data) {
