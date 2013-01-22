@@ -1,10 +1,12 @@
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -100,14 +102,16 @@ public class TaskListDisplayViewImpl extends AbstractView implements
         private SimpleTaskList taskList;
         private PopupButton taskListFilterControl;
         private PopupButton taskListActionControl;
+        private TaskDisplayComponent taskDisplayComponent;
 
         public TaskListDepot(SimpleTaskList taskListParam) {
             super(taskListParam.getName(), new HorizontalLayout(), new TaskDisplayComponent(taskListParam));
             this.taskList = taskListParam;
-            initUI();
+            initHeader();
+            initContent();
         }
 
-        private void initUI() {
+        private void initHeader() {
             HorizontalLayout headerLayout = (HorizontalLayout) this.headerContent;
             headerLayout.setSpacing(true);
 
@@ -119,25 +123,43 @@ public class TaskListDisplayViewImpl extends AbstractView implements
             filterBtnLayout.setSpacing(true);
             filterBtnLayout.setWidth("200px");
 
-            Button allTasksFilterBtn = new Button("All Tasks");
+            Button allTasksFilterBtn = new Button("All Tasks", new Button.ClickListener() {
+
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    displayAllTasks();
+                }
+            });
             allTasksFilterBtn.setStyleName("link");
             filterBtnLayout.addComponent(allTasksFilterBtn);
 
-            Button activeTasksFilterBtn = new Button("Active Tasks Only");
+            Button activeTasksFilterBtn = new Button("Active Tasks Only", new Button.ClickListener() {
+
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    displayActiveTasksOnly();
+                }
+            });
             activeTasksFilterBtn.setStyleName("link");
             filterBtnLayout.addComponent(activeTasksFilterBtn);
 
-            Button archievedTasksFilterBtn = new Button("Archieved Tasks Only");
+            Button archievedTasksFilterBtn = new Button("Archieved Tasks Only", new Button.ClickListener() {
+
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    displayInActiveTasks();
+                }
+            });
             archievedTasksFilterBtn.setStyleName("link");
             filterBtnLayout
                     .addComponent(archievedTasksFilterBtn);
             taskListFilterControl.addComponent(filterBtnLayout);
             headerLayout.addComponent(taskListFilterControl);
-            
+
             taskListActionControl = new PopupButton("Action");
             taskListActionControl.addStyleName("link");
             headerLayout.addComponent(taskListActionControl);
-            
+
             VerticalLayout actionBtnLayout = new VerticalLayout();
             actionBtnLayout.setMargin(true);
             actionBtnLayout.setSpacing(true);
@@ -179,15 +201,44 @@ public class TaskListDisplayViewImpl extends AbstractView implements
             });
             deleteBtn.setStyleName("link");
             actionBtnLayout.addComponent(deleteBtn);
-            
+
             Button reOrder = new Button("Reorder", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    
                 }
             });
             reOrder.setStyleName("link");
             actionBtnLayout.addComponent(reOrder);
+        }
+
+        private void initContent() {
+            taskDisplayComponent = (TaskDisplayComponent) this.bodyContent;
+            displayActiveTasksOnly();
+        }
+
+        private TaskSearchCriteria createBaseSearchCriteria() {
+            SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
+            TaskSearchCriteria criteria = new TaskSearchCriteria();
+            criteria.setProjectid(new NumberSearchField(project.getId()));
+            criteria.setTaskListId(new NumberSearchField(taskList.getId()));
+            return criteria;
+        }
+
+        private void displayActiveTasksOnly() {
+            TaskSearchCriteria criteria = createBaseSearchCriteria();
+            criteria.setIscompleted(new BooleanSearchField(false));
+            taskDisplayComponent.setSearchCriteria(criteria);
+        }
+
+        private void displayAllTasks() {
+            TaskSearchCriteria criteria = createBaseSearchCriteria();
+            taskDisplayComponent.setSearchCriteria(criteria);
+        }
+
+        private void displayInActiveTasks() {
+            TaskSearchCriteria criteria = createBaseSearchCriteria();
+            criteria.setIscompleted(new BooleanSearchField(true));
+            taskDisplayComponent.setSearchCriteria(criteria);
         }
     }
 }

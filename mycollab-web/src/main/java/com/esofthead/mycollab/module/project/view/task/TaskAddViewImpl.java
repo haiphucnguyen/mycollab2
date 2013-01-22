@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.project.view.task;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.ui.components.ProjectTaskListComboBox;
 import com.esofthead.mycollab.module.project.ui.components.ProjectUserComboBox;
+import com.esofthead.mycollab.module.project.ui.components.TaskPercentageCompleteComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -19,7 +20,6 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
-
 import java.util.Collection;
 
 /**
@@ -60,7 +60,7 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
         private class FormLayoutFactory extends TaskFormLayoutFactory {
 
             private static final long serialVersionUID = 1L;
-            
+
             public FormLayoutFactory() {
                 super((task.getId() == null) ? "Create Task" : task.getTaskname());
             }
@@ -96,15 +96,15 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
                     RichTextArea richTextArea = new RichTextArea();
                     richTextArea.setNullRepresentation("");
                     return richTextArea;
-                }
-                
-                if ("name".equals(propertyId)) {
-               	 TextField tf = new TextField();
+                } else if ("name".equals(propertyId)) {
+                    TextField tf = new TextField();
                     tf.setNullRepresentation("");
                     tf.setRequired(true);
                     tf.setRequiredError("Please enter a Name");
                     return tf;
-               }
+                } else if ("percentagecomplete".equals(propertyId)) {
+                    return new TaskPercentageCompleteComboBox();
+                }
                 return null;
             }
         }
@@ -114,5 +114,4 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
     public HasEditFormHandlers<Task> getEditFormHandlers() {
         return editForm;
     }
-    
 }

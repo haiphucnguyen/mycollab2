@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.components.ProjectUserComboBox;
+import com.esofthead.mycollab.module.project.ui.components.TaskPercentageCompleteComboBox;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
@@ -142,6 +143,8 @@ public class TaskAddPopup extends CustomComponent {
                 informationLayout.addComponent(field, "Is Estimated", 1, 3);
             } else if (propertyId.equals("assignuser")) {
                 informationLayout.addComponent(field, "Assign", 0, 4);
+            } else if (propertyId.equals("percentagecomplete")) {
+                informationLayout.addComponent(field, "Complete(%)", 1, 4);
             }
         }
     }
@@ -190,6 +193,8 @@ public class TaskAddPopup extends CustomComponent {
                   tf.setRequired(true);
                   tf.setRequiredError("Please enter a Task Name");
                   return tf;
+            } else if (propertyId.equals("percentagecomplete")) {
+                return new TaskPercentageCompleteComboBox();
             }
             return null;
         }
