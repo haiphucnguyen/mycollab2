@@ -1409,6 +1409,26 @@ white-space: normal;
 	border-width:10px 9px 10px 0;
 	border-color:transparent #ebedee;
 }
+
+.message.important .message-container > .v-csslayout-margin {
+	background-color: #762c54;
+	border-color: #2e0023;
+}
+.message.important .message-container > .v-csslayout-margin:before {
+	border-color: transparent #2e0023;
+}
+.message.important .message-container > .v-csslayout-margin:after {
+	border-color: transparent #762c54;
+}
+
+
+
+.message.important .message-header .user-name {
+	color: white;
+}
+.message.important .message-header .v-button-link.message-title .v-button-caption {
+	color: white;
+}
 .message-header .user-name {
 	font-size: 15px;
 	font-weight: bold;
@@ -1427,21 +1447,28 @@ white-space: normal;
 	padding: 1px 0px;
 }
 
-.message-header .time-post {
-	color: #00acee;
+.message.important .message-header .time-post {
+	color: #aea79e;
 }
-
-.message-header .comment-count {
-/* 	padding: 1px 6px; */
-/* 	border-radius: 3px; */
-/* 	background-color: #00acee; */
-/* 	color: white; */
-/* 	text-shadow: 1px 1px #666; */
+.message-header .time-post {
+	color: gray;
+}
+.message.important .message-header .notification {
+	color: white;
+}
+.message-header .notification {
 	color: black;
 	font-size: 12px;
+}
+.message-header .comment-count, .message-header .attachment-count {
 	padding-right: 3px;
 }
-
+.message-header .attachment-count {
+	padding-left: 5px;
+}
+.message.important .message-body p {
+	color: #aea79e;
+}
 .message-body p {
 	margin: 4px 0px;
 	color: gray;

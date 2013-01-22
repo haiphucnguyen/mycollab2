@@ -119,6 +119,7 @@ public class MessageListViewImpl extends AbstractView implements
 			timePostLbl.setStyleName("time-post");
 			rightHeader.addComponent(timePostLbl);
 			HorizontalLayout notification = new HorizontalLayout();
+			notification.setStyleName("notification");
 			notification.setSizeUndefined();
 			if (message.getCommentsCount() > 0) {
 				HorizontalLayout commentNotification = new HorizontalLayout();
@@ -133,6 +134,22 @@ public class MessageListViewImpl extends AbstractView implements
 				commentNotification.addComponent(commentIcon);
 
 				notification.addComponent(commentNotification);
+
+			}
+			int attachmentCount = 1;
+			if (attachmentCount > 0) {
+				HorizontalLayout attachmentNotification = new HorizontalLayout();
+				Label attachmentCountLbl = new Label(
+						Integer.toString(attachmentCount));
+				attachmentCountLbl.setStyleName("attachment-count");
+				attachmentCountLbl.setSizeUndefined();
+				attachmentNotification.addComponent(attachmentCountLbl);
+				Embedded attachmentIcon = new Embedded();
+				attachmentIcon.setSource(new ThemeResource(
+						"icons/16/attachment.png"));
+				attachmentNotification.addComponent(attachmentIcon);
+
+				notification.addComponent(attachmentNotification);
 
 			}
 			rightHeader.addComponent(notification);
