@@ -49,4 +49,11 @@ public class ProjectTaskListServiceImpl extends DefaultService<Integer, TaskList
     public SimpleTaskList findTaskListById(int taskListId) {
         return projectTaskListMapperExt.findTaskListById(taskListId);
     }
+
+    @Override
+    public void updateTaskListIndex(TaskList[] taskLists) {
+        for (TaskList taskList : taskLists) {
+            projectTaskListMapper.updateByPrimaryKeySelective(taskList);
+        }
+    }
 }

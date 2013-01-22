@@ -33,6 +33,8 @@ import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  *
@@ -43,12 +45,13 @@ public class TaskListReorderViewImpl extends AbstractView implements TaskListReo
 
     private BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList> taskLists;
     private Button saveOrderBtn;
-    
+    private Set<SimpleTaskList> changeSet = new HashSet<SimpleTaskList>();
+
     public TaskListReorderViewImpl() {
         super();
         constructHeader();
     }
-    
+
     private void constructHeader() {
         HorizontalLayout header = new HorizontalLayout();
         header.setMargin(true);
@@ -61,7 +64,7 @@ public class TaskListReorderViewImpl extends AbstractView implements TaskListReo
         saveOrderBtn = new Button("Save", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
-                
+                EventBus.getInstance().fireEvent(new TaskListEvent.SaveReoderTaskList(event, changeSet));
             }
         });
         saveOrderBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -80,12 +83,11 @@ public class TaskListReorderViewImpl extends AbstractView implements TaskListReo
         header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
 
         this.addComponent(header);
-        
+
         final DDVerticalLayout ddLayout = new DDVerticalLayout();
         ddLayout.setComponentVerticalDropRatio(0.3f);
         ddLayout.setDragMode(LayoutDragMode.CLONE);
         ddLayout.setDropHandler(new DropHandler() {
-
             @Override
             public AcceptCriterion getAcceptCriterion() {
                 return new Not(VerticalLocationIs.MIDDLE);
@@ -99,7 +101,7 @@ public class TaskListReorderViewImpl extends AbstractView implements TaskListReo
                 DDVerticalLayout.VerticalLayoutTargetDetails details = (DDVerticalLayout.VerticalLayoutTargetDetails) event
                         .getTargetDetails();
 
-                Component comp = transferable.getComponent();
+                TaskListComponent comp = (TaskListComponent) transferable.getComponent();
 
                 int currentIndex = ddLayout.getComponentIndex(comp);
                 int newIndex = details.getOverIndex();
@@ -111,15 +113,25 @@ public class TaskListReorderViewImpl extends AbstractView implements TaskListReo
                     newIndex++;
                 }
 
+                SimpleTaskList dropTaskList = comp.getTaskList();
+                dropTaskList.setGroupindex(newIndex);
+                changeSet.add(dropTaskList);
                 ddLayout.addComponent(comp, newIndex);
+
+                //change affected task list items
+                for (int i = 0; i < ddLayout.getComponentCount(); i++) {
+                    TaskListComponent affectedComp = (TaskListComponent)ddLayout.getComponent(i);
+                    SimpleTaskList affectedTaskList = affectedComp.getTaskList();
+                    affectedTaskList.setGroupindex(i);
+                    changeSet.add(affectedTaskList);
+                }
             }
         });
-        
+
         taskLists = new BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList>(null, AppContext.getSpringBean(ProjectTaskListService.class), TaskListRowDisplayHandler.class, ddLayout);
-        
         this.addComponent(taskLists);
     }
-    
+
     @Override
     public void displayTaskLists() {
         TaskListSearchCriteria criteria = new TaskListSearchCriteria();
@@ -127,16 +139,27 @@ public class TaskListReorderViewImpl extends AbstractView implements TaskListReo
         criteria.setProjectId(new NumberSearchField(project.getId()));
         taskLists.setSearchCriteria(criteria);
     }
-    
+
     public static class TaskListRowDisplayHandler implements BeanList.RowDisplayHandler<SimpleTaskList> {
 
         @Override
         public Component generateRow(SimpleTaskList taskList, int rowIndex) {
-            VerticalLayout layout = new VerticalLayout();
-            layout.addComponent(new Label(taskList.getName()));
-            layout.addComponent(new Label("Last updated on " + DateTimeUtils.getStringDateFromNow(taskList.getLastupdatedtime())));
-            return layout;
+            return new TaskListComponent(taskList);
         }
     }
-    
+
+    private static class TaskListComponent extends VerticalLayout {
+
+        private SimpleTaskList taskList;
+
+        public TaskListComponent(SimpleTaskList taskList) {
+            this.taskList = taskList;
+            this.addComponent(new Label(taskList.getName()));
+            this.addComponent(new Label("Last updated on " + DateTimeUtils.getStringDateFromNow(taskList.getLastupdatedtime())));
+        }
+
+        public SimpleTaskList getTaskList() {
+            return taskList;
+        }
+    }
 }

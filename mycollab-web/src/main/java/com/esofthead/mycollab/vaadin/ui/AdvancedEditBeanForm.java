@@ -2,9 +2,11 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
+import com.esofthead.mycollab.validator.constraints.DateComparision;
 import com.esofthead.mycollab.web.AppContext;
 import de.steinwedel.vaadin.MessageBox;
 import de.steinwedel.vaadin.MessageBox.ButtonType;
+import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -20,6 +22,8 @@ public class AdvancedEditBeanForm<T> extends GenericForm implements
     private List<EditFormHandler<T>> editFormHandlers;
 
     public AdvancedEditBeanForm() {
+        this.setImmediate(true);
+        this.setWriteThrough(true);
         validation = AppContext.getSpringBean(LocalValidatorFactoryBean.class);
     }
 
@@ -38,8 +42,23 @@ public class AdvancedEditBeanForm<T> extends GenericForm implements
 
             for (@SuppressWarnings("rawtypes") ConstraintViolation violation : violations) {
                 errorMsg.append(violation.getMessage()).append("<br/>");
-                this.getField(violation.getPropertyPath().toString())
-                        .addStyleName("errorField");
+
+                if (violation.getPropertyPath() != null && !violation.getPropertyPath().toString().equals("")) {
+                    this.getField(violation.getPropertyPath().toString())
+                            .addStyleName("errorField");
+                } else {
+                    Annotation validateAnno = violation.getConstraintDescriptor().getAnnotation();
+                    if (validateAnno instanceof DateComparision) {
+                        String firstDateField = ((DateComparision) validateAnno).firstDateField();
+                        String lastDateField = ((DateComparision) validateAnno).lastDateField();
+
+                        this.getField(firstDateField)
+                                .addStyleName("errorField");
+                        this.getField(lastDateField)
+                                .addStyleName("errorField");
+                    }
+                }
+
             }
 
             MessageBox mb = new MessageBox(AppContext.getApplication().getMainWindow(), "Error!",
