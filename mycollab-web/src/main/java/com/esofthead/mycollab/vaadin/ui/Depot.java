@@ -25,15 +25,15 @@ public class Depot extends VerticalLayout {
 		header = new HorizontalLayout();
 		header.setStyleName("depotHeader");
 		header.setWidth("500px");
-                this.headerContent = headerElement;
+		this.headerContent = headerElement;
 		this.bodyContent = component;
-		this.headerContent = header;
+		// this.headerContent = header;
 		this.addComponent(header);
 
 		CssLayout headerLeft = new CssLayout();
 		headerLbl = new Label(title);
 		headerLbl.setStyleName("h2");
-		headerLbl.setSizeUndefined();
+		headerLbl.setWidth("250px");
 		headerLeft.addComponent(headerLbl);
 		headerLeft.setStyleName("depot-title");
 		headerLeft.addListener(new LayoutClickListener() {
@@ -53,12 +53,14 @@ public class Depot extends VerticalLayout {
 		});
 		header.addComponent(headerLeft);
 
-		CssLayout headerRight = new CssLayout();
+		HorizontalLayout headerRight = new HorizontalLayout();
 		headerRight.setStyleName("header-elements");
 		headerRight.setSizeFull();
 
 		if (headerElement != null) {
 			headerRight.addComponent(headerElement);
+			headerRight.setComponentAlignment(headerElement,
+					Alignment.BOTTOM_RIGHT);
 		}
 
 		header.addComponent(headerRight);
