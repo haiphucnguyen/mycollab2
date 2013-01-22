@@ -24,14 +24,13 @@ import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatar;
-import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
@@ -113,37 +112,10 @@ public class NoteListItems extends Depot {
         @Override
         public Component generateRow(final SimpleNote note, int rowIndex) {
             this.note = note;
-            HorizontalLayout noteContainer = new HorizontalLayout();
-            noteContainer.addComponent(new UserAvatar(note.getCreateduser(), note.getCreateUserFullName()));
 
             noteContentLayout = new VerticalLayout();
-            noteContainer.addComponent(noteContentLayout);
 
-            if (note.getSubject() != null && !note.getSubject().equals("")) {
-                noteContentLayout.addComponent(new Label(note.getSubject()));
-            }
-
-            HorizontalLayout noteHeader = new HorizontalLayout();
-
-            UserLink userLink = new UserLink(note.getCreateduser(), note.getCreateUserFullName());
-            noteHeader.addComponent(userLink);
-            noteHeader.setComponentAlignment(userLink, Alignment.MIDDLE_LEFT);
-
-            Label timeLbl = new Label(" - " + DateTimeUtils.getStringDateFromNow(note.getCreatedtime()));
-            noteHeader.addComponent(timeLbl);
-            noteHeader.setComponentAlignment(timeLbl, Alignment.MIDDLE_LEFT);
-
-            noteContentLayout.addComponent(noteHeader);
-
-            Label noteContent = new Label(note.getNote(), Label.CONTENT_XHTML);
-            noteContent.setWidth("100%");
-            noteContentLayout.addComponent(noteContent);
-
-
-            List<Attachment> attachments = note.getAttachments();
-            if (attachments != null && !attachments.isEmpty()) {
-                noteContentLayout.addComponent(new LazyLoadWrapper(new AttachmentDisplayComponent(attachments)));
-            }
+            noteContentLayout.addComponent(constructNoteHeader(note));
 
             HorizontalLayout footer = new HorizontalLayout();
             footer.setSpacing(true);
@@ -168,10 +140,59 @@ public class NoteListItems extends Depot {
             noteContentLayout.addComponent(footer);
 
             commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(AppContext.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);
-            commentList.setWidth("700px");
+            commentList.setWidth("850px");
             noteContentLayout.addComponent(commentList);
-            displayComments();
-            return noteContainer;
+            noteContentLayout.setComponentAlignment(commentList, Alignment.TOP_RIGHT);
+            commentList.loadItems(note.getComments());
+
+            return noteContentLayout;
+        }
+
+        private Component constructNoteHeader(SimpleNote note) {
+            HorizontalLayout layout = new HorizontalLayout();
+            layout.setStyleName("message");
+            layout.setWidth("100%");
+            layout.addComponent(new UserAvatar(note.getCreateduser(),
+                    note.getCreateUserFullName()));
+
+            CssLayout rowLayout = new CssLayout();
+            rowLayout.setStyleName("message-container");
+            rowLayout.setWidth("100%");
+
+            HorizontalLayout messageHeader = new HorizontalLayout();
+            messageHeader.setStyleName("message-header");
+            VerticalLayout leftHeader = new VerticalLayout();
+            Label username = new Label(note.getCreateUserFullName());
+            username.setStyleName("user-name");
+            leftHeader.addComponent(username);
+
+            VerticalLayout rightHeader = new VerticalLayout();
+            Label timePostLbl = new Label(
+                    DateTimeUtils.getStringDateFromNow(note.getCreatedtime()));
+            timePostLbl.setSizeUndefined();
+            timePostLbl.setStyleName("time-post");
+            rightHeader.addComponent(timePostLbl);
+
+            messageHeader.addComponent(leftHeader);
+            messageHeader.setExpandRatio(leftHeader, 1.0f);
+            messageHeader.addComponent(timePostLbl);
+            messageHeader.setWidth("100%");
+
+            rowLayout.addComponent(messageHeader);
+
+
+            Label messageContent = new Label(note.getNote(), Label.CONTENT_XHTML);
+            messageContent.setStyleName("message-body");
+            rowLayout.addComponent(messageContent);
+
+            List<Attachment> attachments = note.getAttachments();
+            if (attachments != null && !attachments.isEmpty()) {
+                rowLayout.addComponent(new AttachmentDisplayComponent(attachments));
+            }
+
+            layout.addComponent(rowLayout);
+            layout.setExpandRatio(rowLayout, 1.0f);
+            return layout;
         }
 
         private void displayComments() {
@@ -221,15 +242,15 @@ public class NoteListItems extends Depot {
             HorizontalLayout controls = new HorizontalLayout();
             controls.setSpacing(true);
             controls.setWidth("100%");
-            
+
             MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
             controls.addComponent(uploadExt);
             controls.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
-            
+
             Label emptySpace = new Label();
             controls.addComponent(emptySpace);
             controls.setExpandRatio(emptySpace, 1.0f);
-            
+
 
             Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
@@ -242,7 +263,7 @@ public class NoteListItems extends Depot {
             cancelBtn.setStyleName("link");
             controls.addComponent(cancelBtn);
             controls.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);
-            
+
             Button saveBtn = new Button("Post", new Button.ClickListener() {
                 private static final long serialVersionUID = 1L;
 

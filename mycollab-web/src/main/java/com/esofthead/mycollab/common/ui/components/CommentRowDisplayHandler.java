@@ -69,7 +69,5 @@ public class CommentRowDisplayHandler implements BeanList.RowDisplayHandler<Simp
         layout.addComponent(rowLayout);
         layout.setExpandRatio(rowLayout, 1.0f);
         return layout;
-
-//        Label content = new Label(comment.getComment(), Label.CONTENT_XHTML);
     }
 }

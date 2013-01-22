@@ -79,10 +79,17 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
     }
 
     public int setSearchRequest(SearchRequest<S> searchRequest) {
+        List<T> currentListData = searchService.findPagableListByCriteria(searchRequest);
+        loadItems(currentListData);
+        return currentListData.size();
+    }
+    
+    public void loadItems(List<T> currentListData) {
         contentLayout.removeAllComponents();
         
-        List<T> currentListData = searchService
-                .findPagableListByCriteria(searchRequest);
+        VerticalLayout content = new VerticalLayout();
+        contentLayout.addComponent(new LazyLoadWrapper(content));
+                
         int i = 0;
         try {
             for (T item : currentListData) {
@@ -90,7 +97,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
                 RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
                 Component row = rowHandler.generateRow(item, i);
                 if (row != null) {
-                    contentLayout.addComponent(row);
+                    content.addComponent(row);
                 }
 
                 i++;
@@ -98,8 +105,6 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
         } catch (Exception e) {
             log.error("Error while generate column display", e);
         }
-
-        return currentListData.size();
     }
 
     public interface RowDisplayHandler<T> {

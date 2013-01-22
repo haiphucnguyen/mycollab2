@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.service;
 
+import com.esofthead.mycollab.common.domain.SimpleComment;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -44,6 +45,10 @@ public class NoteServiceTest extends ServiceTest{
 
         SimpleNote note = noteList.get(0);
         Assert.assertEquals(2, note.getAttachments().size());
+        Assert.assertEquals(2, note.getComments().size());
+        
+        SimpleComment comment = note.getComments().get(0);
+        Assert.assertEquals(1, comment.getAttachments().size());
     }
 
     @DataSet

@@ -4,22 +4,27 @@
 		Engroup - Enterprise Groupware Platform Copyright (C) 2007-2009
 		eSoftHead Company <engroup@esofthead.com> http://www.esofthead.com
 
-		Licensed under the GPL, Version 3.0 (the "License"); you may not use
-		this file except in compliance with the License. You may obtain a copy
-		of the License at http://www.gnu.org/licenses/gpl.html Unless required
-		by applicable law or agreed to in writing, software distributed under
-		the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
-		CONDITIONS OF ANY KIND, either express or implied. See the License for
-		the specific language governing permissions and limitations under the
-		License.
-	-->
+              		Licensed under the GPL, Version 3.0 (the "License"); you may not use
+              		this file except in compliance with the License. You may obtain a copy
+              		of the License at http://www.gnu.org/licenses/gpl.html Unless required
+              		by applicable law or agreed to in writing, software distributed under
+              		the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES OR
+              		CONDITIONS OF ANY KIND, either express or implied. See the License for
+              		the specific language governing permissions and limitations under the
+              		License.
+-->
 <!DOCTYPE dataset PUBLIC "-//eSoftHead/Engroup Database Schema//EN" "http://www.esofthead.com/engroup.dtd">
 <dataset>
-	<s_account id="1" />
-	<s_user firstname="Nguyen" middlename="Phuc" lastname="Hai"
-		username="admin" accountId="1" />
-	<m_crm_note id="1" subject="aaa" attachmentpath="abc"
-		username="admin" sAccountId="1" />
+    
+    <s_account id="1" />
+    <s_user firstname="Nguyen" middlename="Phuc" lastname="Hai"
+            username="admin" accountId="1" />
+    <m_crm_note id="1" subject="aaa" attachmentpath="abc"
+                username="admin" sAccountId="1" />
     <m_attachment type="crm-note" typeid="1" documentpath="/ab/c" id="1"/>
     <m_attachment type="crm-note" typeid="1" documentpath="/ab/c1" id="2"/>
+    <m_comment id="1" sAccountId="1" type="Crm-Note" comment="aaa" typeId="1" createdUser="admin" createdTime="2012-11-25 00:00:00"/>
+    <m_comment id="2" sAccountId="1" type="Crm-Note" comment="xxx" typeId="1" createdUser="admin" createdTime="2012-11-25 00:00:00"/>
+    <m_attachment type="common-comment" typeid="1" documentpath="/ab/c1" id="3"/>
+    <m_attachment type="common-comment" typeid="2" documentpath="/ab/c1" id="4"/>
 </dataset>
