@@ -83,9 +83,7 @@ public class LeadPreviewBuilder extends VerticalLayout {
                             + lead.getFirstname());
                 }
             } else if (propertyId.equals("website")) {
-            	if (lead.getWebsite() != null || lead.getWebsite() != "") {
-            		return new DefaultFormViewFieldFactory.FormUrlLinkViewField(lead.getWebsite());
-            	}
+            	return new DefaultFormViewFieldFactory.FormUrlLinkViewField(lead.getWebsite());
             } else if (propertyId.equals("email")) {
                 return new FormEmailLinkViewField(lead.getEmail());
             } else if (propertyId.equals("accountid")) {
