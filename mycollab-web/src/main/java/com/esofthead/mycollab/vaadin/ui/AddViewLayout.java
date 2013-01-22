@@ -26,7 +26,12 @@ public class AddViewLayout extends CustomLayout {
         icon= new Embedded();
         icon.setSource(resource);
         this.header.addComponent(icon);
-        titleLbl = new Label(title);
+        if (title == null) {
+            titleLbl = new Label("Undefined");
+        } else {
+            titleLbl = new Label(title);
+        }
+        
         titleLbl.setWidth("100%");
         titleLbl.setStyleName("headerName");
         this.header.addComponent(titleLbl);

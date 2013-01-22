@@ -9,6 +9,10 @@ package com.esofthead.mycollab.common;
  * @author haiphucnguyen
  */
 public class CommentTypeConstants {
+    public static final String PRJ_TASK_LIST = "Project-TaskList";
+    
+    public static final String PRJ_TASK = "Project-Task";
+    
     public static final String PRJ_BUG = "Project-Bug";
     
     public static final String PRJ_MESSAGE = "Project-Message";

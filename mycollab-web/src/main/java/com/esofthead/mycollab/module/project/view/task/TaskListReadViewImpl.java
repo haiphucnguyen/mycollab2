@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
@@ -99,6 +101,7 @@ public class TaskListReadViewImpl extends AbstractView implements TaskListReadVi
             @Override
             protected Layout createBottomPanel() {
                 VerticalLayout relatedItemsPanel = new VerticalLayout();
+                relatedItemsPanel.addComponent(new CommentListDepot(CommentTypeConstants.PRJ_TASK_LIST, taskList.getId()));
                 relatedItemsPanel.addComponent(new TaskDepot());
                 return relatedItemsPanel;
             }
