@@ -18,7 +18,6 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -111,9 +110,14 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
                     return attachmentUploadField;
                 } else if (propertyId.equals("severity")) {
                     return new BugSeverityComboBox();
+                } else if (propertyId.equals("components")) {
+                    return new ComponentMultiSelectComp();
+                } else if (propertyId.equals("affectedVersions")) {
+                    return new VersionMultiSelectField();
+                } else if (propertyId.equals("fixedVersions")) {
+                    return new VersionMultiSelectField();
                 }
-                
-                if (propertyId.equals("summary")) {
+                else if (propertyId.equals("summary")) {
                     TextField tf = new TextField();
                     tf.setNullRepresentation("");
                     tf.setRequired(true);

@@ -4,8 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.module.crm.view.account.AccountTableDisplay;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -16,6 +14,7 @@ import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
 /**
@@ -85,6 +84,18 @@ public class BugTableDisplay extends PagedBeanTable2<BugService, BugSearchCriter
                         });
                 b.addStyleName("medium-text");
                 return b;
+
+            }
+        });
+        
+        this.addGeneratedColumn("duedate", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+                final SimpleBug bug = BugTableDisplay.this.getBeanByIndex(itemId);
+                return new Label(AppContext.formatDate(bug.getDuedate()));
 
             }
         });
