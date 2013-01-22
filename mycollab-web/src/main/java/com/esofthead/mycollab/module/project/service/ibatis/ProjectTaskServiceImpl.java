@@ -41,4 +41,26 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
     public SimpleTask findTaskById(int taskId) {
         return taskMapperExt.findTaskById(taskId);
     }
+
+    @Override
+    public int saveWithSession(Task record, String username) {
+        if (record.getPercentagecomplete() == 100) {
+            record.setStatus("Open");
+        } else {
+            record.setStatus("Closed");
+        }
+        return super.saveWithSession(record, username);
+    }
+
+    @Override
+    public int updateWithSession(Task record, String username) {
+        if (record.getPercentagecomplete() == 100) {
+            record.setStatus("Open");
+        } else {
+            record.setStatus("Closed");
+        }
+        return super.updateWithSession(record, username);
+    }
+    
+    
 }

@@ -31,6 +31,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class TaskDisplayComponent extends VerticalLayout {
+    private TaskSearchCriteria criteria;
     
     private TaskTableDisplay taskDisplay;
     private TaskList taskList;
@@ -87,10 +88,13 @@ public class TaskDisplayComponent extends VerticalLayout {
         this.addComponent(createTaskBtn);
     }
     
+    public void setSearchCriteria(TaskSearchCriteria criteria) {
+        this.criteria = criteria;
+        displayTasks();
+    }
+    
     private void displayTasks() {
-        TaskSearchCriteria taskCriteria = new TaskSearchCriteria();
-        taskCriteria.setTaskListId(new NumberSearchField(taskList.getId()));
-        taskDisplay.setSearchCriteria(taskCriteria);
+        taskDisplay.setSearchCriteria(criteria);
     }
     
     public void saveTaskSuccess(SimpleTask task) {
