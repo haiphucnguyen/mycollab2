@@ -48,10 +48,15 @@ public class LeadPreviewBuilder extends VerticalLayout {
         this.lead = lead;
         previewForm.setItemDataSource(new BeanItem<Lead>(lead));
         displayActivities();
+        displayNotes();
     }
 
     public SimpleLead getLead() {
         return lead;
+    }
+    
+    private void displayNotes() {
+        noteListItems.showNotes(CrmTypeConstants.LEAD, lead.getId());
     }
     
     public void displayActivities() {

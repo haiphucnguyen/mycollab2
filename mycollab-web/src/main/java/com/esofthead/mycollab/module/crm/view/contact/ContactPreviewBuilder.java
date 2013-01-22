@@ -73,7 +73,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
     }
 
     private void displayNotes() {
-        noteListItems.showNotes(CrmTypeConstants.ACCOUNT, contact.getId());
+        noteListItems.showNotes(CrmTypeConstants.CONTACT, contact.getId());
     }
     
     public void displayActivities() {

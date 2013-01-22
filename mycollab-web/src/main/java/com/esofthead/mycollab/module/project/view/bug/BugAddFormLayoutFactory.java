@@ -32,7 +32,7 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
         organizationHeader.setStyleName("h2");
         layout.addComponent(organizationHeader);
 
-        informationLayout = new GridFormLayoutHelper(2, 7);
+        informationLayout = new GridFormLayoutHelper(2, 8);
         informationLayout.getLayout().setWidth("100%");
         layout.addComponent(informationLayout.getLayout());
         layout.setComponentAlignment(informationLayout.getLayout(),
@@ -51,10 +51,12 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
             informationLayout.addComponent(field, "Summary", 0, 0, 2, "100%");
         } else if (propertyId.equals("priority")) {
             informationLayout.addComponent(field, "Priority", 0, 1);
+        } else if (propertyId.equals("severity")) {
+            informationLayout.addComponent(field, "Severity", 0, 2);
         } else if (propertyId.equals("duedate")) {
-            informationLayout.addComponent(field, "Due Date", 0, 2);
+            informationLayout.addComponent(field, "Due Date", 0, 3);
         } else if (propertyId.equals("assignuser")) {
-            informationLayout.addComponent(field, "Assignee", 0, 3);
+            informationLayout.addComponent(field, "Assignee", 0, 4);
         } else if (propertyId.equals("components")) {
             informationLayout.addComponent(field, "Components", 1, 1);
         } else if (propertyId.equals("affectedVersions")) {
@@ -62,11 +64,11 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
         } else if (propertyId.equals("fixedVersions")) {
             informationLayout.addComponent(field, "Fixed Versions", 1, 3);
         } else if (propertyId.equals("environment")) {
-            informationLayout.addComponent(field, "Environment", 0, 4, 2, "100%");
+            informationLayout.addComponent(field, "Environment", 0, 5, 2, "100%");
         } else if (propertyId.equals("description")) {
-            informationLayout.addComponent(field, "Description", 0, 5, 2, "100%");
+            informationLayout.addComponent(field, "Description", 0, 6, 2, "100%");
         } else if (propertyId.equals("id")) {//add attachment box
-            informationLayout.addComponent(field, "Attachment", 0, 6);
+            informationLayout.addComponent(field, "Attachment", 0, 7, 2, "100%");
         }
 
     }

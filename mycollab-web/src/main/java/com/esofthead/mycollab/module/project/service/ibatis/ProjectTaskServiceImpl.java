@@ -44,20 +44,20 @@ public class ProjectTaskServiceImpl extends DefaultService<Integer, Task, TaskSe
 
     @Override
     public int saveWithSession(Task record, String username) {
-        if (record.getPercentagecomplete() == 100) {
-            record.setStatus("Open");
-        } else {
+        if ((record.getPercentagecomplete() != null) && (record.getPercentagecomplete() == 100)) {
             record.setStatus("Closed");
+        } else {
+            record.setStatus("Open");
         }
         return super.saveWithSession(record, username);
     }
 
     @Override
     public int updateWithSession(Task record, String username) {
-        if (record.getPercentagecomplete() == 100) {
-            record.setStatus("Open");
-        } else {
+        if ((record.getPercentagecomplete() != null) && (record.getPercentagecomplete() == 100)) {
             record.setStatus("Closed");
+        } else {
+            record.setStatus("Open");
         }
         return super.updateWithSession(record, username);
     }

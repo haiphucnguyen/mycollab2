@@ -67,7 +67,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
             private static final long serialVersionUID = 1L;
 
             public FormLayoutFactory() {
-                super("Create Bug");
+                super((bug.getId() == null) ? "Create Bug" : bug.getSummary());
             }
 
             private Layout createButtonControls() {
@@ -109,6 +109,8 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
                 } else if (propertyId.equals("id")) {
                     attachmentUploadField = new FormAttachmentUploadField();
                     return attachmentUploadField;
+                } else if (propertyId.equals("severity")) {
+                    return new BugSeverityComboBox();
                 }
                 
                 if (propertyId.equals("summary")) {
