@@ -62,7 +62,7 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 
         @Override
         public Layout getLayout() {
-            informationLayout = new GridFormLayoutHelper(2, 7);
+            informationLayout = new GridFormLayoutHelper(2, 8);
             VerticalLayout layout = new VerticalLayout();
             layout.addComponent(informationLayout.getLayout());
             return layout;
@@ -90,11 +90,12 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
                 informationLayout.addComponent(field, "Task List", 1, 4);
             } else if (propertyId.equals("percentagecomplete")) {
                 informationLayout.addComponent(field, "Complete(%)", 0, 5);
-            } 
-            else if (propertyId.equals("notes")) {
+            } else if (propertyId.equals("notes")) {
                 field.setSizeUndefined();
                 informationLayout.addComponent(field, "Notes", 0, 6, 2,
                         UIConstants.DEFAULT_2XCONTROL_WIDTH);
+            } else if (propertyId.equals("id")) {
+                informationLayout.addComponent(field, "Attachments", 0, 7, 2, "100%");
             }
         }
     }

@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
@@ -27,9 +28,9 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
 
     @Override
     public void setItemDataSource(Item newDataSource) {
-        BeanItem<SimpleTask> beanItem = (BeanItem<SimpleTask>)newDataSource;
+        BeanItem<SimpleTask> beanItem = (BeanItem<SimpleTask>) newDataSource;
         task = beanItem.getBean();
-        
+
         this.setFormLayoutFactory(getFormLayoutFactory());
         this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
             private static final long serialVersionUID = 1L;
@@ -59,6 +60,8 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
                             EventBus.getInstance().fireEvent(new TaskListEvent.GotoRead(this, task.getTasklistid()));
                         }
                     });
+                } else if (propertyId.equals("id")) {
+                    return new FormAttachmentDisplayField(AttachmentConstants.PROJECT_TASK_TYPE, task.getId());
                 }
                 return null;
             }

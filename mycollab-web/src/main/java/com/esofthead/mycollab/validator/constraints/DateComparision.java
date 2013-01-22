@@ -23,7 +23,7 @@ import javax.validation.Payload;
 @Constraint(validatedBy = DateComparisionValidator.class)
 @Documented
 public @interface DateComparision {
-    String message() default "{com.esofthead.mycollab.validator.constraints.PhoneNumber}";
+    String message() default "{com.esofthead.mycollab.validator.constraints.DateComparision}";
     
     String firstDateField();
     

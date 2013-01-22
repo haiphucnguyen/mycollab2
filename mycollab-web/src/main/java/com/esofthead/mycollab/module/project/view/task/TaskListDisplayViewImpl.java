@@ -127,6 +127,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
 
                 @Override
                 public void buttonClick(ClickEvent event) {
+                    taskListFilterControl.setPopupVisible(false);
                     displayAllTasks();
                 }
             });
@@ -137,6 +138,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
 
                 @Override
                 public void buttonClick(ClickEvent event) {
+                    taskListFilterControl.setPopupVisible(false);
                     displayActiveTasksOnly();
                 }
             });
@@ -147,6 +149,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
 
                 @Override
                 public void buttonClick(ClickEvent event) {
+                    taskListFilterControl.setPopupVisible(false);
                     displayInActiveTasks();
                 }
             });
@@ -165,10 +168,21 @@ public class TaskListDisplayViewImpl extends AbstractView implements
             actionBtnLayout.setSpacing(true);
             actionBtnLayout.setWidth("200px");
             taskListActionControl.addComponent(actionBtnLayout);
+            
+            Button readBtn = new Button("View", new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    taskListActionControl.setPopupVisible(false);
+                    EventBus.getInstance().fireEvent(new TaskListEvent.GotoRead(event, taskList.getId()));
+                }
+            });
+            readBtn.setStyleName("link");
+            actionBtnLayout.addComponent(readBtn);
 
             Button editBtn = new Button("Edit", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
+                    taskListActionControl.setPopupVisible(false);
                     EventBus.getInstance().fireEvent(new TaskListEvent.GotoEdit(event, taskList));
                 }
             });
@@ -179,6 +193,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
             Button deleteBtn = new Button("Delete", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
+                    taskListActionControl.setPopupVisible(false);
                     ConfirmDialog.show(TaskListDepot.this.getWindow(),
                             "Please Confirm:",
                             "Are you sure to delete task group '"
@@ -201,14 +216,6 @@ public class TaskListDisplayViewImpl extends AbstractView implements
             });
             deleteBtn.setStyleName("link");
             actionBtnLayout.addComponent(deleteBtn);
-
-            Button reOrder = new Button("Reorder", new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                }
-            });
-            reOrder.setStyleName("link");
-            actionBtnLayout.addComponent(reOrder);
         }
 
         private void initContent() {

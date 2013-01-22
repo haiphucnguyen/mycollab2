@@ -26,34 +26,35 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
+import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  *
  * @author haiphucnguyen
  */
-public class ProjectActivityStreamComponent extends Panel {
+public class ProjectActivityStreamComponent extends Depot {
 
     private DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
 
     public ProjectActivityStreamComponent() {
-        super("Project Feeds");
+        super("Project Feeds", new VerticalLayout());
+        activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), ActivityStreamRowDisplayHandler.class, 15);
+        this.bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
+        this.addStyleName("activity-panel");
+        ((VerticalLayout) this.bodyContent).setMargin(false);
     }
 
     public void showProjectFeeds() {
-        this.removeAllComponents();
-
-        activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), ActivityStreamRowDisplayHandler.class, 15);
-        this.addComponent(new LazyLoadWrapper(activityStreamList));
         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
         searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{ModuleNameConstants.PRJ}));
 
@@ -66,7 +67,10 @@ public class ProjectActivityStreamComponent extends Panel {
 
         @Override
         public Component generateRow(SimpleActivityStream activityStream, int rowIndex) {
-            VerticalLayout layout = new VerticalLayout();
+            CssLayout layout = new CssLayout();
+            layout.setWidth("100%");
+            layout.setStyleName("activity-stream");
+            
             HorizontalLayout header = new HorizontalLayout();
             header.setSpacing(true);
             header.addComponent(new UserLink(activityStream.getCreateduser(), activityStream.getCreatedUserFullName()));
@@ -85,7 +89,8 @@ public class ProjectActivityStreamComponent extends Panel {
             header.addComponent(new ActivitylLink(activityStream.getType(), activityStream.getNamefield(), activityStream.getTypeid()));
             layout.addComponent(header);
 
-            HorizontalLayout body = new HorizontalLayout();
+            CssLayout body = new CssLayout();
+            body.setStyleName("activity-date");
             Label dateLbl = new Label(DateTimeUtils.getStringDateFromNow(activityStream.getCreatedtime()));
             body.addComponent(dateLbl);
 

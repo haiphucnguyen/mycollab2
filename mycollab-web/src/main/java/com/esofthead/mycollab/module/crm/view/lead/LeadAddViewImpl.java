@@ -36,8 +36,8 @@ public class LeadAddViewImpl extends AbstractView implements
 
     @Override
     public void editItem(Lead item) {
-        this.lead = lead;
-        editForm.setItemDataSource(new BeanItem<Lead>(item));
+        this.lead = item;
+        editForm.setItemDataSource(new BeanItem<Lead>(lead));
     }
 
     private class EditForm extends AdvancedEditBeanForm<Lead> {

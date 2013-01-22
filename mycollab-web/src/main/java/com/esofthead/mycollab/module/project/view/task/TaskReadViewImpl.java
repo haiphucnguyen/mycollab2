@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -64,7 +66,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
             @Override
             protected Layout createBottomPanel() {
-                return null;
+                return new CommentListDepot(CommentTypeConstants.PRJ_TASK, task.getId());
             }
         }
     }

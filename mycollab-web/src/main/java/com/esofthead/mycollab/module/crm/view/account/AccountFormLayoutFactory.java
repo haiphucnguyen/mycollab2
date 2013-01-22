@@ -71,7 +71,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
             layout.setComponentAlignment(informationLayout.getLayout(),
                     Alignment.BOTTOM_CENTER);
 
-            addressLayout = new GridFormLayoutHelper(2, 4);
+            addressLayout = new GridFormLayoutHelper(2, 5);
             Label addressHeader = new Label("Address Information");
             addressHeader.setStyleName("h2");
             layout.addComponent(addressHeader);
@@ -129,9 +129,13 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
             addressLayout.addComponent(propertyId.equals("shippingstate"), field,
                     "Shipping State", 1, 2);
             addressLayout.addComponent(propertyId.equals("postalcode"), field,
-                    "Postal Code", 0, 3);
+                    "Billing Postal Code", 0, 3);
             addressLayout.addComponent(propertyId.equals("shippingpostalcode"),
                     field, "Shipping Postal Code", 1, 3);
+            addressLayout.addComponent(propertyId.equals("billingcountry"), field,
+                    "Billing Country", 0, 4);
+            addressLayout.addComponent(propertyId.equals("shippingcountry"),
+                    field, "Shipping Country", 1, 4);
 
             if (propertyId.equals("description")) {
                 field.setSizeUndefined();
