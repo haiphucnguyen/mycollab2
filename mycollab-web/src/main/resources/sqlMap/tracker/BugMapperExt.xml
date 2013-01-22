@@ -57,18 +57,6 @@
             </when>
         </choose>
 
-        <if test="involeduser != null" >
-
-<![CDATA[
-            ${involeduser.operation}
-            (m_tracker_bug.assignuser=#{involeduser.value} OR m_tracker_bug.logby = #{involeduser.value} OR
-            (SELECT COUNT(*) 
-                FROM m_tracker_history 
-                WHERE m_tracker_history.relatedbug = m_tracker_bug.id 
-                AND (m_tracker_history.assignuser=#{involeduser.value} OR m_tracker_history.logby=#{involeduser.value})) > 0)
-            ]]>
-        </if>
-
         <if test="summary != null" >
 <![CDATA[${summary.operation} m_tracker_bug.summary LIKE '%${summary.value}%']]></if>
 

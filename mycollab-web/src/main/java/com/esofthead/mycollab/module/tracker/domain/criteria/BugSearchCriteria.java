@@ -9,8 +9,6 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 public class BugSearchCriteria extends SearchCriteria {
 	private StringSearchField assignuser;
 
-	private StringSearchField involeduser;
-
 	private StringSearchField loguser;
 
 	private NumberSearchField projectid;
@@ -59,14 +57,6 @@ public class BugSearchCriteria extends SearchCriteria {
 
 	public void setAssignuser(StringSearchField assignuser) {
 		this.assignuser = assignuser;
-	}
-
-	public StringSearchField getInvoleduser() {
-		return involeduser;
-	}
-
-	public void setInvoleduser(StringSearchField involeduser) {
-		this.involeduser = involeduser;
 	}
 
 	public StringSearchField getLoguser() {

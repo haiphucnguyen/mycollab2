@@ -113,7 +113,6 @@ public class NoteListItems extends Depot {
         @Override
         public Component generateRow(final SimpleNote note, int rowIndex) {
             this.note = note;
-
             HorizontalLayout noteContainer = new HorizontalLayout();
             noteContainer.addComponent(new UserAvatar(note.getCreateduser(), note.getCreateUserFullName()));
 

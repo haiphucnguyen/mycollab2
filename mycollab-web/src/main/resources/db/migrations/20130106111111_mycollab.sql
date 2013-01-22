@@ -1,1 +1,0 @@
-ALTER TABLE `s_user` DROP COLUMN `active` , ADD COLUMN `status` VARCHAR(45) NULL;

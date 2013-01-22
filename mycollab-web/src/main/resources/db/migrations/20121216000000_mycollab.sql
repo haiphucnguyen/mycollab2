@@ -1,2 +1,0 @@
-ALTER TABLE `m_prj_risk` ADD COLUMN `createdTime` DATETIME NULL, ADD COLUMN `lastUpdatedTime` DATETIME NULL;
-ALTER TABLE `m_prj_problem` ADD COLUMN `createdTime` DATETIME NULL, ADD COLUMN `lastUpdatedTime` DATETIME NULL;

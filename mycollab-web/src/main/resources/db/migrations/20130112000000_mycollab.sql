@@ -1,1 +1,0 @@
-ALTER TABLE `s_role_permission` DROP COLUMN `type` , DROP COLUMN `hasPermission` , DROP COLUMN `module` , ADD COLUMN `roleVal` TEXT NOT NULL;

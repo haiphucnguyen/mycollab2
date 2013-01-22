@@ -7,25 +7,22 @@
 	<m_prj_project id="1" name="aaa" sAccountId="1"/>
         
 	<m_tracker_component projectid="1" componentname="component1"
-		id="1" />
+		id="1" sAccountId="1"/>
 	<m_tracker_component projectid="1" componentname="component2"
-		id="2" />
+		id="2" sAccountId="1"/>
         
 	<m_tracker_bug summary="summary 1" id="1" projectid="1"
 		detail="detail 1" status="1" resolution="1" assignuser="admin" logby="admin"
-		createdTime="2009-01-01 00:00:00"/>
+		createdTime="2009-01-01 00:00:00" sAccountId="1"/>
 	<m_tracker_bug summary="summary 2" projectid="1" id="2"
 		detail="detail 2" status="1" resolution="1" assignuser="user1" logby="admin"
-		createdTime="2009-01-02 00:00:00" />
+		createdTime="2009-01-02 00:00:00" sAccountId="1"/>
 	<m_tracker_bug summary="summary 3" id="3" projectid="1"
 		detail="detail 3" status="1" resolution="1" logby="user1" assignuser="user1"
-		createdTime="2009-01-03 00:00:00" />
+		createdTime="2009-01-03 00:00:00" sAccountId="1"/>
         
-	<m_tracker_history id="1" relatedbug="3" logby="admin"
-		assignuser="user1" />
-        
-	<m_tracker_version id="1" projectid="1" versionname="version1" />
-	<m_tracker_version id="2" projectid="1" versionname="version2" />
+	<m_tracker_version id="1" projectid="1" versionname="version1" sAccountId="1"/>
+	<m_tracker_version id="2" projectid="1" versionname="version2" sAccountId="1"/>
         
         <!--FIXED version-->
 	<m_tracker_related_item refkey="bug-1" type="0"

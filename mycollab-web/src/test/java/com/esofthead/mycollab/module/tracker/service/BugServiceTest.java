@@ -57,20 +57,6 @@ public class BugServiceTest extends ServiceTest{
 
     @DataSet
     @Test
-    public void testSearchInvolvedUserCriteria() {
-        BugSearchCriteria criteria = new BugSearchCriteria();
-        criteria.setInvoleduser(new StringSearchField("admin"));
-
-        Assert.assertEquals(3, bugService.getTotalCount(criteria));
-        Assert.assertEquals(
-                3,
-                bugService.findPagableListByCriteria(
-                new SearchRequest<BugSearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
-
-    @DataSet
-    @Test
     public void testGetExtBug() {
         SimpleBug bug = bugService.findBugById(1);
         Assert.assertEquals("Nguyen Hai", bug.getLoguserFullName());
@@ -197,6 +183,7 @@ public class BugServiceTest extends ServiceTest{
         bug.setSummary("summary4");
         bug.setStatus("aaa");
         bug.setProjectid(1);
+        bug.setSaccountid(1);
         int bugId = bugService.saveWithSession(bug, "admin");
         Assert.assertTrue((bugId > 0));
 

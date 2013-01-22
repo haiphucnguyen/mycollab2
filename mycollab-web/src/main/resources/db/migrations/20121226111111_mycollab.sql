@@ -1,1 +1,0 @@
-ALTER TABLE `m_prj_milestone` CHANGE COLUMN `id` `id` INT(11) NOT NULL AUTO_INCREMENT  ;

@@ -20,7 +20,6 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.MessageDispatcher;
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -82,11 +81,6 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
 
     @Override
     public int saveWithSession(Project record, String username) {
-        if (isExistProjectHasSameName(record.getName())) {
-            throw new MyCollabException("There is project has name "
-                    + record.getName()
-                    + " already. Please choose another project name");
-        }
 
         int projectid = super.saveWithSession(record, username);
 
@@ -95,19 +89,6 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
         }
 
         return projectid;
-    }
-
-    @Override
-    public boolean isExistProjectHasSameName(String name) {
-        ProjectExample ex = new ProjectExample();
-        ex.createCriteria().andNameEqualTo(name);
-        List<Project> list = projectMapper.selectByExample(ex);
-        return (list != null && list.size() > 0);
-    }
-
-    @Override
-    public List<SimpleProject> getInvolvedProjectOfUser(String username) {
-        return projectMapperExt.getInvolvedProjectOfUser(username);
     }
 
     @Override

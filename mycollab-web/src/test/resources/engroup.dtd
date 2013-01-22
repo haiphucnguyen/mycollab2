@@ -33,36 +33,6 @@
     m_friend_friend*,
     m_friend_request*,
     m_group*,
-    m_hr_company*,
-    m_hr_company_policy*,
-    m_hr_division*,
-    m_hr_divisiontype*,
-    m_hr_education*,
-    m_hr_employee*,
-    m_hr_employee_contact*,
-    m_hr_employee_education*,
-    m_hr_employee_emergency_contact*,
-    m_hr_employee_family*,
-    m_hr_employee_immigration*,
-    m_hr_employee_job*,
-    m_hr_employee_language*,
-    m_hr_employee_leave*,
-    m_hr_employee_licenses*,
-    m_hr_employee_payment*,
-    m_hr_employee_personal*,
-    m_hr_employee_skill*,
-    m_hr_employee_work_experience*,
-    m_hr_employment_status*,
-    m_hr_holiday*,
-    m_hr_job_categories*,
-    m_hr_jobtitle*,
-    m_hr_language*,
-    m_hr_language_level*,
-    m_hr_leave_type*,
-    m_hr_licenses*,
-    m_hr_location*,
-    m_hr_pay_grades*,
-    m_hr_skill*,
     m_monitor_item*,
     m_pm_messages*,
     m_pm_sent_messages*,
@@ -70,15 +40,12 @@
     m_prj_message*,
     m_prj_milestone*,
     m_prj_monitor*,
-    m_prj_permission*,
     m_prj_problem*,
     m_prj_project*,
-    m_prj_resource*,
     m_prj_risk*,
     m_prj_role*,
     m_prj_task*,
     m_prj_task_list*,
-    m_prj_task_resource*,
     m_rss_agreegator*,
     m_social_message*,
     m_social_user_message*,
@@ -90,7 +57,6 @@
     m_todo_status*,
     m_tracker_bug*,
     m_tracker_component*,
-    m_tracker_history*,
     m_tracker_metadata*,
     m_tracker_query*,
     m_tracker_related_bug*,
@@ -103,9 +69,9 @@
     s_currency*,
     s_role_permission*,
     s_roles*,
-    s_roleuser*,
     s_title*,
     s_user*,
+    s_user_information*,
     s_user_permission*,
     s_user_preference*,
     schema_version*)>
@@ -205,7 +171,6 @@
     billingAddress CDATA #IMPLIED
     city CDATA #IMPLIED
     postalCode CDATA #IMPLIED
-    countryId CDATA #IMPLIED
     description CDATA #IMPLIED
     state CDATA #IMPLIED
     email CDATA #IMPLIED
@@ -213,7 +178,6 @@
     shippingAddress CDATA #IMPLIED
     shippingCity CDATA #IMPLIED
     shippingPostalCode CDATA #IMPLIED
-    shippingCountryId CDATA #IMPLIED
     shippingState CDATA #IMPLIED
     numemployees CDATA #IMPLIED
     createdTime CDATA #IMPLIED
@@ -223,6 +187,8 @@
     type CDATA #IMPLIED
     industry CDATA #IMPLIED
     lastUpdatedTime CDATA #IMPLIED
+    billingCountry CDATA #IMPLIED
+    shippingCountry CDATA #IMPLIED
 >
 
 <!ELEMENT m_crm_accounts_contacts EMPTY>
@@ -468,13 +434,10 @@
 <!ELEMENT m_crm_note EMPTY>
 <!ATTLIST m_crm_note
     id CDATA #REQUIRED
-    contactid CDATA #IMPLIED
     subject CDATA #REQUIRED
     note CDATA #IMPLIED
     type CDATA #IMPLIED
     typeid CDATA #IMPLIED
-    username CDATA #IMPLIED
-    attachmentpath CDATA #IMPLIED
     createdTime CDATA #IMPLIED
     createdUser CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
@@ -724,317 +687,6 @@
     createddate CDATA #REQUIRED
 >
 
-<!ELEMENT m_hr_company EMPTY>
-<!ATTLIST m_hr_company
-    id CDATA #REQUIRED
-    address1 CDATA #IMPLIED
-    address2 CDATA #IMPLIED
-    city CDATA #IMPLIED
-    comments CDATA #IMPLIED
-    companyname CDATA #REQUIRED
-    fax CDATA #IMPLIED
-    phone CDATA #IMPLIED
-    state CDATA #IMPLIED
-    taxid CDATA #IMPLIED
-    zipcode CDATA #IMPLIED
-    countryid CDATA #IMPLIED
-    sAccountId CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_company_policy EMPTY>
-<!ATTLIST m_hr_company_policy
-    id CDATA #REQUIRED
-    title CDATA #REQUIRED
-    details CDATA #IMPLIED
-    applyTo CDATA #IMPLIED
-    createdUser CDATA #IMPLIED
-    status CDATA #REQUIRED
-    lastVisionDate CDATA #IMPLIED
-    policyDocPath CDATA #REQUIRED
-    sAccountId CDATA #IMPLIED
->
-
-<!ELEMENT m_hr_division EMPTY>
-<!ATTLIST m_hr_division
-    id CDATA #REQUIRED
-    description CDATA #IMPLIED
-    location CDATA #IMPLIED
-    division CDATA #REQUIRED
-    companyid CDATA #REQUIRED
-    divisionparentid CDATA #IMPLIED
-    divisiontypeid CDATA #IMPLIED
-    telephone CDATA #IMPLIED
-    fax CDATA #IMPLIED
-    divisionheadid CDATA #IMPLIED
->
-
-<!ELEMENT m_hr_divisiontype EMPTY>
-<!ATTLIST m_hr_divisiontype
-    id CDATA #REQUIRED
-    name CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_education EMPTY>
-<!ATTLIST m_hr_education
-    id CDATA #REQUIRED
-    course CDATA #REQUIRED
-    durationinmonth CDATA #IMPLIED
-    institute CDATA #REQUIRED
-    sAccountId CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_employee EMPTY>
-<!ATTLIST m_hr_employee
-    id CDATA #REQUIRED
-    supervisorid CDATA #IMPLIED
-    code CDATA #IMPLIED
-    username CDATA #REQUIRED
-    sAccountId CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_employee_contact EMPTY>
-<!ATTLIST m_hr_employee_contact
-    id CDATA #REQUIRED
-    city CDATA #IMPLIED
-    hometelephone CDATA #IMPLIED
-    otheremail CDATA #IMPLIED
-    state CDATA #IMPLIED
-    street1 CDATA #IMPLIED
-    street2 CDATA #IMPLIED
-    workemail CDATA #IMPLIED
-    worktelephone CDATA #IMPLIED
-    zipcode CDATA #IMPLIED
-    employeeid CDATA #REQUIRED
-    countryid CDATA #IMPLIED
-    mobile CDATA #IMPLIED
->
-
-<!ELEMENT m_hr_employee_education EMPTY>
-<!ATTLIST m_hr_employee_education
-    id CDATA #REQUIRED
-    educationid CDATA #REQUIRED
-    employeeid CDATA #REQUIRED
-    startdate CDATA #REQUIRED
-    enddate CDATA #REQUIRED
-    score CDATA #IMPLIED
->
-
-<!ELEMENT m_hr_employee_emergency_contact EMPTY>
-<!ATTLIST m_hr_employee_emergency_contact
-    id CDATA #REQUIRED
-    hometelephone CDATA #IMPLIED
-    mobiletelephone CDATA #IMPLIED
-    relname CDATA #REQUIRED
-    relationship CDATA #IMPLIED
-    worktelephone CDATA #IMPLIED
-    employeeid CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_employee_family EMPTY>
-<!ATTLIST m_hr_employee_family
-    id CDATA #REQUIRED
-    name CDATA #REQUIRED
-    relationship CDATA #REQUIRED
-    dob CDATA #IMPLIED
-    employeeid CDATA #IMPLIED
->
-
-<!ELEMENT m_hr_employee_immigration EMPTY>
-<!ATTLIST m_hr_employee_immigration
-    id CDATA #REQUIRED
-    comments CDATA #IMPLIED
-    expireddate CDATA #IMPLIED
-    issuesdate CDATA #IMPLIED
-    no CDATA #IMPLIED
-    type CDATA #IMPLIED
-    citizenship CDATA #IMPLIED
-    employeeid CDATA #IMPLIED
->
-
-<!ELEMENT m_hr_employee_job EMPTY>
-<!ATTLIST m_hr_employee_job
-    id CDATA #REQUIRED
-    joineddate CDATA #IMPLIED
-    jobtitleid CDATA #IMPLIED
-    employeeid CDATA #REQUIRED
-    employmentstatusid CDATA #IMPLIED
-    divisionid CDATA #IMPLIED
-    contract_startdate CDATA #REQUIRED
-    contract_enddate CDATA #REQUIRED
-    comments CDATA #IMPLIED
->
-
-<!ELEMENT m_hr_employee_language EMPTY>
-<!ATTLIST m_hr_employee_language
-    id CDATA #REQUIRED
-    employeeid CDATA #REQUIRED
-    languageid CDATA #REQUIRED
-    levelid CDATA #REQUIRED
-    comment CDATA #IMPLIED
->
-
-<!ELEMENT m_hr_employee_leave EMPTY>
-<!ATTLIST m_hr_employee_leave
-    id CDATA #REQUIRED
-    fromdate CDATA #REQUIRED
-    todate CDATA #REQUIRED
-    leavetypeid CDATA #IMPLIED
-    username CDATA #REQUIRED
-    reasonToLeave CDATA #IMPLIED
->
-
-<!ELEMENT m_hr_employee_licenses EMPTY>
-<!ATTLIST m_hr_employee_licenses
-    id CDATA #REQUIRED
-    startDate CDATA #IMPLIED
-    endDate CDATA #IMPLIED
-    licenseid CDATA #REQUIRED
-    employeeid CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_employee_payment EMPTY>
-<!ATTLIST m_hr_employee_payment
-    id CDATA #REQUIRED
-    employeeid CDATA #REQUIRED
-    paygradeid CDATA #REQUIRED
-    salary CDATA #REQUIRED
-    comment CDATA #IMPLIED
-    startdate CDATA #IMPLIED
-    enddate CDATA #IMPLIED
->
-
-<!ELEMENT m_hr_employee_personal EMPTY>
-<!ATTLIST m_hr_employee_personal
-    id CDATA #REQUIRED
-    ssn CDATA #IMPLIED
-    sin CDATA #IMPLIED
-    countryid CDATA #IMPLIED
-    gender CDATA #IMPLIED
-    maritalstatus CDATA #IMPLIED
-    birthday CDATA #IMPLIED
-    employeeid CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_employee_skill EMPTY>
-<!ATTLIST m_hr_employee_skill
-    id CDATA #REQUIRED
-    comments CDATA #IMPLIED
-    yearsofexperience CDATA #IMPLIED
-    skillid CDATA #REQUIRED
-    employeeid CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_employee_work_experience EMPTY>
-<!ATTLIST m_hr_employee_work_experience
-    id CDATA #REQUIRED
-    comments CDATA #IMPLIED
-    employer CDATA #IMPLIED
-    enddate CDATA #IMPLIED
-    jobtitle CDATA #IMPLIED
-    startdate CDATA #IMPLIED
-    employeeid CDATA #IMPLIED
->
-
-<!ELEMENT m_hr_employment_status EMPTY>
-<!ATTLIST m_hr_employment_status
-    id CDATA #REQUIRED
-    description CDATA #IMPLIED
-    status CDATA #REQUIRED
-    code CDATA #REQUIRED
-    sAccountId CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_holiday EMPTY>
-<!ATTLIST m_hr_holiday
-    id CDATA #REQUIRED
-    holDate CDATA #REQUIRED
-    holName CDATA #REQUIRED
-    description CDATA #IMPLIED
-    sAccountId CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_job_categories EMPTY>
-<!ATTLIST m_hr_job_categories
-    id CDATA #REQUIRED
-    name CDATA #REQUIRED
-    paygradeid CDATA #IMPLIED
->
-
-<!ELEMENT m_hr_jobtitle EMPTY>
-<!ATTLIST m_hr_jobtitle
-    id CDATA #REQUIRED
-    description CDATA #IMPLIED
-    title CDATA #REQUIRED
-    code CDATA #REQUIRED
-    sAccountId CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_language EMPTY>
-<!ATTLIST m_hr_language
-    id CDATA #REQUIRED
-    language CDATA #REQUIRED
-    code CDATA #REQUIRED
-    description CDATA #IMPLIED
-    sAccountId CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_language_level EMPTY>
-<!ATTLIST m_hr_language_level
-    id CDATA #REQUIRED
-    level CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_leave_type EMPTY>
-<!ATTLIST m_hr_leave_type
-    id CDATA #REQUIRED
-    description CDATA #IMPLIED
-    name CDATA #REQUIRED
-    maximumLeave CDATA #IMPLIED
->
-
-<!ELEMENT m_hr_licenses EMPTY>
-<!ATTLIST m_hr_licenses
-    id CDATA #REQUIRED
-    description CDATA #IMPLIED
-    license CDATA #REQUIRED
-    code CDATA #REQUIRED
-    sAccountId CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_location EMPTY>
-<!ATTLIST m_hr_location
-    id CDATA #REQUIRED
-    address CDATA #REQUIRED
-    city CDATA #IMPLIED
-    comments CDATA #IMPLIED
-    fax CDATA #IMPLIED
-    locName CDATA #REQUIRED
-    phone CDATA #IMPLIED
-    state CDATA #IMPLIED
-    zipcode CDATA #IMPLIED
-    countryid CDATA #REQUIRED
-    sAccountId CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_pay_grades EMPTY>
-<!ATTLIST m_hr_pay_grades
-    id CDATA #REQUIRED
-    maximumsalary CDATA #IMPLIED
-    minimumsalary CDATA #IMPLIED
-    code CDATA #REQUIRED
-    currencyid CDATA #REQUIRED
-    sAccountId CDATA #REQUIRED
->
-
-<!ELEMENT m_hr_skill EMPTY>
-<!ATTLIST m_hr_skill
-    id CDATA #REQUIRED
-    description CDATA #IMPLIED
-    skill CDATA #REQUIRED
-    code CDATA #REQUIRED
-    sAccountId CDATA #REQUIRED
->
-
 <!ELEMENT m_monitor_item EMPTY>
 <!ATTLIST m_monitor_item
     id CDATA #REQUIRED
@@ -1116,15 +768,6 @@
     username CDATA #REQUIRED
 >
 
-<!ELEMENT m_prj_permission EMPTY>
-<!ATTLIST m_prj_permission
-    id CDATA #REQUIRED
-    projectid CDATA #REQUIRED
-    pathid CDATA #REQUIRED
-    canAccess CDATA #REQUIRED
-    username CDATA #REQUIRED
->
-
 <!ELEMENT m_prj_problem EMPTY>
 <!ATTLIST m_prj_problem
     id CDATA #REQUIRED
@@ -1178,22 +821,6 @@
     lastUpdatedTime CDATA #IMPLIED
 >
 
-<!ELEMENT m_prj_resource EMPTY>
-<!ATTLIST m_prj_resource
-    id CDATA #REQUIRED
-    resourcename CDATA #REQUIRED
-    bookingtype CDATA #REQUIRED
-    notes CDATA #IMPLIED
-    username CDATA #IMPLIED
-    projectid CDATA #REQUIRED
-    allocation CDATA #IMPLIED
-    startdate CDATA #IMPLIED
-    enddate CDATA #IMPLIED
-    workingtimerate CDATA #IMPLIED
-    overtimerate CDATA #IMPLIED
-    roleid CDATA #IMPLIED
->
-
 <!ELEMENT m_prj_risk EMPTY>
 <!ATTLIST m_prj_risk
     id CDATA #REQUIRED
@@ -1224,6 +851,8 @@
     rolename CDATA #REQUIRED
     description CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
+    projectid CDATA #REQUIRED
+    permissionVal CDATA #REQUIRED
 >
 
 <!ELEMENT m_prj_task EMPTY>
@@ -1250,6 +879,7 @@
     lastUpdatedTime CDATA #IMPLIED
     assignUser CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
+    status CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_task_list EMPTY>
@@ -1263,14 +893,7 @@
     sAccountId CDATA #IMPLIED
     milestoneId CDATA #IMPLIED
     owner CDATA #IMPLIED
->
-
-<!ELEMENT m_prj_task_resource EMPTY>
-<!ATTLIST m_prj_task_resource
-    id CDATA #REQUIRED
-    taskid CDATA #REQUIRED
-    resourceid CDATA #REQUIRED
-    unit CDATA #REQUIRED
+    groupIndex CDATA #IMPLIED
 >
 
 <!ELEMENT m_rss_agreegator EMPTY>
@@ -1392,6 +1015,7 @@
     description CDATA #IMPLIED
     estimateTime CDATA #IMPLIED
     estimateRemainTime CDATA #IMPLIED
+    sAccountId CDATA #REQUIRED
 >
 
 <!ELEMENT m_tracker_component EMPTY>
@@ -1403,46 +1027,7 @@
     description CDATA #IMPLIED
     createdUser CDATA #IMPLIED
     createdDate CDATA #IMPLIED
->
-
-<!ELEMENT m_tracker_history EMPTY>
-<!ATTLIST m_tracker_history
-    id CDATA #REQUIRED
-    summary CDATA #IMPLIED
-    detail CDATA #IMPLIED
-    assignuser CDATA #IMPLIED
-    posteddate CDATA #IMPLIED
-    logby CDATA #IMPLIED
-    severity CDATA #IMPLIED
-    priority CDATA #IMPLIED
-    status CDATA #IMPLIED
-    environment CDATA #IMPLIED
-    affectedversions CDATA #IMPLIED
-    fixonversions CDATA #IMPLIED
-    resolution CDATA #IMPLIED
-    relatedbug CDATA #REQUIRED
-    cus_int_01 CDATA #IMPLIED
-    cus_int_02 CDATA #IMPLIED
-    cus_int_03 CDATA #IMPLIED
-    cus_int_04 CDATA #IMPLIED
-    cus_int_05 CDATA #IMPLIED
-    cus_int_06 CDATA #IMPLIED
-    cus_int_07 CDATA #IMPLIED
-    cus_int_08 CDATA #IMPLIED
-    cus_int_09 CDATA #IMPLIED
-    cus_int_10 CDATA #IMPLIED
-    cus_str_01 CDATA #IMPLIED
-    cus_str_02 CDATA #IMPLIED
-    cus_str_03 CDATA #IMPLIED
-    cus_str_04 CDATA #IMPLIED
-    cus_str_05 CDATA #IMPLIED
-    cus_time_01 CDATA #IMPLIED
-    cus_time_02 CDATA #IMPLIED
-    cus_time_03 CDATA #IMPLIED
-    cus_time_04 CDATA #IMPLIED
-    cus_dbl_01 CDATA #IMPLIED
-    cus_dbl_02 CDATA #IMPLIED
-    cus_dbl_03 CDATA #IMPLIED
+    sAccountId CDATA #REQUIRED
 >
 
 <!ELEMENT m_tracker_metadata EMPTY>
@@ -1491,6 +1076,7 @@
     versionname CDATA #REQUIRED
     createdUser CDATA #IMPLIED
     createdDate CDATA #IMPLIED
+    sAccountId CDATA #REQUIRED
 >
 
 <!ELEMENT s_account EMPTY>
@@ -1554,13 +1140,6 @@
     id CDATA #REQUIRED
 >
 
-<!ELEMENT s_roleuser EMPTY>
-<!ATTLIST s_roleuser
-    username CDATA #REQUIRED
-    id CDATA #REQUIRED
-    roleid CDATA #REQUIRED
->
-
 <!ELEMENT s_title EMPTY>
 <!ATTLIST s_title
     id CDATA #REQUIRED
@@ -1585,7 +1164,16 @@
     company CDATA #IMPLIED
     timezoneid CDATA #IMPLIED
     registrationSource CDATA #IMPLIED
+    isAdmin CDATA #IMPLIED
     registerStatus CDATA #IMPLIED
+    roleid CDATA #IMPLIED
+>
+
+<!ELEMENT s_user_information EMPTY>
+<!ATTLIST s_user_information
+    id CDATA #REQUIRED
+    username CDATA #REQUIRED
+    sAccountId CDATA #REQUIRED
 >
 
 <!ELEMENT s_user_permission EMPTY>

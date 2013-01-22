@@ -11,15 +11,10 @@
             column="ownerFullName"
             jdbcType="VARCHAR"
             property="ownerFullName" />
-        <collection property="attachments" javaType="ArrayList" column="id"
-                    ofType="com.esofthead.mycollab.module.file.domain.Attachment"
-                    select="selectAttachments"/>
+        <collection property="attachments" javaType="ArrayList" columnPrefix="comment_attach_"
+                    resultMap="com.esofthead.mycollab.module.file.dao.AttachmentMapper.BaseResultMap"
+                    ofType="com.esofthead.mycollab.module.file.domain.Attachment"/>
     </resultMap>
-    <select id="selectAttachments" parameterType="int" resultMap="com.esofthead.mycollab.module.file.dao.AttachmentMapper.BaseResultMap">
-        SELECT m_attachment.id, m_attachment.type, m_attachment.documentpath, m_attachment.createdTime, m_attachment.lastUpdatedTime, m_attachment.typeid
-        FROM m_attachment
-        WHERE m_attachment.type='common-comment' AND m_attachment.typeid=#{id}
-    </select>
     
     <sql id="querySearchCriteria">
         <if test="type != null ">
@@ -34,9 +29,13 @@
         <![CDATA[
             SELECT m_comment.id, m_comment.comment, m_comment.createdUser, m_comment.createdTime, 
                    m_comment.type, m_comment.typeId, m_comment.sAccountId,
-                   concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as ownerFullName
+                   concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as ownerFullName,
+                   m_attachment.id AS comment_attach_id, m_attachment.type AS comment_attach_type, m_attachment.documentpath AS comment_attach_documentpath, 
+                   m_attachment.createdTime AS comment_attach_createdTime, m_attachment.lastUpdatedTime AS comment_attach_lastUpdatedTime, 
+                   m_attachment.typeid AS comment_attach_typeid
                 FROM m_comment
                     LEFT OUTER JOIN s_user ON m_comment.createdUser = s_user.username
+                    LEFT OUTER JOIN m_attachment ON (m_attachment.type='common-comment' AND m_attachment.typeid=m_comment.id)
         ]]>
     </sql>
     

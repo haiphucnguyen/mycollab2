@@ -1,1 +1,0 @@
-ALTER TABLE `m_tracker_bug` CHANGE COLUMN `posteddate` `createdTime` DATETIME NULL DEFAULT NULL  , CHANGE COLUMN `updateddate` `lastUpdatedTime` DATETIME NULL DEFAULT NULL  , CHANGE COLUMN `resolution` `resolution` VARCHAR(45) NULL DEFAULT NULL  ;

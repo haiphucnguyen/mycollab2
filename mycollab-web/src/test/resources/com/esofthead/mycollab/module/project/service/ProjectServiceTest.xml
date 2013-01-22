@@ -18,8 +18,6 @@
     <s_account id="1" />
     <s_user username="admin" firstname="Nguyen" lastname="Hai"
         middlename="Phuc" accountId="1" />
-    <m_hr_employee id="1" code="0001" username="admin"
-        sAccountId="1" />
     <m_crm_account id="1" accountName="a" sAccountId="1" />
     <m_prj_project id="1" name="A" priority="1" sAccountId="1" />
     <m_prj_project id="2" name="B" priority="1"
@@ -27,9 +25,5 @@
     <m_prj_project id="3" name="C" priority="1"
         homePage="http://esofthead.com" owner="admin" account="1" sAccountId="1" />
     <m_prj_project id="4" name="D" sAccountId="1" />
-    <m_prj_task id="1" projectid="4" taskindex="1" taskname="taskname" />
-    <m_prj_resource id="1" bookingtype="1a" projectid="4"
-        resourcename="x" username="admin" />
-    <m_prj_task_resource id="1" resourceid="1" taskid="1"
-        unit="1" />
+    <m_prj_task id="1" projectid="4" taskindex="1" taskname="taskname" sAccountId="1"/>
 </dataset>

@@ -1,1 +1,0 @@
-ALTER TABLE `m_prj_task_list` ADD COLUMN `groupIndex` INT NULL;

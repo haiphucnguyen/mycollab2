@@ -1,1 +1,0 @@
-ALTER TABLE `m_tracker_related_item` DROP COLUMN `refitemkey` , CHANGE COLUMN `type` `typeid` INT(10) UNSIGNED NOT NULL  , CHANGE COLUMN `relateitemid` `type` INT(10) UNSIGNED NOT NULL COMMENT '0:fixed version, 1:affected versions, 2:component'  ;

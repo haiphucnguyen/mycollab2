@@ -1,1 +1,0 @@
-ALTER TABLE `m_crm_note` CHANGE COLUMN `type` `type` VARCHAR(45) NULL DEFAULT NULL  ;

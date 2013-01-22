@@ -1,1 +1,0 @@
-ALTER TABLE `s_user` CHANGE COLUMN `status` `registerStatus` VARCHAR(45) NULL DEFAULT NULL;

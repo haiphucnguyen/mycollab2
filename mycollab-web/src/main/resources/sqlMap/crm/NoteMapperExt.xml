@@ -29,6 +29,7 @@
             m_attachment.id as attach_id, m_attachment.type as attach_type, m_attachment.documentpath as attach_documentpath,
             m_attachment.createdTime as attach_createdTime, m_attachment.lastUpdatedTime as attach_lastUpdatedTime,
             m_attachment.typeid as attach_typeid
+            
         FROM m_crm_note
             LEFT OUTER JOIN s_user ON (m_crm_note.createdUser = s_user.username) 
             LEFT OUTER JOIN m_attachment ON (m_attachment.type = 'crm-note' AND m_attachment.typeid=m_crm_note.id)
