@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
@@ -27,6 +28,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
@@ -130,7 +132,10 @@ public class TaskListReorderViewImpl extends AbstractView implements TaskListReo
 
         @Override
         public Component generateRow(SimpleTaskList taskList, int rowIndex) {
-            return new Label(taskList.getName());
+            VerticalLayout layout = new VerticalLayout();
+            layout.addComponent(new Label(taskList.getName()));
+            layout.addComponent(new Label("Last updated on " + DateTimeUtils.getStringDateFromNow(taskList.getLastupdatedtime())));
+            return layout;
         }
     }
     
