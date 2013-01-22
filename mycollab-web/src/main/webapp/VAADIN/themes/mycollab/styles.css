@@ -633,7 +633,7 @@ input.v-textfield-errorField {
 	background: none;
 /* 	border-right: 1px solid #CCC; */
 }
-.accountViewContainer .v-horizontallayout-menuContent > div > div:nth-child(2) {
+.accountViewContainer .v-horizontallayout-menuContent > div > div:first-child + div {
 	background: url('icons/tabcontent-bg.png') repeat-y 0 0 #FFFFFF;
 }
 .accountViewContainer .v-splitpanel-hsplitter-locked {
@@ -773,7 +773,7 @@ input.v-textfield-errorField {
 .projectDashboardView .v-label-h2, .v-label h2 {
 	padding: 0px;
 }
-.v-csslayout-project-dashboard .v-csslayout-margin {
+.v-csslayout-project-dashboard > .v-csslayout-margin {
 	border-color:#8f8f8f;
 	border-style: solid;
 	border-width: 0px 0px 0px 1px;
@@ -797,7 +797,7 @@ input.v-textfield-errorField {
 .projectDashboardView .addViewLayout .h2 {
 	padding: .67em 0 .33em 0;
 }
-.projectDashboardView .v-horizontallayout-menuContent > div > div:nth-child(2) {
+.projectDashboardView .v-horizontallayout-menuContent > div > div:first-child + div {
 	background: url('icons/tabcontent-bg.png') repeat-y 0 0 #FFFFFF;
 }
 .v-csslayout-projectTabContent {
@@ -1368,6 +1368,47 @@ white-space: normal;
 
 /* Messages */
 
+.message {
+	margin: 5px 0px;
+}
+.message .message-container {
+}
+.message .message-container > .v-csslayout-margin {
+	background-color: #ebedee;
+	padding: 10px 15px 10px 10px;
+	border: 1px solid #8f8f8f;
+/* 	box-shadow: 0px 0px 3px rgb(143,143,143); */
+	border-radius: 5px;
+	margin-left: 10px;
+	position:relative;
+}
+.message .message-container > .v-csslayout-margin > .v-csslayout-container {
+	margin-right: 10px;
+}
+.message .message-container > .v-csslayout-margin:before {
+	content:"";
+	position:absolute;
+	border-style:solid;
+    /* reduce the damage in FF3.0 */
+    display:block; 
+    width:0;
+    top:10px; /* controls vertical position */
+	left:-10px; /* value = - border-left-width - border-right-width */
+	border-width:10px 9px 10px 0;
+	border-color:transparent #8f8f8f;
+}
+.message .message-container > .v-csslayout-margin:after {
+	content:"";
+	position:absolute;
+	border-style:solid;
+    /* reduce the damage in FF3.0 */
+    display:block; 
+    width:0;
+	top:10px; /* value = (:before top) + (:before border-top) - (:after border-top) */
+	left:-9px; /* value = - border-left-width - border-right-width */
+	border-width:10px 9px 10px 0;
+	border-color:transparent #ebedee;
+}
 .message-header .user-name {
 	font-size: 15px;
 	font-weight: bold;
@@ -1384,6 +1425,26 @@ white-space: normal;
 
 .message-header .v-button-link.message-title .v-button-wrap {
 	padding: 1px 0px;
+}
+
+.message-header .time-post {
+	color: #00acee;
+}
+
+.message-header .comment-count {
+/* 	padding: 1px 6px; */
+/* 	border-radius: 3px; */
+/* 	background-color: #00acee; */
+/* 	color: white; */
+/* 	text-shadow: 1px 1px #666; */
+	color: black;
+	font-size: 12px;
+	padding-right: 3px;
+}
+
+.message-body p {
+	margin: 4px 0px;
+	color: gray;
 }
 
 /* End Messages */
@@ -1450,10 +1511,16 @@ white-space: normal;
 /* End Multifiles Upload */
 
 /* xBreadCrumb */
+.xbreadcrumbs {
+	background-color: transparent !important;
+}
 .xbreadcrumbs li {
 	padding-bottom: 8px !important;
 }
 .xbreadcrumbs .v-link a span, .xbreadcrumbbutton .v-button-caption {
 	font-size: 13px !important;
+}
+.v-button-xbreadcrumbbutton-home .v-button-caption {
+	background-position: 0px 4px !important;
 }
 /* End xBreadCrumb */

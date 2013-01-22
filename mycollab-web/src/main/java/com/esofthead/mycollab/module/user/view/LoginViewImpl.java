@@ -17,68 +17,71 @@ import com.vaadin.ui.TextField;
 @ViewComponent
 public class LoginViewImpl extends AbstractView implements LoginView {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public LoginViewImpl() {
-        this.addComponent(new LoginForm());
-    }
+	public LoginViewImpl() {
+		this.addComponent(new LoginForm());
+	}
 
-    private class LoginForm extends Form {
+	private class LoginForm extends Form {
 
-        private static final long serialVersionUID = 1L;
-        private final TextField usernameField;
-        private final PasswordField passwordField;
+		private static final long serialVersionUID = 1L;
+		private final TextField usernameField;
+		private final PasswordField passwordField;
 
-        public LoginForm() {
-            // this.setCaption("Login Form");
-            CustomLayout custom = new CustomLayout("loginForm");
-            custom.addStyleName("customLoginForm");
-            usernameField = new TextField("Email");
-            usernameField.setValue("hainguyen@esofthead.com");
+		public LoginForm() {
+			// this.setCaption("Login Form");
+			CustomLayout custom = new CustomLayout("loginForm");
+			custom.addStyleName("customLoginForm");
+			usernameField = new TextField("Email");
+			usernameField.setValue("hainguyen@esofthead.com");
 
-            custom.addComponent(usernameField, "usernameField");
+			custom.addComponent(usernameField, "usernameField");
 
-            passwordField = new PasswordField("Password");
-            passwordField.setValue("123456");
-            StringLengthValidator passwordValidator = new StringLengthValidator(
-                    "Password length must be greater than 6", 6,
-                    Integer.MAX_VALUE, false);
-            passwordField.addValidator(passwordValidator);
+			passwordField = new PasswordField("Password");
+			passwordField.setValue("123456");
+			StringLengthValidator passwordValidator = new StringLengthValidator(
+					"Password length must be greater than 6", 6,
+					Integer.MAX_VALUE, false);
+			passwordField.addValidator(passwordValidator);
 
-            custom.addComponent(passwordField, "passwordField");
+			custom.addComponent(passwordField, "passwordField");
 
-            Button loginBtn = new Button("Login", new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
+			Button loginBtn = new Button("Login", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
 
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    try {
-                        LoginViewImpl.this.fireEvent(new UserEvent.PlainLogin(LoginViewImpl.this, new String[]{(String) usernameField.getValue(), (String) passwordField.getValue()}));
-                    } catch (MyCollabException e) {
-                        LoginForm.this.setComponentError(new UserError(e
-                                .getMessage()));
+				@Override
+				public void buttonClick(ClickEvent event) {
+					try {
+						LoginViewImpl.this.fireEvent(new UserEvent.PlainLogin(
+								LoginViewImpl.this, new String[] {
+										(String) usernameField.getValue(),
+										(String) passwordField.getValue() }));
+					} catch (MyCollabException e) {
+						LoginForm.this.setComponentError(new UserError(e
+								.getMessage()));
 
-                    } catch (Exception e) {
-                        throw new MyCollabException(e);
-                    }
-                }
-            });
+					} catch (Exception e) {
+						throw new MyCollabException(e);
+					}
+				}
+			});
 
-            loginBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-            custom.addComponent(loginBtn, "loginButton");
+			loginBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			custom.addComponent(loginBtn, "loginButton");
 
-            Button signupBtn = new Button("Sign up Now!",
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+			Button signupBtn = new Button("Sign up Now!",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                        }
-                    });
-            signupBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-            custom.addComponent(signupBtn, "signupLink");
+						@Override
+						public void buttonClick(ClickEvent event) {
+						}
+					});
+			signupBtn.setStyleName("link");
+			custom.addComponent(signupBtn, "signupLink");
 
-            this.setLayout(custom);
-        }
-    }
+			this.setLayout(custom);
+		}
+	}
 }

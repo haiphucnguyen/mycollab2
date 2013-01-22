@@ -25,7 +25,6 @@ import com.esofthead.mycollab.vaadin.ui.PagedBeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatar;
-import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
@@ -33,6 +32,8 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.RichTextArea;
@@ -78,10 +79,14 @@ public class MessageListViewImpl extends AbstractView implements
 		@Override
 		public Component generateRow(final SimpleMessage message, int rowIndex) {
 			HorizontalLayout messageLayout = new HorizontalLayout();
+			messageLayout.setStyleName("message");
+			messageLayout.setWidth("100%");
 			messageLayout.addComponent(new UserAvatar(message.getPosteduser(),
 					message.getFullPostedUserName()));
 
-			VerticalLayout rowLayout = new VerticalLayout();
+			CssLayout rowLayout = new CssLayout();
+			rowLayout.setStyleName("message-container");
+			rowLayout.setWidth("100%");
 			Button title = new Button(message.getTitle(),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
@@ -96,36 +101,60 @@ public class MessageListViewImpl extends AbstractView implements
 					});
 			title.setStyleName("link");
 
-			rowLayout.addComponent(title);
+			HorizontalLayout messageHeader = new HorizontalLayout();
+			messageHeader.setStyleName("message-header");
+			VerticalLayout leftHeader = new VerticalLayout();
 
-			rowLayout.addComponent(new Label(message.getMessage(),
-					Label.CONTENT_XHTML));
+			Label username = new Label(message.getFullPostedUserName());
+			username.setStyleName("user-name");
+			leftHeader.addComponent(username);
 
-			HorizontalLayout footer = new HorizontalLayout();
-			Label commentCountLbl = new Label(message.getCommentsCount()
-					+ " comments");
-			footer.addComponent(commentCountLbl);
-			footer.setComponentAlignment(commentCountLbl,
+			title.addStyleName("message-title");
+			leftHeader.addComponent(title);
+
+			VerticalLayout rightHeader = new VerticalLayout();
+			Label timePostLbl = new Label(
+					DateTimeUtils.getStringDateFromNow(message.getPosteddate()));
+			timePostLbl.setSizeUndefined();
+			timePostLbl.setStyleName("time-post");
+			rightHeader.addComponent(timePostLbl);
+			HorizontalLayout notification = new HorizontalLayout();
+			notification.setSizeUndefined();
+			if (message.getCommentsCount() > 0) {
+				HorizontalLayout commentNotification = new HorizontalLayout();
+				Label commentCountLbl = new Label(Integer.toString(message
+						.getCommentsCount()));
+				commentCountLbl.setStyleName("comment-count");
+				commentCountLbl.setSizeUndefined();
+				commentNotification.addComponent(commentCountLbl);
+				Embedded commentIcon = new Embedded();
+				commentIcon.setSource(new ThemeResource(
+						"icons/16/project/message.png"));
+				commentNotification.addComponent(commentIcon);
+
+				notification.addComponent(commentNotification);
+
+			}
+			rightHeader.addComponent(notification);
+			rightHeader.setSizeUndefined();
+			rightHeader.setComponentAlignment(notification,
 					Alignment.MIDDLE_CENTER);
 
-			Label separator = new Label("  |  ");
-			footer.addComponent(separator);
-			footer.setComponentAlignment(separator, Alignment.MIDDLE_CENTER);
+			messageHeader.addComponent(leftHeader);
+			messageHeader.setExpandRatio(leftHeader, 1.0f);
+			messageHeader.addComponent(rightHeader);
+			messageHeader.setWidth("100%");
 
-			UserLink userLink = new UserLink(message.getPosteduser(),
-					message.getFullPostedUserName());
-			footer.addComponent(userLink);
-			footer.setComponentAlignment(userLink, Alignment.MIDDLE_CENTER);
+			rowLayout.addComponent(messageHeader);
 
-			Label timePostLbl = new Label(" wrote on "
-					+ DateTimeUtils.getStringDateFromNow(message
-							.getPosteddate()));
-			footer.addComponent(timePostLbl);
-			footer.setComponentAlignment(timePostLbl, Alignment.MIDDLE_CENTER);
-
-			rowLayout.addComponent(footer);
+			Label messageContent = new Label(message.getMessage(),
+					Label.CONTENT_XHTML);
+			messageContent.setStyleName("message-body");
+			rowLayout.addComponent(messageContent);
 
 			messageLayout.addComponent(rowLayout);
+			messageLayout.setExpandRatio(rowLayout, 1.0f);
+
 			return messageLayout;
 		}
 	}
