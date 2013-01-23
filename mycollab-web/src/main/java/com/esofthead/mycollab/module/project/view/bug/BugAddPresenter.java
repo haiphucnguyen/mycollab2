@@ -86,7 +86,7 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
         bug.setSaccountid(AppContext.getAccountId());
         if (bug.getId() == null) {
             bug.setStatus(BugStatusConstants.OPEN);
-            bug.setResolution(BugResolutionConstants.UNRESOLVED);
+            bug.setResolution(BugResolutionConstants.NEWISSUE);
             bug.setLogby(AppContext.getUsername());
             int bugId = bugService.saveWithSession(bug, AppContext.getUsername());
             AttachmentUploadField uploadField = view.getAttachUploadField();
