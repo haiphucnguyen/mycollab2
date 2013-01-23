@@ -4,7 +4,6 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
-import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
@@ -85,9 +84,6 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
     
     public void loadItems(List<T> currentListData) {
         contentLayout.removeAllComponents();
-        
-        VerticalLayout content = new VerticalLayout();
-        contentLayout.addComponent(new LazyLoadWrapper(content));
                 
         int i = 0;
         try {
@@ -96,7 +92,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
                 RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
                 Component row = rowHandler.generateRow(item, i);
                 if (row != null) {
-                    content.addComponent(row);
+                    contentLayout.addComponent(row);
                 }
 
                 i++;
