@@ -60,7 +60,7 @@ public class Depot extends VerticalLayout {
 		if (headerElement != null) {
 			headerRight.addComponent(headerElement);
 			headerRight.setComponentAlignment(headerElement,
-					Alignment.BOTTOM_RIGHT);
+					Alignment.TOP_RIGHT);
 		}
 
 		header.addComponent(headerRight);
