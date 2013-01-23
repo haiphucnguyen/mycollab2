@@ -2,30 +2,23 @@ package com.esofthead.mycollab.vaadin.mvp;
 
 import com.vaadin.ui.ComponentContainer;
 
-public class NullViewState extends ViewState{
+public class NullViewState extends ViewState {
 
-	public NullViewState() {
-		super(null, new EmptyPresenter(), null);
-	}
-	
-	private static class EmptyPresenter implements Presenter {
-		private static final long serialVersionUID = 1L;
+    public NullViewState() {
+        super(null, new EmptyPresenter(), null);
+    }
 
-		@Override
-		public void go(ComponentContainer container) {
-			
-		}
+    private static class EmptyPresenter implements Presenter {
 
-		@Override
-		public void go(ComponentContainer container, ScreenData<?> data) {
-		}
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public void go(ComponentContainer container, ScreenData<?> data,
-				boolean isHistoryTrack) {
-			
-		}
-		
-	}
+        @Override
+        public void go(ComponentContainer container, ScreenData<?> data) {
+        }
 
+        @Override
+        public void go(ComponentContainer container, ScreenData<?> data,
+                boolean isHistoryTrack) {
+        }
+    }
 }

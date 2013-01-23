@@ -160,7 +160,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
     @Override
     public void gotoUsersAndGroup() {
-        userPresenter.go(ProjectViewImpl.this);
+        userPresenter.go(ProjectViewImpl.this, null);
     }
 
     @Override

@@ -39,7 +39,7 @@ public class MainViewController {
                     @Override
                     public void handle(ShellEvent.GotoCrmPage event) {
                         CrmPresenter crmPresenter = PresenterResolver.getPresenter(CrmPresenter.class);
-                        crmPresenter.go(container);
+                        crmPresenter.go(container, null);
                     }
                 });
 
@@ -55,7 +55,7 @@ public class MainViewController {
                     @Override
                     public void handle(ShellEvent.GotoProjectPage event) {
                         ProjectPresenter prjPresenter = PresenterResolver.getPresenter(ProjectPresenter.class);
-                        prjPresenter.go(container);
+                        prjPresenter.go(container, null);
                     }
                 });
     }
