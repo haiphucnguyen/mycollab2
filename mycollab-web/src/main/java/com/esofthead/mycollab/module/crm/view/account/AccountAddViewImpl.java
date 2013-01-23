@@ -6,7 +6,7 @@ import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
-import com.esofthead.mycollab.vaadin.ui.CountrySelectionCombobox;
+import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -93,14 +93,11 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
                     TextArea textArea = new TextArea("", "");
                     textArea.setNullRepresentation("");
                     return textArea;
-                } else if ("billingcountry".equals(propertyId)) {
-                	CountrySelectionCombobox billingCountryComboBox = new CountrySelectionCombobox();
+                } else if ("billingcountry".equals(propertyId) || "shippingcountry".equals(propertyId)) {
+                	CountryComboBox billingCountryComboBox = new CountryComboBox();
                 	return billingCountryComboBox;
-                } else if ("shippingcountry".equals(propertyId)) {
-                	CountrySelectionCombobox shippingCountryComboBox = new CountrySelectionCombobox();
-                    return shippingCountryComboBox;
                 }
-
+                
                 if (propertyId.equals("accountname")) {
                     TextField tf = new TextField();
                     tf.setNullRepresentation("");

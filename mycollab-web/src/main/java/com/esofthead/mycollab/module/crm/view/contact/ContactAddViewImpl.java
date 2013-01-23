@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -119,7 +120,12 @@ public class ContactAddViewImpl extends AbstractView implements
                     UserComboBox userBox = new UserComboBox();
                     userBox.select(contact.getAssignuser());
                     return userBox;
+                } else if (propertyId.equals("primcountry")
+                        || propertyId.equals("othercountry")) {
+                	CountryComboBox otherCountryComboBox = new CountryComboBox();
+                    return otherCountryComboBox;
                 }
+
 
                 return null;
             }
