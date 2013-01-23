@@ -1,9 +1,10 @@
 package com.esofthead.mycollab.module.tracker;
 
 public class BugStatusConstants {
-	public static String OPEN = "Open";
-	public static String INPROGRESS = "In Progress";
-	public static String RESOLVED = "Resolved";
-	public static String CLOSE = "Close";
-	public static String REOPEN = "ReOpen";
+
+    public static final String OPEN = "Open";
+    public static final String INPROGRESS = "In Progress";
+    public static final String CLOSE = "Close";
+    public static final String TESTPENDING = "Test Pending";
+    public static final String WONFIX = "Won't Fix";
 }
