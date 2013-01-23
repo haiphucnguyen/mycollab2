@@ -49,4 +49,8 @@ public abstract class AbstractPresenter<V extends View> implements Presenter {
 
     protected abstract void onGo(ComponentContainer container,
             ScreenData<?> data);
+    
+    public void go(PageActionChain pageActionChain) {
+        
+    }
 }

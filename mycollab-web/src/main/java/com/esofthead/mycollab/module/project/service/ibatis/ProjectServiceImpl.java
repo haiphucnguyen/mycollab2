@@ -51,10 +51,6 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
     private ProjectMapper projectMapper;
     @Autowired
     private ProjectMapperExt projectMapperExt;
-    @Autowired
-    private PermissionMapper permissionMapper;
-    @Autowired
-    private MessageDispatcher messageDispatcher;
 
     @Override
     public ICrudGenericDAO<Integer, Project> getCrudMapper() {
@@ -67,26 +63,9 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
     }
 
     @Override
-    protected int internalUpdateWithSession(Project record, String username) {
-        super.internalUpdateWithSession(record, username);
-        PermissionExample ex = new PermissionExample();
-        if (record.getOwner() != null && !"".equals(record.getOwner())) {
-            ex.createCriteria().andProjectidEqualTo(record.getId())
-                    .andUsernameEqualTo(record.getOwner());
-            permissionMapper.deleteByExample(ex);
-        }
-
-        return 0;
-    }
-
-    @Override
     public int saveWithSession(Project record, String username) {
 
         int projectid = super.saveWithSession(record, username);
-
-        if (record.getOwner() != null && record.getOwner() != "") {
-            // set all project permissions to project owner
-        }
 
         return projectid;
     }
@@ -101,5 +80,10 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
     @Override
     public int getTotalActivityStream(ActivityStreamSearchCriteria searchCriteria) {
         return projectMapperExt.getTotalActivityStream(searchCriteria);
+    }
+
+    @Override
+    public SimpleProject findProjectById(int projectId) {
+        return projectMapperExt.findProjectById(projectId);
     }
 }

@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
+import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
@@ -135,7 +136,7 @@ public class ActivityStreamComponent extends Depot {
             Button projectLink = new Button(activityStream.getProjectName(), new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    
+                   
                 }
             });
             header.addComponent(projectLink);

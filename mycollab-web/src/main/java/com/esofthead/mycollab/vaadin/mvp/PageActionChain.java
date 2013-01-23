@@ -14,8 +14,9 @@ import java.util.List;
 public class PageActionChain {
     private List<PageAction> chains = new ArrayList<PageAction>();
     
-    public void add(PageAction pageAction) {
+    public PageActionChain add(PageAction pageAction) {
         chains.add(pageAction);
+        return this;
     }
     
     public PageAction get() {

@@ -63,7 +63,7 @@ public class MyProjectsListViewImpl extends AbstractView implements MyProjectsLi
                             public void buttonClick(ClickEvent event) {
                                 EventBus.getInstance().fireEvent(
                                         new ProjectEvent.GotoMyProject(this,
-                                        project));
+                                        project.getId()));
                             }
                         });
                 b.addStyleName("medium-text");
