@@ -17,33 +17,31 @@ import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.web.AppContext;
 
 /**
- * 
+ *
  * @author haiphucnguyen
  */
 @SuppressWarnings("serial")
 public class VersionMultiSelectField extends MultiSelectComp {
 
-	public VersionMultiSelectField() {
-		super();
-		
-		VersionSearchCriteria searchCriteria = new VersionSearchCriteria();
+    public VersionMultiSelectField() {
+        super();
 
-		SimpleProject project = (SimpleProject) AppContext
-				.getVariable("project");
-		searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
-				project.getId()));
-		
-		VersionService versionService = AppContext.getSpringBean(VersionService.class);
-		List<Version> lstVersion = versionService.findPagableListByCriteria(new SearchRequest<VersionSearchCriteria>(searchCriteria, 0, Integer.MAX_VALUE));
-		List<String> lstVersionName = new ArrayList<String>();
-		
-		for (int i = 0; i < lstVersion.size(); i++) {
-			Version version = lstVersion.get(i);
-			lstVersionName.add(version.getVersionname());
-		}
-		
-		this.loadData(lstVersionName);
-	}
-	
+        VersionSearchCriteria searchCriteria = new VersionSearchCriteria();
 
+        SimpleProject project = (SimpleProject) AppContext
+                .getVariable("project");
+        searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
+                project.getId()));
+
+        VersionService versionService = AppContext.getSpringBean(VersionService.class);
+        List<Version> lstVersion = versionService.findPagableListByCriteria(new SearchRequest<VersionSearchCriteria>(searchCriteria, 0, Integer.MAX_VALUE));
+        List<String> lstVersionName = new ArrayList<String>();
+
+        for (int i = 0; i < lstVersion.size(); i++) {
+            Version version = lstVersion.get(i);
+            lstVersionName.add(version.getVersionname());
+        }
+
+        this.loadData(lstVersionName);
+    }
 }
