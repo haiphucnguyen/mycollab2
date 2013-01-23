@@ -4,21 +4,20 @@ import java.util.HashMap;
 
 import org.vaadin.hene.popupbutton.PopupButton;
 
-import com.esofthead.mycollab.vaadin.events.SelectOrRemoveItemHandler;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.themes.Reindeer;
 
 @SuppressWarnings("serial")
-public class VersionPopupSelection extends PopupButton {
+public class MultipleItemsPopupSelection extends PopupButton {
 
 	private Panel panel;
 	
-	private SelectOrRemoveItemHandler<String> versionItem;
+	private MultiSelectComp versionItem;
 	
 	private HashMap<String, CheckBox> hashMapCheckbox = new HashMap<String, CheckBox>();
 	
-	public VersionPopupSelection(SelectOrRemoveItemHandler<String> owner) {
+	public MultipleItemsPopupSelection(MultiSelectComp owner) {
 		this.versionItem = owner;
 		panel = new Panel();
 		panel.setStyleName(Reindeer.PANEL_LIGHT);
@@ -30,7 +29,6 @@ public class VersionPopupSelection extends PopupButton {
 	public void unCheckItem(String itemName) {
 		CheckBox chk = hashMapCheckbox.get(itemName);
 		chk.setValue(false);
-		System.out.println("token field " + itemName);
 	}
 	
 	public void addItemComponent(String itemName) {
@@ -42,9 +40,9 @@ public class VersionPopupSelection extends PopupButton {
 					com.vaadin.data.Property.ValueChangeEvent event) {
 				Boolean value = (Boolean) chkItem.getValue();
 				if (value) {
-					versionItem.onSelect(chkItem.getCaption());
+					versionItem.setSelectedItem(chkItem.getCaption());
 				} else {
-					versionItem.onRemove(chkItem.getCaption());
+					versionItem.removeSelectedItem(chkItem.getCaption());
 				}
 			}
 		});

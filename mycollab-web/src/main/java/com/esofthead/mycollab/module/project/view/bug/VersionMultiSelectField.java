@@ -4,74 +4,46 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-import org.vaadin.addon.customfield.CustomField;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.esofthead.mycollab.vaadin.events.SelectOrRemoveItemHandler;
-import com.esofthead.mycollab.vaadin.ui.UnEditableTokenField;
-import com.vaadin.terminal.ThemeResource;
-import com.vaadin.ui.HorizontalLayout;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.tracker.domain.Version;
+import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
+import com.esofthead.mycollab.module.tracker.service.VersionService;
+import com.esofthead.mycollab.web.AppContext;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @SuppressWarnings("serial")
-public class VersionMultiSelectField extends CustomField implements SelectOrRemoveItemHandler<String> {
+public class VersionMultiSelectField extends MultiSelectComp {
 
-	private UnEditableTokenField componentsDisplay;
-	private VersionPopupSelection selectBtn;
+	public VersionMultiSelectField() {
+		super();
+		
+		VersionSearchCriteria searchCriteria = new VersionSearchCriteria();
+
+		SimpleProject project = (SimpleProject) AppContext
+				.getVariable("project");
+		searchCriteria.setProjectId(new NumberSearchField(SearchField.AND,
+				project.getId()));
+		
+		VersionService versionService = AppContext.getSpringBean(VersionService.class);
+		List<Version> lstVersion = versionService.findPagableListByCriteria(new SearchRequest<VersionSearchCriteria>(searchCriteria, 0, Integer.MAX_VALUE));
+		List<String> lstVersionName = new ArrayList<String>();
+		
+		for (int i = 0; i < lstVersion.size(); i++) {
+			Version version = lstVersion.get(i);
+			lstVersionName.add(version.getVersionname());
+		}
+		
+		this.loadData(lstVersionName);
+	}
 	
-    public VersionMultiSelectField() {
-    	this.setWidth("100%");
-        HorizontalLayout content = new HorizontalLayout();
-        content.setSpacing(true);
-        
-        componentsDisplay = new UnEditableTokenField(){
-        	
-        	@Override
-        	protected void onTokenClick(Object tokenId) {
-        		System.out.println("token field 1 " + tokenId.toString());
-        		selectBtn.unCheckItem((String) tokenId);
-        	};
-        };
-        componentsDisplay.setWidth("220px");
-        componentsDisplay.setInputWidth("210px");
-        
-        selectBtn = new VersionPopupSelection(this);
-        content.addComponent(componentsDisplay);
-        
-        
-        selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
-        
-        selectBtn.addItemComponent("value 1");
-        selectBtn.addItemComponent("value 2");
-        selectBtn.addItemComponent("value 3");
-        selectBtn.addItemComponent("value 4");
-        selectBtn.addItemComponent("value 5");
-        selectBtn.addItemComponent("value 6");
-        selectBtn.addItemComponent("value 7");
-        selectBtn.addItemComponent("value 8");
-        selectBtn.addItemComponent("value 9");
-        selectBtn.addItemComponent("value 10");
-        selectBtn.addStyleName("link");
-        selectBtn.addStyleName("nonPopupIndicator");
-        content.addComponent(selectBtn);
-        this.setCompositionRoot(content);
-    }
-    
-    @Override
-    public Class<?> getType() {
-        return Object.class;
-    }
 
-	@Override
-	public void onSelect(String item) {
-		componentsDisplay.addToken(item);
-	}
-
-	@Override
-	public void onRemove(String item) {
-		componentsDisplay.removeToken(item);
-	}
-    
 }

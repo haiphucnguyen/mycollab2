@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -18,8 +21,6 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @ViewComponent
 public class BugAddViewImpl extends AbstractView implements BugAddView {
