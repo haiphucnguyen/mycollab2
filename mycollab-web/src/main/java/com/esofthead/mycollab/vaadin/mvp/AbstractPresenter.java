@@ -20,11 +20,6 @@ public abstract class AbstractPresenter<V extends View> implements Presenter {
     }
 
     @Override
-    public void go(ComponentContainer container) {
-        go(container, null);
-    }
-
-    @Override
     public void go(ComponentContainer container, ScreenData<?> data) {
         go(container, data, true);
     }
@@ -54,4 +49,8 @@ public abstract class AbstractPresenter<V extends View> implements Presenter {
 
     protected abstract void onGo(ComponentContainer container,
             ScreenData<?> data);
+    
+    public void go(PageActionChain pageActionChain) {
+        
+    }
 }

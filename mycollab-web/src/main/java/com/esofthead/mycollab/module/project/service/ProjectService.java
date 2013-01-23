@@ -19,8 +19,10 @@ package com.esofthead.mycollab.module.project.service;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import java.util.List;
 
@@ -40,4 +42,6 @@ public interface ProjectService extends
      * @return 
      */
     List<ProjectActivityStream> getProjectActivityStreams(SearchRequest<ActivityStreamSearchCriteria> searchRequest);
+    
+    SimpleProject findProjectById(int projectId);
 }

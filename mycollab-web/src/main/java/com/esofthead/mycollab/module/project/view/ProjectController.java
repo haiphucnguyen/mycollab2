@@ -104,11 +104,8 @@ public class ProjectController {
                     public void handle(ProjectEvent.GotoMyProject event) {
                         ProjectViewPresenter presenter = PresenterResolver
                                 .getPresenter(ProjectViewPresenter.class);
-                        SimpleProject project = (SimpleProject) event.getData();
-                        AppContext.putVariable(ProjectContants.PROJECT_NAME,
-                                project);
                         presenter.go(container,
-                                new ScreenData<Project>(project));
+                                new ScreenData<Integer>((Integer)event.getData()));
                     }
                 });
     }

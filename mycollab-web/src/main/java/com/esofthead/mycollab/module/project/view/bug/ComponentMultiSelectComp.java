@@ -4,39 +4,43 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-import com.vaadin.terminal.ThemeResource;
-import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
-import org.vaadin.addon.customfield.CustomField;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
+import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
+import com.esofthead.mycollab.module.tracker.service.ComponentService;
+import com.esofthead.mycollab.web.AppContext;
 
 /**
  *
  * @author haiphucnguyen
  */
-public class ComponentMultiSelectComp extends CustomField {
+@SuppressWarnings("serial")
+public class ComponentMultiSelectComp extends MultiSelectComp {
     
     public ComponentMultiSelectComp() {
-        HorizontalLayout content = new HorizontalLayout();
-        content.setWidth("100%");
-        content.setSpacing(true);
-        TextField componentsDisplay = new TextField();
-        content.addComponent(componentsDisplay);
-        content.setExpandRatio(componentsDisplay, 1.0f);
-        
-        Button selectBtn = new Button(null, new Button.ClickListener() {
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-            }
-        });
-        selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
-        selectBtn.setStyleName("link");
-        content.addComponent(selectBtn);
-        this.setCompositionRoot(content);
-    }
-    
-    @Override
-    public Class<?> getType() {
-        return Object.class;
+super();
+		
+		ComponentSearchCriteria searchCriteria = new ComponentSearchCriteria();
+		
+		SimpleProject project = (SimpleProject) AppContext.getVariable("project");
+		searchCriteria.setProjectid(new NumberSearchField(
+                 SearchField.AND, project.getId()));
+		 
+		ComponentService versionService = AppContext.getSpringBean(ComponentService.class);
+		List<SimpleComponent> lstVersion = versionService.findPagableListByCriteria(new SearchRequest<ComponentSearchCriteria>(searchCriteria, 0, Integer.MAX_VALUE));
+		List<String> lstComponentName = new ArrayList<String>();
+		
+		for (int i = 0; i < lstVersion.size(); i++) {
+			SimpleComponent version = lstVersion.get(i);
+			lstComponentName.add(version.getComponentname());
+		}
+		
+		this.loadData(lstComponentName);
     }
 }

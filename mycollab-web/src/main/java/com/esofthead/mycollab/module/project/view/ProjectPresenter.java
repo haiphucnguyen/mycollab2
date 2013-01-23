@@ -26,6 +26,7 @@ public class ProjectPresenter extends AbstractPresenter<ProjectContainer> {
         MainView mainView = (MainView) container;
         mainView.addView(view);
         view.gotoProjectPage();
+        AppContext.addFragment("project");
         AppContext.updateLastModuleVisit(ModuleNameConstants.PRJ);
     }
 }

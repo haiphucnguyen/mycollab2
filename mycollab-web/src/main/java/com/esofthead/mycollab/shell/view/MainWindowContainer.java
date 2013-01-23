@@ -7,30 +7,64 @@ import com.esofthead.mycollab.shell.ShellController;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.View;
+import com.vaadin.terminal.DownloadStream;
+import com.vaadin.terminal.URIHandler;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UriFragmentUtility;
 import com.vaadin.ui.Window;
+import java.net.URL;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.vaadin.browsercookies.BrowserCookies;
 
 public class MainWindowContainer extends Window implements View {
-
+    
     private static final long serialVersionUID = 1L;
+    
+    private static final Logger log = LoggerFactory.getLogger(MainWindowContainer.class);
+    
+    private UriFragmentUtility urifu;
+    
     private final ShellController controller;
-
+    
     public MainWindowContainer() {
+        urifu = new UriFragmentUtility();
         this.setCaption("MyCollab");
-
         controller = new ShellController(this);
+        
+        this.addURIHandler(new URIHandler() {
 
+            @Override
+            public DownloadStream handleURI(URL context, String relativeUri) {
+                log.debug("URI: " + relativeUri);
+                return null;
+            }
+        });
         setDefaultView(true);
     }
 
+    @Override
+    public void setContent(ComponentContainer newContent) {
+        super.setContent(newContent);
+        log.debug(newContent + "   " + urifu);
+        
+        if (newContent != null) {
+            newContent.addComponent(urifu);
+        }
+    }
+    
+    
+    
+    public void addFragement(String fragement) {
+        log.debug("Add fragement: " + fragement);
+        urifu.setFragment(fragement);
+    }
+    
     public final void setDefaultView(final boolean isAutoLogin) {
         final LoginPresenter presenter = PresenterResolver
                 .getPresenter(LoginPresenter.class);
         LoginView loginView = presenter.getView();
-
-        System.out.println("Login view: " + loginView);
-
+        
         BrowserCookies cookies = new BrowserCookies();
         loginView.addComponent(cookies);
         cookies.addListener(new BrowserCookies.UpdateListener() {
@@ -54,18 +88,18 @@ public class MainWindowContainer extends Window implements View {
                         }
                     }
                 }
-
-
+                
+                
             }
         });
         this.setContent(loginView.getWidget());
     }
-
+    
     @Override
     public ComponentContainer getWidget() {
         return this;
     }
-
+    
     @Override
     public void addViewListener(ApplicationEventListener listener) {
         throw new UnsupportedOperationException("Not supported yet.");

@@ -113,53 +113,14 @@
             LEFT OUTER JOIN s_user ON (m_prj_project.owner = s_user.username) 
         ]]>
 	</sql>
-
-	<select id="getInvolvedProjectOfUser" resultMap="SimpleProjectResult"
-		parameterType="java.lang.String">
-        <![CDATA[
-        SELECT m_prj_project.id, m_prj_project.name, m_prj_project.owner, m_prj_project.account, 
-        m_prj_project.priority, m_prj_project.shortname, m_prj_project.planStartDate, m_prj_project.planEndDate, 
-        m_prj_project.targetBudget, m_prj_project.homePage, m_prj_project.actualBudget, m_prj_project.projectType, 
-        m_prj_project.projectStatus, m_prj_project.description, m_prj_project.defaultBillingRate, m_prj_project.actualStartDate, 
-        m_prj_project.actualEndDate, m_prj_project.defaultOvertimeBillingRate, 
-        concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS ownerName, 
-        m_crm_account.accountName, 0 as ownerType, m_prj_project.currencyid, m_prj_project.progress
         
-        FROM m_prj_project 
-            LEFT OUTER JOIN m_crm_account ON (m_crm_account.id=m_prj_project.account) 
-            LEFT OUTER JOIN s_user ON (m_prj_project.owner = s_user.username)
-            
-        WHERE  (SELECT COUNT(*) FROM s_user as user WHERE
-            m_prj_project.owner = user.username AND user.username =
-            #{username} ) > 0
-        UNION
-        SELECT DISTINCT m_prj_project.id, m_prj_project.name, m_prj_project.owner, m_prj_project.account, 
-        m_prj_project.priority, m_prj_project.shortname, m_prj_project.planStartDate, m_prj_project.planEndDate, 
-        m_prj_project.targetBudget, m_prj_project.homePage, m_prj_project.actualBudget, m_prj_project.projectType, 
-        m_prj_project.projectStatus, m_prj_project.description, m_prj_project.defaultBillingRate, m_prj_project.actualStartDate, 
-        m_prj_project.actualEndDate, m_prj_project.defaultOvertimeBillingRate, 
-        concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS ownerName, 
-        m_crm_account.accountName, 1 as ownerType, m_prj_project.currencyid, m_prj_project.progress
-        
-        FROM m_prj_project 
-            LEFT OUTER JOIN m_crm_account ON (m_crm_account.id=m_prj_project.account) 
-            LEFT OUTER JOIN s_user ON (m_prj_project.owner = s_user.username)
-            
-        WHERE  ((SELECT COUNT(*) 
-                    FROM s_user 
-                    WHERE m_prj_project.owner = s_user.username 
-                        AND s_user.username = #{username} 
-                ) = 0)
-            AND (
-                (SELECT COUNT(*) 
-                    FROM m_prj_resource, s_user
-                    WHERE m_prj_resource.projectid=m_prj_project.id 
-                        AND m_prj_resource.username = s_user.username
-                        AND s_user.username = #{username} 
-                ) > 0)
-        ]]>
+        <select id="findProjectById" parameterType="java.lang.Integer"
+            resultMap="SimpleProjectResult">
+            <include
+                refid="selectSimpleProject" />
 
-	</select>
+            WHERE m_prj_project.id=#{projectId, javaType=INTEGER}
+        </select>
 
 	<select id="getTotalCount" resultType="int" parameterType="ProjectSearchCriteria">
 		SELECT count(*) as totalCount FROM m_prj_project

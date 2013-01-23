@@ -4,6 +4,7 @@ import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.Application;
@@ -242,5 +243,9 @@ public class AppContext implements TransactionListener, Serializable {
         }
         return df.format(date);
 
+    }
+    
+    public static void addFragment(String fragement) {
+        ((MainWindowContainer)getApplication().getMainWindow()).addFragement(fragement);
     }
 }

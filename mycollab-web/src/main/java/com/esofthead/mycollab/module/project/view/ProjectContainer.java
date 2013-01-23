@@ -16,6 +16,6 @@ public class ProjectContainer extends AbstractView {
 
     public void gotoProjectPage() {
        UserDashboardPresenter presenter = PresenterResolver.getPresenter(UserDashboardPresenter.class);
-       presenter.go(this);
+       presenter.go(this, null);
     }
 }
