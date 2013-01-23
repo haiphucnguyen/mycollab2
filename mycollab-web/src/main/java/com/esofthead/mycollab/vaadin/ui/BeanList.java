@@ -37,8 +37,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
         this.rowDisplayHandler = rowDisplayHandler;
         
         this.contentLayout = contentLayout;
-        LazyLoadWrapper contentWrapper = new LazyLoadWrapper(contentLayout);
-        this.setCompositionRoot(contentWrapper);
+        this.setCompositionRoot(contentLayout);
     }
 
     public BeanList(SearchService searchService,
