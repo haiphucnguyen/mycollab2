@@ -91,6 +91,10 @@ input:focus, textarea:focus {
     margin-right: 4px;
 }
 
+div.v-button-nonPopupIndicator div.v-popup-indicator {
+	display: none;
+}
+
 .v-button-bluebtn .v-button-wrap {
 	background-image: none;
 }

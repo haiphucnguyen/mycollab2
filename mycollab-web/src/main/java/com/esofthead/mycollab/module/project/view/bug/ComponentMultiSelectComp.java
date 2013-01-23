@@ -14,6 +14,7 @@ import org.vaadin.addon.customfield.CustomField;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class ComponentMultiSelectComp extends CustomField {
     
     public ComponentMultiSelectComp() {
@@ -21,8 +22,8 @@ public class ComponentMultiSelectComp extends CustomField {
         content.setWidth("100%");
         content.setSpacing(true);
         TextField componentsDisplay = new TextField();
+        componentsDisplay.setWidth("216px");
         content.addComponent(componentsDisplay);
-        content.setExpandRatio(componentsDisplay, 1.0f);
         
         Button selectBtn = new Button(null, new Button.ClickListener() {
             @Override
