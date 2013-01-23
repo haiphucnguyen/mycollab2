@@ -161,7 +161,7 @@ public class BugDashboardViewImpl extends AbstractView implements
         BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
         dueDefectsCriteria.setProjectid(new NumberSearchField(project.getId()));
         dueDefectsCriteria.setResolutions(new SetSearchField<String>(
-                new String[]{BugResolutionConstants.UNRESOLVED}));
+                new String[]{BugResolutionConstants.NEWISSUE}));
         dueBugWidget.setSearchCriteria(dueDefectsCriteria);
         
         BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();

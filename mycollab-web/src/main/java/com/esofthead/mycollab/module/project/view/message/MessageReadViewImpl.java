@@ -6,11 +6,13 @@ package com.esofthead.mycollab.module.project.view.message;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
+import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
+import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -68,10 +70,6 @@ public class MessageReadViewImpl extends AbstractView implements MessageReadView
                 @Override
                 protected Field onCreateField(Item item, Object propertyId,
                         Component uiContext) {
-                    if (propertyId.equals("messagehtml")) {
-                        return new FormViewField(message.getMessagehtml());
-                    } else if (propertyId.equals("posteddate")) {
-                    }
 
                     return null;
                 }
@@ -109,12 +107,16 @@ public class MessageReadViewImpl extends AbstractView implements MessageReadView
             }
 
             protected Layout createBottomPanel() {
-                return new CommentListDepot(CommentTypeConstants.PRJ_MESSAGE, message.getId());
+                VerticalLayout bottomPanel = new VerticalLayout();
+                Component attachmentDisplayComp = AttachmentDisplayComponent.getAttachmentDisplayComponent(AttachmentConstants.PROJECT_MESSAGE, message.getId());
+                bottomPanel.addComponent(attachmentDisplayComp);
+                bottomPanel.addComponent(new CommentListDepot(CommentTypeConstants.PRJ_MESSAGE, message.getId()));
+                return bottomPanel;
             }
 
             @Override
             public void attachField(Object propertyId, Field field) {
-                if (propertyId.equals("messagehtml")) {
+                if (propertyId.equals("message")) {
                     bodyLayout.addComponent(field, 0, 0);
                 } else if (propertyId.equals("posteddate")) {
                     bodyLayout.addComponent(field, 0, 1);

@@ -1,13 +1,10 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.vaadin.dialogs.ConfirmDialog;
-
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -31,6 +28,10 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.peter.buttongroup.ButtonGroup;
 
 @ViewComponent
 public class BugReadViewImpl extends AbstractView implements BugReadView {
@@ -39,6 +40,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
     private static Logger log = LoggerFactory.getLogger(BugReadViewImpl.class);
     private SimpleBug bug;
     private BugPreviewForm previewForm;
+    private HorizontalLayout bugWorkflowControl;
 
     public BugReadViewImpl() {
         super();
@@ -58,6 +60,88 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
         return bug;
     }
 
+    private void displayWorkflowControl() {
+        log.debug("Bug status: " + bug.getStatus());
+        if (BugStatusConstants.OPEN.equals(bug.getStatus())) {
+            bugWorkflowControl.removeAllComponents();
+            ButtonGroup navButton = new ButtonGroup();
+            navButton.addButton(new Button("Start Progress", new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    bug.setStatus(BugStatusConstants.INPROGRESS);
+                    displayWorkflowControl();
+                }
+            }));
+            navButton.addButton(new Button("Won't Fix", new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    bug.setStatus(BugStatusConstants.WONFIX);
+                    displayWorkflowControl();
+                }
+            }));
+            bugWorkflowControl.addComponent(navButton);
+        } else if (BugStatusConstants.INPROGRESS.equals(bug.getStatus())) {
+            bugWorkflowControl.removeAllComponents();
+            ButtonGroup navButton = new ButtonGroup();
+            navButton.addButton(new Button("Stop Progress", new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    bug.setStatus(BugStatusConstants.OPEN);
+                    displayWorkflowControl();
+                }
+            }));
+            navButton.addButton(new Button("Resolved", new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    bug.setStatus(BugStatusConstants.TESTPENDING);
+                    displayWorkflowControl();
+                }
+            }));
+            bugWorkflowControl.addComponent(navButton);
+        } else if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
+            bugWorkflowControl.removeAllComponents();
+            ButtonGroup navButton = new ButtonGroup();
+            navButton.addButton(new Button("Reopen", new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    bug.setStatus(BugStatusConstants.OPEN);
+                    displayWorkflowControl();
+                }
+            }));
+            bugWorkflowControl.addComponent(navButton);
+        } else if (BugStatusConstants.TESTPENDING.equals(bug.getStatus())) {
+            bugWorkflowControl.removeAllComponents();
+            ButtonGroup navButton = new ButtonGroup();
+            navButton.addButton(new Button("Reopen", new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    bug.setStatus(BugStatusConstants.OPEN);
+                    displayWorkflowControl();
+                }
+            }));
+            navButton.addButton(new Button("Close", new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    bug.setStatus(BugStatusConstants.CLOSE);
+                    displayWorkflowControl();
+                }
+            }));
+            bugWorkflowControl.addComponent(navButton);
+        } else if (BugStatusConstants.WONFIX.equals(bug.getStatus())) {
+            bugWorkflowControl.removeAllComponents();
+            ButtonGroup navButton = new ButtonGroup();
+            navButton.addButton(new Button("Reopen", new Button.ClickListener() {
+                @Override
+                public void buttonClick(ClickEvent event) {
+                    bug.setStatus(BugStatusConstants.OPEN);
+                    displayWorkflowControl();
+                }
+            }));
+
+            bugWorkflowControl.addComponent(navButton);
+        }
+    }
+
     private class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
 
         private BugHistoryList historyList;
@@ -67,6 +151,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
             this.setFormLayoutFactory(new FormLayoutFactory());
             this.setFormFieldFactory(new EditFormFieldFactory());
             super.setItemDataSource(newDataSource);
+            displayWorkflowControl();
         }
 
         private class FormLayoutFactory implements IFormLayoutFactory {
@@ -107,7 +192,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                 Button deleteBtn = new Button("Delete", new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                    	ConfirmDialog.show(AppContext.getApplication().getMainWindow(),
+                        ConfirmDialog.show(AppContext.getApplication().getMainWindow(),
                                 "Please Confirm:",
                                 "Are you sure to delete this item: " + bug.getSummary() + " ?",
                                 "Yes", "No", new ConfirmDialog.Listener() {
@@ -132,6 +217,11 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 
                 topPanel.addComponent(buttonControls);
                 topPanel.setComponentAlignment(buttonControls, Alignment.MIDDLE_CENTER);
+                topPanel.setExpandRatio(buttonControls, 1);
+
+                bugWorkflowControl = new HorizontalLayout();
+                topPanel.addComponent(bugWorkflowControl);
+                topPanel.setComponentAlignment(bugWorkflowControl, Alignment.MIDDLE_RIGHT);
 
 
                 taskListAddLayout.addTopControls(topPanel);
