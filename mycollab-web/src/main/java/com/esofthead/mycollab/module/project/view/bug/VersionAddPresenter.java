@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
@@ -15,6 +16,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
@@ -76,7 +78,15 @@ public class VersionAddPresenter extends AbstractPresenter<VersionAddView> {
         BugContainer bugContainer = (BugContainer) container;
         bugContainer.addComponent(view.getWidget());
 
-        view.editItem((Version) data.getParams());
+        Version version = (Version) data.getParams();
+        view.editItem(version);
+        
+        ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
+        if (version.getId() == null) {
+            breadcrumb.gotoVersionAdd();
+        } else {
+            breadcrumb.gotoVersionEdit(version);
+        }
     }
     
 }
