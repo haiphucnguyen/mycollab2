@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.View;
@@ -234,7 +235,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     }
 
     @Override
-    public void displayProject(final SimpleProject project) {
+    public void displayProject(final SimpleProject project, PageActionChain pageActionChain) {
         this.project = project;
         topPanel.removeAllComponents();
 
@@ -242,6 +243,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         topPanel.setComponentAlignment(breadCrumb, Alignment.MIDDLE_LEFT);
         topPanel.setExpandRatio(breadCrumb, 1.0f);
         
+        breadCrumb.setProject(project);
         breadCrumb.select(0);
         breadCrumb.addLink(new Button(project.getName(), new Button.ClickListener() {
 
@@ -278,7 +280,9 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         topPanel.addComponent(controlsBtn);
         topPanel.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
         
-        gotoDashboard(null);
+        if (pageActionChain == null || !pageActionChain.hasNext()) {
+            gotoDashboard(null);
+        }
     }
 
     @Override

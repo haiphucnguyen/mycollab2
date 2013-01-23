@@ -10,6 +10,7 @@ import com.esofthead.mycollab.vaadin.mvp.View;
 import com.vaadin.terminal.DownloadStream;
 import com.vaadin.terminal.URIHandler;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.UriFragmentUtility;
 import com.vaadin.ui.Window;
 import java.net.URL;
 import org.slf4j.Logger;
@@ -22,9 +23,12 @@ public class MainWindowContainer extends Window implements View {
     
     private static final Logger log = LoggerFactory.getLogger(MainWindowContainer.class);
     
+    private UriFragmentUtility urifu;
+    
     private final ShellController controller;
     
     public MainWindowContainer() {
+        urifu = new UriFragmentUtility();
         this.setCaption("MyCollab");
         controller = new ShellController(this);
         
@@ -38,13 +42,28 @@ public class MainWindowContainer extends Window implements View {
         });
         setDefaultView(true);
     }
+
+    @Override
+    public void setContent(ComponentContainer newContent) {
+        super.setContent(newContent);
+        log.debug(newContent + "   " + urifu);
+        
+        if (newContent != null) {
+            newContent.addComponent(urifu);
+        }
+    }
+    
+    
+    
+    public void addFragement(String fragement) {
+        log.debug("Add fragement: " + fragement);
+        urifu.setFragment(fragement);
+    }
     
     public final void setDefaultView(final boolean isAutoLogin) {
         final LoginPresenter presenter = PresenterResolver
                 .getPresenter(LoginPresenter.class);
         LoginView loginView = presenter.getView();
-        
-        System.out.println("Login view: " + loginView);
         
         BrowserCookies cookies = new BrowserCookies();
         loginView.addComponent(cookies);

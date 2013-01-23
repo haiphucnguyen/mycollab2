@@ -35,11 +35,10 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
                 AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
             } else {
                 AppContext.putVariable(ProjectContants.PROJECT_NAME, project);
-                view.displayProject(project);
+                view.displayProject(project, null);
+                AppContext.addFragment("project/" + project.getName());
             }
             
         }
-        
-        
     }
 }
