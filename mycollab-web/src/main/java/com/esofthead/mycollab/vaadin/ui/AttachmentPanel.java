@@ -70,31 +70,7 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
         List<Attachment> attachments = attachmentService.findByAttachmentId(type, typeid);
         if (attachments != null && !attachments.isEmpty()) {
             for (final Attachment attachment : attachments) {
-                String docName = attachment.getDocumentpath();
-                int lastIndex = docName.lastIndexOf("/");
-                if (lastIndex != -1) {
-                    docName = docName.substring(lastIndex + 1,
-                            docName.length());
-                }
-
-                HorizontalLayout attachmentLayout = new HorizontalLayout();
-                attachmentLayout.setSpacing(true);
-
-                Embedded fileTypeIcon = new Embedded(null, UiUtils.getFileIconResource(docName));
-                attachmentLayout.addComponent(fileTypeIcon);
-                Label attachmentLink = new Label(docName);
-                attachmentLayout.addComponent(attachmentLink);
-                attachmentLayout.setComponentAlignment(attachmentLink, Alignment.MIDDLE_CENTER);
-
-                Embedded trashBtn = new Embedded(null, new ThemeResource(
-                        "icons/16/trash.png"));
-                attachmentLayout.addComponent(trashBtn);
-
-                Embedded downloadBtn = new Embedded(null,
-                        new ThemeResource("icons/16/download.png"));
-                attachmentLayout.addComponent(downloadBtn);
-
-                this.addComponent(attachmentLayout);
+                this.addComponent(AttachmentDisplayComponent.constructAttachmentRow(attachment));
             }
         }
     }

@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.file.dao.AttachmentMapper;
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.module.file.domain.AttachmentExample;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
+import com.esofthead.mycollab.module.file.service.ContentService;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,6 +16,9 @@ public class AttachmentServiceImpl extends DefaultCrudService<Integer, Attachmen
 
     @Autowired
     private AttachmentMapper attachmentMapper;
+    
+    @Autowired
+    private ContentService contentService;
 
     @Override
     public ICrudGenericDAO<Integer, Attachment> getCrudMapper() {
@@ -28,4 +32,12 @@ public class AttachmentServiceImpl extends DefaultCrudService<Integer, Attachmen
         ex.createCriteria().andTypeidEqualTo(typeid);
         return attachmentMapper.selectByExample(ex);
     }
+
+    @Override
+    public void removeAttachment(int accountid, Attachment attachment) {
+        contentService.removeContent(accountid, attachment.getDocumentpath());
+        attachmentMapper.deleteByPrimaryKey(attachment.getId());
+    }
+    
+    
 }
