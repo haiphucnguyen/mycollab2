@@ -1,11 +1,5 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import java.util.Date;
-
-import org.apache.commons.beanutils.BeanUtils;
-import org.vaadin.addon.customfield.CustomField;
-import org.vaadin.easyuploads.MultiFileUploadExt;
-
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -16,6 +10,10 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.VerticalLayout;
+import java.util.Date;
+import org.apache.commons.beanutils.BeanUtils;
+import org.vaadin.addon.customfield.CustomField;
+import org.vaadin.easyuploads.MultiFileUploadExt;
 
 public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 
@@ -113,23 +111,22 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
             return Object.class;
         }
     }
-    
+
     public static class FormUrlLinkViewField extends CustomField {
 
-    	private static final long serialVersionUID = 1L;
-    	
-    	public FormUrlLinkViewField(String url) {
-    		url = (url == null) ? "" : url;
-    		Link link = new UrlLink(url);
-    		link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-    		this.setCompositionRoot(link);
-    	}
-    	
-		@Override
-		public Class<?> getType() {
-			return String.class;
-		}
-    	
+        private static final long serialVersionUID = 1L;
+
+        public FormUrlLinkViewField(String url) {
+            url = (url == null) ? "" : url;
+            Link link = new UrlLink(url);
+            link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+            this.setCompositionRoot(link);
+        }
+
+        @Override
+        public Class<?> getType() {
+            return String.class;
+        }
     }
 
     public static class FormEmailLinkViewField extends CustomField {
@@ -152,14 +149,14 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 
         void saveContentsToRepo(String type, int typeId);
     }
-    
+
     public static class FormAttachmentDisplayField extends CustomField {
 
         @Override
         public Class<?> getType() {
             return Object.class;
         }
-        
+
         public FormAttachmentDisplayField(String type, int typeid) {
             Component comp = AttachmentDisplayComponent.getAttachmentDisplayComponent(type, typeid);
             if (comp == null) {
@@ -168,19 +165,18 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
                 this.setCompositionRoot(comp);
             }
         }
-        
     }
 
     public static class FormAttachmentUploadField extends CustomField implements AttachmentUploadField {
 
         private MultiFileUploadExt uploadExt;
         private AttachmentPanel attachmentPanel;
-        
+
         @Override
         public Class<?> getType() {
             return Object.class;
         }
-        
+
         public FormAttachmentUploadField() {
             VerticalLayout layout = new VerticalLayout();
             attachmentPanel = new AttachmentPanel();
@@ -188,6 +184,10 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
             layout.addComponent(attachmentPanel);
             layout.addComponent(uploadExt);
             this.setCompositionRoot(layout);
+        }
+
+        public void getAttachments(String type, int typeid) {
+            attachmentPanel.getAttachments(type, typeid);
         }
 
         @Override

@@ -87,11 +87,14 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
         if (bug.getId() == null) {
             bug.setStatus(BugStatusConstants.OPEN);
             bug.setResolution(BugResolutionConstants.UNRESOLVED);
+            bug.setLogby(AppContext.getUsername());
             int bugId = bugService.saveWithSession(bug, AppContext.getUsername());
             AttachmentUploadField uploadField = view.getAttachUploadField();
             uploadField.saveContentsToRepo(AttachmentConstants.PROJECT_BUG_TYPE, bugId);
         } else {
             bugService.updateWithSession(bug, AppContext.getUsername());
+            AttachmentUploadField uploadField = view.getAttachUploadField();
+            uploadField.saveContentsToRepo(AttachmentConstants.PROJECT_BUG_TYPE, bug.getId());
         }
         
     }

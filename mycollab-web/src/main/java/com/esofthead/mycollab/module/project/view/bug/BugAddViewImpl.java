@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
@@ -105,6 +106,9 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
                     return new UserComboBox();
                 } else if (propertyId.equals("id")) {
                     attachmentUploadField = new FormAttachmentUploadField();
+                    if (bug.getId() != null) {
+                        attachmentUploadField.getAttachments(AttachmentConstants.PROJECT_BUG_TYPE, bug.getId());
+                    }
                     return attachmentUploadField;
                 } else if (propertyId.equals("severity")) {
                     return new BugSeverityComboBox();
