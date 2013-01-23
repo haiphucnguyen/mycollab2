@@ -69,19 +69,8 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 
             @Override
             public void buttonClick(ClickEvent event) {
-                ContentService contentService = AppContext.getSpringBean(ContentService.class);
-                InputStream inStream = contentService.getContent(AppContext.getAccountId(), attachment.getDocumentpath());
-                
-                if (inStream != null) {
-                    String docPath = attachment.getDocumentpath();
-                    String filename = docPath;
-                    int index = docPath.lastIndexOf("/");
-                    if (index !=-1) {
-                        filename = docPath.substring(index+1, docPath.length());
-                    }
-                    StreamDownloadResource downloadResource = new StreamDownloadResource(inStream, filename, AppContext.getApplication());
-                    attachmentLayout.getWindow().open(downloadResource, "_self");
-                }
+                StreamDownloadResource downloadResource = new StreamDownloadResource(attachment.getDocumentpath());
+                    AppContext.getApplication().getMainWindow().open(downloadResource, "_self");
             }
         });
         downloadBtn.setIcon(new ThemeResource("icons/16/download.png"));

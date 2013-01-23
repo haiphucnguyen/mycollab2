@@ -15,7 +15,7 @@ public class RawContentServiceImpl implements RawContentService {
     private static final int BUFFER_SIZE = 1024;
     private static final Logger log = LoggerFactory
             .getLogger(RawContentServiceImpl.class);
-    private static final File baseContentFolder;
+    public static final File baseContentFolder;
 
     static {
         String userFolder = System.getProperty("user.home");

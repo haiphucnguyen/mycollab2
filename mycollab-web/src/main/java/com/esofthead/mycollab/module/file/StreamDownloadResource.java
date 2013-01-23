@@ -4,40 +4,37 @@
  */
 package com.esofthead.mycollab.module.file;
 
-import com.vaadin.Application;
+import com.esofthead.mycollab.module.file.service.impl.RawContentServiceImpl;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.DownloadStream;
-import com.vaadin.terminal.StreamResource;
-import java.io.InputStream;
+import com.vaadin.terminal.FileResource;
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 
 /**
  *
  * @author haiphucnguyen
  */
-public class StreamDownloadResource extends StreamResource {
+public class StreamDownloadResource extends FileResource {
 
-    public StreamDownloadResource(InputStream inputStream, String filename, Application application) {
-        super(new DefaultStreamSource(inputStream), filename, application);
+    public StreamDownloadResource(String documentPath) {
+        super(new File(RawContentServiceImpl.baseContentFolder, documentPath), AppContext.getApplication());
     }
 
     @Override
     public DownloadStream getStream() {
-        final DownloadStream ds = new DownloadStream(getStreamSource().getStream(), getMIMEType(), getFilename());
-//        ds.setParameter("Content-Disposition", "attachment; filename="
-//                + getFilename());
-        ds.setCacheTime(-1);
-        return ds;
-    }
-
-    private static class DefaultStreamSource implements StreamSource {
-
-        private InputStream inputStream;
-
-        public DefaultStreamSource(InputStream inputStream) {
-        }
-
-        @Override
-        public InputStream getStream() {
-            return inputStream;
+        try {
+            final DownloadStream ds = new DownloadStream(new FileInputStream(
+                    getSourceFile()), getMIMEType(), getFilename());
+            ds.setParameter("Content-Disposition", "attachment; filename="
+                    + getFilename());
+            ds.setCacheTime(-1);
+            return ds;
+        } catch (final FileNotFoundException e) {
+            return null;
         }
     }
+    
+    
 }
