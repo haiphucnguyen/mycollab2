@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
@@ -41,7 +40,6 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
     public void editItem(SimpleBug item) {
         this.bug = item;
         editForm.setItemDataSource(new BeanItem<Bug>(item));
-        log.debug("Edit bean: " + BeanUtility.printBeanObj(item));
         
     }
 
