@@ -66,6 +66,14 @@ public class UserServiceDBImpl extends
 		return userMapperExt;
 	}
 
+    @Override
+    public int saveWithSession(User record, String username) {
+        userMapper.insert(record);
+        return 1;
+    }
+        
+        
+
 	@Override
 	public SimpleUser authentication(String username, String password) {
 		UserSearchCriteria criteria = new UserSearchCriteria();
