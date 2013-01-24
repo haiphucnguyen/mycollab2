@@ -8,9 +8,7 @@ import com.vaadin.ui.Component;
 
 public interface ProjectView extends View {
 
-    void displayProject(SimpleProject project, PageActionChain pageActionChain);
-
-    void gotoDashboard(ScreenData data);
+    void constructProjectHeaderPanel(SimpleProject project, PageActionChain pageActionChain);
 
     void gotoUsersAndGroup();
 

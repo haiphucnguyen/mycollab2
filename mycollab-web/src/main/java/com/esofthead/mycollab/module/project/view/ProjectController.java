@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.project.view.bug.BugContainer;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskContainer;
+import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
@@ -36,6 +37,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriter
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -91,7 +93,8 @@ public class ProjectController {
                         SimpleProject project = (SimpleProject) event.getData();
                         AppContext.putVariable(ProjectContants.PROJECT_NAME,
                                 project);
-                        projectView.gotoDashboard(new ScreenData.Edit<Project>(project));
+                        ProjectDashboardPresenter presenter = PresenterResolver.getPresenter(ProjectDashboardPresenter.class);
+                        presenter.go(projectView, new ScreenData.Edit<Project>(project));
                     }
                 });
 
@@ -106,8 +109,7 @@ public class ProjectController {
                     public void handle(ProjectEvent.GotoMyProject event) {
                         ProjectViewPresenter presenter = PresenterResolver
                                 .getPresenter(ProjectViewPresenter.class);
-                        presenter.go(container,
-                                new ScreenData<Integer>((Integer)event.getData()));
+                        presenter.handleChain(container, (PageActionChain) event.getData());
                     }
                 });
     }
@@ -179,7 +181,7 @@ public class ProjectController {
                         projectView.gotoTaskList(null);
                     }
                 });
-        
+
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<TaskListEvent.ReoderTaskList>() {
                     @Override
@@ -429,7 +431,7 @@ public class ProjectController {
                         projectView.gotoBugView(null);
                     }
                 });
-        
+
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<BugEvent.GotoAdd>() {
                     @Override
@@ -574,7 +576,7 @@ public class ProjectController {
                         projectView.gotoBugView(new BugContainer.SearchComponentData(criteria));
                     }
                 });
-        
+
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<BugVersionEvent.GotoAdd>() {
                     @Override

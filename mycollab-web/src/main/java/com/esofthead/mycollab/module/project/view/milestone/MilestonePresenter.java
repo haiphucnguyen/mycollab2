@@ -6,6 +6,8 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.PageAction;
+import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -32,10 +34,7 @@ public class MilestonePresenter  extends AbstractPresenter<MilestoneContainer> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        ProjectView projectViewContainer = (ProjectView) container;
-        projectViewContainer.gotoSubView("Milestones");
-
-        view.removeAllComponents();
+        
 
         if (data instanceof ScreenData.Search) {
             log.debug("Go to milestone list view");
@@ -56,5 +55,22 @@ public class MilestonePresenter  extends AbstractPresenter<MilestoneContainer> {
             presenter.go(view, data);
         }
     }
+
+    @Override
+    public void handleChain(ComponentContainer container, PageActionChain pageActionChain) {
+        ProjectView projectViewContainer = (ProjectView) container;
+        projectViewContainer.gotoSubView("Milestones");
+
+        view.removeAllComponents();
+        
+        PageAction pageAction = pageActionChain.peek();
+        if (pageAction instanceof MilestoneReadPageAction) {
+            MilestoneReadPresenter presenter = PresenterResolver
+                    .getPresenter(MilestoneReadPresenter.class);
+            presenter.go(view, pageAction.getScreenData());
+        }
+    }
+    
+    
     
 }

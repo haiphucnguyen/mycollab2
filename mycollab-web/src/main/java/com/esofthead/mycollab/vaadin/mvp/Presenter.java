@@ -5,7 +5,7 @@ import java.io.Serializable;
 
 public interface Presenter extends Serializable {
     
-    void go(PageActionChain pageActionChain);
+    void handleChain(ComponentContainer container, PageActionChain pageActionChain);
 
     void go(ComponentContainer container, ScreenData<?> data);
 

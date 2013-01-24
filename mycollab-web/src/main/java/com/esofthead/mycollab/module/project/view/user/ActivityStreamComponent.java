@@ -17,7 +17,6 @@ import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
-import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
@@ -25,7 +24,11 @@ import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.view.ProjectPageAction;
+import com.esofthead.mycollab.module.project.view.milestone.MilestoneReadPageAction;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -47,9 +50,9 @@ import java.util.List;
  * @author haiphucnguyen
  */
 public class ActivityStreamComponent extends Depot {
-    
+
     private ProjectActivityStreamPagedList activityStreamList;
-    
+
     public ActivityStreamComponent() {
         super("User Feeds", new VerticalLayout());
         activityStreamList = new ProjectActivityStreamPagedList();
@@ -112,7 +115,7 @@ public class ActivityStreamComponent extends Depot {
             CssLayout layout = new CssLayout();
             layout.setWidth("100%");
             layout.setStyleName("activity-stream");
-            
+
             HorizontalLayout header = new HorizontalLayout();
             header.setSpacing(true);
             header.addComponent(new UserLink(activityStream.getCreateduser(), activityStream.getCreatedUserFullName()));
@@ -128,15 +131,14 @@ public class ActivityStreamComponent extends Depot {
             Label actionLbl = new Label(action.toString());
             header.addComponent(actionLbl);
             header.setComponentAlignment(actionLbl, Alignment.MIDDLE_CENTER);
-            header.addComponent(new ActivityStreamComponent.ActivitylLink(activityStream.getType(), activityStream.getNamefield(), activityStream.getTypeid()));
-            
+            header.addComponent(new ActivityStreamComponent.ActivitylLink(activityStream));
+
             Label prjLabel = new Label("in project ");
             header.addComponent(prjLabel);
             header.setComponentAlignment(prjLabel, Alignment.MIDDLE_CENTER);
             Button projectLink = new Button(activityStream.getProjectName(), new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
-                   
                 }
             });
             header.addComponent(projectLink);
@@ -155,9 +157,13 @@ public class ActivityStreamComponent extends Depot {
 
     private static class ActivitylLink extends Button {
 
-        public ActivitylLink(final String type, final String fieldName, final int typeid) {
-            super(fieldName);
-
+        public ActivitylLink(final ProjectActivityStream activityStream) {
+            super(activityStream.getNamefield());
+            
+            final String type = activityStream.getType();
+            final int typeid = activityStream.getTypeid();
+            final int projectid = activityStream.getExtratypeid();
+            
             this.setIcon(ProjectResources.getIconResource16size(type));
             this.setStyleName("link");
             this.addListener(new Button.ClickListener() {
@@ -165,9 +171,10 @@ public class ActivityStreamComponent extends Depot {
                 public void buttonClick(Button.ClickEvent event) {
                     if (ProjectContants.PROJECT.equals(type)) {
                     } else if (ProjectContants.MESSAGE.equals(type)) {
-                        EventBus.getInstance().fireEvent(new MessageEvent.GotoRead(this, typeid));
+                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, typeid));
                     } else if (ProjectContants.MILESTONE.equals(type)) {
-                        EventBus.getInstance().fireEvent(new MilestoneEvent.GotoRead(this, typeid));
+                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new MilestoneReadPageAction(new ScreenData(typeid)));
+                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
                     } else if (ProjectContants.PROBLEM.equals(type)) {
                         EventBus.getInstance().fireEvent(new ProblemEvent.GotoRead(this, typeid));
                     } else if (ProjectContants.RISK.equals(type)) {

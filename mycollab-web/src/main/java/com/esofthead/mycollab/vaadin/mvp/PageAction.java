@@ -10,12 +10,12 @@ package com.esofthead.mycollab.vaadin.mvp;
  */
 public class PageAction {
     private ScreenData screenData;
+    
+    public PageAction(ScreenData screenData) {
+        this.screenData = screenData;
+    }
 
     public ScreenData getScreenData() {
         return screenData;
-    }
-
-    public void setScreenData(ScreenData screenData) {
-        this.screenData = screenData;
     }
 }

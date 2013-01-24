@@ -22,7 +22,7 @@ public class NullViewState extends ViewState {
         }
 
         @Override
-        public void go(PageActionChain pageActionChain) {
+        public void handleChain(ComponentContainer container, PageActionChain pageActionChain) {
             
         }
     }
