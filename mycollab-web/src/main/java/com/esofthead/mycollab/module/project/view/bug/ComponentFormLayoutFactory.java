@@ -4,11 +4,14 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.module.project.view.bug.VersionFormLayoutFactory.VersionInformationLayout;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -33,9 +36,18 @@ public abstract class ComponentFormLayoutFactory implements IFormLayoutFactory {
         if (topPanel != null) {
             componentAddLayout.addTopControls(topPanel);
         }
+        
+        VerticalLayout layout = new VerticalLayout();
+        
+        Label organizationHeader = new Label("Component Information");
+        organizationHeader.setStyleName("h2");
+        layout.addComponent(organizationHeader);
 
         informationLayout = new ComponentInformationLayout();
-        componentAddLayout.addBody(informationLayout.getLayout());
+        informationLayout.getLayout().setWidth("100%");
+        layout.addComponent(informationLayout.getLayout());
+        
+        componentAddLayout.addBody(layout);
 
         Layout bottomPanel = createBottomPanel();
         if (bottomPanel != null) {
@@ -61,7 +73,8 @@ public abstract class ComponentFormLayoutFactory implements IFormLayoutFactory {
 
         @Override
         public Layout getLayout() {
-            informationLayout = new GridFormLayoutHelper(1, 3);
+            informationLayout = new GridFormLayoutHelper(2, 3);
+            informationLayout.getLayout().setWidth("100%");
             VerticalLayout layout = new VerticalLayout();
             layout.addComponent(informationLayout.getLayout());
             return layout;
@@ -70,9 +83,9 @@ public abstract class ComponentFormLayoutFactory implements IFormLayoutFactory {
         @Override
         public void attachField(Object propertyId, Field field) {
             if (propertyId.equals("componentname")) {
-                informationLayout.addComponent(field, "Component Name", 0, 0);
+                informationLayout.addComponent(field, "Component Name", 0, 0, 2, "100%");
             } else if (propertyId.equals("description")) {
-                informationLayout.addComponent(field, "Description", 0, 1);
+                informationLayout.addComponent(field, "Description", 0, 1, 2, "100%");
             } else if (propertyId.equals("userlead")) {
                 informationLayout.addComponent(field, "Lead", 0, 2);
             }

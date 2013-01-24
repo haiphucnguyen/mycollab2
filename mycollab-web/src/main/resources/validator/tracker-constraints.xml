@@ -11,4 +11,21 @@
             </constraint>
         </field>
     </bean>
+    
+    <bean class="Component" ignore-annotations="true">
+		<field name="componentname">
+			<constraint annotation="javax.validation.constraints.NotNull">
+				<message>Component name must not be null</message>
+			</constraint>
+		</field>
+	</bean>
+	
+	<bean class="Version" ignore-annotations="true">
+		<field name="versionname">
+			<constraint annotation="javax.validation.constraints.NotNull">
+				<message>Version name must not be null</message>
+			</constraint>
+		</field>
+	</bean>
+    
 </constraint-mappings>
