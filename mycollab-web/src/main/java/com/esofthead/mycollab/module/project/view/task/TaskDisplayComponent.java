@@ -14,7 +14,6 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -31,12 +30,10 @@ public class TaskDisplayComponent extends CssLayout {
 
     private TaskSearchCriteria criteria;
     private TaskTableDisplay taskDisplay;
-    private TaskList taskList;
     private Button createTaskBtn;
     
     public TaskDisplayComponent(final SimpleTaskList taskList) {
         // this.setSpacing(true);
-        this.taskList = taskList;
         this.setStyleName("taskdisplay-component");
         
         GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(2, 2);
@@ -62,7 +59,6 @@ public class TaskDisplayComponent extends CssLayout {
                     "startdate", "deadline", "assignUserFullName"}, new String[]{
                     "Task Name", "Start", "Due", "Owner"});
         this.addComponent(taskDisplay);
-        displayTasks();
         
         taskDisplay
                 .addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
@@ -98,6 +94,8 @@ public class TaskDisplayComponent extends CssLayout {
         createTaskBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
         createTaskBtn.setStyleName("link");
         this.addComponent(createTaskBtn);
+        
+        taskDisplay.setItems(taskList.getSubTasks());
     }
     
     public void setSearchCriteria(TaskSearchCriteria criteria) {

@@ -65,7 +65,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
     private boolean isAscending = true;
     private Map<Object, ColumnGenerator> columnGenerators = new HashMap<Object, Table.ColumnGenerator>();
     private Map<Object, Integer> columnWidths = new HashMap<Object, Integer>();
-    private Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> map;
+    private Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> mapEventListener;
 
     public PagedBeanTable2(SearchService searchService, Class<T> type,
             final String[] visibleColumns, String[] columnHeaders) {
@@ -457,15 +457,15 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
     @Override
     public void addTableListener(ApplicationEventListener<? extends ApplicationEvent> listener) {
-        if (map == null) {
-            map = new HashMap<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>>();
+        if (mapEventListener == null) {
+            mapEventListener = new HashMap<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>>();
         }
 
-        Set<ApplicationEventListener<?>> listenerSet = map.get(listener
+        Set<ApplicationEventListener<?>> listenerSet = mapEventListener.get(listener
                 .getEventType());
         if (listenerSet == null) {
             listenerSet = new LinkedHashSet<ApplicationEventListener<?>>();
-            map.put(listener.getEventType(), listenerSet);
+            mapEventListener.put(listener.getEventType(), listenerSet);
         }
 
         listenerSet.add(listener);
@@ -475,9 +475,9 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 
         Class<? extends ApplicationEvent> eventType = event.getClass();
 
-        Set<ApplicationEventListener<?>> eventSet = map.get(eventType);
+        Set<ApplicationEventListener<?>> eventSet = mapEventListener.get(eventType);
         if (eventSet != null) {
-            Iterator<ApplicationEventListener<?>> listenerSet = map.get(eventType).iterator();
+            Iterator<ApplicationEventListener<?>> listenerSet = mapEventListener.get(eventType).iterator();
 
             while (listenerSet.hasNext()) {
                 ApplicationEventListener<?> listener = listenerSet.next();

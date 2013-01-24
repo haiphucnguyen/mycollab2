@@ -1,33 +1,24 @@
 package com.esofthead.mycollab.module.project.domain.criteria;
 
-import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class TaskSearchCriteria extends SearchCriteria {
-    private BooleanSearchField iscompleted;
-    private BooleanSearchField ismilestone;
     private NumberSearchField projectid;
     private DateTimeSearchField greaterThan;
     private DateTimeSearchField lessThan;
     private NumberSearchField taskListId;
     
+    private StringSearchField status;
 
-    public BooleanSearchField getIscompleted() {
-        return iscompleted;
+    public StringSearchField getStatus() {
+        return status;
     }
 
-    public void setIscompleted(BooleanSearchField iscompleted) {
-        this.iscompleted = iscompleted;
-    }
-
-    public BooleanSearchField getIsmilestone() {
-        return ismilestone;
-    }
-
-    public void setIsmilestone(BooleanSearchField ismilestone) {
-        this.ismilestone = ismilestone;
+    public void setStatus(StringSearchField status) {
+        this.status = status;
     }
 
     public NumberSearchField getProjectid() {

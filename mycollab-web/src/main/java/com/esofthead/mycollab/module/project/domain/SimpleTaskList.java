@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.domain;
 
+import java.util.List;
+
 /**
  *
  * @author haiphucnguyen
@@ -12,6 +14,7 @@ public class SimpleTaskList extends TaskList {
 
     private String milestoneName;
     private String ownerFullName;
+    private List<SimpleTask> subTasks;
 
     public String getMilestoneName() {
         return milestoneName;
@@ -27,6 +30,14 @@ public class SimpleTaskList extends TaskList {
 
     public void setOwnerFullName(String ownerFullName) {
         this.ownerFullName = ownerFullName;
+    }
+
+    public List<SimpleTask> getSubTasks() {
+        return subTasks;
+    }
+
+    public void setSubTasks(List<SimpleTask> subTasks) {
+        this.subTasks = subTasks;
     }
 
     @Override

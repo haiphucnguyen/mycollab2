@@ -4,6 +4,7 @@ import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
@@ -25,7 +26,7 @@ public class TaskServiceTest extends ServiceTest{
     @Test
     public void testGetUnCompletedTaskOfUser() {
         TaskSearchCriteria criteria = new TaskSearchCriteria();
-        criteria.setIsmilestone(new BooleanSearchField(SearchField.AND, true));
+        criteria.setStatus(new StringSearchField(SearchField.AND, "And"));
         criteria.setProjectid(new NumberSearchField(SearchField.AND, 1));
 
         Assert.assertEquals(1, projectTaskService.getTotalCount(criteria));

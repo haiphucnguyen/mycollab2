@@ -7,9 +7,8 @@ package com.esofthead.mycollab.module.project.view.task;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.vaadin.ui.BeanTable;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
@@ -20,13 +19,11 @@ import com.vaadin.ui.Table;
  *
  * @author haiphucnguyen
  */
-public class TaskTableDisplay extends PagedBeanTable2<ProjectTaskService, TaskSearchCriteria, SimpleTask> {
+public class TaskTableDisplay extends BeanTable<ProjectTaskService, TaskSearchCriteria, SimpleTask> {
 
-    public TaskTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
+    public TaskTableDisplay(String[] visibleColumns, String[] columnHeaders) {
         super(AppContext.getSpringBean(ProjectTaskService.class),
                 SimpleTask.class, visibleColumns, columnHeaders);
-
-        
 
         this.addGeneratedColumn("taskname", new Table.ColumnGenerator() {
             private static final long serialVersionUID = 1L;
@@ -41,7 +38,6 @@ public class TaskTableDisplay extends PagedBeanTable2<ProjectTaskService, TaskSe
 
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
-                                fireTableEvent(new IPagedBeanTable.TableClickEvent(TaskTableDisplay.this, task, "taskname"));
                             }
                         });
                 b.addStyleName("medium-text");

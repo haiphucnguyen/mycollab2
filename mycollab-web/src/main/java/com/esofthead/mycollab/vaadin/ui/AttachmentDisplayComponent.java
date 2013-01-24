@@ -7,7 +7,6 @@ package com.esofthead.mycollab.vaadin.ui;
 import com.esofthead.mycollab.module.file.StreamDownloadResource;
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
-import com.esofthead.mycollab.module.file.service.ContentService;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -19,7 +18,6 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import java.io.InputStream;
 import java.util.List;
 
 /**
@@ -85,7 +83,7 @@ public class AttachmentDisplayComponent extends VerticalLayout {
         if (attachments != null && !attachments.isEmpty()) {
             return new AttachmentDisplayComponent(attachments);
         } else {
-            return null;
+            return new VerticalLayout();
         }
     }
 }

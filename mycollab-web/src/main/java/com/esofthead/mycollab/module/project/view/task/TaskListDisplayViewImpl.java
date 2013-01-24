@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
@@ -117,7 +117,6 @@ public class TaskListDisplayViewImpl extends AbstractView implements
             this.taskList = taskListParam;
             this.addStyleName("task-list");
             initHeader();
-            initContent();
         }
 
         private void initHeader() {
@@ -234,11 +233,6 @@ public class TaskListDisplayViewImpl extends AbstractView implements
             actionBtnLayout.addComponent(deleteBtn);
         }
 
-        private void initContent() {
-            taskDisplayComponent = (TaskDisplayComponent) this.bodyContent;
-            displayActiveTasksOnly();
-        }
-
         private TaskSearchCriteria createBaseSearchCriteria() {
             SimpleProject project = (SimpleProject) AppContext
                     .getVariable(ProjectContants.PROJECT_NAME);
@@ -250,7 +244,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
 
         private void displayActiveTasksOnly() {
             TaskSearchCriteria criteria = createBaseSearchCriteria();
-            criteria.setIscompleted(new BooleanSearchField(false));
+            criteria.setStatus(new StringSearchField("Open"));
             taskDisplayComponent.setSearchCriteria(criteria);
         }
 
@@ -261,7 +255,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
 
         private void displayInActiveTasks() {
             TaskSearchCriteria criteria = createBaseSearchCriteria();
-            criteria.setIscompleted(new BooleanSearchField(true));
+            criteria.setStatus(new StringSearchField("Closed"));
             taskDisplayComponent.setSearchCriteria(criteria);
         }
     }

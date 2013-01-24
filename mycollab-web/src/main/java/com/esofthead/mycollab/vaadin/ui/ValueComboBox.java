@@ -20,7 +20,7 @@ public class ValueComboBox extends ComboBox {
         this.setImmediate(true);
         this.loadData(values);
         
-        this.setValue(this.getItemIds().iterator().next());
+        this.select(this.getItemIds().iterator().next());
     }
 
     public final void loadData(String... values) {
