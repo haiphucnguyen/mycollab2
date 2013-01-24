@@ -9,6 +9,8 @@ import com.esofthead.mycollab.module.project.view.milestone.MilestonePageAction;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPageAction;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
+import com.esofthead.mycollab.module.project.view.risk.RiskPageAction;
+import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageAction;
@@ -68,7 +70,9 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
             presenter = PresenterResolver.getPresenter(MessagePresenter.class);
         } else if (pageAction instanceof ProblemPageAction) {
             presenter = PresenterResolver.getPresenter(ProblemPresenter.class);
-        } 
+        } else if (pageAction instanceof RiskPageAction) {
+            presenter = PresenterResolver.getPresenter(RiskPresenter.class);
+        }
         else {
             throw new UnsupportedOperationException("Not support page action chain " + pageAction);
         } 
