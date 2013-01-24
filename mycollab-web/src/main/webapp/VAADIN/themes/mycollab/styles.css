@@ -929,6 +929,9 @@ input.v-textfield-errorField {
 	word-wrap: break-word;
 	white-space: normal;	
 }
+.depotComp.task-list .h2 {
+	color: black;
+}
 .depotComp .header-elements {
 }
 
@@ -937,6 +940,9 @@ input.v-textfield-errorField {
 }
 .depotComp .depotContent {
 	padding: 5px 0px;
+}
+.depotComp .depotContent .taskdisplay-component > .v-csslayout-margin{
+	padding-left: 30px;
 }
 .addViewLayout .depotContent .v-button-link {
 	margin-bottom: 5px;
@@ -1576,6 +1582,15 @@ white-space: normal;
 /* End Error Message */
 
 /* Task List Component */
+.taskdisplay-component .v-table-header-wrap {
+	background-color: #8f8f8f;
+}
+.taskdisplay-component .v-table-header .v-table-caption-container {
+	text-shadow: 0px 1px 0px #444;
+}
+.taskdisplay-component .v-table-header .v-table-resizer {
+	border-color: #444;
+}
 .task-component {
 	margin-bottom: 5px;
 	background-color: #F7F7F7;
