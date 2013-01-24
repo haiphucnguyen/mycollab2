@@ -63,7 +63,9 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
 
     public void removeAllAttachmentsDisplay() {
         this.removeAllComponents();
-        fileStores.clear();
+        if (fileStores != null) {
+            fileStores.clear();
+        }
     }
 
     public void getAttachments(String type, int typeid) {

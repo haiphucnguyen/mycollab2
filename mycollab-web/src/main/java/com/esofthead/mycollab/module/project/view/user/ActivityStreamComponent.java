@@ -25,6 +25,7 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.ProjectPageAction;
+import com.esofthead.mycollab.module.project.view.message.MessageReadPageAction;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneReadPageAction;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
@@ -171,7 +172,8 @@ public class ActivityStreamComponent extends Depot {
                 public void buttonClick(Button.ClickEvent event) {
                     if (ProjectContants.PROJECT.equals(type)) {
                     } else if (ProjectContants.MESSAGE.equals(type)) {
-                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, typeid));
+                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new MessageReadPageAction(new ScreenData(typeid)));
+                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
                     } else if (ProjectContants.MILESTONE.equals(type)) {
                         PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new MilestoneReadPageAction(new ScreenData(typeid)));
                         EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
