@@ -43,77 +43,74 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 @Service
-public class UserServiceDBImpl extends
-		DefaultService<String, User, UserSearchCriteria> implements UserService {
+public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCriteria> implements UserService {
 
-	private static Logger log = LoggerFactory
-			.getLogger(UserServiceDBImpl.class);
+    private static Logger log = LoggerFactory
+            .getLogger(UserServiceDBImpl.class);
+    @Autowired
+    private UserMapper userMapper;
+    @Autowired
+    private UserMapperExt userMapperExt;
+    @Autowired
+    private RolePermissionMapper rolePermissionMapper;
 
-	@Autowired
-	private UserMapper userMapper;
-	@Autowired
-	private UserMapperExt userMapperExt;
-	@Autowired
-	private RolePermissionMapper rolePermissionMapper;
+    @Override
+    public ICrudGenericDAO getCrudMapper() {
+        return userMapper;
+    }
 
-	@Override
-	public ICrudGenericDAO getCrudMapper() {
-		return userMapper;
-	}
-
-	@Override
-	public ISearchableDAO<UserSearchCriteria> getSearchMapper() {
-		return userMapperExt;
-	}
+    @Override
+    public ISearchableDAO<UserSearchCriteria> getSearchMapper() {
+        return userMapperExt;
+    }
 
     @Override
     public int saveWithSession(User record, String username) {
+        record.setUsername(record.getEmail());
         userMapper.insert(record);
         return 1;
     }
-        
-        
 
-	@Override
-	public SimpleUser authentication(String username, String password) {
-		UserSearchCriteria criteria = new UserSearchCriteria();
-		criteria.setUsername(new StringSearchField(username));
-		List<SimpleUser> users = findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
-				criteria, 0, Integer.MAX_VALUE));
-		if (users == null || users.isEmpty()) {
-			throw new AuthenticationException("Invalid username or password");
-		} else {
-			SimpleUser user = users.get(0);
-			if (!password.equals(user.getPassword())) {
-				throw new AuthenticationException(
-						"Invalid username or password");
-			}
+    @Override
+    public SimpleUser authentication(String username, String password) {
+        UserSearchCriteria criteria = new UserSearchCriteria();
+        criteria.setUsername(new StringSearchField(username));
+        List<SimpleUser> users = findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
+                criteria, 0, Integer.MAX_VALUE));
+        if (users == null || users.isEmpty()) {
+            throw new AuthenticationException("Invalid username or password");
+        } else {
+            SimpleUser user = users.get(0);
+            if (!password.equals(user.getPassword())) {
+                throw new AuthenticationException(
+                        "Invalid username or password");
+            }
 
-			log.debug("User " + username + " login to system successfully!");
-			if (user.getIsadmin() != null && !user.getIsadmin()) {
-				if (user.getRoleid() != null) {
-					log.debug("User " + username
-							+ " is not admin. Getting his role");
-					RolePermissionExample ex = new RolePermissionExample();
-					ex.createCriteria().andRoleidEqualTo(user.getRoleid());
-					List roles = rolePermissionMapper
-							.selectByExampleWithBLOBs(ex);
-					if (roles != null && roles.size() > 0) {
-						RolePermission rolePer = (RolePermission) roles.get(0);
-						XStream xstream = new XStream(new StaxDriver());
-						PermissionMap permissionMap = (PermissionMap) xstream
-								.fromXML(rolePer.getRoleval());
-						user.setPermissionMaps(permissionMap);
-						log.debug("Find role match to user " + username);
-					} else {
-						log.debug("We can not find any role associate to user "
-								+ username);
-					}
-				} else {
-					log.debug("User " + username + " has no any role");
-				}
-			}
-			return user;
-		}
-	}
+            log.debug("User " + username + " login to system successfully!");
+            if (user.getIsadmin() != null && !user.getIsadmin()) {
+                if (user.getRoleid() != null) {
+                    log.debug("User " + username
+                            + " is not admin. Getting his role");
+                    RolePermissionExample ex = new RolePermissionExample();
+                    ex.createCriteria().andRoleidEqualTo(user.getRoleid());
+                    List roles = rolePermissionMapper
+                            .selectByExampleWithBLOBs(ex);
+                    if (roles != null && roles.size() > 0) {
+                        RolePermission rolePer = (RolePermission) roles.get(0);
+                        XStream xstream = new XStream(new StaxDriver());
+                        PermissionMap permissionMap = (PermissionMap) xstream
+                                .fromXML(rolePer.getRoleval());
+                        user.setPermissionMaps(permissionMap);
+                        log.debug("Find role match to user " + username);
+                    } else {
+                        log.debug("We can not find any role associate to user "
+                                + username);
+                    }
+                } else {
+                    log.debug("User " + username + " has no any role");
+                }
+            }
+            return user;
+        }
+    }
 }
