@@ -177,7 +177,9 @@ public class UserListPresenter extends AbstractPresenter<UserListView> implement
                     .getPagedBeanTable().getCurrentDataList();
             List<String> keyList = new ArrayList<String>();
             for (SimpleUser item : currentDataList) {
-                keyList.add(item.getUsername());
+                if (item.isSelected()) {
+                    keyList.add(item.getUsername());
+                }
             }
 
             if (keyList.size() > 0) {

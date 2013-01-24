@@ -16,13 +16,6 @@
  */
 package com.esofthead.mycollab.module.user.service.mybatis;
 
-import java.util.List;
-
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -41,10 +34,15 @@ import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 @Service
 public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCriteria> implements UserService {
-
+    
     private static Logger log = LoggerFactory
             .getLogger(UserServiceDBImpl.class);
     @Autowired
@@ -53,24 +51,29 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
     private UserMapperExt userMapperExt;
     @Autowired
     private RolePermissionMapper rolePermissionMapper;
-
+    
     @Override
     public ICrudGenericDAO getCrudMapper() {
         return userMapper;
     }
-
+    
     @Override
     public ISearchableDAO<UserSearchCriteria> getSearchMapper() {
         return userMapperExt;
     }
-
+    
     @Override
     public int saveWithSession(User record, String username) {
         record.setUsername(record.getEmail());
         userMapper.insert(record);
         return 1;
     }
-
+    
+    @Override
+    public void removeWithSession(List<String> primaryKeys, String username) {
+        userMapperExt.removeKeysWithSession(primaryKeys);
+    }
+    
     @Override
     public SimpleUser authentication(String username, String password) {
         UserSearchCriteria criteria = new UserSearchCriteria();
@@ -85,7 +88,7 @@ public class UserServiceDBImpl extends DefaultService<String, User, UserSearchCr
                 throw new AuthenticationException(
                         "Invalid username or password");
             }
-
+            
             log.debug("User " + username + " login to system successfully!");
             if (user.getIsadmin() != null && !user.getIsadmin()) {
                 if (user.getRoleid() != null) {

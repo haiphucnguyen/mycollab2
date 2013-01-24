@@ -50,4 +50,9 @@
             <include refid="querySearchCriteria" />
         </trim>
     </select>
+    
+    <delete id="removeKeysWithSession" parameterType="java.util.List">
+        <!--WARNING - @mbggenerated-->
+        delete from s_user where username IN <foreach close=")" collection="list" index="index" item="item" open="(" separator=","> #{item} </foreach>
+    </delete>
 </mapper>

@@ -18,6 +18,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
@@ -47,9 +48,9 @@ public class MyProjectsListViewImpl extends AbstractView implements MyProjectsLi
     private void generateDisplayTable() {
         tableItem = new PagedBeanTable2<ProjectService, ProjectSearchCriteria, SimpleProject>(
                 AppContext.getSpringBean(ProjectService.class),
-                SimpleProject.class, new String[]{"name", "accountName",
-                    "projecttype", "projectstatus"}, new String[]{
-                    "Name", "Account", "Type", "Status"});
+                SimpleProject.class, new String[]{"name", "shortname",
+                    "actualstartdate", "projectstatus"}, new String[]{
+                    "Name", "Short Name", "Start Date", "Status"});
 
         tableItem.addGeneratedColumn("name", new ColumnGenerator() {
             private static final long serialVersionUID = 1L;
@@ -74,14 +75,26 @@ public class MyProjectsListViewImpl extends AbstractView implements MyProjectsLi
 
             }
         });
+        
+        tableItem.addGeneratedColumn("actualstartdate", new ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+                final SimpleProject project = tableItem.getBeanByIndex(itemId);
+                return new Label(AppContext.formatDate(project.getActualstartdate()));
+
+            }
+        });
 
         tableItem.setWidth("100%");
 
         tableItem.setColumnExpandRatio("name", 1f);
         tableItem
-                .setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
+                .setColumnWidth("shortname", UIConstants.TABLE_S_LABEL_WIDTH);
         tableItem
-                .setColumnWidth("projecttype", UIConstants.TABLE_M_LABEL_WIDTH);
+                .setColumnWidth("actualstartdate", UIConstants.TABLE_DATE_WIDTH);
         tableItem.setColumnWidth("projectstatus",
                 UIConstants.TABLE_M_LABEL_WIDTH);
 
