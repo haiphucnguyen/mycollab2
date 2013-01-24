@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
@@ -205,6 +206,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
             if (account != null) {
                 super.onGo(container, data);
                 view.previewItem((SimpleAccount) account);
+                AppContext.addFragment("crm/account/preview/" + UrlEncodeDecoder.encode(account.getId()));
             } else {
                 AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
                 return;

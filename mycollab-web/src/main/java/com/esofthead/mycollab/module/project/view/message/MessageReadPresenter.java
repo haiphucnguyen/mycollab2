@@ -5,7 +5,6 @@
 package com.esofthead.mycollab.module.project.view.message;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;

@@ -2,6 +2,8 @@ package com.esofthead.mycollab.module.project.view.risk;
 
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.PageAction;
+import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -48,4 +50,20 @@ public class RiskPresenter extends AbstractPresenter<RiskContainer> {
             presenter.go(view, data);
         }
     }
+
+    @Override
+    public void handleChain(ComponentContainer container, PageActionChain pageActionChain) {
+        ProjectView projectViewContainer = (ProjectView) container;
+        projectViewContainer.gotoSubView("Risks");
+
+        view.removeAllComponents();
+        
+        PageAction pageAction = pageActionChain.pop();
+        if (pageAction instanceof RiskReadPageAction) {
+            RiskReadPresenter presenter = PresenterResolver.getPresenter(RiskReadPresenter.class);
+            presenter.go(this.view, pageAction.getScreenData());
+        }
+    }
+    
+    
 }

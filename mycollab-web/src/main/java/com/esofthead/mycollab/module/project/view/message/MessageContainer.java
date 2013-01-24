@@ -12,6 +12,5 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class MessageContainer extends AbstractView{
-    
+public class MessageContainer extends AbstractView {
 }

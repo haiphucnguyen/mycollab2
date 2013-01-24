@@ -90,7 +90,7 @@
 			</constraint>
 		</field>
 	</bean>
-
+	
 	<bean class="Risk" ignore-annotations="true">
 		<field name="riskname">
 			<constraint annotation="javax.validation.constraints.NotNull">

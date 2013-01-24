@@ -5,8 +5,11 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriter
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.ui.components.ProjectSearchPanel;
+import com.esofthead.mycollab.module.project.view.ProjectPageAction;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
@@ -63,7 +66,7 @@ public class MyProjectsListViewImpl extends AbstractView implements MyProjectsLi
                             public void buttonClick(ClickEvent event) {
                                 EventBus.getInstance().fireEvent(
                                         new ProjectEvent.GotoMyProject(this,
-                                        project.getId()));
+                                        new PageActionChain(new ProjectPageAction(new ScreenData<Integer>(project.getId())))));
                             }
                         });
                 b.addStyleName("medium-text");

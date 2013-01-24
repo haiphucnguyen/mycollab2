@@ -34,6 +34,8 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.splitbutton.SplitButton;
@@ -88,12 +90,18 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         root.addComponent(mySpaceArea);
         root.setExpandRatio(mySpaceArea, 1.0f);
         root.setWidth("100%");
-
         buildComponents();
+        showWelcomeScreen();
         this.addComponent(root);
+    }
+    
+    private void showWelcomeScreen() {
+        mySpaceArea.addComponent(new Label("Welcome"));
+        
     }
 
     private void buildComponents() {
+        
         myProjectTab.addTab(constructProjectDashboardComponent(), "Dashboard");
         myProjectTab.addTab(constructProjectMessageComponent(), "Messages");
         myProjectTab.addTab(constructProjectMilestoneComponent(), "Milestones");
@@ -143,17 +151,12 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
                             new ScreenData.Search<ProblemSearchCriteria>(
                             searchCriteria));
                 } else if ("Dashboard".equals(caption)) {
-                    gotoDashboard(null);
+                    dashboardPresenter.go(ProjectViewImpl.this, null);
                 } else if ("Users & Group".equals(caption)) {
                     gotoUsersAndGroup();
                 }
             }
         });
-    }
-
-    @Override
-    public void gotoDashboard(ScreenData data) {
-        dashboardPresenter.go(ProjectViewImpl.this, data);
     }
 
     @Override
@@ -171,12 +174,6 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     @Override
     public void gotoRiskView(ScreenData data) {
         riskPresenter.go(ProjectViewImpl.this, data);
-    }
-
-    @SuppressWarnings("rawtypes")
-    @Override
-    public void gotoProblemView(ScreenData data) {
-        problemPresenter.go(ProjectViewImpl.this, data);
     }
 
     @SuppressWarnings("rawtypes")
@@ -235,21 +232,20 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     }
 
     @Override
-    public void displayProject(final SimpleProject project, PageActionChain pageActionChain) {
+    public void constructProjectHeaderPanel(final SimpleProject project, PageActionChain pageActionChain) {
         this.project = project;
         topPanel.removeAllComponents();
 
         topPanel.addComponent(breadCrumb);
         topPanel.setComponentAlignment(breadCrumb, Alignment.MIDDLE_LEFT);
         topPanel.setExpandRatio(breadCrumb, 1.0f);
-        
+
         breadCrumb.setProject(project);
         breadCrumb.select(0);
         breadCrumb.addLink(new Button(project.getName(), new Button.ClickListener() {
-
             @Override
             public void buttonClick(ClickEvent event) {
-                gotoDashboard(null);
+                dashboardPresenter.go(ProjectViewImpl.this, null);
             }
         }));
         breadCrumb.setLinkEnabled(true, 1);
@@ -263,14 +259,14 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
             @Override
             public void splitButtonClick(
                     SplitButton.SplitButtonClickEvent event) {
-                gotoDashboard(new ScreenData.Edit<Project>(project));
+                dashboardPresenter.go(ProjectViewImpl.this, new ScreenData.Edit<Project>(project));
             }
         });
         Button selectBtn = new Button("View Project Detail",
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        gotoDashboard(null);
+                        dashboardPresenter.go(ProjectViewImpl.this, null);
                     }
                 });
         selectBtn.setIcon(new ThemeResource("icons/16/view.png"));
@@ -279,10 +275,6 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
         topPanel.addComponent(controlsBtn);
         topPanel.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
-        
-        if (pageActionChain == null || !pageActionChain.hasNext()) {
-            gotoDashboard(null);
-        }
     }
 
     @Override
@@ -290,10 +282,5 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         log.debug("Project: Go to tab view name " + name);
         View component = (View) myProjectTab.selectTab(name);
         return component;
-    }
-
-    @Override
-    public void gotoMessageView(ScreenData data) {
-        messagePresenter.go(ProjectViewImpl.this, data);
     }
 }

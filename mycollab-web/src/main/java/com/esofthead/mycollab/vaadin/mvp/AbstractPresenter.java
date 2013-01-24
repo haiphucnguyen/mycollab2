@@ -50,7 +50,24 @@ public abstract class AbstractPresenter<V extends View> implements Presenter {
     protected abstract void onGo(ComponentContainer container,
             ScreenData<?> data);
     
-    public void go(PageActionChain pageActionChain) {
+    @Override
+    public void handleChain(ComponentContainer container, PageActionChain pageActionChain) {
+        PageAction pageAction = pageActionChain.pop();
+        go(container, pageAction.getScreenData());
         
+        if (pageActionChain.hasNext()) {
+            onHandleChain(container, pageActionChain);
+        } else {
+            onDefaultStopChain();
+        }
+    }
+    
+    protected void onDefaultStopChain() {
+        
+    }
+    
+    protected void onHandleChain(ComponentContainer container,
+            PageActionChain pageActionChain) {
+        throw new UnsupportedOperationException("You need override this method");
     }
 }

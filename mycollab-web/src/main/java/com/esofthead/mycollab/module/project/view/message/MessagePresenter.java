@@ -10,6 +10,8 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.PageAction;
+import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
@@ -47,4 +49,20 @@ public class MessagePresenter extends AbstractPresenter<MessageContainer> {
             presenter.go(view, new ScreenData.Preview < MessageSearchCriteria > (searchCriteria));
         }
     }
+
+    @Override
+    public void handleChain(ComponentContainer container, PageActionChain pageActionChain) {
+        ProjectView projectViewContainer = (ProjectView) container;
+        projectViewContainer.gotoSubView("Messages");
+        
+        view.removeAllComponents();
+        
+        PageAction pageAction = pageActionChain.pop();
+        if (pageAction instanceof MessageReadPageAction) {
+            MessageReadPresenter presenter = PresenterResolver.getPresenter(MessageReadPresenter.class);
+            presenter.go(this.view, pageAction.getScreenData());
+        }
+    }
+    
+    
 }
