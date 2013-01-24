@@ -18,8 +18,6 @@ import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
-import com.esofthead.mycollab.module.project.events.TaskEvent;
-import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.ProjectPageAction;
 import com.esofthead.mycollab.module.project.view.message.MessageReadPageAction;

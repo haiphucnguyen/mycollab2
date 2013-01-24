@@ -4,13 +4,14 @@
  */
 package com.esofthead.mycollab.module.project.view.message;
 
+import com.esofthead.mycollab.vaadin.mvp.PageAction;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
 /**
  *
  * @author haiphucnguyen
  */
-public class MessageReadPageAction extends MessagePageAction {
+public class MessageReadPageAction extends PageAction {
     public MessageReadPageAction(ScreenData screenData) {
         super(screenData);
     }

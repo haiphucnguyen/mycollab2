@@ -3,14 +3,14 @@ package com.esofthead.mycollab.module.project.view;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.message.MessagePageAction;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
-import com.esofthead.mycollab.module.project.view.milestone.MilestonePageAction;
+import com.esofthead.mycollab.module.project.view.message.MessageReadPageAction;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
-import com.esofthead.mycollab.module.project.view.problem.ProblemPageAction;
+import com.esofthead.mycollab.module.project.view.milestone.MilestoneReadPageAction;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
-import com.esofthead.mycollab.module.project.view.risk.RiskPageAction;
+import com.esofthead.mycollab.module.project.view.problem.ProblemReadPageAction;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
+import com.esofthead.mycollab.module.project.view.risk.RiskReadPageAction;
 import com.esofthead.mycollab.module.project.view.task.TaskListReadPageAction;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskReadPageAction;
@@ -67,13 +67,13 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
         
         AbstractPresenter presenter = null;
         
-        if (pageAction instanceof MilestonePageAction) {
+        if (pageAction instanceof MilestoneReadPageAction) {
             presenter = PresenterResolver.getPresenter(MilestonePresenter.class);
-        } else if (pageAction instanceof MessagePageAction) {
+        } else if (pageAction instanceof MessageReadPageAction) {
             presenter = PresenterResolver.getPresenter(MessagePresenter.class);
-        } else if (pageAction instanceof ProblemPageAction) {
+        } else if (pageAction instanceof ProblemReadPageAction) {
             presenter = PresenterResolver.getPresenter(ProblemPresenter.class);
-        } else if (pageAction instanceof RiskPageAction) {
+        } else if (pageAction instanceof RiskReadPageAction) {
             presenter = PresenterResolver.getPresenter(RiskPresenter.class);
         } else if (pageAction instanceof TaskReadPageAction) {
             presenter = PresenterResolver.getPresenter(TaskPresenter.class);

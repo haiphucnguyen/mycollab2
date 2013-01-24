@@ -52,7 +52,7 @@ public class ProblemPresenter extends AbstractPresenter<ProblemContainer> {
 
         view.removeAllComponents();
         PageAction pageAction = pageActionChain.pop();
-        if (pageAction instanceof ProblemPageAction) {
+        if (pageAction instanceof ProblemReadPageAction) {
             ProblemReadPresenter presenter = PresenterResolver.getPresenter(ProblemReadPresenter.class);
             presenter.go(view, pageAction.getScreenData());
         }
