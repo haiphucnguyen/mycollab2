@@ -52,6 +52,11 @@ public class MessagePresenter extends AbstractPresenter<MessageContainer> {
 
     @Override
     public void handleChain(ComponentContainer container, PageActionChain pageActionChain) {
+        ProjectView projectViewContainer = (ProjectView) container;
+        projectViewContainer.gotoSubView("Messages");
+        
+        view.removeAllComponents();
+        
         PageAction pageAction = pageActionChain.pop();
         if (pageAction instanceof MessageReadPageAction) {
             MessageReadPresenter presenter = PresenterResolver.getPresenter(MessageReadPresenter.class);

@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectService;
@@ -8,6 +7,8 @@ import com.esofthead.mycollab.module.project.view.message.MessagePageAction;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePageAction;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
+import com.esofthead.mycollab.module.project.view.problem.ProblemPageAction;
+import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageAction;
@@ -65,9 +66,12 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
             presenter = PresenterResolver.getPresenter(MilestonePresenter.class);
         } else if (pageAction instanceof MessagePageAction) {
             presenter = PresenterResolver.getPresenter(MessagePresenter.class);
-        } else {
+        } else if (pageAction instanceof ProblemPageAction) {
+            presenter = PresenterResolver.getPresenter(ProblemPresenter.class);
+        } 
+        else {
             throw new UnsupportedOperationException("Not support page action chain " + pageAction);
-        }
+        } 
         
         presenter.handleChain(view, pageActionChain);
     }

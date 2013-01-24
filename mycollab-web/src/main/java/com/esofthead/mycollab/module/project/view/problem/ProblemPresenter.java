@@ -2,6 +2,8 @@ package com.esofthead.mycollab.module.project.view.problem;
 
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.PageAction;
+import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -42,4 +44,19 @@ public class ProblemPresenter extends AbstractPresenter<ProblemContainer> {
             presenter.go(view, data);
         }
     }
+
+    @Override
+    public void handleChain(ComponentContainer container, PageActionChain pageActionChain) {
+        ProjectView projectViewContainer = (ProjectView) container;
+        projectViewContainer.gotoSubView("Problems");
+
+        view.removeAllComponents();
+        PageAction pageAction = pageActionChain.pop();
+        if (pageAction instanceof ProblemPageAction) {
+            ProblemReadPresenter presenter = PresenterResolver.getPresenter(ProblemReadPresenter.class);
+            presenter.go(view, pageAction.getScreenData());
+        }
+    }
+    
+    
 }

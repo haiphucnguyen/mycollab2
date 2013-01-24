@@ -17,7 +17,6 @@ import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
-import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
@@ -27,6 +26,7 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.ProjectPageAction;
 import com.esofthead.mycollab.module.project.view.message.MessageReadPageAction;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneReadPageAction;
+import com.esofthead.mycollab.module.project.view.problem.ProblemReadPageAction;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -171,6 +171,7 @@ public class ActivityStreamComponent extends Depot {
                 @Override
                 public void buttonClick(Button.ClickEvent event) {
                     if (ProjectContants.PROJECT.equals(type)) {
+                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, new PageActionChain(new ProjectPageAction(new ScreenData(projectid)))));
                     } else if (ProjectContants.MESSAGE.equals(type)) {
                         PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new MessageReadPageAction(new ScreenData(typeid)));
                         EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
@@ -178,7 +179,8 @@ public class ActivityStreamComponent extends Depot {
                         PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new MilestoneReadPageAction(new ScreenData(typeid)));
                         EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
                     } else if (ProjectContants.PROBLEM.equals(type)) {
-                        EventBus.getInstance().fireEvent(new ProblemEvent.GotoRead(this, typeid));
+                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new ProblemReadPageAction(new ScreenData(typeid)));
+                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
                     } else if (ProjectContants.RISK.equals(type)) {
                         EventBus.getInstance().fireEvent(new RiskEvent.GotoRead(this, typeid));
                     } else if (ProjectContants.TASK.equals(type)) {
