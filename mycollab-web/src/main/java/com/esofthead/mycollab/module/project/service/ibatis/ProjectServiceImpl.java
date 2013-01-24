@@ -19,22 +19,21 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
-import com.esofthead.mycollab.core.MessageDispatcher;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.module.project.dao.PermissionMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMapperExt;
-import com.esofthead.mycollab.module.project.domain.PermissionExample;
+import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
-import com.esofthead.mycollab.module.project.domain.ProjectExample;
+import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import java.util.GregorianCalendar;
 import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -51,6 +50,8 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
     private ProjectMapper projectMapper;
     @Autowired
     private ProjectMapperExt projectMapperExt;
+    @Autowired
+    private ProjectMemberMapper projectMemberMapper;
 
     @Override
     public ICrudGenericDAO<Integer, Project> getCrudMapper() {
@@ -64,9 +65,15 @@ public class ProjectServiceImpl extends DefaultService<Integer, Project, Project
 
     @Override
     public int saveWithSession(Project record, String username) {
-
         int projectid = super.saveWithSession(record, username);
 
+        ProjectMember projectMember = new ProjectMember();
+        projectMember.setIsadmin(Boolean.TRUE);
+        projectMember.setJoindate(new GregorianCalendar().getTime());
+        projectMember.setProjectid(projectid);
+        projectMember.setUsername(username);
+        projectMemberMapper.insert(projectMember);
+        
         return projectid;
     }
 
