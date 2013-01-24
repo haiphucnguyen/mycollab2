@@ -7,6 +7,27 @@
 			<constraint annotation="org.hibernate.validator.constraints.Email">
 				<message>Please enter a valid email</message>
 			</constraint>
+			<constraint annotation="javax.validation.constraints.NotNull">
+				<message>Please email must be not null</message>
+			</constraint>
+		</field>
+		<field name="firstname">
+			<constraint annotation="javax.validation.constraints.NotNull">
+				<message>The first name must be not null</message>
+			</constraint>
+		</field>
+		<field name="lastname">
+			<constraint annotation="javax.validation.constraints.NotNull">
+				<message>The last name must be not null</message>
+			</constraint>
+		</field>
+	</bean>
+	
+	<bean class="Role" ignore-annotations="true" >
+		<field name="rolename">
+			<constraint annotation="javax.validation.constraints.NotNull">
+				<message>The role name must be not null</message>
+			</constraint>
 		</field>
 	</bean>
 </constraint-mappings>

@@ -25,7 +25,7 @@ public abstract class MultiSelectComp extends CustomField {
 		componentsDisplay = new TextField();
 		componentsDisplay.setNullRepresentation("");
 		componentsDisplay.setReadOnly(true);
-		componentsDisplay.setWidth("150px");
+		componentsDisplay.setWidth("220px");
 
 		selectBtn = new MultipleItemsPopupSelection(this);
 		selectBtn.addListener(new Button.ClickListener() {

@@ -28,7 +28,7 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
 
     @Override
     public Layout getLayout() {
-        AddViewLayout userAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/user/role.png"));
+        AddViewLayout userAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/user/group.png"));
 
         Layout topPanel = createTopPanel();
         if (topPanel != null) {
@@ -36,13 +36,14 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
         }
 
         userInformationLayout = new RoleInformationLayout();
+        userInformationLayout.getLayout().setWidth("100%");
         userAddLayout.addBody(userInformationLayout.getLayout());
 
         Layout bottomPanel = createBottomPanel();
         if (bottomPanel != null) {
             userAddLayout.addBottomControls(bottomPanel);
         }
-
+        
         return userAddLayout;
     }
 
@@ -67,7 +68,7 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
             layout.addComponent(organizationHeader);
 
             informationLayout = new GridFormLayoutHelper(2, 2);
-            informationLayout.getLayout().setWidth("900px");
+            informationLayout.getLayout().setWidth("100%");
 
             layout.addComponent(informationLayout.getLayout());
             return layout;

@@ -23,6 +23,7 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import java.util.Collection;
 import java.util.HashMap;
@@ -158,6 +159,12 @@ public class RoleAddViewImpl extends AbstractView implements RoleAddView {
                     return textArea;
                 } else if (propertyId.equals("isadmin")) {
                     
+                } else if (propertyId.equals("rolename")) {
+                	 TextField tf = new TextField();
+                     tf.setNullRepresentation("");
+                     tf.setRequired(true);
+                     tf.setRequiredError("Please enter a Role name");
+                     return tf;
                 }
                 return null;
             }

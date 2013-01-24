@@ -120,9 +120,8 @@ public class UserTableDisplay extends PagedBeanTable2<UserService, UserSearchCri
             }
         });
         
-        this.setColumnExpandRatio("username", 1);
-        this.setColumnWidth("displayName", UIConstants.TABLE_X_LABEL_WIDTH);
-        this.setColumnWidth("username", UIConstants.TABLE_M_LABEL_WIDTH);
+        this.setColumnExpandRatio("username", 1.0f);
+        //this.setColumnWidth("displayName", UIConstants.TABLE_M_LABEL_WIDTH);
         this.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
         this.setColumnWidth("lastAccessedTime", UIConstants.TABLE_DATE_TIME_WIDTH);
     }

@@ -17,6 +17,7 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
 
     private String title;
@@ -29,13 +30,14 @@ public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
     @Override
     public Layout getLayout() {
         AddViewLayout userAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/user/user.png"));
-
+       
         Layout topPanel = createTopPanel();
         if (topPanel != null) {
             userAddLayout.addTopControls(topPanel);
         }
 
         userInformationLayout = new UserInformationLayout();
+        userInformationLayout.getLayout().setWidth("100%");
         userAddLayout.addBody(userInformationLayout.getLayout());
 
         Layout bottomPanel = createBottomPanel();
@@ -55,7 +57,7 @@ public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
         userInformationLayout.attachField(propertyId, field);
     }
 
-    public static class UserInformationLayout implements IFormLayoutFactory {
+	public static class UserInformationLayout implements IFormLayoutFactory {
 
         private GridFormLayoutHelper informationLayout;
 
@@ -67,7 +69,7 @@ public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
             layout.addComponent(organizationHeader);
 
             informationLayout = new GridFormLayoutHelper(2, 6);
-            informationLayout.getLayout().setWidth("900px");
+            informationLayout.getLayout().setWidth("100%");
 
             layout.addComponent(informationLayout.getLayout());
             return layout;

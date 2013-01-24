@@ -27,7 +27,6 @@ public class UserPermissionManagementViewImpl extends AbstractView implements
 		this.setWidth("100%");
 		this.setMargin(true);
 		tabContainer = new TabSheet();
-		tabContainer.setWidth("100%");
 		constructTabs();
 		this.addComponent(tabContainer);
 

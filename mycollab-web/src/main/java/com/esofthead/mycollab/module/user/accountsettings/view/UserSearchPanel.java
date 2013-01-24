@@ -51,7 +51,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
                                 new UserEvent.GotoAdd(this, null));
                     }
                 });
-        createBtn.setStyleName("link");
+        createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 
         UiUtils.addComponent(layout, createBtn, Alignment.MIDDLE_RIGHT);
@@ -92,7 +92,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
                                     .notifySearchHandler(searchCriteria);
                         }
                     });
-            searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
             basicSearchBody.addComponent(searchBtn);
 
             Button clearBtn = new Button("Clear",
@@ -104,7 +104,7 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
                             nameField.setValue("");
                         }
                     });
-            clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+            clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
             basicSearchBody.addComponent(clearBtn);
             return basicSearchBody;
         }

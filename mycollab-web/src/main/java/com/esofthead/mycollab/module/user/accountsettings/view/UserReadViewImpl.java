@@ -77,6 +77,8 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
                                 }
                             });
                         }
+                    } else if (propertyId.equals("website")) {
+                    	return new DefaultFormViewFieldFactory.FormUrlLinkViewField(user.getWebsite());
                     }
                     return null;
                 }
