@@ -42,7 +42,9 @@ public class MultipleItemsPopupSelection extends PopupButton {
                 }
             }
         });
-        hashMapCheckbox.put(itemName, chkItem);
-        panel.addComponent(chkItem);
+        if (!hashMapCheckbox.containsKey(itemName)) {
+        	 hashMapCheckbox.put(itemName, chkItem);
+             panel.addComponent(chkItem);
+        }
     }
 }

@@ -6,12 +6,13 @@ import java.util.List;
 import org.vaadin.addon.customfield.CustomField;
 
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.GridLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 
 @SuppressWarnings("serial")
-public class MultiSelectComp extends CustomField {
+public abstract class MultiSelectComp extends CustomField {
 
 	private TextField componentsDisplay;
 	private MultipleItemsPopupSelection selectBtn;
@@ -24,9 +25,17 @@ public class MultiSelectComp extends CustomField {
 		componentsDisplay = new TextField();
 		componentsDisplay.setNullRepresentation("");
 		componentsDisplay.setReadOnly(true);
-		componentsDisplay.setWidth("220px");
+		componentsDisplay.setWidth("150px");
 
 		selectBtn = new MultipleItemsPopupSelection(this);
+		selectBtn.addListener(new Button.ClickListener() {
+			
+			@Override
+			public void buttonClick(ClickEvent event) {
+				initData();
+			}
+		});
+		
 		content.addComponent(componentsDisplay, 0, 0);
 
 		selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
@@ -34,13 +43,20 @@ public class MultiSelectComp extends CustomField {
 		selectBtn.addStyleName("link");
 		selectBtn.addStyleName("nonPopupIndicator");
 		content.addComponent(selectBtn, 1, 0);
+		
 		this.setCompositionRoot(content);
 	}
+	
+	abstract void initData();
 	
 	public void loadData(List<String> values) {
 		for (int i = 0; i < values.size(); i++) {
 			selectBtn.addItemComponent(values.get(i));
 		}
+	}
+	
+	protected List<String> getSelectedItem() {
+		return lstStringValue;
 	}
 
 	public void setSelectedItem(String item) {
