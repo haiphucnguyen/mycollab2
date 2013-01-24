@@ -6,6 +6,8 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.PageAction;
+import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -54,4 +56,20 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 
         presenter.go(view, data);
     }
+
+    @Override
+    public void handleChain(ComponentContainer container, PageActionChain pageActionChain) {
+        ProjectView projectViewContainer = (ProjectView) container;
+        projectViewContainer.gotoSubView("Tasks");
+
+        view.removeAllComponents();
+        
+        PageAction pageAction = pageActionChain.peek();
+        if (pageAction instanceof TaskReadPageAction) {
+            TaskReadPresenter presenter = PresenterResolver.getPresenter(TaskReadPresenter.class);
+            presenter.go(view, pageAction.getScreenData());
+        }
+    }
+    
+    
 }

@@ -11,6 +11,8 @@ import com.esofthead.mycollab.module.project.view.problem.ProblemPageAction;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPageAction;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
+import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
+import com.esofthead.mycollab.module.project.view.task.TaskReadPageAction;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageAction;
@@ -72,6 +74,8 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
             presenter = PresenterResolver.getPresenter(ProblemPresenter.class);
         } else if (pageAction instanceof RiskPageAction) {
             presenter = PresenterResolver.getPresenter(RiskPresenter.class);
+        } else if (pageAction instanceof TaskReadPageAction) {
+            presenter = PresenterResolver.getPresenter(TaskPresenter.class);
         }
         else {
             throw new UnsupportedOperationException("Not support page action chain " + pageAction);
