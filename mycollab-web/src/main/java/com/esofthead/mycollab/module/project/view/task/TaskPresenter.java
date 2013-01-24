@@ -26,8 +26,6 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
     public void go(ComponentContainer container, ScreenData<?> data) {
         super.go(container, data, false);
     }
-    
-    
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
@@ -63,13 +61,18 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
         projectViewContainer.gotoSubView("Tasks");
 
         view.removeAllComponents();
-        
+
+        AbstractPresenter presenter;
+
         PageAction pageAction = pageActionChain.peek();
         if (pageAction instanceof TaskReadPageAction) {
-            TaskReadPresenter presenter = PresenterResolver.getPresenter(TaskReadPresenter.class);
-            presenter.go(view, pageAction.getScreenData());
+            presenter = PresenterResolver.getPresenter(TaskReadPresenter.class);
+        } else if (pageAction instanceof TaskListReadPageAction) {
+            presenter = PresenterResolver.getPresenter(TaskListReadPresenter.class);
+        } else {
+            throw new UnsupportedOperationException("Do not support page action " + pageAction);
         }
+
+        presenter.go(view, pageAction.getScreenData());
     }
-    
-    
 }

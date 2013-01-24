@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.project.view.problem.ProblemPageAction;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPageAction;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
+import com.esofthead.mycollab.module.project.view.task.TaskListReadPageAction;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskReadPageAction;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
@@ -75,6 +76,8 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
         } else if (pageAction instanceof RiskPageAction) {
             presenter = PresenterResolver.getPresenter(RiskPresenter.class);
         } else if (pageAction instanceof TaskReadPageAction) {
+            presenter = PresenterResolver.getPresenter(TaskPresenter.class);
+        } else if (pageAction instanceof TaskListReadPageAction) {
             presenter = PresenterResolver.getPresenter(TaskPresenter.class);
         }
         else {

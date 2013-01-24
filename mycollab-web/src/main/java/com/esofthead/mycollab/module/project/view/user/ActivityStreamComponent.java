@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.project.view.message.MessageReadPageAction;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneReadPageAction;
 import com.esofthead.mycollab.module.project.view.problem.ProblemReadPageAction;
 import com.esofthead.mycollab.module.project.view.risk.RiskReadPageAction;
+import com.esofthead.mycollab.module.project.view.task.TaskListReadPageAction;
 import com.esofthead.mycollab.module.project.view.task.TaskReadPageAction;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
@@ -189,7 +190,8 @@ public class ActivityStreamComponent extends Depot {
                         PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new TaskReadPageAction(new ScreenData(typeid)));
                         EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
                     } else if (ProjectContants.TASK_LIST.equals(type)) {
-                        EventBus.getInstance().fireEvent(new TaskListEvent.GotoRead(this, typeid));
+                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new TaskListReadPageAction(new ScreenData(typeid)));
+                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
                     } else if (ProjectContants.BUG.equals(type)) {
                         EventBus.getInstance().fireEvent(new BugEvent.GotoRead(this, typeid));
                     } else if (ProjectContants.BUG_COMPONENT.equals(type)) {
