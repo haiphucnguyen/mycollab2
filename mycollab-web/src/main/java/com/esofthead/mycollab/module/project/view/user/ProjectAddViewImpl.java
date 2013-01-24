@@ -26,10 +26,10 @@ import com.vaadin.ui.TextField;
  */
 @ViewComponent
 public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
-    
+
     private Project project;
     private EditForm editForm;
-    
+
     public ProjectAddViewImpl() {
         editForm = new EditForm();
         this.addComponent(editForm);
@@ -68,12 +68,12 @@ public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
             private Layout createButtonControls() {
                 if (project.getId() == null) {
                     return (new EditFormControlsGenerator<Project>(ProjectAddViewImpl.EditForm.this))
-                        .createButtonControls();
+                            .createButtonControls();
                 } else {
                     return (new EditFormControlsGenerator<Project>(ProjectAddViewImpl.EditForm.this))
-                        .createButtonControls(true, false, true);
+                            .createButtonControls(true, false, true);
                 }
-                
+
             }
 
             @Override
@@ -95,13 +95,19 @@ public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
             protected Field onCreateField(Item item, Object propertyId,
                     com.vaadin.ui.Component uiContext) {
                 if (propertyId.equals("description")) {
-                   RichTextArea field = new RichTextArea(); 
-                   field.setHeight("350px");
-                   return field;
+                    RichTextArea field = new RichTextArea();
+                    field.setHeight("350px");
+                    return field;
                 } else if (propertyId.equals("projectstatus")) {
                     return new ProjectStatusComboBox();
-                } 
-                
+                } else if (propertyId.equals("shortname")) {
+                    TextField tf = new TextField();
+                    tf.setNullRepresentation("");
+                    tf.setRequired(true);
+                    tf.setRequiredError("Please enter a project short name");
+                    return tf;
+                }
+
                 if (propertyId.equals("name")) {
                     TextField tf = new TextField();
                     tf.setNullRepresentation("");
@@ -109,15 +115,16 @@ public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
                     tf.setRequiredError("Please enter a Name");
                     return tf;
                 }
-                
+
                 return null;
             }
         }
     }
-    
+
     private static class ProjectStatusComboBox extends ValueComboBox {
+
         public ProjectStatusComboBox() {
-            this.loadData(ProjectDataTypeFactory.getProjectStatusList());
+            super(false, ProjectDataTypeFactory.getProjectStatusList());
         }
     }
 }

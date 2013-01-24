@@ -52,7 +52,7 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
         financialHeader.setStyleName("h2");
         layout.addComponent(financialHeader);
 
-        financialLayout = new GridFormLayoutHelper(2, 3);
+        financialLayout = new GridFormLayoutHelper(2, 4);
         financialLayout.getLayout().setWidth("900px");
         layout.addComponent(financialLayout.getLayout());
         layout.setComponentAlignment(financialLayout.getLayout(),
@@ -88,17 +88,22 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
             informationLayout.addComponent(field, "Status", 1, 1);
         } else if (propertyId.equals("planstartdate")) {
             financialLayout.addComponent(field, "Plan Start Date", 0, 0);
-        } else if (propertyId.equals("targetbudget")) {
-            financialLayout.addComponent(field, "Target Budget", 1, 0);
+        } else if (propertyId.equals("currencyid")) {
+            financialLayout.addComponent(field, "Currency", 1, 0);
         } else if (propertyId.equals("planenddate")) {
             financialLayout.addComponent(field, "Plan End Date", 0, 1);
         } else if (propertyId.equals("defaultbillingrate")) {
             financialLayout.addComponent(field, "Rate", 1, 1);
-        } else if (propertyId.equals("currencyid")) {
-            financialLayout.addComponent(field, "Currency", 0, 2);
-        } else if (propertyId.equals("defaultovertimebillingrate")) {
-            financialLayout.addComponent(field, "Overtime Rate", 1, 2);
-        } else if (propertyId.equals("description")) {
+        } else if (propertyId.equals("actualstartdate")) {
+            financialLayout.addComponent(field, "Actual Start Date", 0, 2);
+        }  else if (propertyId.equals("targetbudget")) {
+            financialLayout.addComponent(field, "Target Budget", 1, 2);
+        } else if (propertyId.equals("actualenddate")) {
+            financialLayout.addComponent(field, "Actual End Date", 0, 3);
+        } else if (propertyId.equals("actualbudget")) {
+            financialLayout.addComponent(field, "Actual Budget", 1, 3);
+        } 
+        else if (propertyId.equals("description")) {
             descriptionLayout.addComponent(field, "Description", 0, 0, 2,
                     UIConstants.DEFAULT_2XCONTROL_WIDTH);
         }

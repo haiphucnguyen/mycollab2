@@ -19,9 +19,11 @@ public class ValueComboBox extends ComboBox {
         this.setNullSelectionAllowed(nullIsAllowable);
         this.setImmediate(true);
         this.loadData(values);
+        
+        this.setValue(this.getItemIds().iterator().next());
     }
 
-    public void loadData(String... values) {
+    public final void loadData(String... values) {
         this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
 
         for (int i = 0; i < values.length; i++) {
