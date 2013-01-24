@@ -20,6 +20,9 @@ import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.ProjectPageAction;
+import com.esofthead.mycollab.module.project.view.bug.BugReadPageAction;
+import com.esofthead.mycollab.module.project.view.bug.ComponentReadPageAction;
+import com.esofthead.mycollab.module.project.view.bug.VersionReadPageAction;
 import com.esofthead.mycollab.module.project.view.message.MessageReadPageAction;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneReadPageAction;
 import com.esofthead.mycollab.module.project.view.problem.ProblemReadPageAction;
@@ -191,11 +194,14 @@ public class ActivityStreamComponent extends Depot {
                         PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new TaskListReadPageAction(new ScreenData(typeid)));
                         EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
                     } else if (ProjectContants.BUG.equals(type)) {
-                        EventBus.getInstance().fireEvent(new BugEvent.GotoRead(this, typeid));
+                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new BugReadPageAction(new ScreenData(typeid)));
+                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
                     } else if (ProjectContants.BUG_COMPONENT.equals(type)) {
-                        EventBus.getInstance().fireEvent(new BugComponentEvent.GotoRead(this, typeid));
+                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new ComponentReadPageAction(new ScreenData(typeid)));
+                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
                     } else if (ProjectContants.BUG_VERSION.equals(type)) {
-                        EventBus.getInstance().fireEvent(new BugVersionEvent.GotoRead(this, typeid));
+                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new VersionReadPageAction(new ScreenData(typeid)));
+                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
                     }
                 }
             });

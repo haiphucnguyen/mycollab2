@@ -3,6 +3,11 @@ package com.esofthead.mycollab.module.project.view;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
+import com.esofthead.mycollab.module.project.view.bug.BugReadPageAction;
+import com.esofthead.mycollab.module.project.view.bug.ComponentReadPageAction;
+import com.esofthead.mycollab.module.project.view.bug.VersionReadPageAction;
+import com.esofthead.mycollab.module.project.view.bug.VersionReadPresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.message.MessageReadPageAction;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
@@ -79,6 +84,12 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
             presenter = PresenterResolver.getPresenter(TaskPresenter.class);
         } else if (pageAction instanceof TaskListReadPageAction) {
             presenter = PresenterResolver.getPresenter(TaskPresenter.class);
+        } else if (pageAction instanceof BugReadPageAction) {
+            presenter = PresenterResolver.getPresenter(BugPresenter.class);
+        } else if (pageAction instanceof ComponentReadPageAction) {
+            presenter = PresenterResolver.getPresenter(BugPresenter.class);
+        } else if (pageAction instanceof VersionReadPageAction) {
+            presenter = PresenterResolver.getPresenter(BugPresenter.class);
         }
         else {
             throw new UnsupportedOperationException("Not support page action chain " + pageAction);
