@@ -80,6 +80,15 @@ public class TaskAddPresenter extends AbstractPresenter<TaskAddView> {
         ProjectTaskService taskService = AppContext.getSpringBean(ProjectTaskService.class);
 
         item.setSaccountid(AppContext.getAccountId());
+        if (item.getPercentagecomplete() == null) {
+            item.setPercentagecomplete(new Double(0));
+            item.setStatus("Open");
+        } else if (item.getPercentagecomplete().doubleValue() == 100d) {
+            item.setStatus("Closed");
+        } else {
+            item.setStatus("Open");
+        }
+        
         if (item.getId() == null) {
             taskService.saveWithSession(item, AppContext.getUsername());
         } else {

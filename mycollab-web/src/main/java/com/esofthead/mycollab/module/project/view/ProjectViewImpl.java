@@ -175,12 +175,6 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
     @SuppressWarnings("rawtypes")
     @Override
-    public void gotoProblemView(ScreenData data) {
-        problemPresenter.go(ProjectViewImpl.this, data);
-    }
-
-    @SuppressWarnings("rawtypes")
-    @Override
     public void gotoBugView(ScreenData data) {
         bugPresenter.go(ProjectViewImpl.this, data);
     }
@@ -290,10 +284,5 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
         log.debug("Project: Go to tab view name " + name);
         View component = (View) myProjectTab.selectTab(name);
         return component;
-    }
-
-    @Override
-    public void gotoMessageView(ScreenData data) {
-        messagePresenter.go(ProjectViewImpl.this, data);
     }
 }

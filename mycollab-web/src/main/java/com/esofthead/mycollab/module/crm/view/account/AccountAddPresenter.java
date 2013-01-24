@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.service.AccountService;
@@ -56,7 +57,13 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         super.onGo(container, data);
-        view.editItem((Account) data.getParams());
+        Account account = (Account) data.getParams();
+        view.editItem(account);
+        if (account.getId() == null) {
+            AppContext.addFragment("crm/account/add");
+        } else {
+            AppContext.addFragment("crm/account/edit/" + UrlEncodeDecoder.encode(account.getId()));
+        }
     }
 
     public void saveAccount(Account account) {

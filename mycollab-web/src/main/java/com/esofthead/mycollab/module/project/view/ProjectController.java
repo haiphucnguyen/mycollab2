@@ -24,6 +24,8 @@ import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.view.bug.BugContainer;
+import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
+import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskContainer;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -343,7 +345,8 @@ public class ProjectController {
                                 .getView(ProjectView.class);
                         ScreenData.Add<Problem> data = new ScreenData.Add<Problem>(
                                 new Problem());
-                        projectView.gotoProblemView(data);
+                        ProblemPresenter presenter = PresenterResolver.getPresenter(ProblemPresenter.class);
+                        presenter.go(projectView, data);
                     }
                 });
 
@@ -360,7 +363,8 @@ public class ProjectController {
                                 .getView(ProjectView.class);
                         ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
                                 (Integer) event.getData());
-                        projectView.gotoProblemView(data);
+                        ProblemPresenter presenter = PresenterResolver.getPresenter(ProblemPresenter.class);
+                        presenter.go(projectView, data);
                     }
                 });
 
@@ -383,9 +387,10 @@ public class ProjectController {
 
                         criteria.setProjectId(new NumberSearchField(
                                 SearchField.AND, project.getId()));
-                        projectView
-                                .gotoProblemView(new ScreenData.Search<ProblemSearchCriteria>(
-                                criteria));
+                        ScreenData.Search<ProblemSearchCriteria> data = new ScreenData.Search<ProblemSearchCriteria>(
+                                criteria);
+                        ProblemPresenter presenter = PresenterResolver.getPresenter(ProblemPresenter.class);
+                        presenter.go(projectView, data);
                     }
                 });
 
@@ -402,7 +407,8 @@ public class ProjectController {
                                 .getView(ProjectView.class);
                         ScreenData.Edit<Problem> data = new ScreenData.Edit<Problem>(
                                 (Problem) event.getData());
-                        projectView.gotoProblemView(data);
+                        ProblemPresenter presenter = PresenterResolver.getPresenter(ProblemPresenter.class);
+                        presenter.go(projectView, data);
                     }
                 });
     }
@@ -654,7 +660,8 @@ public class ProjectController {
                                 .getView(ProjectView.class);
                         ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
                                 (Integer) event.getData());
-                        projectView.gotoMessageView(data);
+                        MessagePresenter presenter = PresenterResolver.getPresenter(MessagePresenter.class);
+                        presenter.go(projectView, data);
                     }
                 });
     }
