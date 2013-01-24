@@ -1,7 +1,13 @@
 package com.esofthead.mycollab.module.project.view.user;
 
+import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 
 @ViewComponent
@@ -14,6 +20,28 @@ public class MyFeedsViewImpl extends AbstractView implements MyFeedsView {
     private TaskStatusComponent taskStatusComponent;
     
     public MyFeedsViewImpl() {
+        this.setSpacing(true);
+        this.setMargin(true);
+        
+        HorizontalLayout header = new HorizontalLayout();
+        header.setWidth("100%");
+        Button createProjectBtn = new Button("Create",
+                new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
+
+                    @Override
+                    public void buttonClick(Button.ClickEvent event) {
+                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoAdd(MyFeedsViewImpl.this, null));
+
+                    }
+                });
+        createProjectBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+        createProjectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+        header.addComponent(createProjectBtn);
+        header.setComponentAlignment(createProjectBtn, Alignment.MIDDLE_RIGHT);
+        
+        this.addComponent(header);
+        
         HorizontalLayout layout = new HorizontalLayout();
         layout.setWidth("100%");
         layout.setSpacing(true);
