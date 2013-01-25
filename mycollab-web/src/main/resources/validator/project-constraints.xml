@@ -23,6 +23,11 @@
                 <message>Short name must not be null</message>
             </constraint>
         </field>
+        <field name="projectstatus">
+            <constraint annotation="javax.validation.constraints.NotNull">
+                <message>The project status must not be null</message>
+            </constraint>
+        </field>
     </bean>
 
     <bean class="Message" ignore-annotations="true">

@@ -21,6 +21,16 @@
         <if test="category != null">
             ${category.operation} m_prj_message.category = #{category.value,javaType=VARCHAR}
         </if>
+        <if test="title != null">
+          <![CDATA[
+            ${title.operation} m_prj_message.title like '%${title.value}%'
+            ]]>
+        </if>
+        <if test="message != null">
+          <![CDATA[
+            ${message.operation} m_prj_message.message like '%${message.value}%' OR m_prj_message.title like '%${message.value}%'
+            ]]>
+        </if>
     </sql>
 	
     <sql id="selectMessage">

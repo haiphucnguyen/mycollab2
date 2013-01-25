@@ -12,6 +12,7 @@ public class ProjectSearchCriteria extends SearchCriteria {
     private StringSearchField projectStatus;
     private StringSearchField projectType;
     private NumberSearchField saccountid;
+    private StringSearchField projectName;
 
     public StringSearchField getUsername() {
         return username;
@@ -60,4 +61,12 @@ public class ProjectSearchCriteria extends SearchCriteria {
     public void setSaccountid(NumberSearchField saccountid) {
         this.saccountid = saccountid;
     }
+
+	public void setProjectName(StringSearchField projectName) {
+		this.projectName = projectName;
+	}
+
+	public StringSearchField getProjectName() {
+		return projectName;
+	}
 }
