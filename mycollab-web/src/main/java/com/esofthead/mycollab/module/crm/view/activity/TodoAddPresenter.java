@@ -19,7 +19,6 @@ public class TodoAddPresenter extends CrmGenericPresenter<TodoAddView> {
 
     public TodoAddPresenter(TodoAddView view) {
         super(TodoAddView.class);
-
         view.getEditFormHandlers().addFormHandler(new EditFormHandler<Task>() {
             @Override
             public void onSave(final Task item) {
