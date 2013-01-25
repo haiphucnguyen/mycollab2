@@ -19,4 +19,9 @@ public class UIConstants {
 	public static final String THEME_ROUND_BUTTON = "round-border";
 	public static final String SPLIT_BUTTON = "esofthead";
 	public static final String MESSAGE_IMPORTANT = "important";
+	public static final String WIDGET_TITLE = "widget-title";
+	public static final String WIDGET_ROW = "widget-row";
+	public static final String BUG_LIST = "bug-list";
+	public static final String DATE_INFO = "date-info";
+	public static final String SELECT_BG = "select-bg";
 }
