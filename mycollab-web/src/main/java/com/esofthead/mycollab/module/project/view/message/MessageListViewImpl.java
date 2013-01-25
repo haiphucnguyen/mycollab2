@@ -264,7 +264,7 @@ public class MessageListViewImpl extends AbstractView implements
 				}
 			});
 			searchBtn.setIcon(new ThemeResource("icons/22/search.png"));
-			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			searchBtn.setStyleName("link");
 			basicSearchBody.addComponent(searchBtn);
 			
 			this.setCompositionRoot(basicSearchBody);
