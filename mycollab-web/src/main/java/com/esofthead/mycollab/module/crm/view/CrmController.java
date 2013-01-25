@@ -42,9 +42,9 @@ import com.esofthead.mycollab.module.crm.view.activity.CallAddPresenter;
 import com.esofthead.mycollab.module.crm.view.activity.CallReadPresenter;
 import com.esofthead.mycollab.module.crm.view.activity.MeetingAddPresenter;
 import com.esofthead.mycollab.module.crm.view.activity.MeetingReadPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.TaskAddPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.TaskAddViewImpl;
-import com.esofthead.mycollab.module.crm.view.activity.TaskReadPresenter;
+import com.esofthead.mycollab.module.crm.view.activity.TodoAddPresenter;
+import com.esofthead.mycollab.module.crm.view.activity.TodoAddViewImpl;
+import com.esofthead.mycollab.module.crm.view.activity.TodoReadPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignListPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignReadPresenter;
@@ -224,9 +224,9 @@ public class CrmController {
 
                     @Override
                     public void handle(ActivityEvent.TaskAdd event) {
-                        TaskAddViewImpl view = ViewManager
-                                .getView(TaskAddViewImpl.class);
-                        new TaskAddPresenter(view).go(container,
+                        TodoAddViewImpl view = ViewManager
+                                .getView(TodoAddViewImpl.class);
+                        new TodoAddPresenter(view).go(container,
                                 new ScreenData.Add<Task>(new Task()));
                     }
                 });
@@ -242,9 +242,9 @@ public class CrmController {
 
                     @Override
                     public void handle(ActivityEvent.TaskEdit event) {
-                        TaskAddViewImpl view = ViewManager
-                                .getView(TaskAddViewImpl.class);
-                        new TaskAddPresenter(view).go(
+                        TodoAddViewImpl view = ViewManager
+                                .getView(TodoAddViewImpl.class);
+                        new TodoAddPresenter(view).go(
                                 container,
                                 new ScreenData.Edit<Task>((Task) event
                                 .getData()));
@@ -263,8 +263,8 @@ public class CrmController {
                     @SuppressWarnings({"unchecked", "rawtypes"})
                     @Override
                     public void handle(ActivityEvent.TaskRead event) {
-                        TaskReadPresenter presenter = PresenterResolver
-                                .getPresenter(TaskReadPresenter.class);
+                        TodoReadPresenter presenter = PresenterResolver
+                                .getPresenter(TodoReadPresenter.class);
                         presenter.go(container,
                                 new ScreenData.Preview(event.getData()));
 

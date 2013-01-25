@@ -13,12 +13,12 @@ import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class TaskAddPresenter extends CrmGenericPresenter<TaskAddView> {
+public class TodoAddPresenter extends CrmGenericPresenter<TodoAddView> {
 
     private static final long serialVersionUID = 1L;
 
-    public TaskAddPresenter(TaskAddView view) {
-        super(TaskAddView.class);
+    public TodoAddPresenter(TodoAddView view) {
+        super(TodoAddView.class);
 
         view.getEditFormHandlers().addFormHandler(new EditFormHandler<Task>() {
             @Override
