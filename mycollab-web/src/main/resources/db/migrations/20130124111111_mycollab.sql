@@ -9,7 +9,7 @@ ALTER TABLE `m_crm_call` DROP FOREIGN KEY `FK_m_crm_call_1` ;
 ALTER TABLE `m_crm_call` 
   ADD CONSTRAINT `FK_m_crm_call_1`
   FOREIGN KEY (`sAccountId` )
-  REFERENCES `mycollab`.`s_account` (`id` )
+  REFERENCES `s_account` (`id` )
   ON DELETE CASCADE
   ON UPDATE CASCADE;
 ALTER TABLE `m_crm_campaign` DROP FOREIGN KEY `FK_m_crm_campaign_5` ;
