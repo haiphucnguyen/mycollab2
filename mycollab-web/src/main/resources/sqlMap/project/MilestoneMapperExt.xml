@@ -29,6 +29,11 @@
         <if test="projectId != null" >
             <![CDATA[${projectId.operation} m_prj_milestone.projectid = ${projectId.value}]]>
         </if>
+        <if test="milestoneName != null">
+          <![CDATA[
+            ${milestoneName.operation} m_prj_milestone.name like '%${milestoneName.value}%'
+            ]]>
+        </if>
     </sql>
     
     <sql id="selectMilestone" >

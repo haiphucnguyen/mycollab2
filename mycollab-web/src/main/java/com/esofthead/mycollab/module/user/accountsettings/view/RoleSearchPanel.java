@@ -5,6 +5,9 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -88,7 +91,11 @@ public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
                         public void buttonClick(Button.ClickEvent event) {
                             searchCriteria = new RoleSearchCriteria();
                             searchCriteria.setsAccountId(new NumberSearchField(AppContext.getAccountId()));
-
+                            if (StringUtil.isNotNullOrEmpty((String) nameField
+        							.getValue())) {
+        						searchCriteria.setRoleName(new StringSearchField(
+        								SearchField.AND, (String) nameField.getValue()));
+        					}
                             RoleSearchPanel.this
                                     .notifySearchHandler(searchCriteria);
                         }

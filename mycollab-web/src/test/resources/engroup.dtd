@@ -56,17 +56,18 @@
     m_todo_category*,
     m_todo_status*,
     m_tracker_bug*,
+    m_tracker_bug_related_item*,
     m_tracker_component*,
     m_tracker_metadata*,
     m_tracker_query*,
     m_tracker_related_bug*,
-    m_tracker_related_item*,
     m_tracker_version*,
     s_account*,
     s_activitystream*,
     s_billing_plan*,
     s_country*,
     s_currency*,
+    s_report_bug_issue*,
     s_role_permission*,
     s_roles*,
     s_title*,
@@ -350,7 +351,7 @@
     firstname CDATA #IMPLIED
     lastname CDATA #REQUIRED
     leadsource CDATA #IMPLIED
-    assignto CDATA #IMPLIED
+    assignUser CDATA #IMPLIED
     department CDATA #IMPLIED
     officePhone CDATA #IMPLIED
     mobile CDATA #IMPLIED
@@ -726,6 +727,8 @@
     username CDATA #REQUIRED
     projectId CDATA #REQUIRED
     joinDate CDATA #REQUIRED
+    projectRoleId CDATA #IMPLIED
+    isAdmin CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_message EMPTY>
@@ -801,14 +804,14 @@
     owner CDATA #IMPLIED
     account CDATA #IMPLIED
     priority CDATA #IMPLIED
-    shortname CDATA #IMPLIED
+    shortname CDATA #REQUIRED
     planStartDate CDATA #IMPLIED
     planEndDate CDATA #IMPLIED
     targetBudget CDATA #IMPLIED
     homePage CDATA #IMPLIED
     actualBudget CDATA #IMPLIED
     projectType CDATA #IMPLIED
-    projectStatus CDATA #IMPLIED
+    projectStatus CDATA #REQUIRED
     description CDATA #IMPLIED
     defaultBillingRate CDATA #IMPLIED
     actualStartDate CDATA #IMPLIED
@@ -1018,6 +1021,14 @@
     sAccountId CDATA #REQUIRED
 >
 
+<!ELEMENT m_tracker_bug_related_item EMPTY>
+<!ATTLIST m_tracker_bug_related_item
+    id CDATA #REQUIRED
+    bugid CDATA #REQUIRED
+    type CDATA #REQUIRED
+    typeid CDATA #REQUIRED
+>
+
 <!ELEMENT m_tracker_component EMPTY>
 <!ATTLIST m_tracker_component
     id CDATA #REQUIRED
@@ -1057,14 +1068,6 @@
     relatedid CDATA #REQUIRED
     relatetype CDATA #REQUIRED
     comment CDATA #IMPLIED
->
-
-<!ELEMENT m_tracker_related_item EMPTY>
-<!ATTLIST m_tracker_related_item
-    id CDATA #REQUIRED
-    typeid CDATA #REQUIRED
-    type CDATA #REQUIRED
-    refkey CDATA #REQUIRED
 >
 
 <!ELEMENT m_tracker_version EMPTY>
@@ -1123,6 +1126,15 @@
     isocode CDATA #REQUIRED
     symbol CDATA #REQUIRED
     conversionrate CDATA #IMPLIED
+>
+
+<!ELEMENT s_report_bug_issue EMPTY>
+<!ATTLIST s_report_bug_issue
+    id CDATA #REQUIRED
+    sAccountId CDATA #IMPLIED
+    username CDATA #IMPLIED
+    userAgent CDATA #IMPLIED
+    errorTrace CDATA #REQUIRED
 >
 
 <!ELEMENT s_role_permission EMPTY>

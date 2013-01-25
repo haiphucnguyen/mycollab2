@@ -2,7 +2,7 @@
 <dataset>
     <s_account id="1" />
     <s_user username="hainguyen" firstname="Nguyen" lastname="Hai" accountId="1"/>
-    <m_prj_project id="1" name="a" sAccountId="1" />
+    <m_prj_project id="1" name="a" sAccountId="1" shortname="aaa" projectStatus="Open" />
     <m_prj_risk id="1" description="aaa" projectid="1" riskname="a" source="source"  sAccountId="1"/>
     <m_prj_risk id="2" description="aaa" projectid="1" riskname="ab"  sAccountId="1"/>
     <m_prj_risk id="3" description="aaa" projectid="1" riskname="c" sAccountId="1"/>

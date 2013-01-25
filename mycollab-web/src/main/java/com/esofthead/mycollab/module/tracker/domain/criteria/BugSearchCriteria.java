@@ -50,7 +50,9 @@ public class BugSearchCriteria extends SearchCriteria {
 	SetSearchField<String> severities;
 
 	SetSearchField<String> statuses;
-
+	
+	private NumberSearchField projectId;
+	
 	public StringSearchField getAssignuser() {
 		return assignuser;
 	}
@@ -225,5 +227,13 @@ public class BugSearchCriteria extends SearchCriteria {
 
 	public void setStatuses(SetSearchField<String> statuses) {
 		this.statuses = statuses;
+	}
+
+	public void setProjectId(NumberSearchField projectId) {
+		this.projectId = projectId;
+	}
+
+	public NumberSearchField getProjectId() {
+		return projectId;
 	}
 }

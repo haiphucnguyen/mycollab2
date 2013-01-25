@@ -45,10 +45,10 @@
 			value="com.esofthead.mycollab.module.tracker.dao.QueryMapperExt" />
 	</bean>
 
-	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="relatedItemMapper">
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="bugRelatedItemMapper">
 		<property name="sqlSessionTemplate" ref="sqlMapClient" />
 		<property name="mapperInterface"
-			value="com.esofthead.mycollab.module.tracker.dao.RelatedItemMapper" />
+			value="com.esofthead.mycollab.module.tracker.dao.BugRelatedItemMapper" />
 	</bean>
 
 	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="versionMapper">

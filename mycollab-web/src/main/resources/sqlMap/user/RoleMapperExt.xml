@@ -12,6 +12,11 @@
             ${sAccountId.operation} s_roles.sAccountId = ${sAccountId.value}
             ]]>
         </if>
+        <if test="roleName != null">
+          <![CDATA[
+            ${roleName.operation} s_roles.rolename like '%${roleName.value}%'
+            ]]>
+        </if>
     </sql>
 
     <select id="getTotalCount" resultType="int" parameterType="RoleSearchCriteria">

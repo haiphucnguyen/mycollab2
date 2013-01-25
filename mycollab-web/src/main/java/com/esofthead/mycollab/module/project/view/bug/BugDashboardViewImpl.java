@@ -154,6 +154,9 @@ public class BugDashboardViewImpl extends AbstractView implements
         StatusSummaryWidget statusSummaryWidget = new StatusSummaryWidget();
         rightColumn.addComponent(new LazyLoadWrapper(statusSummaryWidget));
         
+        BugTrendReportWidget bugTrendWidget = new BugTrendReportWidget();
+        rightColumn.addComponent(new LazyLoadWrapper(bugTrendWidget));
+        
         BugSearchCriteria statusSearchCriteria = new BugSearchCriteria();
         statusSearchCriteria.setProjectid(new NumberSearchField(project.getId()));
         statusSummaryWidget.setSearchCriteria(statusSearchCriteria);

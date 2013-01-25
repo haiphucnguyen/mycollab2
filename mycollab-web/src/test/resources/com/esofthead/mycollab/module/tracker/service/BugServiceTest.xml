@@ -4,7 +4,7 @@
 	<s_account id="1"/>
 	<s_user username="admin" firstname="Nguyen" lastname="Hai" accountId="1"/>
 	<s_user username="user1" firstname="first1" lastname="last1" accountId="1"/>
-	<m_prj_project id="1" name="aaa" sAccountId="1"/>
+	<m_prj_project id="1" name="aaa" sAccountId="1" shortname="aaa" projectStatus="Open"/>
         
 	<m_tracker_component projectid="1" componentname="component1"
 		id="1" sAccountId="1"/>
@@ -25,18 +25,18 @@
 	<m_tracker_version id="2" projectid="1" versionname="version2" sAccountId="1"/>
         
         <!--FIXED version-->
-	<m_tracker_related_item refkey="bug-1" type="0"
+	<m_tracker_bug_related_item bugid="1" type="FixVersion"
 		typeid="1" id="1" />
         
         <!--FIXED version-->
-	<m_tracker_related_item refkey="bug-1" type="0"
+	<m_tracker_bug_related_item bugid="1" type="FixVersion"
 		typeid="2" id="2" />
         
         <!--AFFECTED VERSION-->
-	<m_tracker_related_item refkey="bug-1" type="1"
+	<m_tracker_bug_related_item bugid="1" type="AffVersion"
 		typeid="2" id="3" />
         
         <!--COMPONENT-->
-	<m_tracker_related_item refkey="bug-1" type="2"
+	<m_tracker_bug_related_item bugid="1" type="Component"
 		typeid="1" id="4" />
 </dataset>

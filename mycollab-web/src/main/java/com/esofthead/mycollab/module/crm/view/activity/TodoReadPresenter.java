@@ -16,12 +16,12 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 
-public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
+public class TodoReadPresenter extends CrmGenericPresenter<TodoReadView> {
 
 	private static final long serialVersionUID = 1L;
 
-	public TaskReadPresenter() {
-		super(TaskReadView.class);
+	public TodoReadPresenter() {
+		super(TodoReadView.class);
 		bind();
 	}
 

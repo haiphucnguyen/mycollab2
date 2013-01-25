@@ -6,6 +6,8 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
@@ -109,6 +111,11 @@ public class MilestoneSearchPanel extends GenericSearchPanel<MilestoneSearchCrit
                             searchCriteria = new MilestoneSearchCriteria();
                             searchCriteria.setProjectId(new NumberSearchField(
                                     SearchField.AND, project.getId()));
+                            if (StringUtil.isNotNullOrEmpty((String) nameField
+        							.getValue())) {
+        						searchCriteria.setMilestoneName(new StringSearchField(
+        								SearchField.AND, (String) nameField.getValue()));
+        					}
 
                             MilestoneSearchPanel.this
                                     .notifySearchHandler(searchCriteria);

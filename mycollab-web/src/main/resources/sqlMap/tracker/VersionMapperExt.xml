@@ -12,6 +12,11 @@
             ${projectId.operation} m_tracker_version.projectid =
             #{projectId.value,javaType=INTEGER}
         </if>
+         <if test="versionname != null">
+          <![CDATA[
+            ${versionname.operation} m_tracker_version.versionname like '%${versionname.value}%'
+            ]]>
+        </if>
         
         <if test="id != null">
             <![CDATA[${id.operation} m_tracker_version.id ${id.compareOperator} #{id.value,javaType=INTEGER}]]>

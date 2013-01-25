@@ -13,6 +13,7 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -38,9 +39,9 @@ public class ContactOpportunityListComp extends RelatedListComp<OpportunitySearc
         contentContainer.setSpacing(true);
 
         SplitButton controlsBtn = new SplitButton();
-        controlsBtn.addStyleName(SplitButton.STYLE_CHAMELEON);
+        controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
         controlsBtn.setCaption("New Opportunity");
-        controlsBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+        controlsBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
         controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
             @Override
             public void splitButtonClick(SplitButton.SplitButtonClickEvent event) {

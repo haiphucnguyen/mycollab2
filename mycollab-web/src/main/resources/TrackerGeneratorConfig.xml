@@ -64,9 +64,9 @@
             tableName="m_tracker_related_bug" />
 
         <table
-            domainObjectName="RelatedItem"
+            domainObjectName="BugRelatedItem"
             schema="mycollab"
-            tableName="m_tracker_related_item" />
+            tableName="m_tracker_bug_related_item" />
 
         <table
             domainObjectName="Version"

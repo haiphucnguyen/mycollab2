@@ -93,8 +93,8 @@
         <if test="resolvedDateTo != null" >
 <![CDATA[${resolvedDateTo.operation} m_tracker_bug.resolveddate <= #{resolvedDateTo.value,javaType=DATE}]]></if>
 
-        <if test="projectid" >
-			<![CDATA[${projectid.operation} m_tracker_bug.projectid=#{projectid.value,javaType=INTEGER}]]>
+        <if test="projectId != null" >
+			<![CDATA[${projectId.operation} m_tracker_bug.projectid=#{projectId.value,javaType=INTEGER}]]>
 
         </if>
 
@@ -112,10 +112,10 @@
 
 <![CDATA[
             (SELECT COUNT(*)
-                FROM m_tracker_related_item
-                WHERE m_tracker_related_item.type='1'
-                    AND m_tracker_related_item.typeid=#{affectedversion,javaType=INTEGER}
-                    AND m_tracker_related_item.refkey=concat('bug-', m_tracker_bug.id))> 0
+                FROM m_tracker_bug_related_item
+                WHERE m_tracker_bug_related_item.type='AffVersion'
+                    AND m_tracker_bug_related_item.typeid=#{affectedversion,javaType=INTEGER}
+                    AND m_tracker_bug_related_item.bugid=m_tracker_bug.id)> 0
                     ]]>
             </foreach>
         </if>
@@ -134,10 +134,10 @@
 
 <![CDATA[
                 (SELECT COUNT(*) 
-                    FROM m_tracker_related_item
-                    WHERE m_tracker_related_item.type='0'
-                        AND m_tracker_related_item.typeid=#{fixedversion,javaType=INTEGER}
-                        AND m_tracker_related_item.refkey=concat('bug-', m_tracker_bug.id))> 0
+                    FROM m_tracker_bug_related_item
+                    WHERE m_tracker_bug_related_item.type='FixVersion'
+                        AND m_tracker_bug_related_item.typeid=#{fixedversion,javaType=INTEGER}
+                        AND m_tracker_bug_related_item.bugid=m_tracker_bug.id)> 0
                 ]]>
             </foreach>
         </if>
@@ -155,17 +155,17 @@
                 separator="OR" >
 
 <![CDATA[
-                (((SELECT COUNT(*) 
-                    FROM m_tracker_related_item
-                    WHERE m_tracker_related_item.type='0'
-                        AND m_tracker_related_item.typeid=#{versionid,javaType=INTEGER}
-                        AND m_tracker_related_item.refkey=concat('bug-', m_tracker_bug.id))> 0)
+                ((SELECT COUNT(*)
+                FROM m_tracker_bug_related_item
+                WHERE m_tracker_bug_related_item.type='AffVersion'
+                    AND m_tracker_bug_related_item.typeid=#{affectedversion,javaType=INTEGER}
+                    AND m_tracker_bug_related_item.bugid=m_tracker_bug.id)> 0)
                   OR 
-                  ((SELECT COUNT(*)
-                    FROM m_tracker_related_item
-                    WHERE m_tracker_related_item.type='1'
-                        AND m_tracker_related_item.typeid=#{versionid,javaType=INTEGER}
-                        AND m_tracker_related_item.refkey=concat('bug-', m_tracker_bug.id))> 0))
+                  ((SELECT COUNT(*) 
+                    FROM m_tracker_bug_related_item
+                    WHERE m_tracker_bug_related_item.type='FixVersion'
+                        AND m_tracker_bug_related_item.typeid=#{fixedversion,javaType=INTEGER}
+                        AND m_tracker_bug_related_item.bugid=m_tracker_bug.id)> 0)
                 ]]>
             </foreach>
         </if>
@@ -184,10 +184,10 @@
 
 <![CDATA[
                 (SELECT COUNT(*)
-                    FROM m_tracker_related_item
-                    WHERE m_tracker_related_item.type='2'
-                        AND m_tracker_related_item.typeid=#{componentid,javaType=INTEGER}
-                        AND m_tracker_related_item.refkey=concat('bug-', m_tracker_bug.id))> 0
+                    FROM m_tracker_bug_related_item
+                    WHERE m_tracker_bug_related_item.type='Component'
+                        AND m_tracker_bug_related_item.typeid=#{componentid,javaType=INTEGER}
+                        AND m_tracker_bug_related_item.bugid=m_tracker_bug.id)> 0
                 ]]>
             </foreach>
         </if>
@@ -290,11 +290,11 @@
                LEFT OUTER JOIN m_prj_project ON (m_tracker_bug.projectid = m_prj_project.id)
                LEFT OUTER JOIN s_user AS assignuserTbl ON (m_tracker_bug.assignuser=assignuserTbl.username)
                LEFT OUTER JOIN s_user AS loguserTbl ON (m_tracker_bug.logby=loguserTbl.username)
-               LEFT OUTER JOIN m_tracker_related_item AS relatedItem1 ON (relatedItem1.refkey = CONCAT('bug-', m_tracker_bug.id) AND relatedItem1.type='1')
+               LEFT OUTER JOIN m_tracker_bug_related_item AS relatedItem1 ON (relatedItem1.bugid = m_tracker_bug.id AND relatedItem1.type='AffVersion')
                LEFT OUTER JOIN m_tracker_version AS affectedversion ON (affectedversion.id = relatedItem1.typeid)
-               LEFT OUTER JOIN m_tracker_related_item AS relatedItem2 ON (relatedItem2.refkey = CONCAT('bug-', m_tracker_bug.id) AND relatedItem2.type='0')
+               LEFT OUTER JOIN m_tracker_bug_related_item AS relatedItem2 ON (relatedItem2.bugid = m_tracker_bug.id AND relatedItem2.type='FixVersion')
                LEFT OUTER JOIN m_tracker_version AS fixedversion ON (fixedversion.id = relatedItem2.typeid)
-               LEFT OUTER JOIN m_tracker_related_item AS relatedItem3 ON (relatedItem3.refkey = CONCAT('bug-', m_tracker_bug.id) AND relatedItem3.type='2')
+               LEFT OUTER JOIN m_tracker_bug_related_item AS relatedItem3 ON (relatedItem3.bugid = m_tracker_bug.id AND relatedItem3.type='Component')
                LEFT OUTER JOIN m_tracker_component AS component ON (component.id = relatedItem3.typeid)
                
         ]]>
@@ -483,9 +483,9 @@
             COUNT(IFNULL(m_tracker_component.id,'')) AS value,
             m_tracker_component.componentname as groupname
         FROM m_tracker_bug
-        RIGHT OUTER JOIN m_tracker_related_item ON (CONCAT('bug-', m_tracker_bug.id) = m_tracker_related_item.refkey) 
-        RIGHT OUTER JOIN m_tracker_component ON ((m_tracker_related_item.type = 2)
-                AND m_tracker_component.id = m_tracker_related_item.typeid)
+        RIGHT OUTER JOIN m_tracker_bug_related_item ON (m_tracker_bug.id = m_tracker_bug_related_item.bugid) 
+        RIGHT OUTER JOIN m_tracker_component ON ((m_tracker_bug_related_item.type = 'Component')
+                AND m_tracker_component.id = m_tracker_bug_related_item.typeid)
         ]]>
 
         <trim
@@ -503,7 +503,8 @@
 <![CDATA[
         SELECT 0 as groupid, COUNT(m_tracker_bug.id) as value, '' as groupname
             FROM m_tracker_bug
-            WHERE (SELECT COUNT(*) FROM m_tracker_related_item WHERE m_tracker_related_item.type=2 AND CONCAT('bug-', m_tracker_bug.id) = m_tracker_related_item.refkey) = 0
+            WHERE (SELECT COUNT(*) FROM m_tracker_bug_related_item WHERE m_tracker_bug_related_item.type='Component' 
+                AND m_tracker_bug.id=m_tracker_bug_related_item.typeid) = 0
         ]]>
 
         <include refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
