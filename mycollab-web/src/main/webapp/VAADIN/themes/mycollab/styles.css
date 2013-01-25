@@ -843,6 +843,7 @@ input.v-textfield-errorField {
 }
 .projectinfo-header .project-name {
 	font-weight: bold;
+	font-size: 16px;
 }
 .projectinfo-header .project-shortname {
 	color: gray;

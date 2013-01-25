@@ -6,7 +6,7 @@ package com.esofthead.mycollab.module.project.view;
 
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.view.user.ProjectFormLayoutFactory;
+import com.esofthead.mycollab.module.project.view.user.ProjectFormViewLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -39,6 +39,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 		prjDisplay = new BasicProjectInformation();
 		projectInfoHeader = new HorizontalLayout();
 		projectInfoHeader.setWidth("100%");
+		projectInfoHeader.setStyleName(UIConstants.PROJECT_INFO_HEADER);
 		this.addComponent(projectInfoHeader);
 		this.addComponent(prjDisplay);
 	}
@@ -47,7 +48,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 		project = (SimpleProject) AppContext
 				.getVariable(ProjectContants.PROJECT_NAME);
 
-		projectInfoHeader.setStyleName(UIConstants.PROJECT_INFO_HEADER);
+		projectInfoHeader.removeAllComponents();
 		Label projectName = new Label(project.getName());
 		projectName.setStyleName(UIConstants.PROJECT_NAME);
 		projectName.setSizeUndefined();
@@ -188,7 +189,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 
 		@Override
 		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new ProjectFormLayoutFactory.ProjectInformationLayout());
+			this.setFormLayoutFactory(new ProjectFormViewLayoutFactory.ProjectInformationLayout());
 			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
 				private static final long serialVersionUID = 1L;
 
