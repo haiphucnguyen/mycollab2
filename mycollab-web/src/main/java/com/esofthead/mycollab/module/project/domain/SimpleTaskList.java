@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.domain;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -14,7 +15,7 @@ public class SimpleTaskList extends TaskList {
 
     private String milestoneName;
     private String ownerFullName;
-    private List<SimpleTask> subTasks;
+    private List<SimpleTask> subTasks = new ArrayList<SimpleTask>();
 
     public String getMilestoneName() {
         return milestoneName;
