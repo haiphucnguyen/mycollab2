@@ -78,6 +78,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
         taskLists = new BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList>(
                 null, AppContext.getSpringBean(ProjectTaskListService.class),
                 TaskListRowDisplayHandler.class);
+        taskLists.setLazyLoad(true);
         this.addComponent(taskLists);
     }
 
@@ -117,6 +118,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
             this.taskList = taskListParam;
             this.addStyleName("task-list");
             initHeader();
+            taskDisplayComponent = (TaskDisplayComponent) this.bodyContent;
         }
 
         private void initHeader() {
