@@ -59,6 +59,11 @@
             tableName="s_activitystream" />
 
         <table
+            domainObjectName="ReportBugIssue"
+            schema="mycollab"
+            tableName="s_report_bug_issue" />
+        
+        <table
             domainObjectName="Comment"
             schema="mycollab"
             tableName="m_comment" />

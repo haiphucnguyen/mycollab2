@@ -26,13 +26,13 @@ import com.vaadin.ui.TextField;
 import java.util.Collection;
 
 @ViewComponent
-public class TaskAddViewImpl extends AbstractView implements TaskAddView {
+public class TodoAddViewImpl extends AbstractView implements TodoAddView {
 
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
     private Task task;
 
-    public TaskAddViewImpl() {
+    public TodoAddViewImpl() {
         super();
         editForm = new EditForm();
         this.addComponent(editForm);
@@ -56,7 +56,7 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
             super.setItemDataSource(newDataSource, propertyIds);
         }
 
-        private class FormLayoutFactory extends TaskFormLayoutFactory {
+        private class FormLayoutFactory extends TodoFormLayoutFactory {
 
             private static final long serialVersionUID = 1L;
             

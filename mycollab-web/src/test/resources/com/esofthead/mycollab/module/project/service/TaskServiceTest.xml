@@ -1,7 +1,7 @@
 <!DOCTYPE dataset PUBLIC "-//eSoftHead/Engroup Database Schema//EN" "http://www.esofthead.com/engroup.dtd">
 <dataset>
     <s_account id="1" />
-    <m_prj_project id="1" name="a" sAccountId="1" />
+    <m_prj_project id="1" name="a" sAccountId="1" shortname="aaa" projectStatus="Open" />
     <m_prj_task taskindex="1" id="1" projectid="1" taskname="a" sAccountId="1"/>
     <m_prj_task taskindex="2" id="2" projectid="1" taskname="b"
         parenttask="1" percentagecomplete="70" ismilestone="true" sAccountId="1"/>
