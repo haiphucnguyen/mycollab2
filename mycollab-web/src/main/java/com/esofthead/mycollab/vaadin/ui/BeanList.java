@@ -4,6 +4,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CustomComponent;
 import com.vaadin.ui.VerticalLayout;
@@ -23,6 +24,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
     private SearchService searchService;
     private Class<? extends RowDisplayHandler<T>> rowDisplayHandler;
     private VerticalLayout contentLayout;
+    private boolean isLazyLoad = false;
     
     public BeanList(Object parentComponent, SearchService searchService,
             Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
@@ -50,6 +52,10 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
         if (row != null && contentLayout != null) {
             contentLayout.addComponent(row, 0);
         }
+    }
+    
+    public void setLazyLoad(boolean isLazyLoad) {
+        this.isLazyLoad = isLazyLoad;
     }
 
     private RowDisplayHandler<T> constructRowndisplayHandler() {
@@ -92,7 +98,11 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
                 RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
                 Component row = rowHandler.generateRow(item, i);
                 if (row != null) {
-                    contentLayout.addComponent(row);
+                    if (isLazyLoad) {
+                        contentLayout.addComponent(new LazyLoadWrapper(row));
+                    } else {
+                        contentLayout.addComponent(row);
+                    }
                 }
 
                 i++;

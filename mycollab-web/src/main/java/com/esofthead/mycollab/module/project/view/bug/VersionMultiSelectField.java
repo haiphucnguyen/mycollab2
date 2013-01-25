@@ -4,10 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -16,6 +12,9 @@ import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
 import com.esofthead.mycollab.web.AppContext;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
 
 /**
  *
@@ -23,16 +22,16 @@ import com.esofthead.mycollab.web.AppContext;
  */
 @SuppressWarnings("serial")
 public class VersionMultiSelectField extends MultiSelectComp {
-	
-	private HashMap<String, Version> hashMapVersion;
+
+    private HashMap<String, Version> hashMapVersion;
 
     public VersionMultiSelectField() {
         super();
     }
 
-	@Override
-	void initData() {
-		VersionSearchCriteria searchCriteria = new VersionSearchCriteria();
+    @Override
+    void initData() {
+        VersionSearchCriteria searchCriteria = new VersionSearchCriteria();
 
         SimpleProject project = (SimpleProject) AppContext
                 .getVariable("project");
@@ -51,18 +50,18 @@ public class VersionMultiSelectField extends MultiSelectComp {
         }
 
         this.loadData(lstVersionName);
-	}
-	
-	public List<Version> getListSelectedVersion() {
-		List<String> lstStr =  getSelectedItem();
-		List<Version> lstValues = new ArrayList<Version>();
-		
-		for (int i = 0; i < lstStr.size(); i++) {
-			if (hashMapVersion.containsKey(lstStr.get(i))) {
-				lstValues.add(hashMapVersion.get(lstStr.get(i)));
-			}
-		}
-		
-		return lstValues;
-	}
+    }
+
+    public List<Version> getSelectedVersions() {
+        List<String> lstStr = getSelectedItem();
+        List<Version> lstValues = new ArrayList<Version>();
+
+        for (int i = 0; i < lstStr.size(); i++) {
+            if (hashMapVersion.containsKey(lstStr.get(i))) {
+                lstValues.add(hashMapVersion.get(lstStr.get(i)));
+            }
+        }
+
+        return lstValues;
+    }
 }

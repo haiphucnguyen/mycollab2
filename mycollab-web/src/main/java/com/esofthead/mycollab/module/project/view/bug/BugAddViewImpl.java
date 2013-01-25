@@ -1,11 +1,10 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
+import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -21,6 +20,9 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 @ViewComponent
 public class BugAddViewImpl extends AbstractView implements BugAddView {
@@ -31,6 +33,10 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
     private EditForm editForm;
     private SimpleBug bug;
     private FormAttachmentUploadField attachmentUploadField;
+    
+    private ComponentMultiSelectField componentSelect;
+    private VersionMultiSelectField affectedVersionSelect;
+    private VersionMultiSelectField fixedVersionSelect;
 
     public BugAddViewImpl() {
         super();
@@ -48,6 +54,21 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
     @Override
     public AttachmentUploadField getAttachUploadField() {
         return attachmentUploadField;
+    }
+
+    @Override
+    public List<Component> getComponents() {
+        return componentSelect.getSelectedComponents();
+    }
+
+    @Override
+    public List<Version> getAffectedVersions() {
+        return affectedVersionSelect.getSelectedVersions();
+    }
+
+    @Override
+    public List<Version> getFixedVersion() {
+        return fixedVersionSelect.getSelectedVersions();
     }
 
     private class EditForm extends AdvancedEditBeanForm<SimpleBug> {
@@ -114,11 +135,14 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
                 } else if (propertyId.equals("severity")) {
                     return new BugSeverityComboBox();
                 } else if (propertyId.equals("components")) {
-                    return new ComponentMultiSelectComp();
+                    componentSelect = new ComponentMultiSelectField();
+                    return componentSelect;
                 } else if (propertyId.equals("affectedVersions")) {
-                    return new VersionMultiSelectField();
+                    affectedVersionSelect = new VersionMultiSelectField();
+                    return affectedVersionSelect;
                 } else if (propertyId.equals("fixedVersions")) {
-                    return new VersionMultiSelectField();
+                    fixedVersionSelect = new VersionMultiSelectField();
+                    return fixedVersionSelect;
                 }
                 else if (propertyId.equals("summary")) {
                     TextField tf = new TextField();
