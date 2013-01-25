@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project;
 
+import com.esofthead.mycollab.module.tracker.BugStatusConstants;
+
 public class ProjectDataTypeFactory {
 
     public static final String PROJECT_STATUS_OPEN = "Open";
@@ -15,7 +17,7 @@ public class ProjectDataTypeFactory {
     private static String[] BUG_PRIORITY_LIST = new String[]{"Blocker",
         "Critical", "Major", "Minor", "Trivial"};
     private static String[] BUG_SEVERITY_LIST = new String[]{"Critical", "Major", "Minor", "Trivial"};
-    private static String[] BUG_STATUS_LIST = new String[]{"UnConfirmed", "New", "Assigned", "ReOpened", "Ready", "Resolved", "Verify"};
+    private static String[] BUG_STATUS_LIST = new String[]{BugStatusConstants.CLOSE, BugStatusConstants.INPROGRESS, BugStatusConstants.OPEN, BugStatusConstants.TESTPENDING, BugStatusConstants.WONFIX};
 
     public static String[] getProjectTypeList() {
         return PROJECT_TYPE_LIST;

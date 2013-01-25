@@ -12,24 +12,20 @@ import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.module.tracker.RelatedItemConstants;
 import com.esofthead.mycollab.module.tracker.dao.BugMapper;
 import com.esofthead.mycollab.module.tracker.dao.BugMapperExt;
 import com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt;
 import com.esofthead.mycollab.module.tracker.dao.MetaDataMapper;
-import com.esofthead.mycollab.module.tracker.dao.RelatedItemMapper;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.MetaData;
 import com.esofthead.mycollab.module.tracker.domain.MetaDataExample;
 import com.esofthead.mycollab.module.tracker.domain.MetaField;
 import com.esofthead.mycollab.module.tracker.domain.MetaOptionField;
-import com.esofthead.mycollab.module.tracker.domain.RelatedItemExample;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
@@ -59,8 +55,6 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
     @Autowired
     protected MetaDataMapper metaDataMapper;
     @Autowired
-    protected RelatedItemMapper relatedItemMapper;
-    @Autowired
     protected AuditLogService auditLogService;
     @Autowired
     protected AttachmentService attachmentService;
@@ -75,31 +69,6 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
     @Override
     public ISearchableDAO<BugSearchCriteria> getSearchMapper() {
         return bugMapperExt;
-    }
-
-    @Override
-    protected int internalRemoveWithSession(Integer primaryKey, String username) {
-        Bug bug = findByPrimaryKey(primaryKey);
-
-        RelatedItemExample ex = new RelatedItemExample();
-        ex.createCriteria()
-                .andTypeIn(
-                Arrays.asList(RelatedItemConstants.AFFECTED_VERSION,
-                RelatedItemConstants.COMPONENT,
-                RelatedItemConstants.FIXED_VERSION))
-                .andRefkeyEqualTo("bug-" + primaryKey);
-        relatedItemMapper.deleteByExample(ex);
-
-        // remove bug's attachments
-        String attachmentid = "defect-" + primaryKey;
-        // attachmentService.removeById(attachmentid);
-
-        // notify watchers
-        String bugid = "defect-" + primaryKey;
-
-        monitorItemService.deleteWatchingItems(bugid);
-
-        return super.remove(primaryKey);
     }
 
     @Override
