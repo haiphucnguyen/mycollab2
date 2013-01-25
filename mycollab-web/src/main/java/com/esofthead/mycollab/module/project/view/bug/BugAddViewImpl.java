@@ -21,14 +21,11 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import java.util.List;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 @ViewComponent
 public class BugAddViewImpl extends AbstractView implements BugAddView {
 
     private static final long serialVersionUID = 1L;
-    private static Logger log = LoggerFactory.getLogger(BugAddViewImpl.class);
     
     private EditForm editForm;
     private SimpleBug bug;

@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.BugResolutionConstants;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -91,10 +92,22 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
             int bugId = bugService.saveWithSession(bug, AppContext.getUsername());
             AttachmentUploadField uploadField = view.getAttachUploadField();
             uploadField.saveContentsToRepo(AttachmentConstants.PROJECT_BUG_TYPE, bugId);
+            
+            //save component
+            BugRelatedItemService bugRelatedItemService = AppContext.getSpringBean(BugRelatedItemService.class);
+            bugRelatedItemService.saveAffectedVersionsOfBug(bugId, view.getAffectedVersions());
+            bugRelatedItemService.saveFixedVersionsOfBug(bugId, view.getFixedVersion());
+            bugRelatedItemService.saveComponentsOfBug(bugId, view.getComponents());
         } else {
             bugService.updateWithSession(bug, AppContext.getUsername());
             AttachmentUploadField uploadField = view.getAttachUploadField();
             uploadField.saveContentsToRepo(AttachmentConstants.PROJECT_BUG_TYPE, bug.getId());
+            
+            int bugId = bug.getId();
+            BugRelatedItemService bugRelatedItemService = AppContext.getSpringBean(BugRelatedItemService.class);
+            bugRelatedItemService.updateAfftedVersionsOfBug(bugId, view.getAffectedVersions());
+            bugRelatedItemService.updateFixedVersionsOfBug(bugId, view.getFixedVersion());
+            bugRelatedItemService.updateComponentsOfBug(bugId, view.getComponents());
         }
         
     }
