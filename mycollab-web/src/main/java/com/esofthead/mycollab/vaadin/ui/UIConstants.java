@@ -24,4 +24,7 @@ public class UIConstants {
 	public static final String BUG_LIST = "bug-list";
 	public static final String DATE_INFO = "date-info";
 	public static final String SELECT_BG = "select-bg";
+	public static final String PROJECT_INFO_HEADER = "projectinfo-header";
+	public static final String PROJECT_NAME = "project-name";
+	public static final String PROJECT_SHORT_NAME = "project-shortname";
 }

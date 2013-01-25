@@ -15,168 +15,205 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class ProjectInformationComponent extends VerticalLayout {
 
-    private SimpleProject project;
-    private ProjectDisplayInformation prjDisplay;
+	private SimpleProject project;
+	private ProjectDisplayInformation prjDisplay;
+	private final HorizontalLayout projectInfoHeader;
 
-    public ProjectInformationComponent() {
-        prjDisplay = new BasicProjectInformation();
-        this.addComponent(prjDisplay);
-    }
+	public ProjectInformationComponent() {
+		prjDisplay = new BasicProjectInformation();
+		projectInfoHeader = new HorizontalLayout();
+		projectInfoHeader.setWidth("100%");
+		this.addComponent(projectInfoHeader);
+		this.addComponent(prjDisplay);
+	}
 
-    public void displayProjectInformation() {
-        project = (SimpleProject) AppContext
-                .getVariable(ProjectContants.PROJECT_NAME);
-        prjDisplay.show();
-    }
+	public void displayProjectInformation() {
+		project = (SimpleProject) AppContext
+				.getVariable(ProjectContants.PROJECT_NAME);
 
-    private interface ProjectDisplayInformation extends Component {
+		projectInfoHeader.setStyleName(UIConstants.PROJECT_INFO_HEADER);
+		Label projectName = new Label(project.getName());
+		projectName.setStyleName(UIConstants.PROJECT_NAME);
+		projectName.setSizeUndefined();
+		Label projectShortname = new Label("(" + project.getShortname() + ")");
+		projectShortname.setStyleName(UIConstants.PROJECT_SHORT_NAME);
+		projectInfoHeader.addComponent(projectName);
+		projectInfoHeader.addComponent(projectShortname);
+		projectInfoHeader.setExpandRatio(projectShortname, 1.0f);
+		projectInfoHeader.setComponentAlignment(projectShortname,
+				Alignment.TOP_LEFT);
 
-        void show();
-    }
+		prjDisplay.show();
+	}
 
-    private class BasicProjectInformation extends VerticalLayout implements ProjectDisplayInformation {
+	private interface ProjectDisplayInformation extends Component {
 
-        private BasicPreviewForm previewForm;
+		void show();
+	}
 
-        public BasicProjectInformation() {
-            previewForm = new BasicPreviewForm();
-            this.addComponent(previewForm);
+	private class BasicProjectInformation extends VerticalLayout implements
+			ProjectDisplayInformation {
 
-            Button moreBtn = new Button("More", new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    ProjectInformationComponent.this.removeComponent(BasicProjectInformation.this);
-                    prjDisplay = new DetailProjectInformation();
-                    ProjectInformationComponent.this.addComponent(prjDisplay);
-                    prjDisplay.show();
-                }
-            });
-            moreBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-            this.addComponent(moreBtn);
-        }
+		private final BasicPreviewForm previewForm;
 
-        @Override
-        public void show() {
-            previewForm.setItemDataSource(new BeanItem(project));
-        }
-    }
+		public BasicProjectInformation() {
+			previewForm = new BasicPreviewForm();
+			this.addComponent(previewForm);
 
-    private class BasicPreviewForm extends AdvancedPreviewBeanForm<SimpleProject> {
+			Button moreBtn = new Button("More", new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					ProjectInformationComponent.this
+							.removeComponent(BasicProjectInformation.this);
+					prjDisplay = new DetailProjectInformation();
+					ProjectInformationComponent.this.addComponent(prjDisplay);
+					prjDisplay.show();
+				}
+			});
+			moreBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			this.addComponent(moreBtn);
+		}
 
-        private static final long serialVersionUID = 1L;
+		@Override
+		public void show() {
+			previewForm.setItemDataSource(new BeanItem(project));
+		}
+	}
 
-        @Override
-        public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new IFormLayoutFactory() {
-                private GridFormLayoutHelper informationLayout;
+	private class BasicPreviewForm extends
+			AdvancedPreviewBeanForm<SimpleProject> {
 
-                @Override
-                public Layout getLayout() {
-                    informationLayout = new GridFormLayoutHelper(2, 2);
-                    informationLayout.getLayout().setWidth("900px");
-                    return informationLayout.getLayout();
-                }
+		private static final long serialVersionUID = 1L;
 
-                @Override
-                public void attachField(Object propertyId, Field field) {
-                    if (propertyId.equals("homepage")) {
-                        informationLayout.addComponent(field, "Home Page", 0, 0);
-                    } else if (propertyId.equals("actualstartdate")) {
-                        informationLayout.addComponent(field, "Start Date", 1, 0);
-                    } else if (propertyId.equals("description")) {
-                        informationLayout.addComponent(field, "Description", 0, 1, 2,
-                                UIConstants.DEFAULT_2XCONTROL_WIDTH);
-                    }
-                }
-            });
+		@Override
+		public void setItemDataSource(Item newDataSource) {
+			this.setFormLayoutFactory(new IFormLayoutFactory() {
+				private GridFormLayoutHelper informationLayout;
 
-            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-                private static final long serialVersionUID = 1L;
+				@Override
+				public Layout getLayout() {
+					informationLayout = new GridFormLayoutHelper(2, 2);
+					informationLayout.getLayout().setWidth("900px");
+					informationLayout.getLayout().setMargin(false, false, true,
+							false);
+					return informationLayout.getLayout();
+				}
 
-                @Override
-                protected Field onCreateField(Item item, Object propertyId,
-                        Component uiContext) {
-                    if (propertyId.equals("actualstartdate")) {
-                        return new DefaultFormViewFieldFactory.FormViewField(AppContext.formatDate(project.getActualstartdate()));
-                    } else if (propertyId.equals("homepage")) {
-                        return new FormUrlLinkViewField(project.getHomepage());
-                    }
-                    return null;
-                }
-            });
-            super.setItemDataSource(newDataSource);
-        }
-    }
+				@Override
+				public void attachField(Object propertyId, Field field) {
+					if (propertyId.equals("homepage")) {
+						informationLayout.addComponent(field, "Home Page", 0,
+								0, Alignment.TOP_LEFT);
+					} else if (propertyId.equals("actualstartdate")) {
+						informationLayout.addComponent(field, "Start Date", 1,
+								0, Alignment.TOP_LEFT);
+					} else if (propertyId.equals("description")) {
+						informationLayout.addComponent(field, "Description", 0,
+								1, 2, UIConstants.DEFAULT_2XCONTROL_WIDTH,
+								Alignment.TOP_LEFT);
+					}
+				}
+			});
 
-    private class DetailProjectInformation extends VerticalLayout implements ProjectDisplayInformation {
+			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+				private static final long serialVersionUID = 1L;
 
-        private DetailPreviewForm previewForm;
+				@Override
+				protected Field onCreateField(Item item, Object propertyId,
+						Component uiContext) {
+					if (propertyId.equals("actualstartdate")) {
+						return new DefaultFormViewFieldFactory.FormViewField(
+								AppContext.formatDate(project
+										.getActualstartdate()));
+					} else if (propertyId.equals("homepage")) {
+						return new FormUrlLinkViewField(project.getHomepage());
+					}
+					return null;
+				}
+			});
+			super.setItemDataSource(newDataSource);
+		}
+	}
 
-        public DetailProjectInformation() {
-            previewForm = new DetailPreviewForm();
-            this.addComponent(previewForm);
+	private class DetailProjectInformation extends VerticalLayout implements
+			ProjectDisplayInformation {
 
-            Button lessBtn = new Button("Less", new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    ProjectInformationComponent.this.removeComponent(DetailProjectInformation.this);
-                    prjDisplay = new BasicProjectInformation();
-                    ProjectInformationComponent.this.addComponent(prjDisplay);
-                    prjDisplay.show();
-                }
-            });
+		private final DetailPreviewForm previewForm;
 
-            lessBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-            this.addComponent(lessBtn);
-        }
+		public DetailProjectInformation() {
+			previewForm = new DetailPreviewForm();
+			this.addComponent(previewForm);
 
-        @Override
-        public void show() {
-            previewForm.setItemDataSource(new BeanItem(project));
-        }
-    }
+			Button lessBtn = new Button("Less", new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					ProjectInformationComponent.this
+							.removeComponent(DetailProjectInformation.this);
+					prjDisplay = new BasicProjectInformation();
+					ProjectInformationComponent.this.addComponent(prjDisplay);
+					prjDisplay.show();
+				}
+			});
 
-    private class DetailPreviewForm extends AdvancedPreviewBeanForm<SimpleProject> {
+			lessBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			this.addComponent(lessBtn);
+		}
 
-        private static final long serialVersionUID = 1L;
+		@Override
+		public void show() {
+			previewForm.setItemDataSource(new BeanItem(project));
+		}
+	}
 
-        @Override
-        public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new ProjectFormLayoutFactory.ProjectInformationLayout());
-            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-                private static final long serialVersionUID = 1L;
+	private class DetailPreviewForm extends
+			AdvancedPreviewBeanForm<SimpleProject> {
 
-                @Override
-                protected Field onCreateField(Item item, Object propertyId,
-                        Component uiContext) {
-                    if (propertyId.equals("planstartdate")) {
-                        return new FormViewField(AppContext.formatDate(project.getPlanstartdate()));
-                    } else if (propertyId.equals("planenddate")) {
-                        return new FormViewField(AppContext.formatDate(project.getPlanenddate()));
-                    } else if (propertyId.equals("actualstartdate")) {
-                        return new FormViewField(AppContext.formatDate(project.getActualstartdate()));
-                    } else if (propertyId.equals("actualenddate")) {
-                        return new FormViewField(AppContext.formatDate(project.getActualenddate()));
-                    } else if (propertyId.equals("homepage")) {
-                        return new FormUrlLinkViewField(project.getHomepage());
-                    }
-                    return null;
-                }
-            });
-            super.setItemDataSource(newDataSource);
-        }
-    }
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void setItemDataSource(Item newDataSource) {
+			this.setFormLayoutFactory(new ProjectFormLayoutFactory.ProjectInformationLayout());
+			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				protected Field onCreateField(Item item, Object propertyId,
+						Component uiContext) {
+					if (propertyId.equals("planstartdate")) {
+						return new FormViewField(AppContext.formatDate(project
+								.getPlanstartdate()));
+					} else if (propertyId.equals("planenddate")) {
+						return new FormViewField(AppContext.formatDate(project
+								.getPlanenddate()));
+					} else if (propertyId.equals("actualstartdate")) {
+						return new FormViewField(AppContext.formatDate(project
+								.getActualstartdate()));
+					} else if (propertyId.equals("actualenddate")) {
+						return new FormViewField(AppContext.formatDate(project
+								.getActualenddate()));
+					} else if (propertyId.equals("homepage")) {
+						return new FormUrlLinkViewField(project.getHomepage());
+					}
+					return null;
+				}
+			});
+			super.setItemDataSource(newDataSource);
+		}
+	}
 }

@@ -43,6 +43,11 @@ input:focus, textarea:focus {
     box-shadow: 0 0 1px #0a58cd inset;
 }
 
+.v-label.h2 {
+	font-size: 14px;
+	padding: 0px;
+}
+
 .v-app {
     /*background: #E1E1E1;*/
     background: #FFFFFF;
@@ -391,7 +396,6 @@ input.v-textfield[type="text"], textarea.v-textarea, .v-filterselect {
 }
 
 .advSearch .advSearchHeader .h2 {
-    font-size: 14px;
     border-bottom: 1px solid #B7B7B7;
     padding-top: 0px;
 }
@@ -439,7 +443,6 @@ input.v-textfield[type="text"], textarea.v-textarea, .v-filterselect {
 }
 
 .basicSearch .basicSearchHeader .h2 {
-    font-size: 14px;
     border-bottom: 1px solid #B7B7B7;
     padding-top: 0px;
 }
@@ -588,7 +591,6 @@ input.v-textfield-errorField {
 	margin-top: 15px;
 }
 .addViewLayout .h2 {
-	font-size: 14px;
 	border-bottom: 1px solid #B7B7B7;
 	color: #5E5E5E;
 	text-shadow: #F0F0F0 0 1px 0;
@@ -827,6 +829,22 @@ input.v-textfield-errorField {
 	min-width: 300px !important;
 	margin-bottom: 10px;
 }
+.projectDashboardView .addViewLayout .depot-title .h2 {
+    padding: 0px;
+}
+.projectinfo-header {
+	font-size: 14px;
+	border-bottom: 1px solid #8f8f8f;
+	padding-bottom: 0.2em;
+}
+.projectinfo-header .project-name {
+	font-weight: bold;
+}
+.projectinfo-header .project-shortname {
+	color: gray;
+	padding-left: 5px;
+}
+
 /* End Project Management */
 
 /*Css for wizard*/
@@ -920,7 +938,6 @@ input.v-textfield-errorField {
 	background: url('icons/16/depot_arrow_right.png') no-repeat top left transparent;
 }
 .depotComp .h2 {
-	font-size: 14px;
 	border: 0px;
 	color: #5E5E5E;
 	text-shadow: #F0F0F0 0 1px 0;

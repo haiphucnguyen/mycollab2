@@ -11,120 +11,107 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
 
-    private String title;
-    
-    private ProjectInformationLayout projectInformationLayout;
+	private final String title;
 
-    public ProjectFormLayoutFactory(String title) {
-        this.title = title;
-    }
+	private ProjectInformationLayout projectInformationLayout;
 
-    @Override
-    public Layout getLayout() {
-        AddViewLayout projectAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/project/project.png"));
+	public ProjectFormLayoutFactory(String title) {
+		this.title = title;
+	}
 
-        projectInformationLayout = new ProjectInformationLayout();
-        
-        projectAddLayout.addTopControls(createTopPanel());
-        
-         projectAddLayout.addBody(projectInformationLayout.getLayout());
+	@Override
+	public Layout getLayout() {
+		AddViewLayout projectAddLayout = new AddViewLayout(title,
+				new ThemeResource("icons/48/project/project.png"));
 
-        projectAddLayout.addBottomControls(createBottomPanel());
+		projectInformationLayout = new ProjectInformationLayout();
 
-        return projectAddLayout;
-    }
+		projectAddLayout.addTopControls(createTopPanel());
 
-    @Override
-    public void attachField(Object propertyId, Field field) {
-        projectInformationLayout.attachField(propertyId, field);
-    }
+		projectAddLayout.addBody(projectInformationLayout.getLayout());
 
-    protected abstract Layout createTopPanel();
+		projectAddLayout.addBottomControls(createBottomPanel());
 
-    protected abstract Layout createBottomPanel();
+		return projectAddLayout;
+	}
 
-    public static class ProjectInformationLayout implements IFormLayoutFactory {
+	@Override
+	public void attachField(Object propertyId, Field field) {
+		projectInformationLayout.attachField(propertyId, field);
+	}
 
-        private GridFormLayoutHelper informationLayout;
-        private GridFormLayoutHelper financialLayout;
-        private GridFormLayoutHelper descriptionLayout;
+	protected abstract Layout createTopPanel();
 
-        @Override
-        public Layout getLayout() {
-            VerticalLayout layout = new VerticalLayout();
+	protected abstract Layout createBottomPanel();
 
-            Label organizationHeader = new Label("Project Information");
-            organizationHeader.setStyleName("h2");
-            layout.addComponent(organizationHeader);
+	public static class ProjectInformationLayout implements IFormLayoutFactory {
 
-            informationLayout = new GridFormLayoutHelper(2, 2);
-            informationLayout.getLayout().setWidth("900px");
-            layout.addComponent(informationLayout.getLayout());
-            layout.setComponentAlignment(informationLayout.getLayout(),
-                    Alignment.BOTTOM_CENTER);
+		private GridFormLayoutHelper moreInfoLayout;
 
-            Label financialHeader = new Label("Schedule & Financial Information");
-            financialHeader.setStyleName("h2");
-            layout.addComponent(financialHeader);
+		@Override
+		public Layout getLayout() {
+			VerticalLayout layout = new VerticalLayout();
 
-            financialLayout = new GridFormLayoutHelper(2, 4);
-            financialLayout.getLayout().setWidth("900px");
-            layout.addComponent(financialLayout.getLayout());
-            layout.setComponentAlignment(financialLayout.getLayout(),
-                    Alignment.BOTTOM_CENTER);
+			// Label organizationHeader = new Label("Project Information");
+			// organizationHeader.setStyleName("h2");
+			// layout.addComponent(organizationHeader);
 
-            Label descHeader = new Label("Description");
-            descHeader.setStyleName("h2");
-            layout.addComponent(descHeader);
+			moreInfoLayout = new GridFormLayoutHelper(2, 6);
+			moreInfoLayout.getLayout().setWidth("900px");
+			moreInfoLayout.getLayout().setMargin(false, false, true, false);
+			layout.addComponent(moreInfoLayout.getLayout());
+			layout.setComponentAlignment(moreInfoLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
+			return layout;
+		}
 
-            descriptionLayout = new GridFormLayoutHelper(2, 1);
-            descriptionLayout.getLayout().setWidth("900px");
-            layout.addComponent(descriptionLayout.getLayout());
-            layout.setComponentAlignment(descriptionLayout.getLayout(),
-                    Alignment.BOTTOM_CENTER);
-            return layout;
-        }
-
-        @Override
-        public void attachField(Object propertyId, Field field) {
-            if (propertyId.equals("name")) {
-                informationLayout.addComponent(field, "Name", 0, 0);
-            } else if (propertyId.equals("homepage")) {
-                informationLayout.addComponent(field, "Home Page", 1, 0);
-            } else if (propertyId.equals("shortname")) {
-                informationLayout.addComponent(field, "Short Name", 0, 1);
-            } else if (propertyId.equals("projectstatus")) {
-                informationLayout.addComponent(field, "Status", 1, 1);
-            } else if (propertyId.equals("planstartdate")) {
-                financialLayout.addComponent(field, "Plan Start Date", 0, 0);
-            } else if (propertyId.equals("currencyid")) {
-                financialLayout.addComponent(field, "Currency", 1, 0);
-            } else if (propertyId.equals("planenddate")) {
-                financialLayout.addComponent(field, "Plan End Date", 0, 1);
-            } else if (propertyId.equals("defaultbillingrate")) {
-                financialLayout.addComponent(field, "Rate", 1, 1);
-            } else if (propertyId.equals("actualstartdate")) {
-                financialLayout.addComponent(field, "Actual Start Date", 0, 2);
-            } else if (propertyId.equals("targetbudget")) {
-                financialLayout.addComponent(field, "Target Budget", 1, 2);
-            } else if (propertyId.equals("actualenddate")) {
-                financialLayout.addComponent(field, "Actual End Date", 0, 3);
-            } else if (propertyId.equals("actualbudget")) {
-                financialLayout.addComponent(field, "Actual Budget", 1, 3);
-            } else if (propertyId.equals("description")) {
-                descriptionLayout.addComponent(field, "Description", 0, 0, 2,
-                        UIConstants.DEFAULT_2XCONTROL_WIDTH);
-            }
-        }
-    }
+		@Override
+		public void attachField(Object propertyId, Field field) {
+			if (propertyId.equals("homepage")) {
+				moreInfoLayout.addComponent(field, "Home Page", 0, 0,
+						Alignment.TOP_LEFT);
+			} else if (propertyId.equals("projectstatus")) {
+				moreInfoLayout.addComponent(field, "Status", 1, 0,
+						Alignment.TOP_LEFT);
+			} else if (propertyId.equals("planstartdate")) {
+				moreInfoLayout.addComponent(field, "Plan Start Date", 0, 1,
+						Alignment.TOP_LEFT);
+			} else if (propertyId.equals("currencyid")) {
+				moreInfoLayout.addComponent(field, "Currency", 1, 1,
+						Alignment.TOP_LEFT);
+			} else if (propertyId.equals("planenddate")) {
+				moreInfoLayout.addComponent(field, "Plan End Date", 0, 2,
+						Alignment.TOP_LEFT);
+			} else if (propertyId.equals("defaultbillingrate")) {
+				moreInfoLayout.addComponent(field, "Rate", 1, 2,
+						Alignment.TOP_LEFT);
+			} else if (propertyId.equals("actualstartdate")) {
+				moreInfoLayout.addComponent(field, "Actual Start Date", 0, 3,
+						Alignment.TOP_LEFT);
+			} else if (propertyId.equals("targetbudget")) {
+				moreInfoLayout.addComponent(field, "Target Budget", 1, 3,
+						Alignment.TOP_LEFT);
+			} else if (propertyId.equals("actualenddate")) {
+				moreInfoLayout.addComponent(field, "Actual End Date", 0, 4,
+						Alignment.TOP_LEFT);
+			} else if (propertyId.equals("actualbudget")) {
+				moreInfoLayout.addComponent(field, "Actual Budget", 1, 4,
+						Alignment.TOP_LEFT);
+			} else if (propertyId.equals("description")) {
+				moreInfoLayout
+						.addComponent(field, "Description", 0, 5, 2,
+								UIConstants.DEFAULT_2XCONTROL_WIDTH,
+								Alignment.TOP_LEFT);
+			}
+		}
+	}
 }
