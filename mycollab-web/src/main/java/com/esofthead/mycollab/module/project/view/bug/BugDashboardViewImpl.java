@@ -121,10 +121,13 @@ public class BugDashboardViewImpl extends AbstractView implements
         leftColumn = new VerticalLayout();
         leftColumn.setSpacing(true);
         body.addComponent(leftColumn);
+        body.setExpandRatio(leftColumn, 1.0f);
 
         rightColumn = new VerticalLayout();
         rightColumn.setSpacing(true);
+        rightColumn.setWidth("500px");
         body.addComponent(rightColumn);
+        body.setComponentAlignment(rightColumn, Alignment.TOP_RIGHT);
 
         this.addComponent(body);
     }
@@ -143,23 +146,17 @@ public class BugDashboardViewImpl extends AbstractView implements
         leftColumn.addComponent(updateBugWidgetWrapper);
 
         SimpleProject project = (SimpleProject)AppContext.getVariable(ProjectContants.PROJECT_NAME);
-
-        PrioritySummaryWidget prioritySummaryWidget = new PrioritySummaryWidget();
-        rightColumn.addComponent(new LazyLoadWrapper(prioritySummaryWidget));
         
-        BugSearchCriteria prioritySearchCriteria = new BugSearchCriteria();
-        prioritySearchCriteria.setProjectid(new NumberSearchField(project.getId()));
-        prioritySummaryWidget.setSearchCriteria(prioritySearchCriteria);
-        
-        StatusSummaryWidget statusSummaryWidget = new StatusSummaryWidget();
-        rightColumn.addComponent(new LazyLoadWrapper(statusSummaryWidget));
+        BugChartComponent bugChartComponent = new BugChartComponent();
+        rightColumn.addComponent(bugChartComponent);
         
         BugTrendReportWidget bugTrendWidget = new BugTrendReportWidget();
         rightColumn.addComponent(new LazyLoadWrapper(bugTrendWidget));
+        BugSearchCriteria trendSearchCriteria = new BugSearchCriteria();
+        trendSearchCriteria.setProjectid(new NumberSearchField(project.getId()));
+        bugTrendWidget.setSearchCriteria(trendSearchCriteria);
         
-        BugSearchCriteria statusSearchCriteria = new BugSearchCriteria();
-        statusSearchCriteria.setProjectid(new NumberSearchField(project.getId()));
-        statusSummaryWidget.setSearchCriteria(statusSearchCriteria);
+        
         
         BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
         dueDefectsCriteria.setProjectid(new NumberSearchField(project.getId()));

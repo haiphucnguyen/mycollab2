@@ -184,4 +184,9 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
         SimpleBug bug = bugMapperExt.getBugById(bugId);
         return bug;
     }
+    
+    @Override
+    public List<GroupItem> getBugStatusTrendSummary(BugSearchCriteria criteria) {
+        return bugMapperExt.getBugStatusTrendSummary(criteria);
+    }
 }

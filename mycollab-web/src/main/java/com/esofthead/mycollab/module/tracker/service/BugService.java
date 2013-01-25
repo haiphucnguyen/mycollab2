@@ -28,4 +28,6 @@ public interface BugService extends
     List<GroupItem> getVersionDefectsSummary(BugSearchCriteria criteria);
 
     List<GroupItem> getComponentDefectsSummary(BugSearchCriteria criteria);
+    
+    List<GroupItem> getBugStatusTrendSummary(BugSearchCriteria criteria);
 }
