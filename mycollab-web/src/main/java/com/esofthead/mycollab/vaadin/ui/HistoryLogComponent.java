@@ -14,6 +14,7 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -28,6 +29,7 @@ import java.util.Map;
  * @author haiphucnguyen
  */
 public class HistoryLogComponent extends VerticalLayout {
+
     public static final String DEFAULT_FIELD = "default";
     public static final String DATE_FIELD = "date";
     public static final String DATETIME_FIELD = "datetime";
@@ -48,7 +50,7 @@ public class HistoryLogComponent extends VerticalLayout {
         this.module = module;
         this.type = type;
         this.typeid = typeid;
-        
+
         logTable = new BeanList<AuditLogService, AuditLogSearchCriteria, SimpleAuditLog>(this, AppContext.getSpringBean(AuditLogService.class), HistoryLogRowDisplay.class);
         this.addComponent(logTable);
     }
@@ -82,6 +84,10 @@ public class HistoryLogComponent extends VerticalLayout {
 
             List<AuditChangeItem> changeItems = log.getChangeItems();
             if (changeItems != null && changeItems.size() > 0) {
+                CssLayout layout = new CssLayout();
+                layout.setWidth("100%");
+                layout.setStyleName("activity-stream");
+
                 GridLayout gridLayout = new GridLayout(3, changeItems.size() + 2);
                 gridLayout.setWidth("100%");
 
@@ -95,7 +101,7 @@ public class HistoryLogComponent extends VerticalLayout {
 
                     FieldDisplayHandler fieldDisplayHandler = fieldsFormat.get(fieldName);
                     if (fieldDisplayHandler != null) {
-                    	gridLayout.addComponent(new Label(fieldDisplayHandler.getDisplayName()), 0, visibleRows + 2);
+                        gridLayout.addComponent(new Label(fieldDisplayHandler.getDisplayName()), 0, visibleRows + 2);
                         gridLayout.addComponent(fieldDisplayHandler.getFormat().formatField(item.getOldvalue()), 1, visibleRows + 2);
                         gridLayout.addComponent(fieldDisplayHandler.getFormat().formatField(item.getNewvalue()), 2, visibleRows + 2);
                         visibleRows++;
@@ -113,7 +119,7 @@ public class HistoryLogComponent extends VerticalLayout {
                     header.setWidth("100%");
                     header.setSpacing(true);
                     UserLink userLink = new UserLink(log.getPosteduser(), log.getPostedUserFullName());
-                    
+
                     header.addComponent(userLink);
                     header.setComponentAlignment(userLink, Alignment.MIDDLE_LEFT);
                     Label lbDate = new Label("changed " + DateTimeUtils.getStringDateFromNow(DateTimeUtils.getDateByStringWithFormatW3C(strDate)));
@@ -127,7 +133,8 @@ public class HistoryLogComponent extends VerticalLayout {
                     gridLayout.addComponent(new Label("New Value"), 2, 1);
 
                     gridLayout.setRows(visibleRows + 2);
-                    return gridLayout;
+                    layout.addComponent(gridLayout);
+                    return layout;
                 }
 
             } else {
@@ -196,8 +203,8 @@ public class HistoryLogComponent extends VerticalLayout {
 
         @Override
         public Component formatField(String value) {
-        	Date formatDate = DateTimeUtils.getDateByStringWithFormatW3C(value);
-        	return new Label(AppContext.formatDate(formatDate));
+            Date formatDate = DateTimeUtils.getDateByStringWithFormatW3C(value);
+            return new Label(AppContext.formatDate(formatDate));
         }
     }
 }
