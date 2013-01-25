@@ -32,7 +32,7 @@ public class BugDisplayWidget extends VerticalLayout {
 
 	public BugDisplayWidget(String title) {
 		Label titleLbl = new Label(title);
-		titleLbl.setStyleName("widget-title");
+		titleLbl.setStyleName(UIConstants.WIDGET_TITLE);
 		this.addComponent(titleLbl);
 		dataList = new BeanList<BugService, BugSearchCriteria, SimpleBug>(
 				AppContext.getSpringBean(BugService.class),
@@ -51,7 +51,7 @@ public class BugDisplayWidget extends VerticalLayout {
 		moreBtn.setStyleName(UIConstants.THEME_LINK);
 		this.addComponent(moreBtn);
 		this.setComponentAlignment(moreBtn, Alignment.TOP_RIGHT);
-		this.setStyleName("bug-list");
+		this.setStyleName(UIConstants.BUG_LIST);
 	}
 
 	public void setSearchCriteria(BugSearchCriteria searchCriteria) {
@@ -69,7 +69,7 @@ public class BugDisplayWidget extends VerticalLayout {
 		public Component generateRow(final SimpleBug obj, int rowIndex) {
 			GridLayout layout = new GridLayout(2, 2);
 			layout.setWidth("100%");
-			layout.setSpacing(true);
+			layout.setSpacing(false);
 			layout.addComponent(new Embedded(null, new ThemeResource(
 					"icons/22/project/bug.png")), 0, 0, 0, 1);
 
@@ -85,10 +85,12 @@ public class BugDisplayWidget extends VerticalLayout {
 					});
 			layout.addComponent(defectLink);
 			layout.setColumnExpandRatio(1, 1.0f);
-			layout.addComponent(new Label(obj.getDescription()), 1, 1, 1, 1);
+			Label dateInfo = new Label("due on " + obj.getDuedate());
+			dateInfo.setStyleName(UIConstants.DATE_INFO);
+			layout.addComponent(dateInfo, 1, 1, 1, 1);
 			CssLayout rowLayout = new CssLayout();
 			rowLayout.addComponent(layout);
-			rowLayout.setStyleName("widget-row");
+			rowLayout.setStyleName(UIConstants.WIDGET_ROW);
 			rowLayout.setWidth("100%");
 			return rowLayout;
 		}

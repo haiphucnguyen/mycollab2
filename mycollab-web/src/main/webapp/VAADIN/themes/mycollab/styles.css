@@ -57,6 +57,10 @@ input:focus, textarea:focus {
 	height: 30px;
 }
 
+.v-table-row-odd {
+	background: none repeat scroll 0% 0% rgb(219, 222, 227) !important;
+}
+
 .v-button-bluebtn {
 	background: url("icons/grad-dark-bottom2.png") repeat-x left bottom #357ed0;
 /* 	background-color: #357ed0; */
@@ -1637,4 +1641,16 @@ white-space: normal;
 	padding-left: 5px;
 	padding-top: 3px;
 }
+.bug-list .date-info {
+	font-size: 11px;
+	color: gray;
+}
 /* End Bug Widget */
+
+/* Background has SELECT icon */
+.v-button.select-bg {
+	height: 16px;
+	width: 16px;
+	background: url('icons/16/select.png') no-repeat top right transparent;
+}
+/* End Background has SELECT icon */
