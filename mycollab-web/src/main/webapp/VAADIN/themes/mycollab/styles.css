@@ -242,6 +242,10 @@ input.v-textfield[type="text"], textarea.v-textarea, .v-filterselect {
     border:1px solid gray;
 }
 
+.v-textfield.noBorderRight {
+    border-right-style: none;
+}
+
 .v-datefield-button {
 	padding: .1em 0 .2em;
 }
@@ -1649,8 +1653,8 @@ white-space: normal;
 
 /* Background has SELECT icon */
 .v-button.select-bg {
-	height: 16px;
-	width: 16px;
-	background: url('icons/16/select.png') no-repeat top right transparent;
+	height: 20px;
+	width: 20px;
+	background: url('icons/22/select.png') no-repeat top right transparent;
 }
 /* End Background has SELECT icon */

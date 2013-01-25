@@ -287,7 +287,7 @@ public class MessageListViewImpl extends AbstractView implements
 					createBasicLayout();
 				}
 			});
-			cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			cancelBtn.setStyleName("link");
 			controls.addComponent(cancelBtn);
 
 			this.addComponent(controls);

@@ -8,6 +8,7 @@ public class RoleSearchCriteria extends SearchCriteria {
 
     private StringSearchField username;
     private NumberSearchField sAccountId;
+    private StringSearchField roleName;
 
     public StringSearchField getUsername() {
         return username;
@@ -24,5 +25,13 @@ public class RoleSearchCriteria extends SearchCriteria {
     public void setsAccountId(NumberSearchField sAccountId) {
         this.sAccountId = sAccountId;
     }
+
+	public void setRoleName(StringSearchField roleName) {
+		this.roleName = roleName;
+	}
+
+	public StringSearchField getRoleName() {
+		return roleName;
+	}
     
 }

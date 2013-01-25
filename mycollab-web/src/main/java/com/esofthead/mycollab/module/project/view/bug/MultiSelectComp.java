@@ -5,7 +5,9 @@ import java.util.List;
 
 import org.vaadin.addon.customfield.CustomField;
 
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.GridLayout;
@@ -25,7 +27,8 @@ public abstract class MultiSelectComp extends CustomField {
 		componentsDisplay = new TextField();
 		componentsDisplay.setNullRepresentation("");
 		componentsDisplay.setReadOnly(true);
-		componentsDisplay.setWidth("220px");
+		componentsDisplay.setWidth("210px");
+		componentsDisplay.addStyleName("noBorderRight");
 
 		selectBtn = new MultipleItemsPopupSelection(this);
 		selectBtn.addListener(new Button.ClickListener() {
@@ -37,12 +40,12 @@ public abstract class MultiSelectComp extends CustomField {
 		});
 		
 		content.addComponent(componentsDisplay, 0, 0);
+		content.setComponentAlignment(componentsDisplay, Alignment.MIDDLE_CENTER);
 
-		selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
-
-		selectBtn.addStyleName("link");
 		selectBtn.addStyleName("nonPopupIndicator");
+		selectBtn.addStyleName(UIConstants.SELECT_BG);
 		content.addComponent(selectBtn, 1, 0);
+		content.setComponentAlignment(selectBtn, Alignment.MIDDLE_CENTER);
 		
 		this.setCompositionRoot(content);
 	}

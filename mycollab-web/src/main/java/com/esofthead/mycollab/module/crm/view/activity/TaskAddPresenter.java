@@ -33,6 +33,7 @@ public class TaskAddPresenter extends CrmGenericPresenter<TaskAddView> {
 
             @Override
             public void onCancel() {
+            	System.out.println("Task add presenter oncancel");
                 ViewState viewState = HistoryViewManager.back();
                 if (viewState instanceof NullViewState) {
                     EventBus.getInstance().fireEvent(

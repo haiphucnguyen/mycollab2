@@ -14,6 +14,7 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
@@ -43,7 +44,8 @@ public class AccountCaseListComp extends RelatedListComp<CaseSearchCriteria> {
                 fireNewRelatedItem("");
             }
         });
-        newBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+        newBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
+        newBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
         newBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CASE));
 
         contentContainer.addComponent(newBtn);

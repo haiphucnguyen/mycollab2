@@ -5,6 +5,9 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -87,7 +90,13 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
                         public void buttonClick(Button.ClickEvent event) {
                             searchCriteria = new UserSearchCriteria();
                             searchCriteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-
+                            
+                            if (StringUtil.isNotNullOrEmpty((String) nameField
+        							.getValue())) {
+        						searchCriteria.setDisplayName(new StringSearchField(
+        								SearchField.AND, (String) nameField.getValue()));
+        					}
+                            
                             UserSearchPanel.this
                                     .notifySearchHandler(searchCriteria);
                         }

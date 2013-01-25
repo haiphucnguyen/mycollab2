@@ -105,7 +105,9 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 				@Override
 				public void buttonClick(ClickEvent event) {
 					searchCriteria = new BugSearchCriteria();
-
+					searchCriteria.setProjectId(new NumberSearchField(
+                            SearchField.AND, project.getId()));
+					searchCriteria.setSummary(new StringSearchField(nameField.getValue().toString().trim()));
 					BugSearchPanel.this
 							.notifySearchHandler(searchCriteria);
 				}
