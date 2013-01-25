@@ -1503,7 +1503,14 @@ white-space: normal;
 }
 
 .v-buttongroup .v-button.v-button-left .v-button-wrap {
-	padding: 4px 6px 0px 10px;
+	padding: 4px 10px 0px 14px;
+}
+
+.v-buttongroup .v-button.v-button-right .v-button-wrap {
+    padding: 4px 14px 0px 10px;
+}
+.v-buttongroup .v-button.v-button-middle .v-button-wrap {
+    padding: 4px 10px 0px;
 }
 
 .v-buttongroup .v-button.v-button-left .v-button-wrap,
@@ -1591,6 +1598,9 @@ white-space: normal;
 .taskdisplay-component .v-table-header .v-table-resizer {
 	border-color: #444;
 }
+.taskdisplay-component > .v-csslayout-margin > .v-csslayout-container > div.v-button-link {
+	margin-top: 5px;
+}
 .task-component {
 	margin-bottom: 5px;
 	background-color: #F7F7F7;
@@ -1607,3 +1617,24 @@ white-space: normal;
 	font-size: 11px;
 }
 /* End Task List Component */
+
+/* Bug Widget */
+.bug-list {
+	margin: 10px 0px;
+}
+.widget-title {
+	border-bottom: 1px solid rgb(183, 183, 183);
+	padding-bottom: 0.2em;
+	margin-bottom: 5px;
+	font-weight: bold
+}
+.widget-row {
+	margin-bottom: 5px;
+}
+.widget-row > .v-csslayout-margin {
+	background-color: rgb(247, 247, 247);
+	border: 1px solid rgba(0, 0, 0, 0.25);
+	padding-left: 5px;
+	padding-top: 3px;
+}
+/* End Bug Widget */
