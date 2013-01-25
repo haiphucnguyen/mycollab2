@@ -99,6 +99,9 @@ public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
                     field.setHeight("350px");
                     return field;
                 } else if (propertyId.equals("projectstatus")) {
+                	ProjectStatusComboBox projectCombo = new ProjectStatusComboBox();
+                	projectCombo.setRequired(true);
+                	projectCombo.setRequiredError("Please enter a project status");
                     return new ProjectStatusComboBox();
                 } else if (propertyId.equals("shortname")) {
                     TextField tf = new TextField();

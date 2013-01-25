@@ -6,6 +6,9 @@ import java.util.Set;
 
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.ProjectContants;
@@ -18,8 +21,11 @@ import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
+import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
+import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
+import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -27,7 +33,10 @@ import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatar;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -58,13 +67,20 @@ public class MessageListViewImpl extends AbstractView implements
 		this.setSpacing(true);
 		this.setWidth("100%");
 		topMessagePanel = new TopMessagePanel();
+		topMessagePanel.getSearchHandlers().addSearchHandler( new SearchHandler<MessageSearchCriteria>() {
+
+			@Override
+			public void onSearch(MessageSearchCriteria criteria) {
+				tableItem.setSearchCriteria(criteria);
+			}
+        });
 		this.addComponent(topMessagePanel);
 		tableItem = new PagedBeanList<MessageService, MessageSearchCriteria, SimpleMessage>(
 				AppContext.getSpringBean(MessageService.class),
 				new MessageRowDisplayHandler());
 		this.addComponent(tableItem);
 	}
-
+	
 	@Override
 	public void setCriteria(MessageSearchCriteria criteria) {
 		this.searchCriteria = criteria;
@@ -176,13 +192,100 @@ public class MessageListViewImpl extends AbstractView implements
 		}
 	}
 
+	@SuppressWarnings({ "serial"})
+	private class MessageSearchPanel extends
+			GenericSearchPanel<MessageSearchCriteria> {
+		private SimpleProject project;
+		private MessageSearchCriteria messageSearchCriteria;
+		private String textSearch = "";
+
+		public MessageSearchPanel() {
+			this.project = (SimpleProject) AppContext
+					.getVariable(ProjectContants.PROJECT_NAME);
+		}
+
+		@Override
+		public void attach() {
+			super.attach();
+			createBasicSearchLayout();
+		}
+
+		private void createBasicSearchLayout() {
+
+			HorizontalLayout basicSearchBody = new HorizontalLayout();
+			basicSearchBody.setSpacing(true);
+			final TextField nameField = new TextField();
+			nameField.addListener(new TextChangeListener() {
+
+				@Override
+				public void textChange(TextChangeEvent event) {
+					messageSearchCriteria = new MessageSearchCriteria();
+
+					messageSearchCriteria
+							.setProjectid(new NumberSearchField(
+									SearchField.AND, project.getId()));
+
+					textSearch = event.getText().toString()
+							.trim();
+					
+					messageSearchCriteria.setMessage(new StringSearchField(
+							textSearch));
+
+					MessageSearchPanel.this
+							.notifySearchHandler(messageSearchCriteria);
+				}
+			});
+
+			nameField.setTextChangeEventMode(TextChangeEventMode.LAZY);
+			nameField.setTextChangeTimeout(200);
+			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			UiUtils.addComponent(basicSearchBody, nameField,
+					Alignment.MIDDLE_RIGHT);
+
+			Button searchBtn = new Button();
+			searchBtn.addListener(new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(Button.ClickEvent event) {
+					messageSearchCriteria = new MessageSearchCriteria();
+
+					messageSearchCriteria
+							.setProjectid(new NumberSearchField(
+									SearchField.AND, project
+											.getId()));
+
+					messageSearchCriteria
+							.setMessage(new StringSearchField(
+									textSearch));
+
+					MessageSearchPanel.this
+							.notifySearchHandler(messageSearchCriteria);
+				}
+			});
+			searchBtn.setIcon(new ThemeResource("icons/22/search.png"));
+			searchBtn.setStyleName("link");
+			basicSearchBody.addComponent(searchBtn);
+			
+			this.setCompositionRoot(basicSearchBody);
+		}
+
+	}
+
 	private final class TopMessagePanel extends VerticalLayout {
 
 		private static final long serialVersionUID = 1L;
 
+		private MessageSearchPanel messageSearchPanel;
+
 		public TopMessagePanel() {
 			this.setWidth("100%");
+			messageSearchPanel = new MessageSearchPanel();
 			createBasicLayout();
+		}
+
+		public HasSearchHandlers<MessageSearchCriteria> getSearchHandlers() {
+			return messageSearchPanel;
 		}
 
 		public void createBasicLayout() {
@@ -190,6 +293,14 @@ public class MessageListViewImpl extends AbstractView implements
 
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setWidth("100%");
+			Label lb = new Label("");
+			layout.addComponent(lb);
+			layout.setExpandRatio(lb, 1.0f);
+			messageSearchPanel.setWidth("350px");
+
+			layout.addComponent(messageSearchPanel);
+			layout.setComponentAlignment(messageSearchPanel, Alignment.MIDDLE_CENTER);
+			
 			Button createAccountBtn = new Button("New Message",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
@@ -203,8 +314,8 @@ public class MessageListViewImpl extends AbstractView implements
 			createAccountBtn
 					.setIcon(new ThemeResource("icons/16/addRecord.png"));
 
-			UiUtils.addComponent(layout, createAccountBtn,
-					Alignment.MIDDLE_RIGHT);
+			layout.addComponent(createAccountBtn);
+			layout.setComponentAlignment(createAccountBtn, Alignment.MIDDLE_CENTER);
 			this.addComponent(layout);
 		}
 

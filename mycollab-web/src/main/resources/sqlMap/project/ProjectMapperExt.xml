@@ -55,6 +55,11 @@
 		<if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_prj_project.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
 		</if>
+		<if test="projectName != null">
+          <![CDATA[
+            ${projectName.operation} m_prj_project.name like '%${projectName.value}%'
+            ]]>
+        </if>
 	</sql>
 
 	<sql id="queryTotalCountSearchCriteria">

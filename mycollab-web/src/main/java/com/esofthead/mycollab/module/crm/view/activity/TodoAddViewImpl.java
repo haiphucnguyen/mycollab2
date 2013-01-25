@@ -65,7 +65,7 @@ public class TodoAddViewImpl extends AbstractView implements TodoAddView {
             }
 
             private Layout createButtonControls() {
-                return (new EditFormControlsGenerator<Task>(EditForm.this))
+            return (new EditFormControlsGenerator<Task>(EditForm.this))
                         .createButtonControls();
             }
 

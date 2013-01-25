@@ -10,6 +10,10 @@ public class MessageSearchCriteria extends SearchCriteria {
     private NumberSearchField projectid;
     
     private StringSearchField category;
+    
+    private StringSearchField title;
+    
+    private StringSearchField message;
 
 	public NumberSearchField getId() {
 		return id;
@@ -33,5 +37,21 @@ public class MessageSearchCriteria extends SearchCriteria {
 
 	public void setCategory(StringSearchField category) {
 		this.category = category;
+	}
+
+	public void setTitle(StringSearchField title) {
+		this.title = title;
+	}
+
+	public StringSearchField getTitle() {
+		return title;
+	}
+
+	public void setMessage(StringSearchField message) {
+		this.message = message;
+	}
+
+	public StringSearchField getMessage() {
+		return message;
 	}
 }

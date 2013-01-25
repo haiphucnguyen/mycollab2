@@ -7,6 +7,7 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.ui.components.ProjectSearchPanel;
 import com.esofthead.mycollab.module.project.view.ProjectPageAction;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -36,6 +37,14 @@ public class MyProjectsListViewImpl extends AbstractView implements MyProjectsLi
         this.setMargin(true);
 
         searchPanel = new ProjectSearchPanel();
+        searchPanel.addSearchHandler( new SearchHandler<ProjectSearchCriteria>() {
+
+			@Override
+			public void onSearch(ProjectSearchCriteria criteria) {
+				tableItem.setSearchCriteria(criteria);
+			}
+        });
+        
         this.addComponent(searchPanel);
 
         listLayout = new VerticalLayout();
