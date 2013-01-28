@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, nameField = "riskname", type = ProjectContants.RISK, extraFieldName = "projectid")
+@Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.RISK)
 public class RiskServiceImpl extends DefaultService<Integer, Risk, RiskSearchCriteria> implements
         RiskService {
 

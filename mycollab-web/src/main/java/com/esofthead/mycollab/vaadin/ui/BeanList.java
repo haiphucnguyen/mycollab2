@@ -24,18 +24,19 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
     private SearchService searchService;
     private Class<? extends RowDisplayHandler<T>> rowDisplayHandler;
     private VerticalLayout contentLayout;
-    private boolean isLazyLoad = false;
+    private boolean isLazyLoad = true;
     
     public BeanList(Object parentComponent, SearchService searchService,
             Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
-        this(parentComponent, searchService, rowDisplayHandler, new VerticalLayout());
+        this(parentComponent, searchService, rowDisplayHandler, new VerticalLayout(), true);
     }
 
     public BeanList(Object parentComponent, SearchService searchService,
-            Class<? extends RowDisplayHandler<T>> rowDisplayHandler, VerticalLayout contentLayout) {
+            Class<? extends RowDisplayHandler<T>> rowDisplayHandler, VerticalLayout contentLayout, boolean isLazyLoad) {
         this.parentComponent = parentComponent;
         this.searchService = searchService;
         this.rowDisplayHandler = rowDisplayHandler;
+        this.isLazyLoad = isLazyLoad;
         
         this.contentLayout = contentLayout;
         this.setCompositionRoot(contentLayout);
@@ -52,10 +53,6 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
         if (row != null && contentLayout != null) {
             contentLayout.addComponent(row, 0);
         }
-    }
-    
-    public void setLazyLoad(boolean isLazyLoad) {
-        this.isLazyLoad = isLazyLoad;
     }
 
     private RowDisplayHandler<T> constructRowndisplayHandler() {

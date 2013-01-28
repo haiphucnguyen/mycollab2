@@ -4,9 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import java.util.HashSet;
-import java.util.Set;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.ProjectContants;
@@ -32,11 +29,12 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-
 import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * 
@@ -140,7 +138,7 @@ public class TaskListReorderViewImpl extends AbstractView implements
 
 		taskLists = new BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList>(
 				null, AppContext.getSpringBean(ProjectTaskListService.class),
-				TaskListRowDisplayHandler.class, ddLayout);
+				TaskListRowDisplayHandler.class, ddLayout, false);
 		this.addComponent(taskLists);
 	}
 

@@ -8,7 +8,6 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.terminal.ThemeResource;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -18,6 +17,7 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public abstract class VersionFormLayoutFactory implements IFormLayoutFactory {
 
     private String title;
@@ -65,7 +65,6 @@ public abstract class VersionFormLayoutFactory implements IFormLayoutFactory {
 
     protected abstract Layout createBottomPanel();
 
-    @SuppressWarnings("serial")
     public static class VersionInformationLayout implements IFormLayoutFactory {
 
         private GridFormLayoutHelper informationLayout;

@@ -28,6 +28,7 @@ import java.util.Map;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class HistoryLogComponent extends VerticalLayout {
 
     public static final String DEFAULT_FIELD = "default";

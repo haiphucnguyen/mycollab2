@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.tracker.service.ibatis;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -18,6 +19,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, nameField = "versionname", type = ProjectContants.BUG_VERSION, extraFieldName = "projectid")
+@Auditable(module = ModuleNameConstants.PRJ, type =  ProjectContants.BUG_VERSION)
 public class VersionServiceImpl extends DefaultService<Integer, Version, VersionSearchCriteria>
         implements VersionService {
 

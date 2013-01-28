@@ -44,35 +44,32 @@ public class BugDashboardViewImpl extends AbstractView implements
         title.setStyleName("h2");
         header.addComponent(title);
         header.setExpandRatio(title, 0.5f);
-        
+
         ButtonGroup navButton = new ButtonGroup();
         navButton.addButton(new Button("Bugs", new Button.ClickListener() {
-
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new BugEvent.GotoList(this, null));
             }
         }));
-        
-        navButton.addButton(new Button("Components", new Button.ClickListener() {
 
+        navButton.addButton(new Button("Components", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new BugComponentEvent.GotoList(this, null));
             }
         }));
         navButton.addButton(new Button("Versions", new Button.ClickListener() {
-
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new BugVersionEvent.GotoList(this, null));
             }
         }));
-        
+
         header.addComponent(navButton);
         header.setExpandRatio(navButton, 0.5f);
-        
-        SplitButton controlsBtn = new SplitButton();
+
+        final SplitButton controlsBtn = new SplitButton();
         controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
         controlsBtn.setCaption("Create Bug");
         controlsBtn
@@ -84,32 +81,34 @@ public class BugDashboardViewImpl extends AbstractView implements
                         new BugEvent.GotoAdd(this, null));
             }
         });
-        
+
         VerticalLayout btnControlsLayout = new VerticalLayout();
         btnControlsLayout.setWidth("150px");
         Button createComponentBtn = new Button("Create Component",
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
+                        controlsBtn.setPopupVisible(false);
                         EventBus.getInstance().fireEvent(new BugComponentEvent.GotoAdd(this, null));
                     }
                 });
         createComponentBtn.setStyleName("link");
         btnControlsLayout.addComponent(createComponentBtn);
-        
+
         Button createVersionBtn = new Button("Create Version",
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
+                        controlsBtn.setPopupVisible(false);
                         EventBus.getInstance().fireEvent(new BugVersionEvent.GotoAdd(this, null));
                     }
                 });
         createVersionBtn.setStyleName("link");
         btnControlsLayout.addComponent(createVersionBtn);
         controlsBtn.addComponent(btnControlsLayout);
-        
+
         header.addComponent(controlsBtn);
-        
+
         header.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 
         this.addComponent(header);
@@ -145,25 +144,25 @@ public class BugDashboardViewImpl extends AbstractView implements
         LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(updateBugWidget);
         leftColumn.addComponent(updateBugWidgetWrapper);
 
-        SimpleProject project = (SimpleProject)AppContext.getVariable(ProjectContants.PROJECT_NAME);
-        
+        SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
+
         BugChartComponent bugChartComponent = new BugChartComponent();
         rightColumn.addComponent(bugChartComponent);
-        
+
         BugTrendReportWidget bugTrendWidget = new BugTrendReportWidget();
         rightColumn.addComponent(new LazyLoadWrapper(bugTrendWidget));
         BugSearchCriteria trendSearchCriteria = new BugSearchCriteria();
         trendSearchCriteria.setProjectid(new NumberSearchField(project.getId()));
         bugTrendWidget.setSearchCriteria(trendSearchCriteria);
-        
-        
-        
+
+
+
         BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
         dueDefectsCriteria.setProjectid(new NumberSearchField(project.getId()));
         dueDefectsCriteria.setResolutions(new SetSearchField<String>(
                 new String[]{BugResolutionConstants.NEWISSUE}));
         dueBugWidget.setSearchCriteria(dueDefectsCriteria);
-        
+
         BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
         recentDefectsCriteria.setProjectid(new NumberSearchField(project.getId()));
         updateBugWidget.setSearchCriteria(recentDefectsCriteria);

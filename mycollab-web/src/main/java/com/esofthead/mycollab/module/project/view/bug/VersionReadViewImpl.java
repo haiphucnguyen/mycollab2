@@ -5,6 +5,8 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -14,10 +16,12 @@ import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.Window;
 
 /**
  *
@@ -26,8 +30,8 @@ import com.vaadin.ui.Layout;
 @ViewComponent
 public class VersionReadViewImpl extends AbstractView implements VersionReadView {
     private static final long serialVersionUID = 1L;
-    private Version version;
-    private PreviewForm previewForm;
+    protected Version version;
+    protected AdvancedPreviewBeanForm<Version> previewForm;
 
     public VersionReadViewImpl() {
         super();
@@ -70,6 +74,39 @@ public class VersionReadViewImpl extends AbstractView implements VersionReadView
             });
             super.setItemDataSource(newDataSource);
         }
+        
+        @Override
+        protected void doPrint() {
+            // Create a window that contains what you want to print
+            Window window = new Window("Window to Print");
+
+            VersionReadViewImpl printView = new VersionReadViewImpl.PrintView();
+            printView.previewItem(version);
+            window.addComponent(printView);
+
+            // Add the printing window as a new application-level window
+            getApplication().addWindow(window);
+
+            // Open it as a popup window with no decorations
+            getWindow().open(new ExternalResource(window.getURL()),
+                    "_blank", 1100, 200, // Width and height
+                    Window.BORDER_NONE); // No decorations
+
+            // Print automatically when the window opens.
+            // This call will block until the print dialog exits!
+            window.executeJavaScript("print();");
+
+            // Close the window automatically after printing
+            window.executeJavaScript("self.close();");
+        }
+
+        @Override
+        protected void showHistory() {
+            VersionHistoryLogWindow historyLog = new VersionHistoryLogWindow(
+                    ModuleNameConstants.PRJ, ProjectContants.BUG_VERSION,
+                    version.getId());
+            getWindow().addWindow(historyLog);
+        }
 
         class FormLayoutFactory extends VersionFormLayoutFactory {
 
@@ -88,6 +125,51 @@ public class VersionReadViewImpl extends AbstractView implements VersionReadView
             @Override
             protected Layout createBottomPanel() {
                 return new HorizontalLayout();
+            }
+        }
+    }
+    
+    @SuppressWarnings("serial")
+	public static class PrintView extends VersionReadViewImpl {
+
+        public PrintView() {
+            previewForm = new AdvancedPreviewBeanForm<Version>() {
+                @Override
+                public void setItemDataSource(Item newDataSource) {
+                	 this.setFormLayoutFactory(new VersionReadViewImpl.PrintView.FormLayoutFactory());
+                     this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+                         private static final long serialVersionUID = 1L;
+                         
+                         @Override
+                         protected Field onCreateField(Item item, Object propertyId,
+                                 Component uiContext) {
+                             
+                             return null;
+                         }
+                     });
+                     super.setItemDataSource(newDataSource);
+                }
+            };
+
+            this.addComponent(previewForm);
+        }
+
+        class FormLayoutFactory extends VersionFormLayoutFactory {
+
+            private static final long serialVersionUID = 1L;
+
+            public FormLayoutFactory() {
+            	 super(version.getVersionname());
+            }
+
+            @Override
+            protected Layout createTopPanel() {
+                return new HorizontalLayout();
+            }
+
+            @Override
+            protected Layout createBottomPanel() {
+            	 return new HorizontalLayout();
             }
         }
     }
