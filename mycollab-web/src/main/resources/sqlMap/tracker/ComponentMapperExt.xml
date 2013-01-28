@@ -27,8 +27,8 @@
     <sql id="selectComponents">
         <![CDATA[
           SELECT m_tracker_component.id, m_tracker_component.projectid, m_tracker_component.componentname, 
-               m_tracker_component.userlead, m_tracker_component.description,
-               m_tracker_component.createdUser, m_tracker_component.createdDate,
+                m_tracker_component.userlead, m_tracker_component.description, 
+                m_tracker_component.sAccountId, m_tracker_component.lastUpdatedTime, m_tracker_component.createdTime,
                concat(s_user.firstname,  IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS userLeadFullName
         FROM m_tracker_component
         LEFT OUTER JOIN s_user ON (m_tracker_component.userlead=s_user.username)
@@ -43,6 +43,14 @@
                 refid="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt.querySearchCriteria" />
         </trim>
     </select>
+    
+    <sql id="orderStatement">
+        ORDER BY 
+        <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            m_tracker_component.lastUpdatedTime DESC
+        ]]>
+    </sql>
 
     <select id="findPagableListByCriteria" resultMap="SimpleComponentResult"
                 parameterType="ComponentSearchCriteria">
@@ -54,8 +62,7 @@
             <include
                 refid="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt.querySearchCriteria" />
         </trim>
-
-        ORDER BY m_tracker_component.createdDate DESC
+        <include refid="orderStatement"/>
     </select>
         
     <select id="findComponentById" parameterType="java.lang.Integer"

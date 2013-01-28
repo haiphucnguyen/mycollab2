@@ -67,6 +67,7 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
         item.setProjectid(project.getId());
 
         if (item.getId() == null) {
+            item.setCreateduser(AppContext.getUsername());
             componentService.saveWithSession(item, AppContext.getUsername());
         } else {
             componentService.updateWithSession(item, AppContext.getUsername());

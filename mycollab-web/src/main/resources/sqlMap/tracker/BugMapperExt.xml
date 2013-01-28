@@ -280,11 +280,12 @@
                  m_prj_project.name as projectname, affectedversion.id as affectedversion_id, affectedversion.projectid as affectedversion_projectid, 
                  affectedversion.description as affectedversion_description, affectedversion.duedate as affectedversion_duedate, 
                  affectedversion.versionname as affectedversion_versionname, affectedversion.createdUser as affectedversion_createdUser, 
-                 affectedversion.createdDate as affectedversion_createdDate,
+                 affectedversion.createdTime as affectedversion_createdTime, affectedversion.lastUpdatedTime as affectedversion_lastUpdatedTime,
                  fixedversion.versionname as fixedversion_versionname, fixedversion.createdUser as fixedversion_createdUser, 
-                 fixedversion.createdDate as fixedversion_createdDate,
-                 component.id as component_id, component.projectid as component_projectid, component.componentname as componentname, component.userlead as component_userlead, 
-                 component.description as component_description, component.createdUser as component_createdUser, component.createdDate as component_createdDate,
+                 fixedversion.createdTime as fixedversion_createdTime, fixedversion.lastUpdatedTime as fixedversion_lastUpdatedTime,
+                 component.id as component_id, component.projectid as component_projectid, component.componentname as componentname, 
+                 component.userlead as component_userlead, component.description as component_description, component.createdUser as component_createdUser, 
+                 component.createdTime as component_createdTime, component.lastUpdatedTime as component_lastUpdatedTime, 
                  m_tracker_bug.description, m_tracker_bug.estimateTime, m_tracker_bug.estimateRemainTime
            FROM m_tracker_bug
                LEFT OUTER JOIN m_prj_project ON (m_tracker_bug.projectid = m_prj_project.id)
