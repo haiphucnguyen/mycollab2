@@ -133,12 +133,21 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
                     return new BugSeverityComboBox();
                 } else if (propertyId.equals("components")) {
                     componentSelect = new ComponentMultiSelectField();
+                    if (bug.getComponents() != null && bug.getComponents().size() > 0) {
+                    	componentSelect.setComponentsDisplay(bug.getComponents());
+                    }
                     return componentSelect;
                 } else if (propertyId.equals("affectedVersions")) {
                     affectedVersionSelect = new VersionMultiSelectField();
+                    if (bug.getAffectedVersions() != null && bug.getAffectedVersions().size() > 0) {
+                    	affectedVersionSelect.setVersionsDisplay(bug.getAffectedVersions());
+                    }
                     return affectedVersionSelect;
                 } else if (propertyId.equals("fixedVersions")) {
                     fixedVersionSelect = new VersionMultiSelectField();
+                    if (bug.getFixedVersions() != null && bug.getFixedVersions().size() > 0) {
+                    	fixedVersionSelect.setVersionsDisplay(bug.getFixedVersions());
+                    }
                     return fixedVersionSelect;
                 }
                 else if (propertyId.equals("summary")) {

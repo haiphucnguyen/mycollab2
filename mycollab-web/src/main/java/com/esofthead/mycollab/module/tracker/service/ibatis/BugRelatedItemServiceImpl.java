@@ -71,9 +71,9 @@ public class BugRelatedItemServiceImpl implements BugRelatedItemService{
         }
     }
     
-    private void deleteTrackerBugRelatedItem(int bugid) {
+    private void deleteTrackerBugRelatedItem(int bugid, String type) {
     	BugRelatedItemExample ex = new BugRelatedItemExample();
-        ex.createCriteria().andBugidEqualTo(bugid).andTypeEqualTo(BugSearchCriteria.AFFVERSION).andTypeEqualTo(BugSearchCriteria.FIXVERSION).andTypeEqualTo(BugSearchCriteria.COMPONENT);
+        ex.createCriteria().andBugidEqualTo(bugid).andTypeEqualTo(type);
         
         bugRelatedItemMapper.deleteByExample(ex);
     }
@@ -81,19 +81,19 @@ public class BugRelatedItemServiceImpl implements BugRelatedItemService{
     
     @Override
     public void updateAfftedVersionsOfBug(int bugid, List<Version> versions) {
-    	deleteTrackerBugRelatedItem(bugid);
+    	deleteTrackerBugRelatedItem(bugid, BugSearchCriteria.AFFVERSION);
     	insertAffectedVersionsOfBug(bugid, versions);
     }
 
     @Override
     public void updateFixedVersionsOfBug(int bugid, List<Version> versions) {
-    	deleteTrackerBugRelatedItem(bugid);
+    	deleteTrackerBugRelatedItem(bugid, BugSearchCriteria.FIXVERSION);
     	insertFixedVersionsOfBug(bugid, versions);
     }
 
     @Override
     public void updateComponentsOfBug(int bugid, List<Component> components) {
-    	deleteTrackerBugRelatedItem(bugid);
+    	deleteTrackerBugRelatedItem(bugid, BugSearchCriteria.COMPONENT);
     	insertComponentsOfBug(bugid, components);
     }
     

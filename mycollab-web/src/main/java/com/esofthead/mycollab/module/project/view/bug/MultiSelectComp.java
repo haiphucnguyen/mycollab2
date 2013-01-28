@@ -36,6 +36,12 @@ public abstract class MultiSelectComp extends CustomField {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				initData();
+				
+				if (lstStringValue.size() > 0) {
+					for (int i = 0; i < lstStringValue.size(); i++) {
+						selectBtn.checkItem(lstStringValue.get(i));
+					}
+				}
 			}
 		});
 		
@@ -52,7 +58,7 @@ public abstract class MultiSelectComp extends CustomField {
 	
 	abstract void initData();
 	
-	public void loadData(List<String> values) {
+	protected void loadData(List<String> values) {
 		for (int i = 0; i < values.size(); i++) {
 			selectBtn.addItemComponent(values.get(i));
 		}
@@ -64,7 +70,9 @@ public abstract class MultiSelectComp extends CustomField {
 
 	public void setSelectedItem(String item) {
 		componentsDisplay.setReadOnly(false);
-		lstStringValue.add(item);
+		if (!lstStringValue.contains(item)) {
+			lstStringValue.add(item);
+		}
 		componentsDisplay.setValue(buildStringDisplay());
 		componentsDisplay.setReadOnly(true);
 	}

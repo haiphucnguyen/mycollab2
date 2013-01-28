@@ -29,6 +29,14 @@ public class ComponentMultiSelectField extends MultiSelectComp {
     public ComponentMultiSelectField() {
         super();
     }
+    
+    public void setComponentsDisplay(List<Component> lstComponent) {
+    	for (int i = 0; i < lstComponent.size(); i++) {
+			String item = lstComponent.get(i).getComponentname();
+			setSelectedItem(item);
+		}
+    }
+    
 
     @Override
     void initData() {

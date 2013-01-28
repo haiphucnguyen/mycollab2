@@ -26,6 +26,11 @@ public class MultipleItemsPopupSelection extends PopupButton {
         CheckBox chk = hashMapCheckbox.get(itemName);
         chk.setValue(false);
     }
+    
+    public void checkItem(String itemName) {
+    	CheckBox chk = hashMapCheckbox.get(itemName);
+        chk.setValue(true);
+    }
 
     public void addItemComponent(String itemName) {
         final CheckBox chkItem = new CheckBox(itemName);

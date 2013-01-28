@@ -8,6 +8,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.VersionService;
@@ -27,6 +28,13 @@ public class VersionMultiSelectField extends MultiSelectComp {
 
     public VersionMultiSelectField() {
         super();
+    }
+    
+    public void setVersionsDisplay(List<Version> lstVersion) {
+    	for (int i = 0; i < lstVersion.size(); i++) {
+			String item = lstVersion.get(i).getVersionname();
+			setSelectedItem(item);
+		}
     }
 
     @Override
