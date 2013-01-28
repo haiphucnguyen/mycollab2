@@ -79,6 +79,9 @@
         <if test='typeid != null'>
             <![CDATA[${typeid.operation} typeid = ${typeid.value} ]]>
         </if>
+        <if test="isClosed != null">
+            <![CDATA[${isClosed.operation} m_crm_task.isClosed IS ${isClosed.value}]]>
+        </if>
     </sql>
     
     <sql id="queryCallSearchCriteria" >
@@ -97,6 +100,9 @@
         <if test='typeid != null'>
             <![CDATA[${typeid.operation} typeid = ${typeid.value} ]]>
         </if>
+        <if test="isClosed != null">
+            <![CDATA[${isClosed.operation} m_crm_call.isClosed IS ${isClosed.value}]]>
+        </if>
     </sql>
     
     <sql id="queryMeetingSearchCriteria" >
@@ -114,6 +120,9 @@
         </if>
         <if test='typeid != null'>
             <![CDATA[${typeid.operation} typeid = ${typeid.value} ]]>
+        </if>
+        <if test="isClosed != null">
+            <![CDATA[${isClosed.operation} m_crm_meeting.isClosed IS ${isClosed.value}]]>
         </if>
     </sql>
 
