@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.crm.domain.criteria;
 
-import com.esofthead.mycollab.core.arguments.BooleanSearchField;
+import com.esofthead.mycollab.core.arguments.BitSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -18,7 +18,7 @@ public class MeetingSearchCriteria extends SearchCriteria {
     private NumberSearchField saccountid;
     private SetSearchField<String> assignUsers;
     private NumberSearchField id;
-    private BooleanSearchField isClosed;
+    private BitSearchField isClosed;
 
     public NumberSearchField getSaccountid() {
         return saccountid;
@@ -44,11 +44,11 @@ public class MeetingSearchCriteria extends SearchCriteria {
         return id;
     }
 
-    public BooleanSearchField getIsClosed() {
-        return isClosed;
-    }
+	public void setIsClosed(BitSearchField isClosed) {
+		this.isClosed = isClosed;
+	}
 
-    public void setIsClosed(BooleanSearchField isClosed) {
-        this.isClosed = isClosed;
-    }
+	public BitSearchField getIsClosed() {
+		return isClosed;
+	}
 }
