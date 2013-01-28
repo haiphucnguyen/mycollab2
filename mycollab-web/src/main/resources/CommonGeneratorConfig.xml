@@ -57,6 +57,9 @@
             domainObjectName="ActivityStream"
             schema="mycollab"
             tableName="s_activitystream" />
+        
+        <table schema="mycollab" tableName="s_user_tracking"
+               domainObjectName="UserTracking" />
 
         <table
             domainObjectName="ReportBugIssue"

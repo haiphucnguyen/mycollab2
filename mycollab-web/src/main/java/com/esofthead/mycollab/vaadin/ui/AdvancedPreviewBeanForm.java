@@ -28,10 +28,6 @@ public class AdvancedPreviewBeanForm<T> extends GenericForm implements
             }
         }
     }
-
-    protected void doExportPdf() {
-        throw new MyCollabException("This method must be override by sub classes");
-    }
     
     protected void doPrint() {
         throw new MyCollabException("This method must be override by sub classes");

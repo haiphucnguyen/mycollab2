@@ -14,6 +14,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
 import com.vaadin.ui.ComponentContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -58,6 +59,11 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
             AppContext.setSession(user, pref);
             EventBus.getInstance().fireEvent(
                     new ShellEvent.GotoMainPage(this, null));
+            
+            //Tracking user service
+            AbstractWebApplicationContext context = (AbstractWebApplicationContext) AppContext.getApplication()
+                .getContext();
+            System.out.println("User agent: " + context.getBrowser().getBrowserApplication());
         } catch (MyCollabException e) {
             throw e;
         }

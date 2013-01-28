@@ -1,20 +1,20 @@
 <beans xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-    xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
-    xmlns="http://www.springframework.org/schema/beans"
-    xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+       xmlns:tx="http://www.springframework.org/schema/tx" xmlns:context="http://www.springframework.org/schema/context"
+       xmlns="http://www.springframework.org/schema/beans"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
         http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
         http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
 
     <bean id="activityStreamMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.common.dao.ActivityStreamMapper" />
+                  value="com.esofthead.mycollab.common.dao.ActivityStreamMapper" />
     </bean>
     
     <bean id="activityStreamMapperExt" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt" />
+                  value="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt" />
     </bean>
     
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="auditLogMapper">
@@ -30,36 +30,42 @@
     <bean id="commentMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.common.dao.CommentMapper" />
+                  value="com.esofthead.mycollab.common.dao.CommentMapper" />
     </bean>
     <bean id="commentMapperExt" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.common.dao.CommentMapperExt" />
+                  value="com.esofthead.mycollab.common.dao.CommentMapperExt" />
     </bean>
 
     <bean id="currencyMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.common.dao.CurrencyMapper" />
+                  value="com.esofthead.mycollab.common.dao.CurrencyMapper" />
     </bean>
 
     <bean id="monitorItemMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.common.dao.MonitorItemMapper" />
+                  value="com.esofthead.mycollab.common.dao.MonitorItemMapper" />
     </bean>
 
     <bean id="monitorItemMapperExt" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.common.dao.MonitorItemMapperExt" />
+                  value="com.esofthead.mycollab.common.dao.MonitorItemMapperExt" />
     </bean>
     
     <bean id="userPreferenceMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
-            value="com.esofthead.mycollab.common.dao.UserPreferenceMapper" />
+                  value="com.esofthead.mycollab.common.dao.UserPreferenceMapper" />
+    </bean>
+    
+    <bean id="userTrackingMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+                  value="com.esofthead.mycollab.common.dao.UserTrackingMapper" />
     </bean>
 
     <bean id="messageDispatcher" class="com.esofthead.mycollab.core.MessageDispatcherImpl" />
