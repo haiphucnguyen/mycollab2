@@ -7,6 +7,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.VerticalLayout;
@@ -142,6 +143,25 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
         @Override
         public Class<?> getType() {
             return String.class;
+        }
+    }
+
+    public static class FormContainerViewField extends CustomField {
+
+        private HorizontalLayout layout;
+
+        public FormContainerViewField() {
+            layout = new HorizontalLayout();
+            this.setCompositionRoot(layout);
+        }
+        
+        public void addComponentField(Component component) {
+            layout.addComponent(component);
+        }
+
+        @Override
+        public Class<?> getType() {
+            return Object.class;
         }
     }
 

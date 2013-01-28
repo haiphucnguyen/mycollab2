@@ -186,6 +186,11 @@
             <version>1.1.1</version>
         </dependency>
         <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>pdfexport</artifactId>
+            <version>1.0.1</version>
+        </dependency>
+        <dependency>
             <groupId>org.vaadin.addon</groupId>
             <artifactId>confirmdialog</artifactId>
             <version>1.2.1</version>

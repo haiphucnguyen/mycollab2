@@ -132,7 +132,7 @@ public class ComponentReadPresenter extends AbstractPresenter<ComponentReadView>
                 view.previewItem(component);
                 
                 ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
-                breadcrumb.gotoComponentEdit(component);
+                breadcrumb.gotoComponentRead(component);
             } else {
                 AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
                 return;

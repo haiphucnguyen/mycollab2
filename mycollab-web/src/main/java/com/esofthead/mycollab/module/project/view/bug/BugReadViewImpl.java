@@ -3,9 +3,13 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
+import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
+import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -149,7 +153,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
         @Override
         public void setItemDataSource(Item newDataSource) {
             this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new EditFormFieldFactory());
+            this.setFormFieldFactory(new PreviewFormFieldFactory());
             super.setItemDataSource(newDataSource);
             displayWorkflowControl();
         }
@@ -278,7 +282,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
             }
         }
 
-        private class EditFormFieldFactory extends DefaultFormViewFieldFactory {
+        private class PreviewFormFieldFactory extends DefaultFormViewFieldFactory {
 
             private static final long serialVersionUID = 1L;
 
@@ -290,11 +294,49 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                 } else if (propertyId.equals("id")) {
                     return new FormAttachmentDisplayField(AttachmentConstants.PROJECT_BUG_TYPE, bug.getId());
                 } else if (propertyId.equals("components")) {
-                   
+                   if (bug.getComponents() != null) {
+                       FormContainerViewField componentContainer = new FormContainerViewField();
+                       for (final Component component: bug.getComponents()) {
+                           Button componentLink = new Button(component.getComponentname(), new Button.ClickListener() {
+
+                               @Override
+                               public void buttonClick(ClickEvent event) {
+                                   EventBus.getInstance().fireEvent(new BugComponentEvent.GotoRead(BugReadViewImpl.this, component.getId()));
+                               }
+                           });
+                           componentContainer.addComponentField(componentLink);
+                           componentLink.setStyleName("link");
+                       }
+                       return componentContainer;
+                   }
                 } else if (propertyId.equals("affectedVersions")) {
-                    
+                    FormContainerViewField componentContainer = new FormContainerViewField();
+                       for (final Version version: bug.getAffectedVersions()) {
+                           Button versionLink = new Button(version.getVersionname(), new Button.ClickListener() {
+
+                               @Override
+                               public void buttonClick(ClickEvent event) {
+                                   EventBus.getInstance().fireEvent(new BugVersionEvent.GotoRead(BugReadViewImpl.this, version.getId()));
+                               }
+                           });
+                           componentContainer.addComponentField(versionLink);
+                           versionLink.setStyleName("link");
+                       }
+                       return componentContainer;
                 } else if (propertyId.equals("fixedVersions")) {
-                   
+                   FormContainerViewField componentContainer = new FormContainerViewField();
+                       for (final Version version: bug.getFixedVersions()) {
+                           Button versionLink = new Button(version.getVersionname(), new Button.ClickListener() {
+
+                               @Override
+                               public void buttonClick(ClickEvent event) {
+                                   EventBus.getInstance().fireEvent(new BugVersionEvent.GotoRead(BugReadViewImpl.this, version.getId()));
+                               }
+                           });
+                           componentContainer.addComponentField(versionLink);
+                           versionLink.setStyleName("link");
+                       }
+                       return componentContainer;
                 }
                 return null;
             }

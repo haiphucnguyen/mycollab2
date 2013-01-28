@@ -283,7 +283,7 @@
                  affectedversion.createdTime as affectedversion_createdTime, affectedversion.lastUpdatedTime as affectedversion_lastUpdatedTime,
                  fixedversion.versionname as fixedversion_versionname, fixedversion.createdUser as fixedversion_createdUser, 
                  fixedversion.createdTime as fixedversion_createdTime, fixedversion.lastUpdatedTime as fixedversion_lastUpdatedTime,
-                 component.id as component_id, component.projectid as component_projectid, component.componentname as componentname, 
+                 component.id as component_id, component.projectid as component_projectid, component.componentname as component_componentname, 
                  component.userlead as component_userlead, component.description as component_description, component.createdUser as component_createdUser, 
                  component.createdTime as component_createdTime, component.lastUpdatedTime as component_lastUpdatedTime, 
                  m_tracker_bug.description, m_tracker_bug.estimateTime, m_tracker_bug.estimateRemainTime
