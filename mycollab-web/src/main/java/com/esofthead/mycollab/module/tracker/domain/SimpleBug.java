@@ -13,6 +13,7 @@ public class SimpleBug extends Bug {
     private List<Version> fixedVersions;
     private List<Component> components;
     private List<Attachment> attachments;
+    private String comment;
 
     public String getProjectname() {
         return projectname;
@@ -68,5 +69,13 @@ public class SimpleBug extends Bug {
 
     public void setAttachments(List<Attachment> attachments) {
         this.attachments = attachments;
+    }
+
+    public String getComment() {
+        return comment;
+    }
+
+    public void setComment(String comment) {
+        this.comment = comment;
     }
 }

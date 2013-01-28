@@ -6,6 +6,7 @@ package com.esofthead.mycollab.common.interceptor.service;
 
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.persistence.service.IPostUpdateHandler;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.HashMap;
@@ -94,7 +95,8 @@ public class AuditLogAspect {
             } catch (Exception e) {
                 log.error(
                         "Error when save audit for save action of service "
-                        + cls.getName(), e);
+                        + cls.getName() + "and bean: " + BeanUtility.printBeanObj(bean), e);
+                 
                 if (key != null) {
                     caches.remove(key);
                 }
