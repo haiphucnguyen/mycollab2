@@ -53,6 +53,10 @@ public class BugSearchCriteria extends SearchCriteria {
 	
 	private NumberSearchField projectId;
 	
+	public static String AFFVERSION = "AffVersion";
+	public static String FIXVERSION = "FixVersion";
+	public static String COMPONENT = "Component";
+	
 	public StringSearchField getAssignuser() {
 		return assignuser;
 	}
