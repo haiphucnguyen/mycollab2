@@ -55,6 +55,9 @@
                 #{user}
             </foreach>
         </if>
+        <if test="isClosed != null">
+            <![CDATA[${isClosed.operation} m_crm_meeting.isClosed IS ${isClosed.value}]]>
+        </if>
     </sql>
     
     <sql id="orderStatement">

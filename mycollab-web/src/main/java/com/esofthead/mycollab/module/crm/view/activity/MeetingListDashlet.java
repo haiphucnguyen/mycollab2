@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
@@ -31,6 +32,7 @@ public class MeetingListDashlet extends Depot {
         MeetingSearchCriteria criteria = new MeetingSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
         criteria.setAssignUsers(new SetSearchField<String>(new String[]{AppContext.getUsername()}));
+        criteria.setIsClosed(new BooleanSearchField(false));
         tableItem.setSearchCriteria(criteria);
     }
 }

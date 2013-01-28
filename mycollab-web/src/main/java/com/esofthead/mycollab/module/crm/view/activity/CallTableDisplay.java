@@ -8,11 +8,13 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.criteria.CallSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.CallService;
+import com.esofthead.mycollab.module.crm.view.account.AccountTableDisplay;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
@@ -46,6 +48,30 @@ public class CallTableDisplay extends PagedBeanTable2<CallService, CallSearchCri
                             }
                         });
                 b.addStyleName("medium-text");
+                return b;
+                
+            }
+        });
+        
+        this.addGeneratedColumn("isClosed", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+            
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+                final SimpleCall call = CallTableDisplay.this.getBeanByIndex(itemId);
+                Button b = new Button(null,
+                        new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
+                            
+                            @Override
+                            public void buttonClick(Button.ClickEvent event) {
+                               fireTableEvent(new TableClickEvent(CallTableDisplay.this, call, "isClosed"));
+                            }
+                        });
+                b.setIcon(new ThemeResource("icons/16/close.png"));
+                b.setStyleName("link");
+                b.setDescription("Close this call");
                 return b;
                 
             }
