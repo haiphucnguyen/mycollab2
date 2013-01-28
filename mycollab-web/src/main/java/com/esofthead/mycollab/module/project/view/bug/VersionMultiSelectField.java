@@ -29,12 +29,12 @@ public class VersionMultiSelectField extends MultiSelectComp {
     public VersionMultiSelectField() {
         super();
     }
-    
+
     public void setVersionsDisplay(List<Version> lstVersion) {
-    	for (int i = 0; i < lstVersion.size(); i++) {
-			String item = lstVersion.get(i).getVersionname();
-			setSelectedItem(item);
-		}
+        for (int i = 0; i < lstVersion.size(); i++) {
+            String item = lstVersion.get(i).getVersionname();
+            setSelectedItem(item);
+        }
     }
 
     @Override

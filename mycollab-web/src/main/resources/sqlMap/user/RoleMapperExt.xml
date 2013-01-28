@@ -26,17 +26,30 @@
             <include refid="querySearchCriteria" />
         </trim>
     </select>
-
-    <select id="findPagableListByCriteria" resultMap="SimpleRoleUser"
-            parameterType="RoleSearchCriteria">
+    
+    <sql id="selectSimpleRole">
         <![CDATA[
             SELECT s_roles.id, s_roles.rolename, s_roles.description, s_roles.sAccountId, s_role_permission.roleVal AS permissionVal
             FROM s_roles
                 LEFT OUTER JOIN s_role_permission ON (s_role_permission.roleid = s_roles.id)
         ]]>
+    </sql>
+
+    <select id="findPagableListByCriteria" resultMap="SimpleRoleUser"
+            parameterType="RoleSearchCriteria">
+         <include
+            refid="com.esofthead.mycollab.module.user.dao.RoleMapperExt.selectSimpleRole" />
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1 
             <include refid="querySearchCriteria" />
         </trim>
+    </select>
+    
+    <select id="findRoleById" parameterType="java.lang.Integer"
+            resultMap="SimpleRoleUser">
+        <include
+            refid="com.esofthead.mycollab.module.user.dao.RoleMapperExt.selectSimpleRole" />
+
+        WHERE s_roles.id=#{roleId, javaType=INTEGER}
     </select>
 </mapper>

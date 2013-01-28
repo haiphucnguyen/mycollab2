@@ -26,11 +26,11 @@ import com.esofthead.mycollab.module.user.dao.RolePermissionMapper;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.RolePermission;
 import com.esofthead.mycollab.module.user.domain.RolePermissionExample;
+import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
-import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -75,5 +75,10 @@ public class RoleServiceDBImpl extends DefaultService<Integer, Role, RoleSearchC
         } else {
             rolePermissionMapper.insert(rolePer);
         }
+    }
+
+    @Override
+    public SimpleRole findRoleById(int roleId) {
+       return roleMapperExt.findRoleById(roleId);
     }
 }

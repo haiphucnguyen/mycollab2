@@ -138,22 +138,6 @@ public class PreviewFormControlsGenerator<T> {
         historyBtn.setDescription("Show history log");
         layout.addComponent(historyBtn);
         layout.setComponentAlignment(historyBtn, Alignment.MIDDLE_RIGHT);
-        
-        Button exportPdf = new Button(null, new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                previewForm.doExportPdf();
-            }
-        });
-        
-        
-
-        exportPdf.setIcon(new ThemeResource("icons/16/pdf.png"));
-        exportPdf.setStyleName("link");
-        exportPdf.setDescription("Export to pdf");
-        layout.addComponent(exportPdf);
-        layout.setComponentAlignment(exportPdf, Alignment.MIDDLE_RIGHT);
-        
 
         Button printBtn = new Button(null, new Button.ClickListener() {
             @Override

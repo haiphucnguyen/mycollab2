@@ -140,9 +140,6 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
                     public void buttonClick(ClickEvent event) {
                         user.setIsadmin((Boolean) isAdminCheck.getValue());
 
-                        System.out.println("Admin Check: "
-                                + isAdminCheck.getValue());
-
                         if (user.getIsadmin()) {
                             user.setRoleid(null);
                             layout.removeComponent(roleLayout);

@@ -16,9 +16,10 @@
  */
 package com.esofthead.mycollab.module.user.service;
 
-import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.common.domain.PermissionMap;
+import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.user.domain.Role;
+import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 
 /**
@@ -26,4 +27,6 @@ import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
  */
 public interface RoleService extends IDefaultService<Integer, Role, RoleSearchCriteria> {
     void savePermission(int roleId, PermissionMap permissionMap);
+    
+    SimpleRole findRoleById(int roleId);
 }

@@ -7,14 +7,17 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.user.domain.Role;
+import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
+import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.Window;
 import java.io.Serializable;
 
 /**
@@ -76,8 +79,18 @@ public class RoleController implements Serializable {
                     public void handle(RoleEvent.GotoRead event) {
                         RoleReadPresenter presenter = PresenterResolver
                                 .getPresenter(RoleReadPresenter.class);
-                        presenter.go(container, new ScreenData.Preview<Role>(
-                                (Role) event.getData()));
+                        if (event.getData() instanceof SimpleRole) {
+                            presenter.go(container, new ScreenData.Preview<Role>(
+                                    (Role) event.getData()));
+                        } else if (event.getData() instanceof Integer) {
+                            RoleService roleService = AppContext.getSpringBean(RoleService.class);
+                            SimpleRole role = roleService.findRoleById((Integer) event.getData());
+                            if (role == null) {
+                                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                            } else {
+                                presenter.go(container, new ScreenData.Preview<Role>(role));
+                            }
+                        }
                     }
                 });
 

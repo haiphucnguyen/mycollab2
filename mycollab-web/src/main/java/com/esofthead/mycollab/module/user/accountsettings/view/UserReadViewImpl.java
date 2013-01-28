@@ -6,6 +6,8 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.events.RoleEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -18,6 +20,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -69,13 +72,18 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
                         if (user.getIsadmin() != null && user.getIsadmin() == Boolean.TRUE) {
                             return new FormViewField("True");
                         } else {
-                            return new FormLinkViewField(user.getRoleName(), new Button.ClickListener() {
+                            FormContainerViewField formContainer = new FormContainerViewField();
+                            formContainer.addComponentField(new Label("False. Role: "));
+                            Button roleLink = new Button(user.getRoleName(), new Button.ClickListener() {
 
                                 @Override
                                 public void buttonClick(ClickEvent event) {
-                                    
+                                    EventBus.getInstance().fireEvent(new RoleEvent.GotoRead(UserReadViewImpl.this, user.getRoleid()));
                                 }
                             });
+                            formContainer.addComponentField(roleLink);
+                            roleLink.setStyleName("link");
+                            return formContainer;
                         }
                     } else if (propertyId.equals("website")) {
                     	return new DefaultFormViewFieldFactory.FormUrlLinkViewField(user.getWebsite());
