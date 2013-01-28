@@ -18,28 +18,27 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
         extends CustomComponent {
 
     private static Logger log = LoggerFactory.getLogger(BeanList.class);
-    
     private static final long serialVersionUID = 1L;
     private Object parentComponent;
     private SearchService searchService;
     private Class<? extends RowDisplayHandler<T>> rowDisplayHandler;
+    private LazyLoadWrapper contentWrapper;
     private VerticalLayout contentLayout;
-    private boolean isLazyLoad = true;
-    
+
     public BeanList(Object parentComponent, SearchService searchService,
             Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
-        this(parentComponent, searchService, rowDisplayHandler, new VerticalLayout(), true);
+        this(parentComponent, searchService, rowDisplayHandler, new VerticalLayout());
     }
 
     public BeanList(Object parentComponent, SearchService searchService,
-            Class<? extends RowDisplayHandler<T>> rowDisplayHandler, VerticalLayout contentLayout, boolean isLazyLoad) {
+            Class<? extends RowDisplayHandler<T>> rowDisplayHandler, VerticalLayout contentLayout) {
         this.parentComponent = parentComponent;
         this.searchService = searchService;
         this.rowDisplayHandler = rowDisplayHandler;
-        this.isLazyLoad = isLazyLoad;
-        
+
+        this.contentWrapper = new LazyLoadWrapper(contentLayout);
         this.contentLayout = contentLayout;
-        this.setCompositionRoot(contentLayout);
+        this.setCompositionRoot(contentWrapper);
     }
 
     public BeanList(SearchService searchService,
@@ -84,10 +83,10 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
         loadItems(currentListData);
         return currentListData.size();
     }
-    
+
     public void loadItems(List<T> currentListData) {
         contentLayout.removeAllComponents();
-                
+
         int i = 0;
         try {
             for (T item : currentListData) {
@@ -95,11 +94,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
                 RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
                 Component row = rowHandler.generateRow(item, i);
                 if (row != null) {
-                    if (isLazyLoad) {
-                        contentLayout.addComponent(new LazyLoadWrapper(row));
-                    } else {
-                        contentLayout.addComponent(row);
-                    }
+                    contentLayout.addComponent(row);
                 }
 
                 i++;

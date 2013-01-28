@@ -138,7 +138,7 @@ public class TaskListReorderViewImpl extends AbstractView implements
 
 		taskLists = new BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList>(
 				null, AppContext.getSpringBean(ProjectTaskListService.class),
-				TaskListRowDisplayHandler.class, ddLayout, false);
+				TaskListRowDisplayHandler.class, ddLayout);
 		this.addComponent(taskLists);
 	}
 

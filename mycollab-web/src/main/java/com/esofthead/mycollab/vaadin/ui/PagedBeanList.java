@@ -7,6 +7,7 @@ import com.esofthead.mycollab.vaadin.events.HasPagableHandlers;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.data.validator.IntegerValidator;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -38,17 +39,15 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
     private Label totalPagesLabel;
     private TextField currentPageTextField;
     private List<T> currentListData;
-    private VerticalLayout content;
     private Set<PagableHandler> pagableHandlers;
     private RowDisplayHandler<T> rowDisplayHandler;
-
+    
     public PagedBeanList(SearchService searchService,
             RowDisplayHandler<T> rowDisplayHandler) {
         this.searchService = searchService;
         this.rowDisplayHandler = rowDisplayHandler;
 
-        content = new VerticalLayout();
-        this.addComponent(content);
+        
         this.addComponent(createPageControls());
     }
 
@@ -239,7 +238,14 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
         this.setCurrentPage(currentPage);
         this.setTotalPage(totalPage);
 
-        content.removeAllComponents();
+        Component comp = this.getComponent(0);
+        if (comp instanceof LazyLoadWrapper) {
+          this.removeComponent(comp);  
+        } 
+        
+        VerticalLayout content = new VerticalLayout();
+        LazyLoadWrapper wrapperComp = new LazyLoadWrapper(content);
+        this.addComponent(wrapperComp, 0);
 
         int i = 0;
         for (T item : currentListData) {

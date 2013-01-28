@@ -166,7 +166,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
                     new Button.ClickListener() {
                         @Override
                         public void buttonClick(ClickEvent event) {
-                            taskListActionControl.setCaption("Archieved Tasks");
+                            taskListFilterControl.setCaption("Archieved Tasks");
                             taskListFilterControl.setPopupVisible(false);
                             displayInActiveTasks();
                         }

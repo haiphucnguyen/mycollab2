@@ -56,7 +56,7 @@
             </foreach>
         </if>
         <if test="isClosed != null">
-            <![CDATA[${isClosed.operation} m_crm_meeting.isClosed IS ${isClosed.value}]]>
+            <![CDATA[${isClosed.operation} m_crm_meeting.isClosed = ${isClosed.value}]]>
         </if>
     </sql>
     

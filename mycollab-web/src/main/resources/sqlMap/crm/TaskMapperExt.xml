@@ -131,7 +131,7 @@
             <![CDATA[${saccountid.operation} m_crm_task.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
         </if>
         <if test="isClosed != null">
-            <![CDATA[${isClosed.operation} m_crm_task.isClosed IS ${isClosed.value}]]>
+            <![CDATA[${isClosed.operation} m_crm_task.isClosed = ${isClosed.value}]]>
         </if>
     </sql>
 
