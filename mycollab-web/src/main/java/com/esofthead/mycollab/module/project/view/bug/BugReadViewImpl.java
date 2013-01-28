@@ -289,6 +289,12 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                     return new FormDateViewField(bug.getDuedate());
                 } else if (propertyId.equals("id")) {
                     return new FormAttachmentDisplayField(AttachmentConstants.PROJECT_BUG_TYPE, bug.getId());
+                } else if (propertyId.equals("components")) {
+                   
+                } else if (propertyId.equals("affectedVersions")) {
+                    
+                } else if (propertyId.equals("fixedVersions")) {
+                   
                 }
                 return null;
             }
