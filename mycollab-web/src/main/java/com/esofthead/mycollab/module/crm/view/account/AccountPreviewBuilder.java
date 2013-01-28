@@ -183,6 +183,14 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
                 }
 
                 @Override
+                protected void doExportPdf() {
+                   AccountPreviewBuilder printView = new AccountPreviewBuilder.PrintView();
+                    printView.previewItem(account);
+                    
+                }
+                
+
+                @Override
                 protected void doPrint() {
                     // Create a window that contains what you want to print
                     Window window = new Window("Window to Print");
