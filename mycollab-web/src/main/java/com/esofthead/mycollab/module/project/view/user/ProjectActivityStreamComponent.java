@@ -30,108 +30,131 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.ui.Alignment;
+import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class ProjectActivityStreamComponent extends Depot {
 
-    private DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
+	private final DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
 
-    public ProjectActivityStreamComponent() {
-        super("Project Feeds", new VerticalLayout());
-        activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(AppContext.getSpringBean(ActivityStreamService.class), ActivityStreamRowDisplayHandler.class, 15);
-        this.bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
-        this.addStyleName("activity-panel");
-        ((VerticalLayout) this.bodyContent).setMargin(false);
-    }
+	public ProjectActivityStreamComponent() {
+		super("Project Feeds", new VerticalLayout());
+		activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
+				AppContext.getSpringBean(ActivityStreamService.class),
+				ActivityStreamRowDisplayHandler.class, 15);
+		this.bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
+		this.addStyleName("activity-panel");
+		((VerticalLayout) this.bodyContent).setMargin(false);
+	}
 
-    public void showProjectFeeds() {
-        ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-        searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{ModuleNameConstants.PRJ}));
+	public void showProjectFeeds() {
+		ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
+		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
+				new String[] { ModuleNameConstants.PRJ }));
 
-        SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
-        searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(project.getId()));
-        activityStreamList.setSearchCriteria(searchCriteria);
-    }
+		SimpleProject project = (SimpleProject) AppContext
+				.getVariable(ProjectContants.PROJECT_NAME);
+		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(project
+				.getId()));
+		activityStreamList.setSearchCriteria(searchCriteria);
+	}
 
-    public static class ActivityStreamRowDisplayHandler implements DefaultBeanPagedList.RowDisplayHandler<SimpleActivityStream> {
+	public static class ActivityStreamRowDisplayHandler implements
+			DefaultBeanPagedList.RowDisplayHandler<SimpleActivityStream> {
 
-        @Override
-        public Component generateRow(SimpleActivityStream activityStream, int rowIndex) {
-            CssLayout layout = new CssLayout();
-            layout.setWidth("100%");
-            layout.setStyleName("activity-stream");
-            
-            HorizontalLayout header = new HorizontalLayout();
-            header.setSpacing(true);
-            header.addComponent(new UserLink(activityStream.getCreateduser(), activityStream.getCreatedUserFullName()));
-            StringBuilder action = new StringBuilder();
+		@Override
+		public Component generateRow(SimpleActivityStream activityStream,
+				int rowIndex) {
+			CssLayout layout = new CssLayout();
+			layout.setWidth("100%");
+			layout.setStyleName("activity-stream");
 
-            if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream.getAction())) {
-                action.append("create a new ");
-            } else if (ActivityStreamConstants.ACTION_UPDATE.equals(activityStream.getAction())) {
-                action.append("update ");
-            }
+			CssLayout header = new CssLayout();
+			header.setStyleName("stream-content");
+			header.addComponent(new UserLink(activityStream.getCreateduser(),
+					activityStream.getCreatedUserFullName()));
+			StringBuilder action = new StringBuilder();
 
-            action.append(activityStream.getType());
-            Label actionLbl = new Label(action.toString());
-            header.addComponent(actionLbl);
-            header.setComponentAlignment(actionLbl, Alignment.MIDDLE_CENTER);
-            header.addComponent(new ActivitylLink(activityStream.getType(), activityStream.getNamefield(), activityStream.getTypeid()));
-            layout.addComponent(header);
+			if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream
+					.getAction())) {
+				action.append("create a new ");
+			} else if (ActivityStreamConstants.ACTION_UPDATE
+					.equals(activityStream.getAction())) {
+				action.append("update ");
+			}
 
-            CssLayout body = new CssLayout();
-            body.setStyleName("activity-date");
-            Label dateLbl = new Label(DateTimeUtils.getStringDateFromNow(activityStream.getCreatedtime()));
-            body.addComponent(dateLbl);
+			action.append(activityStream.getType());
+			Label actionLbl = new Label(action.toString());
+			actionLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+			header.addComponent(actionLbl);
+			// header.setComponentAlignment(actionLbl, Alignment.TOP_CENTER);
+			header.addComponent(new ActivitylLink(activityStream.getType(),
+					activityStream.getNamefield(), activityStream.getTypeid()));
+			layout.addComponent(header);
 
-            layout.addComponent(body);
-            return layout;
-        }
-    }
+			CssLayout body = new CssLayout();
+			body.setStyleName("activity-date");
+			Label dateLbl = new Label(
+					DateTimeUtils.getStringDateFromNow(activityStream
+							.getCreatedtime()));
+			body.addComponent(dateLbl);
 
-    private static class ActivitylLink extends Button {
+			layout.addComponent(body);
+			return layout;
+		}
+	}
 
-        public ActivitylLink(final String type, final String fieldName, final int typeid) {
-            super(fieldName);
+	private static class ActivitylLink extends Button {
 
-            this.setIcon(ProjectResources.getIconResource16size(type));
-            this.setStyleName("link");
-            
-            this.addListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    if (ProjectContants.PROJECT.equals(type)) {
-                    } else if (ProjectContants.MESSAGE.equals(type)) {
-                        EventBus.getInstance().fireEvent(new MessageEvent.GotoRead(this, typeid));
-                    } else if (ProjectContants.MILESTONE.equals(type)) {
-                        EventBus.getInstance().fireEvent(new MilestoneEvent.GotoRead(this, typeid));
-                    } else if (ProjectContants.PROBLEM.equals(type)) {
-                        EventBus.getInstance().fireEvent(new ProblemEvent.GotoRead(this, typeid));
-                    } else if (ProjectContants.RISK.equals(type)) {
-                        EventBus.getInstance().fireEvent(new RiskEvent.GotoRead(this, typeid));
-                    } else if (ProjectContants.TASK.equals(type)) {
-                        EventBus.getInstance().fireEvent(new TaskEvent.GotoRead(this, typeid));
-                    } else if (ProjectContants.TASK_LIST.equals(type)) {
-                        EventBus.getInstance().fireEvent(new TaskListEvent.GotoRead(this, typeid));
-                    } else if (ProjectContants.BUG.equals(type)) {
-                        EventBus.getInstance().fireEvent(new BugEvent.GotoRead(this, typeid));
-                    } else if (ProjectContants.BUG_COMPONENT.equals(type)) {
-                        EventBus.getInstance().fireEvent(new BugComponentEvent.GotoRead(this, typeid));
-                    } else if (ProjectContants.BUG_VERSION.equals(type)) {
-                        EventBus.getInstance().fireEvent(new BugVersionEvent.GotoRead(this, typeid));
-                    }
-                }
-            });
-        }
-    }
+		public ActivitylLink(final String type, final String fieldName,
+				final int typeid) {
+			super(fieldName);
+
+			this.setIcon(ProjectResources.getIconResource16size(type));
+			this.setStyleName("link");
+
+			this.addListener(new Button.ClickListener() {
+				@Override
+				public void buttonClick(Button.ClickEvent event) {
+					if (ProjectContants.PROJECT.equals(type)) {
+					} else if (ProjectContants.MESSAGE.equals(type)) {
+						EventBus.getInstance().fireEvent(
+								new MessageEvent.GotoRead(this, typeid));
+					} else if (ProjectContants.MILESTONE.equals(type)) {
+						EventBus.getInstance().fireEvent(
+								new MilestoneEvent.GotoRead(this, typeid));
+					} else if (ProjectContants.PROBLEM.equals(type)) {
+						EventBus.getInstance().fireEvent(
+								new ProblemEvent.GotoRead(this, typeid));
+					} else if (ProjectContants.RISK.equals(type)) {
+						EventBus.getInstance().fireEvent(
+								new RiskEvent.GotoRead(this, typeid));
+					} else if (ProjectContants.TASK.equals(type)) {
+						EventBus.getInstance().fireEvent(
+								new TaskEvent.GotoRead(this, typeid));
+					} else if (ProjectContants.TASK_LIST.equals(type)) {
+						EventBus.getInstance().fireEvent(
+								new TaskListEvent.GotoRead(this, typeid));
+					} else if (ProjectContants.BUG.equals(type)) {
+						EventBus.getInstance().fireEvent(
+								new BugEvent.GotoRead(this, typeid));
+					} else if (ProjectContants.BUG_COMPONENT.equals(type)) {
+						EventBus.getInstance().fireEvent(
+								new BugComponentEvent.GotoRead(this, typeid));
+					} else if (ProjectContants.BUG_VERSION.equals(type)) {
+						EventBus.getInstance().fireEvent(
+								new BugVersionEvent.GotoRead(this, typeid));
+					}
+				}
+			});
+		}
+	}
 }
