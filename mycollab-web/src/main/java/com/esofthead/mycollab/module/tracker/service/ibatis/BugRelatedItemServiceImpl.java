@@ -82,19 +82,25 @@ public class BugRelatedItemServiceImpl implements BugRelatedItemService{
     @Override
     public void updateAfftedVersionsOfBug(int bugid, List<Version> versions) {
     	deleteTrackerBugRelatedItem(bugid, BugSearchCriteria.AFFVERSION);
-    	insertAffectedVersionsOfBug(bugid, versions);
+    	if (versions.size() > 0) {
+    		insertAffectedVersionsOfBug(bugid, versions);
+    	}
     }
 
     @Override
     public void updateFixedVersionsOfBug(int bugid, List<Version> versions) {
     	deleteTrackerBugRelatedItem(bugid, BugSearchCriteria.FIXVERSION);
-    	insertFixedVersionsOfBug(bugid, versions);
+    	if (versions.size() > 0) {
+    		insertFixedVersionsOfBug(bugid, versions);
+    	}
     }
 
     @Override
     public void updateComponentsOfBug(int bugid, List<Component> components) {
     	deleteTrackerBugRelatedItem(bugid, BugSearchCriteria.COMPONENT);
-    	insertComponentsOfBug(bugid, components);
+    	if (components.size() > 0) {
+    		insertComponentsOfBug(bugid, components);
+    	}
     }
     
 }
