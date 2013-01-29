@@ -1,5 +1,6 @@
-package com.esofthead.mycollab.vaadin.ui;
+package com.esofthead.mycollab.vaadin.ui.table;
 
+import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
@@ -7,6 +8,7 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.vaadin.data.Container;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;

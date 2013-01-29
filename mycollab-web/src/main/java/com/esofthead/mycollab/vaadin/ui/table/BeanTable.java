@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.vaadin.ui;
+package com.esofthead.mycollab.vaadin.ui.table;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -16,15 +16,15 @@ import java.util.List;
 import java.util.Map;
 import java.util.Set;
 
-public class BeanTable<SearchService extends ISearchableService<S>, S extends SearchCriteria, T> extends Table {
-    
+public class BeanTable<SearchService extends ISearchableService<S>, S extends SearchCriteria, T> extends Table implements IBeanTable {
+
     private static final long serialVersionUID = 1L;
     private String[] visibleColumns;
     private String[] columnHeaders;
     private Class typeClass;
     private SearchService searchService;
     private Map<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>> mapEventListener;
-    
+
     public BeanTable(SearchService searchService, Class typeClass, String[] visibleColumns, String[] columnHeaders) {
         super();
         this.searchService = searchService;
@@ -33,12 +33,12 @@ public class BeanTable<SearchService extends ISearchableService<S>, S extends Se
         this.columnHeaders = columnHeaders;
         this.setStyleName("list-view");
     }
-    
+
     public void setSearchCriteria(S searchCriteria) {
         List itemsCol = searchService.findPagableListByCriteria(new SearchRequest<S>(searchCriteria, 0, Integer.MAX_VALUE));
         setItems(itemsCol);
     }
-    
+
     public void setItems(List<T> itemsCol) {
         BeanItemContainer<T> container = new BeanItemContainer<T>(typeClass,
                 itemsCol);
@@ -47,15 +47,14 @@ public class BeanTable<SearchService extends ISearchableService<S>, S extends Se
         this.setColumnHeaders(columnHeaders);
         this.setPageLength(itemsCol.size());
     }
-    
+
     @SuppressWarnings("unchecked")
     public T getBeanByIndex(Object itemId) {
         Container container = this.getContainerDataSource();
         BeanItem<T> item = (BeanItem<T>) container.getItem(itemId);
         return (item == null) ? null : item.getBean();
     }
-    
-    
+
     public void addTableListener(ApplicationEventListener<? extends ApplicationEvent> listener) {
         if (mapEventListener == null) {
             mapEventListener = new HashMap<Class<? extends ApplicationEvent>, Set<ApplicationEventListener<?>>>();
