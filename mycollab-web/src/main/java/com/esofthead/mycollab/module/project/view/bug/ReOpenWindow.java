@@ -11,6 +11,8 @@ import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
+import com.esofthead.mycollab.module.tracker.domain.Version;
+import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -31,11 +33,13 @@ import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import java.util.GregorianCalendar;
+import java.util.List;
 
 /**
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class ReOpenWindow extends Window {
     private SimpleBug bug;
     private EditForm editForm;
@@ -91,6 +95,9 @@ public class ReOpenWindow extends Window {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
                         bug.setStatus(BugStatusConstants.REOPENNED);
+                        
+                        BugRelatedItemService bugRelatedItemService = AppContext.getSpringBean(BugRelatedItemService.class);
+                        bugRelatedItemService.updateFixedVersionsOfBug(bug.getId(), (List<Version>)fixedVersionSelect.getSelectedItems());
 
                         //Save bug status and assignee
                         BugService bugService = AppContext.getSpringBean(BugService.class);

@@ -9,18 +9,18 @@ import com.vaadin.ui.themes.Reindeer;
 @SuppressWarnings("serial")
 public class MultipleItemsPopupSelection extends PopupButton {
 
-	private Panel panel;
+    private Panel panel;
 
-	public MultipleItemsPopupSelection() {
-		panel = new Panel();
-		panel.setStyleName(Reindeer.PANEL_LIGHT);
-		panel.setHeight("200px");
-		panel.setWidth("300px");
-		this.addComponent(panel);
+    public MultipleItemsPopupSelection() {
+        panel = new Panel();
+        panel.setStyleName(Reindeer.PANEL_LIGHT);
+        panel.setHeight("200px");
+        panel.setWidth("300px");
+        this.addComponent(panel);
 
-	}
+    }
 
-	public void addItemComponent(Component itemName) {
-		panel.addComponent(itemName);
-	}
+    public void addItemComponent(Component itemName) {
+        panel.addComponent(itemName);
+    }
 }
