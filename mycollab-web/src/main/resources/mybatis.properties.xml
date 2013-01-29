@@ -3,18 +3,17 @@
 	PUBLIC "-//mybatis.org//DTD Config 3.0//EN" "http://mybatis.org/dtd/mybatis-3-config.dtd"> 
 <configuration>
     <environments default="development">
-		<environment id="development">
-		    <transactionManager type="JDBC" />
-		    <dataSource type="POOLED">
-		        <property name="driver" value="%s" />
-		        <property name="url" value="%s" />
-		        <property name="username" value="%s" />
-		        <property name="password" value="%s" />
-	        </dataSource>
-		</environment>
-	</environments> 
-	<mappers> 
-		<mapper resource="sqlMap/common/ReportBugIssueMapper.xml" /> 
-		<mapper resource="sqlMap/user/UserMapper.xml" /> 
-	</mappers> 
+        <environment id="development">
+            <transactionManager type="JDBC" />
+            <dataSource type="POOLED">
+                <property name="driver" value="%s" />
+                <property name="url" value="%s" />
+                <property name="username" value="%s" />
+                <property name="password" value="%s" />
+            </dataSource>
+        </environment>
+    </environments> 
+    <mappers> 
+        <mapper resource="sqlMap/common/ReportBugIssueMapper.xml" /> 
+    </mappers> 
 </configuration> 

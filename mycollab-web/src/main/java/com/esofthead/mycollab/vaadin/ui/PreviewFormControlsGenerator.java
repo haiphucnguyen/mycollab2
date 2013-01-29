@@ -35,7 +35,7 @@ public class PreviewFormControlsGenerator<T> {
                 previewForm.fireCancelForm(item);
             }
         });
-        backBtn.setIcon(new ThemeResource("icons/back.png"));
+        backBtn.setIcon(new ThemeResource("icons/16/back.png"));
         backBtn.setDescription("Back to list");
         backBtn.setStyleName("link");
         layout.addComponent(backBtn);
