@@ -278,16 +278,18 @@
                  m_tracker_bug.estimateRemainTime, 
                  concat(assignuserTbl.firstname, IFNULL(concat(' ', assignuserTbl.middlename, ' '), ' '), assignuserTbl.lastname) as assignuserFullName,
                  concat(loguserTbl.firstname, IFNULL(concat(' ', loguserTbl.middlename, ' '), ' '), loguserTbl.lastname) as loguserFullName,
-                 m_prj_project.name as projectname, affectedversion.id as affectedversion_id, affectedversion.projectid as affectedversion_projectid, 
+                 m_prj_project.name as projectname, 
+                 affectedversion.id as affectedversion_id, affectedversion.projectid as affectedversion_projectid, 
                  affectedversion.description as affectedversion_description, affectedversion.duedate as affectedversion_duedate, 
                  affectedversion.versionname as affectedversion_versionname, affectedversion.createdUser as affectedversion_createdUser, 
                  affectedversion.createdTime as affectedversion_createdTime, affectedversion.lastUpdatedTime as affectedversion_lastUpdatedTime,
+                 fixedversion.id as fixedversion_id, fixedversion.projectid as fixedversion_projectid, 
+                 fixedversion.description as fixedversion_description, fixedversion.duedate as fixedversion_duedate, 
                  fixedversion.versionname as fixedversion_versionname, fixedversion.createdUser as fixedversion_createdUser, 
                  fixedversion.createdTime as fixedversion_createdTime, fixedversion.lastUpdatedTime as fixedversion_lastUpdatedTime,
                  component.id as component_id, component.projectid as component_projectid, component.componentname as component_componentname, 
                  component.userlead as component_userlead, component.description as component_description, component.createdUser as component_createdUser, 
-                 component.createdTime as component_createdTime, component.lastUpdatedTime as component_lastUpdatedTime, 
-                 m_tracker_bug.description, m_tracker_bug.estimateTime, m_tracker_bug.estimateRemainTime
+                 component.createdTime as component_createdTime, component.lastUpdatedTime as component_lastUpdatedTime
            FROM m_tracker_bug
                LEFT OUTER JOIN m_prj_project ON (m_tracker_bug.projectid = m_prj_project.id)
                LEFT OUTER JOIN s_user AS assignuserTbl ON (m_tracker_bug.assignuser=assignuserTbl.username)

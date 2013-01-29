@@ -9,7 +9,6 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.tracker.domain.Component;
-import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
 import com.esofthead.mycollab.web.AppContext;
@@ -24,22 +23,14 @@ import java.util.List;
 @SuppressWarnings("serial")
 public class ComponentMultiSelectField extends MultiSelectComp {
 
-    private HashMap<String, SimpleComponent> hashMapComponent;
+    private HashMap<String, Component> componentMap;
 
     public ComponentMultiSelectField() {
         super();
     }
-    
-    public void setComponentsDisplay(List<Component> lstComponent) {
-    	for (int i = 0; i < lstComponent.size(); i++) {
-			String item = lstComponent.get(i).getComponentname();
-			setSelectedItem(item);
-		}
-    }
-    
 
     @Override
-    void initData() {
+    protected void initData() {
         ComponentSearchCriteria searchCriteria = new ComponentSearchCriteria();
 
         SimpleProject project = (SimpleProject) AppContext
@@ -47,33 +38,16 @@ public class ComponentMultiSelectField extends MultiSelectComp {
         searchCriteria.setProjectid(new NumberSearchField(SearchField.AND,
                 project.getId()));
 
-        ComponentService versionService = AppContext
+        ComponentService componentService = AppContext
                 .getSpringBean(ComponentService.class);
-        List<SimpleComponent> lstVersion = versionService
+        List<Component> lstComponent = componentService
                 .findPagableListByCriteria(new SearchRequest<ComponentSearchCriteria>(
                 searchCriteria, 0, Integer.MAX_VALUE));
-        List<String> lstComponentName = new ArrayList<String>();
-        hashMapComponent = new HashMap<String, SimpleComponent>();
 
-        for (int i = 0; i < lstVersion.size(); i++) {
-            SimpleComponent component = lstVersion.get(i);
-            lstComponentName.add(component.getComponentname());
-            hashMapComponent.put(component.getComponentname(), component);
-        }
-
-        this.loadData(lstComponentName);
     }
 
-    public List<Component> getSelectedComponents() {
-        List<String> lstStr = getSelectedItem();
-        List<Component> lstValues = new ArrayList<Component>();
-
-        for (int i = 0; i < lstStr.size(); i++) {
-            if (hashMapComponent.containsKey(lstStr.get(i))) {
-                lstValues.add(hashMapComponent.get(lstStr.get(i)));
-            }
-        }
-
-        return lstValues;
+    @Override
+    protected String getDisplaySelectedItemsString() {
+        return "";
     }
 }

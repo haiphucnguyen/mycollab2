@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import org.vaadin.hene.popupbutton.PopupButton;
-
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -16,6 +14,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.hene.popupbutton.PopupButton;
 
 @ViewComponent
 public class ActivityCalendarViewImpl extends AbstractView implements

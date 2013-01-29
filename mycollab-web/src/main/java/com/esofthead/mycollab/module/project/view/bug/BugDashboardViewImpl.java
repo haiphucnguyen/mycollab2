@@ -46,31 +46,39 @@ public class BugDashboardViewImpl extends AbstractView implements
         header.setExpandRatio(title, 0.5f);
 
         ButtonGroup navButton = new ButtonGroup();
-        navButton.addButton(new Button("Bugs", new Button.ClickListener() {
+        Button bugListBtn = new Button("Bugs", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new BugEvent.GotoList(this, null));
             }
-        }));
+        });
+        
+        navButton.addButton(bugListBtn);
 
-        navButton.addButton(new Button("Components", new Button.ClickListener() {
+        Button componentListBtn = new Button("Components", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new BugComponentEvent.GotoList(this, null));
             }
-        }));
-        navButton.addButton(new Button("Versions", new Button.ClickListener() {
+        });
+        
+        navButton.addButton(componentListBtn);
+        
+        Button versionListBtn = new Button("Versions", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new BugVersionEvent.GotoList(this, null));
             }
-        }));
+        });
+        
+        navButton.addButton(versionListBtn);
 
         header.addComponent(navButton);
         header.setExpandRatio(navButton, 0.5f);
 
         final SplitButton controlsBtn = new SplitButton();
         controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
+        controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
         controlsBtn.setCaption("Create Bug");
         controlsBtn
                 .addClickListener(new SplitButton.SplitButtonClickListener() {
