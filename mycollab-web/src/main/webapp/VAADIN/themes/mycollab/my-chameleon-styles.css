@@ -357,8 +357,9 @@ td.v-datefield-calendarpanel-month,
 .v-contextmenu,
 .v-Notification,
 .v-menubar-submenu {
-	background-color: rgb(249,249,249);
+/* 	background-color: rgb(209,209,209); */
 	background-color: rgba(249,249,249,.85);
+/* 	background-color: white; */
 	}
 
 body.v-ie6 .v-window,

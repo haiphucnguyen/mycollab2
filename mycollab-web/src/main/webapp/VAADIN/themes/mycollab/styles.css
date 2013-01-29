@@ -58,6 +58,17 @@ input:focus, textarea:focus {
     background: #FFFFFF;
 }
 
+.v-window, .v-Notification {
+	background-color: white;
+	border-radius: 2px;
+}
+.v-window-header {
+	font-weight: bold;
+}
+.v-button {
+	vertical-align: top;
+}
+
 .v-app, .v-window, .v-popupview-popup, .v-tooltip, .v-app input, .v-app select, .v-app button, .v-app textarea, .v-window input, .v-window select, .v-window button, .v-window textarea, .v-popupview-popup input, .v-popupview-popup select, .v-popupview-popup button, .v-popupview-popup textarea, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu, .v-table-header-drag, .v-menubar-submenu, .v-drag-element {
 	font: 12px/18px "Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif !important;
 }
@@ -1384,6 +1395,7 @@ white-space: normal;
 	border-right:1px solid rgb(171,171,171);
 	border-radius: 0px 25px 25px 0px;
 }
+
 .v-splitbutton-esofthead .v-button-esofthead.bluebtn.v-popupbutton {
 	border-right: 1px solid rgb(47, 91, 183);
 }
