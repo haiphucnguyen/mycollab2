@@ -8,7 +8,6 @@ import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.module.project.events.BugEvent;
-import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -36,12 +35,11 @@ import java.util.GregorianCalendar;
  *
  * @author haiphucnguyen
  */
-public class ReOpenWindow extends Window {
+public class ApproveInputWindow extends Window{
     private SimpleBug bug;
     private EditForm editForm;
-    private VersionMultiSelectField fixedVersionSelect;
 
-    public ReOpenWindow(SimpleBug bug) {
+    public ApproveInputWindow(SimpleBug bug) {
         this.bug = bug;
         this.setWidth("830px");
         editForm = new EditForm();
@@ -81,16 +79,15 @@ public class ReOpenWindow extends Window {
                 Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
-                        ReOpenWindow.this.close();
+                        ApproveInputWindow.this.close();
                     }
                 });
                 cancelBtn.setStyleName("link");
                 controlsBtn.addComponent(cancelBtn);
 
-                Button wonFixBtn = new Button("Reopen", new Button.ClickListener() {
+                Button approveBtn = new Button("Approve & Close", new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
-                        bug.setStatus(BugStatusConstants.REOPENNED);
 
                         //Save bug status and assignee
                         BugService bugService = AppContext.getSpringBean(BugService.class);
@@ -107,12 +104,12 @@ public class ReOpenWindow extends Window {
 
                         CommentService commentService = AppContext.getSpringBean(CommentService.class);
                         commentService.saveWithSession(comment, AppContext.getUsername());
-                        ReOpenWindow.this.close();
-                        EventBus.getInstance().fireEvent(new BugEvent.GotoRead(ReOpenWindow.this, bug.getId()));
+                        ApproveInputWindow.this.close();
+                        EventBus.getInstance().fireEvent(new BugEvent.GotoRead(ApproveInputWindow.this, bug.getId()));
                     }
                 });
-                wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-                controlsBtn.addComponent(wonFixBtn);
+                approveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+                controlsBtn.addComponent(approveBtn);
 
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 
@@ -121,14 +118,10 @@ public class ReOpenWindow extends Window {
 
             @Override
             public void attachField(Object propertyId, Field field) {
-                if (propertyId.equals("resolution")) {
-                    informationLayout.addComponent(field, "Resolution", 0, 0);
-                } else if (propertyId.equals("assignuser")) {
-                    informationLayout.addComponent(field, "Assign User", 0, 1);
-                } else if (propertyId.equals("fixedVersions")) {
-                    informationLayout.addComponent(field, "Fixed Versions", 0, 2, 2, "100%");
+                if (propertyId.equals("assignuser")) {
+                    informationLayout.addComponent(field, "Assign User", 0, 0);
                 } else if (propertyId.equals("comment")) {
-                    informationLayout.addComponent(field, "Comments", 0, 3, 2, UIConstants.DEFAULT_2XCONTROL_WIDTH);
+                    informationLayout.addComponent(field, "Comments", 0, 1, 2, UIConstants.DEFAULT_2XCONTROL_WIDTH);
                 }
             }
         }
@@ -140,13 +133,8 @@ public class ReOpenWindow extends Window {
             @Override
             protected Field onCreateField(Item item, Object propertyId,
                     com.vaadin.ui.Component uiContext) {
-                if (propertyId.equals("resolution")) {
-                    return new BugResolutionComboBox();
-                } else if (propertyId.equals("assignuser")) {
+                if (propertyId.equals("assignuser")) {
                     return new UserComboBox();
-                } else if (propertyId.equals("fixedVersions")) {
-                    fixedVersionSelect = new VersionMultiSelectField();
-                    return fixedVersionSelect;
                 } else if (propertyId.equals("comment")) {
                     commentArea = new RichTextArea();
                     commentArea.setNullRepresentation("");

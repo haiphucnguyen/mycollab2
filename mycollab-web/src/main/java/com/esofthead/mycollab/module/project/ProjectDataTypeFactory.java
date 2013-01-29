@@ -25,7 +25,7 @@ public class ProjectDataTypeFactory {
     
     private static String[] BUG_STATUS_LIST = new String[]{BugStatusConstants.CLOSE, BugStatusConstants.INPROGRESS, BugStatusConstants.OPEN, BugStatusConstants.TESTPENDING, BugStatusConstants.WONFIX};
     
-    private static String[] BUG_RESOLUTION_LIST = new String[] {BugResolutionConstants.CAN_NOT_REPRODUCE, BugResolutionConstants.DUPLICATE, BugResolutionConstants.FIXED, BugResolutionConstants.INCOMPLETE, BugResolutionConstants.NEWISSUE, BugResolutionConstants.WAITFORVERIFICATION, BugResolutionConstants.WON_FIX};
+    private static String[] BUG_RESOLUTION_LIST = new String[] {BugResolutionConstants.CAN_NOT_REPRODUCE, BugResolutionConstants.DUPLICATE, BugResolutionConstants.REOPEN, BugResolutionConstants.FIXED, BugResolutionConstants.INCOMPLETE, BugResolutionConstants.NEWISSUE, BugResolutionConstants.WAITFORVERIFICATION, BugResolutionConstants.WON_FIX};
 
     public static String[] getProjectTypeList() {
         return PROJECT_TYPE_LIST;

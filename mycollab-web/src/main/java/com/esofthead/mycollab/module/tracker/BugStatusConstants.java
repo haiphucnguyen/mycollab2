@@ -7,4 +7,5 @@ public class BugStatusConstants {
     public static final String CLOSE = "Close";
     public static final String TESTPENDING = "Test Pending";
     public static final String WONFIX = "Won't Fix";
+    public static final String REOPENNED = "Reopenned";
 }

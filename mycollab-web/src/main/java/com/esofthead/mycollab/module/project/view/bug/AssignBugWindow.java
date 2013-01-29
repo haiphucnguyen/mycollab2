@@ -85,7 +85,7 @@ public class AssignBugWindow extends Window {
                 cancelBtn.setStyleName("link");
                 controlsBtn.addComponent(cancelBtn);
 
-                Button wonFixBtn = new Button("Assign", new Button.ClickListener() {
+                Button approveBtn = new Button("Assign", new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
 
@@ -108,8 +108,8 @@ public class AssignBugWindow extends Window {
                         EventBus.getInstance().fireEvent(new BugEvent.GotoRead(AssignBugWindow.this, bug.getId()));
                     }
                 });
-                wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-                controlsBtn.addComponent(wonFixBtn);
+                approveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+                controlsBtn.addComponent(approveBtn);
 
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 

@@ -65,13 +65,15 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
     }
     
     private void displayWorkflowControl() {
-        if (BugStatusConstants.OPEN.equals(bug.getStatus())) {
+        if (BugStatusConstants.OPEN.equals(bug.getStatus()) || BugStatusConstants.REOPENNED.equals(bug.getStatus())) {
             bugWorkflowControl.removeAllComponents();
             ButtonGroup navButton = new ButtonGroup();
             navButton.addButton(new Button("Start Progress", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
                     bug.setStatus(BugStatusConstants.INPROGRESS);
+                    BugService bugService = AppContext.getSpringBean(BugService.class);
+                    bugService.updateWithSession(bug, AppContext.getUsername());
                     displayWorkflowControl();
                 }
             }));
@@ -89,14 +91,15 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                 @Override
                 public void buttonClick(ClickEvent event) {
                     bug.setStatus(BugStatusConstants.OPEN);
+                    BugService bugService = AppContext.getSpringBean(BugService.class);
+                    bugService.updateWithSession(bug, AppContext.getUsername());
                     displayWorkflowControl();
                 }
             }));
             navButton.addButton(new Button("Resolved", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    bug.setStatus(BugStatusConstants.TESTPENDING);
-                    displayWorkflowControl();
+                    AppContext.getApplication().getMainWindow().addWindow(new ResolvedInputWindow(bug));
                 }
             }));
             bugWorkflowControl.addComponent(navButton);
@@ -119,11 +122,10 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                     AppContext.getApplication().getMainWindow().addWindow(new ReOpenWindow(bug));
                 }
             }));
-            navButton.addButton(new Button("Close", new Button.ClickListener() {
+            navButton.addButton(new Button("Approve & Close", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    bug.setStatus(BugStatusConstants.CLOSE);
-                    displayWorkflowControl();
+                   AppContext.getApplication().getMainWindow().addWindow(new ApproveInputWindow(bug));
                 }
             }));
             bugWorkflowControl.addComponent(navButton);
