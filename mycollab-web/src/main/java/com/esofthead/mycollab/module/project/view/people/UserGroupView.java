@@ -4,13 +4,11 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
-import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.mvp.View;
 
 /**
  *
  * @author haiphucnguyen
  */
-@ViewComponent
-public class UserContainer extends AbstractView {
+public interface UserGroupView extends View {
 }

@@ -11,7 +11,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
-import com.esofthead.mycollab.module.project.view.people.UserPresenter;
+import com.esofthead.mycollab.module.project.view.people.ProjectUserPresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
@@ -35,7 +35,6 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.VerticalLayout;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.splitbutton.SplitButton;
@@ -56,7 +55,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     private BugPresenter bugPresenter;
     private ProblemPresenter problemPresenter;
     private RiskPresenter riskPresenter;
-    private UserPresenter userPresenter;
+    private ProjectUserPresenter userPresenter;
     private SimpleProject project;
     private ProjectBreadcrumb breadCrumb;
 
@@ -194,7 +193,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     }
 
     private Component constructProjectUsers() {
-        userPresenter = PresenterResolver.getPresenter(UserPresenter.class);
+        userPresenter = PresenterResolver.getPresenter(ProjectUserPresenter.class);
         return userPresenter.getView();
     }
 

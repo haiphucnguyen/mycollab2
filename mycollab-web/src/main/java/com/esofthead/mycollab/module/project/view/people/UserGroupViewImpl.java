@@ -12,6 +12,6 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class UserDashboardViewImpl extends AbstractView implements UserDashboardView{
+public class UserGroupViewImpl extends AbstractView implements UserGroupView {
     
 }

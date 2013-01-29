@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.tracker.service.ibatis;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -10,6 +11,7 @@ import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.tracker.dao.ComponentMapper;
 import com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt;
 import com.esofthead.mycollab.module.tracker.domain.Component;
+import com.esofthead.mycollab.module.tracker.domain.ComponentExample;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.ComponentService;
@@ -43,4 +45,22 @@ public class ComponentServiceImpl extends DefaultService<Integer, Component, Com
     public SimpleComponent findComponentById(int componentId) {
         return componentMapperExt.findComponentById(componentId);
     }
+
+    @Override
+    public int saveWithSession(Component record, String username) {
+        //check whether there is exiting record
+        ComponentExample ex = new ComponentExample();
+        
+        ex.createCriteria().andComponentnameEqualTo(record.getComponentname()).andProjectidEqualTo(record.getProjectid());
+        
+        int count = componentMapper.countByExample(ex);
+        if (count > 0) {
+            throw new MyCollabException("There is an existing record has name " + record.getComponentname());
+        } else {
+            return super.saveWithSession(record, username);
+        }
+        
+    }
+    
+    
 }

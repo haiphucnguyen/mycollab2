@@ -12,15 +12,14 @@ import com.vaadin.ui.ComponentContainer;
  *
  * @author haiphucnguyen
  */
-public class UserPresenter extends AbstractPresenter<UserContainer> {
+public class UserGroupPresenter extends AbstractPresenter<UserGroupView> {
 
-    public UserPresenter() {
-        super(UserContainer.class);
+    public UserGroupPresenter() {
+        super(UserGroupView.class);
     }
-    
+
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         
     }
-    
 }
