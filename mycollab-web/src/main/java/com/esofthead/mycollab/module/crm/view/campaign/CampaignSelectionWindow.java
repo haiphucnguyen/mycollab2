@@ -12,8 +12,8 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.ui.DateSelectionField;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
-import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -28,173 +28,170 @@ import com.vaadin.ui.Window;
 
 public class CampaignSelectionWindow extends Window {
 
-	private static final long serialVersionUID = 1L;
-	private CampaignSearchCriteria searchCriteria;
-	private CampaignTableDisplay tableItem;
-	private FieldSelection fieldSelection;
+    private static final long serialVersionUID = 1L;
+    private CampaignSearchCriteria searchCriteria;
+    private CampaignTableDisplay tableItem;
+    private FieldSelection fieldSelection;
 
-	public CampaignSelectionWindow(FieldSelection fieldSelection) {
-		super("Campaign Name Lookup");
+    public CampaignSelectionWindow(FieldSelection fieldSelection) {
+        super("Campaign Name Lookup");
 
-		this.setWidth("800px");
+        this.setWidth("800px");
 
-		this.fieldSelection = fieldSelection;
-	}
+        this.fieldSelection = fieldSelection;
+    }
 
-	public void show() {
-		searchCriteria = new CampaignSearchCriteria();
-		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
+    public void show() {
+        searchCriteria = new CampaignSearchCriteria();
+        searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+                AppContext.getAccountId()));
 
-		VerticalLayout layout = new VerticalLayout();
-		layout.setSpacing(true);
-		layout.setMargin(true);
+        VerticalLayout layout = new VerticalLayout();
+        layout.setSpacing(true);
+        layout.setMargin(true);
 
-		createCampaignList();
-		layout.addComponent(createSearchPanel());
-		layout.addComponent(tableItem);
-		this.setContent(layout);
+        createCampaignList();
+        layout.addComponent(createSearchPanel());
+        layout.addComponent(tableItem);
+        this.setContent(layout);
 
-		tableItem.setSearchCriteria(searchCriteria);
-		center();
-	}
+        tableItem.setSearchCriteria(searchCriteria);
+        center();
+    }
+    private TextField textValueField;
+    private GridLayout layoutSearchPane;
+    private DateSelectionField dateSearchField;
 
-	private TextField textValueField;
-	private GridLayout layoutSearchPane;
-	private DateSelectionField dateSearchField;
+    private void addTextFieldSearch() {
+        textValueField = new TextField();
+        layoutSearchPane.addComponent(textValueField, 0, 0);
+        layoutSearchPane.setComponentAlignment(textValueField, Alignment.MIDDLE_CENTER);
+    }
 
-	private void addTextFieldSearch() {
-		textValueField = new TextField();
-		layoutSearchPane.addComponent(textValueField, 0, 0);
-		layoutSearchPane.setComponentAlignment(textValueField, Alignment.MIDDLE_CENTER);
-	}
+    private void addDateFieldSearch() {
+        dateSearchField = new DateSelectionField();
+        dateSearchField.setDateFormat(AppContext.getDateFormat());
+        layoutSearchPane.addComponent(dateSearchField, 0, 0);
+        layoutSearchPane.setComponentAlignment(dateSearchField, Alignment.MIDDLE_CENTER);
+    }
 
-	private void addDateFieldSearch() {
-		dateSearchField = new DateSelectionField();
-		dateSearchField.setDateFormat(AppContext.getDateFormat());
-		layoutSearchPane.addComponent(dateSearchField, 0, 0);
-		layoutSearchPane.setComponentAlignment(dateSearchField, Alignment.MIDDLE_CENTER);
-	}
+    private void removeComponents() {
+        layoutSearchPane.removeComponent(0, 0);
+        textValueField = null;
+        dateSearchField = null;
+    }
 
-	private void removeComponents() {
-		layoutSearchPane.removeComponent(0, 0);
-		textValueField = null;
-		dateSearchField = null;
-	}
+    @SuppressWarnings("serial")
+    private ComponentContainer createSearchPanel() {
+        layoutSearchPane = new GridLayout(3, 2);
+        layoutSearchPane.setSpacing(true);
 
-	@SuppressWarnings("serial")
-	private ComponentContainer createSearchPanel() {
-		layoutSearchPane = new GridLayout(3, 2);
-		layoutSearchPane.setSpacing(true);
+        final ValueComboBox group = new ValueComboBox(false, new String[]{
+                    "Campaign Name", "Start Date", "End Date"});
+        group.select("Campaign Name");
+        group.setImmediate(true);
+        group.addListener(new Property.ValueChangeListener() {
+            @Override
+            public void valueChange(ValueChangeEvent event) {
+                removeComponents();
+                String searchType = (String) group.getValue();
+                if (searchType.equals("Campaign Name")) {
+                    addTextFieldSearch();
+                } else if (searchType.equals("Start Date")) {
+                    addDateFieldSearch();
+                } else if (searchType.equals("End Date")) {
+                    addDateFieldSearch();
+                }
+            }
+        });
 
-		final ValueComboBox group = new ValueComboBox(false, new String[] {
-				"Campaign Name", "Start Date", "End Date" });
-		group.select("Campaign Name");
-		group.setImmediate(true);
-		group.addListener(new Property.ValueChangeListener() {
+        layoutSearchPane.addComponent(group, 1, 0);
+        layoutSearchPane.setComponentAlignment(group, Alignment.MIDDLE_CENTER);
+        addTextFieldSearch();
 
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				removeComponents();
-				String searchType = (String) group.getValue();
-				if (searchType.equals("Campaign Name")) {
-					addTextFieldSearch();
-				} else if (searchType.equals("Start Date")) {
-					addDateFieldSearch();
-				} else if (searchType.equals("End Date")) {
-					addDateFieldSearch();
-				}
-			}
-		});
+        Button searchBtn = new Button("Search");
+        searchBtn.addListener(new Button.ClickListener() {
+            @Override
+            public void buttonClick(ClickEvent event) {
+                searchCriteria = new CampaignSearchCriteria();
+                searchCriteria.setSaccountid(new NumberSearchField(
+                        SearchField.AND, AppContext.getAccountId()));
 
-		layoutSearchPane.addComponent(group, 1, 0);
-		layoutSearchPane.setComponentAlignment(group, Alignment.MIDDLE_CENTER);
-		addTextFieldSearch();
+                String searchType = (String) group.getValue();
+                if (StringUtil.isNotNullOrEmpty(searchType)) {
 
-		Button searchBtn = new Button("Search");
-		searchBtn.addListener(new Button.ClickListener() {
+                    if (textValueField != null) {
+                        String strSearch = (String) textValueField.getValue();
+                        if (StringUtil.isNotNullOrEmpty(strSearch)) {
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				searchCriteria = new CampaignSearchCriteria();
-				searchCriteria.setSaccountid(new NumberSearchField(
-						SearchField.AND, AppContext.getAccountId()));
+                            if (searchType.equals("Campaign Name")) {
+                                searchCriteria
+                                        .setCampaignName(new StringSearchField(
+                                        SearchField.AND, strSearch));
+                            } else if (searchType.equals("Email")) {
+                            } else if (searchType.equals("Phone")) {
+                            }
+                        }
+                    }
 
-				String searchType = (String) group.getValue();
-				if (StringUtil.isNotNullOrEmpty(searchType)) {
+                    if (dateSearchField != null) {
+                        SearchField searchDate = dateSearchField.getValue();
+                        if (searchType.equals("Start Date")) {
+                            if (searchDate != null
+                                    && (searchDate instanceof DateSearchField)) {
+                                searchCriteria
+                                        .setStartDate((DateSearchField) searchDate);
+                            } else if (searchDate != null
+                                    && (searchDate instanceof RangeDateSearchField)) {
+                                searchCriteria
+                                        .setStartDateRange((RangeDateSearchField) searchDate);
+                            }
+                        } else if (searchType.equals("End Date")) {
+                            if (searchDate != null
+                                    && (searchDate instanceof DateSearchField)) {
+                                searchCriteria
+                                        .setEndDate((DateSearchField) searchDate);
+                            } else if (searchDate != null
+                                    && (searchDate instanceof RangeDateSearchField)) {
+                                searchCriteria
+                                        .setEndDateRange((RangeDateSearchField) searchDate);
+                            }
+                        }
+                    }
+                }
 
-					if (textValueField != null) {
-						String strSearch = (String) textValueField.getValue();
-						if (StringUtil.isNotNullOrEmpty(strSearch)) {
+                tableItem.setSearchCriteria(searchCriteria);
+            }
+        });
+        layoutSearchPane.addComponent(searchBtn, 2, 0);
+        layoutSearchPane.setComponentAlignment(searchBtn, Alignment.MIDDLE_CENTER);
+        return layoutSearchPane;
+    }
 
-							if (searchType.equals("Campaign Name")) {
-								searchCriteria
-										.setCampaignName(new StringSearchField(
-												SearchField.AND, strSearch));
-							} else if (searchType.equals("Email")) {
-							} else if (searchType.equals("Phone")) {
-							}
-						}
-					}
+    @SuppressWarnings("serial")
+    private void createCampaignList() {
+        tableItem = new CampaignTableDisplay(new String[]{"campaignname",
+                    "type", "status", "startdate", "enddate"}, new String[]{
+                    "Campaign", "Type", "Status", "Start Date", "End Date"});
+        tableItem.setWidth("100%");
+        tableItem
+                .addTableListener(new ApplicationEventListener<TableClickEvent>() {
+            @Override
+            public Class<? extends ApplicationEvent> getEventType() {
+                return TableClickEvent.class;
+            }
 
-					if (dateSearchField != null) {
-						SearchField searchDate = dateSearchField.getValue();
-						if (searchType.equals("Start Date")) {
-							if (searchDate != null
-									&& (searchDate instanceof DateSearchField)) {
-								searchCriteria
-										.setStartDate((DateSearchField) searchDate);
-							} else if (searchDate != null
-									&& (searchDate instanceof RangeDateSearchField)) {
-								searchCriteria
-										.setStartDateRange((RangeDateSearchField) searchDate);
-							}
-						} else if (searchType.equals("End Date")) {
-							if (searchDate != null
-									&& (searchDate instanceof DateSearchField)) {
-								searchCriteria
-										.setEndDate((DateSearchField) searchDate);
-							} else if (searchDate != null
-									&& (searchDate instanceof RangeDateSearchField)) {
-								searchCriteria
-										.setEndDateRange((RangeDateSearchField) searchDate);
-							}
-						}
-					}
-				}
+            @Override
+            public void handle(TableClickEvent event) {
+                SimpleCampaign campaign = (SimpleCampaign) event
+                        .getData();
+                if ("campaignname".equals(event.getFieldName())) {
+                    fieldSelection.fireValueChange(campaign);
+                    CampaignSelectionWindow.this.getParent()
+                            .removeWindow(CampaignSelectionWindow.this);
+                }
 
-				tableItem.setSearchCriteria(searchCriteria);
-			}
-		});
-		layoutSearchPane.addComponent(searchBtn, 2, 0);
-		layoutSearchPane.setComponentAlignment(searchBtn, Alignment.MIDDLE_CENTER);
-		return layoutSearchPane;
-	}
-
-	@SuppressWarnings("serial")
-	private void createCampaignList() {
-		tableItem = new CampaignTableDisplay(new String[] { "campaignname",
-				"type", "status", "startdate", "enddate" }, new String[] {
-				"Campaign", "Type", "Status", "Start Date", "End Date" });
-		tableItem.setWidth("100%");
-		tableItem
-				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return TableClickEvent.class;
-					}
-
-					@Override
-					public void handle(TableClickEvent event) {
-						SimpleCampaign campaign = (SimpleCampaign) event
-								.getData();
-						if ("campaignname".equals(event.getFieldName())) {
-							fieldSelection.fireValueChange(campaign);
-							CampaignSelectionWindow.this.getParent()
-									.removeWindow(CampaignSelectionWindow.this);
-						}
-
-					}
-				});
-	}
+            }
+        });
+    }
 }

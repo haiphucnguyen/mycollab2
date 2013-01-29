@@ -43,8 +43,7 @@ public class MyCollabApplication extends Application {
     @Override
     public void terminalError(com.vaadin.terminal.Terminal.ErrorEvent event) {
         getMainWindow().showNotification(
-                "An internal error has occurred, please "
-                + "contact the administrator!",
+                "An internal error has occurred, it is logged into our database. We will resolved soon. Sorry for inconvenience",
                 Notification.TYPE_ERROR_MESSAGE);
 
         log.error("An uncaught exception occurred: ", event.getThrowable());

@@ -12,8 +12,8 @@ import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityTableDispla
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -64,14 +64,14 @@ public class ContactOpportunityListComp extends RelatedListComp<OpportunitySearc
                     "assignUserFullName", "id"}, new String[]{"Name",
                     "Sales Stage", "Amount", "Close", "User", "Action"});
 
-        tableItem.addTableListener(new ApplicationEventListener<PagedBeanTable2.TableClickEvent>() {
+        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override
             public Class<? extends ApplicationEvent> getEventType() {
-                return PagedBeanTable2.TableClickEvent.class;
+                return TableClickEvent.class;
             }
 
             @Override
-            public void handle(PagedBeanTable2.TableClickEvent event) {
+            public void handle(TableClickEvent event) {
                 SimpleOpportunity opportunity = (SimpleOpportunity) event.getData();
                 if ("opportunityname".equals(event.getFieldName())) {
                     EventBus.getInstance().fireEvent(

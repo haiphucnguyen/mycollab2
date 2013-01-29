@@ -9,8 +9,8 @@ import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
@@ -47,14 +47,14 @@ public class AccountOpportunityListComp extends RelatedListComp<OpportunitySearc
                     "salesstage", "amount", "expectedcloseddate", "id"}, new String[]{"Name",
                     "Sales Stage", "Amount", "Close", "Action"});
 
-        tableItem.addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
+        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override
             public Class<? extends ApplicationEvent> getEventType() {
-                return IPagedBeanTable.TableClickEvent.class;
+                return TableClickEvent.class;
             }
 
             @Override
-            public void handle(IPagedBeanTable.TableClickEvent event) {
+            public void handle(TableClickEvent event) {
                 SimpleOpportunity opportunity = (SimpleOpportunity) event.getData();
                 if ("opportunityname".equals(event.getFieldName())) {
                     EventBus.getInstance().fireEvent(

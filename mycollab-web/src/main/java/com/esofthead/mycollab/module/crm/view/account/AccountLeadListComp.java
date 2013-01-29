@@ -9,8 +9,8 @@ import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
@@ -60,14 +60,14 @@ public class AccountLeadListComp extends RelatedListComp<LeadSearchCriteria> {
                 new String[]{"leadName", "status", "officephone", "email", "id"}, new String[]{"Name", "Status",
                     "Office Phone", "Email", "Action"});
 
-        tableItem.addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
+        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override
             public Class<? extends ApplicationEvent> getEventType() {
-                return IPagedBeanTable.TableClickEvent.class;
+                return TableClickEvent.class;
             }
 
             @Override
-            public void handle(IPagedBeanTable.TableClickEvent event) {
+            public void handle(TableClickEvent event) {
                 SimpleLead lead = (SimpleLead) event.getData();
                 if ("leadName".equals(event.getFieldName())) {
                     EventBus.getInstance().fireEvent(

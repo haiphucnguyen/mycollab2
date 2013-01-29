@@ -12,10 +12,10 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -23,6 +23,7 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 @ViewComponent
 public class LeadListViewImpl extends AbstractView implements LeadListView {
@@ -56,14 +57,14 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
                 new String[]{"", "Name", "Status", "Account Name",
                     "Office Phone", "Email", "Assign User"});
 
-        tableItem.addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
+        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override
             public Class<? extends ApplicationEvent> getEventType() {
-                return IPagedBeanTable.TableClickEvent.class;
+                return TableClickEvent.class;
             }
 
             @Override
-            public void handle(IPagedBeanTable.TableClickEvent event) {
+            public void handle(TableClickEvent event) {
                 SimpleLead lead = (SimpleLead) event.getData();
                 if ("leadName".equals(event.getFieldName())) {
                     EventBus.getInstance().fireEvent(new LeadEvent.GotoRead(LeadListViewImpl.this, lead.getId()));

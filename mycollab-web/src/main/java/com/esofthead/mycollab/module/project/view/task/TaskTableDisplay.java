@@ -7,9 +7,10 @@ package com.esofthead.mycollab.module.project.view.task;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.vaadin.ui.BeanTable;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.BeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
@@ -38,6 +39,7 @@ public class TaskTableDisplay extends BeanTable<ProjectTaskService, TaskSearchCr
 
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
+                                fireTableEvent(new TableClickEvent(TaskTableDisplay.this, task, "taskname"));
                             }
                         });
                 b.addStyleName("medium-text");

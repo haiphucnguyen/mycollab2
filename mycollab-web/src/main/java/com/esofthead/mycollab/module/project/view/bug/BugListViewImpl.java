@@ -11,15 +11,16 @@ import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 @ViewComponent
 public class BugListViewImpl extends AbstractView implements BugListView {
@@ -50,14 +51,14 @@ public class BugListViewImpl extends AbstractView implements BugListView {
                     "assignuserFullName", "severity", "resolution", "duedate"},
                 new String[]{"", "Summary", "Assigned User", "Severity", "Resolution", "Due Date"});
 
-        tableItem.addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
+        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override
             public Class<? extends ApplicationEvent> getEventType() {
-                return IPagedBeanTable.TableClickEvent.class;
+                return TableClickEvent.class;
             }
 
             @Override
-            public void handle(IPagedBeanTable.TableClickEvent event) {
+            public void handle(TableClickEvent event) {
                 SimpleBug bug = (SimpleBug) event.getData();
                 if ("summary".equals(event.getFieldName())) {
                     EventBus.getInstance().fireEvent(new BugEvent.GotoRead(BugListViewImpl.this, bug.getId()));

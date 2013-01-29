@@ -13,7 +13,7 @@ import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.VerticalLayout;
 
@@ -29,14 +29,14 @@ public class CallListDashlet extends Depot {
         super("My Calls", new VerticalLayout());
 
         tableItem = new CallTableDisplay(new String[]{"isClosed", "subject", "startdate", "status"}, new String[]{"", "Subject", "Start Date", "Status"});
-        tableItem.addTableListener(new ApplicationEventListener<IPagedBeanTable.TableClickEvent>() {
+        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override
             public Class<? extends ApplicationEvent> getEventType() {
-                return IPagedBeanTable.TableClickEvent.class;
+                return TableClickEvent.class;
             }
 
             @Override
-            public void handle(IPagedBeanTable.TableClickEvent event) {
+            public void handle(TableClickEvent event) {
                 SimpleCall call = (SimpleCall) event.getData();
                 if ("isClosed".equals(event.getFieldName())) {
                     call.setIsclosed(true);

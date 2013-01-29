@@ -11,9 +11,8 @@ import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
-import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable.TableClickEvent;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -168,7 +167,7 @@ public class OpportunitySelectionWindow extends Window {
                     "salesstage", "assignUserFullName", "accountName"},
                 new String[]{"Name", "Sales Stage", "User", "Account Name"});
         tableItem.setWidth("100%");
-        tableItem.addTableListener(new ApplicationEventListener<PagedBeanTable2.TableClickEvent>() {
+        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override
             public Class<? extends ApplicationEvent> getEventType() {
                 return TableClickEvent.class;

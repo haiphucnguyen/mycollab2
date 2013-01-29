@@ -63,7 +63,8 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
             //Tracking user service
             AbstractWebApplicationContext context = (AbstractWebApplicationContext) AppContext.getApplication()
                 .getContext();
-            System.out.println("User agent: " + context.getBrowser().getBrowserApplication());
+            
+            System.out.println("User agent: " + context.getBrowser().getBrowserApplication() + "  " + context.getBrowser().getAddress());
         } catch (MyCollabException e) {
             throw e;
         }

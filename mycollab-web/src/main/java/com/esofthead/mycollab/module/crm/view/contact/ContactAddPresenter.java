@@ -71,6 +71,8 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
         } else {
             contactService.updateWithSession(contact, AppContext.getUsername());
         }
+        
+        
 
     }
 }

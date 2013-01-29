@@ -31,14 +31,23 @@ public class AppContext implements TransactionListener, Serializable {
     private UserPreference userPreference;
     private final Map<String, Object> variables = new HashMap<String, Object>();
     private long lastAccessTime = 0;
+    private static org.springframework.web.context.WebApplicationContext springContext;
 
     public AppContext(Application application) {
         this.app = application;
+        if (springContext == null) {
+            WebApplicationContext context = (WebApplicationContext) application
+                    .getContext();
+            springContext = WebApplicationContextUtils
+                    .getRequiredWebApplicationContext(context.getHttpSession()
+                    .getServletContext());
+        }
+
 
         // It's usable from now on in the current request
         instance.set(this);
     }
-    
+
     public AppContext getInstance() {
         return instance.get();
     }
@@ -128,12 +137,6 @@ public class AppContext implements TransactionListener, Serializable {
     }
 
     public static <T> T getSpringBean(Class<T> requiredType) {
-        WebApplicationContext context = (WebApplicationContext) instance.get().app
-                .getContext();
-
-        org.springframework.web.context.WebApplicationContext springContext = WebApplicationContextUtils
-                .getRequiredWebApplicationContext(context.getHttpSession()
-                .getServletContext());
 
         return springContext.getBean(requiredType);
     }
@@ -248,8 +251,8 @@ public class AppContext implements TransactionListener, Serializable {
         return df.format(date);
 
     }
-    
+
     public static void addFragment(String fragement) {
-        ((MainWindowContainer)getApplication().getMainWindow()).addFragement(fragement);
+        ((MainWindowContainer) getApplication().getMainWindow()).addFragement(fragement);
     }
 }

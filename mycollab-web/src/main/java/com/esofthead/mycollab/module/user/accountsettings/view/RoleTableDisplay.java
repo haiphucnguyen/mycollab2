@@ -8,9 +8,9 @@ import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.service.RoleService;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.IPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -64,7 +64,7 @@ public class RoleTableDisplay extends PagedBeanTable2<RoleService, RoleSearchCri
 
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
-                                fireTableEvent(new IPagedBeanTable.TableClickEvent(RoleTableDisplay.this, user, "rolename"));
+                                fireTableEvent(new TableClickEvent(RoleTableDisplay.this, user, "rolename"));
                             }
                         });
                 b.addStyleName("medium-text");

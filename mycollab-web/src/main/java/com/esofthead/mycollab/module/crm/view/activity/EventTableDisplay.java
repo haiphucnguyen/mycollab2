@@ -8,8 +8,9 @@ import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.EventService;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
@@ -93,7 +94,7 @@ public class EventTableDisplay extends PagedBeanTable2<EventService, EventSearch
 
                             @Override
                             public void buttonClick(Button.ClickEvent event) {
-                               fireTableEvent(new TableClickEvent(EventTableDisplay.this, simpleEvent, "subject"));
+                                fireTableEvent(new TableClickEvent(EventTableDisplay.this, simpleEvent, "subject"));
                             }
                         });
                 b.addStyleName("medium-text");
@@ -101,7 +102,7 @@ public class EventTableDisplay extends PagedBeanTable2<EventService, EventSearch
 
             }
         });
-        
+
         this.setColumnExpandRatio("subject", 1);
         this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
         this.setColumnWidth("status", UIConstants.TABLE_M_LABEL_WIDTH);
