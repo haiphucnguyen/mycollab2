@@ -71,6 +71,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 
         final SplitButton controlsBtn = new SplitButton();
         controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
+        controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
         controlsBtn.setCaption("Create Bug");
         controlsBtn
                 .addClickListener(new SplitButton.SplitButtonClickListener() {

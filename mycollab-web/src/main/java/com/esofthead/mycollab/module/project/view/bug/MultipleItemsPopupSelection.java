@@ -11,7 +11,6 @@ public class MultipleItemsPopupSelection extends PopupButton {
 
     private Panel panel;
     private MultiSelectComp versionItem;
-    private HashMap<String, CheckBox> hashMapCheckbox = new HashMap<String, CheckBox>();
 
     public MultipleItemsPopupSelection(MultiSelectComp owner) {
         this.versionItem = owner;
@@ -21,15 +20,9 @@ public class MultipleItemsPopupSelection extends PopupButton {
         panel.setWidth("300px");
         this.addComponent(panel);
     }
-
-    public void unCheckItem(String itemName) {
-        CheckBox chk = hashMapCheckbox.get(itemName);
-        chk.setValue(false);
-    }
     
-    public void checkItem(String itemName) {
-    	CheckBox chk = hashMapCheckbox.get(itemName);
-        chk.setValue(true);
+    public void displayItems() {
+        
     }
 
     public void addItemComponent(String itemName) {
@@ -41,15 +34,9 @@ public class MultipleItemsPopupSelection extends PopupButton {
                     com.vaadin.data.Property.ValueChangeEvent event) {
                 Boolean value = (Boolean) chkItem.getValue();
                 if (value) {
-                    versionItem.setSelectedItem(chkItem.getCaption());
-                } else {
-                    versionItem.removeSelectedItem(chkItem.getCaption());
+                   
                 }
             }
         });
-        if (!hashMapCheckbox.containsKey(itemName)) {
-        	 hashMapCheckbox.put(itemName, chkItem);
-             panel.addComponent(chkItem);
-        }
     }
 }
