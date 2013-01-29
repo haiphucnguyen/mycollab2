@@ -21,6 +21,7 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.PasswordField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
@@ -106,7 +107,7 @@ public class UserInformationViewImpl extends AbstractView implements
 				informationHeader.setStyleName("h2");
 				layout.addComponent(informationHeader);
 
-				informationLayout = new GridFormLayoutHelper(1, 9);
+				informationLayout = new GridFormLayoutHelper(1, 10);
 				layout.addComponent(informationLayout.getLayout());
 				layout.setComponentAlignment(informationLayout.getLayout(),
 						Alignment.MIDDLE_LEFT);
@@ -144,6 +145,9 @@ public class UserInformationViewImpl extends AbstractView implements
 				} else if (propertyId.equals("company")) {
 					field.setSizeUndefined();
 					informationLayout.addComponent(field, "Company", 0, 8);
+				} else if (propertyId.equals("password")) {
+					field.setSizeUndefined();
+					informationLayout.addComponent(field, "Password", 0, 9);
 				}
 			}
 		}
@@ -160,6 +164,9 @@ public class UserInformationViewImpl extends AbstractView implements
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter a valid email");
 					return tf;
+				} else if (propertyId.equals("password")) {
+					PasswordField pf = new PasswordField();
+					return pf;
 				}
 
 				return null;

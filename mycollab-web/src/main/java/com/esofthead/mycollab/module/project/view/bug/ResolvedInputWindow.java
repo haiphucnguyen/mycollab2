@@ -154,6 +154,9 @@ public class ResolvedInputWindow extends Window {
                     return new UserComboBox();
                 } else if (propertyId.equals("fixedVersions")) {
                     fixedVersionSelect = new VersionMultiSelectField();
+                    if (bug.getFixedVersions().size() > 0) {
+                    	fixedVersionSelect.setSelectedItems(bug.getFixedVersions());
+                    }
                     return fixedVersionSelect;
                 } else if (propertyId.equals("comment")) {
                     commentArea = new RichTextArea();

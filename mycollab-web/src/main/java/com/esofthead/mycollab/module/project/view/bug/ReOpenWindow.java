@@ -51,6 +51,7 @@ public class ReOpenWindow extends Window {
         editForm = new EditForm();
         this.addComponent(editForm);
         editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+        center();
     }
 
     private class EditForm extends AdvancedEditBeanForm<Bug> {
@@ -153,6 +154,9 @@ public class ReOpenWindow extends Window {
                     return new UserComboBox();
                 } else if (propertyId.equals("fixedVersions")) {
                     fixedVersionSelect = new VersionMultiSelectField();
+                    if (bug.getFixedVersions().size() > 0) {
+                    	fixedVersionSelect.setSelectedItems(bug.getFixedVersions());
+                    }
                     return fixedVersionSelect;
                 } else if (propertyId.equals("comment")) {
                     commentArea = new RichTextArea();

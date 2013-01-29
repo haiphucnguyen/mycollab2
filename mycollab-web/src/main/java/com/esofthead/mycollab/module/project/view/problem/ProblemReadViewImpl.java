@@ -159,7 +159,8 @@ public class ProblemReadViewImpl extends AbstractView implements ProblemReadView
                         	 if (propertyId.equals("raisedbyuser")) {
                                  return new FormViewField(problem.getRaisedByUserFullName());
                              } else if (propertyId.equals("assigntouser")) {
-                                 return new FormViewField(problem.getAssignedUserFullName());
+                            	 return new UserLinkViewField(problem.getAssigntouser(),
+                            			 problem.getAssignedUserFullName());
                              } else if (propertyId.equals("level")) {
                                  RatingStars tinyRs = new RatingStars();
                                  tinyRs.setValue(problem.getLevel());

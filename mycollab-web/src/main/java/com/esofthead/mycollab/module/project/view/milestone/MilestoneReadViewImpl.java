@@ -164,12 +164,8 @@ public class MilestoneReadViewImpl extends AbstractView implements MilestoneRead
                                  Component uiContext) {
                              
                              if (propertyId.equals("owner")) {
-                                 return new FormLinkViewField(milestone.getOwnerFullName(), new Button.ClickListener() {
-                                     @Override
-                                     public void buttonClick(ClickEvent event) {
-                                         //TODO: add link to user view
-                                     }
-                                 });
+                            	 return new UserLinkViewField(milestone.getOwner(),
+                            			 milestone.getOwnerFullName());
                              } else if (propertyId.equals("startdate")) {
                                  return new FormViewField(AppContext.formatDate(milestone.getStartdate()));
                              } else if (propertyId.equals("enddate")) {
