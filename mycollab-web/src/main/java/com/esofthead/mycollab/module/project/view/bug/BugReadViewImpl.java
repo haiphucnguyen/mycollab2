@@ -106,8 +106,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
             navButton.addButton(new Button("Reopen", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    bug.setStatus(BugStatusConstants.OPEN);
-                    displayWorkflowControl();
+                    AppContext.getApplication().getMainWindow().addWindow(new ReOpenWindow(bug));
                 }
             }));
             bugWorkflowControl.addComponent(navButton);
@@ -117,8 +116,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
             navButton.addButton(new Button("Reopen", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    bug.setStatus(BugStatusConstants.OPEN);
-                    displayWorkflowControl();
+                    AppContext.getApplication().getMainWindow().addWindow(new ReOpenWindow(bug));
                 }
             }));
             navButton.addButton(new Button("Close", new Button.ClickListener() {
@@ -135,8 +133,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
             navButton.addButton(new Button("Reopen", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    bug.setStatus(BugStatusConstants.OPEN);
-                    displayWorkflowControl();
+                    AppContext.getApplication().getMainWindow().addWindow(new ReOpenWindow(bug));
                 }
             }));
             
