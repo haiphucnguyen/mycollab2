@@ -1,21 +1,26 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import org.vaadin.addon.customfield.CustomField;
+
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.TextField;
-import java.util.List;
-import org.vaadin.addon.customfield.CustomField;
 
 @SuppressWarnings("serial")
 public abstract class MultiSelectComp extends CustomField {
 
     protected TextField componentsDisplay;
-    private MultipleItemsPopupSelection componentPopupSelection;
+    protected MultipleItemsPopupSelection componentPopupSelection;
     protected List dataList;
-    protected List selectedItems;
+    protected List selectedItemsList = new ArrayList();
+    protected boolean isClicked = false;
 
     public MultiSelectComp() {
         this.setWidth("100%");
@@ -28,12 +33,13 @@ public abstract class MultiSelectComp extends CustomField {
         componentsDisplay.setWidth("210px");
         componentsDisplay.addStyleName("noBorderRight");
 
-        componentPopupSelection = new MultipleItemsPopupSelection(this);
+        componentPopupSelection = new MultipleItemsPopupSelection();
         componentPopupSelection.addListener(new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 initData();
-                componentPopupSelection.displayItems();
+                setSelectedComponentsDisplay();
+                isClicked = true;
             }
         });
 
@@ -47,19 +53,29 @@ public abstract class MultiSelectComp extends CustomField {
 
         this.setCompositionRoot(content);
     }
+    
+    protected void addItemToComponent(Component comp) {
+    	componentPopupSelection.addItemComponent(comp);
+    }
+    
+    public List getDataList() {
+    	return dataList;
+    }
 
     public void setSelectedItems(List items) {
-        this.selectedItems = items;
+        this.selectedItemsList = items;
         componentsDisplay.setReadOnly(false);
         componentsDisplay.setValue(getDisplaySelectedItemsString());
         componentsDisplay.setReadOnly(true);
     }
 
     public List getSelectedItems() {
-        return selectedItems;
+        return selectedItemsList;
     }
 
     abstract protected String getDisplaySelectedItemsString();
+    
+    abstract protected void setSelectedComponentsDisplay();
 
     abstract protected void initData();
 

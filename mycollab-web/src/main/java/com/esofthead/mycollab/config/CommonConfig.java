@@ -1,7 +1,9 @@
 package com.esofthead.mycollab.config;
 
+//import java.util.Properties;
 import java.util.Properties;
-import org.jasypt.util.text.BasicTextEncryptor;
+import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
+import org.jasypt.properties.EncryptableProperties;
 
 public class CommonConfig {
 
@@ -41,7 +43,9 @@ public class CommonConfig {
     }
 
     public static final CommonConfig loadConfig() {
-        Properties properties = new Properties();
+        StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
+        encryptor.setPassword(DECRYPT_PASS);
+        Properties properties = new EncryptableProperties(encryptor);
         try {
             properties.load(Thread.currentThread().getContextClassLoader()
                     .getResourceAsStream(CONFIG_FILE));
@@ -50,11 +54,7 @@ public class CommonConfig {
             String userName = properties.getProperty(USER_NAME);
             String password = properties.getProperty(PASSWORD);
 
-            BasicTextEncryptor textEncryptor = new BasicTextEncryptor();
-            textEncryptor.setPassword(DECRYPT_PASS);
-            String decryptPass = textEncryptor.decrypt(password);
-
-            return new CommonConfig(className, url, userName, decryptPass);
+            return new CommonConfig(className, url, userName, password);
         } catch (Exception e) {
         }
         return null;
