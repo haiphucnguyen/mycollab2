@@ -106,6 +106,7 @@ public class WontFixExplainWindow extends Window {
                         //Save bug status and assignee
                         BugService bugService = AppContext.getSpringBean(BugService.class);
                         bugService.updateWithSession(bug, AppContext.getUsername());
+                        
 
                         //Save comment
                         Comment comment = new Comment();

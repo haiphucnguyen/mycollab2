@@ -17,109 +17,108 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 
 /**
- * 
+ *
  * @author haiphucnguyen
  */
 @SuppressWarnings("serial")
+//TODO: Refactor code for simpler
 public class ComponentMultiSelectField extends MultiSelectComp {
-	
-	private HashMap<String, CheckBox> componentPoupMap = new HashMap<String, CheckBox>();
 
-	public ComponentMultiSelectField() {
-		super();
-	}
+    private HashMap<String, CheckBox> componentPoupMap = new HashMap<String, CheckBox>();
 
-	@Override
-	protected void initData() {
-		ComponentSearchCriteria searchCriteria = new ComponentSearchCriteria();
+    public ComponentMultiSelectField() {
+        super();
+    }
 
-		SimpleProject project = (SimpleProject) AppContext
-				.getVariable("project");
-		searchCriteria.setProjectid(new NumberSearchField(SearchField.AND,
-				project.getId()));
+    @Override
+    protected void initData() {
+        ComponentSearchCriteria searchCriteria = new ComponentSearchCriteria();
 
-		ComponentService componentService = AppContext
-				.getSpringBean(ComponentService.class);
-		dataList = componentService
-				.findPagableListByCriteria(new SearchRequest<ComponentSearchCriteria>(
-						searchCriteria, 0, Integer.MAX_VALUE));
+        SimpleProject project = (SimpleProject) AppContext
+                .getVariable("project");
+        searchCriteria.setProjectid(new NumberSearchField(SearchField.AND,
+                project.getId()));
 
-		for (int i = 0; i < dataList.size(); i++) {
+        ComponentService componentService = AppContext
+                .getSpringBean(ComponentService.class);
+        dataList = componentService
+                .findPagableListByCriteria(new SearchRequest<ComponentSearchCriteria>(
+                searchCriteria, 0, Integer.MAX_VALUE));
 
-			final CheckBox chkItem = new CheckBox(
-					((Component) dataList.get(i)).getComponentname());
-			chkItem.setImmediate(true);
-			chkItem.addListener(new ValueChangeListener() {
-				@Override
-				public void valueChange(
-						com.vaadin.data.Property.ValueChangeEvent event) {
-					Boolean value = (Boolean) chkItem.getValue();
-					Component component = getComponentInListByName(chkItem
-							.getCaption());
-					if (component != null) {
-						if (isClicked) {
-							System.out.println("aajdsafjsd " );
-							removeElementByName(component.getComponentname());
-							if (value) {
-								if (!selectedItemsList.contains(component)) {
-									selectedItemsList.add(component);
-								}
-							}
-							setSelectedItems(selectedItemsList);
-						}
-					}
-				}
-			});
-			if (!componentPoupMap.containsKey(chkItem.getCaption())) {
-	    		componentPoupMap.put(chkItem.getCaption(), chkItem);
-	    		addItemToComponent(chkItem);
-	    	}
-		}
-	}
-	
-	private void removeElementByName(String name) {
-		for (int i = 0; i < selectedItemsList.size(); i++) {
-			Component component = (Component) selectedItemsList.get(i);
-			if (component.getComponentname().equals(name)) {
-				selectedItemsList.remove(i);
-				break;
-			}
-		}
-	}
+        for (int i = 0; i < dataList.size(); i++) {
 
-	private Component getComponentInListByName(String name) {
-		Component componentReturn = null;
-		for (int i = 0; i < dataList.size(); i++) {
-			Component component = (Component) dataList.get(i);
-			if (component.getComponentname().equals(name)) {
-				componentReturn = component;
-			}
-		}
-		return componentReturn;
-	}
+            final CheckBox chkItem = new CheckBox(
+                    ((Component) dataList.get(i)).getComponentname());
+            chkItem.setImmediate(true);
+            chkItem.addListener(new ValueChangeListener() {
+                @Override
+                public void valueChange(
+                        com.vaadin.data.Property.ValueChangeEvent event) {
+                    Boolean value = (Boolean) chkItem.getValue();
+                    Component component = getComponentInListByName(chkItem
+                            .getCaption());
+                    if (component != null) {
+                        if (isClicked) {
+                            removeElementByName(component.getComponentname());
+                            if (value) {
+                                if (!selectedItemsList.contains(component)) {
+                                    selectedItemsList.add(component);
+                                }
+                            }
+                            setSelectedItems(selectedItemsList);
+                        }
+                    }
+                }
+            });
+            if (!componentPoupMap.containsKey(chkItem.getCaption())) {
+                componentPoupMap.put(chkItem.getCaption(), chkItem);
+                addItemToComponent(chkItem);
+            }
+        }
+    }
 
-	protected void setSelectedComponentsDisplay() {
-		for (int i = 0; i < selectedItemsList.size(); i++) {
-			Component comp = (Component)selectedItemsList.get(i);
-			if (componentPoupMap.containsKey(comp.getComponentname())) {
-				CheckBox chk = componentPoupMap.get(comp.getComponentname());
-				chk.setValue(true);
-			}
-		}
-	}
+    private void removeElementByName(String name) {
+        for (int i = 0; i < selectedItemsList.size(); i++) {
+            Component component = (Component) selectedItemsList.get(i);
+            if (component.getComponentname().equals(name)) {
+                selectedItemsList.remove(i);
+                break;
+            }
+        }
+    }
 
-	@Override
-	protected String getDisplaySelectedItemsString() {
-		StringBuilder str = new StringBuilder();
-		for (int i = 0; i < selectedItemsList.size(); i++) {
-			Component component = (Component) selectedItemsList.get(i);
-			if (i == selectedItemsList.size() - 1) {
-				str.append(component.getComponentname());
-			} else {
-				str.append(component.getComponentname() + ", ");
-			}
-		}
-		return str.toString();
-	}
+    private Component getComponentInListByName(String name) {
+        Component componentReturn = null;
+        for (int i = 0; i < dataList.size(); i++) {
+            Component component = (Component) dataList.get(i);
+            if (component.getComponentname().equals(name)) {
+                componentReturn = component;
+            }
+        }
+        return componentReturn;
+    }
 
+    protected void setSelectedComponentsDisplay() {
+        for (int i = 0; i < selectedItemsList.size(); i++) {
+            Component comp = (Component) selectedItemsList.get(i);
+            if (componentPoupMap.containsKey(comp.getComponentname())) {
+                CheckBox chk = componentPoupMap.get(comp.getComponentname());
+                chk.setValue(true);
+            }
+        }
+    }
+
+    @Override
+    protected String getDisplaySelectedItemsString() {
+        StringBuilder str = new StringBuilder();
+        for (int i = 0; i < selectedItemsList.size(); i++) {
+            Component component = (Component) selectedItemsList.get(i);
+            if (i == selectedItemsList.size() - 1) {
+                str.append(component.getComponentname());
+            } else {
+                str.append(component.getComponentname() + ", ");
+            }
+        }
+        return str.toString();
+    }
 }
