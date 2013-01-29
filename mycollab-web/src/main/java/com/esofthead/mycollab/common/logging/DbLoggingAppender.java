@@ -2,7 +2,7 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.common;
+package com.esofthead.mycollab.common.logging;
 
 import java.io.StringReader;
 
@@ -15,7 +15,6 @@ import org.apache.log4j.spi.LoggingEvent;
 
 import com.esofthead.mycollab.common.dao.ReportBugIssueMapper;
 import com.esofthead.mycollab.common.domain.ReportBugIssueWithBLOBs;
-import com.esofthead.mycollab.config.MybatisConfig;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
 

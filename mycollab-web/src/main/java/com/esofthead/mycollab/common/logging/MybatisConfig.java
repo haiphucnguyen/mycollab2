@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.config;
+package com.esofthead.mycollab.common.logging;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
