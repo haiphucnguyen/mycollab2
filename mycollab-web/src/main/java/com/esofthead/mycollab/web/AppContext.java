@@ -38,6 +38,10 @@ public class AppContext implements TransactionListener, Serializable {
         // It's usable from now on in the current request
         instance.set(this);
     }
+    
+    public AppContext getInstance() {
+        return instance.get();
+    }
 
     @Override
     public void transactionStart(Application application, Object transactionData) {
