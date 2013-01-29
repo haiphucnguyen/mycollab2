@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
+import java.util.List;
+
 import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
@@ -14,9 +16,6 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
-import com.esofthead.mycollab.module.project.events.BugComponentEvent;
-import com.esofthead.mycollab.module.project.events.BugEvent;
-import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.ProjectPageAction;
@@ -38,173 +37,234 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.ui.Alignment;
+import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import java.util.List;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class ActivityStreamComponent extends Depot {
 
-    private ProjectActivityStreamPagedList activityStreamList;
+	private final ProjectActivityStreamPagedList activityStreamList;
 
-    public ActivityStreamComponent() {
-        super("User Feeds", new VerticalLayout());
-        activityStreamList = new ProjectActivityStreamPagedList();
-        this.bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
-        this.addStyleName("activity-panel");
-        ((VerticalLayout) this.bodyContent).setMargin(false);
-    }
+	public ActivityStreamComponent() {
+		super("User Feeds", new VerticalLayout());
+		activityStreamList = new ProjectActivityStreamPagedList();
+		this.bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
+		this.addStyleName("activity-panel");
+		((VerticalLayout) this.bodyContent).setMargin(false);
+	}
 
-    public void showFeeds() {
-        ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-        searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{ModuleNameConstants.PRJ}));
+	public void showFeeds() {
+		ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
+		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
+				new String[] { ModuleNameConstants.PRJ }));
 
-        activityStreamList.setSearchCriteria(searchCriteria);
-    }
+		activityStreamList.setSearchCriteria(searchCriteria);
+	}
 
-    static class ProjectActivityStreamPagedList extends AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
+	static class ProjectActivityStreamPagedList
+			extends
+			AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
 
-        private ProjectService projectService;
+		private final ProjectService projectService;
 
-        public ProjectActivityStreamPagedList() {
-            super(ActivityStreamComponent.ActivityStreamRowDisplayHandler.class, 15);
+		public ProjectActivityStreamPagedList() {
+			super(
+					ActivityStreamComponent.ActivityStreamRowDisplayHandler.class,
+					15);
 
-            projectService = AppContext.getSpringBean(ProjectService.class);
-        }
+			projectService = AppContext.getSpringBean(ProjectService.class);
+		}
 
-        @Override
-        public void doSearch() {
-            totalCount = projectService.getTotalActivityStream(searchRequest
-                    .getSearchCriteria());
-            totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
-            if (searchRequest.getCurrentPage() > totalPage) {
-                searchRequest.setCurrentPage(totalPage);
-            }
+		@Override
+		public void doSearch() {
+			totalCount = projectService.getTotalActivityStream(searchRequest
+					.getSearchCriteria());
+			totalPage = (totalCount - 1) / searchRequest.getNumberOfItems() + 1;
+			if (searchRequest.getCurrentPage() > totalPage) {
+				searchRequest.setCurrentPage(totalPage);
+			}
 
-            this.setCurrentPage(currentPage);
-            this.setTotalPage(totalPage);
+			this.setCurrentPage(currentPage);
+			this.setTotalPage(totalPage);
 
-            List<ProjectActivityStream> currentListData = (List<ProjectActivityStream>) projectService
-                    .getProjectActivityStreams(searchRequest);
-            listContainer.removeAllComponents();
-            int i = 0;
-            try {
-                for (ProjectActivityStream item : currentListData) {
-                    AbstractBeanPagedList.RowDisplayHandler<ProjectActivityStream> rowHandler = (AbstractBeanPagedList.RowDisplayHandler<ProjectActivityStream>) rowDisplayHandler
-                            .newInstance();
-                    Component row = rowHandler.generateRow(item, i);
-                    listContainer.addComponent(row);
-                    i++;
-                }
-            } catch (Exception e) {
-                throw new MyCollabException(e);
-            }
-        }
-    }
+			List<ProjectActivityStream> currentListData = projectService
+					.getProjectActivityStreams(searchRequest);
+			listContainer.removeAllComponents();
+			int i = 0;
+			try {
+				for (ProjectActivityStream item : currentListData) {
+					AbstractBeanPagedList.RowDisplayHandler<ProjectActivityStream> rowHandler = rowDisplayHandler
+							.newInstance();
+					Component row = rowHandler.generateRow(item, i);
+					listContainer.addComponent(row);
+					i++;
+				}
+			} catch (Exception e) {
+				throw new MyCollabException(e);
+			}
+		}
+	}
 
-    public static class ActivityStreamRowDisplayHandler implements DefaultBeanPagedList.RowDisplayHandler<ProjectActivityStream> {
+	public static class ActivityStreamRowDisplayHandler implements
+			DefaultBeanPagedList.RowDisplayHandler<ProjectActivityStream> {
 
-        @Override
-        public Component generateRow(final ProjectActivityStream activityStream, int rowIndex) {
-            CssLayout layout = new CssLayout();
-            layout.setWidth("100%");
-            layout.setStyleName("activity-stream");
+		@Override
+		public Component generateRow(
+				final ProjectActivityStream activityStream, int rowIndex) {
+			CssLayout layout = new CssLayout();
+			layout.setWidth("100%");
+			layout.setStyleName("activity-stream");
 
-            HorizontalLayout header = new HorizontalLayout();
-            header.setSpacing(true);
-            header.addComponent(new UserLink(activityStream.getCreateduser(), activityStream.getCreatedUserFullName()));
-            StringBuilder action = new StringBuilder();
+			CssLayout header = new CssLayout();
+			header.setStyleName("stream-content");
+			// header.setSpacing(true);
+			header.addComponent(new UserLink(activityStream.getCreateduser(),
+					activityStream.getCreatedUserFullName()));
+			StringBuilder action = new StringBuilder();
 
-            if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream.getAction())) {
-                action.append("create a new ");
-            } else if (ActivityStreamConstants.ACTION_UPDATE.equals(activityStream.getAction())) {
-                action.append("update ");
-            }
+			if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream
+					.getAction())) {
+				action.append(" create a new ");
+			} else if (ActivityStreamConstants.ACTION_UPDATE
+					.equals(activityStream.getAction())) {
+				action.append(" update ");
+			}
 
-            action.append(activityStream.getType());
-            Label actionLbl = new Label(action.toString());
-            header.addComponent(actionLbl);
-            header.setComponentAlignment(actionLbl, Alignment.MIDDLE_CENTER);
-            header.addComponent(new ActivityStreamComponent.ActivitylLink(activityStream));
+			action.append(activityStream.getType());
+			Label actionLbl = new Label(action.toString());
+			actionLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+			header.addComponent(actionLbl);
+			// header.setComponentAlignment(actionLbl, Alignment.TOP_CENTER);
+			header.addComponent(new ActivityStreamComponent.ActivitylLink(
+					activityStream));
 
-            Label prjLabel = new Label("in project ");
-            header.addComponent(prjLabel);
-            header.setComponentAlignment(prjLabel, Alignment.MIDDLE_CENTER);
-            Button projectLink = new Button(activityStream.getProjectName(), new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, new PageActionChain(new ProjectPageAction(new ScreenData(activityStream.getProjectId())))));
-                }
-            });
-            header.addComponent(projectLink);
-            projectLink.setStyleName("link");
-            layout.addComponent(header);
+			Label prjLabel = new Label(" in project ");
+			prjLabel.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+			header.addComponent(prjLabel);
+			// header.setComponentAlignment(prjLabel, Alignment.TOP_CENTER);
+			Button projectLink = new Button(activityStream.getProjectName(),
+					new Button.ClickListener() {
+						@Override
+						public void buttonClick(ClickEvent event) {
+							EventBus.getInstance()
+									.fireEvent(
+											new ProjectEvent.GotoMyProject(
+													this,
+													new PageActionChain(
+															new ProjectPageAction(
+																	new ScreenData(
+																			activityStream
+																					.getProjectId())))));
+						}
+					});
+			header.addComponent(projectLink);
+			projectLink.setStyleName("link");
+			layout.addComponent(header);
 
-            CssLayout body = new CssLayout();
-            body.setStyleName("activity-date");
-            Label dateLbl = new Label(DateTimeUtils.getStringDateFromNow(activityStream.getCreatedtime()));
-            body.addComponent(dateLbl);
+			CssLayout body = new CssLayout();
+			body.setStyleName("activity-date");
+			Label dateLbl = new Label(
+					DateTimeUtils.getStringDateFromNow(activityStream
+							.getCreatedtime()));
+			body.addComponent(dateLbl);
 
-            layout.addComponent(body);
-            return layout;
-        }
-    }
+			layout.addComponent(body);
+			return layout;
+		}
+	}
 
-    private static class ActivitylLink extends Button {
+	private static class ActivitylLink extends Button {
 
-        public ActivitylLink(final ProjectActivityStream activityStream) {
-            super(activityStream.getNamefield());
-            
-            final String type = activityStream.getType();
-            final int typeid = activityStream.getTypeid();
-            final int projectid = activityStream.getExtratypeid();
-            
-            this.setIcon(ProjectResources.getIconResource16size(type));
-            this.setStyleName("link");
-            this.addListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(Button.ClickEvent event) {
-                    if (ProjectContants.PROJECT.equals(type)) {
-                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, new PageActionChain(new ProjectPageAction(new ScreenData(projectid)))));
-                    } else if (ProjectContants.MESSAGE.equals(type)) {
-                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new MessageReadPageAction(new ScreenData(typeid)));
-                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
-                    } else if (ProjectContants.MILESTONE.equals(type)) {
-                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new MilestoneReadPageAction(new ScreenData(typeid)));
-                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
-                    } else if (ProjectContants.PROBLEM.equals(type)) {
-                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new ProblemReadPageAction(new ScreenData(typeid)));
-                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
-                    } else if (ProjectContants.RISK.equals(type)) {
-                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new RiskReadPageAction(new ScreenData(typeid)));
-                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
-                    } else if (ProjectContants.TASK.equals(type)) {
-                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new TaskReadPageAction(new ScreenData(typeid)));
-                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
-                    } else if (ProjectContants.TASK_LIST.equals(type)) {
-                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new TaskListReadPageAction(new ScreenData(typeid)));
-                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
-                    } else if (ProjectContants.BUG.equals(type)) {
-                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new BugReadPageAction(new ScreenData(typeid)));
-                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
-                    } else if (ProjectContants.BUG_COMPONENT.equals(type)) {
-                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new ComponentReadPageAction(new ScreenData(typeid)));
-                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
-                    } else if (ProjectContants.BUG_VERSION.equals(type)) {
-                        PageActionChain chain = new PageActionChain(new ProjectPageAction(new ScreenData(projectid)), new VersionReadPageAction(new ScreenData(typeid)));
-                        EventBus.getInstance().fireEvent(new ProjectEvent.GotoMyProject(this, chain));
-                    }
-                }
-            });
-        }
-    }
+		public ActivitylLink(final ProjectActivityStream activityStream) {
+			super(activityStream.getNamefield());
+
+			final String type = activityStream.getType();
+			final int typeid = activityStream.getTypeid();
+			final int projectid = activityStream.getExtratypeid();
+
+			this.setIcon(ProjectResources.getIconResource16size(type));
+			this.setStyleName("link");
+			this.addListener(new Button.ClickListener() {
+				@Override
+				public void buttonClick(Button.ClickEvent event) {
+					if (ProjectContants.PROJECT.equals(type)) {
+						EventBus.getInstance().fireEvent(
+								new ProjectEvent.GotoMyProject(this,
+										new PageActionChain(
+												new ProjectPageAction(
+														new ScreenData(
+																projectid)))));
+					} else if (ProjectContants.MESSAGE.equals(type)) {
+						PageActionChain chain = new PageActionChain(
+								new ProjectPageAction(new ScreenData(projectid)),
+								new MessageReadPageAction(
+										new ScreenData(typeid)));
+						EventBus.getInstance().fireEvent(
+								new ProjectEvent.GotoMyProject(this, chain));
+					} else if (ProjectContants.MILESTONE.equals(type)) {
+						PageActionChain chain = new PageActionChain(
+								new ProjectPageAction(new ScreenData(projectid)),
+								new MilestoneReadPageAction(new ScreenData(
+										typeid)));
+						EventBus.getInstance().fireEvent(
+								new ProjectEvent.GotoMyProject(this, chain));
+					} else if (ProjectContants.PROBLEM.equals(type)) {
+						PageActionChain chain = new PageActionChain(
+								new ProjectPageAction(new ScreenData(projectid)),
+								new ProblemReadPageAction(
+										new ScreenData(typeid)));
+						EventBus.getInstance().fireEvent(
+								new ProjectEvent.GotoMyProject(this, chain));
+					} else if (ProjectContants.RISK.equals(type)) {
+						PageActionChain chain = new PageActionChain(
+								new ProjectPageAction(new ScreenData(projectid)),
+								new RiskReadPageAction(new ScreenData(typeid)));
+						EventBus.getInstance().fireEvent(
+								new ProjectEvent.GotoMyProject(this, chain));
+					} else if (ProjectContants.TASK.equals(type)) {
+						PageActionChain chain = new PageActionChain(
+								new ProjectPageAction(new ScreenData(projectid)),
+								new TaskReadPageAction(new ScreenData(typeid)));
+						EventBus.getInstance().fireEvent(
+								new ProjectEvent.GotoMyProject(this, chain));
+					} else if (ProjectContants.TASK_LIST.equals(type)) {
+						PageActionChain chain = new PageActionChain(
+								new ProjectPageAction(new ScreenData(projectid)),
+								new TaskListReadPageAction(new ScreenData(
+										typeid)));
+						EventBus.getInstance().fireEvent(
+								new ProjectEvent.GotoMyProject(this, chain));
+					} else if (ProjectContants.BUG.equals(type)) {
+						PageActionChain chain = new PageActionChain(
+								new ProjectPageAction(new ScreenData(projectid)),
+								new BugReadPageAction(new ScreenData(typeid)));
+						EventBus.getInstance().fireEvent(
+								new ProjectEvent.GotoMyProject(this, chain));
+					} else if (ProjectContants.BUG_COMPONENT.equals(type)) {
+						PageActionChain chain = new PageActionChain(
+								new ProjectPageAction(new ScreenData(projectid)),
+								new ComponentReadPageAction(new ScreenData(
+										typeid)));
+						EventBus.getInstance().fireEvent(
+								new ProjectEvent.GotoMyProject(this, chain));
+					} else if (ProjectContants.BUG_VERSION.equals(type)) {
+						PageActionChain chain = new PageActionChain(
+								new ProjectPageAction(new ScreenData(projectid)),
+								new VersionReadPageAction(
+										new ScreenData(typeid)));
+						EventBus.getInstance().fireEvent(
+								new ProjectEvent.GotoMyProject(this, chain));
+					}
+				}
+			});
+		}
+	}
 }

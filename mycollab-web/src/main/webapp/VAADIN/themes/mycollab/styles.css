@@ -44,6 +44,9 @@ input:focus, textarea:focus {
     /*box-shadow: 0 0 1px #1185DE inset;*/
     box-shadow: 0 0 1px #0a58cd inset;
 }
+.v-button .v-icon, .v-nativebutton .v-icon {
+	vertical-align: top;
+}
 
 .v-label.h2 {
 	font-size: 14px;
@@ -1273,6 +1276,14 @@ white-space: normal;
 	border: 1px solid rgba(0,0,0,0.25);
 	padding-left: 5px;
 }
+.stream-content > .v-csslayout-margin {
+	padding-top: 3px;
+}
+.stream-content > .v-csslayout-margin > .v-csslayout-container > div {
+	display: inline-block;
+	vertical-align: top;
+	margin: 0px 3px;
+}
 .activity-date {
 	color: gray;
 	font-size: 11px;
@@ -1375,6 +1386,9 @@ white-space: normal;
 }
 .v-splitbutton-esofthead .v-button-esofthead.bluebtn.v-popupbutton {
 	border-right: 1px solid rgb(47, 91, 183);
+}
+.v-splitbutton-esofthead .v-button-esofthead.bluebtn.v-popupbutton .v-popup-indicator {
+	background-image: url("icons/sprites-white.png");
 }
 .v-splitbutton-esofthead .v-button-esofthead.v-popupbutton:focus {
 	border-left-color: rgb(171,171,171);
