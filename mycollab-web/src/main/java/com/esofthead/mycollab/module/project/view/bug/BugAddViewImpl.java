@@ -55,20 +55,17 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 
     @Override
     public List<Component> getComponents() {
-//        return componentSelect.getSelectedComponents();
-        return null;
+        return componentSelect.getSelectedItems();
     }
 
     @Override
     public List<Version> getAffectedVersions() {
-//        return affectedVersionSelect.getSelectedVersions();
-        return null;
+        return affectedVersionSelect.getSelectedItems();
     }
 
     @Override
     public List<Version> getFixedVersion() {
-//        return fixedVersionSelect.getSelectedVersions();
-        return null;
+        return fixedVersionSelect.getSelectedItems();
     }
 
     private class EditForm extends AdvancedEditBeanForm<SimpleBug> {
@@ -137,19 +134,19 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
                 } else if (propertyId.equals("components")) {
                     componentSelect = new ComponentMultiSelectField();
                     if (bug.getComponents() != null && bug.getComponents().size() > 0) {
-//                    	componentSelect.setComponentsDisplay(bug.getComponents());
+                    	componentSelect.setSelectedItems(bug.getComponents());
                     }
                     return componentSelect;
                 } else if (propertyId.equals("affectedVersions")) {
                     affectedVersionSelect = new VersionMultiSelectField();
                     if (bug.getAffectedVersions() != null && bug.getAffectedVersions().size() > 0) {
-//                    	affectedVersionSelect.setVersionsDisplay(bug.getAffectedVersions());
+                    	affectedVersionSelect.setSelectedItems(bug.getAffectedVersions());
                     }
                     return affectedVersionSelect;
                 } else if (propertyId.equals("fixedVersions")) {
                     fixedVersionSelect = new VersionMultiSelectField();
                     if (bug.getFixedVersions() != null && bug.getFixedVersions().size() > 0) {
-//                    	fixedVersionSelect.setVersionsDisplay(bug.getFixedVersions());
+                    	fixedVersionSelect.setSelectedItems(bug.getFixedVersions());
                     }
                     return fixedVersionSelect;
                 }
