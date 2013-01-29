@@ -78,9 +78,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
             navButton.addButton(new Button("Won't Fix", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
-                    bug.setStatus(BugStatusConstants.WONFIX);
                     AppContext.getApplication().getMainWindow().addWindow(new WontFixExplainWindow(bug));
-                    displayWorkflowControl();
                 }
             }));
             bugWorkflowControl.addComponent(navButton);
@@ -177,6 +175,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                 Button assignBtn = new Button("Assign", new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
+                        AppContext.getApplication().getMainWindow().addWindow(new AssignBugWindow(bug));
                     }
                 });
                 assignBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
