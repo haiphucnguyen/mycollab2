@@ -8,6 +8,7 @@ import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -35,10 +36,11 @@ import java.util.GregorianCalendar;
  *
  * @author haiphucnguyen
  */
-public class ApproveInputWindow extends Window{
+public class ApproveInputWindow extends Window {
+
     private SimpleBug bug;
     private EditForm editForm;
-
+    
     public ApproveInputWindow(SimpleBug bug) {
         this.bug = bug;
         this.setWidth("830px");
@@ -46,36 +48,36 @@ public class ApproveInputWindow extends Window{
         this.addComponent(editForm);
         editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
     }
-
+    
     private class EditForm extends AdvancedEditBeanForm<Bug> {
-
+        
         private static final long serialVersionUID = 1L;
         private RichTextArea commentArea;
-
+        
         @Override
         public void setItemDataSource(Item newDataSource) {
             this.setFormLayoutFactory(new EditForm.FormLayoutFactory());
             this.setFormFieldFactory(new EditForm.EditFormFieldFactory());
             super.setItemDataSource(newDataSource);
         }
-
+        
         class FormLayoutFactory implements IFormLayoutFactory {
-
+            
             private static final long serialVersionUID = 1L;
             private GridFormLayoutHelper informationLayout;
-
+            
             @Override
             public Layout getLayout() {
                 VerticalLayout layout = new VerticalLayout();
                 informationLayout = new GridFormLayoutHelper(2, 6);
                 informationLayout.getLayout().setWidth("800px");
-
+                
                 layout.addComponent(informationLayout.getLayout());
-
+                
                 HorizontalLayout controlsBtn = new HorizontalLayout();
                 controlsBtn.setSpacing(true);
                 layout.addComponent(controlsBtn);
-
+                
                 Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
@@ -84,12 +86,12 @@ public class ApproveInputWindow extends Window{
                 });
                 cancelBtn.setStyleName("link");
                 controlsBtn.addComponent(cancelBtn);
-
+                
                 Button approveBtn = new Button("Approve & Close", new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
-
                         //Save bug status and assignee
+                        bug.setStatus(BugStatusConstants.CLOSE);
                         BugService bugService = AppContext.getSpringBean(BugService.class);
                         bugService.updateWithSession(bug, AppContext.getUsername());
 
@@ -101,7 +103,7 @@ public class ApproveInputWindow extends Window{
                         comment.setSaccountid(AppContext.getAccountId());
                         comment.setType(CommentTypeConstants.PRJ_BUG);
                         comment.setTypeid(bug.getId());
-
+                        
                         CommentService commentService = AppContext.getSpringBean(CommentService.class);
                         commentService.saveWithSession(comment, AppContext.getUsername());
                         ApproveInputWindow.this.close();
@@ -110,12 +112,12 @@ public class ApproveInputWindow extends Window{
                 });
                 approveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
                 controlsBtn.addComponent(approveBtn);
-
+                
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
-
+                
                 return layout;
             }
-
+            
             @Override
             public void attachField(Object propertyId, Field field) {
                 if (propertyId.equals("assignuser")) {
@@ -125,11 +127,11 @@ public class ApproveInputWindow extends Window{
                 }
             }
         }
-
+        
         private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
-
+            
             private static final long serialVersionUID = 1L;
-
+            
             @Override
             protected Field onCreateField(Item item, Object propertyId,
                     com.vaadin.ui.Component uiContext) {
@@ -140,8 +142,8 @@ public class ApproveInputWindow extends Window{
                     commentArea.setNullRepresentation("");
                     return commentArea;
                 }
-
-
+                
+                
                 return null;
             }
         }

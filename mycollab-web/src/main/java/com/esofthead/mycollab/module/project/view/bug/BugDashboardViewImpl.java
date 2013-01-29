@@ -144,11 +144,11 @@ public class BugDashboardViewImpl extends AbstractView implements
         leftColumn.removeAllComponents();
         rightColumn.removeAllComponents();
 
-        BugDisplayWidget dueBugWidget = new BugDisplayWidget("Due Bugs");
+        DueBugWidget dueBugWidget = new DueBugWidget();
         LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(dueBugWidget);
         leftColumn.addComponent(dueBugWidgetWrapper);
 
-        BugDisplayWidget updateBugWidget = new BugDisplayWidget("Updated Bug Recently");
+        RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
         LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(updateBugWidget);
         leftColumn.addComponent(updateBugWidgetWrapper);
 
