@@ -97,7 +97,6 @@ public class ComponentMultiSelectField extends MultiSelectComp {
 	protected void setSelectedComponentsDisplay() {
 		for (int i = 0; i < selectedItemsList.size(); i++) {
 			Component comp = (Component)selectedItemsList.get(i);
-			System.out.println("aaaa " + comp.getId());
 			if (componentPoupMap.containsKey(comp.getComponentname())) {
 				CheckBox chk = componentPoupMap.get(comp.getComponentname());
 				chk.setValue(true);
