@@ -48,6 +48,7 @@ public class ComponentMultiSelectField extends MultiSelectComp {
 
 			final CheckBox chkItem = new CheckBox(
 					((Component) dataList.get(i)).getComponentname());
+			chkItem.setImmediate(true);
 			chkItem.addListener(new ValueChangeListener() {
 				@Override
 				public void valueChange(
@@ -56,13 +57,16 @@ public class ComponentMultiSelectField extends MultiSelectComp {
 					Component component = getComponentInListByName(chkItem
 							.getCaption());
 					if (component != null) {
-						removeElementByName(component.getComponentname());
-						if (value) {
-							if (!selectedItemsList.contains(component)) {
-								selectedItemsList.add(component);
+						if (isClicked) {
+							System.out.println("aajdsafjsd " );
+							removeElementByName(component.getComponentname());
+							if (value) {
+								if (!selectedItemsList.contains(component)) {
+									selectedItemsList.add(component);
+								}
 							}
+							setSelectedItems(selectedItemsList);
 						}
-						setSelectedItems(selectedItemsList);
 					}
 				}
 			});

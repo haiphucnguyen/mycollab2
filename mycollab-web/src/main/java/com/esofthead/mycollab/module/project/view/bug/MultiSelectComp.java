@@ -20,6 +20,7 @@ public abstract class MultiSelectComp extends CustomField {
     protected MultipleItemsPopupSelection componentPopupSelection;
     protected List dataList;
     protected List selectedItemsList = new ArrayList();
+    protected boolean isClicked = false;
 
     public MultiSelectComp() {
         this.setWidth("100%");
@@ -38,6 +39,7 @@ public abstract class MultiSelectComp extends CustomField {
             public void buttonClick(ClickEvent event) {
                 initData();
                 setSelectedComponentsDisplay();
+                isClicked = true;
             }
         });
 

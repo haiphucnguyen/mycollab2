@@ -57,13 +57,15 @@ public class VersionMultiSelectField extends MultiSelectComp {
 					Version version = getVersionInListByName(chkItem
 							.getCaption());
 					if (version != null) {
-						removeElementByName(version.getVersionname());
-						if (value) {
-							if (!selectedItemsList.contains(version)) {
-								selectedItemsList.add(version);
+						if (isClicked) {
+							removeElementByName(version.getVersionname());
+							if (value) {
+								if (!selectedItemsList.contains(version)) {
+									selectedItemsList.add(version);
+								}
 							}
+							setSelectedItems(selectedItemsList);
 						}
-						setSelectedItems(selectedItemsList);
 					}
 				}
 			});
