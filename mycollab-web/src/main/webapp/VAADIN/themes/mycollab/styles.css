@@ -59,12 +59,22 @@ input:focus, textarea:focus {
 	color: black;
 	text-decoration: line-through;
 }
-
+.v-button-link .v-button-wrap,
+.v-button-borderless .v-button-wrap {
+	display: inline-block;
+	vertical-align: top;
+}
 .v-label.h2 {
 	font-size: 14px;
 	padding: 0px;
 }
-
+input.v-textfield, textarea.v-textarea, .v-filterselect {
+	background: #fff url('icons/input-bg.png') repeat-x;
+}
+input.v-textfield[type="text"],
+.v-filterselect {
+	height: 1.17em;
+	}
 .v-app {
     /*background: #E1E1E1;*/
     background: #FFFFFF;
@@ -73,15 +83,7 @@ input:focus, textarea:focus {
 .v-button {
 	vertical-align: top;
 }
-.v-panel-nocaption {
-	border-top: none;
-}
-.v-panel-deco {
-	border-top: none;
-}
-div.v-panel-content-light {
-	border: none;
-}
+
 .v-app, .v-window, .v-popupview-popup, .v-tooltip, .v-app input, .v-app select, .v-app button, .v-app textarea, .v-window input, .v-window select, .v-window button, .v-window textarea, .v-popupview-popup input, .v-popupview-popup select, .v-popupview-popup button, .v-popupview-popup textarea, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu, .v-table-header-drag, .v-menubar-submenu, .v-drag-element {
 	font: 12px/18px "Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif !important;
 }
@@ -1775,12 +1777,13 @@ white-space: normal;
 /* Popup Window */
 .v-window, .v-Notification {
 	background-color: white;
-	border-radius: 5px 5px 2px 2px;
+	border-radius: 2px;
 }
 .v-window-outerheader {
 	background: url('icons/grad-dark-bottom2.png') repeat-x left bottom rgb(57,71,84);
 	border-bottom: 1px solid #8f8f8f;
-	border-radius: 4px 4px 0px 0px;
+	border-radius: 1px;
+	min-height: 15px;
 }
 div.v-window-header {
 	font-weight: bold;
@@ -1802,3 +1805,19 @@ div.v-window-header {
 	background-image: url("icons/star_12x11.png");
 }
 /* End Rating Stars */
+
+/* No border Panel */
+
+.v-panel.no-border .v-panel-nocaption {
+	border-top: none;
+}
+.v-panel.no-border .v-panel-deco {
+	border-top: none;
+}
+.v-panel.no-border div.v-panel-content-light {
+	border: none;
+}
+.v-panel.no-border .v-panel-content {
+	border: none;
+}
+/* End no border Panel */
