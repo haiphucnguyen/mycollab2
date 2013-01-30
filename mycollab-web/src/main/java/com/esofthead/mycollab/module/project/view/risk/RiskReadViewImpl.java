@@ -181,9 +181,9 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
                              } else if (propertyId.equals("raisedbyuser")) {
                                  return new FormViewField(risk.getRaisedByUserFullName());
                              } else if (propertyId.equals("assigntouser")) {
-                                 return new FormViewField(risk
-                                         .getAssignedToUserFullName());
-                             } else if (propertyId.equals("response")) {
+                             	return new UserLinkViewField(risk.getAssigntouser(),
+                            			risk.getAssignedToUserFullName());
+                            } else if (propertyId.equals("response")) {
                                  return new FormViewField(risk.getResponse(),
                                          Label.CONTENT_XHTML);
                              }
