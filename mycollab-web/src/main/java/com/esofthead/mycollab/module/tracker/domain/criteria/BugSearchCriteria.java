@@ -47,9 +47,9 @@ public class BugSearchCriteria extends SearchCriteria {
 
 	private SetSearchField<Integer> priorities;
 
-	SetSearchField<String> severities;
+	private SetSearchField<String> severities;
 
-	SetSearchField<String> statuses;
+	private SetSearchField<String> statuses;
 	
 	private NumberSearchField projectId;
 	

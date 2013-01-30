@@ -23,152 +23,152 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.Window;
 
 /**
- * 
+ *
  * @author haiphucnguyen
  */
 @ViewComponent
 public class ComponentReadViewImpl extends AbstractView implements
-		ComponentReadView {
-	private static final long serialVersionUID = 1L;
-	protected SimpleComponent component;
-	protected AdvancedPreviewBeanForm<SimpleComponent> previewForm;
+        ComponentReadView {
 
-	public ComponentReadViewImpl() {
-		super();
-		previewForm = new PreviewForm();
-		this.addComponent(previewForm);
-	}
+    private static final long serialVersionUID = 1L;
+    protected SimpleComponent component;
+    protected AdvancedPreviewBeanForm<SimpleComponent> previewForm;
 
-	@Override
-	public void previewItem(SimpleComponent item) {
-		component = item;
-		previewForm.setItemDataSource(new BeanItem<SimpleComponent>(item));
-	}
+    public ComponentReadViewImpl() {
+        super();
+        previewForm = new PreviewForm();
+        this.addComponent(previewForm);
+    }
 
-	@Override
-	public SimpleComponent getItem() {
-		return component;
-	}
+    @Override
+    public void previewItem(SimpleComponent item) {
+        component = item;
+        previewForm.setItemDataSource(new BeanItem<SimpleComponent>(item));
+    }
 
-	@Override
-	public HasPreviewFormHandlers<SimpleComponent> getPreviewFormHandlers() {
-		return previewForm;
-	}
+    @Override
+    public SimpleComponent getItem() {
+        return component;
+    }
 
-	protected class ComponentFormFieldLayout extends
-			DefaultFormViewFieldFactory {
+    @Override
+    public HasPreviewFormHandlers<SimpleComponent> getPreviewFormHandlers() {
+        return previewForm;
+    }
 
-		private static final long serialVersionUID = 1L;
+    protected class ComponentFormFieldLayout extends DefaultFormViewFieldFactory {
 
-		@Override
-		protected Field onCreateField(Item item, Object propertyId,
-				Component uiContext) {
-			if (propertyId.equals("userlead")) {
-				return new UserLinkViewField(component.getUserlead(),
-						component.getUserLeadFullName());
-			}
-			return null;
-		}
-	}
+        private static final long serialVersionUID = 1L;
 
-	private class PreviewForm extends AdvancedPreviewBeanForm<SimpleComponent> {
+        @Override
+        protected Field onCreateField(Item item, Object propertyId,
+                Component uiContext) {
+            if (propertyId.equals("userlead")) {
+                return new UserLinkViewField(component.getUserlead(),
+                        component.getUserLeadFullName());
+            }
+            return null;
+        }
+    }
 
-		private static final long serialVersionUID = 1L;
+    private class PreviewForm extends AdvancedPreviewBeanForm<SimpleComponent> {
 
-		@Override
-		public void setItemDataSource(Item newDataSource) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new ComponentFormFieldLayout());
-			super.setItemDataSource(newDataSource);
-		}
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		protected void doPrint() {
-			// Create a window that contains what you want to print
-			Window window = new Window("Window to Print");
+        @Override
+        public void setItemDataSource(Item newDataSource) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new ComponentFormFieldLayout());
+            super.setItemDataSource(newDataSource);
+        }
 
-			ComponentReadViewImpl printView = new ComponentReadViewImpl.PrintView();
-			printView.previewItem(component);
-			window.addComponent(printView);
+        @Override
+        protected void doPrint() {
+            // Create a window that contains what you want to print
+            Window window = new Window("Window to Print");
 
-			// Add the printing window as a new application-level window
-			getApplication().addWindow(window);
+            ComponentReadViewImpl printView = new ComponentReadViewImpl.PrintView();
+            printView.previewItem(component);
+            window.addComponent(printView);
 
-			// Open it as a popup window with no decorations
-			getWindow().open(new ExternalResource(window.getURL()), "_blank",
-					1100, 200, // Width and height
-					Window.BORDER_NONE); // No decorations
+            // Add the printing window as a new application-level window
+            getApplication().addWindow(window);
 
-			// Print automatically when the window opens.
-			// This call will block until the print dialog exits!
-			window.executeJavaScript("print();");
+            // Open it as a popup window with no decorations
+            getWindow().open(new ExternalResource(window.getURL()), "_blank",
+                    1100, 200, // Width and height
+                    Window.BORDER_NONE); // No decorations
 
-			// Close the window automatically after printing
-			window.executeJavaScript("self.close();");
-		}
+            // Print automatically when the window opens.
+            // This call will block until the print dialog exits!
+            window.executeJavaScript("print();");
 
-		@Override
-		protected void showHistory() {
-			ComponentHistoryLogWindow historyLog = new ComponentHistoryLogWindow(
-					ModuleNameConstants.PRJ, ProjectContants.BUG_COMPONENT,
-					component.getId());
-			getWindow().addWindow(historyLog);
-		}
+            // Close the window automatically after printing
+            window.executeJavaScript("self.close();");
+        }
 
-		class FormLayoutFactory extends ComponentFormLayoutFactory {
+        @Override
+        protected void showHistory() {
+            ComponentHistoryLogWindow historyLog = new ComponentHistoryLogWindow(
+                    ModuleNameConstants.PRJ, ProjectContants.BUG_COMPONENT,
+                    component.getId());
+            getWindow().addWindow(historyLog);
+        }
 
-			private static final long serialVersionUID = 1L;
+        class FormLayoutFactory extends ComponentFormLayoutFactory {
 
-			public FormLayoutFactory() {
-				super(component.getComponentname());
-			}
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<SimpleComponent>(
-						PreviewForm.this)).createButtonControls();
-			}
+            public FormLayoutFactory() {
+                super(component.getComponentname());
+            }
 
-			@Override
-			protected Layout createBottomPanel() {
-				return new HorizontalLayout();
-			}
-		}
-	}
+            @Override
+            protected Layout createTopPanel() {
+                return (new PreviewFormControlsGenerator<SimpleComponent>(
+                        PreviewForm.this)).createButtonControls();
+            }
 
-	@SuppressWarnings("serial")
-	public static class PrintView extends ComponentReadViewImpl {
+            @Override
+            protected Layout createBottomPanel() {
+                return new HorizontalLayout();
+            }
+        }
+    }
 
-		public PrintView() {
-			previewForm = new AdvancedPreviewBeanForm<SimpleComponent>() {
-				@Override
-				public void setItemDataSource(Item newDataSource) {
-					this.setFormLayoutFactory(new ComponentReadViewImpl.PrintView.FormLayoutFactory());
-					this.setFormFieldFactory(new ComponentFormFieldLayout());
-					super.setItemDataSource(newDataSource);
-				}
-			};
+    @SuppressWarnings("serial")
+    public static class PrintView extends ComponentReadViewImpl {
 
-			this.addComponent(previewForm);
-		}
+        public PrintView() {
+            previewForm = new AdvancedPreviewBeanForm<SimpleComponent>() {
+                @Override
+                public void setItemDataSource(Item newDataSource) {
+                    this.setFormLayoutFactory(new ComponentReadViewImpl.PrintView.FormLayoutFactory());
+                    this.setFormFieldFactory(new ComponentFormFieldLayout());
+                    super.setItemDataSource(newDataSource);
+                }
+            };
 
-		class FormLayoutFactory extends ComponentFormLayoutFactory {
+            this.addComponent(previewForm);
+        }
 
-			private static final long serialVersionUID = 1L;
+        class FormLayoutFactory extends ComponentFormLayoutFactory {
 
-			public FormLayoutFactory() {
-				super(component.getComponentname());
-			}
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			protected Layout createTopPanel() {
-				return new HorizontalLayout();
-			}
+            public FormLayoutFactory() {
+                super(component.getComponentname());
+            }
 
-			@Override
-			protected Layout createBottomPanel() {
-				return new HorizontalLayout();
-			}
-		}
-	}
+            @Override
+            protected Layout createTopPanel() {
+                return new HorizontalLayout();
+            }
+
+            @Override
+            protected Layout createBottomPanel() {
+                return new HorizontalLayout();
+            }
+        }
+    }
 }

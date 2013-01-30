@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
-import java.util.Collection;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -26,6 +24,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.themes.Reindeer;
+import java.util.Collection;
 
 @SuppressWarnings("serial")
 public class AccountSearchPanel extends GenericSearchPanel<AccountSearchCriteria> {
