@@ -5,7 +5,6 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -35,7 +34,6 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
             for (GroupItem item : groupItems) {
                 HorizontalLayout assigneeLayout = new HorizontalLayout();
                 assigneeLayout.setSpacing(true);
-                System.out.println(BeanUtility.printBeanObj(item));
                 Label userLbl = new Label();
                 if (item.getGroupid() == null) {
                     userLbl.setValue("Undefined");
@@ -43,9 +41,11 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
                     userLbl.setValue(item.getGroupname());
                 }
                 assigneeLayout.addComponent(userLbl);
-                System.out.println("Value: " + ((float)item.getValue() / totalCount) + " total: " + totalCount + "---" + item.getValue());
                 ProgressIndicator indicator = new ProgressIndicator(new Float((float)item.getValue() / totalCount));
                 assigneeLayout.addComponent(indicator);
+                
+                Label progressLbl = new Label("(" + item.getValue() + "/" + totalCount + ")");
+                assigneeLayout.addComponent(progressLbl);
                 bodyContent.addComponent(assigneeLayout);
             }
             

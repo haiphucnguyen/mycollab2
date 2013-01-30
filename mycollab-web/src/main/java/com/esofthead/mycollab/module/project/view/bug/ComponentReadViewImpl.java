@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
@@ -154,6 +155,7 @@ public class ComponentReadViewImpl extends AbstractView implements
                 
                 BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
                 unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(project.getId()));
+                unresolvedByAssigneeSearchCriteria.setComponentids(new SetSearchField<Integer>(component.getId()));
                 unresolvedByAssigneeWidget.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
                 return layout;
             }
