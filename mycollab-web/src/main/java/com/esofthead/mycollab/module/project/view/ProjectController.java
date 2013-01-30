@@ -500,7 +500,7 @@ public class ProjectController {
 
                         BugSearchCriteria criteria = new BugSearchCriteria();
 
-                        criteria.setProjectid(new NumberSearchField(
+                        criteria.setProjectId(new NumberSearchField(
                                 SearchField.AND, project.getId()));
                         projectView
                                 .gotoBugView(new ScreenData.Search<BugSearchCriteria>(

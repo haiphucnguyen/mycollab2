@@ -23,10 +23,8 @@ public class SimpleLead extends Lead {
 	private String assignUserFullName;
 
 	private String campaignName;
-
-	public String getLeadName() {
-		return getFirstname() + " " + getLastname();
-	}
+	
+	private String leadName;
 
 	public String getCampaignName() {
 		return campaignName;
@@ -42,5 +40,13 @@ public class SimpleLead extends Lead {
 
 	public void setAssignUserFullName(String assignUserFullName) {
 		this.assignUserFullName = assignUserFullName;
+	}
+
+	public void setLeadName(String leadName) {
+		this.leadName = leadName;
+	}
+
+	public String getLeadName() {
+		return leadName;
 	}
 }

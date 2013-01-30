@@ -11,8 +11,6 @@ public class BugSearchCriteria extends SearchCriteria {
 
 	private StringSearchField loguser;
 
-	private NumberSearchField projectid;
-
 	private DateTimeSearchField postedDateFrom;
 
 	private DateTimeSearchField postedDateTo;
@@ -71,14 +69,6 @@ public class BugSearchCriteria extends SearchCriteria {
 
 	public void setLoguser(StringSearchField loguser) {
 		this.loguser = loguser;
-	}
-
-	public NumberSearchField getProjectid() {
-		return projectid;
-	}
-
-	public void setProjectid(NumberSearchField projectid) {
-		this.projectid = projectid;
 	}
 
 	public DateTimeSearchField getPostedDateFrom() {

@@ -1,0 +1,59 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package com.esofthead.mycollab.module.project.view.bug;
+
+import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.ProgressIndicator;
+import com.vaadin.ui.VerticalLayout;
+import java.util.List;
+
+/**
+ *
+ * @author haiphucnguyen
+ */
+public class UnresolvedBugsByAssigneeWidget extends Depot {
+    
+    public UnresolvedBugsByAssigneeWidget() {
+        super("Unresolved by assignee", new VerticalLayout());
+    }
+    
+    public void setSearchCriteria(BugSearchCriteria searchCriteria) {
+        
+        BugService bugService = AppContext.getSpringBean(BugService.class);
+        int totalCount = bugService.getTotalCount(searchCriteria);
+        List<GroupItem> groupItems = bugService.getAssignedDefectsSummary(searchCriteria);
+        if (!groupItems.isEmpty()) {
+            for (GroupItem item : groupItems) {
+                HorizontalLayout assigneeLayout = new HorizontalLayout();
+                assigneeLayout.setSpacing(true);
+                System.out.println(BeanUtility.printBeanObj(item));
+                Label userLbl = new Label();
+                if (item.getGroupid() == null) {
+                    userLbl.setValue("Undefined");
+                } else {
+                    userLbl.setValue(item.getGroupname());
+                }
+                assigneeLayout.addComponent(userLbl);
+                System.out.println("Value: " + ((float)item.getValue() / totalCount) + " total: " + totalCount + "---" + item.getValue());
+                ProgressIndicator indicator = new ProgressIndicator(new Float((float)item.getValue() / totalCount));
+                assigneeLayout.addComponent(indicator);
+                bodyContent.addComponent(assigneeLayout);
+            }
+            
+            
+        }
+    }
+    
+    public static void main(String[] args) {
+        System.out.println((float)1/5);
+    }
+}

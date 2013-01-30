@@ -4,12 +4,15 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.vaadin.ui.VerticalLayout;
 
 /**
  *
  * @author haiphucnguyen
  */
-public class UnresolvedBugsByPriorityWidget extends VerticalLayout {
-    
+public class UnresolvedBugsByPriorityWidget extends Depot {
+    public UnresolvedBugsByPriorityWidget() {
+        super("Unresolved by Priority", new VerticalLayout());
+    }
 }

@@ -5,14 +5,18 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
+import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
@@ -20,6 +24,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 /**
@@ -131,7 +136,26 @@ public class ComponentReadViewImpl extends AbstractView implements
 
             @Override
             protected Layout createBottomPanel() {
-                return new HorizontalLayout();
+                SimpleProject project = (SimpleProject)AppContext.getVariable(ProjectContants.PROJECT_NAME);
+                HorizontalLayout layout = new HorizontalLayout();
+                layout.setSpacing(true);
+                VerticalLayout leftColumn = new VerticalLayout();
+                layout.addComponent(leftColumn);
+                UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget();
+                unresolvedBugWidget.setWidth("450px");
+                leftColumn.addComponent(unresolvedBugWidget);
+                
+                VerticalLayout rightColumn = new VerticalLayout();
+                layout.addComponent(rightColumn);
+                
+                UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget();
+                unresolvedByAssigneeWidget.setWidth("450px");
+                rightColumn.addComponent(unresolvedByAssigneeWidget);
+                
+                BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
+                unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(project.getId()));
+                unresolvedByAssigneeWidget.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
+                return layout;
             }
         }
     }

@@ -84,7 +84,7 @@ public class BugServiceTest extends ServiceTest{
     @Test
     public void testGetComponentDefectsSummary() {
         BugSearchCriteria criteria = new BugSearchCriteria();
-        criteria.setProjectid(new NumberSearchField(1));
+        criteria.setProjectId(new NumberSearchField(1));
         bugService.getComponentDefectsSummary(criteria);
     }
 

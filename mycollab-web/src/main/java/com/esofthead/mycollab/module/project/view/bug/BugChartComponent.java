@@ -89,7 +89,7 @@ public class BugChartComponent extends Depot {
             bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
             BugSearchCriteria prioritySearchCriteria = new BugSearchCriteria();
-            prioritySearchCriteria.setProjectid(new NumberSearchField(project.getId()));
+            prioritySearchCriteria.setProjectId(new NumberSearchField(project.getId()));
             prioritySummaryWidget.setSearchCriteria(prioritySearchCriteria);
         } else if ("BugsByStatus".equals(reportName)) {
             StatusSummaryWidget statusSummaryWidget = new StatusSummaryWidget();
@@ -98,7 +98,7 @@ public class BugChartComponent extends Depot {
             bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
             BugSearchCriteria statusSearchCriteria = new BugSearchCriteria();
-            statusSearchCriteria.setProjectid(new NumberSearchField(project.getId()));
+            statusSearchCriteria.setProjectId(new NumberSearchField(project.getId()));
             statusSummaryWidget.setSearchCriteria(statusSearchCriteria);
         } else if ("BugByResolution".equals(reportName)) {
             BugResolutionSummaryWidget resolutionSummaryWdiget = new BugResolutionSummaryWidget();
@@ -107,7 +107,7 @@ public class BugChartComponent extends Depot {
             bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
             BugSearchCriteria statusSearchCriteria = new BugSearchCriteria();
-            statusSearchCriteria.setProjectid(new NumberSearchField(project.getId()));
+            statusSearchCriteria.setProjectId(new NumberSearchField(project.getId()));
             resolutionSummaryWdiget.setSearchCriteria(statusSearchCriteria);
         }
     }
