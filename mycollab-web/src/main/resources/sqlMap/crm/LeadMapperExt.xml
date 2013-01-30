@@ -227,6 +227,7 @@
                m_crm_lead.otherAddress, m_crm_lead.otherState, m_crm_lead.otherCity, m_crm_lead.otherPostalCode, m_crm_lead.otherCountry,
                m_crm_lead.email, m_crm_lead.createdTime, m_crm_lead.createdUser, m_crm_lead.sAccountId, m_crm_lead.assignUser, m_crm_lead.status, 
                m_crm_lead.source, concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS assignUserFullName, 
+               concat (m_crm_lead.firstname, " ", m_crm_lead.lastname) AS leadName,
                m_crm_campaign.campaignName, m_crm_lead.website, m_crm_lead.lastUpdatedTime, m_crm_lead.noemployees
 
         FROM m_crm_lead
