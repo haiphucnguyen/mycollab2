@@ -4,19 +4,21 @@
  */
 package com.esofthead.mycollab.module.file;
 
-import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.persistence.service.ISearchableService;
-import com.vaadin.terminal.StreamResource;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStreamWriter;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
 import java.util.List;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
+import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.persistence.service.ISearchableService;
+import com.vaadin.terminal.StreamResource;
 
 /**
  *
@@ -130,6 +132,7 @@ public abstract class ExportStreamResource implements StreamResource.StreamSourc
     public static class ListData extends ExportStreamResource {
 
         private List data;
+        private static final String selectedFieldName = "selected";
 
         public ListData(String[] visibleColumns, String[] headerNames, List data) {
             super(visibleColumns, headerNames);
@@ -173,22 +176,25 @@ public abstract class ExportStreamResource implements StreamResource.StreamSourc
 
                         for (int j = 0; j < data.size(); j++) {
                             Object rowObj = data.get(j);
+                            
+                            boolean iselected = (Boolean) PropertyUtils.getProperty(rowObj, selectedFieldName);
+                            if (iselected) {
+                            	 for (int k = 0; k < visibleColumns.length; k++) {
+                                     String visColumn = visibleColumns[k];
+                                     Object value = PropertyUtils.getProperty(rowObj, visColumn);
+                                     if (value == null) {
+                                         writer.write("");
+                                     } else {
+                                         writer.write(value.toString());
+                                     }
 
-                            for (int k = 0; k < visibleColumns.length; k++) {
-                                String visColumn = visibleColumns[k];
-                                Object value = PropertyUtils.getProperty(rowObj, visColumn);
-                                if (value == null) {
-                                    writer.write("");
-                                } else {
-                                    writer.write(value.toString());
-                                }
+                                     if (k < visibleColumns.length - 1) {
+                                         writer.write(",");
+                                     }
 
-                                if (k < visibleColumns.length - 1) {
-                                    writer.write(",");
-                                }
-
+                                 }
+                                 writer.write("\r\n");
                             }
-                            writer.write("\r\n");
                         }
 
                     } catch (Exception e) {

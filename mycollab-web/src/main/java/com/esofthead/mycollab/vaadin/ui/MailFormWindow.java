@@ -21,7 +21,6 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class MailFormWindow extends Window {
@@ -41,20 +40,20 @@ public class MailFormWindow extends Window {
 	private boolean isAddCc = false;
 	private boolean isAddBcc = false;
 	
-	private String[] arrMail;
+	private List<String> lstMail;
 
 	public MailFormWindow() {
 		initLayout();
 	}
 	
-	public MailFormWindow(String[] arrMail) {
-		this.arrMail = arrMail;
+	public MailFormWindow(List<String> lstMail) {
+		this.lstMail = lstMail;
 		initLayout();
 	}
 	
 	private void initLayout() {
-		this.setWidth("800px");
-		this.setHeight("530px");
+		this.setWidth("830px");
+		this.setHeight("500px");
 		initUI();
 		center();
 	}
@@ -108,20 +107,28 @@ public class MailFormWindow extends Window {
 		mainLayout.setMargin(true);
 		mainLayout.setSpacing(true);
 		
+		Panel inputPanel = new Panel();
+		inputPanel.setHeight("120px");
+		inputPanel.setWidth("100%");
+		inputPanel.setStyleName("noneBorder-panel");
+		inputPanel.getContent().setSizeUndefined();
+		
 		inputLayout = new GridLayout(3, 4);
 		inputLayout.setSpacing(true);
-		inputLayout.setMargin(true);
 		inputLayout.setWidth("100%");
 		
+		inputPanel.addComponent(inputLayout);
 		
-		mainLayout.addComponent(inputLayout);
+		mainLayout.addComponent(inputPanel);
 		
 		tokenFieldMailTo = new TokenFieldTextField() ;
 		inputLayout.addComponent(createTextFieldMail("To:", tokenFieldMailTo), 0, 0);
 		
-		if (arrMail != null) {
-			for (int i = 0; i < arrMail.length; i++) {
-				tokenFieldMailTo.addToken(arrMail[i]);
+		if (lstMail != null) {
+			for(String mail : lstMail) {
+				if (mail != null && !mail.equals("")) {
+					tokenFieldMailTo.addToken(mail);
+				}
 			}
 		}
 		
@@ -144,22 +151,21 @@ public class MailFormWindow extends Window {
 		controlsLayout.setWidth("100%");
 		
 		final AttachmentPanel attachments = new AttachmentPanel();
+		attachments.setWidth("500px");
         
 		 MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
 		 
 		Panel attachedFilepanel = new Panel();
+		attachedFilepanel.setScrollable(true);
 		attachedFilepanel.setHeight("80px");
-		attachedFilepanel.setWidth("250px");
+		attachedFilepanel.setStyleName("noneBorder-panel");
 		attachedFilepanel.getContent().setSizeUndefined();
 		attachedFilepanel.addComponent(attachments);
 		
-		VerticalLayout attachmentLayout = new VerticalLayout();
-		attachmentLayout.setSpacing(true);
-		attachmentLayout.addComponent(attachedFilepanel);
-		attachmentLayout.addComponent(uploadExt);
+		attachedFilepanel.addComponent(uploadExt);
 		
-		controlsLayout.addComponent(attachmentLayout);
-		controlsLayout.setExpandRatio(attachmentLayout, 1.0f);
+		controlsLayout.addComponent(attachedFilepanel);
+		controlsLayout.setExpandRatio(attachedFilepanel, 1.0f);
 
 		controlsLayout.setSpacing(true);
 		Button sendBtn = new Button("Send", new Button.ClickListener() {
@@ -194,6 +200,7 @@ public class MailFormWindow extends Window {
 				}
 			}
 		});
+		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsLayout.addComponent(sendBtn);
 		controlsLayout.setComponentAlignment(sendBtn, Alignment.MIDDLE_RIGHT);
 
@@ -206,6 +213,7 @@ public class MailFormWindow extends Window {
 			}
 		});
 
+		cancelBtn.setStyleName("link");
 		controlsLayout.addComponent(cancelBtn);
 		controlsLayout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);
 		mainLayout.addComponent(controlsLayout, 0, 2);
