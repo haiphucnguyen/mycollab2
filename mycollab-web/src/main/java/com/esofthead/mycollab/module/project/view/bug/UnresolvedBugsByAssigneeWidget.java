@@ -52,8 +52,4 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
             
         }
     }
-    
-    public static void main(String[] args) {
-        System.out.println((float)1/5);
-    }
 }
