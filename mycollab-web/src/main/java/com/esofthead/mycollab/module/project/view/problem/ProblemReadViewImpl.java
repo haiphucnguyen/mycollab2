@@ -25,179 +25,190 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.Window;
 
 @ViewComponent
-public class ProblemReadViewImpl extends AbstractView implements ProblemReadView {
+public class ProblemReadViewImpl extends AbstractView implements
+		ProblemReadView {
 
-    private static final long serialVersionUID = 1L;
-    protected SimpleProblem problem;
-    protected AdvancedPreviewBeanForm<Problem> previewForm;
+	private static final long serialVersionUID = 1L;
+	protected SimpleProblem problem;
+	protected AdvancedPreviewBeanForm<Problem> previewForm;
 
-    public ProblemReadViewImpl() {
-        super();
-        previewForm = new PreviewForm();
-        this.addComponent(previewForm);
-    }
+	public ProblemReadViewImpl() {
+		super();
+		previewForm = new PreviewForm();
+		this.addComponent(previewForm);
+	}
 
-    @Override
-    public void previewItem(SimpleProblem item) {
-        problem = item;
-        previewForm.setItemDataSource(new BeanItem<Problem>(item));
-    }
+	@Override
+	public void previewItem(SimpleProblem item) {
+		problem = item;
+		previewForm.setItemDataSource(new BeanItem<Problem>(item));
+	}
 
-    @Override
-    public SimpleProblem getItem() {
-        return problem;
-    }
+	@Override
+	public SimpleProblem getItem() {
+		return problem;
+	}
 
-    @Override
-    public HasPreviewFormHandlers<Problem> getPreviewFormHandlers() {
-        return previewForm;
-    }
+	@Override
+	public HasPreviewFormHandlers<Problem> getPreviewFormHandlers() {
+		return previewForm;
+	}
 
-    private class PreviewForm extends AdvancedPreviewBeanForm<Problem> {
+	private class PreviewForm extends AdvancedPreviewBeanForm<Problem> {
 
-        private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-        @Override
-        public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-                private static final long serialVersionUID = 1L;
+		@Override
+		public void setItemDataSource(Item newDataSource) {
+			this.setFormLayoutFactory(new FormLayoutFactory());
+			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+				private static final long serialVersionUID = 1L;
 
-                @Override
-                protected Field onCreateField(Item item, Object propertyId,
-                        Component uiContext) {
+				@Override
+				protected Field onCreateField(Item item, Object propertyId,
+						Component uiContext) {
 
-                    if (propertyId.equals("raisedbyuser")) {
-                        return new FormViewField(problem.getRaisedByUserFullName());
-                    } else if (propertyId.equals("assigntouser")) {
-                        return new FormViewField(problem.getAssignedUserFullName());
-                    } else if (propertyId.equals("level")) {
-                        RatingStars tinyRs = new RatingStars();
-                        tinyRs.setValue(problem.getLevel());
-                        tinyRs.setReadOnly(true);
-                        return tinyRs;
-                    } else if (propertyId.equals("datedue")) {
-                        return new FormViewField(AppContext.formatDate(problem
-                                .getDatedue()));
-                    }
+					if (propertyId.equals("raisedbyuser")) {
+						return new FormViewField(problem
+								.getRaisedByUserFullName());
+					} else if (propertyId.equals("level")) {
+						RatingStars tinyRs = new RatingStars();
+						tinyRs.setValue(problem.getLevel());
+						tinyRs.setReadOnly(true);
+						return tinyRs;
+					} else if (propertyId.equals("datedue")) {
+						return new FormViewField(AppContext.formatDate(problem
+								.getDatedue()));
+					} else if (propertyId.equals("assigntouser")) {
+						return new UserLinkViewField(problem.getAssigntouser(),
+								problem.getAssignedUserFullName());
+					}
 
-                    return null;
-                }
-            });
-            super.setItemDataSource(newDataSource);
-        }
-        
-        @Override
-        protected void doPrint() {
-            // Create a window that contains what you want to print
-            Window window = new Window("Window to Print");
+					return null;
+				}
+			});
+			super.setItemDataSource(newDataSource);
+		}
 
-            ProblemReadViewImpl printView = new ProblemReadViewImpl.PrintView();
-            printView.previewItem(problem);
-            window.addComponent(printView);
+		@Override
+		protected void doPrint() {
+			// Create a window that contains what you want to print
+			Window window = new Window("Window to Print");
 
-            // Add the printing window as a new application-level window
-            getApplication().addWindow(window);
+			ProblemReadViewImpl printView = new ProblemReadViewImpl.PrintView();
+			printView.previewItem(problem);
+			window.addComponent(printView);
 
-            // Open it as a popup window with no decorations
-            getWindow().open(new ExternalResource(window.getURL()),
-                    "_blank", 1100, 200, // Width and height
-                    Window.BORDER_NONE); // No decorations
+			// Add the printing window as a new application-level window
+			getApplication().addWindow(window);
 
-            // Print automatically when the window opens.
-            // This call will block until the print dialog exits!
-            window.executeJavaScript("print();");
+			// Open it as a popup window with no decorations
+			getWindow().open(new ExternalResource(window.getURL()), "_blank",
+					1100, 200, // Width and height
+					Window.BORDER_NONE); // No decorations
 
-            // Close the window automatically after printing
-            window.executeJavaScript("self.close();");
-        }
+			// Print automatically when the window opens.
+			// This call will block until the print dialog exits!
+			window.executeJavaScript("print();");
 
-        @Override
-        protected void showHistory() {
-            ProblemHistoryLogWindow historyLog = new ProblemHistoryLogWindow(
-                    ModuleNameConstants.PRJ, ProjectContants.PROBLEM,
-                    problem.getId());
-            getWindow().addWindow(historyLog);
-        }
+			// Close the window automatically after printing
+			window.executeJavaScript("self.close();");
+		}
 
-        class FormLayoutFactory extends ProblemFormLayoutFactory {
+		@Override
+		protected void showHistory() {
+			ProblemHistoryLogWindow historyLog = new ProblemHistoryLogWindow(
+					ModuleNameConstants.PRJ, ProjectContants.PROBLEM,
+					problem.getId());
+			getWindow().addWindow(historyLog);
+		}
 
-            private static final long serialVersionUID = 1L;
+		class FormLayoutFactory extends ProblemFormLayoutFactory {
 
-            public FormLayoutFactory() {
-                super(problem.getIssuename());
-            }
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            protected Layout createTopPanel() {
-                return (new PreviewFormControlsGenerator<Problem>(
-                        PreviewForm.this)).createButtonControls();
-            }
+			public FormLayoutFactory() {
+				super(problem.getIssuename());
+			}
 
-            @Override
-            protected Layout createBottomPanel() {
-                return new CommentListDepot(CommentTypeConstants.PRJ_PROBLEM, problem.getId());
-            }
-        }
-    }
-    
-    @SuppressWarnings("serial")
+			@Override
+			protected Layout createTopPanel() {
+				return (new PreviewFormControlsGenerator<Problem>(
+						PreviewForm.this)).createButtonControls();
+			}
+
+			@Override
+			protected Layout createBottomPanel() {
+				return new CommentListDepot(CommentTypeConstants.PRJ_PROBLEM,
+						problem.getId());
+			}
+		}
+	}
+
+	@SuppressWarnings("serial")
 	public static class PrintView extends ProblemReadViewImpl {
 
-        public PrintView() {
-            previewForm = new AdvancedPreviewBeanForm<Problem>() {
-                @Override
-                public void setItemDataSource(Item newDataSource) {
-                	 this.setFormLayoutFactory(new ProblemReadViewImpl.PrintView.FormLayoutFactory());
-                     this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-                         private static final long serialVersionUID = 1L;
-                         
-                         @Override
-                         protected Field onCreateField(Item item, Object propertyId,
-                                 Component uiContext) {
-                             
-                        	 if (propertyId.equals("raisedbyuser")) {
-                                 return new FormViewField(problem.getRaisedByUserFullName());
-                             } else if (propertyId.equals("assigntouser")) {
-                            	 return new UserLinkViewField(problem.getAssigntouser(),
-                            			 problem.getAssignedUserFullName());
-                             } else if (propertyId.equals("level")) {
-                                 RatingStars tinyRs = new RatingStars();
-                                 tinyRs.setValue(problem.getLevel());
-                                 tinyRs.setReadOnly(true);
-                                 return tinyRs;
-                             } else if (propertyId.equals("datedue")) {
-                                 return new FormViewField(AppContext.formatDate(problem
-                                         .getDatedue()));
-                             }
-                        	 
-                             return null;
-                         }
-                     });
-                     super.setItemDataSource(newDataSource);
-                }
-            };
+		public PrintView() {
+			previewForm = new AdvancedPreviewBeanForm<Problem>() {
+				@Override
+				public void setItemDataSource(Item newDataSource) {
+					this.setFormLayoutFactory(new ProblemReadViewImpl.PrintView.FormLayoutFactory());
+					this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+						private static final long serialVersionUID = 1L;
 
-            this.addComponent(previewForm);
-        }
+						@Override
+						protected Field onCreateField(Item item,
+								Object propertyId, Component uiContext) {
 
-        class FormLayoutFactory extends ProblemFormLayoutFactory {
+							if (propertyId.equals("raisedbyuser")) {
+								return new FormViewField(problem
+										.getRaisedByUserFullName());
+							} else if (propertyId.equals("assigntouser")) {
+								return new UserLinkViewField(problem
+										.getAssigntouser(), problem
+										.getAssignedUserFullName());
+							} else if (propertyId.equals("level")) {
+								RatingStars tinyRs = new RatingStars();
+								tinyRs.setValue(problem.getLevel());
+								tinyRs.setReadOnly(true);
+								return tinyRs;
+							} else if (propertyId.equals("datedue")) {
+								return new FormViewField(AppContext
+										.formatDate(problem.getDatedue()));
+							} else if (propertyId.equals("assigntouser")) {
+								return new UserLinkViewField(problem
+										.getAssigntouser(), problem
+										.getAssignedUserFullName());
+							}
 
-            private static final long serialVersionUID = 1L;
+							return null;
+						}
+					});
+					super.setItemDataSource(newDataSource);
+				}
+			};
 
-            public FormLayoutFactory() {
-            	 super(problem.getIssuename());
-            }
+			this.addComponent(previewForm);
+		}
 
-            @Override
-            protected Layout createTopPanel() {
-                return new HorizontalLayout();
-            }
+		class FormLayoutFactory extends ProblemFormLayoutFactory {
 
-            @Override
-            protected Layout createBottomPanel() {
-            	return new CommentListDepot(CommentTypeConstants.PRJ_PROBLEM, problem.getId(), false);
-            }
-        }
-    }
+			private static final long serialVersionUID = 1L;
+
+			public FormLayoutFactory() {
+				super(problem.getIssuename());
+			}
+
+			@Override
+			protected Layout createTopPanel() {
+				return new HorizontalLayout();
+			}
+
+			@Override
+			protected Layout createBottomPanel() {
+				return new CommentListDepot(CommentTypeConstants.PRJ_PROBLEM,
+						problem.getId(), false);
+			}
+		}
+	}
 }
