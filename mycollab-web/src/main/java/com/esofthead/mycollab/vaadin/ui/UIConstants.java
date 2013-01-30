@@ -17,6 +17,8 @@ public class UIConstants {
 	public static final String THEME_BLUE_LINK = "bluebtn";
 	public static final String THEME_LINK = "link";
 	public static final String THEME_ROUND_BUTTON = "round-border";
+	public static final String LINK_COMPLETED = "completed";
+	public static final String LINK_OVERDUE = "overdue";
 	public static final String SPLIT_BUTTON = "esofthead";
 	public static final String MESSAGE_IMPORTANT = "important";
 	public static final String WIDGET_TITLE = "widget-title";
