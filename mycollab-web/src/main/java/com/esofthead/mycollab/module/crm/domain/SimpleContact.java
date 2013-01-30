@@ -22,6 +22,7 @@ public class SimpleContact extends Contact {
     private Integer accountId;
     private String accountName;
     private String assignUserFullName;
+    private String contactName;
 
     public Integer getAccountId() {
         return accountId;
@@ -30,10 +31,13 @@ public class SimpleContact extends Contact {
     public void setAccountId(Integer accountId) {
         this.accountId = accountId;
     }
-    
 
     public String getContactName() {
-        return getFirstname() + " " + getLastname();
+        return contactName;
+    }
+
+    public void setContactName(String contactName) {
+        this.contactName = contactName;
     }
 
     public String getAccountName() {

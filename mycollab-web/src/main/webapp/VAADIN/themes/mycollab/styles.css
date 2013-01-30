@@ -49,6 +49,18 @@ input:focus, textarea:focus {
 	vertical-align: top;
 }
 
+.v-button-link .v-button-caption {
+	text-decoration: none;
+}
+
+.v-button-link.overdue .v-button-caption {
+	color: red;
+}
+.v-button-link.completed .v-button-caption {
+	color: black;
+	text-decoration: line-through;
+}
+
 .v-label.h2 {
 	font-size: 14px;
 	padding: 0px;
@@ -59,17 +71,18 @@ input:focus, textarea:focus {
     background: #FFFFFF;
 }
 
-.v-window, .v-Notification {
-	background-color: white;
-	border-radius: 2px;
-}
-.v-window-header {
-	font-weight: bold;
-}
 .v-button {
 	vertical-align: top;
 }
-
+.v-panel-nocaption {
+	border-top: none;
+}
+.v-panel-deco {
+	border-top: none;
+}
+div.v-panel-content-light {
+	border: none;
+}
 .v-app, .v-window, .v-popupview-popup, .v-tooltip, .v-app input, .v-app select, .v-app button, .v-app textarea, .v-window input, .v-window select, .v-window button, .v-window textarea, .v-popupview-popup input, .v-popupview-popup select, .v-popupview-popup button, .v-popupview-popup textarea, .v-filterselect-suggestpopup, .v-datefield-popup, .v-contextmenu, .v-Notification, .v-menubar-submenu, .v-table-header-drag, .v-menubar-submenu, .v-drag-element {
 	font: 12px/18px "Lucida Sans Unicode",Helvetica,Arial,Verdana,sans-serif !important;
 }
@@ -1782,3 +1795,34 @@ white-space: normal;
 	margin: 0px;
 }
 /* End Background has SELECT icon */
+
+/* Popup Window */
+.v-window, .v-Notification {
+	background-color: white;
+	border-radius: 5px 5px 2px 2px;
+}
+.v-window-outerheader {
+	background: url('icons/grad-dark-bottom2.png') repeat-x left bottom rgb(57,71,84);
+	border-bottom: 1px solid #8f8f8f;
+	border-radius: 4px 4px 0px 0px;
+}
+div.v-window-header {
+	font-weight: bold;
+	color: white;
+	text-shadow: 0px 1px 0px #444;
+	padding: 3px 0px 0px;
+}
+.v-window .v-table-header-wrap {
+	background: url('icons/grad-light-top.png') repeat-x left top #ddd;
+}
+.v-window .v-table-header-wrap .v-table-caption-container {
+	color: black;
+	text-shadow: 0px 1px 0px rgb(223,223,223);
+}
+/* End Popup Window */
+
+/* Rating Stars */
+.v-table-row-odd .v-ratingstars-wrapper-tiny .v-ratingstars-star {
+	background-image: url("icons/star_12x11.png");
+}
+/* End Rating Stars */
