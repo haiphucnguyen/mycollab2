@@ -1,10 +1,14 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
-import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CaseService;
-import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.file.ExportStreamResource;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
@@ -20,11 +24,6 @@ import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-
-import org.vaadin.dialogs.ConfirmDialog;
 
 public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
 		implements ListPresenter<CaseSearchCriteria> {
@@ -116,21 +115,35 @@ public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
 					public void onSelect(String id, String caption) {
 						if ("delete".equals(id)) {
 							ConfirmDialog.show(view.getWindow(),
-                                    "Please Confirm:",
-                                    "Are you sure to delete selected items: ",
-                                    "Yes", "No", new ConfirmDialog.Listener() {
-                                private static final long serialVersionUID = 1L;
+									"Please Confirm:",
+									"Are you sure to delete selected items: ",
+									"Yes", "No", new ConfirmDialog.Listener() {
+										private static final long serialVersionUID = 1L;
 
-                                @Override
-                                public void onClose(ConfirmDialog dialog) {
-                                    if (dialog.isConfirmed()) {
-                                        deleteSelectedItems();
-                                    }
-                                }
-                            });
+										@Override
+										public void onClose(ConfirmDialog dialog) {
+											if (dialog.isConfirmed()) {
+												deleteSelectedItems();
+											}
+										}
+									});
 						} else if ("mail".equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
+							if (isSelectAll) {
+								AppContext.getApplication().getMainWindow().showNotification("This version has not supported the sending email for all users yet!");
+							} else {
+								List<String> lstMail = new ArrayList<String>();
+								List<SimpleCase> tableData = view
+										.getPagedBeanTable()
+										.getCurrentDataList();
+								for (SimpleCase item : tableData) {
+									if (item.isSelected()) {
+										lstMail.add(item.getEmail());
+									}
+								}
+								view.getWidget().getWindow()
+								.addWindow(new MailFormWindow(lstMail));
+							}
+							
 						} else if ("export".equals(id)) {
 							Resource res = null;
 

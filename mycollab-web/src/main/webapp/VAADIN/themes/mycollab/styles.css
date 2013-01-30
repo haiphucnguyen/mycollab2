@@ -35,6 +35,7 @@ only screen and (max-device-width : 1024px) {
 /* 		min-width: 900px; */
 /* 	} */
 }
+
 input.noBorderRight {
 	border-radius: 2px 0px 0px 2px;
 }
@@ -1316,6 +1317,29 @@ white-space: normal;
 	border: none;
 }
 /* End Activity Stream Channel */
+
+/* Start Email Form */
+
+.v-panel-content-noneBorder-panel {
+	border-width: 0px 0px 0px 0px;
+	border-color: #ffffff;
+	border-style: none;
+	background-color: transparent;
+}
+
+.v-panel-content-noneBorder-panel {
+	border-width: 0px 0px 0px 0px;
+	border-style: none;
+}
+.v-panel-deco-noneBorder-panel {
+	border: none;
+}
+
+.v-panel-nocaption-noneBorder-panel {
+	border: none;
+}
+
+/* End Email Form*/
 
 /* Round border button */
 .v-button.v-button-round-border

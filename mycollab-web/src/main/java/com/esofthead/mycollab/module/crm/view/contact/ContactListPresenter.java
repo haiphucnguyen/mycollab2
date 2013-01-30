@@ -118,21 +118,35 @@ public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
 					public void onSelect(String id, String caption) {
 						if ("delete".equals(id)) {
 							ConfirmDialog.show(view.getWindow(),
-                                    "Please Confirm:",
-                                    "Are you sure to delete selected items: ",
-                                    "Yes", "No", new ConfirmDialog.Listener() {
-                                private static final long serialVersionUID = 1L;
+									"Please Confirm:",
+									"Are you sure to delete selected items: ",
+									"Yes", "No", new ConfirmDialog.Listener() {
+										private static final long serialVersionUID = 1L;
 
-                                @Override
-                                public void onClose(ConfirmDialog dialog) {
-                                    if (dialog.isConfirmed()) {
-                                        deleteSelectedItems();
-                                    }
-                                }
-                            });
+										@Override
+										public void onClose(ConfirmDialog dialog) {
+											if (dialog.isConfirmed()) {
+												deleteSelectedItems();
+											}
+										}
+									});
 						} else if ("mail".equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
+							if (isSelectAll) {
+								AppContext.getApplication().getMainWindow().showNotification("This version has not supported the sending email for all users yet!");
+							} else {
+								List<String> lstMail = new ArrayList<String>();
+								List<SimpleContact> tableData = view
+										.getPagedBeanTable()
+										.getCurrentDataList();
+								for (SimpleContact item : tableData) {
+									if (item.isSelected()) {
+										lstMail.add(item.getContactName() + " <" + item.getEmail() + ">");
+									}
+								}
+								view.getWidget().getWindow()
+								.addWindow(new MailFormWindow(lstMail));
+							}
+							
 						} else if ("export".equals(id)) {
 							Resource res = null;
 
