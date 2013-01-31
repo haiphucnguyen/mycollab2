@@ -13,4 +13,5 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  */
 @ViewComponent
 public class ProjectUserContainer extends AbstractView {
+    
 }
