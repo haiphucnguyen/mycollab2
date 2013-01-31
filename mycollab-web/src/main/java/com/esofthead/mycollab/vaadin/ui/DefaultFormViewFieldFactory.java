@@ -156,6 +156,7 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 			layout = new CssLayout();
 			layout.setWidth("100%");
 			this.setCompositionRoot(layout);
+			this.setStyleName(UIConstants.FORM_CONTAINER_VIEW);
 		}
 
 		public void addComponentField(Component component) {

@@ -1479,7 +1479,7 @@ white-space: normal;
 /* Token Field */
 .tokenfield .v-csslayout-margin {
 	border: 1px solid rgb(143, 143, 143);
-	background: url("img/input-bg.png") repeat-x scroll 0% 0% rgb(255, 255, 255);
+	background: url("icons/input-bg.png") repeat-x scroll 0% 0% rgb(255, 255, 255);
 	padding: 3px 2px 2px;
 	border-radius: 3px;
 /* 	box-shadow: -1px 1px 1px #ddd inset; */
@@ -1845,3 +1845,30 @@ div.v-window-header {
 	border: none;
 }
 /* End no border Panel */
+
+/* Form Container View Field */
+.form-container .v-csslayout .v-button-link {
+	height: 18px;
+	border-radius: 8px 8px 8px 8px;
+	background: url("icons/grad-dark-bottom.png") repeat-x scroll left bottom rgb(57, 71, 84);
+	padding: 0px 7px 1px;
+}
+.form-container .v-csslayout .v-button-link .v-button-caption {
+	color: white;
+}
+/* End Form Container View Field */
+
+/* LazyLoad */
+div.v-lazyloadingwrapper-loading {
+	background-color: transparent;
+	background-image: url('icons/loading-indicator2.gif');
+	border: none;
+}
+/* End LazyLoad */
+
+/* Mail Panel */
+.mail-panel .v-gridlayout-margin {
+	max-height: 150px;
+	overflow-y: auto;
+} 
+/* End Mail Panel */
