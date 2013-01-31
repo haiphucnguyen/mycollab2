@@ -57,7 +57,7 @@ public class ProjectUserAddViewImpl extends AbstractView implements ProjectUserA
             private static final long serialVersionUID = 1L;
 
             public FormLayoutFactory() {
-                super("Create ProjectMember");
+                super("Create Project Member");
             }
 
             private Layout createButtonControls() {
