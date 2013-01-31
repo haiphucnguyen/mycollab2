@@ -17,11 +17,14 @@ import com.esofthead.mycollab.web.AppContext;
  * @author haiphucnguyen
  */
 @SuppressWarnings("serial")
-//TODO: Refactor code for simpler
 public class VersionMultiSelectField extends MultiSelectComp {
 
     public VersionMultiSelectField() {
         super("versionname");
+    }
+    
+    public VersionMultiSelectField(String width) {
+        super("versionname", width);
     }
 
     @Override

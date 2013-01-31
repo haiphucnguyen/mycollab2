@@ -25,23 +25,19 @@ import com.vaadin.ui.PopupDateField;
  * @author haiphucnguyen
  */
 @SuppressWarnings("serial")
-public class DateSelectionField extends GridLayout{
+public class DateSelectionHorizontalField extends GridLayout{
 	
 	private DateField dateStart = new DateField();
 	private DateField dateEnd = new DateField();
 	
 	DateSelectionComboBox dateSelectionBox;
 	
-	public DateSelectionField(String width) {
-		this();
-		dateSelectionBox.setWidth(width);
-	}
-	
-	public DateSelectionField() {
+	public DateSelectionHorizontalField() {
 		
 		setDateWidth(120);
 		this.setSpacing(true);
 		dateSelectionBox = new DateSelectionComboBox();
+		dateSelectionBox.setWidth("100px");
 		dateSelectionBox.setFilteringMode(Filtering.FILTERINGMODE_OFF);
 		dateSelectionBox.setImmediate(true);
 		
