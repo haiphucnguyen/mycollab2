@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.usertracking;
 
 import java.io.BufferedReader;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileReader;
 import java.math.BigInteger;
@@ -9,15 +8,10 @@ import java.security.MessageDigest;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import org.apache.ibatis.session.SqlSession;
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
 
 import com.esofthead.mycollab.usertracking.dao.IpCountryMapper;
 import com.esofthead.mycollab.usertracking.domain.IpCountry;
@@ -27,7 +21,6 @@ public class IpCountryUpdater {
 	private static final String MYBATIS_CONFIG = "usertracking.mybatis.xml";
 	
 	private static final String URL = "URL";
-	private static final String SELECT_PATTERN = "SELECT_PATTERN";
 
 	public static final void updateDB() throws Exception {
 		Properties properties = new Properties();
@@ -35,74 +28,35 @@ public class IpCountryUpdater {
 				.getResourceAsStream(CONFIG_FILE));
 
 		String url = properties.getProperty(URL);
-		String file_pattern = properties.getProperty(SELECT_PATTERN);
-
 		/**
-		 * download the html file
+		 * download database from server
 		 */
-		ByteArrayOutputStream buffer = new ByteArrayOutputStream();
-		HttpDownloader.downloadFile(url, buffer);
 
-		String fileName = getFile(new String(buffer.toByteArray()),
-				file_pattern);
-		if (fileName.length() > 0) {
+		String tmpDir = getTmpDir();
+		String downloadFile;
+		if (tmpDir.endsWith("/"))
+			downloadFile = String.format("%s%s", tmpDir,
+					encryptText(String.valueOf(System.currentTimeMillis()))
+							+ ".zip");
+		else
+			downloadFile = String.format("%s/%s", tmpDir,
+					encryptText(String.valueOf(System.currentTimeMillis()))
+							+ ".zip");
+
+		HttpDownloader.downloadFile(url, downloadFile);
+		List<String> lsUnzipFile = Unzip.unzip(downloadFile, tmpDir);
+		if (lsUnzipFile.size() > 0) {
+			String databaseFile = lsUnzipFile.get(0);
 			/**
-			 * download database from server
+			 * serialize plain text to list objects
 			 */
-			String requestUrl;
-			if (url.endsWith("/"))
-				requestUrl = String.format("%s%s", url, fileName);
-			else
-				requestUrl = String.format("%s/%s", url, fileName);
-
-			String tmpDir = getTmpDir();
-			String downloadFile;
-			if (tmpDir.endsWith("/"))
-				downloadFile = String.format("%s%s", tmpDir,
-						encryptText(String.valueOf(System.currentTimeMillis()))
-								+ ".zip");
-			else
-				downloadFile = String.format("%s/%s", tmpDir,
-						encryptText(String.valueOf(System.currentTimeMillis()))
-								+ ".zip");
-
-			HttpDownloader.downloadFile(requestUrl, downloadFile);
-			List<String> lsUnzipFile = Unzip.unzip(downloadFile, tmpDir);
-			if (lsUnzipFile.size() > 0) {
-				String databaseFile = lsUnzipFile.get(0);
-				/**
-				 * serialize plain text to list objects
-				 */
-				List<IpCountry> lsIpCountry = parse(databaseFile);				
-				/**
-				 * truncate database and insert new data we would like to do in
-				 * an session
-				 */
-				updateDatabase(lsIpCountry);
-			}
-
+			List<IpCountry> lsIpCountry = parse(databaseFile);				
+			/**
+			 * truncate database and insert new data we would like to do in
+			 * an session
+			 */
+			updateDatabase(lsIpCountry);
 		}
-	}
-
-	private static final String getFile(String html, String pattern)
-			throws Exception {
-		String lowerCasePatter = pattern.toLowerCase();
-		Pattern __pattern = Pattern.compile(lowerCasePatter);
-		Document doc = Jsoup.parse(html);
-
-		for (Element e : doc.select("a")) {
-			String fileName = e.html().toLowerCase();
-			Matcher matcher = __pattern.matcher(fileName);
-
-			if (matcher.find()) {
-				String matchString = fileName.substring(matcher.start(),
-						matcher.end());
-				if (matchString.equals(fileName)) {
-					return e.html();
-				}
-			}
-		}
-		return "";
 	}
 
 	private static final String getTmpDir() throws Exception {

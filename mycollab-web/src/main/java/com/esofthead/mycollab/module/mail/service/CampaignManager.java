@@ -79,11 +79,6 @@ public class CampaignManager {
 		return sendCampaignMessage(request);
 	}
 	
-	public static final SendResponse sendTemplateCampaignMessage(String resourceName,
-			String subject, String senderMail, String senderName,
-			List<Recipient> to, String bbcAddress, String attachFile) {
-		return null;
-	}
 
 	public static final StatisticsResponse statistic(String sender) {
 		final String requestUrl = "https://mandrillapp.com/api/1.0/senders/info.json";
