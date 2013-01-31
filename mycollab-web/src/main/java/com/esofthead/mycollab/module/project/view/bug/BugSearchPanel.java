@@ -4,6 +4,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -153,10 +154,10 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		private CheckBox summaryField;
 		private CheckBox descriptionField;
 		
-		private BugPriorityComboBox priorityField;
-		private BugStatusComboBox statusField;
-		private BugResolutionComboBox resolutionField;
-		private BugSeverityComboBox severityField;
+		private BugStaticItemMultiSelectField priorityField;
+		private BugStaticItemMultiSelectField statusField;
+		private BugStaticItemMultiSelectField resolutionField;
+		private BugStaticItemMultiSelectField severityField;
 		
 		private ComponentMultiSelectField componentField;
 		private VersionMultiSelectField affectedVersionField;
@@ -194,15 +195,15 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			layoutCheckbox.addComponent(descriptionField);
 			
 			updateDateField = (DateSelectionField) gridLayout.addComponent(
-					new DateSelectionField("250px"), "Update Date", 0, 1);
+					new DateSelectionField("245px"), "Update Date", 0, 1);
 			updateDateField.setDateFormat(AppContext.getDateFormat());
 
 			dueDateField = (DateSelectionField) gridLayout.addComponent(
-					new DateSelectionField("250px"), "Due Date", 0, 3);
+					new DateSelectionField("245px"), "Due Date", 0, 3);
 			dueDateField.setDateFormat(AppContext.getDateFormat());
 			
 			resolveDateField = (DateSelectionField) gridLayout.addComponent(
-					new DateSelectionField("250px"), "Resolve Date", 0, 2);
+					new DateSelectionField("245px"), "Resolve Date", 0, 2);
 			resolveDateField.setDateFormat(AppContext.getDateFormat());
 			
 			componentField = (ComponentMultiSelectField) gridLayout.addComponent(new ComponentMultiSelectField("225px"),
@@ -214,15 +215,15 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			fixedVersionField = (VersionMultiSelectField) gridLayout.addComponent(new VersionMultiSelectField("225px"),
 					"Fixed Version", 1, 3);
 			
-			priorityField = (BugPriorityComboBox) gridLayout.addComponent(new BugPriorityComboBox(),
+			priorityField = (BugStaticItemMultiSelectField) gridLayout.addComponent(new BugStaticItemMultiSelectField(ProjectDataTypeFactory.getBugPriorityList()),
 					"Priority", 0, 4);
 			
-			statusField = (BugStatusComboBox) gridLayout.addComponent(new BugStatusComboBox(),
+			statusField = (BugStaticItemMultiSelectField) gridLayout.addComponent(new BugStaticItemMultiSelectField(ProjectDataTypeFactory.getBugStatusList()),
 					"Status", 1, 4);
 			
-			resolutionField = (BugResolutionComboBox) gridLayout.addComponent(new BugResolutionComboBox(),
+			resolutionField = (BugStaticItemMultiSelectField) gridLayout.addComponent(new BugStaticItemMultiSelectField(ProjectDataTypeFactory.getBugResolutionList()),
 					"Resolution", 0, 5);
-			severityField = (BugSeverityComboBox) gridLayout.addComponent(new BugSeverityComboBox(),
+			severityField = (BugStaticItemMultiSelectField) gridLayout.addComponent(new BugStaticItemMultiSelectField(ProjectDataTypeFactory.getBugSeverityList()),
 					"Severity", 1, 5);
 
 

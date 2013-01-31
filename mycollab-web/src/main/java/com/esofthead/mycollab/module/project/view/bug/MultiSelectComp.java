@@ -25,15 +25,9 @@ public abstract class MultiSelectComp extends CustomField {
 	private String displayName;
 	private HashMap<String, CheckBox> componentPoupMap = new HashMap<String, CheckBox>();
 	private List selectedItemsList = new ArrayList();
-	protected List dataList;
+	protected List dataList = new ArrayList();
 	
-	public MultiSelectComp(String displayName, String width) {
-		this(displayName);
-		componentsDisplay.setWidth(width);
-	}
-
-	public MultiSelectComp(String displayName) {
-		this.displayName = displayName;
+	public MultiSelectComp() {
 		this.setWidth("100%");
 		GridLayout content = new GridLayout(2, 1);
 		content.setSpacing(false);
@@ -67,17 +61,31 @@ public abstract class MultiSelectComp extends CustomField {
 
 		this.setCompositionRoot(content);
 	}
+	
+	public MultiSelectComp(String displayName, String width) {
+		this(displayName);
+		componentsDisplay.setWidth(width);
+	}
+
+	public MultiSelectComp(String displayName) {
+		this();
+		this.displayName = displayName;
+	}
 
 	private void createItemPopup() {
 		for (int i = 0; i < dataList.size(); i++) {
 
 			Object itemComp = dataList.get(i);
 			String itemName = "";
-			try {
-				itemName = (String) PropertyUtils.getProperty(itemComp,
-						displayName);
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (displayName != "" ) {
+				try {
+					itemName = (String) PropertyUtils.getProperty(itemComp,
+							displayName);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				itemName = (String) dataList.get(i);
 			}
 			final CheckBox chkItem = new CheckBox(itemName);
 			chkItem.setImmediate(true);
@@ -86,22 +94,35 @@ public abstract class MultiSelectComp extends CustomField {
 				public void valueChange(
 						com.vaadin.data.Property.ValueChangeEvent event) {
 					Boolean value = (Boolean) chkItem.getValue();
-					Object itemObj = getElementInDataListByName(chkItem
-							.getCaption());
 					String objDisplayName = "";
-					try {
-						objDisplayName = (String) PropertyUtils.getProperty(
-								itemObj, displayName);
-					} catch (Exception e) {
-						e.printStackTrace();
-					}
-					if (itemObj != null) {
-						if (isClicked) {
-							removeElementSelectedListByName(objDisplayName);
-							if (value) {
-								if (!selectedItemsList.contains(itemObj)) {
-									selectedItemsList.add(itemObj);
+					if (displayName != "") {
+						Object itemObj = getElementInDataListByName(chkItem
+								.getCaption());
+						try {
+							objDisplayName = (String) PropertyUtils.getProperty(
+									itemObj, displayName);
+						} catch (Exception e) {
+							e.printStackTrace();
+						}
+						if (itemObj != null) {
+							if (isClicked) {
+								removeElementSelectedListByName(objDisplayName);
+								if (value) {
+									if (!selectedItemsList.contains(itemObj)) {
+										selectedItemsList.add(itemObj);
+									}
 								}
+								setSelectedItems(selectedItemsList);
+							}
+						}
+					} else {
+						if (isClicked) {
+							if (value) {
+								if (!selectedItemsList.contains(chkItem.getCaption())) {
+									selectedItemsList.add(chkItem.getCaption());
+								}
+							} else {
+								selectedItemsList.remove(chkItem.getCaption());
 							}
 							setSelectedItems(selectedItemsList);
 						}
@@ -154,12 +175,17 @@ public abstract class MultiSelectComp extends CustomField {
 			Object itemObj = selectedItemsList.get(i);
 
 			String objDisplayName = "";
-			try {
-				objDisplayName = (String) PropertyUtils.getProperty(itemObj,
-						displayName);
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (displayName != "") {
+				try {
+					objDisplayName = (String) PropertyUtils.getProperty(itemObj,
+							displayName);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				objDisplayName = (String) selectedItemsList.get(i);
 			}
+			
 			if (componentPoupMap.containsKey(objDisplayName)) {
 				CheckBox chk = componentPoupMap.get(objDisplayName);
 				chk.setValue(true);
@@ -192,11 +218,15 @@ public abstract class MultiSelectComp extends CustomField {
 			Object itemObj = selectedItemsList.get(i);
 
 			String objDisplayName = "";
-			try {
-				objDisplayName = (String) PropertyUtils.getProperty(itemObj,
-						displayName);
-			} catch (Exception e) {
-				e.printStackTrace();
+			if (displayName != "") {
+				try {
+					objDisplayName = (String) PropertyUtils.getProperty(itemObj,
+							displayName);
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+			} else {
+				objDisplayName = (String) selectedItemsList.get(i);
 			}
 			if (i == selectedItemsList.size() - 1) {
 				str.append(objDisplayName);
