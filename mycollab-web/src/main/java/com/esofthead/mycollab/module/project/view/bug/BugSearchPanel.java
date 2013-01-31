@@ -154,8 +154,9 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		private CheckBox descriptionField;
 		
 		private BugPriorityComboBox priorityField;
-		private TextField statusField;
-		private TextField resolutionField;
+		private BugStatusComboBox statusField;
+		private BugResolutionComboBox resolutionField;
+		private BugSeverityComboBox severityField;
 		
 		private ComponentMultiSelectField componentField;
 		private VersionMultiSelectField affectedVersionField;
@@ -178,48 +179,51 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		public ComponentContainer constructBody() {
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 6);
 
-			nameField = (TextField) gridLayout.addComponent(new TextField(),
-					"Name", 0, 0);
-			
 			HorizontalLayout layoutCheckbox;
 			
 			layoutCheckbox = (HorizontalLayout) gridLayout.addComponent(new HorizontalLayout(),
-					null, 1, 0);
-			layoutCheckbox.setSpacing(true);
+					"Name", 0, 0, 2, "100%", Alignment.MIDDLE_LEFT);
+			layoutCheckbox.setSpacing(false);
+			
+			nameField = new TextField();
+			nameField.setWidth("400px");
 			summaryField = new CheckBox("Summary", true);
 			descriptionField = new CheckBox("Description", true);
+			layoutCheckbox.addComponent(nameField);
 			layoutCheckbox.addComponent(summaryField);
 			layoutCheckbox.addComponent(descriptionField);
 			
 			updateDateField = (DateSelectionField) gridLayout.addComponent(
-					new DateSelectionField(), "Update Date", 0, 1);
+					new DateSelectionField("250px"), "Update Date", 0, 1);
 			updateDateField.setDateFormat(AppContext.getDateFormat());
 
 			dueDateField = (DateSelectionField) gridLayout.addComponent(
-					new DateSelectionField(), "Due Date", 1, 1);
+					new DateSelectionField("250px"), "Due Date", 0, 3);
 			dueDateField.setDateFormat(AppContext.getDateFormat());
 			
 			resolveDateField = (DateSelectionField) gridLayout.addComponent(
-					new DateSelectionField(), "Resolve Date", 0, 2);
+					new DateSelectionField("250px"), "Resolve Date", 0, 2);
 			resolveDateField.setDateFormat(AppContext.getDateFormat());
 			
-			componentField = (ComponentMultiSelectField) gridLayout.addComponent(new ComponentMultiSelectField(),
+			componentField = (ComponentMultiSelectField) gridLayout.addComponent(new ComponentMultiSelectField("225px"),
 					"Component", 1, 2);
 			
-			affectedVersionField = (VersionMultiSelectField) gridLayout.addComponent(new VersionMultiSelectField(),
-					"Affected Version", 0, 3);
+			affectedVersionField = (VersionMultiSelectField) gridLayout.addComponent(new VersionMultiSelectField("225px"),
+					"Affected Version", 1, 1);
 			
-			fixedVersionField = (VersionMultiSelectField) gridLayout.addComponent(new VersionMultiSelectField(),
-					"Description", 1, 3);
+			fixedVersionField = (VersionMultiSelectField) gridLayout.addComponent(new VersionMultiSelectField("225px"),
+					"Fixed Version", 1, 3);
 			
 			priorityField = (BugPriorityComboBox) gridLayout.addComponent(new BugPriorityComboBox(),
 					"Priority", 0, 4);
 			
-			statusField = (TextField) gridLayout.addComponent(new TextField(),
+			statusField = (BugStatusComboBox) gridLayout.addComponent(new BugStatusComboBox(),
 					"Status", 1, 4);
 			
-			resolutionField = (TextField) gridLayout.addComponent(new TextField(),
-					"Description", 0, 5);
+			resolutionField = (BugResolutionComboBox) gridLayout.addComponent(new BugResolutionComboBox(),
+					"Resolution", 0, 5);
+			severityField = (BugSeverityComboBox) gridLayout.addComponent(new BugSeverityComboBox(),
+					"Severity", 1, 5);
 
 
 			return gridLayout.getLayout();
@@ -231,7 +235,6 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			buttonControls.setSpacing(true);
 			
 			Button searchBtn = new Button("Search", new Button.ClickListener() {
-				@SuppressWarnings({ "unchecked" })
 				@Override
 				public void buttonClick(ClickEvent event) {
 					searchCriteria = new BugSearchCriteria();

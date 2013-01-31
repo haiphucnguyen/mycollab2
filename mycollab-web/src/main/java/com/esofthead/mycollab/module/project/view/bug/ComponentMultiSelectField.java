@@ -17,11 +17,14 @@ import com.esofthead.mycollab.web.AppContext;
  * @author haiphucnguyen
  */
 @SuppressWarnings("serial")
-//TODO: Refactor code for simpler
 public class ComponentMultiSelectField extends MultiSelectComp {
 
     public ComponentMultiSelectField() {
         super("componentname");
+    }
+    
+    public ComponentMultiSelectField(String width) {
+    	super("componentname", width);
     }
 
     @Override

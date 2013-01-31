@@ -26,6 +26,11 @@ public abstract class MultiSelectComp extends CustomField {
 	private HashMap<String, CheckBox> componentPoupMap = new HashMap<String, CheckBox>();
 	private List selectedItemsList = new ArrayList();
 	protected List dataList;
+	
+	public MultiSelectComp(String displayName, String width) {
+		this(displayName);
+		componentsDisplay.setWidth(width);
+	}
 
 	public MultiSelectComp(String displayName) {
 		this.displayName = displayName;
