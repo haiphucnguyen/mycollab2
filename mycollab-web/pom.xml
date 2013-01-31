@@ -241,11 +241,6 @@
             <artifactId>batik-svggen</artifactId>
             <version>1.7</version>
         </dependency>
-        <dependency>
-			<groupId>org.jsoup</groupId>
-			<artifactId>jsoup</artifactId>
-			<version>1.7.1</version>
-		</dependency>
 		<dependency>
 			<groupId>com.google.code.gson</groupId>
 			<artifactId>gson</artifactId>
