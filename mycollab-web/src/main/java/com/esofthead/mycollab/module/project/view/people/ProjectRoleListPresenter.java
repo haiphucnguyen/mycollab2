@@ -4,10 +4,21 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.vaadin.ui.ComponentContainer;
+
 /**
  *
  * @author haiphucnguyen
  */
-public class ProjectRoleListPresenter {
-    
+public class ProjectRoleListPresenter extends AbstractPresenter<ProjectRoleListView> {
+    public ProjectRoleListPresenter() {
+        super(ProjectRoleListView.class);
+    }
+
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

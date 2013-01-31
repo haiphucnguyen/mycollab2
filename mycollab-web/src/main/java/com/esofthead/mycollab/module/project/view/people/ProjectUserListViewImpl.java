@@ -4,10 +4,14 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+
 /**
  *
  * @author haiphucnguyen
  */
-public class ProjectUserListViewImpl {
+@ViewComponent
+public class ProjectUserListViewImpl extends AbstractView implements ProjectUserListView {
     
 }

@@ -4,10 +4,12 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+
 /**
  *
  * @author haiphucnguyen
  */
-public class ProjectRoleListViewImpl {
+public class ProjectRoleListViewImpl extends AbstractView implements ProjectRoleListView {
     
 }
