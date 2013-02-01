@@ -1,9 +1,12 @@
 package com.esofthead.mycollab.shell;
 
+import com.esofthead.mycollab.module.user.view.ForgotPasswordPresenter;
 import com.esofthead.mycollab.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
+import com.esofthead.mycollab.module.user.view.SignupPresenter;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.shell.events.ShellEvent.GotoMainPage;
+import com.esofthead.mycollab.shell.events.ShellEvent.GotoSignupPage;
 import com.esofthead.mycollab.shell.events.ShellEvent.LogOut;
 import com.esofthead.mycollab.shell.view.MainView;
 import com.esofthead.mycollab.shell.view.MainViewPresenter;
@@ -13,7 +16,6 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 import java.io.Serializable;
 import java.util.Calendar;
@@ -26,11 +28,10 @@ public class ShellController implements Serializable {
 
     private static final long serialVersionUID = 1L;
     private static Logger log = LoggerFactory.getLogger(ShellController.class);
-    private final ComponentContainer container;
+    private final MainWindowContainer container;
 
-    public ShellController(ComponentContainer container) {
+    public ShellController(MainWindowContainer container) {
         this.container = container;
-
         bind();
     }
 
@@ -94,5 +95,35 @@ public class ShellController implements Serializable {
                         ((MainWindowContainer) container).setDefaultView(false);
                     }
                 });
+        
+        EventBus.getInstance().addListener(new ApplicationEventListener<ShellEvent.GotoSignupPage>() {
+
+            @Override
+            public Class<? extends ApplicationEvent> getEventType() {
+                return ShellEvent.GotoSignupPage.class;
+            }
+
+            @Override
+            public void handle(GotoSignupPage event) {
+                SignupPresenter presenter = PresenterResolver.getPresenter(SignupPresenter.class);
+                presenter.go(container, null);
+            }
+            
+        });
+        
+        EventBus.getInstance().addListener(new ApplicationEventListener<ShellEvent.GotoForgotPasswordPage>() {
+
+            @Override
+            public Class<? extends ApplicationEvent> getEventType() {
+                return ShellEvent.GotoForgotPasswordPage.class;
+            }
+
+            @Override
+            public void handle(ShellEvent.GotoForgotPasswordPage event) {
+                ForgotPasswordPresenter presenter = PresenterResolver.getPresenter(ForgotPasswordPresenter.class);
+                presenter.go(container, null);
+            }
+            
+        });
     }
 }

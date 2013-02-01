@@ -39,4 +39,18 @@ public class ShellEvent {
             super(source, data);
         }
     }
+    
+    public static class GotoSignupPage extends ApplicationEvent {
+
+        public GotoSignupPage(Object source, Object data) {
+            super(source, data);
+        }
+    }
+    
+    public static class GotoForgotPasswordPage extends ApplicationEvent {
+
+        public GotoForgotPasswordPage(Object source, Object data) {
+            super(source, data);
+        }
+    }
 }

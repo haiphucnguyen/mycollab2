@@ -13,17 +13,17 @@ import com.vaadin.ui.ComponentContainer;
  *
  * @author haiphucnguyen
  */
-public class SignupPresenter extends AbstractPresenter<SignupView> {
-    public SignupPresenter() {
-        super(SignupView.class);
+public class ForgotPasswordPresenter extends AbstractPresenter<ForgotPasswordView> {
+
+    public ForgotPasswordPresenter() {
+        super(ForgotPasswordView.class);
     }
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        MainWindowContainer windowContainer = (MainWindowContainer)container;
+        MainWindowContainer windowContainer = (MainWindowContainer) container;
         windowContainer.removeAllComponents();
-        
+
         windowContainer.addComponent(view.getWidget());
     }
-    
 }
