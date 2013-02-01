@@ -2,9 +2,9 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.common.service.ibatis;
+package com.esofthead.mycollab.schedule.impl;
 
-import com.esofthead.mycollab.common.service.MyCollabScheduleService;
+import com.esofthead.mycollab.schedule.MyCollabScheduleService;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +18,5 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService{
     @Override
     @Scheduled(fixedRate=10)
     public void doSomething() {
-        
     }
 }

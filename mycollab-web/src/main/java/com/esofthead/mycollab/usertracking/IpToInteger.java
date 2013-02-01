@@ -21,10 +21,10 @@ public class IpToInteger {
 		int y = Integer.parseInt(subIp[2]);
 		int z = Integer.parseInt(subIp[3]);
 
-		if (w < 0 || w >= 255 
-				|| x < 0 || x >= 255 
-				|| y < 0 || y >= 255
-				|| z < 0 || z >= 255)
+		if (w < 0 || w > 255 
+				|| x < 0 || x > 255 
+				|| y < 0 || y > 255
+				|| z < 0 || z > 255)
 			throw new Exception("Invalid ip address format");
 
 		return (16777216 * w) + (65536 * x) + (256 * y) + z;

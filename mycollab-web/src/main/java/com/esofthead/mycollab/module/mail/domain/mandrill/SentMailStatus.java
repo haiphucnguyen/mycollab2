@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.mail.service;
+package com.esofthead.mycollab.module.mail.domain.mandrill;
 
 public class SentMailStatus {
 	private String email;

@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.mail.service;
+package com.esofthead.mycollab.module.mail.domain.mandrill;
 
 import java.io.ByteArrayOutputStream;
 import java.io.File;
