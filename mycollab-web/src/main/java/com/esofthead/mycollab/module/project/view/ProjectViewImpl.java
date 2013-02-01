@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.people.ProjectUserPresenter;
+import com.esofthead.mycollab.module.project.view.people.UserGroupPresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
@@ -55,7 +56,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     private BugPresenter bugPresenter;
     private ProblemPresenter problemPresenter;
     private RiskPresenter riskPresenter;
-    private ProjectUserPresenter userPresenter;
+    private UserGroupPresenter userPresenter;
     private SimpleProject project;
     private ProjectBreadcrumb breadCrumb;
 
@@ -193,7 +194,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     }
 
     private Component constructProjectUsers() {
-        userPresenter = PresenterResolver.getPresenter(ProjectUserPresenter.class);
+        userPresenter = PresenterResolver.getPresenter(UserGroupPresenter.class);
         return userPresenter.getView();
     }
 

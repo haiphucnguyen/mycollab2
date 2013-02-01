@@ -4,7 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
-
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -25,75 +24,74 @@ import java.util.Collection;
 @ViewComponent
 public class ProjectUserAddViewImpl extends AbstractView implements ProjectUserAddView {
 
-	private static final long serialVersionUID = 1L;
-	private EditForm editForm;
-	private ProjectMember user;
+    private static final long serialVersionUID = 1L;
+    private EditForm editForm;
+    private ProjectMember user;
 
-	public ProjectUserAddViewImpl() {
-		super();
-		editForm = new EditForm();
-		this.addComponent(editForm);
-	}
+    public ProjectUserAddViewImpl() {
+        super();
+        editForm = new EditForm();
+        this.addComponent(editForm);
+    }
 
-	@Override
-	public void editItem(ProjectMember item) {
-		this.user = item;
-		editForm.setItemDataSource(new BeanItem<ProjectMember>(user));
-	}
+    @Override
+    public void editItem(ProjectMember item) {
+        this.user = item;
+        editForm.setItemDataSource(new BeanItem<ProjectMember>(user));
+    }
 
-	private class EditForm extends AdvancedEditBeanForm<ProjectMember> {
+    private class EditForm extends AdvancedEditBeanForm<ProjectMember> {
 
-		private static final long serialVersionUID = 1L;
+        private static final long serialVersionUID = 1L;
 
-		@Override
-		public void setItemDataSource(Item newDataSource,
-				Collection<?> propertyIds) {
-			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
-			super.setItemDataSource(newDataSource, propertyIds);
-		}
+        @Override
+        public void setItemDataSource(Item newDataSource,
+                Collection<?> propertyIds) {
+            this.setFormLayoutFactory(new FormLayoutFactory());
+            this.setFormFieldFactory(new EditFormFieldFactory());
+            super.setItemDataSource(newDataSource, propertyIds);
+        }
 
-		private class FormLayoutFactory extends ProjectUserFormLayoutFactory {
+        private class FormLayoutFactory extends ProjectUserFormLayoutFactory {
 
-			private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-			public FormLayoutFactory() {
-				super("Create ProjectMember");
-			}
+            public FormLayoutFactory() {
+                super("Create Project Member");
+            }
 
-			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<ProjectMember>(
-						EditForm.this)).createButtonControls();
-			}
+            private Layout createButtonControls() {
+                return (new EditFormControlsGenerator<ProjectMember>(
+                        EditForm.this)).createButtonControls();
+            }
 
-			@Override
-			protected Layout createTopPanel() {
-				return createButtonControls();
-			}
+            @Override
+            protected Layout createTopPanel() {
+                return createButtonControls();
+            }
 
-			@Override
-			protected Layout createBottomPanel() {
-				return createButtonControls();
-			}
-		}
+            @Override
+            protected Layout createBottomPanel() {
+                return createButtonControls();
+            }
+        }
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
+        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
-			private static final long serialVersionUID = 1L;
+            private static final long serialVersionUID = 1L;
 
-			@Override
-			protected Field onCreateField(Item item, Object propertyId,
-					com.vaadin.ui.Component uiContext) {
+            @Override
+            protected Field onCreateField(Item item, Object propertyId,
+                    com.vaadin.ui.Component uiContext) {
 
-				
-				return null;
-			}
-		}
-	}
 
-	@Override
-	public HasEditFormHandlers<ProjectMember> getEditFormHandlers() {
-		return editForm;
-	}
-    
+                return null;
+            }
+        }
+    }
+
+    @Override
+    public HasEditFormHandlers<ProjectMember> getEditFormHandlers() {
+        return editForm;
+    }
 }

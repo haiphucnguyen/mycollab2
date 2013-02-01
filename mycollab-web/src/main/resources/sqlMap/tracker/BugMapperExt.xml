@@ -63,35 +63,34 @@
         <if test="detail != null" >
 <![CDATA[${detail.operation} m_tracker_bug.detail LIKE '%${detail.value}%']]></if>
 
+<if test="description != null" >
+	<![CDATA[${description.operation} m_tracker_bug.description LIKE '%${description.value}%']]>
+</if>
+
+<if test="updatedDate != null">
+            ${updatedDate.operation} CAST(m_tracker_bug.lastUpdatedTime AS DATE ) ${updatedDate.comparision} #{updatedDate.value}
+        </if> 
+         <if test="dueDate != null">
+            ${dueDate.operation} CAST(m_tracker_bug.duedate AS DATE ) ${dueDate.comparision} #{dueDate.value}
+        </if>  
+        <if test="resolvedDate != null">
+            ${resolvedDate.operation} CAST(m_tracker_bug.resolveddate AS DATE ) ${resolvedDate.comparision} #{resolvedDate.value}
+        </if>  
+        <if test="updatedDateRange != null">
+            ${updatedDateRange.operation} CAST(m_tracker_bug.lastUpdatedTime AS DATE ) BETWEEN #{updatedDateRange.from} AND #{updatedDateRange.to}
+        </if>
+         <if test="dueDateRange != null">
+            ${dueDateRange.operation} CAST(m_tracker_bug.duedate AS DATE ) BETWEEN #{dueDateRange.from} AND #{dueDateRange.to}
+        </if> 
+          <if test="resolvedDateRange != null">
+            ${resolvedDateRange.operation} CAST(m_tracker_bug.resolveddate AS DATE ) BETWEEN #{resolvedDateRange.from} AND #{resolvedDateRange.to}
+        </if> 
+
         <if test="environment != null" >
 <![CDATA[${environment.operation} m_tracker_bug.environment LIKE '%${environment.value}%']]></if>
 
         <if test="loguser != null" >
 <![CDATA[${loguser.operation} m_tracker_bug.logby = #{loguser.value}]]></if>
-
-        <if test="postedDateFrom != null" >
-<![CDATA[${postedDateFrom.operation} m_tracker_bug.createdTime >= #{postedDateFrom.value,javaType=DATE}]]></if>
-
-        <if test="postedDateTo != null" >
-<![CDATA[${postedDateTo.operation} m_tracker_bug.createdTime <= #{postedDateTo.value,javaType=DATE}]]></if>
-
-        <if test="updatedDateFrom != null" >
-<![CDATA[${updatedDateFrom.operation} m_tracker_bug.lastUpdatedTime >= #{updatedDateFrom,javaType=DATE}]]></if>
-
-        <if test="updatedDateTo != null" >
-<![CDATA[${updatedDateTo.operation} m_tracker_bug.lastUpdatedTime <= #{updatedDateTo.value,javaType=DATE}]]></if>
-
-        <if test="dueDateFrom != null" >
-<![CDATA[${dueDateFrom.operation} m_tracker_bug.duedate >= #{dueDateFrom.value,javaType=DATE}]]></if>
-
-        <if test="dueDateTo != null" >
-<![CDATA[${dueDateTo.operation} m_tracker_bug.duedate <= #{dueDateTo.value,javaType=DATE}]]></if>
-
-        <if test="resolvedDateFrom != null" >
-<![CDATA[${resolvedDateFrom.operation} m_tracker_bug.resolveddate >= #{resolvedDateFrom.value,javaType=DATE}]]></if>
-
-        <if test="resolvedDateTo != null" >
-<![CDATA[${resolvedDateTo.operation} m_tracker_bug.resolveddate <= #{resolvedDateTo.value,javaType=DATE}]]></if>
 
         <if test="projectId != null" >
 			<![CDATA[${projectId.operation} m_tracker_bug.projectid=#{projectId.value,javaType=INTEGER}]]>
@@ -242,7 +241,7 @@
 
             </foreach>
         </if>
-
+        
         <if test="severities != null" >
 			${severities.operation} m_tracker_bug.severity IN
 
