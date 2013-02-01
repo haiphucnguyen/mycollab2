@@ -1,17 +1,14 @@
-package com.esofthead.mycollab.module.mail.service;
+package com.esofthead.mycollab.module.mail.domain.mandrill;
 
 import java.util.LinkedList;
 
 public class SendResponse extends LinkedList<SentMailStatus> {
-
+	private static final long serialVersionUID = -2796192018165482020L;
+	
 	private static final String REJECTED = "rejected";
 	private static final String SENT = "sent";
 	private static final String QUEUED = "queued";
 	
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = -2796192018165482020L;
 	private int sent = 0;
 	private int rejected = 0;
 	private int queued = 0;

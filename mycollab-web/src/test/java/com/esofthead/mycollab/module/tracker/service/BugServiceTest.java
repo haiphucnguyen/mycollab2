@@ -1,5 +1,15 @@
 package com.esofthead.mycollab.module.tracker.service;
 
+import java.util.Calendar;
+import java.util.GregorianCalendar;
+import java.util.List;
+
+import org.junit.Assert;
+import org.junit.Test;
+import org.junit.runner.RunWith;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.test.context.ContextConfiguration;
+
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -13,14 +23,6 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
 import com.esofthead.mycollab.test.ServiceTest;
-import java.util.Calendar;
-import java.util.GregorianCalendar;
-import java.util.List;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.runner.RunWith;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(EngroupClassRunner.class)
 @ContextConfiguration(locations = {"classpath:META-INF/spring/service-test-context.xml"})
@@ -132,25 +134,6 @@ public class BugServiceTest extends ServiceTest{
 
     @DataSet
     @Test
-    public void testSearchByDateCriteria() {
-        BugSearchCriteria criteria = new BugSearchCriteria();
-        Calendar date = new GregorianCalendar();
-        date.set(Calendar.YEAR, 2009);
-        date.set(Calendar.MONTH, 0);
-        date.set(Calendar.DAY_OF_MONTH, 2);
-
-        criteria.setPostedDateFrom(new DateTimeSearchField(SearchField.AND, date
-                .getTime()));
-        Assert.assertEquals(1, bugService.getTotalCount(criteria));
-        Assert.assertEquals(
-                1,
-                bugService.findPagableListByCriteria(
-                new SearchRequest<BugSearchCriteria>(criteria, 0,
-                Integer.MAX_VALUE)).size());
-    }
-
-    @DataSet
-    @Test
     public void testSearchByDateCriteria2() {
         BugSearchCriteria criteria = new BugSearchCriteria();
         Calendar date = new GregorianCalendar();
@@ -158,7 +141,7 @@ public class BugServiceTest extends ServiceTest{
         date.set(Calendar.MONTH, 0);
         date.set(Calendar.DAY_OF_MONTH, 2);
 
-        criteria.setUpdatedDateTo(new DateTimeSearchField(SearchField.AND, date
+        criteria.setUpdatedDate(new DateTimeSearchField(SearchField.AND, date
                 .getTime()));
         Assert.assertEquals(0, bugService.getTotalCount(criteria));
         Assert.assertEquals(

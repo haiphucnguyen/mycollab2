@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.mail.service;
+package com.esofthead.mycollab.module.mail.domain.mandrill;
 
 public abstract class StatisticObject {
 	public abstract int get_sent();

@@ -1,4 +1,7 @@
-package com.esofthead.mycollab.module.mail.service;
+package com.esofthead.mycollab.module.mail.service.mandrill;
+
+import com.esofthead.mycollab.module.mail.domain.mandrill.Message;
+import com.esofthead.mycollab.module.mail.service.MailConfig;
 
 
 public class SendRequest {
@@ -34,9 +37,6 @@ public class SendRequest {
 	
 	public SendRequest() {
 		message = new Message();
-		CampaignConfig config = CampaignConfig.loadConfig();
-		if (null != config) {
-			key = config.getApiKey();
-		}
+		key = MailConfig.getProperty(MailConfig.API_KEY);
 	}
 }
