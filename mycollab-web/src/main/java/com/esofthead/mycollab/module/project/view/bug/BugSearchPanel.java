@@ -1,12 +1,22 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.tracker.domain.Component;
+import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DateSelectionField;
@@ -28,94 +38,94 @@ import com.vaadin.ui.themes.Reindeer;
 
 public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 
-    private static final long serialVersionUID = 1L;
-    private SimpleProject project;
-    protected BugSearchCriteria searchCriteria;
+	private static final long serialVersionUID = 1L;
+	private SimpleProject project;
+	protected BugSearchCriteria searchCriteria;
 
-    public BugSearchPanel() {
-        this.project = (SimpleProject) AppContext
-                .getVariable(ProjectContants.PROJECT_NAME);
-    }
+	public BugSearchPanel() {
+		this.project = (SimpleProject) AppContext
+				.getVariable(ProjectContants.PROJECT_NAME);
+	}
 
-    @Override
-    public void attach() {
-        super.attach();
-        createBasicSearchLayout();
-    }
+	@Override
+	public void attach() {
+		super.attach();
+		createBasicSearchLayout();
+	}
 
-    private void createBasicSearchLayout() {
+	private void createBasicSearchLayout() {
 
-        this.setCompositionRoot(new BugBasicSearchLayout());
-    }
+		this.setCompositionRoot(new BugBasicSearchLayout());
+	}
 
-    private void createAdvancedSearchLayout() {
-        BugAdvancedSearchLayout layout = new BugAdvancedSearchLayout();
-        this.setCompositionRoot(layout);
-    }
+	private void createAdvancedSearchLayout() {
+		BugAdvancedSearchLayout layout = new BugAdvancedSearchLayout();
+		this.setCompositionRoot(layout);
+	}
 
-    private HorizontalLayout createSearchTopPanel() {
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setWidth("100%");
-        layout.setSpacing(true);
+	private HorizontalLayout createSearchTopPanel() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setWidth("100%");
+		layout.setSpacing(true);
 
-        Label searchtitle = new Label("Search Bugs");
-        searchtitle.setStyleName(Reindeer.LABEL_H2);
-        layout.addComponent(searchtitle);
+		Label searchtitle = new Label("Search Bugs");
+		searchtitle.setStyleName(Reindeer.LABEL_H2);
+		layout.addComponent(searchtitle);
 
-        Button createAccountBtn = new Button("Create",
-                new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+		Button createAccountBtn = new Button("Create",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        EventBus.getInstance().fireEvent(
-                                new BugEvent.GotoAdd(this, null));
-                    }
-                });
-        createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-        createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new BugEvent.GotoAdd(this, null));
+					}
+				});
+		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 
-        UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
+		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
 
-        return layout;
-    }
+		return layout;
+	}
 
-    private class BugBasicSearchLayout extends BasicSearchLayout {
+	private class BugBasicSearchLayout extends BasicSearchLayout {
 
-        private static final long serialVersionUID = 1L;
-        private TextField nameField;
-        private CheckBox myItemCheckbox;
+		private static final long serialVersionUID = 1L;
+		private TextField nameField;
+		private CheckBox myItemCheckbox;
 
-        @Override
-        public ComponentContainer constructHeader() {
-            return createSearchTopPanel();
-        }
+		@Override
+		public ComponentContainer constructHeader() {
+			return createSearchTopPanel();
+		}
 
-        @SuppressWarnings("serial")
-        @Override
-        public ComponentContainer constructBody() {
-            HorizontalLayout basicSearchBody = new HorizontalLayout();
-            basicSearchBody.setSpacing(true);
-            basicSearchBody.addComponent(new Label("Name"));
-            nameField = new TextField();
-            nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-            UiUtils.addComponent(basicSearchBody, nameField,
-                    Alignment.MIDDLE_CENTER);
-            myItemCheckbox = new CheckBox("My Items");
-            UiUtils.addComponent(basicSearchBody, myItemCheckbox,
-                    Alignment.MIDDLE_CENTER);
+		@SuppressWarnings("serial")
+		@Override
+		public ComponentContainer constructBody() {
+			HorizontalLayout basicSearchBody = new HorizontalLayout();
+			basicSearchBody.setSpacing(true);
+			basicSearchBody.addComponent(new Label("Name"));
+			nameField = new TextField();
+			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			UiUtils.addComponent(basicSearchBody, nameField,
+					Alignment.MIDDLE_CENTER);
+			myItemCheckbox = new CheckBox("My Items");
+			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
+					Alignment.MIDDLE_CENTER);
 
-            Button searchBtn = new Button("Search");
-            searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-            searchBtn.addListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    searchCriteria = new BugSearchCriteria();
-                    searchCriteria.setProjectId(new NumberSearchField(
-                            SearchField.AND, project.getId()));
-					searchCriteria.setSummary(new StringSearchField(nameField.getValue().toString().trim()));
-					BugSearchPanel.this
-							.notifySearchHandler(searchCriteria);
+			Button searchBtn = new Button("Search");
+			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			searchBtn.addListener(new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					searchCriteria = new BugSearchCriteria();
+					searchCriteria.setProjectId(new NumberSearchField(
+							SearchField.AND, project.getId()));
+					searchCriteria.setSummary(new StringSearchField(nameField
+							.getValue().toString().trim()));
+					BugSearchPanel.this.notifySearchHandler(searchCriteria);
 				}
 			});
 
@@ -130,39 +140,38 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 				}
 			});
 			basicSearchBody.addComponent(cancelBtn);
-			
+
 			Button advancedSearchBtn = new Button("Advanced Search",
 					new Button.ClickListener() {
 						@Override
 						public void buttonClick(ClickEvent event) {
-							BugSearchPanel.this
-									.createAdvancedSearchLayout();
+							BugSearchPanel.this.createAdvancedSearchLayout();
 						}
 					});
 			advancedSearchBtn.setStyleName("link");
 			UiUtils.addComponent(basicSearchBody, advancedSearchBtn,
 					Alignment.MIDDLE_CENTER);
-			
+
 			return basicSearchBody;
 		}
 	}
-	
+
 	@SuppressWarnings("serial")
 	private class BugAdvancedSearchLayout extends AdvancedSearchLayout {
 
 		private TextField nameField;
 		private CheckBox summaryField;
 		private CheckBox descriptionField;
-		
+
 		private BugStaticItemMultiSelectField priorityField;
 		private BugStaticItemMultiSelectField statusField;
 		private BugStaticItemMultiSelectField resolutionField;
 		private BugStaticItemMultiSelectField severityField;
-		
+
 		private ComponentMultiSelectField componentField;
 		private VersionMultiSelectField affectedVersionField;
 		private VersionMultiSelectField fixedVersionField;
-		
+
 		private DateSelectionField updateDateField;
 		private DateSelectionField dueDateField;
 		private DateSelectionField resolveDateField;
@@ -178,15 +187,17 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 
 		@Override
 		public ComponentContainer constructBody() {
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(2, 6, "170px");
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(2, 6,
+					"170px");
 			gridLayout.getLayout().setWidth("100%");
 
 			HorizontalLayout layoutCheckbox;
-			
-			layoutCheckbox = (HorizontalLayout) gridLayout.addComponent(new HorizontalLayout(),
-					"Name", 0, 0, 2, "100%", Alignment.MIDDLE_LEFT);
+
+			layoutCheckbox = (HorizontalLayout) gridLayout.addComponent(
+					new HorizontalLayout(), "Name", 0, 0, 2, "100%",
+					Alignment.MIDDLE_LEFT);
 			layoutCheckbox.setSpacing(false);
-			
+
 			nameField = new TextField();
 			nameField.setWidth("400px");
 			summaryField = new CheckBox("Summary", true);
@@ -194,7 +205,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			layoutCheckbox.addComponent(nameField);
 			layoutCheckbox.addComponent(summaryField);
 			layoutCheckbox.addComponent(descriptionField);
-			
+
 			updateDateField = (DateSelectionField) gridLayout.addComponent(
 					new DateSelectionField("245px"), "Update Date", 0, 1);
 			updateDateField.setDateFormat(AppContext.getDateFormat());
@@ -202,131 +213,228 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			dueDateField = (DateSelectionField) gridLayout.addComponent(
 					new DateSelectionField("245px"), "Due Date", 0, 3);
 			dueDateField.setDateFormat(AppContext.getDateFormat());
-			
+
 			resolveDateField = (DateSelectionField) gridLayout.addComponent(
 					new DateSelectionField("245px"), "Resolve Date", 0, 2);
 			resolveDateField.setDateFormat(AppContext.getDateFormat());
-			
-			componentField = (ComponentMultiSelectField) gridLayout.addComponent(new ComponentMultiSelectField("225px"),
-					"Component", 1, 2);
-			
-			affectedVersionField = (VersionMultiSelectField) gridLayout.addComponent(new VersionMultiSelectField("225px"),
-					"Affected Version", 1, 1);
-			
-			fixedVersionField = (VersionMultiSelectField) gridLayout.addComponent(new VersionMultiSelectField("225px"),
-					"Fixed Version", 1, 3);
-			
-			priorityField = (BugStaticItemMultiSelectField) gridLayout.addComponent(new BugStaticItemMultiSelectField(ProjectDataTypeFactory.getBugPriorityList()),
-					"Priority", 0, 4);
-			
-			statusField = (BugStaticItemMultiSelectField) gridLayout.addComponent(new BugStaticItemMultiSelectField(ProjectDataTypeFactory.getBugStatusList()),
-					"Status", 1, 4);
-			
-			resolutionField = (BugStaticItemMultiSelectField) gridLayout.addComponent(new BugStaticItemMultiSelectField(ProjectDataTypeFactory.getBugResolutionList()),
-					"Resolution", 0, 5);
-			severityField = (BugStaticItemMultiSelectField) gridLayout.addComponent(new BugStaticItemMultiSelectField(ProjectDataTypeFactory.getBugSeverityList()),
-					"Severity", 1, 5);
 
+			componentField = (ComponentMultiSelectField) gridLayout
+					.addComponent(new ComponentMultiSelectField("225px"),
+							"Component", 1, 2);
+
+			affectedVersionField = (VersionMultiSelectField) gridLayout
+					.addComponent(new VersionMultiSelectField("225px"),
+							"Affected Version", 1, 1);
+
+			fixedVersionField = (VersionMultiSelectField) gridLayout
+					.addComponent(new VersionMultiSelectField("225px"),
+							"Fixed Version", 1, 3);
+
+			priorityField = (BugStaticItemMultiSelectField) gridLayout
+					.addComponent(new BugStaticItemMultiSelectField(
+							ProjectDataTypeFactory.getBugPriorityList()),
+							"Priority", 0, 4);
+
+			statusField = (BugStaticItemMultiSelectField) gridLayout
+					.addComponent(new BugStaticItemMultiSelectField(
+							ProjectDataTypeFactory.getBugStatusList()),
+							"Status", 1, 4);
+
+			resolutionField = (BugStaticItemMultiSelectField) gridLayout
+					.addComponent(new BugStaticItemMultiSelectField(
+							ProjectDataTypeFactory.getBugResolutionList()),
+							"Resolution", 0, 5);
+			severityField = (BugStaticItemMultiSelectField) gridLayout
+					.addComponent(new BugStaticItemMultiSelectField(
+							ProjectDataTypeFactory.getBugSeverityList()),
+							"Severity", 1, 5);
 
 			return gridLayout.getLayout();
 		}
 
-		 @Override
-	        public ComponentContainer constructFooter() {
-	            HorizontalLayout buttonControls = new HorizontalLayout();
-	            buttonControls.setSpacing(true);
+		@Override
+		public ComponentContainer constructFooter() {
+			HorizontalLayout buttonControls = new HorizontalLayout();
+			buttonControls.setSpacing(true);
 
-	            Button searchBtn = new Button("Search", new Button.ClickListener() {
-	                @Override
-	                public void buttonClick(ClickEvent event) {
-	                    searchCriteria = new BugSearchCriteria();
-	                    searchCriteria.setProjectId(new NumberSearchField(
-	                            SearchField.AND, project.getId()));
+			Button searchBtn = new Button("Search", new Button.ClickListener() {
+				@SuppressWarnings("unchecked")
+				@Override
+				public void buttonClick(ClickEvent event) {
+					searchCriteria = new BugSearchCriteria();
+					searchCriteria.setProjectId(new NumberSearchField(
+							SearchField.AND, project.getId()));
 
-//						if (StringUtil.isNotNullOrEmpty((String) nameField
-//								.getValue())) {
-//							searchCriteria.setSummary(new StringSearchField(
-//									SearchField.AND,
-//									((String) nameField.getValue()).trim()));
-//						}
-	//
-//						SearchField startDate = startDateField.getValue();
-//						if (startDate != null
-//								&& (startDate instanceof DateSearchField)) {
-//							searchCriteria
-//									.setStartDate((DateSearchField) startDate);
-//						} else if (startDate != null
-//								&& (startDate instanceof RangeDateSearchField)) {
-//							searchCriteria
-//									.setStartDateRange((RangeDateSearchField) startDate);
-//						}
-	//
-//						SearchField endDate = endDateField.getValue();
-//						if (endDate != null && (endDate instanceof DateSearchField)) {
-//							searchCriteria.setStartDate((DateSearchField) endDate);
-//						} else if (endDate != null
-//								&& (endDate instanceof RangeDateSearchField)) {
-//							searchCriteria
-//									.setStartDateRange((RangeDateSearchField) endDate);
-//						}
-	//
-//						Collection<String> types = (Collection<String>) typeField
-//								.getValue();
-//						if (types != null && types.size() > 0) {
-//							searchCriteria.setTypes(new SetSearchField<String>(
-//									SearchField.AND, types));
-//						}
-	//
-//						Collection<String> statuses = (Collection<String>) statusField
-//								.getValue();
-//						if (statuses != null && statuses.size() > 0) {
-//							searchCriteria.setStatuses(new SetSearchField<String>(
-//									SearchField.AND, statuses));
-//						}
-	//
-//						Collection<String> assignUsers = (Collection<String>) assignUserField
-//								.getValue();
-//						if (assignUsers != null && assignUsers.size() > 0) {
-//							searchCriteria
-//									.setAssignUsers(new SetSearchField<String>(
-//											SearchField.AND, assignUsers));
-//						}
+					if (StringUtil.isNotNullOrEmpty((String) nameField
+							.getValue())) {
 
-	                    BugSearchPanel.this
-	                            .notifySearchHandler(searchCriteria);
+						if (((Boolean) summaryField.getValue()) == true) {
+							searchCriteria.setSummary(new StringSearchField(
+									SearchField.AND, ((String) nameField
+											.getValue()).trim()));
+						}
 
-	                }
-	            });
+						if (((Boolean) descriptionField.getValue()) == true) {
+							if (((Boolean) summaryField.getValue()) == true) {
+								searchCriteria
+								.setDescription(new StringSearchField(
+										SearchField.OR,
+										((String) nameField.getValue())
+												.trim()));
+							} else {
+								searchCriteria
+								.setDescription(new StringSearchField(
+										SearchField.AND,
+										((String) nameField.getValue())
+												.trim()));
+							}
+						}
+					}
 
-	            buttonControls.addComponent(searchBtn);
-	            searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+					SearchField updateDate = updateDateField.getValue();
+					if (updateDate != null
+							&& (updateDate instanceof DateSearchField)) {
+						searchCriteria
+								.setUpdatedDate((DateSearchField) updateDate);
+					} else if (updateDate != null
+							&& (updateDate instanceof RangeDateSearchField)) {
+						searchCriteria
+								.setUpdatedDateRange((RangeDateSearchField) updateDate);
+					}
 
-	            Button clearBtn = new Button("Clear", new Button.ClickListener() {
-	                @Override
-	                public void buttonClick(ClickEvent event) {
-	                    nameField.setValue("");
-//						startDateField.setDefaultSelection();
-//						endDateField.setDefaultSelection();
-//						typeField.setValue(null);
-//						statusField.setValue(null);
-//						assignUserField.setValue(null);
-	                }
-	            });
-	            clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-	            buttonControls.addComponent(clearBtn);
+					SearchField resolvedDate = resolveDateField.getValue();
+					if (resolvedDate != null
+							&& (resolvedDate instanceof DateSearchField)) {
+						searchCriteria
+								.setResolvedDate((DateSearchField) resolvedDate);
+					} else if (resolvedDate != null
+							&& (resolvedDate instanceof RangeDateSearchField)) {
+						searchCriteria
+								.setResolvedDateRange((RangeDateSearchField) resolvedDate);
+					}
 
-	            Button basicSearchBtn = new Button("Basic Search",
-	                    new Button.ClickListener() {
-	                        @Override
-	                        public void buttonClick(ClickEvent event) {
-	                            BugSearchPanel.this.createBasicSearchLayout();
+					SearchField dueDate = dueDateField.getValue();
+					if (dueDate != null && (dueDate instanceof DateSearchField)) {
+						searchCriteria.setDueDate((DateSearchField) dueDate);
+					} else if (dueDate != null
+							&& (dueDate instanceof RangeDateSearchField)) {
+						searchCriteria
+								.setDueDateRange((RangeDateSearchField) dueDate);
+					}
 
-	                        }
-	                    });
-	            basicSearchBtn.setStyleName("link");
-	            UiUtils.addComponent(buttonControls, basicSearchBtn,
-	                    Alignment.MIDDLE_CENTER);
-	            return buttonControls;
-	        }
-    }
+					Collection<String> priorities = (Collection<String>) priorityField
+							.getSelectedItems();
+					if (priorities != null && priorities.size() > 0) {
+						searchCriteria
+								.setPriorities(new SetSearchField<String>(
+										SearchField.AND, priorities));
+					}
+
+					Collection<String> resolutions = (Collection<String>) resolutionField
+							.getSelectedItems();
+					if (resolutions != null && resolutions.size() > 0) {
+						searchCriteria
+								.setResolutions(new SetSearchField<String>(
+										SearchField.AND, resolutions));
+					}
+
+					Collection<String> statues = (Collection<String>) statusField
+							.getSelectedItems();
+					if (statues != null && statues.size() > 0) {
+						searchCriteria.setStatuses(new SetSearchField<String>(
+								SearchField.AND, statues));
+					}
+
+					Collection<String> severities = (Collection<String>) severityField
+							.getSelectedItems();
+					if (severities != null && severities.size() > 0) {
+						searchCriteria
+								.setSeverities(new SetSearchField<String>(
+										SearchField.AND, severities));
+					}
+
+					Collection<Version> afftectVersions = (Collection<Version>) affectedVersionField
+							.getSelectedItems();
+
+					List<Integer> lstIdAfectedVersion = new ArrayList<Integer>();
+					for (Version itemVersion : afftectVersions) {
+						lstIdAfectedVersion.add(itemVersion.getId());
+					}
+					if (lstIdAfectedVersion != null
+							&& lstIdAfectedVersion.size() > 0) {
+						searchCriteria
+								.setVersionids(new SetSearchField<Integer>(
+										SearchField.AND, lstIdAfectedVersion));
+					}
+
+					Collection<Version> fixedVersions = (Collection<Version>) fixedVersionField
+							.getSelectedItems();
+
+					List<Integer> lstIdFixedVersion = new ArrayList<Integer>();
+					for (Version itemVersion : fixedVersions) {
+						lstIdFixedVersion.add(itemVersion.getId());
+					}
+					if (lstIdFixedVersion != null
+							&& lstIdFixedVersion.size() > 0) {
+						searchCriteria
+								.setFixedversionids(new SetSearchField<Integer>(
+										SearchField.AND, lstIdFixedVersion));
+					}
+
+					Collection<Component> components = (Collection<Component>) componentField
+							.getSelectedItems();
+
+					List<Integer> lstIdComponent = new ArrayList<Integer>();
+					for (Component itemComp : components) {
+						lstIdFixedVersion.add(itemComp.getId());
+					}
+					if (lstIdComponent != null && lstIdComponent.size() > 0) {
+						searchCriteria
+								.setComponentids(new SetSearchField<Integer>(
+										SearchField.AND, lstIdComponent));
+					}
+
+					BugSearchPanel.this.notifySearchHandler(searchCriteria);
+
+				}
+			});
+
+			buttonControls.addComponent(searchBtn);
+			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+
+			Button clearBtn = new Button("Clear", new Button.ClickListener() {
+				@Override
+				public void buttonClick(ClickEvent event) {
+					nameField.setValue("");
+					updateDateField.setDefaultSelection();
+					resolveDateField.setDefaultSelection();
+					dueDateField.setDefaultSelection();
+					priorityField.resetComp();
+					resolutionField.resetComp();
+					affectedVersionField.resetComp();
+					componentField.resetComp();
+					fixedVersionField.resetComp();
+					statusField.resetComp();
+					severityField.resetComp();
+					summaryField.setValue(true);
+					descriptionField.setValue(true);
+				}
+			});
+			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			buttonControls.addComponent(clearBtn);
+
+			Button basicSearchBtn = new Button("Basic Search",
+					new Button.ClickListener() {
+						@Override
+						public void buttonClick(ClickEvent event) {
+							BugSearchPanel.this.createBasicSearchLayout();
+
+						}
+					});
+			basicSearchBtn.setStyleName("link");
+			UiUtils.addComponent(buttonControls, basicSearchBtn,
+					Alignment.MIDDLE_CENTER);
+			return buttonControls;
+		}
+	}
 }

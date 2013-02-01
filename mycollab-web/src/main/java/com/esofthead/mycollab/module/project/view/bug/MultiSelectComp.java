@@ -71,6 +71,20 @@ public abstract class MultiSelectComp extends CustomField {
 		this();
 		this.displayName = displayName;
 	}
+	
+	public void resetComp() {
+		for (int i = 0; i < selectedItemsList.size(); i++) {
+			selectedItemsList.remove(i);
+		}
+		
+		componentsDisplay.setReadOnly(false);
+		componentsDisplay.setValue("");
+		componentsDisplay.setReadOnly(true);
+		
+		for (CheckBox chk : componentPoupMap.values()) {
+			chk.setValue(false);
+		}
+	}
 
 	private void createItemPopup() {
 		for (int i = 0; i < dataList.size(); i++) {

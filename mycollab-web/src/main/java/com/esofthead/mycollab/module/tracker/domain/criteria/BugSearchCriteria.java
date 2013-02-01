@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.tracker.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.RangeDateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -11,23 +12,21 @@ public class BugSearchCriteria extends SearchCriteria {
 
 	private StringSearchField loguser;
 
-	private DateTimeSearchField postedDateFrom;
-
-	private DateTimeSearchField postedDateTo;
+	private DateTimeSearchField updatedDate;
 	
-	private DateTimeSearchField updatedDateFrom;
+	private RangeDateTimeSearchField updatedDateRange;
 	
-	private DateTimeSearchField updatedDateTo;
+	private DateTimeSearchField dueDate;
 	
-	private DateTimeSearchField dueDateFrom;
+	private RangeDateTimeSearchField dueDateRange;
 	
-	private DateTimeSearchField dueDateTo;
+	private DateTimeSearchField resolvedDate;
 	
-	private DateTimeSearchField resolvedDateFrom;
-	
-	private DateTimeSearchField resolvedDateTo;
+	private RangeDateTimeSearchField resolvedDateRange;
 
 	private StringSearchField summary;
+	
+	private StringSearchField description;
 
 	private StringSearchField detail;
 
@@ -43,7 +42,7 @@ public class BugSearchCriteria extends SearchCriteria {
 	
 	private SetSearchField<Integer> versionids;
 
-	private SetSearchField<Integer> priorities;
+	private SetSearchField<String> priorities;
 
 	private SetSearchField<String> severities;
 
@@ -69,70 +68,6 @@ public class BugSearchCriteria extends SearchCriteria {
 
 	public void setLoguser(StringSearchField loguser) {
 		this.loguser = loguser;
-	}
-
-	public DateTimeSearchField getPostedDateFrom() {
-		return postedDateFrom;
-	}
-
-	public void setPostedDateFrom(DateTimeSearchField postedDateFrom) {
-		this.postedDateFrom = postedDateFrom;
-	}
-
-	public DateTimeSearchField getPostedDateTo() {
-		return postedDateTo;
-	}
-
-	public void setPostedDateTo(DateTimeSearchField postedDateTo) {
-		this.postedDateTo = postedDateTo;
-	}
-
-	public DateTimeSearchField getUpdatedDateFrom() {
-		return updatedDateFrom;
-	}
-
-	public void setUpdatedDateFrom(DateTimeSearchField updatedDateFrom) {
-		this.updatedDateFrom = updatedDateFrom;
-	}
-
-	public DateTimeSearchField getUpdatedDateTo() {
-		return updatedDateTo;
-	}
-
-	public void setUpdatedDateTo(DateTimeSearchField updatedDateTo) {
-		this.updatedDateTo = updatedDateTo;
-	}
-
-	public DateTimeSearchField getDueDateFrom() {
-		return dueDateFrom;
-	}
-
-	public void setDueDateFrom(DateTimeSearchField dueDateFrom) {
-		this.dueDateFrom = dueDateFrom;
-	}
-
-	public DateTimeSearchField getDueDateTo() {
-		return dueDateTo;
-	}
-
-	public void setDueDateTo(DateTimeSearchField dueDateTo) {
-		this.dueDateTo = dueDateTo;
-	}
-
-	public DateTimeSearchField getResolvedDateFrom() {
-		return resolvedDateFrom;
-	}
-
-	public void setResolvedDateFrom(DateTimeSearchField resolvedDateFrom) {
-		this.resolvedDateFrom = resolvedDateFrom;
-	}
-
-	public DateTimeSearchField getResolvedDateTo() {
-		return resolvedDateTo;
-	}
-
-	public void setResolvedDateTo(DateTimeSearchField resolvedDateTo) {
-		this.resolvedDateTo = resolvedDateTo;
 	}
 
 	public StringSearchField getSummary() {
@@ -199,12 +134,84 @@ public class BugSearchCriteria extends SearchCriteria {
 		this.versionids = versionids;
 	}
 
-	public SetSearchField<Integer> getPriorities() {
+	public DateTimeSearchField getUpdatedDate() {
+		return updatedDate;
+	}
+
+	public void setUpdatedDate(DateTimeSearchField updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+
+	public RangeDateTimeSearchField getUpdatedDateRange() {
+		return updatedDateRange;
+	}
+
+	public void setUpdatedDateRange(RangeDateTimeSearchField updatedDateRange) {
+		this.updatedDateRange = updatedDateRange;
+	}
+
+	public DateTimeSearchField getDueDate() {
+		return dueDate;
+	}
+
+	public void setDueDate(DateTimeSearchField dueDate) {
+		this.dueDate = dueDate;
+	}
+
+	public RangeDateTimeSearchField getDueDateRange() {
+		return dueDateRange;
+	}
+
+	public void setDueDateRange(RangeDateTimeSearchField dueDateRange) {
+		this.dueDateRange = dueDateRange;
+	}
+
+	public DateTimeSearchField getResolvedDate() {
+		return resolvedDate;
+	}
+
+	public void setResolvedDate(DateTimeSearchField resolvedDate) {
+		this.resolvedDate = resolvedDate;
+	}
+
+	public RangeDateTimeSearchField getResolvedDateRange() {
+		return resolvedDateRange;
+	}
+
+	public void setResolvedDateRange(RangeDateTimeSearchField resolvedDateRange) {
+		this.resolvedDateRange = resolvedDateRange;
+	}
+
+	public SetSearchField<String> getPriorities() {
 		return priorities;
 	}
 
-	public void setPriorities(SetSearchField<Integer> priorities) {
+	public void setPriorities(SetSearchField<String> priorities) {
 		this.priorities = priorities;
+	}
+
+	public static String getAFFVERSION() {
+		return AFFVERSION;
+	}
+
+	public static void setAFFVERSION(String aFFVERSION) {
+		AFFVERSION = aFFVERSION;
+	}
+
+	public static String getFIXVERSION() {
+		return FIXVERSION;
+	}
+
+	public static void setFIXVERSION(String fIXVERSION) {
+		FIXVERSION = fIXVERSION;
+	}
+
+	public static String getCOMPONENT() {
+		return COMPONENT;
+	}
+
+	public static void setCOMPONENT(String cOMPONENT) {
+		COMPONENT = cOMPONENT;
 	}
 
 	public SetSearchField<String> getSeverities() {
@@ -229,5 +236,13 @@ public class BugSearchCriteria extends SearchCriteria {
 
 	public NumberSearchField getProjectId() {
 		return projectId;
+	}
+
+	public void setDescription(StringSearchField description) {
+		this.description = description;
+	}
+
+	public StringSearchField getDescription() {
+		return description;
 	}
 }
