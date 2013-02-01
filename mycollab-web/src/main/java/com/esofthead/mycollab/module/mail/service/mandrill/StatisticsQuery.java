@@ -1,5 +1,6 @@
-package com.esofthead.mycollab.module.mail.service;
+package com.esofthead.mycollab.module.mail.service.mandrill;
 
+import com.esofthead.mycollab.module.mail.service.MailConfig;
 
 class StatisticsQuery {
 	private String key;
@@ -18,9 +19,6 @@ class StatisticsQuery {
 	}
 	
 	public StatisticsQuery() {
-		CampaignConfig config = CampaignConfig.loadConfig();
-		if (null != config) {
-			key = config.getApiKey();
-		}
+		key = MailConfig.getProperty(MailConfig.API_KEY);
 	}
 }
