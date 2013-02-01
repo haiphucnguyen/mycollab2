@@ -2,6 +2,8 @@ package com.esofthead.mycollab.module.user.view;
 
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -23,90 +25,93 @@ import com.vaadin.ui.TextField;
 @ViewComponent
 public class SignupViewImpl extends AbstractView implements SignupView {
 
-    private static final long serialVersionUID = 1L;
-    private Form form;
-    private User user = new User();
+	private static final long serialVersionUID = 1L;
+	private final Form form;
+	private User user = new User();
 
-    public SignupViewImpl() {
-        super();
-        this.setCaption("Signup Form");
+	public SignupViewImpl() {
+		super();
+		this.setCaption("Signup Form");
 
-        form = new Form();
-        form.setCaption("Signup");
+		form = new Form();
+		form.setCaption("Signup");
 
-        form.setFormFieldFactory(new SignupFieldFactory());
+		form.setFormFieldFactory(new SignupFieldFactory());
 
-        BeanItem<User> item = new BeanItem<User>(user);
-        form.setItemDataSource(item);
+		BeanItem<User> item = new BeanItem<User>(user);
+		form.setItemDataSource(item);
 
-        this.addComponent(form);
+		this.addComponent(form);
 
-        HorizontalLayout formBtnBar = new HorizontalLayout();
-        form.getFooter().addComponent(formBtnBar);
+		HorizontalLayout formBtnBar = new HorizontalLayout();
+		form.getFooter().addComponent(formBtnBar);
 
-        Button okBtn = new Button("OK", form, "commit");
-        formBtnBar.addComponent(okBtn);
-        okBtn.addListener(new Button.ClickListener() {
-            private static final long serialVersionUID = 1L;
+		Button okBtn = new Button("OK", form, "commit");
+		formBtnBar.addComponent(okBtn);
+		okBtn.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public void buttonClick(ClickEvent event) {
-                user.setUsername(user.getEmail());
-                try {
-                    UserService userService = AppContext.getSpringBean(UserService.class);
-                } catch (Exception e) {
-                    UserError message = new UserError(e.getMessage());
-                    SignupViewImpl.this.form.setComponentError(message);
-                }
-            }
-        });
+			@Override
+			public void buttonClick(ClickEvent event) {
+				user.setUsername(user.getEmail());
+				try {
+					UserService userService = AppContext
+							.getSpringBean(UserService.class);
+				} catch (Exception e) {
+					UserError message = new UserError(e.getMessage());
+					SignupViewImpl.this.form.setComponentError(message);
+				}
+			}
+		});
 
-        Button resetBtn = new Button("Reset", form, "discard");
-        formBtnBar.addComponent(resetBtn);
-        resetBtn.addListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                user = new User();
-            }
-        });
+		Button resetBtn = new Button("Reset", form, "discard");
+		formBtnBar.addComponent(resetBtn);
+		resetBtn.addListener(new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				user = new User();
+			}
+		});
 
-        Button cancelBtn = new Button("Cancel");
-        formBtnBar.addComponent(cancelBtn);
-        cancelBtn.addListener(new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            }
-        });
-    }
+		Button cancelBtn = new Button("Cancel");
+		formBtnBar.addComponent(cancelBtn);
+		cancelBtn.addListener(new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.LogOut(this, null));
+			}
+		});
+	}
 
-    private static class SignupFieldFactory implements FormFieldFactory {
+	private static class SignupFieldFactory implements FormFieldFactory {
 
-        private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-        @Override
-        public Field createField(Item item, Object propertyId,
-                Component uiContext) {
-            String pid = (String) propertyId;
-            Field field = null;
+		@Override
+		public Field createField(Item item, Object propertyId,
+				Component uiContext) {
+			String pid = (String) propertyId;
+			Field field = null;
 
-            if ("firstname".equals(pid)) {
-                field = new TextField("First Name");
-                field.addValidator(new NullValidator("Not allow null value",
-                        false));
-            } else if ("lastname".equals(pid)) {
-                field = new TextField("Last Name");
-            } else if ("password".equals(pid)) {
-                field = new PasswordField("Password");
-            } else if ("email".equals(pid)) {
-                field = new TextField("Email");
-                field.addValidator(new EmailValidator(
-                        "Please enter a valid email address"));
-            }
+			if ("firstname".equals(pid)) {
+				field = new TextField("First Name");
+				field.addValidator(new NullValidator("Not allow null value",
+						false));
+			} else if ("lastname".equals(pid)) {
+				field = new TextField("Last Name");
+			} else if ("password".equals(pid)) {
+				field = new PasswordField("Password");
+			} else if ("email".equals(pid)) {
+				field = new TextField("Email");
+				field.addValidator(new EmailValidator(
+						"Please enter a valid email address"));
+			}
 
-            if (field != null && field instanceof TextField) {
-                ((TextField) field).setNullRepresentation("");
-            }
-            return field;
-        }
-    }
+			if (field != null && field instanceof TextField) {
+				((TextField) field).setNullRepresentation("");
+			}
+			return field;
+		}
+	}
 }
