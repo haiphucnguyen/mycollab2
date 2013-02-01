@@ -39,7 +39,7 @@ import com.vaadin.ui.themes.Reindeer;
 public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
-	private SimpleProject project;
+	private final SimpleProject project;
 	protected BugSearchCriteria searchCriteria;
 
 	public BugSearchPanel() {
@@ -188,14 +188,13 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		@Override
 		public ComponentContainer constructBody() {
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(2, 6,
-					"170px");
+					"150px");
 			gridLayout.getLayout().setWidth("100%");
 
 			HorizontalLayout layoutCheckbox;
 
 			layoutCheckbox = (HorizontalLayout) gridLayout.addComponent(
-					new HorizontalLayout(), "Name", 0, 0, 2, "100%",
-					Alignment.MIDDLE_LEFT);
+					new HorizontalLayout(), "Name", 0, 0, 2, "100%");
 			layoutCheckbox.setSpacing(false);
 
 			nameField = new TextField();
@@ -277,16 +276,16 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 						if (((Boolean) descriptionField.getValue()) == true) {
 							if (((Boolean) summaryField.getValue()) == true) {
 								searchCriteria
-								.setDescription(new StringSearchField(
-										SearchField.OR,
-										((String) nameField.getValue())
-												.trim()));
+										.setDescription(new StringSearchField(
+												SearchField.OR,
+												((String) nameField.getValue())
+														.trim()));
 							} else {
 								searchCriteria
-								.setDescription(new StringSearchField(
-										SearchField.AND,
-										((String) nameField.getValue())
-												.trim()));
+										.setDescription(new StringSearchField(
+												SearchField.AND,
+												((String) nameField.getValue())
+														.trim()));
 							}
 						}
 					}
@@ -322,7 +321,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 								.setDueDateRange((RangeDateSearchField) dueDate);
 					}
 
-					Collection<String> priorities = (Collection<String>) priorityField
+					Collection<String> priorities = priorityField
 							.getSelectedItems();
 					if (priorities != null && priorities.size() > 0) {
 						searchCriteria
@@ -330,7 +329,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 										SearchField.AND, priorities));
 					}
 
-					Collection<String> resolutions = (Collection<String>) resolutionField
+					Collection<String> resolutions = resolutionField
 							.getSelectedItems();
 					if (resolutions != null && resolutions.size() > 0) {
 						searchCriteria
@@ -338,14 +337,13 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 										SearchField.AND, resolutions));
 					}
 
-					Collection<String> statues = (Collection<String>) statusField
-							.getSelectedItems();
+					Collection<String> statues = statusField.getSelectedItems();
 					if (statues != null && statues.size() > 0) {
 						searchCriteria.setStatuses(new SetSearchField<String>(
 								SearchField.AND, statues));
 					}
 
-					Collection<String> severities = (Collection<String>) severityField
+					Collection<String> severities = severityField
 							.getSelectedItems();
 					if (severities != null && severities.size() > 0) {
 						searchCriteria
@@ -353,7 +351,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 										SearchField.AND, severities));
 					}
 
-					Collection<Version> afftectVersions = (Collection<Version>) affectedVersionField
+					Collection<Version> afftectVersions = affectedVersionField
 							.getSelectedItems();
 
 					List<Integer> lstIdAfectedVersion = new ArrayList<Integer>();
@@ -367,7 +365,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 										SearchField.AND, lstIdAfectedVersion));
 					}
 
-					Collection<Version> fixedVersions = (Collection<Version>) fixedVersionField
+					Collection<Version> fixedVersions = fixedVersionField
 							.getSelectedItems();
 
 					List<Integer> lstIdFixedVersion = new ArrayList<Integer>();
@@ -381,7 +379,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 										SearchField.AND, lstIdFixedVersion));
 					}
 
-					Collection<Component> components = (Collection<Component>) componentField
+					Collection<Component> components = componentField
 							.getSelectedItems();
 
 					List<Integer> lstIdComponent = new ArrayList<Integer>();

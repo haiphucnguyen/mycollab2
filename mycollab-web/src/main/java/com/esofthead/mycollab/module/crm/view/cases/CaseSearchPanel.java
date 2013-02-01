@@ -71,7 +71,8 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 
 		@Override
 		public ComponentContainer constructBody() {
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 2);
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 2,
+					"90px");
 
 			numberField = (TextField) gridLayout.addComponent(new TextField(),
 					"Number", 0, 0);
@@ -123,8 +124,7 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 					// }
 
 					SimpleAccount account = accountField.getAccount();
-					if (StringUtil.isNotNullOrEmpty((String) account
-							.getAccountname())) {
+					if (StringUtil.isNotNullOrEmpty(account.getAccountname())) {
 						searchCriteria.setAccountName(new StringSearchField(
 								SearchField.AND, account.getAccountname()));
 					}

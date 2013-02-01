@@ -188,7 +188,8 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 
 		@Override
 		public ComponentContainer constructBody() {
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 4);
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 4,
+					"90px");
 
 			firstnameField = (TextField) gridLayout.addComponent(
 					new TextField(), "First Name", 0, 0);

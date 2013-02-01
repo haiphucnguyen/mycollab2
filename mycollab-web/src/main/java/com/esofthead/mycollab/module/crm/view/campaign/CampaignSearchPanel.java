@@ -107,7 +107,7 @@ public class CampaignSearchPanel extends
 			myItemCheckbox = new CheckBox("My Items");
 			UiUtils.addComponent(layout, myItemCheckbox,
 					Alignment.MIDDLE_CENTER);
-			
+
 			Button searchBtn = new Button("Search");
 			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 
@@ -117,22 +117,22 @@ public class CampaignSearchPanel extends
 					searchCriteria = new CampaignSearchCriteria();
 					searchCriteria.setSaccountid(new NumberSearchField(
 							SearchField.AND, AppContext.getAccountId()));
-					
-					if (StringUtil.isNotNullOrEmpty(nameField
-							.getValue().toString().trim())) {
-						searchCriteria
-						.setCampaignName(new StringSearchField(
-								SearchField.AND, (String) nameField
-										.getValue()));
+
+					if (StringUtil.isNotNullOrEmpty(nameField.getValue()
+							.toString().trim())) {
+						searchCriteria.setCampaignName(new StringSearchField(
+								SearchField.AND, (String) nameField.getValue()));
 					}
-					
+
 					if (myItemCheckbox.booleanValue()) {
-						searchCriteria.	setAssignUsers(new SetSearchField<String>(SearchField.AND, new String[] {AppContext
-								.getUsername()}));
+						searchCriteria
+								.setAssignUsers(new SetSearchField<String>(
+										SearchField.AND,
+										new String[] { AppContext.getUsername() }));
 					} else {
 						searchCriteria.setAssignUsers(null);
 					}
-					
+
 					CampaignSearchPanel.this
 							.notifySearchHandler(searchCriteria);
 				}
@@ -184,7 +184,8 @@ public class CampaignSearchPanel extends
 
 		@Override
 		public ComponentContainer constructBody() {
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3);
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3,
+					"90px");
 
 			nameField = (TextField) gridLayout.addComponent(new TextField(),
 					"Name", 0, 0);
@@ -209,7 +210,7 @@ public class CampaignSearchPanel extends
 		public ComponentContainer constructFooter() {
 			HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
-			
+
 			Button searchBtn = new Button("Search", new Button.ClickListener() {
 				@SuppressWarnings({ "unchecked" })
 				@Override

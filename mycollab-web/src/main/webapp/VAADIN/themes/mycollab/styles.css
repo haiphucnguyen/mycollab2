@@ -469,7 +469,7 @@ input.v-textfield[type="text"], textarea.v-textarea, .v-filterselect {
 }
 
 .advSearch .advSearchBody .v-label {
-	width: 90px !important;
+/* 	width: 90px !important; */
 	text-align: right;
 }
 
@@ -1872,3 +1872,12 @@ div.v-lazyloadingwrapper-loading {
 	overflow-y: auto;
 } 
 /* End Mail Panel */
+
+/* Progress Indicator */
+.v-progressindicator-wrapper {
+	height: 15px;
+}
+.v-progressindicator-indicator {
+	height: 15px;
+}
+/* End Progress Indicator */
