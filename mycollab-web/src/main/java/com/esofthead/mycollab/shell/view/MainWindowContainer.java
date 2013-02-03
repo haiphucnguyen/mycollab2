@@ -11,6 +11,7 @@ import com.vaadin.terminal.DownloadStream;
 import com.vaadin.terminal.URIHandler;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UriFragmentUtility;
+import com.vaadin.ui.UriFragmentUtility.FragmentChangedEvent;
 import com.vaadin.ui.Window;
 import java.net.URL;
 import org.slf4j.Logger;
@@ -24,11 +25,22 @@ public class MainWindowContainer extends Window implements View {
     private static final Logger log = LoggerFactory.getLogger(MainWindowContainer.class);
     
     private UriFragmentUtility urifu;
+    private FragmentNavigator fragmentNavigator;
     
     private final ShellController controller;
     
     public MainWindowContainer() {
         urifu = new UriFragmentUtility();
+        fragmentNavigator = new FragmentNavigator();
+        
+        urifu.addListener(new UriFragmentUtility.FragmentChangedListener() {
+
+            @Override
+            public void fragmentChanged(FragmentChangedEvent source) {
+               System.out.println("Change fragement: " + source.getUriFragmentUtility().getFragment());
+               fragmentNavigator.navigateByFragement(source.getUriFragmentUtility().getFragment());
+            }
+        });
         this.setCaption("MyCollab");
         controller = new ShellController(this);
         
@@ -36,7 +48,7 @@ public class MainWindowContainer extends Window implements View {
 
             @Override
             public DownloadStream handleURI(URL context, String relativeUri) {
-                log.debug("URI: " + relativeUri);
+                log.debug("URI: " + relativeUri + "---" + context.getPath());
                 return null;
             }
         });

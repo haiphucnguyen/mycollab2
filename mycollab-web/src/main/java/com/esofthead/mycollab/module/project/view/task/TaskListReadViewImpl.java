@@ -23,7 +23,9 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -50,11 +52,11 @@ public class TaskListReadViewImpl extends AbstractView implements TaskListReadVi
     }
 
     @Override
-    public HasPreviewFormHandlers<TaskList> getPreviewFormHandlers() {
+    public HasPreviewFormHandlers<SimpleTaskList> getPreviewFormHandlers() {
         return previewForm;
     }
 
-    private class PreviewForm extends AdvancedPreviewBeanForm<TaskList> {
+    private class PreviewForm extends AdvancedPreviewBeanForm<SimpleTaskList> {
 
         private static final long serialVersionUID = 1L;
 
@@ -76,6 +78,19 @@ public class TaskListReadViewImpl extends AbstractView implements TaskListReadVi
                         });
                     } else if (propertyId.equals("owner")) {
                         return new UserLinkViewField(taskList.getOwner(), taskList.getOwnerFullName());
+                    } else if (propertyId.equals("percentageComplete")) {
+                        FormContainerViewField fieldContainer = new FormContainerViewField();
+                        ProgressIndicator progressField = new ProgressIndicator(new Float(taskList.getPercentageComplete()));
+                        fieldContainer.addComponentField(progressField);
+                        return fieldContainer;
+                    } else if (propertyId.equals("numOpenTasks")) {
+                        FormContainerViewField fieldContainer = new FormContainerViewField();
+                        ProgressIndicator progressField = new ProgressIndicator(new Float(1 - (float)taskList.getNumOpenTasks() / taskList.getNumAllTasks()));
+                        fieldContainer.addComponentField(progressField);
+                        
+                        Label numTaskLbl = new Label("(" + taskList.getNumOpenTasks() + "/" + taskList.getNumAllTasks() + ")");
+                        fieldContainer.addComponentField(numTaskLbl);
+                        return fieldContainer;
                     }
 
                     return null;
@@ -94,7 +109,7 @@ public class TaskListReadViewImpl extends AbstractView implements TaskListReadVi
 
             @Override
             protected Layout createTopPanel() {
-                return (new PreviewFormControlsGenerator<TaskList>(PreviewForm.this))
+                return (new PreviewFormControlsGenerator<SimpleTaskList>(PreviewForm.this))
                         .createButtonControls();
             }
 
@@ -111,7 +126,7 @@ public class TaskListReadViewImpl extends AbstractView implements TaskListReadVi
     private class TaskDepot extends Depot {
 
         public TaskDepot() {
-            super("Tasks", new TaskDisplayComponent(taskList));
+            super("Tasks", new TaskDisplayComponent(taskList, false));
         }
     }
 

@@ -134,6 +134,7 @@ public class TaskListWindow extends Window {
                 ProjectTaskListService taskListService = AppContext.getSpringBean(ProjectTaskListService.class);
                 taskList.setSaccountid(AppContext.getAccountId());
                 taskList.setCreatedtime(new GregorianCalendar().getTime());
+                taskList.setStatus("Open");
 
                 SimpleProject prj = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
                 taskList.setProjectid(prj.getId());

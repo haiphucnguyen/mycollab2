@@ -12,6 +12,6 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
  */
 public class TaskPercentageCompleteComboBox extends ValueComboBox {
     public TaskPercentageCompleteComboBox() {
-        this.loadData(new String[]{"0", "10", "20", "30", "40", "50", "60", "70", "80", "90", "100"});
+        super(false, 0d, 10d, 20d, 30d, 40d, 50d, 60d, 70d, 80d, 90d, 100d);
     }
 }

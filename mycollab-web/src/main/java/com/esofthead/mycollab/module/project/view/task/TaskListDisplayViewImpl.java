@@ -1,8 +1,5 @@
 package com.esofthead.mycollab.module.project.view.task;
 
-import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.hene.popupbutton.PopupButton;
-
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
@@ -28,6 +25,8 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.hene.popupbutton.PopupButton;
 
 @SuppressWarnings("serial")
 @ViewComponent
@@ -118,7 +117,7 @@ public class TaskListDisplayViewImpl extends AbstractView implements
 
         public TaskListDepot(SimpleTaskList taskListParam) {
             super(taskListParam.getName(), new HorizontalLayout(),
-                    new TaskDisplayComponent(taskListParam));
+                    new TaskDisplayComponent(taskListParam, true));
             this.taskList = taskListParam;
             this.addStyleName("task-list");
             initHeader();
@@ -218,7 +217,6 @@ public class TaskListDisplayViewImpl extends AbstractView implements
                     taskList.setStatus("Closed");
                     ProjectTaskListService taskListService = AppContext.getSpringBean(ProjectTaskListService.class);
                     taskListService.updateWithSession(taskList, AppContext.getUsername());
-                    System.out.println("Parent" + ((ComponentContainer)TaskListDepot.this.getParent()));
                     LazyLoadWrapper parentComp = (LazyLoadWrapper)TaskListDepot.this.getParent();
                     ((ComponentContainer)parentComp.getParent()).removeComponent(parentComp);
                 }

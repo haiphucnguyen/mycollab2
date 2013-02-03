@@ -77,6 +77,10 @@ public abstract class TaskListFormLayoutFactory implements IFormLayoutFactory {
                 informationLayout.addComponent(field, "Responsible User", 0, 2);
             } else if (propertyId.equals("milestoneid")) {
                 informationLayout.addComponent(field, "Related Milestone", 1, 2);
+            } else if (propertyId.equals("percentageComplete")) {
+                informationLayout.addComponent(field, "Progress", 0, 3);
+            } else if (propertyId.equals("numOpenTasks")) {
+                informationLayout.addComponent(field, "% Task Complete", 1, 3);
             }
         }
     }

@@ -18,8 +18,10 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.ProgressIndicator;
 
 /**
  *
@@ -31,32 +33,53 @@ public class TaskDisplayComponent extends CssLayout {
     private TaskTableDisplay taskDisplay;
     private Button createTaskBtn;
 
-    public TaskDisplayComponent(final SimpleTaskList taskList) {
+    public TaskDisplayComponent(final SimpleTaskList taskList, boolean isDisplayTaskListInfo) {
         // this.setSpacing(true);
         this.setStyleName("taskdisplay-component");
 
-        GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(2, 2);
-        this.addComponent(layoutHelper.getLayout());
+        if (isDisplayTaskListInfo) {
+            GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(2, 3);
+            layoutHelper.getLayout().setWidth("100%");
+            this.addComponent(layoutHelper.getLayout());
 
-        Label descLbl = (Label) layoutHelper.addComponent(new Label(),
-                "Description", 0, 0, 2, "100%", Alignment.TOP_LEFT);
-        descLbl.setValue(taskList.getDescription());
+            Label descLbl = (Label) layoutHelper.addComponent(new Label(),
+                    "Description", 0, 0, 2, "100%", Alignment.TOP_RIGHT);
+            descLbl.setValue(taskList.getDescription());
 
-        Button userLink = (Button) layoutHelper.addComponent(new Button(
-                taskList.getOwnerFullName()), "Responsible User", 0, 1,
-                Alignment.TOP_LEFT);
-        userLink.setStyleName("link");
+            Button userLink = (Button) layoutHelper.addComponent(new Button(
+                    taskList.getOwnerFullName()), "Responsible User", 0, 1,
+                    Alignment.TOP_RIGHT);
+            userLink.setStyleName("link");
 
-        Button milestoneLink = (Button) layoutHelper.addComponent(new Button(
-                taskList.getMilestoneName()), "Milestone", 1, 1,
-                Alignment.TOP_LEFT);
-        milestoneLink.setStyleName("link");
-        Layout taskInfo = layoutHelper.getLayout();
-        taskInfo.setMargin(false, false, true, false);
+            Button milestoneLink = (Button) layoutHelper.addComponent(new Button(
+                    taskList.getMilestoneName()), "Milestone", 1, 1,
+                    Alignment.TOP_RIGHT);
+            milestoneLink.setStyleName("link");
+
+            ProgressIndicator taskListProgress = (ProgressIndicator) layoutHelper.addComponent(new ProgressIndicator(new Float(taskList.getPercentageComplete())), "Progress", 0, 2);
+            taskListProgress.setValue(taskList.getPercentageComplete() / 100);
+
+            HorizontalLayout taskNumberProgress = new HorizontalLayout();
+            taskNumberProgress.setSpacing(true);
+            taskNumberProgress = (HorizontalLayout) layoutHelper.addComponent(taskNumberProgress, "% Task Complete", 1, 2);
+            ProgressIndicator taskNumberProgressBar = new ProgressIndicator(new Float(0.0));
+            if (taskList.getNumAllTasks() > 0) {
+                taskNumberProgressBar.setValue(new Float(1 - (float) taskList.getNumOpenTasks() / taskList.getNumAllTasks()));;
+            }
+
+            taskNumberProgress.addComponent(taskNumberProgressBar);
+
+            Label taskNumberLbl = new Label("(" + taskList.getNumOpenTasks() + "/" + taskList.getNumAllTasks() + ")");
+            taskNumberProgress.addComponent(taskNumberLbl);
+
+            Layout taskInfo = layoutHelper.getLayout();
+            taskInfo.setMargin(false, false, true, false);
+        }
+
 
         taskDisplay = new TaskTableDisplay(new String[]{"taskname",
-                    "startdate", "deadline", "assignUserFullName"}, new String[]{
-                    "Task Name", "Start", "Due", "Owner"});
+                    "startdate", "deadline", "percentagecomplete", "assignUserFullName"}, new String[]{
+                    "Task Name", "Start", "Due", "% Complete", "Owner"});
         this.addComponent(taskDisplay);
 
         taskDisplay

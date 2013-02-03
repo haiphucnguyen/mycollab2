@@ -109,7 +109,6 @@ public class ProjectController {
                     public void handle(ProjectEvent.GotoMyProject event) {
                         ProjectViewPresenter presenter = PresenterResolver
                                 .getPresenter(ProjectViewPresenter.class);
-                        System.out.append("Page Chain: " + ((PageActionChain) event.getData()).peek());
                         presenter.handleChain(container, (PageActionChain) event.getData());
                     }
                 });

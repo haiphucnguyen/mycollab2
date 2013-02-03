@@ -11,9 +11,25 @@
             property="milestoneName" />
         
         <result
+            column="percentageComplete"
+            jdbcType="DOUBLE"
+            property="percentageComplete" />
+        
+        <result
+            column="numOpenTasks"
+            jdbcType="INTEGER"
+            property="numOpenTasks" />
+        
+        <result
+            column="numAllTasks"
+            jdbcType="INTEGER"
+            property="numAllTasks" />
+        
+        <result
             column="ownerFullName"
             jdbcType="VARCHAR"
             property="ownerFullName" />
+        
         <collection property="subTasks" ofType="com.esofthead.mycollab.module.project.domain.SimpleTask"
             resultMap="com.esofthead.mycollab.module.project.dao.TaskMapperExt.TaskResult"
             columnPrefix="subTask_"/>
@@ -44,7 +60,10 @@
                     m_prj_task.actualCost AS subTask_actualCost, m_prj_task.ismilestone AS subTask_ismilestone, m_prj_task.tasklistid AS subTask_tasklistid, 
                     m_prj_task.createdTime AS subTask_createdTime, m_prj_task.lastUpdatedTime AS subTask_lastUpdatedTime, 
                     m_prj_task.assignUser AS subTask_assignUser, m_prj_task.sAccountId AS subTask_sAccountId, m_prj_task.status AS subTask_status,
-                    concat(taskUser.firstname, IFNULL(concat(' ', taskUser.middlename, ' '), ' '), taskUser.lastname) AS subTask_assignUserFullName
+                    concat(taskUser.firstname, IFNULL(concat(' ', taskUser.middlename, ' '), ' '), taskUser.lastname) AS subTask_assignUserFullName,
+                    (SELECT AVG(task.percentagecomplete) FROM m_prj_task AS task WHERE m_prj_task_list.id = task.tasklistid) AS percentageComplete,
+                    (SELECT COUNT(task_all.id) FROM  m_prj_task AS task_all WHERE m_prj_task_list.id = task_all.tasklistid) AS numAllTasks,
+                    (SELECT COUNT(task_open.id) FROM  m_prj_task AS task_open WHERE m_prj_task_list.id = task_open.tasklistid AND task_open.status='Open') AS numOpenTasks
                     FROM m_prj_task_list
                         LEFT OUTER JOIN s_user ON (s_user.username = m_prj_task_list.owner)
                         LEFT OUTER JOIN m_prj_milestone ON (m_prj_milestone.id = m_prj_task_list.milestoneId)

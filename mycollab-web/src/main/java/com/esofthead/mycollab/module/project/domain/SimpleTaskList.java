@@ -16,6 +16,9 @@ public class SimpleTaskList extends TaskList {
     private String milestoneName;
     private String ownerFullName;
     private List<SimpleTask> subTasks = new ArrayList<SimpleTask>();
+    private double percentageComplete;
+    private int numOpenTasks;
+    private int numAllTasks;
 
     public String getMilestoneName() {
         return milestoneName;
@@ -58,6 +61,28 @@ public class SimpleTaskList extends TaskList {
         hash = 47 * hash + (this.ownerFullName != null ? this.ownerFullName.hashCode() : 0);
         return hash;
     }
-    
-    
+
+    public double getPercentageComplete() {
+        return percentageComplete;
+    }
+
+    public void setPercentageComplete(double percentageComplete) {
+        this.percentageComplete = percentageComplete;
+    }
+
+    public int getNumOpenTasks() {
+        return numOpenTasks;
+    }
+
+    public void setNumOpenTasks(int numOpenTasks) {
+        this.numOpenTasks = numOpenTasks;
+    }
+
+    public int getNumAllTasks() {
+        return numAllTasks;
+    }
+
+    public void setNumAllTasks(int numAllTasks) {
+        this.numAllTasks = numAllTasks;
+    }
 }

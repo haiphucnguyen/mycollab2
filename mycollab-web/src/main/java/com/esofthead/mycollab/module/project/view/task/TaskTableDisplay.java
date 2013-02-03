@@ -14,6 +14,7 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.Table;
 
 /**
@@ -47,7 +48,21 @@ public class TaskTableDisplay extends BeanTable<ProjectTaskService, TaskSearchCr
 
             }
         });
-        
+
+        this.addGeneratedColumn("percentagecomplete", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+                final SimpleTask task = TaskTableDisplay.this.getBeanByIndex(itemId);
+                Double percomp = (task.getPercentagecomplete() == null) ? new Double(0) : task.getPercentagecomplete()/100;
+                ProgressIndicator progress = new ProgressIndicator(new Float(percomp));
+                progress.setWidth("100px");
+                return progress;
+            }
+        });
+
         this.addGeneratedColumn("startdate", new Table.ColumnGenerator() {
             private static final long serialVersionUID = 1L;
 
@@ -59,7 +74,7 @@ public class TaskTableDisplay extends BeanTable<ProjectTaskService, TaskSearchCr
 
             }
         });
-        
+
         this.addGeneratedColumn("deadline", new Table.ColumnGenerator() {
             private static final long serialVersionUID = 1L;
 
@@ -78,8 +93,7 @@ public class TaskTableDisplay extends BeanTable<ProjectTaskService, TaskSearchCr
         this.setColumnWidth("assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
         this.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);
         this.setColumnWidth("deadline", UIConstants.TABLE_DATE_WIDTH);
-
+        this.setColumnWidth("percentagecomplete", UIConstants.TABLE_M_LABEL_WIDTH);
         this.setWidth("100%");
     }
-    
 }
