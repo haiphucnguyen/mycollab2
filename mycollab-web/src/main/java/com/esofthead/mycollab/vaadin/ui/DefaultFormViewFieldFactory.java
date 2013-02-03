@@ -14,6 +14,7 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.DefaultFieldFactory;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Link;
 import com.vaadin.ui.VerticalLayout;
@@ -157,6 +158,27 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
             layout.setWidth("100%");
             this.setCompositionRoot(layout);
             this.setStyleName(UIConstants.FORM_CONTAINER_VIEW);
+        }
+
+        public void addComponentField(Component component) {
+            layout.addComponent(component);
+        }
+
+        @Override
+        public Class<?> getType() {
+            return Object.class;
+        }
+    }
+    
+    public static class FormContainerHorizontalViewField extends CustomField {
+
+        private final HorizontalLayout layout;
+
+        public FormContainerHorizontalViewField() {
+            layout = new HorizontalLayout();
+            layout.setWidth("100%");
+            layout.setSpacing(true);
+            this.setCompositionRoot(layout);
         }
 
         public void addComponentField(Component component) {

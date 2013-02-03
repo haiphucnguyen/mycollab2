@@ -79,13 +79,15 @@ public class TaskListReadViewImpl extends AbstractView implements TaskListReadVi
                     } else if (propertyId.equals("owner")) {
                         return new UserLinkViewField(taskList.getOwner(), taskList.getOwnerFullName());
                     } else if (propertyId.equals("percentageComplete")) {
-                        FormContainerViewField fieldContainer = new FormContainerViewField();
-                        ProgressIndicator progressField = new ProgressIndicator(new Float(taskList.getPercentageComplete()));
+                        FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
+                        ProgressIndicator progressField = new ProgressIndicator(new Float(taskList.getPercentageComplete()/100));
+                        progressField.setWidth("100px");
                         fieldContainer.addComponentField(progressField);
                         return fieldContainer;
                     } else if (propertyId.equals("numOpenTasks")) {
-                        FormContainerViewField fieldContainer = new FormContainerViewField();
+                        FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
                         ProgressIndicator progressField = new ProgressIndicator(new Float(1 - (float)taskList.getNumOpenTasks() / taskList.getNumAllTasks()));
+                        progressField.setWidth("100px");
                         fieldContainer.addComponentField(progressField);
                         
                         Label numTaskLbl = new Label("(" + taskList.getNumOpenTasks() + "/" + taskList.getNumAllTasks() + ")");
