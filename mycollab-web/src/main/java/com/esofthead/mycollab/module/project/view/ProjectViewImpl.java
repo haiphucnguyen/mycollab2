@@ -11,7 +11,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
-import com.esofthead.mycollab.module.project.view.people.ProjectUserPresenter;
+import com.esofthead.mycollab.module.project.view.people.ProjectMemberPresenter;
 import com.esofthead.mycollab.module.project.view.people.UserGroupPresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;

@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.dao;
 
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 
 /**
@@ -12,4 +13,5 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearch
  * @author haiphucnguyen
  */
 public interface ProjectMemberMapperExt extends ISearchableDAO<ProjectMemberSearchCriteria> {
+    SimpleProjectMember findMemberById(int memberId);
 }

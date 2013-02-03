@@ -10,6 +10,7 @@ import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -37,6 +38,11 @@ public class ProjectMemberServiceImpl extends DefaultService<Integer, ProjectMem
     @Override
     public ISearchableDAO<ProjectMemberSearchCriteria> getSearchMapper() {
         return projectMemberMapperExt;
+    }
+
+    @Override
+    public SimpleProjectMember findMemberById(int memberId) {
+        return projectMemberMapperExt.findMemberById(memberId);
     }
     
 }

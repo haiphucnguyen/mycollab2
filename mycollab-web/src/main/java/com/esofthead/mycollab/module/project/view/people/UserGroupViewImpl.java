@@ -20,7 +20,7 @@ import com.vaadin.ui.VerticalLayout;
 @ViewComponent
 public class UserGroupViewImpl extends AbstractView implements UserGroupView {
 
-    private ProjectUserPresenter userPresenter;
+    private ProjectMemberPresenter userPresenter;
     private ProjectRolePresenter rolePresenter;
     private DetachedTabs myProjectTab;
     private CssLayout mySpaceArea = new CssLayout();
@@ -44,7 +44,7 @@ public class UserGroupViewImpl extends AbstractView implements UserGroupView {
     }
     
     private void buildComponents() {
-        userPresenter = PresenterResolver.getPresenter(ProjectUserPresenter.class);
+        userPresenter = PresenterResolver.getPresenter(ProjectMemberPresenter.class);
         myProjectTab.addTab(userPresenter.getView(), "Users");
         
         rolePresenter = PresenterResolver.getPresenter(ProjectRolePresenter.class);

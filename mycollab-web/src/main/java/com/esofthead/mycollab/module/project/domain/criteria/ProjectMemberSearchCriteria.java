@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.domain.criteria;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 
 /**
@@ -11,5 +12,14 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
  * @author haiphucnguyen
  */
 public class ProjectMemberSearchCriteria extends SearchCriteria {
-    
+
+    private NumberSearchField projectId;
+
+    public NumberSearchField getProjectId() {
+        return projectId;
+    }
+
+    public void setProjectId(NumberSearchField projectId) {
+        this.projectId = projectId;
+    }
 }

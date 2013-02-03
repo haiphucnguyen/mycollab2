@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt" >
+    <resultMap
+        id="ProjectMemberResult"
+        extends="com.esofthead.mycollab.module.project.dao.ProjectMemberMapper.BaseResultMap"
+        type="com.esofthead.mycollab.module.project.domain.SimpleProjectMember" >
+
+        <result
+            column="memberFullName"
+            jdbcType="VARCHAR"
+            property="memberFullName" />
+    </resultMap>
+    
+    <sql id="querySearchCriteria" >
+    
+    	<if test="projectId != null">
+            <![CDATA[${projectId.operation} m_prj_member.projectId ${projectId.compareOperator} #{projectId.value,javaType=INTEGER}]]>
+        </if>
+    </sql>
+    
+    <sql id="selectMember" >
+
+<![CDATA[
+          SELECT m_prj_member.id, m_prj_member.username, m_prj_member.projectId, m_prj_member.joinDate, m_prj_member.projectRoleId, 
+                 m_prj_member.isAdmin,
+                 concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS memberFullName
+            FROM m_prj_member
+              LEFT OUTER JOIN s_user ON (m_prj_member.raisedbyuser=s_user.username)
+        ]]>
+    </sql>
+
+    <select
+        id="getTotalCount"
+        parameterType="ProblemSearchCriteria"
+        resultType="int" >
+        SELECT count(*) as totalCount FROM m_prj_member
+
+
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+            1=1 
+
+            <include refid="com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt.querySearchCriteria" />
+        </trim>
+    </select>
+    
+    <sql id="orderStatement">
+        ORDER BY 
+        <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            m_prj_member.joinDate DESC
+        ]]>
+    </sql>
+
+    <select
+        id="findPagableListByCriteria"
+        parameterType="ProblemSearchCriteria"
+        resultMap="ProjectMemberResult" >
+
+        <include refid="com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt.selectMember" />
+
+        <trim
+            prefix="WHERE"
+            prefixOverrides="AND | OR " >
+            1=1 
+
+            <include refid="com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt.querySearchCriteria" />
+        </trim>
+        <include refid="orderStatement"/>
+    </select>
+
+    <select
+        id="findMemberById"
+        parameterType="java.lang.Integer"
+        resultMap="ProjectMemberResult" >
+
+        <include refid="com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt.selectMember" />
+        WHERE m_prj_member.id=#{memberId, javaType=INTEGER}
+
+    </select>
+    
+     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MIN(id) FROM m_prj_member
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt.querySearchCriteria"/>
+        </trim>
+    </select>
+    
+    <select id="getPreviousItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MAX(id) FROM m_prj_member
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt.querySearchCriteria"/>
+        </trim>
+    </select>        
+</mapper>    
