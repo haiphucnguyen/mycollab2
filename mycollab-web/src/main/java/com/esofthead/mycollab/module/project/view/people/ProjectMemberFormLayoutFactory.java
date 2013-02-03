@@ -18,12 +18,12 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author haiphucnguyen
  */
-public abstract class ProjectUserFormLayoutFactory implements IFormLayoutFactory {
+public abstract class ProjectMemberFormLayoutFactory implements IFormLayoutFactory {
 
     private String title;
     private UserFormLayoutFactory.UserInformationLayout userInformationLayout;
 
-    public ProjectUserFormLayoutFactory(String title) {
+    public ProjectMemberFormLayoutFactory(String title) {
         this.title = title;
     }
 

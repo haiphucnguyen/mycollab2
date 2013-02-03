@@ -10,5 +10,5 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
  *
  * @author haiphucnguyen
  */
-public class ProjectUserReadViewImpl extends AbstractView implements ProjectUserReadView {
+public class ProjectMemberReadViewImpl extends AbstractView implements ProjectMemberReadView {
 }

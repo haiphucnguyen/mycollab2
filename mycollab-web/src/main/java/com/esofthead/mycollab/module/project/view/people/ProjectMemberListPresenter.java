@@ -12,9 +12,9 @@ import com.vaadin.ui.ComponentContainer;
  *
  * @author haiphucnguyen
  */
-public class ProjectUserListPresenter extends AbstractPresenter<ProjectUserListView> {
-    public ProjectUserListPresenter() {
-        super(ProjectUserListView.class);
+public class ProjectMemberListPresenter extends AbstractPresenter<ProjectMemberListView> {
+    public ProjectMemberListPresenter() {
+        super(ProjectMemberListView.class);
     }
 
     @Override

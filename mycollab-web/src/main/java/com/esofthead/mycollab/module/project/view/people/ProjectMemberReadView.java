@@ -10,5 +10,5 @@ import com.esofthead.mycollab.vaadin.mvp.View;
  *
  * @author haiphucnguyen
  */
-public interface ProjectUserReadView extends View {
+public interface ProjectMemberReadView extends View {
 }

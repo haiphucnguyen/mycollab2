@@ -4,8 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
@@ -17,18 +17,18 @@ import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
  *
  * @author haiphucnguyen
  */
-public interface ProjectUserListView extends View{
+public interface ProjectMemberListView extends View{
     void enableActionControls(int numOfSelectedItem);
 
     void disableActionControls();
 
-    HasSearchHandlers<UserSearchCriteria> getSearchHandlers();
+    HasSearchHandlers<ProjectMemberSearchCriteria> getSearchHandlers();
 
     HasSelectionOptionHandlers getOptionSelectionHandlers();
 
     HasPopupActionHandlers getPopupActionHandlers();
 
-    HasSelectableItemHandlers<SimpleUser> getSelectableItemHandlers();
+    HasSelectableItemHandlers<SimpleProjectMember> getSelectableItemHandlers();
 
-    IPagedBeanTable<UserSearchCriteria, SimpleUser> getPagedBeanTable();
+    IPagedBeanTable<ProjectMemberSearchCriteria, SimpleProjectMember> getPagedBeanTable();
 }

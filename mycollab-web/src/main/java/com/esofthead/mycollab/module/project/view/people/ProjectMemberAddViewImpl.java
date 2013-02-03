@@ -22,13 +22,13 @@ import java.util.Collection;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class ProjectUserAddViewImpl extends AbstractView implements ProjectUserAddView {
+public class ProjectMemberAddViewImpl extends AbstractView implements ProjectMemberAddView {
 
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
     private ProjectMember user;
 
-    public ProjectUserAddViewImpl() {
+    public ProjectMemberAddViewImpl() {
         super();
         editForm = new EditForm();
         this.addComponent(editForm);
@@ -52,7 +52,7 @@ public class ProjectUserAddViewImpl extends AbstractView implements ProjectUserA
             super.setItemDataSource(newDataSource, propertyIds);
         }
 
-        private class FormLayoutFactory extends ProjectUserFormLayoutFactory {
+        private class FormLayoutFactory extends ProjectMemberFormLayoutFactory {
 
             private static final long serialVersionUID = 1L;
 

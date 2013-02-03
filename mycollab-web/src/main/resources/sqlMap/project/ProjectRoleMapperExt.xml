@@ -1,40 +1,42 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="com.esofthead.mycollab.module.project.dao.RoleMapperExt">
-	<sql id="querySearchCriteria">
-		<if test="rolename != null">
-			${rolename.operation} m_prj_role.rolename
-			LIKE
-			'%${rolename.value}%'
+<mapper namespace="com.esofthead.mycollab.module.project.dao.ProjectRoleMapperExt">
+    <sql id="querySearchCriteria">
+        <if test="rolename != null">
+            ${rolename.operation} m_prj_role.rolename
+            LIKE
+            '%${rolename.value}%'
         </if>
-		<if test="saccountid != null">
+        <if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_prj_role.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
-		</if>
-	</sql>
+        </if>
+    </sql>
 
-	<sql id="selectRole">
+    <sql id="selectRole">
         <![CDATA[
           SELECT id, rolename, description
               FROM m_prj_role
         ]]>
-	</sql>
+    </sql>
 
-	<select id="getTotalCount" resultType="int" parameterType="RoleSearchCriteria">
-		SELECT count(*) as totalCount FROM m_prj_role
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.project.dao.RoleMapperExt.querySearchCriteria" />
-		</trim>
-	</select>
+    <select id="getTotalCount" resultType="int" parameterType="RoleSearchCriteria">
+        SELECT count(*) as totalCount FROM m_prj_role
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include
+                refid="com.esofthead.mycollab.module.project.dao.ProjectRoleMapperExt.querySearchCriteria" />
+        </trim>
+    </select>
 
-	<select id="findPagableListByCriteria"
-		resultMap="com.esofthead.mycollab.module.project.dao.RoleMapper.BaseResultMap"
-		parameterType="RoleSearchCriteria">
-		<include refid="com.esofthead.mycollab.module.project.dao.RoleMapperExt.selectRole" />
+    <select id="findPagableListByCriteria"
+                resultMap="com.esofthead.mycollab.module.project.dao.ProjectRoleMapper.BaseResultMap"
+                parameterType="RoleSearchCriteria">
+        <include refid="com.esofthead.mycollab.module.project.dao.ProjectRoleMapperExt.selectRole" />
 
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.project.dao.RoleMapperExt.querySearchCriteria" />
-		</trim>
-	</select>
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include
+                refid="com.esofthead.mycollab.module.project.dao.ProjectRoleMapperExt.querySearchCriteria" />
+        </trim>
+    </select>
 </mapper>

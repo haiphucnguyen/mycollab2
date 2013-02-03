@@ -12,7 +12,7 @@ import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
  *
  * @author haiphucnguyen
  */
-public interface ProjectUserAddView  extends IFormAddView<ProjectMember> {
+public interface ProjectMemberAddView  extends IFormAddView<ProjectMember> {
 
     HasEditFormHandlers<ProjectMember> getEditFormHandlers();
     
