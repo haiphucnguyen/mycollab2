@@ -4,7 +4,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
-public class RoleSearchCriteria extends SearchCriteria {
+public class ProjectRoleSearchCriteria extends SearchCriteria {
 
     private StringSearchField rolename;
     private NumberSearchField saccountid;

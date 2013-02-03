@@ -23,7 +23,5 @@ public class UserGroupPresenter extends AbstractPresenter<UserGroupView> {
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         ProjectView projectViewContainer = (ProjectView) container;
         projectViewContainer.gotoSubView("Users & Group");
-        
-        projectViewContainer.addComponent(view.getWidget());
     }
 }

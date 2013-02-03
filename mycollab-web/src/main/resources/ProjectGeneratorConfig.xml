@@ -74,7 +74,7 @@
             tableName="m_prj_risk" />
 
         <table
-            domainObjectName="Role"
+            domainObjectName="ProjectRole"
             schema="mycollab"
             tableName="m_prj_role" />
 

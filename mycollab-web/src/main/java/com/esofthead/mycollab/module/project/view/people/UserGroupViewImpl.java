@@ -5,9 +5,12 @@
 package com.esofthead.mycollab.module.project.view.people;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -19,22 +22,19 @@ public class UserGroupViewImpl extends AbstractView implements UserGroupView {
 
     private ProjectUserPresenter userPresenter;
     private ProjectRolePresenter rolePresenter;
-    private final DetachedTabs myProjectTab;
-    private final CssLayout mySpaceArea = new CssLayout();
+    private DetachedTabs myProjectTab;
+    private CssLayout mySpaceArea = new CssLayout();
 
     public UserGroupViewImpl() {
 
         myProjectTab = new DetachedTabs.Horizontal(mySpaceArea);
         myProjectTab.setSizeFull();
-        myProjectTab.setHeight(null);
 
-        CssLayout menu = new CssLayout();
+        HorizontalLayout menu = new HorizontalLayout();
         menu.setHeight("40px");
-        menu.setStyleName("sidebar-menu");
         menu.addComponent(myProjectTab);
 
         this.addComponent(menu);
-        mySpaceArea.setStyleName("projectTabContent");
         mySpaceArea.setWidth("100%");
         mySpaceArea.setHeight(null);
         this.addComponent(mySpaceArea);
@@ -44,7 +44,10 @@ public class UserGroupViewImpl extends AbstractView implements UserGroupView {
     }
     
     private void buildComponents() {
-        myProjectTab.addTab(new VerticalLayout(), "Users");
-        myProjectTab.addTab(new VerticalLayout(), "Roles");
+        userPresenter = PresenterResolver.getPresenter(ProjectUserPresenter.class);
+        myProjectTab.addTab(userPresenter.getView(), "Users");
+        
+        rolePresenter = PresenterResolver.getPresenter(ProjectRolePresenter.class);
+        myProjectTab.addTab(rolePresenter.getView(), "Roles");
     }
 }
