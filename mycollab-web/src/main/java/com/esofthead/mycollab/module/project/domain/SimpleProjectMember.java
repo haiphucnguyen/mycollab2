@@ -10,6 +10,8 @@ package com.esofthead.mycollab.module.project.domain;
  */
 public class SimpleProjectMember extends ProjectMember {
     private String memberFullName;
+    
+    private String roleName;
 
     public String getMemberFullName() {
         return memberFullName;
@@ -17,5 +19,13 @@ public class SimpleProjectMember extends ProjectMember {
 
     public void setMemberFullName(String memberFullName) {
         this.memberFullName = memberFullName;
+    }
+
+    public String getRoleName() {
+        return roleName;
+    }
+
+    public void setRoleName(String roleName) {
+        this.roleName = roleName;
     }
 }

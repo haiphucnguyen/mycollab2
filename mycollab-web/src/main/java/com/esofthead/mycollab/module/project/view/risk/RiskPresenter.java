@@ -32,7 +32,6 @@ public class RiskPresenter extends AbstractPresenter<RiskContainer> {
         view.removeAllComponents();
 
         if (data instanceof ScreenData.Search) {
-            log.debug("Go to risk list view");
             RiskListPresenter presenter = PresenterResolver
                     .getPresenter(RiskListPresenter.class);
             presenter.go(view, data);

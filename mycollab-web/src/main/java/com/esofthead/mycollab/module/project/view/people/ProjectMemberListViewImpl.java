@@ -23,6 +23,7 @@ import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
@@ -62,9 +63,9 @@ public class ProjectMemberListViewImpl extends AbstractView implements ProjectMe
     private void generateDisplayTable() {
         tableItem = new PagedBeanTable2<ProjectMemberService, ProjectMemberSearchCriteria, SimpleProjectMember>(
                 AppContext.getSpringBean(ProjectMemberService.class), SimpleProjectMember.class,
-                new String[]{"selected", "riskname",
-                    "assignedToUserFullName", "datedue", "level"},
-                new String[]{"", "Name", "Assigned to", "Due Date", "Level"});
+                new String[]{"selected", "memberFullName",
+                    "role", "joindate"},
+                new String[]{"", "Member", "Role", "Join Date"});
 
         tableItem.addGeneratedColumn("selected", new Table.ColumnGenerator() {
             private static final long serialVersionUID = 1L;
@@ -90,8 +91,45 @@ public class ProjectMemberListViewImpl extends AbstractView implements ProjectMe
                 return cb;
             }
         });
+        
+        tableItem.addGeneratedColumn("joinDate", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-        tableItem.addGeneratedColumn("riskname", new Table.ColumnGenerator() {
+            @Override
+            public Object generateCell(final Table source, final Object itemId,
+                    Object columnId) {
+                SimpleProjectMember item = tableItem.getBeanByIndex(itemId);
+                Label joinDateLbl = new Label(AppContext.formatDate(item.getJoindate()));
+                return joinDateLbl;
+            }
+        });
+        
+        tableItem.addGeneratedColumn("role", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public Object generateCell(final Table source, final Object itemId,
+                    Object columnId) {
+                SimpleProjectMember item = tableItem.getBeanByIndex(itemId);
+                if (item.getIsadmin() != null && Boolean.TRUE.equals(item.getIsadmin())) {
+                    return new Label("Admin");
+                } else if (item.getProjectroleid() != null){
+                    Button roleBtn = new Button(item.getRoleName(), new Button.ClickListener() {
+
+                        @Override
+                        public void buttonClick(ClickEvent event) {
+                            
+                        }
+                    });
+                    roleBtn.setStyleName("link");
+                    return roleBtn;
+                } else {
+                    return new Label("");
+                }
+            }
+        });
+
+        tableItem.addGeneratedColumn("memberFullName", new Table.ColumnGenerator() {
             private static final long serialVersionUID = 1L;
 
             @Override
@@ -115,11 +153,11 @@ public class ProjectMemberListViewImpl extends AbstractView implements ProjectMe
             }
         });
 
-        tableItem.setColumnExpandRatio("riskname", 1);
-        tableItem.setColumnWidth("assignedToUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
-        tableItem.setColumnWidth("level",
+        tableItem.setColumnExpandRatio("memberFullName", 1);
+        tableItem.setColumnWidth("joinDate", UIConstants.TABLE_DATE_WIDTH);
+        tableItem.setColumnWidth("role",
                 UIConstants.TABLE_X_LABEL_WIDTH);
-        tableItem.setColumnWidth("datedue", UIConstants.TABLE_DATE_WIDTH);
+        tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 
         tableItem.setWidth("100%");
 

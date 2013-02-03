@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.view.people;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
@@ -19,6 +20,11 @@ public class ProjectMemberPresenter extends AbstractPresenter<ProjectMemberConta
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        view.removeAllComponents();
+        
+        AbstractPresenter presenter = null;
+        
+        presenter = PresenterResolver.getPresenter(ProjectMemberListPresenter.class);
+        presenter.go(view, data);
     }
 }

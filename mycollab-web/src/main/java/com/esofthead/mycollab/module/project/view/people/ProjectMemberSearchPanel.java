@@ -53,7 +53,7 @@ public class ProjectMemberSearchPanel extends GenericSearchPanel<ProjectMemberSe
         layout.setWidth("100%");
         layout.setSpacing(true);
 
-        Label searchtitle = new Label("Search ProjectMembers");
+        Label searchtitle = new Label("Search Project Members");
         searchtitle.setStyleName(Reindeer.LABEL_H2);
         layout.addComponent(searchtitle);
 
