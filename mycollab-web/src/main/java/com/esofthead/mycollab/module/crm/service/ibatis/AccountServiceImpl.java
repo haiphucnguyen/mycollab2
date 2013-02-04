@@ -22,11 +22,14 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.crm.dao.AccountContactMapper;
+import com.esofthead.mycollab.module.crm.dao.AccountLeadMapper;
 import com.esofthead.mycollab.module.crm.dao.AccountMapper;
 import com.esofthead.mycollab.module.crm.dao.AccountMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.AccountContact;
 import com.esofthead.mycollab.module.crm.domain.AccountContactExample;
+import com.esofthead.mycollab.module.crm.domain.AccountLead;
+import com.esofthead.mycollab.module.crm.domain.AccountLeadExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
@@ -41,29 +44,31 @@ import org.springframework.transaction.annotation.Transactional;
 @Auditable(module = "Crm", type = "Account")
 public class AccountServiceImpl extends DefaultService<Integer, Account, AccountSearchCriteria> implements
         AccountService {
-    
+
     @Autowired
     protected AccountMapper accountMapper;
     @Autowired
     protected AccountMapperExt accountMapperExt;
     @Autowired
     protected AccountContactMapper accountContactMapper;
-    
+    @Autowired
+    protected AccountLeadMapper accountLeadMapper;
+
     @Override
     public ICrudGenericDAO<Integer, Account> getCrudMapper() {
         return accountMapper;
     }
-    
+
     @Override
     public ISearchableDAO<AccountSearchCriteria> getSearchMapper() {
         return accountMapperExt;
     }
-    
+
     @Override
     public SimpleAccount findAccountById(int accountId) {
         return accountMapperExt.findAccountById(accountId);
     }
-    
+
     @Override
     public void saveAccountContactRelationship(List<AccountContact> associateContacts) {
         for (AccountContact associateContact : associateContacts) {
@@ -74,11 +79,29 @@ public class AccountServiceImpl extends DefaultService<Integer, Account, Account
             }
         }
     }
-    
+
     @Override
     public void removeAccountContactRelationship(AccountContact associateContact) {
         AccountContactExample ex = new AccountContactExample();
         ex.createCriteria().andAccountidEqualTo(associateContact.getAccountid()).andContactidEqualTo(associateContact.getContactid());
         accountContactMapper.deleteByExample(ex);
+    }
+
+    @Override
+    public void saveAccountLeadRelationship(List<AccountLead> associateLeads) {
+        for (AccountLead associateLead : associateLeads) {
+            AccountLeadExample ex = new AccountLeadExample();
+            ex.createCriteria().andAccountidEqualTo(associateLead.getAccountid()).andLeadidEqualTo(associateLead.getLeadid());
+            if (accountLeadMapper.countByExample(ex) == 0) {
+                accountLeadMapper.insert(associateLead);
+            }
+        }
+    }
+
+    @Override
+    public void removeAccountLeadRelationship(AccountLead associateLead) {
+        AccountLeadExample ex = new AccountLeadExample();
+        ex.createCriteria().andAccountidEqualTo(associateLead.getAccountid()).andLeadidEqualTo(associateLead.getLeadid());
+        accountLeadMapper.deleteByExample(ex);
     }
 }

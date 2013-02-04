@@ -57,7 +57,7 @@ public abstract class RelatedListComp<T, S extends SearchCriteria> extends Depot
         handlers.add(handler);
     }
 
-    public void setSelectedItems(Set selectedItems) {
+    public void setSelectedItems(Set<T> selectedItems) {
         throw new MyCollabException("Must be override by support class");
     }
 }
