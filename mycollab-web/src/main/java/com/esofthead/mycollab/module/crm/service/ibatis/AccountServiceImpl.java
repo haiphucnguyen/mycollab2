@@ -24,7 +24,6 @@ import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.crm.dao.AccountContactMapper;
 import com.esofthead.mycollab.module.crm.dao.AccountMapper;
 import com.esofthead.mycollab.module.crm.dao.AccountMapperExt;
-import com.esofthead.mycollab.module.crm.dao.TaskMapper;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.AccountContact;
 import com.esofthead.mycollab.module.crm.domain.AccountContactExample;
@@ -42,29 +41,29 @@ import org.springframework.transaction.annotation.Transactional;
 @Auditable(module = "Crm", type = "Account")
 public class AccountServiceImpl extends DefaultService<Integer, Account, AccountSearchCriteria> implements
         AccountService {
-
+    
     @Autowired
     protected AccountMapper accountMapper;
     @Autowired
     protected AccountMapperExt accountMapperExt;
     @Autowired
     protected AccountContactMapper accountContactMapper;
-
+    
     @Override
     public ICrudGenericDAO<Integer, Account> getCrudMapper() {
         return accountMapper;
     }
-
+    
     @Override
     public ISearchableDAO<AccountSearchCriteria> getSearchMapper() {
         return accountMapperExt;
     }
-
+    
     @Override
     public SimpleAccount findAccountById(int accountId) {
         return accountMapperExt.findAccountById(accountId);
     }
-
+    
     @Override
     public void saveAccountContactRelationship(List<AccountContact> associateContacts) {
         for (AccountContact associateContact : associateContacts) {
@@ -74,5 +73,12 @@ public class AccountServiceImpl extends DefaultService<Integer, Account, Account
                 accountContactMapper.insert(associateContact);
             }
         }
+    }
+    
+    @Override
+    public void removeAccountContactRelationship(AccountContact associateContact) {
+        AccountContactExample ex = new AccountContactExample();
+        ex.createCriteria().andAccountidEqualTo(associateContact.getAccountid()).andContactidEqualTo(associateContact.getContactid());
+        accountContactMapper.deleteByExample(ex);
     }
 }

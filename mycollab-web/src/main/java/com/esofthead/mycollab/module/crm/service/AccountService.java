@@ -29,4 +29,6 @@ public interface AccountService extends
     SimpleAccount findAccountById(int accountId);
     
     void saveAccountContactRelationship(List<AccountContact> associateContacts);
+    
+    void removeAccountContactRelationship(AccountContact associateContact);
 }
