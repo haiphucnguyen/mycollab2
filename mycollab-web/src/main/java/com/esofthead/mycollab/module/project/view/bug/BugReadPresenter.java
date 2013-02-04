@@ -30,7 +30,6 @@ public class BugReadPresenter extends AbstractPresenter<BugReadView> {
                 BugContainer bugContainer = (BugContainer) container;
                 bugContainer.removeAllComponents();
                 bugContainer.addComponent(view.getWidget());
-                System.out.println("milestonename: " + bug.getMilestoneName());
                 view.previewItem(bug);
                 
                 ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);

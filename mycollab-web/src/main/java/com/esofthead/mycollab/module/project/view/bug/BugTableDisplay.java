@@ -86,7 +86,10 @@ public class BugTableDisplay extends PagedBeanTable2<BugService, BugSearchCriter
                             }
                         });
                 b.addStyleName("medium-text");
-                if (bug.getDuedate() != null && (bug.getDuedate().before(new GregorianCalendar().getTime()))) {
+                if ("Close".equals(bug.getStatus())) {
+                	System.out.println("CCCCCCCCC: " + bug.getStatus());
+                	b.addStyleName(UIConstants.LINK_COMPLETED);
+                } else if (bug.getDuedate() != null && (bug.getDuedate().before(new GregorianCalendar().getTime()))) {
                     b.addStyleName(UIConstants.LINK_OVERDUE);
                 }
                 return b;
