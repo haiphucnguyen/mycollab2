@@ -36,8 +36,9 @@
         <constructor-arg ref="dataSource" />
     </bean>
     
-    <bean id="h2MigrationResolver">
-        <constructor-arg value="classpath:/db/h2/extdb/migrations">
+    <bean id="h2MigrationResolver"
+        class="com.carbonfive.db.migration.ResourceMigrationResolver">
+        <constructor-arg value="classpath:/db/h2/extdb/migrations/" />
     </bean>
     
     <bean id="migrationH2"
