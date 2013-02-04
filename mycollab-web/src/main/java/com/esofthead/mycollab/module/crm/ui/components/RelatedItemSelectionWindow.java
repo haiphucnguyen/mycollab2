@@ -32,8 +32,8 @@ public abstract class RelatedItemSelectionWindow<S extends SearchCriteria> exten
     public RelatedItemSelectionWindow(String title, RelatedListComp<S> relatedList) {
         super(title);
         center();
-        bodyContent.setSpacing(true);
         bodyContent = new VerticalLayout();
+        bodyContent.setSpacing(true);
         this.setContent(bodyContent);
         this.relatedListComp = relatedList;
         initUI();
