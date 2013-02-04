@@ -36,10 +36,15 @@
         <constructor-arg ref="dataSource" />
     </bean>
     
+    <bean id="h2MigrationResolver">
+        <constructor-arg value="classpath:/db/h2/extdb/migrations">
+    </bean>
+    
     <bean id="migrationH2"
         class="com.carbonfive.db.migration.DataSourceMigrationManager"
         init-method="migrate">
         <constructor-arg ref="h2dataSource" />
+        <property name="migrationResolver" ref = "h2MigrationResolver"/>
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
