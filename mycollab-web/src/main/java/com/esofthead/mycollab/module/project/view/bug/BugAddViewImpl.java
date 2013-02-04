@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.file.AttachmentConstants;
+import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -132,30 +133,31 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
                 } else if (propertyId.equals("severity")) {
                     return new BugSeverityComboBox();
                 } else if (propertyId.equals("components")) {
-                    componentSelect = new ComponentMultiSelectField();
+                    componentSelect = new ComponentMultiSelectField("227px");
                     if (bug.getComponents() != null && bug.getComponents().size() > 0) {
                     	componentSelect.setSelectedItems(bug.getComponents());
                     }
                     return componentSelect;
                 } else if (propertyId.equals("affectedVersions")) {
-                    affectedVersionSelect = new VersionMultiSelectField();
+                    affectedVersionSelect = new VersionMultiSelectField("227px");
                     if (bug.getAffectedVersions() != null && bug.getAffectedVersions().size() > 0) {
                     	affectedVersionSelect.setSelectedItems(bug.getAffectedVersions());
                     }
                     return affectedVersionSelect;
                 } else if (propertyId.equals("fixedVersions")) {
-                    fixedVersionSelect = new VersionMultiSelectField();
+                    fixedVersionSelect = new VersionMultiSelectField("227px");
                     if (bug.getFixedVersions() != null && bug.getFixedVersions().size() > 0) {
                     	fixedVersionSelect.setSelectedItems(bug.getFixedVersions());
                     }
                     return fixedVersionSelect;
-                }
-                else if (propertyId.equals("summary")) {
+                } else if (propertyId.equals("summary")) {
                     TextField tf = new TextField();
                     tf.setNullRepresentation("");
                     tf.setRequired(true);
                     tf.setRequiredError("Please enter a Summary");
                     return tf;
+                } else if (propertyId.equals("milestoneid")) {
+                    return new MilestoneComboBox();
                 }
                 
                 return null;

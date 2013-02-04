@@ -25,7 +25,7 @@ import org.vaadin.hene.splitbutton.SplitButton;
  *
  * @author haiphucnguyen
  */
-public class ContactOpportunityListComp extends RelatedListComp<OpportunitySearchCriteria> {
+public class ContactOpportunityListComp extends RelatedListComp<SimpleOpportunity, OpportunitySearchCriteria> {
 
     private static final long serialVersionUID = 1L;
 
@@ -110,5 +110,10 @@ public class ContactOpportunityListComp extends RelatedListComp<OpportunitySearc
         });
 
         contentContainer.addComponent(tableItem);
+    }
+
+    @Override
+    public void refresh() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

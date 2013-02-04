@@ -4,6 +4,7 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.domain.AccountContact;
 import com.esofthead.mycollab.module.crm.domain.Call;
 import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.Lead;
@@ -28,6 +29,9 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Set;
 import org.vaadin.dialogs.ConfirmDialog;
 
@@ -121,7 +125,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                 });
 
         view.getRelatedContactHandlers().addRelatedListHandler(
-                new AbstractRelatedListHandler() {
+                new AbstractRelatedListHandler<SimpleContact>() {
                     @Override
                     public void createNewRelatedItem(String itemId) {
                         SimpleContact contact = new SimpleContact();
@@ -131,8 +135,23 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                     }
 
                     @Override
-                    public void selectAssociateItems(Set items) {
-                        super.selectAssociateItems(items);
+                    public void selectAssociateItems(Set<SimpleContact> items) {
+                        if (items.size() > 0) {
+                            SimpleAccount account = view.getItem();
+                            List<AccountContact> associateContacts = new ArrayList<AccountContact>();
+                            for (SimpleContact contact : items) {
+                                AccountContact assoContact = new AccountContact();
+                                assoContact.setAccountid(account.getId());
+                                assoContact.setContactid(contact.getId());
+                                assoContact.setCreatedtime(new GregorianCalendar().getTime());
+                                associateContacts.add(assoContact);
+                            }
+                            
+                            AccountService accountService = AppContext.getSpringBean(AccountService.class);
+                            accountService.saveAccountContactRelationship(associateContacts);
+
+                            view.getRelatedContactHandlers().refresh();
+                        }
                     }
                 });
 

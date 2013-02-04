@@ -21,13 +21,16 @@ import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.crm.dao.AccountContactMapper;
 import com.esofthead.mycollab.module.crm.dao.AccountMapper;
 import com.esofthead.mycollab.module.crm.dao.AccountMapperExt;
-import com.esofthead.mycollab.module.crm.dao.TaskMapper;
 import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.domain.AccountContact;
+import com.esofthead.mycollab.module.crm.domain.AccountContactExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.AccountService;
+import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
@@ -38,26 +41,44 @@ import org.springframework.transaction.annotation.Transactional;
 @Auditable(module = "Crm", type = "Account")
 public class AccountServiceImpl extends DefaultService<Integer, Account, AccountSearchCriteria> implements
         AccountService {
-
+    
     @Autowired
     protected AccountMapper accountMapper;
     @Autowired
     protected AccountMapperExt accountMapperExt;
     @Autowired
-    protected TaskMapper taskMapper;
-
+    protected AccountContactMapper accountContactMapper;
+    
     @Override
     public ICrudGenericDAO<Integer, Account> getCrudMapper() {
         return accountMapper;
     }
-
+    
     @Override
     public ISearchableDAO<AccountSearchCriteria> getSearchMapper() {
         return accountMapperExt;
     }
-
+    
     @Override
     public SimpleAccount findAccountById(int accountId) {
         return accountMapperExt.findAccountById(accountId);
+    }
+    
+    @Override
+    public void saveAccountContactRelationship(List<AccountContact> associateContacts) {
+        for (AccountContact associateContact : associateContacts) {
+            AccountContactExample ex = new AccountContactExample();
+            ex.createCriteria().andAccountidEqualTo(associateContact.getAccountid()).andContactidEqualTo(associateContact.getContactid());
+            if (accountContactMapper.countByExample(ex) == 0) {
+                accountContactMapper.insert(associateContact);
+            }
+        }
+    }
+    
+    @Override
+    public void removeAccountContactRelationship(AccountContact associateContact) {
+        AccountContactExample ex = new AccountContactExample();
+        ex.createCriteria().andAccountidEqualTo(associateContact.getAccountid()).andContactidEqualTo(associateContact.getContactid());
+        accountContactMapper.deleteByExample(ex);
     }
 }

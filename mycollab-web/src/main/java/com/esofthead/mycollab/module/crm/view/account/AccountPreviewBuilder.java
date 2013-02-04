@@ -59,7 +59,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
     }
     
     public void previewItem(SimpleAccount item) {
-        account = item;
+        this.account = item;
         previewForm.setItemDataSource(new BeanItem<Account>(account));
         displayNotes();
         displayActivities();

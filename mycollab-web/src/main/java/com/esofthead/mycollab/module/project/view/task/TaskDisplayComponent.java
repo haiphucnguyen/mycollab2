@@ -8,11 +8,13 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -77,9 +79,9 @@ public class TaskDisplayComponent extends CssLayout {
         }
 
 
-        taskDisplay = new TaskTableDisplay(new String[]{"taskname",
+        taskDisplay = new TaskTableDisplay(new String[]{"id", "taskname",
                     "startdate", "deadline", "percentagecomplete", "assignUserFullName"}, new String[]{
-                    "Task Name", "Start", "Due", "% Complete", "Owner"});
+                    "", "Task Name", "Start", "Due", "% Complete", "Owner"});
         this.addComponent(taskDisplay);
 
         taskDisplay
@@ -97,6 +99,12 @@ public class TaskDisplayComponent extends CssLayout {
                             new TaskEvent.GotoRead(
                             TaskDisplayComponent.this, task
                             .getId()));
+                } else if ("id".equals(event.getFieldName())) {
+                    task.setStatus("Closed");
+                    task.setPercentagecomplete(100d);
+                    
+                    ProjectTaskService projectTaskService = AppContext.getSpringBean(ProjectTaskService.class);
+                    projectTaskService.updateWithSession(task, AppContext.getUsername());
                 }
             }
         });

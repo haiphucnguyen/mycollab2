@@ -6,5 +6,5 @@ import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 
 public interface ContactMapperExt extends ISearchableDAO<ContactSearchCriteria> {
 
-	public abstract SimpleContact findContactById(int contactId);
+    SimpleContact findContactById(int contactId);
 }

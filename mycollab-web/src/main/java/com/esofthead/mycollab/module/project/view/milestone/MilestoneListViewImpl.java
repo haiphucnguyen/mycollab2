@@ -4,6 +4,10 @@
  */
 package com.esofthead.mycollab.module.project.view.milestone;
 
+import java.util.GregorianCalendar;
+
+import org.vaadin.hene.splitbutton.PopupButtonControl;
+
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
@@ -15,12 +19,11 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
+import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -110,6 +113,9 @@ public class MilestoneListViewImpl extends AbstractView implements MilestoneList
                             }
                         });
                 b.addStyleName("medium-text");
+                if (milestone.getEnddate() != null && (milestone.getEnddate().before(new GregorianCalendar().getTime()))) {
+                    b.addStyleName(UIConstants.LINK_OVERDUE);
+                }
                 return b;
 
             }

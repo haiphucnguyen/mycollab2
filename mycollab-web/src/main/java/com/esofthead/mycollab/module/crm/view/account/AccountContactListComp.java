@@ -3,9 +3,12 @@ package com.esofthead.mycollab.module.crm.view.account;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.domain.AccountContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableDisplay;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
@@ -23,9 +26,10 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 import java.util.Set;
+import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.splitbutton.SplitButton;
 
-public class AccountContactListComp extends RelatedListComp<ContactSearchCriteria> {
+public class AccountContactListComp extends RelatedListComp<SimpleContact, ContactSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
     private Account account;
@@ -39,7 +43,7 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
         this.account = account;
         loadContacts();
     }
-    
+
     private void loadContacts() {
         ContactSearchCriteria criteria = new ContactSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(SearchField.AND,
@@ -48,7 +52,6 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
                 .getId()));
         this.setSearchCriteria(criteria);
     }
-    
 
     @SuppressWarnings("serial")
     private void initUI() {
@@ -110,11 +113,15 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
             @Override
             public Object generateCell(Table source, Object itemId,
                     Object columnId) {
+                final SimpleContact contact = (SimpleContact) tableItem.getBeanByIndex(itemId);
                 HorizontalLayout controlLayout = new HorizontalLayout();
                 Button editBtn = new Button(null, new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        throw new UnsupportedOperationException("Not supported yet.");
+                        EventBus.getInstance().fireEvent(
+                                new ContactEvent.GotoRead(
+                                AccountContactListComp.this, contact
+                                .getId()));
                     }
                 });
                 editBtn.setStyleName("link");
@@ -124,7 +131,25 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
                 Button deleteBtn = new Button(null, new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        throw new UnsupportedOperationException("Not supported yet.");
+                        ConfirmDialog.show(AppContext.getApplication().getMainWindow(),
+                                "Please Confirm:",
+                                "Are you sure to delete this relationship? Only the relationship is removed. The record will not be deleted.",
+                                "Yes", "No", new ConfirmDialog.Listener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void onClose(ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    AccountService accountService = AppContext
+                                            .getSpringBean(AccountService.class);
+                                    AccountContact associateContact = new AccountContact();
+                                    associateContact.setAccountid(account.getId());
+                                    associateContact.setContactid(contact.getId());
+                                    accountService.removeAccountContactRelationship(associateContact);
+                                    AccountContactListComp.this.refresh();
+                                }
+                            }
+                        });
                     }
                 });
                 deleteBtn.setStyleName("link");
@@ -140,9 +165,10 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
     @Override
     public void setSelectedItems(Set selectedItems) {
         fireSelectedRelatedItems(selectedItems);
-        
+    }
+
+    @Override
+    public void refresh() {
         loadContacts();
     }
-    
-    
 }

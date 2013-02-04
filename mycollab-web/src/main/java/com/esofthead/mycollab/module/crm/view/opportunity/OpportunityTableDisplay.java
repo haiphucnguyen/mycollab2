@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import java.util.GregorianCalendar;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
@@ -71,6 +73,15 @@ public class OpportunityTableDisplay extends PagedBeanTable2<OpportunityService,
                             }
                         });
                 b.addStyleName("medium-text");
+                
+                if ("Closed Won".equals(opportunity.getSalesstage()) || "Closed Lost".equals(opportunity.getSalesstage())) {
+                    b.addStyleName(UIConstants.LINK_COMPLETED);
+                } else {
+                    if (opportunity.getExpectedcloseddate() != null && (opportunity.getExpectedcloseddate().before(new GregorianCalendar().getTime()))) {
+                        b.addStyleName(UIConstants.LINK_OVERDUE);
+                    }
+                }
+                
                 return b;
             }
         });

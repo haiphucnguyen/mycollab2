@@ -57,7 +57,7 @@ public class ProjectMemberSearchPanel extends GenericSearchPanel<ProjectMemberSe
         searchtitle.setStyleName(Reindeer.LABEL_H2);
         layout.addComponent(searchtitle);
 
-        Button createBtn = new Button("Create",
+        Button createBtn = new Button("Invite",
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 

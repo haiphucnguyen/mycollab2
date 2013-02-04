@@ -10,6 +10,7 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 import java.util.HashSet;
 import java.util.Set;
@@ -19,16 +20,22 @@ import org.apache.commons.beanutils.PropertyUtils;
  *
  * @author haiphucnguyen
  */
-public abstract class RelatedItemSelectionWindow<S extends SearchCriteria> extends Window {
+public abstract class RelatedItemSelectionWindow<T, S extends SearchCriteria> extends Window {
     
     private static final String selectedFieldName = "selected";
-    protected RelatedListComp<S> relatedListComp;
-    protected IPagedBeanTable<S, ?> tableItem;
-    protected Set selectedItems = new HashSet();
     
-    public RelatedItemSelectionWindow(String title, RelatedListComp<S> relatedList) {
+    protected RelatedListComp<T, S> relatedListComp;
+    protected IPagedBeanTable<S, T> tableItem;
+    protected Set selectedItems = new HashSet();
+    protected VerticalLayout bodyContent;
+    
+    public RelatedItemSelectionWindow(String title, RelatedListComp<T, S> relatedList) {
         super(title);
-        
+        center();
+        bodyContent = new VerticalLayout();
+        bodyContent.setMargin(true);
+        bodyContent.setSpacing(true);
+        this.setContent(bodyContent);
         this.relatedListComp = relatedList;
         initUI();
         

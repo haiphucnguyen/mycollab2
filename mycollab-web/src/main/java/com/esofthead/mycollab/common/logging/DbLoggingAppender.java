@@ -59,7 +59,6 @@ public class DbLoggingAppender extends AppenderSkeleton {
 		record.setErrortrace(message.toString());
 		
 		commitLog(record);
-//		System.out.println("MESSAGE: " + message);
 	}
 
 	@Override

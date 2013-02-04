@@ -18,10 +18,10 @@ import java.util.Set;
  *
  * @author haiphucnguyen
  */
-public class RelatedListComp<S extends SearchCriteria> extends Depot implements IRelatedListHandlers {
+public abstract class RelatedListComp<T, S extends SearchCriteria> extends Depot implements IRelatedListHandlers<T> {
 
-    protected Set<RelatedListHandler> handlers;
-    protected IPagedBeanTable<S, ?> tableItem;
+    protected Set<RelatedListHandler<T>> handlers;
+    protected IPagedBeanTable<S, T> tableItem;
 
     public RelatedListComp(String title) {
         super(title, new VerticalLayout());
@@ -49,9 +49,9 @@ public class RelatedListComp<S extends SearchCriteria> extends Depot implements 
     }
 
     @Override
-    public void addRelatedListHandler(RelatedListHandler handler) {
+    public void addRelatedListHandler(RelatedListHandler<T> handler) {
         if (handlers == null) {
-            handlers = new HashSet<RelatedListHandler>();
+            handlers = new HashSet<RelatedListHandler<T>>();
         }
 
         handlers.add(handler);

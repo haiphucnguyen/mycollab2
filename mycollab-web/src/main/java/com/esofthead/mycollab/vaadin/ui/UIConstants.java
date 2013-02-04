@@ -11,6 +11,7 @@ public class UIConstants {
 	public static final int TABLE_S_LABEL_WIDTH = 60;
 	public static final int TABLE_M_LABEL_WIDTH = 120;
 	public static final int TABLE_X_LABEL_WIDTH = 160;
+        public static final int TABLE_EX_LABEL_WIDTH = 200;
 	public static final int TABLE_EMAIL_WIDTH = 200;
 	public static final int TABLE_DATE_WIDTH = 110;
 	public static final int TABLE_DATE_TIME_WIDTH = 140;

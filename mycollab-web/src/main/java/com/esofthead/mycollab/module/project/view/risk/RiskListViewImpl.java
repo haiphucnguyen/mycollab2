@@ -1,5 +1,10 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
+import java.util.GregorianCalendar;
+
+import org.vaadin.hene.splitbutton.PopupButtonControl;
+import org.vaadin.teemu.ratingstars.RatingStars;
+
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
@@ -27,8 +32,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
-import org.vaadin.teemu.ratingstars.RatingStars;
 
 @ViewComponent
 public class RiskListViewImpl extends AbstractView implements RiskListView {
@@ -105,6 +108,14 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
                             }
                         });
                 b.addStyleName("medium-text");
+                
+                if ("Closed".equals(risk.getStatus())) {
+                    b.addStyleName(UIConstants.LINK_COMPLETED);
+                } else {
+                    if (risk.getDatedue() != null && (risk.getDatedue().before(new GregorianCalendar().getTime()))) {
+                        b.addStyleName(UIConstants.LINK_OVERDUE);
+                    }
+                }
                 return b;
 
             }

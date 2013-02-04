@@ -20,7 +20,7 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 import org.vaadin.hene.splitbutton.SplitButton;
 
-public class AccountLeadListComp extends RelatedListComp<LeadSearchCriteria> {
+public class AccountLeadListComp extends RelatedListComp<SimpleLead, LeadSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
 
@@ -94,5 +94,10 @@ public class AccountLeadListComp extends RelatedListComp<LeadSearchCriteria> {
         });
 
         contentContainer.addComponent(tableItem);
+    }
+
+    @Override
+    public void refresh() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

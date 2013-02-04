@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import java.util.GregorianCalendar;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.EventService;
@@ -98,6 +100,14 @@ public class EventTableDisplay extends PagedBeanTable2<EventService, EventSearch
                             }
                         });
                 b.addStyleName("medium-text");
+                
+                if ("Held".equals(simpleEvent.getStatus())) {
+                    b.addStyleName(UIConstants.LINK_COMPLETED);
+                } else {
+                    if (simpleEvent.getEndDate() != null && (simpleEvent.getEndDate().before(new GregorianCalendar().getTime()))) {
+                        b.addStyleName(UIConstants.LINK_OVERDUE);
+                    }
+                }
                 return b;
 
             }

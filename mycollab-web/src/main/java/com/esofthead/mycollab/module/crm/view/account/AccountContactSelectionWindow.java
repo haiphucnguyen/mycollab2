@@ -4,18 +4,22 @@
  */
 package com.esofthead.mycollab.module.crm.view.account;
 
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableDisplay;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 
 /**
  *
  * @author haiphucnguyen
  */
-public class AccountContactSelectionWindow extends RelatedItemSelectionWindow<ContactSearchCriteria> {
+public class AccountContactSelectionWindow extends RelatedItemSelectionWindow<SimpleContact, ContactSearchCriteria> {
 
     public AccountContactSelectionWindow(AccountContactListComp associateContactList) {
-        super("Contacts", associateContactList);
+        super("Select Contacts", associateContactList);
         
         this.setWidth("900px");
     }
@@ -25,6 +29,17 @@ public class AccountContactSelectionWindow extends RelatedItemSelectionWindow<Co
         tableItem = new ContactTableDisplay(new String[]{"selected",
                     "contactName", "title", "accountName", "officephone"}, new String[]{"", "Name", "Title",
                     "Account Name", "Office Phone"});
-        this.addComponent(tableItem);
+        
+        Button selectBtn = new Button("Select", new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(ClickEvent event) {
+                close();
+            }
+        });
+        selectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+        
+        this.bodyContent.addComponent(selectBtn);
+        this.bodyContent.addComponent(tableItem);
     }
 }

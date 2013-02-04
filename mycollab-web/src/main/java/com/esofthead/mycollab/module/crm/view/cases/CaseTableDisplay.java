@@ -68,6 +68,10 @@ public class CaseTableDisplay extends PagedBeanTable2<CaseService, CaseSearchCri
                             }
                         });
                 b.addStyleName("medium-text");
+                
+                if ("Closed".equals(cases.getStatus()) || "Rejected".equals(cases.getStatus())) {
+                    b.addStyleName(UIConstants.LINK_COMPLETED);
+                }
                 return b;
             }
         });

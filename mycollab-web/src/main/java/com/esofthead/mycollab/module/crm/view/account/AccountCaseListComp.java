@@ -24,7 +24,7 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author haiphucnguyen
  */
-public class AccountCaseListComp extends RelatedListComp<CaseSearchCriteria> {
+public class AccountCaseListComp extends RelatedListComp<SimpleCase, CaseSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
 
@@ -73,5 +73,10 @@ public class AccountCaseListComp extends RelatedListComp<CaseSearchCriteria> {
         });
 
         contentContainer.addComponent(tableItem);
+    }
+
+    @Override
+    public void refresh() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

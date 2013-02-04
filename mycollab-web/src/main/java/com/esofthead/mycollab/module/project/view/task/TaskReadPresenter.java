@@ -6,8 +6,12 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -19,6 +23,7 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Window;
 
 /**
  * 
@@ -81,6 +86,53 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 								.fireEvent(
 										new TaskListEvent.GotoTaskListScreen(
 												this, null));
+					}
+
+					@Override
+					public void gotoNext(Task data) {
+						ProjectTaskService taskService = AppContext
+						.getSpringBean(ProjectTaskService.class);
+						
+						TaskSearchCriteria criteria = new TaskSearchCriteria();
+						SimpleProject project = (SimpleProject) AppContext
+								.getVariable("project");
+						criteria.setProjectid(new NumberSearchField(
+								SearchField.AND, project.getId()));
+						criteria.setId(new NumberSearchField(data.getId(),
+								NumberSearchField.GREATHER));
+						Integer nextId = taskService.getNextItemKey(criteria);
+						if (nextId != null) {
+							EventBus.getInstance().fireEvent(
+									new TaskEvent.GotoRead(this, nextId));
+						} else {
+							view.getWindow().showNotification("Information",
+									"You are already in the last record",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+						}
+
+					}
+
+					@Override
+					public void gotoPrevious(Task data) {
+						ProjectTaskService taskService = AppContext
+						.getSpringBean(ProjectTaskService.class);
+						
+						TaskSearchCriteria criteria = new TaskSearchCriteria();
+						SimpleProject project = (SimpleProject) AppContext
+								.getVariable("project");
+						criteria.setProjectid(new NumberSearchField(
+								SearchField.AND, project.getId()));
+						criteria.setId(new NumberSearchField(data.getId(),
+								NumberSearchField.LESSTHAN));
+						Integer nextId = taskService.getNextItemKey(criteria);
+						if (nextId != null) {
+							EventBus.getInstance().fireEvent(
+									new TaskEvent.GotoRead(this, nextId));
+						} else {
+							view.getWindow().showNotification("Information",
+									"You are already in the first record",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+						}
 					}
 				});
 	}

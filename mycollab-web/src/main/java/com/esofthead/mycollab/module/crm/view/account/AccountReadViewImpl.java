@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -12,7 +13,7 @@ public class AccountReadViewImpl extends AbstractView implements
         AccountReadView {
 
     private static final long serialVersionUID = 1L;
-    private AccountPreviewBuilder accountPreview;
+    private AccountPreviewBuilder.ReadView accountPreview;
 
     public AccountReadViewImpl() {
         super();
@@ -36,7 +37,7 @@ public class AccountReadViewImpl extends AbstractView implements
     }
 
     @Override
-    public IRelatedListHandlers getRelatedContactHandlers() {
+    public IRelatedListHandlers<SimpleContact> getRelatedContactHandlers() {
         return accountPreview.getAssociateContactList();
     }
 

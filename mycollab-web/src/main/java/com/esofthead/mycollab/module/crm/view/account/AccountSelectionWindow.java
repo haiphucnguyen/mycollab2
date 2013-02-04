@@ -31,6 +31,9 @@ public class AccountSelectionWindow extends Window {
     private AccountSearchCriteria searchCriteria;
     private AccountTableDisplay tableItem;
     private FieldSelection fieldSelection;
+    private TextField textValueField;
+    private UserComboBox userBox;
+    private GridLayout layoutSearchPane;
 
     public AccountSelectionWindow(FieldSelection fieldSelection) {
         super("Account Name Lookup");
@@ -56,9 +59,7 @@ public class AccountSelectionWindow extends Window {
         tableItem.setSearchCriteria(searchCriteria);
         center();
     }
-    private TextField textValueField;
-    private UserComboBox userBox;
-    private GridLayout layoutSearchPane;
+    
 
     private void addTextFieldSearch() {
         textValueField = new TextField();

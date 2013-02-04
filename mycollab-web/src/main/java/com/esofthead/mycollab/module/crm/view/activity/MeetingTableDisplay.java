@@ -4,16 +4,16 @@
  */
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
+import com.ibm.icu.util.GregorianCalendar;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
@@ -46,7 +46,7 @@ public class MeetingTableDisplay extends PagedBeanTable2<MeetingService, Meeting
                                         .getId()));
                             }
                         });
-                b.addStyleName("medium-text");
+                b.addStyleName(UIConstants.LINK_COMPLETED);
                 return b;
                 
             }
