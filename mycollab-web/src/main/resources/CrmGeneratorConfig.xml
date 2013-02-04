@@ -54,9 +54,9 @@
             tableName="m_crm_accounts_contacts" />
         
         <table
-            domainObjectName="AccountOpportunity"
+            domainObjectName="AccountLead"
             schema="mycollab"
-            tableName="m_crm_accounts_opportunities" />
+            tableName="m_crm_accounts_leads" />
         
         <table
             domainObjectName="Campaign"

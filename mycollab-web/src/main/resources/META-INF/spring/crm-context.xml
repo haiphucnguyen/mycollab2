@@ -15,6 +15,12 @@
             value="com.esofthead.mycollab.module.crm.dao.AccountContactMapper" />
     </bean>
     
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="accountLeadMapper">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.crm.dao.AccountLeadMapper" />
+    </bean>
+    
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="accountMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
