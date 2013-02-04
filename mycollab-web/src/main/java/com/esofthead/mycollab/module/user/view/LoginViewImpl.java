@@ -19,84 +19,90 @@ import com.vaadin.ui.TextField;
 @ViewComponent
 public class LoginViewImpl extends AbstractView implements LoginView {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public LoginViewImpl() {
-        this.addComponent(new LoginForm());
-    }
+	public LoginViewImpl() {
+		this.setStyleName("loginView");
 
-    private class LoginForm extends Form {
+		this.addComponent(new LoginForm());
+	}
 
-        private static final long serialVersionUID = 1L;
-        private final TextField usernameField;
-        private final PasswordField passwordField;
+	private class LoginForm extends Form {
 
-        public LoginForm() {
-            // this.setCaption("Login Form");
-            CustomLayout custom = new CustomLayout("loginForm");
-            custom.addStyleName("customLoginForm");
-            usernameField = new TextField("Email");
-            usernameField.setValue("hainguyen@esofthead.com");
+		private static final long serialVersionUID = 1L;
+		private final TextField usernameField;
+		private final PasswordField passwordField;
 
-            custom.addComponent(usernameField, "usernameField");
+		public LoginForm() {
+			// this.setCaption("Login Form");
+			CustomLayout custom = new CustomLayout("loginForm");
+			custom.addStyleName("customLoginForm");
+			usernameField = new TextField("Email");
+			usernameField.setValue("hainguyen@esofthead.com");
 
-            passwordField = new PasswordField("Password");
-            passwordField.setValue("123456");
-            StringLengthValidator passwordValidator = new StringLengthValidator(
-                    "Password length must be greater than 6", 6,
-                    Integer.MAX_VALUE, false);
-            passwordField.addValidator(passwordValidator);
+			custom.addComponent(usernameField, "usernameField");
 
-            custom.addComponent(passwordField, "passwordField");
+			passwordField = new PasswordField("Password");
+			passwordField.setValue("123456");
+			StringLengthValidator passwordValidator = new StringLengthValidator(
+					"Password length must be greater than 6", 6,
+					Integer.MAX_VALUE, false);
+			passwordField.addValidator(passwordValidator);
 
-            Button loginBtn = new Button("Login", new Button.ClickListener() {
-                private static final long serialVersionUID = 1L;
+			custom.addComponent(passwordField, "passwordField");
 
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    try {
-                        LoginViewImpl.this.fireEvent(new UserEvent.PlainLogin(
-                                LoginViewImpl.this, new String[]{
-                                    (String) usernameField.getValue(),
-                                    (String) passwordField.getValue()}));
-                    } catch (MyCollabException e) {
-                        LoginForm.this.setComponentError(new UserError(e
-                                .getMessage()));
+			Button loginBtn = new Button("Sign In", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
 
-                    } catch (Exception e) {
-                        throw new MyCollabException(e);
-                    }
-                }
-            });
+				@Override
+				public void buttonClick(ClickEvent event) {
+					try {
+						LoginViewImpl.this.fireEvent(new UserEvent.PlainLogin(
+								LoginViewImpl.this, new String[] {
+										(String) usernameField.getValue(),
+										(String) passwordField.getValue() }));
+					} catch (MyCollabException e) {
+						LoginForm.this.setComponentError(new UserError(e
+								.getMessage()));
 
-            loginBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-            custom.addComponent(loginBtn, "loginButton");
+					} catch (Exception e) {
+						throw new MyCollabException(e);
+					}
+				}
+			});
 
-            Button signupBtn = new Button("Sign up Now!",
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+			loginBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			custom.addComponent(loginBtn, "loginButton");
 
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            EventBus.getInstance().fireEvent(new ShellEvent.GotoSignupPage(this, null));
-                        }
-                    });
-            signupBtn.setStyleName("link");
-            custom.addComponent(signupBtn, "signupLink");
-            
-            Button forgotPasswordBtn = new Button("Forgot password",
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+			Button signupBtn = new Button("Create an Account",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-                        @Override
-                        public void buttonClick(ClickEvent event) {
-                            EventBus.getInstance().fireEvent(new ShellEvent.GotoForgotPasswordPage(this, null));
-                        }
-                    });
-            forgotPasswordBtn.setStyleName("link");
-            custom.addComponent(forgotPasswordBtn, "forgotLink");
+						@Override
+						public void buttonClick(ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new ShellEvent.GotoSignupPage(this, null));
+						}
+					});
+			signupBtn.setStyleName("link");
+			custom.addComponent(signupBtn, "signupLink");
 
-            this.setLayout(custom);
-        }
-    }
+			Button forgotPasswordBtn = new Button("Forgot password",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new ShellEvent.GotoForgotPasswordPage(this,
+											null));
+						}
+					});
+			forgotPasswordBtn.setStyleName("link");
+			custom.addComponent(forgotPasswordBtn, "forgotLink");
+
+			this.setLayout(custom);
+			this.setHeight("100%");
+		}
+	}
 }
