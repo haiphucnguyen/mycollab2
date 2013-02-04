@@ -14,6 +14,12 @@
         <property name="username" value="${db.username}" />
         <property name="password" value="${db.password}" />
     </bean>
+    
+    <bean id="h2dataSource" class="org.apache.commons.dbcp.BasicDataSource"
+        destroy-method="close">
+        <property name="driverClassName" value="${h2.driverClassName}" />
+        <property name="url" value="${h2.url}" />
+    </bean>
 
     <bean id="txManager"
         class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
@@ -28,6 +34,12 @@
         class="com.carbonfive.db.migration.DataSourceMigrationManager"
         init-method="migrate">
         <constructor-arg ref="dataSource" />
+    </bean>
+    
+    <bean id="migrationH2"
+        class="com.carbonfive.db.migration.DataSourceMigrationManager"
+        init-method="migrate">
+        <constructor-arg ref="h2dataSource" />
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

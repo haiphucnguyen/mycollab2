@@ -16,7 +16,8 @@ import org.springframework.stereotype.Service;
 public class MyCollabScheduleServiceImpl implements MyCollabScheduleService{
     
     @Override
-    @Scheduled(fixedRate=10)
+    @Scheduled(fixedDelay=10000)
     public void doSomething() {
+    	System.out.println("scheduler is running");
     }
 }
