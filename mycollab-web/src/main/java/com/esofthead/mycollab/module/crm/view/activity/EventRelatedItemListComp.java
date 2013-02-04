@@ -24,7 +24,7 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author haiphucnguyen
  */
-public class EventRelatedItemListComp extends RelatedListComp<EventSearchCriteria> {
+public class EventRelatedItemListComp extends RelatedListComp<SimpleEvent, EventSearchCriteria> {
 
     private final boolean allowCreateNew;
 

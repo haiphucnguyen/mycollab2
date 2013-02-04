@@ -20,16 +20,16 @@ import org.apache.commons.beanutils.PropertyUtils;
  *
  * @author haiphucnguyen
  */
-public abstract class RelatedItemSelectionWindow<S extends SearchCriteria> extends Window {
+public abstract class RelatedItemSelectionWindow<T, S extends SearchCriteria> extends Window {
     
     private static final String selectedFieldName = "selected";
     
-    protected RelatedListComp<S> relatedListComp;
-    protected IPagedBeanTable<S, ?> tableItem;
+    protected RelatedListComp<T, S> relatedListComp;
+    protected IPagedBeanTable<S, T> tableItem;
     protected Set selectedItems = new HashSet();
     protected VerticalLayout bodyContent;
     
-    public RelatedItemSelectionWindow(String title, RelatedListComp<S> relatedList) {
+    public RelatedItemSelectionWindow(String title, RelatedListComp<T, S> relatedList) {
         super(title);
         center();
         bodyContent = new VerticalLayout();

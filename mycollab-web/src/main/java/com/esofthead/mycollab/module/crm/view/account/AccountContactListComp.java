@@ -25,7 +25,7 @@ import com.vaadin.ui.VerticalLayout;
 import java.util.Set;
 import org.vaadin.hene.splitbutton.SplitButton;
 
-public class AccountContactListComp extends RelatedListComp<ContactSearchCriteria> {
+public class AccountContactListComp extends RelatedListComp<SimpleContact, ContactSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
     private Account account;
@@ -39,8 +39,6 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
         this.account = account;
         loadContacts();
     }
-    
-    
 
     private void loadContacts() {
         ContactSearchCriteria criteria = new ContactSearchCriteria();
@@ -145,12 +143,10 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
     @Override
     public void setSelectedItems(Set selectedItems) {
         fireSelectedRelatedItems(selectedItems);
-
-        loadContacts();
     }
 
     @Override
     public void refresh() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        loadContacts();
     }
 }

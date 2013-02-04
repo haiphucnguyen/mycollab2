@@ -17,7 +17,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
-public class AccountOpportunityListComp extends RelatedListComp<OpportunitySearchCriteria> {
+public class AccountOpportunityListComp extends RelatedListComp<SimpleOpportunity, OpportunitySearchCriteria> {
 
     private static final long serialVersionUID = 1L;
 
