@@ -39,5 +39,6 @@ public class BugHistoryList extends Depot {
         historyLogComponent.generateFieldDisplayHandler("loguserFullName", "Logged by");
         historyLogComponent.generateFieldDisplayHandler("assignuserFullName", "Assigned to");
         historyLogComponent.generateFieldDisplayHandler("assignuser", "Assigned to");
+        historyLogComponent.generateFieldDisplayHandler("milestoneid", "Milestone");
     }
 }

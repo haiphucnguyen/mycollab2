@@ -21,6 +21,7 @@ import java.util.List;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class MilestoneComboBox extends ComboBox {
 
     public MilestoneComboBox() {

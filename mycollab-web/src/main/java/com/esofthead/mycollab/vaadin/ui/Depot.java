@@ -33,9 +33,9 @@ public class Depot extends VerticalLayout {
 		CssLayout headerLeft = new CssLayout();
 		headerLbl = new Label(title);
 		headerLbl.setStyleName("h2");
-		headerLbl.setWidth("250px");
 		headerLeft.addComponent(headerLbl);
 		headerLeft.setStyleName("depot-title");
+		headerLeft.setWidth("250px");
 		headerLeft.addListener(new LayoutClickListener() {
 			private static final long serialVersionUID = 1L;
 

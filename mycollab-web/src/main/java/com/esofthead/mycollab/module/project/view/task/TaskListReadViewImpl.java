@@ -4,10 +4,17 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import org.vaadin.hene.popupbutton.PopupButton;
+
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -17,12 +24,14 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.ProgressIndicator;
@@ -127,10 +136,94 @@ public class TaskListReadViewImpl extends AbstractView implements TaskListReadVi
         }
     }
 
-    private class TaskDepot extends Depot {
+    @SuppressWarnings("serial")
+	private class TaskDepot extends Depot {
 
+    	private TaskDisplayComponent taskDisplayComponent;
         public TaskDepot() {
-            super("Tasks", new TaskDisplayComponent(taskList, false));
+            super("Tasks", new HorizontalLayout(), new TaskDisplayComponent(taskList, false));
+            this.addStyleName("task-list");
+            initHeader();
+            taskDisplayComponent = (TaskDisplayComponent) this.bodyContent;
+        }
+        
+		private void initHeader() {
+        	HorizontalLayout headerLayout = (HorizontalLayout) this.headerContent;
+            headerLayout.setSpacing(true);
+            
+            final PopupButton taskListFilterControl;
+            taskListFilterControl = new PopupButton("Active Tasks");
+            taskListFilterControl.setWidth("120px");
+            taskListFilterControl.addStyleName("link");
+
+            VerticalLayout filterBtnLayout = new VerticalLayout();
+            filterBtnLayout.setMargin(true);
+            filterBtnLayout.setSpacing(true);
+            filterBtnLayout.setWidth("200px");
+
+            Button allTasksFilterBtn = new Button("All Tasks",
+                    new Button.ClickListener() {
+                        @Override
+                        public void buttonClick(ClickEvent event) {
+                            taskListFilterControl.setPopupVisible(false);
+                            taskListFilterControl.setCaption("All Tasks");
+                            displayAllTasks();
+                        }
+                    });
+            allTasksFilterBtn.setStyleName("link");
+            filterBtnLayout.addComponent(allTasksFilterBtn);
+
+            Button activeTasksFilterBtn = new Button("Active Tasks Only",
+                    new Button.ClickListener() {
+                        @Override
+                        public void buttonClick(ClickEvent event) {
+                            taskListFilterControl.setPopupVisible(false);
+                            taskListFilterControl.setCaption("Active Tasks");
+                            displayActiveTasksOnly();
+                        }
+                    });
+            activeTasksFilterBtn.setStyleName("link");
+            filterBtnLayout.addComponent(activeTasksFilterBtn);
+
+            Button archievedTasksFilterBtn = new Button("Archieved Tasks Only",
+                    new Button.ClickListener() {
+                        @Override
+                        public void buttonClick(ClickEvent event) {
+                            taskListFilterControl.setCaption("Archieved Tasks");
+                            taskListFilterControl.setPopupVisible(false);
+                            displayInActiveTasks();
+                        }
+                    });
+            archievedTasksFilterBtn.setStyleName("link");
+            filterBtnLayout.addComponent(archievedTasksFilterBtn);
+            taskListFilterControl.addComponent(filterBtnLayout);
+            headerLayout.addComponent(taskListFilterControl);
+        }
+        
+        private TaskSearchCriteria createBaseSearchCriteria() {
+            SimpleProject project = (SimpleProject) AppContext
+                    .getVariable(ProjectContants.PROJECT_NAME);
+            TaskSearchCriteria criteria = new TaskSearchCriteria();
+            criteria.setProjectid(new NumberSearchField(project.getId()));
+            criteria.setTaskListId(new NumberSearchField(taskList.getId()));
+            return criteria;
+        }
+        
+        private void displayActiveTasksOnly() {
+            TaskSearchCriteria criteria = createBaseSearchCriteria();
+            criteria.setStatus(new StringSearchField("Open"));
+            taskDisplayComponent.setSearchCriteria(criteria);
+        }
+
+        private void displayAllTasks() {
+            TaskSearchCriteria criteria = createBaseSearchCriteria();
+            taskDisplayComponent.setSearchCriteria(criteria);
+        }
+
+        private void displayInActiveTasks() {
+            TaskSearchCriteria criteria = createBaseSearchCriteria();
+            criteria.setStatus(new StringSearchField("Closed"));
+            taskDisplayComponent.setSearchCriteria(criteria);
         }
     }
 
