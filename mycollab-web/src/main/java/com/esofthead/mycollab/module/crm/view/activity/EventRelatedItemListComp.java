@@ -117,4 +117,9 @@ public class EventRelatedItemListComp extends RelatedListComp<EventSearchCriteri
 
         contentContainer.addComponent(tableItem);
     }
+
+    @Override
+    public void refresh() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

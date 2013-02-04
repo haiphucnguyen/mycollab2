@@ -33,7 +33,7 @@ public class AccountContactSelectionWindow extends RelatedItemSelectionWindow<Co
 
             @Override
             public void buttonClick(ClickEvent event) {
-                
+                close();
             }
         });
         selectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

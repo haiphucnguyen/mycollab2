@@ -18,7 +18,7 @@ import java.util.Set;
  *
  * @author haiphucnguyen
  */
-public class RelatedListComp<S extends SearchCriteria> extends Depot implements IRelatedListHandlers {
+public abstract class RelatedListComp<S extends SearchCriteria> extends Depot implements IRelatedListHandlers {
 
     protected Set<RelatedListHandler> handlers;
     protected IPagedBeanTable<S, ?> tableItem;

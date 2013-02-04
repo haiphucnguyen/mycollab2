@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.account;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Call;
@@ -132,6 +133,10 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 
                     @Override
                     public void selectAssociateItems(Set items) {
+                        for (Object obj : items) {
+                            SimpleContact contact = (SimpleContact)obj;
+                            System.out.println("Selected item: " + BeanUtility.printBeanObj(contact));
+                        }
                         super.selectAssociateItems(items);
                     }
                 });

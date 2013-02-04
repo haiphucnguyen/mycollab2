@@ -111,4 +111,9 @@ public class ContactOpportunityListComp extends RelatedListComp<OpportunitySearc
 
         contentContainer.addComponent(tableItem);
     }
+
+    @Override
+    public void refresh() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

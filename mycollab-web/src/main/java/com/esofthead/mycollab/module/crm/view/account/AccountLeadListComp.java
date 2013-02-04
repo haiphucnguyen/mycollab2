@@ -95,4 +95,9 @@ public class AccountLeadListComp extends RelatedListComp<LeadSearchCriteria> {
 
         contentContainer.addComponent(tableItem);
     }
+
+    @Override
+    public void refresh() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

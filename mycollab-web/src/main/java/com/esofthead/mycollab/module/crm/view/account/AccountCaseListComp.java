@@ -74,4 +74,9 @@ public class AccountCaseListComp extends RelatedListComp<CaseSearchCriteria> {
 
         contentContainer.addComponent(tableItem);
     }
+
+    @Override
+    public void refresh() {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
 }

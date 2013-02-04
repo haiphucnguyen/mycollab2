@@ -33,6 +33,7 @@ public abstract class RelatedItemSelectionWindow<S extends SearchCriteria> exten
         super(title);
         center();
         bodyContent = new VerticalLayout();
+        bodyContent.setMargin(true);
         bodyContent.setSpacing(true);
         this.setContent(bodyContent);
         this.relatedListComp = relatedList;

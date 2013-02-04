@@ -39,6 +39,8 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
         this.account = account;
         loadContacts();
     }
+    
+    
 
     private void loadContacts() {
         ContactSearchCriteria criteria = new ContactSearchCriteria();
@@ -145,5 +147,10 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
         fireSelectedRelatedItems(selectedItems);
 
         loadContacts();
+    }
+
+    @Override
+    public void refresh() {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }
