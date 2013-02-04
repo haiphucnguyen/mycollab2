@@ -59,6 +59,7 @@ public class TaskTableDisplay extends BeanTable<ProjectTaskService, TaskSearchCr
                 final SimpleTask task = TaskTableDisplay.this.getBeanByIndex(itemId);
                 Double percomp = (task.getPercentagecomplete() == null) ? new Double(0) : task.getPercentagecomplete() / 100;
                 ProgressIndicator progress = new ProgressIndicator(new Float(percomp));
+                progress.setPollingInterval(1000*60*60*24);
                 progress.setWidth("100px");
                 return progress;
             }
@@ -95,7 +96,7 @@ public class TaskTableDisplay extends BeanTable<ProjectTaskService, TaskSearchCr
             public com.vaadin.ui.Component generateCell(Table source,
                     final Object itemId, Object columnId) {
                 final SimpleTask task = TaskTableDisplay.this.getBeanByIndex(itemId);
-                if (task.getPercentagecomplete() != null && task.getPercentagecomplete() != 100) {
+                if ((task.getPercentagecomplete() != null && task.getPercentagecomplete() != 100) || task.getPercentagecomplete() == null) {
                     Button b = new Button(null,
                             new Button.ClickListener() {
                                 private static final long serialVersionUID = 1L;

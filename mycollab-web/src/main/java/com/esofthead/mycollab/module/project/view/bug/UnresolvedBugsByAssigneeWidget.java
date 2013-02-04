@@ -42,6 +42,7 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
                 }
                 assigneeLayout.addComponent(userLbl);
                 ProgressIndicator indicator = new ProgressIndicator(new Float((float)item.getValue() / totalCount));
+                indicator.setPollingInterval(1000*60*60*24);
                 assigneeLayout.addComponent(indicator);
                 
                 Label progressLbl = new Label("(" + item.getValue() + "/" + totalCount + ")");

@@ -79,9 +79,9 @@ public class TaskDisplayComponent extends CssLayout {
         }
 
 
-        taskDisplay = new TaskTableDisplay(new String[]{"taskname",
+        taskDisplay = new TaskTableDisplay(new String[]{"id", "taskname",
                     "startdate", "deadline", "percentagecomplete", "assignUserFullName"}, new String[]{
-                    "Task Name", "Start", "Due", "% Complete", "Owner"});
+                    "", "Task Name", "Start", "Due", "% Complete", "Owner"});
         this.addComponent(taskDisplay);
 
         taskDisplay
