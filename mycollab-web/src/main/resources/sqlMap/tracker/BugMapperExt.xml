@@ -20,6 +20,11 @@
             column="projectname"
             jdbcType="VARCHAR"
             property="projectname" />
+        
+        <result
+            column="milestoneName"
+            jdbcType="VARCHAR"
+            property="milestoneName" />
 
         <collection
             columnPrefix="affectedversion_"

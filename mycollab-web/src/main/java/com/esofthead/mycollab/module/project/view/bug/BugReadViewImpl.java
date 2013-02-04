@@ -1,16 +1,12 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.peter.buttongroup.ButtonGroup;
-
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
+import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -35,37 +31,40 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.peter.buttongroup.ButtonGroup;
 
 @ViewComponent
 public class BugReadViewImpl extends AbstractView implements BugReadView {
-    
+
     private static final long serialVersionUID = 1L;
     private static Logger log = LoggerFactory.getLogger(BugReadViewImpl.class);
     private SimpleBug bug;
     private BugPreviewForm previewForm;
     private HorizontalLayout bugWorkflowControl;
-    
+
     public BugReadViewImpl() {
         super();
-        
+
         previewForm = new BugPreviewForm();
         this.addComponent(previewForm);
     }
-    
+
     @Override
     public void previewItem(SimpleBug item) {
         this.bug = item;
         previewForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
     }
-    
+
     @Override
     public SimpleBug getItem() {
         return bug;
     }
-    
+
     private void displayWorkflowControl() {
         if (BugStatusConstants.OPEN.equals(bug.getStatus()) || BugStatusConstants.REOPENNED.equals(bug.getStatus())) {
             bugWorkflowControl.removeAllComponents();
@@ -127,7 +126,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
             navButton.addButton(new Button("Approve & Close", new Button.ClickListener() {
                 @Override
                 public void buttonClick(ClickEvent event) {
-                   AppContext.getApplication().getMainWindow().addWindow(new ApproveInputWindow(bug));
+                    AppContext.getApplication().getMainWindow().addWindow(new ApproveInputWindow(bug));
                 }
             }));
             bugWorkflowControl.addComponent(navButton);
@@ -140,15 +139,15 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                     AppContext.getApplication().getMainWindow().addWindow(new ReOpenWindow(bug));
                 }
             }));
-            
+
             bugWorkflowControl.addComponent(navButton);
         }
     }
-    
+
     private class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
-        
+
         private BugHistoryList historyList;
-        
+
         @Override
         public void setItemDataSource(Item newDataSource) {
             this.setFormLayoutFactory(new FormLayoutFactory());
@@ -156,23 +155,23 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
             super.setItemDataSource(newDataSource);
             displayWorkflowControl();
         }
-        
+
         private class FormLayoutFactory implements IFormLayoutFactory {
-            
+
             private GridFormLayoutHelper informationLayout;
-            
+
             @Override
             public Layout getLayout() {
                 AddViewLayout taskListAddLayout = new AddViewLayout(bug.getSummary(), new ThemeResource("icons/48/project/bug.png"));
-                
+
                 HorizontalLayout topPanel = new HorizontalLayout();
                 topPanel.setSpacing(true);
                 topPanel.setMargin(true);
                 topPanel.setWidth("100%");
-                
+
                 HorizontalLayout buttonControls = new HorizontalLayout();
                 buttonControls.setSpacing(true);
-                
+
                 Button assignBtn = new Button("Assign", new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
@@ -182,7 +181,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                 assignBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
                 buttonControls.addComponent(assignBtn);
                 buttonControls.setComponentAlignment(assignBtn, Alignment.MIDDLE_CENTER);
-                
+
                 Button editBtn = new Button("Edit", new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
@@ -192,7 +191,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                 editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
                 buttonControls.addComponent(editBtn);
                 buttonControls.setComponentAlignment(editBtn, Alignment.MIDDLE_CENTER);
-                
+
                 Button deleteBtn = new Button("Delete", new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
@@ -201,7 +200,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                                 "Are you sure to delete this item: " + bug.getSummary() + " ?",
                                 "Yes", "No", new ConfirmDialog.Listener() {
                             private static final long serialVersionUID = 1L;
-                            
+
                             @Override
                             public void onClose(ConfirmDialog dialog) {
                                 if (dialog.isConfirmed()) {
@@ -218,36 +217,36 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                 deleteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
                 buttonControls.addComponent(deleteBtn);
                 buttonControls.setComponentAlignment(deleteBtn, Alignment.MIDDLE_CENTER);
-                
+
                 topPanel.addComponent(buttonControls);
                 topPanel.setComponentAlignment(buttonControls, Alignment.MIDDLE_CENTER);
                 topPanel.setExpandRatio(buttonControls, 1);
-                
+
                 bugWorkflowControl = new HorizontalLayout();
                 topPanel.addComponent(bugWorkflowControl);
                 topPanel.setComponentAlignment(bugWorkflowControl, Alignment.MIDDLE_RIGHT);
-                
-                
+
+
                 taskListAddLayout.addTopControls(topPanel);
-                
+
                 informationLayout = new GridFormLayoutHelper(2, 11);
                 taskListAddLayout.addBody(informationLayout.getLayout());
-                
+
                 taskListAddLayout.addBottomControls(createBottomLayout());
                 return taskListAddLayout;
             }
-            
+
             private ComponentContainer createBottomLayout() {
                 VerticalLayout bottomLayout = new VerticalLayout();
                 historyList = new BugHistoryList(bug.getId());
                 bottomLayout.addComponent(historyList);
-                
+
                 CommentListDepot commentList = new CommentListDepot(CommentTypeConstants.PRJ_BUG, bug.getId());
                 bottomLayout.addComponent(commentList);
-                
+
                 return bottomLayout;
             }
-            
+
             @Override
             public void attachField(Object propertyId, Field field) {
                 if (propertyId.equals("summary")) {
@@ -272,7 +271,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                     informationLayout.addComponent(field, "Assigned to", 1, 5);
                 } else if (propertyId.equals("milestoneName")) {
                     informationLayout.addComponent(field, "Milestone", 0, 6);
-                }else if (propertyId.equals("components")) {
+                } else if (propertyId.equals("components")) {
                     informationLayout.addComponent(field, "Components", 0, 7, 2, "100%");
                 } else if (propertyId.equals("affectedVersions")) {
                     informationLayout.addComponent(field, "Affected Versions", 0, 8, 2, "100%");
@@ -283,11 +282,11 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                 }
             }
         }
-        
+
         private class PreviewFormFieldFactory extends DefaultFormViewFieldFactory {
-            
+
             private static final long serialVersionUID = 1L;
-            
+
             @Override
             protected Field onCreateField(Item item, Object propertyId,
                     com.vaadin.ui.Component uiContext) {
@@ -339,9 +338,18 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                     }
                     return componentContainer;
                 } else if (propertyId.equals("milestoneName")) {
-                	FormContainerViewField componentContainer = new FormContainerViewField();
-                    componentContainer.addComponentField(new Label(bug.getMilestoneName()));
-                    return componentContainer;
+                    if (bug.getMilestoneid() != null) {
+                        FormLinkViewField componentContainer = new FormLinkViewField(bug.getMilestoneName(), new Button.ClickListener() {
+                            @Override
+                            public void buttonClick(ClickEvent event) {
+                                EventBus.getInstance().fireEvent(new MilestoneEvent.GotoRead(BugReadViewImpl.this, bug.getMilestoneid()));
+                            }
+                        });
+                        return componentContainer;
+                    } else {
+                        return new FormViewField("");
+                    }
+
                 }
                 return null;
             }
