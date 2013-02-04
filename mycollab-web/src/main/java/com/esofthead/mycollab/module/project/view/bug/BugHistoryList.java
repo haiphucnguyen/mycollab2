@@ -14,6 +14,7 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class BugHistoryList extends Depot {
 
     private HistoryLogComponent historyLogComponent;
@@ -29,5 +30,14 @@ public class BugHistoryList extends Depot {
         historyLogComponent.generateFieldDisplayHandler("description", "Description");
         historyLogComponent.generateFieldDisplayHandler("summary", "Summary");
         historyLogComponent.generateFieldDisplayHandler("detail", "Detail");
+        historyLogComponent.generateFieldDisplayHandler("status", "Status");
+        historyLogComponent.generateFieldDisplayHandler("priority", "Priority");
+        historyLogComponent.generateFieldDisplayHandler("severity", "Severity");
+        historyLogComponent.generateFieldDisplayHandler("resolution", "Resolution");
+        historyLogComponent.generateFieldDisplayHandler("duedate", "Due Date", HistoryLogComponent.DATE_FIELD);
+        historyLogComponent.generateFieldDisplayHandler("createdTime", "Created Time", HistoryLogComponent.DATE_FIELD);
+        historyLogComponent.generateFieldDisplayHandler("loguserFullName", "Logged by");
+        historyLogComponent.generateFieldDisplayHandler("assignuserFullName", "Assigned to");
+        historyLogComponent.generateFieldDisplayHandler("assignuser", "Assigned to");
     }
 }

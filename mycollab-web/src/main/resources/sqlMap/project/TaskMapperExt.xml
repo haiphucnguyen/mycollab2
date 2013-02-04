@@ -11,6 +11,10 @@
     </resultMap>
 
     <sql id="querySearchCriteria">
+    	<if test="id != null">
+            <![CDATA[${id.operation} m_prj_task.id ${id.compareOperator} #{id.value,javaType=INTEGER}]]>
+        </if>
+        
         <if test="projectid != null">
             <![CDATA[
                 ${projectid.operation} m_prj_task.projectid=#{projectid.value,javaType=INTEGER}
@@ -85,5 +89,25 @@
             refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.selectTask" />
 
         WHERE m_prj_task.id=#{taskId, javaType=INTEGER}
+    </select>
+    
+     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MIN(id) FROM m_prj_task
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria"/>
+        </trim>
+    </select>
+    
+    <select id="getPreviousItemKey" parameterType="map" resultType="java.lang.Integer">
+        SELECT MAX(id) FROM m_prj_task
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include 
+                refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria"/>
+        </trim>
     </select>
 </mapper>
