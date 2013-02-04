@@ -95,7 +95,7 @@ public class TaskTableDisplay extends BeanTable<ProjectTaskService, TaskSearchCr
             public com.vaadin.ui.Component generateCell(Table source,
                     final Object itemId, Object columnId) {
                 final SimpleTask task = TaskTableDisplay.this.getBeanByIndex(itemId);
-                if (task.getPercentagecomplete() != null && task.getPercentagecomplete() != 100) {
+                if ((task.getPercentagecomplete() != null && task.getPercentagecomplete() != 100) || task.getPercentagecomplete() == null) {
                     Button b = new Button(null,
                             new Button.ClickListener() {
                                 private static final long serialVersionUID = 1L;
