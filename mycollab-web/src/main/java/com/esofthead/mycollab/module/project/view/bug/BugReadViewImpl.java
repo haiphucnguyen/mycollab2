@@ -228,7 +228,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                 
                 taskListAddLayout.addTopControls(topPanel);
                 
-                informationLayout = new GridFormLayoutHelper(2, 10);
+                informationLayout = new GridFormLayoutHelper(2, 11);
                 taskListAddLayout.addBody(informationLayout.getLayout());
                 
                 taskListAddLayout.addBottomControls(createBottomLayout());
@@ -268,14 +268,16 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                     informationLayout.addComponent(field, "Logged by", 0, 5);
                 } else if (propertyId.equals("assignuserFullName")) {
                     informationLayout.addComponent(field, "Assigned to", 1, 5);
-                } else if (propertyId.equals("components")) {
-                    informationLayout.addComponent(field, "Components", 0, 6, 2, "100%");
+                } else if (propertyId.equals("milestoneid")) {
+                    informationLayout.addComponent(field, "Milestone", 0, 6);
+                }else if (propertyId.equals("components")) {
+                    informationLayout.addComponent(field, "Components", 0, 7, 2, "100%");
                 } else if (propertyId.equals("affectedVersions")) {
-                    informationLayout.addComponent(field, "Affected Versions", 0, 7, 2, "100%");
+                    informationLayout.addComponent(field, "Affected Versions", 0, 8, 2, "100%");
                 } else if (propertyId.equals("fixedVersions")) {
-                    informationLayout.addComponent(field, "Fixed Versions", 0, 8, 2, "100%");
+                    informationLayout.addComponent(field, "Fixed Versions", 0, 9, 2, "100%");
                 } else if (propertyId.equals("id")) {
-                    informationLayout.addComponent(field, "Attachments", 0, 9, 2, "100%");
+                    informationLayout.addComponent(field, "Attachments", 0, 10, 2, "100%");
                 }
             }
         }
