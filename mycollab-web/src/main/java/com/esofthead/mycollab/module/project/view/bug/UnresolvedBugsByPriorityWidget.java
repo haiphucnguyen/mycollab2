@@ -47,6 +47,7 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 						priorityLayout.addComponent(userLbl);
 						ProgressIndicator indicator = new ProgressIndicator(
 								new Float((float) item.getValue() / totalCount));
+                                                indicator.setPollingInterval(1000*60*60*24);
 						priorityLayout.addComponent(indicator);
 
 						Label progressLbl = new Label("(" + item.getValue()

@@ -59,6 +59,7 @@ public class TaskTableDisplay extends BeanTable<ProjectTaskService, TaskSearchCr
                 final SimpleTask task = TaskTableDisplay.this.getBeanByIndex(itemId);
                 Double percomp = (task.getPercentagecomplete() == null) ? new Double(0) : task.getPercentagecomplete() / 100;
                 ProgressIndicator progress = new ProgressIndicator(new Float(percomp));
+                progress.setPollingInterval(1000*60*60*24);
                 progress.setWidth("100px");
                 return progress;
             }
