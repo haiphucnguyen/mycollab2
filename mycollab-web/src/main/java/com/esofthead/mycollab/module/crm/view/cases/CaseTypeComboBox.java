@@ -9,6 +9,6 @@ public class CaseTypeComboBox extends ValueComboBox{
 	public CaseTypeComboBox() {
 		super();
 		setCaption(null);
-		this.loadData(CrmDataTypeFactory.getCasesStatusList());
+		this.loadData(CrmDataTypeFactory.getCasesType());
 	}
 }

@@ -39,7 +39,7 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
         this.account = account;
         loadContacts();
     }
-    
+
     private void loadContacts() {
         ContactSearchCriteria criteria = new ContactSearchCriteria();
         criteria.setSaccountid(new NumberSearchField(SearchField.AND,
@@ -48,7 +48,6 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
                 .getId()));
         this.setSearchCriteria(criteria);
     }
-    
 
     @SuppressWarnings("serial")
     private void initUI() {
@@ -110,11 +109,15 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
             @Override
             public Object generateCell(Table source, Object itemId,
                     Object columnId) {
+                final SimpleContact contact = (SimpleContact) tableItem.getBeanByIndex(itemId);
                 HorizontalLayout controlLayout = new HorizontalLayout();
                 Button editBtn = new Button(null, new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        throw new UnsupportedOperationException("Not supported yet.");
+                        EventBus.getInstance().fireEvent(
+                                new ContactEvent.GotoRead(
+                                AccountContactListComp.this, contact
+                                .getId()));
                     }
                 });
                 editBtn.setStyleName("link");
@@ -140,9 +143,7 @@ public class AccountContactListComp extends RelatedListComp<ContactSearchCriteri
     @Override
     public void setSelectedItems(Set selectedItems) {
         fireSelectedRelatedItems(selectedItems);
-        
+
         loadContacts();
     }
-    
-    
 }

@@ -24,48 +24,6 @@
                 ${accountId.operation} m_crm_account.id ${accountId.compareOperator} #{accountId.value,javaType=INTEGER}
             ]]>
         </if>
-        <if test="opportunityId != null">
-            <![CDATA[${opportunityId.operation}
-                (SELECT COUNT(*) 
-                    FROM m_crm_type_relationship, m_crm_opportunity
-                    WHERE m_crm_type_relationship.type=2 AND m_crm_contact.id= m_crm_type_relationship.type1id 
-                        AND m_crm_type_relationship.type2id=m_crm_opportunity.id 
-                        AND m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER}) > 0
-             ]]>
-        </if>
-        <if test="contractId != null">
-            <![CDATA[
-                ${contractId.operation}
-                (SELECT COUNT(*) 
-                    FROM m_crm_type_relationship, m_crm_contract
-                    WHERE m_crm_type_relationship.type=7 
-                        AND m_crm_contact.id=m_crm_type_relationship.type2id 
-                        AND m_crm_contract.id=m_crm_type_relationship.type1id
-                        AND m_crm_contract.id=#{contractId.value,javaType=INTEGER}) > 0
-            ]]>
-        </if>
-        <if test="caseId != null">
-            <![CDATA[
-                ${caseId.operation}
-                (SELECT COUNT(*) 
-                    FROM m_crm_type_relationship, m_crm_case
-                    WHERE m_crm_type_relationship.type=8 
-                        AND m_crm_contact.id=m_crm_type_relationship.type2id 
-                        AND m_crm_case.id=m_crm_type_relationship.type1id
-                        AND m_crm_case.id=#{caseId.value,javaType=INTEGER}) > 0
-            ]]>
-        </if>
-        <if test="targetListId != null">
-            <![CDATA[
-                ${targetListId.operation}
-                (SELECT COUNT(*) 
-                 FROM m_crm_type_relationship, m_crm_target_list
-                 WHERE m_crm_type_relationship.type=11 
-                     AND m_crm_contact.id=m_crm_type_relationship.type2id 
-                     AND m_crm_target_list.id=m_crm_type_relationship.type1id
-                     AND m_crm_target_list.id=#{targetListId.value,javaType=INTEGER}) > 0
-            ]]>
-        </if>
         <if test="assignUserName != null">
             <![CDATA[
             ${assignUserName.operation}
@@ -163,50 +121,6 @@
                     AND m_crm_contact.id = m_crm_accounts_contacts.contactId
                     AND m_crm_account.id = m_crm_accounts_contacts.accountId) > 0
                 ]]>
-        </if>
-        <if test="opportunityId != null">
-            <![CDATA[
-                ${opportunityId.operation}
-                (SELECT COUNT(*) 
-                FROM m_crm_type_relationship, m_crm_opportunity
-                WHERE m_crm_type_relationship.type=2 
-                    AND m_crm_contact.id= m_crm_type_relationship.type1id 
-                    AND m_crm_type_relationship.type2id=m_crm_opportunity.id 
-                    AND m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER}) > 0
-             ]]>
-        </if>
-        <if test="contractId != null">
-            <![CDATA[
-                ${contractId.operation}
-                (SELECT COUNT(*) 
-                 FROM m_crm_type_relationship, m_crm_contract
-                 WHERE m_crm_type_relationship.type=7 
-                     AND m_crm_contact.id=m_crm_type_relationship.type2id 
-                     AND m_crm_contract.id=m_crm_type_relationship.type1id
-                     AND m_crm_contract.id=#{contractId.value,javaType=INTEGER}) > 0
-            ]]>
-        </if>
-        <if test="caseId != null">
-            <![CDATA[
-                ${caseId.operation}
-                (SELECT COUNT(*) 
-                 FROM m_crm_type_relationship, m_crm_case
-                 WHERE m_crm_type_relationship.type=8 
-                     AND m_crm_contact.id=m_crm_type_relationship.type2id 
-                     AND m_crm_case.id=m_crm_type_relationship.type1id
-                     AND m_crm_case.id=#{caseId.value,javaType=INTEGER}) > 0
-            ]]>
-        </if>
-        <if test="targetListId != null">
-            <![CDATA[
-                ${targetListId.operation}
-                (SELECT COUNT(*) 
-                 FROM m_crm_type_relationship, m_crm_target_list
-                 WHERE m_crm_type_relationship.type=11 
-                     AND m_crm_contact.id=m_crm_type_relationship.type2id 
-                     AND m_crm_target_list.id=m_crm_type_relationship.type1id
-                     AND m_crm_target_list.id=#{targetListId.value,javaType=INTEGER}) > 0
-            ]]>
         </if>
         <if test="assignUserName != null">
             <![CDATA[
