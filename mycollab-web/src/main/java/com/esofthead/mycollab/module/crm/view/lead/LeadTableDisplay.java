@@ -67,6 +67,11 @@ public class LeadTableDisplay extends PagedBeanTable2<LeadService, LeadSearchCri
                             }
                         });
                 b.addStyleName("medium-text");
+                
+                if ("Dead".equals(lead.getStatus())) {
+                    b.addStyleName(UIConstants.LINK_COMPLETED);
+                }
+                
                 return b;
             }
         });

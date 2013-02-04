@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.GregorianCalendar;
+
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
@@ -111,6 +113,10 @@ public class VersionListViewImpl extends AbstractView implements VersionListView
                             }
                         });
                 b.addStyleName("medium-text");
+                
+                if (bugVersion.getDuedate() != null && (bugVersion.getDuedate().before(new GregorianCalendar().getTime()))) {
+                    b.addStyleName(UIConstants.LINK_OVERDUE);
+                }
                 return b;
 
             }

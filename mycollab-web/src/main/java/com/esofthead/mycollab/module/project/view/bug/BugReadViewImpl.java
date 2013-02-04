@@ -1,5 +1,10 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.peter.buttongroup.ButtonGroup;
+
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
@@ -30,12 +35,9 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.peter.buttongroup.ButtonGroup;
 
 @ViewComponent
 public class BugReadViewImpl extends AbstractView implements BugReadView {
@@ -268,7 +270,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                     informationLayout.addComponent(field, "Logged by", 0, 5);
                 } else if (propertyId.equals("assignuserFullName")) {
                     informationLayout.addComponent(field, "Assigned to", 1, 5);
-                } else if (propertyId.equals("milestoneid")) {
+                } else if (propertyId.equals("milestoneName")) {
                     informationLayout.addComponent(field, "Milestone", 0, 6);
                 }else if (propertyId.equals("components")) {
                     informationLayout.addComponent(field, "Components", 0, 7, 2, "100%");
@@ -335,6 +337,10 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
                         componentContainer.addComponentField(versionLink);
                         versionLink.setStyleName("link");
                     }
+                    return componentContainer;
+                } else if (propertyId.equals("milestoneName")) {
+                	FormContainerViewField componentContainer = new FormContainerViewField();
+                    componentContainer.addComponentField(new Label(bug.getMilestoneName()));
                     return componentContainer;
                 }
                 return null;
