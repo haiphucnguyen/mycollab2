@@ -44,7 +44,9 @@ public class AccountTableDisplay extends PagedBeanTable2<AccountService, Account
                         SimpleAccount account = AccountTableDisplay.this
                                 .getBeanByIndex(itemId);
                         AccountTableDisplay.this.fireSelectItemEvent(account);
-
+                        fireTableEvent(new TableClickEvent(
+                                AccountTableDisplay.this, account,
+                                "selected"));
                     }
                 });
 

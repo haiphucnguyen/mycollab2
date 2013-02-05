@@ -26,8 +26,8 @@ public class CampaignAccountSelectionWindow extends RelatedItemSelectionWindow<S
     @Override
     protected void initUI() {
         tableItem = new AccountTableDisplay(new String[]{"selected",
-                    "accountname", "title", "accountName", "officephone"}, new String[]{"", "Name", "Title",
-                    "Account Name", "Office Phone"});
+                    "accountname", "phoneoffice", "email", "city"}, 
+                new String[]{"", "Name", "Phone", "Email", "City"});
         
         Button selectBtn = new Button("Select", new Button.ClickListener() {
 

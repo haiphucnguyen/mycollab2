@@ -67,7 +67,7 @@ public class CampaignAccountListComp extends RelatedListComp<SimpleAccount, Acco
         final SplitButton controlsBtn = new SplitButton();
         controlsBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CONTACT));
         controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
-        controlsBtn.setCaption("New Contact");
+        controlsBtn.setCaption("New Account");
         controlsBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
         controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
             @Override
@@ -75,7 +75,7 @@ public class CampaignAccountListComp extends RelatedListComp<SimpleAccount, Acco
                 fireNewRelatedItem("");
             }
         });
-        Button selectBtn = new Button("Select from existing contacts", new Button.ClickListener() {
+        Button selectBtn = new Button("Select from existing accounts", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 CampaignAccountSelectionWindow accountsWindow = new CampaignAccountSelectionWindow(CampaignAccountListComp.this);
@@ -93,8 +93,8 @@ public class CampaignAccountListComp extends RelatedListComp<SimpleAccount, Acco
         contentContainer.addComponent(controlsBtn);
 
         tableItem = new AccountTableDisplay(
-                new String[]{"contactName", "title", "email", "officephone", "id"},
-                new String[]{"Name", "Title", "Email", "Office Phone", "Action"});
+                new String[]{"accountname", "phoneoffice", "email", "city", "id"},
+                new String[]{"Name", "Phone", "Email", "City", "Action"});
 
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override
