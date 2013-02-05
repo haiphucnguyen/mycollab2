@@ -36,6 +36,7 @@ public class AccountSearchCriteria extends SearchCriteria {
     private StringSearchField anyMail;
     private NumberSearchField saccountid;
     private NumberSearchField id;
+    private NumberSearchField campaignId;
 
     public StringSearchField getAnyMail() {
         return anyMail;
@@ -139,5 +140,13 @@ public class AccountSearchCriteria extends SearchCriteria {
 
     public void setId(NumberSearchField id) {
         this.id = id;
+    }
+
+    public NumberSearchField getCampaignId() {
+        return campaignId;
+    }
+
+    public void setCampaignId(NumberSearchField campaignId) {
+        this.campaignId = campaignId;
     }
 }

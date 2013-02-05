@@ -16,6 +16,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import java.util.Arrays;
+import java.util.GregorianCalendar;
 
 public class OpportunityAddPresenter extends CrmGenericPresenter<OpportunityAddView> {
 
@@ -76,6 +77,7 @@ public class OpportunityAddPresenter extends CrmGenericPresenter<OpportunityAddV
                 ContactOpportunity associateOpportunity = new ContactOpportunity();
                 associateOpportunity.setOpportunityid(opportunity.getId());
                 associateOpportunity.setContactid(((SimpleContact)opportunity.getExtraData()).getId());
+                associateOpportunity.setCreatedtime(new GregorianCalendar().getTime());
                 ContactService contactService = AppContext.getSpringBean(ContactService.class);
                 contactService.saveContactOpportunityRelationship(Arrays.asList(associateOpportunity));
             }

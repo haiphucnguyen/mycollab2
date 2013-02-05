@@ -5,5 +5,8 @@ import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 
 public interface CampaignAddView extends IFormAddView<Campaign> {
-	HasEditFormHandlers<Campaign> getEditFormHandlers();
+
+    HasEditFormHandlers<Campaign> getEditFormHandlers();
+    
+    
 }

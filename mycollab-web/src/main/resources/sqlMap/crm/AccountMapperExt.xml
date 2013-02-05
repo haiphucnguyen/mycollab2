@@ -63,6 +63,14 @@
         <if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_account.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
         </if>
+        <if test="campaignId != null">
+            <![CDATA[
+            ${campaignId.operation} 
+            (SELECT COUNT(*) 
+                FROM m_crm_campaign, m_crm_campaigns_accounts 
+                WHERE m_crm_campaign.id=#{campaignId.value,javaType=INTEGER} AND m_crm_account.id=m_crm_campaigns_accounts.accountId AND
+                    m_crm_campaigns_accounts.campaignId=#{campaignId.value,javaType=INTEGER}) > 0]]>
+        </if>
     </sql>
 
     <sql id="queryTotalCountSearchCriteria">
@@ -117,6 +125,14 @@
         </if>
         <if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_account.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
+        </if>
+        <if test="campaignId != null">
+            <![CDATA[
+            ${campaignId.operation} 
+            (SELECT COUNT(*) 
+                FROM m_crm_campaign, m_crm_campaigns_accounts 
+                WHERE m_crm_campaign.id=#{campaignId.value,javaType=INTEGER} AND m_crm_account.id=m_crm_campaigns_accounts.accountId AND
+                    m_crm_campaigns_accounts.campaignId=#{campaignId.value,javaType=INTEGER}) > 0]]>
         </if>
     </sql>
 

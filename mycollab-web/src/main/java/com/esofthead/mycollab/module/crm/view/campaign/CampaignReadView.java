@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.module.crm.domain.Campaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -10,4 +11,6 @@ public interface CampaignReadView extends IPreviewView<SimpleCampaign> {
 	HasPreviewFormHandlers<Campaign> getPreviewFormHandlers();
         
         IRelatedListHandlers getRelatedActivityHandlers();
+        
+        IRelatedListHandlers<SimpleAccount> getRelatedAccountHandlers();
 }
