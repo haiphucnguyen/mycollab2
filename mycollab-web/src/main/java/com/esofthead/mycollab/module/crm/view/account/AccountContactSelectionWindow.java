@@ -7,15 +7,19 @@ package com.esofthead.mycollab.module.crm.view.account;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
+import com.esofthead.mycollab.module.crm.view.contact.ContactSimpleSearchPanel;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableDisplay;
+import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.HorizontalLayout;
 
 /**
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class AccountContactSelectionWindow extends RelatedItemSelectionWindow<SimpleContact, ContactSearchCriteria> {
 
     public AccountContactSelectionWindow(AccountContactListComp associateContactList) {
@@ -39,7 +43,21 @@ public class AccountContactSelectionWindow extends RelatedItemSelectionWindow<Si
         });
         selectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         
-        this.bodyContent.addComponent(selectBtn);
+        ContactSimpleSearchPanel contactSimpleSearchPanel = new ContactSimpleSearchPanel();
+        contactSimpleSearchPanel.addSearchHandler(new SearchHandler<ContactSearchCriteria>(){
+
+			@Override
+			public void onSearch(ContactSearchCriteria criteria) {
+				tableItem.setSearchCriteria(criteria);
+			}
+        	
+        });
+        
+        HorizontalLayout headerLayout = new HorizontalLayout();
+        headerLayout.addComponent(selectBtn);
+        headerLayout.addComponent(contactSimpleSearchPanel);
+        
+        this.bodyContent.addComponent(headerLayout);
         this.bodyContent.addComponent(tableItem);
     }
 }

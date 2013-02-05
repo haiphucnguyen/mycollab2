@@ -73,7 +73,6 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
 
             prefixFirstNameBox = new HorizontalLayout();
             prefixFirstNameBox.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-            prefixFirstNameBox.setSpacing(true);
             informationLayout.addComponent(prefixFirstNameBox, "First Name", 0, 0);
 
             Label addressHeader = new Label("Address Information");
@@ -96,10 +95,10 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
         public void attachField(Object propertyId, Field field) {
             if (propertyId.equals("prefixname")) {
                 prefixFirstNameBox.addComponent(field, 0);
-                field.setWidth("45px");
+                field.setWidth("50px");
             } else if (propertyId.equals("firstname")) {
                 prefixFirstNameBox.addComponent(field);
-                field.setWidth("145px");
+                field.setWidth("195px");
             }
 
             informationLayout.addComponent(propertyId.equals("lastname"), field,

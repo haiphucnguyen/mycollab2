@@ -37,6 +37,7 @@ public abstract class RelatedItemSelectionWindow<T, S extends SearchCriteria> ex
         bodyContent.setSpacing(true);
         this.setContent(bodyContent);
         this.relatedListComp = relatedList;
+        this.setModal(true);
         initUI();
         
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {

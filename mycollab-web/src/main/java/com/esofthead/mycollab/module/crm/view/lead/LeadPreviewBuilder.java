@@ -84,7 +84,7 @@ public class LeadPreviewBuilder extends VerticalLayout {
                 if (lead.getTitle() == null) {
                     return new FormViewField(lead.getFirstname());
                 } else {
-                    return new FormViewField(lead.getTitle() + " "
+                    return new FormViewField(lead.getTitle()
                             + lead.getFirstname());
                 }
             } else if (propertyId.equals("website")) {
