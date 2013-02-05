@@ -41,6 +41,7 @@ public class ContactSearchCriteria extends SearchCriteria {
     private StringSearchField anyPostalCode;
     private SetSearchField<String> leadSources;
     private NumberSearchField id;
+    private NumberSearchField campaignId;
 
     public StringSearchField getContactName() {
         return contactName;
@@ -184,5 +185,13 @@ public class ContactSearchCriteria extends SearchCriteria {
 
     public NumberSearchField getId() {
         return id;
+    }
+
+    public NumberSearchField getCampaignId() {
+        return campaignId;
+    }
+
+    public void setCampaignId(NumberSearchField campaignId) {
+        this.campaignId = campaignId;
     }
 }

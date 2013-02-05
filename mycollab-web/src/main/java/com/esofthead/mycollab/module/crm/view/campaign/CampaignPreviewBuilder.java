@@ -57,6 +57,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
         previewForm.setItemDataSource(new BeanItem<Campaign>(campaign));
         displayActivities();
         displayAccounts();
+        displayContacts();
     }
     
     private void displayActivities() {
@@ -69,6 +70,10 @@ public class CampaignPreviewBuilder extends VerticalLayout {
     
     private void displayAccounts() {
        associateAccountList.displayAccounts(campaign);
+    }
+    
+    private void displayContacts() {
+        associateContactList.displayContacts(campaign);
     }
     
     public SimpleCampaign getCampaign() {

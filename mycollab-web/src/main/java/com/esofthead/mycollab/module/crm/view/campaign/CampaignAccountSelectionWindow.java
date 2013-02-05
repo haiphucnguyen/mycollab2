@@ -17,8 +17,8 @@ import com.vaadin.ui.Button;
  */
 public class CampaignAccountSelectionWindow extends RelatedItemSelectionWindow<SimpleAccount, AccountSearchCriteria> {
 
-    public CampaignAccountSelectionWindow(CampaignAccountListComp associateContactList) {
-        super("Select Accounts", associateContactList);
+    public CampaignAccountSelectionWindow(CampaignAccountListComp associateAccountList) {
+        super("Select Accounts", associateAccountList);
         
         this.setWidth("900px");
     }

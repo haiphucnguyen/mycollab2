@@ -22,11 +22,14 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.crm.dao.CampaignAccountMapper;
+import com.esofthead.mycollab.module.crm.dao.CampaignContactMapper;
 import com.esofthead.mycollab.module.crm.dao.CampaignMapper;
 import com.esofthead.mycollab.module.crm.dao.CampaignMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccountExample;
+import com.esofthead.mycollab.module.crm.domain.CampaignContact;
+import com.esofthead.mycollab.module.crm.domain.CampaignContactExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
@@ -48,6 +51,8 @@ public class CampaignServiceImpl extends DefaultService<Integer, Campaign, Campa
     private CampaignMapperExt campaignMapperExt;
     @Autowired
     private CampaignAccountMapper campaignAccountMapper;
+    @Autowired
+    private CampaignContactMapper campaignContactMapper;
     
     @Override
     public ICrudGenericDAO<Integer, Campaign> getCrudMapper() {
@@ -80,5 +85,23 @@ public class CampaignServiceImpl extends DefaultService<Integer, Campaign, Campa
         CampaignAccountExample ex = new CampaignAccountExample();
         ex.createCriteria().andAccountidEqualTo(associateAccount.getAccountid()).andCampaignidEqualTo(associateAccount.getCampaignid());
         campaignAccountMapper.deleteByExample(ex);
+    }
+    
+    @Override
+    public void saveCampaignContactRelationship(List<CampaignContact> associateContacts) {
+        for (CampaignContact associateContact : associateContacts) {
+            CampaignContactExample ex = new CampaignContactExample();
+            ex.createCriteria().andCampaignidEqualTo(associateContact.getCampaignid()).andContactidEqualTo(associateContact.getContactid());
+            if (campaignContactMapper.countByExample(ex) == 0) {
+                campaignContactMapper.insert(associateContact);
+            }
+        }
+    }
+    
+    @Override
+    public void removeCampaignContactRelationship(CampaignContact associateContact) {
+        CampaignContactExample ex = new CampaignContactExample();
+        ex.createCriteria().andCampaignidEqualTo(associateContact.getCampaignid()).andContactidEqualTo(associateContact.getContactid());
+        campaignContactMapper.deleteByExample(ex);
     }
 }

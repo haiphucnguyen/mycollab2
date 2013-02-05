@@ -1,7 +1,10 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import com.esofthead.mycollab.module.crm.domain.CampaignContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
@@ -12,6 +15,8 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import java.util.Arrays;
+import java.util.GregorianCalendar;
 
 public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 
@@ -68,11 +73,21 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
         contact.setSaccountid(AppContext.getAccountId());
         if (contact.getId() == null) {
             contactService.saveWithSession(contact, AppContext.getUsername());
+            
+            if (contact.getExtraData() != null && contact.getExtraData() instanceof SimpleCampaign) {
+                CampaignContact associateContact = new CampaignContact();
+                associateContact.setCampaignid(((SimpleCampaign)contact.getExtraData()).getId());
+                associateContact.setContactid(contact.getId());
+                associateContact.setCreatedtime(new GregorianCalendar().getTime());
+                
+                CampaignService campaignService = AppContext.getSpringBean(CampaignService.class);
+                campaignService.saveCampaignContactRelationship(Arrays.asList(associateContact));
+            }
         } else {
             contactService.updateWithSession(contact, AppContext.getUsername());
         }
-        
-        
+
+
 
     }
 }

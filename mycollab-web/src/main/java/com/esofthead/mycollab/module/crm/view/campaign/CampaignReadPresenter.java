@@ -6,14 +6,18 @@ import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Call;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
+import com.esofthead.mycollab.module.crm.domain.CampaignContact;
+import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
@@ -175,21 +179,54 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
             public void selectAssociateItems(Set<SimpleAccount> items) {
                 if (items.size() > 0) {
                     SimpleCampaign campaign = view.getItem();
-                    List<CampaignAccount> associateContacts = new ArrayList<CampaignAccount>();
+                    List<CampaignAccount> associateAccounts = new ArrayList<CampaignAccount>();
                     for (SimpleAccount account : items) {
                         CampaignAccount assoAccount = new CampaignAccount();
                         assoAccount.setAccountid(account.getId());
                         assoAccount.setCampaignid(campaign.getId());
                         assoAccount.setCreatedtime(new GregorianCalendar().getTime());
-                        associateContacts.add(assoAccount);
+                        associateAccounts.add(assoAccount);
                     }
 
                     CampaignService accountService = AppContext.getSpringBean(CampaignService.class);
-                    accountService.saveCampaignAccountRelationship(associateContacts);
+                    accountService.saveCampaignAccountRelationship(associateAccounts);
 
                     view.getRelatedAccountHandlers().refresh();
                 }
             }
+        });
+        
+        view.getRelatedContactHandlers().addRelatedListHandler(new AbstractRelatedListHandler<SimpleContact>() {
+
+            @Override
+            public void createNewRelatedItem(String itemId) {
+                Contact contact = new Contact();
+                contact.setExtraData(view.getItem());
+                EventBus.getInstance().fireEvent(new ContactEvent.GotoEdit(CampaignReadPresenter.this, contact));
+            }
+
+            @Override
+            public void selectAssociateItems(Set<SimpleContact> items) {
+                if (items.size() > 0) {
+                    SimpleCampaign campaign = view.getItem();
+                    List<CampaignContact> associateContacts = new ArrayList<CampaignContact>();
+                    for (SimpleContact contact : items) {
+                        CampaignContact associateContact = new CampaignContact();
+                        associateContact.setCampaignid(campaign.getId());
+                        associateContact.setContactid(contact.getId());
+                        associateContact.setCreatedtime(new GregorianCalendar().getTime());
+                        associateContacts.add(associateContact);
+                    }
+                    
+                    CampaignService campaignService = AppContext.getSpringBean(CampaignService.class);
+                    campaignService.saveCampaignContactRelationship(associateContacts);
+                    
+                    view.getRelatedContactHandlers().refresh();
+                }
+            }
+            
+            
+            
         });
 
 

@@ -4,10 +4,45 @@
  */
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
+import com.esofthead.mycollab.module.crm.view.account.AccountTableDisplay;
+import com.esofthead.mycollab.module.crm.view.contact.ContactTableDisplay;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.vaadin.ui.Button;
+
 /**
  *
  * @author haiphucnguyen
  */
-public class CampaignContactSelectionWindow {
+public class CampaignContactSelectionWindow extends RelatedItemSelectionWindow<SimpleContact, ContactSearchCriteria> {
+
+    public CampaignContactSelectionWindow(CampaignContactListComp associateContactList) {
+        super("Select Contacts", associateContactList);
+        
+        this.setWidth("900px");
+    }
+
+    @Override
+    protected void initUI() {
+        tableItem = new ContactTableDisplay(new String[]{"selected",
+                    "contactName", "email", "officephone", "accountName"}, 
+                new String[]{"", "Name", "Email", "Phone", "Account"});
+        
+        Button selectBtn = new Button("Select", new Button.ClickListener() {
+
+            @Override
+            public void buttonClick(Button.ClickEvent event) {
+                close();
+            }
+        });
+        selectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+        
+        this.bodyContent.addComponent(selectBtn);
+        this.bodyContent.addComponent(tableItem);
+    }
     
 }

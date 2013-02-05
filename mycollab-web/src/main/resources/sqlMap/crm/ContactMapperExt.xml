@@ -87,6 +87,14 @@
                 #{leadSource}
             </foreach>
         </if>
+        <if test="campaignId != null">
+            <![CDATA[${campaignId.operation} 
+                (SELECT COUNT(*) 
+                    FROM m_crm_campaign, m_crm_campaigns_contacts 
+                    WHERE m_crm_campaigns_contacts.campaignId=#{campaignId.value,javaType=INTEGER} AND m_crm_campaigns_contacts.contactId=m_crm_contact.id
+                        AND m_crm_campaign.id=#{campaignId.value,javaType=INTEGER}) > 0
+            ]]>
+        </if>
     </sql>
 
 
@@ -186,6 +194,14 @@
                          open="(" separator=",">
                 #{leadSource}
             </foreach>
+        </if>
+        <if test="campaignId != null">
+            <![CDATA[${campaignId.operation} 
+                (SELECT COUNT(*) 
+                    FROM m_crm_campaign, m_crm_campaigns_contacts 
+                    WHERE m_crm_campaigns_contacts.campaignId=#{campaignId.value,javaType=INTEGER} AND m_crm_campaigns_contacts.contactId=m_crm_contact.id
+                        AND m_crm_campaign.id=#{campaignId.value,javaType=INTEGER}) > 0
+            ]]>
         </if>
     </sql>
 

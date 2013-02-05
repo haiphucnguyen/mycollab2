@@ -20,6 +20,7 @@ package com.esofthead.mycollab.module.crm.service;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
+import com.esofthead.mycollab.module.crm.domain.CampaignContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import java.util.List;
@@ -32,4 +33,8 @@ public interface CampaignService extends
         void saveCampaignAccountRelationship(List<CampaignAccount> associateAccounts);
         
         void removeCampaignAccountRelationship(CampaignAccount associateAccount);
+        
+        void saveCampaignContactRelationship(List<CampaignContact> associateContacts);
+        
+        void removeCampaignContactRelationship(CampaignContact associateContact);
 }

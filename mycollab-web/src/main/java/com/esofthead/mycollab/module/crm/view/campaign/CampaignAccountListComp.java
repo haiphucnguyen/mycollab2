@@ -105,7 +105,7 @@ public class CampaignAccountListComp extends RelatedListComp<SimpleAccount, Acco
             @Override
             public void handle(TableClickEvent event) {
                 SimpleContact contact = (SimpleContact) event.getData();
-                if ("contactName".equals(event.getFieldName())) {
+                if ("accountname".equals(event.getFieldName())) {
                     EventBus.getInstance().fireEvent(
                             new ContactEvent.GotoRead(
                             CampaignAccountListComp.this, contact
