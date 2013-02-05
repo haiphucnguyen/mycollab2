@@ -52,6 +52,8 @@ public class DbLoggingAppender extends AppenderSkeleton {
 			AbstractWebApplicationContext context = (AbstractWebApplicationContext) AppContext
 					.getApplication().getContext();
 			record.setUseragent(context.getBrowser().getBrowserApplication());
+			
+			
 		} catch (Exception e) {
 				
 		}
