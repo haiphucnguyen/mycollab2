@@ -10,10 +10,10 @@ import java.util.Set;
  *
  * @author haiphucnguyen
  */
-public abstract class AbstractRelatedListHandler implements RelatedListHandler {
+public abstract class AbstractRelatedListHandler<T> implements RelatedListHandler<T> {
 
     @Override
-    public void selectAssociateItems(Set items) {
+    public void selectAssociateItems(Set<T> items) {
         
     }
     

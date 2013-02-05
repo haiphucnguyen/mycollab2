@@ -47,7 +47,6 @@ public class CallTableDisplay extends PagedBeanTable2<CallService, CallSearchCri
                                         .getId()));
                             }
                         });
-                b.addStyleName("medium-text");
                 return b;
                 
             }

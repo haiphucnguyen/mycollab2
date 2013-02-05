@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import java.util.GregorianCalendar;
+
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -45,6 +47,16 @@ public class TaskTableDisplay extends BeanTable<ProjectTaskService, TaskSearchCr
                             }
                         });
                 b.addStyleName("medium-text");
+                
+                if ("100d".equals(task.getPercentagecomplete())) {
+                    b.addStyleName(UIConstants.LINK_COMPLETED);
+                } else {
+                    if ((task.getEnddate() != null && (task.getEnddate().before(new GregorianCalendar().getTime()))) 
+                    		|| (task.getActualenddate() != null && (task.getActualenddate().before(new GregorianCalendar().getTime())))
+                    		|| (task.getDeadline() != null && (task.getDeadline().before(new GregorianCalendar().getTime())))) {
+                        b.addStyleName(UIConstants.LINK_OVERDUE);
+                    }
+                }
                 return b;
 
             }

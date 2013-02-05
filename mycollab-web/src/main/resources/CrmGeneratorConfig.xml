@@ -54,14 +54,29 @@
             tableName="m_crm_accounts_contacts" />
         
         <table
-            domainObjectName="AccountOpportunity"
+            domainObjectName="AccountLead"
             schema="mycollab"
-            tableName="m_crm_accounts_opportunities" />
+            tableName="m_crm_accounts_leads" />
         
         <table
             domainObjectName="Campaign"
             schema="mycollab"
             tableName="m_crm_campaign" />
+        
+        <table
+            domainObjectName="CampaignAccount"
+            schema="mycollab"
+            tableName="m_crm_campaigns_accounts" />
+        
+        <table
+            domainObjectName="CampaignContact"
+            schema="mycollab"
+            tableName="m_crm_campaigns_contacts" />
+        
+        <table
+            domainObjectName="CampaignLead"
+            schema="mycollab"
+            tableName="m_crm_campaigns_leads" />
 
         <table
             domainObjectName="Call"
@@ -82,6 +97,11 @@
             domainObjectName="ContactCase"
             schema="mycollab"
             tableName="m_crm_contacts_cases" />
+        
+        <table
+            domainObjectName="ContactOpportunity"
+            schema="mycollab"
+            tableName="m_crm_contacts_opportunities" />
 
         <table
             domainObjectName="Contract"

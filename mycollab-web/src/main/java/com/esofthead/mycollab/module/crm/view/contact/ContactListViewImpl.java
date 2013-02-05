@@ -54,9 +54,9 @@ public class ContactListViewImpl extends AbstractView implements
     @SuppressWarnings("serial")
     private void generateDisplayTable() {
         tableItem = new ContactTableDisplay(new String[]{"selected",
-                    "contactName", "title", "accountName", "email", "officephone",
-                    "assignUserFullName"}, new String[]{"", "Name", "Title",
-                    "Account Name", "Email", "Office Phone", "User"});
+                    "contactName", "title", "accountName", "email", "officephone"}, 
+                    new String[]{"", "Name", "Title",
+                    "Account Name", "Email", "Office Phone"});
 
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override

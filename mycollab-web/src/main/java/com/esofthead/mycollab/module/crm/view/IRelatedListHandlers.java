@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.crm.view;
 
-public interface IRelatedListHandlers {
+public interface IRelatedListHandlers<T> {
 
-    void addRelatedListHandler(RelatedListHandler handler);
+    void addRelatedListHandler(RelatedListHandler<T> handler);
+    
+    void refresh();
 }

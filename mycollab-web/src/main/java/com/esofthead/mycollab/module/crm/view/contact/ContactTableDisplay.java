@@ -126,7 +126,7 @@ public class ContactTableDisplay extends PagedBeanTable2<ContactService, Contact
         this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
         this.setColumnWidth("title", UIConstants.TABLE_X_LABEL_WIDTH);
         this
-                .setColumnWidth("accountName", UIConstants.TABLE_X_LABEL_WIDTH);
+                .setColumnWidth("accountName", UIConstants.TABLE_EX_LABEL_WIDTH);
         this.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
         this
                 .setColumnWidth("officephone", UIConstants.TABLE_X_LABEL_WIDTH);

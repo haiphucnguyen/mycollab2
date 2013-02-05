@@ -69,5 +69,19 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
         super.setItemDataSource(newDataSource);
     }
 
+    @Override
+    protected void doPrint() {
+    	taskDoPrint();
+    }
+    
+    @Override
+    protected void showHistory() {
+       taskShowHistory();
+    }
+    
+    abstract protected void taskDoPrint();
+    
+    abstract protected void taskShowHistory();
+    
     abstract TaskFormLayoutFactory getFormLayoutFactory();
 }

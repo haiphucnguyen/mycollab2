@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.view.user;
 
+import java.util.GregorianCalendar;
+
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
@@ -80,6 +82,14 @@ public class MyProjectsListViewImpl extends AbstractView implements MyProjectsLi
                             }
                         });
                 b.addStyleName("medium-text");
+                if ("Closed".equals(project.getProjectstatus())) {
+                    b.addStyleName(UIConstants.LINK_COMPLETED);
+                } else {
+                    if ((project.getPlanenddate() != null && (project.getPlanenddate().before(new GregorianCalendar().getTime()))) 
+                    		|| (project.getActualenddate() != null && (project.getActualenddate().before(new GregorianCalendar().getTime())))) {
+                        b.addStyleName(UIConstants.LINK_OVERDUE);
+                    }
+                }
                 return b;
 
             }

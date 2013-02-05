@@ -23,4 +23,6 @@ public interface IPagedBeanTable<S extends SearchCriteria, T>
     void setColumnExpandRatio(Object propertyId, float expandRation);
 
     void setColumnWidth(Object propertyId, int width);
+    
+    public T getBeanByIndex(Object itemId);
 }

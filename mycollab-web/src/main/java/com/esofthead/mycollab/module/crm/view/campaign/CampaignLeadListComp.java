@@ -13,6 +13,6 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class CampaignLeadListComp extends Depot {
     public CampaignLeadListComp() {
-        super("Campaigns", new VerticalLayout());
+        super("Leads", new VerticalLayout());
     }
 }

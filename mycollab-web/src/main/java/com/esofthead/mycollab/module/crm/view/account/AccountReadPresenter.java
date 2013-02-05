@@ -4,6 +4,8 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
+import com.esofthead.mycollab.module.crm.domain.AccountContact;
+import com.esofthead.mycollab.module.crm.domain.AccountLead;
 import com.esofthead.mycollab.module.crm.domain.Call;
 import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.Lead;
@@ -11,6 +13,7 @@ import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
@@ -28,6 +31,9 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
 import java.util.Set;
 import org.vaadin.dialogs.ConfirmDialog;
 
@@ -121,7 +127,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                 });
 
         view.getRelatedContactHandlers().addRelatedListHandler(
-                new AbstractRelatedListHandler() {
+                new AbstractRelatedListHandler<SimpleContact>() {
                     @Override
                     public void createNewRelatedItem(String itemId) {
                         SimpleContact contact = new SimpleContact();
@@ -131,8 +137,23 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                     }
 
                     @Override
-                    public void selectAssociateItems(Set items) {
-                        super.selectAssociateItems(items);
+                    public void selectAssociateItems(Set<SimpleContact> items) {
+                        if (items.size() > 0) {
+                            SimpleAccount account = view.getItem();
+                            List<AccountContact> associateContacts = new ArrayList<AccountContact>();
+                            for (SimpleContact contact : items) {
+                                AccountContact assoContact = new AccountContact();
+                                assoContact.setAccountid(account.getId());
+                                assoContact.setContactid(contact.getId());
+                                assoContact.setCreatedtime(new GregorianCalendar().getTime());
+                                associateContacts.add(assoContact);
+                            }
+                            
+                            AccountService accountService = AppContext.getSpringBean(AccountService.class);
+                            accountService.saveAccountContactRelationship(associateContacts);
+
+                            view.getRelatedContactHandlers().refresh();
+                        }
                     }
                 });
 
@@ -150,13 +171,33 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                 });
 
         view.getRelatedLeadHandlers().addRelatedListHandler(
-                new AbstractRelatedListHandler() {
+                new AbstractRelatedListHandler<SimpleLead>() {
                     @Override
                     public void createNewRelatedItem(String itemId) {
                         Lead lead = new Lead();
                         lead.setAccountname(view.getItem().getAccountname());
                         EventBus.getInstance().fireEvent(
                                 new LeadEvent.GotoEdit(this, lead));
+                    }
+                    
+                    @Override
+                    public void selectAssociateItems(Set<SimpleLead> items) {
+                        if (items.size() > 0) {
+                            SimpleAccount account = view.getItem();
+                            List<AccountLead> associateLeads = new ArrayList<AccountLead>();
+                            for (SimpleLead contact : items) {
+                                AccountLead assoLead = new AccountLead();
+                                assoLead.setAccountid(account.getId());
+                                assoLead.setLeadid(contact.getId());
+                                assoLead.setCreatetime(new GregorianCalendar().getTime());
+                                associateLeads.add(assoLead);
+                            }
+                            
+                            AccountService accountService = AppContext.getSpringBean(AccountService.class);
+                            accountService.saveAccountLeadRelationship(associateLeads);
+
+                            view.getRelatedContactHandlers().refresh();
+                        }
                     }
                 });
 

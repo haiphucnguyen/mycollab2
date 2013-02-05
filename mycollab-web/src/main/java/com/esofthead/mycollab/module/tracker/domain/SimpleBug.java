@@ -14,6 +14,7 @@ public class SimpleBug extends Bug {
     private List<Component> components;
     private List<Attachment> attachments;
     private String comment;
+    private String milestoneName;
 
     public String getProjectname() {
         return projectname;
@@ -78,4 +79,12 @@ public class SimpleBug extends Bug {
     public void setComment(String comment) {
         this.comment = comment;
     }
+
+	public void setMilestoneName(String milestoneName) {
+		this.milestoneName = milestoneName;
+	}
+
+	public String getMilestoneName() {
+		return milestoneName;
+	}
 }

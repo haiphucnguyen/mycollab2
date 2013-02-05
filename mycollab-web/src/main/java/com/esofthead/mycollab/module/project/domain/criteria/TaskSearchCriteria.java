@@ -10,6 +10,7 @@ public class TaskSearchCriteria extends SearchCriteria {
     private DateTimeSearchField greaterThan;
     private DateTimeSearchField lessThan;
     private NumberSearchField taskListId;
+    private NumberSearchField id;
     
     private StringSearchField status;
 
@@ -52,4 +53,12 @@ public class TaskSearchCriteria extends SearchCriteria {
     public void setTaskListId(NumberSearchField taskListId) {
         this.taskListId = taskListId;
     }
+
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
+
+	public NumberSearchField getId() {
+		return id;
+	}
 }

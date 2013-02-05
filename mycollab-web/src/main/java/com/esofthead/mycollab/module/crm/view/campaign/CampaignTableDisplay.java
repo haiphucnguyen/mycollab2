@@ -7,7 +7,6 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -16,6 +15,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+import java.util.GregorianCalendar;
 
 /**
  *
@@ -61,7 +61,7 @@ public class CampaignTableDisplay extends PagedBeanTable2<CampaignService, Campa
                     final Object itemId, Object columnId) {
                 final SimpleCampaign campaign = CampaignTableDisplay.this
                         .getBeanByIndex(itemId);
-                ButtonLink b = new ButtonLink(campaign.getCampaignname(),
+                Button b = new Button(campaign.getCampaignname(),
                         new Button.ClickListener() {
                             private static final long serialVersionUID = 1L;
 
@@ -70,7 +70,16 @@ public class CampaignTableDisplay extends PagedBeanTable2<CampaignService, Campa
                                 fireTableEvent(new TableClickEvent(CampaignTableDisplay.this, campaign, "campaignname"));
                             }
                         });
+                b.setStyleName("link");
                 b.addStyleName("medium-text");
+                
+                if ("Complete".equals(campaign.getStatus())) {
+                    b.addStyleName(UIConstants.LINK_COMPLETED);
+                } else {
+                    if (campaign.getEnddate() != null && (campaign.getEnddate().before(new GregorianCalendar().getTime()))) {
+                        b.addStyleName(UIConstants.LINK_OVERDUE);
+                    }
+                }
                 return b;
 
             }
