@@ -53,8 +53,14 @@ public class DbLoggingAppender extends AppenderSkeleton {
                     .getApplication().getContext();
             record.setUseragent(context.getBrowser().getBrowserApplication());
 
-            record.setIpaddress(context.getBrowser().getAddress());
-            record.setCountryCode(Ip2CountryCode.getCountryCode(record.getIpaddress()));
+            String ipaddress = context.getBrowser().getAddress();
+            /*
+             * just accept ipv4
+             */
+            if (ipaddress.length() <= 15) {
+            	record.setIpaddress(context.getBrowser().getAddress());
+                record.setCountryCode(Ip2CountryCode.getCountryCode(record.getIpaddress()));
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }
