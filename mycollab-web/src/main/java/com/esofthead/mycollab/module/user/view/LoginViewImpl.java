@@ -22,8 +22,6 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 	private static final long serialVersionUID = 1L;
 
 	public LoginViewImpl() {
-		this.setStyleName("loginView");
-
 		this.addComponent(new LoginForm());
 	}
 
@@ -87,7 +85,7 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 			signupBtn.setStyleName("link");
 			custom.addComponent(signupBtn, "signupLink");
 
-			Button forgotPasswordBtn = new Button("Forgot password",
+			Button forgotPasswordBtn = new Button("Forgot your password?",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

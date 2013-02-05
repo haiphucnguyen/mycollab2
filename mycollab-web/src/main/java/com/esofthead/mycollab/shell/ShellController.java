@@ -101,7 +101,12 @@ public class ShellController implements Serializable {
 
 						container.setStyleName("loginView");
 
-						presenter.go(container, null);
+						if (loginView.getParent() == null
+								|| loginView.getParent() == container) {
+							((Window) container).setContent(loginView);
+						} else {
+							presenter.go(container, null);
+						}
 
 						AppContext.clearSession();
 					}
