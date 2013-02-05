@@ -71,6 +71,8 @@ public class ShellController implements Serializable {
 									+ container);
 						}
 
+						container.setStyleName("mainView");
+
 						mainViewPresenter.go(container, null);
 					}
 				});
@@ -96,6 +98,8 @@ public class ShellController implements Serializable {
 
 						loginView.addComponent(cookies);
 						cookies.setCookie("loginInfo", "", expiryDate);
+
+						container.setStyleName("loginView");
 
 						presenter.go(container, null);
 
