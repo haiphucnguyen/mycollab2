@@ -15,6 +15,7 @@ import org.apache.log4j.spi.LoggingEvent;
 
 import com.esofthead.mycollab.common.dao.ReportBugIssueMapper;
 import com.esofthead.mycollab.common.domain.ReportBugIssueWithBLOBs;
+import com.esofthead.mycollab.usertracking.Ip2CountryCode;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
 
@@ -53,7 +54,8 @@ public class DbLoggingAppender extends AppenderSkeleton {
 					.getApplication().getContext();
 			record.setUseragent(context.getBrowser().getBrowserApplication());
 			
-			
+			record.setIpaddress(context.getBrowser().getAddress());
+			record.setCountryCode(Ip2CountryCode.getCountryCode(record.getIpaddress()));
 		} catch (Exception e) {
 				
 		}

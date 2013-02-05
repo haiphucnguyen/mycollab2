@@ -8,25 +8,42 @@ import java.net.URL;
 public class MybatisConfig {
 	private static final String MYBATIS_PROPERTIES = "usertracking.mybatis.xml";
 	private static final String RESOURCE_NAME = "/mycollab_extdb.h2.db";
-	
+
+	private static String mybatisConfig = null;
+
+	static {
+		String mybatisContent = getMybatisTemplateContent();
+		URL location = MybatisConfig.class.getResource(RESOURCE_NAME);
+		String className = "org.h2.Driver";
+		File file = new File(location.getPath());
+		String url = String.format("jdbc:h2:file:%s/%s", file.getParent(),
+				"mycollab_extdb;MODE=MySQL");
+		String userName = "";
+		String password = "";
+
+		mybatisConfig = String.format(mybatisContent, className, url, userName,
+				password);
+	}
 
 	public static final String loadConfig() {
-		try {
-			URL location = MybatisConfig.class.getResource(RESOURCE_NAME);
-			String className = "org.h2.Driver";
-			File file = new File(location.getPath());
-			String url = String.format("jdbc:h2:file:%s/%s", file.getParent(), "mycollab_extdb;MODE=MySQL");
-			String userName = "";
-			String password = "";
-
-			String mybatisContent = getMybatisTemplateContent();
-			if (null != mybatisContent) {
-				return String.format(mybatisContent, className, url, userName,
-						password);
-			}
-		} catch (Exception e) {
-		}
-		return null;
+		return mybatisConfig;
+//		try {
+//			URL location = MybatisConfig.class.getResource(RESOURCE_NAME);
+//			String className = "org.h2.Driver";
+//			File file = new File(location.getPath());
+//			String url = String.format("jdbc:h2:file:%s/%s", file.getParent(),
+//					"mycollab_extdb;MODE=MySQL");
+//			String userName = "";
+//			String password = "";
+//
+//			String mybatisContent = getMybatisTemplateContent();
+//			if (null != mybatisContent) {
+//				return String.format(mybatisContent, className, url, userName,
+//						password);
+//			}
+//		} catch (Exception e) {
+//		}
+//		return null;
 	}
 
 	private static final String getMybatisTemplateContent() {
