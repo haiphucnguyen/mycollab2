@@ -84,13 +84,13 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 	}
 
 	private String toHtmlContent(ReportBugIssueWithBLOBs issue) {
-		final String bodyTemplate = "User Name: %s\r\n"
-				+ "Account type: %s\r\n"
-				+ "Ip address: %s\r\n"
-				+ "Country code: %s\r\n"
+		final String bodyTemplate = "User Name: %s<br />"
+				+ "Account type: %s<br />"
+				+ "Ip address: %s<br />"
+				+ "Country code: %s<br />"
 				+ "User agent: %s"
-				+ "\r\n\r\n/------------------------------- Error Trace ---------------------------/\r\n\r\n"
-				+ "%s\r\n";
+				+ "<br /><br />------------------------------- Error Trace ---------------------------<br /><br />"
+				+ "%s<br />";
 
 		return String.format(bodyTemplate, issue.getUsername(),
 				issue.getSaccountid(), issue.getIpaddress(),
