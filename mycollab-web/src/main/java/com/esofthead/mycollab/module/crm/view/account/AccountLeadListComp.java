@@ -57,7 +57,7 @@ public class AccountLeadListComp extends RelatedListComp<SimpleLead, LeadSearchC
         VerticalLayout contentContainer = (VerticalLayout) bodyContent;
         contentContainer.setSpacing(true);
 
-        SplitButton controlsBtn = new SplitButton();
+        final SplitButton controlsBtn = new SplitButton();
         controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
         controlsBtn.setCaption("New Lead");
         controlsBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
@@ -71,6 +71,12 @@ public class AccountLeadListComp extends RelatedListComp<SimpleLead, LeadSearchC
         Button selectBtn = new Button("Select from existing leads", new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
+                AccountLeadSelectionWindow leadsWindow = new AccountLeadSelectionWindow(AccountLeadListComp.this);
+                LeadSearchCriteria criteria = new LeadSearchCriteria();
+                criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+                getWindow().addWindow(leadsWindow);
+                leadsWindow.setSearchCriteria(criteria);
+                controlsBtn.setPopupVisible(false);
             }
         });
         selectBtn.setIcon(new ThemeResource("icons/16/select.png"));

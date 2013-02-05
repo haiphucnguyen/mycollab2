@@ -29,7 +29,6 @@ public class ContactSearchCriteria extends SearchCriteria {
     private StringSearchField assignUserName;
     private StringSearchField username;
     private NumberSearchField accountId;
-    private NumberSearchField notAssociateAccountId;
     private NumberSearchField saccountid;
     private StringSearchField firstname;
     private StringSearchField lastname;
@@ -81,14 +80,6 @@ public class ContactSearchCriteria extends SearchCriteria {
 
     public void setAccountId(NumberSearchField accountId) {
         this.accountId = accountId;
-    }
-
-    public NumberSearchField getNotAssociateAccountId() {
-        return notAssociateAccountId;
-    }
-
-    public void setNotAssociateAccountId(NumberSearchField notAssociateAccountId) {
-        this.notAssociateAccountId = notAssociateAccountId;
     }
 
     public NumberSearchField getSaccountid() {

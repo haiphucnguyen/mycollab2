@@ -6,8 +6,10 @@
         <environment id="development">
             <transactionManager type="JDBC" />
             <dataSource type="POOLED">
-                <property name="driver" value="org.h2.Driver" />
-                <property name="url" value="jdbc:h2:~/mycollab_extdb;MODE=MySQL" />
+                <property name="driver" value="%s" />
+                <property name="url" value="%s" />
+                <property name="username" value="%s" />
+                <property name="password" value="%s" />
             </dataSource>
         </environment>
     </environments> 

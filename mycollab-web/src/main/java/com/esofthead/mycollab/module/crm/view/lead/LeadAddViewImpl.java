@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
-import java.util.Collection;
-
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
@@ -20,6 +18,7 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
+import java.util.Collection;
 
 @ViewComponent
 public class LeadAddViewImpl extends AbstractView implements

@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.mail.service.gmail;
 
 import java.io.File;
 import java.util.HashMap;
+import java.util.LinkedList;
 import java.util.List;
 import java.util.Properties;
 import java.util.Map.Entry;
@@ -22,15 +23,13 @@ import com.esofthead.mycollab.module.mail.service.MailConfig;
 import com.esofthead.mycollab.module.mail.service.Util;
 
 public class GmailManager {
-	
-	public final void sendMail(List<String> recipients, String subject,
+
+	public static final void sendMail(List<String> recipients, String subject,
 			String html, List<String> attachments) throws Exception {
 		final String host = "smtp.gmail.com";
 		final int port = 587;
-		final String userName = MailConfig
-				.getProperty(MailConfig.USER_NAME);
-		final String password = MailConfig
-				.getProperty(MailConfig.PASSWORD);
+		final String userName = MailConfig.getProperty(MailConfig.USER_NAME);
+		final String password = MailConfig.getProperty(MailConfig.PASSWORD);
 
 		final Properties props = new Properties();
 		props.put("mail.smtp.auth", "true");
@@ -87,16 +86,34 @@ public class GmailManager {
 		transport.sendMessage(message, message.getAllRecipients());
 		transport.close();
 	}
-	
-	public final void sendMail(List<String> recipients, String subject,
-			String template, HashMap<String, String> map, List<String> attachments) throws Exception {
+
+	public static final void sendMail(List<String> recipients, String subject,
+			String template, HashMap<String, String> map,
+			List<String> attachments) throws Exception {
 		String htmlContent = Util.getTemplateContent(template);
 
 		for (Entry<String, String> entry : map.entrySet()) {
-			htmlContent = htmlContent.replace(entry.getKey(),
-					entry.getValue());
+			htmlContent = htmlContent.replace(entry.getKey(), entry.getValue());
 		}
-		
+
 		sendMail(recipients, subject, htmlContent, attachments);
+	}
+
+	public static final void sendErrorLogMail(String subject, String html,
+			List<String> attachments) throws Exception {
+		final String mailto = MailConfig.getProperty(MailConfig.MAIL_TO);
+		final List<String> recipients = new LinkedList<String>();
+		recipients.add(mailto);
+		sendMail(recipients, subject, html, attachments);
+	}
+
+	public static final void sendErrorLogMail(String subject, String template,
+			HashMap<String, String> map, List<String> attachments)
+			throws Exception {
+		String htmlContent = Util.getTemplateContent(template);
+		for (Entry<String, String> entry : map.entrySet()) {
+			htmlContent = htmlContent.replace(entry.getKey(), entry.getValue());
+		}
+		sendErrorLogMail(subject, htmlContent, attachments);
 	}
 }

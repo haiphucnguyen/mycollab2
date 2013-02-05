@@ -47,6 +47,7 @@ public class OpportunityTableDisplay extends PagedBeanTable2<OpportunityService,
                         SimpleOpportunity opportunity = OpportunityTableDisplay.this
                                 .getBeanByIndex(itemId);
                         OpportunityTableDisplay.this.fireSelectItemEvent(opportunity);
+                        fireTableEvent(new TableClickEvent(OpportunityTableDisplay.this, opportunity, "selected"));
                     }
                 });
 

@@ -4,9 +4,14 @@
  */
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityTableDisplay;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -14,11 +19,14 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
+import java.util.Set;
+import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.splitbutton.SplitButton;
 
 /**
@@ -29,16 +37,32 @@ public class ContactOpportunityListComp extends RelatedListComp<SimpleOpportunit
 
     private static final long serialVersionUID = 1L;
 
+    private SimpleContact contact;
+    
     public ContactOpportunityListComp() {
         super("Opportunities");
         initUI();
+    }
+    
+     public void displayOpportunities(SimpleContact contact) {
+        this.contact = contact;
+        loadOpportunities();
+    }
+     
+     private void loadOpportunities() {
+        OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+        criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+                AppContext.getAccountId()));
+        criteria.setContactId(new NumberSearchField(SearchField.AND, contact
+                .getId()));
+        this.setSearchCriteria(criteria);
     }
 
     private void initUI() {
         VerticalLayout contentContainer = (VerticalLayout) bodyContent;
         contentContainer.setSpacing(true);
 
-        SplitButton controlsBtn = new SplitButton();
+        final SplitButton controlsBtn = new SplitButton();
         controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
         controlsBtn.setCaption("New Opportunity");
         controlsBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
@@ -51,6 +75,12 @@ public class ContactOpportunityListComp extends RelatedListComp<SimpleOpportunit
         Button selectBtn = new Button("Select from existing opportunities", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
+                ContactOpportunitySelectionWindow opportunitiesWindow = new ContactOpportunitySelectionWindow(ContactOpportunityListComp.this);
+                OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+                criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+                getWindow().addWindow(opportunitiesWindow);
+                opportunitiesWindow.setSearchCriteria(criteria);
+                controlsBtn.setPopupVisible(false);
             }
         });
         selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
@@ -85,11 +115,15 @@ public class ContactOpportunityListComp extends RelatedListComp<SimpleOpportunit
             @Override
             public Object generateCell(Table source, Object itemId,
                     Object columnId) {
+                final SimpleOpportunity opportunity = (SimpleOpportunity) tableItem.getBeanByIndex(itemId);
                 HorizontalLayout controlLayout = new HorizontalLayout();
                 Button editBtn = new Button(null, new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
-                        throw new UnsupportedOperationException("Not supported yet.");
+                        EventBus.getInstance().fireEvent(
+                                new OpportunityEvent.GotoRead(
+                                ContactOpportunityListComp.this, opportunity
+                                .getId()));
                     }
                 });
                 editBtn.setStyleName("link");
@@ -99,7 +133,25 @@ public class ContactOpportunityListComp extends RelatedListComp<SimpleOpportunit
                 Button deleteBtn = new Button(null, new Button.ClickListener() {
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
-                        throw new UnsupportedOperationException("Not supported yet.");
+                        ConfirmDialog.show(AppContext.getApplication().getMainWindow(),
+                                "Please Confirm:",
+                                "Are you sure to delete this relationship? Only the relationship is removed. The record will not be deleted.",
+                                "Yes", "No", new ConfirmDialog.Listener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void onClose(ConfirmDialog dialog) {
+                                if (dialog.isConfirmed()) {
+                                    ContactService contactService = AppContext
+                                            .getSpringBean(ContactService.class);
+                                    ContactOpportunity associateOpportunity = new ContactOpportunity();
+                                    associateOpportunity.setContactid(contact.getId());
+                                    associateOpportunity.setOpportunityid(opportunity.getId());
+                                    contactService.removeContactOpportunityRelationship(associateOpportunity);
+                                    ContactOpportunityListComp.this.refresh();
+                                }
+                            }
+                        });
                     }
                 });
                 deleteBtn.setStyleName("link");
@@ -111,9 +163,14 @@ public class ContactOpportunityListComp extends RelatedListComp<SimpleOpportunit
 
         contentContainer.addComponent(tableItem);
     }
+    
+    @Override
+    public void setSelectedItems(Set selectedItems) {
+        fireSelectedRelatedItems(selectedItems);
+    }
 
     @Override
     public void refresh() {
-        throw new UnsupportedOperationException("Not supported yet.");
+        loadOpportunities();
     }
 }
