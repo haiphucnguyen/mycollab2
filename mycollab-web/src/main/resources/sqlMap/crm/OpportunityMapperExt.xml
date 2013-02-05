@@ -25,13 +25,11 @@
         </if>
         <if test="contactId != null">
             <![CDATA[
-                ${contactId.operation}
+                ${contactId.operation} 
                 (SELECT COUNT(*) 
-                FROM m_crm_contact, m_crm_type_relationship
-                WHERE m_crm_opportunity.id=m_crm_type_relationship.type2id 
-                      AND m_crm_type_relationship.type='2'
-                      AND m_crm_contact.id=#{contactId.value,javaType=INTEGER}
-                      AND m_crm_type_relationship.type1id=m_crm_contact.id) > 0
+                    FROM m_crm_contacts_opportunities, m_crm_contact 
+                    WHERE m_crm_contact.id=#{contactId.value, javaType=INTEGER} AND m_crm_opportunity.id= m_crm_contacts_opportunities.opportunityId
+                            AND m_crm_contacts_opportunities.contactId=#{contactId.value,javaType=INTEGER}) > 0
             ]]>
         </if>
         <if test="campaignName != null">
@@ -51,16 +49,6 @@
            			#{assignUser}
            	</foreach>
 		</if>
-        <if test="quoteId != null">
-          <![CDATA[
-            ${quoteId.operation}
-              (SELECT COUNT(*) FROM m_crm_quote, m_crm_type_relationship 
-                  WHERE m_crm_type_relationship.type=8
-                        AND m_crm_type_relationship.type1id=m_crm_quote.id
-                        AND m_crm_quote.id=#{quoteId.value,javaType=INTEGER}
-                        AND m_crm_type_relationship.type2id=m_crm_opportunity.id) > 0
-          ]]>
-        </if>
         <if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_opportunity.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
         </if>
@@ -112,13 +100,11 @@
         </if>
         <if test="contactId != null">
             <![CDATA[
-                ${contactId.operation}
+                ${contactId.operation} 
                 (SELECT COUNT(*) 
-                FROM m_crm_contact, m_crm_type_relationship
-                WHERE m_crm_opportunity.id=m_crm_type_relationship.type2id 
-                      AND m_crm_type_relationship.type='2'
-                      AND m_crm_contact.id=#{contactId.value,javaType=INTEGER}
-                      AND m_crm_type_relationship.type1id=m_crm_contact.id) > 0
+                    FROM m_crm_contacts_opportunities, m_crm_contact 
+                    WHERE m_crm_contact.id=#{contactId.value,javaType=INTEGER} AND m_crm_opportunity.id= m_crm_contacts_opportunities.opportunityId
+                            AND m_crm_contacts_opportunities.contactId=#{contactId.value,javaType=INTEGER}) > 0
             ]]>
         </if>
         <if test="campaignName != null">
@@ -129,16 +115,6 @@
             WHERE m_crm_opportunity.campaignid = m_crm_campaign.id 
                 AND m_crm_campaign.campaignName like '%${campaignName.value}%') > 0
                 ]]>
-        </if>
-        <if test="quoteId != null">
-          <![CDATA[
-                ${quoteId.operation}
-              (SELECT COUNT(*) FROM m_crm_quote, m_crm_type_relationship 
-                  WHERE m_crm_type_relationship.type=8
-                        AND m_crm_type_relationship.type1id=m_crm_quote.id
-                        AND m_crm_quote.id=#{quoteId.value,javaType=INTEGER}
-                        AND m_crm_type_relationship.type2id=m_crm_opportunity.id) > 0
-          ]]>
         </if>
         <if test="assignUserName != null">
             <![CDATA[

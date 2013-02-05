@@ -90,7 +90,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
                 AppContext.getAccountId()));
         criteria.setContactId(new NumberSearchField(SearchField.AND, contact
                 .getId()));
-        associateOpportunityList.setSearchCriteria(criteria);
+        associateOpportunityList.displayOpportunities(contact);
     }
 
     protected class ContactFormFieldFactory extends DefaultFormViewFieldFactory {
