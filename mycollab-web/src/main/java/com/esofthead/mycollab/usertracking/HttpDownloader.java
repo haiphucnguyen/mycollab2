@@ -8,36 +8,37 @@ import java.net.URL;
 import java.net.URLConnection;
 
 public class HttpDownloader {
-	/**
-	 * 5 seconds to accept the connection
-	 */
-	private static final int TIME_OUT = 5;
 
-	public static final void downloadFile(String requestUrl, String fileName)
-			throws Exception {
-		FileOutputStream fos = new FileOutputStream(new File(fileName));
-		downloadFile(requestUrl, fos);
-	}
-	
-	public static final void downloadFile(String requestUrl,
-			OutputStream outStream) throws Exception {
-		URL url = new URL(requestUrl);
-		URLConnection connection = url.openConnection();
-		connection.setConnectTimeout(TIME_OUT * 1000);
+    /**
+     * 5 seconds to accept the connection
+     */
+    private static final int TIME_OUT = 5;
 
-		connection.connect();
+    public static final void downloadFile(String requestUrl, String fileName)
+            throws Exception {
+        FileOutputStream fos = new FileOutputStream(new File(fileName));
+        downloadFile(requestUrl, fos);
+    }
 
-		BufferedInputStream input = new BufferedInputStream(
-				connection.getInputStream());
+    public static final void downloadFile(String requestUrl,
+            OutputStream outStream) throws Exception {
+        URL url = new URL(requestUrl);
+        URLConnection connection = url.openConnection();
+        connection.setConnectTimeout(TIME_OUT * 1000);
 
-		int count;
-		byte data[] = new byte[1024];
-		while ((count = input.read(data)) != -1) {
-			outStream.write(data, 0, count);
-		}
-		input.close();
+        connection.connect();
 
-		outStream.flush();
-		outStream.close();
-	}
+        BufferedInputStream input = new BufferedInputStream(
+                connection.getInputStream());
+
+        int count;
+        byte data[] = new byte[1024];
+        while ((count = input.read(data)) != -1) {
+            outStream.write(data, 0, count);
+        }
+        input.close();
+
+        outStream.flush();
+        outStream.close();
+    }
 }

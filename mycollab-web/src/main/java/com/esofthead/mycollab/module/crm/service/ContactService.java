@@ -18,11 +18,17 @@ package com.esofthead.mycollab.module.crm.service;
 
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.core.persistence.service.IPostUpdateHandler;
+import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import java.util.List;
 
 public interface ContactService extends
         IDefaultService<Integer, SimpleContact, ContactSearchCriteria>, IPostUpdateHandler<SimpleContact> {
     
     SimpleContact findContactById(int contactId);
+    
+    void removeContactOpportunityRelationship(ContactOpportunity associateOpportunity);
+    
+    void saveContactOpportunityRelationship(List<ContactOpportunity> associateOpportunities);
 }
