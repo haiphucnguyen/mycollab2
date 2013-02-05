@@ -91,6 +91,10 @@ input.v-textfield[type="text"],
 body div > input.v-filterselect-input[type="text"] {
 	height: 1.2em;
 }
+
+.mainView, .loginView {
+	overflow: auto;
+}
 .v-button-caption {
 	vertical-align: top;
 }
@@ -542,9 +546,6 @@ input.v-textfield-errorField {
 .loginView {
 	background-color: #e5e5e5;
 }
-.customLoginForm {
-	min-height: 700px;
-}
 .formView {
     background: white;
     width: 600px;
@@ -604,6 +605,16 @@ input.v-textfield-errorField {
 	float: left;
 	background: url('icons/image.png') no-repeat 0 0 transparent;
 }
+.customSignUpForm #loginForm {
+	margin-top: 0px;
+	height: 405px;
+}
+.customSignUpForm #policy {
+	text-align: left;
+	font-size: 11px;
+	display: block;
+	padding: 0px 20px;
+}
 #loginForm {
     width: 280px;
     background: #f3f3f3;
@@ -611,6 +622,11 @@ input.v-textfield-errorField {
     float: right;
     height: 355px;
     margin-top: 15px;
+    color: #4a4a4a;
+}
+
+.customSignUpForm #loginForm .v-captionwrapper {
+	margin: 10px auto;
 }
 
 #loginForm .v-captionwrapper {
@@ -628,15 +644,22 @@ input.v-textfield-errorField {
     font-size: 13px;
     color: #777;
 }
+.customSignUpForm #loginForm input.v-textfield {
+	font-size: 15px !important;
+	height: 20px;
+}
+.customLoginForm #loginForm input.v-textfield {
+	font-size: 17px !important;
+	height: 35px;
+}
 
 #loginForm input.v-textfield {
     width: 235px;
-    font-size: 17px !important;
-    background: #FBFBFB;
+    background: #FFFFFF;
     border-color: #BBB;
     border-radius: 3px;
     padding: .2em;
-    height: 35px;
+    color: #4a4a4a;
 }
 
 #loginForm input.v-textfield.v-textfield-focus {
@@ -650,6 +673,10 @@ input.v-textfield-errorField {
     margin-top: 20px;
 }
 
+.customSignUpForm #loginForm #submitLogin {
+	margin-top: 10px;
+}
+
 #loginForm #submitLogin .v-button-wrap {
 	height: 30px;
 }
@@ -658,6 +685,10 @@ input.v-textfield-errorField {
 	font-size: 17px;
 	line-height: 30px;
 	margin: 0 15px;
+}
+
+.customSignUpForm #loginFormContainer #newToUs {
+	padding: 20px 0px 0px;
 }
 
 #loginFormContainer #newToUs {
