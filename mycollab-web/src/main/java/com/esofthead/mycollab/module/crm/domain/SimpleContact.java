@@ -16,11 +16,13 @@
  */
 package com.esofthead.mycollab.module.crm.domain;
 
+import java.util.List;
+
 public class SimpleContact extends Contact {
 
     private static final long serialVersionUID = 1L;
     private Integer accountId;
-    private String accountName;
+    private List<Account> accounts;
     private String assignUserFullName;
     private String contactName;
 
@@ -40,12 +42,12 @@ public class SimpleContact extends Contact {
         this.contactName = contactName;
     }
 
-    public String getAccountName() {
-        return accountName;
+    public List<Account> getAccounts() {
+        return accounts;
     }
 
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
+    public void setAccounts(List<Account> accounts) {
+        this.accounts = accounts;
     }
 
     public String getAssignUserFullName() {

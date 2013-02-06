@@ -84,7 +84,6 @@ public class SalesDashboardView extends Depot {
 
 		VerticalLayout bodyContent = (VerticalLayout) this.bodyContent;
 		bodyContent.removeAllComponents();
-		;
 
 		if ("OpportunitySalesStage".equals(reportName)) {
 			OpportunitySalesStageDashboard salesStageDashboard = new OpportunitySalesStageDashboard();
