@@ -26,7 +26,7 @@ public class CampaignLeadSelectionWindow extends RelatedItemSelectionWindow<Simp
     @Override
     protected void initUI() {
         tableItem = new LeadTableDisplay(new String[]{"selected",
-                    "leadName", "status", "Email", "officephone"}, 
+                    "leadName", "status", "email", "officephone"}, 
                 new String[]{"", "Name", "Status", "Email", "Phone"});
         
         Button selectBtn = new Button("Select", new Button.ClickListener() {

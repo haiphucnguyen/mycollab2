@@ -74,7 +74,7 @@ public class CampaignLeadListComp  extends RelatedListComp<SimpleLead, LeadSearc
                 fireNewRelatedItem("");
             }
         });
-        Button selectBtn = new Button("Select from existing accounts", new Button.ClickListener() {
+        Button selectBtn = new Button("Select from existing leads", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 CampaignLeadSelectionWindow leadsWindow = new CampaignLeadSelectionWindow(CampaignLeadListComp.this);
