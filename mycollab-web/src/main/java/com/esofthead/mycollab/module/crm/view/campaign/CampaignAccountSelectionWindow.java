@@ -7,7 +7,9 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
+import com.esofthead.mycollab.module.crm.view.account.AccountSimpleSearchPanel;
 import com.esofthead.mycollab.module.crm.view.account.AccountTableDisplay;
+import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Button;
 
@@ -38,6 +40,17 @@ public class CampaignAccountSelectionWindow extends RelatedItemSelectionWindow<S
         });
         selectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         
+        AccountSimpleSearchPanel accountSimpleSearchPanel = new AccountSimpleSearchPanel();
+        accountSimpleSearchPanel.addSearchHandler(new SearchHandler<AccountSearchCriteria>(){
+
+			@Override
+			public void onSearch(AccountSearchCriteria criteria) {
+				tableItem.setSearchCriteria(criteria);
+			}
+        	
+        });
+        
+        this.bodyContent.addComponent(accountSimpleSearchPanel);
         this.bodyContent.addComponent(selectBtn);
         this.bodyContent.addComponent(tableItem);
     }

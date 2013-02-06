@@ -139,8 +139,8 @@ public class TaskAddPopup extends CustomComponent {
                 informationLayout.addComponent(field, "Actual End Date", 1, 2);
             } else if (propertyId.equals("deadline")) {
                 informationLayout.addComponent(field, "Deadline", 0, 3);
-            } else if (propertyId.equals("isestimated")) {
-                informationLayout.addComponent(field, "Is Estimated", 1, 3);
+            } else if (propertyId.equals("priority")) {
+                informationLayout.addComponent(field, "Priority", 1, 3);
             } else if (propertyId.equals("assignuser")) {
                 informationLayout.addComponent(field, "Assign", 0, 4);
             } else if (propertyId.equals("percentagecomplete")) {
@@ -195,6 +195,8 @@ public class TaskAddPopup extends CustomComponent {
                   return tf;
             } else if (propertyId.equals("percentagecomplete")) {
                 return new TaskPercentageCompleteComboBox();
+            } else if ("priority".equals(propertyId)) {
+                return new TaskPriorityComboBox();
             }
             return null;
         }

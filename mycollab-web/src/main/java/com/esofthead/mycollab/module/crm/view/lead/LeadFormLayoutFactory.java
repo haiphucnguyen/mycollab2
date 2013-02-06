@@ -95,7 +95,6 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
         public void attachField(Object propertyId, Field field) {
             if (propertyId.equals("prefixname")) {
                 prefixFirstNameBox.addComponent(field, 0);
-                field.setWidth("50px");
             } else if (propertyId.equals("firstname")) {
                 prefixFirstNameBox.addComponent(field);
                 field.setWidth("195px");

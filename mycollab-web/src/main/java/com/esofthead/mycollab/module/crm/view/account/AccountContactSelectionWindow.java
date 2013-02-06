@@ -53,8 +53,8 @@ public class AccountContactSelectionWindow extends RelatedItemSelectionWindow<Si
         	
         });
         
-        this.bodyContent.addComponent(selectBtn);
         this.bodyContent.addComponent(contactSimpleSearchPanel);
+        this.bodyContent.addComponent(selectBtn);
         this.bodyContent.addComponent(tableItem);
     }
 }

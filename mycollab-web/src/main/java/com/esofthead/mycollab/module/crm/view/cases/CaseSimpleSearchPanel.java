@@ -32,6 +32,7 @@ public class CaseSimpleSearchPanel extends
     @Override
 	public void attach() {
 		super.attach();
+		this.setHeight("32px");
 		createBasicSearchLayout();
 	}
     

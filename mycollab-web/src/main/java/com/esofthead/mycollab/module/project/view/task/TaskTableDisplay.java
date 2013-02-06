@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.GregorianCalendar;
 
+import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -16,6 +17,7 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.Table;
@@ -37,6 +39,7 @@ public class TaskTableDisplay extends BeanTable<ProjectTaskService, TaskSearchCr
             public com.vaadin.ui.Component generateCell(Table source,
                     final Object itemId, Object columnId) {
                 final SimpleTask task = TaskTableDisplay.this.getBeanByIndex(itemId);
+                
                 ButtonLink b = new ButtonLink(task.getTaskname(),
                         new Button.ClickListener() {
                             private static final long serialVersionUID = 1L;
@@ -47,6 +50,24 @@ public class TaskTableDisplay extends BeanTable<ProjectTaskService, TaskSearchCr
                             }
                         });
                 b.addStyleName("medium-text");
+                
+                if (StringUtil.isNotNullOrEmpty(task.getPriority())) {
+                	ThemeResource iconPriority = new ThemeResource(TaskPriorityComboBox.PRIORITY_MEDIUM_IMG);
+                    
+                    if (TaskPriorityComboBox.PRIORITY_HIGHT.equals(task.getPriority())) {
+                    	iconPriority = new ThemeResource(TaskPriorityComboBox.PRIORITY_HIGHT_IMG);
+                    } else if (TaskPriorityComboBox.PRIORITY_LOW.equals(task.getPriority())) {
+                    	iconPriority = new ThemeResource(TaskPriorityComboBox.PRIORITY_LOW_IMG);
+                    } else if (TaskPriorityComboBox.PRIORITY_MEDIUM.equals(task.getPriority())) {
+                    	iconPriority = new ThemeResource(TaskPriorityComboBox.PRIORITY_MEDIUM_IMG);
+                    } else if (TaskPriorityComboBox.PRIORITY_NONE.equals(task.getPriority())) {
+                    	iconPriority = new ThemeResource(TaskPriorityComboBox.PRIORITY_NONE_IMG);
+                    } else if (TaskPriorityComboBox.PRIORITY_URGENT.equals(task.getPriority())) {
+                    	iconPriority = new ThemeResource(TaskPriorityComboBox.PRIORITY_URGENT_IMG);
+                    }
+                    
+                    b.setIcon(iconPriority);
+                }
                 
                 if ("100d".equals(task.getPercentagecomplete())) {
                     b.addStyleName(UIConstants.LINK_COMPLETED);

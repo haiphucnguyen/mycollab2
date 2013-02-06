@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import java.util.Collection;
+
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.ui.components.ProjectTaskListComboBox;
 import com.esofthead.mycollab.module.project.ui.components.ProjectUserComboBox;
@@ -20,7 +22,6 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
-import java.util.Collection;
 
 /**
  *
@@ -104,6 +105,8 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
                     return tf;
                 } else if ("percentagecomplete".equals(propertyId)) {
                     return new TaskPercentageCompleteComboBox();
+                } else if ("priority".equals(propertyId)) {
+                    return new TaskPriorityComboBox();
                 }
                 return null;
             }

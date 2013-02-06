@@ -59,17 +59,18 @@ public class TaskDisplayComponent extends CssLayout {
             milestoneLink.setStyleName("link");
 
             ProgressIndicator taskListProgress = (ProgressIndicator) layoutHelper.addComponent(new ProgressIndicator(new Float(taskList.getPercentageComplete())), "Progress", 0, 2);
+            taskListProgress.setWidth("100px");
             taskListProgress.setValue(taskList.getPercentageComplete() / 100);
 
             HorizontalLayout taskNumberProgress = new HorizontalLayout();
             taskNumberProgress.setSpacing(true);
             taskNumberProgress = (HorizontalLayout) layoutHelper.addComponent(taskNumberProgress, "% Task Complete", 1, 2);
-            ProgressIndicator taskNumberProgressBar = new ProgressIndicator(new Float(0.0));
-            if (taskList.getNumAllTasks() > 0) {
-                taskNumberProgressBar.setValue(new Float(1 - (float) taskList.getNumOpenTasks() / taskList.getNumAllTasks()));;
-            }
-
-            taskNumberProgress.addComponent(taskNumberProgressBar);
+//            ProgressIndicator taskNumberProgressBar = new ProgressIndicator(new Float(0.0));
+//            if (taskList.getNumAllTasks() > 0) {
+//                taskNumberProgressBar.setValue(new Float(1 - (float) taskList.getNumOpenTasks() / taskList.getNumAllTasks()));;
+//            }
+//
+//            taskNumberProgress.addComponent(taskNumberProgressBar);
 
             Label taskNumberLbl = new Label("(" + taskList.getNumOpenTasks() + "/" + taskList.getNumAllTasks() + ")");
             taskNumberProgress.addComponent(taskNumberLbl);
