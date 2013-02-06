@@ -86,7 +86,9 @@ public class ContactServiceImpl extends DefaultService<Integer, SimpleContact, C
     
     @Override
     public SimpleContact findContactById(int contactId) {
-        return contactMapperExt.findContactById(contactId);
+        SimpleContact contact = contactMapperExt.findContactById(contactId);
+        System.out.println("Size: " + contact.getAccounts().size());
+        return contact;
     }
     
     @Override
