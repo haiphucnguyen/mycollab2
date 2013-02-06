@@ -154,7 +154,7 @@ public class CrmController {
                         AccountAddPresenter presenter = PresenterResolver
                                 .getPresenter(AccountAddPresenter.class);
 
-                        SimpleAccount account = (SimpleAccount) event.getData();
+                        Account account = (Account) event.getData();
                         presenter.go(container, new ScreenData.Edit<Account>(
                                 account));
                     }

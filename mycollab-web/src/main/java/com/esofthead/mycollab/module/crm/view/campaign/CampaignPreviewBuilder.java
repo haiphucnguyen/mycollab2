@@ -7,6 +7,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
@@ -55,6 +56,9 @@ public class CampaignPreviewBuilder extends VerticalLayout {
         this.campaign = campaign;
         previewForm.setItemDataSource(new BeanItem<Campaign>(campaign));
         displayActivities();
+        displayAccounts();
+        displayContacts();
+        displayLeads();
     }
     
     private void displayActivities() {
@@ -63,6 +67,18 @@ public class CampaignPreviewBuilder extends VerticalLayout {
         criteria.setType(new StringSearchField(SearchField.AND, CrmTypeConstants.CAMPAIGN));
         criteria.setTypeid(new NumberSearchField(campaign.getId()));
         associateActivityList.setSearchCriteria(criteria);
+    }
+    
+    private void displayAccounts() {
+       associateAccountList.displayAccounts(campaign);
+    }
+    
+    private void displayContacts() {
+        associateContactList.displayContacts(campaign);
+    }
+    
+    private void displayLeads() {
+        associateLeadList.displayLeads(campaign);
     }
     
     public SimpleCampaign getCampaign() {
@@ -75,6 +91,18 @@ public class CampaignPreviewBuilder extends VerticalLayout {
 
     public EventRelatedItemListComp getAssociateActivityList() {
         return associateActivityList;
+    }
+
+    public CampaignAccountListComp getAssociateAccountList() {
+        return associateAccountList;
+    }
+
+    public CampaignContactListComp getAssociateContactList() {
+        return associateContactList;
+    }
+
+    public CampaignLeadListComp getAssociateLeadList() {
+        return associateLeadList;
     }
     
     protected class CampaignFormFieldFactory extends DefaultFormViewFieldFactory {

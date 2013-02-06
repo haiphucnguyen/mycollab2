@@ -14,62 +14,62 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
-	private static final long serialVersionUID = 1L;
 
-	public CampaignAddPresenter() {
-		super(CampaignAddView.class);
-		bind();
-	}
+    private static final long serialVersionUID = 1L;
 
-	private void bind() {
-		view.getEditFormHandlers().addFormHandler(
-				new EditFormHandler<Campaign>() {
+    public CampaignAddPresenter() {
+        super(CampaignAddView.class);
+        bind();
+    }
 
-					@Override
-					public void onSave(final Campaign campaign) {
-						saveCampaign(campaign);
-						ViewState viewState = HistoryViewManager.back();
-						if (viewState instanceof NullViewState) {
-							EventBus.getInstance().fireEvent(
-									new CampaignEvent.GotoList(this, null));
-						}
-					}
+    private void bind() {
+        view.getEditFormHandlers().addFormHandler(
+                new EditFormHandler<Campaign>() {
+                    @Override
+                    public void onSave(final Campaign campaign) {
+                        saveCampaign(campaign);
+                        ViewState viewState = HistoryViewManager.back();
+                        if (viewState instanceof NullViewState) {
+                            EventBus.getInstance().fireEvent(
+                                    new CampaignEvent.GotoList(this, null));
+                        }
+                    }
 
-					@Override
-					public void onCancel() {
-						ViewState viewState = HistoryViewManager.back();
-						if (viewState instanceof NullViewState) {
-							EventBus.getInstance().fireEvent(
-									new CampaignEvent.GotoList(this, null));
-						}
-					}
+                    @Override
+                    public void onCancel() {
+                        ViewState viewState = HistoryViewManager.back();
+                        if (viewState instanceof NullViewState) {
+                            EventBus.getInstance().fireEvent(
+                                    new CampaignEvent.GotoList(this, null));
+                        }
+                    }
 
-					@Override
-					public void onSaveAndNew(final Campaign campaign) {
-						saveCampaign(campaign);
-						EventBus.getInstance().fireEvent(
-								new CampaignEvent.GotoAdd(this, null));
-					}
-				});
-	}
+                    @Override
+                    public void onSaveAndNew(final Campaign campaign) {
+                        saveCampaign(campaign);
+                        EventBus.getInstance().fireEvent(
+                                new CampaignEvent.GotoAdd(this, null));
+                    }
+                });
+    }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		super.onGo(container, data);
-		view.editItem((Campaign) data.getParams());
-	}
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        super.onGo(container, data);
+        view.editItem((Campaign) data.getParams());
+    }
 
-	public void saveCampaign(Campaign campaign) {
-		CampaignService campaignService = AppContext
-				.getSpringBean(CampaignService.class);
+    public void saveCampaign(Campaign campaign) {
+        CampaignService campaignService = AppContext
+                .getSpringBean(CampaignService.class);
 
-		campaign.setSaccountid(AppContext.getAccountId());
-		if (campaign.getId() == null) {
-			campaignService.saveWithSession(campaign, AppContext.getUsername());
-		} else {
-			campaignService.updateWithSession(campaign,
-					AppContext.getUsername());
-		}
+        campaign.setSaccountid(AppContext.getAccountId());
+        if (campaign.getId() == null) {
+            campaignService.saveWithSession(campaign, AppContext.getUsername());
+        } else {
+            campaignService.updateWithSession(campaign,
+                    AppContext.getUsername());
+        }
 
-	}
+    }
 }

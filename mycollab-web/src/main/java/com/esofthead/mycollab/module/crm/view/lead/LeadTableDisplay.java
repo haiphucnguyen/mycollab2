@@ -43,6 +43,9 @@ public class LeadTableDisplay extends PagedBeanTable2<LeadService, LeadSearchCri
                         SimpleLead lead = LeadTableDisplay.this.getBeanByIndex(itemId);
                         LeadTableDisplay.this.fireSelectItemEvent(lead);
 
+                        fireTableEvent(new TableClickEvent(
+                                LeadTableDisplay.this, lead,
+                                "selected"));
                     }
                 });
 
