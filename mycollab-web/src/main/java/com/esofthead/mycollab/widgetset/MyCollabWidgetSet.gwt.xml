@@ -55,4 +55,6 @@
     <inherits name="fi.jasoft.dragdroplayouts.DragDropLayoutsWidgetSet" />
 
     <inherits name="com.lexaden.breadcrumb.BreadcrumbWidgetset" />
+
+    <inherits name="org.vaadin.addon.componentexport.widgetset.ComponentexportdemoWidgetset" />
 </module>
