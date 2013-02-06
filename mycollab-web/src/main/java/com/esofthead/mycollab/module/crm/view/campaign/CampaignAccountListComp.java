@@ -9,9 +9,8 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.account.AccountTableDisplay;
@@ -104,11 +103,11 @@ public class CampaignAccountListComp extends RelatedListComp<SimpleAccount, Acco
 
             @Override
             public void handle(TableClickEvent event) {
-                SimpleContact contact = (SimpleContact) event.getData();
+                SimpleAccount account = (SimpleAccount) event.getData();
                 if ("accountname".equals(event.getFieldName())) {
                     EventBus.getInstance().fireEvent(
-                            new ContactEvent.GotoRead(
-                            CampaignAccountListComp.this, contact
+                            new AccountEvent.GotoRead(
+                            CampaignAccountListComp.this, account
                             .getId()));
                 }
             }
@@ -125,9 +124,8 @@ public class CampaignAccountListComp extends RelatedListComp<SimpleAccount, Acco
                     @Override
                     public void buttonClick(Button.ClickEvent event) {
                         EventBus.getInstance().fireEvent(
-                                new ContactEvent.GotoRead(
-                                CampaignAccountListComp.this, account
-                                .getId()));
+                                new AccountEvent.GotoEdit(
+                                CampaignAccountListComp.this, account));
                     }
                 });
                 editBtn.setStyleName("link");

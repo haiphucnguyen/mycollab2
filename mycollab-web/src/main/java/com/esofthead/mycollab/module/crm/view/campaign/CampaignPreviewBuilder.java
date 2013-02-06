@@ -58,6 +58,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
         displayActivities();
         displayAccounts();
         displayContacts();
+        displayLeads();
     }
     
     private void displayActivities() {
@@ -74,6 +75,10 @@ public class CampaignPreviewBuilder extends VerticalLayout {
     
     private void displayContacts() {
         associateContactList.displayContacts(campaign);
+    }
+    
+    private void displayLeads() {
+        associateLeadList.displayLeads(campaign);
     }
     
     public SimpleCampaign getCampaign() {
