@@ -92,7 +92,7 @@ public class CampaignLeadListComp  extends RelatedListComp<SimpleLead, LeadSearc
         contentContainer.addComponent(controlsBtn);
 
         tableItem = new LeadTableDisplay(
-                new String[]{"leadName", "status", "Email", "officephone", "id"},
+                new String[]{"leadName", "status", "email", "officephone", "id"},
                 new String[]{"Name", "Status", "Email", "Phone", "Action"});
 
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {

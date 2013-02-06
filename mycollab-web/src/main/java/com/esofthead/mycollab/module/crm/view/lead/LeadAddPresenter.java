@@ -72,7 +72,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
             
             if (lead.getExtraData() != null && (lead.getExtraData() instanceof SimpleCampaign)) {
                 CampaignLead associateLead = new CampaignLead();
-                associateLead.setCampaignid(Integer.MIN_VALUE);
+                associateLead.setCampaignid(((SimpleCampaign)lead.getExtraData()).getId());
                 associateLead.setLeadid(lead.getId());
                 associateLead.setCreatedtime(new GregorianCalendar().getTime());
                 
