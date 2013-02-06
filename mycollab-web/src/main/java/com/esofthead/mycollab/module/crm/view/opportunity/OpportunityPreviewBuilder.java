@@ -54,6 +54,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
         previewForm.setItemDataSource(new BeanItem<Opportunity>(opportunity));
 
         displayActivities();
+        displayContacts();
     }
 
     public SimpleOpportunity getOpportunity() {
@@ -67,6 +68,10 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
         criteria.setTypeid(new NumberSearchField(opportunity.getId()));
         associateActivityList.setSearchCriteria(criteria);
     }
+    
+    private void displayContacts() {
+        associateContactList.displayContacts(opportunity);
+    }
 
     public AdvancedPreviewBeanForm<Opportunity> getPreviewForm() {
         return previewForm;
@@ -75,6 +80,15 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
     public EventRelatedItemListComp getAssociateActivityList() {
         return associateActivityList;
     }
+
+    public OpportunityContactListComp getAssociateContactList() {
+        return associateContactList;
+    }
+
+    public OpportunityLeadListComp getAssociateLeadList() {
+        return associateLeadList;
+    }
+    
 
     public static class ReadView extends OpportunityPreviewBuilder {
 

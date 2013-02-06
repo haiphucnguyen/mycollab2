@@ -22,9 +22,12 @@ import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.crm.dao.OpportunityContactMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
+import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
+import com.esofthead.mycollab.module.crm.domain.OpportunityContactExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
@@ -39,34 +42,54 @@ import org.springframework.transaction.annotation.Transactional;
 @Auditable(module = "Crm", type = "Opportunity")
 public class OpportunityServiceImpl extends DefaultService<Integer, Opportunity, OpportunitySearchCriteria>
         implements OpportunityService {
-
+    
     @Autowired
     private OpportunityMapper opportunityMapper;
     @Autowired
     private OpportunityMapperExt opportunityMapperExt;
-
+    @Autowired
+    private OpportunityContactMapper opportunityContactMapper;
+    
     @Override
     public ICrudGenericDAO<Integer, Opportunity> getCrudMapper() {
         return opportunityMapper;
     }
-
+    
     @Override
     public ISearchableDAO<OpportunitySearchCriteria> getSearchMapper() {
         return opportunityMapperExt;
     }
-
+    
     @Override
     public SimpleOpportunity findOpportunityById(int opportunityId) {
         return opportunityMapperExt.findOpportunityById(opportunityId);
     }
-
+    
     @Override
     public List<GroupItem> getSalesStageSummary(OpportunitySearchCriteria criteria) {
         return opportunityMapperExt.getSalesStageSummary(criteria);
     }
-
+    
     @Override
     public List<GroupItem> getLeadSourcesSummary(OpportunitySearchCriteria criteria) {
         return opportunityMapperExt.getLeadSourcesSummary(criteria);
+    }
+    
+    @Override
+    public void saveOpportunityContactRelationship(List<OpportunityContact> associateContacts) {
+        for (OpportunityContact associateContact : associateContacts) {
+            OpportunityContactExample ex = new OpportunityContactExample();
+            ex.createCriteria().andContactidEqualTo(associateContact.getContactid()).andOpportunityidEqualTo(associateContact.getOpportunityid());
+            if (opportunityContactMapper.countByExample(ex) == 0) {
+                opportunityContactMapper.insert(associateContact);
+            }
+        }
+    }
+    
+    @Override
+    public void removeOpportunityContactRelationship(OpportunityContact associateContact) {
+        OpportunityContactExample ex = new OpportunityContactExample();
+        ex.createCriteria().andContactidEqualTo(associateContact.getContactid()).andOpportunityidEqualTo(associateContact.getOpportunityid());
+        opportunityContactMapper.deleteByExample(ex);
     }
 }

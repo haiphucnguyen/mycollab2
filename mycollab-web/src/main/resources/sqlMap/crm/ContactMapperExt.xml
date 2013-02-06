@@ -91,8 +91,19 @@
             <![CDATA[${campaignId.operation} 
                 (SELECT COUNT(*) 
                     FROM m_crm_campaign, m_crm_campaigns_contacts 
-                    WHERE m_crm_campaigns_contacts.campaignId=#{campaignId.value,javaType=INTEGER} AND m_crm_campaigns_contacts.contactId=m_crm_contact.id
+                    WHERE m_crm_campaigns_contacts.campaignId=#{campaignId.value,javaType=INTEGER} 
+                        AND m_crm_campaigns_contacts.contactId=m_crm_contact.id
                         AND m_crm_campaign.id=#{campaignId.value,javaType=INTEGER}) > 0
+            ]]>
+        </if>
+        <if test="opportunityId != null">
+            <![CDATA[
+                ${opportunityId.operation} 
+                (SELECT COUNT(*) 
+                    FROM m_crm_opportunity, m_crm_opportunities_contacts 
+                    WHERE m_crm_opportunities_contacts.opportunityId=#{opportunityId.value,javaType=INTEGER} 
+                        AND m_crm_opportunities_contacts.contactId=m_crm_contact.id 
+                        AND m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER}) > 0
             ]]>
         </if>
     </sql>
@@ -199,8 +210,19 @@
             <![CDATA[${campaignId.operation} 
                 (SELECT COUNT(*) 
                     FROM m_crm_campaign, m_crm_campaigns_contacts 
-                    WHERE m_crm_campaigns_contacts.campaignId=#{campaignId.value,javaType=INTEGER} AND m_crm_campaigns_contacts.contactId=m_crm_contact.id
+                    WHERE m_crm_campaigns_contacts.campaignId=#{campaignId.value,javaType=INTEGER} 
+                        AND m_crm_campaigns_contacts.contactId=m_crm_contact.id
                         AND m_crm_campaign.id=#{campaignId.value,javaType=INTEGER}) > 0
+            ]]>
+        </if>
+        <if test="opportunityId != null">
+            <![CDATA[
+                ${opportunityId.operation} 
+                (SELECT COUNT(*) 
+                    FROM m_crm_opportunity, m_crm_opportunities_contacts 
+                    WHERE m_crm_opportunities_contacts.opportunityId=#{opportunityId.value,javaType=INTEGER} 
+                        AND m_crm_opportunities_contacts.contactId=m_crm_contact.id 
+                        AND m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER}) > 0
             ]]>
         </if>
     </sql>

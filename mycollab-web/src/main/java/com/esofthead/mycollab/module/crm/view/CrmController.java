@@ -6,10 +6,10 @@ import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Call;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.Case;
+import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
@@ -524,8 +524,8 @@ public class CrmController {
                     public void handle(ContactEvent.GotoEdit event) {
                         ContactAddPresenter presenter = PresenterResolver
                                 .getPresenter(ContactAddPresenter.class);
-                        presenter.go(container, new ScreenData.Edit<SimpleContact>(
-                                (SimpleContact) event.getData()));
+                        presenter.go(container, new ScreenData.Edit<Contact>(
+                                (Contact) event.getData()));
                     }
                 });
 

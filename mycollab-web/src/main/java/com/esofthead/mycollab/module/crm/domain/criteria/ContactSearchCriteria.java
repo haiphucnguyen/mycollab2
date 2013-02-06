@@ -42,6 +42,7 @@ public class ContactSearchCriteria extends SearchCriteria {
     private SetSearchField<String> leadSources;
     private NumberSearchField id;
     private NumberSearchField campaignId;
+    private NumberSearchField opportunityId;
 
     public StringSearchField getContactName() {
         return contactName;
@@ -193,5 +194,13 @@ public class ContactSearchCriteria extends SearchCriteria {
 
     public void setCampaignId(NumberSearchField campaignId) {
         this.campaignId = campaignId;
+    }
+
+    public NumberSearchField getOpportunityId() {
+        return opportunityId;
+    }
+
+    public void setOpportunityId(NumberSearchField opportunityId) {
+        this.opportunityId = opportunityId;
     }
 }
