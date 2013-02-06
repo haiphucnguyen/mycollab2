@@ -53,11 +53,8 @@ public class AccountContactSelectionWindow extends RelatedItemSelectionWindow<Si
         	
         });
         
-        HorizontalLayout headerLayout = new HorizontalLayout();
-        headerLayout.addComponent(selectBtn);
-        headerLayout.addComponent(contactSimpleSearchPanel);
-        
-        this.bodyContent.addComponent(headerLayout);
+        this.bodyContent.addComponent(selectBtn);
+        this.bodyContent.addComponent(contactSimpleSearchPanel);
         this.bodyContent.addComponent(tableItem);
     }
 }
