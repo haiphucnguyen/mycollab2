@@ -7,17 +7,21 @@ import com.esofthead.mycollab.module.crm.domain.Call;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
 import com.esofthead.mycollab.module.crm.domain.CampaignContact;
+import com.esofthead.mycollab.module.crm.domain.CampaignLead;
 import com.esofthead.mycollab.module.crm.domain.Contact;
+import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
@@ -224,9 +228,35 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
                     view.getRelatedContactHandlers().refresh();
                 }
             }
+        });
+        
+        view.getRelatedLeadHandlers().addRelatedListHandler(new AbstractRelatedListHandler<SimpleLead>() {
+            @Override
+            public void createNewRelatedItem(String itemId) {
+                Lead lead = new Lead();
+                lead.setExtraData(view.getItem());
+                EventBus.getInstance().fireEvent(new LeadEvent.GotoEdit(CampaignReadPresenter.this, lead));
+            }
             
-            
-            
+            @Override
+            public void selectAssociateItems(Set<SimpleLead> items) {
+                if (items.size() > 0) {
+                    SimpleCampaign campaign = view.getItem();
+                    List<CampaignLead> associateLeads = new ArrayList<CampaignLead>();
+                    for (SimpleLead lead : items) {
+                        CampaignLead associateLead = new CampaignLead();
+                        associateLead.setCampaignid(campaign.getId());
+                        associateLead.setLeadid(lead.getId());
+                        associateLead.setCreatedtime(new GregorianCalendar().getTime());
+                        associateLeads.add(associateLead);
+                    }
+                    
+                    CampaignService campaignService = AppContext.getSpringBean(CampaignService.class);
+                    campaignService.saveCampaignLeadRelationship(associateLeads);
+                    
+                    view.getRelatedLeadHandlers().refresh();
+                }
+            }
         });
 
 

@@ -31,7 +31,6 @@ public class LeadSearchCriteria extends SearchCriteria {
     private StringSearchField assignUserName;
     private NumberSearchField campaignId;
     private NumberSearchField opportunityId;
-    private NumberSearchField targetListId;
     private NumberSearchField saccountid;
     private StringSearchField firstname;
     private StringSearchField lastname;
@@ -108,14 +107,6 @@ public class LeadSearchCriteria extends SearchCriteria {
 
     public void setOpportunityId(NumberSearchField opportunityId) {
         this.opportunityId = opportunityId;
-    }
-
-    public NumberSearchField getTargetListId() {
-        return targetListId;
-    }
-
-    public void setTargetListId(NumberSearchField targetListId) {
-        this.targetListId = targetListId;
     }
 
     public NumberSearchField getSaccountid() {

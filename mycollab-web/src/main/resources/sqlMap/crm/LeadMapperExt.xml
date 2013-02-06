@@ -14,7 +14,11 @@
         </if>
         <if test="campaignId != null">
             <![CDATA[
-            ${campaignId.operation} m_crm_lead.campaignId = #{campaignId.value,javaType=INTEGER}
+            ${campaignId.operation} 
+                (SELECT COUNT(*) 
+                    FROM m_crm_campaign, m_crm_campaigns_leads 
+                    WHERE m_crm_campaigns_leads.campaignId=#{campaignId.value,javaType=INTEGER} AND m_crm_campaigns_leads.leadId=m_crm_lead.id
+                        AND m_crm_campaign.id=m_crm_campaigns_leads.campaignId) > 0
             ]]>
         </if>
         <if test="referredBy != null">
@@ -49,16 +53,6 @@
                       AND m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER}
                       AND m_crm_type_relationship.type1id=m_crm_lead.id
                       AND m_crm_type_relationship.type2id=m_crm_opportunity.id) > 0
-          ]]>
-        </if>
-        <if test="targetListId != null">
-            <![CDATA[
-                ${targetListId.operation}
-              (SELECT COUNT(*) FROM m_crm_target_list, m_crm_type_relationship
-                  WHERE m_crm_type_relationship.type=12
-                      AND m_crm_target_list.id=#{targetListId.value,javaType=INTEGER}
-                      AND m_crm_type_relationship.type1id=m_crm_target_list.id
-                      AND m_crm_type_relationship.type2id=m_crm_lead.id) > 0
           ]]>
         </if>
         <if test="saccountid != null">
@@ -114,6 +108,15 @@
                 ${accountId.operation} m_crm_account.id = #{accountId.value,javaType=INTEGER}
             ]]>
         </if>
+        <if test="campaignId != null">
+            <![CDATA[
+            ${campaignId.operation} 
+                (SELECT COUNT(*) 
+                    FROM m_crm_campaign, m_crm_campaigns_leads 
+                    WHERE m_crm_campaigns_leads.campaignId=#{campaignId.value,javaType=INTEGER} AND m_crm_campaigns_leads.leadId=m_crm_lead.id
+                        AND m_crm_campaign.id=m_crm_campaigns_leads.campaignId) > 0
+            ]]>
+        </if>
     </sql>
 
     <sql id="queryTotalCountSearchCriteria">
@@ -165,16 +168,6 @@
                       AND m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER}
                       AND m_crm_type_relationship.type1id=m_crm_lead.id
                       AND m_crm_type_relationship.type2id=m_crm_opportunity.id) > 0
-          ]]>
-        </if>
-        <if test="targetListId != null">
-            <![CDATA[
-            ${targetListId.operation}
-              (SELECT COUNT(*) FROM m_crm_target_list, m_crm_type_relationship
-                  WHERE m_crm_type_relationship.type=12
-                      AND m_crm_target_list.id=#{targetListId.value,javaType=INTEGER}
-                      AND m_crm_type_relationship.type1id=m_crm_target_list.id
-                      AND m_crm_type_relationship.type2id=m_crm_lead.id) > 0
           ]]>
         </if>
         <if test="saccountid != null">
