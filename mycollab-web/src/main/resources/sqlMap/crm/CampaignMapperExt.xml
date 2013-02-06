@@ -1,71 +1,59 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt">
-	<resultMap extends="com.esofthead.mycollab.module.crm.dao.CampaignMapper.BaseResultMap"
-		id="SimpleCampaignResult" type="com.esofthead.mycollab.module.crm.domain.SimpleCampaign">
-		<result column="assignUserFullName" jdbcType="VARCHAR"
-			property="assignUserFullName" />
-	</resultMap>
+    <resultMap extends="com.esofthead.mycollab.module.crm.dao.CampaignMapper.BaseResultMap"
+                   id="SimpleCampaignResult" type="com.esofthead.mycollab.module.crm.domain.SimpleCampaign">
+        <result column="assignUserFullName" jdbcType="VARCHAR"
+                        property="assignUserFullName" />
+    </resultMap>
 
-	<sql id="querySearchCriteria">
-		<if test="campaignName != null">
+    <sql id="querySearchCriteria">
+        <if test="campaignName != null">
           <![CDATA[
             ${campaignName.operation} m_crm_campaign.campaignName like '%${campaignName.value}%']]>
-		</if>
-		<if test="assignUser != null">
+        </if>
+        <if test="assignUser != null">
             <![CDATA[${assignUser.operation} m_crm_campaign.assignUser = #{assignUser.value}]]>
-		</if>
-		<if test="assignUserName != null">
+        </if>
+        <if test="assignUserName != null">
             <![CDATA[${assignUserName.operation} concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) LIKE '%${assignUserName.value}%']]>
-		</if>
-		<if test="leadId != null">
+        </if>
+        <if test="leadId != null">
             <![CDATA[
             ${leadId.operation} 
-            (SELECT COUNT(*) FROM m_crm_type_relationship, m_crm_lead
-                WHERE m_crm_type_relationship.type=4 
-                    AND m_crm_type_relationship.type1id=m_crm_lead.id
-                    AND m_crm_lead.id=#{leadId.value,javaType=INTEGER}
-                    AND m_crm_type_relationship.type2id=m_crm_campaign.id) > 0
+            (SELECT COUNT(*) 
+                FROM m_crm_lead, m_crm_campaigns_leads
+                WHERE m_crm_lead.id=#{leadId.value,javaType=INTEGER} AND m_crm_campaigns_leads.leadId=m_crm_lead.id 
+                    AND  m_crm_campaigns_leads.campaignId=m_crm_campaign.id ) > 0
             ]]>
-		</if>
-		<if test="targetListId!=null">
-            <![CDATA[
-                ${targetListId.operation} 
-              (SELECT COUNT(*) FROM m_crm_type_relationship, m_crm_target_list
-               WHERE m_crm_type_relationship.type=12 
-                  AND m_crm_target_list.id=#{targetListId.value,javaType=INTEGER}
-                  AND m_crm_type_relationship.type1id=m_crm_campaign.id
-                  AND m_crm_type_relationship.type2id=m_crm_target_list.id
-              ) > 0
-          ]]>
-		</if>
-		<if test="statuses != null">
-			${statuses.operation}
-			m_crm_campaign.status IN
-			<foreach close=")" collection="statuses.values" item="status"
-				open="(" separator=",">
-				#{status}
+        </if>
+        <if test="statuses != null">
+            ${statuses.operation}
+            m_crm_campaign.status IN
+            <foreach close=")" collection="statuses.values" item="status"
+                                 open="(" separator=",">
+                #{status}
             </foreach>
-		</if>
-		<if test="types != null">
-			${types.operation} m_crm_campaign.type IN
-			<foreach close=")" collection="types.values" item="type"
-				open="(" separator=",">
-				#{type}
+        </if>
+        <if test="types != null">
+            ${types.operation} m_crm_campaign.type IN
+            <foreach close=")" collection="types.values" item="type"
+                                 open="(" separator=",">
+                #{type}
             </foreach>
-		</if>
-		<if test="assignUsers != null">
-			${assignUsers.operation}
-			m_crm_campaign.assignUser IN
-			<foreach close=")" collection="assignUsers.values" item="user"
-				open="(" separator=",">
-				#{user}
+        </if>
+        <if test="assignUsers != null">
+            ${assignUsers.operation}
+            m_crm_campaign.assignUser IN
+            <foreach close=")" collection="assignUsers.values" item="user"
+                                 open="(" separator=",">
+                #{user}
             </foreach>
-		</if>
+        </if>
         <if test="startDate != null">
             ${startDate.operation} CAST(m_crm_campaign.startDate AS DATE ) ${startDate.comparision} #{startDate.value}
         </if> 
-         <if test="endDate != null">
+        <if test="endDate != null">
             ${endDate.operation} CAST(m_crm_campaign.endDate AS DATE ) ${endDate.comparision} #{endDate.value}
         </if>  
         <if test="startDateRange != null">
@@ -74,81 +62,68 @@
         <if test="endDateRange != null">
             ${endDateRange.operation} CAST(m_crm_campaign.endDate AS DATE ) BETWEEN #{endDateRange.from} AND #{endDateRange.to}
         </if> 	
-		<if test="saccountid != null">
+        <if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_campaign.sAccountId = #{saccountid.value, javaType=INTEGER}]]>
-		</if>
-	</sql>
+        </if>
+    </sql>
 
-	<sql id="queryTotalCountSearchCriteria">
+    <sql id="queryTotalCountSearchCriteria">
 	
-		<if test="id != null">
+        <if test="id != null">
             <![CDATA[${id.operation} m_crm_campaign.id ${id.compareOperator} #{id.value,javaType=INTEGER}]]>
         </if>
         
-		<if test="campaignName != null">
+        <if test="campaignName != null">
           <![CDATA[
           ${campaignName.operation} m_crm_campaign.campaignName like '%${campaignName.value}%']]>
-		</if>
-		<if test="assignUser != null">
+        </if>
+        <if test="assignUser != null">
             <![CDATA[${assignUser.operation} m_crm_campaign.assignUser = #{assignUser.value}]]>
-		</if>
-		<if test="assignUserName != null">
+        </if>
+        <if test="assignUserName != null">
             <![CDATA[
                 ${assignUserName.operation}
                 (SELECT COUNT(*) FROM s_user
                 WHERE m_crm_campaign.assignUser = s_user.username AND
                     (concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) LIKE '%${assignUserName.value}%')) > 0]]>
-		</if>
-		<if test="leadId != null">
+        </if>
+        <if test="leadId != null">
             <![CDATA[
-            ${leadId.operation}
-            (SELECT COUNT(*) FROM m_crm_type_relationship, m_crm_lead
-                WHERE m_crm_type_relationship.type=4 
-                    AND m_crm_type_relationship.type1id=m_crm_lead.id
-                    AND m_crm_lead.id=#{leadId.value,javaType=INTEGER}
-                    AND m_crm_type_relationship.type2id=m_crm_campaign.id) > 0
+            ${leadId.operation} 
+            (SELECT COUNT(*) 
+                FROM m_crm_lead, m_crm_campaigns_leads
+                WHERE m_crm_lead.id=#{leadId.value,javaType=INTEGER} AND m_crm_campaigns_leads.leadId=m_crm_lead.id 
+                    AND  m_crm_campaigns_leads.campaignId=m_crm_campaign.id ) > 0
             ]]>
-		</if>
-		<if test="targetListId != null">
-            <![CDATA[
-                ${targetListId.operation}
-                
-              (SELECT COUNT(*) FROM m_crm_type_relationship, m_crm_target_list
-               WHERE m_crm_type_relationship.type=12 
-                  AND m_crm_target_list.id=#{targetListId.value,javaType=INTEGER}
-                  AND m_crm_type_relationship.type1id=m_crm_campaign.id
-                  AND m_crm_type_relationship.type2id=m_crm_target_list.id
-              ) > 0
-          ]]>
-		</if>
-		<if test="statuses != null">
-			${statuses.operation}
-			m_crm_campaign.status IN
-			<foreach close=")" collection="statuses.values" item="status"
-				open="(" separator=",">
-				#{status}
+        </if>
+        <if test="statuses != null">
+            ${statuses.operation}
+            m_crm_campaign.status IN
+            <foreach close=")" collection="statuses.values" item="status"
+                                 open="(" separator=",">
+                #{status}
             </foreach>
-		</if>
-		<if test="types != null">
-			${types.operation}
-			m_crm_campaign.type IN
-			<foreach close=")" collection="types.values" item="type"
-				open="(" separator=",">
-				#{type}
+        </if>
+        <if test="types != null">
+            ${types.operation}
+            m_crm_campaign.type IN
+            <foreach close=")" collection="types.values" item="type"
+                                 open="(" separator=",">
+                #{type}
             </foreach>
-		</if>
-		<if test="assignUsers != null">
-			${assignUsers.operation}
-			m_crm_campaign.assignUser IN
-			<foreach close=")" collection="assignUsers.values" item="user"
-				open="(" separator=",">
-				#{user}
+        </if>
+        <if test="assignUsers != null">
+            ${assignUsers.operation}
+            m_crm_campaign.assignUser IN
+            <foreach close=")" collection="assignUsers.values" item="user"
+                                 open="(" separator=",">
+                #{user}
             </foreach>
-		</if>
-		<if test="startDate != null">
+        </if>
+        <if test="startDate != null">
             ${startDate.operation} CAST(m_crm_campaign.startDate AS DATE ) ${startDate.comparision} #{startDate.value}
         </if> 
-         <if test="endDate != null">
+        <if test="endDate != null">
             ${endDate.operation} CAST(m_crm_campaign.endDate AS DATE ) ${endDate.comparision} #{endDate.value}
         </if>  
         <if test="startDateRange != null">
@@ -157,19 +132,20 @@
         <if test="endDateRange != null">
             ${endDateRange.operation} CAST(m_crm_campaign.endDate AS DATE ) BETWEEN #{endDateRange.from} AND #{endDateRange.to}
         </if>
-		<if test="saccountid != null">
+        <if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_campaign.sAccountId = #{saccountid.value, javaType=INTEGER}]]>
-		</if>
-	</sql>
+        </if>
+    </sql>
 
-	<select id="getTotalCount" parameterType="CampaignSearchCriteria"
-		resultType="int">
-		SELECT count(*) as totalCount FROM m_crm_campaign
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.queryTotalCountSearchCriteria" />
-		</trim>
-	</select>
+    <select id="getTotalCount" parameterType="CampaignSearchCriteria"
+                resultType="int">
+        SELECT count(*) as totalCount FROM m_crm_campaign
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include
+                refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.queryTotalCountSearchCriteria" />
+        </trim>
+    </select>
     
     <delete id="removeByCriteria" parameterType="CampaignSearchCriteria">
         DELETE FROM m_crm_campaign
@@ -178,7 +154,7 @@
         </if>
     </delete>
 
-	<sql id="selectSimpleCampaign">
+    <sql id="selectSimpleCampaign">
         <![CDATA[
         SELECT m_crm_campaign.id, m_crm_campaign.campaignName, m_crm_campaign.startDate, m_crm_campaign.endDate, m_crm_campaign.currencyId, 
                m_crm_campaign.impressionnote, m_crm_campaign.budget, m_crm_campaign.actualCost, m_crm_campaign.expectedRevenue, 
@@ -189,35 +165,37 @@
         FROM m_crm_campaign       
             LEFT OUTER JOIN s_user ON (m_crm_campaign.assignUser=s_user.username)
         ]]>
-	</sql>
+    </sql>
     
     <sql id="orderStatement">
-        ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        ORDER BY 
+        <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[
             m_crm_campaign.lastUpdatedTime DESC
         ]]>
     </sql>
 
-	<select id="findPagableListByCriteria" parameterType="CampaignSearchCriteria"
-		resultMap="SimpleCampaignResult">
-		<include
-			refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.selectSimpleCampaign" />
-		<trim prefix="WHERE" prefixOverrides="AND | OR ">
-			1=1 <include
-				refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.querySearchCriteria" />
-		</trim>
+    <select id="findPagableListByCriteria" parameterType="CampaignSearchCriteria"
+                resultMap="SimpleCampaignResult">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.selectSimpleCampaign" />
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 
+            <include
+                refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.querySearchCriteria" />
+        </trim>
         <include refid="orderStatement"/>
-	</select>
+    </select>
 
-	<select id="findCampaignById" parameterType="int"
-		resultMap="SimpleCampaignResult">
-		<include
-			refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.selectSimpleCampaign" />
+    <select id="findCampaignById" parameterType="int"
+                resultMap="SimpleCampaignResult">
+        <include
+            refid="com.esofthead.mycollab.module.crm.dao.CampaignMapperExt.selectSimpleCampaign" />
 
-		WHERE m_crm_campaign.id=#{campaignId,javaType=INTEGER}
-	</select>
+        WHERE m_crm_campaign.id=#{campaignId,javaType=INTEGER}
+    </select>
 	
-	<select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
+    <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
         SELECT MIN(id) FROM m_crm_campaign
 
         <trim prefix="WHERE" prefixOverrides="AND | OR ">

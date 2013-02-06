@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
 import com.esofthead.mycollab.module.crm.domain.Campaign;
+import com.esofthead.mycollab.module.crm.domain.CampaignLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
@@ -12,6 +14,8 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import java.util.Arrays;
+import java.util.GregorianCalendar;
 
 public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 
@@ -66,6 +70,15 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
         campaign.setSaccountid(AppContext.getAccountId());
         if (campaign.getId() == null) {
             campaignService.saveWithSession(campaign, AppContext.getUsername());
+            
+            if (campaign.getExtraData() != null && campaign.getExtraData() instanceof SimpleLead) {
+                CampaignLead associateLead = new CampaignLead();
+                associateLead.setCampaignid(campaign.getId());
+                associateLead.setLeadid(((SimpleLead)campaign.getExtraData()).getId());
+                associateLead.setCreatedtime(new GregorianCalendar().getTime());
+                
+                campaignService.saveCampaignLeadRelationship(Arrays.asList(associateLead));
+            }
         } else {
             campaignService.updateWithSession(campaign,
                     AppContext.getUsername());
