@@ -66,7 +66,7 @@ public class CampaignContactListComp extends RelatedListComp<SimpleContact, Cont
         final SplitButton controlsBtn = new SplitButton();
         controlsBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CONTACT));
         controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
-        controlsBtn.setCaption("New Account");
+        controlsBtn.setCaption("New Contact");
         controlsBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
         controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
             @Override
@@ -74,7 +74,7 @@ public class CampaignContactListComp extends RelatedListComp<SimpleContact, Cont
                 fireNewRelatedItem("");
             }
         });
-        Button selectBtn = new Button("Select from existing accounts", new Button.ClickListener() {
+        Button selectBtn = new Button("Select from existing contacts", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 CampaignContactSelectionWindow contactsWindow = new CampaignContactSelectionWindow(CampaignContactListComp.this);
