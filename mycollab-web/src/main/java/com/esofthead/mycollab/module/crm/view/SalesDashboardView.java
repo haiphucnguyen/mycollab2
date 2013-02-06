@@ -55,7 +55,7 @@ public class SalesDashboardView extends Depot {
 				displayReport();
 			}
 		});
-		prevButton.setIcon(new ThemeResource("icons/16/previousBlue.png"));
+		prevButton.setIcon(new ThemeResource("icons/16/previous_gray.png"));
 		prevButton.setStyleName("link");
 		prevButton.addStyleName("no-margin");
 		headerContainer.addComponent(prevButton);
@@ -71,7 +71,7 @@ public class SalesDashboardView extends Depot {
 				displayReport();
 			}
 		});
-		nextBtn.setIcon(new ThemeResource("icons/16/nextBlue.png"));
+		nextBtn.setIcon(new ThemeResource("icons/16/next_gray.png"));
 		nextBtn.setStyleName("link");
 		nextBtn.addStyleName("no-margin");
 		headerContainer.addComponent(nextBtn);
