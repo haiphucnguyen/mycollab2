@@ -49,10 +49,15 @@ public class LeadPreviewBuilder extends VerticalLayout {
         previewForm.setItemDataSource(new BeanItem<Lead>(lead));
         displayActivities();
         displayNotes();
+        displayCampaigns();
     }
 
     public SimpleLead getLead() {
         return lead;
+    }
+    
+    private void displayCampaigns() {
+        associateCampaignList.displayCampaigns(lead);
     }
     
     private void displayNotes() {
@@ -70,6 +75,12 @@ public class LeadPreviewBuilder extends VerticalLayout {
     public EventRelatedItemListComp getAssociateActivityList() {
         return associateActivityList;
     }
+
+    public LeadCampaignListComp getAssociateCampaignList() {
+        return associateCampaignList;
+    }
+    
+    
 
     public AdvancedPreviewBeanForm<Lead> getPreviewForm() {
         return previewForm;

@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
+import com.esofthead.mycollab.module.crm.view.lead.LeadTableDisplay;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -43,7 +44,9 @@ public class CampaignTableDisplay extends PagedBeanTable2<CampaignService, Campa
                         SimpleCampaign campaign = CampaignTableDisplay.this
                                 .getBeanByIndex(itemId);
                         CampaignTableDisplay.this.fireSelectItemEvent(campaign);
-
+                        fireTableEvent(new TableClickEvent(
+                                CampaignTableDisplay.this, campaign,
+                                "selected"));
                     }
                 });
 
@@ -72,7 +75,7 @@ public class CampaignTableDisplay extends PagedBeanTable2<CampaignService, Campa
                         });
                 b.setStyleName("link");
                 b.addStyleName("medium-text");
-                
+
                 if ("Complete".equals(campaign.getStatus())) {
                     b.addStyleName(UIConstants.LINK_COMPLETED);
                 } else {
