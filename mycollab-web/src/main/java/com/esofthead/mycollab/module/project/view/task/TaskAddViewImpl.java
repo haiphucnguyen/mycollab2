@@ -119,7 +119,7 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
                 } else if (propertyId.equals("id")) {
                     attachmentUploadField = new FormAttachmentUploadField();
                     if (task.getId() != null) {
-                        attachmentUploadField.getAttachments(AttachmentConstants.PROJECT_BUG_TYPE, task.getId());
+                        attachmentUploadField.getAttachments(AttachmentConstants.PROJECT_TASK_TYPE, task.getId());
                     }
                     return attachmentUploadField;
                 } 

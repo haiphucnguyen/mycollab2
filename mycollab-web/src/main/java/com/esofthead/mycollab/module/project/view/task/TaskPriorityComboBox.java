@@ -14,7 +14,7 @@ public class TaskPriorityComboBox extends ComboBox {
 	public static final String PRIORITY_NONE_IMG = "icons/16/priority_none.png";
 	public static final String PRIORITY_URGENT_IMG = "icons/16/priority_urgent.png";
 
-	public static final String PRIORITY_HIGHT = "Hight";
+	public static final String PRIORITY_HIGHT = "High";
 	public static final String PRIORITY_LOW = "Low";
 	public static final String PRIORITY_MEDIUM = "Medium";
 	public static final String PRIORITY_NONE = "None";
