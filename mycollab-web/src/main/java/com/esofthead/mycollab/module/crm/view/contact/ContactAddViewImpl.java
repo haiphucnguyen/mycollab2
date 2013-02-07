@@ -1,9 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.module.crm.domain.Contact;
-import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
-import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
@@ -14,7 +11,6 @@ import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
@@ -28,7 +24,7 @@ public class ContactAddViewImpl extends AbstractView implements
 
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
-    private SimpleContact contact;
+    private Contact contact;
 
     public ContactAddViewImpl() {
         super();
@@ -37,18 +33,18 @@ public class ContactAddViewImpl extends AbstractView implements
     }
 
     @Override
-    public void editItem(SimpleContact item) {
+    public void editItem(Contact item) {
         this.contact = item;
         editForm.setItemDataSource(new BeanItem<Contact>(contact));
 
     }
 
     @Override
-    public HasEditFormHandlers<SimpleContact> getEditFormHandlers() {
+    public HasEditFormHandlers<Contact> getEditFormHandlers() {
         return editForm;
     }
 
-    private class EditForm extends AdvancedEditBeanForm<SimpleContact> {
+    private class EditForm extends AdvancedEditBeanForm<Contact> {
 
         private static final long serialVersionUID = 1L;
 
@@ -64,11 +60,11 @@ public class ContactAddViewImpl extends AbstractView implements
             private static final long serialVersionUID = 1L;
 
             public FormLayoutFactory() {
-                super((contact.getId() == null) ? "Create Contact" : contact.getContactName());
+                super((contact.getId() == null) ? "Create Contact" : (contact.getFirstname() + " " + contact.getLastname()));
             }
 
             private Layout createButtonControls() {
-                return (new EditFormControlsGenerator<SimpleContact>(EditForm.this))
+                return (new EditFormControlsGenerator<Contact>(EditForm.this))
                         .createButtonControls();
             }
 
@@ -96,15 +92,15 @@ public class ContactAddViewImpl extends AbstractView implements
                     return leadSource;
                 } else if (propertyId.equals("accountId")) {
                     AccountSelectionField accountField = new AccountSelectionField();
-                    if (contact.getAccountId() != null) {
-                        AccountService accountService = AppContext
-                                .getSpringBean(AccountService.class);
-                        SimpleAccount account = accountService
-                                .findAccountById(contact.getAccountId());
-                        if (account != null) {
-                            accountField.setAccount(account);
-                        }
-                    }
+//                    if (contact.getAccountId() != null) {
+//                        AccountService accountService = AppContext
+//                                .getSpringBean(AccountService.class);
+//                        SimpleAccount account = accountService
+//                                .findAccountById(contact.getAccountId());
+//                        if (account != null) {
+//                            accountField.setAccount(account);
+//                        }
+//                    }
                     return accountField;
                 } else if (propertyId.equals("lastname")) {
                     TextField tf = new TextField();

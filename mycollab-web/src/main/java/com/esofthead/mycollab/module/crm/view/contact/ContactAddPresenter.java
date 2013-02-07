@@ -1,11 +1,11 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.module.crm.domain.CampaignContact;
+import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
-import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
@@ -34,9 +34,9 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 
     private void bind() {
         view.getEditFormHandlers().addFormHandler(
-                new EditFormHandler<SimpleContact>() {
+                new EditFormHandler<Contact>() {
                     @Override
-                    public void onSave(final SimpleContact contact) {
+                    public void onSave(final Contact contact) {
                         saveContact(contact);
                         ViewState viewState = HistoryViewManager.back();
 
@@ -57,7 +57,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
                     }
 
                     @Override
-                    public void onSaveAndNew(final SimpleContact contact) {
+                    public void onSaveAndNew(final Contact contact) {
                         saveContact(contact);
                         EventBus.getInstance().fireEvent(
                                 new ContactEvent.GotoAdd(this, null));
@@ -68,10 +68,10 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         super.onGo(container, data);
-        view.editItem((SimpleContact) data.getParams());
+        view.editItem((Contact) data.getParams());
     }
 
-    public void saveContact(SimpleContact contact) {
+    public void saveContact(Contact contact) {
         ContactService contactService = AppContext
                 .getSpringBean(ContactService.class);
 

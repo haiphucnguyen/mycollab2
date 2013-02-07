@@ -70,25 +70,6 @@ public class ContactServiceImpl extends DefaultService<Integer, SimpleContact, C
     }
     
     @Override
-    public int saveWithSession(SimpleContact record, String username) {
-        int contactId = super.saveWithSession(record, username);
-        
-        if (record.getAccountId() != null) {
-            AccountContact accountContactRel = new AccountContact();
-            accountContactRel.setAccountid(record.getAccountId());
-            accountContactRel.setContactid(contactId);
-            accountContactRel.setCreatedtime(new GregorianCalendar().getTime());
-            accountContactMapper.insert(accountContactRel);
-        }
-        return contactId;
-    }
-    
-    @Override
-    public int updateWithSession(SimpleContact record, String username) {
-        return super.updateWithSession(record, username);
-    }
-    
-    @Override
     public SimpleContact findContactById(int contactId) {
         SimpleContact contact = contactMapperExt.findContactById(contactId);
         System.out.println("Size: " + contact.getAccounts().size());
