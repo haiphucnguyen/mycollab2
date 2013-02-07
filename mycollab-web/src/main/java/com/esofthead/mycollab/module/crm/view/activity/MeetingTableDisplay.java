@@ -47,6 +47,14 @@ public class MeetingTableDisplay extends PagedBeanTable2<MeetingService, Meeting
                             }
                         });
                 b.addStyleName(UIConstants.LINK_COMPLETED);
+                
+                if ("Held".equals(meeting.getStatus())) {
+                    b.addStyleName(UIConstants.LINK_COMPLETED);
+                } else {
+                    if (meeting.getEnddate() != null && (meeting.getEnddate().before(new GregorianCalendar().getTime()))) {
+                        b.addStyleName(UIConstants.LINK_OVERDUE);
+                    }
+                }
                 return b;
                 
             }
