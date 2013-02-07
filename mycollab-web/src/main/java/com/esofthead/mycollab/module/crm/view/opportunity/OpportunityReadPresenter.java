@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Call;
@@ -238,6 +239,8 @@ public class OpportunityReadPresenter extends CrmGenericPresenter<OpportunityRea
             if (opportunity != null) {
                 super.onGo(container, data);
                 view.previewItem(opportunity);
+                
+                AppContext.addFragment("crm/opportunity/preview/" + UrlEncodeDecoder.encode(opportunity.getId()));
             } else {
                 AppContext
                         .getApplication()

@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Call;
@@ -199,6 +200,8 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
             if (lead != null) {
                 super.onGo(container, data);
                 view.previewItem(lead);
+                
+                AppContext.addFragment("crm/lead/preview/" + UrlEncodeDecoder.encode(lead.getId()));
             } else {
                 AppContext
                         .getApplication()

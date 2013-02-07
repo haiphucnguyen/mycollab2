@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.crm.domain.CampaignContact;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
@@ -68,7 +69,14 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         super.onGo(container, data);
-        view.editItem((Contact) data.getParams());
+        Contact contact = (Contact) data.getParams();
+        view.editItem(contact);
+        
+        if (contact.getId() == null) {
+            AppContext.addFragment("crm/contact/add");
+        } else {
+            AppContext.addFragment("crm/contact/edit/" + UrlEncodeDecoder.encode(contact.getId()));
+        }
     }
 
     public void saveContact(Contact contact) {
@@ -97,17 +105,14 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
             } else if (contact.getExtraData() != null && contact.getExtraData() instanceof SimpleCase) {
                 ContactCase associateCase = new ContactCase();
                 associateCase.setContactid(contact.getId());
-                associateCase.setCaseid(((SimpleCase)contact.getExtraData()).getId());
+                associateCase.setCaseid(((SimpleCase) contact.getExtraData()).getId());
                 associateCase.setCreatedtime(new GregorianCalendar().getTime());
-                
+
                 contactService.saveContactCaseRelationship(Arrays.asList(associateCase));
             }
 
         } else {
             contactService.updateWithSession(contact, AppContext.getUsername());
         }
-
-
-
     }
 }

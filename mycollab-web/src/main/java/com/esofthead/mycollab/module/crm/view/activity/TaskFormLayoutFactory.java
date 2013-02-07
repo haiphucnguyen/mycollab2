@@ -10,13 +10,13 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
-public abstract class TodoFormLayoutFactory implements IFormLayoutFactory {
+public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
     
     private static final long serialVersionUID = 1L;
     private GridFormLayoutHelper informationLayout;
     private String title;
     
-    public TodoFormLayoutFactory(String title) {
+    public TaskFormLayoutFactory(String title) {
         this.title = title;
     }
     

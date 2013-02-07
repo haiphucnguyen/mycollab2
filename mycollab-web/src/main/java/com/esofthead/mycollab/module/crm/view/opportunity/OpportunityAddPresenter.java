@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
@@ -61,7 +62,14 @@ public class OpportunityAddPresenter extends CrmGenericPresenter<OpportunityAddV
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         super.onGo(container, data);
-        view.editItem((Opportunity) data.getParams());
+        Opportunity opportunity = (Opportunity) data.getParams();
+        view.editItem(opportunity);
+        
+        if (opportunity.getId() == null) {
+            AppContext.addFragment("crm/opportunity/add");
+        } else {
+            AppContext.addFragment("crm/opportunity/edit/" + UrlEncodeDecoder.encode(opportunity.getId()));
+        }
     }
 
     public void saveOpportunity(Opportunity opportunity) {

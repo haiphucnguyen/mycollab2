@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -201,6 +202,8 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
             if (cases != null) {
                 super.onGo(container, data);
                 view.previewItem(cases);
+                
+                AppContext.addFragment("crm/cases/preview/" + UrlEncodeDecoder.encode(cases.getId()));
             } else {
                 AppContext
                         .getApplication()

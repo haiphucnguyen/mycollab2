@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
@@ -60,7 +61,14 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         super.onGo(container, data);
-        view.editItem((Campaign) data.getParams());
+        Campaign campaign = (Campaign) data.getParams();
+        view.editItem(campaign);
+        
+        if (campaign.getId() == null) {
+            AppContext.addFragment("crm/campaign/add");
+        } else {
+            AppContext.addFragment("crm/campaign/edit/" + UrlEncodeDecoder.encode(campaign.getId()));
+        }
     }
 
     public void saveCampaign(Campaign campaign) {

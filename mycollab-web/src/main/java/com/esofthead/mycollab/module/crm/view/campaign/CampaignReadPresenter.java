@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
@@ -272,6 +273,7 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
             if (campaign != null) {
                 super.onGo(container, data);
                 view.previewItem(campaign);
+                AppContext.addFragment("crm/campaign/preview/" + UrlEncodeDecoder.encode(campaign.getId()));
             } else {
                 AppContext
                         .getApplication()

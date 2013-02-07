@@ -4,6 +4,6 @@ import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 
-public interface TodoAddView extends IFormAddView<Task> {
+public interface TaskAddView extends IFormAddView<Task> {
 	HasEditFormHandlers<Task> getEditFormHandlers();
 }

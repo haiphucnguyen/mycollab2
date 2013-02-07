@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.crm.domain.Call;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.CallService;
@@ -14,56 +15,63 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
-	private static final long serialVersionUID = 1L;
 
-	public CallAddPresenter() {
-		super(CallAddView.class);
+    private static final long serialVersionUID = 1L;
 
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Call>() {
+    public CallAddPresenter() {
+        super(CallAddView.class);
 
-			@Override
-			public void onSave(final Call item) {
-				save(item);
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.GotoTodoList(this, null));
-				}
-			}
+        view.getEditFormHandlers().addFormHandler(new EditFormHandler<Call>() {
+            @Override
+            public void onSave(final Call item) {
+                save(item);
+                ViewState viewState = HistoryViewManager.back();
+                if (viewState instanceof NullViewState) {
+                    EventBus.getInstance().fireEvent(
+                            new ActivityEvent.GotoTodoList(this, null));
+                }
+            }
 
-			@Override
-			public void onCancel() {
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new ActivityEvent.GotoTodoList(this, null));
-				}
-			}
+            @Override
+            public void onCancel() {
+                ViewState viewState = HistoryViewManager.back();
+                if (viewState instanceof NullViewState) {
+                    EventBus.getInstance().fireEvent(
+                            new ActivityEvent.GotoTodoList(this, null));
+                }
+            }
 
-			@Override
-			public void onSaveAndNew(final Call item) {
-				save(item);
-				EventBus.getInstance().fireEvent(
-						new ActivityEvent.CallAdd(this, null));
-			}
-		});
-	}
+            @Override
+            public void onSaveAndNew(final Call item) {
+                save(item);
+                EventBus.getInstance().fireEvent(
+                        new ActivityEvent.CallAdd(this, null));
+            }
+        });
+    }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		super.onGo(container, data);
-		view.editItem((Call) data.getParams());
-	}
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        super.onGo(container, data);
+        Call call = (Call) data.getParams();
+        view.editItem(call);
+        
+        if (call.getId() == null) {
+            AppContext.addFragment("crm/call/add");
+        } else {
+            AppContext.addFragment("crm/call/edit/" + UrlEncodeDecoder.encode(call.getId()));
+        }
+    }
 
-	public void save(Call item) {
-		CallService taskService = AppContext.getSpringBean(CallService.class);
+    public void save(Call item) {
+        CallService taskService = AppContext.getSpringBean(CallService.class);
 
-		item.setSaccountid(AppContext.getAccountId());
-		if (item.getId() == null) {
-			taskService.saveWithSession(item, AppContext.getUsername());
-		} else {
-			taskService.updateWithSession(item, AppContext.getUsername());
-		}
+        item.setSaccountid(AppContext.getAccountId());
+        if (item.getId() == null) {
+            taskService.saveWithSession(item, AppContext.getUsername());
+        } else {
+            taskService.updateWithSession(item, AppContext.getUsername());
+        }
 
-	}
+    }
 }

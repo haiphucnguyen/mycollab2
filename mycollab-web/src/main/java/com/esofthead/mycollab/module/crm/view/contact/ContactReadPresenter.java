@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Call;
@@ -200,6 +201,8 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
             if (contact != null) {
                 super.onGo(container, data);
                 view.previewItem(contact);
+                
+                AppContext.addFragment("crm/contact/preview/" + UrlEncodeDecoder.encode(contact.getId()));
             } else {
                 AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
                 return;

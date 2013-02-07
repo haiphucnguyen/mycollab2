@@ -148,7 +148,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                                 assoContact.setCreatedtime(new GregorianCalendar().getTime());
                                 associateContacts.add(assoContact);
                             }
-                            
+
                             AccountService accountService = AppContext.getSpringBean(AccountService.class);
                             accountService.saveAccountContactRelationship(associateContacts);
 
@@ -179,7 +179,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                         EventBus.getInstance().fireEvent(
                                 new LeadEvent.GotoEdit(this, lead));
                     }
-                    
+
                     @Override
                     public void selectAssociateItems(Set<SimpleLead> items) {
                         if (items.size() > 0) {
@@ -192,7 +192,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
                                 assoLead.setCreatetime(new GregorianCalendar().getTime());
                                 associateLeads.add(assoLead);
                             }
-                            
+
                             AccountService accountService = AppContext.getSpringBean(AccountService.class);
                             accountService.saveAccountLeadRelationship(associateLeads);
 

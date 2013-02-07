@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
@@ -63,7 +64,14 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         super.onGo(container, data);
-        view.editItem((Lead) data.getParams());
+        Lead lead = (Lead) data.getParams();
+        view.editItem(lead);
+        
+        if (lead.getId() == null) {
+            AppContext.addFragment("crm/lead/add");
+        } else {
+            AppContext.addFragment("crm/lead/edit/" + UrlEncodeDecoder.encode(lead.getId()));
+        }
     }
 
     public void saveLead(Lead lead) {
