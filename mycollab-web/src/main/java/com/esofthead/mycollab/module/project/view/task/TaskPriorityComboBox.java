@@ -14,21 +14,21 @@ public class TaskPriorityComboBox extends ComboBox {
 	public static final String PRIORITY_NONE_IMG = "icons/16/priority_none.png";
 	public static final String PRIORITY_URGENT_IMG = "icons/16/priority_urgent.png";
 
-	public static final String PRIORITY_HIGHT = "Hight Priority";
-	public static final String PRIORITY_LOW = "Low Priority";
-	public static final String PRIORITY_MEDIUM = "Medium Priority";
-	public static final String PRIORITY_NONE = "None Priority";
-	public static final String PRIORITY_URGENT = "Urgent Priority";
+	public static final String PRIORITY_HIGHT = "Hight";
+	public static final String PRIORITY_LOW = "Low";
+	public static final String PRIORITY_MEDIUM = "Medium";
+	public static final String PRIORITY_NONE = "None";
+	public static final String PRIORITY_URGENT = "Urgent";
 
 	public TaskPriorityComboBox() {
 		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
 
 		IndexedContainer ic = new IndexedContainer();
-		ic.addItem(PRIORITY_HIGHT);
-		ic.addItem(PRIORITY_LOW);
-		ic.addItem(PRIORITY_MEDIUM);
-		ic.addItem(PRIORITY_NONE);
 		ic.addItem(PRIORITY_URGENT);
+		ic.addItem(PRIORITY_HIGHT);
+		ic.addItem(PRIORITY_MEDIUM);
+		ic.addItem(PRIORITY_LOW);
+		ic.addItem(PRIORITY_NONE);
 
 		this.setContainerDataSource(ic);
 

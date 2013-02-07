@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.GregorianCalendar;
 
+import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -15,6 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
@@ -85,6 +87,25 @@ public class BugTableDisplay extends PagedBeanTable2<BugService, BugSearchCriter
                                 fireTableEvent(new TableClickEvent(BugTableDisplay.this, bug, "summary"));
                             }
                         });
+                
+                if (StringUtil.isNotNullOrEmpty(bug.getPriority())) {
+                	ThemeResource iconPriority = new ThemeResource(BugPriorityComboBox.PRIORITY_MAJOR_IMG);
+                    
+                    if (BugPriorityComboBox.PRIORITY_BLOCKER.equals(bug.getPriority())) {
+                    	iconPriority = new ThemeResource(BugPriorityComboBox.PRIORITY_BLOCKER_IMG);
+                    } else if (BugPriorityComboBox.PRIORITY_CRITICAL.equals(bug.getPriority())) {
+                    	iconPriority = new ThemeResource(BugPriorityComboBox.PRIORITY_CRITICAL_IMG);
+                    } else if (BugPriorityComboBox.PRIORITY_MAJOR.equals(bug.getPriority())) {
+                    	iconPriority = new ThemeResource(BugPriorityComboBox.PRIORITY_MAJOR_IMG);
+                    } else if (BugPriorityComboBox.PRIORITY_MINOR.equals(bug.getPriority())) {
+                    	iconPriority = new ThemeResource(BugPriorityComboBox.PRIORITY_MINOR_IMG);
+                    } else if (BugPriorityComboBox.PRIORITY_TRIVIAL.equals(bug.getPriority())) {
+                    	iconPriority = new ThemeResource(BugPriorityComboBox.PRIORITY_TRIVIAL_IMG);
+                    }
+                    
+                    b.setIcon(iconPriority);
+                }
+                
                 b.addStyleName("medium-text");
                 if ("Close".equals(bug.getStatus())) {
                 	b.addStyleName(UIConstants.LINK_COMPLETED);

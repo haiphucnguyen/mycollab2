@@ -47,6 +47,10 @@ public class CallTableDisplay extends PagedBeanTable2<CallService, CallSearchCri
                                         .getId()));
                             }
                         });
+                
+                if ("Held".equals(call.getStatus())) {
+                    b.addStyleName(UIConstants.LINK_COMPLETED);
+                }
                 return b;
                 
             }
