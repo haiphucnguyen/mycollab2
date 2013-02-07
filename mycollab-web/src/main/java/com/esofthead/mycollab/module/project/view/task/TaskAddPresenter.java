@@ -98,7 +98,7 @@ public class TaskAddPresenter extends AbstractPresenter<TaskAddView> {
         } else {
             taskService.updateWithSession(item, AppContext.getUsername());
             AttachmentUploadField uploadField = view.getAttachUploadField();
-            uploadField.saveContentsToRepo(AttachmentConstants.PROJECT_BUG_TYPE, item.getId());
+            uploadField.saveContentsToRepo(AttachmentConstants.PROJECT_TASK_TYPE, item.getId());
         }
     }
 }
