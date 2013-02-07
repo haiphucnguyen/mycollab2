@@ -26,95 +26,92 @@ import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-public class OpportunityListPresenter extends
-		CrmGenericPresenter<OpportunityListView> implements
-		ListPresenter<OpportunitySearchCriteria> {
+public class OpportunityListPresenter extends CrmGenericPresenter<OpportunityListView> implements
+        ListPresenter<OpportunitySearchCriteria> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    private static final String[] EXPORT_VISIBLE_COLUMNS = new String[]{
+        "opportunityname", "accountName", "salesstage", "amount",
+        "expectedcloseddate", "assignUserFullName"};
+    private static final String[] EXPORT_DISPLAY_NAMES = new String[]{"Name",
+        "Account Name", "Sales Stage", "Amount", "Close", "Assign User"};
+    private OpportunityService opportunityService;
+    private OpportunitySearchCriteria searchCriteria;
+    private boolean isSelectAll = false;
 
-	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
-			"opportunityname", "accountName", "salesstage", "amount",
-			"expectedcloseddate", "assignUserFullName" };
-	private static final String[] EXPORT_DISPLAY_NAMES = new String[] { "Name",
-			"Account Name", "Sales Stage", "Amount", "Close", "Assign User" };
+    public OpportunityListPresenter() {
+        super(OpportunityListView.class);
+        opportunityService = AppContext.getSpringBean(OpportunityService.class);
 
-	private OpportunityService opportunityService;
-	private OpportunitySearchCriteria searchCriteria;
-	private boolean isSelectAll = false;
+        view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+            private static final long serialVersionUID = 1L;
 
-	public OpportunityListPresenter() {
-		super(OpportunityListView.class);
-		opportunityService = AppContext.getSpringBean(OpportunityService.class);
+            @Override
+            public void move(int newPageNumber) {
+                pageChange();
+            }
 
-		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
-			private static final long serialVersionUID = 1L;
+            @Override
+            public void displayItemChange(int numOfItems) {
+                pageChange();
+            }
 
-			@Override
-			public void move(int newPageNumber) {
-				pageChange();
-			}
+            private void pageChange() {
+                if (isSelectAll) {
+                    selectAllItemsInCurrentPage();
+                }
 
-			@Override
-			public void displayItemChange(int numOfItems) {
-				pageChange();
-			}
+                checkWhetherEnableTableActionControl();
+            }
+        });
 
-			private void pageChange() {
-				if (isSelectAll) {
-					selectAllItemsInCurrentPage();
-				}
+        view.getSearchHandlers().addSearchHandler(
+                new SearchHandler<OpportunitySearchCriteria>() {
+                    @Override
+                    public void onSearch(OpportunitySearchCriteria criteria) {
+                        doSearch(criteria);
+                    }
+                });
 
-				checkWhetherEnableTableActionControl();
-			}
-		});
+        view.getOptionSelectionHandlers().addSelectionOptionHandler(
+                new SelectionOptionHandler() {
+                    @Override
+                    public void onSelectCurrentPage() {
+                        isSelectAll = false;
+                        selectAllItemsInCurrentPage();
 
-		view.getSearchHandlers().addSearchHandler(
-				new SearchHandler<OpportunitySearchCriteria>() {
-					@Override
-					public void onSearch(OpportunitySearchCriteria criteria) {
-						doSearch(criteria);
-					}
-				});
+                        checkWhetherEnableTableActionControl();
+                    }
 
-		view.getOptionSelectionHandlers().addSelectionOptionHandler(
-				new SelectionOptionHandler() {
-					@Override
-					public void onSelectCurrentPage() {
-						isSelectAll = false;
-						selectAllItemsInCurrentPage();
+                    @Override
+                    public void onDeSelect() {
+                        Collection<SimpleOpportunity> currentDataList = view
+                                .getPagedBeanTable().getCurrentDataList();
+                        isSelectAll = false;
+                        for (SimpleOpportunity item : currentDataList) {
+                            item.setSelected(false);
+                            CheckBox checkBox = (CheckBox) item.getExtraData();
+                            checkBox.setValue(false);
+                        }
 
-						checkWhetherEnableTableActionControl();
-					}
+                        checkWhetherEnableTableActionControl();
+                    }
 
-					@Override
-					public void onDeSelect() {
-						Collection<SimpleOpportunity> currentDataList = view
-								.getPagedBeanTable().getCurrentDataList();
-						isSelectAll = false;
-						for (SimpleOpportunity item : currentDataList) {
-							item.setSelected(false);
-							CheckBox checkBox = (CheckBox) item.getExtraData();
-							checkBox.setValue(false);
-						}
+                    @Override
+                    public void onSelectAll() {
+                        isSelectAll = true;
+                        selectAllItemsInCurrentPage();
 
-						checkWhetherEnableTableActionControl();
-					}
+                        checkWhetherEnableTableActionControl();
+                    }
+                });
 
-					@Override
-					public void onSelectAll() {
-						isSelectAll = true;
-						selectAllItemsInCurrentPage();
-
-						checkWhetherEnableTableActionControl();
-					}
-				});
-
-		view.getPopupActionHandlers().addPopupActionHandler(
-				new PopupActionHandler() {
-					@Override
-					public void onSelect(String id, String caption) {
-						if ("delete".equals(id)) {
-							ConfirmDialog.show(view.getWindow(),
+        view.getPopupActionHandlers().addPopupActionHandler(
+                new PopupActionHandler() {
+                    @Override
+                    public void onSelect(String id, String caption) {
+                        if ("delete".equals(id)) {
+                            ConfirmDialog.show(view.getWindow(),
                                     "Please Confirm:",
                                     "Are you sure to delete selected items: ",
                                     "Yes", "No", new ConfirmDialog.Listener() {
@@ -127,106 +124,108 @@ public class OpportunityListPresenter extends
                                     }
                                 }
                             });
-						} else if ("mail".equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
-						} else if ("export".equals(id)) {
-							Resource res = null;
+                        } else if ("mail".equals(id)) {
+                            view.getWidget().getWindow()
+                                    .addWindow(new MailFormWindow());
+                        } else if ("export".equals(id)) {
+                            Resource res = null;
 
-							if (isSelectAll) {
-								res = new StreamResource(
-										new ExportStreamResource.AllItems<OpportunitySearchCriteria>(
-												EXPORT_VISIBLE_COLUMNS,
-												EXPORT_DISPLAY_NAMES,
-												AppContext
-														.getSpringBean(OpportunityService.class),
-												searchCriteria), "export.csv",
-										view.getApplication());
-							} else {
-								List tableData = view.getPagedBeanTable()
-										.getCurrentDataList();
-								res = new StreamResource(
-										new ExportStreamResource.ListData(
-												EXPORT_VISIBLE_COLUMNS,
-												EXPORT_DISPLAY_NAMES, tableData),
-										"export.csv", view.getApplication());
-							}
+                            if (isSelectAll) {
+                                res = new StreamResource(
+                                        new ExportStreamResource.AllItems<OpportunitySearchCriteria>(
+                                        EXPORT_VISIBLE_COLUMNS,
+                                        EXPORT_DISPLAY_NAMES,
+                                        AppContext
+                                        .getSpringBean(OpportunityService.class),
+                                        searchCriteria), "export.csv",
+                                        view.getApplication());
+                            } else {
+                                List tableData = view.getPagedBeanTable()
+                                        .getCurrentDataList();
+                                res = new StreamResource(
+                                        new ExportStreamResource.ListData(
+                                        EXPORT_VISIBLE_COLUMNS,
+                                        EXPORT_DISPLAY_NAMES, tableData),
+                                        "export.csv", view.getApplication());
+                            }
 
-							view.getWidget().getWindow().open(res, "_blank");
-						}
-					}
-				});
+                            view.getWidget().getWindow().open(res, "_blank");
+                        }
+                    }
+                });
 
-		view.getSelectableItemHandlers().addSelectableItemHandler(
-				new SelectableItemHandler<SimpleOpportunity>() {
-					@Override
-					public void onSelect(SimpleOpportunity item) {
-						isSelectAll = false;
-						item.setSelected(!item.isSelected());
+        view.getSelectableItemHandlers().addSelectableItemHandler(
+                new SelectableItemHandler<SimpleOpportunity>() {
+                    @Override
+                    public void onSelect(SimpleOpportunity item) {
+                        isSelectAll = false;
+                        item.setSelected(!item.isSelected());
 
-						checkWhetherEnableTableActionControl();
-					}
-				});
-	}
+                        checkWhetherEnableTableActionControl();
+                    }
+                });
+    }
 
-	private void selectAllItemsInCurrentPage() {
-		Collection<SimpleOpportunity> currentDataList = view
-				.getPagedBeanTable().getCurrentDataList();
-		for (SimpleOpportunity item : currentDataList) {
-			item.setSelected(true);
-			CheckBox checkBox = (CheckBox) item.getExtraData();
-			checkBox.setValue(true);
-		}
-	}
+    private void selectAllItemsInCurrentPage() {
+        Collection<SimpleOpportunity> currentDataList = view
+                .getPagedBeanTable().getCurrentDataList();
+        for (SimpleOpportunity item : currentDataList) {
+            item.setSelected(true);
+            CheckBox checkBox = (CheckBox) item.getExtraData();
+            checkBox.setValue(true);
+        }
+    }
 
-	private void checkWhetherEnableTableActionControl() {
-		Collection<SimpleOpportunity> currentDataList = view
-				.getPagedBeanTable().getCurrentDataList();
-		int countItems = 0;
-		for (SimpleOpportunity item : currentDataList) {
-			if (item.isSelected()) {
-				countItems++;
-			}
-		}
-		if (countItems > 0) {
-			view.enableActionControls(countItems);
-		} else {
-			view.disableActionControls();
-		}
-	}
+    private void checkWhetherEnableTableActionControl() {
+        Collection<SimpleOpportunity> currentDataList = view
+                .getPagedBeanTable().getCurrentDataList();
+        int countItems = 0;
+        for (SimpleOpportunity item : currentDataList) {
+            if (item.isSelected()) {
+                countItems++;
+            }
+        }
+        if (countItems > 0) {
+            view.enableActionControls(countItems);
+        } else {
+            view.disableActionControls();
+        }
+    }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		super.onGo(container, data);
-		doSearch((OpportunitySearchCriteria) data.getParams());
-	}
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        super.onGo(container, data);
+        doSearch((OpportunitySearchCriteria) data.getParams());
 
-	@Override
-	public void doSearch(OpportunitySearchCriteria searchCriteria) {
-		this.searchCriteria = searchCriteria;
-		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
-	}
+        AppContext.addFragment("crm/opportunity/list");
+    }
 
-	private void deleteSelectedItems() {
-		if (!isSelectAll) {
-			Collection<SimpleOpportunity> currentDataList = view
-					.getPagedBeanTable().getCurrentDataList();
-			List<Integer> keyList = new ArrayList<Integer>();
-			for (SimpleOpportunity item : currentDataList) {
-				if (item.isSelected()) {
-					keyList.add(item.getId());
-				}
-			}
+    @Override
+    public void doSearch(OpportunitySearchCriteria searchCriteria) {
+        this.searchCriteria = searchCriteria;
+        view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+    }
 
-			if (keyList.size() > 0) {
-				opportunityService.removeWithSession(keyList,
-						AppContext.getUsername());
-				doSearch(searchCriteria);
-				checkWhetherEnableTableActionControl();
-			}
-		} else {
-			opportunityService.removeByCriteria(searchCriteria);
-			doSearch(searchCriteria);
-		}
-	}
+    private void deleteSelectedItems() {
+        if (!isSelectAll) {
+            Collection<SimpleOpportunity> currentDataList = view
+                    .getPagedBeanTable().getCurrentDataList();
+            List<Integer> keyList = new ArrayList<Integer>();
+            for (SimpleOpportunity item : currentDataList) {
+                if (item.isSelected()) {
+                    keyList.add(item.getId());
+                }
+            }
+
+            if (keyList.size() > 0) {
+                opportunityService.removeWithSession(keyList,
+                        AppContext.getUsername());
+                doSearch(searchCriteria);
+                checkWhetherEnableTableActionControl();
+            }
+        } else {
+            opportunityService.removeByCriteria(searchCriteria);
+            doSearch(searchCriteria);
+        }
+    }
 }

@@ -26,222 +26,222 @@ import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 
 public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
-		implements ListPresenter<LeadSearchCriteria> {
+        implements ListPresenter<LeadSearchCriteria> {
 
-	private static final long serialVersionUID = 1L;
+    private static final long serialVersionUID = 1L;
+    private static final String[] EXPORT_VISIBLE_COLUMNS = new String[]{
+        "leadName", "status", "accountname", "officephone", "email",
+        "assignUserFullName"};
+    private static final String[] EXPORT_DISPLAY_NAMES = new String[]{"Name",
+        "Status", "Account Name", "Office Phone", "Email", "Assign User"};
+    private LeadService leadService;
+    private LeadSearchCriteria searchCriteria;
+    private boolean isSelectAll = false;
 
-	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
-			"leadName", "status", "accountname", "officephone", "email",
-			"assignUserFullName" };
-	private static final String[] EXPORT_DISPLAY_NAMES = new String[] { "Name",
-			"Status", "Account Name", "Office Phone", "Email", "Assign User" };
+    public LeadListPresenter() {
+        super(LeadListView.class);
+        leadService = AppContext.getSpringBean(LeadService.class);
 
-	private LeadService leadService;
-	private LeadSearchCriteria searchCriteria;
-	private boolean isSelectAll = false;
+        view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
+            private static final long serialVersionUID = 1L;
 
-	public LeadListPresenter() {
-		super(LeadListView.class);
-		leadService = AppContext.getSpringBean(LeadService.class);
+            @Override
+            public void move(int newPageNumber) {
+                pageChange();
+            }
 
-		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
-			private static final long serialVersionUID = 1L;
+            @Override
+            public void displayItemChange(int numOfItems) {
+                pageChange();
+            }
 
-			@Override
-			public void move(int newPageNumber) {
-				pageChange();
-			}
+            private void pageChange() {
+                if (isSelectAll) {
+                    selectAllItemsInCurrentPage();
+                }
 
-			@Override
-			public void displayItemChange(int numOfItems) {
-				pageChange();
-			}
+                checkWhetherEnableTableActionControl();
+            }
+        });
 
-			private void pageChange() {
-				if (isSelectAll) {
-					selectAllItemsInCurrentPage();
-				}
+        view.getSearchHandlers().addSearchHandler(
+                new SearchHandler<LeadSearchCriteria>() {
+                    @Override
+                    public void onSearch(LeadSearchCriteria criteria) {
+                        doSearch(criteria);
+                    }
+                });
 
-				checkWhetherEnableTableActionControl();
-			}
-		});
+        view.getOptionSelectionHandlers().addSelectionOptionHandler(
+                new SelectionOptionHandler() {
+                    @Override
+                    public void onSelectCurrentPage() {
+                        isSelectAll = false;
+                        selectAllItemsInCurrentPage();
 
-		view.getSearchHandlers().addSearchHandler(
-				new SearchHandler<LeadSearchCriteria>() {
-					@Override
-					public void onSearch(LeadSearchCriteria criteria) {
-						doSearch(criteria);
-					}
-				});
+                        checkWhetherEnableTableActionControl();
+                    }
 
-		view.getOptionSelectionHandlers().addSelectionOptionHandler(
-				new SelectionOptionHandler() {
-					@Override
-					public void onSelectCurrentPage() {
-						isSelectAll = false;
-						selectAllItemsInCurrentPage();
+                    @Override
+                    public void onDeSelect() {
+                        Collection<SimpleLead> currentDataList = view
+                                .getPagedBeanTable().getCurrentDataList();
+                        isSelectAll = false;
+                        for (SimpleLead item : currentDataList) {
+                            item.setSelected(false);
+                            CheckBox checkBox = (CheckBox) item.getExtraData();
+                            checkBox.setValue(false);
+                        }
 
-						checkWhetherEnableTableActionControl();
-					}
+                        checkWhetherEnableTableActionControl();
+                    }
 
-					@Override
-					public void onDeSelect() {
-						Collection<SimpleLead> currentDataList = view
-								.getPagedBeanTable().getCurrentDataList();
-						isSelectAll = false;
-						for (SimpleLead item : currentDataList) {
-							item.setSelected(false);
-							CheckBox checkBox = (CheckBox) item.getExtraData();
-							checkBox.setValue(false);
-						}
+                    @Override
+                    public void onSelectAll() {
+                        isSelectAll = true;
+                        selectAllItemsInCurrentPage();
 
-						checkWhetherEnableTableActionControl();
-					}
+                        checkWhetherEnableTableActionControl();
+                    }
+                });
 
-					@Override
-					public void onSelectAll() {
-						isSelectAll = true;
-						selectAllItemsInCurrentPage();
+        view.getPopupActionHandlers().addPopupActionHandler(
+                new PopupActionHandler() {
+                    @Override
+                    public void onSelect(String id, String caption) {
+                        if ("delete".equals(id)) {
+                            ConfirmDialog.show(view.getWindow(),
+                                    "Please Confirm:",
+                                    "Are you sure to delete selected items: ",
+                                    "Yes", "No", new ConfirmDialog.Listener() {
+                                private static final long serialVersionUID = 1L;
 
-						checkWhetherEnableTableActionControl();
-					}
-				});
+                                @Override
+                                public void onClose(ConfirmDialog dialog) {
+                                    if (dialog.isConfirmed()) {
+                                        deleteSelectedItems();
+                                    }
+                                }
+                            });
+                        } else if ("mail".equals(id)) {
+                            if (isSelectAll) {
+                                AppContext.getApplication().getMainWindow().showNotification("This version has not supported the sending email for all users yet!");
+                            } else {
+                                List<String> lstMail = new ArrayList<String>();
 
-		view.getPopupActionHandlers().addPopupActionHandler(
-				new PopupActionHandler() {
-					@Override
-					public void onSelect(String id, String caption) {
-						if ("delete".equals(id)) {
-							ConfirmDialog.show(view.getWindow(),
-									"Please Confirm:",
-									"Are you sure to delete selected items: ",
-									"Yes", "No", new ConfirmDialog.Listener() {
-										private static final long serialVersionUID = 1L;
+                                List<SimpleLead> tableData = view
+                                        .getPagedBeanTable()
+                                        .getCurrentDataList();
+                                for (SimpleLead item : tableData) {
+                                    if (item.isSelected()) {
+                                        lstMail.add(item.getLeadName() + " <" + item.getEmail() + ">");
+                                    }
+                                }
 
-										@Override
-										public void onClose(ConfirmDialog dialog) {
-											if (dialog.isConfirmed()) {
-												deleteSelectedItems();
-											}
-										}
-									});
-						} else if ("mail".equals(id)) {
-							if (isSelectAll) {
-								AppContext.getApplication().getMainWindow().showNotification("This version has not supported the sending email for all users yet!");
-							} else {
-								List<String> lstMail = new ArrayList<String>();
+                                view.getWidget().getWindow()
+                                        .addWindow(new MailFormWindow(lstMail));
+                            }
 
-								List<SimpleLead> tableData = view
-										.getPagedBeanTable()
-										.getCurrentDataList();
-								for (SimpleLead item : tableData) {
-									if (item.isSelected()) {
-										lstMail.add(item.getLeadName() + " <" + item.getEmail() + ">");
-									}
-								}
+                        } else if ("export".equals(id)) {
+                            Resource res = null;
 
-								view.getWidget().getWindow()
-										.addWindow(new MailFormWindow(lstMail));
-							}
+                            if (isSelectAll) {
+                                res = new StreamResource(
+                                        new ExportStreamResource.AllItems<LeadSearchCriteria>(
+                                        EXPORT_VISIBLE_COLUMNS,
+                                        EXPORT_DISPLAY_NAMES,
+                                        AppContext
+                                        .getSpringBean(LeadService.class),
+                                        searchCriteria), "export.csv",
+                                        view.getApplication());
+                            } else {
+                                List tableData = view.getPagedBeanTable()
+                                        .getCurrentDataList();
+                                res = new StreamResource(
+                                        new ExportStreamResource.ListData(
+                                        EXPORT_VISIBLE_COLUMNS,
+                                        EXPORT_DISPLAY_NAMES, tableData),
+                                        "export.csv", view.getApplication());
+                            }
 
-						} else if ("export".equals(id)) {
-							Resource res = null;
+                            view.getWidget().getWindow().open(res, "_blank");
+                        }
+                    }
+                });
 
-							if (isSelectAll) {
-								res = new StreamResource(
-										new ExportStreamResource.AllItems<LeadSearchCriteria>(
-												EXPORT_VISIBLE_COLUMNS,
-												EXPORT_DISPLAY_NAMES,
-												AppContext
-														.getSpringBean(LeadService.class),
-												searchCriteria), "export.csv",
-										view.getApplication());
-							} else {
-								List tableData = view.getPagedBeanTable()
-										.getCurrentDataList();
-								res = new StreamResource(
-										new ExportStreamResource.ListData(
-												EXPORT_VISIBLE_COLUMNS,
-												EXPORT_DISPLAY_NAMES, tableData),
-										"export.csv", view.getApplication());
-							}
+        view.getSelectableItemHandlers().addSelectableItemHandler(
+                new SelectableItemHandler<SimpleLead>() {
+                    @Override
+                    public void onSelect(SimpleLead item) {
+                        isSelectAll = false;
+                        item.setSelected(!item.isSelected());
 
-							view.getWidget().getWindow().open(res, "_blank");
-						}
-					}
-				});
+                        checkWhetherEnableTableActionControl();
 
-		view.getSelectableItemHandlers().addSelectableItemHandler(
-				new SelectableItemHandler<SimpleLead>() {
-					@Override
-					public void onSelect(SimpleLead item) {
-						isSelectAll = false;
-						item.setSelected(!item.isSelected());
+                    }
+                });
+    }
 
-						checkWhetherEnableTableActionControl();
+    private void selectAllItemsInCurrentPage() {
+        Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
+                .getCurrentDataList();
+        for (SimpleLead item : currentDataList) {
+            item.setSelected(true);
+            CheckBox checkBox = (CheckBox) item.getExtraData();
+            checkBox.setValue(true);
+        }
+    }
 
-					}
-				});
-	}
+    private void checkWhetherEnableTableActionControl() {
+        Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
+                .getCurrentDataList();
+        int countItems = 0;
+        for (SimpleLead item : currentDataList) {
+            if (item.isSelected()) {
+                countItems++;
+            }
+        }
+        if (countItems > 0) {
+            view.enableActionControls(countItems);
+        } else {
+            view.disableActionControls();
+        }
+    }
 
-	private void selectAllItemsInCurrentPage() {
-		Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		for (SimpleLead item : currentDataList) {
-			item.setSelected(true);
-			CheckBox checkBox = (CheckBox) item.getExtraData();
-			checkBox.setValue(true);
-		}
-	}
+    @Override
+    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+        super.onGo(container, data);
+        doSearch((LeadSearchCriteria) data.getParams());
+        
+        AppContext.addFragment("crm/lead/list");
+    }
 
-	private void checkWhetherEnableTableActionControl() {
-		Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
-				.getCurrentDataList();
-		int countItems = 0;
-		for (SimpleLead item : currentDataList) {
-			if (item.isSelected()) {
-				countItems++;
-			}
-		}
-		if (countItems > 0) {
-			view.enableActionControls(countItems);
-		} else {
-			view.disableActionControls();
-		}
-	}
+    @Override
+    public void doSearch(LeadSearchCriteria searchCriteria) {
+        this.searchCriteria = searchCriteria;
+        view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+    }
 
-	@Override
-	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		super.onGo(container, data);
-		doSearch((LeadSearchCriteria) data.getParams());
-	}
+    private void deleteSelectedItems() {
+        if (!isSelectAll) {
+            Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
+                    .getCurrentDataList();
+            List<Integer> keyList = new ArrayList<Integer>();
+            for (SimpleLead item : currentDataList) {
+                if (item.isSelected()) {
+                    keyList.add(item.getId());
+                }
+            }
 
-	@Override
-	public void doSearch(LeadSearchCriteria searchCriteria) {
-		this.searchCriteria = searchCriteria;
-		view.getPagedBeanTable().setSearchCriteria(searchCriteria);
-	}
-
-	private void deleteSelectedItems() {
-		if (!isSelectAll) {
-			Collection<SimpleLead> currentDataList = view.getPagedBeanTable()
-					.getCurrentDataList();
-			List<Integer> keyList = new ArrayList<Integer>();
-			for (SimpleLead item : currentDataList) {
-				if (item.isSelected()) {
-					keyList.add(item.getId());
-				}
-			}
-
-			if (keyList.size() > 0) {
-				leadService
-						.removeWithSession(keyList, AppContext.getUsername());
-				doSearch(searchCriteria);
-				checkWhetherEnableTableActionControl();
-			}
-		} else {
-			leadService.removeByCriteria(searchCriteria);
-			doSearch(searchCriteria);
-		}
-	}
+            if (keyList.size() > 0) {
+                leadService
+                        .removeWithSession(keyList, AppContext.getUsername());
+                doSearch(searchCriteria);
+                checkWhetherEnableTableActionControl();
+            }
+        } else {
+            leadService.removeByCriteria(searchCriteria);
+            doSearch(searchCriteria);
+        }
+    }
 }
