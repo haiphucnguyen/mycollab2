@@ -9,6 +9,8 @@ import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.themes.Reindeer;
 
 @ViewComponent
 public class MyFeedsViewImpl extends AbstractView implements MyFeedsView {
@@ -25,6 +27,14 @@ public class MyFeedsViewImpl extends AbstractView implements MyFeedsView {
         
         HorizontalLayout header = new HorizontalLayout();
         header.setWidth("100%");
+        header.setMargin(false, false, false, true);
+        header.addStyleName("project-feed-header");
+        
+        Label searchtitle = new Label("Projects Information");
+        searchtitle.setStyleName(Reindeer.LABEL_H1);
+        header.addComponent(searchtitle);
+        header.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
+        
         Button createProjectBtn = new Button("Create",
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;

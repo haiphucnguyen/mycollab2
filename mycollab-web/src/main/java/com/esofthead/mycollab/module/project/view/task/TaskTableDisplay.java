@@ -17,7 +17,6 @@ import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.Table;
@@ -69,7 +68,7 @@ public class TaskTableDisplay extends BeanTable<ProjectTaskService, TaskSearchCr
                     b.setIcon(iconPriority);
                 }
                 
-                if ("100d".equals(task.getPercentagecomplete())) {
+                if (100d == task.getPercentagecomplete()) {
                     b.addStyleName(UIConstants.LINK_COMPLETED);
                 } else {
                     if ((task.getEnddate() != null && (task.getEnddate().before(new GregorianCalendar().getTime()))) 
