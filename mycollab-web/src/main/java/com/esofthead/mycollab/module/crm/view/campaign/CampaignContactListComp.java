@@ -8,6 +8,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
+import com.esofthead.mycollab.module.crm.domain.CampaignContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
@@ -146,10 +147,10 @@ public class CampaignContactListComp extends RelatedListComp<SimpleContact, Cont
                                 if (dialog.isConfirmed()) {
                                     CampaignService campaignService = AppContext
                                             .getSpringBean(CampaignService.class);
-                                    CampaignAccount associateAccount = new CampaignAccount();
-                                    associateAccount.setAccountid(contact.getId());
-                                    associateAccount.setCampaignid(campaign.getId());
-                                    campaignService.removeCampaignAccountRelationship(associateAccount);
+                                    CampaignContact associateContact = new CampaignContact();
+                                    associateContact.setContactid(contact.getId());
+                                    associateContact.setCampaignid(campaign.getId());
+                                    campaignService.removeCampaignContactRelationship(associateContact);
                                     CampaignContactListComp.this.refresh();
                                 }
                             }

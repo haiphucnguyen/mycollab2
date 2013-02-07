@@ -106,6 +106,15 @@
                         AND m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER}) > 0
             ]]>
         </if>
+        <if test="caseId != null">
+            <![CDATA[
+                ${caseId.operation}
+                (SELECT COUNT(*) 
+                    FROM c_crm_case, m_crm_contacts_cases 
+                    WHERE m_crm_case.id=#{caseId.value,javaType=INTEGER} AND m_crm_contacts_cases.caseId=m_crm_case.id 
+                        AND m_crm_contacts_cases.contactId=m_crm_contact.id) > 0
+            ]]>
+        </if>  
     </sql>
 
 
@@ -223,6 +232,15 @@
                     WHERE m_crm_opportunities_contacts.opportunityId=#{opportunityId.value,javaType=INTEGER} 
                         AND m_crm_opportunities_contacts.contactId=m_crm_contact.id 
                         AND m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER}) > 0
+            ]]>
+        </if>
+        <if test="caseId != null">
+            <![CDATA[
+                ${caseId.operation}
+                (SELECT COUNT(*) 
+                    FROM c_crm_case, m_crm_contacts_cases 
+                    WHERE m_crm_case.id=#{caseId.value,javaType=INTEGER} AND m_crm_contacts_cases.caseId=m_crm_case.id 
+                        AND m_crm_contacts_cases.contactId=m_crm_contact.id) > 0
             ]]>
         </if>
     </sql>

@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.cases;
 
 import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -37,5 +38,10 @@ public class CaseReadViewImpl extends AbstractView implements CaseReadView {
     @Override
     public IRelatedListHandlers getRelatedActivityHandlers() {
         return casePreview.getAssociateActivityList();
+    }
+
+    @Override
+    public IRelatedListHandlers<SimpleContact> getRelatedContactHandlers() {
+        return casePreview.getAssociateContactList();
     }
 }

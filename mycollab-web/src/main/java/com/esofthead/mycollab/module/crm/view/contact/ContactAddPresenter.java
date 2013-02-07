@@ -1,8 +1,10 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.module.crm.domain.CampaignContact;
+import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
@@ -76,24 +78,31 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
         contact.setSaccountid(AppContext.getAccountId());
         if (contact.getId() == null) {
             contactService.saveWithSession(contact, AppContext.getUsername());
-            
+
             if (contact.getExtraData() != null && contact.getExtraData() instanceof SimpleCampaign) {
                 CampaignContact associateContact = new CampaignContact();
-                associateContact.setCampaignid(((SimpleCampaign)contact.getExtraData()).getId());
+                associateContact.setCampaignid(((SimpleCampaign) contact.getExtraData()).getId());
                 associateContact.setContactid(contact.getId());
                 associateContact.setCreatedtime(new GregorianCalendar().getTime());
-                
+
                 CampaignService campaignService = AppContext.getSpringBean(CampaignService.class);
                 campaignService.saveCampaignContactRelationship(Arrays.asList(associateContact));
             } else if (contact.getExtraData() != null && contact.getExtraData() instanceof SimpleOpportunity) {
                 OpportunityContact associateContact = new OpportunityContact();
                 associateContact.setContactid(contact.getId());
-                associateContact.setOpportunityid(((SimpleOpportunity)contact.getExtraData()).getId());
+                associateContact.setOpportunityid(((SimpleOpportunity) contact.getExtraData()).getId());
                 associateContact.setCreatedtime(new GregorianCalendar().getTime());
                 OpportunityService opportunityService = AppContext.getSpringBean(OpportunityService.class);
                 opportunityService.saveOpportunityContactRelationship(Arrays.asList(associateContact));
+            } else if (contact.getExtraData() != null && contact.getExtraData() instanceof SimpleCase) {
+                ContactCase associateCase = new ContactCase();
+                associateCase.setContactid(contact.getId());
+                associateCase.setCaseid(((SimpleCase)contact.getExtraData()).getId());
+                associateCase.setCreatedtime(new GregorianCalendar().getTime());
+                
+                contactService.saveContactCaseRelationship(Arrays.asList(associateCase));
             }
-            
+
         } else {
             contactService.updateWithSession(contact, AppContext.getUsername());
         }

@@ -99,6 +99,12 @@
             value="com.esofthead.mycollab.module.crm.dao.ContactMapperExt" />
     </bean>
     
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contactCaseMapper">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.crm.dao.ContactCaseMapper" />
+    </bean>
+    
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="contactOpportunityMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"

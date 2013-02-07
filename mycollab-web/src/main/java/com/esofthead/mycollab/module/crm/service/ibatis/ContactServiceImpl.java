@@ -22,12 +22,14 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.crm.dao.AccountContactMapper;
+import com.esofthead.mycollab.module.crm.dao.ContactCaseMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapperExt;
 import com.esofthead.mycollab.module.crm.dao.ContactOpportunityMapper;
 import com.esofthead.mycollab.module.crm.domain.AccountContact;
-import com.esofthead.mycollab.module.crm.domain.AccountContactExample;
 import com.esofthead.mycollab.module.crm.domain.Contact;
+import com.esofthead.mycollab.module.crm.domain.ContactCase;
+import com.esofthead.mycollab.module.crm.domain.ContactCaseExample;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunityExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
@@ -54,6 +56,8 @@ public class ContactServiceImpl extends DefaultService<Integer, SimpleContact, C
     private AccountContactMapper accountContactMapper;
     @Autowired
     private ContactOpportunityMapper contactOpportunityMapper;
+    @Autowired
+    private ContactCaseMapper contactCaseMapper;
     
     @Override
     public ICrudGenericDAO<Integer, Contact> getCrudMapper() {
@@ -97,33 +101,6 @@ public class ContactServiceImpl extends DefaultService<Integer, SimpleContact, C
     }
     
     @Override
-    public void postUpdate(SimpleContact oldValue, SimpleContact newValue) {
-        if (oldValue.getAccountId() != newValue.getAccountId()) {
-            if (oldValue.getAccountId() == null) {
-                AccountContact accountContactRel = new AccountContact();
-                accountContactRel.setAccountid(newValue.getAccountId());
-                accountContactRel.setContactid(newValue.getId());
-                accountContactRel.setCreatedtime(new GregorianCalendar().getTime());
-                accountContactMapper.insert(accountContactRel);
-            } else {
-                AccountContactExample ex = new AccountContactExample();
-                ex.createCriteria().andAccountidEqualTo(oldValue.getAccountId());
-                ex.createCriteria().andContactidEqualTo(oldValue.getId());
-                accountContactMapper.deleteByExample(ex);
-                
-                
-                if (newValue.getAccountId() != null) {
-                    AccountContact accountContactRel = new AccountContact();
-                    accountContactRel.setAccountid(newValue.getAccountId());
-                    accountContactRel.setContactid(newValue.getId());
-                    accountContactRel.setCreatedtime(new GregorianCalendar().getTime());
-                    accountContactMapper.insert(accountContactRel);
-                }
-            }
-        }
-    }
-    
-    @Override
     public void removeContactOpportunityRelationship(ContactOpportunity associateOpportunity) {
         ContactOpportunityExample ex = new ContactOpportunityExample();
         ex.createCriteria().andContactidEqualTo(associateOpportunity.getContactid()).andOpportunityidEqualTo(associateOpportunity.getOpportunityid());
@@ -139,5 +116,23 @@ public class ContactServiceImpl extends DefaultService<Integer, SimpleContact, C
                 contactOpportunityMapper.insert(assoOpportunity);
             }
         }
+    }
+    
+    @Override
+    public void saveContactCaseRelationship(List<ContactCase> associateCases) {
+        for (ContactCase associateCase : associateCases) {
+            ContactCaseExample ex = new ContactCaseExample();
+            ex.createCriteria().andContactidEqualTo(associateCase.getContactid()).andCaseidEqualTo(associateCase.getCaseid());
+            if (contactCaseMapper.countByExample(ex) == 0) {
+                contactCaseMapper.insert(associateCase);
+            }
+        }
+    }
+    
+    @Override
+    public void removeContactCaseRelationship(ContactCase associateCase) {
+        ContactCaseExample ex = new ContactCaseExample();
+        ex.createCriteria().andContactidEqualTo(associateCase.getContactid()).andCaseidEqualTo(associateCase.getCaseid());
+        contactCaseMapper.deleteByExample(ex);
     }
 }
