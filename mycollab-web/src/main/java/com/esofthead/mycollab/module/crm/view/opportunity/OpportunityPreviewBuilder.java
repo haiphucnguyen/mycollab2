@@ -55,6 +55,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
 
         displayActivities();
         displayContacts();
+        displayLeads();
     }
 
     public SimpleOpportunity getOpportunity() {
@@ -71,6 +72,10 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
     
     private void displayContacts() {
         associateContactList.displayContacts(opportunity);
+    }
+    
+    private void displayLeads() {
+        associateLeadList.displayLeads(opportunity);
     }
 
     public AdvancedPreviewBeanForm<Opportunity> getPreviewForm() {

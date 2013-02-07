@@ -28,6 +28,8 @@ import com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContactExample;
+import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
+import com.esofthead.mycollab.module.crm.domain.OpportunityLeadExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
@@ -91,5 +93,17 @@ public class OpportunityServiceImpl extends DefaultService<Integer, Opportunity,
         OpportunityContactExample ex = new OpportunityContactExample();
         ex.createCriteria().andContactidEqualTo(associateContact.getContactid()).andOpportunityidEqualTo(associateContact.getOpportunityid());
         opportunityContactMapper.deleteByExample(ex);
+    }
+
+    @Override
+    public void saveOpportunityLeadRelationship(List<OpportunityLead> associateLeads) {
+        for (OpportunityLead associateLead : associateLeads) {
+            OpportunityLeadExample ex = new OpportunityLeadExample();
+        }
+    }
+
+    @Override
+    public void removeOpportunityLeadRelationship(OpportunityLead associateLead) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

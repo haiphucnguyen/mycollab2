@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.opportunity;
 
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -45,5 +46,10 @@ public class OpportunityReadViewImpl extends AbstractView implements
     @Override
     public IRelatedListHandlers<SimpleContact> getRelatedContactHandlers() {
         return opportunityPreview.getAssociateContactList();
+    }
+
+    @Override
+    public IRelatedListHandlers<SimpleLead> getRelatedLeadHandlers() {
+        return opportunityPreview.getAssociateLeadList();
     }
 }

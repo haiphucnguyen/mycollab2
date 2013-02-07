@@ -20,6 +20,7 @@ import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
+import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import java.util.List;
@@ -36,4 +37,8 @@ public interface OpportunityService extends
     void saveOpportunityContactRelationship(List<OpportunityContact> associateContacts);
     
     void removeOpportunityContactRelationship(OpportunityContact associateContact);
+    
+    void saveOpportunityLeadRelationship(List<OpportunityLead> associateLeads);
+    
+    void removeOpportunityLeadRelationship(OpportunityLead associateLead);
 }

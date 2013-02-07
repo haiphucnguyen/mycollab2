@@ -132,6 +132,11 @@
             domainObjectName="OpportunityContact"
             schema="mycollab"
             tableName="m_crm_opportunities_contacts" />
+        
+        <table
+            domainObjectName="OpportunityLead"
+            schema="mycollab"
+            tableName="m_crm_opportunities_leads" />
 
         <table
             domainObjectName="Note"

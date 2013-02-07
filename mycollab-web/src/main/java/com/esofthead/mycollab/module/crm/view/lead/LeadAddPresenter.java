@@ -2,10 +2,13 @@ package com.esofthead.mycollab.module.crm.view.lead;
 
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
 import com.esofthead.mycollab.module.crm.domain.Lead;
+import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
+import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -78,6 +81,14 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
                 
                 CampaignService campaignService = AppContext.getSpringBean(CampaignService.class);
                 campaignService.saveCampaignLeadRelationship(Arrays.asList(associateLead));
+            } else if (lead.getExtraData() != null && lead.getExtraData() instanceof SimpleOpportunity) {
+                OpportunityLead associateLead = new OpportunityLead();
+                associateLead.setOpportunityid(((SimpleOpportunity)lead.getExtraData()).getId());
+                associateLead.setLeadid(lead.getId());
+                associateLead.setCreatedtime(new GregorianCalendar().getTime());
+                
+                OpportunityService opportunityService = AppContext.getSpringBean(OpportunityService.class);
+                opportunityService.saveOpportunityLeadRelationship(Arrays.asList(associateLead));
             }
         } else {
             leadService.updateWithSession(lead, AppContext.getUsername());

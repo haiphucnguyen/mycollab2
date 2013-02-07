@@ -4,15 +4,19 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Call;
 import com.esofthead.mycollab.module.crm.domain.Contact;
+import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
+import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
@@ -194,6 +198,32 @@ public class OpportunityReadPresenter extends CrmGenericPresenter<OpportunityRea
                 OpportunityService opportunityService = AppContext.getSpringBean(OpportunityService.class);
                 opportunityService.saveOpportunityContactRelationship(associateContacts);
                 view.getRelatedContactHandlers().refresh();
+            }
+        });
+        
+        view.getRelatedLeadHandlers().addRelatedListHandler(new AbstractRelatedListHandler<SimpleLead>() {
+            @Override
+            public void createNewRelatedItem(String itemId) {
+                Lead lead = new Lead();
+                lead.setExtraData(view.getItem());
+                EventBus.getInstance().fireEvent(new LeadEvent.GotoEdit(OpportunityReadPresenter.this, lead));
+            }
+            
+            @Override
+            public void selectAssociateItems(Set<SimpleLead> items) {
+                SimpleOpportunity opportunity = view.getItem();
+                List<OpportunityLead> associateLeads = new ArrayList<OpportunityLead>();
+                for (SimpleLead lead : items) {
+                    OpportunityLead associateLead = new OpportunityLead();
+                    associateLead.setLeadid(lead.getId());
+                    associateLead.setOpportunityid(opportunity.getId());
+                    associateLead.setCreatedtime(new GregorianCalendar().getTime());
+                    associateLeads.add(associateLead);
+                }
+                
+                OpportunityService opportunityService = AppContext.getSpringBean(OpportunityService.class);
+                opportunityService.saveOpportunityLeadRelationship(associateLeads);
+                view.getRelatedLeadHandlers().refresh();
             }
         });
     }
