@@ -45,16 +45,6 @@
                 #{assignUser}
             </foreach>
         </if>
-        <if test="opportunityId != null">
-            <![CDATA[
-            ${opportunityId.operation}
-              (SELECT COUNT(*) FROM m_crm_opportunity, m_crm_type_relationship
-                  WHERE m_crm_type_relationship.type=9
-                      AND m_crm_opportunity.id=#{opportunityId.value,javaType=INTEGER}
-                      AND m_crm_type_relationship.type1id=m_crm_lead.id
-                      AND m_crm_type_relationship.type2id=m_crm_opportunity.id) > 0
-          ]]>
-        </if>
         <if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_crm_lead.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
         </if>

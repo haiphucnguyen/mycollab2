@@ -1,0 +1,1 @@
+drop table `m_crm_type_relationship`;
