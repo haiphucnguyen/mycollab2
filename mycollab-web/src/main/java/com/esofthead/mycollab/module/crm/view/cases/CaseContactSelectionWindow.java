@@ -17,6 +17,7 @@ import com.vaadin.ui.Button;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class CaseContactSelectionWindow extends RelatedItemSelectionWindow<SimpleContact, ContactSearchCriteria> {
 
     public CaseContactSelectionWindow(CaseContactListComp associateContactList) {

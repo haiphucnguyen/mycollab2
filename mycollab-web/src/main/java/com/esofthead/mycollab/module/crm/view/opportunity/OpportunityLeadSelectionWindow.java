@@ -17,6 +17,7 @@ import com.vaadin.ui.Button;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class OpportunityLeadSelectionWindow extends RelatedItemSelectionWindow<SimpleLead, LeadSearchCriteria> {
 
     public OpportunityLeadSelectionWindow(OpportunityLeadListComp associateLeadList) {

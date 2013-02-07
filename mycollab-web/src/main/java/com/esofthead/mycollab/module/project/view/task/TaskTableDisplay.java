@@ -68,7 +68,7 @@ public class TaskTableDisplay extends BeanTable<ProjectTaskService, TaskSearchCr
                     b.setIcon(iconPriority);
                 }
                 
-                if (100d == task.getPercentagecomplete()) {
+                if (task.getPercentagecomplete() != null && 100d == task.getPercentagecomplete()) {
                     b.addStyleName(UIConstants.LINK_COMPLETED);
                 } else {
                     if ((task.getEnddate() != null && (task.getEnddate().before(new GregorianCalendar().getTime()))) 

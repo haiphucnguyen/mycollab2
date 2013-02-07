@@ -39,5 +39,8 @@ public class TaskPriorityComboBox extends ComboBox {
 		this.setItemIcon(PRIORITY_NONE, new ThemeResource(PRIORITY_NONE_IMG));
 		this.setItemIcon(PRIORITY_URGENT,
 				new ThemeResource(PRIORITY_URGENT_IMG));
+		
+		this.setNullSelectionAllowed(false);
+		this.setValue(this.getItemIds().iterator().next());
 	}
 }
