@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.Collection;
 
+import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.ui.components.ProjectTaskListComboBox;
 import com.esofthead.mycollab.module.project.ui.components.ProjectUserComboBox;
@@ -14,6 +15,8 @@ import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.AttachmentUploadField;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormAttachmentUploadField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
@@ -33,6 +36,7 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
     private Task task;
+    private FormAttachmentUploadField attachmentUploadField;
 
     public TaskAddViewImpl() {
         super();
@@ -44,6 +48,11 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
     public void editItem(Task item) {
         this.task = item;
         editForm.setItemDataSource(new BeanItem<Task>(task));
+    }
+    
+    @Override
+    public AttachmentUploadField getAttachUploadField() {
+        return attachmentUploadField;
     }
 
     private class EditForm extends AdvancedEditBeanForm<Task> {
@@ -107,7 +116,13 @@ public class TaskAddViewImpl extends AbstractView implements TaskAddView {
                     return new TaskPercentageCompleteComboBox();
                 } else if ("priority".equals(propertyId)) {
                     return new TaskPriorityComboBox();
-                }
+                } else if (propertyId.equals("id")) {
+                    attachmentUploadField = new FormAttachmentUploadField();
+                    if (task.getId() != null) {
+                        attachmentUploadField.getAttachments(AttachmentConstants.PROJECT_BUG_TYPE, task.getId());
+                    }
+                    return attachmentUploadField;
+                } 
                 return null;
             }
         }

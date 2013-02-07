@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
@@ -17,6 +18,7 @@ import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.AttachmentUploadField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -90,9 +92,13 @@ public class TaskAddPresenter extends AbstractPresenter<TaskAddView> {
         }
         
         if (item.getId() == null) {
-            taskService.saveWithSession(item, AppContext.getUsername());
+            int taskId = taskService.saveWithSession(item, AppContext.getUsername());
+            AttachmentUploadField uploadField = view.getAttachUploadField();
+            uploadField.saveContentsToRepo(AttachmentConstants.PROJECT_TASK_TYPE, taskId);
         } else {
             taskService.updateWithSession(item, AppContext.getUsername());
+            AttachmentUploadField uploadField = view.getAttachUploadField();
+            uploadField.saveContentsToRepo(AttachmentConstants.PROJECT_BUG_TYPE, item.getId());
         }
     }
 }

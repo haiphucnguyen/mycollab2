@@ -213,11 +213,6 @@ public class MessageListViewImpl extends AbstractView implements
             basicSearchBody.setWidth("100%");
             basicSearchBody.setSpacing(true);
             basicSearchBody.setMargin(true);
-            Label headerLbl = new Label("Messages");
-            headerLbl.setStyleName("h2");
-            basicSearchBody.addComponent(headerLbl);
-            basicSearchBody.setComponentAlignment(headerLbl, Alignment.MIDDLE_LEFT);
-            basicSearchBody.setExpandRatio(headerLbl, 1.0f);
 
             
             final TextField nameField = new TextField();
@@ -295,10 +290,13 @@ public class MessageListViewImpl extends AbstractView implements
             this.removeAllComponents();
 
             HorizontalLayout layout = new HorizontalLayout();
+            layout.setMargin(false, false, false, true);
             layout.setWidth("100%");
-            Label lb = new Label("");
-            layout.addComponent(lb);
-            layout.setExpandRatio(lb, 1.0f);
+            Label headerLbl = new Label("Messages");
+            headerLbl.setStyleName("h2");
+            layout.addComponent(headerLbl);
+            layout.setComponentAlignment(headerLbl, Alignment.MIDDLE_LEFT);
+            layout.setExpandRatio(headerLbl, 1.0f);
             messageSearchPanel.setWidth("350px");
 
             layout.addComponent(messageSearchPanel);
