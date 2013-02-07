@@ -23,6 +23,7 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.crm.dao.OpportunityContactMapper;
+import com.esofthead.mycollab.module.crm.dao.OpportunityLeadMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityMapper;
 import com.esofthead.mycollab.module.crm.dao.OpportunityMapperExt;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
@@ -51,6 +52,8 @@ public class OpportunityServiceImpl extends DefaultService<Integer, Opportunity,
     private OpportunityMapperExt opportunityMapperExt;
     @Autowired
     private OpportunityContactMapper opportunityContactMapper;
+    @Autowired
+    private OpportunityLeadMapper opportunityLeadMapper;
     
     @Override
     public ICrudGenericDAO<Integer, Opportunity> getCrudMapper() {
@@ -94,16 +97,22 @@ public class OpportunityServiceImpl extends DefaultService<Integer, Opportunity,
         ex.createCriteria().andContactidEqualTo(associateContact.getContactid()).andOpportunityidEqualTo(associateContact.getOpportunityid());
         opportunityContactMapper.deleteByExample(ex);
     }
-
+    
     @Override
     public void saveOpportunityLeadRelationship(List<OpportunityLead> associateLeads) {
         for (OpportunityLead associateLead : associateLeads) {
             OpportunityLeadExample ex = new OpportunityLeadExample();
+            ex.createCriteria().andOpportunityidEqualTo(associateLead.getOpportunityid()).andLeadidEqualTo(associateLead.getLeadid());
+            if (opportunityLeadMapper.countByExample(ex) == 0) {
+                opportunityLeadMapper.insert(associateLead);
+            }
         }
     }
-
+    
     @Override
     public void removeOpportunityLeadRelationship(OpportunityLead associateLead) {
-        throw new UnsupportedOperationException("Not supported yet.");
+        OpportunityLeadExample ex = new OpportunityLeadExample();
+        ex.createCriteria().andOpportunityidEqualTo(associateLead.getOpportunityid()).andLeadidEqualTo(associateLead.getLeadid());
+        opportunityLeadMapper.deleteByExample(ex);
     }
 }

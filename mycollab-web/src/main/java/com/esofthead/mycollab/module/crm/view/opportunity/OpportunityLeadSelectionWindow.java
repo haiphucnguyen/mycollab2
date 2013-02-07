@@ -21,38 +21,34 @@ public class OpportunityLeadSelectionWindow extends RelatedItemSelectionWindow<S
 
     public OpportunityLeadSelectionWindow(OpportunityLeadListComp associateLeadList) {
         super("Select Leads", associateLeadList);
-        
+
         this.setWidth("900px");
     }
 
     @Override
     protected void initUI() {
         tableItem = new LeadTableDisplay(new String[]{"selected",
-                    "leadName", "status", "email", "officephone"}, 
+                    "leadName", "status", "email", "officephone"},
                 new String[]{"", "Name", "Status", "Email", "Phone"});
-        
-        Button selectBtn = new Button("Select", new Button.ClickListener() {
 
+        Button selectBtn = new Button("Select", new Button.ClickListener() {
             @Override
             public void buttonClick(Button.ClickEvent event) {
                 close();
             }
         });
         selectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-        
-        LeadSimpleSearchPanel leadSimpleSearchPanel = new LeadSimpleSearchPanel();
-        leadSimpleSearchPanel.addSearchHandler(new SearchHandler<LeadSearchCriteria>(){
 
-			@Override
-			public void onSearch(LeadSearchCriteria criteria) {
-				tableItem.setSearchCriteria(criteria);
-			}
-        	
+        LeadSimpleSearchPanel leadSimpleSearchPanel = new LeadSimpleSearchPanel();
+        leadSimpleSearchPanel.addSearchHandler(new SearchHandler<LeadSearchCriteria>() {
+            @Override
+            public void onSearch(LeadSearchCriteria criteria) {
+                tableItem.setSearchCriteria(criteria);
+            }
         });
-        
+
         this.bodyContent.addComponent(leadSimpleSearchPanel);
         this.bodyContent.addComponent(selectBtn);
         this.bodyContent.addComponent(tableItem);
     }
-    
 }
