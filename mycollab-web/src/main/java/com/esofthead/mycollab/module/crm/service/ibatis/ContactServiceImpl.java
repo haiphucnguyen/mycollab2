@@ -26,7 +26,6 @@ import com.esofthead.mycollab.module.crm.dao.ContactCaseMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapper;
 import com.esofthead.mycollab.module.crm.dao.ContactMapperExt;
 import com.esofthead.mycollab.module.crm.dao.ContactOpportunityMapper;
-import com.esofthead.mycollab.module.crm.domain.AccountContact;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.ContactCaseExample;
@@ -35,7 +34,6 @@ import com.esofthead.mycollab.module.crm.domain.ContactOpportunityExample;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
-import java.util.GregorianCalendar;
 import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -45,7 +43,7 @@ import org.springframework.transaction.annotation.Transactional;
 @Transactional
 @Traceable(module = "Crm", type = "Contact", nameField = "lastname")
 @Auditable(module = "Crm", type = "Contact")
-public class ContactServiceImpl extends DefaultService<Integer, SimpleContact, ContactSearchCriteria> implements
+public class ContactServiceImpl extends DefaultService<Integer, Contact, ContactSearchCriteria> implements
         ContactService {
     
     @Autowired
@@ -72,7 +70,6 @@ public class ContactServiceImpl extends DefaultService<Integer, SimpleContact, C
     @Override
     public SimpleContact findContactById(int contactId) {
         SimpleContact contact = contactMapperExt.findContactById(contactId);
-        System.out.println("Size: " + contact.getAccounts().size());
         return contact;
     }
     
