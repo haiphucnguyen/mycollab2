@@ -39,8 +39,8 @@ import com.vaadin.ui.Window;
  * @author haiphucnguyen
  */
 public abstract class AccountPreviewBuilder extends VerticalLayout {
-    
-    protected SimpleAccount account;
+	private static final long serialVersionUID = 1L;
+	protected SimpleAccount account;
     protected AdvancedPreviewBeanForm<Account> previewForm;
     protected AccountContactListComp associateContactList;
     protected AccountOpportunityListComp associateOpportunityList;
@@ -174,7 +174,9 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
             initRelatedComponent();
             
             previewForm = new AdvancedPreviewBeanForm<Account>() {
-                @Override
+				private static final long serialVersionUID = 1L;
+
+				@Override
                 public void setItemDataSource(Item newDataSource) {
                     this.setFormLayoutFactory(new AccountFormLayoutFactory.AccountInformationLayout());
                     this.setFormFieldFactory(new AccountFormFieldFactory());

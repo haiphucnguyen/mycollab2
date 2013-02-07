@@ -28,8 +28,7 @@ public class AttachmentServiceImpl extends DefaultCrudService<Integer, Attachmen
     @Override
     public List<Attachment> findByAttachmentId(String type, int typeid) {
         AttachmentExample ex = new AttachmentExample();
-        ex.createCriteria().andTypeEqualTo(type);
-        ex.createCriteria().andTypeidEqualTo(typeid);
+        ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeid);
         return attachmentMapper.selectByExample(ex);
     }
 
