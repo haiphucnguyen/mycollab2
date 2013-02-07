@@ -110,7 +110,7 @@
             <![CDATA[
                 ${caseId.operation}
                 (SELECT COUNT(*) 
-                    FROM c_crm_case, m_crm_contacts_cases 
+                    FROM m_crm_case, m_crm_contacts_cases 
                     WHERE m_crm_case.id=#{caseId.value,javaType=INTEGER} AND m_crm_contacts_cases.caseId=m_crm_case.id 
                         AND m_crm_contacts_cases.contactId=m_crm_contact.id) > 0
             ]]>
@@ -238,11 +238,11 @@
             <![CDATA[
                 ${caseId.operation}
                 (SELECT COUNT(*) 
-                    FROM c_crm_case, m_crm_contacts_cases 
+                    FROM m_crm_case, m_crm_contacts_cases 
                     WHERE m_crm_case.id=#{caseId.value,javaType=INTEGER} AND m_crm_contacts_cases.caseId=m_crm_case.id 
                         AND m_crm_contacts_cases.contactId=m_crm_contact.id) > 0
             ]]>
-        </if>
+        </if>  
     </sql>
 
     <sql id="selectSimpleContact">
