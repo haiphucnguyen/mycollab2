@@ -4,7 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -32,194 +31,223 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @ViewComponent
-public class VersionReadViewImpl extends AbstractView implements VersionReadView {
-    private static final long serialVersionUID = 1L;
-    protected Version version;
-    protected AdvancedPreviewBeanForm<Version> previewForm;
+public class VersionReadViewImpl extends AbstractView implements
+		VersionReadView {
+	private static final long serialVersionUID = 1L;
+	protected Version version;
+	protected AdvancedPreviewBeanForm<Version> previewForm;
 
-    public VersionReadViewImpl() {
-        super();
-        previewForm = new PreviewForm();
-        this.addComponent(previewForm);
-    }
+	public VersionReadViewImpl() {
+		super();
+		previewForm = new PreviewForm();
+		this.addComponent(previewForm);
+	}
 
-    @Override
-    public void previewItem(Version item) {
-        version = item;
-        previewForm.setItemDataSource(new BeanItem<Version>(item));
-    }
+	@Override
+	public void previewItem(Version item) {
+		version = item;
+		previewForm.setItemDataSource(new BeanItem<Version>(item));
+	}
 
-    @Override
-    public Version getItem() {
-        return version;
-    }
+	@Override
+	public Version getItem() {
+		return version;
+	}
 
-    @Override
-    public HasPreviewFormHandlers<Version> getPreviewFormHandlers() {
-        return previewForm;
-    }
+	@Override
+	public HasPreviewFormHandlers<Version> getPreviewFormHandlers() {
+		return previewForm;
+	}
 
-    private class PreviewForm extends AdvancedPreviewBeanForm<Version> {
+	private class PreviewForm extends AdvancedPreviewBeanForm<Version> {
 
-        private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-        @Override
-        public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-                private static final long serialVersionUID = 1L;
+		@Override
+		public void setItemDataSource(Item newDataSource) {
+			this.setFormLayoutFactory(new FormLayoutFactory());
+			this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+				private static final long serialVersionUID = 1L;
 
-                @Override
-                protected Field onCreateField(Item item, Object propertyId,
-                        Component uiContext) {
+				@Override
+				protected Field onCreateField(Item item, Object propertyId,
+						Component uiContext) {
 
-                    return null;
-                }
-            });
-            super.setItemDataSource(newDataSource);
-        }
-        
-        @Override
-        protected void doPrint() {
-            // Create a window that contains what you want to print
-            Window window = new Window("Window to Print");
+					return null;
+				}
+			});
+			super.setItemDataSource(newDataSource);
+		}
 
-            VersionReadViewImpl printView = new VersionReadViewImpl.PrintView();
-            printView.previewItem(version);
-            window.addComponent(printView);
+		@Override
+		protected void doPrint() {
+			// Create a window that contains what you want to print
+			Window window = new Window("Window to Print");
 
-            // Add the printing window as a new application-level window
-            getApplication().addWindow(window);
+			VersionReadViewImpl printView = new VersionReadViewImpl.PrintView();
+			printView.previewItem(version);
+			window.addComponent(printView);
 
-            // Open it as a popup window with no decorations
-            getWindow().open(new ExternalResource(window.getURL()),
-                    "_blank", 1100, 200, // Width and height
-                    Window.BORDER_NONE); // No decorations
+			// Add the printing window as a new application-level window
+			getApplication().addWindow(window);
 
-            // Print automatically when the window opens.
-            // This call will block until the print dialog exits!
-            window.executeJavaScript("print();");
+			// Open it as a popup window with no decorations
+			getWindow().open(new ExternalResource(window.getURL()), "_blank",
+					1100, 200, // Width and height
+					Window.BORDER_NONE); // No decorations
 
-            // Close the window automatically after printing
-            window.executeJavaScript("self.close();");
-        }
+			// Print automatically when the window opens.
+			// This call will block until the print dialog exits!
+			window.executeJavaScript("print();");
 
-        @Override
-        protected void showHistory() {
-            VersionHistoryLogWindow historyLog = new VersionHistoryLogWindow(
-                    ModuleNameConstants.PRJ, ProjectContants.BUG_VERSION,
-                    version.getId());
-            getWindow().addWindow(historyLog);
-        }
+			// Close the window automatically after printing
+			window.executeJavaScript("self.close();");
+		}
 
-        class FormLayoutFactory extends VersionFormLayoutFactory implements IBugReportDisplayContainer{
+		@Override
+		protected void showHistory() {
+			VersionHistoryLogWindow historyLog = new VersionHistoryLogWindow(
+					ModuleNameConstants.PRJ, ProjectContants.BUG_VERSION,
+					version.getId());
+			getWindow().addWindow(historyLog);
+		}
 
-            private static final long serialVersionUID = 1L;
+		class FormLayoutFactory extends VersionFormLayoutFactory implements
+				IBugReportDisplayContainer {
 
-            public FormLayoutFactory() {
-                super(version.getVersionname());
-            }
+			private static final long serialVersionUID = 1L;
+			private HorizontalLayout bottomLayout;
 
-            @Override
-            protected Layout createTopPanel() {
-                return (new PreviewFormControlsGenerator<Version>(PreviewForm.this))
-                        .createButtonControls();
-            }
+			public FormLayoutFactory() {
+				super(version.getVersionname());
+			}
 
-            @Override
-            protected Layout createBottomPanel() {
-                SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
-                HorizontalLayout layout = new HorizontalLayout();
-                layout.setSpacing(true);
-                VerticalLayout leftColumn = new VerticalLayout();
-                layout.addComponent(leftColumn);
-                UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(FormLayoutFactory.this);
-                unresolvedBugWidget.setWidth("450px");
-                leftColumn.addComponent(unresolvedBugWidget);
-                
-                BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
-                unresolvedByPrioritySearchCriteria.setProjectId(new NumberSearchField(project.getId()));
-                unresolvedByPrioritySearchCriteria.setVersionids(new SetSearchField<Integer>(version.getId()));
-                unresolvedByPrioritySearchCriteria.setStatuses(new SetSearchField<String>(SearchField.AND, new String[]{BugStatusConstants.INPROGRESS, BugStatusConstants.OPEN, BugStatusConstants.REOPENNED}));
-                unresolvedBugWidget.setSearchCriteria(unresolvedByPrioritySearchCriteria);
-                
-                VerticalLayout rightColumn = new VerticalLayout();
-                layout.addComponent(rightColumn);
-                
-                UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget(FormLayoutFactory.this);
-                unresolvedByAssigneeWidget.setWidth("450px");
-                rightColumn.addComponent(unresolvedByAssigneeWidget);
-                
-                BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
-                unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(project.getId()));
-                unresolvedByAssigneeSearchCriteria.setVersionids(new SetSearchField<Integer>(version.getId()));
-                unresolvedByAssigneeSearchCriteria.setStatuses(new SetSearchField<String>(SearchField.AND, new String[]{BugStatusConstants.INPROGRESS, BugStatusConstants.OPEN, BugStatusConstants.REOPENNED}));
-                unresolvedByAssigneeWidget.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
-                return layout;
-            }
+			@Override
+			protected Layout createTopPanel() {
+				return (new PreviewFormControlsGenerator<Version>(
+						PreviewForm.this)).createButtonControls();
+			}
+
+			@Override
+			protected Layout createBottomPanel() {
+				bottomLayout = new HorizontalLayout();
+				bottomLayout.setSpacing(true);
+				bottomLayout.setWidth("100%");
+				displayBugReports();
+				return bottomLayout;
+			}
 
 			@Override
 			public void displayBugReports() {
-				// TODO Auto-generated method stub
-				
+				bottomLayout.removeAllComponents();
+				SimpleProject project = (SimpleProject) AppContext
+						.getVariable(ProjectContants.PROJECT_NAME);
+				VerticalLayout leftColumn = new VerticalLayout();
+				bottomLayout.addComponent(leftColumn);
+				UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(
+						FormLayoutFactory.this);
+				unresolvedBugWidget.setWidth("450px");
+				leftColumn.addComponent(unresolvedBugWidget);
+
+				BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
+				unresolvedByPrioritySearchCriteria
+						.setProjectId(new NumberSearchField(project.getId()));
+				unresolvedByPrioritySearchCriteria
+						.setVersionids(new SetSearchField<Integer>(version
+								.getId()));
+				unresolvedByPrioritySearchCriteria
+						.setStatuses(new SetSearchField<String>(
+								SearchField.AND, new String[] {
+										BugStatusConstants.INPROGRESS,
+										BugStatusConstants.OPEN,
+										BugStatusConstants.REOPENNED }));
+				unresolvedBugWidget
+						.setSearchCriteria(unresolvedByPrioritySearchCriteria);
+
+				VerticalLayout rightColumn = new VerticalLayout();
+				bottomLayout.addComponent(rightColumn);
+
+				UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget(
+						FormLayoutFactory.this);
+				unresolvedByAssigneeWidget.setWidth("450px");
+				rightColumn.addComponent(unresolvedByAssigneeWidget);
+
+				BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
+				unresolvedByAssigneeSearchCriteria
+						.setProjectId(new NumberSearchField(project.getId()));
+				unresolvedByAssigneeSearchCriteria
+						.setVersionids(new SetSearchField<Integer>(version
+								.getId()));
+				unresolvedByAssigneeSearchCriteria
+						.setStatuses(new SetSearchField<String>(
+								SearchField.AND, new String[] {
+										BugStatusConstants.INPROGRESS,
+										BugStatusConstants.OPEN,
+										BugStatusConstants.REOPENNED }));
+				unresolvedByAssigneeWidget
+						.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
 			}
 
 			@Override
 			public void displayBugListWidget(String title,
 					BugSearchCriteria criteria) {
-				// TODO Auto-generated method stub
-				
+				bottomLayout.removeAllComponents();
+				BugListWidget bugListWidget = new BugListWidget(title,
+						criteria, this);
+				bugListWidget.setWidth("100%");
+				this.bottomLayout.addComponent(bugListWidget);
+
 			}
-        }
-    }
-    
-    @SuppressWarnings("serial")
+		}
+	}
+
+	@SuppressWarnings("serial")
 	public static class PrintView extends VersionReadViewImpl {
 
-        public PrintView() {
-            previewForm = new AdvancedPreviewBeanForm<Version>() {
-                @Override
-                public void setItemDataSource(Item newDataSource) {
-                	 this.setFormLayoutFactory(new VersionReadViewImpl.PrintView.FormLayoutFactory());
-                     this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
-                         private static final long serialVersionUID = 1L;
-                         
-                         @Override
-                         protected Field onCreateField(Item item, Object propertyId,
-                                 Component uiContext) {
-                             
-                             return null;
-                         }
-                     });
-                     super.setItemDataSource(newDataSource);
-                }
-            };
+		public PrintView() {
+			previewForm = new AdvancedPreviewBeanForm<Version>() {
+				@Override
+				public void setItemDataSource(Item newDataSource) {
+					this.setFormLayoutFactory(new VersionReadViewImpl.PrintView.FormLayoutFactory());
+					this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+						private static final long serialVersionUID = 1L;
 
-            this.addComponent(previewForm);
-        }
+						@Override
+						protected Field onCreateField(Item item,
+								Object propertyId, Component uiContext) {
 
-        class FormLayoutFactory extends VersionFormLayoutFactory {
+							return null;
+						}
+					});
+					super.setItemDataSource(newDataSource);
+				}
+			};
 
-            private static final long serialVersionUID = 1L;
+			this.addComponent(previewForm);
+		}
 
-            public FormLayoutFactory() {
-            	 super(version.getVersionname());
-            }
+		class FormLayoutFactory extends VersionFormLayoutFactory {
 
-            @Override
-            protected Layout createTopPanel() {
-                return new HorizontalLayout();
-            }
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            protected Layout createBottomPanel() {
-            	 return new HorizontalLayout();
-            }
-        }
-    }
-    
+			public FormLayoutFactory() {
+				super(version.getVersionname());
+			}
+
+			@Override
+			protected Layout createTopPanel() {
+				return new HorizontalLayout();
+			}
+
+			@Override
+			protected Layout createBottomPanel() {
+				return new HorizontalLayout();
+			}
+		}
+	}
+
 }
