@@ -44,15 +44,17 @@ import com.vaadin.ui.ComponentContainer;
  */
 @ViewComponent
 public class ProjectBreadcrumb extends Breadcrumb implements View {
-    
-    private SimpleProject project;
+	private static final long serialVersionUID = 1L;
+	private SimpleProject project;
     
     public ProjectBreadcrumb() {
         this.setShowAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
         this.setHideAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
         this.setUseDefaultClickBehaviour(false);
         this.addLink(new Button(null, new Button.ClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new ShellEvent.GotoProjectPage(this, null));
             }
@@ -74,7 +76,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
     public void gotoMessage(Message message) {
         this.select(1);
         this.addLink(new Button("Messages", new Button.ClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new MessageEvent.GotoList(this, null));
             }
@@ -103,7 +107,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.addLink(new Button("Risks", new GotoRiskListListener()));
         this.setLinkEnabled(true, 2);
         this.addLink(new Button(risk.getRiskname(), new Button.ClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new RiskEvent.GotoRead(this, risk.getId()));
             }
@@ -121,8 +127,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
     }
     
     private static class GotoRiskListListener implements Button.ClickListener {
-        
-        @Override
+		private static final long serialVersionUID = 1L;
+
+		@Override
         public void buttonClick(ClickEvent event) {
             EventBus.getInstance().fireEvent(new RiskEvent.GotoList(this, null));
         }
@@ -165,8 +172,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
     }
     
     private static class GotoMilestoneListListener implements Button.ClickListener {
-        
-        @Override
+		private static final long serialVersionUID = 1L;
+
+		@Override
         public void buttonClick(ClickEvent event) {
             EventBus.getInstance().fireEvent(new MilestoneEvent.GotoList(this, null));
         }

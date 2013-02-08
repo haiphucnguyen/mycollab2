@@ -57,7 +57,6 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 						Button userLbl = new Button(status, listener);
 						userLbl.setWidth("100px");
 						userLbl.setStyleName("link");
-						userLbl.setWidth("100px");
 
 						priorityLayout.addComponent(userLbl);
 						ProgressIndicator indicator = new ProgressIndicator(
