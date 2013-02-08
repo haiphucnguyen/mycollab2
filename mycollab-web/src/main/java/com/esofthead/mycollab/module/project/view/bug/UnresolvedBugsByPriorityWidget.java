@@ -12,6 +12,8 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.ProgressIndicator;
@@ -22,9 +24,14 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class UnresolvedBugsByPriorityWidget extends Depot {
+	private static final long serialVersionUID = 1L;
+	
+	private ComponentFormLayoutFactory componentLayout;
 
-	public UnresolvedBugsByPriorityWidget() {
+	public UnresolvedBugsByPriorityWidget(ComponentFormLayoutFactory componentLayout) {
 		super("Unresolved by Priority", new VerticalLayout());
+		
+		this.componentLayout = componentLayout;
 	}
 
 	public void setSearchCriteria(BugSearchCriteria searchCriteria) {
@@ -41,13 +48,15 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 						isFound = true;
 						HorizontalLayout priorityLayout = new HorizontalLayout();
 						priorityLayout.setSpacing(true);
-						Label userLbl = new Label(status);
+						Button userLbl = new Button(status);
+						userLbl.setWidth("100px");
+						userLbl.setStyleName("link");
 						userLbl.setWidth("100px");
 
 						priorityLayout.addComponent(userLbl);
 						ProgressIndicator indicator = new ProgressIndicator(
 								new Float((float) item.getValue() / totalCount));
-                                                indicator.setPollingInterval(1000*60*60*24);
+                        indicator.setPollingInterval(1000000000);
 						priorityLayout.addComponent(indicator);
 
 						Label progressLbl = new Label("(" + item.getValue()
@@ -61,10 +70,12 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 				if (!isFound) {
 					HorizontalLayout priorityLayout = new HorizontalLayout();
 					priorityLayout.setSpacing(true);
-					Label userLbl = new Label(status);
+					Button userLbl = new Button(status);
 					userLbl.setWidth("100px");
+					userLbl.setStyleName("link");
 					priorityLayout.addComponent(userLbl);
 					ProgressIndicator indicator = new ProgressIndicator(0f);
+					indicator.setPollingInterval(1000000000);
 					priorityLayout.addComponent(indicator);
 
 					Label progressLbl = new Label("(" + 0 + "/" + totalCount
@@ -75,5 +86,16 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 			}
 
 		}
+	}
+	
+	class BugStatusClickListener implements Button.ClickListener {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void buttonClick(ClickEvent event) {
+			// TODO Auto-generated method stub
+			
+		}
+		
 	}
 }

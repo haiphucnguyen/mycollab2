@@ -93,7 +93,8 @@ public class ReOpenWindow extends Window {
                 controlsBtn.addComponent(cancelBtn);
 
                 Button wonFixBtn = new Button("Reopen", new Button.ClickListener() {
-                    @Override
+                    @SuppressWarnings("unchecked")
+					@Override
                     public void buttonClick(Button.ClickEvent event) {
                         bug.setStatus(BugStatusConstants.REOPENNED);
                         

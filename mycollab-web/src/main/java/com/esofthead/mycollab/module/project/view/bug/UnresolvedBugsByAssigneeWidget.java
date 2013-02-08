@@ -20,9 +20,14 @@ import java.util.List;
  * @author haiphucnguyen
  */
 public class UnresolvedBugsByAssigneeWidget extends Depot {
-    
-    public UnresolvedBugsByAssigneeWidget() {
+	private static final long serialVersionUID = 1L;
+
+	private ComponentFormLayoutFactory componentLayout;
+	
+	public UnresolvedBugsByAssigneeWidget(ComponentFormLayoutFactory componentLayout) {
         super("Unresolved by assignee", new VerticalLayout());
+        
+        this.componentLayout = componentLayout;
     }
     
     public void setSearchCriteria(BugSearchCriteria searchCriteria) {
@@ -42,7 +47,7 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
                 }
                 assigneeLayout.addComponent(userLbl);
                 ProgressIndicator indicator = new ProgressIndicator(new Float((float)item.getValue() / totalCount));
-                indicator.setPollingInterval(1000*60*60*24);
+                indicator.setPollingInterval(1000000000);
                 assigneeLayout.addComponent(indicator);
                 
                 Label progressLbl = new Label("(" + item.getValue() + "/" + totalCount + ")");

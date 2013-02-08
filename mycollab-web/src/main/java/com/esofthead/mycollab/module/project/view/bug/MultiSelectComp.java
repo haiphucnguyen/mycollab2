@@ -24,7 +24,9 @@ public abstract class MultiSelectComp extends CustomField {
 	private boolean isClicked = false;
 	private String displayName;
 	private HashMap<String, CheckBox> componentPoupMap = new HashMap<String, CheckBox>();
+	@SuppressWarnings("rawtypes")
 	private List selectedItemsList = new ArrayList();
+	@SuppressWarnings("rawtypes")
 	protected List dataList = new ArrayList();
 	
 	public MultiSelectComp() {

@@ -24,7 +24,9 @@ import com.vaadin.ui.Label;
  * @author haiphucnguyen
  */
 public class RecentBugUpdateWidget extends BugDisplayWidget {
-    public RecentBugUpdateWidget() {
+	private static final long serialVersionUID = 1L;
+
+	public RecentBugUpdateWidget() {
         super("Updated Bug Recently", RecentBugRowDisplayHandler.class);
     }
     

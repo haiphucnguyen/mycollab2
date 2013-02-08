@@ -93,7 +93,8 @@ public class ResolvedInputWindow extends Window {
                 controlsBtn.addComponent(cancelBtn);
 
                 Button wonFixBtn = new Button("Resolved", new Button.ClickListener() {
-                    @Override
+                    @SuppressWarnings("unchecked")
+					@Override
                     public void buttonClick(Button.ClickEvent event) {
                         bug.setStatus(BugStatusConstants.TESTPENDING);
                         

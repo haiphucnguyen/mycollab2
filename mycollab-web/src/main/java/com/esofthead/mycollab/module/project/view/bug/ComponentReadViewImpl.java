@@ -126,6 +126,7 @@ public class ComponentReadViewImpl extends AbstractView implements
         class FormLayoutFactory extends ComponentFormLayoutFactory {
             
             private static final long serialVersionUID = 1L;
+            private HorizontalLayout bottomLayout;
             
             public FormLayoutFactory() {
                 super(component.getComponentname());
@@ -139,12 +140,19 @@ public class ComponentReadViewImpl extends AbstractView implements
             
             @Override
             protected Layout createBottomPanel() {
-                SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
-                HorizontalLayout layout = new HorizontalLayout();
-                layout.setSpacing(true);
+            	bottomLayout = new HorizontalLayout();
+            	bottomLayout.setSpacing(true);
+                displayBugReports();
+                return bottomLayout;
+            }
+            
+            @Override
+            public void displayBugReports() {
+            	bottomLayout.removeAllComponents();
+            	SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
                 VerticalLayout leftColumn = new VerticalLayout();
-                layout.addComponent(leftColumn);
-                UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget();
+                bottomLayout.addComponent(leftColumn);
+                UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(FormLayoutFactory.this);
                 unresolvedBugWidget.setWidth("450px");
                 leftColumn.addComponent(unresolvedBugWidget);
                 
@@ -155,9 +163,9 @@ public class ComponentReadViewImpl extends AbstractView implements
                 unresolvedBugWidget.setSearchCriteria(unresolvedByPrioritySearchCriteria);
                 
                 VerticalLayout rightColumn = new VerticalLayout();
-                layout.addComponent(rightColumn);
+                bottomLayout.addComponent(rightColumn);
                 
-                UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget();
+                UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget(FormLayoutFactory.this);
                 unresolvedByAssigneeWidget.setWidth("450px");
                 rightColumn.addComponent(unresolvedByAssigneeWidget);
                 
@@ -166,8 +174,10 @@ public class ComponentReadViewImpl extends AbstractView implements
                 unresolvedByAssigneeSearchCriteria.setComponentids(new SetSearchField<Integer>(component.getId()));
                 unresolvedByAssigneeSearchCriteria.setStatuses(new SetSearchField<String>(SearchField.AND, new String[]{BugStatusConstants.INPROGRESS, BugStatusConstants.OPEN, BugStatusConstants.REOPENNED}));
                 unresolvedByAssigneeWidget.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
-                return layout;
             }
+            
+            @Override
+            public void displayBugListWidgets() {}
         }
     }
     

@@ -64,6 +64,10 @@ public abstract class ComponentFormLayoutFactory implements IFormLayoutFactory {
     protected abstract Layout createTopPanel();
 
     protected abstract Layout createBottomPanel();
+    
+    public void displayBugReports() {}
+    
+    public void displayBugListWidgets() {}
 
     public static class ComponentInformationLayout implements IFormLayoutFactory {
 

@@ -26,8 +26,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class VersionAddPresenter extends AbstractPresenter<VersionAddView> {
+	private static final long serialVersionUID = 1L;
 
-    public VersionAddPresenter() {
+	public VersionAddPresenter() {
         super(VersionAddView.class);
 
         view.getEditFormHandlers().addFormHandler(new EditFormHandler<Version>() {
