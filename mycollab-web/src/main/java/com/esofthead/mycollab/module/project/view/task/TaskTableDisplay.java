@@ -22,140 +22,147 @@ import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.Table;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public class TaskTableDisplay extends BeanTable<ProjectTaskService, TaskSearchCriteria, SimpleTask> {
+public class TaskTableDisplay extends
+		BeanTable<ProjectTaskService, TaskSearchCriteria, SimpleTask> {
 
-    public TaskTableDisplay(String[] visibleColumns, String[] columnHeaders) {
-        super(AppContext.getSpringBean(ProjectTaskService.class),
-                SimpleTask.class, visibleColumns, columnHeaders);
+	public TaskTableDisplay(String[] visibleColumns, String[] columnHeaders) {
+		super(AppContext.getSpringBean(ProjectTaskService.class),
+				SimpleTask.class, visibleColumns, columnHeaders);
 
-        this.addGeneratedColumn("taskname", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+		this.addGeneratedColumn("taskname", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleTask task = TaskTableDisplay.this.getBeanByIndex(itemId);
-                
-                ButtonLink b = new ButtonLink(task.getTaskname(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleTask task = TaskTableDisplay.this
+						.getBeanByIndex(itemId);
 
-                            @Override
-                            public void buttonClick(Button.ClickEvent event) {
-                                fireTableEvent(new TableClickEvent(TaskTableDisplay.this, task, "taskname"));
-                            }
-                        });
-                b.addStyleName("medium-text");
-                
-                if (StringUtil.isNotNullOrEmpty(task.getPriority())) {
-                	ThemeResource iconPriority = new ThemeResource(TaskPriorityComboBox.PRIORITY_MEDIUM_IMG);
-                    
-                    if (TaskPriorityComboBox.PRIORITY_HIGHT.equals(task.getPriority())) {
-                    	iconPriority = new ThemeResource(TaskPriorityComboBox.PRIORITY_HIGHT_IMG);
-                    } else if (TaskPriorityComboBox.PRIORITY_LOW.equals(task.getPriority())) {
-                    	iconPriority = new ThemeResource(TaskPriorityComboBox.PRIORITY_LOW_IMG);
-                    } else if (TaskPriorityComboBox.PRIORITY_MEDIUM.equals(task.getPriority())) {
-                    	iconPriority = new ThemeResource(TaskPriorityComboBox.PRIORITY_MEDIUM_IMG);
-                    } else if (TaskPriorityComboBox.PRIORITY_NONE.equals(task.getPriority())) {
-                    	iconPriority = new ThemeResource(TaskPriorityComboBox.PRIORITY_NONE_IMG);
-                    } else if (TaskPriorityComboBox.PRIORITY_URGENT.equals(task.getPriority())) {
-                    	iconPriority = new ThemeResource(TaskPriorityComboBox.PRIORITY_URGENT_IMG);
-                    }
-                    
-                    b.setIcon(iconPriority);
-                }
-                
-                if (task.getPercentagecomplete() != null && 100d == task.getPercentagecomplete()) {
-                    b.addStyleName(UIConstants.LINK_COMPLETED);
-                } else {
-                    if ((task.getEnddate() != null && (task.getEnddate().before(new GregorianCalendar().getTime()))) 
-                    		|| (task.getActualenddate() != null && (task.getActualenddate().before(new GregorianCalendar().getTime())))
-                    		|| (task.getDeadline() != null && (task.getDeadline().before(new GregorianCalendar().getTime())))) {
-                        b.addStyleName(UIConstants.LINK_OVERDUE);
-                    }
-                }
-                return b;
+				ButtonLink b = new ButtonLink(task.getTaskname(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-            }
-        });
+							@Override
+							public void buttonClick(Button.ClickEvent event) {
+								fireTableEvent(new TableClickEvent(
+										TaskTableDisplay.this, task, "taskname"));
+							}
+						});
+				b.addStyleName("medium-text");
 
-        this.addGeneratedColumn("percentagecomplete", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+				if (StringUtil.isNotNullOrEmpty(task.getPriority())) {
+					ThemeResource iconPriority = TaskPriorityComboBox
+							.getIconResourceByPriority(task.getPriority());
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleTask task = TaskTableDisplay.this.getBeanByIndex(itemId);
-                Double percomp = (task.getPercentagecomplete() == null) ? new Double(0) : task.getPercentagecomplete() / 100;
-                ProgressIndicator progress = new ProgressIndicator(new Float(percomp));
-                progress.setPollingInterval(1000*60*60*24);
-                progress.setWidth("100px");
-                return progress;
-            }
-        });
+					b.setIcon(iconPriority);
+				}
 
-        this.addGeneratedColumn("startdate", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+				if (task.getPercentagecomplete() != null
+						&& 100d == task.getPercentagecomplete()) {
+					b.addStyleName(UIConstants.LINK_COMPLETED);
+				} else {
+					if ((task.getEnddate() != null && (task.getEnddate()
+							.before(new GregorianCalendar().getTime())))
+							|| (task.getActualenddate() != null && (task
+									.getActualenddate()
+									.before(new GregorianCalendar().getTime())))
+							|| (task.getDeadline() != null && (task
+									.getDeadline()
+									.before(new GregorianCalendar().getTime())))) {
+						b.addStyleName(UIConstants.LINK_OVERDUE);
+					}
+				}
+				return b;
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleTask task = TaskTableDisplay.this.getBeanByIndex(itemId);
-                return new Label(AppContext.formatDate(task.getStartdate()));
+			}
+		});
 
-            }
-        });
+		this.addGeneratedColumn("percentagecomplete",
+				new Table.ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
 
-        this.addGeneratedColumn("deadline", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+					@Override
+					public com.vaadin.ui.Component generateCell(Table source,
+							final Object itemId, Object columnId) {
+						final SimpleTask task = TaskTableDisplay.this
+								.getBeanByIndex(itemId);
+						Double percomp = (task.getPercentagecomplete() == null) ? new Double(
+								0) : task.getPercentagecomplete() / 100;
+						ProgressIndicator progress = new ProgressIndicator(
+								new Float(percomp));
+						progress.setPollingInterval(1000 * 60 * 60 * 24);
+						progress.setWidth("100px");
+						return progress;
+					}
+				});
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleTask task = TaskTableDisplay.this.getBeanByIndex(itemId);
-                return new Label(AppContext.formatDate(task.getDeadline()));
+		this.addGeneratedColumn("startdate", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-            }
-        });
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleTask task = TaskTableDisplay.this
+						.getBeanByIndex(itemId);
+				return new Label(AppContext.formatDate(task.getStartdate()));
 
-        this.addGeneratedColumn("id", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+			}
+		});
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleTask task = TaskTableDisplay.this.getBeanByIndex(itemId);
-                if ((task.getPercentagecomplete() != null && task.getPercentagecomplete() != 100) || task.getPercentagecomplete() == null) {
-                    Button b = new Button(null,
-                            new Button.ClickListener() {
-                                private static final long serialVersionUID = 1L;
+		this.addGeneratedColumn("deadline", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-                                @Override
-                                public void buttonClick(Button.ClickEvent event) {
-                                    fireTableEvent(new TableClickEvent(TaskTableDisplay.this, task, "id"));
-                                }
-                            });
-                    b.setIcon(new ThemeResource("icons/16/close.png"));
-                    b.setStyleName("link");
-                    b.setDescription("Close this task");
-                    return b;
-                } else {
-                    return new Label();
-                }
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleTask task = TaskTableDisplay.this
+						.getBeanByIndex(itemId);
+				return new Label(AppContext.formatDate(task.getDeadline()));
 
-            }
-        });
+			}
+		});
 
+		this.addGeneratedColumn("id", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleTask task = TaskTableDisplay.this
+						.getBeanByIndex(itemId);
+				if ((task.getPercentagecomplete() != null && task
+						.getPercentagecomplete() != 100)
+						|| task.getPercentagecomplete() == null) {
+					Button b = new Button(null, new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-        this.setColumnExpandRatio("taskname", 1);
-        this.setColumnWidth("assignUserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
-        this.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);
-        this.setColumnWidth("deadline", UIConstants.TABLE_DATE_WIDTH);
-        this.setColumnWidth("percentagecomplete", UIConstants.TABLE_M_LABEL_WIDTH);
-        this.setWidth("100%");
-    }
+						@Override
+						public void buttonClick(Button.ClickEvent event) {
+							fireTableEvent(new TableClickEvent(
+									TaskTableDisplay.this, task, "id"));
+						}
+					});
+					b.setIcon(new ThemeResource("icons/16/close.png"));
+					b.setStyleName("link");
+					b.setDescription("Close this task");
+					return b;
+				} else {
+					return new Label();
+				}
+
+			}
+		});
+
+		this.setColumnExpandRatio("taskname", 1);
+		this.setColumnWidth("assignUserFullName",
+				UIConstants.TABLE_X_LABEL_WIDTH);
+		this.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);
+		this.setColumnWidth("deadline", UIConstants.TABLE_DATE_WIDTH);
+		this.setColumnWidth("percentagecomplete",
+				UIConstants.TABLE_M_LABEL_WIDTH);
+		this.setWidth("100%");
+	}
 }

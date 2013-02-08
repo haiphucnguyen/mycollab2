@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
@@ -11,12 +12,16 @@ import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.Label;
 
 /**
  *
@@ -62,7 +67,24 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
                     });
                 } else if (propertyId.equals("id")) {
                     return new FormAttachmentDisplayField(AttachmentConstants.PROJECT_TASK_TYPE, task.getId());
-                }
+                } else if (propertyId.equals("priority")) {
+					if (StringUtil.isNotNullOrEmpty(task
+							.getPriority())) {
+						ThemeResource iconPriority = TaskPriorityComboBox
+								.getIconResourceByPriority(task
+										.getPriority());
+						Embedded iconEmbedded = new Embedded(null,
+								iconPriority);
+						Label lbPriority = new Label(task
+								.getPriority());
+
+						FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
+						containerField.addComponentField(iconEmbedded);
+						lbPriority.setWidth("220px");
+						containerField.addComponentField(lbPriority);
+						return containerField;
+					}
+				}
                 return null;
             }
         });

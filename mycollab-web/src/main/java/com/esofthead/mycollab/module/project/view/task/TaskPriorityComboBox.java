@@ -24,7 +24,7 @@ public class TaskPriorityComboBox extends ComboBox {
 		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
 
 		IndexedContainer ic = new IndexedContainer();
-		ic.addItem(PRIORITY_URGENT);
+		this.addItem(PRIORITY_URGENT);
 		ic.addItem(PRIORITY_HIGHT);
 		ic.addItem(PRIORITY_MEDIUM);
 		ic.addItem(PRIORITY_LOW);
@@ -42,5 +42,21 @@ public class TaskPriorityComboBox extends ComboBox {
 		
 		this.setNullSelectionAllowed(false);
 		this.setValue(this.getItemIds().iterator().next());
+	}
+	
+	public static ThemeResource getIconResourceByPriority(String priority) {
+		ThemeResource iconPriority = new ThemeResource(PRIORITY_MEDIUM_IMG);
+		 if (PRIORITY_HIGHT.equals(priority)) {
+           	iconPriority = new ThemeResource(PRIORITY_HIGHT_IMG);
+           } else if (PRIORITY_LOW.equals(priority)) {
+           	iconPriority = new ThemeResource(PRIORITY_LOW_IMG);
+           } else if (PRIORITY_MEDIUM.equals(priority)) {
+           	iconPriority = new ThemeResource(PRIORITY_MEDIUM_IMG);
+           } else if (PRIORITY_NONE.equals(priority)) {
+           	iconPriority = new ThemeResource(PRIORITY_NONE_IMG);
+           } else if (PRIORITY_URGENT.equals(priority)) {
+           	iconPriority = new ThemeResource(PRIORITY_URGENT_IMG);
+           }
+		return iconPriority;
 	}
 }
