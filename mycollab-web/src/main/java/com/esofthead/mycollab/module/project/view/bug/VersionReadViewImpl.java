@@ -116,7 +116,7 @@ public class VersionReadViewImpl extends AbstractView implements VersionReadView
             getWindow().addWindow(historyLog);
         }
 
-        class FormLayoutFactory extends VersionFormLayoutFactory {
+        class FormLayoutFactory extends VersionFormLayoutFactory implements IBugReportDisplayContainer{
 
             private static final long serialVersionUID = 1L;
 
@@ -137,7 +137,7 @@ public class VersionReadViewImpl extends AbstractView implements VersionReadView
                 layout.setSpacing(true);
                 VerticalLayout leftColumn = new VerticalLayout();
                 layout.addComponent(leftColumn);
-                UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget();
+                UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(FormLayoutFactory.this);
                 unresolvedBugWidget.setWidth("450px");
                 leftColumn.addComponent(unresolvedBugWidget);
                 
@@ -150,7 +150,7 @@ public class VersionReadViewImpl extends AbstractView implements VersionReadView
                 VerticalLayout rightColumn = new VerticalLayout();
                 layout.addComponent(rightColumn);
                 
-                UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget();
+                UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget(FormLayoutFactory.this);
                 unresolvedByAssigneeWidget.setWidth("450px");
                 rightColumn.addComponent(unresolvedByAssigneeWidget);
                 
@@ -161,6 +161,18 @@ public class VersionReadViewImpl extends AbstractView implements VersionReadView
                 unresolvedByAssigneeWidget.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
                 return layout;
             }
+
+			@Override
+			public void displayBugReports() {
+				// TODO Auto-generated method stub
+				
+			}
+
+			@Override
+			public void displayBugListWidget() {
+				// TODO Auto-generated method stub
+				
+			}
         }
     }
     

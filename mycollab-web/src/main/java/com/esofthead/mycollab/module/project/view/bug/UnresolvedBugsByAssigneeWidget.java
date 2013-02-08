@@ -22,9 +22,9 @@ import java.util.List;
 public class UnresolvedBugsByAssigneeWidget extends Depot {
 	private static final long serialVersionUID = 1L;
 
-	private ComponentFormLayoutFactory componentLayout;
+	private IBugReportDisplayContainer componentLayout;
 	
-	public UnresolvedBugsByAssigneeWidget(ComponentFormLayoutFactory componentLayout) {
+	public UnresolvedBugsByAssigneeWidget(IBugReportDisplayContainer componentLayout) {
         super("Unresolved by assignee", new VerticalLayout());
         
         this.componentLayout = componentLayout;

@@ -23,12 +23,15 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.Button.ClickEvent;
 
 /**
  *
@@ -123,7 +126,7 @@ public class ComponentReadViewImpl extends AbstractView implements
             getWindow().addWindow(historyLog);
         }
         
-        class FormLayoutFactory extends ComponentFormLayoutFactory {
+        class FormLayoutFactory extends ComponentFormLayoutFactory implements IBugReportDisplayContainer {
             
             private static final long serialVersionUID = 1L;
             private HorizontalLayout bottomLayout;
@@ -177,7 +180,24 @@ public class ComponentReadViewImpl extends AbstractView implements
             }
             
             @Override
-            public void displayBugListWidgets() {}
+            public void displayBugListWidget() {
+            	bottomLayout.removeAllComponents();
+            	VerticalLayout bugListLayout = new VerticalLayout();
+            	
+            	Button backToBugReportsBtn = new Button("Back to component dashboard", new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						displayBugReports();
+						
+					}
+				});
+            	bugListLayout.addComponent(backToBugReportsBtn);
+            	bugListLayout.addComponent(new Label("AAA"));
+            	
+            	this.bottomLayout.addComponent(bugListLayout);
+            }
         }
     }
     

@@ -7,7 +7,13 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -25,12 +31,13 @@ import com.vaadin.ui.VerticalLayout;
  */
 public class UnresolvedBugsByPriorityWidget extends Depot {
 	private static final long serialVersionUID = 1L;
-	
-	private ComponentFormLayoutFactory componentLayout;
 
-	public UnresolvedBugsByPriorityWidget(ComponentFormLayoutFactory componentLayout) {
+	private IBugReportDisplayContainer componentLayout;
+
+	public UnresolvedBugsByPriorityWidget(
+			IBugReportDisplayContainer componentLayout) {
 		super("Unresolved by Priority", new VerticalLayout());
-		
+
 		this.componentLayout = componentLayout;
 	}
 
@@ -40,6 +47,8 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 		int totalCount = bugService.getTotalCount(searchCriteria);
 		List<GroupItem> groupItems = bugService
 				.getPrioritySummary(searchCriteria);
+		BugPriorityClickListener listener = new BugPriorityClickListener();
+
 		if (!groupItems.isEmpty()) {
 			for (String status : ProjectDataTypeFactory.getBugPriorityList()) {
 				boolean isFound = false;
@@ -48,7 +57,7 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 						isFound = true;
 						HorizontalLayout priorityLayout = new HorizontalLayout();
 						priorityLayout.setSpacing(true);
-						Button userLbl = new Button(status);
+						Button userLbl = new Button(status, listener);
 						userLbl.setWidth("100px");
 						userLbl.setStyleName("link");
 						userLbl.setWidth("100px");
@@ -56,7 +65,7 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 						priorityLayout.addComponent(userLbl);
 						ProgressIndicator indicator = new ProgressIndicator(
 								new Float((float) item.getValue() / totalCount));
-                        indicator.setPollingInterval(1000000000);
+						indicator.setPollingInterval(1000000000);
 						priorityLayout.addComponent(indicator);
 
 						Label progressLbl = new Label("(" + item.getValue()
@@ -70,7 +79,7 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 				if (!isFound) {
 					HorizontalLayout priorityLayout = new HorizontalLayout();
 					priorityLayout.setSpacing(true);
-					Button userLbl = new Button(status);
+					Button userLbl = new Button(status, listener);
 					userLbl.setWidth("100px");
 					userLbl.setStyleName("link");
 					priorityLayout.addComponent(userLbl);
@@ -87,15 +96,22 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 
 		}
 	}
-	
-	class BugStatusClickListener implements Button.ClickListener {
+
+	class BugPriorityClickListener implements Button.ClickListener {
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void buttonClick(ClickEvent event) {
-			// TODO Auto-generated method stub
+			String caption = event.getButton().getCaption();
+			SimpleProject project = (SimpleProject) AppContext
+					.getVariable(ProjectContants.PROJECT_NAME);
+			BugSearchCriteria criteria = new BugSearchCriteria();
+			criteria.setProjectId(new NumberSearchField(project.getId()));
+			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
+					new String[] { caption }));
 			
+			componentLayout.displayBugListWidget();
 		}
-		
+
 	}
 }
