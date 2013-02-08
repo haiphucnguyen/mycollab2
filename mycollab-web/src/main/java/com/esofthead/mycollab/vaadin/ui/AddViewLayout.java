@@ -42,7 +42,7 @@ public class AddViewLayout extends CustomLayout {
     public void setTitle(String title) {
         titleLbl.setValue(title);
     }
-
+    
     public void addTopControls(ComponentContainer topControls) {
         this.addComponent(topControls, "addViewTopControls");
     }

@@ -14,6 +14,12 @@
 		<param-name>contextConfigLocation</param-name>
 		<param-value>classpath:/META-INF/spring/*-context.xml</param-value>
 	</context-param>
+	<context-param>
+		<description>
+		Vaadin production mode</description>
+		<param-name>productionMode</param-name>
+		<param-value>true</param-value>
+	</context-param>
 	<servlet>
 		<servlet-name>MyCollabApplication</servlet-name>
 		<servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
