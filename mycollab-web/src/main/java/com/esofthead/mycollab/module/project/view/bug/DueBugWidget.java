@@ -24,7 +24,9 @@ import com.vaadin.ui.Label;
  * @author haiphucnguyen
  */
 public class DueBugWidget extends BugDisplayWidget {
-    public DueBugWidget() {
+	private static final long serialVersionUID = 1L;
+
+	public DueBugWidget() {
         super("Due Bugs", DueBugRowDisplayHandler.class);
     }
     

@@ -169,7 +169,8 @@ public class VersionReadViewImpl extends AbstractView implements VersionReadView
 			}
 
 			@Override
-			public void displayBugListWidget() {
+			public void displayBugListWidget(String title,
+					BugSearchCriteria criteria) {
 				// TODO Auto-generated method stub
 				
 			}

@@ -24,11 +24,13 @@ public abstract class MultiSelectComp extends CustomField {
 	private boolean isClicked = false;
 	private String displayName;
 	private HashMap<String, CheckBox> componentPoupMap = new HashMap<String, CheckBox>();
+	
 	@SuppressWarnings("rawtypes")
 	private List selectedItemsList = new ArrayList();
+	
 	@SuppressWarnings("rawtypes")
 	protected List dataList = new ArrayList();
-	
+
 	public MultiSelectComp() {
 		this.setWidth("100%");
 		GridLayout content = new GridLayout(2, 1);
@@ -63,7 +65,7 @@ public abstract class MultiSelectComp extends CustomField {
 
 		this.setCompositionRoot(content);
 	}
-	
+
 	public MultiSelectComp(String displayName, String width) {
 		this(displayName);
 		componentsDisplay.setWidth(width);
@@ -73,16 +75,16 @@ public abstract class MultiSelectComp extends CustomField {
 		this();
 		this.displayName = displayName;
 	}
-	
+
 	public void resetComp() {
 		for (int i = 0; i < selectedItemsList.size(); i++) {
 			selectedItemsList.remove(i);
 		}
-		
+
 		componentsDisplay.setReadOnly(false);
 		componentsDisplay.setValue("");
 		componentsDisplay.setReadOnly(true);
-		
+
 		for (CheckBox chk : componentPoupMap.values()) {
 			chk.setValue(false);
 		}
@@ -93,7 +95,7 @@ public abstract class MultiSelectComp extends CustomField {
 
 			Object itemComp = dataList.get(i);
 			String itemName = "";
-			if (displayName != "" ) {
+			if (displayName != "") {
 				try {
 					itemName = (String) PropertyUtils.getProperty(itemComp,
 							displayName);
@@ -115,8 +117,8 @@ public abstract class MultiSelectComp extends CustomField {
 						Object itemObj = getElementInDataListByName(chkItem
 								.getCaption());
 						try {
-							objDisplayName = (String) PropertyUtils.getProperty(
-									itemObj, displayName);
+							objDisplayName = (String) PropertyUtils
+									.getProperty(itemObj, displayName);
 						} catch (Exception e) {
 							e.printStackTrace();
 						}
@@ -134,7 +136,8 @@ public abstract class MultiSelectComp extends CustomField {
 					} else {
 						if (isClicked) {
 							if (value) {
-								if (!selectedItemsList.contains(chkItem.getCaption())) {
+								if (!selectedItemsList.contains(chkItem
+										.getCaption())) {
 									selectedItemsList.add(chkItem.getCaption());
 								}
 							} else {
@@ -193,15 +196,15 @@ public abstract class MultiSelectComp extends CustomField {
 			String objDisplayName = "";
 			if (displayName != "") {
 				try {
-					objDisplayName = (String) PropertyUtils.getProperty(itemObj,
-							displayName);
+					objDisplayName = (String) PropertyUtils.getProperty(
+							itemObj, displayName);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			} else {
 				objDisplayName = (String) selectedItemsList.get(i);
 			}
-			
+
 			if (componentPoupMap.containsKey(objDisplayName)) {
 				CheckBox chk = componentPoupMap.get(objDisplayName);
 				chk.setValue(true);
@@ -236,8 +239,8 @@ public abstract class MultiSelectComp extends CustomField {
 			String objDisplayName = "";
 			if (displayName != "") {
 				try {
-					objDisplayName = (String) PropertyUtils.getProperty(itemObj,
-							displayName);
+					objDisplayName = (String) PropertyUtils.getProperty(
+							itemObj, displayName);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}

@@ -26,8 +26,9 @@ import org.jfree.data.xy.XYDataset;
  * @author haiphucnguyen
  */
 public class BugTrendReportWidget extends TimeSeriesChartWrapper<BugSearchCriteria> {
-
-    private static String patternDate = "yyyy-MM-dd";
+	private static final long serialVersionUID = 1L;
+	
+	private static String patternDate = "yyyy-MM-dd";
     private static SimpleDateFormat dateFormat = new SimpleDateFormat(patternDate);
     
     public BugTrendReportWidget() {
@@ -56,12 +57,8 @@ public class BugTrendReportWidget extends TimeSeriesChartWrapper<BugSearchCriter
         
         TimeSeriesCollection dataset = new TimeSeriesCollection();
         for (TimeSeries series : seriesMap.values()) {
-            System.out.println("Add series: " + series.toString());
             dataset.addSeries(series);
         }
-        
-       
-        
         return dataset;
     }
     

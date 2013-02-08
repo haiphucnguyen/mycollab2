@@ -7,13 +7,9 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -33,6 +29,7 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 	private static final long serialVersionUID = 1L;
 
 	private IBugReportDisplayContainer componentLayout;
+	private BugSearchCriteria bugSearchCriteria;
 
 	public UnresolvedBugsByPriorityWidget(
 			IBugReportDisplayContainer componentLayout) {
@@ -42,7 +39,7 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 	}
 
 	public void setSearchCriteria(BugSearchCriteria searchCriteria) {
-
+		this.bugSearchCriteria = searchCriteria;
 		BugService bugService = AppContext.getSpringBean(BugService.class);
 		int totalCount = bugService.getTotalCount(searchCriteria);
 		List<GroupItem> groupItems = bugService
@@ -103,14 +100,9 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 		@Override
 		public void buttonClick(ClickEvent event) {
 			String caption = event.getButton().getCaption();
-			SimpleProject project = (SimpleProject) AppContext
-					.getVariable(ProjectContants.PROJECT_NAME);
-			BugSearchCriteria criteria = new BugSearchCriteria();
-			criteria.setProjectId(new NumberSearchField(project.getId()));
-			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
-					new String[] { caption }));
-			
-			componentLayout.displayBugListWidget();
+			bugSearchCriteria.setPriorities(new SetSearchField<String>(SearchField.AND, new String[] {caption}));
+			componentLayout.displayBugListWidget(caption + " Bugs List",
+					bugSearchCriteria);
 		}
 
 	}
