@@ -183,8 +183,18 @@ public abstract class DetachedTabs extends CustomComponent {
 		if (content == null || caption == null) {
 			throw new NullPointerException("Arguments may not be null");
 		}
+		
+		this.addTab(content, new NativeButton(caption, tabChangeListener));
+	}
+	
+	public void addTab(final Component content, final Button button) {
+		if (content == null || button == null) {
+			throw new NullPointerException("Arguments may not be null");
+		}
 
-		final Button button = new NativeButton(caption, tabChangeListener);
+		if (button.getListeners(TabChangeListener.class).isEmpty()) {
+			button.addListener(tabChangeListener);
+		}
 
 		if (orientation == Orientation.HORIZONTAL) {
 			button.setHeight("100%");
