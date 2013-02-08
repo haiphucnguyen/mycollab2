@@ -17,7 +17,6 @@ Any value defined here will override the pom.xml file value but is only applicab
     </properties>
     <spring-data xmlns="http://www.netbeans.org/ns/spring-data/1">
         <config-files>
-            <config-file>src/main/resources/META-INF/spring/audit-context.xml</config-file>
             <config-file>src/main/resources/META-INF/spring/common-context.xml</config-file>
             <config-file>src/main/resources/META-INF/spring/core-context.xml</config-file>
             <config-file>src/main/resources/META-INF/spring/crm-context.xml</config-file>
@@ -26,6 +25,7 @@ Any value defined here will override the pom.xml file value but is only applicab
             <config-file>src/main/resources/META-INF/spring/project-context.xml</config-file>
             <config-file>src/main/resources/META-INF/spring/tracker-context.xml</config-file>
             <config-file>src/main/resources/META-INF/spring/user-context.xml</config-file>
+            <config-file>src/main/resources/META-INF/spring/schedule-context.xml.xml</config-file>
         </config-files>
         <config-file-groups/>
     </spring-data>

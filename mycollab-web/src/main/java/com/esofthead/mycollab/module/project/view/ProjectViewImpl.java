@@ -36,6 +36,8 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.NativeButton;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.splitbutton.SplitButton;
@@ -101,7 +103,6 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
     }
 
     private void buildComponents() {
-        
         myProjectTab.addTab(constructProjectDashboardComponent(), "Dashboard");
         myProjectTab.addTab(constructProjectMessageComponent(), "Messages");
         myProjectTab.addTab(constructProjectMilestoneComponent(), "Milestones");

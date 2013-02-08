@@ -4,6 +4,10 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
@@ -34,9 +38,10 @@ public class TaskDisplayComponent extends CssLayout {
     private TaskSearchCriteria criteria;
     private TaskTableDisplay taskDisplay;
     private Button createTaskBtn;
+    private SimpleTaskList taskList;
 
     public TaskDisplayComponent(final SimpleTaskList taskList, boolean isDisplayTaskListInfo) {
-        // this.setSpacing(true);
+        this.taskList = taskList;
         this.setStyleName("taskdisplay-component");
 
         if (isDisplayTaskListInfo) {
@@ -61,16 +66,11 @@ public class TaskDisplayComponent extends CssLayout {
             ProgressIndicator taskListProgress = (ProgressIndicator) layoutHelper.addComponent(new ProgressIndicator(new Float(taskList.getPercentageComplete())), "Progress", 0, 2);
             taskListProgress.setWidth("100px");
             taskListProgress.setValue(taskList.getPercentageComplete() / 100);
+            taskListProgress.setPollingInterval(1000000000);
 
             HorizontalLayout taskNumberProgress = new HorizontalLayout();
             taskNumberProgress.setSpacing(true);
             taskNumberProgress = (HorizontalLayout) layoutHelper.addComponent(taskNumberProgress, "% Task Complete", 1, 2);
-//            ProgressIndicator taskNumberProgressBar = new ProgressIndicator(new Float(0.0));
-//            if (taskList.getNumAllTasks() > 0) {
-//                taskNumberProgressBar.setValue(new Float(1 - (float) taskList.getNumOpenTasks() / taskList.getNumAllTasks()));;
-//            }
-//
-//            taskNumberProgress.addComponent(taskNumberProgressBar);
 
             Label taskNumberLbl = new Label("(" + taskList.getNumOpenTasks() + "/" + taskList.getNumAllTasks() + ")");
             taskNumberProgress.addComponent(taskNumberLbl);
@@ -135,7 +135,17 @@ public class TaskDisplayComponent extends CssLayout {
     }
 
     private void displayTasks() {
-        taskDisplay.setSearchCriteria(criteria);
+    	if (criteria == null) {
+    		SimpleProject project = (SimpleProject) AppContext
+                    .getVariable(ProjectContants.PROJECT_NAME);
+            TaskSearchCriteria criteria = new TaskSearchCriteria();
+            criteria.setProjectid(new NumberSearchField(project.getId()));
+            criteria.setTaskListId(new NumberSearchField(taskList.getId()));
+            criteria.setStatus(new StringSearchField("Open"));
+            this.criteria = criteria;
+    	} 
+    	
+    	taskDisplay.setSearchCriteria(criteria);
     }
 
     public void saveTaskSuccess(SimpleTask task) {
