@@ -18,6 +18,10 @@ public class Depot extends VerticalLayout {
 	private final Label headerLbl;
 	protected ComponentContainer headerContent;
 	protected ComponentContainer bodyContent;
+	
+	public Depot(String title, ComponentContainer component) {
+		this(title, null, component);
+	}
 
 	public Depot(String title, ComponentContainer headerElement,
 			ComponentContainer component) {
@@ -71,10 +75,6 @@ public class Depot extends VerticalLayout {
 		customComp.setStyleName("depotContent");
 		this.addComponent(customComp);
 		this.setComponentAlignment(customComp, Alignment.MIDDLE_LEFT);
-	}
-
-	public Depot(String title, ComponentContainer component) {
-		this(title, null, component);
 	}
 
 	public void setTitle(String title) {

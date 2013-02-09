@@ -28,7 +28,6 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
 
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
-    private Problem problem;
     private static Map<Integer, String> valueCaptions = new HashMap<Integer, String>(
             5);
 
@@ -48,7 +47,6 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
 
     @Override
     public void editItem(Problem problem) {
-        this.problem = problem;
         editForm.setItemDataSource(new BeanItem<Problem>(problem));
     }
 

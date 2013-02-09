@@ -476,6 +476,9 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
     protected void fireTableEvent(ApplicationEvent event) {
 
         Class<? extends ApplicationEvent> eventType = event.getClass();
+        if (mapEventListener == null) {
+        	return;
+        }
 
         Set<ApplicationEventListener<?>> eventSet = mapEventListener.get(eventType);
         if (eventSet != null) {

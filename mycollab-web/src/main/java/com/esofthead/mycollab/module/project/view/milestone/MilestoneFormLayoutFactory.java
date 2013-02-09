@@ -20,8 +20,9 @@ import com.vaadin.ui.VerticalLayout;
  */
 public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory{
     private static final long serialVersionUID = 1L;
-    private GridFormLayoutHelper informationLayout;
+    
     private String title;
+    private MilestoneInformationLayout milestoneInformationLayout;
     
     public MilestoneFormLayoutFactory(String title) {
         this.title = title;
@@ -33,41 +34,59 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory{
         
         milestoneAddLayout.addTopControls(createTopPanel());
         
-        VerticalLayout layout = new VerticalLayout();
-        
-        Label organizationHeader = new Label("Milestone Information");
-        organizationHeader.setStyleName("h2");
-        layout.addComponent(organizationHeader);
-        
-        informationLayout = new GridFormLayoutHelper(2, 3);
-        informationLayout.getLayout().setWidth("100%");
-        layout.addComponent(informationLayout.getLayout());
-        layout.setComponentAlignment(informationLayout.getLayout(),
-                Alignment.BOTTOM_CENTER);
+        milestoneInformationLayout = new MilestoneInformationLayout();
         
         milestoneAddLayout.addBottomControls(createBottomPanel());
         
-        milestoneAddLayout.addBody(layout);
+        milestoneAddLayout.addBody(milestoneInformationLayout.getLayout());
         
         return milestoneAddLayout;
     }
     
     @Override
     public void attachField(Object propertyId, Field field) {
-        if (propertyId.equals("name")) {
-            informationLayout.addComponent(field, "Name", 0, 0, 2, "100%");
-        } else if (propertyId.equals("startdate")) {
-            informationLayout.addComponent(field, "Start Date", 0, 1);
-        } else if (propertyId.equals("enddate")) {
-            informationLayout.addComponent(field, "End Date", 0, 2);
-        } else if (propertyId.equals("owner")) {
-            informationLayout.addComponent(field, "Responsible User", 1, 1);
-        } else if (propertyId.equals("flag")) {
-            informationLayout.addComponent(field, "Flag", 1, 2);
-        }
+        milestoneInformationLayout.attachField(propertyId, field);
     }
     
     protected abstract Layout createTopPanel();
     
     protected abstract Layout createBottomPanel();
+    
+    public static class MilestoneInformationLayout implements IFormLayoutFactory {
+		private static final long serialVersionUID = 1L;
+		
+		private GridFormLayoutHelper informationLayout;
+        
+		@Override
+		public Layout getLayout() {
+			VerticalLayout layout = new VerticalLayout();
+	        
+	        Label organizationHeader = new Label("Milestone Information");
+	        organizationHeader.setStyleName("h2");
+	        layout.addComponent(organizationHeader);
+	        
+	        informationLayout = new GridFormLayoutHelper(2, 3);
+	        informationLayout.getLayout().setWidth("100%");
+	        layout.addComponent(informationLayout.getLayout());
+	        layout.setComponentAlignment(informationLayout.getLayout(),
+	                Alignment.BOTTOM_CENTER);
+	        return layout;
+		}
+
+		@Override
+		public void attachField(Object propertyId, Field field) {
+			if (propertyId.equals("name")) {
+	            informationLayout.addComponent(field, "Name", 0, 0, 2, "100%");
+	        } else if (propertyId.equals("startdate")) {
+	            informationLayout.addComponent(field, "Start Date", 0, 1);
+	        } else if (propertyId.equals("enddate")) {
+	            informationLayout.addComponent(field, "End Date", 0, 2);
+	        } else if (propertyId.equals("owner")) {
+	            informationLayout.addComponent(field, "Responsible User", 1, 1);
+	        } else if (propertyId.equals("flag")) {
+	            informationLayout.addComponent(field, "Flag", 1, 2);
+	        }
+		}
+    	
+    }
 }

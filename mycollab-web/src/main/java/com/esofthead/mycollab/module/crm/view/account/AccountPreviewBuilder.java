@@ -245,10 +245,13 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
      *
      */
     public static class PrintView extends AccountPreviewBuilder {
-        
-        public PrintView() {
+		private static final long serialVersionUID = 1L;
+
+		public PrintView() {
             previewForm = new AdvancedPreviewBeanForm<Account>() {
-                @Override
+				private static final long serialVersionUID = 1L;
+
+				@Override
                 public void setItemDataSource(Item newDataSource) {
                     this.setFormLayoutFactory(new FormLayoutFactory());
                     this.setFormFieldFactory(new AccountFormFieldFactory());

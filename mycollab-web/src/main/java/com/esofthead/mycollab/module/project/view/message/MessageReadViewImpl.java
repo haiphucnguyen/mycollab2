@@ -33,8 +33,9 @@ import com.vaadin.ui.VerticalLayout;
  */
 @ViewComponent
 public class MessageReadViewImpl extends AbstractView implements MessageReadView {
-
-    private PreviewForm previewForm;
+	private static final long serialVersionUID = 1L;
+	
+	private PreviewForm previewForm;
     private SimpleMessage message;
 
     public MessageReadViewImpl() {
@@ -60,8 +61,9 @@ public class MessageReadViewImpl extends AbstractView implements MessageReadView
     }
 
     private class PreviewForm extends AdvancedPreviewBeanForm<SimpleMessage> {
+		private static final long serialVersionUID = 1L;
 
-        @Override
+		@Override
         public void setItemDataSource(Item newDataSource) {
             this.setFormLayoutFactory(new FormLayoutFactory());
             this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
@@ -78,8 +80,8 @@ public class MessageReadViewImpl extends AbstractView implements MessageReadView
         }
 
         class FormLayoutFactory implements IFormLayoutFactory {
-
-            private GridLayout bodyLayout;
+			private static final long serialVersionUID = 1L;
+			private GridLayout bodyLayout;
 
             @Override
             public Layout getLayout() {

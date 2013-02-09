@@ -27,13 +27,15 @@ public class CommentListDepot extends Depot implements ReloadableComponent{
     
     private BeanList<CommentService, CommentSearchCriteria, SimpleComment> commentList;
     
+    public CommentListDepot(boolean isDisplayCommentInput) {
+    	 super("Comments", new VerticalLayout());
+         this.setWidth("900px");
+         this.isDisplayCommentInput = isDisplayCommentInput;
+         initUI();
+    }
     
     public CommentListDepot(String type, int typeid) {
-        super("Comments", new VerticalLayout());
-        this.setWidth("900px");
-        this.type = type;
-        this.typeid = typeid;
-        initUI();
+        this(type, typeid, true);
     }
     
     public CommentListDepot(String type, int typeid, boolean isDisplayCommentInput) {
@@ -43,6 +45,7 @@ public class CommentListDepot extends Depot implements ReloadableComponent{
         this.typeid = typeid;
         this.isDisplayCommentInput = isDisplayCommentInput;
         initUI();
+        displayCommentList();
     }
 
     private void initUI() {
@@ -56,10 +59,11 @@ public class CommentListDepot extends Depot implements ReloadableComponent{
         commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(AppContext.getSpringBean(CommentService.class), CommentRowDisplayHandler.class);
         contentContainer.addComponent(commentList);
     }
-
-    @Override
-    public void attach() {
-        displayCommentList();
+    
+    public void loadComments(String type, int typeid) {
+    	this.type = type;
+    	this.typeid = typeid;
+    	displayCommentList();
     }
     
     private void displayCommentList() {

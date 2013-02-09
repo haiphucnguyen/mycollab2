@@ -27,8 +27,9 @@ import com.vaadin.ui.Table;
  * @author haiphucnguyen
  */
 public class BugTableDisplay extends PagedBeanTable2<BugService, BugSearchCriteria, SimpleBug> {
+	private static final long serialVersionUID = 1L;
 
-    public BugTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
+	public BugTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
         super(AppContext.getSpringBean(BugService.class),
                 SimpleBug.class, visibleColumns, columnHeaders);
 

@@ -41,6 +41,8 @@ public class BugSearchCriteria extends SearchCriteria {
 	private SetSearchField<Integer> fixedversionids;
 	
 	private SetSearchField<Integer> versionids;
+	
+	private SetSearchField<Integer> milestoneIds;
 
 	private SetSearchField<String> priorities;
 
@@ -244,5 +246,13 @@ public class BugSearchCriteria extends SearchCriteria {
 
 	public StringSearchField getDescription() {
 		return description;
+	}
+
+	public SetSearchField<Integer> getMilestoneIds() {
+		return milestoneIds;
+	}
+
+	public void setMilestoneIds(SetSearchField<Integer> milestoneIds) {
+		this.milestoneIds = milestoneIds;
 	}
 }
