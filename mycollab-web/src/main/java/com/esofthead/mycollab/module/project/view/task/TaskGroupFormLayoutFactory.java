@@ -16,12 +16,12 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author haiphucnguyen
  */
-public abstract class TaskListFormLayoutFactory implements IFormLayoutFactory {
+public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 
     private String title;
     private TaskListInformationLayout informationLayout;
 
-    public TaskListFormLayoutFactory(String title) {
+    public TaskGroupFormLayoutFactory(String title) {
         this.title = title;
     }
 

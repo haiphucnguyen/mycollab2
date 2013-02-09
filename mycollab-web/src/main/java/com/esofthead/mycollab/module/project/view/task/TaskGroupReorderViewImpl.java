@@ -41,14 +41,14 @@ import java.util.Set;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class TaskListReorderViewImpl extends AbstractView implements
-		TaskListReorderView {
+public class TaskGroupReorderViewImpl extends AbstractView implements
+		TaskGroupReorderView {
 
 	private BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList> taskLists;
 	private Button saveOrderBtn;
 	private final Set<SimpleTaskList> changeSet = new HashSet<SimpleTaskList>();
 
-	public TaskListReorderViewImpl() {
+	public TaskGroupReorderViewImpl() {
 		super();
 		constructHeader();
 	}

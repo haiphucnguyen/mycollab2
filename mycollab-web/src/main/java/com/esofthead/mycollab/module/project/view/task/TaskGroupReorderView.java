@@ -10,6 +10,6 @@ import com.esofthead.mycollab.vaadin.mvp.View;
  *
  * @author haiphucnguyen
  */
-public interface TaskListReorderView extends View {
+public interface TaskGroupReorderView extends View {
     void displayTaskLists();
 }

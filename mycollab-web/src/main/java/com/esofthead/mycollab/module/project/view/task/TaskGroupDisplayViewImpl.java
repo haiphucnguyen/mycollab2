@@ -30,13 +30,13 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class TaskListDisplayViewImpl extends AbstractView implements
-        TaskListDisplayView {
+public class TaskGroupDisplayViewImpl extends AbstractView implements
+        TaskGroupDisplayView {
 
     private BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList> taskLists;
     private Button reOrderBtn;
 
-    public TaskListDisplayViewImpl() {
+    public TaskGroupDisplayViewImpl() {
         super();
 
         constructHeader();
@@ -67,9 +67,9 @@ public class TaskListDisplayViewImpl extends AbstractView implements
                 new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        TaskListWindow taskListWindow = new TaskListWindow(
-                                TaskListDisplayViewImpl.this);
-                        TaskListDisplayViewImpl.this.getWindow().addWindow(
+                        TaskGroupAddWindow taskListWindow = new TaskGroupAddWindow(
+                                TaskGroupDisplayViewImpl.this);
+                        TaskGroupDisplayViewImpl.this.getWindow().addWindow(
                                 taskListWindow);
                     }
                 });

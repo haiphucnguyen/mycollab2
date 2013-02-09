@@ -6,12 +6,12 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.ui.ComponentContainer;
 
-public class TaskListDisplayPresenter extends AbstractPresenter<TaskListDisplayView> {
+public class TaskGroupDisplayPresenter extends AbstractPresenter<TaskGroupDisplayView> {
 
     private static final long serialVersionUID = 1L;
 
-    public TaskListDisplayPresenter() {
-        super(TaskListDisplayView.class);
+    public TaskGroupDisplayPresenter() {
+        super(TaskGroupDisplayView.class);
     }
 
     @Override

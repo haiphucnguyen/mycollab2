@@ -12,7 +12,7 @@ import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
  *
  * @author haiphucnguyen
  */
-public interface TaskListAddView extends IFormAddView<TaskList> {
+public interface TaskGroupAddView extends IFormAddView<TaskList> {
 
     HasEditFormHandlers<TaskList> getEditFormHandlers();
     

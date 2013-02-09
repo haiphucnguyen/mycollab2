@@ -27,12 +27,12 @@ import java.util.Collection;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class TaskListAddViewImpl extends AbstractView implements TaskListAddView {
+public class TaskGroupAddViewImpl extends AbstractView implements TaskGroupAddView {
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
     private TaskList taskList;
 
-    public TaskListAddViewImpl() {
+    public TaskGroupAddViewImpl() {
         super();
         editForm = new EditForm();
         this.addComponent(editForm);
@@ -56,7 +56,7 @@ public class TaskListAddViewImpl extends AbstractView implements TaskListAddView
             super.setItemDataSource(newDataSource, propertyIds);
         }
 
-        private class FormLayoutFactory extends TaskListFormLayoutFactory {
+        private class FormLayoutFactory extends TaskGroupFormLayoutFactory {
 
             private static final long serialVersionUID = 1L;
             

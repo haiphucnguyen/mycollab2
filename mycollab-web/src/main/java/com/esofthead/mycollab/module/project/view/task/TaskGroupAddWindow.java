@@ -38,17 +38,17 @@ import com.vaadin.ui.Window;
  *
  * @author haiphucnguyen
  */
-public class TaskListWindow extends Window {
+public class TaskGroupAddWindow extends Window {
 
-    private TaskListDisplayView taskView;
+    private TaskGroupDisplayView taskView;
     private SimpleTaskList taskList;
-    private TaskListWindow.TaskListForm taskListForm;
+    private TaskGroupAddWindow.TaskListForm taskListForm;
 
-    public TaskListWindow(TaskListDisplayView taskView) {
+    public TaskGroupAddWindow(TaskGroupDisplayView taskView) {
         this.setWidth("800px");
         this.taskView = taskView;
         taskList = new SimpleTaskList();
-        taskListForm = new TaskListWindow.TaskListForm();
+        taskListForm = new TaskGroupAddWindow.TaskListForm();
         taskListForm.setItemDataSource(new BeanItem(taskList));
         this.addComponent(taskListForm);
 
@@ -63,8 +63,8 @@ public class TaskListWindow extends Window {
 
         @Override
         public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new TaskListWindow.TaskListForm.TaskListFormLayoutFactory());
-            this.setFormFieldFactory(new TaskListWindow.TaskListForm.EditFormFieldFactory());
+            this.setFormLayoutFactory(new TaskGroupAddWindow.TaskListForm.TaskListFormLayoutFactory());
+            this.setFormFieldFactory(new TaskGroupAddWindow.TaskListForm.EditFormFieldFactory());
             super.setItemDataSource(newDataSource);
         }
 
@@ -97,9 +97,9 @@ public class TaskListWindow extends Window {
                 Button saveBtn = new Button("Save", new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        if (TaskListWindow.TaskListForm.this.validateForm(taskList)) {
+                        if (TaskGroupAddWindow.TaskListForm.this.validateForm(taskList)) {
                             saveTaskList();
-                            TaskListWindow.this.close();
+                            TaskGroupAddWindow.this.close();
                         }
                     }
                 });
@@ -109,7 +109,7 @@ public class TaskListWindow extends Window {
                 Button saveAndNewBtn = new Button("Save & New", new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        if (TaskListWindow.TaskListForm.this.validateForm(taskList)) {
+                        if (TaskGroupAddWindow.TaskListForm.this.validateForm(taskList)) {
                             saveTaskList();
                             taskList = new SimpleTaskList();
                         }
@@ -121,7 +121,7 @@ public class TaskListWindow extends Window {
                 Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
                     @Override
                     public void buttonClick(ClickEvent event) {
-                        TaskListWindow.this.close();
+                        TaskGroupAddWindow.this.close();
                     }
                 });
                 cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

@@ -12,7 +12,7 @@ import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
  *
  * @author haiphucnguyen
  */
-public interface TaskListReadView extends IPreviewView<SimpleTaskList> {
+public interface TaskGroupReadView extends IPreviewView<SimpleTaskList> {
     
     HasPreviewFormHandlers<SimpleTaskList> getPreviewFormHandlers();
 }

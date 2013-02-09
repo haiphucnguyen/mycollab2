@@ -21,10 +21,10 @@ import com.vaadin.ui.ComponentContainer;
  *
  * @author haiphucnguyen
  */
-public class TaskListReadPresenter extends AbstractPresenter<TaskListReadView> {
+public class TaskGroupReadPresenter extends AbstractPresenter<TaskGroupReadView> {
 
-    public TaskListReadPresenter() {
-        super(TaskListReadView.class);
+    public TaskGroupReadPresenter() {
+        super(TaskGroupReadView.class);
         bind();
     }
 

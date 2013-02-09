@@ -24,10 +24,10 @@ import java.util.Set;
  *
  * @author haiphucnguyen
  */
-public class TaskListReorderPresenter extends AbstractPresenter<TaskListReorderView> {
+public class TaskGroupReorderPresenter extends AbstractPresenter<TaskGroupReorderView> {
 
-    public TaskListReorderPresenter() {
-        super(TaskListReorderView.class);
+    public TaskGroupReorderPresenter() {
+        super(TaskGroupReorderView.class);
 
         EventBus.getInstance().addListener(new ApplicationEventListener<TaskListEvent.SaveReoderTaskList>() {
             @Override

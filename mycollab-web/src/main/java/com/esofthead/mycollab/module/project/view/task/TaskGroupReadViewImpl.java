@@ -42,13 +42,13 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 @ViewComponent
-public class TaskListReadViewImpl extends AbstractView implements TaskListReadView {
+public class TaskGroupReadViewImpl extends AbstractView implements TaskGroupReadView {
 
     private static final long serialVersionUID = 1L;
     private PreviewForm previewForm;
     private SimpleTaskList taskList;
 
-    public TaskListReadViewImpl() {
+    public TaskGroupReadViewImpl() {
         super();
         previewForm = new PreviewForm();
         this.addComponent(previewForm);
@@ -112,7 +112,7 @@ public class TaskListReadViewImpl extends AbstractView implements TaskListReadVi
             super.setItemDataSource(newDataSource);
         }
 
-        class FormLayoutFactory extends TaskListFormLayoutFactory {
+        class FormLayoutFactory extends TaskGroupFormLayoutFactory {
 
             private static final long serialVersionUID = 1L;
 

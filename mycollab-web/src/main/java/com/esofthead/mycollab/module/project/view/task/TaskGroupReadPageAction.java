@@ -11,8 +11,8 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
  *
  * @author haiphucnguyen
  */
-public class TaskListReadPageAction extends PageAction {
-    public TaskListReadPageAction(ScreenData data) {
+public class TaskGroupReadPageAction extends PageAction {
+    public TaskGroupReadPageAction(ScreenData data) {
         super(data);
     }
 }

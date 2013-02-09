@@ -23,9 +23,9 @@ import com.vaadin.ui.ComponentContainer;
  *
  * @author haiphucnguyen
  */
-public class TaskListAddPresenter extends AbstractPresenter<TaskListAddView> {
-    public TaskListAddPresenter() {
-        super(TaskListAddView.class);
+public class TaskGroupAddPresenter extends AbstractPresenter<TaskGroupAddView> {
+    public TaskGroupAddPresenter() {
+        super(TaskGroupAddView.class);
         
         view.getEditFormHandlers().addFormHandler(new EditFormHandler<TaskList>() {
             @Override

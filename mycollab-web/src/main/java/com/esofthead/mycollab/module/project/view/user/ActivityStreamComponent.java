@@ -27,7 +27,7 @@ import com.esofthead.mycollab.module.project.view.message.MessageReadPageAction;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneReadPageAction;
 import com.esofthead.mycollab.module.project.view.problem.ProblemReadPageAction;
 import com.esofthead.mycollab.module.project.view.risk.RiskReadPageAction;
-import com.esofthead.mycollab.module.project.view.task.TaskListReadPageAction;
+import com.esofthead.mycollab.module.project.view.task.TaskGroupReadPageAction;
 import com.esofthead.mycollab.module.project.view.task.TaskReadPageAction;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
@@ -239,7 +239,7 @@ public class ActivityStreamComponent extends Depot {
                     } else if (ProjectContants.TASK_LIST.equals(type)) {
                         PageActionChain chain = new PageActionChain(
                                 new ProjectPageAction(new ScreenData(projectid)),
-                                new TaskListReadPageAction(new ScreenData(
+                                new TaskGroupReadPageAction(new ScreenData(
                                 typeid)));
                         EventBus.getInstance().fireEvent(
                                 new ProjectEvent.GotoMyProject(this, chain));

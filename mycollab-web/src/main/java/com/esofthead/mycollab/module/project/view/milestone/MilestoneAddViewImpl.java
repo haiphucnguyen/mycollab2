@@ -28,7 +28,7 @@ public class MilestoneAddViewImpl extends AbstractView implements MilestoneAddVi
 
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
-    private Milestone risk;
+    private Milestone milestone;
 
     public MilestoneAddViewImpl() {
         super();
@@ -38,7 +38,7 @@ public class MilestoneAddViewImpl extends AbstractView implements MilestoneAddVi
 
     @Override
     public void editItem(Milestone milestone) {
-        this.risk = milestone;
+        this.milestone = milestone;
         editForm.setItemDataSource(new BeanItem<Milestone>(milestone));
     }
 

@@ -39,17 +39,17 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
         if (data instanceof TaskContainer.PreviewTaskData) {
             presenter = PresenterResolver.getPresenter(TaskReadPresenter.class);
         } else if (data instanceof TaskContainer.PreviewTaskListData) {
-            presenter = PresenterResolver.getPresenter(TaskListReadPresenter.class);
+            presenter = PresenterResolver.getPresenter(TaskGroupReadPresenter.class);
         } else if (data instanceof TaskContainer.EditTaskData) {
             presenter = PresenterResolver.getPresenter(TaskAddPresenter.class);
         } else if (data instanceof TaskContainer.AddTaskData) {
             presenter = PresenterResolver.getPresenter(TaskAddPresenter.class);
         } else if (data instanceof TaskContainer.EditTaskListData) {
-            presenter = PresenterResolver.getPresenter(TaskListAddPresenter.class);
+            presenter = PresenterResolver.getPresenter(TaskGroupAddPresenter.class);
         } else if (data instanceof TaskContainer.ReorderTaskListRequest) {
-            presenter = PresenterResolver.getPresenter(TaskListReorderPresenter.class);
+            presenter = PresenterResolver.getPresenter(TaskGroupReorderPresenter.class);
         } else {
-            presenter = PresenterResolver.getPresenter(TaskListDisplayPresenter.class);
+            presenter = PresenterResolver.getPresenter(TaskGroupDisplayPresenter.class);
         }
 
         presenter.go(view, data);
@@ -67,8 +67,8 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
         PageAction pageAction = pageActionChain.peek();
         if (pageAction instanceof TaskReadPageAction) {
             presenter = PresenterResolver.getPresenter(TaskReadPresenter.class);
-        } else if (pageAction instanceof TaskListReadPageAction) {
-            presenter = PresenterResolver.getPresenter(TaskListReadPresenter.class);
+        } else if (pageAction instanceof TaskGroupReadPageAction) {
+            presenter = PresenterResolver.getPresenter(TaskGroupReadPresenter.class);
         } else {
             throw new UnsupportedOperationException("Do not support page action " + pageAction);
         }
