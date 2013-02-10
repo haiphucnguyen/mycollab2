@@ -49,7 +49,7 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 	}
 
 	private void displayTaskGroups() {
-
+		associateTaskGroupListComp.displayTakLists(milestone);
 	}
 
 	private void displayBugs() {

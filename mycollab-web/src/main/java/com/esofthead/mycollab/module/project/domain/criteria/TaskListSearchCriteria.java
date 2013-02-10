@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.project.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 /**
@@ -17,6 +18,8 @@ public class TaskListSearchCriteria extends SearchCriteria {
     private NumberSearchField projectId;
     
     private StringSearchField status;
+    
+    private SetSearchField<Integer> milestoneIds;
 
     public NumberSearchField getProjectId() {
         return projectId;
@@ -33,4 +36,12 @@ public class TaskListSearchCriteria extends SearchCriteria {
     public void setStatus(StringSearchField status) {
         this.status = status;
     }
+
+	public SetSearchField<Integer> getMilestoneIds() {
+		return milestoneIds;
+	}
+
+	public void setMilestoneIds(SetSearchField<Integer> milestoneIds) {
+		this.milestoneIds = milestoneIds;
+	}
 }
