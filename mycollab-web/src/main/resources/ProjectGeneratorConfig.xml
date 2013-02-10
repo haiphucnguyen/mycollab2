@@ -77,6 +77,11 @@
             domainObjectName="ProjectRole"
             schema="mycollab"
             tableName="m_prj_role" />
+        
+        <table
+            domainObjectName="ProjectRolePermission"
+            schema="mycollab"
+            tableName="m_prj_role_permission" />
 
         <table
             domainObjectName="Task"

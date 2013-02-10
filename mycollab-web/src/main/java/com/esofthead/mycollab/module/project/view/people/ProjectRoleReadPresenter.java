@@ -13,7 +13,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class ProjectRoleReadPresenter extends AbstractPresenter<ProjectRoleReadView> {
-    public ProjectRoleReadPresenter() {
+	private static final long serialVersionUID = 1L;
+
+	public ProjectRoleReadPresenter() {
         super(ProjectRoleReadView.class);
     }
 

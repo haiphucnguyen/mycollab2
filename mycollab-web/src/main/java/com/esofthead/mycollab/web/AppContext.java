@@ -1,5 +1,16 @@
 package com.esofthead.mycollab.web;
 
+import java.io.Serializable;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.GregorianCalendar;
+import java.util.HashMap;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
@@ -10,15 +21,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.Application;
 import com.vaadin.service.ApplicationContext.TransactionListener;
 import com.vaadin.terminal.gwt.server.WebApplicationContext;
-import java.io.Serializable;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.GregorianCalendar;
-import java.util.HashMap;
-import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.web.context.support.WebApplicationContextUtils;
 
 public class AppContext implements TransactionListener, Serializable {
 
@@ -27,9 +29,11 @@ public class AppContext implements TransactionListener, Serializable {
     private static Logger log = LoggerFactory.getLogger(AppContext.class);
     private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
     private final Application app;
+    private final Map<String, Object> variables = new HashMap<String, Object>();
+    
     private SimpleUser session;
     private UserPreference userPreference;
-    private final Map<String, Object> variables = new HashMap<String, Object>();
+    
     private long lastAccessTime = 0;
     private static org.springframework.web.context.WebApplicationContext springContext;
 

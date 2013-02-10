@@ -1,8 +1,4 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
-package com.esofthead.mycollab.module.user.accountsettings.view;
+package com.esofthead.mycollab.module.project.view.people;
 
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -13,16 +9,12 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
-/**
- *
- * @author haiphucnguyen
- */
-public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
+public abstract class ProjectRoleFormLayoutFactory implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
 	private String title;
-    private RoleInformationLayout userInformationLayout;
+    private ProjectRoleInformationLayout userInformationLayout;
 
-    public RoleFormLayoutFactory(String title) {
+    public ProjectRoleFormLayoutFactory(String title) {
         this.title = title;
     }
 
@@ -35,7 +27,7 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
             userAddLayout.addTopControls(topPanel);
         }
 
-        userInformationLayout = new RoleInformationLayout();
+        userInformationLayout = new ProjectRoleInformationLayout();
         userInformationLayout.getLayout().setWidth("100%");
         userAddLayout.addBody(userInformationLayout.getLayout());
 
@@ -56,7 +48,7 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
         userInformationLayout.attachField(propertyId, field);
     }
 
-    public static class RoleInformationLayout implements IFormLayoutFactory {
+    public static class ProjectRoleInformationLayout implements IFormLayoutFactory {
 		private static final long serialVersionUID = 1L;
 		private GridFormLayoutHelper informationLayout;
 
@@ -83,4 +75,5 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
             }
         }
     }
+
 }

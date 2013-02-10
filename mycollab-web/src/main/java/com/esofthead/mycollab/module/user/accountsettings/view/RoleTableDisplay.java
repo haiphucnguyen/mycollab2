@@ -21,8 +21,9 @@ import com.vaadin.ui.Table;
  * @author haiphucnguyen
  */
 public class RoleTableDisplay extends PagedBeanTable2<RoleService, RoleSearchCriteria, Role> {
+	private static final long serialVersionUID = 1L;
 
-    public RoleTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
+	public RoleTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
         super(AppContext.getSpringBean(RoleService.class), Role.class, visibleColumns, columnHeaders);
 
         this.addGeneratedColumn("selected", new Table.ColumnGenerator() {

@@ -13,4 +13,5 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  */
 @ViewComponent
 public class MessageContainer extends AbstractView {
+	private static final long serialVersionUID = 1L;
 }

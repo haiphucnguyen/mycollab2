@@ -11,4 +11,5 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
  * @author haiphucnguyen
  */
 public class ProjectMemberReadViewImpl extends AbstractView implements ProjectMemberReadView {
+	private static final long serialVersionUID = 1L;
 }

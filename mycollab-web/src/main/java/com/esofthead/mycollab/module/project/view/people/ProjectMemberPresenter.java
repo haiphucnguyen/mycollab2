@@ -14,7 +14,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class ProjectMemberPresenter extends AbstractPresenter<ProjectMemberContainer> {
-    public ProjectMemberPresenter() {
+	private static final long serialVersionUID = 1L;
+
+	public ProjectMemberPresenter() {
         super(ProjectMemberContainer.class);
     }
 
@@ -22,7 +24,7 @@ public class ProjectMemberPresenter extends AbstractPresenter<ProjectMemberConta
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         view.removeAllComponents();
         
-        AbstractPresenter presenter = null;
+        AbstractPresenter<?> presenter = null;
         
         presenter = PresenterResolver.getPresenter(ProjectMemberListPresenter.class);
         presenter.go(view, data);

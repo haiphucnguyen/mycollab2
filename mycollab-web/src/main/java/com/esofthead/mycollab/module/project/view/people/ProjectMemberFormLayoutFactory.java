@@ -19,8 +19,8 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public abstract class ProjectMemberFormLayoutFactory implements IFormLayoutFactory {
-
-    private String title;
+	private static final long serialVersionUID = 1L;
+	private String title;
     private UserFormLayoutFactory.UserInformationLayout userInformationLayout;
 
     public ProjectMemberFormLayoutFactory(String title) {
@@ -58,8 +58,8 @@ public abstract class ProjectMemberFormLayoutFactory implements IFormLayoutFacto
     }
 
     public static class ProjectMemberInformationLayout implements IFormLayoutFactory {
-
-        private GridFormLayoutHelper informationLayout;
+		private static final long serialVersionUID = 1L;
+		private GridFormLayoutHelper informationLayout;
 
         @Override
         public Layout getLayout() {

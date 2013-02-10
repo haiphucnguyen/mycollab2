@@ -33,6 +33,8 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 
 	private void bind() {
 		view.addViewListener(new ApplicationEventListener<UserEvent.PlainLogin>() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public Class<? extends ApplicationEvent> getEventType() {
 				return UserEvent.PlainLogin.class;

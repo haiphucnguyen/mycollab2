@@ -35,50 +35,50 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class RoleServiceDBImpl extends DefaultService<Integer, Role, RoleSearchCriteria>
-        implements RoleService {
+public class RoleServiceDBImpl extends
+		DefaultService<Integer, Role, RoleSearchCriteria> implements
+		RoleService {
 
-    @Autowired
-    private RoleMapper roleMapper;
-    @Autowired
-    private RoleMapperExt roleMapperExt;
-    
-    @Autowired
-    private RolePermissionMapper rolePermissionMapper;
+	@Autowired
+	private RoleMapper roleMapper;
+	@Autowired
+	private RoleMapperExt roleMapperExt;
 
-    @Override
-    public ICrudGenericDAO<Integer, Role> getCrudMapper() {
-        return roleMapper;
-    }
+	@Autowired
+	private RolePermissionMapper rolePermissionMapper;
 
-    @Override
-    public ISearchableDAO<RoleSearchCriteria> getSearchMapper() {
-        return roleMapperExt;
-    }
+	@Override
+	public ICrudGenericDAO<Integer, Role> getCrudMapper() {
+		return roleMapper;
+	}
 
-    @Override
-    public void savePermission(int roleId, PermissionMap permissionMap) {
-        XStream xstream = new XStream(new StaxDriver());
-        String perVal = xstream.toXML(permissionMap);
-        
-        RolePermissionExample ex = new RolePermissionExample();
-        ex.createCriteria().andRoleidEqualTo(roleId);
-        
-        RolePermission rolePer = new RolePermission();
-        rolePer.setRoleid(roleId);
-        rolePer.setRoleval(perVal);
-        
-        
-        int data = rolePermissionMapper.countByExample(ex);
-        if (data > 0) {
-            rolePermissionMapper.updateByExampleSelective(rolePer, ex);
-        } else {
-            rolePermissionMapper.insert(rolePer);
-        }
-    }
+	@Override
+	public ISearchableDAO<RoleSearchCriteria> getSearchMapper() {
+		return roleMapperExt;
+	}
 
-    @Override
-    public SimpleRole findRoleById(int roleId) {
-       return roleMapperExt.findRoleById(roleId);
-    }
+	@Override
+	public void savePermission(int roleId, PermissionMap permissionMap) {
+		XStream xstream = new XStream(new StaxDriver());
+		String perVal = xstream.toXML(permissionMap);
+
+		RolePermissionExample ex = new RolePermissionExample();
+		ex.createCriteria().andRoleidEqualTo(roleId);
+
+		RolePermission rolePer = new RolePermission();
+		rolePer.setRoleid(roleId);
+		rolePer.setRoleval(perVal);
+
+		int data = rolePermissionMapper.countByExample(ex);
+		if (data > 0) {
+			rolePermissionMapper.updateByExampleSelective(rolePer, ex);
+		} else {
+			rolePermissionMapper.insert(rolePer);
+		}
+	}
+
+	@Override
+	public SimpleRole findRoleById(int roleId) {
+		return roleMapperExt.findRoleById(roleId);
+	}
 }

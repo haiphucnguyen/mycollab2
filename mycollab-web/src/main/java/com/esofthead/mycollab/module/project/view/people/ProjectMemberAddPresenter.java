@@ -9,17 +9,20 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public class ProjectMemberAddPresenter extends AbstractPresenter<ProjectMemberAddView> {
-    public ProjectMemberAddPresenter() {
-        super(ProjectMemberAddView.class);
-    }
+public class ProjectMemberAddPresenter extends
+		AbstractPresenter<ProjectMemberAddView> {
+	private static final long serialVersionUID = 1L;
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
-    
+	public ProjectMemberAddPresenter() {
+		super(ProjectMemberAddView.class);
+	}
+
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
 }

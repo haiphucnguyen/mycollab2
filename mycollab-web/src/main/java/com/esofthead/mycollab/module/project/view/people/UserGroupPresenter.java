@@ -14,8 +14,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class UserGroupPresenter extends AbstractPresenter<UserGroupView> {
+	private static final long serialVersionUID = 1L;
 
-    public UserGroupPresenter() {
+	public UserGroupPresenter() {
         super(UserGroupView.class);
     }
 

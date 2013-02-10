@@ -18,63 +18,63 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
+	private static final long serialVersionUID = 1L;
 
-    public RoleAddPresenter() {
-        super(RoleAddView.class);
+	public RoleAddPresenter() {
+		super(RoleAddView.class);
 
-        view.getEditFormHandlers().addFormHandler(new EditFormHandler<Role>() {
-            @Override
-            public void onSave(final Role item) {
-                save(item);
-                ViewState viewState = HistoryViewManager.back();
-                if (viewState instanceof NullViewState) {
-                    EventBus.getInstance().fireEvent(
-                            new RoleEvent.GotoList(this, null));
-                }
-            }
+		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Role>() {
+			@Override
+			public void onSave(final Role item) {
+				save(item);
+				ViewState viewState = HistoryViewManager.back();
+				if (viewState instanceof NullViewState) {
+					EventBus.getInstance().fireEvent(
+							new RoleEvent.GotoList(this, null));
+				}
+			}
 
-            @Override
-            public void onCancel() {
-                ViewState viewState = HistoryViewManager.back();
-                if (viewState instanceof NullViewState) {
-                    EventBus.getInstance().fireEvent(
-                            new RoleEvent.GotoList(this, null));
-                }
-            }
+			@Override
+			public void onCancel() {
+				ViewState viewState = HistoryViewManager.back();
+				if (viewState instanceof NullViewState) {
+					EventBus.getInstance().fireEvent(
+							new RoleEvent.GotoList(this, null));
+				}
+			}
 
-            @Override
-            public void onSaveAndNew(Role item) {
-                save(item);
-                EventBus.getInstance().fireEvent(
-                        new RoleEvent.GotoAdd(this, null));
-            }
-        });
-    }
+			@Override
+			public void onSaveAndNew(Role item) {
+				save(item);
+				EventBus.getInstance().fireEvent(
+						new RoleEvent.GotoAdd(this, null));
+			}
+		});
+	}
 
-    public void save(Role item) {
-        RoleService roleService = AppContext.getSpringBean(RoleService.class);
-        item.setSaccountid(AppContext.getAccountId());
+	public void save(Role item) {
+		RoleService roleService = AppContext.getSpringBean(RoleService.class);
+		item.setSaccountid(AppContext.getAccountId());
 
-        if (item.getId() == null) {
-            roleService.saveWithSession(item, AppContext.getUsername());
-        } else {
-            roleService.updateWithSession(item, AppContext.getUsername());
-        }
+		if (item.getId() == null) {
+			roleService.saveWithSession(item, AppContext.getUsername());
+		} else {
+			roleService.updateWithSession(item, AppContext.getUsername());
+		}
 
+		roleService.savePermission(item.getId(), view.getPermissionMap());
 
-        roleService.savePermission(item.getId(), view.getPermissionMap());
+	}
 
-    }
-
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        RoleContainer roleContainer = (RoleContainer) container;
-        roleContainer.removeAllComponents();
-        roleContainer.addComponent(view.getWidget());
-        view.editItem((Role) data.getParams());
-    }
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		RoleContainer roleContainer = (RoleContainer) container;
+		roleContainer.removeAllComponents();
+		roleContainer.addComponent(view.getWidget());
+		view.editItem((Role) data.getParams());
+	}
 }

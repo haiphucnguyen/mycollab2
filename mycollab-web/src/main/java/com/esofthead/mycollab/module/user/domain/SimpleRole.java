@@ -13,8 +13,8 @@ import com.thoughtworks.xstream.io.xml.StaxDriver;
  * @author haiphucnguyen
  */
 public class SimpleRole extends Role {
-
-    private String permissionVal;
+	private static final long serialVersionUID = 1L;
+	private String permissionVal;
     private PermissionMap permissionMap;
 
     public String getPermissionVal() {

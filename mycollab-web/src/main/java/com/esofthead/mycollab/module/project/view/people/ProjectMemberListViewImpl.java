@@ -115,8 +115,9 @@ public class ProjectMemberListViewImpl extends AbstractView implements ProjectMe
                     return new Label("Admin");
                 } else if (item.getProjectroleid() != null){
                     Button roleBtn = new Button(item.getRoleName(), new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-                        @Override
+						@Override
                         public void buttonClick(ClickEvent event) {
                             
                         }

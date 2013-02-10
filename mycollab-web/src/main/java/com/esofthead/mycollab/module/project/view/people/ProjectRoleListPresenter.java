@@ -9,16 +9,21 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public class ProjectRoleListPresenter extends AbstractPresenter<ProjectRoleListView> {
-    public ProjectRoleListPresenter() {
-        super(ProjectRoleListView.class);
-    }
+public class ProjectRoleListPresenter extends
+		AbstractPresenter<ProjectRoleListView> {
+	private static final long serialVersionUID = 1L;
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+	public ProjectRoleListPresenter() {
+		super(ProjectRoleListView.class);
+	}
+
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		container.removeAllComponents();
+		
+		container.addComponent(view.getWidget());
+	}
 }

@@ -12,8 +12,9 @@ import java.util.HashMap;
  * @author haiphucnguyen
  */
 public class PermissionMap extends HashMap<String, Integer> {
+	private static final long serialVersionUID = 1L;
 
-    public void addPath(String permissionItem, Integer value) {
+	public void addPath(String permissionItem, Integer value) {
         this.put(permissionItem, value);
     }
 

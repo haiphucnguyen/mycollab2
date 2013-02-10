@@ -27,108 +27,113 @@ import com.vaadin.ui.VerticalLayout;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @ViewComponent
 public class RoleListViewImpl extends AbstractView implements RoleListView {
 
-    private static final long serialVersionUID = 1L;
-    private final RoleSearchPanel searchPanel;
-    private SelectionOptionButton selectOptionButton;
-    private RoleTableDisplay tableItem;
-    private final VerticalLayout listLayout;
-    private PopupButtonControl tableActionControls;
-    private final Label selectedItemsNumberLabel = new Label();
+	private static final long serialVersionUID = 1L;
+	private final RoleSearchPanel searchPanel;
+	private SelectionOptionButton selectOptionButton;
+	private RoleTableDisplay tableItem;
+	private final VerticalLayout listLayout;
+	private PopupButtonControl tableActionControls;
+	private final Label selectedItemsNumberLabel = new Label();
 
-    public RoleListViewImpl() {
-        this.setSpacing(true);
+	public RoleListViewImpl() {
+		this.setSpacing(true);
 
-        searchPanel = new RoleSearchPanel();
-        this.addComponent(searchPanel);
+		searchPanel = new RoleSearchPanel();
+		this.addComponent(searchPanel);
 
-        listLayout = new VerticalLayout();
-        listLayout.setSpacing(true);
-        this.addComponent(listLayout);
+		listLayout = new VerticalLayout();
+		listLayout.setSpacing(true);
+		this.addComponent(listLayout);
 
-        generateDisplayTable();
-    }
+		generateDisplayTable();
+	}
 
-    private void generateDisplayTable() {
-        tableItem = new RoleTableDisplay(new String[]{"selected", "rolename", "description"},
-                new String[]{"", "Name", "Description"});
+	private void generateDisplayTable() {
+		tableItem = new RoleTableDisplay(new String[] { "selected", "rolename",
+				"description" }, new String[] { "", "Name", "Description" });
 
-        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-            @Override
-            public Class<? extends ApplicationEvent> getEventType() {
-                return TableClickEvent.class;
-            }
+		tableItem
+				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+					private static final long serialVersionUID = 1L;
 
-            @Override
-            public void handle(TableClickEvent event) {
-                Role user = (Role) event.getData();
-                if ("rolename".equals(event.getFieldName())) {
-                    EventBus.getInstance().fireEvent(new RoleEvent.GotoRead(RoleListViewImpl.this, user));
-                }
-            }
-        });
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return TableClickEvent.class;
+					}
 
-        listLayout.addComponent(constructTableActionControls());
-        listLayout.addComponent(tableItem);
-    }
+					@Override
+					public void handle(TableClickEvent event) {
+						Role role = (Role) event.getData();
+						if ("rolename".equals(event.getFieldName())) {
+							EventBus.getInstance().fireEvent(
+									new RoleEvent.GotoRead(
+											RoleListViewImpl.this, role));
+						}
+					}
+				});
 
-    @Override
-    public HasSearchHandlers<RoleSearchCriteria> getSearchHandlers() {
-        return searchPanel;
-    }
+		listLayout.addComponent(constructTableActionControls());
+		listLayout.addComponent(tableItem);
+	}
 
-    private ComponentContainer constructTableActionControls() {
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setSpacing(true);
+	@Override
+	public HasSearchHandlers<RoleSearchCriteria> getSearchHandlers() {
+		return searchPanel;
+	}
 
-        selectOptionButton = new SelectionOptionButton(tableItem);
-        layout.addComponent(selectOptionButton);
+	private ComponentContainer constructTableActionControls() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
 
-        tableActionControls = new PopupButtonControl("delete", "Delete");
-        tableActionControls.addOptionItem("mail", "Mail");
-        tableActionControls.addOptionItem("export", "Export");
+		selectOptionButton = new SelectionOptionButton(tableItem);
+		layout.addComponent(selectOptionButton);
 
-        layout.addComponent(tableActionControls);
-        layout.addComponent(selectedItemsNumberLabel);
-        layout.setComponentAlignment(selectedItemsNumberLabel,
-                Alignment.MIDDLE_CENTER);
-        return layout;
-    }
+		tableActionControls = new PopupButtonControl("delete", "Delete");
+		tableActionControls.addOptionItem("mail", "Mail");
+		tableActionControls.addOptionItem("export", "Export");
 
-    @Override
-    public void enableActionControls(int numOfSelectedItems) {
-        tableActionControls.setEnabled(true);
-        selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
-    }
+		layout.addComponent(tableActionControls);
+		layout.addComponent(selectedItemsNumberLabel);
+		layout.setComponentAlignment(selectedItemsNumberLabel,
+				Alignment.MIDDLE_CENTER);
+		return layout;
+	}
 
-    @Override
-    public void disableActionControls() {
-        tableActionControls.setEnabled(false);
-        selectedItemsNumberLabel.setValue("");
-    }
+	@Override
+	public void enableActionControls(int numOfSelectedItems) {
+		tableActionControls.setEnabled(true);
+		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+	}
 
-    @Override
-    public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-        return selectOptionButton;
-    }
+	@Override
+	public void disableActionControls() {
+		tableActionControls.setEnabled(false);
+		selectedItemsNumberLabel.setValue("");
+	}
 
-    @Override
-    public HasPopupActionHandlers getPopupActionHandlers() {
-        return tableActionControls;
-    }
+	@Override
+	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+		return selectOptionButton;
+	}
 
-    @Override
-    public HasSelectableItemHandlers<Role> getSelectableItemHandlers() {
-        return tableItem;
-    }
+	@Override
+	public HasPopupActionHandlers getPopupActionHandlers() {
+		return tableActionControls;
+	}
 
-    @Override
-    public IPagedBeanTable<RoleSearchCriteria, Role> getPagedBeanTable() {
-        return tableItem;
-    }
+	@Override
+	public HasSelectableItemHandlers<Role> getSelectableItemHandlers() {
+		return tableItem;
+	}
+
+	@Override
+	public IPagedBeanTable<RoleSearchCriteria, Role> getPagedBeanTable() {
+		return tableItem;
+	}
 }

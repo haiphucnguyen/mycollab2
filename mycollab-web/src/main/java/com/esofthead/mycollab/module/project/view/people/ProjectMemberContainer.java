@@ -13,5 +13,6 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  */
 @ViewComponent
 public class ProjectMemberContainer extends AbstractView {
+	private static final long serialVersionUID = 1L;
     
 }

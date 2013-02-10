@@ -34,7 +34,9 @@ public class BugDisplayWidget extends VerticalLayout {
         this.addComponent(dataList);
 
         Button moreBtn = new Button("More ...", new Button.ClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(
                         new BugEvent.GotoList(BugDisplayWidget.this,

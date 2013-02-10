@@ -4,11 +4,16 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.module.file.ExportStreamResource;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
-import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -17,17 +22,12 @@ import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import org.vaadin.dialogs.ConfirmDialog;
 
 /**
  *
@@ -148,7 +148,7 @@ public class ProjectMemberListPresenter extends AbstractPresenter<ProjectMemberL
                                         searchCriteria), "export.csv",
                                         view.getApplication());
                             } else {
-                                List tableData = view.getPagedBeanTable()
+                                List<?> tableData = view.getPagedBeanTable()
                                         .getCurrentDataList();
                                 res = new StreamResource(
                                         new ExportStreamResource.ListData(
@@ -206,9 +206,6 @@ public class ProjectMemberListPresenter extends AbstractPresenter<ProjectMemberL
         projectMemberContainer.removeAllComponents();
         projectMemberContainer.addComponent(view.getWidget());
         doSearch((ProjectMemberSearchCriteria) data.getParams());
-        
-        ProjectBreadcrumb breadCrumb = ViewManager.getView(ProjectBreadcrumb.class);
-//        breadCrumb.gotoProjectMemberList();
     }
 
     @Override
