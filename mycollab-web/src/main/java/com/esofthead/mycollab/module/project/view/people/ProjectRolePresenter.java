@@ -12,26 +12,31 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public class ProjectRolePresenter extends AbstractPresenter<ProjectRoleContainer> {
+public class ProjectRolePresenter extends
+		AbstractPresenter<ProjectRoleContainer> {
 	private static final long serialVersionUID = 1L;
 
 	public ProjectRolePresenter() {
-        super(ProjectRoleContainer.class);
-    }
+		super(ProjectRoleContainer.class);
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-    	AbstractPresenter<?> presenter = null;
-    	
-    	if (data instanceof ProjectRoleScreenData.Search) {
-    		presenter = PresenterResolver.getPresenter(ProjectRoleListPresenter.class);
-    	} else {
-    		throw new MyCollabException("Can not handle data " + data);
-    	}
-    	
-    	presenter.go(view, data);
-    }
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		AbstractPresenter<?> presenter = null;
+
+		if (data instanceof ProjectRoleScreenData.Search) {
+			presenter = PresenterResolver
+					.getPresenter(ProjectRoleListPresenter.class);
+		} else if (data instanceof ProjectRoleScreenData.Add) {
+			presenter = PresenterResolver
+					.getPresenter(ProjectRoleAddPresenter.class);
+		} else {
+			throw new MyCollabException("Can not handle data " + data);
+		}
+
+		presenter.go(view, data);
+	}
 }

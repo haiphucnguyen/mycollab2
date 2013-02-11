@@ -7,7 +7,6 @@ import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.module.project.view.bug.BugReadPageAction;
 import com.esofthead.mycollab.module.project.view.bug.ComponentReadPageAction;
 import com.esofthead.mycollab.module.project.view.bug.VersionReadPageAction;
-import com.esofthead.mycollab.module.project.view.bug.VersionReadPresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.message.MessageReadPageAction;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;

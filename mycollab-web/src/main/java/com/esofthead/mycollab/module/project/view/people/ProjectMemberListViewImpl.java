@@ -40,22 +40,22 @@ import org.vaadin.hene.splitbutton.PopupButtonControl;
 public class ProjectMemberListViewImpl extends AbstractView implements ProjectMemberListView {
 
     private static final long serialVersionUID = 1L;
-    private final ProjectMemberSearchPanel riskSearchPanel;
+    private final ProjectMemberSearchPanel roleSearchPanel;
     private SelectionOptionButton selectOptionButton;
     private PagedBeanTable2<ProjectMemberService, ProjectMemberSearchCriteria, SimpleProjectMember> tableItem;
-    private final VerticalLayout riskListLayout;
+    private final VerticalLayout roleListLayout;
     private PopupButtonControl tableActionControls;
     private final Label selectedItemsNumberLabel = new Label();
 
     public ProjectMemberListViewImpl() {
         this.setSpacing(true);
 
-        riskSearchPanel = new ProjectMemberSearchPanel();
-        this.addComponent(riskSearchPanel);
+        roleSearchPanel = new ProjectMemberSearchPanel();
+        this.addComponent(roleSearchPanel);
 
-        riskListLayout = new VerticalLayout();
-        riskListLayout.setSpacing(true);
-        this.addComponent(riskListLayout);
+        roleListLayout = new VerticalLayout();
+        roleListLayout.setSpacing(true);
+        this.addComponent(roleListLayout);
 
         generateDisplayTable();
     }
@@ -162,13 +162,13 @@ public class ProjectMemberListViewImpl extends AbstractView implements ProjectMe
 
         tableItem.setWidth("100%");
 
-        riskListLayout.addComponent(constructTableActionControls());
-        riskListLayout.addComponent(tableItem);
+        roleListLayout.addComponent(constructTableActionControls());
+        roleListLayout.addComponent(tableItem);
     }
 
     @Override
     public HasSearchHandlers<ProjectMemberSearchCriteria> getSearchHandlers() {
-        return riskSearchPanel;
+        return roleSearchPanel;
     }
 
     private ComponentContainer constructTableActionControls() {

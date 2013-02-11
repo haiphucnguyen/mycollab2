@@ -13,10 +13,12 @@ import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenDa
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 
@@ -86,5 +88,11 @@ public class UserGroupViewImpl extends AbstractView implements UserGroupView {
 					}
 				});
 
+	}
+	
+	@Override
+	public Component gotoSubView(String name) {
+		View component = (View) myProjectTab.selectTab(name);
+		return component;
 	}
 }

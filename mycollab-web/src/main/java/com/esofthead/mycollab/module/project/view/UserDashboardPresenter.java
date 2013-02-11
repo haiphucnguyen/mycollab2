@@ -15,8 +15,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class UserDashboardPresenter extends AbstractPresenter<UserDashboardView> {
+	private static final long serialVersionUID = 1L;
 
-    public UserDashboardPresenter() {
+	public UserDashboardPresenter() {
         super(UserDashboardView.class);
     }
 

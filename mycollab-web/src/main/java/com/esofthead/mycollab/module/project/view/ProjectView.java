@@ -10,15 +10,15 @@ public interface ProjectView extends View {
 
     void constructProjectHeaderPanel(SimpleProject project, PageActionChain pageActionChain);
 
-    void gotoUsersAndGroup();
+    void gotoUsersAndGroup(ScreenData<?> data);
 
-    void gotoMilestoneView(ScreenData data);
+    void gotoMilestoneView(ScreenData<?> data);
 
-    void gotoRiskView(@SuppressWarnings("rawtypes") ScreenData data);
+    void gotoRiskView(ScreenData<?> data);
 
-    void gotoBugView(@SuppressWarnings("rawtypes") ScreenData data);
+    void gotoBugView(ScreenData<?> data);
 
-    void gotoTaskList(ScreenData data);
+    void gotoTaskList(ScreenData<?> data);
 
     Component gotoSubView(String name);
 }

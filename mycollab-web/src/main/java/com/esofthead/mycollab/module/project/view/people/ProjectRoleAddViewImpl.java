@@ -20,6 +20,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
@@ -33,6 +34,7 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author haiphucnguyen
  */
+@ViewComponent
 public class ProjectRoleAddViewImpl  extends AbstractView implements ProjectRoleAddView {
     
     private static final long serialVersionUID = 1L;

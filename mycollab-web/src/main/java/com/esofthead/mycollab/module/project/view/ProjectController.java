@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.Project;
+import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.Task;
@@ -20,11 +21,13 @@ import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.view.bug.BugContainer;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskContainer;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
@@ -57,6 +60,7 @@ public class ProjectController {
         bindBugEvents();
         bindMessageEvents();
         bindMilestoneEvents();
+        bindUserGroupEvents();
     }
 
     @SuppressWarnings("serial")
@@ -117,6 +121,8 @@ public class ProjectController {
     private void bindTaskListEvents() {
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<TaskListEvent.GotoRead>() {
+                	private static final long serialVersionUID = 1L;
+                	
                     @Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return TaskListEvent.GotoRead.class;
@@ -134,6 +140,8 @@ public class ProjectController {
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<TaskListEvent.GotoEdit>() {
+                	private static final long serialVersionUID = 1L;
+                	
                     @Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return TaskListEvent.GotoEdit.class;
@@ -151,6 +159,8 @@ public class ProjectController {
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<TaskListEvent.GotoAdd>() {
+                	private static final long serialVersionUID = 1L;
+                	
                     @Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return TaskListEvent.GotoAdd.class;
@@ -169,6 +179,8 @@ public class ProjectController {
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<TaskListEvent.GotoTaskListScreen>() {
+                	private static final long serialVersionUID = 1L;
+                	
                     @Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return TaskListEvent.GotoTaskListScreen.class;
@@ -184,6 +196,8 @@ public class ProjectController {
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<TaskListEvent.ReoderTaskList>() {
+                	private static final long serialVersionUID = 1L;
+                	
                     @Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return TaskListEvent.ReoderTaskList.class;
@@ -203,6 +217,8 @@ public class ProjectController {
     private void bindTaskEvents() {
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<TaskEvent.GotoRead>() {
+                	private static final long serialVersionUID = 1L;
+                	
                     @Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return TaskEvent.GotoRead.class;
@@ -220,6 +236,8 @@ public class ProjectController {
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<TaskEvent.GotoAdd>() {
+                	private static final long serialVersionUID = 1L;
+                	
                     @Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return TaskEvent.GotoAdd.class;
@@ -237,6 +255,8 @@ public class ProjectController {
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<TaskEvent.GotoEdit>() {
+                	private static final long serialVersionUID = 1L;
+                	
                     @Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return TaskEvent.GotoEdit.class;
@@ -651,6 +671,8 @@ public class ProjectController {
     private void bindMessageEvents() {
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<MessageEvent.GotoRead>() {
+                	private static final long serialVersionUID = 1L;
+                	
                     @Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return MessageEvent.GotoRead.class;
@@ -671,6 +693,8 @@ public class ProjectController {
     private void bindMilestoneEvents() {
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<MilestoneEvent.GotoAdd>() {
+                	private static final long serialVersionUID = 1L;
+                	
                     @Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return MilestoneEvent.GotoAdd.class;
@@ -688,6 +712,8 @@ public class ProjectController {
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<MilestoneEvent.GotoRead>() {
+                	private static final long serialVersionUID = 1L;
+                	
                     @Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return MilestoneEvent.GotoRead.class;
@@ -705,7 +731,9 @@ public class ProjectController {
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<MilestoneEvent.GotoList>() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return MilestoneEvent.GotoList.class;
                     }
@@ -730,7 +758,9 @@ public class ProjectController {
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<MilestoneEvent.GotoEdit>() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return MilestoneEvent.GotoEdit.class;
                     }
@@ -742,6 +772,27 @@ public class ProjectController {
                         ScreenData.Edit<Milestone> data = new ScreenData.Edit<Milestone>(
                                 (Milestone) event.getData());
                         projectView.gotoMilestoneView(data);
+                    }
+                });
+    }
+    
+    private void bindUserGroupEvents() {
+    	EventBus.getInstance().addListener(
+                new ApplicationEventListener<ProjectRoleEvent.GotoAdd>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+                    public Class<? extends ApplicationEvent> getEventType() {
+                        return ProjectRoleEvent.GotoAdd.class;
+                    }
+
+                    @Override
+                    public void handle(ProjectRoleEvent.GotoAdd event) {
+                        ProjectView projectView = ViewManager
+                                .getView(ProjectView.class);
+                        ProjectRoleScreenData.Add data = new ProjectRoleScreenData.Add(
+                                new ProjectRole());
+                        projectView.gotoUsersAndGroup(data);
                     }
                 });
     }

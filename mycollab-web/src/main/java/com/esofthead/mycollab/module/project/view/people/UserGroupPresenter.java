@@ -5,7 +5,9 @@
 package com.esofthead.mycollab.module.project.view.people;
 
 import com.esofthead.mycollab.module.project.view.ProjectView;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
@@ -24,5 +26,14 @@ public class UserGroupPresenter extends AbstractPresenter<UserGroupView> {
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         ProjectView projectViewContainer = (ProjectView) container;
         projectViewContainer.gotoSubView("Users & Group");
+        
+        AbstractPresenter<?> presenter;
+        if (data instanceof ProjectRoleScreenData.Add) {
+        	presenter = PresenterResolver.getPresenter(ProjectRolePresenter.class);
+        } else {
+        	presenter = PresenterResolver.getPresenter(ProjectMemberPresenter.class);
+        }
+        
+        presenter.go(view, data);
     }
 }

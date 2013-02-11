@@ -1,6 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.project.dao.ProjectRoleMapperExt">
+    <resultMap
+        extends="com.esofthead.mycollab.module.project.dao.ProjectRoleMapper.BaseResultMap"
+        id="SimpleRoleResult"
+        type="com.esofthead.mycollab.module.project.domain.SimpleProjectRole">
+        <result column="permissionVal" jdbcType="LONGVARCHAR"
+            property="permissionVal" />
+    </resultMap>
+
     <sql id="querySearchCriteria">
         <if test="rolename != null">
             ${rolename.operation} m_prj_role.rolename
@@ -10,33 +18,47 @@
         <if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_prj_role.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
         </if>
+        <if test="projectId != null">
+            <![CDATA[${projectId.operation} m_prj_role.projectid = #{projectId,javaType=INTEGER}]]>
+        </if>
     </sql>
 
-    <sql id="selectRole">
+    <sql id="selectSimpleRole">
         <![CDATA[
-          SELECT id, rolename, description
-              FROM m_prj_role
+            SELECT m_prj_role.id, m_prj_role.rolename, m_prj_role.description, m_prj_role.sAccountId, 
+                m_prj_role.projectid, m_prj_role_permission.roleVal AS permissionVal
+            FROM m_prj_role
+                LEFT OUTER JOIN m_prj_role_permission ON (m_prj_role_permission.roleid = m_prj_role.id)
         ]]>
     </sql>
 
     <select id="getTotalCount" resultType="int" parameterType="RoleSearchCriteria">
         SELECT count(*) as totalCount FROM m_prj_role
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 
+            1=1
             <include
                 refid="com.esofthead.mycollab.module.project.dao.ProjectRoleMapperExt.querySearchCriteria" />
         </trim>
     </select>
 
     <select id="findPagableListByCriteria"
-                resultMap="com.esofthead.mycollab.module.project.dao.ProjectRoleMapper.BaseResultMap"
-                parameterType="RoleSearchCriteria">
-        <include refid="com.esofthead.mycollab.module.project.dao.ProjectRoleMapperExt.selectRole" />
+        resultMap="com.esofthead.mycollab.module.project.dao.ProjectRoleMapperExt.SimpleRoleResult"
+        parameterType="RoleSearchCriteria">
+        <include
+            refid="com.esofthead.mycollab.module.project.dao.ProjectRoleMapperExt.selectSimpleRole" />
 
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 
+            1=1
             <include
                 refid="com.esofthead.mycollab.module.project.dao.ProjectRoleMapperExt.querySearchCriteria" />
         </trim>
+    </select>
+
+    <select id="findRoleById" parameterType="java.lang.Integer"
+        resultMap="com.esofthead.mycollab.module.project.dao.ProjectRoleMapperExt.SimpleRoleResult">
+        <include
+            refid="com.esofthead.mycollab.module.project.dao.ProjectRoleMapperExt.selectSimpleRole" />
+
+        WHERE m_prj_role.id=#{roleId, javaType=INTEGER}
     </select>
 </mapper>
