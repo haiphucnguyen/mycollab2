@@ -148,7 +148,7 @@ public abstract class AbstractBeanPagedList <S extends SearchCriteria, T>
         }
     }
 
-    @SuppressWarnings("unchecked")
+    
     public void setSearchCriteria(S searchCriteria) {
         listContainer.removeAllComponents();
 

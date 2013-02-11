@@ -16,8 +16,9 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  */
 @ViewComponent
 public class TaskContainer extends AbstractView {
+	private static final long serialVersionUID = 1L;
 
-    public static class PreviewTaskListData extends ScreenData<Integer> {
+	public static class PreviewTaskListData extends ScreenData<Integer> {
 
         public PreviewTaskListData(Integer taskListId) {
             super(taskListId);

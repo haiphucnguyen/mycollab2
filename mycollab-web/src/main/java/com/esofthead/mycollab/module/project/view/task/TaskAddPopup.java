@@ -4,8 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.module.file.AttachmentConstants;
@@ -44,9 +42,8 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class TaskAddPopup extends CustomComponent {
-
-    private static Logger log = LoggerFactory.getLogger(TaskAddPopup.class);
-    private TabSheet taskContainer;
+	private static final long serialVersionUID = 1L;
+	private TabSheet taskContainer;
     private SimpleTask task;
     private TaskNoteLayout taskNoteComponent;
 
@@ -71,7 +68,9 @@ public class TaskAddPopup extends CustomComponent {
         HorizontalLayout controlsLayout = new HorizontalLayout();
         controlsLayout.setSpacing(true);
         Button saveBtn = new Button("Save", new Button.ClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void buttonClick(ClickEvent event) {
                 ProjectTaskService taskService = AppContext.getSpringBean(ProjectTaskService.class);
                 SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
@@ -105,8 +104,9 @@ public class TaskAddPopup extends CustomComponent {
     }
 
     private class TaskInformationLayout extends AdvancedEditBeanForm<Task> {
+		private static final long serialVersionUID = 1L;
 
-        public TaskInformationLayout() {
+		public TaskInformationLayout() {
             this.setFormLayoutFactory(new TaskLayout());
             this.setFormFieldFactory(new EditFormFieldFactory());
             this.setItemDataSource(new BeanItem<Task>(task));
@@ -114,8 +114,8 @@ public class TaskAddPopup extends CustomComponent {
     }
 
     private static class TaskLayout implements IFormLayoutFactory {
-
-        private GridFormLayoutHelper informationLayout;
+		private static final long serialVersionUID = 1L;
+		private GridFormLayoutHelper informationLayout;
 
         @Override
         public Layout getLayout() {
@@ -150,8 +150,8 @@ public class TaskAddPopup extends CustomComponent {
     }
 
     private class TaskNoteLayout extends VerticalLayout {
-
-        private TextArea noteArea;
+		private static final long serialVersionUID = 1L;
+		private TextArea noteArea;
         private AttachmentPanel attachmentPanel;
 
         public TaskNoteLayout() {

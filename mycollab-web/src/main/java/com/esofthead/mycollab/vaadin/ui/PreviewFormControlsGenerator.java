@@ -28,7 +28,9 @@ public class PreviewFormControlsGenerator<T> {
 
         Button backBtn;
         backBtn = new Button(null, new Button.ClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void buttonClick(ClickEvent event) {
                 T item = ((BeanItem<T>) previewForm.getItemDataSource())
                         .getBean();
@@ -112,7 +114,9 @@ public class PreviewFormControlsGenerator<T> {
         layout.setComponentAlignment(previousItem, Alignment.MIDDLE_RIGHT);
 
         Button nextItemBtn = new Button(null, new Button.ClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void buttonClick(ClickEvent event) {
                 T item = ((BeanItem<T>) previewForm.getItemDataSource())
                         .getBean();
@@ -128,7 +132,9 @@ public class PreviewFormControlsGenerator<T> {
 
 
         Button historyBtn = new Button(null, new Button.ClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void buttonClick(ClickEvent event) {
                 previewForm.showHistory();
             }
@@ -140,7 +146,9 @@ public class PreviewFormControlsGenerator<T> {
         layout.setComponentAlignment(historyBtn, Alignment.MIDDLE_RIGHT);
 
         Button printBtn = new Button(null, new Button.ClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void buttonClick(ClickEvent event) {
                 previewForm.doPrint();
             }

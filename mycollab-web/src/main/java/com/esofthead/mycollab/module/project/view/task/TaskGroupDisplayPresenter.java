@@ -20,7 +20,7 @@ public class TaskGroupDisplayPresenter extends AbstractPresenter<TaskGroupDispla
         taskContainer.removeAllComponents();
         
         taskContainer.addComponent(view.getWidget());
-        view.displayTakLists();
+        view.displayActiveTakLists();
         
         ProjectBreadcrumb breadCrumb = ViewManager.getView(ProjectBreadcrumb.class);
         breadCrumb.gotoTaskDashboard();

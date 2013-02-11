@@ -33,7 +33,6 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
     private int currentPage = 1;
     private int totalPage = 1;
     private int totalCount;
-    private int currentViewCount;
     private ComboBox itemsPerPageSelect;
     private Button first, previous, next, last;
     private Label totalPagesLabel;
@@ -233,8 +232,7 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 
         currentListData = searchService
                 .findPagableListByCriteria(searchRequest);
-        currentViewCount = currentListData.size();
-
+        
         this.setCurrentPage(currentPage);
         this.setTotalPage(totalPage);
 

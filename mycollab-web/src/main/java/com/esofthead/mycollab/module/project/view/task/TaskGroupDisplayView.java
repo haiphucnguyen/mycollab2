@@ -7,5 +7,5 @@ public interface TaskGroupDisplayView extends View {
 
     void insertTaskList(SimpleTaskList taskList);
 
-    void displayTakLists();
+    void displayActiveTakLists();
 }

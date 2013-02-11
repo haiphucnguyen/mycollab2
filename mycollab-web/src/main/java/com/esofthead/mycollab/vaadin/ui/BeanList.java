@@ -71,7 +71,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
         }
     }
 
-    @SuppressWarnings("unchecked")
+    
     public int setSearchCriteria(S searchCriteria) {
         SearchRequest<S> searchRequest = new SearchRequest<S>(searchCriteria,
                 0, Integer.MAX_VALUE);
@@ -90,11 +90,11 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
         int i = 0;
         try {
             for (T item : currentListData) {
-
                 RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
+                
                 Component row = rowHandler.generateRow(item, i);
                 if (row != null) {
-                    contentLayout.addComponent(row);
+                    contentLayout.addComponent(new LazyLoadWrapper(row));
                 }
 
                 i++;

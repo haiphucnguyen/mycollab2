@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.view.task;
 
+import org.vaadin.hene.popupbutton.PopupButton;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
@@ -16,13 +18,14 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
 public class TaskGroupDisplayViewImpl extends AbstractView implements
         TaskGroupDisplayView {
 
+	private PopupButton taskGroupSelecition;
     private TaskGroupDisplayWidget taskLists;
     private Button reOrderBtn;
 
@@ -37,10 +40,60 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
         header.setMargin(true);
         header.setSpacing(true);
         header.setWidth("100%");
-        Label headerLbl = new Label("All Tasks");
-        headerLbl.setStyleName("h2");
-        header.addComponent(headerLbl);
-        header.setExpandRatio(headerLbl, 1.0f);
+        taskGroupSelecition = new PopupButton("Active Tasks");
+		taskGroupSelecition.addStyleName("link");
+		taskGroupSelecition.addStyleName("h2");
+        header.addComponent(taskGroupSelecition);
+        header.setExpandRatio(taskGroupSelecition, 1.0f);
+        
+        VerticalLayout filterBtnLayout = new VerticalLayout();
+		filterBtnLayout.setMargin(true);
+		filterBtnLayout.setSpacing(true);
+		filterBtnLayout.setWidth("200px");
+		
+		Button allTasksFilterBtn = new Button("All Tasks",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						taskGroupSelecition.setPopupVisible(false);
+						taskGroupSelecition.setCaption("All Task Groups");
+						displayAllTaskGroups();
+					}
+				});
+		allTasksFilterBtn.setStyleName("link");
+		filterBtnLayout.addComponent(allTasksFilterBtn);
+
+		Button activeTasksFilterBtn = new Button("Active Tasks Only",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						taskGroupSelecition.setPopupVisible(false);
+						taskGroupSelecition.setCaption("Active Task Groups");
+						displayActiveTakLists();
+					}
+				});
+		activeTasksFilterBtn.setStyleName("link");
+		filterBtnLayout.addComponent(activeTasksFilterBtn);
+
+		Button archievedTasksFilterBtn = new Button("Archieved Tasks Only",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						taskGroupSelecition.setCaption("Archieved Task Groups");
+						taskGroupSelecition.setPopupVisible(false);
+						displayInActiveTaskGroups();
+					}
+				});
+		archievedTasksFilterBtn.setStyleName("link");
+		filterBtnLayout.addComponent(archievedTasksFilterBtn);
+		
+		taskGroupSelecition.addComponent(filterBtnLayout);
 
         reOrderBtn = new Button("Reorder", new Button.ClickListener() {
             @Override
@@ -71,14 +124,30 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
         taskLists = new TaskGroupDisplayWidget();
         this.addComponent(taskLists);
     }
+    
+    private TaskListSearchCriteria createBaseSearchCriteria() {
+		SimpleProject project = (SimpleProject) AppContext
+				.getVariable(ProjectContants.PROJECT_NAME);
+		TaskListSearchCriteria criteria = new TaskListSearchCriteria();
+		criteria.setProjectId(new NumberSearchField(project.getId()));
+		return criteria;
+	}
 
     @Override
-    public void displayTakLists() {
-        TaskListSearchCriteria criteria = new TaskListSearchCriteria();
-        SimpleProject project = (SimpleProject) AppContext
-                .getVariable(ProjectContants.PROJECT_NAME);
-        criteria.setProjectId(new NumberSearchField(project.getId()));
+    public void displayActiveTakLists() {
+        TaskListSearchCriteria criteria = createBaseSearchCriteria();
         criteria.setStatus(new StringSearchField("Open"));
+        taskLists.setSearchCriteria(criteria);
+    }
+    
+    private void displayInActiveTaskGroups() {
+    	TaskListSearchCriteria criteria = createBaseSearchCriteria();
+        criteria.setStatus(new StringSearchField("Closed"));
+        taskLists.setSearchCriteria(criteria);
+    }
+    
+    private void displayAllTaskGroups() {
+    	TaskListSearchCriteria criteria = createBaseSearchCriteria();
         taskLists.setSearchCriteria(criteria);
     }
 
