@@ -35,7 +35,7 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 
         @Override
         public Component generateRow(final SimpleBug obj, int rowIndex) {
-            GridLayout layout = new GridLayout(2, 2);
+            GridLayout layout = new GridLayout(2, 3);
             layout.setWidth("100%");
             layout.setSpacing(false);
             layout.addComponent(new Embedded(null, new ThemeResource(
@@ -53,9 +53,12 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
                     });
             layout.addComponent(defectLink);
             layout.setColumnExpandRatio(1, 1.0f);
+            Label descInfo = new Label(obj.getDescription());
+            layout.addComponent(descInfo, 1, 1);
+            
             Label dateInfo = new Label("last updated on " + AppContext.formatDate(obj.getLastupdatedtime()));
             dateInfo.setStyleName(UIConstants.DATE_INFO);
-            layout.addComponent(dateInfo, 1, 1, 1, 1);
+            layout.addComponent(dateInfo, 1, 2);
             CssLayout rowLayout = new CssLayout();
             rowLayout.addComponent(layout);
             rowLayout.setStyleName(UIConstants.WIDGET_ROW);

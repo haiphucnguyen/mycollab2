@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
@@ -143,29 +144,35 @@ public class BugDashboardViewImpl extends AbstractView implements
     public void attach() {
         leftColumn.removeAllComponents();
         rightColumn.removeAllComponents();
+        
+        SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
 
         DueBugWidget dueBugWidget = new DueBugWidget();
         LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(dueBugWidget);
         leftColumn.addComponent(dueBugWidgetWrapper);
-
-        RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
-        LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(updateBugWidget);
-        leftColumn.addComponent(updateBugWidgetWrapper);
-
-        SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
-
-        BugChartComponent bugChartComponent = new BugChartComponent();
-        rightColumn.addComponent(bugChartComponent);
-
         BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
         dueDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
         dueDefectsCriteria.setResolutions(new SetSearchField<String>(
                 new String[]{BugResolutionConstants.NEWISSUE}));
         dueBugWidget.setSearchCriteria(dueDefectsCriteria);
 
+        RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
+        LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(updateBugWidget);
+        leftColumn.addComponent(updateBugWidgetWrapper);
         BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
         recentDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
         updateBugWidget.setSearchCriteria(recentDefectsCriteria);
+        
 
+        BugChartComponent bugChartComponent = new BugChartComponent();
+        rightColumn.addComponent(bugChartComponent);
+        
+        MyBugListWidget myBugListWidget = new MyBugListWidget();
+        LazyLoadWrapper myBugsWidgetWrapper = new LazyLoadWrapper(myBugListWidget);
+        rightColumn.addComponent(myBugsWidgetWrapper);
+        BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
+        myBugsSearchCriteria.setProjectId(new NumberSearchField(project.getId()));
+        myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext.getUsername()));
+        myBugListWidget.setSearchCriteria(myBugsSearchCriteria);
     }
 }
