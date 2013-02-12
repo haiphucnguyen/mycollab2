@@ -20,8 +20,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class UserReadPresenter extends AbstractPresenter<UserReadView> {
+	private static final long serialVersionUID = 1L;
 
-    public UserReadPresenter() {
+	public UserReadPresenter() {
         super(UserReadView.class);
 
         bind();

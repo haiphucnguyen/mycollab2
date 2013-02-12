@@ -35,149 +35,155 @@ import org.vaadin.addon.customfield.CustomField;
 @ViewComponent
 public class UserAddViewImpl extends AbstractView implements UserAddView {
 
-    private static final long serialVersionUID = 1L;
-    private UserAddViewImpl.EditForm editForm;
-    private User user;
+	private static final long serialVersionUID = 1L;
+	private UserAddViewImpl.EditForm editForm;
+	private User user;
 
-    public UserAddViewImpl() {
-        super();
-        editForm = new UserAddViewImpl.EditForm();
-        this.addComponent(editForm);
-    }
+	public UserAddViewImpl() {
+		super();
+		editForm = new UserAddViewImpl.EditForm();
+		this.addComponent(editForm);
+	}
 
-    @Override
-    public void editItem(User item) {
-        this.user = item;
-        editForm.setItemDataSource(new BeanItem<User>(user));
-    }
+	@Override
+	public void editItem(User item) {
+		this.user = item;
+		editForm.setItemDataSource(new BeanItem<User>(user));
+	}
 
-    private class EditForm extends AdvancedEditBeanForm<User> {
+	private class EditForm extends AdvancedEditBeanForm<User> {
 
-        private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-        @Override
-        public void setItemDataSource(Item newDataSource,
-                Collection<?> propertyIds) {
-            this.setFormLayoutFactory(new UserAddViewImpl.EditForm.FormLayoutFactory());
-            this.setFormFieldFactory(new UserAddViewImpl.EditForm.EditFormFieldFactory());
-            super.setItemDataSource(newDataSource, propertyIds);
-        }
+		@Override
+		public void setItemDataSource(Item newDataSource,
+				Collection<?> propertyIds) {
+			this.setFormLayoutFactory(new UserAddViewImpl.EditForm.FormLayoutFactory());
+			this.setFormFieldFactory(new UserAddViewImpl.EditForm.EditFormFieldFactory());
+			super.setItemDataSource(newDataSource, propertyIds);
+		}
 
-        private class FormLayoutFactory extends UserFormLayoutFactory {
+		private class FormLayoutFactory extends UserFormLayoutFactory {
 
-            private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-            public FormLayoutFactory() {
-                super("Create User");
-            }
+			public FormLayoutFactory() {
+				super("Create User");
+			}
 
-            private Layout createButtonControls() {
-                return (new EditFormControlsGenerator<User>(
-                        UserAddViewImpl.EditForm.this)).createButtonControls();
-            }
+			private Layout createButtonControls() {
+				return (new EditFormControlsGenerator<User>(
+						UserAddViewImpl.EditForm.this)).createButtonControls();
+			}
 
-            @Override
-            protected Layout createTopPanel() {
-                return createButtonControls();
-            }
+			@Override
+			protected Layout createTopPanel() {
+				return createButtonControls();
+			}
 
-            @Override
-            protected Layout createBottomPanel() {
-                return createButtonControls();
-            }
-        }
+			@Override
+			protected Layout createBottomPanel() {
+				return createButtonControls();
+			}
+		}
 
-        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
+		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
-            private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            protected Field onCreateField(Item item, Object propertyId,
-                    com.vaadin.ui.Component uiContext) {
+			@Override
+			protected Field onCreateField(Item item, Object propertyId,
+					com.vaadin.ui.Component uiContext) {
 
-                if (propertyId.equals("isadmin")) {
-                    return new UserAddViewImpl.EditForm.AdminRoleSelectionField();
-                } else if (propertyId.equals("firstname") || propertyId.equals("lastname") || propertyId.equals("email")) {
-                    TextField tf = new TextField();
-                    tf.setNullRepresentation("");
-                    tf.setRequired(true);
-                    tf.setRequiredError("This field must be not null");
-                    return tf;
-                }
-                return null;
-            }
-        }
+				if (propertyId.equals("isadmin")) {
+					return new UserAddViewImpl.EditForm.AdminRoleSelectionField();
+				} else if (propertyId.equals("firstname")
+						|| propertyId.equals("lastname")
+						|| propertyId.equals("email")) {
+					TextField tf = new TextField();
+					tf.setNullRepresentation("");
+					tf.setRequired(true);
+					tf.setRequiredError("This field must be not null");
+					return tf;
+				}
+				return null;
+			}
+		}
 
-        private class AdminRoleSelectionField extends CustomField {
+		private class AdminRoleSelectionField extends CustomField {
+			private static final long serialVersionUID = 1L;
+			private CheckBox isAdminCheck;
+			private HorizontalLayout layout;
+			private HorizontalLayout roleLayout;
+			private RoleComboBox roleComboBox;
 
-            private CheckBox isAdminCheck;
-            private HorizontalLayout layout;
-            private HorizontalLayout roleLayout;
-            private RoleComboBox roleComboBox;
+			public AdminRoleSelectionField() {
+				layout = new HorizontalLayout();
+				layout.setSpacing(true);
 
-            public AdminRoleSelectionField() {
-                layout = new HorizontalLayout();
-                layout.setSpacing(true);
+				roleLayout = new HorizontalLayout();
+				roleLayout.setSpacing(true);
+				roleLayout.addComponent(new Label("Role"));
+				roleComboBox = new RoleComboBox();
+				roleComboBox.addListener(new Property.ValueChangeListener() {
+					private static final long serialVersionUID = 1L;
 
-                roleLayout = new HorizontalLayout();
-                roleLayout.setSpacing(true);
-                roleLayout.addComponent(new Label("Role"));
-                roleComboBox = new RoleComboBox();
-                roleComboBox.addListener(new Property.ValueChangeListener() {
-                    @Override
-                    public void valueChange(Property.ValueChangeEvent event) {
-                        user.setRoleid((Integer) roleComboBox.getValue());
-                    }
-                });
+					@Override
+					public void valueChange(Property.ValueChangeEvent event) {
+						user.setRoleid((Integer) roleComboBox.getValue());
+					}
+				});
 
-                roleLayout.addComponent(roleComboBox);
+				roleLayout.addComponent(roleComboBox);
 
-                isAdminCheck = new CheckBox("");
-                isAdminCheck.setImmediate(true);
-                isAdminCheck.setWriteThrough(true);
-                isAdminCheck.addListener(new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        user.setIsadmin((Boolean) isAdminCheck.getValue());
+				isAdminCheck = new CheckBox("");
+				isAdminCheck.setImmediate(true);
+				isAdminCheck.setWriteThrough(true);
+				isAdminCheck.addListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-                        if (user.getIsadmin()) {
-                            user.setRoleid(null);
-                            layout.removeComponent(roleLayout);
-                        } else {
-                            if (roleComboBox.getContainerPropertyIds().size() > 0) {
-                                layout.addComponent(roleLayout);
-                            } else {
-                                AppContext
-                                        .getApplication()
-                                        .getMainWindow()
-                                        .showNotification(
-                                        "Information",
-                                        "You must have at least one role to deselect admin checkbox",
-                                        Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                                isAdminCheck.setValue(Boolean.TRUE);
-                            }
-                        }
-                    }
-                });
+					@Override
+					public void buttonClick(ClickEvent event) {
+						user.setIsadmin((Boolean) isAdminCheck.getValue());
 
-                isAdminCheck.setValue(user.getIsadmin());
-                layout.addComponent(isAdminCheck);
-                if (user.getIsadmin() == null || !user.getIsadmin()) {
-                    layout.addComponent(roleLayout);
-                }
+						if (user.getIsadmin()) {
+							user.setRoleid(null);
+							layout.removeComponent(roleLayout);
+						} else {
+							if (roleComboBox.getContainerPropertyIds().size() > 0) {
+								layout.addComponent(roleLayout);
+							} else {
+								AppContext
+										.getApplication()
+										.getMainWindow()
+										.showNotification(
+												"Information",
+												"You must have at least one role to deselect admin checkbox",
+												Window.Notification.TYPE_HUMANIZED_MESSAGE);
+								isAdminCheck.setValue(Boolean.TRUE);
+							}
+						}
+					}
+				});
 
-                this.setCompositionRoot(layout);
-            }
+				isAdminCheck.setValue(user.getIsadmin());
+				layout.addComponent(isAdminCheck);
+				if (user.getIsadmin() == null || !user.getIsadmin()) {
+					layout.addComponent(roleLayout);
+				}
 
-            @Override
-            public Class<?> getType() {
-                return Object.class;
-            }
-        }
-    }
+				this.setCompositionRoot(layout);
+			}
 
-    @Override
-    public HasEditFormHandlers<User> getEditFormHandlers() {
-        return editForm;
-    }
+			@Override
+			public Class<?> getType() {
+				return Object.class;
+			}
+		}
+	}
+
+	@Override
+	public HasEditFormHandlers<User> getEditFormHandlers() {
+		return editForm;
+	}
 }

@@ -23,8 +23,8 @@ import java.io.Serializable;
  * @author haiphucnguyen
  */
 public class UserController implements Serializable {
-
-    private UserContainer container;
+	private static final long serialVersionUID = 1L;
+	private UserContainer container;
 
     public UserController(UserContainer container) {
         this.container = container;
@@ -34,7 +34,9 @@ public class UserController implements Serializable {
     private void bindUserEvents() {
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<UserEvent.GotoAdd>() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return UserEvent.GotoAdd.class;
                     }
@@ -50,7 +52,9 @@ public class UserController implements Serializable {
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<UserEvent.GotoEdit>() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return UserEvent.GotoEdit.class;
                     }
@@ -68,7 +72,9 @@ public class UserController implements Serializable {
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<UserEvent.GotoRead>() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return UserEvent.GotoRead.class;
                     }
@@ -84,7 +90,9 @@ public class UserController implements Serializable {
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<UserEvent.GotoList>() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return UserEvent.GotoList.class;
                     }

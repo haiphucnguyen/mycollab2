@@ -12,44 +12,46 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @ViewComponent
 public class UserPermissionManagementViewImpl extends AbstractView implements
-        UserPermissionManagementView {
+		UserPermissionManagementView {
+	private static final long serialVersionUID = 1L;
+	private final TabSheet tabContainer;
+	private UserPresenter userPresenter;
+	private RolePresenter rolePresenter;
 
-    private final TabSheet tabContainer;
-    private UserPresenter userPresenter;
-    private RolePresenter rolePresenter;
+	public UserPermissionManagementViewImpl() {
+		this.setWidth("100%");
+		this.setMargin(true);
+		tabContainer = new TabSheet();
+		constructTabs();
+		this.addComponent(tabContainer);
 
-    public UserPermissionManagementViewImpl() {
-        this.setWidth("100%");
-        this.setMargin(true);
-        tabContainer = new TabSheet();
-        constructTabs();
-        this.addComponent(tabContainer);
+		tabContainer.addListener(new TabSheet.SelectedTabChangeListener() {
+			private static final long serialVersionUID = 1L;
 
-        tabContainer.addListener(new TabSheet.SelectedTabChangeListener() {
-            @Override
-            public void selectedTabChange(SelectedTabChangeEvent event) {
-                Component selectedTab = tabContainer.getSelectedTab();
-                if (selectedTab instanceof RoleContainer) {
-                    rolePresenter.go(tabContainer, null);
-                } else if (selectedTab instanceof UserContainer) {
-                    userPresenter.go(tabContainer, null);
-                }
-            }
-        });
-    }
+			@Override
+			public void selectedTabChange(SelectedTabChangeEvent event) {
+				Component selectedTab = tabContainer.getSelectedTab();
+				if (selectedTab instanceof RoleContainer) {
+					rolePresenter.go(tabContainer, null);
+				} else if (selectedTab instanceof UserContainer) {
+					userPresenter.go(tabContainer, null);
+				}
+			}
+		});
+	}
 
-    private void constructTabs() {
-        userPresenter = PresenterResolver.getPresenter(UserPresenter.class);
-        tabContainer.addTab(userPresenter.getView(), "Users");
-        // goto user list by default
-        userPresenter.go(UserPermissionManagementViewImpl.this, null);
+	private void constructTabs() {
+		userPresenter = PresenterResolver.getPresenter(UserPresenter.class);
+		tabContainer.addTab(userPresenter.getView(), "Users");
+		// goto user list by default
+		userPresenter.go(UserPermissionManagementViewImpl.this, null);
 
-        rolePresenter = PresenterResolver.getPresenter(RolePresenter.class);
-        tabContainer.addTab(rolePresenter.getView(), "Roles");
-    }
+		rolePresenter = PresenterResolver.getPresenter(RolePresenter.class);
+		tabContainer.addTab(rolePresenter.getView(), "Roles");
+	}
 }

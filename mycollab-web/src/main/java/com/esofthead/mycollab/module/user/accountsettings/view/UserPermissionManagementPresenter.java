@@ -13,8 +13,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class UserPermissionManagementPresenter extends AbstractPresenter<UserPermissionManagementView> {
+	private static final long serialVersionUID = 1L;
 
-    public UserPermissionManagementPresenter() {
+	public UserPermissionManagementPresenter() {
         super(UserPermissionManagementView.class);
     }
     

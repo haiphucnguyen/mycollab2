@@ -29,8 +29,8 @@ import com.vaadin.ui.themes.Reindeer;
  * @author haiphucnguyen
  */
 public class RoleSearchPanel extends GenericSearchPanel<RoleSearchCriteria> {
-
-    private RoleSearchCriteria searchCriteria;
+	private static final long serialVersionUID = 1L;
+	private RoleSearchCriteria searchCriteria;
 
     public RoleSearchPanel() {
         this.setCompositionRoot(new RoleBasicSearchLayout());

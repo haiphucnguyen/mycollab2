@@ -18,61 +18,62 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class UserAddPresenter extends AbstractPresenter<UserAddView> {
+	private static final long serialVersionUID = 1L;
 
-    public UserAddPresenter() {
-        super(UserAddView.class);
+	public UserAddPresenter() {
+		super(UserAddView.class);
 
-        view.getEditFormHandlers().addFormHandler(new EditFormHandler<User>() {
-            @Override
-            public void onSave(final User item) {
-                save(item);
-                ViewState viewState = HistoryViewManager.back();
-                if (viewState instanceof NullViewState) {
-                    EventBus.getInstance().fireEvent(
-                            new UserEvent.GotoList(this, null));
-                }
-            }
+		view.getEditFormHandlers().addFormHandler(new EditFormHandler<User>() {
+			@Override
+			public void onSave(final User item) {
+				save(item);
+				ViewState viewState = HistoryViewManager.back();
+				if (viewState instanceof NullViewState) {
+					EventBus.getInstance().fireEvent(
+							new UserEvent.GotoList(this, null));
+				}
+			}
 
-            @Override
-            public void onCancel() {
-                ViewState viewState = HistoryViewManager.back();
-                if (viewState instanceof NullViewState) {
-                    EventBus.getInstance().fireEvent(
-                            new UserEvent.GotoList(this, null));
-                }
-            }
+			@Override
+			public void onCancel() {
+				ViewState viewState = HistoryViewManager.back();
+				if (viewState instanceof NullViewState) {
+					EventBus.getInstance().fireEvent(
+							new UserEvent.GotoList(this, null));
+				}
+			}
 
-            @Override
-            public void onSaveAndNew(final User item) {
-                save(item);
-                EventBus.getInstance().fireEvent(
-                        new UserEvent.GotoAdd(this, null));
-            }
-        });
-    }
+			@Override
+			public void onSaveAndNew(final User item) {
+				save(item);
+				EventBus.getInstance().fireEvent(
+						new UserEvent.GotoAdd(this, null));
+			}
+		});
+	}
 
-    public void save(User item) {
-        UserService userService = AppContext.getSpringBean(UserService.class);
+	public void save(User item) {
+		UserService userService = AppContext.getSpringBean(UserService.class);
 
-        item.setAccountid(AppContext.getAccountId());
-        User user = userService.findByPrimaryKey(item.getUsername());
-        if (user == null) {
-            userService.saveWithSession(item, AppContext.getUsername());
-        } else {
-            userService.updateWithSession(item, AppContext.getUsername());
-        }
+		item.setAccountid(AppContext.getAccountId());
+		User user = userService.findByPrimaryKey(item.getUsername());
+		if (user == null) {
+			userService.saveWithSession(item, AppContext.getUsername());
+		} else {
+			userService.updateWithSession(item, AppContext.getUsername());
+		}
 
-    }
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        UserContainer userContainer = (UserContainer) container;
-        userContainer.removeAllComponents();
-        userContainer.addComponent(view.getWidget());
-        view.editItem((User) data.getParams());
-    }
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		UserContainer userContainer = (UserContainer) container;
+		userContainer.removeAllComponents();
+		userContainer.addComponent(view.getWidget());
+		view.editItem((User) data.getParams());
+	}
 }

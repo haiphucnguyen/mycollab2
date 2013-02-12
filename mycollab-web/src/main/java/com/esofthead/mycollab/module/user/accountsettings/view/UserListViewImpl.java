@@ -27,115 +27,117 @@ import com.vaadin.ui.VerticalLayout;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @ViewComponent
 public class UserListViewImpl extends AbstractView implements UserListView {
 
-    private static final long serialVersionUID = 1L;
-    private final UserSearchPanel searchPanel;
-    private SelectionOptionButton selectOptionButton;
-    private UserTableDisplay tableItem;
-    private final VerticalLayout listLayout;
-    private PopupButtonControl tableActionControls;
-    private final Label selectedItemsNumberLabel = new Label();
+	private static final long serialVersionUID = 1L;
+	private final UserSearchPanel searchPanel;
+	private SelectionOptionButton selectOptionButton;
+	private UserTableDisplay tableItem;
+	private final VerticalLayout listLayout;
+	private PopupButtonControl tableActionControls;
+	private final Label selectedItemsNumberLabel = new Label();
 
-    public UserListViewImpl() {
-        this.setSpacing(true);
-        this.setMargin(true);
+	public UserListViewImpl() {
+		this.setSpacing(true);
+		this.setMargin(true);
 
-        searchPanel = new UserSearchPanel();
-        this.addComponent(searchPanel);
+		searchPanel = new UserSearchPanel();
+		this.addComponent(searchPanel);
 
-        listLayout = new VerticalLayout();
-        listLayout.setSpacing(true);
-        this.addComponent(listLayout);
+		listLayout = new VerticalLayout();
+		listLayout.setSpacing(true);
+		this.addComponent(listLayout);
 
-        generateDisplayTable();
-    }
+		generateDisplayTable();
+	}
 
-    private void generateDisplayTable() {
-        tableItem = new UserTableDisplay(new String[]{"selected",
-                    "displayName", "username", "email", "lastAccessedTime"},
-                new String[]{"", "Name", "User Name", "Email",
-                    "Last Accessed Time"});
+	private void generateDisplayTable() {
+		tableItem = new UserTableDisplay(new String[] { "selected",
+				"displayName", "username", "email", "lastAccessedTime" },
+				new String[] { "", "Name", "User Name", "Email",
+						"Last Accessed Time" });
 
-        tableItem
-                .addTableListener(new ApplicationEventListener<TableClickEvent>() {
-            @Override
-            public Class<? extends ApplicationEvent> getEventType() {
-                return TableClickEvent.class;
-            }
+		tableItem
+				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+					private static final long serialVersionUID = 1L;
 
-            @Override
-            public void handle(TableClickEvent event) {
-                SimpleUser user = (SimpleUser) event.getData();
-                if (("username".equals(event.getFieldName()) || ("displayName"
-                        .equals(event.getFieldName())))) {
-                    EventBus.getInstance().fireEvent(
-                            new UserEvent.GotoRead(
-                            UserListViewImpl.this, user));
-                }
-            }
-        });
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return TableClickEvent.class;
+					}
 
-        listLayout.addComponent(constructTableActionControls());
-        listLayout.addComponent(tableItem);
-    }
+					@Override
+					public void handle(TableClickEvent event) {
+						SimpleUser user = (SimpleUser) event.getData();
+						if (("username".equals(event.getFieldName()) || ("displayName"
+								.equals(event.getFieldName())))) {
+							EventBus.getInstance().fireEvent(
+									new UserEvent.GotoRead(
+											UserListViewImpl.this, user));
+						}
+					}
+				});
 
-    @Override
-    public HasSearchHandlers<UserSearchCriteria> getSearchHandlers() {
-        return searchPanel;
-    }
+		listLayout.addComponent(constructTableActionControls());
+		listLayout.addComponent(tableItem);
+	}
 
-    private ComponentContainer constructTableActionControls() {
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setSpacing(true);
+	@Override
+	public HasSearchHandlers<UserSearchCriteria> getSearchHandlers() {
+		return searchPanel;
+	}
 
-        selectOptionButton = new SelectionOptionButton(tableItem);
-        layout.addComponent(selectOptionButton);
+	private ComponentContainer constructTableActionControls() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
 
-        tableActionControls = new PopupButtonControl("delete", "Delete");
-        tableActionControls.addOptionItem("mail", "Mail");
-        tableActionControls.addOptionItem("export", "Export");
+		selectOptionButton = new SelectionOptionButton(tableItem);
+		layout.addComponent(selectOptionButton);
 
-        layout.addComponent(tableActionControls);
-        layout.addComponent(selectedItemsNumberLabel);
-        layout.setComponentAlignment(selectedItemsNumberLabel,
-                Alignment.MIDDLE_CENTER);
-        return layout;
-    }
+		tableActionControls = new PopupButtonControl("delete", "Delete");
+		tableActionControls.addOptionItem("mail", "Mail");
+		tableActionControls.addOptionItem("export", "Export");
 
-    @Override
-    public void enableActionControls(int numOfSelectedItems) {
-        tableActionControls.setEnabled(true);
-        selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
-    }
+		layout.addComponent(tableActionControls);
+		layout.addComponent(selectedItemsNumberLabel);
+		layout.setComponentAlignment(selectedItemsNumberLabel,
+				Alignment.MIDDLE_CENTER);
+		return layout;
+	}
 
-    @Override
-    public void disableActionControls() {
-        tableActionControls.setEnabled(false);
-        selectedItemsNumberLabel.setValue("");
-    }
+	@Override
+	public void enableActionControls(int numOfSelectedItems) {
+		tableActionControls.setEnabled(true);
+		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+	}
 
-    @Override
-    public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-        return selectOptionButton;
-    }
+	@Override
+	public void disableActionControls() {
+		tableActionControls.setEnabled(false);
+		selectedItemsNumberLabel.setValue("");
+	}
 
-    @Override
-    public HasPopupActionHandlers getPopupActionHandlers() {
-        return tableActionControls;
-    }
+	@Override
+	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+		return selectOptionButton;
+	}
 
-    @Override
-    public HasSelectableItemHandlers<SimpleUser> getSelectableItemHandlers() {
-        return tableItem;
-    }
+	@Override
+	public HasPopupActionHandlers getPopupActionHandlers() {
+		return tableActionControls;
+	}
 
-    @Override
-    public IPagedBeanTable<UserSearchCriteria, SimpleUser> getPagedBeanTable() {
-        return tableItem;
-    }
+	@Override
+	public HasSelectableItemHandlers<SimpleUser> getSelectableItemHandlers() {
+		return tableItem;
+	}
+
+	@Override
+	public IPagedBeanTable<UserSearchCriteria, SimpleUser> getPagedBeanTable() {
+		return tableItem;
+	}
 }

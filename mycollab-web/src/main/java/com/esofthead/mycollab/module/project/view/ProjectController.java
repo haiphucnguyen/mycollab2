@@ -813,6 +813,25 @@ public class ProjectController {
 				});
 
 		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ProjectRoleEvent.GotoEdit>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ProjectRoleEvent.GotoEdit.class;
+					}
+
+					@Override
+					public void handle(ProjectRoleEvent.GotoEdit event) {
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
+						ProjectRoleScreenData.Add data = new ProjectRoleScreenData.Add(
+								(ProjectRole) event.getData());
+						projectView.gotoUsersAndGroup(data);
+					}
+				});
+
+		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ProjectRoleEvent.GotoRead>() {
 					private static final long serialVersionUID = 1L;
 

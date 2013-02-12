@@ -13,8 +13,8 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  */
 @ViewComponent
 public class UserContainer extends AbstractView {
-    
-    private UserController controller;
+	private static final long serialVersionUID = 1L;
+	private UserController controller;
     
     public UserContainer() {
         controller = new UserController(this);
