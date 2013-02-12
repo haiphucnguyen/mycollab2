@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -43,12 +44,18 @@ public class TaskDisplayComponent extends CssLayout {
 	private Label taskNumberLbl;
 
 	private SimpleTaskList taskList;
+	private boolean isDisplayTaskListInfo;
 
 	public TaskDisplayComponent(final SimpleTaskList taskList,
 			boolean isDisplayTaskListInfo) {
 		this.taskList = taskList;
+		this.isDisplayTaskListInfo = isDisplayTaskListInfo;
 		this.setStyleName("taskdisplay-component");
 
+		showTaskGroupInfo();
+	}
+	
+	private void showTaskGroupInfo() {
 		if (isDisplayTaskListInfo) {
 			GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(2, 3);
 			layoutHelper.getLayout().setWidth("100%");
@@ -119,6 +126,10 @@ public class TaskDisplayComponent extends CssLayout {
 									.getSpringBean(ProjectTaskService.class);
 							projectTaskService.updateWithSession(task,
 									AppContext.getUsername());
+							TaskDisplayComponent.this.removeAllComponents();
+							ProjectTaskListService taskListService = AppContext.getSpringBean(ProjectTaskListService.class);
+							taskList = taskListService.findTaskListById(taskList.getId());
+							showTaskGroupInfo();
 						}
 					}
 				});

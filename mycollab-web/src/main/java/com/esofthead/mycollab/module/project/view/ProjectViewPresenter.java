@@ -69,7 +69,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
     protected void onHandleChain(ComponentContainer container, PageActionChain pageActionChain) {
         PageAction pageAction = pageActionChain.peek();
         
-        AbstractPresenter presenter = null;
+        AbstractPresenter<?> presenter = null;
         
         if (pageAction instanceof MilestoneReadPageAction) {
             presenter = PresenterResolver.getPresenter(MilestonePresenter.class);

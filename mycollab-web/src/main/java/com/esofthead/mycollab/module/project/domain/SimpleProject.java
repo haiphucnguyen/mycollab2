@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.domain;
 
+import com.esofthead.mycollab.common.domain.PermissionMap;
+
 public class SimpleProject extends Project {
 	private static final long serialVersionUID = 1L;
 
@@ -11,6 +13,8 @@ public class SimpleProject extends Project {
     // has username belong in query string,
     // 2 if undefine
     private int ownerType;
+    
+    private PermissionMap permissionMap;
 
     public int getOwnerType() {
         return ownerType;
@@ -36,4 +40,11 @@ public class SimpleProject extends Project {
         this.accountName = accountName;
     }
 
+	public PermissionMap getPermissionMap() {
+		return permissionMap;
+	}
+
+	public void setPermissionMap(PermissionMap permissionMap) {
+		this.permissionMap = permissionMap;
+	}
 }
