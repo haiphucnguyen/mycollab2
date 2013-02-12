@@ -17,7 +17,8 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
-public class MilestoneBugListComp extends VerticalLayout implements IBugReportDisplayContainer{
+public class MilestoneBugListComp extends VerticalLayout implements
+		IBugReportDisplayContainer {
 	private static final long serialVersionUID = 1L;
 
 	private Milestone milestone;
@@ -45,40 +46,58 @@ public class MilestoneBugListComp extends VerticalLayout implements IBugReportDi
 	public void displayBugReports() {
 		this.removeAllComponents();
 		HorizontalLayout bodyLayout = new HorizontalLayout();
-		SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
-        VerticalLayout leftColumn = new VerticalLayout();
-        bodyLayout.addComponent(leftColumn);
-        UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(this);
-        unresolvedBugWidget.setWidth("450px");
-        leftColumn.addComponent(unresolvedBugWidget);
-        
-        BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
-        unresolvedByPrioritySearchCriteria.setProjectId(new NumberSearchField(project.getId()));
-        unresolvedByPrioritySearchCriteria.setMilestoneIds(new SetSearchField<Integer>(milestone.getId()));
-        unresolvedByPrioritySearchCriteria.setStatuses(new SetSearchField<String>(SearchField.AND, new String[]{BugStatusConstants.INPROGRESS, BugStatusConstants.OPEN, BugStatusConstants.REOPENNED}));
-        unresolvedBugWidget.setSearchCriteria(unresolvedByPrioritySearchCriteria);
-        
-        VerticalLayout rightColumn = new VerticalLayout();
-        bodyLayout.addComponent(rightColumn);
-        
-        UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget(this);
-        unresolvedByAssigneeWidget.setWidth("450px");
-        rightColumn.addComponent(unresolvedByAssigneeWidget);
-        
-        BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
-        unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(project.getId()));
-        unresolvedByAssigneeSearchCriteria.setMilestoneIds(new SetSearchField<Integer>(milestone.getId()));
-        unresolvedByAssigneeSearchCriteria.setStatuses(new SetSearchField<String>(SearchField.AND, new String[]{BugStatusConstants.INPROGRESS, BugStatusConstants.OPEN, BugStatusConstants.REOPENNED}));
-        unresolvedByAssigneeWidget.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
+		SimpleProject project = (SimpleProject) AppContext
+				.getVariable(ProjectContants.PROJECT_NAME);
+		VerticalLayout leftColumn = new VerticalLayout();
+		bodyLayout.addComponent(leftColumn);
+		UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(
+				this);
+		unresolvedBugWidget.setWidth("450px");
+		leftColumn.addComponent(unresolvedBugWidget);
+
+		BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
+		unresolvedByPrioritySearchCriteria.setProjectId(new NumberSearchField(
+				project.getId()));
+		unresolvedByPrioritySearchCriteria
+				.setMilestoneIds(new SetSearchField<Integer>(milestone.getId()));
+		unresolvedByPrioritySearchCriteria
+				.setStatuses(new SetSearchField<String>(SearchField.AND,
+						new String[] { BugStatusConstants.INPROGRESS,
+								BugStatusConstants.OPEN,
+								BugStatusConstants.REOPENNED }));
+		unresolvedBugWidget
+				.setSearchCriteria(unresolvedByPrioritySearchCriteria);
+
+		VerticalLayout rightColumn = new VerticalLayout();
+		bodyLayout.addComponent(rightColumn);
+
+		UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget(
+				this);
+		unresolvedByAssigneeWidget.setWidth("450px");
+		rightColumn.addComponent(unresolvedByAssigneeWidget);
+
+		BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
+		unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(
+				project.getId()));
+		unresolvedByAssigneeSearchCriteria
+				.setMilestoneIds(new SetSearchField<Integer>(milestone.getId()));
+		unresolvedByAssigneeSearchCriteria
+				.setStatuses(new SetSearchField<String>(SearchField.AND,
+						new String[] { BugStatusConstants.INPROGRESS,
+								BugStatusConstants.OPEN,
+								BugStatusConstants.REOPENNED }));
+		unresolvedByAssigneeWidget
+				.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
 		this.addComponent(bodyLayout);
 	}
 
 	@Override
 	public void displayBugListWidget(String title, BugSearchCriteria criteria) {
 		this.removeAllComponents();
-    	BugListWidget bugListWidget = new BugListWidget(title, criteria, this);
-    	bugListWidget.setWidth("100%");
-    	this.addComponent(bugListWidget);
+		BugListWidget bugListWidget = new BugListWidget(title,
+				"Back to milestone dashboard", criteria, this);
+		bugListWidget.setWidth("100%");
+		this.addComponent(bugListWidget);
 	}
 
 }

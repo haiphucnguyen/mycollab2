@@ -2,6 +2,7 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
+import com.vaadin.ui.AbstractOrderedLayout;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
@@ -17,14 +18,14 @@ public class Depot extends VerticalLayout {
 	protected HorizontalLayout header;
 	private final Label headerLbl;
 	protected ComponentContainer headerContent;
-	protected ComponentContainer bodyContent;
+	protected AbstractOrderedLayout bodyContent;
 	
-	public Depot(String title, ComponentContainer component) {
+	public Depot(String title, AbstractOrderedLayout component) {
 		this(title, null, component);
 	}
 
 	public Depot(String title, ComponentContainer headerElement,
-			ComponentContainer component) {
+			AbstractOrderedLayout component) {
 		this.setStyleName("depotComp");
 		header = new HorizontalLayout();
 		header.setStyleName("depotHeader");

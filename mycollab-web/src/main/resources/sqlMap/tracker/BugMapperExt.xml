@@ -453,8 +453,6 @@
         m_tracker_bug
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1
-
-
             <include
                 refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
         </trim>

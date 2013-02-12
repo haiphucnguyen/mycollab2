@@ -32,7 +32,7 @@ public class BugTrendReportWidget extends TimeSeriesChartWrapper<BugSearchCriter
     private static SimpleDateFormat dateFormat = new SimpleDateFormat(patternDate);
     
     public BugTrendReportWidget() {
-         super("Bugs By Priority", 450, 300);
+         super("Bugs Trend", 450, 300);
     }
     
     @Override

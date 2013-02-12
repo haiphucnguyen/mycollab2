@@ -16,26 +16,19 @@ import com.vaadin.ui.Button.ClickEvent;
 public class BugListWidget extends Depot {
 	private static final long serialVersionUID = 1L;
 
-	private IBugReportDisplayContainer bugReportDisplayContainer;
 	private BugSearchCriteria bugSearchCriteria;
 	private BugTableDisplay tableItem;
 
-	public BugListWidget(String title, BugSearchCriteria bugSearchCriteria,
-			IBugReportDisplayContainer bugReportDisplayContainer) {
+	public BugListWidget(String title, String backBtnLabel,
+			BugSearchCriteria bugSearchCriteria,
+			final IBugReportDisplayContainer bugReportDisplayContainer) {
 		super(title, new VerticalLayout());
 
-		this.bugReportDisplayContainer = bugReportDisplayContainer;
-
-		initUI();
-		setSearchCriteria(bugSearchCriteria);
-	}
-
-	private void initUI() {
 		VerticalLayout contentLayout = (VerticalLayout) this.bodyContent;
 		contentLayout.setSpacing(true);
 		contentLayout.setWidth("100%");
-		
-		Button backToBugReportsBtn = new Button("Back to component dashboard",
+
+		Button backToBugReportsBtn = new Button(backBtnLabel,
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -73,6 +66,8 @@ public class BugListWidget extends Depot {
 
 		tableItem.setWidth("100%");
 		contentLayout.addComponent(tableItem);
+
+		setSearchCriteria(bugSearchCriteria);
 	}
 
 	private void setSearchCriteria(BugSearchCriteria searchCriteria) {

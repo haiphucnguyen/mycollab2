@@ -180,7 +180,7 @@ public class ComponentReadViewImpl extends AbstractView implements
             @Override
             public void displayBugListWidget(String title, BugSearchCriteria criteria) {
             	bottomLayout.removeAllComponents();
-            	BugListWidget bugListWidget = new BugListWidget(title, criteria, this);
+            	BugListWidget bugListWidget = new BugListWidget(title, "Back to component dashboard", criteria, this);
             	bugListWidget.setWidth("100%");
             	this.bottomLayout.addComponent(bugListWidget);
             }

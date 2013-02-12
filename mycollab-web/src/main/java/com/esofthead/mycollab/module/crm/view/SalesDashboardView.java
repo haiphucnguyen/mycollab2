@@ -24,7 +24,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class SalesDashboardView extends Depot {
-
+	private static final long serialVersionUID = 1L;
 	private final String[] reportDashboard = { "OpportunitySalesStage",
 			"OpportunityLeadSource" };
 	private int currentReportIndex = 0;
@@ -44,6 +44,8 @@ public class SalesDashboardView extends Depot {
 		headerContainer.setExpandRatio(emptySpace, 1.0f);
 
 		Button prevButton = new Button(null, new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (currentReportIndex == 0) {
@@ -61,6 +63,8 @@ public class SalesDashboardView extends Depot {
 		headerContainer.addComponent(prevButton);
 
 		Button nextBtn = new Button(null, new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				if (currentReportIndex >= (reportDashboard.length - 1)) {

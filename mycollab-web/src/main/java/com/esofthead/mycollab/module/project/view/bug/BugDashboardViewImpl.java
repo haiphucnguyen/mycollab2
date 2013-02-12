@@ -157,14 +157,6 @@ public class BugDashboardViewImpl extends AbstractView implements
         BugChartComponent bugChartComponent = new BugChartComponent();
         rightColumn.addComponent(bugChartComponent);
 
-        BugTrendReportWidget bugTrendWidget = new BugTrendReportWidget();
-        rightColumn.addComponent(new LazyLoadWrapper(bugTrendWidget));
-        BugSearchCriteria trendSearchCriteria = new BugSearchCriteria();
-        trendSearchCriteria.setProjectId(new NumberSearchField(project.getId()));
-        bugTrendWidget.setSearchCriteria(trendSearchCriteria);
-
-
-
         BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
         dueDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
         dueDefectsCriteria.setResolutions(new SetSearchField<String>(
