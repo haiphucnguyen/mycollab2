@@ -140,7 +140,7 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView> implement
                                         searchCriteria), "export.csv",
                                         view.getApplication());
                             } else {
-                                List tableData = view.getPagedBeanTable()
+                                List<SimpleRisk> tableData = view.getPagedBeanTable()
                                         .getCurrentDataList();
                                 res = new StreamResource(
                                         new ExportStreamResource.ListData(

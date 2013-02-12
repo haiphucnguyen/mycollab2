@@ -813,16 +813,16 @@ public class ProjectController {
 				});
 
 		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ProjectRoleEvent.GotoList>() {
+				new ApplicationEventListener<ProjectRoleEvent.GotoRead>() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
-						return ProjectRoleEvent.GotoList.class;
+						return ProjectRoleEvent.GotoRead.class;
 					}
 
 					@Override
-					public void handle(ProjectRoleEvent.GotoList event) {
+					public void handle(ProjectRoleEvent.GotoRead event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
 						ProjectRoleScreenData.Read data = new ProjectRoleScreenData.Read(

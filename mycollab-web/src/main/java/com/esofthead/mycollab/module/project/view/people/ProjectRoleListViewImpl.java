@@ -108,7 +108,7 @@ public class ProjectRoleListViewImpl extends AbstractView implements
                             public void buttonClick(Button.ClickEvent event) {
                             	EventBus.getInstance().fireEvent(
     									new ProjectRoleEvent.GotoRead(
-    											ProjectRoleListViewImpl.this, role));
+    											ProjectRoleListViewImpl.this, role.getId()));
                             }
                         });
                 b.addStyleName("medium-text");

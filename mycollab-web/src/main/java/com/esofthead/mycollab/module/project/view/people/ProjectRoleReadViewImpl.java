@@ -13,7 +13,6 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -95,25 +94,14 @@ public class ProjectRoleReadViewImpl extends AbstractView implements ProjectRole
 
                 PermissionMap permissionMap = role.getPermissionMap();
 
-                GridFormLayoutHelper crmFormHelper = new GridFormLayoutHelper(2, ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length);
-                Depot crmHeader = new Depot("Customer Relationship Management", crmFormHelper.getLayout());
+                GridFormLayoutHelper projectFormHelper = new GridFormLayoutHelper(2, ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length);
 
                 for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
                     String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
-                    crmFormHelper.addComponent(new Label(getValueFromPerPath(permissionMap, permissionPath)), permissionPath, 0, i);
+                    projectFormHelper.addComponent(new Label(getValueFromPerPath(permissionMap, permissionPath)), permissionPath, 0, i);
                 }
 
-                permissionsPanel.addComponent(crmHeader);
-
-                GridFormLayoutHelper userFormHelper = new GridFormLayoutHelper(2, ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length);
-                Depot userHeader = new Depot("User Management", userFormHelper.getLayout());
-
-                for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
-                    String permissionPath = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
-                    userFormHelper.addComponent(new Label(getValueFromPerPath(permissionMap, permissionPath)), permissionPath, 0, i);
-                }
-
-                permissionsPanel.addComponent(userHeader);
+                permissionsPanel.addComponent(projectFormHelper.getLayout());
 
                 return permissionsPanel;
             }

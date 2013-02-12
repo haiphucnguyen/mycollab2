@@ -145,7 +145,7 @@ public class ProjectRoleListPresenter extends
 												searchCriteria), "export.csv",
 										view.getApplication());
 							} else {
-								List tableData = view.getPagedBeanTable()
+								List<ProjectRole> tableData = view.getPagedBeanTable()
 										.getCurrentDataList();
 								res = new StreamResource(
 										new ExportStreamResource.ListData(
