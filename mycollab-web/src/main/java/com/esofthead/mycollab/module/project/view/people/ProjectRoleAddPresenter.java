@@ -4,7 +4,9 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
@@ -59,6 +61,9 @@ public class ProjectRoleAddPresenter extends AbstractPresenter<ProjectRoleAddVie
 	public void save(ProjectRole item) {
 		ProjectRoleService roleService = AppContext.getSpringBean(ProjectRoleService.class);
 		item.setSaccountid(AppContext.getAccountId());
+		
+		SimpleProject project = (SimpleProject)AppContext.getVariable(ProjectContants.PROJECT_NAME);
+		item.setProjectid(project.getId());
 
 		if (item.getId() == null) {
 			roleService.saveWithSession(item, AppContext.getUsername());
@@ -66,7 +71,7 @@ public class ProjectRoleAddPresenter extends AbstractPresenter<ProjectRoleAddVie
 			roleService.updateWithSession(item, AppContext.getUsername());
 		}
 
-		roleService.savePermission(item.getId(), view.getPermissionMap());
+		roleService.savePermission(project.getId(), item.getId(), view.getPermissionMap());
 
 	}
 

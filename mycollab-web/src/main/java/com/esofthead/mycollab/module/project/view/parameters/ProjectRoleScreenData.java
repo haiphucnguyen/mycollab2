@@ -18,4 +18,11 @@ public class ProjectRoleScreenData {
 			super(params);
 		}
 	}
+	
+	public static class Read extends ScreenData<Integer> {
+
+		public Read(Integer params) {
+			super(params);
+		}
+	}
 }

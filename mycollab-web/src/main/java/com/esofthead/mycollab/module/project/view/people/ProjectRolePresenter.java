@@ -33,6 +33,9 @@ public class ProjectRolePresenter extends
 		} else if (data instanceof ProjectRoleScreenData.Add) {
 			presenter = PresenterResolver
 					.getPresenter(ProjectRoleAddPresenter.class);
+		} else if (data instanceof ProjectRoleScreenData.Read) {
+			presenter = PresenterResolver
+					.getPresenter(ProjectRoleReadPresenter.class);
 		} else {
 			throw new MyCollabException("Can not handle data " + data);
 		}

@@ -25,12 +25,15 @@ import java.util.Set;
  * @author haiphucnguyen
  */
 public class TaskGroupReorderPresenter extends AbstractPresenter<TaskGroupReorderView> {
+	private static final long serialVersionUID = 1L;
 
-    public TaskGroupReorderPresenter() {
+	public TaskGroupReorderPresenter() {
         super(TaskGroupReorderView.class);
 
         EventBus.getInstance().addListener(new ApplicationEventListener<TaskListEvent.SaveReoderTaskList>() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public Class<? extends ApplicationEvent> getEventType() {
                 return TaskListEvent.SaveReoderTaskList.class;
             }

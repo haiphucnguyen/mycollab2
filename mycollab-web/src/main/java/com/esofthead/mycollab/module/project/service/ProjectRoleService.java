@@ -9,7 +9,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCr
 public interface ProjectRoleService extends
 		IDefaultService<Integer, ProjectRole, ProjectRoleSearchCriteria> {
 
-	void savePermission(int roleId, PermissionMap permissionMap);
+	void savePermission(int projectId, int roleId, PermissionMap permissionMap);
 
 	SimpleProjectRole findRoleById(int roleId);
 }

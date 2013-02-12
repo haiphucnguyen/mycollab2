@@ -10,24 +10,26 @@ import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
-import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
-import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
-import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -65,26 +67,59 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 				ProjectRole.class, new String[] { "selected", "rolename",
 						"description" }, new String[] { "", "Name",
 						"Description" });
+		
+		tableItem.addGeneratedColumn("selected", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
 
-		tableItem
-				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-					private static final long serialVersionUID = 1L;
+            @Override
+            public Object generateCell(final Table source, final Object itemId,
+                    Object columnId) {
+                final CheckBox cb = new CheckBox("", false);
+                cb.setImmediate(true);
+                cb.addListener(new Button.ClickListener() {
+                    private static final long serialVersionUID = 1L;
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return TableClickEvent.class;
-					}
+                    @Override
+                    public void buttonClick(Button.ClickEvent event) {
+                        ProjectRole role = tableItem
+                                .getBeanByIndex(itemId);
+                        tableItem.fireSelectItemEvent(role);
+                    }
+                });
 
-					@Override
-					public void handle(TableClickEvent event) {
-						ProjectRole role = (ProjectRole) event.getData();
-						if ("rolename".equals(event.getFieldName())) {
-							EventBus.getInstance().fireEvent(
-									new ProjectRoleEvent.GotoRead(
-											ProjectRoleListViewImpl.this, role));
-						}
-					}
-				});
+                ProjectRole role = tableItem.getBeanByIndex(itemId);
+                role.setExtraData(cb);
+                return cb;
+            }
+        });
+		
+		tableItem.addGeneratedColumn("rolename", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+                final ProjectRole role = tableItem.getBeanByIndex(itemId);
+                ButtonLink b = new ButtonLink(role.getRolename(),
+                        new Button.ClickListener() {
+                            private static final long serialVersionUID = 1L;
+
+                            @Override
+                            public void buttonClick(Button.ClickEvent event) {
+                            	EventBus.getInstance().fireEvent(
+    									new ProjectRoleEvent.GotoRead(
+    											ProjectRoleListViewImpl.this, role));
+                            }
+                        });
+                b.addStyleName("medium-text");
+                return b;
+
+            }
+        });
+		
+		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+		tableItem.setColumnExpandRatio("rolename", 1);
+		tableItem.setColumnWidth("description", UIConstants.TABLE_X_LABEL_WIDTH);
 
 		listLayout.addComponent(constructTableActionControls());
 		listLayout.addComponent(tableItem);

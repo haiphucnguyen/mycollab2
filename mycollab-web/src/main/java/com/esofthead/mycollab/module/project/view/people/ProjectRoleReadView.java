@@ -4,11 +4,16 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.module.project.domain.ProjectRole;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
+import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
+import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
 /**
  *
  * @author haiphucnguyen
  */
-public interface ProjectRoleReadView extends View {
+public interface ProjectRoleReadView extends IPreviewView<SimpleProjectRole> {
+
+	HasPreviewFormHandlers<ProjectRole> getPreviewFormHandlers();
 }

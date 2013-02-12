@@ -9,7 +9,6 @@ import com.esofthead.mycollab.module.user.PermissionFlag;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
-import com.esofthead.mycollab.module.user.view.component.PermissionComboBox;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;

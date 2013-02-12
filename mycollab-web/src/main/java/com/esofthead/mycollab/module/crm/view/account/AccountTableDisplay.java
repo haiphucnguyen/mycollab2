@@ -23,8 +23,9 @@ import com.vaadin.ui.Table;
  * @author haiphucnguyen
  */
 public class AccountTableDisplay extends PagedBeanTable2<AccountService, AccountSearchCriteria, SimpleAccount> {
+	private static final long serialVersionUID = 1L;
 
-    public AccountTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
+	public AccountTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
         super(AppContext.getSpringBean(AccountService.class),
                 SimpleAccount.class, visibleColumns, columnHeaders);
 

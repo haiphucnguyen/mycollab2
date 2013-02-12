@@ -19,7 +19,7 @@
             <![CDATA[${saccountid.operation} m_prj_role.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
         </if>
         <if test="projectId != null">
-            <![CDATA[${projectId.operation} m_prj_role.projectid = #{projectId,javaType=INTEGER}]]>
+            <![CDATA[${projectId.operation} m_prj_role.projectid = #{projectId.value,javaType=INTEGER}]]>
         </if>
     </sql>
 

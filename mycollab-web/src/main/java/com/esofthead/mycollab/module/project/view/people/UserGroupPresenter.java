@@ -28,7 +28,8 @@ public class UserGroupPresenter extends AbstractPresenter<UserGroupView> {
         projectViewContainer.gotoSubView("Users & Group");
         
         AbstractPresenter<?> presenter;
-        if (data instanceof ProjectRoleScreenData.Add) {
+        if (data instanceof ProjectRoleScreenData.Add || data instanceof ProjectRoleScreenData.Search
+        		|| data instanceof ProjectRoleScreenData.Read) {
         	presenter = PresenterResolver.getPresenter(ProjectRolePresenter.class);
         } else {
         	presenter = PresenterResolver.getPresenter(ProjectMemberPresenter.class);

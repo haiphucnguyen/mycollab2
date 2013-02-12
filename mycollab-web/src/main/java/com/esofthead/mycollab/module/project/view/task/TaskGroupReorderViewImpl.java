@@ -43,7 +43,7 @@ import java.util.Set;
 @ViewComponent
 public class TaskGroupReorderViewImpl extends AbstractView implements
 		TaskGroupReorderView {
-
+	private static final long serialVersionUID = 1L;
 	private BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList> taskLists;
 	private Button saveOrderBtn;
 	private final Set<SimpleTaskList> changeSet = new HashSet<SimpleTaskList>();
@@ -63,6 +63,8 @@ public class TaskGroupReorderViewImpl extends AbstractView implements
 		header.setExpandRatio(headerLbl, 1.0f);
 
 		saveOrderBtn = new Button("Save", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(Button.ClickEvent event) {
 				EventBus.getInstance().fireEvent(
@@ -75,6 +77,8 @@ public class TaskGroupReorderViewImpl extends AbstractView implements
 
 		Button newTaskListBtn = new Button("Back to task list",
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
 						EventBus.getInstance()
@@ -93,6 +97,8 @@ public class TaskGroupReorderViewImpl extends AbstractView implements
 		ddLayout.setComponentVerticalDropRatio(0.3f);
 		ddLayout.setDragMode(LayoutDragMode.CLONE);
 		ddLayout.setDropHandler(new DropHandler() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public AcceptCriterion getAcceptCriterion() {
 				return new Not(VerticalLocationIs.MIDDLE);
@@ -138,7 +144,7 @@ public class TaskGroupReorderViewImpl extends AbstractView implements
 
 		taskLists = new BeanList<ProjectTaskListService, TaskListSearchCriteria, SimpleTaskList>(
 				null, AppContext.getSpringBean(ProjectTaskListService.class),
-				TaskListRowDisplayHandler.class, ddLayout);
+				TaskListRowDisplayHandler.class, ddLayout, false);
 		this.addComponent(taskLists);
 	}
 
@@ -161,7 +167,7 @@ public class TaskGroupReorderViewImpl extends AbstractView implements
 	}
 
 	private static class TaskListComponent extends CssLayout {
-
+		private static final long serialVersionUID = 1L;
 		private final SimpleTaskList taskList;
 
 		public TaskListComponent(SimpleTaskList taskList) {

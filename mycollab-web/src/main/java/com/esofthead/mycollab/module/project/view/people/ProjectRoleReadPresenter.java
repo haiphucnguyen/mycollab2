@@ -4,23 +4,79 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import com.esofthead.mycollab.module.project.domain.ProjectRole;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
+import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
+import com.esofthead.mycollab.module.project.service.ProjectRoleService;
+import com.esofthead.mycollab.module.user.domain.Role;
+import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public class ProjectRoleReadPresenter extends AbstractPresenter<ProjectRoleReadView> {
+public class ProjectRoleReadPresenter extends
+		AbstractPresenter<ProjectRoleReadView> {
 	private static final long serialVersionUID = 1L;
 
 	public ProjectRoleReadPresenter() {
-        super(ProjectRoleReadView.class);
-    }
+		super(ProjectRoleReadView.class);
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        throw new UnsupportedOperationException("Not supported yet.");
-    }
+		bind();
+	}
+
+	private void bind() {
+		view.getPreviewFormHandlers().addFormHandler(
+				new DefaultPreviewFormHandler<ProjectRole>() {
+					@Override
+					public void onEdit(ProjectRole data) {
+						EventBus.getInstance().fireEvent(
+								new ProjectRoleEvent.GotoEdit(this, data));
+					}
+
+					@Override
+					public void onDelete(ProjectRole data) {
+						ProjectRoleService projectRoleService = AppContext
+								.getSpringBean(ProjectRoleService.class);
+						projectRoleService.removeWithSession(data.getId(),
+								AppContext.getUsername());
+						EventBus.getInstance().fireEvent(
+								new ProjectRoleEvent.GotoList(this, null));
+					}
+
+					@Override
+					public void onClone(ProjectRole data) {
+						Role cloneData = (Role) data.copy();
+						cloneData.setRolename(null);
+						EventBus.getInstance().fireEvent(
+								new ProjectRoleEvent.GotoAdd(this, cloneData));
+					}
+
+					@Override
+					public void onCancel() {
+						EventBus.getInstance().fireEvent(
+								new ProjectRoleEvent.GotoList(this, null));
+					}
+				});
+	}
+
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		ProjectRoleContainer roleContainer = (ProjectRoleContainer) container;
+		roleContainer.removeAllComponents();
+		roleContainer.addComponent(view.getWidget());
+
+		if (data.getParams() instanceof Integer) {
+			ProjectRoleService projectRoleService = AppContext
+					.getSpringBean(ProjectRoleService.class);
+			SimpleProjectRole role = projectRoleService
+					.findRoleById((Integer) data.getParams());
+			view.previewItem(role);
+		}
+	}
 }

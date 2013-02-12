@@ -44,7 +44,7 @@ public class ProjectRoleServiceImpl extends
 	}
 
 	@Override
-	public void savePermission(int roleId, PermissionMap permissionMap) {
+	public void savePermission(int projectId, int roleId, PermissionMap permissionMap) {
 		XStream xstream = new XStream(new StaxDriver());
 		String perVal = xstream.toXML(permissionMap);
 
@@ -53,6 +53,7 @@ public class ProjectRoleServiceImpl extends
 
 		ProjectRolePermission rolePer = new ProjectRolePermission();
 		rolePer.setRoleid(roleId);
+		rolePer.setProjectid(projectId);
 		rolePer.setRoleval(perVal);
 
 		int data = projectRolePermissionMapper.countByExample(ex);

@@ -16,60 +16,61 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
+	private static final long serialVersionUID = 1L;
 
-    public RoleReadPresenter() {
-        super(RoleReadView.class);
+	public RoleReadPresenter() {
+		super(RoleReadView.class);
 
-        bind();
-    }
+		bind();
+	}
 
-    private void bind() {
-        view.getPreviewFormHandlers().addFormHandler(
-                new DefaultPreviewFormHandler<Role>() {
-                    @Override
-                    public void onEdit(Role data) {
-                        EventBus.getInstance().fireEvent(
-                                new RoleEvent.GotoEdit(this, data));
-                    }
+	private void bind() {
+		view.getPreviewFormHandlers().addFormHandler(
+				new DefaultPreviewFormHandler<Role>() {
+					@Override
+					public void onEdit(Role data) {
+						EventBus.getInstance().fireEvent(
+								new RoleEvent.GotoEdit(this, data));
+					}
 
-                    @Override
-                    public void onDelete(Role data) {
-                        RoleService taskService = AppContext
-                                .getSpringBean(RoleService.class);
-                        taskService.removeWithSession(data.getId(),
-                                AppContext.getUsername());
-                        EventBus.getInstance().fireEvent(
-                                new RoleEvent.GotoList(this, null));
-                    }
+					@Override
+					public void onDelete(Role data) {
+						RoleService roleService = AppContext
+								.getSpringBean(RoleService.class);
+						roleService.removeWithSession(data.getId(),
+								AppContext.getUsername());
+						EventBus.getInstance().fireEvent(
+								new RoleEvent.GotoList(this, null));
+					}
 
-                    @Override
-                    public void onClone(Role data) {
-                        Role cloneData = (Role) data.copy();
-                        cloneData.setRolename(null);
-                        EventBus.getInstance().fireEvent(
-                                new RoleEvent.GotoAdd(this, cloneData));
-                    }
+					@Override
+					public void onClone(Role data) {
+						Role cloneData = (Role) data.copy();
+						cloneData.setRolename(null);
+						EventBus.getInstance().fireEvent(
+								new RoleEvent.GotoAdd(this, cloneData));
+					}
 
-                    @Override
-                    public void onCancel() {
-                        EventBus.getInstance().fireEvent(
-                                new RoleEvent.GotoList(this, null));
-                    }
-                });
-    }
+					@Override
+					public void onCancel() {
+						EventBus.getInstance().fireEvent(
+								new RoleEvent.GotoList(this, null));
+					}
+				});
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        RoleContainer roleContainer = (RoleContainer) container;
-        roleContainer.removeAllComponents();
-        roleContainer.addComponent(view.getWidget());
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		RoleContainer roleContainer = (RoleContainer) container;
+		roleContainer.removeAllComponents();
+		roleContainer.addComponent(view.getWidget());
 
-        if (data.getParams() instanceof SimpleRole) {
-            view.previewItem((SimpleRole) data.getParams());
-        }
-    }
+		if (data.getParams() instanceof SimpleRole) {
+			view.previewItem((SimpleRole) data.getParams());
+		}
+	}
 }
