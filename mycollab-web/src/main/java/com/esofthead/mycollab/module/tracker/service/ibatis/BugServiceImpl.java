@@ -1,5 +1,20 @@
 package com.esofthead.mycollab.module.tracker.service.ibatis;
 
+import java.io.StringReader;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.xml.parsers.DocumentBuilder;
+import javax.xml.parsers.DocumentBuilderFactory;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+import org.w3c.dom.Document;
+import org.w3c.dom.Element;
+import org.w3c.dom.NodeList;
+import org.xml.sax.InputSource;
+
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.GroupItem;
@@ -26,20 +41,6 @@ import com.esofthead.mycollab.module.tracker.domain.MetaOptionField;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import java.io.StringReader;
-import java.util.ArrayList;
-import java.util.List;
-import javax.xml.parsers.DocumentBuilder;
-import javax.xml.parsers.DocumentBuilderFactory;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
-import org.w3c.dom.Document;
-import org.w3c.dom.Element;
-import org.w3c.dom.NodeList;
-import org.xml.sax.InputSource;
 
 @Service
 @Transactional
@@ -47,8 +48,6 @@ import org.xml.sax.InputSource;
 @Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.BUG)
 @Watchable(type = MonitorTypeConstants.PRJ_BUG)
 public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriteria> implements BugService {
-
-    private static Logger log = LoggerFactory.getLogger(BugServiceImpl.class);
     @Autowired
     protected BugMapper bugMapper;
     @Autowired
@@ -139,11 +138,6 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
             }
         }
         return fields;
-    }
-
-    @Override
-    public int saveWithSession(Bug record, String username) {
-        return super.saveWithSession(record, username);
     }
 
     @Override

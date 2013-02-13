@@ -15,6 +15,7 @@ import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.service.MonitorItemService;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.web.AppContext;
 
 @Aspect
@@ -30,7 +31,6 @@ public class MonitorItemAspect {
 	@After("execution(public * com.esofthead.mycollab..service..*.saveWithSession(..)) && args(bean, username)")
 	public void traceSaveActivity(JoinPoint joinPoint, Object bean,
 			String username) {
-
 		Advised advised = (Advised) joinPoint.getThis();
 		Class<?> cls = advised.getTargetSource().getTargetClass();
 
@@ -47,6 +47,8 @@ public class MonitorItemAspect {
 				MonitorItemService monitorItemService = AppContext
 						.getSpringBean(MonitorItemService.class);
 				monitorItemService.saveWithSession(monitorItem, username);
+				log.debug("Save monitor item: "
+						+ BeanUtility.printBeanObj(monitorItem));
 			} catch (Exception e) {
 				log.error(
 						"Error when save activity for save action of service "
