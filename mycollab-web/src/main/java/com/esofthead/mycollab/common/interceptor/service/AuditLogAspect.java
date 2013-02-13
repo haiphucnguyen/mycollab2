@@ -4,13 +4,11 @@
  */
 package com.esofthead.mycollab.common.interceptor.service;
 
-import com.esofthead.mycollab.common.service.AuditLogService;
-import com.esofthead.mycollab.core.persistence.service.IPostUpdateHandler;
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import java.io.Serializable;
 import java.lang.reflect.Method;
 import java.util.HashMap;
 import java.util.Map;
+
 import org.apache.commons.beanutils.PropertyUtils;
 import org.aspectj.lang.JoinPoint;
 import org.aspectj.lang.annotation.After;
@@ -22,6 +20,9 @@ import org.springframework.aop.framework.Advised;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
+
+import com.esofthead.mycollab.common.service.AuditLogService;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 
 /**
  *
@@ -83,10 +84,10 @@ public class AuditLogAspect {
                 int sAccountId = (Integer) PropertyUtils.getProperty(bean, "saccountid");
                 Object oldValue = caches.get(key);
                 if (oldValue != null) {
-                    if (cls.isAssignableFrom(IPostUpdateHandler.class)) {
-                        Object service = advised.getTargetSource().getTarget();
-                        ((IPostUpdateHandler) service).postUpdate(oldValue, bean);
-                    }
+//                    if (cls.isAssignableFrom(IPostUpdateHandler.class)) {
+//                        Object service = advised.getTargetSource().getTarget();
+//                        ((IPostUpdateHandler) service).postUpdate(oldValue, bean);
+//                    }
 
                     log.debug("Save audit log for service " + bean);
                     auditLogService.saveAuditLog(username, auditAnnotation.module(), auditAnnotation.type(), typeid, sAccountId, oldValue, bean);

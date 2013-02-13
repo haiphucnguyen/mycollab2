@@ -1,9 +1,11 @@
 package com.esofthead.mycollab.module.tracker.service.ibatis;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
+import com.esofthead.mycollab.common.interceptor.service.Watchable;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.core.MyCollabException;
@@ -43,6 +45,7 @@ import org.xml.sax.InputSource;
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, nameField = "summary", type = ProjectContants.BUG, extraFieldName = "projectid")
 @Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.BUG)
+@Watchable(type = MonitorTypeConstants.PRJ_BUG)
 public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriteria> implements BugService {
 
     private static Logger log = LoggerFactory.getLogger(BugServiceImpl.class);
