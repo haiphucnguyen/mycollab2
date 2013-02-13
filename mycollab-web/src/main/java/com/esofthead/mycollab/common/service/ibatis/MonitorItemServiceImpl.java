@@ -29,37 +29,37 @@ public class MonitorItemServiceImpl extends
 	}
 
 	@Override
-	public int countMonitorsOfItem(String itemid) {
+	public int countMonitorsOfItem(String type, int typeid) {
 		MonitorItemExample ex = new MonitorItemExample();
-		ex.createCriteria().andItemidEqualTo(itemid);
+		ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeid);
 		return monitorItemMapper.countByExample(ex);
 	}
 
 	@Override
-	public Boolean isWatchingItem(String username, String itemid) {
+	public Boolean isWatchingItem(String username, String type, int typeid) {
 		MonitorItemExample ex = new MonitorItemExample();
-		ex.createCriteria().andItemidEqualTo(itemid).andUserEqualTo(username);
-		return (monitorItemMapper.countByExample(ex) > 0);
+		ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeid).andUserEqualTo(username);
+		return (monitorItemMapper.countByExample(ex) != 0);
 	}
 
 	@Override
-	public void deleteWatchingItems(String itemid) {
+	public List<MonitorItem> getMonitorItems(String type, int typeid) {
 		MonitorItemExample ex = new MonitorItemExample();
-		ex.createCriteria().andItemidEqualTo(itemid);
-		monitorItemMapper.deleteByExample(ex);
-	}
-
-	@Override
-	public void deleteWatchingItem(String username, String itemid) {
-		MonitorItemExample ex = new MonitorItemExample();
-		ex.createCriteria().andUserEqualTo(username).andItemidEqualTo(itemid);
-		monitorItemMapper.deleteByExample(ex);
-	}
-
-	@Override
-	public List<MonitorItem> getMonitorItems(String itemid) {
-		MonitorItemExample ex = new MonitorItemExample();
-		ex.createCriteria().andItemidEqualTo(itemid);
+		ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeid);
 		return monitorItemMapper.selectByExample(ex);
+	}
+
+	@Override
+	public void deleteWatchingItems(String type, int typeid) {
+		MonitorItemExample ex = new MonitorItemExample();
+		ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeid);
+		monitorItemMapper.deleteByExample(ex);
+	}
+
+	@Override
+	public void deleteWatchingItem(String username, String type, int typeid) {
+		MonitorItemExample ex = new MonitorItemExample();
+		ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeid).andUserEqualTo(username);
+		monitorItemMapper.deleteByExample(ex);
 	}
 }

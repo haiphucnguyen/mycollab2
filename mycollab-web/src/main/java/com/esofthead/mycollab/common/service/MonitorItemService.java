@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.common.service;
 
 import java.util.List;
-import java.util.Map;
 
 import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
@@ -12,7 +11,7 @@ public interface MonitorItemService extends ICrudService<Integer, MonitorItem> {
 	 * @param itemid
 	 * @return
 	 */
-	int countMonitorsOfItem(String itemid);
+	int countMonitorsOfItem(String type, int typeid);
 
 	/**
 	 * 
@@ -20,25 +19,25 @@ public interface MonitorItemService extends ICrudService<Integer, MonitorItem> {
 	 * @param itemid
 	 * @return
 	 */
-	Boolean isWatchingItem(String username, String itemid);
+	Boolean isWatchingItem(String username, String type, int typeid);
 
 	/**
 	 * 
 	 * @param itemid
 	 * @return
 	 */
-	List<MonitorItem> getMonitorItems(String itemid);
+	List<MonitorItem> getMonitorItems(String type, int typeid);
 
 	/**
 	 * 
 	 * @param itemid
 	 */
-	void deleteWatchingItems(String itemid);
+	void deleteWatchingItems(String type, int typeid);
 
 	/**
 	 * 
 	 * @param username
 	 * @param itemid
 	 */
-	void deleteWatchingItem(String username, String itemid);
+	void deleteWatchingItem(String username, String type, int typeid);
 }

@@ -45,7 +45,8 @@ public class BugDisplayWidget extends Depot {
 		});
 		moreBtn.setStyleName(UIConstants.THEME_LINK);
 		bodyContent.addComponent(moreBtn);
-		bodyContent.setComponentAlignment(moreBtn, Alignment.TOP_RIGHT);
+		((VerticalLayout) bodyContent).setComponentAlignment(moreBtn,
+				Alignment.TOP_RIGHT);
 		bodyContent.setStyleName(UIConstants.BUG_LIST);
 	}
 
