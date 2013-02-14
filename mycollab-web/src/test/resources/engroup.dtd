@@ -8,18 +8,23 @@
     m_comment*,
     m_crm_account*,
     m_crm_accounts_contacts*,
-    m_crm_accounts_opportunities*,
+    m_crm_accounts_leads*,
     m_crm_call*,
     m_crm_campaign*,
+    m_crm_campaigns_accounts*,
+    m_crm_campaigns_contacts*,
+    m_crm_campaigns_leads*,
     m_crm_case*,
     m_crm_contact*,
     m_crm_contacts_cases*,
+    m_crm_contacts_opportunities*,
     m_crm_contract*,
     m_crm_customer*,
     m_crm_lead*,
     m_crm_meeting*,
     m_crm_note*,
     m_crm_opportunities_contacts*,
+    m_crm_opportunities_leads*,
     m_crm_opportunity*,
     m_crm_product*,
     m_crm_product_catalog*,
@@ -28,7 +33,6 @@
     m_crm_target*,
     m_crm_target_list*,
     m_crm_task*,
-    m_crm_type_relationship*,
     m_ecm_transaction*,
     m_friend_friend*,
     m_friend_request*,
@@ -39,11 +43,11 @@
     m_prj_member*,
     m_prj_message*,
     m_prj_milestone*,
-    m_prj_monitor*,
     m_prj_problem*,
     m_prj_project*,
     m_prj_risk*,
     m_prj_role*,
+    m_prj_role_permission*,
     m_prj_task*,
     m_prj_task_list*,
     m_rss_agreegator*,
@@ -75,6 +79,7 @@
     s_user_information*,
     s_user_permission*,
     s_user_preference*,
+    s_user_tracking*,
     schema_version*)>
 
 <!ELEMENT m_attachment EMPTY>
@@ -200,12 +205,12 @@
     createdTime CDATA #IMPLIED
 >
 
-<!ELEMENT m_crm_accounts_opportunities EMPTY>
-<!ATTLIST m_crm_accounts_opportunities
+<!ELEMENT m_crm_accounts_leads EMPTY>
+<!ATTLIST m_crm_accounts_leads
     id CDATA #REQUIRED
     accountId CDATA #REQUIRED
-    opportunityId CDATA #REQUIRED
-    createdTime CDATA #IMPLIED
+    leadId CDATA #REQUIRED
+    createTime CDATA #REQUIRED
 >
 
 <!ELEMENT m_crm_call EMPTY>
@@ -252,6 +257,30 @@
     type CDATA #IMPLIED
     assignUser CDATA #IMPLIED
     lastUpdatedTime CDATA #IMPLIED
+>
+
+<!ELEMENT m_crm_campaigns_accounts EMPTY>
+<!ATTLIST m_crm_campaigns_accounts
+    id CDATA #REQUIRED
+    campaignId CDATA #REQUIRED
+    accountId CDATA #REQUIRED
+    createdTime CDATA #REQUIRED
+>
+
+<!ELEMENT m_crm_campaigns_contacts EMPTY>
+<!ATTLIST m_crm_campaigns_contacts
+    id CDATA #REQUIRED
+    campaignId CDATA #REQUIRED
+    contactId CDATA #REQUIRED
+    createdTime CDATA #REQUIRED
+>
+
+<!ELEMENT m_crm_campaigns_leads EMPTY>
+<!ATTLIST m_crm_campaigns_leads
+    id CDATA #REQUIRED
+    campaignId CDATA #REQUIRED
+    leadId CDATA #REQUIRED
+    createdTime CDATA #REQUIRED
 >
 
 <!ELEMENT m_crm_case EMPTY>
@@ -319,6 +348,14 @@
     contactId CDATA #REQUIRED
     caseId CDATA #REQUIRED
     createdTime CDATA #IMPLIED
+>
+
+<!ELEMENT m_crm_contacts_opportunities EMPTY>
+<!ATTLIST m_crm_contacts_opportunities
+    id CDATA #REQUIRED
+    contactId CDATA #REQUIRED
+    opportunityId CDATA #REQUIRED
+    createdTime CDATA #REQUIRED
 >
 
 <!ELEMENT m_crm_contract EMPTY>
@@ -451,6 +488,14 @@
     opportunityId CDATA #REQUIRED
     contactId CDATA #REQUIRED
     createdTime CDATA #IMPLIED
+>
+
+<!ELEMENT m_crm_opportunities_leads EMPTY>
+<!ATTLIST m_crm_opportunities_leads
+    id CDATA #REQUIRED
+    opportunityId CDATA #REQUIRED
+    leadId CDATA #REQUIRED
+    createdTime CDATA #REQUIRED
 >
 
 <!ELEMENT m_crm_opportunity EMPTY>
@@ -645,14 +690,6 @@
     isClosed CDATA #IMPLIED
 >
 
-<!ELEMENT m_crm_type_relationship EMPTY>
-<!ATTLIST m_crm_type_relationship
-    id CDATA #REQUIRED
-    type1id CDATA #REQUIRED
-    type2id CDATA #REQUIRED
-    type CDATA #REQUIRED
->
-
 <!ELEMENT m_ecm_transaction EMPTY>
 <!ATTLIST m_ecm_transaction
     id CDATA #REQUIRED
@@ -692,8 +729,9 @@
 <!ATTLIST m_monitor_item
     id CDATA #REQUIRED
     user CDATA #REQUIRED
-    itemid CDATA #REQUIRED
-    monitor_date CDATA #IMPLIED
+    monitor_date CDATA #REQUIRED
+    type CDATA #REQUIRED
+    typeid CDATA #REQUIRED
 >
 
 <!ELEMENT m_pm_messages EMPTY>
@@ -762,13 +800,6 @@
     createdTime CDATA #IMPLIED
     lastUpdatedTime CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
->
-
-<!ELEMENT m_prj_monitor EMPTY>
-<!ATTLIST m_prj_monitor
-    id CDATA #REQUIRED
-    projectid CDATA #REQUIRED
-    username CDATA #REQUIRED
 >
 
 <!ELEMENT m_prj_problem EMPTY>
@@ -855,7 +886,14 @@
     description CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
     projectid CDATA #REQUIRED
-    permissionVal CDATA #REQUIRED
+>
+
+<!ELEMENT m_prj_role_permission EMPTY>
+<!ATTLIST m_prj_role_permission
+    id CDATA #REQUIRED
+    roleid CDATA #REQUIRED
+    roleVal CDATA #REQUIRED
+    projectid CDATA #REQUIRED
 >
 
 <!ELEMENT m_prj_task EMPTY>
@@ -897,6 +935,7 @@
     milestoneId CDATA #IMPLIED
     owner CDATA #IMPLIED
     groupIndex CDATA #IMPLIED
+    status CDATA #REQUIRED
 >
 
 <!ELEMENT m_rss_agreegator EMPTY>
@@ -1019,6 +1058,7 @@
     estimateTime CDATA #IMPLIED
     estimateRemainTime CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
+    milestoneId CDATA #IMPLIED
 >
 
 <!ELEMENT m_tracker_bug_related_item EMPTY>
@@ -1037,8 +1077,9 @@
     userlead CDATA #IMPLIED
     description CDATA #IMPLIED
     createdUser CDATA #IMPLIED
-    createdDate CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
+    lastUpdatedTime CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
 >
 
 <!ELEMENT m_tracker_metadata EMPTY>
@@ -1078,8 +1119,9 @@
     duedate CDATA #IMPLIED
     versionname CDATA #REQUIRED
     createdUser CDATA #IMPLIED
-    createdDate CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
+    lastUpdatedTime CDATA #IMPLIED
+    createdTime CDATA #IMPLIED
 >
 
 <!ELEMENT s_account EMPTY>
@@ -1135,6 +1177,8 @@
     username CDATA #IMPLIED
     userAgent CDATA #IMPLIED
     errorTrace CDATA #REQUIRED
+    ipaddress CDATA #IMPLIED
+    country_code CDATA #IMPLIED
 >
 
 <!ELEMENT s_role_permission EMPTY>
@@ -1203,6 +1247,15 @@
     username CDATA #IMPLIED
     lastModuleVisit CDATA #IMPLIED
     lastAccessedTime CDATA #IMPLIED
+>
+
+<!ELEMENT s_user_tracking EMPTY>
+<!ATTLIST s_user_tracking
+    id CDATA #REQUIRED
+    username CDATA #REQUIRED
+    userAgent CDATA #REQUIRED
+    createdTime CDATA #REQUIRED
+    sAccountId CDATA #REQUIRED
 >
 
 <!ELEMENT schema_version EMPTY>
