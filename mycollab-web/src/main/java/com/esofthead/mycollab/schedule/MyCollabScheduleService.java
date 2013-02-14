@@ -10,5 +10,5 @@ package com.esofthead.mycollab.schedule;
  */
 public interface MyCollabScheduleService {
 
-    void doSomething();
+    void sendErrorReports();
 }

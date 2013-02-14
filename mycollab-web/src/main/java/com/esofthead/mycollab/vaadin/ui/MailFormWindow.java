@@ -2,14 +2,8 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.util.List;
 
-import org.apache.commons.mail.EmailException;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
-import com.esofthead.mycollab.common.domain.MailRecipientField;
-import com.esofthead.mycollab.common.service.MailService;
-import com.esofthead.mycollab.utils.ParsingUtils;
-import com.esofthead.mycollab.utils.ParsingUtils.InvalidEmailException;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -175,31 +169,31 @@ public class MailFormWindow extends Window {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				MailService mailService = AppContext
-						.getSpringBean(MailService.class);
-				try {
-
-					List<MailRecipientField> toFields = ParsingUtils
-							.parseEmailField((String) tokenFieldMailTo
-									.getValue());
-					List<MailRecipientField> ccFields = ParsingUtils
-							.parseEmailField((String) tokenFieldMailCc
-									.getValue());
-					List<MailRecipientField> bccFields = ParsingUtils
-							.parseEmailField((String) tokenFieldMailBcc
-									.getValue());
-
-					mailService.sendMail(toFields, ccFields, bccFields,
-							(String) subject.getValue(),
-							(String) noteArea.getValue());
-				} catch (InvalidEmailException e) {
-					// TODO: add more descriptive error message
-					getWindow()
-							.showNotification("Error", "Email invalid error");
-				} catch (EmailException e1) {
-					getWindow().showNotification("Error", "Send email error");
-					e1.printStackTrace();
-				}
+//				MailService mailService = AppContext
+//						.getSpringBean(MailService.class);
+//				try {
+//
+//					List<MailRecipientField> toFields = ParsingUtils
+//							.parseEmailField((String) tokenFieldMailTo
+//									.getValue());
+//					List<MailRecipientField> ccFields = ParsingUtils
+//							.parseEmailField((String) tokenFieldMailCc
+//									.getValue());
+//					List<MailRecipientField> bccFields = ParsingUtils
+//							.parseEmailField((String) tokenFieldMailBcc
+//									.getValue());
+//
+//					mailService.sendMail(toFields, ccFields, bccFields,
+//							(String) subject.getValue(),
+//							(String) noteArea.getValue());
+//				} catch (InvalidEmailException e) {
+//					// TODO: add more descriptive error message
+//					getWindow()
+//							.showNotification("Error", "Email invalid error");
+//				} catch (EmailException e1) {
+//					getWindow().showNotification("Error", "Send email error");
+//					e1.printStackTrace();
+//				}
 			}
 		});
 		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

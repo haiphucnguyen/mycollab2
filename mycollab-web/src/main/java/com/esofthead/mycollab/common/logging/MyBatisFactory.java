@@ -2,23 +2,36 @@ package com.esofthead.mycollab.common.logging;
 
 import java.io.ByteArrayOutputStream;
 import java.io.InputStream;
+import java.io.StringReader;
 import java.util.Properties;
 
+import org.apache.ibatis.session.SqlSessionFactory;
+import org.apache.ibatis.session.SqlSessionFactoryBuilder;
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
 import org.jasypt.properties.EncryptableProperties;
 
-public class MybatisConfig {
+public class MyBatisFactory {
 	private static final String MYBATIS_PROPERTIES = "mybatis.properties.xml";
 	private static final String RESOURCE_PROPERTIES = "resources.properties";
-	
+
 	private static final String CLASS_NAME = "db.driverClassName";
 	private static final String URL = "db.url";
 	private static final String USER_NAME = "db.username";
 	private static final String PASSWORD = "db.password";
-	
+
 	private static final String DECRYPT_PASS = "esofthead321";
 
-	public static final String loadConfig() {
+	private static final MyBatisFactory instance = new MyBatisFactory();
+
+	private SqlSessionFactory sessionFactory;
+
+	public MyBatisFactory() {
+		String xmlConfig = loadConfig();
+		SqlSessionFactoryBuilder builder = new SqlSessionFactoryBuilder();
+		sessionFactory = builder.build(new StringReader(xmlConfig));
+	}
+
+	private static final String loadConfig() {
 
 		StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
 		encryptor.setPassword(DECRYPT_PASS);
@@ -33,11 +46,12 @@ public class MybatisConfig {
 			String password = resourceProperties.getProperty(PASSWORD);
 
 			String mybatisContent = getMybatisTemplateContent();
-			if (null != mybatisContent) {
+			if (mybatisContent != null) {
 				return String.format(mybatisContent, className, url, userName,
 						password);
 			}
 		} catch (Exception e) {
+			e.printStackTrace();
 		}
 		return null;
 	}
@@ -63,5 +77,9 @@ public class MybatisConfig {
 		}
 
 		return null;
+	}
+
+	public static SqlSessionFactory build() {
+		return instance.sessionFactory;
 	}
 }
