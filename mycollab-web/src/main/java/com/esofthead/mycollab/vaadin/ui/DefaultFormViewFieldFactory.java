@@ -72,8 +72,9 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
     }
 
     public static class FormDateViewField extends CustomField {
+		private static final long serialVersionUID = 1L;
 
-        public FormDateViewField(Date date) {
+		public FormDateViewField(Date date) {
             Label l = new Label();
             l.setWidth("100%");
             l.setValue(AppContext.formatDate(date));
@@ -103,8 +104,9 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
     }
 
     public static class UserLinkViewField extends CustomField {
+		private static final long serialVersionUID = 1L;
 
-        public UserLinkViewField(String username, String fullName) {
+		public UserLinkViewField(String username, String fullName) {
             UserLink l = new UserLink(username, fullName);
             l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
             this.setCompositionRoot(l);
@@ -150,8 +152,8 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
     }
 
     public static class FormContainerViewField extends CustomField {
-
-        private final CssLayout layout;
+		private static final long serialVersionUID = 1L;
+		private final CssLayout layout;
 
         public FormContainerViewField() {
             layout = new CssLayout();
@@ -171,8 +173,8 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
     }
     
     public static class FormContainerHorizontalViewField extends CustomField {
-
-        private final HorizontalLayout layout;
+		private static final long serialVersionUID = 1L;
+		private final HorizontalLayout layout;
 
         public FormContainerHorizontalViewField() {
             layout = new HorizontalLayout();
@@ -197,8 +199,9 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
     }
 
     public static class FormAttachmentDisplayField extends CustomField {
+		private static final long serialVersionUID = 1L;
 
-        @Override
+		@Override
         public Class<?> getType() {
             return Object.class;
         }
@@ -216,8 +219,8 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 
     public static class FormAttachmentUploadField extends CustomField implements
             AttachmentUploadField {
-
-        private final MultiFileUploadExt uploadExt;
+		private static final long serialVersionUID = 1L;
+		private final MultiFileUploadExt uploadExt;
         private final AttachmentPanel attachmentPanel;
 
         @Override

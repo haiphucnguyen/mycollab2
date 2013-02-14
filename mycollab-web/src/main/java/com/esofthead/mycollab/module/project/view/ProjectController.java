@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
@@ -62,7 +61,6 @@ public class ProjectController {
 		bindMessageEvents();
 		bindMilestoneEvents();
 		bindUserGroupEvents();
-		throw new MyCollabException("AAA");
 	}
 
 	@SuppressWarnings("serial")

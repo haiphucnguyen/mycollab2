@@ -7,18 +7,21 @@ package com.esofthead.mycollab.vaadin.ui;
 import com.vaadin.ui.Button;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class UserLink extends Button {
+	private static final long serialVersionUID = 1L;
 
-    public UserLink(final String username, final String displayName) {
-        super(displayName, new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-            }
-        });
+	public UserLink(final String username, final String displayName) {
+		super(displayName, new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-        this.setStyleName("link");
-    }
+			@Override
+			public void buttonClick(ClickEvent event) {
+			}
+		});
+
+		this.setStyleName("link");
+	}
 }

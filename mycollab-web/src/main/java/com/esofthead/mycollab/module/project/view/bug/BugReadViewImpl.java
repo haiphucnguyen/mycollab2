@@ -41,318 +41,397 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 @ViewComponent
 public class BugReadViewImpl extends AbstractView implements BugReadView {
 
-    private static final long serialVersionUID = 1L;
-    private static Logger log = LoggerFactory.getLogger(BugReadViewImpl.class);
-    private SimpleBug bug;
-    private BugPreviewForm previewForm;
-    private HorizontalLayout bugWorkflowControl;
+	private static final long serialVersionUID = 1L;
+	private static Logger log = LoggerFactory.getLogger(BugReadViewImpl.class);
+	private SimpleBug bug;
+	private BugPreviewForm previewForm;
+	private HorizontalLayout bugWorkflowControl;
 
-    public BugReadViewImpl() {
-        super();
+	public BugReadViewImpl() {
+		super();
 
-        previewForm = new BugPreviewForm();
-        this.addComponent(previewForm);
-    }
+		previewForm = new BugPreviewForm();
+		this.addComponent(previewForm);
+	}
 
-    @Override
-    public void previewItem(SimpleBug item) {
-        this.bug = item;
-        previewForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
-    }
+	@Override
+	public void previewItem(SimpleBug item) {
+		this.bug = item;
+		previewForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+	}
 
-    @Override
-    public SimpleBug getItem() {
-        return bug;
-    }
+	@Override
+	public SimpleBug getItem() {
+		return bug;
+	}
 
-    private void displayWorkflowControl() {
-        if (BugStatusConstants.OPEN.equals(bug.getStatus()) || BugStatusConstants.REOPENNED.equals(bug.getStatus())) {
-            bugWorkflowControl.removeAllComponents();
-            ButtonGroup navButton = new ButtonGroup();
-            navButton.addButton(new Button("Start Progress", new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    bug.setStatus(BugStatusConstants.INPROGRESS);
-                    BugService bugService = AppContext.getSpringBean(BugService.class);
-                    bugService.updateWithSession(bug, AppContext.getUsername());
-                    displayWorkflowControl();
-                }
-            }));
-            navButton.addButton(new Button("Won't Fix", new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    AppContext.getApplication().getMainWindow().addWindow(new WontFixExplainWindow(bug));
-                }
-            }));
-            bugWorkflowControl.addComponent(navButton);
-        } else if (BugStatusConstants.INPROGRESS.equals(bug.getStatus())) {
-            bugWorkflowControl.removeAllComponents();
-            ButtonGroup navButton = new ButtonGroup();
-            navButton.addButton(new Button("Stop Progress", new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    bug.setStatus(BugStatusConstants.OPEN);
-                    BugService bugService = AppContext.getSpringBean(BugService.class);
-                    bugService.updateWithSession(bug, AppContext.getUsername());
-                    displayWorkflowControl();
-                }
-            }));
-            navButton.addButton(new Button("Resolved", new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    AppContext.getApplication().getMainWindow().addWindow(new ResolvedInputWindow(bug));
-                }
-            }));
-            bugWorkflowControl.addComponent(navButton);
-        } else if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
-            bugWorkflowControl.removeAllComponents();
-            ButtonGroup navButton = new ButtonGroup();
-            navButton.addButton(new Button("Reopen", new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    AppContext.getApplication().getMainWindow().addWindow(new ReOpenWindow(bug));
-                }
-            }));
-            bugWorkflowControl.addComponent(navButton);
-        } else if (BugStatusConstants.TESTPENDING.equals(bug.getStatus())) {
-            bugWorkflowControl.removeAllComponents();
-            ButtonGroup navButton = new ButtonGroup();
-            navButton.addButton(new Button("Reopen", new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    AppContext.getApplication().getMainWindow().addWindow(new ReOpenWindow(bug));
-                }
-            }));
-            navButton.addButton(new Button("Approve & Close", new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    AppContext.getApplication().getMainWindow().addWindow(new ApproveInputWindow(bug));
-                }
-            }));
-            bugWorkflowControl.addComponent(navButton);
-        } else if (BugStatusConstants.WONFIX.equals(bug.getStatus())) {
-            bugWorkflowControl.removeAllComponents();
-            ButtonGroup navButton = new ButtonGroup();
-            navButton.addButton(new Button("Reopen", new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    AppContext.getApplication().getMainWindow().addWindow(new ReOpenWindow(bug));
-                }
-            }));
+	private void displayWorkflowControl() {
+		if (BugStatusConstants.OPEN.equals(bug.getStatus())
+				|| BugStatusConstants.REOPENNED.equals(bug.getStatus())) {
+			bugWorkflowControl.removeAllComponents();
+			ButtonGroup navButton = new ButtonGroup();
+			navButton.addButton(new Button("Start Progress",
+					new Button.ClickListener() {
+						@Override
+						public void buttonClick(ClickEvent event) {
+							bug.setStatus(BugStatusConstants.INPROGRESS);
+							BugService bugService = AppContext
+									.getSpringBean(BugService.class);
+							bugService.updateWithSession(bug,
+									AppContext.getUsername());
+							displayWorkflowControl();
+						}
+					}));
+			navButton.addButton(new Button("Won't Fix",
+					new Button.ClickListener() {
+						@Override
+						public void buttonClick(ClickEvent event) {
+							AppContext.getApplication().getMainWindow()
+									.addWindow(new WontFixExplainWindow(bug));
+						}
+					}));
+			bugWorkflowControl.addComponent(navButton);
+		} else if (BugStatusConstants.INPROGRESS.equals(bug.getStatus())) {
+			bugWorkflowControl.removeAllComponents();
+			ButtonGroup navButton = new ButtonGroup();
+			navButton.addButton(new Button("Stop Progress",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-            bugWorkflowControl.addComponent(navButton);
-        }
-    }
+						@Override
+						public void buttonClick(ClickEvent event) {
+							bug.setStatus(BugStatusConstants.OPEN);
+							BugService bugService = AppContext
+									.getSpringBean(BugService.class);
+							bugService.updateWithSession(bug,
+									AppContext.getUsername());
+							displayWorkflowControl();
+						}
+					}));
+			navButton.addButton(new Button("Resolved",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-    private class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
+						@Override
+						public void buttonClick(ClickEvent event) {
+							AppContext.getApplication().getMainWindow()
+									.addWindow(new ResolvedInputWindow(bug));
+						}
+					}));
+			bugWorkflowControl.addComponent(navButton);
+		} else if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
+			bugWorkflowControl.removeAllComponents();
+			ButtonGroup navButton = new ButtonGroup();
+			navButton.addButton(new Button("Reopen",
+					new Button.ClickListener() {
+						@Override
+						public void buttonClick(ClickEvent event) {
+							AppContext.getApplication().getMainWindow()
+									.addWindow(new ReOpenWindow(bug));
+						}
+					}));
+			bugWorkflowControl.addComponent(navButton);
+		} else if (BugStatusConstants.TESTPENDING.equals(bug.getStatus())) {
+			bugWorkflowControl.removeAllComponents();
+			ButtonGroup navButton = new ButtonGroup();
+			navButton.addButton(new Button("Reopen",
+					new Button.ClickListener() {
+						@Override
+						public void buttonClick(ClickEvent event) {
+							AppContext.getApplication().getMainWindow()
+									.addWindow(new ReOpenWindow(bug));
+						}
+					}));
+			navButton.addButton(new Button("Approve & Close",
+					new Button.ClickListener() {
+						@Override
+						public void buttonClick(ClickEvent event) {
+							AppContext.getApplication().getMainWindow()
+									.addWindow(new ApproveInputWindow(bug));
+						}
+					}));
+			bugWorkflowControl.addComponent(navButton);
+		} else if (BugStatusConstants.WONFIX.equals(bug.getStatus())) {
+			bugWorkflowControl.removeAllComponents();
+			ButtonGroup navButton = new ButtonGroup();
+			navButton.addButton(new Button("Reopen",
+					new Button.ClickListener() {
+						@Override
+						public void buttonClick(ClickEvent event) {
+							AppContext.getApplication().getMainWindow()
+									.addWindow(new ReOpenWindow(bug));
+						}
+					}));
 
-        private BugHistoryList historyList;
+			bugWorkflowControl.addComponent(navButton);
+		}
+	}
 
-        @Override
-        public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new PreviewFormFieldFactory());
-            super.setItemDataSource(newDataSource);
-            displayWorkflowControl();
-        }
+	private class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
 
-        private class FormLayoutFactory implements IFormLayoutFactory {
+		private BugHistoryList historyList;
 
-            private GridFormLayoutHelper informationLayout;
+		@Override
+		public void setItemDataSource(Item newDataSource) {
+			this.setFormLayoutFactory(new FormLayoutFactory());
+			this.setFormFieldFactory(new PreviewFormFieldFactory());
+			super.setItemDataSource(newDataSource);
+			displayWorkflowControl();
+		}
 
-            @Override
-            public Layout getLayout() {
-                AddViewLayout taskListAddLayout = new AddViewLayout(bug.getSummary(), new ThemeResource("icons/48/project/bug.png"));
+		private class FormLayoutFactory implements IFormLayoutFactory {
 
-                HorizontalLayout topPanel = new HorizontalLayout();
-                topPanel.setSpacing(true);
-                topPanel.setMargin(true);
-                topPanel.setWidth("100%");
+			private GridFormLayoutHelper informationLayout;
 
-                HorizontalLayout buttonControls = new HorizontalLayout();
-                buttonControls.setSpacing(true);
+			@Override
+			public Layout getLayout() {
+				AddViewLayout taskListAddLayout = new AddViewLayout(
+						bug.getSummary(), new ThemeResource(
+								"icons/48/project/bug.png"));
 
-                Button assignBtn = new Button("Assign", new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        AppContext.getApplication().getMainWindow().addWindow(new AssignBugWindow(bug));
-                    }
-                });
-                assignBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-                buttonControls.addComponent(assignBtn);
-                buttonControls.setComponentAlignment(assignBtn, Alignment.MIDDLE_CENTER);
+				HorizontalLayout topPanel = new HorizontalLayout();
+				topPanel.setSpacing(true);
+				topPanel.setMargin(true);
+				topPanel.setWidth("100%");
 
-                Button editBtn = new Button("Edit", new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        EventBus.getInstance().fireEvent(new BugEvent.GotoEdit(BugReadViewImpl.this, bug));
-                    }
-                });
-                editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-                buttonControls.addComponent(editBtn);
-                buttonControls.setComponentAlignment(editBtn, Alignment.MIDDLE_CENTER);
+				HorizontalLayout buttonControls = new HorizontalLayout();
+				buttonControls.setSpacing(true);
 
-                Button deleteBtn = new Button("Delete", new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        ConfirmDialog.show(AppContext.getApplication().getMainWindow(),
-                                "Please Confirm:",
-                                "Are you sure to delete this item: " + bug.getSummary() + " ?",
-                                "Yes", "No", new ConfirmDialog.Listener() {
-                            private static final long serialVersionUID = 1L;
+				Button assignBtn = new Button("Assign",
+						new Button.ClickListener() {
+							@Override
+							public void buttonClick(ClickEvent event) {
+								AppContext.getApplication().getMainWindow()
+										.addWindow(new AssignBugWindow(bug));
+							}
+						});
+				assignBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+				buttonControls.addComponent(assignBtn);
+				buttonControls.setComponentAlignment(assignBtn,
+						Alignment.MIDDLE_CENTER);
 
-                            @Override
-                            public void onClose(ConfirmDialog dialog) {
-                                if (dialog.isConfirmed()) {
-                                    BugService bugService = AppContext
-                                            .getSpringBean(BugService.class);
-                                    bugService.removeWithSession(bug.getId(),
-                                            AppContext.getUsername());
-                                    EventBus.getInstance().fireEvent(new BugEvent.GotoList(BugReadViewImpl.this, bug));
-                                }
-                            }
-                        });
-                    }
-                });
-                deleteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-                buttonControls.addComponent(deleteBtn);
-                buttonControls.setComponentAlignment(deleteBtn, Alignment.MIDDLE_CENTER);
+				Button editBtn = new Button("Edit", new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance()
+								.fireEvent(
+										new BugEvent.GotoEdit(
+												BugReadViewImpl.this, bug));
+					}
+				});
+				editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+				buttonControls.addComponent(editBtn);
+				buttonControls.setComponentAlignment(editBtn,
+						Alignment.MIDDLE_CENTER);
 
-                topPanel.addComponent(buttonControls);
-                topPanel.setComponentAlignment(buttonControls, Alignment.MIDDLE_CENTER);
-                topPanel.setExpandRatio(buttonControls, 1);
+				Button deleteBtn = new Button("Delete",
+						new Button.ClickListener() {
+							@Override
+							public void buttonClick(ClickEvent event) {
+								ConfirmDialog.show(AppContext.getApplication()
+										.getMainWindow(), "Please Confirm:",
+										"Are you sure to delete this item: "
+												+ bug.getSummary() + " ?",
+										"Yes", "No",
+										new ConfirmDialog.Listener() {
+											private static final long serialVersionUID = 1L;
 
-                bugWorkflowControl = new HorizontalLayout();
-                topPanel.addComponent(bugWorkflowControl);
-                topPanel.setComponentAlignment(bugWorkflowControl, Alignment.MIDDLE_RIGHT);
+											@Override
+											public void onClose(
+													ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													BugService bugService = AppContext
+															.getSpringBean(BugService.class);
+													bugService.removeWithSession(
+															bug.getId(),
+															AppContext
+																	.getUsername());
+													EventBus.getInstance()
+															.fireEvent(
+																	new BugEvent.GotoList(
+																			BugReadViewImpl.this,
+																			bug));
+												}
+											}
+										});
+							}
+						});
+				deleteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+				buttonControls.addComponent(deleteBtn);
+				buttonControls.setComponentAlignment(deleteBtn,
+						Alignment.MIDDLE_CENTER);
 
+				topPanel.addComponent(buttonControls);
+				topPanel.setComponentAlignment(buttonControls,
+						Alignment.MIDDLE_CENTER);
+				topPanel.setExpandRatio(buttonControls, 1);
 
-                taskListAddLayout.addTopControls(topPanel);
+				bugWorkflowControl = new HorizontalLayout();
+				topPanel.addComponent(bugWorkflowControl);
+				topPanel.setComponentAlignment(bugWorkflowControl,
+						Alignment.MIDDLE_RIGHT);
 
-                informationLayout = new GridFormLayoutHelper(2, 11);
-                taskListAddLayout.addBody(informationLayout.getLayout());
+				taskListAddLayout.addTopControls(topPanel);
 
-                taskListAddLayout.addBottomControls(createBottomLayout());
-                return taskListAddLayout;
-            }
+				informationLayout = new GridFormLayoutHelper(2, 11);
+				taskListAddLayout.addBody(informationLayout.getLayout());
 
-            private ComponentContainer createBottomLayout() {
-                VerticalLayout bottomLayout = new VerticalLayout();
-                historyList = new BugHistoryList(bug.getId());
-                bottomLayout.addComponent(historyList);
+				taskListAddLayout.addBottomControls(createBottomLayout());
+				return taskListAddLayout;
+			}
 
-                CommentListDepot commentList = new CommentListDepot(CommentTypeConstants.PRJ_BUG, bug.getId());
-                bottomLayout.addComponent(commentList);
+			private ComponentContainer createBottomLayout() {
+				VerticalLayout bottomLayout = new VerticalLayout();
+				historyList = new BugHistoryList(bug.getId());
+				bottomLayout.addComponent(historyList);
 
-                return bottomLayout;
-            }
+				CommentListDepot commentList = new CommentListDepot(
+						CommentTypeConstants.PRJ_BUG, bug.getId());
+				bottomLayout.addComponent(commentList);
 
-            @Override
-            public void attachField(Object propertyId, Field field) {
-                if (propertyId.equals("summary")) {
-                    informationLayout.addComponent(field, "Summary", 0, 0, 2, "100%");
-                } else if (propertyId.equals("description")) {
-                    informationLayout.addComponent(field, "Description", 0, 1, 2, "100%");
-                } else if (propertyId.equals("status")) {
-                    informationLayout.addComponent(field, "Status", 0, 2);
-                } else if (propertyId.equals("priority")) {
-                    informationLayout.addComponent(field, "Priority", 1, 2);
-                } else if (propertyId.equals("severity")) {
-                    informationLayout.addComponent(field, "Severity", 0, 3);
-                } else if (propertyId.equals("resolution")) {
-                    informationLayout.addComponent(field, "Resolution", 1, 3);
-                } else if (propertyId.equals("duedate")) {
-                    informationLayout.addComponent(field, "Due Date", 0, 4);
-                } else if (propertyId.equals("createdTime")) {
-                    informationLayout.addComponent(field, "Created Time", 1, 4);
-                } else if (propertyId.equals("loguserFullName")) {
-                    informationLayout.addComponent(field, "Logged by", 0, 5);
-                } else if (propertyId.equals("assignuserFullName")) {
-                    informationLayout.addComponent(field, "Assigned to", 1, 5);
-                } else if (propertyId.equals("milestoneName")) {
-                    informationLayout.addComponent(field, "Milestone", 0, 6);
-                } else if (propertyId.equals("components")) {
-                    informationLayout.addComponent(field, "Components", 0, 7, 2, "100%");
-                } else if (propertyId.equals("affectedVersions")) {
-                    informationLayout.addComponent(field, "Affected Versions", 0, 8, 2, "100%");
-                } else if (propertyId.equals("fixedVersions")) {
-                    informationLayout.addComponent(field, "Fixed Versions", 0, 9, 2, "100%");
-                } else if (propertyId.equals("id")) {
-                    informationLayout.addComponent(field, "Attachments", 0, 10, 2, "100%");
-                }
-            }
-        }
+				return bottomLayout;
+			}
 
-        private class PreviewFormFieldFactory extends DefaultFormViewFieldFactory {
+			@Override
+			public void attachField(Object propertyId, Field field) {
+				if (propertyId.equals("summary")) {
+					informationLayout.addComponent(field, "Summary", 0, 0, 2,
+							"100%");
+				} else if (propertyId.equals("description")) {
+					informationLayout.addComponent(field, "Description", 0, 1,
+							2, "100%");
+				} else if (propertyId.equals("status")) {
+					informationLayout.addComponent(field, "Status", 0, 2);
+				} else if (propertyId.equals("priority")) {
+					informationLayout.addComponent(field, "Priority", 1, 2);
+				} else if (propertyId.equals("severity")) {
+					informationLayout.addComponent(field, "Severity", 0, 3);
+				} else if (propertyId.equals("resolution")) {
+					informationLayout.addComponent(field, "Resolution", 1, 3);
+				} else if (propertyId.equals("duedate")) {
+					informationLayout.addComponent(field, "Due Date", 0, 4);
+				} else if (propertyId.equals("createdTime")) {
+					informationLayout.addComponent(field, "Created Time", 1, 4);
+				} else if (propertyId.equals("loguserFullName")) {
+					informationLayout.addComponent(field, "Logged by", 0, 5);
+				} else if (propertyId.equals("assignuserFullName")) {
+					informationLayout.addComponent(field, "Assigned to", 1, 5);
+				} else if (propertyId.equals("milestoneName")) {
+					informationLayout.addComponent(field, "Milestone", 0, 6);
+				} else if (propertyId.equals("components")) {
+					informationLayout.addComponent(field, "Components", 0, 7,
+							2, "100%");
+				} else if (propertyId.equals("affectedVersions")) {
+					informationLayout.addComponent(field, "Affected Versions",
+							0, 8, 2, "100%");
+				} else if (propertyId.equals("fixedVersions")) {
+					informationLayout.addComponent(field, "Fixed Versions", 0,
+							9, 2, "100%");
+				} else if (propertyId.equals("id")) {
+					informationLayout.addComponent(field, "Attachments", 0, 10,
+							2, "100%");
+				}
+			}
+		}
 
-            private static final long serialVersionUID = 1L;
+		private class PreviewFormFieldFactory extends
+				DefaultFormViewFieldFactory {
 
-            @Override
-            protected Field onCreateField(Item item, Object propertyId,
-                    com.vaadin.ui.Component uiContext) {
-                if (propertyId.equals("duedate")) {
-                    return new FormDateViewField(bug.getDuedate());
-                } else if (propertyId.equals("assignuserFullName") || propertyId.equals("loguserFullName")) {
-                    return new UserLinkViewField(bug.getAssignuser(), bug.getAssignuserFullName());
-                } else if (propertyId.equals("id")) {
-                    return new FormAttachmentDisplayField(AttachmentConstants.PROJECT_BUG_TYPE, bug.getId());
-                } else if (propertyId.equals("components")) {
-                    if (bug.getComponents() != null) {
-                        FormContainerViewField componentContainer = new FormContainerViewField();
-                        for (final Component component : bug.getComponents()) {
-                            Button componentLink = new Button(component.getComponentname(), new Button.ClickListener() {
-                                @Override
-                                public void buttonClick(ClickEvent event) {
-                                    EventBus.getInstance().fireEvent(new BugComponentEvent.GotoRead(BugReadViewImpl.this, component.getId()));
-                                }
-                            });
-                            componentContainer.addComponentField(componentLink);
-                            componentLink.setStyleName("link");
-                        }
-                        return componentContainer;
-                    }
-                } else if (propertyId.equals("affectedVersions")) {
-                    FormContainerViewField componentContainer = new FormContainerViewField();
-                    for (final Version version : bug.getAffectedVersions()) {
-                        Button versionLink = new Button(version.getVersionname(), new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                EventBus.getInstance().fireEvent(new BugVersionEvent.GotoRead(BugReadViewImpl.this, version.getId()));
-                            }
-                        });
-                        componentContainer.addComponentField(versionLink);
-                        versionLink.setStyleName("link");
-                    }
-                    return componentContainer;
-                } else if (propertyId.equals("fixedVersions")) {
-                    FormContainerViewField componentContainer = new FormContainerViewField();
-                    for (final Version version : bug.getFixedVersions()) {
-                        Button versionLink = new Button(version.getVersionname(), new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                EventBus.getInstance().fireEvent(new BugVersionEvent.GotoRead(BugReadViewImpl.this, version.getId()));
-                            }
-                        });
-                        componentContainer.addComponentField(versionLink);
-                        versionLink.setStyleName("link");
-                    }
-                    return componentContainer;
-                } else if (propertyId.equals("milestoneName")) {
-                    if (bug.getMilestoneid() != null) {
-                        FormLinkViewField componentContainer = new FormLinkViewField(bug.getMilestoneName(), new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                EventBus.getInstance().fireEvent(new MilestoneEvent.GotoRead(BugReadViewImpl.this, bug.getMilestoneid()));
-                            }
-                        });
-                        return componentContainer;
-                    } else {
-                        return new FormViewField("");
-                    }
+			private static final long serialVersionUID = 1L;
 
-                }
-                return null;
-            }
-        }
-    }
+			@Override
+			protected Field onCreateField(Item item, Object propertyId,
+					com.vaadin.ui.Component uiContext) {
+				if (propertyId.equals("duedate")) {
+					return new FormDateViewField(bug.getDuedate());
+				} else if (propertyId.equals("assignuserFullName")) {
+					return new UserLinkViewField(bug.getAssignuser(),
+							bug.getAssignuserFullName());
+				} else if (propertyId.equals("loguserFullName")) {
+					return new UserLinkViewField(bug.getLogby(),
+							bug.getLoguserFullName());
+				} else if (propertyId.equals("id")) {
+					return new FormAttachmentDisplayField(
+							AttachmentConstants.PROJECT_BUG_TYPE, bug.getId());
+				} else if (propertyId.equals("components")) {
+					if (bug.getComponents() != null) {
+						FormContainerViewField componentContainer = new FormContainerViewField();
+						for (final Component component : bug.getComponents()) {
+							Button componentLink = new Button(
+									component.getComponentname(),
+									new Button.ClickListener() {
+										@Override
+										public void buttonClick(ClickEvent event) {
+											EventBus.getInstance()
+													.fireEvent(
+															new BugComponentEvent.GotoRead(
+																	BugReadViewImpl.this,
+																	component
+																			.getId()));
+										}
+									});
+							componentContainer.addComponentField(componentLink);
+							componentLink.setStyleName("link");
+						}
+						return componentContainer;
+					}
+				} else if (propertyId.equals("affectedVersions")) {
+					FormContainerViewField componentContainer = new FormContainerViewField();
+					for (final Version version : bug.getAffectedVersions()) {
+						Button versionLink = new Button(
+								version.getVersionname(),
+								new Button.ClickListener() {
+									@Override
+									public void buttonClick(ClickEvent event) {
+										EventBus.getInstance().fireEvent(
+												new BugVersionEvent.GotoRead(
+														BugReadViewImpl.this,
+														version.getId()));
+									}
+								});
+						componentContainer.addComponentField(versionLink);
+						versionLink.setStyleName("link");
+					}
+					return componentContainer;
+				} else if (propertyId.equals("fixedVersions")) {
+					FormContainerViewField componentContainer = new FormContainerViewField();
+					for (final Version version : bug.getFixedVersions()) {
+						Button versionLink = new Button(
+								version.getVersionname(),
+								new Button.ClickListener() {
+									@Override
+									public void buttonClick(ClickEvent event) {
+										EventBus.getInstance().fireEvent(
+												new BugVersionEvent.GotoRead(
+														BugReadViewImpl.this,
+														version.getId()));
+									}
+								});
+						componentContainer.addComponentField(versionLink);
+						versionLink.setStyleName("link");
+					}
+					return componentContainer;
+				} else if (propertyId.equals("milestoneName")) {
+					if (bug.getMilestoneid() != null) {
+						FormLinkViewField componentContainer = new FormLinkViewField(
+								bug.getMilestoneName(),
+								new Button.ClickListener() {
+									@Override
+									public void buttonClick(ClickEvent event) {
+										EventBus.getInstance().fireEvent(
+												new MilestoneEvent.GotoRead(
+														BugReadViewImpl.this,
+														bug.getMilestoneid()));
+									}
+								});
+						return componentContainer;
+					} else {
+						return new FormViewField("");
+					}
+
+				}
+				return null;
+			}
+		}
+	}
 }

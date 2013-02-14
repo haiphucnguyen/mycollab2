@@ -30,7 +30,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class ProjectInformationComponent extends VerticalLayout {
-
+	private static final long serialVersionUID = 1L;
 	private SimpleProject project;
 	private ProjectDisplayInformation prjDisplay;
 	private final HorizontalLayout projectInfoHeader;
@@ -70,7 +70,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 
 	private class BasicProjectInformation extends VerticalLayout implements
 			ProjectDisplayInformation {
-
+		private static final long serialVersionUID = 1L;
 		private final BasicPreviewForm previewForm;
 
 		public BasicProjectInformation() {
@@ -78,6 +78,8 @@ public class ProjectInformationComponent extends VerticalLayout {
 			this.addComponent(previewForm);
 
 			Button moreBtn = new Button("More", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void buttonClick(ClickEvent event) {
 					ProjectInformationComponent.this
@@ -93,7 +95,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 
 		@Override
 		public void show() {
-			previewForm.setItemDataSource(new BeanItem(project));
+			previewForm.setItemDataSource(new BeanItem<SimpleProject>(project));
 		}
 	}
 
@@ -105,6 +107,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 		@Override
 		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new IFormLayoutFactory() {
+				private static final long serialVersionUID = 1L;
 				private GridFormLayoutHelper informationLayout;
 
 				@Override
@@ -154,7 +157,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 
 	private class DetailProjectInformation extends VerticalLayout implements
 			ProjectDisplayInformation {
-
+		private static final long serialVersionUID = 1L;
 		private final DetailPreviewForm previewForm;
 
 		public DetailProjectInformation() {
@@ -162,6 +165,8 @@ public class ProjectInformationComponent extends VerticalLayout {
 			this.addComponent(previewForm);
 
 			Button lessBtn = new Button("Less", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void buttonClick(ClickEvent event) {
 					ProjectInformationComponent.this
@@ -178,7 +183,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 
 		@Override
 		public void show() {
-			previewForm.setItemDataSource(new BeanItem(project));
+			previewForm.setItemDataSource(new BeanItem<SimpleProject>(project));
 		}
 	}
 
