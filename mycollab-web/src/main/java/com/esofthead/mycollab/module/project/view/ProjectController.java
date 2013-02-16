@@ -9,7 +9,7 @@ import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.domain.StandupReport;
+import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
@@ -811,7 +811,7 @@ public class ProjectController {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
 						StandupScreenData.Add data = new StandupScreenData.Add(
-								new StandupReport());
+								new SimpleStandupReport());
 						projectView.gotoStandupReportView(data);
 					}
 				});

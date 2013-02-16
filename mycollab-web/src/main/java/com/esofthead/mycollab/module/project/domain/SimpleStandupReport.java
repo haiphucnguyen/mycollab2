@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.project.domain;
 
-public class SimpleStandupReport extends StandupReport{
+public class SimpleStandupReport extends StandupReportWithBLOBs {
 	private static final long serialVersionUID = 1L;
 
 	private String logByFullName;

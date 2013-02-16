@@ -14,6 +14,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.RichTextArea;
 
 @ViewComponent
 public class StandupAddViewImpl extends AbstractView implements StandupAddView {
@@ -55,7 +56,7 @@ public class StandupAddViewImpl extends AbstractView implements StandupAddView {
 
 			private Layout createButtonControls() {
 				return (new EditFormControlsGenerator<StandupReport>(
-						EditForm.this)).createButtonControls();
+						EditForm.this)).createButtonControls(true, false, true);
 			}
 
 			@Override
@@ -76,6 +77,9 @@ public class StandupAddViewImpl extends AbstractView implements StandupAddView {
 			@Override
 			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
+				if (propertyId.equals("whatlastday") || propertyId.equals("whattoday") || propertyId.equals("whatproblem")) {
+		        	return new RichTextArea();
+				}
 				return null;
 			}
 		}
