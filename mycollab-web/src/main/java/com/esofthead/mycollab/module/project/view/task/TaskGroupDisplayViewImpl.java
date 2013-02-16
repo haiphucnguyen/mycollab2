@@ -25,7 +25,7 @@ import com.vaadin.ui.VerticalLayout;
 public class TaskGroupDisplayViewImpl extends AbstractView implements
         TaskGroupDisplayView {
 
-	private PopupButton taskGroupSelecition;
+	private PopupButton taskGroupSelection;
     private TaskGroupDisplayWidget taskLists;
     private Button reOrderBtn;
 
@@ -40,11 +40,11 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
         header.setMargin(true);
         header.setSpacing(true);
         header.setWidth("100%");
-        taskGroupSelecition = new PopupButton("Active Tasks");
-		taskGroupSelecition.addStyleName("link");
-		taskGroupSelecition.addStyleName("h2");
-        header.addComponent(taskGroupSelecition);
-        header.setExpandRatio(taskGroupSelecition, 1.0f);
+        taskGroupSelection = new PopupButton("Active Tasks");
+		taskGroupSelection.addStyleName("link");
+		taskGroupSelection.addStyleName("h2");
+        header.addComponent(taskGroupSelection);
+        header.setExpandRatio(taskGroupSelection, 1.0f);
         
         VerticalLayout filterBtnLayout = new VerticalLayout();
 		filterBtnLayout.setMargin(true);
@@ -57,8 +57,8 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						taskGroupSelecition.setPopupVisible(false);
-						taskGroupSelecition.setCaption("All Task Groups");
+						taskGroupSelection.setPopupVisible(false);
+						taskGroupSelection.setCaption("All Task Groups");
 						displayAllTaskGroups();
 					}
 				});
@@ -71,8 +71,8 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						taskGroupSelecition.setPopupVisible(false);
-						taskGroupSelecition.setCaption("Active Task Groups");
+						taskGroupSelection.setPopupVisible(false);
+						taskGroupSelection.setCaption("Active Task Groups");
 						displayActiveTakLists();
 					}
 				});
@@ -85,15 +85,15 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						taskGroupSelecition.setCaption("Archieved Task Groups");
-						taskGroupSelecition.setPopupVisible(false);
+						taskGroupSelection.setCaption("Archieved Task Groups");
+						taskGroupSelection.setPopupVisible(false);
 						displayInActiveTaskGroups();
 					}
 				});
 		archievedTasksFilterBtn.setStyleName("link");
 		filterBtnLayout.addComponent(archievedTasksFilterBtn);
 		
-		taskGroupSelecition.addComponent(filterBtnLayout);
+		taskGroupSelection.addComponent(filterBtnLayout);
 
         reOrderBtn = new Button("Reorder", new Button.ClickListener() {
             @Override

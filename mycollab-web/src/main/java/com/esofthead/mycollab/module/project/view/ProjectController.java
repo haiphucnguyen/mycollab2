@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.domain.StandupReport;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
@@ -23,11 +24,13 @@ import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
+import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.view.bug.BugContainer;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskContainer;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
@@ -60,6 +63,7 @@ public class ProjectController {
 		bindBugEvents();
 		bindMessageEvents();
 		bindMilestoneEvents();
+		bindStandupEvents();
 		bindUserGroupEvents();
 	}
 
@@ -788,6 +792,27 @@ public class ProjectController {
 						ScreenData.Edit<Milestone> data = new ScreenData.Edit<Milestone>(
 								(Milestone) event.getData());
 						projectView.gotoMilestoneView(data);
+					}
+				});
+	}
+
+	private void bindStandupEvents() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<StandUpEvent.GotoAdd>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return StandUpEvent.GotoAdd.class;
+					}
+
+					@Override
+					public void handle(StandUpEvent.GotoAdd event) {
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
+						StandupScreenData.Add data = new StandupScreenData.Add(
+								new StandupReport());
+						projectView.gotoStandupReportView(data);
 					}
 				});
 	}

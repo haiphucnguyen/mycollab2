@@ -13,6 +13,8 @@ public interface ProjectView extends View {
     void gotoUsersAndGroup(ScreenData<?> data);
 
     void gotoMilestoneView(ScreenData<?> data);
+    
+    void gotoStandupReportView(ScreenData<?> data);
 
     void gotoRiskView(ScreenData<?> data);
 

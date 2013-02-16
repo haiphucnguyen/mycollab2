@@ -19,6 +19,13 @@ public class StandupScreenData {
 		}
 	}
 
+	public static class Edit extends ScreenData<StandupReport> {
+
+		public Edit(StandupReport params) {
+			super(params);
+		}
+	}
+
 	public static class Read extends ScreenData<Integer> {
 
 		public Read(Integer params) {

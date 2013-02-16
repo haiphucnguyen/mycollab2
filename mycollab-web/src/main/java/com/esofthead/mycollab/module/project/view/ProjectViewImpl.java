@@ -1,4 +1,3 @@
-
 package com.esofthead.mycollab.module.project.view;
 
 import org.slf4j.Logger;
@@ -13,9 +12,11 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
+import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.people.UserGroupPresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
@@ -158,7 +159,13 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 						} else if ("Users & Group".equals(caption)) {
 							gotoUsersAndGroup(null);
 						} else if ("StandUp".equals(caption)) {
-							standupPresenter.go(ProjectViewImpl.this, null);
+							StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
+							SimpleProject project = (SimpleProject) AppContext
+									.getVariable(ProjectContants.PROJECT_NAME);
+							criteria.setProjectId(new NumberSearchField(project
+									.getId()));
+							standupPresenter.go(ProjectViewImpl.this,
+									new StandupScreenData.Search(criteria));
 						}
 					}
 				});
@@ -189,6 +196,11 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	@Override
 	public void gotoMilestoneView(ScreenData data) {
 		milestonesPresenter.go(ProjectViewImpl.this, data);
+	}
+	
+	@Override
+	public void gotoStandupReportView(ScreenData<?> data) {
+		standupPresenter.go(ProjectViewImpl.this, data);
 	}
 
 	private Component constructProjectDashboardComponent() {
@@ -225,9 +237,10 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 				.getPresenter(ProblemPresenter.class);
 		return problemPresenter.getView();
 	}
-	
+
 	private Component constructProjectStandupMeeting() {
-		standupPresenter = PresenterResolver.getPresenter(StandupPresenter.class);
+		standupPresenter = PresenterResolver
+				.getPresenter(StandupPresenter.class);
 		return standupPresenter.getView();
 	}
 

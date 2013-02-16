@@ -60,6 +60,14 @@
 				refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
+    
+    <sql id="orderStatement">
+        ORDER BY 
+        <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+             m_prj_risk.lastUpdatedTime DESC
+        ]]>
+    </sql>
 
 	<select id="findPagableListByCriteria" resultMap="RiskResult"
 		parameterType="RiskSearchCriteria">
@@ -69,6 +77,7 @@
 			1=1 <include
 				refid="com.esofthead.mycollab.module.project.dao.RiskMapperExt.querySearchCriteria" />
 		</trim>
+        <include refid="orderStatement"/>
 	</select>
     
     <select id="findRiskById" parameterType="java.lang.Integer"

@@ -13,15 +13,17 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 public class MessageEvent {
 
     public static class GotoList extends ApplicationEvent {
+		private static final long serialVersionUID = 1L;
 
-        public GotoList(Object source, Object data) {
+		public GotoList(Object source, Object data) {
             super(source, data);
         }
     }
 
     public static class GotoRead extends ApplicationEvent {
+		private static final long serialVersionUID = 1L;
 
-        public GotoRead(Object source, Object data) {
+		public GotoRead(Object source, Object data) {
             super(source, data);
         }
     }

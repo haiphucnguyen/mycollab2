@@ -12,21 +12,22 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class ProjectPresenter extends AbstractPresenter<ProjectContainer> {
+	private static final long serialVersionUID = 1L;
 
-    public ProjectPresenter() {
-        super(ProjectContainer.class);
-    }
+	public ProjectPresenter() {
+		super(ProjectContainer.class);
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        MainView mainView = (MainView) container;
-        mainView.addView(view);
-        view.gotoProjectPage();
-        AppContext.addFragment("project");
-        AppContext.updateLastModuleVisit(ModuleNameConstants.PRJ);
-    }
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		MainView mainView = (MainView) container;
+		mainView.addView(view);
+		view.gotoProjectPage();
+		AppContext.addFragment("project");
+		AppContext.updateLastModuleVisit(ModuleNameConstants.PRJ);
+	}
 }

@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+    namespace="com.esofthead.mycollab.module.project.dao.StandupReportMapperExt">
+    <resultMap
+        extends="com.esofthead.mycollab.module.project.dao.StandupReportMapper.BaseResultMap"
+        id="StandupResult"
+        type="com.esofthead.mycollab.module.project.domain.SimpleStandupReport">
+        <result column="logByFullName" property="logByFullName"
+            jdbcType="VARCHAR" />
+    </resultMap>
+
+    <sql id="querySearchCriteria">
+        <if test="projectId != null">
+            <![CDATA[${projectId.operation} m_prj_standup.projectId=#{projectId.value,javaType=INTEGER}]]>
+        </if>
+        <if test="logBy != null">
+            <![CDATA[${logBy.operation} m_prj_standup.logBy=#{logBy.value}]]>
+        </if>
+    </sql>
+    
+    <sql id="orderStatement">
+        ORDER BY 
+        <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+             m_prj_standup.forday DESC, logByFullName DESC
+        ]]>
+    </sql>
+
+    <sql id="selectStandupReport">
+        <![CDATA[
+          SELECT m_prj_standup.id, m_prj_standup.sAccountId, m_prj_standup.projectId, m_prj_standup.forday, 
+            m_prj_standup.logBy, m_prj_standup.createTime, m_prj_standup.lastUpdatedTime, 
+            m_prj_standup.whatlastday, m_prj_standup.whattoday, m_prj_standup.whatproblem,
+            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS logByFullName
+          FROM m_prj_standup
+            LEFT OUTER JOIN s_user ON ( m_prj_standup.logBy=s_user.username)
+        ]]>
+    </sql>
+
+    <select id="getTotalCount" resultType="int" parameterType="StandupReportSearchCriteria">
+        SELECT count(*) as totalCount FROM m_prj_standup
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1
+            <include refid="querySearchCriteria" />
+        </trim>
+    </select>
+
+    <select id="findPagableListByCriteria" resultMap="StandupResult"
+        parameterType="StandupReportSearchCriteria">
+        <include refid="selectStandupReport" />
+
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1
+            <include refid="querySearchCriteria" />
+        </trim>
+    </select>
+
+    <select id="findReportById" parameterType="java.lang.Integer"
+        resultMap="StandupResult">
+        <include refid="selectStandupReport" />
+
+        WHERE m_prj_standup.id=#{standupId, javaType=INTEGER}
+    </select>
+</mapper>
