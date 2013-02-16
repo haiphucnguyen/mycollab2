@@ -1,0 +1,1 @@
+ALTER TABLE `m_prj_standup` CHANGE COLUMN `createTime` `createdTime` DATETIME NOT NULL  ;

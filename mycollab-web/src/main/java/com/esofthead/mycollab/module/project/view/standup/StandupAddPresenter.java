@@ -61,6 +61,7 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 	        standupReport.setProjectid(project.getId());
 	        standupReport.setSaccountid(AppContext.getAccountId());
 	        standupReport.setForday(new GregorianCalendar().getTime());
+	        standupReport.setLogby(AppContext.getUsername());
 	        
 	        if (standupReport.getId() == null) {
 	            standupReportService.saveWithSession(standupReport, AppContext.getUsername());
