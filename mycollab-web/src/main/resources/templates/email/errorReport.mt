@@ -5,21 +5,21 @@
 <title>Insert title here</title>
 </head>
 <body>
-<table border="1">
-    <tr>
-        <th>Account Id</th>
-        <th>User</th>
-        <th>Browser Agent</th>
-        <th>Error Trace</th>
-    </tr>
-#foreach( $issue in $issueCol )
-    <tr>
-        <th>$issue.Saccountid</th>
-        <th>$issue.Username</th>
-        <th>$issue.Useragent</th>
-        <th>$issue.Errortrace</th>
-    </tr>
-#end
-</table>
+	<table border="1">
+		<tr>
+			<th>Account Id</th>
+			<th>User</th>
+			<th>Browser Agent</th>
+			<th>Error Trace</th>
+		</tr>
+		#foreach( $issue in $issueCol )
+		<tr>
+			<th>$issue.Saccountid</th>
+			<th>$issue.Username</th>
+			<th>$issue.Useragent</th>
+			<th>$issue.Errortrace</th>
+		</tr>
+		#end
+	</table>
 </body>
 </html>

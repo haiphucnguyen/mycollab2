@@ -81,6 +81,11 @@
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.RiskMapperExt" />
     </bean>
+    
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="standUpMapper">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface" value="com.esofthead.mycollab.module.project.dao.StandupReportMapper" />
+    </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="projectRoleMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />

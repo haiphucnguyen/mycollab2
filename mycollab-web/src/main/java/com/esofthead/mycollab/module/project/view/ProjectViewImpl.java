@@ -19,6 +19,7 @@ import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.people.UserGroupPresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
+import com.esofthead.mycollab.module.project.view.standup.StandupPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -58,6 +59,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private ProblemPresenter problemPresenter;
 	private RiskPresenter riskPresenter;
 	private UserGroupPresenter userPresenter;
+	private StandupPresenter standupPresenter;
 	private SimpleProject project;
 	private ProjectBreadcrumb breadCrumb;
 
@@ -109,6 +111,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		myProjectTab.addTab(constructProjectBugComponent(), "Bugs");
 		myProjectTab.addTab(constructProjectRiskComponent(), "Risks");
 		myProjectTab.addTab(constructProjectProblemComponent(), "Problems");
+		myProjectTab.addTab(constructProjectStandupMeeting(), "StandUp");
 		myProjectTab.addTab(constructProjectUsers(), "Users & Group");
 
 		myProjectTab
@@ -154,6 +157,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 							dashboardPresenter.go(ProjectViewImpl.this, null);
 						} else if ("Users & Group".equals(caption)) {
 							gotoUsersAndGroup(null);
+						} else if ("StandUp".equals(caption)) {
+							standupPresenter.go(ProjectViewImpl.this, null);
 						}
 					}
 				});
@@ -219,6 +224,11 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		problemPresenter = PresenterResolver
 				.getPresenter(ProblemPresenter.class);
 		return problemPresenter.getView();
+	}
+	
+	private Component constructProjectStandupMeeting() {
+		standupPresenter = PresenterResolver.getPresenter(StandupPresenter.class);
+		return standupPresenter.getView();
 	}
 
 	private Component constructTaskDashboardComponent() {
