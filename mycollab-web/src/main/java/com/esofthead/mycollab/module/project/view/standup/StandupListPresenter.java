@@ -26,6 +26,7 @@ public class StandupListPresenter extends AbstractPresenter<StandupListView>
 
 	public void doSearch(StandupReportSearchCriteria searchCriteria) {
 		this.searchCriteria = searchCriteria;
+		view.setSearchCriteria(searchCriteria);
 	}
 
 }

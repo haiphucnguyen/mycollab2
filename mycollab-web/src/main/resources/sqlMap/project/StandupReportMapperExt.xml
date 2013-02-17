@@ -17,10 +17,13 @@
         <if test="logBy != null">
             <![CDATA[${logBy.operation} m_prj_standup.logBy=#{logBy.value}]]>
         </if>
+        <if test="onDate != null">
+            <![CDATA[${onDate.operation} CAST(m_prj_standup.forday AS DATE) = ${onDate.value}]]>
+        </if>
     </sql>
-    
+
     <sql id="orderStatement">
-        ORDER BY 
+        ORDER BY
         <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[
              m_prj_standup.forday DESC, logByFullName DESC
@@ -38,7 +41,8 @@
         ]]>
     </sql>
 
-    <select id="getTotalCount" resultType="int" parameterType="StandupReportSearchCriteria">
+    <select id="getTotalCount" resultType="int"
+        parameterType="StandupReportSearchCriteria">
         SELECT count(*) as totalCount FROM m_prj_standup
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1

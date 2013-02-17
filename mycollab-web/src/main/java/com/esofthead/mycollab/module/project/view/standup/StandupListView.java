@@ -4,4 +4,5 @@ import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearch
 import com.esofthead.mycollab.vaadin.mvp.View;
 
 public interface StandupListView extends View {
+	void setSearchCriteria(StandupReportSearchCriteria searchCriteria);
 }

@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.module.project.view;
 
+import java.util.GregorianCalendar;
+
+import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
@@ -15,6 +18,7 @@ import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
@@ -813,6 +817,35 @@ public class ProjectController {
 						StandupScreenData.Add data = new StandupScreenData.Add(
 								new SimpleStandupReport());
 						projectView.gotoStandupReportView(data);
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<StandUpEvent.GotoList>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return StandUpEvent.GotoList.class;
+					}
+
+					@Override
+					public void handle(StandUpEvent.GotoList event) {
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
+
+						SimpleProject project = (SimpleProject) AppContext
+								.getVariable(ProjectContants.PROJECT_NAME);
+
+						StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
+
+						criteria.setProjectId(new NumberSearchField(
+								SearchField.AND, project.getId()));
+						criteria.setOnDate(new DateSearchField(SearchField.AND,
+								new GregorianCalendar().getTime()));
+						projectView
+								.gotoStandupReportView(new StandupScreenData.Search(
+										criteria));
 					}
 				});
 	}
