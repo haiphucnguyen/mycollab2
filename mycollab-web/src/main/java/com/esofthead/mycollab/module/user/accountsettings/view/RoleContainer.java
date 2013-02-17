@@ -13,7 +13,8 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  */
 @ViewComponent
 public class RoleContainer extends AbstractView {
-    private RoleController controller;
+	private static final long serialVersionUID = 1L;
+	private RoleController controller;
     
     public RoleContainer() {
         controller = new RoleController(this);

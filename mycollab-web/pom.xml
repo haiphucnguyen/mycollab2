@@ -414,7 +414,7 @@
                 <version>8.1.5.v20120716</version>
                 <configuration>
                     <tmpDir>target/temp</tmpDir>
-                    <scanIntervalSeconds>10</scanIntervalSeconds>
+                    <!--  <scanIntervalSeconds>10</scanIntervalSeconds>-->
                     <webAppConfig>
                         <contextPath>/${project.name}</contextPath>
                     </webAppConfig>

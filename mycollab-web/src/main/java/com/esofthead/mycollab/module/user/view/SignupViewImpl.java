@@ -73,6 +73,8 @@ public class SignupViewImpl extends AbstractView implements SignupView {
 
 		((CustomLayout) form.getLayout()).addComponent(signInBtn, "signupLink");
 		signInBtn.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
 			@Override
 			public void buttonClick(ClickEvent event) {
 				EventBus.getInstance().fireEvent(
@@ -83,6 +85,7 @@ public class SignupViewImpl extends AbstractView implements SignupView {
 		Button tosBtn = new Button("Terms of Service");
 		tosBtn.setStyleName(UIConstants.THEME_LINK);
 		tosBtn.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -95,6 +98,7 @@ public class SignupViewImpl extends AbstractView implements SignupView {
 		Button privacyBtn = new Button("Privacy Policies");
 		privacyBtn.setStyleName(UIConstants.THEME_LINK);
 		privacyBtn.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -138,7 +142,7 @@ public class SignupViewImpl extends AbstractView implements SignupView {
 	}
 
 	private static class SignupFormLayoutFactory implements IFormLayoutFactory {
-
+		private static final long serialVersionUID = 1L;
 		private CustomLayout SignupFormLayout;
 
 		@Override

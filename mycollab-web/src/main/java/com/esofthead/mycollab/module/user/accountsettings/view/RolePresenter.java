@@ -17,8 +17,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class RolePresenter extends AbstractPresenter<RoleContainer> {
+	private static final long serialVersionUID = 1L;
 
-    public RolePresenter() {
+	public RolePresenter() {
         super(RoleContainer.class);
     }
 

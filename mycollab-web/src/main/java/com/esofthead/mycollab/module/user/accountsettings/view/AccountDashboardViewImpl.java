@@ -22,6 +22,10 @@ public class AccountDashboardViewImpl extends AbstractView implements
 	private final CssLayout accountSpace = new CssLayout();
 	private final AccountController controller = new AccountController(this);
 
+	private UserInformationPresenter userInformationPresenter;
+	private UserPermissionManagementPresenter userPermissionPresenter;
+	private AccountSettingsPresenter accountSettingPresenter;
+
 	public AccountDashboardViewImpl() {
 		this.setStyleName("accountViewContainer");
 		this.setMargin(false);
@@ -80,26 +84,26 @@ public class AccountDashboardViewImpl extends AbstractView implements
 	}
 
 	private ComponentContainer constructAccountSettingsComponent() {
-		AccountSettingsPresenter presenter = PresenterResolver
+		accountSettingPresenter = PresenterResolver
 				.getPresenter(AccountSettingsPresenter.class);
-		return presenter.getView();
+		return accountSettingPresenter.getView();
 	}
 
 	private ComponentContainer constructUserInformationComponent() {
-		UserInformationPresenter presenter = PresenterResolver
+		userInformationPresenter = PresenterResolver
 				.getPresenter(UserInformationPresenter.class);
-		return presenter.getView();
+		return userInformationPresenter.getView();
 	}
 
 	private ComponentContainer constructUserPermissionComponent() {
-		UserPermissionManagementPresenter presenter = PresenterResolver
+		userPermissionPresenter = PresenterResolver
 				.getPresenter(UserPermissionManagementPresenter.class);
-		return presenter.getView();
+		return userPermissionPresenter.getView();
 	}
 
 	@Override
 	public void gotoUserInformation() {
-		accountTab.selectTab("User Information");
+		userInformationPresenter.go(AccountDashboardViewImpl.this, null);
 	}
 
 	@Override

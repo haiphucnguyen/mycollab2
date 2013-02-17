@@ -10,7 +10,6 @@ import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
@@ -41,13 +40,6 @@ public class UserInformationViewImpl extends AbstractView implements
 		formItem = new EditForm();
 		viewLayout.addComponent(formItem);
 		this.addComponent(viewLayout);
-	}
-
-	@Override
-	public void attach() {
-		User currentUser = AppContext.getSession();
-		formItem.setItemDataSource(new BeanItem<User>(currentUser));
-		displayUserAvatar();
 	}
 
 	private void displayUserAvatar() {
@@ -107,7 +99,7 @@ public class UserInformationViewImpl extends AbstractView implements
 				informationHeader.setStyleName("h2");
 				layout.addComponent(informationHeader);
 
-				informationLayout = new GridFormLayoutHelper(1, 10);
+				informationLayout = new GridFormLayoutHelper(1, 8);
 				layout.addComponent(informationLayout.getLayout());
 				layout.setComponentAlignment(informationLayout.getLayout(),
 						Alignment.MIDDLE_LEFT);
@@ -122,32 +114,21 @@ public class UserInformationViewImpl extends AbstractView implements
 			@Override
 			public void attachField(Object propertyId, Field field) {
 				if (propertyId.equals("firstname")) {
-					field.setSizeUndefined();
 					informationLayout.addComponent(field, "First Name", 0, 0);
 				} else if (propertyId.equals("lastname")) {
-					field.setSizeUndefined();
 					informationLayout.addComponent(field, "Last Name", 0, 1);
-				} else if (propertyId.equals("nickname")) {
-					field.setSizeUndefined();
-					informationLayout.addComponent(field, "Nickname", 0, 3);
-				} else if (propertyId.equals("dateofbirth")) {
-					field.setSizeUndefined();
-					informationLayout.addComponent(field, "Birthday", 0, 4);
 				} else if (propertyId.equals("email")) {
-					field.setSizeUndefined();
-					informationLayout.addComponent(field, "Email", 0, 5);
-				} else if (propertyId.equals("website")) {
-					field.setSizeUndefined();
-					informationLayout.addComponent(field, "Website", 0, 6);
-				} else if (propertyId.equals("displayname")) {
-					field.setSizeUndefined();
-					informationLayout.addComponent(field, "Display Name", 0, 7);
-				} else if (propertyId.equals("company")) {
-					field.setSizeUndefined();
-					informationLayout.addComponent(field, "Company", 0, 8);
+					informationLayout.addComponent(field, "Email", 0, 2);
 				} else if (propertyId.equals("password")) {
-					field.setSizeUndefined();
-					informationLayout.addComponent(field, "Password", 0, 9);
+					informationLayout.addComponent(field, "Password", 0, 3);
+				} else if (propertyId.equals("dateofbirth")) {
+					informationLayout.addComponent(field, "Birthday", 0, 4);
+				} else if (propertyId.equals("website")) {
+					informationLayout.addComponent(field, "Website", 0, 5);
+				} else if (propertyId.equals("displayname")) {
+					informationLayout.addComponent(field, "Display Name", 0, 6);
+				} else if (propertyId.equals("company")) {
+					informationLayout.addComponent(field, "Company", 0, 7);
 				}
 			}
 		}
@@ -182,5 +163,6 @@ public class UserInformationViewImpl extends AbstractView implements
 	@Override
 	public void editItem(User user) {
 		formItem.setItemDataSource(new BeanItem<User>(user));
+		displayUserAvatar();
 	}
 }

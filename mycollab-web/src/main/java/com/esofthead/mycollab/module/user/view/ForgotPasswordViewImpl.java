@@ -43,6 +43,7 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 			Button sendEmail = new Button("Send verification email");
 			sendEmail.setStyleName(UIConstants.THEME_BLUE_LINK);
 			sendEmail.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
 
 				@Override
 				public void buttonClick(ClickEvent event) {
@@ -54,6 +55,7 @@ public class ForgotPasswordViewImpl extends AbstractView implements
 					"<<< No thanks, memory's back! Magika!!!");
 			memoBackBtn.setStyleName(UIConstants.THEME_LINK);
 			memoBackBtn.addListener(new ClickListener() {
+				private static final long serialVersionUID = 1L;
 
 				@Override
 				public void buttonClick(ClickEvent event) {

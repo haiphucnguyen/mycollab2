@@ -37,10 +37,11 @@ public class MainWindowContainer extends Window implements View {
 		fragmentNavigator = new FragmentNavigator();
 
 		urifu.addListener(new UriFragmentUtility.FragmentChangedListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void fragmentChanged(FragmentChangedEvent source) {
-				System.out.println("Change fragement: "
+				log.debug("Change fragement: "
 						+ source.getUriFragmentUtility().getFragment());
 				fragmentNavigator.navigateByFragement(source
 						.getUriFragmentUtility().getFragment());
@@ -117,7 +118,8 @@ public class MainWindowContainer extends Window implements View {
 	}
 
 	@Override
-	public void addViewListener(ApplicationEventListener listener) {
+	public void addViewListener(
+			@SuppressWarnings("rawtypes") ApplicationEventListener listener) {
 		throw new UnsupportedOperationException("Not supported yet.");
 	}
 }

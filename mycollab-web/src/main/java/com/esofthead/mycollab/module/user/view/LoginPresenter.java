@@ -81,5 +81,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		container.removeAllComponents();
 		container.addComponent(view.getWidget());
+		
+		AppContext.addFragment("user/login");
 	}
 }

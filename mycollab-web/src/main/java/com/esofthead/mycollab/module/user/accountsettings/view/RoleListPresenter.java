@@ -29,8 +29,8 @@ import org.vaadin.dialogs.ConfirmDialog;
  * @author haiphucnguyen
  */
 public class RoleListPresenter  extends AbstractPresenter<RoleListView> implements ListPresenter<RoleSearchCriteria> {
-
-    private RoleService userService;
+	private static final long serialVersionUID = 1L;
+	private RoleService userService;
     private RoleSearchCriteria searchCriteria;
     private boolean isSelectAll = false;
 

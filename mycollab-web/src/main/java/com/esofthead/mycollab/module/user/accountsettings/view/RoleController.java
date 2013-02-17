@@ -25,8 +25,8 @@ import java.io.Serializable;
  * @author haiphucnguyen
  */
 public class RoleController implements Serializable {
-
-    private RoleContainer container;
+	private static final long serialVersionUID = 1L;
+	private RoleContainer container;
 
     public RoleController(RoleContainer container) {
         this.container = container;
@@ -36,7 +36,9 @@ public class RoleController implements Serializable {
     private void bindRoleEvents() {
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<RoleEvent.GotoAdd>() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return RoleEvent.GotoAdd.class;
                     }
@@ -52,7 +54,9 @@ public class RoleController implements Serializable {
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<RoleEvent.GotoEdit>() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return RoleEvent.GotoEdit.class;
                     }
@@ -70,7 +74,9 @@ public class RoleController implements Serializable {
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<RoleEvent.GotoRead>() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return RoleEvent.GotoRead.class;
                     }
@@ -96,7 +102,9 @@ public class RoleController implements Serializable {
 
         EventBus.getInstance().addListener(
                 new ApplicationEventListener<RoleEvent.GotoList>() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public Class<? extends ApplicationEvent> getEventType() {
                         return RoleEvent.GotoList.class;
                     }
