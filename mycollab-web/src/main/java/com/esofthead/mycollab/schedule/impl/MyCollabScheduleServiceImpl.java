@@ -31,7 +31,7 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 	private MailService mailService;
 
 	@Override
-	@Scheduled(fixedDelay = 10000)
+	@Scheduled(fixedDelay = 600000)
 	public void sendErrorReports() {
 		SqlSession session = MyBatisFactory.build().openSession();
 		try {

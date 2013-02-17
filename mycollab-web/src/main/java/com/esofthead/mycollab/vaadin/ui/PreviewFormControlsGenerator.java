@@ -99,7 +99,9 @@ public class PreviewFormControlsGenerator<T> {
         layout.setExpandRatio(editButtons, 1.0f);
 
         Button previousItem = new Button(null, new Button.ClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void buttonClick(ClickEvent event) {
                 T item = ((BeanItem<T>) previewForm.getItemDataSource())
                         .getBean();

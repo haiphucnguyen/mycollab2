@@ -119,6 +119,10 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
             log.error("Error while generate column display", e);
         }
     }
+    
+    public boolean isEmpty() {
+    	return (contentLayout != null) && (contentLayout.getComponentCount() > 0);
+    }
 
     public interface RowDisplayHandler<T> {
 

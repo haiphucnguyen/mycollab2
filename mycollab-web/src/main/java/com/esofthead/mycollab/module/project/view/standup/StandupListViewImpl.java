@@ -15,6 +15,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
+import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -35,6 +36,7 @@ public class StandupListViewImpl extends AbstractView implements
 		StandupListView {
 	private static final long serialVersionUID = 1L;
 
+	private Label titleLbl;
 	private VerticalLayout reportContent;
 	private InlineDateField dateSelection;
 
@@ -69,9 +71,9 @@ public class StandupListViewImpl extends AbstractView implements
 		reportInDay = new BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport>(
 				AppContext.getSpringBean(StandupReportService.class),
 				StandupReportRowDisplay.class);
-		this.addComponent(reportInDay);
+		reportContent.addComponent(reportInDay);
 	}
-	
+
 	private void displayReport(Date date) {
 		StandupReportSearchCriteria searchCriteria = new StandupReportSearchCriteria();
 		SimpleProject project = (SimpleProject) AppContext
@@ -80,10 +82,16 @@ public class StandupListViewImpl extends AbstractView implements
 		searchCriteria.setOnDate(new DateSearchField(SearchField.AND, date));
 		setSearchCriteria(searchCriteria);
 	}
-	
+
 	@Override
 	public void setSearchCriteria(StandupReportSearchCriteria searchCriteria) {
 		reportInDay.setSearchCriteria(searchCriteria);
+
+		if (searchCriteria.getOnDate() != null) {
+			titleLbl.setValue("StandUp Report for "
+					+ AppContext.formatDate(searchCriteria.getOnDate()
+							.getValue()));
+		}
 	}
 
 	private void constructHeader() {
@@ -92,7 +100,7 @@ public class StandupListViewImpl extends AbstractView implements
 		header.setSpacing(true);
 		header.setWidth("100%");
 
-		Label titleLbl = new Label("StandUp Reports");
+		titleLbl = new Label("StandUp Reports");
 		titleLbl.addStyleName("h2");
 		header.addComponent(titleLbl);
 		header.setComponentAlignment(titleLbl, Alignment.MIDDLE_RIGHT);
@@ -123,8 +131,36 @@ public class StandupListViewImpl extends AbstractView implements
 
 		@Override
 		public Component generateRow(SimpleStandupReport obj, int rowIndex) {
-			return new Label(obj.getWhatlastday());
+			return new StandupReportDepot(obj);
 		}
 
+	}
+
+	static class StandupReportDepot extends Depot {
+		private static final long serialVersionUID = 1L;
+
+		public StandupReportDepot(SimpleStandupReport report) {
+			super(report.getLogByFullName(), new VerticalLayout());
+
+			Label whatYesterdayLbl = new Label(
+					"What I did in the last day/week");
+			whatYesterdayLbl.setStyleName("h2");
+			bodyContent.addComponent(whatYesterdayLbl);
+			Label whatYesterdayField = new Label(report.getWhatlastday());
+			bodyContent.addComponent(whatYesterdayField);
+
+			Label whatTodayLbl = new Label("What I will do today/week");
+			whatTodayLbl.setStyleName("h2");
+			bodyContent.addComponent(whatTodayLbl);
+			Label whatTodayField = new Label(report.getWhattoday());
+			bodyContent.addComponent(whatTodayField);
+
+			Label roadblockLbl = new Label(
+					"Do you have roadblocks? If you have questions or you need help, please write your questions or needs here");
+			roadblockLbl.setStyleName("h2");
+			bodyContent.addComponent(roadblockLbl);
+			Label whatProblemField = new Label(report.getWhatproblem());
+			bodyContent.addComponent(whatProblemField);
+		}
 	}
 }

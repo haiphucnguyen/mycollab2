@@ -1,9 +1,12 @@
 package com.esofthead.mycollab.module.project.view;
 
+import java.util.GregorianCalendar;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.hene.splitbutton.SplitButton;
 
+import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.ProjectContants;
@@ -164,6 +167,9 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 									.getVariable(ProjectContants.PROJECT_NAME);
 							criteria.setProjectId(new NumberSearchField(project
 									.getId()));
+							criteria.setOnDate(new DateSearchField(
+									SearchField.AND, new GregorianCalendar()
+											.getTime()));
 							standupPresenter.go(ProjectViewImpl.this,
 									new StandupScreenData.Search(criteria));
 						}
@@ -197,7 +203,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	public void gotoMilestoneView(ScreenData data) {
 		milestonesPresenter.go(ProjectViewImpl.this, data);
 	}
-	
+
 	@Override
 	public void gotoStandupReportView(ScreenData<?> data) {
 		standupPresenter.go(ProjectViewImpl.this, data);
