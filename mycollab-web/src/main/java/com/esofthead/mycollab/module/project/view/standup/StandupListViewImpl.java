@@ -8,18 +8,34 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.InlineDateField;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class StandupListViewImpl extends AbstractView implements
 		StandupListView {
 	private static final long serialVersionUID = 1L;
+	
+	private VerticalLayout reportContent;
+	private InlineDateField dateSelection;
 
 	public StandupListViewImpl() {
 		super();
 		constructHeader();
+		
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setWidth("100%");
+		reportContent = new VerticalLayout();
+		reportContent.setWidth("100%");
+		layout.addComponent(reportContent);
+		layout.setExpandRatio(reportContent, 1.0f);
+		
+		dateSelection = new InlineDateField("");
+		layout.addComponent(dateSelection);
+		this.addComponent(layout);
 	}
 
 	private void constructHeader() {

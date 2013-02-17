@@ -9,7 +9,7 @@ import com.vaadin.ui.ComponentContainer;
 public class StandupListPresenter extends AbstractPresenter<StandupListView>
 		implements ListPresenter<StandupReportSearchCriteria> {
 	private static final long serialVersionUID = 1L;
-	
+
 	private StandupReportSearchCriteria searchCriteria;
 
 	public StandupListPresenter() {
@@ -25,7 +25,7 @@ public class StandupListPresenter extends AbstractPresenter<StandupListView>
 	}
 
 	public void doSearch(StandupReportSearchCriteria searchCriteria) {
-		 this.searchCriteria = searchCriteria;
+		this.searchCriteria = searchCriteria;
 	}
 
 }
