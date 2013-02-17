@@ -48,8 +48,10 @@ public class StandupListViewImpl extends AbstractView implements
 
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setWidth("100%");
+		layout.setSpacing(true);
 		reportContent = new VerticalLayout();
 		reportContent.setWidth("100%");
+		reportContent.setSpacing(true);
 		layout.addComponent(reportContent);
 		layout.setExpandRatio(reportContent, 1.0f);
 
@@ -142,6 +144,7 @@ public class StandupListViewImpl extends AbstractView implements
 		public StandupReportDepot(SimpleStandupReport report) {
 			super(report.getLogByFullName(), new VerticalLayout());
 
+			((VerticalLayout) bodyContent).setSpacing(true);
 			Label whatYesterdayLbl = new Label(
 					"What I did in the last day/week");
 			whatYesterdayLbl.setStyleName("h2");
