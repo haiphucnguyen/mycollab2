@@ -4,10 +4,13 @@
  */
 package com.esofthead.mycollab.validator.constraints;
 
+import java.text.SimpleDateFormat;
 import java.util.Date;
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;
 import org.apache.commons.beanutils.PropertyUtils;
+
+import com.esofthead.mycollab.web.AppContext;
 
 /**
  *
@@ -34,7 +37,11 @@ public class DateComparisionValidator implements
             if (firstDate == null || lastDate == null) {
                 return true;
             } else {
-                return firstDate.before(lastDate);
+            	 SimpleDateFormat formatter = new SimpleDateFormat(AppContext.getDateFormat());
+                 firstDate =  formatter.parse(AppContext.formatDate(firstDate));
+                 lastDate = formatter.parse(AppContext.formatDate(lastDate));
+                 
+                 return (firstDate.compareTo(lastDate) == 1) ? false : true;
             }
         } catch (Exception ex) {
             return true;

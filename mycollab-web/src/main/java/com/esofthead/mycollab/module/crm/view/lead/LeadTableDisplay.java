@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
@@ -22,6 +23,7 @@ import com.vaadin.ui.Table;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class LeadTableDisplay extends PagedBeanTable2<LeadService, LeadSearchCriteria, SimpleLead> {
 
     public LeadTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
@@ -76,6 +78,19 @@ public class LeadTableDisplay extends PagedBeanTable2<LeadService, LeadSearchCri
                 }
                 
                 return b;
+            }
+        });
+        
+        this.addGeneratedColumn("assignUserFullName", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+            	final SimpleLead lead = LeadTableDisplay.this.getBeanByIndex(itemId);
+                UserLink b = new UserLink(lead.getAssignuser(), lead.getAssignUserFullName());
+                return b;
+
             }
         });
 

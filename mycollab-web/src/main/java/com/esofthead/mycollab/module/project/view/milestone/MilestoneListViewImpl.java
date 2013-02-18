@@ -21,6 +21,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
@@ -116,6 +117,19 @@ public class MilestoneListViewImpl extends AbstractView implements MilestoneList
                 if (milestone.getEnddate() != null && (milestone.getEnddate().before(new GregorianCalendar().getTime()))) {
                     b.addStyleName(UIConstants.LINK_OVERDUE);
                 }
+                return b;
+
+            }
+        });
+        
+        tableItem.addGeneratedColumn("ownerFullName", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+            	final SimpleMilestone milestone = tableItem.getBeanByIndex(itemId);
+                UserLink b = new UserLink(milestone.getOwner(), milestone.getOwnerFullName());
                 return b;
 
             }
