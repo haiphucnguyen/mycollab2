@@ -7,19 +7,16 @@ import java.util.Properties;
 
 import org.apache.ibatis.session.SqlSessionFactory;
 import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
-import org.jasypt.properties.EncryptableProperties;
+
+import com.esofthead.mycollab.common.ApplicationProperties;
 
 public class MyBatisFactory {
 	private static final String MYBATIS_PROPERTIES = "mybatis.properties.xml";
-	private static final String RESOURCE_PROPERTIES = "resources.properties";
 
 	private static final String CLASS_NAME = "db.driverClassName";
 	private static final String URL = "db.url";
 	private static final String USER_NAME = "db.username";
 	private static final String PASSWORD = "db.password";
-
-	private static final String DECRYPT_PASS = "esofthead321";
 
 	private static final MyBatisFactory instance = new MyBatisFactory();
 
@@ -32,14 +29,9 @@ public class MyBatisFactory {
 	}
 
 	private static final String loadConfig() {
-
-		StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
-		encryptor.setPassword(DECRYPT_PASS);
-		Properties resourceProperties = new EncryptableProperties(encryptor);
 		try {
-			resourceProperties.load(Thread.currentThread()
-					.getContextClassLoader()
-					.getResourceAsStream(RESOURCE_PROPERTIES));
+			Properties resourceProperties = ApplicationProperties
+					.getAppProperties();
 			String className = resourceProperties.getProperty(CLASS_NAME);
 			String url = resourceProperties.getProperty(URL);
 			String userName = resourceProperties.getProperty(USER_NAME);

@@ -1,4 +1,17 @@
 db.driverClassName=com.mysql.jdbc.Driver
 db.url=jdbc:mysql://localhost/mycollab_live?autoReconnect=true
-db.username=root
-db.password=<Your db password here>
+#db.url=jdbc:mysql://23.23.166.114/mycollab_live?autoReconnect=true
+db.username=<Your db username>
+db.password=<Your db password>
+
+h2.driverClassName=org.h2.Driver
+h2.url=jdbc:h2:~/mycollab_extdb;MODE=MySQL
+
+mail.smtphost=smtp.gmail.com
+mail.port=587
+mail.username=mail@esofthead.com
+mail.password=esofthead321
+
+error.sendTo=<Your email>
+
+content.rawContentServiceImpl=com.esofthead.mycollab.module.file.service.impl.RawContentServiceImpl

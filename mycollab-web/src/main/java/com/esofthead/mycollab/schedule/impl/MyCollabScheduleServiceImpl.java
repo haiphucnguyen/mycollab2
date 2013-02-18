@@ -12,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.dao.ReportBugIssueMapper;
 import com.esofthead.mycollab.common.domain.ReportBugIssueExample;
 import com.esofthead.mycollab.common.domain.ReportBugIssueWithBLOBs;
@@ -53,8 +54,8 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 				String msg = VelocityTemplate.format(context,
 						"templates/email/errorReport.mt");
 				mailService.sendHTMLMail("mail@esofthead.com", "Error Agent",
-						new String[] { "hainguyen@esofthead.com" },
-						new String[] { "Hai Nguyen" },
+						new String[] { ApplicationProperties.getSendErrorEmail() },
+						new String[] { ApplicationProperties.getSendErrorEmail() },
 						"My Collab Error Report", msg);
 			}
 		} finally {
