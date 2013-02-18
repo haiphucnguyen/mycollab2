@@ -25,8 +25,8 @@ import com.vaadin.terminal.StreamResource;
  * @author haiphucnguyen
  */
 public abstract class ExportStreamResource implements StreamResource.StreamSource {
-
-    private static Logger log = LoggerFactory.getLogger(ExportStreamResource.class);
+	private static final long serialVersionUID = 1L;
+	private static Logger log = LoggerFactory.getLogger(ExportStreamResource.class);
     protected String[] visibleColumns;
     protected String[] headerNames;
 
@@ -36,8 +36,8 @@ public abstract class ExportStreamResource implements StreamResource.StreamSourc
     }
 
     public static class AllItems<S extends SearchCriteria> extends ExportStreamResource {
-
-        private ISearchableService<S> searchService;
+		private static final long serialVersionUID = 1L;
+		private ISearchableService<S> searchService;
         private S searchCriteria;
 
         public AllItems(String[] visibleColumns, String[] headerNames, ISearchableService searchService, S searchCriteria) {
