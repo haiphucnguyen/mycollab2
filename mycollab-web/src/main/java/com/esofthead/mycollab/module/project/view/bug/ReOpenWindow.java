@@ -91,6 +91,7 @@ public class ReOpenWindow extends Window {
                 });
                 cancelBtn.setStyleName("link");
                 controlsBtn.addComponent(cancelBtn);
+                controlsBtn.setComponentAlignment(cancelBtn, Alignment.MIDDLE_LEFT);
 
                 Button wonFixBtn = new Button("Reopen", new Button.ClickListener() {
                     @SuppressWarnings("unchecked")
@@ -122,6 +123,7 @@ public class ReOpenWindow extends Window {
                 });
                 wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
                 controlsBtn.addComponent(wonFixBtn);
+                controlsBtn.setComponentAlignment(wonFixBtn, Alignment.MIDDLE_RIGHT);
 
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 

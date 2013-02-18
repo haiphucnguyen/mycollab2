@@ -18,6 +18,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
@@ -117,6 +118,19 @@ public class ProblemListViewImpl extends AbstractView implements
                         b.addStyleName(UIConstants.LINK_OVERDUE);
                     }
                 }
+                return b;
+
+            }
+        });
+        
+        tableItem.addGeneratedColumn("assignedUserFullName", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+            	final SimpleProblem problem = tableItem.getBeanByIndex(itemId);
+                UserLink b = new UserLink(problem.getAssigntouser(), problem.getAssignedUserFullName());
                 return b;
 
             }

@@ -13,6 +13,7 @@ import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
@@ -25,6 +26,7 @@ import com.vaadin.ui.Table;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class OpportunityTableDisplay extends PagedBeanTable2<OpportunityService, OpportunitySearchCriteria, SimpleOpportunity> {
 
     public OpportunityTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
@@ -84,6 +86,20 @@ public class OpportunityTableDisplay extends PagedBeanTable2<OpportunityService,
                 }
                 
                 return b;
+            }
+        });
+        
+        this.addGeneratedColumn("assignUserFullName", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+            	 final SimpleOpportunity opportunity = OpportunityTableDisplay.this
+                 .getBeanByIndex(itemId);
+                UserLink b = new UserLink(opportunity.getAssignuser(), opportunity.getAssignUserFullName());
+                return b;
+
             }
         });
 

@@ -4,11 +4,13 @@
  */
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import java.util.GregorianCalendar;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
-import com.esofthead.mycollab.module.crm.view.lead.LeadTableDisplay;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
@@ -16,12 +18,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
-import java.util.GregorianCalendar;
 
 /**
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class CampaignTableDisplay extends PagedBeanTable2<CampaignService, CampaignSearchCriteria, SimpleCampaign> {
 
     public CampaignTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
@@ -83,6 +85,20 @@ public class CampaignTableDisplay extends PagedBeanTable2<CampaignService, Campa
                         b.addStyleName(UIConstants.LINK_OVERDUE);
                     }
                 }
+                return b;
+
+            }
+        });
+        
+        this.addGeneratedColumn("assignUserFullName", new Table.ColumnGenerator() {
+            private static final long serialVersionUID = 1L;
+
+            @Override
+            public com.vaadin.ui.Component generateCell(Table source,
+                    final Object itemId, Object columnId) {
+            	final SimpleCampaign campaign = CampaignTableDisplay.this
+                .getBeanByIndex(itemId);
+                UserLink b = new UserLink(campaign.getAssignuser(), campaign.getAssignUserFullName());
                 return b;
 
             }

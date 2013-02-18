@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.BeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
@@ -27,6 +28,11 @@ import com.vaadin.ui.Table;
  */
 public class TaskTableDisplay extends
 		BeanTable<ProjectTaskService, TaskSearchCriteria, SimpleTask> {
+
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 944942786615684152L;
 
 	public TaskTableDisplay(String[] visibleColumns, String[] columnHeaders) {
 		super(AppContext.getSpringBean(ProjectTaskService.class),
@@ -155,6 +161,19 @@ public class TaskTableDisplay extends
 
 			}
 		});
+		
+		 this.addGeneratedColumn("assignUserFullName", new Table.ColumnGenerator() {
+	            private static final long serialVersionUID = 1L;
+
+	            @Override
+	            public com.vaadin.ui.Component generateCell(Table source,
+	                    final Object itemId, Object columnId) {
+	                final SimpleTask account = TaskTableDisplay.this.getBeanByIndex(itemId);
+	                UserLink b = new UserLink(account.getAssignuser(), account.getAssignUserFullName());
+	                return b;
+
+	            }
+	        });
 
 		this.setColumnExpandRatio("taskname", 1);
 		this.setColumnWidth("assignUserFullName",
