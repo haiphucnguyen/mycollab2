@@ -20,7 +20,7 @@ public interface ProjectMemberService extends
 		IDefaultService<Integer, ProjectMember, ProjectMemberSearchCriteria> {
 	SimpleProjectMember findMemberById(int memberId);
 	
-	SimpleProjectMember findMemberByUsername(String username);
+	SimpleProjectMember findMemberByUsername(String username, int projectId);
 
 	List<SimpleUser> getUsersNotInProject(int projectId);
 }

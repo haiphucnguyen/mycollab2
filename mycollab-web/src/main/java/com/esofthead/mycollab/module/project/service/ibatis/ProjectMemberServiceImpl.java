@@ -56,8 +56,9 @@ public class ProjectMemberServiceImpl extends
 	}
 
 	@Override
-	public SimpleProjectMember findMemberByUsername(String username) {
-		return projectMemberMapperExt.findMemberByUsername(username);
+	public SimpleProjectMember findMemberByUsername(String username,
+			int projectId) {
+		return projectMemberMapperExt.findMemberByUsername(username, projectId);
 	}
 
 }

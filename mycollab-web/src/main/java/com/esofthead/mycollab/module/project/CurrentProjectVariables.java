@@ -27,7 +27,7 @@ public class CurrentProjectVariables {
 		ProjectMemberService prjMemberService = AppContext
 				.getSpringBean(ProjectMemberService.class);
 		SimpleProjectMember prjMember = prjMemberService
-				.findMemberByUsername(AppContext.getUsername());
+				.findMemberByUsername(AppContext.getUsername(), project.getId());
 		if (prjMember != null) {
 			if (prjMember.getIsadmin() != null
 					&& prjMember.getIsadmin() == Boolean.FALSE

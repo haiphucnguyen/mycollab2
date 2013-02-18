@@ -6,19 +6,24 @@ package com.esofthead.mycollab.module.project.dao;
 
 import java.util.List;
 
+import org.apache.ibatis.annotations.Param;
+
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public interface ProjectMemberMapperExt extends ISearchableDAO<ProjectMemberSearchCriteria> {
-    SimpleProjectMember findMemberById(int memberId);
-    
-    List<SimpleUser> getUsersNotInProject(int projectId);
-    
-    SimpleProjectMember findMemberByUsername(String username);
+public interface ProjectMemberMapperExt extends
+		ISearchableDAO<ProjectMemberSearchCriteria> {
+	SimpleProjectMember findMemberById(int memberId);
+
+	List<SimpleUser> getUsersNotInProject(int projectId);
+
+	SimpleProjectMember findMemberByUsername(
+			@Param("username") String username,
+			@Param("projectId") int projectId);
 }

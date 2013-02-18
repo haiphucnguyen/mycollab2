@@ -95,7 +95,7 @@
                  m_prj_member.isAdmin,
                  concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS memberFullName
             FROM m_prj_member, s_user
-            WHERE (m_prj_member.username=s_user.username AND s_user.username=#{username})
+            WHERE (m_prj_member.username=s_user.username AND s_user.username=#{username} AND m_prj_member.projectId=#{projectId})
     </select>
     
     <select

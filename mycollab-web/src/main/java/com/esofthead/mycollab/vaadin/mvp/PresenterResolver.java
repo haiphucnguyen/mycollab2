@@ -4,12 +4,16 @@ import com.esofthead.mycollab.web.AppContext;
 import java.util.Map;
 import java.util.WeakHashMap;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class PresenterResolver {
 
     private static final String PRESENTER_VAL = "presenterMap";
+    private static Logger log = LoggerFactory.getLogger(PresenterResolver.class);
 
     @SuppressWarnings("unchecked")
-    public static <P extends Presenter> P getPresenter(Class<P> presenterClass) {
+	public static <P extends Presenter> P getPresenter(Class<P> presenterClass) {
         Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>)AppContext.getVariable(PRESENTER_VAL);
         if (presenterMap == null) {
             presenterMap = new WeakHashMap<Class<?>, Object>();
@@ -35,6 +39,7 @@ public class PresenterResolver {
         if (presenterMap != null) {
            presenterMap.clear(); 
            AppContext.removeVariable(PRESENTER_VAL);
+           log.debug("Remove presenter map");
         }
     }
 }
