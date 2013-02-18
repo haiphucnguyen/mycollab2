@@ -4,7 +4,9 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
 /**
@@ -13,4 +15,5 @@ import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
  */
 public interface ProjectMemberReadView extends
 		IPreviewView<SimpleProjectMember> {
+	HasPreviewFormHandlers<ProjectMember> getPreviewFormHandlers();
 }

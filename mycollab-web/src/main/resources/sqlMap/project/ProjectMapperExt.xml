@@ -60,6 +60,11 @@
             ${projectName.operation} m_prj_project.name like '%${projectName.value}%'
             ]]>
         </if>
+        <if test="involvedMember != null">
+          <![CDATA[
+            ${involvedMember.operation} (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=#{involvedMember.value}) > 0
+            ]]>
+        </if>
 	</sql>
 
 	<sql id="queryTotalCountSearchCriteria">
@@ -101,6 +106,16 @@
 		<if test="saccountid != null">
             <![CDATA[${saccountid.operation} m_prj_project.sAccountId = #{saccountid.value,javaType=INTEGER}]]>
 		</if>
+        <if test="projectName != null">
+          <![CDATA[
+            ${projectName.operation} m_prj_project.name like '%${projectName.value}%'
+            ]]>
+        </if>
+        <if test="involvedMember != null">
+          <![CDATA[
+            ${involvedMember.operation} (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=#{involvedMember.value}) > 0
+            ]]>
+        </if>
 	</sql>
 
 	<sql id="selectSimpleProject">

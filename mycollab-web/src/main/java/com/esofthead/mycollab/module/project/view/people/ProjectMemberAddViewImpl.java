@@ -7,14 +7,16 @@ package com.esofthead.mycollab.module.project.view.people;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectRoleComboBox;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
-import com.esofthead.mycollab.module.user.view.component.RoleComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -104,13 +106,25 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 					com.vaadin.ui.Component uiContext) {
 
 				if (propertyId.equals("username")) {
-					ProjectMemberService prjMemberService = AppContext
-							.getSpringBean(ProjectMemberService.class);
-					SimpleProject project = (SimpleProject) AppContext
-							.getVariable(ProjectContants.PROJECT_NAME);
-					List<SimpleUser> users = prjMemberService
-							.getUsersNotInProject(project.getId());
-					return new UserComboBox(users);
+					if (user.getUsername() == null) {
+						ProjectMemberService prjMemberService = AppContext
+								.getSpringBean(ProjectMemberService.class);
+						SimpleProject project = (SimpleProject) AppContext
+								.getVariable(ProjectContants.PROJECT_NAME);
+						List<SimpleUser> users = prjMemberService
+								.getUsersNotInProject(project.getId());
+						return new UserComboBox(users);
+					} else {
+						if (user instanceof SimpleProjectMember) {
+							return new DefaultFormViewFieldFactory.FormViewField(
+									((SimpleProjectMember) user)
+											.getMemberFullName());
+						} else {
+							return new DefaultFormViewFieldFactory.FormViewField(
+									user.getUsername());
+						}
+					}
+
 				} else if (propertyId.equals("isadmin")) {
 					return new AdminRoleSelectionField();
 				}
@@ -123,7 +137,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 			private CheckBox isAdminCheck;
 			private HorizontalLayout layout;
 			private HorizontalLayout roleLayout;
-			private RoleComboBox roleComboBox;
+			private ProjectRoleComboBox roleComboBox;
 
 			public AdminRoleSelectionField() {
 				layout = new HorizontalLayout();
@@ -132,7 +146,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 				roleLayout = new HorizontalLayout();
 				roleLayout.setSpacing(true);
 				roleLayout.addComponent(new Label("Role"));
-				roleComboBox = new RoleComboBox();
+				roleComboBox = new ProjectRoleComboBox();
 				roleComboBox.addListener(new Property.ValueChangeListener() {
 					private static final long serialVersionUID = 1L;
 

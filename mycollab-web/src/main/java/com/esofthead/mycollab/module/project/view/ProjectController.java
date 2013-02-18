@@ -929,7 +929,7 @@ public class ProjectController {
 						projectView.gotoUsersAndGroup(data);
 					}
 				});
-		
+
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ProjectMemberEvent.GotoAdd>() {
 					private static final long serialVersionUID = 1L;
@@ -945,6 +945,25 @@ public class ProjectController {
 								.getView(ProjectView.class);
 						ProjectMemberScreenData.Add data = new ProjectMemberScreenData.Add(
 								new ProjectMember());
+						projectView.gotoUsersAndGroup(data);
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ProjectMemberEvent.GotoEdit>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ProjectMemberEvent.GotoEdit.class;
+					}
+
+					@Override
+					public void handle(ProjectMemberEvent.GotoEdit event) {
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
+						ProjectMemberScreenData.Add data = new ProjectMemberScreenData.Add(
+								(ProjectMember) event.getData());
 						projectView.gotoUsersAndGroup(data);
 					}
 				});

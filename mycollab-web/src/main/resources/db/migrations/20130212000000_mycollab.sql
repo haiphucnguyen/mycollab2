@@ -1,0 +1,1 @@
+ALTER TABLE `s_user` CHANGE COLUMN `password` `password` TEXT NULL DEFAULT NULL  ;

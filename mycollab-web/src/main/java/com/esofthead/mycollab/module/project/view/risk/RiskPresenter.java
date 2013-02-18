@@ -38,12 +38,12 @@ public class RiskPresenter extends AbstractPresenter<RiskContainer> {
 
         } else if (data instanceof ScreenData.Add
                 || data instanceof ScreenData.Edit) {
-            log.debug("Go to risk add view");
+            log.debug("Go to projectMember add view");
             RiskAddPresenter presenter = PresenterResolver
                     .getPresenter(RiskAddPresenter.class);
             presenter.go(view, data);
         } else if (data instanceof ScreenData.Preview) {
-            log.debug("Go to risk preview view");
+            log.debug("Go to projectMember preview view");
             RiskReadPresenter presenter = PresenterResolver
                     .getPresenter(RiskReadPresenter.class);
             presenter.go(view, data);

@@ -96,7 +96,7 @@ public class MainWindowContainer extends Window implements View {
 								if (loginParams.length == 2) {
 									try {
 										presenter.doLogin(loginParams[0],
-												loginParams[1]);
+												loginParams[1], true);
 									} catch (MyCollabException e) {
 										throw e;
 									}

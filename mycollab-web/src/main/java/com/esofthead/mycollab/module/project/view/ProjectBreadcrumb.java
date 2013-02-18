@@ -92,7 +92,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
     public void gotoRiskList() {
         this.select(1);
         this.addLink(new Button("Risks"));
-        AppContext.addFragment("project/risk/list/" + UrlEncodeDecoder.encode(project.getId()));
+        AppContext.addFragment("project/projectMember/list/" + UrlEncodeDecoder.encode(project.getId()));
     }
     
     public void gotoRiskRead(Risk risk) {
@@ -100,7 +100,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.addLink(new Button("Risks", new GotoRiskListListener()));
         this.setLinkEnabled(true, 2);
         this.addLink(new ButtonTooltip(risk.getRiskname()));
-        AppContext.addFragment("project/risk/preview/" + UrlEncodeDecoder.encode(project.getId() + "/" + risk.getId()));
+        AppContext.addFragment("project/projectMember/preview/" + UrlEncodeDecoder.encode(project.getId() + "/" + risk.getId()));
     }
     
     public void gotoRiskEdit(final Risk risk) {
@@ -116,7 +116,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
             }
         }));
         this.addLink(new Button("Edit"));
-        AppContext.addFragment("project/risk/edit/" + UrlEncodeDecoder.encode(project.getId() + "/" + risk.getId()));
+        AppContext.addFragment("project/projectMember/edit/" + UrlEncodeDecoder.encode(project.getId() + "/" + risk.getId()));
     }
     
     public void gotoRiskAdd() {
@@ -124,7 +124,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.addLink(new Button("Risks", new GotoRiskListListener()));
         this.setLinkEnabled(true, 2);
         this.addLink(new Button("Add"));
-        AppContext.addFragment("project/risk/add/" + UrlEncodeDecoder.encode(project.getId()));
+        AppContext.addFragment("project/projectMember/add/" + UrlEncodeDecoder.encode(project.getId()));
     }
     
     private static class GotoRiskListListener implements Button.ClickListener {
