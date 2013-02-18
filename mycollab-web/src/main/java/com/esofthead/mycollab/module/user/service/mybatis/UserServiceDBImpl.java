@@ -92,7 +92,8 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
-	public SimpleUser authentication(String username, String password) {
+	public SimpleUser authentication(String username, String password,
+			boolean isPasswordEncrypt) {
 		UserSearchCriteria criteria = new UserSearchCriteria();
 		criteria.setUsername(new StringSearchField(username));
 		List<SimpleUser> users = findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
@@ -103,7 +104,7 @@ public class UserServiceDBImpl extends
 			SimpleUser user = users.get(0);
 			if (user.getPassword() == null
 					|| !PasswordEncryptHelper.checkPassword(password,
-							user.getPassword())) {
+							user.getPassword(), isPasswordEncrypt)) {
 				log.debug("PASS: " + password + "   " + user.getPassword());
 				throw new AuthenticationException(
 						"Invalid username or password");

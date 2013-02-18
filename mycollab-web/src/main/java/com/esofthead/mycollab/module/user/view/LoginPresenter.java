@@ -43,16 +43,16 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 			@Override
 			public void handle(PlainLogin event) {
 				String[] data = (String[]) event.getData();
-				doLogin(data[0], data[1]);
+				doLogin(data[0], data[1], false);
 			}
 		});
 	}
 
-	public void doLogin(String username, String password) {
+	public void doLogin(String username, String password, boolean isPasswordEncrypt) {
 		try {
 			UserService userService = AppContext
 					.getSpringBean(UserService.class);
-			SimpleUser user = userService.authentication(username, password);
+			SimpleUser user = userService.authentication(username, password, isPasswordEncrypt);
 			UserPreferenceService preferenceService = AppContext
 					.getSpringBean(UserPreferenceService.class);
 			UserPreference pref = preferenceService

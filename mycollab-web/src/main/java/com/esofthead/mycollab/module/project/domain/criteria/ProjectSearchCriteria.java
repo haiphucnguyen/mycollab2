@@ -13,6 +13,7 @@ public class ProjectSearchCriteria extends SearchCriteria {
     private StringSearchField projectType;
     private NumberSearchField saccountid;
     private StringSearchField projectName;
+    private StringSearchField involvedMember;
 
     public StringSearchField getUsername() {
         return username;
@@ -68,5 +69,13 @@ public class ProjectSearchCriteria extends SearchCriteria {
 
 	public StringSearchField getProjectName() {
 		return projectName;
+	}
+
+	public StringSearchField getInvolvedMember() {
+		return involvedMember;
+	}
+
+	public void setInvolvedMember(StringSearchField involvedMember) {
+		this.involvedMember = involvedMember;
 	}
 }

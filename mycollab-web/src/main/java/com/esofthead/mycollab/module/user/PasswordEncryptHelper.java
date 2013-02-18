@@ -10,8 +10,12 @@ public class PasswordEncryptHelper {
 	}
 
 	public static boolean checkPassword(String plainPassword,
-			String encryptPassword) {
-		return passwordEncryptor.checkPassword(plainPassword, encryptPassword);
+			String encryptPassword, boolean isPasswordEncrypt) {
+		if (isPasswordEncrypt) {
+			return plainPassword.equals(encryptPassword);
+		} else {
+			return passwordEncryptor.checkPassword(plainPassword, encryptPassword);
+		}
 	}
 	
 	public static void main(String[] args) {

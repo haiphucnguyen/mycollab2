@@ -27,5 +27,5 @@ import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 public interface UserService extends IDefaultService<String, User, UserSearchCriteria> {
     public static int FREE_BILLING = 0;
     
-    SimpleUser authentication(String username, String password);
+    SimpleUser authentication(String username, String password, boolean isPasswordEncrypt);
 }
