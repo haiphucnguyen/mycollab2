@@ -107,8 +107,7 @@ public class ProjectController {
 								.getView(ProjectView.class);
 
 						SimpleProject project = (SimpleProject) event.getData();
-						AppContext.putVariable(ProjectContants.CURRENT_PROJECT,
-								project);
+						CurrentProjectVariables.setProject(project);
 						ProjectDashboardPresenter presenter = PresenterResolver
 								.getPresenter(ProjectDashboardPresenter.class);
 						presenter.go(projectView, new ScreenData.Edit<Project>(

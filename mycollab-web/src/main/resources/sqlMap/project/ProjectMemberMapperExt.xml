@@ -87,6 +87,20 @@
     </select>
     
     <select
+        id="findMemberByUsername"
+        parameterType="java.lang.String"
+        resultMap="ProjectMemberResult" >
+
+        SELECT m_prj_member.id, m_prj_member.username, m_prj_member.projectId, m_prj_member.joinDate, m_prj_member.projectRoleId, 
+                 m_prj_member.isAdmin,
+                 concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS memberFullName,
+                 m_prj_role.rolename
+            FROM m_prj_member, s_user
+              LEFT OUTER JOIN m_prj_role ON (m_prj_role.id=m_prj_member.projectRoleId)
+            WHERE (m_prj_member.username=s_user.username AND s_user.username=#{username})
+    </select>
+    
+    <select
         id="getUsersNotInProject"
         parameterType="java.lang.Integer"
         resultMap="com.esofthead.mycollab.module.user.dao.UserMapperExt.SimpleUserResult" >

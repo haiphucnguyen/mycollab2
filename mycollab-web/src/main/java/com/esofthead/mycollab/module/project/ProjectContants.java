@@ -4,7 +4,7 @@ public class ProjectContants {
 
 	public static final String CURRENT_PROJECT = "project";
 
-	public static final String PROJECT_PERMISSION = "project_permission";
+	public static final String PROJECT_MEMBER = "project_member";
 
 	public static final String PROJECT = "Project";
 

@@ -145,7 +145,7 @@ public class AppContext implements TransactionListener, Serializable {
         return springContext.getBean(requiredType);
     }
 
-    private static boolean isAdmin() {
+    public static boolean isAdmin() {
         return instance.get().session.getIsadmin();
     }
 

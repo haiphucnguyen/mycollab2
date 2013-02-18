@@ -19,4 +19,6 @@ public interface ProjectMemberMapperExt extends ISearchableDAO<ProjectMemberSear
     SimpleProjectMember findMemberById(int memberId);
     
     List<SimpleUser> getUsersNotInProject(int projectId);
+    
+    SimpleProjectMember findMemberByUsername(String username);
 }

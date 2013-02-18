@@ -55,4 +55,9 @@ public class ProjectMemberServiceImpl extends
 		return projectMemberMapperExt.getUsersNotInProject(projectId);
 	}
 
+	@Override
+	public SimpleProjectMember findMemberByUsername(String username) {
+		return projectMemberMapperExt.findMemberByUsername(username);
+	}
+
 }
