@@ -5,6 +5,7 @@ import java.util.GregorianCalendar;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
@@ -106,7 +107,7 @@ public class ProjectController {
 								.getView(ProjectView.class);
 
 						SimpleProject project = (SimpleProject) event.getData();
-						AppContext.putVariable(ProjectContants.PROJECT_NAME,
+						AppContext.putVariable(ProjectContants.CURRENT_PROJECT,
 								project);
 						ProjectDashboardPresenter presenter = PresenterResolver
 								.getPresenter(ProjectDashboardPresenter.class);
@@ -353,13 +354,10 @@ public class ProjectController {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
 
-						SimpleProject project = (SimpleProject) AppContext
-								.getVariable(ProjectContants.PROJECT_NAME);
-
 						RiskSearchCriteria criteria = new RiskSearchCriteria();
 
 						criteria.setProjectId(new NumberSearchField(
-								SearchField.AND, project.getId()));
+								SearchField.AND, CurrentProjectVariables.getProjectId()));
 						projectView
 								.gotoRiskView(new ScreenData.Search<RiskSearchCriteria>(
 										criteria));
@@ -419,13 +417,10 @@ public class ProjectController {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
 
-						SimpleProject project = (SimpleProject) AppContext
-								.getVariable(ProjectContants.PROJECT_NAME);
-
 						ProblemSearchCriteria criteria = new ProblemSearchCriteria();
 
 						criteria.setProjectId(new NumberSearchField(
-								SearchField.AND, project.getId()));
+								SearchField.AND, CurrentProjectVariables.getProjectId()));
 						ScreenData.Search<ProblemSearchCriteria> data = new ScreenData.Search<ProblemSearchCriteria>(
 								criteria);
 						ProblemPresenter presenter = PresenterResolver
@@ -534,13 +529,10 @@ public class ProjectController {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
 
-						SimpleProject project = (SimpleProject) AppContext
-								.getVariable(ProjectContants.PROJECT_NAME);
-
 						BugSearchCriteria criteria = new BugSearchCriteria();
 
 						criteria.setProjectId(new NumberSearchField(
-								SearchField.AND, project.getId()));
+								SearchField.AND, CurrentProjectVariables.getProjectId()));
 						projectView
 								.gotoBugView(new ScreenData.Search<BugSearchCriteria>(
 										criteria));
@@ -609,11 +601,8 @@ public class ProjectController {
 					public void handle(BugComponentEvent.GotoList event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						SimpleProject project = (SimpleProject) AppContext
-								.getVariable(ProjectContants.PROJECT_NAME);
 						ComponentSearchCriteria criteria = new ComponentSearchCriteria();
-						criteria.setProjectid(new NumberSearchField(project
-								.getId()));
+						criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
 						projectView
 								.gotoBugView(new BugContainer.SearchComponentData(
 										criteria));
@@ -682,11 +671,8 @@ public class ProjectController {
 					public void handle(BugVersionEvent.GotoList event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						SimpleProject project = (SimpleProject) AppContext
-								.getVariable(ProjectContants.PROJECT_NAME);
 						VersionSearchCriteria criteria = new VersionSearchCriteria();
-						criteria.setProjectId(new NumberSearchField(project
-								.getId()));
+						criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
 						projectView
 								.gotoBugView(new BugContainer.SearchVersionData(
 										criteria));
@@ -770,13 +756,10 @@ public class ProjectController {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
 
-						SimpleProject project = (SimpleProject) AppContext
-								.getVariable(ProjectContants.PROJECT_NAME);
-
 						MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
 
 						criteria.setProjectId(new NumberSearchField(
-								SearchField.AND, project.getId()));
+								SearchField.AND, CurrentProjectVariables.getProjectId()));
 						projectView
 								.gotoMilestoneView(new ScreenData.Search<MilestoneSearchCriteria>(
 										criteria));
@@ -837,13 +820,10 @@ public class ProjectController {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
 
-						SimpleProject project = (SimpleProject) AppContext
-								.getVariable(ProjectContants.PROJECT_NAME);
-
 						StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
 
 						criteria.setProjectId(new NumberSearchField(
-								SearchField.AND, project.getId()));
+								SearchField.AND, CurrentProjectVariables.getProjectId()));
 						criteria.setOnDate(new DateSearchField(SearchField.AND,
 								new GregorianCalendar().getTime()));
 						projectView

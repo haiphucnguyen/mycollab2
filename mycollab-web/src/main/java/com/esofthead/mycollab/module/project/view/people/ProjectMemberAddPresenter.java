@@ -6,9 +6,8 @@ package com.esofthead.mycollab.module.project.view.people;
 
 import java.util.GregorianCalendar;
 
-import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
@@ -80,16 +79,15 @@ public class ProjectMemberAddPresenter extends
 	public void saveProjectMember(ProjectMember projectMember) {
 		ProjectMemberService projectMemberService = AppContext
 				.getSpringBean(ProjectMemberService.class);
-
-		SimpleProject project = (SimpleProject) AppContext
-				.getVariable(ProjectContants.PROJECT_NAME);
-		projectMember.setProjectid(project.getId());
+		projectMember.setProjectid(CurrentProjectVariables.getProjectId());
 		projectMember.setJoindate(new GregorianCalendar().getTime());
 		if (projectMember.getId() == null) {
-			projectMemberService.saveWithSession(projectMember, AppContext.getUsername());
+			projectMemberService.saveWithSession(projectMember,
+					AppContext.getUsername());
 
 		} else {
-			projectMemberService.updateWithSession(projectMember, AppContext.getUsername());
+			projectMemberService.updateWithSession(projectMember,
+					AppContext.getUsername());
 		}
 
 	}

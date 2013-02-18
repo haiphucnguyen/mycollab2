@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
-import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
@@ -20,49 +20,52 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public class ProjectRoleAddPresenter extends AbstractPresenter<ProjectRoleAddView> {
+public class ProjectRoleAddPresenter extends
+		AbstractPresenter<ProjectRoleAddView> {
 	private static final long serialVersionUID = 1L;
 
 	public ProjectRoleAddPresenter() {
 		super(ProjectRoleAddView.class);
 
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<ProjectRole>() {
-			@Override
-			public void onSave(final ProjectRole item) {
-				save(item);
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new ProjectRoleEvent.GotoList(this, null));
-				}
-			}
+		view.getEditFormHandlers().addFormHandler(
+				new EditFormHandler<ProjectRole>() {
+					@Override
+					public void onSave(final ProjectRole item) {
+						save(item);
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new ProjectRoleEvent.GotoList(this, null));
+						}
+					}
 
-			@Override
-			public void onCancel() {
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new ProjectRoleEvent.GotoList(this, null));
-				}
-			}
+					@Override
+					public void onCancel() {
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new ProjectRoleEvent.GotoList(this, null));
+						}
+					}
 
-			@Override
-			public void onSaveAndNew(ProjectRole item) {
-				save(item);
-				EventBus.getInstance().fireEvent(
-						new ProjectRoleEvent.GotoAdd(this, null));
-			}
-		});
+					@Override
+					public void onSaveAndNew(ProjectRole item) {
+						save(item);
+						EventBus.getInstance().fireEvent(
+								new ProjectRoleEvent.GotoAdd(this, null));
+					}
+				});
 	}
 
 	public void save(ProjectRole item) {
-		ProjectRoleService roleService = AppContext.getSpringBean(ProjectRoleService.class);
+		ProjectRoleService roleService = AppContext
+				.getSpringBean(ProjectRoleService.class);
 		item.setSaccountid(AppContext.getAccountId());
-		
-		SimpleProject project = (SimpleProject)AppContext.getVariable(ProjectContants.PROJECT_NAME);
+
+		SimpleProject project = CurrentProjectVariables.getProject();
 		item.setProjectid(project.getId());
 
 		if (item.getId() == null) {
@@ -71,7 +74,8 @@ public class ProjectRoleAddPresenter extends AbstractPresenter<ProjectRoleAddVie
 			roleService.updateWithSession(item, AppContext.getUsername());
 		}
 
-		roleService.savePermission(project.getId(), item.getId(), view.getPermissionMap());
+		roleService.savePermission(project.getId(), item.getId(),
+				view.getPermissionMap());
 
 	}
 

@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
-import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
@@ -22,72 +22,76 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
+	private static final long serialVersionUID = 1L;
 
-    public ComponentAddPresenter() {
-        super(ComponentAddView.class);
+	public ComponentAddPresenter() {
+		super(ComponentAddView.class);
 
-        view.getEditFormHandlers().addFormHandler(new EditFormHandler<Component>() {
-            @Override
-            public void onSave(final Component item) {
-                save(item);
-                ViewState viewState = HistoryViewManager.back();
-                if (viewState instanceof NullViewState) {
-                    EventBus.getInstance().fireEvent(
-                            new BugComponentEvent.GotoList(this, null));
-                }
-            }
+		view.getEditFormHandlers().addFormHandler(
+				new EditFormHandler<Component>() {
+					@Override
+					public void onSave(final Component item) {
+						save(item);
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new BugComponentEvent.GotoList(this, null));
+						}
+					}
 
-            @Override
-            public void onCancel() {
-                ViewState viewState = HistoryViewManager.back();
-                if (viewState instanceof NullViewState) {
-                    EventBus.getInstance().fireEvent(
-                            new BugComponentEvent.GotoList(this, null));
-                }
-            }
+					@Override
+					public void onCancel() {
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new BugComponentEvent.GotoList(this, null));
+						}
+					}
 
-            @Override
-            public void onSaveAndNew(final Component item) {
-                save(item);
-                EventBus.getInstance().fireEvent(
-                        new BugComponentEvent.GotoAdd(this, null));
-            }
-        });
-    }
+					@Override
+					public void onSaveAndNew(final Component item) {
+						save(item);
+						EventBus.getInstance().fireEvent(
+								new BugComponentEvent.GotoAdd(this, null));
+					}
+				});
+	}
 
-    public void save(Component item) {
-        ComponentService componentService = AppContext.getSpringBean(ComponentService.class);
+	public void save(Component item) {
+		ComponentService componentService = AppContext
+				.getSpringBean(ComponentService.class);
 
-        SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
-        item.setSaccountid(AppContext.getAccountId());
-        item.setProjectid(project.getId());
+		SimpleProject project = CurrentProjectVariables.getProject();
+		item.setSaccountid(AppContext.getAccountId());
+		item.setProjectid(project.getId());
 
-        if (item.getId() == null) {
-            item.setCreateduser(AppContext.getUsername());
-            componentService.saveWithSession(item, AppContext.getUsername());
-        } else {
-            componentService.updateWithSession(item, AppContext.getUsername());
-        }
-    }
+		if (item.getId() == null) {
+			item.setCreateduser(AppContext.getUsername());
+			componentService.saveWithSession(item, AppContext.getUsername());
+		} else {
+			componentService.updateWithSession(item, AppContext.getUsername());
+		}
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        BugContainer bugContainer = (BugContainer) container;
-        bugContainer.addComponent(view.getWidget());
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		BugContainer bugContainer = (BugContainer) container;
+		bugContainer.addComponent(view.getWidget());
 
-        Component component = (Component) data.getParams();
-        view.editItem(component);
-        
-        ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
-        
-        if (component.getId() == null) {
-            breadcrumb.gotoComponentAdd();
-        } else {
-            breadcrumb.gotoComponentEdit(component);
-        }
-    }
+		Component component = (Component) data.getParams();
+		view.editItem(component);
+
+		ProjectBreadcrumb breadcrumb = ViewManager
+				.getView(ProjectBreadcrumb.class);
+
+		if (component.getId() == null) {
+			breadcrumb.gotoComponentAdd();
+		} else {
+			breadcrumb.gotoComponentEdit(component);
+		}
+	}
 }

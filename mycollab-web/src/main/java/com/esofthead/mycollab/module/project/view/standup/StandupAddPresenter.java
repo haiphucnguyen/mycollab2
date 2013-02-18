@@ -3,8 +3,7 @@ package com.esofthead.mycollab.module.project.view.standup;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.StandupReport;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
@@ -25,59 +24,62 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 		super(StandupAddView.class);
 		bind();
 	}
-	
+
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<StandupReport>() {
-            @Override
-            public void onSave(final StandupReport standupReport) {
-                saveStandupReport(standupReport);
-                ViewState viewState = HistoryViewManager.back();
-                if (viewState instanceof NullViewState) {
-                    EventBus.getInstance().fireEvent(
-                            new StandUpEvent.GotoList(this, null));
-                }
-            }
+		view.getEditFormHandlers().addFormHandler(
+				new EditFormHandler<StandupReport>() {
+					@Override
+					public void onSave(final StandupReport standupReport) {
+						saveStandupReport(standupReport);
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new StandUpEvent.GotoList(this, null));
+						}
+					}
 
-            @Override
-            public void onCancel() {
-                ViewState viewState = HistoryViewManager.back();
-                if (viewState instanceof NullViewState) {
-                    EventBus.getInstance().fireEvent(
-                            new StandUpEvent.GotoList(this, null));
-                }
-            }
+					@Override
+					public void onCancel() {
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new StandUpEvent.GotoList(this, null));
+						}
+					}
 
-            @Override
-            public void onSaveAndNew(final StandupReport standupReport) {
-                throw new MyCollabException("Do not support this feature");
-            }
-        });
+					@Override
+					public void onSaveAndNew(final StandupReport standupReport) {
+						throw new MyCollabException(
+								"Do not support this feature");
+					}
+				});
 	}
-	
-	 public void saveStandupReport(StandupReport standupReport) {
-	        StandupReportService standupReportService = AppContext.getSpringBean(StandupReportService.class);
-	        SimpleProject project = (SimpleProject) AppContext
-	                .getVariable(ProjectContants.PROJECT_NAME);
-	        standupReport.setProjectid(project.getId());
-	        standupReport.setSaccountid(AppContext.getAccountId());
-	        standupReport.setForday(new GregorianCalendar().getTime());
-	        standupReport.setLogby(AppContext.getUsername());
-	        
-	        if (standupReport.getId() == null) {
-	            standupReportService.saveWithSession(standupReport, AppContext.getUsername());
-	        } else {
-	            standupReportService.updateWithSession(standupReport, AppContext.getUsername());
-	        }
 
-	    }
+	public void saveStandupReport(StandupReport standupReport) {
+		StandupReportService standupReportService = AppContext
+				.getSpringBean(StandupReportService.class);
+		standupReport.setProjectid(CurrentProjectVariables.getProjectId());
+		standupReport.setSaccountid(AppContext.getAccountId());
+		standupReport.setForday(new GregorianCalendar().getTime());
+		standupReport.setLogby(AppContext.getUsername());
+
+		if (standupReport.getId() == null) {
+			standupReportService.saveWithSession(standupReport,
+					AppContext.getUsername());
+		} else {
+			standupReportService.updateWithSession(standupReport,
+					AppContext.getUsername());
+		}
+
+	}
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		StandupContainer standupContainer = (StandupContainer) container;
-        standupContainer.removeAllComponents();
-        standupContainer.addComponent(view.getWidget());
-        StandupReport standupReport = (StandupReport) data.getParams();
-        view.editItem(standupReport);
+		standupContainer.removeAllComponents();
+		standupContainer.addComponent(view.getWidget());
+		StandupReport standupReport = (StandupReport) data.getParams();
+		view.editItem(standupReport);
 
 	}
 

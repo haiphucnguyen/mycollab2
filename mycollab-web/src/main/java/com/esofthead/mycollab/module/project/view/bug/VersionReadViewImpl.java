@@ -8,8 +8,8 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -19,7 +19,6 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
@@ -144,8 +143,6 @@ public class VersionReadViewImpl extends AbstractView implements
 			@Override
 			public void displayBugReports() {
 				bottomLayout.removeAllComponents();
-				SimpleProject project = (SimpleProject) AppContext
-						.getVariable(ProjectContants.PROJECT_NAME);
 				VerticalLayout leftColumn = new VerticalLayout();
 				bottomLayout.addComponent(leftColumn);
 				UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(
@@ -155,7 +152,8 @@ public class VersionReadViewImpl extends AbstractView implements
 
 				BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
 				unresolvedByPrioritySearchCriteria
-						.setProjectId(new NumberSearchField(project.getId()));
+						.setProjectId(new NumberSearchField(
+								CurrentProjectVariables.getProjectId()));
 				unresolvedByPrioritySearchCriteria
 						.setVersionids(new SetSearchField<Integer>(version
 								.getId()));
@@ -178,7 +176,8 @@ public class VersionReadViewImpl extends AbstractView implements
 
 				BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
 				unresolvedByAssigneeSearchCriteria
-						.setProjectId(new NumberSearchField(project.getId()));
+						.setProjectId(new NumberSearchField(
+								CurrentProjectVariables.getProjectId()));
 				unresolvedByAssigneeSearchCriteria
 						.setVersionids(new SetSearchField<Integer>(version
 								.getId()));

@@ -4,10 +4,12 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
@@ -29,12 +31,11 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+
 import fi.jasoft.dragdroplayouts.DDVerticalLayout;
 import fi.jasoft.dragdroplayouts.client.ui.LayoutDragMode;
 import fi.jasoft.dragdroplayouts.events.LayoutBoundTransferable;
 import fi.jasoft.dragdroplayouts.events.VerticalLocationIs;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
  * 
@@ -151,9 +152,8 @@ public class TaskGroupReorderViewImpl extends AbstractView implements
 	@Override
 	public void displayTaskLists() {
 		TaskListSearchCriteria criteria = new TaskListSearchCriteria();
-		SimpleProject project = (SimpleProject) AppContext
-				.getVariable(ProjectContants.PROJECT_NAME);
-		criteria.setProjectId(new NumberSearchField(project.getId()));
+		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
+				.getProjectId()));
 		taskLists.setSearchCriteria(criteria);
 	}
 

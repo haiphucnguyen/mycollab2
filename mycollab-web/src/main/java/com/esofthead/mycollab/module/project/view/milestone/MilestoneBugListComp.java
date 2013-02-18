@@ -3,9 +3,8 @@ package com.esofthead.mycollab.module.project.view.milestone;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
-import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Milestone;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.view.bug.BugListWidget;
 import com.esofthead.mycollab.module.project.view.bug.BugTableDisplay;
 import com.esofthead.mycollab.module.project.view.bug.IBugReportDisplayContainer;
@@ -13,7 +12,6 @@ import com.esofthead.mycollab.module.project.view.bug.UnresolvedBugsByAssigneeWi
 import com.esofthead.mycollab.module.project.view.bug.UnresolvedBugsByPriorityWidget;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -46,8 +44,6 @@ public class MilestoneBugListComp extends VerticalLayout implements
 	public void displayBugReports() {
 		this.removeAllComponents();
 		HorizontalLayout bodyLayout = new HorizontalLayout();
-		SimpleProject project = (SimpleProject) AppContext
-				.getVariable(ProjectContants.PROJECT_NAME);
 		VerticalLayout leftColumn = new VerticalLayout();
 		bodyLayout.addComponent(leftColumn);
 		UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(
@@ -57,7 +53,7 @@ public class MilestoneBugListComp extends VerticalLayout implements
 
 		BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
 		unresolvedByPrioritySearchCriteria.setProjectId(new NumberSearchField(
-				project.getId()));
+				CurrentProjectVariables.getProjectId()));
 		unresolvedByPrioritySearchCriteria
 				.setMilestoneIds(new SetSearchField<Integer>(milestone.getId()));
 		unresolvedByPrioritySearchCriteria
@@ -78,7 +74,7 @@ public class MilestoneBugListComp extends VerticalLayout implements
 
 		BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
 		unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(
-				project.getId()));
+				CurrentProjectVariables.getProjectId()));
 		unresolvedByAssigneeSearchCriteria
 				.setMilestoneIds(new SetSearchField<Integer>(milestone.getId()));
 		unresolvedByAssigneeSearchCriteria

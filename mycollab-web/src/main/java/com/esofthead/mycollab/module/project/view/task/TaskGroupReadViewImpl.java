@@ -10,8 +10,7 @@ import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
@@ -24,7 +23,6 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
@@ -80,7 +78,9 @@ public class TaskGroupReadViewImpl extends AbstractView implements TaskGroupRead
                         Component uiContext) {
                     if (propertyId.equals("milestoneid")) {
                         return new FormLinkViewField(taskList.getMilestoneName(), new Button.ClickListener() {
-                            @Override
+							private static final long serialVersionUID = 1L;
+
+							@Override
                             public void buttonClick(ClickEvent event) {
                                 EventBus.getInstance().fireEvent(new MilestoneEvent.GotoRead(this, taskList.getMilestoneid()));
                             }
@@ -201,10 +201,8 @@ public class TaskGroupReadViewImpl extends AbstractView implements TaskGroupRead
         }
         
         private TaskSearchCriteria createBaseSearchCriteria() {
-            SimpleProject project = (SimpleProject) AppContext
-                    .getVariable(ProjectContants.PROJECT_NAME);
             TaskSearchCriteria criteria = new TaskSearchCriteria();
-            criteria.setProjectid(new NumberSearchField(project.getId()));
+            criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
             criteria.setTaskListId(new NumberSearchField(taskList.getId()));
             return criteria;
         }

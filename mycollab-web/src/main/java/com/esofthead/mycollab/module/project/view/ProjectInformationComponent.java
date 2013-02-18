@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.view.user.ProjectFormViewLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -45,8 +45,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 	}
 
 	public void displayProjectInformation() {
-		project = (SimpleProject) AppContext
-				.getVariable(ProjectContants.PROJECT_NAME);
+		project = CurrentProjectVariables.getProject();
 
 		projectInfoHeader.removeAllComponents();
 		Label projectName = new Label(project.getName());

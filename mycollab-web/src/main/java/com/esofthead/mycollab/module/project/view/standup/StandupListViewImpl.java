@@ -5,6 +5,7 @@ import java.util.Date;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
@@ -78,9 +79,8 @@ public class StandupListViewImpl extends AbstractView implements
 
 	private void displayReport(Date date) {
 		StandupReportSearchCriteria searchCriteria = new StandupReportSearchCriteria();
-		SimpleProject project = (SimpleProject) AppContext
-				.getVariable(ProjectContants.PROJECT_NAME);
-		searchCriteria.setProjectId(new NumberSearchField(project.getId()));
+		searchCriteria.setProjectId(new NumberSearchField(
+				CurrentProjectVariables.getProjectId()));
 		searchCriteria.setOnDate(new DateSearchField(SearchField.AND, date));
 		setSearchCriteria(searchCriteria);
 	}

@@ -5,7 +5,7 @@
 package com.esofthead.mycollab.module.project.view.people;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
@@ -15,7 +15,6 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -67,8 +66,8 @@ public class UserGroupViewImpl extends AbstractView implements UserGroupView {
 					public void tabChanged(DetachedTabs.TabChangedEvent event) {
 						Button btn = event.getSource();
 						String caption = btn.getCaption();
-						SimpleProject project = (SimpleProject) AppContext
-								.getVariable(ProjectContants.PROJECT_NAME);
+						SimpleProject project = CurrentProjectVariables
+								.getProject();
 
 						if ("Users".equals(caption)) {
 							ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
@@ -89,7 +88,7 @@ public class UserGroupViewImpl extends AbstractView implements UserGroupView {
 				});
 
 	}
-	
+
 	@Override
 	public Component gotoSubView(String name) {
 		View component = (View) myProjectTab.selectTab(name);

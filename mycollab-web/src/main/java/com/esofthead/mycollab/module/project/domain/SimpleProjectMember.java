@@ -4,14 +4,20 @@
  */
 package com.esofthead.mycollab.module.project.domain;
 
+import com.esofthead.mycollab.common.domain.PermissionMap;
+
 /**
  *
  * @author haiphucnguyen
  */
 public class SimpleProjectMember extends ProjectMember {
-    private String memberFullName;
+	private static final long serialVersionUID = 1L;
+
+	private String memberFullName;
     
     private String roleName;
+    
+    private PermissionMap permissionMaps;
 
     public String getMemberFullName() {
         return memberFullName;
@@ -28,4 +34,12 @@ public class SimpleProjectMember extends ProjectMember {
     public void setRoleName(String roleName) {
         this.roleName = roleName;
     }
+
+	public PermissionMap getPermissionMaps() {
+		return permissionMaps;
+	}
+
+	public void setPermissionMaps(PermissionMap permissionMaps) {
+		this.permissionMaps = permissionMaps;
+	}
 }

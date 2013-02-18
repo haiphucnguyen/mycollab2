@@ -1,9 +1,12 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import org.vaadin.hene.splitbutton.SplitButton;
+import org.vaadin.peter.buttongroup.ButtonGroup;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -22,157 +25,166 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import org.vaadin.hene.splitbutton.SplitButton;
-import org.vaadin.peter.buttongroup.ButtonGroup;
 
 @SuppressWarnings("serial")
 @ViewComponent
 public class BugDashboardViewImpl extends AbstractView implements
-        BugDashboardView {
+		BugDashboardView {
 
-    private VerticalLayout leftColumn, rightColumn;
+	private VerticalLayout leftColumn, rightColumn;
 
-    public BugDashboardViewImpl() {
-        super();
-        initUI();
-    }
+	public BugDashboardViewImpl() {
+		super();
+		initUI();
+	}
 
-    private void initUI() {
-        HorizontalLayout header = new HorizontalLayout();
-        header.setWidth("100%");
+	private void initUI() {
+		HorizontalLayout header = new HorizontalLayout();
+		header.setWidth("100%");
 
-        Label title = new Label("Bug Dashboard");
-        title.setStyleName("h2");
-        header.addComponent(title);
-        header.setExpandRatio(title, 0.5f);
+		Label title = new Label("Bug Dashboard");
+		title.setStyleName("h2");
+		header.addComponent(title);
+		header.setExpandRatio(title, 0.5f);
 
-        ButtonGroup navButton = new ButtonGroup();
-        Button bugListBtn = new Button("Bugs", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBus.getInstance().fireEvent(new BugEvent.GotoList(this, null));
-            }
-        });
-        
-        navButton.addButton(bugListBtn);
+		ButtonGroup navButton = new ButtonGroup();
+		Button bugListBtn = new Button("Bugs", new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance().fireEvent(
+						new BugEvent.GotoList(this, null));
+			}
+		});
 
-        Button componentListBtn = new Button("Components", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBus.getInstance().fireEvent(new BugComponentEvent.GotoList(this, null));
-            }
-        });
-        
-        navButton.addButton(componentListBtn);
-        
-        Button versionListBtn = new Button("Versions", new Button.ClickListener() {
-            @Override
-            public void buttonClick(ClickEvent event) {
-                EventBus.getInstance().fireEvent(new BugVersionEvent.GotoList(this, null));
-            }
-        });
-        
-        navButton.addButton(versionListBtn);
+		navButton.addButton(bugListBtn);
 
-        header.addComponent(navButton);
-        header.setExpandRatio(navButton, 0.5f);
+		Button componentListBtn = new Button("Components",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new BugComponentEvent.GotoList(this, null));
+					}
+				});
 
-        final SplitButton controlsBtn = new SplitButton();
-        controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
-        controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-        controlsBtn.setCaption("Create Bug");
-        controlsBtn
-                .addClickListener(new SplitButton.SplitButtonClickListener() {
-            @Override
-            public void splitButtonClick(
-                    SplitButton.SplitButtonClickEvent event) {
-                EventBus.getInstance().fireEvent(
-                        new BugEvent.GotoAdd(this, null));
-            }
-        });
+		navButton.addButton(componentListBtn);
 
-        VerticalLayout btnControlsLayout = new VerticalLayout();
-        btnControlsLayout.setWidth("150px");
-        Button createComponentBtn = new Button("Create Component",
-                new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        controlsBtn.setPopupVisible(false);
-                        EventBus.getInstance().fireEvent(new BugComponentEvent.GotoAdd(this, null));
-                    }
-                });
-        createComponentBtn.setStyleName("link");
-        btnControlsLayout.addComponent(createComponentBtn);
+		Button versionListBtn = new Button("Versions",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new BugVersionEvent.GotoList(this, null));
+					}
+				});
 
-        Button createVersionBtn = new Button("Create Version",
-                new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        controlsBtn.setPopupVisible(false);
-                        EventBus.getInstance().fireEvent(new BugVersionEvent.GotoAdd(this, null));
-                    }
-                });
-        createVersionBtn.setStyleName("link");
-        btnControlsLayout.addComponent(createVersionBtn);
-        controlsBtn.addComponent(btnControlsLayout);
+		navButton.addButton(versionListBtn);
 
-        header.addComponent(controlsBtn);
+		header.addComponent(navButton);
+		header.setExpandRatio(navButton, 0.5f);
 
-        header.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
+		final SplitButton controlsBtn = new SplitButton();
+		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
+		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
+		controlsBtn.setCaption("Create Bug");
+		controlsBtn
+				.addClickListener(new SplitButton.SplitButtonClickListener() {
+					@Override
+					public void splitButtonClick(
+							SplitButton.SplitButtonClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new BugEvent.GotoAdd(this, null));
+					}
+				});
 
-        this.addComponent(header);
+		VerticalLayout btnControlsLayout = new VerticalLayout();
+		btnControlsLayout.setWidth("150px");
+		Button createComponentBtn = new Button("Create Component",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						controlsBtn.setPopupVisible(false);
+						EventBus.getInstance().fireEvent(
+								new BugComponentEvent.GotoAdd(this, null));
+					}
+				});
+		createComponentBtn.setStyleName("link");
+		btnControlsLayout.addComponent(createComponentBtn);
 
-        HorizontalLayout body = new HorizontalLayout();
-        body.setWidth("100%");
-        body.setSpacing(true);
+		Button createVersionBtn = new Button("Create Version",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						controlsBtn.setPopupVisible(false);
+						EventBus.getInstance().fireEvent(
+								new BugVersionEvent.GotoAdd(this, null));
+					}
+				});
+		createVersionBtn.setStyleName("link");
+		btnControlsLayout.addComponent(createVersionBtn);
+		controlsBtn.addComponent(btnControlsLayout);
 
-        leftColumn = new VerticalLayout();
-        leftColumn.setSpacing(true);
-        body.addComponent(leftColumn);
-        body.setExpandRatio(leftColumn, 1.0f);
+		header.addComponent(controlsBtn);
 
-        rightColumn = new VerticalLayout();
-        rightColumn.setSpacing(true);
-        rightColumn.setWidth("500px");
-        body.addComponent(rightColumn);
-        body.setComponentAlignment(rightColumn, Alignment.TOP_RIGHT);
+		header.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 
-        this.addComponent(body);
-    }
+		this.addComponent(header);
 
-    @Override
-    public void attach() {
-        leftColumn.removeAllComponents();
-        rightColumn.removeAllComponents();
-        
-        SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
+		HorizontalLayout body = new HorizontalLayout();
+		body.setWidth("100%");
+		body.setSpacing(true);
 
-        DueBugWidget dueBugWidget = new DueBugWidget();
-        LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(dueBugWidget);
-        leftColumn.addComponent(dueBugWidgetWrapper);
-        BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
-        dueDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
-        dueDefectsCriteria.setResolutions(new SetSearchField<String>(
-                new String[]{BugResolutionConstants.NEWISSUE}));
-        dueBugWidget.setSearchCriteria(dueDefectsCriteria);
+		leftColumn = new VerticalLayout();
+		leftColumn.setSpacing(true);
+		body.addComponent(leftColumn);
+		body.setExpandRatio(leftColumn, 1.0f);
 
-        RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
-        LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(updateBugWidget);
-        leftColumn.addComponent(updateBugWidgetWrapper);
-        BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
-        recentDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
-        updateBugWidget.setSearchCriteria(recentDefectsCriteria);
-        
+		rightColumn = new VerticalLayout();
+		rightColumn.setSpacing(true);
+		rightColumn.setWidth("500px");
+		body.addComponent(rightColumn);
+		body.setComponentAlignment(rightColumn, Alignment.TOP_RIGHT);
 
-        BugChartComponent bugChartComponent = new BugChartComponent();
-        rightColumn.addComponent(bugChartComponent);
-        
-        MyBugListWidget myBugListWidget = new MyBugListWidget();
-        LazyLoadWrapper myBugsWidgetWrapper = new LazyLoadWrapper(myBugListWidget);
-        rightColumn.addComponent(myBugsWidgetWrapper);
-        BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
-        myBugsSearchCriteria.setProjectId(new NumberSearchField(project.getId()));
-        myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext.getUsername()));
-        myBugListWidget.setSearchCriteria(myBugsSearchCriteria);
-    }
+		this.addComponent(body);
+	}
+
+	@Override
+	public void attach() {
+		leftColumn.removeAllComponents();
+		rightColumn.removeAllComponents();
+
+		SimpleProject project = CurrentProjectVariables.getProject();
+
+		DueBugWidget dueBugWidget = new DueBugWidget();
+		LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(dueBugWidget);
+		leftColumn.addComponent(dueBugWidgetWrapper);
+		BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
+		dueDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
+		dueDefectsCriteria.setResolutions(new SetSearchField<String>(
+				new String[] { BugResolutionConstants.NEWISSUE }));
+		dueBugWidget.setSearchCriteria(dueDefectsCriteria);
+
+		RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
+		LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(
+				updateBugWidget);
+		leftColumn.addComponent(updateBugWidgetWrapper);
+		BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
+		recentDefectsCriteria.setProjectId(new NumberSearchField(project
+				.getId()));
+		updateBugWidget.setSearchCriteria(recentDefectsCriteria);
+
+		BugChartComponent bugChartComponent = new BugChartComponent();
+		rightColumn.addComponent(bugChartComponent);
+
+		MyBugListWidget myBugListWidget = new MyBugListWidget();
+		LazyLoadWrapper myBugsWidgetWrapper = new LazyLoadWrapper(
+				myBugListWidget);
+		rightColumn.addComponent(myBugsWidgetWrapper);
+		BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
+		myBugsSearchCriteria
+				.setProjectId(new NumberSearchField(project.getId()));
+		myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext
+				.getUsername()));
+		myBugListWidget.setSearchCriteria(myBugsSearchCriteria);
+	}
 }

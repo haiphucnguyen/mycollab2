@@ -9,7 +9,7 @@ import org.vaadin.hene.splitbutton.SplitButton;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
@@ -37,7 +37,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ButtonTooltip;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.terminal.ThemeResource;
@@ -67,7 +66,6 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private RiskPresenter riskPresenter;
 	private UserGroupPresenter userPresenter;
 	private StandupPresenter standupPresenter;
-	private SimpleProject project;
 	private ProjectBreadcrumb breadCrumb;
 
 	public ProjectViewImpl() {
@@ -131,31 +129,28 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 							messagePresenter.go(ProjectViewImpl.this, null);
 						} else if ("Milestones".equals(caption)) {
 							MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
-							SimpleProject project = (SimpleProject) AppContext
-									.getVariable(ProjectContants.PROJECT_NAME);
 							searchCriteria.setProjectId(new NumberSearchField(
-									SearchField.AND, project.getId()));
+									SearchField.AND, CurrentProjectVariables
+											.getProjectId()));
 							gotoMilestoneView(new ScreenData.Search<MilestoneSearchCriteria>(
 									searchCriteria));
 						} else if ("Tasks".equals(caption)) {
 							taskPresenter.go(ProjectViewImpl.this,
-									new ScreenData<SimpleProject>(project));
+									new ScreenData<SimpleProject>(CurrentProjectVariables.getProject()));
 						} else if ("Bugs".equals(caption)) {
 							gotoBugView(null);
 						} else if ("Risks".equals(caption)) {
 							RiskSearchCriteria searchCriteria = new RiskSearchCriteria();
-							SimpleProject project = (SimpleProject) AppContext
-									.getVariable(ProjectContants.PROJECT_NAME);
 							searchCriteria.setProjectId(new NumberSearchField(
-									SearchField.AND, project.getId()));
+									SearchField.AND, CurrentProjectVariables
+											.getProjectId()));
 							gotoRiskView(new ScreenData.Search<RiskSearchCriteria>(
 									searchCriteria));
 						} else if ("Problems".equals(caption)) {
 							ProblemSearchCriteria searchCriteria = new ProblemSearchCriteria();
-							SimpleProject project = (SimpleProject) AppContext
-									.getVariable(ProjectContants.PROJECT_NAME);
 							searchCriteria.setProjectId(new NumberSearchField(
-									SearchField.AND, project.getId()));
+									SearchField.AND, CurrentProjectVariables
+											.getProjectId()));
 							problemPresenter
 									.go(ProjectViewImpl.this,
 											new ScreenData.Search<ProblemSearchCriteria>(
@@ -164,16 +159,14 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 							dashboardPresenter.go(ProjectViewImpl.this, null);
 						} else if ("Users & Group".equals(caption)) {
 							ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
-							SimpleProject project = (SimpleProject) AppContext
-									.getVariable(ProjectContants.PROJECT_NAME);
-							criteria.setProjectId(new NumberSearchField(project.getId()));
-							gotoUsersAndGroup(new ProjectMemberScreenData.Search(criteria));
+							criteria.setProjectId(new NumberSearchField(
+									CurrentProjectVariables.getProjectId()));
+							gotoUsersAndGroup(new ProjectMemberScreenData.Search(
+									criteria));
 						} else if ("StandUp".equals(caption)) {
 							StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
-							SimpleProject project = (SimpleProject) AppContext
-									.getVariable(ProjectContants.PROJECT_NAME);
-							criteria.setProjectId(new NumberSearchField(project
-									.getId()));
+							criteria.setProjectId(new NumberSearchField(
+									CurrentProjectVariables.getProjectId()));
 							criteria.setOnDate(new DateSearchField(
 									SearchField.AND, new GregorianCalendar()
 											.getTime()));
@@ -270,7 +263,6 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	@Override
 	public void constructProjectHeaderPanel(final SimpleProject project,
 			PageActionChain pageActionChain) {
-		this.project = project;
 		topPanel.removeAllComponents();
 
 		topPanel.addComponent(breadCrumb);

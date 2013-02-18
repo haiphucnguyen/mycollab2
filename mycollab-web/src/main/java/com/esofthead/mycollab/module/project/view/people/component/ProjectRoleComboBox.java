@@ -5,8 +5,7 @@ import java.util.List;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
@@ -24,11 +23,10 @@ public class ProjectRoleComboBox extends ComboBox {
 		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
 
 		ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
-		SimpleProject project = (SimpleProject) AppContext
-				.getVariable(ProjectContants.PROJECT_NAME);
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
-		criteria.setProjectId(new NumberSearchField(project.getId()));
+		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
+				.getProjectId()));
 
 		ProjectRoleService roleService = AppContext
 				.getSpringBean(ProjectRoleService.class);

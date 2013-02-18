@@ -5,8 +5,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
@@ -18,11 +17,11 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 public class TaskGroupDisplayWidget
 		extends
@@ -210,10 +209,9 @@ public class TaskGroupDisplayWidget
 		}
 
 		private TaskSearchCriteria createBaseSearchCriteria() {
-			SimpleProject project = (SimpleProject) AppContext
-					.getVariable(ProjectContants.PROJECT_NAME);
 			TaskSearchCriteria criteria = new TaskSearchCriteria();
-			criteria.setProjectid(new NumberSearchField(project.getId()));
+			criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
+					.getProjectId()));
 			criteria.setTaskListId(new NumberSearchField(taskList.getId()));
 			return criteria;
 		}

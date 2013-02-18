@@ -12,8 +12,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.file.ExportStreamResource;
-import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
@@ -206,20 +205,20 @@ public class ProjectMemberListPresenter extends
 	}
 
 	@Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        ProjectMemberContainer userGroupContainer = (ProjectMemberContainer) container;
-        userGroupContainer.removeAllComponents();
-        userGroupContainer.addComponent(view.getWidget());
-        if (data == null) {
-        	SimpleProject project = (SimpleProject)AppContext.getVariable(ProjectContants.PROJECT_NAME);
-        	ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
-        	criteria.setProjectId(new NumberSearchField(project.getId()));
-        	doSearch(criteria);
-        } else {
-        	doSearch((ProjectMemberSearchCriteria) data.getParams());
-        }
-        
-    }
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		ProjectMemberContainer userGroupContainer = (ProjectMemberContainer) container;
+		userGroupContainer.removeAllComponents();
+		userGroupContainer.addComponent(view.getWidget());
+		if (data == null) {
+			ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
+			criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
+					.getProjectId()));
+			doSearch(criteria);
+		} else {
+			doSearch((ProjectMemberSearchCriteria) data.getParams());
+		}
+
+	}
 
 	@Override
 	public void doSearch(ProjectMemberSearchCriteria searchCriteria) {

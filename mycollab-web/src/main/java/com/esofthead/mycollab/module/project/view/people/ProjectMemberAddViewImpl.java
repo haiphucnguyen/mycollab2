@@ -4,9 +4,13 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
-import com.esofthead.mycollab.module.project.ProjectContants;
+import java.util.Collection;
+import java.util.List;
+
+import org.vaadin.addon.customfield.CustomField;
+
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectRoleComboBox;
@@ -24,18 +28,13 @@ import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
-
-import java.util.Collection;
-import java.util.List;
-
-import org.vaadin.addon.customfield.CustomField;
 
 /**
  * 
@@ -109,10 +108,9 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 					if (user.getUsername() == null) {
 						ProjectMemberService prjMemberService = AppContext
 								.getSpringBean(ProjectMemberService.class);
-						SimpleProject project = (SimpleProject) AppContext
-								.getVariable(ProjectContants.PROJECT_NAME);
 						List<SimpleUser> users = prjMemberService
-								.getUsersNotInProject(project.getId());
+								.getUsersNotInProject(CurrentProjectVariables
+										.getProjectId());
 						return new UserComboBox(users);
 					} else {
 						if (user instanceof SimpleProjectMember) {

@@ -6,8 +6,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
-import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
@@ -54,7 +53,7 @@ public class TaskDisplayComponent extends CssLayout {
 
 		showTaskGroupInfo();
 	}
-	
+
 	private void showTaskGroupInfo() {
 		if (isDisplayTaskListInfo) {
 			GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(2, 3);
@@ -127,8 +126,10 @@ public class TaskDisplayComponent extends CssLayout {
 							projectTaskService.updateWithSession(task,
 									AppContext.getUsername());
 							TaskDisplayComponent.this.removeAllComponents();
-							ProjectTaskListService taskListService = AppContext.getSpringBean(ProjectTaskListService.class);
-							taskList = taskListService.findTaskListById(taskList.getId());
+							ProjectTaskListService taskListService = AppContext
+									.getSpringBean(ProjectTaskListService.class);
+							taskList = taskListService
+									.findTaskListById(taskList.getId());
 							showTaskGroupInfo();
 						}
 					}
@@ -162,10 +163,9 @@ public class TaskDisplayComponent extends CssLayout {
 
 	private void displayTasks() {
 		if (criteria == null) {
-			SimpleProject project = (SimpleProject) AppContext
-					.getVariable(ProjectContants.PROJECT_NAME);
 			TaskSearchCriteria criteria = new TaskSearchCriteria();
-			criteria.setProjectid(new NumberSearchField(project.getId()));
+			criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
+					.getProjectId()));
 			criteria.setTaskListId(new NumberSearchField(taskList.getId()));
 			criteria.setStatus(new StringSearchField("Open"));
 			this.criteria = criteria;
@@ -176,9 +176,10 @@ public class TaskDisplayComponent extends CssLayout {
 		// Update tasklist progress and number of open task/all task
 		taskNumberLbl.setValue("(" + (taskList.getNumOpenTasks() + 1) + "/"
 				+ (taskList.getNumAllTasks() + 1) + ")");
-		
+
 		int newAllTasks = taskList.getNumAllTasks() + 1;
-		double newProgressTask = (taskList.getPercentageComplete() * taskList.getNumAllTasks()) / newAllTasks;
+		double newProgressTask = (taskList.getPercentageComplete() * taskList
+				.getNumAllTasks()) / newAllTasks;
 		taskListProgress.setValue(newProgressTask / 100);
 	}
 

@@ -7,8 +7,7 @@ package com.esofthead.mycollab.module.project.view.task;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.module.file.AttachmentConstants;
-import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
@@ -73,9 +72,9 @@ public class TaskAddPopup extends CustomComponent {
 			@Override
             public void buttonClick(ClickEvent event) {
                 ProjectTaskService taskService = AppContext.getSpringBean(ProjectTaskService.class);
-                SimpleProject project = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
+               
                 task.setTasklistid(taskList.getId());
-                task.setProjectid(project.getId());
+                task.setProjectid(CurrentProjectVariables.getProjectId());
                 task.setSaccountid(AppContext.getAccountId());
                 task.setNotes(taskNoteComponent.getNote());
                 if (taskInformationLayout.validateForm(task)) {
@@ -90,7 +89,9 @@ public class TaskAddPopup extends CustomComponent {
         controlsLayout.addComponent(saveBtn);
 
         Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void buttonClick(ClickEvent event) {
                 taskDisplayComp.closeTaskAdd();
             }

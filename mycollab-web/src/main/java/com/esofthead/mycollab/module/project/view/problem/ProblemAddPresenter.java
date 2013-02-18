@@ -1,8 +1,7 @@
 package com.esofthead.mycollab.module.project.view.problem;
 
-import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Problem;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
@@ -19,72 +18,73 @@ import com.vaadin.ui.ComponentContainer;
 
 public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public ProblemAddPresenter() {
-        super(ProblemAddView.class);
-        bind();
-    }
+	public ProblemAddPresenter() {
+		super(ProblemAddView.class);
+		bind();
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        ProblemContainer problemContainer = (ProblemContainer) container;
-        problemContainer.removeAllComponents();
-        problemContainer.addComponent(view.getWidget());
-        
-        Problem problem = (Problem) data.getParams();
-        view.editItem(problem);
-        
-        ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
-        if (problem.getId() == null) {
-            breadcrumb.gotoProblemAdd();
-        } else {
-            breadcrumb.gotoProblemEdit(problem);
-        }
-    }
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		ProblemContainer problemContainer = (ProblemContainer) container;
+		problemContainer.removeAllComponents();
+		problemContainer.addComponent(view.getWidget());
 
-    private void bind() {
-        view.getEditFormHandlers().addFormHandler(new EditFormHandler<Problem>() {
-            @Override
-            public void onSave(final Problem problem) {
-                saveProblem(problem);
-                ViewState viewState = HistoryViewManager.back();
-                if (viewState instanceof NullViewState) {
-                    EventBus.getInstance().fireEvent(
-                            new ProblemEvent.GotoList(this, null));
-                }
-            }
+		Problem problem = (Problem) data.getParams();
+		view.editItem(problem);
 
-            @Override
-            public void onCancel() {
-                ViewState viewState = HistoryViewManager.back();
-                if (viewState instanceof NullViewState) {
-                    EventBus.getInstance().fireEvent(
-                            new ProblemEvent.GotoList(this, null));
-                }
-            }
+		ProjectBreadcrumb breadcrumb = ViewManager
+				.getView(ProjectBreadcrumb.class);
+		if (problem.getId() == null) {
+			breadcrumb.gotoProblemAdd();
+		} else {
+			breadcrumb.gotoProblemEdit(problem);
+		}
+	}
 
-            @Override
-            public void onSaveAndNew(final Problem problem) {
-                saveProblem(problem);
-                EventBus.getInstance().fireEvent(
-                        new ProblemEvent.GotoAdd(this, null));
-            }
-        });
-    }
+	private void bind() {
+		view.getEditFormHandlers().addFormHandler(
+				new EditFormHandler<Problem>() {
+					@Override
+					public void onSave(final Problem problem) {
+						saveProblem(problem);
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new ProblemEvent.GotoList(this, null));
+						}
+					}
 
-    public void saveProblem(Problem problem) {
-        ProblemService problemService = AppContext.getSpringBean(ProblemService.class);
-        SimpleProject project = (SimpleProject) AppContext
-                .getVariable(ProjectContants.PROJECT_NAME);
-        problem.setProjectid(project.getId());
-        problem.setSaccountid(AppContext.getAccountId());
+					@Override
+					public void onCancel() {
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new ProblemEvent.GotoList(this, null));
+						}
+					}
 
-        if (problem.getId() == null) {
-            problemService.saveWithSession(problem, AppContext.getUsername());
-        } else {
-            problemService.updateWithSession(problem, AppContext.getUsername());
-        }
+					@Override
+					public void onSaveAndNew(final Problem problem) {
+						saveProblem(problem);
+						EventBus.getInstance().fireEvent(
+								new ProblemEvent.GotoAdd(this, null));
+					}
+				});
+	}
 
-    }
+	public void saveProblem(Problem problem) {
+		ProblemService problemService = AppContext
+				.getSpringBean(ProblemService.class);
+		problem.setProjectid(CurrentProjectVariables.getProjectId());
+		problem.setSaccountid(AppContext.getAccountId());
+
+		if (problem.getId() == null) {
+			problemService.saveWithSession(problem, AppContext.getUsername());
+		} else {
+			problemService.updateWithSession(problem, AppContext.getUsername());
+		}
+
+	}
 }

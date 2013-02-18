@@ -6,8 +6,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.GregorianCalendar;
 
-import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
@@ -35,154 +34,171 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class TaskGroupAddWindow extends Window {
+	private static final long serialVersionUID = 1L;
+	private TaskGroupDisplayView taskView;
+	private SimpleTaskList taskList;
+	private TaskGroupAddWindow.TaskListForm taskListForm;
 
-    private TaskGroupDisplayView taskView;
-    private SimpleTaskList taskList;
-    private TaskGroupAddWindow.TaskListForm taskListForm;
+	public TaskGroupAddWindow(TaskGroupDisplayView taskView) {
+		this.setWidth("800px");
+		this.taskView = taskView;
+		taskList = new SimpleTaskList();
+		taskListForm = new TaskGroupAddWindow.TaskListForm();
+		taskListForm.setItemDataSource(new BeanItem(taskList));
+		this.addComponent(taskListForm);
 
-    public TaskGroupAddWindow(TaskGroupDisplayView taskView) {
-        this.setWidth("800px");
-        this.taskView = taskView;
-        taskList = new SimpleTaskList();
-        taskListForm = new TaskGroupAddWindow.TaskListForm();
-        taskListForm.setItemDataSource(new BeanItem(taskList));
-        this.addComponent(taskListForm);
+		center();
+	}
 
-        center();
-    }
+	private void notifyToReloadTaskList() {
+		taskView.insertTaskList(taskList);
+	}
 
-    private void notifyToReloadTaskList() {
-        taskView.insertTaskList(taskList);
-    }
+	private class TaskListForm extends AdvancedEditBeanForm<TaskList> {
+		private static final long serialVersionUID = 1L;
 
-    private class TaskListForm extends AdvancedEditBeanForm<TaskList> {
+		@Override
+		public void setItemDataSource(Item newDataSource) {
+			this.setFormLayoutFactory(new TaskGroupAddWindow.TaskListForm.TaskListFormLayoutFactory());
+			this.setFormFieldFactory(new TaskGroupAddWindow.TaskListForm.EditFormFieldFactory());
+			super.setItemDataSource(newDataSource);
+		}
 
-        @Override
-        public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new TaskGroupAddWindow.TaskListForm.TaskListFormLayoutFactory());
-            this.setFormFieldFactory(new TaskGroupAddWindow.TaskListForm.EditFormFieldFactory());
-            super.setItemDataSource(newDataSource);
-        }
+		private class TaskListFormLayoutFactory implements IFormLayoutFactory {
+			private static final long serialVersionUID = 1L;
+			private GridFormLayoutHelper informationLayout;
 
-        private class TaskListFormLayoutFactory implements IFormLayoutFactory {
+			@Override
+			public Layout getLayout() {
+				AddViewLayout taskListAddLayout = new AddViewLayout(
+						"New Task List", new ThemeResource(
+								"icons/48/project/tasklist.png"));
 
-            private GridFormLayoutHelper informationLayout;
+				informationLayout = new GridFormLayoutHelper(2, 3);
 
-            @Override
-            public Layout getLayout() {
-                AddViewLayout taskListAddLayout = new AddViewLayout("New Task List", new ThemeResource("icons/48/project/tasklist.png"));
+				VerticalLayout bodyLayout = new VerticalLayout();
+				Label organizationHeader = new Label("Task List Information");
+				organizationHeader.setStyleName("h2");
+				bodyLayout.addComponent(organizationHeader);
+				bodyLayout.addComponent(informationLayout.getLayout());
 
-                informationLayout = new GridFormLayoutHelper(2, 3);
+				taskListAddLayout.addBody(bodyLayout);
+				taskListAddLayout.addBottomControls(createBottomPanel());
+				return taskListAddLayout;
+			}
 
-                VerticalLayout bodyLayout = new VerticalLayout();
-                Label organizationHeader = new Label("Task List Information");
-                organizationHeader.setStyleName("h2");
-                bodyLayout.addComponent(organizationHeader);
-                bodyLayout.addComponent(informationLayout.getLayout());
+			private Layout createBottomPanel() {
+				HorizontalLayout layout = new HorizontalLayout();
+				layout.setSpacing(true);
+				layout.setMargin(true);
+				layout.setStyleName("addNewControl");
+				Button saveBtn = new Button("Save", new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-                taskListAddLayout.addBody(bodyLayout);
-                taskListAddLayout.addBottomControls(createBottomPanel());
-                return taskListAddLayout;
-            }
+					@Override
+					public void buttonClick(ClickEvent event) {
+						if (TaskGroupAddWindow.TaskListForm.this
+								.validateForm(taskList)) {
+							saveTaskList();
+							TaskGroupAddWindow.this.close();
+						}
+					}
+				});
+				saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+				layout.addComponent(saveBtn);
 
-            private Layout createBottomPanel() {
-                HorizontalLayout layout = new HorizontalLayout();
-                layout.setSpacing(true);
-                layout.setMargin(true);
-                layout.setStyleName("addNewControl");
-                Button saveBtn = new Button("Save", new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        if (TaskGroupAddWindow.TaskListForm.this.validateForm(taskList)) {
-                            saveTaskList();
-                            TaskGroupAddWindow.this.close();
-                        }
-                    }
-                });
-                saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-                layout.addComponent(saveBtn);
+				Button saveAndNewBtn = new Button("Save & New",
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-                Button saveAndNewBtn = new Button("Save & New", new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        if (TaskGroupAddWindow.TaskListForm.this.validateForm(taskList)) {
-                            saveTaskList();
-                            taskList = new SimpleTaskList();
-                        }
-                    }
-                });
-                saveAndNewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-                layout.addComponent(saveAndNewBtn);
+							@Override
+							public void buttonClick(ClickEvent event) {
+								if (TaskGroupAddWindow.TaskListForm.this
+										.validateForm(taskList)) {
+									saveTaskList();
+									taskList = new SimpleTaskList();
+								}
+							}
+						});
+				saveAndNewBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+				layout.addComponent(saveAndNewBtn);
 
-                Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        TaskGroupAddWindow.this.close();
-                    }
-                });
-                cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-                layout.addComponent(cancelBtn);
+				Button cancelBtn = new Button("Cancel",
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-                return layout;
-            }
+							@Override
+							public void buttonClick(ClickEvent event) {
+								TaskGroupAddWindow.this.close();
+							}
+						});
+				cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+				layout.addComponent(cancelBtn);
 
-            private void saveTaskList() {
-                ProjectTaskListService taskListService = AppContext.getSpringBean(ProjectTaskListService.class);
-                taskList.setSaccountid(AppContext.getAccountId());
-                taskList.setCreatedtime(new GregorianCalendar().getTime());
-                taskList.setStatus("Open");
+				return layout;
+			}
 
-                SimpleProject prj = (SimpleProject) AppContext.getVariable(ProjectContants.PROJECT_NAME);
-                taskList.setProjectid(prj.getId());
-                taskListService.saveWithSession(taskList, AppContext.getUsername());
-                notifyToReloadTaskList();
-            }
+			private void saveTaskList() {
+				ProjectTaskListService taskListService = AppContext
+						.getSpringBean(ProjectTaskListService.class);
+				taskList.setSaccountid(AppContext.getAccountId());
+				taskList.setCreatedtime(new GregorianCalendar().getTime());
+				taskList.setStatus("Open");
+				taskList.setProjectid(CurrentProjectVariables.getProjectId());
+				taskListService.saveWithSession(taskList,
+						AppContext.getUsername());
+				notifyToReloadTaskList();
+			}
 
-            @Override
-            public void attachField(Object propertyId, Field field) {
-                if (propertyId.equals("name")) {
-                    informationLayout.addComponent(field, "Name", 0, 0, 2, "100%");
-                } else if (propertyId.equals("description")) {
-                    informationLayout.addComponent(field, "Description", 0, 1, 2, "100%");
-                } else if (propertyId.equals("owner")) {
-                    informationLayout.addComponent(field, "Responsible User", 0, 2);
-                } else if (propertyId.equals("milestoneid")) {
-                    informationLayout.addComponent(field, "Related Milestone", 1, 2);
-                }
-            }
-        }
+			@Override
+			public void attachField(Object propertyId, Field field) {
+				if (propertyId.equals("name")) {
+					informationLayout.addComponent(field, "Name", 0, 0, 2,
+							"100%");
+				} else if (propertyId.equals("description")) {
+					informationLayout.addComponent(field, "Description", 0, 1,
+							2, "100%");
+				} else if (propertyId.equals("owner")) {
+					informationLayout.addComponent(field, "Responsible User",
+							0, 2);
+				} else if (propertyId.equals("milestoneid")) {
+					informationLayout.addComponent(field, "Related Milestone",
+							1, 2);
+				}
+			}
+		}
 
-        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
+		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
-            private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            protected Field onCreateField(Item item, Object propertyId,
-                    com.vaadin.ui.Component uiContext) {
-                if (propertyId.equals("description")) {
-                    TextArea area = new TextArea();
-                    area.setNullRepresentation("");
-                    return area;
-                } else if (propertyId.equals("owner")) {
-                    return new UserComboBox();
-                } else if (propertyId.equals("milestoneid")) {
-                    return new MilestoneComboBox();
-                }
-                
-                if ("name".equals(propertyId)) {
-               	 TextField tf = new TextField();
-                    tf.setNullRepresentation("");
-                    tf.setRequired(true);
-                    tf.setRequiredError("Please enter a Name");
-                    return tf;
-               }
-                
-                return null;
-            }
-        }
-    }
+			@Override
+			protected Field onCreateField(Item item, Object propertyId,
+					com.vaadin.ui.Component uiContext) {
+				if (propertyId.equals("description")) {
+					TextArea area = new TextArea();
+					area.setNullRepresentation("");
+					return area;
+				} else if (propertyId.equals("owner")) {
+					return new UserComboBox();
+				} else if (propertyId.equals("milestoneid")) {
+					return new MilestoneComboBox();
+				}
+
+				if ("name".equals(propertyId)) {
+					TextField tf = new TextField();
+					tf.setNullRepresentation("");
+					tf.setRequired(true);
+					tf.setRequiredError("Please enter a Name");
+					return tf;
+				}
+
+				return null;
+			}
+		}
+	}
 }

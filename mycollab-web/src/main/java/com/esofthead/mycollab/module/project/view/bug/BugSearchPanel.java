@@ -11,7 +11,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
-import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -43,8 +43,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 	protected BugSearchCriteria searchCriteria;
 
 	public BugSearchPanel() {
-		this.project = (SimpleProject) AppContext
-				.getVariable(ProjectContants.PROJECT_NAME);
+		this.project = CurrentProjectVariables.getProject();
 	}
 
 	@Override
