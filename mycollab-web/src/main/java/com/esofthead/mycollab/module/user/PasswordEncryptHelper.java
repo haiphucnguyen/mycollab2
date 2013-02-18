@@ -14,11 +14,17 @@ public class PasswordEncryptHelper {
 		if (isPasswordEncrypt) {
 			return plainPassword.equals(encryptPassword);
 		} else {
-			return passwordEncryptor.checkPassword(plainPassword, encryptPassword);
+			return passwordEncryptor.checkPassword(plainPassword,
+					encryptPassword);
 		}
 	}
-	
+
 	public static void main(String[] args) {
-		System.out.println(PasswordEncryptHelper.encryptPassword("123456"));
+		System.out
+				.println(PasswordEncryptHelper
+						.checkPassword(
+								"123456",
+								"8Ik7q/G+X7EmJbCOC6ZmMEuZlfUePZqaRRvCAy2thRrlxwx5G9v2JYMt423xQxWo",
+								false));
 	}
 }

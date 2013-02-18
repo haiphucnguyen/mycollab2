@@ -93,10 +93,8 @@
 
         SELECT m_prj_member.id, m_prj_member.username, m_prj_member.projectId, m_prj_member.joinDate, m_prj_member.projectRoleId, 
                  m_prj_member.isAdmin,
-                 concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS memberFullName,
-                 m_prj_role.rolename
+                 concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS memberFullName
             FROM m_prj_member, s_user
-              LEFT OUTER JOIN m_prj_role ON (m_prj_role.id=m_prj_member.projectRoleId)
             WHERE (m_prj_member.username=s_user.username AND s_user.username=#{username})
     </select>
     

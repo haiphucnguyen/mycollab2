@@ -146,7 +146,12 @@ public class AppContext implements TransactionListener, Serializable {
     }
 
     public static boolean isAdmin() {
-        return instance.get().session.getIsadmin();
+        Boolean isAdmin = instance.get().session.getIsadmin();
+        if (isAdmin == null) {
+        	return Boolean.FALSE;
+        } else {
+        	return isAdmin;
+        }
     }
 
     public static boolean canRead(String permissionItem) {
