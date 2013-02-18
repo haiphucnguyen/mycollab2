@@ -105,7 +105,6 @@ public class UserDashboardViewImpl extends AbstractView implements
                 String caption = btn.getCaption();
                 if ("My Projects".equals(caption)) {
                     ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
-                    // TODO: wrong search criteria
 
                     gotoMyProjectList(new ScreenData.Search<ProjectSearchCriteria>(
                             searchCriteria));
