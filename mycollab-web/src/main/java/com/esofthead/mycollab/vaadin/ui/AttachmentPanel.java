@@ -38,7 +38,9 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
         final HorizontalLayout fileAttachmentLayout = new HorizontalLayout();
         fileAttachmentLayout.setSpacing(true);
         Button removeBtn = new Button(null, new Button.ClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void buttonClick(ClickEvent event) {
                 File file = fileStores.get(fileName);
                 if (file != null) {

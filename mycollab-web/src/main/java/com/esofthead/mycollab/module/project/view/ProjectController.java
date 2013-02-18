@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.Project;
+import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
@@ -26,6 +27,7 @@ import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
@@ -33,6 +35,7 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.view.bug.BugContainer;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
@@ -904,6 +907,44 @@ public class ProjectController {
 								.getView(ProjectView.class);
 						ProjectRoleScreenData.Read data = new ProjectRoleScreenData.Read(
 								(Integer) event.getData());
+						projectView.gotoUsersAndGroup(data);
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ProjectMemberEvent.GotoRead>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ProjectMemberEvent.GotoRead.class;
+					}
+
+					@Override
+					public void handle(ProjectMemberEvent.GotoRead event) {
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
+						ProjectMemberScreenData.Read data = new ProjectMemberScreenData.Read(
+								(Integer) event.getData());
+						projectView.gotoUsersAndGroup(data);
+					}
+				});
+		
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ProjectMemberEvent.GotoAdd>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ProjectMemberEvent.GotoAdd.class;
+					}
+
+					@Override
+					public void handle(ProjectMemberEvent.GotoAdd event) {
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
+						ProjectMemberScreenData.Add data = new ProjectMemberScreenData.Add(
+								new ProjectMember());
 						projectView.gotoUsersAndGroup(data);
 					}
 				});

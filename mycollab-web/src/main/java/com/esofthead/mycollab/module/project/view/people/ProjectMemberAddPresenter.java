@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -22,7 +23,10 @@ public class ProjectMemberAddPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		throw new UnsupportedOperationException("Not supported yet.");
+		ProjectMemberContainer userGroupContainer = (ProjectMemberContainer) container;
+		userGroupContainer.removeAllComponents();
+		userGroupContainer.addComponent(view.getWidget());
+		view.editItem((ProjectMember) data.getParams());
 	}
 
 }

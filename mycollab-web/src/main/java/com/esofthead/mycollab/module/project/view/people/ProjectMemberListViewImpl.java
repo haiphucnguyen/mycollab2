@@ -92,7 +92,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements ProjectMe
             }
         });
         
-        tableItem.addGeneratedColumn("joinDate", new Table.ColumnGenerator() {
+        tableItem.addGeneratedColumn("joindate", new Table.ColumnGenerator() {
             private static final long serialVersionUID = 1L;
 
             @Override

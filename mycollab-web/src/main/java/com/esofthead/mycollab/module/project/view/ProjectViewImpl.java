@@ -14,11 +14,13 @@ import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.people.UserGroupPresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
@@ -160,7 +162,11 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 						} else if ("Dashboard".equals(caption)) {
 							dashboardPresenter.go(ProjectViewImpl.this, null);
 						} else if ("Users & Group".equals(caption)) {
-							gotoUsersAndGroup(null);
+							ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
+							SimpleProject project = (SimpleProject) AppContext
+									.getVariable(ProjectContants.PROJECT_NAME);
+							criteria.setProjectId(new NumberSearchField(project.getId()));
+							gotoUsersAndGroup(new ProjectMemberScreenData.Search(criteria));
 						} else if ("StandUp".equals(caption)) {
 							StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
 							SimpleProject project = (SimpleProject) AppContext

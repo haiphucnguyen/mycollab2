@@ -4,11 +4,13 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.vaadin.mvp.IPreviewView;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public interface ProjectMemberReadView extends View {
+public interface ProjectMemberReadView extends
+		IPreviewView<SimpleProjectMember> {
 }
