@@ -24,6 +24,11 @@ public class ProjectRolePresenter extends
 	}
 
 	@Override
+	public void go(ComponentContainer container, ScreenData<?> data) {
+		super.go(container, data, false);
+	}
+
+	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		AbstractPresenter<?> presenter = null;
 

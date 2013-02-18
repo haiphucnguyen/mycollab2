@@ -13,31 +13,41 @@ import java.util.List;
 
 public class UserComboBox extends ComboBox {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    @SuppressWarnings("unchecked")
-    public UserComboBox() {
-        super();
-        this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+	@SuppressWarnings("unchecked")
+	public UserComboBox() {
+		super();
+		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
 
-        UserSearchCriteria criteria = new UserSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-                AppContext.getAccountId()));
+		UserSearchCriteria criteria = new UserSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
 
-        UserService userService = AppContext.getSpringBean(UserService.class);
-        List<SimpleUser> userList = userService
-                .findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
-                criteria, 0, Integer.MAX_VALUE));
+		UserService userService = AppContext.getSpringBean(UserService.class);
+		List<SimpleUser> userList = userService
+				.findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
+						criteria, 0, Integer.MAX_VALUE));
+		loadUserList(userList);
 
-        BeanContainer<String, SimpleUser> beanItem = new BeanContainer<String, SimpleUser>(
-                SimpleUser.class);
-        beanItem.setBeanIdProperty("username");
+	}
 
-        for (SimpleUser user : userList) {
-            beanItem.addBean(user);
-        }
+	public UserComboBox(List<SimpleUser> userList) {
+		super();
+		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
+		loadUserList(userList);
+	}
 
-        this.setContainerDataSource(beanItem);
-        this.setItemCaptionPropertyId("displayName");
-    }
+	private void loadUserList(List<SimpleUser> userList) {
+		BeanContainer<String, SimpleUser> beanItem = new BeanContainer<String, SimpleUser>(
+				SimpleUser.class);
+		beanItem.setBeanIdProperty("username");
+
+		for (SimpleUser user : userList) {
+			beanItem.addBean(user);
+		}
+
+		this.setContainerDataSource(beanItem);
+		this.setItemCaptionPropertyId("displayName");
+	}
 }

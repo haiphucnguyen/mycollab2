@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
-import com.esofthead.mycollab.module.user.accountsettings.view.UserFormLayoutFactory;
+
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -22,7 +22,7 @@ public abstract class ProjectMemberFormLayoutFactory implements
 		IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
 	private String title;
-	private UserFormLayoutFactory.UserInformationLayout userInformationLayout;
+	private ProjectMemberInformationLayout userInformationLayout;
 
 	public ProjectMemberFormLayoutFactory(String title) {
 		this.title = title;
@@ -38,7 +38,7 @@ public abstract class ProjectMemberFormLayoutFactory implements
 			userAddLayout.addTopControls(topPanel);
 		}
 
-		userInformationLayout = new UserFormLayoutFactory.UserInformationLayout();
+		userInformationLayout = new ProjectMemberInformationLayout();
 		userInformationLayout.getLayout().setWidth("100%");
 		userAddLayout.addBody(userInformationLayout.getLayout());
 
@@ -71,7 +71,7 @@ public abstract class ProjectMemberFormLayoutFactory implements
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
-			informationLayout = new GridFormLayoutHelper(1, 1);
+			informationLayout = new GridFormLayoutHelper(1, 2);
 			informationLayout.getLayout().setWidth("100%");
 
 			layout.addComponent(informationLayout.getLayout());
@@ -83,7 +83,7 @@ public abstract class ProjectMemberFormLayoutFactory implements
 			if (propertyId.equals("username")) {
 				informationLayout.addComponent(field, "User", 0, 0);
 			} else if (propertyId.equals("isadmin")) {
-				informationLayout.addComponent(field, "Role", 0, 1);
+				informationLayout.addComponent(field, "Is Admin", 0, 1);
 			}
 		}
 	}
