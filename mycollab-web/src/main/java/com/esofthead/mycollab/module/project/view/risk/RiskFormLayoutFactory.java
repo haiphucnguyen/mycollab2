@@ -22,7 +22,7 @@ public abstract class RiskFormLayoutFactory implements IFormLayoutFactory {
     
     @Override
     public Layout getLayout() {
-        AddViewLayout riskAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/project/risk.png"));
+        AddViewLayout riskAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/project/projectMember.png"));
         
         riskAddLayout.addTopControls(createTopPanel());
         

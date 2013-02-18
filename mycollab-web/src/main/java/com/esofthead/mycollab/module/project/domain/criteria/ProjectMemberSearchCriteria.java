@@ -8,18 +8,28 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class ProjectMemberSearchCriteria extends SearchCriteria {
 
-    private NumberSearchField projectId;
+	private NumberSearchField projectId;
 
-    public NumberSearchField getProjectId() {
-        return projectId;
-    }
+	private NumberSearchField id;
 
-    public void setProjectId(NumberSearchField projectId) {
-        this.projectId = projectId;
-    }
+	public NumberSearchField getId() {
+		return id;
+	}
+
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
+
+	public NumberSearchField getProjectId() {
+		return projectId;
+	}
+
+	public void setProjectId(NumberSearchField projectId) {
+		this.projectId = projectId;
+	}
 }

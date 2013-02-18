@@ -47,13 +47,13 @@ public class RiskServiceTest extends ServiceTest{
     public void testInsertAndReturnKey() {
         Risk record = new Risk();
         record.setProjectid(1);
-        record.setRiskname("New risk");
+        record.setRiskname("New projectMember");
         record.setDescription("aaa");
         record.setSaccountid(1);
         int newId = riskService.saveWithSession(record, "hainguyen");
         System.out.println("Risk id: " + newId);
 
         Risk risk = riskService.findByPrimaryKey(newId);
-        Assert.assertEquals("New risk", risk.getRiskname());
+        Assert.assertEquals("New projectMember", risk.getRiskname());
     }
 }

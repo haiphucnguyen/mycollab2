@@ -21,8 +21,6 @@ public class ProjectMemberPresenter extends
 	public ProjectMemberPresenter() {
 		super(ProjectMemberContainer.class);
 	}
-	
-	
 
 	@Override
 	public void go(ComponentContainer container, ScreenData<?> data) {
@@ -42,6 +40,9 @@ public class ProjectMemberPresenter extends
 			presenter = PresenterResolver
 					.getPresenter(ProjectMemberReadPresenter.class);
 		} else if (data instanceof ProjectMemberScreenData.Search) {
+			presenter = PresenterResolver
+					.getPresenter(ProjectMemberListPresenter.class);
+		} else {
 			presenter = PresenterResolver
 					.getPresenter(ProjectMemberListPresenter.class);
 		}

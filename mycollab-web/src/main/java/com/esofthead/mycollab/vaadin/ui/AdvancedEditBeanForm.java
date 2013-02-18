@@ -1,25 +1,26 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.esofthead.mycollab.vaadin.events.EditFormHandler;
-import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
-import com.esofthead.mycollab.validator.constraints.DateComparision;
-import com.esofthead.mycollab.web.AppContext;
-import de.steinwedel.vaadin.MessageBox;
-import de.steinwedel.vaadin.MessageBox.ButtonType;
 import java.lang.annotation.Annotation;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+
 import javax.validation.ConstraintViolation;
 import javax.validation.Validator;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
+
 import org.springframework.validation.beanvalidation.LocalValidatorFactoryBean;
+
+import com.esofthead.mycollab.vaadin.events.EditFormHandler;
+import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
+import com.esofthead.mycollab.validator.constraints.DateComparision;
+import com.esofthead.mycollab.web.AppContext;
+
+import de.steinwedel.vaadin.MessageBox;
+import de.steinwedel.vaadin.MessageBox.ButtonType;
 
 @SuppressWarnings("serial")
 public class AdvancedEditBeanForm<T> extends GenericForm implements
         HasEditFormHandlers<T> {
-    private static Logger log = LoggerFactory.getLogger(AdvancedEditBeanForm.class);
 
     private final Validator validation;
     private List<EditFormHandler<T>> editFormHandlers;

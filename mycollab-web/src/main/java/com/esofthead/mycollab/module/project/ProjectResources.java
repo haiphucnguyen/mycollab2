@@ -23,7 +23,7 @@ public class ProjectResources {
         sizeResources.put(ProjectContants.MESSAGE, new ThemeResource("icons/16/project/message.png"));
         sizeResources.put(ProjectContants.MILESTONE, new ThemeResource("icons/16/project/milestone.png"));
         sizeResources.put(ProjectContants.PROBLEM, new ThemeResource("icons/16/project/problem.png"));
-        sizeResources.put(ProjectContants.RISK, new ThemeResource("icons/16/project/risk.png"));
+        sizeResources.put(ProjectContants.RISK, new ThemeResource("icons/16/project/projectMember.png"));
         sizeResources.put(ProjectContants.TASK, new ThemeResource("icons/16/project/task.png"));
         sizeResources.put(ProjectContants.TASK_LIST, new ThemeResource("icons/16/project/tasklist.png"));
         sizeResources.put(ProjectContants.BUG, new ThemeResource("icons/16/project/bug.png"));
