@@ -62,7 +62,7 @@
         </if>
         <if test="involvedMember != null">
           <![CDATA[
-            ${involvedMember.operation} (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=#{involvedMember}) > 0
+            ${involvedMember.operation} (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=#{involvedMember.value}) > 0
             ]]>
         </if>
 	</sql>
@@ -113,7 +113,7 @@
         </if>
         <if test="involvedMember != null">
           <![CDATA[
-            ${involvedMember.operation} (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=#{involvedMember}) > 0
+            ${involvedMember.operation} (SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.projectId=m_prj_project.id AND m_prj_member.username=#{involvedMember.value}) > 0
             ]]>
         </if>
 	</sql>
