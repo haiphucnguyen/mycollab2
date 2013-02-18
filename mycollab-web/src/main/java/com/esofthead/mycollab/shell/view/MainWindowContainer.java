@@ -51,6 +51,7 @@ public class MainWindowContainer extends Window implements View {
 		controller = new ShellController(this);
 
 		this.addURIHandler(new URIHandler() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public DownloadStream handleURI(URL context, String relativeUri) {

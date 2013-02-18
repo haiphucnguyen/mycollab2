@@ -57,10 +57,6 @@ public class UserDashboardViewImpl extends AbstractView implements
         myHome.setStyleName("sectionHeader");
         menu.addComponent(myHome);
         menu.addComponent(mySpaceTabs);
-        Label calendar = new Label("Calendar");
-        calendar.setStyleName("sectionHeader");
-        menu.addComponent(calendar);
-        menu.addComponent(calendarToolTabs);
 
         mySpaceTabs.setStyleName("hide-selection");
         calendarToolTabs.setStyleName("hide-selection");

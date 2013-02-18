@@ -72,7 +72,7 @@ public class ActivityStreamComponent extends Depot {
 	static class ProjectActivityStreamPagedList
 			extends
 			AbstractBeanPagedList<ActivityStreamSearchCriteria, ProjectActivityStream> {
-
+		private static final long serialVersionUID = 1L;
 		private final ProjectService projectService;
 
 		public ProjectActivityStreamPagedList() {

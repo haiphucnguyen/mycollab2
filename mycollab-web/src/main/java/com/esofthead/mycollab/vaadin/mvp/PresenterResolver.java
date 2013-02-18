@@ -30,7 +30,8 @@ public class PresenterResolver {
     }
 
     public static void clearResources() {
-        Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>)AppContext.getVariable(PRESENTER_VAL);
+        @SuppressWarnings("unchecked")
+		Map<Class<?>, Object> presenterMap = (Map<Class<?>, Object>)AppContext.getVariable(PRESENTER_VAL);
         if (presenterMap != null) {
            presenterMap.clear(); 
            AppContext.removeVariable(PRESENTER_VAL);

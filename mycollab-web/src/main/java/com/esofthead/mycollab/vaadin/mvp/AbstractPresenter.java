@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.vaadin.mvp;
 
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.vaadin.ui.ComponentContainer;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -52,6 +53,7 @@ public abstract class AbstractPresenter<V extends View> implements Presenter {
     
     @Override
     public void handleChain(ComponentContainer container, PageActionChain pageActionChain) {
+    	log.debug("Handle chain: " + BeanUtility.printBeanObj(pageActionChain));
         PageAction pageAction = pageActionChain.pop();
         go(container, pageAction.getScreenData());
         
