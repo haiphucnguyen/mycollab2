@@ -29,6 +29,7 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.ui.ButtonTooltip;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.lexaden.breadcrumb.Breadcrumb;
@@ -60,7 +61,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
             }
         }));
         
-        this.setHeight(35, Sizeable.UNITS_PIXELS);
+        this.setHeight(25, Sizeable.UNITS_PIXELS);
     }
     
     public void setProject(SimpleProject project) {
@@ -84,7 +85,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
             }
         }));
         this.setLinkEnabled(true, 2);
-        this.addLink(new Button(message.getTitle()));
+        this.addLink(new ButtonTooltip(message.getTitle()));
         AppContext.addFragment("project/message/preview/" + UrlEncodeDecoder.encode(project.getId() + "/" + message.getId()));
     }
     
@@ -98,7 +99,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.select(1);
         this.addLink(new Button("Risks", new GotoRiskListListener()));
         this.setLinkEnabled(true, 2);
-        this.addLink(new Button(risk.getRiskname()));
+        this.addLink(new ButtonTooltip(risk.getRiskname()));
         AppContext.addFragment("project/risk/preview/" + UrlEncodeDecoder.encode(project.getId() + "/" + risk.getId()));
     }
     
@@ -106,7 +107,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.select(1);
         this.addLink(new Button("Risks", new GotoRiskListListener()));
         this.setLinkEnabled(true, 2);
-        this.addLink(new Button(risk.getRiskname(), new Button.ClickListener() {
+        this.addLink(new ButtonTooltip(risk.getRiskname(), new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -145,7 +146,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.select(1);
         this.addLink(new Button("Milestones", new GotoMilestoneListListener()));
         this.setLinkEnabled(true, 2);
-        this.addLink(new Button(milestone.getName()));
+        this.addLink(new ButtonTooltip(milestone.getName()));
         AppContext.addFragment("project/milestone/preview/" + UrlEncodeDecoder.encode(project.getId() + "/" + milestone.getId()));
     }
     
@@ -153,7 +154,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.select(1);
         this.addLink(new Button("Milestones", new GotoMilestoneListListener()));
         this.setLinkEnabled(true, 2);
-        this.addLink(new Button(milestone.getName(), new Button.ClickListener() {
+        this.addLink(new ButtonTooltip(milestone.getName(), new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new MilestoneEvent.GotoRead(this, milestone.getId()));
@@ -190,7 +191,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.select(1);
         this.addLink(new Button("Problems", new GotoProblemListListener()));
         this.setLinkEnabled(true, 2);
-        this.addLink(new Button(problem.getIssuename()));
+        this.addLink(new ButtonTooltip(problem.getIssuename()));
         AppContext.addFragment("project/problem/preview/" + UrlEncodeDecoder.encode(project.getId() + "/" + problem.getId()));
     }
     
@@ -198,7 +199,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.select(1);
         this.addLink(new Button("Problems", new GotoProblemListListener()));
         this.setLinkEnabled(true, 2);
-        this.addLink(new Button(problem.getIssuename(), new Button.ClickListener() {
+        this.addLink(new ButtonTooltip(problem.getIssuename(), new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new ProblemEvent.GotoRead(this, problem.getId()));
@@ -251,7 +252,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.select(1);
         this.addLink(new Button("Task Assignments", new GotoTaskAssignmentDashboard()));
         this.setLinkEnabled(true, 2);
-        this.addLink(new Button("Task Group: " + taskList.getName()));
+        this.addLink(new ButtonTooltip("Task Group: " + taskList.getName()));
         AppContext.addFragment("project/task/taskgroup/preview/" + UrlEncodeDecoder.encode(project.getId() + "/" + taskList.getId()));
     }
     
@@ -259,7 +260,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.select(1);
         this.addLink(new Button("Task Assignments", new GotoTaskAssignmentDashboard()));
         this.setLinkEnabled(true, 2);
-        this.addLink(new Button("Task Group: " + taskList.getName(), new Button.ClickListener() {
+        this.addLink(new ButtonTooltip("Task Group: " + taskList.getName(), new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new TaskListEvent.GotoRead(this, taskList.getId()));
@@ -282,7 +283,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.select(1);
         this.addLink(new Button("Task Assignments", new GotoTaskAssignmentDashboard()));
         this.setLinkEnabled(true, 2);
-        this.addLink(new Button("Task: " + task.getTaskname()));
+        this.addLink(new ButtonTooltip("Task: " + task.getTaskname()));
         AppContext.addFragment("project/task/task/preview/" + UrlEncodeDecoder.encode(project.getId() + "/" + task.getId()));
     }
     
@@ -290,7 +291,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.select(1);
         this.addLink(new Button("Task Assignments", new GotoTaskAssignmentDashboard()));
         this.setLinkEnabled(true, 2);
-        this.addLink(new Button("Task: " + task.getTaskname(), new Button.ClickListener() {
+        this.addLink(new ButtonTooltip("Task: " + task.getTaskname(), new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new TaskEvent.GotoRead(this, task.getId()));
@@ -335,7 +336,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.select(1);
         this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
         this.setLinkEnabled(true, 2);
-        this.addLink(new Button(bug.getSummary(), new Button.ClickListener() {
+        this.addLink(new ButtonTooltip(bug.getSummary(), new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new BugEvent.GotoRead(this, bug.getId()));
@@ -349,7 +350,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.select(1);
         this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
         this.setLinkEnabled(true, 2);
-        this.addLink(new Button(bug.getSummary()));
+        this.addLink(new ButtonTooltip(bug.getSummary()));
         AppContext.addFragment("project/bug/preview/" + UrlEncodeDecoder.encode(project.getId() + "/" + bug.getId()));
     }
     
@@ -377,7 +378,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.setLinkEnabled(true, 2);
         this.addLink(new Button("Versions", new GotoVersionListener()));
         this.setLinkEnabled(true, 3);
-        this.addLink(new Button(version.getVersionname(), new Button.ClickListener() {
+        this.addLink(new ButtonTooltip(version.getVersionname(), new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new BugVersionEvent.GotoRead(this, version.getId()));
@@ -393,7 +394,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.setLinkEnabled(true, 2);
         this.addLink(new Button("Versions", new GotoVersionListener()));
         this.setLinkEnabled(true, 3);
-        this.addLink(new Button(version.getVersionname()));
+        this.addLink(new ButtonTooltip(version.getVersionname()));
         AppContext.addFragment("project/bug/version/preview/" + UrlEncodeDecoder.encode(project.getId() + "/" + version.getId()));
     }
     
@@ -429,7 +430,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.setLinkEnabled(true, 2);
         this.addLink(new Button("Components", new GotoComponentListener()));
         this.setLinkEnabled(true, 3);
-        this.addLink(new Button(component.getComponentname(), new Button.ClickListener() {
+        this.addLink(new ButtonTooltip(component.getComponentname(), new Button.ClickListener() {
             @Override
             public void buttonClick(ClickEvent event) {
                 EventBus.getInstance().fireEvent(new BugComponentEvent.GotoRead(this, component.getId()));
@@ -445,7 +446,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
         this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
         this.setLinkEnabled(true, 2);
         this.addLink(new Button("Components", new GotoComponentListener()));
-        this.addLink(new Button(component.getComponentname()));
+        this.addLink(new ButtonTooltip(component.getComponentname()));
         AppContext.addFragment("project/bug/component/preview/" + UrlEncodeDecoder.encode(project.getId() + "/" + component.getId()));
     }
     

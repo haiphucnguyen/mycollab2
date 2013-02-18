@@ -34,6 +34,7 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.ButtonTooltip;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -273,12 +274,12 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		topPanel.removeAllComponents();
 
 		topPanel.addComponent(breadCrumb);
-		topPanel.setComponentAlignment(breadCrumb, Alignment.MIDDLE_LEFT);
+		topPanel.setComponentAlignment(breadCrumb, Alignment.BOTTOM_CENTER);
 		topPanel.setExpandRatio(breadCrumb, 1.0f);
 
 		breadCrumb.setProject(project);
 		breadCrumb.select(0);
-		breadCrumb.addLink(new Button(project.getName(),
+		breadCrumb.addLink(new ButtonTooltip(project.getName(),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {
