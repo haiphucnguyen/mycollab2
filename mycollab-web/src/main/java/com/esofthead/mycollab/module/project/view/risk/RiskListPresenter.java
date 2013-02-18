@@ -113,7 +113,7 @@ public class RiskListPresenter extends AbstractPresenter<RiskListView> implement
                         if ("delete".equals(id)) {
                             ConfirmDialog.show(view.getWindow(),
                                     "Please Confirm:",
-                                    "Are you sure to delete selected items: ",
+                                    "Are you sure to delete selected items ?",
                                     "Yes", "No", new ConfirmDialog.Listener() {
                                 private static final long serialVersionUID = 1L;
 
