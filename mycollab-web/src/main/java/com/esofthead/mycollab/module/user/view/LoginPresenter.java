@@ -48,11 +48,13 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 		});
 	}
 
-	public void doLogin(String username, String password, boolean isPasswordEncrypt) {
+	public void doLogin(String username, String password,
+			boolean isPasswordEncrypt) {
 		try {
 			UserService userService = AppContext
 					.getSpringBean(UserService.class);
-			SimpleUser user = userService.authentication(username, password, isPasswordEncrypt);
+			SimpleUser user = userService.authentication(username, password,
+					isPasswordEncrypt);
 			UserPreferenceService preferenceService = AppContext
 					.getSpringBean(UserPreferenceService.class);
 			UserPreference pref = preferenceService
@@ -69,7 +71,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 			AbstractWebApplicationContext context = (AbstractWebApplicationContext) AppContext
 					.getApplication().getContext();
 
-			System.out.println("User agent: "
+			log.debug("User agent: "
 					+ context.getBrowser().getBrowserApplication() + "  "
 					+ context.getBrowser().getAddress());
 		} catch (MyCollabException e) {
@@ -81,7 +83,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		container.removeAllComponents();
 		container.addComponent(view.getWidget());
-		
+
 		AppContext.addFragment("user/login");
 	}
 }

@@ -17,6 +17,7 @@ import com.esofthead.mycollab.common.service.UserPreferenceService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.Application;
@@ -218,6 +219,8 @@ public class AppContext implements TransactionListener, Serializable {
         ViewManager.clearResources();
         PresenterResolver.clearResources();
         EventBus.getInstance().clear();
+        ControllerRegistry.getInstance().clearRegistries();
+        clearAllVariables();
     }
 
     static void clearAllVariables() {

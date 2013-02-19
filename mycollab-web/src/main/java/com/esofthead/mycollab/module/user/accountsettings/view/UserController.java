@@ -13,102 +13,103 @@ import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
-import java.io.Serializable;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public class UserController implements Serializable {
+public class UserController implements IController {
 	private static final long serialVersionUID = 1L;
 	private UserContainer container;
 
-    public UserController(UserContainer container) {
-        this.container = container;
-        bindUserEvents();
-    }
+	public UserController(UserContainer container) {
+		this.container = container;
+		bindUserEvents();
+	}
 
-    private void bindUserEvents() {
-        EventBus.getInstance().addListener(
-                new ApplicationEventListener<UserEvent.GotoAdd>() {
+	private void bindUserEvents() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<UserEvent.GotoAdd>() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-                    public Class<? extends ApplicationEvent> getEventType() {
-                        return UserEvent.GotoAdd.class;
-                    }
+					public Class<? extends ApplicationEvent> getEventType() {
+						return UserEvent.GotoAdd.class;
+					}
 
-                    @Override
-                    public void handle(UserEvent.GotoAdd event) {
-                        UserAddPresenter presenter = PresenterResolver
-                                .getPresenter(UserAddPresenter.class);
-                        presenter.go(container, new ScreenData.Add<User>(
-                                new User()));
-                    }
-                });
+					@Override
+					public void handle(UserEvent.GotoAdd event) {
+						UserAddPresenter presenter = PresenterResolver
+								.getPresenter(UserAddPresenter.class);
+						presenter.go(container, new ScreenData.Add<User>(
+								new User()));
+					}
+				});
 
-        EventBus.getInstance().addListener(
-                new ApplicationEventListener<UserEvent.GotoEdit>() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<UserEvent.GotoEdit>() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-                    public Class<? extends ApplicationEvent> getEventType() {
-                        return UserEvent.GotoEdit.class;
-                    }
+					public Class<? extends ApplicationEvent> getEventType() {
+						return UserEvent.GotoEdit.class;
+					}
 
-                    @Override
-                    public void handle(UserEvent.GotoEdit event) {
-                        UserAddPresenter presenter = PresenterResolver
-                                .getPresenter(UserAddPresenter.class);
+					@Override
+					public void handle(UserEvent.GotoEdit event) {
+						UserAddPresenter presenter = PresenterResolver
+								.getPresenter(UserAddPresenter.class);
 
-                        SimpleUser user = (SimpleUser) event.getData();
-                        presenter.go(container, new ScreenData.Edit<User>(
-                                user));
-                    }
-                });
+						SimpleUser user = (SimpleUser) event.getData();
+						presenter
+								.go(container, new ScreenData.Edit<User>(user));
+					}
+				});
 
-        EventBus.getInstance().addListener(
-                new ApplicationEventListener<UserEvent.GotoRead>() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<UserEvent.GotoRead>() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-                    public Class<? extends ApplicationEvent> getEventType() {
-                        return UserEvent.GotoRead.class;
-                    }
+					public Class<? extends ApplicationEvent> getEventType() {
+						return UserEvent.GotoRead.class;
+					}
 
-                    @Override
-                    public void handle(UserEvent.GotoRead event) {
-                        UserReadPresenter presenter = PresenterResolver
-                                .getPresenter(UserReadPresenter.class);
-                        presenter.go(container, new ScreenData.Preview<SimpleUser>(
-                                (SimpleUser) event.getData()));
-                    }
-                });
+					@Override
+					public void handle(UserEvent.GotoRead event) {
+						UserReadPresenter presenter = PresenterResolver
+								.getPresenter(UserReadPresenter.class);
+						presenter.go(container,
+								new ScreenData.Preview<SimpleUser>(
+										(SimpleUser) event.getData()));
+					}
+				});
 
-        EventBus.getInstance().addListener(
-                new ApplicationEventListener<UserEvent.GotoList>() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<UserEvent.GotoList>() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-                    public Class<? extends ApplicationEvent> getEventType() {
-                        return UserEvent.GotoList.class;
-                    }
+					public Class<? extends ApplicationEvent> getEventType() {
+						return UserEvent.GotoList.class;
+					}
 
-                    @Override
-                    public void handle(UserEvent.GotoList event) {
-                        UserListPresenter presenter = PresenterResolver
-                                .getPresenter(UserListPresenter.class);
+					@Override
+					public void handle(UserEvent.GotoList event) {
+						UserListPresenter presenter = PresenterResolver
+								.getPresenter(UserListPresenter.class);
 
-                        UserSearchCriteria criteria = new UserSearchCriteria();
-                        criteria.setSaccountid(new NumberSearchField(
-                                SearchField.AND, AppContext.getAccountId()));
-                        presenter.go(container,
-                                new ScreenData.Search<UserSearchCriteria>(
-                                criteria));
-                    }
-                });
-    }
+						UserSearchCriteria criteria = new UserSearchCriteria();
+						criteria.setSaccountid(new NumberSearchField(
+								SearchField.AND, AppContext.getAccountId()));
+						presenter.go(container,
+								new ScreenData.Search<UserSearchCriteria>(
+										criteria));
+					}
+				});
+	}
 }

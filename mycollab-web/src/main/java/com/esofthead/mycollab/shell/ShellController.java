@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.shell;
 
-import java.io.Serializable;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -22,11 +21,13 @@ import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
+import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Window;
 
-public class ShellController implements Serializable {
+public class ShellController implements IController {
 
 	private static final long serialVersionUID = 1L;
 	private static Logger log = LoggerFactory.getLogger(ShellController.class);
@@ -109,11 +110,14 @@ public class ShellController implements Serializable {
 						}
 
 						AppContext.clearSession();
+						ControllerRegistry.getInstance().addController(
+								new ShellController(container));
 					}
 				});
 
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ShellEvent.GotoSignupPage>() {
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
@@ -132,6 +136,7 @@ public class ShellController implements Serializable {
 		EventBus.getInstance()
 				.addListener(
 						new ApplicationEventListener<ShellEvent.GotoForgotPasswordPage>() {
+							private static final long serialVersionUID = 1L;
 
 							@Override
 							public Class<? extends ApplicationEvent> getEventType() {

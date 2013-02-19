@@ -95,6 +95,9 @@ body div > input.v-filterselect-input[type="text"] {
 .mainView, .loginView {
 	overflow: auto;
 }
+.v-button-wrap {
+	text-overflow: clip;
+}
 .v-button-caption {
 	vertical-align: top;
 }
@@ -943,6 +946,11 @@ input.v-textfield-errorField {
 .projectDashboardView .menuContent {
 	max-width: 1130px;
 }
+
+.projectDashboardView .v-table-body-noselection {
+ 	height: 100% !important;
+}
+
 .projectDashboardView .v-splitpanel-hsplitter-locked {
 	width: 0px;
 	border-style: solid;
@@ -1003,6 +1011,9 @@ input.v-textfield-errorField {
 .projectDashboardView .v-tabsheet-content {
 	background-color: #F3F3F3;
 }
+.projectDashboardView .Milestones .v-tabsheet-content {
+	background-color: #FFFFFF;
+}
 .projectDashboardView .addViewLayout {
 	border: none;
 	background: none;
@@ -1025,6 +1036,9 @@ input.v-textfield-errorField {
 	border-width: 1px 0px 0px 1px;
 	background-color: #fff;
 	height: 100%;
+}
+.v-csslayout-projectTabContent.Milestones > .v-csslayout-margin {
+	padding: 10px 0px 0px;
 }
 .projectTabContent .h1 {
 	padding: .67em 0 .33em 0;
@@ -1711,23 +1725,23 @@ white-space: normal;
 	border-color:transparent #ebedee;
 }
 
-.message.important .message-container > .v-csslayout-margin {
+.message.important-message .message-container > .v-csslayout-margin {
 	background-color: #762c54;
 	border-color: #2e0023;
 }
-.message.important .message-container > .v-csslayout-margin:before {
+.message.important-message .message-container > .v-csslayout-margin:before {
 	border-color: transparent #2e0023;
 }
-.message.important .message-container > .v-csslayout-margin:after {
+.message.important-message .message-container > .v-csslayout-margin:after {
 	border-color: transparent #762c54;
 }
 
 
 
-.message.important .message-header .user-name {
+.message.important-message .message-header .user-name {
 	color: white;
 }
-.message.important .message-header .v-button-link.message-title .v-button-caption {
+.message.important-message .message-header .v-button-link.message-title .v-button-caption {
 	color: white;
 }
 .message-header .user-name {
@@ -1748,13 +1762,13 @@ white-space: normal;
 	padding: 1px 0px;
 }
 
-.message.important .message-header .time-post {
+.message.important-message .message-header .time-post {
 	color: #aea79e;
 }
 .message-header .time-post {
 	color: gray;
 }
-.message.important .message-header .notification {
+.message.important-message .message-header .notification {
 	color: white;
 }
 .message-header .notification {
@@ -1767,7 +1781,7 @@ white-space: normal;
 .message-header .attachment-count {
 	padding-left: 5px;
 }
-.message.important .message-body p {
+.message.important-message .message-body p {
 	color: #aea79e;
 }
 .message-body p {
@@ -1903,6 +1917,13 @@ white-space: normal;
 }
 /* End Task List Component */
 
+/* Widget */
+.widget-row .metadata {
+	font-size: 11px;
+	color: gray;
+}
+/* End Widget */
+
 /* Bug Widget */
 .bug-list {
 	margin: 10px 0px;
@@ -1921,10 +1942,6 @@ white-space: normal;
 	border: 1px solid rgba(0, 0, 0, 0.25);
 	padding-left: 5px;
 	padding-top: 3px;
-}
-.bug-list .date-info {
-	font-size: 11px;
-	color: gray;
 }
 /* End Bug Widget */
 

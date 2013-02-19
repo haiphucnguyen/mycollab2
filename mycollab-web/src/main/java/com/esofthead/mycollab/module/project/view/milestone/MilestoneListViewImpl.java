@@ -36,202 +36,214 @@ import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @ViewComponent
-public class MilestoneListViewImpl extends AbstractView implements MilestoneListView {
+public class MilestoneListViewImpl extends AbstractView implements
+		MilestoneListView {
 
-    private static final long serialVersionUID = 1L;
-    private final MilestoneSearchPanel riskSearchPanel;
-    private SelectionOptionButton selectOptionButton;
-    private PagedBeanTable2<MilestoneService, MilestoneSearchCriteria, SimpleMilestone> tableItem;
-    private final VerticalLayout riskListLayout;
-    private PopupButtonControl tableActionControls;
-    private final Label selectedItemsNumberLabel = new Label();
+	private static final long serialVersionUID = 1L;
+	private final MilestoneSearchPanel riskSearchPanel;
+	private SelectionOptionButton selectOptionButton;
+	private PagedBeanTable2<MilestoneService, MilestoneSearchCriteria, SimpleMilestone> tableItem;
+	private final VerticalLayout riskListLayout;
+	private PopupButtonControl tableActionControls;
+	private final Label selectedItemsNumberLabel = new Label();
 
-    public MilestoneListViewImpl() {
-        this.setSpacing(true);
+	public MilestoneListViewImpl() {
+		this.setSpacing(true);
+		this.setMargin(false, true, true, true);
 
-        riskSearchPanel = new MilestoneSearchPanel();
-        this.addComponent(riskSearchPanel);
+		riskSearchPanel = new MilestoneSearchPanel();
+		this.addComponent(riskSearchPanel);
 
-        riskListLayout = new VerticalLayout();
-        riskListLayout.setSpacing(true);
-        this.addComponent(riskListLayout);
+		riskListLayout = new VerticalLayout();
+		riskListLayout.setSpacing(true);
+		this.addComponent(riskListLayout);
 
-        generateDisplayTable();
-    }
+		generateDisplayTable();
+	}
 
-    private void generateDisplayTable() {
-        tableItem = new PagedBeanTable2<MilestoneService, MilestoneSearchCriteria, SimpleMilestone>(
-                AppContext.getSpringBean(MilestoneService.class), SimpleMilestone.class,
-                new String[]{"selected", "name",
-                    "iscompleted", "startdate", "enddate", "flag", "ownerFullName"},
-                new String[]{"", "Name", "Status", "Start Date", "End Date", "Flag", "Responsible User"});
+	private void generateDisplayTable() {
+		tableItem = new PagedBeanTable2<MilestoneService, MilestoneSearchCriteria, SimpleMilestone>(
+				AppContext.getSpringBean(MilestoneService.class),
+				SimpleMilestone.class, new String[] { "selected", "name",
+						"iscompleted", "startdate", "enddate", "flag",
+						"ownerFullName" }, new String[] { "", "Name", "Status",
+						"Start Date", "End Date", "Flag", "Responsible User" });
 
-        tableItem.addGeneratedColumn("selected", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+		tableItem.addGeneratedColumn("selected", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public Object generateCell(final Table source, final Object itemId,
-                    Object columnId) {
-                final CheckBox cb = new CheckBox("", false);
-                cb.setImmediate(true);
-                cb.addListener(new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+			@Override
+			public Object generateCell(final Table source, final Object itemId,
+					Object columnId) {
+				final CheckBox cb = new CheckBox("", false);
+				cb.setImmediate(true);
+				cb.addListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        SimpleMilestone account = tableItem.getBeanByIndex(itemId);
-                        tableItem.fireSelectItemEvent(account);
+					@Override
+					public void buttonClick(Button.ClickEvent event) {
+						SimpleMilestone account = tableItem
+								.getBeanByIndex(itemId);
+						tableItem.fireSelectItemEvent(account);
 
-                    }
-                });
+					}
+				});
 
-                SimpleMilestone account = tableItem.getBeanByIndex(itemId);
-                account.setExtraData(cb);
-                return cb;
-            }
-        });
+				SimpleMilestone account = tableItem.getBeanByIndex(itemId);
+				account.setExtraData(cb);
+				return cb;
+			}
+		});
 
-        tableItem.addGeneratedColumn("name", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+		tableItem.addGeneratedColumn("name", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleMilestone milestone = tableItem.getBeanByIndex(itemId);
-                ButtonLink b = new ButtonLink(milestone.getName(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleMilestone milestone = tableItem
+						.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(milestone.getName(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-                            @Override
-                            public void buttonClick(Button.ClickEvent event) {
-                                EventBus.getInstance().fireEvent(
-                                        new MilestoneEvent.GotoRead(this, milestone
-                                        .getId()));
-                            }
-                        });
-                b.addStyleName("medium-text");
-                if (milestone.getEnddate() != null && (milestone.getEnddate().before(new GregorianCalendar().getTime()))) {
-                    b.addStyleName(UIConstants.LINK_OVERDUE);
-                }
-                return b;
+							@Override
+							public void buttonClick(Button.ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new MilestoneEvent.GotoRead(this,
+												milestone.getId()));
+							}
+						});
+				b.addStyleName("medium-text");
+				if (milestone.getEnddate() != null
+						&& (milestone.getEnddate()
+								.before(new GregorianCalendar().getTime()))) {
+					b.addStyleName(UIConstants.LINK_OVERDUE);
+				}
+				return b;
 
-            }
-        });
-        
-        tableItem.addGeneratedColumn("ownerFullName", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+			}
+		});
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-            	final SimpleMilestone milestone = tableItem.getBeanByIndex(itemId);
-                UserLink b = new UserLink(milestone.getOwner(), milestone.getOwnerFullName());
-                return b;
+		tableItem.addGeneratedColumn("ownerFullName",
+				new Table.ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
 
-            }
-        });
-        
-        tableItem.addGeneratedColumn("startdate", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+					@Override
+					public com.vaadin.ui.Component generateCell(Table source,
+							final Object itemId, Object columnId) {
+						final SimpleMilestone milestone = tableItem
+								.getBeanByIndex(itemId);
+						UserLink b = new UserLink(milestone.getOwner(),
+								milestone.getOwnerFullName());
+						return b;
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    Object itemId, Object columnId) {
-                final SimpleMilestone milestone = tableItem
-                        .getBeanByIndex(itemId);
-                Label l = new Label();
+					}
+				});
 
-                l.setValue(AppContext.formatDate(milestone.getStartdate()));
-                return l;
-            }
-        });
-        
-        tableItem.addGeneratedColumn("enddate", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+		tableItem.addGeneratedColumn("startdate", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    Object itemId, Object columnId) {
-                final SimpleMilestone milestone = tableItem
-                        .getBeanByIndex(itemId);
-                Label l = new Label();
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				final SimpleMilestone milestone = tableItem
+						.getBeanByIndex(itemId);
+				Label l = new Label();
 
-                l.setValue(AppContext.formatDate(milestone.getEnddate()));
-                return l;
-            }
-        });
+				l.setValue(AppContext.formatDate(milestone.getStartdate()));
+				return l;
+			}
+		});
 
-        tableItem.setWidth("100%");
-        
-        tableItem.setColumnExpandRatio("accountname", 1);
-        tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-        tableItem.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);
-        tableItem.setColumnWidth("enddate", UIConstants.TABLE_DATE_WIDTH);
-        tableItem.setColumnWidth("iscompleted", UIConstants.TABLE_S_LABEL_WIDTH);
-        tableItem.setColumnWidth("flag", UIConstants.TABLE_S_LABEL_WIDTH);
-        tableItem.setColumnWidth("ownerFullName", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.addGeneratedColumn("enddate", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-        riskListLayout.addComponent(constructTableActionControls());
-        riskListLayout.addComponent(tableItem);
-    }
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					Object itemId, Object columnId) {
+				final SimpleMilestone milestone = tableItem
+						.getBeanByIndex(itemId);
+				Label l = new Label();
 
-    @Override
-    public HasSearchHandlers<MilestoneSearchCriteria> getSearchHandlers() {
-        return riskSearchPanel;
-    }
+				l.setValue(AppContext.formatDate(milestone.getEnddate()));
+				return l;
+			}
+		});
 
-    private ComponentContainer constructTableActionControls() {
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setSpacing(true);
+		tableItem.setWidth("100%");
 
-        selectOptionButton = new SelectionOptionButton(tableItem);
-        layout.addComponent(selectOptionButton);
+		tableItem.setColumnExpandRatio("accountname", 1);
+		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+		tableItem.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);
+		tableItem.setColumnWidth("enddate", UIConstants.TABLE_DATE_WIDTH);
+		tableItem
+				.setColumnWidth("iscompleted", UIConstants.TABLE_S_LABEL_WIDTH);
+		tableItem.setColumnWidth("flag", UIConstants.TABLE_S_LABEL_WIDTH);
+		tableItem.setColumnWidth("ownerFullName",
+				UIConstants.TABLE_X_LABEL_WIDTH);
 
-        tableActionControls = new PopupButtonControl("delete", "Delete");
-        tableActionControls.addOptionItem("mail", "Mail");
-        tableActionControls.addOptionItem("export", "Export");
-        tableActionControls.setVisible(false);
+		riskListLayout.addComponent(constructTableActionControls());
+		riskListLayout.addComponent(tableItem);
+	}
 
-        layout.addComponent(tableActionControls);
-        layout.addComponent(selectedItemsNumberLabel);
-        layout.setComponentAlignment(selectedItemsNumberLabel,
-                Alignment.MIDDLE_CENTER);
-        return layout;
-    }
+	@Override
+	public HasSearchHandlers<MilestoneSearchCriteria> getSearchHandlers() {
+		return riskSearchPanel;
+	}
 
-    @Override
-    public void enableActionControls(int numOfSelectedItems) {
-        tableActionControls.setVisible(true);
-        selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
-    }
+	private ComponentContainer constructTableActionControls() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
 
-    @Override
-    public void disableActionControls() {
-        tableActionControls.setVisible(false);
-        selectedItemsNumberLabel.setValue("");
-    }
+		selectOptionButton = new SelectionOptionButton(tableItem);
+		layout.addComponent(selectOptionButton);
 
-    @Override
-    public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-        return selectOptionButton;
-    }
+		tableActionControls = new PopupButtonControl("delete", "Delete");
+		tableActionControls.addOptionItem("mail", "Mail");
+		tableActionControls.addOptionItem("export", "Export");
+		tableActionControls.setVisible(false);
 
-    @Override
-    public HasPopupActionHandlers getPopupActionHandlers() {
-        return tableActionControls;
-    }
+		layout.addComponent(tableActionControls);
+		layout.addComponent(selectedItemsNumberLabel);
+		layout.setComponentAlignment(selectedItemsNumberLabel,
+				Alignment.MIDDLE_CENTER);
+		return layout;
+	}
 
-    @Override
-    public HasSelectableItemHandlers<SimpleMilestone> getSelectableItemHandlers() {
-        return tableItem;
-    }
+	@Override
+	public void enableActionControls(int numOfSelectedItems) {
+		tableActionControls.setVisible(true);
+		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+	}
 
-    @Override
-    public IPagedBeanTable<MilestoneSearchCriteria, SimpleMilestone> getPagedBeanTable() {
-        return tableItem;
-    }
+	@Override
+	public void disableActionControls() {
+		tableActionControls.setVisible(false);
+		selectedItemsNumberLabel.setValue("");
+	}
+
+	@Override
+	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+		return selectOptionButton;
+	}
+
+	@Override
+	public HasPopupActionHandlers getPopupActionHandlers() {
+		return tableActionControls;
+	}
+
+	@Override
+	public HasSelectableItemHandlers<SimpleMilestone> getSelectableItemHandlers() {
+		return tableItem;
+	}
+
+	@Override
+	public IPagedBeanTable<MilestoneSearchCriteria, SimpleMilestone> getPagedBeanTable() {
+		return tableItem;
+	}
 }

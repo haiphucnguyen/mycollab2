@@ -4,14 +4,27 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
+import com.esofthead.mycollab.module.project.view.bug.BugTableDisplay;
+import com.esofthead.mycollab.module.project.view.standup.StandupReportListDisplay;
+import com.esofthead.mycollab.module.project.view.task.TaskTableDisplay;
+import com.esofthead.mycollab.module.tracker.BugStatusConstants;
+import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
@@ -155,8 +168,77 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 
 			@Override
 			protected Layout createBottomPanel() {
-				return new VerticalLayout();
+				VerticalLayout relatedItemsPanel = new VerticalLayout();
+				relatedItemsPanel.addComponent(new UserTaskDepot());
+				relatedItemsPanel.addComponent(new UserBugDepot());
+				relatedItemsPanel.addComponent(new UserStandupReportDepot());
+				return relatedItemsPanel;
 			}
+		}
+	}
+
+	private class UserTaskDepot extends Depot {
+		private static final long serialVersionUID = 1L;
+
+		public UserTaskDepot() {
+			super("Open Task", new VerticalLayout());
+
+			TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
+			searchCriteria.setProjectid(new NumberSearchField(
+					CurrentProjectVariables.getProjectId()));
+			searchCriteria.setStatus(new StringSearchField("Open"));
+			searchCriteria.setAssignUser(new StringSearchField(projectMember
+					.getUsername()));
+			TaskTableDisplay taskDisplay = new TaskTableDisplay(new String[] {
+					"id", "taskname", "startdate", "deadline",
+					"percentagecomplete", "assignUserFullName" }, new String[] {
+					"", "Task Name", "Start", "Due", "% Complete", "Owner" });
+			taskDisplay.setSearchCriteria(searchCriteria);
+			bodyContent.addComponent(taskDisplay);
+		}
+	}
+
+	private class UserBugDepot extends Depot {
+		private static final long serialVersionUID = 1L;
+
+		public UserBugDepot() {
+			super("Open Bugs", new VerticalLayout());
+
+			BugTableDisplay bugDisplay = new BugTableDisplay(
+					new String[] { "selected", "summary", "severity",
+							"resolution", "duedate" }, new String[] { "",
+							"Summary", "Severity", "Resolution", "Due Date" });
+
+			BugSearchCriteria searchCriteria = new BugSearchCriteria();
+			searchCriteria.setProjectId(new NumberSearchField(
+					CurrentProjectVariables.getProjectId()));
+			searchCriteria.setAssignuser(new StringSearchField(projectMember
+					.getUsername()));
+			searchCriteria.setStatuses(new SetSearchField<String>(
+					SearchField.AND, new String[] {
+							BugStatusConstants.INPROGRESS,
+							BugStatusConstants.OPEN,
+							BugStatusConstants.REOPENNED }));
+			bugDisplay.setSearchCriteria(searchCriteria);
+
+			this.bodyContent.addComponent(bugDisplay);
+		}
+	}
+
+	private class UserStandupReportDepot extends Depot {
+		private static final long serialVersionUID = 1L;
+
+		public UserStandupReportDepot() {
+			super("StandUp Reports", new VerticalLayout());
+
+			StandupReportListDisplay standupReportListDisplay = new StandupReportListDisplay();
+			StandupReportSearchCriteria searchCriteria = new StandupReportSearchCriteria();
+			searchCriteria.setProjectId(new NumberSearchField(
+					CurrentProjectVariables.getProjectId()));
+			searchCriteria.setLogBy(new StringSearchField(projectMember
+					.getUsername()));
+			standupReportListDisplay.setSearchCriteria(searchCriteria);
+			bodyContent.addComponent(standupReportListDisplay);
 		}
 	}
 

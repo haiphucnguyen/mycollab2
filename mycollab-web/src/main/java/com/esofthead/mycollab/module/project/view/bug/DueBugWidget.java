@@ -20,48 +20,51 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.Label;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class DueBugWidget extends BugDisplayWidget {
 	private static final long serialVersionUID = 1L;
 
 	public DueBugWidget() {
-        super("Due Bugs", DueBugRowDisplayHandler.class);
-    }
-    
-    public static class DueBugRowDisplayHandler implements
-            BeanList.RowDisplayHandler<SimpleBug> {
+		super("Due Bugs", DueBugRowDisplayHandler.class);
+	}
 
-        @Override
-        public Component generateRow(final SimpleBug obj, int rowIndex) {
-            GridLayout layout = new GridLayout(2, 2);
-            layout.setWidth("100%");
-            layout.setSpacing(false);
-            layout.addComponent(new Embedded(null, new ThemeResource(
-                    "icons/22/project/bug.png")), 0, 0, 0, 1);
+	public static class DueBugRowDisplayHandler implements
+			BeanList.RowDisplayHandler<SimpleBug> {
 
-            ButtonLink defectLink = new ButtonLink(obj.getSummary(),
-                    new Button.ClickListener() {
-                        private static final long serialVersionUID = 1L;
+		@Override
+		public Component generateRow(final SimpleBug obj, int rowIndex) {
+			GridLayout layout = new GridLayout(2, 2);
+			layout.setWidth("100%");
+			layout.setSpacing(false);
+			layout.addComponent(new Embedded(null, new ThemeResource(
+					"icons/22/project/bug.png")), 0, 0, 0, 1);
 
-                        @Override
-                        public void buttonClick(Button.ClickEvent event) {
-                            EventBus.getInstance().fireEvent(
-                                    new BugEvent.GotoRead(this, obj.getId()));
-                        }
-                    });
-            layout.addComponent(defectLink);
-            layout.setColumnExpandRatio(1, 1.0f);
-            Label dateInfo = new Label("due on " + AppContext.formatDate(obj.getDuedate()) + ". Assignee: " + obj.getAssignuserFullName());
-            dateInfo.setStyleName(UIConstants.DATE_INFO);
-            layout.addComponent(dateInfo, 1, 1, 1, 1);
-            
-            CssLayout rowLayout = new CssLayout();
-            rowLayout.addComponent(layout);
-            rowLayout.setStyleName(UIConstants.WIDGET_ROW);
-            rowLayout.setWidth("100%");
-            return rowLayout;
-        }
-    }
+			ButtonLink defectLink = new ButtonLink(obj.getSummary(),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(Button.ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new BugEvent.GotoRead(this, obj.getId()));
+						}
+					});
+			defectLink.setWidth("100%");
+			layout.addComponent(defectLink);
+			layout.setColumnExpandRatio(1, 1.0f);
+			Label dateInfo = new Label("due on "
+					+ AppContext.formatDate(obj.getDuedate()) + ". Assignee: "
+					+ obj.getAssignuserFullName());
+			dateInfo.setStyleName(UIConstants.WIDGET_ROW_METADATA);
+			layout.addComponent(dateInfo, 1, 1, 1, 1);
+
+			CssLayout rowLayout = new CssLayout();
+			rowLayout.addComponent(layout);
+			rowLayout.setStyleName(UIConstants.WIDGET_ROW);
+			rowLayout.setWidth("100%");
+			return rowLayout;
+		}
+	}
 }

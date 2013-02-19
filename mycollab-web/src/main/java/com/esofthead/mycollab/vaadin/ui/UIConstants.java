@@ -11,7 +11,7 @@ public class UIConstants {
 	public static final int TABLE_S_LABEL_WIDTH = 60;
 	public static final int TABLE_M_LABEL_WIDTH = 120;
 	public static final int TABLE_X_LABEL_WIDTH = 160;
-        public static final int TABLE_EX_LABEL_WIDTH = 200;
+	public static final int TABLE_EX_LABEL_WIDTH = 200;
 	public static final int TABLE_EMAIL_WIDTH = 200;
 	public static final int TABLE_DATE_WIDTH = 110;
 	public static final int TABLE_DATE_TIME_WIDTH = 140;
@@ -23,12 +23,12 @@ public class UIConstants {
 	public static final String LINK_COMPLETED = "completed";
 	public static final String LINK_OVERDUE = "overdue";
 	public static final String SPLIT_BUTTON = "esofthead";
-	public static final String MESSAGE_IMPORTANT = "important";
-	//TODO: remove widget title?
+	public static final String MESSAGE_IMPORTANT = "important-message";
+	// TODO: remove widget title?
 	public static final String WIDGET_TITLE = "widget-title";
 	public static final String WIDGET_ROW = "widget-row";
 	public static final String BUG_LIST = "bug-list";
-	public static final String DATE_INFO = "date-info";
+	public static final String WIDGET_ROW_METADATA = "metadata";
 	public static final String SELECT_BG = "select-bg";
 	public static final String PROJECT_INFO_HEADER = "projectinfo-header";
 	public static final String PROJECT_NAME = "project-name";
