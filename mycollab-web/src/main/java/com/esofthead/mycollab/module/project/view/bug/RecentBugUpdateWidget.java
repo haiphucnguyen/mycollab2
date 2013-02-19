@@ -51,6 +51,7 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 									new BugEvent.GotoRead(this, obj.getId()));
 						}
 					});
+			defectLink.setWidth("100%");
 			layout.addComponent(defectLink);
 			layout.setColumnExpandRatio(1, 1.0f);
 			Label descInfo = new Label(obj.getDescription());

@@ -23,7 +23,7 @@ public class UIConstants {
 	public static final String LINK_COMPLETED = "completed";
 	public static final String LINK_OVERDUE = "overdue";
 	public static final String SPLIT_BUTTON = "esofthead";
-	public static final String MESSAGE_IMPORTANT = "important";
+	public static final String MESSAGE_IMPORTANT = "important-message";
 	// TODO: remove widget title?
 	public static final String WIDGET_TITLE = "widget-title";
 	public static final String WIDGET_ROW = "widget-row";

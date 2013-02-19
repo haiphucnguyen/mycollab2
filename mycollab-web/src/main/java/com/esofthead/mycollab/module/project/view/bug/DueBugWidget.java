@@ -51,6 +51,7 @@ public class DueBugWidget extends BugDisplayWidget {
 									new BugEvent.GotoRead(this, obj.getId()));
 						}
 					});
+			defectLink.setWidth("100%");
 			layout.addComponent(defectLink);
 			layout.setColumnExpandRatio(1, 1.0f);
 			Label dateInfo = new Label("due on "
