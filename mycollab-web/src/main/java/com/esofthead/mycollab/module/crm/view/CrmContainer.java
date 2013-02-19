@@ -1,5 +1,9 @@
 package com.esofthead.mycollab.module.crm.view;
 
+import java.util.Iterator;
+
+import org.vaadin.hene.popupbutton.PopupButton;
+
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
@@ -11,6 +15,7 @@ import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -23,8 +28,6 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.VerticalLayout;
-import java.util.Iterator;
-import org.vaadin.hene.popupbutton.PopupButton;
 
 @ViewComponent
 public class CrmContainer extends AbstractView {
@@ -51,7 +54,7 @@ public class CrmContainer extends AbstractView {
     private final CssLayout toolbar;
 
     public CrmContainer() {
-        new CrmController(this);
+        ControllerRegistry.getInstance().addController(new CrmController(this));
         CustomLayout container = new CustomLayout("crmContainer");
         container.setStyleName("crmContainer");
 

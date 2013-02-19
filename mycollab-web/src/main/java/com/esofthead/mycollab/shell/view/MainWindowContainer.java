@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.shell.ShellController;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
+import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.vaadin.terminal.DownloadStream;
@@ -30,8 +31,6 @@ public class MainWindowContainer extends Window implements View {
 	private UriFragmentUtility urifu;
 	private FragmentNavigator fragmentNavigator;
 
-	private final ShellController controller;
-
 	public MainWindowContainer() {
 		urifu = new UriFragmentUtility();
 		fragmentNavigator = new FragmentNavigator();
@@ -48,7 +47,8 @@ public class MainWindowContainer extends Window implements View {
 			}
 		});
 		this.setCaption("MyCollab");
-		controller = new ShellController(this);
+		ControllerRegistry.getInstance().addController(
+				new ShellController(this));
 
 		this.addURIHandler(new URIHandler() {
 			private static final long serialVersionUID = 1L;
