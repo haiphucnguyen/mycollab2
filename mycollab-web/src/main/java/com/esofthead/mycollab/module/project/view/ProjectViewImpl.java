@@ -66,7 +66,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private RiskPresenter riskPresenter;
 	private UserGroupPresenter userPresenter;
 	private StandupPresenter standupPresenter;
-	private ProjectBreadcrumb breadCrumb;
+	private final ProjectBreadcrumb breadCrumb;
 
 	public ProjectViewImpl() {
 		this.setStyleName("projectDashboardView");
@@ -125,9 +125,11 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 					public void tabChanged(TabChangedEvent event) {
 						Button btn = event.getSource();
 						String caption = btn.getCaption();
+						mySpaceArea.setStyleName("projectTabContent");
 						if ("Messages".equals(caption)) {
 							messagePresenter.go(ProjectViewImpl.this, null);
 						} else if ("Milestones".equals(caption)) {
+							mySpaceArea.addStyleName("Milestones");
 							MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
 							searchCriteria.setProjectId(new NumberSearchField(
 									SearchField.AND, CurrentProjectVariables
@@ -135,8 +137,11 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 							gotoMilestoneView(new ScreenData.Search<MilestoneSearchCriteria>(
 									searchCriteria));
 						} else if ("Tasks".equals(caption)) {
-							taskPresenter.go(ProjectViewImpl.this,
-									new ScreenData<SimpleProject>(CurrentProjectVariables.getProject()));
+							taskPresenter.go(
+									ProjectViewImpl.this,
+									new ScreenData<SimpleProject>(
+											CurrentProjectVariables
+													.getProject()));
 						} else if ("Bugs".equals(caption)) {
 							gotoBugView(null);
 						} else if ("Risks".equals(caption)) {

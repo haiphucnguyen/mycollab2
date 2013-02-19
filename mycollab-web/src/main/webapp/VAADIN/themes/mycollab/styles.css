@@ -1008,6 +1008,9 @@ input.v-textfield-errorField {
 .projectDashboardView .v-tabsheet-content {
 	background-color: #F3F3F3;
 }
+.projectDashboardView .Milestones .v-tabsheet-content {
+	background-color: #FFFFFF;
+}
 .projectDashboardView .addViewLayout {
 	border: none;
 	background: none;
@@ -1030,6 +1033,9 @@ input.v-textfield-errorField {
 	border-width: 1px 0px 0px 1px;
 	background-color: #fff;
 	height: 100%;
+}
+.v-csslayout-projectTabContent.Milestones > .v-csslayout-margin {
+	padding: 10px 0px 0px;
 }
 .projectTabContent .h1 {
 	padding: .67em 0 .33em 0;
