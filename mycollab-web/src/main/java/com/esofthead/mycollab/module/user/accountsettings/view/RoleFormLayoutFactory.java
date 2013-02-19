@@ -67,7 +67,7 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
             organizationHeader.setStyleName("h2");
             layout.addComponent(organizationHeader);
 
-            informationLayout = new GridFormLayoutHelper(2, 2);
+            informationLayout = new GridFormLayoutHelper(6, 2);
             informationLayout.getLayout().setWidth("100%");
 
             layout.addComponent(informationLayout.getLayout());
@@ -77,9 +77,9 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
         @Override
         public void attachField(Object propertyId, Field field) {
             if (propertyId.equals("rolename")) {
-                informationLayout.addComponent(field, "Role Name", 0, 0, 2, "100%");
+                informationLayout.addComponent(field, "Role Name", 0, 0);
             } else if (propertyId.equals("description")) {
-                informationLayout.addComponent(field, "Description", 0, 1, 2, "100%");
+                informationLayout.addComponent(field, "Description", 0, 1);
             }
         }
     }

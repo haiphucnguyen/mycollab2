@@ -4,6 +4,7 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -60,7 +61,6 @@ public abstract class ProjectRoleFormLayoutFactory implements IFormLayoutFactory
             layout.addComponent(organizationHeader);
 
             informationLayout = new GridFormLayoutHelper(2, 2);
-            informationLayout.getLayout().setWidth("100%");
 
             layout.addComponent(informationLayout.getLayout());
             return layout;
@@ -69,9 +69,9 @@ public abstract class ProjectRoleFormLayoutFactory implements IFormLayoutFactory
         @Override
         public void attachField(Object propertyId, Field field) {
             if (propertyId.equals("rolename")) {
-                informationLayout.addComponent(field, "Role Name", 0, 0, 2, "100%");
+                informationLayout.addComponent(field, "Role Name", 0, 0);
             } else if (propertyId.equals("description")) {
-                informationLayout.addComponent(field, "Description", 0, 1, 2, "100%");
+                informationLayout.addComponent(field, "Description", 0, 1);
             }
         }
     }

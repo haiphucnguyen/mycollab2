@@ -43,7 +43,6 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 
 	public UserListViewImpl() {
 		this.setSpacing(true);
-		this.setMargin(true);
 
 		searchPanel = new UserSearchPanel();
 		this.addComponent(searchPanel);
