@@ -20,7 +20,6 @@ public class AccountDashboardViewImpl extends AbstractView implements
 	private final HorizontalLayout root;
 	private final DetachedTabs accountTab;
 	private final CssLayout accountSpace = new CssLayout();
-	private final AccountController controller = new AccountController(this);
 
 	private UserInformationPresenter userInformationPresenter;
 	private UserPermissionManagementPresenter userPermissionPresenter;

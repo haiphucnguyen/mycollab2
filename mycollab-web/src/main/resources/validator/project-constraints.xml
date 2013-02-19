@@ -22,6 +22,9 @@
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Short name must not be null</message>
             </constraint>
+            <constraint annotation="com.esofthead.mycollab.validator.constraints.ShortnameProjectChecking">
+                <message>Project short name must contain 3 characters</message>
+            </constraint>
         </field>
         <field name="projectstatus">
             <constraint annotation="javax.validation.constraints.NotNull">

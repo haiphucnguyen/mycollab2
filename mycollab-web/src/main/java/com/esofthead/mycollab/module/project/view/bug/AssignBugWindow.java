@@ -36,7 +36,8 @@ import java.util.GregorianCalendar;
  * @author haiphucnguyen
  */
 public class AssignBugWindow extends Window {
-    private SimpleBug bug;
+	private static final long serialVersionUID = 1L;
+	private SimpleBug bug;
     private EditForm editForm;
 
     public AssignBugWindow(SimpleBug bug) {

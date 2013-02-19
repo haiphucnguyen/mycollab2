@@ -52,7 +52,9 @@ public class BugListViewImpl extends AbstractView implements BugListView {
                 new String[]{"", "Summary", "Assigned User", "Severity", "Resolution", "Due Date"});
 
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public Class<? extends ApplicationEvent> getEventType() {
                 return TableClickEvent.class;
             }

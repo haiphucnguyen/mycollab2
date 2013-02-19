@@ -911,7 +911,7 @@ input.v-textfield-errorField {
     margin: 10px 0px;
 }
 
-.v-csslayout-account-dashboard .v-csslayout-margin {
+.v-csslayout-account-dashboard > .v-csslayout-margin {
 	border-color:#8f8f8f;
 	border-style: solid;
 	border-width: 0px 0px 0px 1px;

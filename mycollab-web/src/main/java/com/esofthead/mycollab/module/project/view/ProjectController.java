@@ -50,13 +50,14 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriter
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 
-public class ProjectController {
-
+public class ProjectController implements IController {
+	private static final long serialVersionUID = 1L;
 	private ProjectContainer container;
 
 	public ProjectController(ProjectContainer container) {
@@ -354,7 +355,8 @@ public class ProjectController {
 						RiskSearchCriteria criteria = new RiskSearchCriteria();
 
 						criteria.setProjectId(new NumberSearchField(
-								SearchField.AND, CurrentProjectVariables.getProjectId()));
+								SearchField.AND, CurrentProjectVariables
+										.getProjectId()));
 						projectView
 								.gotoRiskView(new ScreenData.Search<RiskSearchCriteria>(
 										criteria));
@@ -417,7 +419,8 @@ public class ProjectController {
 						ProblemSearchCriteria criteria = new ProblemSearchCriteria();
 
 						criteria.setProjectId(new NumberSearchField(
-								SearchField.AND, CurrentProjectVariables.getProjectId()));
+								SearchField.AND, CurrentProjectVariables
+										.getProjectId()));
 						ScreenData.Search<ProblemSearchCriteria> data = new ScreenData.Search<ProblemSearchCriteria>(
 								criteria);
 						ProblemPresenter presenter = PresenterResolver
@@ -529,7 +532,8 @@ public class ProjectController {
 						BugSearchCriteria criteria = new BugSearchCriteria();
 
 						criteria.setProjectId(new NumberSearchField(
-								SearchField.AND, CurrentProjectVariables.getProjectId()));
+								SearchField.AND, CurrentProjectVariables
+										.getProjectId()));
 						projectView
 								.gotoBugView(new ScreenData.Search<BugSearchCriteria>(
 										criteria));
@@ -599,7 +603,8 @@ public class ProjectController {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
 						ComponentSearchCriteria criteria = new ComponentSearchCriteria();
-						criteria.setProjectid(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+						criteria.setProjectid(new NumberSearchField(
+								CurrentProjectVariables.getProjectId()));
 						projectView
 								.gotoBugView(new BugContainer.SearchComponentData(
 										criteria));
@@ -669,7 +674,8 @@ public class ProjectController {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
 						VersionSearchCriteria criteria = new VersionSearchCriteria();
-						criteria.setProjectId(new NumberSearchField(CurrentProjectVariables.getProjectId()));
+						criteria.setProjectId(new NumberSearchField(
+								CurrentProjectVariables.getProjectId()));
 						projectView
 								.gotoBugView(new BugContainer.SearchVersionData(
 										criteria));
@@ -756,7 +762,8 @@ public class ProjectController {
 						MilestoneSearchCriteria criteria = new MilestoneSearchCriteria();
 
 						criteria.setProjectId(new NumberSearchField(
-								SearchField.AND, CurrentProjectVariables.getProjectId()));
+								SearchField.AND, CurrentProjectVariables
+										.getProjectId()));
 						projectView
 								.gotoMilestoneView(new ScreenData.Search<MilestoneSearchCriteria>(
 										criteria));
@@ -820,7 +827,8 @@ public class ProjectController {
 						StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
 
 						criteria.setProjectId(new NumberSearchField(
-								SearchField.AND, CurrentProjectVariables.getProjectId()));
+								SearchField.AND, CurrentProjectVariables
+										.getProjectId()));
 						criteria.setOnDate(new DateSearchField(SearchField.AND,
 								new GregorianCalendar().getTime()));
 						projectView

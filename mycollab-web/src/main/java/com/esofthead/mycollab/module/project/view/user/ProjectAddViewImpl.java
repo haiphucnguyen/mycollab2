@@ -24,6 +24,7 @@ import com.vaadin.ui.TextField;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 @ViewComponent
 public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
 
@@ -102,7 +103,7 @@ public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
                 	ProjectStatusComboBox projectCombo = new ProjectStatusComboBox();
                 	projectCombo.setRequired(true);
                 	projectCombo.setRequiredError("Please enter a project status");
-                    return new ProjectStatusComboBox();
+                    return projectCombo;
                 } else if (propertyId.equals("shortname")) {
                     TextField tf = new TextField();
                     tf.setNullRepresentation("");

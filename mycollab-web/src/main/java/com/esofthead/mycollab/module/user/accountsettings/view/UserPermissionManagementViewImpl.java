@@ -7,9 +7,10 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.vaadin.ui.Component;
-import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
+import com.github.wolfie.detachedtabs.DetachedTabs;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
 
 /**
  * 
@@ -19,39 +20,55 @@ import com.vaadin.ui.TabSheet.SelectedTabChangeEvent;
 public class UserPermissionManagementViewImpl extends AbstractView implements
 		UserPermissionManagementView {
 	private static final long serialVersionUID = 1L;
-	private final TabSheet tabContainer;
+	private DetachedTabs myProjectTab;
 	private UserPresenter userPresenter;
 	private RolePresenter rolePresenter;
+	private CssLayout mySpaceArea = new CssLayout();
 
 	public UserPermissionManagementViewImpl() {
-		this.setWidth("100%");
 		this.setMargin(true);
-		tabContainer = new TabSheet();
-		constructTabs();
-		this.addComponent(tabContainer);
+		myProjectTab = new DetachedTabs.Horizontal(mySpaceArea);
+		myProjectTab.setSizeFull();
 
-		tabContainer.addListener(new TabSheet.SelectedTabChangeListener() {
-			private static final long serialVersionUID = 1L;
+		HorizontalLayout menu = new HorizontalLayout();
+		menu.setHeight("40px");
+		menu.addComponent(myProjectTab);
 
-			@Override
-			public void selectedTabChange(SelectedTabChangeEvent event) {
-				Component selectedTab = tabContainer.getSelectedTab();
-				if (selectedTab instanceof RoleContainer) {
-					rolePresenter.go(tabContainer, null);
-				} else if (selectedTab instanceof UserContainer) {
-					userPresenter.go(tabContainer, null);
-				}
-			}
-		});
+		this.addComponent(menu);
+		mySpaceArea.setWidth("100%");
+		mySpaceArea.setHeight(null);
+		this.addComponent(mySpaceArea);
+		this.setExpandRatio(mySpaceArea, 1.0f);
+		this.setWidth("100%");
+
+		buildComponents();
+	}
+	
+	private void buildComponents() {
+		userPresenter = PresenterResolver
+				.getPresenter(UserPresenter.class);
+		myProjectTab.addTab(userPresenter.getView(), "Users");
+
+		rolePresenter = PresenterResolver
+				.getPresenter(RolePresenter.class);
+		myProjectTab.addTab(rolePresenter.getView(), "Roles");
+
+		myProjectTab
+				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+					@Override
+					public void tabChanged(DetachedTabs.TabChangedEvent event) {
+						Button btn = event.getSource();
+						String caption = btn.getCaption();
+						if ("Users".equals(caption)) {
+							userPresenter.go(myProjectTab, null);
+						} else if ("Roles".equals(caption)) {
+							
+							rolePresenter.go(myProjectTab, null);
+						}
+					}
+				});
+		userPresenter.go(myProjectTab, null);
+
 	}
 
-	private void constructTabs() {
-		userPresenter = PresenterResolver.getPresenter(UserPresenter.class);
-		tabContainer.addTab(userPresenter.getView(), "Users");
-		// goto user list by default
-		userPresenter.go(UserPermissionManagementViewImpl.this, null);
-
-		rolePresenter = PresenterResolver.getPresenter(RolePresenter.class);
-		tabContainer.addTab(rolePresenter.getView(), "Roles");
-	}
 }

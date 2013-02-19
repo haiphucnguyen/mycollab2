@@ -28,11 +28,7 @@ import com.vaadin.ui.Table;
  */
 public class TaskTableDisplay extends
 		BeanTable<ProjectTaskService, TaskSearchCriteria, SimpleTask> {
-
-	/**
-	 * 
-	 */
-	private static final long serialVersionUID = 944942786615684152L;
+	private static final long serialVersionUID = 1L;
 
 	public TaskTableDisplay(String[] visibleColumns, String[] columnHeaders) {
 		super(AppContext.getSpringBean(ProjectTaskService.class),
