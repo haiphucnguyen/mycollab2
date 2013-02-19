@@ -13,6 +13,7 @@ import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -25,7 +26,6 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.ThemeResource;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Embedded;
@@ -142,9 +142,9 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 								Object propertyId, Component uiContext) {
 
 							if (propertyId.equals("assignuser")) {
-								return new DefaultFormViewFieldFactory.UserLinkViewField(
-										task.getAssignuser(), task
-												.getAssignUserFullName());
+								return new ProjectUserFormLinkField(task
+										.getAssignuser(), task
+										.getAssignUserFullName());
 							} else if (propertyId.equals("taskListName")) {
 								return new DefaultFormViewFieldFactory.FormViewField(
 										task.getTaskListName());
@@ -197,9 +197,11 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 											.getPriority());
 
 									FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
-									containerField.addComponentField(iconEmbedded);
+									containerField
+											.addComponentField(iconEmbedded);
 									lbPriority.setWidth("220px");
-									containerField.addComponentField(lbPriority);
+									containerField
+											.addComponentField(lbPriority);
 									return containerField;
 								}
 							}

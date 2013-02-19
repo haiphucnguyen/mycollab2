@@ -11,6 +11,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -73,7 +74,7 @@ public class ComponentReadViewImpl extends AbstractView implements
 		protected Field onCreateField(Item item, Object propertyId,
 				Component uiContext) {
 			if (propertyId.equals("userlead")) {
-				return new UserLinkViewField(component.getUserlead(),
+				return new ProjectUserFormLinkField(component.getUserlead(),
 						component.getUserLeadFullName());
 			}
 			return null;

@@ -8,6 +8,7 @@ import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
@@ -69,7 +70,8 @@ public class ProblemReadViewImpl extends AbstractView implements
 						Component uiContext) {
 
 					if (propertyId.equals("raisedbyuser")) {
-						return new FormViewField(problem
+						return new ProjectUserFormLinkField(problem
+								.getRaisedbyuser(), problem
 								.getRaisedByUserFullName());
 					} else if (propertyId.equals("level")) {
 						RatingStars tinyRs = new RatingStars();
@@ -80,8 +82,9 @@ public class ProblemReadViewImpl extends AbstractView implements
 						return new FormViewField(AppContext.formatDate(problem
 								.getDatedue()));
 					} else if (propertyId.equals("assigntouser")) {
-						return new UserLinkViewField(problem.getAssigntouser(),
-								problem.getAssignedUserFullName());
+						return new ProjectUserFormLinkField(problem
+								.getAssigntouser(), problem
+								.getAssignedUserFullName());
 					}
 
 					return null;
@@ -161,10 +164,11 @@ public class ProblemReadViewImpl extends AbstractView implements
 								Object propertyId, Component uiContext) {
 
 							if (propertyId.equals("raisedbyuser")) {
-								return new FormViewField(problem
+								return new ProjectUserFormLinkField(problem
+										.getRaisedbyuser(), problem
 										.getRaisedByUserFullName());
 							} else if (propertyId.equals("assigntouser")) {
-								return new UserLinkViewField(problem
+								return new ProjectUserFormLinkField(problem
 										.getAssigntouser(), problem
 										.getAssignedUserFullName());
 							} else if (propertyId.equals("level")) {
@@ -175,10 +179,6 @@ public class ProblemReadViewImpl extends AbstractView implements
 							} else if (propertyId.equals("datedue")) {
 								return new FormViewField(AppContext
 										.formatDate(problem.getDatedue()));
-							} else if (propertyId.equals("assigntouser")) {
-								return new UserLinkViewField(problem
-										.getAssigntouser(), problem
-										.getAssignedUserFullName());
 							}
 
 							return null;
