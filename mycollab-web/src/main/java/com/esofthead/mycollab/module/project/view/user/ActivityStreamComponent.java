@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.project.view.bug.ComponentReadPageAction;
 import com.esofthead.mycollab.module.project.view.bug.VersionReadPageAction;
 import com.esofthead.mycollab.module.project.view.message.MessageReadPageAction;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneReadPageAction;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.module.project.view.problem.ProblemReadPageAction;
 import com.esofthead.mycollab.module.project.view.risk.RiskReadPageAction;
 import com.esofthead.mycollab.module.project.view.task.TaskGroupReadPageAction;
@@ -34,7 +35,6 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.Sizeable;
@@ -126,8 +126,8 @@ public class ActivityStreamComponent extends Depot {
 			CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
 			// header.setSpacing(true);
-			header.addComponent(new UserLink(activityStream.getCreateduser(),
-					activityStream.getCreatedUserFullName()));
+			header.addComponent(new ProjectUserLink(activityStream
+					.getCreateduser(), activityStream.getCreatedUserFullName()));
 			StringBuilder action = new StringBuilder();
 
 			if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream
@@ -152,6 +152,8 @@ public class ActivityStreamComponent extends Depot {
 			// header.setComponentAlignment(prjLabel, Alignment.TOP_CENTER);
 			Button projectLink = new Button(activityStream.getProjectName(),
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(ClickEvent event) {
 							EventBus.getInstance()

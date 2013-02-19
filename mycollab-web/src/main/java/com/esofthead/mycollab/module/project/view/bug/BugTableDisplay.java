@@ -7,12 +7,12 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
@@ -66,8 +66,7 @@ public class BugTableDisplay extends PagedBeanTable2<BugService, BugSearchCriter
             public com.vaadin.ui.Component generateCell(Table source,
                     final Object itemId, Object columnId) {
                 final SimpleBug bug = BugTableDisplay.this.getBeanByIndex(itemId);
-                UserLink b = new UserLink(bug.getAssignuser(), bug.getAssignuserFullName());
-                return b;
+						return new ProjectUserLink(bug.getAssignuser(), bug.getAssignuserFullName());
 
             }
         });

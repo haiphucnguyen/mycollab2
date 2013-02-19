@@ -24,10 +24,10 @@ import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.Sizeable;
@@ -77,8 +77,8 @@ public class ProjectActivityStreamComponent extends Depot {
 
 			CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
-			header.addComponent(new UserLink(activityStream.getCreateduser(),
-					activityStream.getCreatedUserFullName()));
+			header.addComponent(new ProjectUserLink(activityStream
+					.getCreateduser(), activityStream.getCreatedUserFullName()));
 			StringBuilder action = new StringBuilder();
 
 			if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream

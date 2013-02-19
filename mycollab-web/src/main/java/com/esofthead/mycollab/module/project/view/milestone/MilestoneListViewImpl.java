@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
@@ -21,7 +22,6 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
@@ -138,8 +138,8 @@ public class MilestoneListViewImpl extends AbstractView implements
 							final Object itemId, Object columnId) {
 						final SimpleMilestone milestone = tableItem
 								.getBeanByIndex(itemId);
-						UserLink b = new UserLink(milestone.getOwner(),
-								milestone.getOwnerFullName());
+						ProjectUserLink b = new ProjectUserLink(milestone
+								.getOwner(), milestone.getOwnerFullName());
 						return b;
 
 					}

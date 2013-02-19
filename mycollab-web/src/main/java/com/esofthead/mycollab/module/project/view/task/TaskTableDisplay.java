@@ -10,9 +10,9 @@ import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.vaadin.ui.table.BeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
@@ -157,19 +157,21 @@ public class TaskTableDisplay extends
 
 			}
 		});
-		
-		 this.addGeneratedColumn("assignUserFullName", new Table.ColumnGenerator() {
-	            private static final long serialVersionUID = 1L;
 
-	            @Override
-	            public com.vaadin.ui.Component generateCell(Table source,
-	                    final Object itemId, Object columnId) {
-	                final SimpleTask account = TaskTableDisplay.this.getBeanByIndex(itemId);
-	                UserLink b = new UserLink(account.getAssignuser(), account.getAssignUserFullName());
-	                return b;
+		this.addGeneratedColumn("assignUserFullName",
+				new Table.ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
 
-	            }
-	        });
+					@Override
+					public com.vaadin.ui.Component generateCell(Table source,
+							final Object itemId, Object columnId) {
+						final SimpleTask account = TaskTableDisplay.this
+								.getBeanByIndex(itemId);
+						return new ProjectUserLink(account.getAssignuser(),
+								account.getAssignUserFullName());
+
+					}
+				});
 
 		this.setColumnExpandRatio("taskname", 1);
 		this.setColumnWidth("assignUserFullName",
