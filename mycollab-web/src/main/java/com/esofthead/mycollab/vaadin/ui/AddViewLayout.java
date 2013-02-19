@@ -4,54 +4,48 @@ import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Embedded;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
 public class AddViewLayout extends CustomLayout {
 
-    private static final long serialVersionUID = 1L;
-    
-    private final HorizontalLayout header;
-    
-    private Label titleLbl;
-    private Embedded icon;
+	private static final long serialVersionUID = 1L;
 
-    public AddViewLayout(String title, ThemeResource resource) {
-        super("addView");
-        
-        this.header = new HorizontalLayout();
-        this.header.setStyleName("addViewHeader");
-        this.header.addStyleName("create item header");
-        
-        icon= new Embedded();
-        icon.setSource(resource);
-        this.header.addComponent(icon);
-        if (title == null) {
-            titleLbl = new Label("Undefined");
-        } else {
-            titleLbl = new Label(title);
-        }
-        
-        titleLbl.setWidth("100%");
-        titleLbl.setStyleName("headerName");
-        this.header.addComponent(titleLbl);
-        this.addComponent(header, "addViewHeader");
-    }
-    
-    
-    public void setTitle(String title) {
-        titleLbl.setValue(title);
-    }
-    
-    public void addTopControls(ComponentContainer topControls) {
-        this.addComponent(topControls, "addViewTopControls");
-    }
+	private final Label titleLbl;
+	private final Embedded icon;
 
-    public void addBottomControls(ComponentContainer bottomControls) {
-        this.addComponent(bottomControls, "addViewBottomControls");
-    }
+	public AddViewLayout(String title, ThemeResource resource) {
+		super("addView");
 
-    public void addBody(ComponentContainer body) {
-        this.addComponent(body, "addViewBody");
-    }
+		icon = new Embedded();
+		icon.setSource(resource);
+		this.addComponent(icon, "addViewHeaderIcon");
+		titleLbl = new Label();
+		titleLbl.setStyleName("headerName");
+		titleLbl.setSizeUndefined();
+		titleLbl.setImmediate(true);
+
+		this.addComponent(titleLbl, "addViewHeaderTitle");
+
+		if (title == null) {
+			this.setTitle("Undefined");
+		} else {
+			this.setTitle(title);
+		}
+	}
+
+	public void setTitle(String title) {
+		this.titleLbl.setValue(title);
+	}
+
+	public void addTopControls(ComponentContainer topControls) {
+		this.addComponent(topControls, "addViewTopControls");
+	}
+
+	public void addBottomControls(ComponentContainer bottomControls) {
+		this.addComponent(bottomControls, "addViewBottomControls");
+	}
+
+	public void addBody(ComponentContainer body) {
+		this.addComponent(body, "addViewBody");
+	}
 }

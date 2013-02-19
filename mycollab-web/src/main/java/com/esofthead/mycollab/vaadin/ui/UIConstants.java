@@ -33,4 +33,5 @@ public class UIConstants {
 	public static final String PROJECT_INFO_HEADER = "projectinfo-header";
 	public static final String PROJECT_NAME = "project-name";
 	public static final String PROJECT_SHORT_NAME = "project-shortname";
+	public static final String WORD_WRAP = "wordWrap";
 }
