@@ -12,8 +12,8 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.ui.components.ProjectUserComboBox;
 import com.esofthead.mycollab.module.project.ui.components.TaskPercentageCompleteComboBox;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
@@ -187,7 +187,7 @@ public class TaskAddPopup extends CustomComponent {
         protected Field onCreateField(Item item, Object propertyId,
                 com.vaadin.ui.Component uiContext) {
             if (propertyId.equals("assignuser")) {
-                return new ProjectUserComboBox();
+                return new ProjectMemberComboBox();
             } else if (propertyId.equals("taskname")) {
             	  TextField tf = new TextField();
                   tf.setNullRepresentation("");

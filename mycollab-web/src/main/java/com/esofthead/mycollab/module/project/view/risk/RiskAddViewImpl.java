@@ -1,7 +1,12 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.vaadin.teemu.ratingstars.RatingStars;
+
 import com.esofthead.mycollab.module.project.domain.Risk;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -16,10 +21,6 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
-
-import java.util.HashMap;
-import java.util.Map;
-import org.vaadin.teemu.ratingstars.RatingStars;
 
 @ViewComponent
 public class RiskAddViewImpl extends AbstractView implements RiskAddView {
@@ -98,9 +99,9 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
                     risk.setRequiredError("Please enter a Desciption");
                     return risk;
                 } else if (propertyId.equals("raisedbyuser")) {
-                    return new UserComboBox();
+                    return new ProjectMemberComboBox();
                 } else if (propertyId.equals("assigntouser")) {
-                    return new UserComboBox();
+                    return new ProjectMemberComboBox();
                 } else if (propertyId.equals("response")) {
                     return new RichTextArea();
                 } else if (propertyId.equals("consequence")) {

@@ -1,7 +1,12 @@
 package com.esofthead.mycollab.module.project.view.problem;
 
+import java.util.HashMap;
+import java.util.Map;
+
+import org.vaadin.teemu.ratingstars.RatingStars;
+
 import com.esofthead.mycollab.module.project.domain.Problem;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
@@ -18,151 +23,147 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
-import java.util.HashMap;
-import java.util.Map;
-import org.vaadin.teemu.ratingstars.RatingStars;
-
 @ViewComponent
 public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
-        IFormAddView<Problem> {
+		IFormAddView<Problem> {
 
-    private static final long serialVersionUID = 1L;
-    private EditForm editForm;
-    private static Map<Integer, String> valueCaptions = new HashMap<Integer, String>(
-            5);
+	private static final long serialVersionUID = 1L;
+	private EditForm editForm;
+	private static Map<Integer, String> valueCaptions = new HashMap<Integer, String>(
+			5);
 
-    static {
-        valueCaptions.put(1, "Epic Fail");
-        valueCaptions.put(2, "Poor");
-        valueCaptions.put(3, "OK");
-        valueCaptions.put(4, "Good");
-        valueCaptions.put(5, "Excellent");
-    }
+	static {
+		valueCaptions.put(1, "Epic Fail");
+		valueCaptions.put(2, "Poor");
+		valueCaptions.put(3, "OK");
+		valueCaptions.put(4, "Good");
+		valueCaptions.put(5, "Excellent");
+	}
 
-    public ProblemAddViewImpl() {
-        super();
-        editForm = new EditForm();
-        this.addComponent(editForm);
-    }
+	public ProblemAddViewImpl() {
+		super();
+		editForm = new EditForm();
+		this.addComponent(editForm);
+	}
 
-    @Override
-    public void editItem(Problem problem) {
-        editForm.setItemDataSource(new BeanItem<Problem>(problem));
-    }
+	@Override
+	public void editItem(Problem problem) {
+		editForm.setItemDataSource(new BeanItem<Problem>(problem));
+	}
 
-    private class EditForm extends AdvancedEditBeanForm<Problem> {
+	private class EditForm extends AdvancedEditBeanForm<Problem> {
 
-        private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-        @Override
-        public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new EditFormFieldFactory());
-            super.setItemDataSource(newDataSource);
-        }
+		@Override
+		public void setItemDataSource(Item newDataSource) {
+			this.setFormLayoutFactory(new FormLayoutFactory());
+			this.setFormFieldFactory(new EditFormFieldFactory());
+			super.setItemDataSource(newDataSource);
+		}
 
-        class FormLayoutFactory extends ProblemFormLayoutFactory {
+		class FormLayoutFactory extends ProblemFormLayoutFactory {
 
-            private static final long serialVersionUID = 1L;
-            
-            public FormLayoutFactory() {
-                super("Create Problem");
-            }
+			private static final long serialVersionUID = 1L;
 
-            private Layout createButtonControls() {
-                return (new EditFormControlsGenerator<Problem>(EditForm.this))
-                        .createButtonControls();
-            }
+			public FormLayoutFactory() {
+				super("Create Problem");
+			}
 
-            @Override
-            protected Layout createTopPanel() {
-                return createButtonControls();
-            }
+			private Layout createButtonControls() {
+				return (new EditFormControlsGenerator<Problem>(EditForm.this))
+						.createButtonControls();
+			}
 
-            @Override
-            protected Layout createBottomPanel() {
-                return createButtonControls();
-            }
-        }
+			@Override
+			protected Layout createTopPanel() {
+				return createButtonControls();
+			}
 
-        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
+			@Override
+			protected Layout createBottomPanel() {
+				return createButtonControls();
+			}
+		}
 
-            private static final long serialVersionUID = 1L;
+		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
-            @Override
-            protected Field onCreateField(Item item, Object propertyId,
-                    com.vaadin.ui.Component uiContext) {
+			private static final long serialVersionUID = 1L;
 
-                if (propertyId.equals("description")) {
-                	 RichTextArea risk = new RichTextArea();
-                     risk.setRequired(true);
-                     risk.setNullRepresentation("");
-                     risk.setRequiredError("Please enter a Desciption");
-                     return risk;
-                } else if (propertyId.equals("raisedbyuser")) {
-                    return new UserComboBox();
-                } else if (propertyId.equals("type")) {
-                } else if (propertyId.equals("assigntouser")) {
-                    return new UserComboBox();
-                } else if (propertyId.equals("priority")) {
-                    ValueComboBox box = new ValueComboBox();
-                    box.loadData(new String[]{"High", "Medium", "Low"});
-                    return box;
-                } else if (propertyId.equals("status")) {
-                    ValueComboBox box = new ValueComboBox();
-                    box.loadData(new String[]{"Open", "Closed"});
-                    return box;
-                } else if (propertyId.equals("level")) {
-                    final RatingStars ratingField = new RatingStars();
-                    ratingField.setMaxValue(5);
-                    ratingField.setImmediate(true);
-                    ratingField.setDescription("Problem level");
-                    ratingField.setValueCaption(valueCaptions.values().toArray(
-                            new String[5]));
+			@Override
+			protected Field onCreateField(Item item, Object propertyId,
+					com.vaadin.ui.Component uiContext) {
 
-                    ratingField.addListener(new Property.ValueChangeListener() {
-                        private static final long serialVersionUID = -3277119031169194273L;
+				if (propertyId.equals("description")) {
+					RichTextArea risk = new RichTextArea();
+					risk.setRequired(true);
+					risk.setNullRepresentation("");
+					risk.setRequiredError("Please enter a Desciption");
+					return risk;
+				} else if (propertyId.equals("raisedbyuser")) {
+					return new ProjectMemberComboBox();
+				} else if (propertyId.equals("type")) {
+				} else if (propertyId.equals("assigntouser")) {
+					return new ProjectMemberComboBox();
+				} else if (propertyId.equals("priority")) {
+					ValueComboBox box = new ValueComboBox();
+					box.loadData(new String[] { "High", "Medium", "Low" });
+					return box;
+				} else if (propertyId.equals("status")) {
+					ValueComboBox box = new ValueComboBox();
+					box.loadData(new String[] { "Open", "Closed" });
+					return box;
+				} else if (propertyId.equals("level")) {
+					final RatingStars ratingField = new RatingStars();
+					ratingField.setMaxValue(5);
+					ratingField.setImmediate(true);
+					ratingField.setDescription("Problem level");
+					ratingField.setValueCaption(valueCaptions.values().toArray(
+							new String[5]));
 
-                        @Override
-                        public void valueChange(Property.ValueChangeEvent event) {
-                            Double value = (Double) event.getProperty()
-                                    .getValue();
-                            RatingStars changedRs = (RatingStars) event
-                                    .getProperty();
+					ratingField.addListener(new Property.ValueChangeListener() {
+						private static final long serialVersionUID = -3277119031169194273L;
 
-                            // reset value captions
-                            changedRs.setValueCaption(valueCaptions.values()
-                                    .toArray(new String[5]));
-                            // set "Your Rating" caption
-                            if (value == null) {
-                                changedRs.setValue(1);
-                            } else {
-                                changedRs.setValueCaption(
-                                        (int) Math.round(value), "Your Rating");
-                            }
+						@Override
+						public void valueChange(Property.ValueChangeEvent event) {
+							Double value = (Double) event.getProperty()
+									.getValue();
+							RatingStars changedRs = (RatingStars) event
+									.getProperty();
 
-                        }
-                    });
-                    return ratingField;
-                } else if (propertyId.equals("resolution")) {
-                    return new RichTextArea();
-                }
-                
-                if (propertyId.equals("issuename")) {
-                    TextField tf = new TextField();
-                    tf.setNullRepresentation("");
-                    tf.setRequired(true);
-                    tf.setRequiredError("Please enter a Name");
-                    return tf;
-                }
+							// reset value captions
+							changedRs.setValueCaption(valueCaptions.values()
+									.toArray(new String[5]));
+							// set "Your Rating" caption
+							if (value == null) {
+								changedRs.setValue(1);
+							} else {
+								changedRs.setValueCaption(
+										(int) Math.round(value), "Your Rating");
+							}
 
-                return null;
-            }
-        }
-    }
+						}
+					});
+					return ratingField;
+				} else if (propertyId.equals("resolution")) {
+					return new RichTextArea();
+				}
 
-    @Override
-    public HasEditFormHandlers<Problem> getEditFormHandlers() {
-        return editForm;
-    }
+				if (propertyId.equals("issuename")) {
+					TextField tf = new TextField();
+					tf.setNullRepresentation("");
+					tf.setRequired(true);
+					tf.setRequiredError("Please enter a Name");
+					return tf;
+				}
+
+				return null;
+			}
+		}
+	}
+
+	@Override
+	public HasEditFormHandlers<Problem> getEditFormHandlers() {
+		return editForm;
+	}
 }

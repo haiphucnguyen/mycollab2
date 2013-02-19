@@ -4,6 +4,9 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.Collection;
+
+import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
@@ -15,15 +18,10 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
-import com.vaadin.ui.ComboBox;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-
-import java.util.Collection;
 
 /**
  * 
@@ -104,8 +102,7 @@ public class ComponentAddViewImpl extends AbstractView implements
 					field.setNullRepresentation("");
 					return field;
 				} else if (propertyId.equals("userlead")) {
-					UserComboBox userBox = new UserComboBox();
-					userBox.select(AppContext.getUsername());
+					ProjectMemberComboBox userBox = new ProjectMemberComboBox();
 					return userBox;
 				}
 

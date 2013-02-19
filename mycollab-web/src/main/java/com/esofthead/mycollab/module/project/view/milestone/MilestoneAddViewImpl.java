@@ -5,7 +5,7 @@
 package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.module.project.domain.Milestone;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -20,94 +20,95 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextField;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @ViewComponent
-public class MilestoneAddViewImpl extends AbstractView implements MilestoneAddView {
+public class MilestoneAddViewImpl extends AbstractView implements
+		MilestoneAddView {
 
-    private static final long serialVersionUID = 1L;
-    private EditForm editForm;
-    private Milestone milestone;
+	private static final long serialVersionUID = 1L;
+	private EditForm editForm;
+	private Milestone milestone;
 
-    public MilestoneAddViewImpl() {
-        super();
-        editForm = new EditForm();
-        this.addComponent(editForm);
-    }
+	public MilestoneAddViewImpl() {
+		super();
+		editForm = new EditForm();
+		this.addComponent(editForm);
+	}
 
-    @Override
-    public void editItem(Milestone milestone) {
-        this.milestone = milestone;
-        editForm.setItemDataSource(new BeanItem<Milestone>(milestone));
-    }
+	@Override
+	public void editItem(Milestone milestone) {
+		this.milestone = milestone;
+		editForm.setItemDataSource(new BeanItem<Milestone>(milestone));
+	}
 
-    private class EditForm extends AdvancedEditBeanForm<Milestone> {
+	private class EditForm extends AdvancedEditBeanForm<Milestone> {
 
-        private static final long serialVersionUID = 1L;
+		private static final long serialVersionUID = 1L;
 
-        @Override
-        public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new EditFormFieldFactory());
-            super.setItemDataSource(newDataSource);
-        }
+		@Override
+		public void setItemDataSource(Item newDataSource) {
+			this.setFormLayoutFactory(new FormLayoutFactory());
+			this.setFormFieldFactory(new EditFormFieldFactory());
+			super.setItemDataSource(newDataSource);
+		}
 
-        class FormLayoutFactory extends MilestoneFormLayoutFactory {
+		class FormLayoutFactory extends MilestoneFormLayoutFactory {
 
-            private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-            public FormLayoutFactory() {
-                super("Create Milestone");
-            }
+			public FormLayoutFactory() {
+				super("Create Milestone");
+			}
 
-            private Layout createButtonControls() {
-                return (new EditFormControlsGenerator<Milestone>(EditForm.this))
-                        .createButtonControls();
-            }
+			private Layout createButtonControls() {
+				return (new EditFormControlsGenerator<Milestone>(EditForm.this))
+						.createButtonControls();
+			}
 
-            @Override
-            protected Layout createTopPanel() {
-                return createButtonControls();
-            }
+			@Override
+			protected Layout createTopPanel() {
+				return createButtonControls();
+			}
 
-            @Override
-            protected Layout createBottomPanel() {
-                return createButtonControls();
-            }
-        }
+			@Override
+			protected Layout createBottomPanel() {
+				return createButtonControls();
+			}
+		}
 
-        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
+		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
-            private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            protected Field onCreateField(Item item, Object propertyId,
-                    com.vaadin.ui.Component uiContext) {
-                if (propertyId.equals("owner")) {
-                    UserComboBox userbox = new UserComboBox();
-                    userbox.setRequired(true);
-                    userbox.setRequiredError("Please enter a Responesible User");
-                    return userbox;
-                } else if (propertyId.equals("flag")) {
-                    return new ValueComboBox(false, "External", "Internal");
-                }
-                
-                if (propertyId.equals("name")) {
-                    TextField tf = new TextField();
-                    tf.setNullRepresentation("");
-                    tf.setRequired(true);
-                    tf.setRequiredError("Please enter a Name");
-                    return tf;
-                }
-                
-                return null;
-            }
-        }
-    }
+			@Override
+			protected Field onCreateField(Item item, Object propertyId,
+					com.vaadin.ui.Component uiContext) {
+				if (propertyId.equals("owner")) {
+					ProjectMemberComboBox userbox = new ProjectMemberComboBox();
+					userbox.setRequired(true);
+					userbox.setRequiredError("Please enter a owner");
+					return userbox;
+				} else if (propertyId.equals("flag")) {
+					return new ValueComboBox(false, "External", "Internal");
+				}
 
-    @Override
-    public HasEditFormHandlers<Milestone> getEditFormHandlers() {
-        return editForm;
-    }
+				if (propertyId.equals("name")) {
+					TextField tf = new TextField();
+					tf.setNullRepresentation("");
+					tf.setRequired(true);
+					tf.setRequiredError("Please enter a Name");
+					return tf;
+				}
+
+				return null;
+			}
+		}
+	}
+
+	@Override
+	public HasEditFormHandlers<Milestone> getEditFormHandlers() {
+		return editForm;
+	}
 }
