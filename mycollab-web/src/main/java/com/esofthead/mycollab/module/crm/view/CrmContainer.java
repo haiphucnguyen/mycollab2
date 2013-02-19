@@ -66,12 +66,12 @@ public class CrmContainer extends AbstractView {
         toolbar.addComponent(homeBtn);
 
         Button accountList = new Button(ACCOUNT_LIST, listener);
+        System.out.println("Enable: " + AppContext.canRead(RolePermissionCollections.CRM_ACCOUNT));
         accountList.setEnabled(AppContext.canRead(RolePermissionCollections.CRM_ACCOUNT));
         accountList.setStyleName("link");
         toolbar.addComponent(accountList);
 
         Button contactList = new Button(CONTACT_LIST, listener);
-        contactList.setEnabled(AppContext.canRead(RolePermissionCollections.CRM_CONTACT));
         contactList.setStyleName("link");
         toolbar.addComponent(contactList);
 

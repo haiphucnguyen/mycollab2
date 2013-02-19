@@ -26,6 +26,10 @@ public class PermissionFlag {
     public static boolean canAccess(int flag) {
         return ((flag & ACCESS) == ACCESS);
     }
+    
+    public static void main(String[] args) {
+		System.out.println(canRead(2));
+	}
 
     public static String toString(int flag) {
         if (flag == NO_ACCESS) {

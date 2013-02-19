@@ -204,10 +204,10 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 		public UserBugDepot() {
 			super("Open Bugs", new VerticalLayout());
 
-			BugTableDisplay bugDisplay = new BugTableDisplay(new String[] {
-					"selected", "summary", "assignuserFullName", "severity",
-					"resolution", "duedate" }, new String[] { "", "Summary",
-					"Assigned User", "Severity", "Resolution", "Due Date" });
+			BugTableDisplay bugDisplay = new BugTableDisplay(
+					new String[] { "selected", "summary", "severity",
+							"resolution", "duedate" }, new String[] { "",
+							"Summary", "Severity", "Resolution", "Due Date" });
 
 			BugSearchCriteria searchCriteria = new BugSearchCriteria();
 			searchCriteria.setProjectId(new NumberSearchField(
