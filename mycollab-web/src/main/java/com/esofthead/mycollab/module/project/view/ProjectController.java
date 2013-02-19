@@ -910,7 +910,7 @@ public class ProjectController implements IController {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
 						ProjectMemberScreenData.Read data = new ProjectMemberScreenData.Read(
-								(Integer) event.getData());
+								event.getData());
 						projectView.gotoUsersAndGroup(data);
 					}
 				});

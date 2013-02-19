@@ -5,6 +5,7 @@ import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.crm.view.account.AccountFormLayoutFactory;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
@@ -72,7 +73,16 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 		@Override
 		protected Field onCreateField(Item item, Object propertyId,
 				Component uiContext) {
-
+			if (propertyId.equals("startdate")) {
+				return new DefaultFormViewFieldFactory.FormDateViewField(
+						milestone.getStartdate());
+			} else if (propertyId.equals("enddate")) {
+				return new DefaultFormViewFieldFactory.FormDateViewField(
+						milestone.getEnddate());
+			} else if (propertyId.equals("owner")) {
+				return new ProjectUserFormLinkField(milestone.getOwner(),
+						milestone.getOwnerFullName());
+			}
 			return null;
 		}
 	}

@@ -8,6 +8,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
@@ -142,24 +143,31 @@ public class ProjectMemberReadPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		ProjectMemberService prjMemberService = AppContext
+				.getSpringBean(ProjectMemberService.class);
+		SimpleProjectMember prjMember = null;
 		if (data.getParams() instanceof Integer) {
-			ProjectMemberService prjMemberService = AppContext
-					.getSpringBean(ProjectMemberService.class);
-			SimpleProjectMember prjMember = prjMemberService
-					.findMemberById((Integer) data.getParams());
-			if (prjMember != null) {
-				ProjectMemberContainer userGroupContainer = (ProjectMemberContainer) container;
-				userGroupContainer.removeAllComponents();
-				userGroupContainer.addComponent(view.getWidget());
-				view.previewItem(prjMember);
-			} else {
-				AppContext
-						.getApplication()
-						.getMainWindow()
-						.showNotification("Information",
-								"The record is not existed",
-								Window.Notification.TYPE_HUMANIZED_MESSAGE);
-			}
+			prjMember = prjMemberService.findMemberById((Integer) data
+					.getParams());
+
+		} else if (data.getParams() instanceof String) {
+			String username = (String) data.getParams();
+			prjMember = prjMemberService.findMemberByUsername(username,
+					CurrentProjectVariables.getProjectId());
+		}
+
+		if (prjMember != null) {
+			ProjectMemberContainer userGroupContainer = (ProjectMemberContainer) container;
+			userGroupContainer.removeAllComponents();
+			userGroupContainer.addComponent(view.getWidget());
+			view.previewItem(prjMember);
+		} else {
+			AppContext
+					.getApplication()
+					.getMainWindow()
+					.showNotification("Information",
+							"The record is not existed",
+							Window.Notification.TYPE_HUMANIZED_MESSAGE);
 		}
 
 	}

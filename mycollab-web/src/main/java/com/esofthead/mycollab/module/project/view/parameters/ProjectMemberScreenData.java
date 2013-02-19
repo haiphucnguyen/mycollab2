@@ -19,9 +19,9 @@ public class ProjectMemberScreenData {
 		}
 	}
 
-	public static class Read extends ScreenData<Integer> {
+	public static class Read extends ScreenData<Object> {
 
-		public Read(Integer params) {
+		public Read(Object params) {
 			super(params);
 		}
 	}

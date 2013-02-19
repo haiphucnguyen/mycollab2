@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.peter.buttongroup.ButtonGroup;
+
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
@@ -7,6 +10,7 @@ import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -33,16 +37,11 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.peter.buttongroup.ButtonGroup;
 
 @ViewComponent
 public class BugReadViewImpl extends AbstractView implements BugReadView {
 
 	private static final long serialVersionUID = 1L;
-	private static Logger log = LoggerFactory.getLogger(BugReadViewImpl.class);
 	private SimpleBug bug;
 	private BugPreviewForm previewForm;
 	private HorizontalLayout bugWorkflowControl;
@@ -72,6 +71,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 			ButtonGroup navButton = new ButtonGroup();
 			navButton.addButton(new Button("Start Progress",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(ClickEvent event) {
 							bug.setStatus(BugStatusConstants.INPROGRESS);
@@ -84,6 +85,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 					}));
 			navButton.addButton(new Button("Won't Fix",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(ClickEvent event) {
 							AppContext.getApplication().getMainWindow()
@@ -124,6 +127,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 			ButtonGroup navButton = new ButtonGroup();
 			navButton.addButton(new Button("Reopen",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(ClickEvent event) {
 							AppContext.getApplication().getMainWindow()
@@ -136,6 +141,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 			ButtonGroup navButton = new ButtonGroup();
 			navButton.addButton(new Button("Reopen",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(ClickEvent event) {
 							AppContext.getApplication().getMainWindow()
@@ -144,6 +151,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 					}));
 			navButton.addButton(new Button("Approve & Close",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(ClickEvent event) {
 							AppContext.getApplication().getMainWindow()
@@ -156,6 +165,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 			ButtonGroup navButton = new ButtonGroup();
 			navButton.addButton(new Button("Reopen",
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
 						@Override
 						public void buttonClick(ClickEvent event) {
 							AppContext.getApplication().getMainWindow()
@@ -168,7 +179,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 	}
 
 	private class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
-
+		private static final long serialVersionUID = 1L;
 		private BugHistoryList historyList;
 
 		@Override
@@ -180,7 +191,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 		}
 
 		private class FormLayoutFactory implements IFormLayoutFactory {
-
+			private static final long serialVersionUID = 1L;
 			private GridFormLayoutHelper informationLayout;
 
 			@Override
@@ -199,6 +210,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 
 				Button assignBtn = new Button("Assign",
 						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
 							@Override
 							public void buttonClick(ClickEvent event) {
 								AppContext.getApplication().getMainWindow()
@@ -211,6 +224,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 						Alignment.MIDDLE_CENTER);
 
 				Button editBtn = new Button("Edit", new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(ClickEvent event) {
 						EventBus.getInstance()
@@ -226,6 +241,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 
 				Button deleteBtn = new Button("Delete",
 						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
 							@Override
 							public void buttonClick(ClickEvent event) {
 								ConfirmDialog.show(AppContext.getApplication()
@@ -345,10 +362,10 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 				if (propertyId.equals("duedate")) {
 					return new FormDateViewField(bug.getDuedate());
 				} else if (propertyId.equals("assignuserFullName")) {
-					return new UserLinkViewField(bug.getAssignuser(),
+					return new ProjectUserFormLinkField(bug.getAssignuser(),
 							bug.getAssignuserFullName());
 				} else if (propertyId.equals("loguserFullName")) {
-					return new UserLinkViewField(bug.getLogby(),
+					return new ProjectUserFormLinkField(bug.getLogby(),
 							bug.getLoguserFullName());
 				} else if (propertyId.equals("id")) {
 					return new FormAttachmentDisplayField(
@@ -360,6 +377,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 							Button componentLink = new Button(
 									component.getComponentname(),
 									new Button.ClickListener() {
+										private static final long serialVersionUID = 1L;
+
 										@Override
 										public void buttonClick(ClickEvent event) {
 											EventBus.getInstance()
@@ -381,6 +400,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 						Button versionLink = new Button(
 								version.getVersionname(),
 								new Button.ClickListener() {
+									private static final long serialVersionUID = 1L;
+
 									@Override
 									public void buttonClick(ClickEvent event) {
 										EventBus.getInstance().fireEvent(
@@ -399,6 +420,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 						Button versionLink = new Button(
 								version.getVersionname(),
 								new Button.ClickListener() {
+									private static final long serialVersionUID = 1L;
+
 									@Override
 									public void buttonClick(ClickEvent event) {
 										EventBus.getInstance().fireEvent(
@@ -416,6 +439,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 						FormLinkViewField componentContainer = new FormLinkViewField(
 								bug.getMilestoneName(),
 								new Button.ClickListener() {
+									private static final long serialVersionUID = 1L;
+
 									@Override
 									public void buttonClick(ClickEvent event) {
 										EventBus.getInstance().fireEvent(
