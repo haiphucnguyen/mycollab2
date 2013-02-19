@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.project.events.BugEvent;
-import com.esofthead.mycollab.module.project.view.bug.RecentBugUpdateWidget.RecentBugRowDisplayHandler;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
@@ -48,7 +47,7 @@ public class MyBugListWidget extends BugDisplayWidget {
 			layout.setColumnExpandRatio(1, 1.0f);
 			Label dateInfo = new Label("last updated on "
 					+ AppContext.formatDate(obj.getLastupdatedtime()));
-			dateInfo.setStyleName(UIConstants.DATE_INFO);
+			dateInfo.setStyleName(UIConstants.WIDGET_ROW_METADATA);
 			layout.addComponent(dateInfo, 1, 1, 1, 1);
 			CssLayout rowLayout = new CssLayout();
 			rowLayout.addComponent(layout);

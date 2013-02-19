@@ -943,6 +943,11 @@ input.v-textfield-errorField {
 .projectDashboardView .menuContent {
 	max-width: 1130px;
 }
+
+.projectDashboardView .v-table-body-noselection {
+ 	height: 100% !important;
+}
+
 .projectDashboardView .v-splitpanel-hsplitter-locked {
 	width: 0px;
 	border-style: solid;
@@ -1903,6 +1908,13 @@ white-space: normal;
 }
 /* End Task List Component */
 
+/* Widget */
+.widget-row .metadata {
+	font-size: 11px;
+	color: gray;
+}
+/* End Widget */
+
 /* Bug Widget */
 .bug-list {
 	margin: 10px 0px;
@@ -1921,10 +1933,6 @@ white-space: normal;
 	border: 1px solid rgba(0, 0, 0, 0.25);
 	padding-left: 5px;
 	padding-top: 3px;
-}
-.bug-list .date-info {
-	font-size: 11px;
-	color: gray;
 }
 /* End Bug Widget */
 
