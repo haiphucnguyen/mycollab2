@@ -38,6 +38,9 @@
         <if test="taskListId != null">
             <![CDATA[${taskListId.operation} m_prj_task.tasklistid = #{taskListId.value,javaType=INTEGER}]]>
         </if>
+        <if test="assignUser != null">
+            <![CDATA[${assignUser.operation} m_prj_task.assignUser = #{assignUser.value}]]>
+        </if>
     </sql>
 
     <sql id="selectTask">

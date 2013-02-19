@@ -114,6 +114,7 @@ public class ShellController implements Serializable {
 
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ShellEvent.GotoSignupPage>() {
+					private static final long serialVersionUID = 1L;
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
@@ -132,6 +133,7 @@ public class ShellController implements Serializable {
 		EventBus.getInstance()
 				.addListener(
 						new ApplicationEventListener<ShellEvent.GotoForgotPasswordPage>() {
+							private static final long serialVersionUID = 1L;
 
 							@Override
 							public Class<? extends ApplicationEvent> getEventType() {

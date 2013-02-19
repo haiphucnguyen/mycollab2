@@ -34,8 +34,6 @@ public class MyCollabApplication extends Application {
         super.close();
         log.debug("Application is closed. Clean all resources");
         AppContext.clearSession();
-        EventBus.getInstance().clear();
-        AppContext.clearAllVariables();
     }
     
     

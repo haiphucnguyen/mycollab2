@@ -217,6 +217,8 @@ public class AppContext implements TransactionListener, Serializable {
     public static void clearSession() {
         ViewManager.clearResources();
         PresenterResolver.clearResources();
+        EventBus.getInstance().clear();
+        clearAllVariables();
     }
 
     static void clearAllVariables() {
