@@ -191,8 +191,8 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 					.getUsername()));
 			TaskTableDisplay taskDisplay = new TaskTableDisplay(new String[] {
 					"id", "taskname", "startdate", "deadline",
-					"percentagecomplete", "assignUserFullName" }, new String[] {
-					"", "Task Name", "Start", "Due", "% Complete", "Owner" });
+					"percentagecomplete"}, new String[] {
+					"", "Task Name", "Start", "Due", "% Complete"});
 			taskDisplay.setSearchCriteria(searchCriteria);
 			bodyContent.addComponent(taskDisplay);
 		}

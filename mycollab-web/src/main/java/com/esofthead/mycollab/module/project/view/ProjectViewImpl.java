@@ -108,16 +108,33 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 
 	}
 
+	private static class MenuButton extends Button {
+		public MenuButton(String caption, String iconResource) {
+			super(caption);
+			this.setIcon(new ThemeResource("icons/22/project/" + iconResource));
+			this.setStyleName("link");
+		}
+	}
+
 	private void buildComponents() {
-		myProjectTab.addTab(constructProjectDashboardComponent(), "Dashboard");
-		myProjectTab.addTab(constructProjectMessageComponent(), "Messages");
-		myProjectTab.addTab(constructProjectMilestoneComponent(), "Milestones");
-		myProjectTab.addTab(constructTaskDashboardComponent(), "Tasks");
-		myProjectTab.addTab(constructProjectBugComponent(), "Bugs");
-		myProjectTab.addTab(constructProjectRiskComponent(), "Risks");
-		myProjectTab.addTab(constructProjectProblemComponent(), "Problems");
-		myProjectTab.addTab(constructProjectStandupMeeting(), "StandUp");
-		myProjectTab.addTab(constructProjectUsers(), "Users & Group");
+		myProjectTab.addTab(constructProjectDashboardComponent(),
+				new MenuButton("Dashboard", "menu_dashboard.png"));
+		myProjectTab.addTab(constructProjectMessageComponent(), new MenuButton(
+				"Messages", "menu_message.png"));
+		myProjectTab.addTab(constructProjectMilestoneComponent(),
+				new MenuButton("Milestones", "menu_milestone.png"));
+		myProjectTab.addTab(constructTaskDashboardComponent(), new MenuButton(
+				"Tasks", "menu_task.png"));
+		myProjectTab.addTab(constructProjectBugComponent(), new MenuButton(
+				"Bugs", "menu_bug.png"));
+		myProjectTab.addTab(constructProjectRiskComponent(), new MenuButton(
+				"Risks", "menu_risk.png"));
+		myProjectTab.addTab(constructProjectProblemComponent(), new MenuButton(
+				"Problems", "menu_problem.png"));
+		myProjectTab.addTab(constructProjectStandupMeeting(), new MenuButton(
+				"StandUp", "menu_standup.png"));
+		myProjectTab.addTab(constructProjectUsers(), new MenuButton(
+				"Users & Group", "menu_user.png"));
 
 		myProjectTab
 				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
