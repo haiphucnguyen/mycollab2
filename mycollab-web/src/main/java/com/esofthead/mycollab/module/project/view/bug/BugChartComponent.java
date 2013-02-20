@@ -4,7 +4,13 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
+import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -29,10 +35,10 @@ public class BugChartComponent extends Depot {
 	private SimpleProject project;
 
 	public BugChartComponent() {
-        super("Bugs Dashboard", new HorizontalLayout(), new VerticalLayout());
-        project = CurrentProjectVariables.getProject();
-        initUI();
-    }
+		super("Bugs Dashboard", new HorizontalLayout(), new VerticalLayout());
+		project = CurrentProjectVariables.getProject();
+		initUI();
+	}
 
 	private void initUI() {
 		HorizontalLayout headerContainer = (HorizontalLayout) this.headerContent;
@@ -96,6 +102,12 @@ public class BugChartComponent extends Depot {
 			BugSearchCriteria trendSearchCriteria = new BugSearchCriteria();
 			trendSearchCriteria.setProjectId(new NumberSearchField(project
 					.getId()));
+
+			Date last30Days = DateTimeUtils.subtractOrAddDayDuration(
+					new GregorianCalendar().getTime(), -30);
+			trendSearchCriteria.setUpdatedDate(new DateTimeSearchField(
+					SearchField.AND, DateTimeSearchField.GREATERTHANEQUAL,
+					last30Days));
 			bugTrendWidget.setSearchCriteria(trendSearchCriteria);
 		} else if ("BugsByPriority".equals(reportName)) {
 			PrioritySummaryWidget prioritySummaryWidget = new PrioritySummaryWidget();

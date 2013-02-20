@@ -1,9 +1,13 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.GregorianCalendar;
+
 import org.vaadin.hene.splitbutton.SplitButton;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
+import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -11,7 +15,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
-import com.esofthead.mycollab.module.tracker.BugResolutionConstants;
+import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -154,7 +158,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 		rightColumn.removeAllComponents();
 
 		SimpleProject project = CurrentProjectVariables.getProject();
-		
+
 		MyBugListWidget myBugListWidget = new MyBugListWidget();
 		LazyLoadWrapper myBugsWidgetWrapper = new LazyLoadWrapper(
 				myBugListWidget);
@@ -162,34 +166,44 @@ public class BugDashboardViewImpl extends AbstractView implements
 		BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
 		myBugsSearchCriteria
 				.setProjectId(new NumberSearchField(project.getId()));
+		myBugsSearchCriteria
+				.setStatuses(new SetSearchField<String>(SearchField.AND,
+						new String[] { BugStatusConstants.INPROGRESS,
+								BugStatusConstants.OPEN,
+								BugStatusConstants.REOPENNED }));
 		myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext
 				.getUsername()));
-		
+
 		myBugListWidget.setSearchCriteria(myBugsSearchCriteria);
 
-		DueBugWidget dueBugWidget = new DueBugWidget();
-		LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(dueBugWidget);
-		leftColumn.addComponent(dueBugWidgetWrapper);
-		BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
-		dueDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
-		dueDefectsCriteria.setResolutions(new SetSearchField<String>(
-				new String[] { BugResolutionConstants.NEWISSUE }));
-		dueBugWidget.setSearchCriteria(dueDefectsCriteria);
-
-		BugChartComponent bugChartComponent = new BugChartComponent();
-		rightColumn.addComponent(bugChartComponent);
-		
 		RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
 		LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(
 				updateBugWidget);
-		rightColumn.addComponent(updateBugWidgetWrapper);
+		leftColumn.addComponent(updateBugWidgetWrapper);
 		BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
 		recentDefectsCriteria.setProjectId(new NumberSearchField(project
 				.getId()));
 		updateBugWidget.setSearchCriteria(recentDefectsCriteria);
 
+		BugChartComponent bugChartComponent = new BugChartComponent();
+		rightColumn.addComponent(bugChartComponent);
 		
+		DueBugWidget dueBugWidget = new DueBugWidget();
+		LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(dueBugWidget);
+		rightColumn.addComponent(dueBugWidgetWrapper);
+		BugSearchCriteria dueDefectsCriteria = new BugSearchCriteria();
+		dueDefectsCriteria.setProjectId(new NumberSearchField(project.getId()));
+		dueDefectsCriteria.setDueDate(new DateTimeSearchField(SearchField.AND,
+				DateTimeSearchField.LESSTHANEQUAL, new GregorianCalendar()
+						.getTime()));
+		dueDefectsCriteria
+				.setStatuses(new SetSearchField<String>(SearchField.AND,
+						new String[] { BugStatusConstants.INPROGRESS,
+								BugStatusConstants.OPEN,
+								BugStatusConstants.REOPENNED }));
+		dueBugWidget.setSearchCriteria(dueDefectsCriteria);
 
 		
+
 	}
 }
