@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.validator.constraints;
+package com.esofthead.mycollab.module.project.domain.validator;
 
 import static java.lang.annotation.ElementType.ANNOTATION_TYPE;
 import static java.lang.annotation.ElementType.FIELD;

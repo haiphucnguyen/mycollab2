@@ -197,6 +197,14 @@
                 #{severityitem}
             </foreach>
         </if>
+        
+        <if test="milestoneIds != null">
+            ${milestoneIds.operation} m_tracker_bug.milestoneId IN
+            <foreach close=")" collection="milestoneIds.values"
+                item="milestoneitem" open="(" separator=",">
+                #{milestoneitem}
+            </foreach>
+        </if>
     </sql>
 
     <sql id="querySearchCriteria">
@@ -362,6 +370,13 @@
             <foreach close=")" collection="severities.values"
                 item="severityitem" open="(" separator=",">
                 #{severityitem}
+            </foreach>
+        </if>
+        <if test="milestoneIds != null">
+            ${milestoneIds.operation} m_tracker_bug.milestoneId IN
+            <foreach close=")" collection="milestoneIds.values"
+                item="milestoneitem" open="(" separator=",">
+                #{milestoneitem}
             </foreach>
         </if>
     </sql>

@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.validator.constraints;
+package com.esofthead.mycollab.module.project.domain.validator;
 
 import javax.validation.ConstraintValidator;
 import javax.validation.ConstraintValidatorContext;

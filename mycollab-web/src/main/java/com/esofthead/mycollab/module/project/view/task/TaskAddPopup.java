@@ -50,6 +50,7 @@ public class TaskAddPopup extends CustomComponent {
 
         VerticalLayout taskLayout = new VerticalLayout();
         taskLayout.setSpacing(true);
+        taskLayout.setMargin(false, false, true, false);
 
         Label titleLbl = new Label("Add New Task");
         taskLayout.addComponent(titleLbl);

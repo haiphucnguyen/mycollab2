@@ -11,14 +11,21 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.view.bug.BugListViewImpl;
 import com.esofthead.mycollab.module.project.view.bug.BugTableDisplay;
 import com.esofthead.mycollab.module.project.view.standup.StandupReportListDisplay;
 import com.esofthead.mycollab.module.project.view.task.TaskTableDisplay;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
+import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -27,6 +34,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
@@ -191,8 +199,30 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 					.getUsername()));
 			TaskTableDisplay taskDisplay = new TaskTableDisplay(new String[] {
 					"id", "taskname", "startdate", "deadline",
-					"percentagecomplete"}, new String[] {
-					"", "Task Name", "Start", "Due", "% Complete"});
+					"percentagecomplete" }, new String[] { "", "Task Name",
+					"Start", "Due", "% Complete" });
+
+			taskDisplay
+					.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public Class<? extends ApplicationEvent> getEventType() {
+							return TableClickEvent.class;
+						}
+
+						@Override
+						public void handle(TableClickEvent event) {
+							SimpleTask task = (SimpleTask) event.getData();
+							if ("taskname".equals(event.getFieldName())) {
+								EventBus.getInstance().fireEvent(
+										new TaskEvent.GotoRead(
+												ProjectMemberReadViewImpl.this,
+												task.getId()));
+							}
+						}
+					});
+
 			taskDisplay.setSearchCriteria(searchCriteria);
 			bodyContent.addComponent(taskDisplay);
 		}
@@ -208,6 +238,26 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 					new String[] { "selected", "summary", "severity",
 							"resolution", "duedate" }, new String[] { "",
 							"Summary", "Severity", "Resolution", "Due Date" });
+			bugDisplay
+					.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public Class<? extends ApplicationEvent> getEventType() {
+							return TableClickEvent.class;
+						}
+
+						@Override
+						public void handle(TableClickEvent event) {
+							SimpleBug bug = (SimpleBug) event.getData();
+							if ("summary".equals(event.getFieldName())) {
+								EventBus.getInstance().fireEvent(
+										new BugEvent.GotoRead(
+												ProjectMemberReadViewImpl.this,
+												bug.getId()));
+							}
+						}
+					});
 
 			BugSearchCriteria searchCriteria = new BugSearchCriteria();
 			searchCriteria.setProjectId(new NumberSearchField(

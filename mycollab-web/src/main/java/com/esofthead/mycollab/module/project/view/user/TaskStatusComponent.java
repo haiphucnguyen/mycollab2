@@ -14,10 +14,13 @@ import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
+import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -25,7 +28,6 @@ import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -35,6 +37,7 @@ import com.vaadin.ui.VerticalLayout;
 public class TaskStatusComponent extends Depot {
     
     private DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
+    private static LabelStringGenerator menuLinkGenerator = new TaskStatusLinkLabelStringGenerator();
     
     public TaskStatusComponent() {
         super("Openned Tasks", new VerticalLayout());
@@ -61,10 +64,10 @@ public class TaskStatusComponent extends Depot {
             layout.setWidth("100%");
             layout.setStyleName("activity-stream");
             
-            HorizontalLayout header = new HorizontalLayout();
-            header.setSpacing(true);
+            CssLayout header = new CssLayout();
+			header.setStyleName("stream-content");
             
-            Button taskLink = new Button(genericTask.getName(), new Button.ClickListener() {
+            Button taskLink = generateActivityStreamLink(genericTask.getName(), new Button.ClickListener() {
 
                 @Override
                 public void buttonClick(ClickEvent event) {
@@ -76,10 +79,10 @@ public class TaskStatusComponent extends Depot {
             header.addComponent(taskLink);
             
             Label projectLbl = new Label(" in project ");
+            projectLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
             header.addComponent(projectLbl);
-            header.setComponentAlignment(projectLbl, Alignment.MIDDLE_CENTER);
             
-            Button projectLink = new Button(genericTask.getProjectName(), new Button.ClickListener() {
+            Button projectLink = generateActivityStreamLink(genericTask.getProjectName(), new Button.ClickListener() {
 
                 @Override
                 public void buttonClick(ClickEvent event) {
@@ -102,4 +105,23 @@ public class TaskStatusComponent extends Depot {
             return layout;
         }
     }
+    
+    private static Button generateActivityStreamLink(String linkname,
+			Button.ClickListener listener) {
+		return CommonUIFactory.createButtonTooltip(
+				menuLinkGenerator.handleText(linkname), linkname, listener);
+	}
+
+	private static class TaskStatusLinkLabelStringGenerator implements
+			LabelStringGenerator {
+
+		@Override
+		public String handleText(String value) {
+			if (value.length() > 45) {
+				return value.substring(0, 45) + "...";
+			}
+			return value;
+		}
+
+	}
 }

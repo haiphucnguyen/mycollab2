@@ -185,9 +185,13 @@ public class BugDashboardViewImpl extends AbstractView implements
 				.getId()));
 		updateBugWidget.setSearchCriteria(recentDefectsCriteria);
 
-		BugChartComponent bugChartComponent = new BugChartComponent();
+		BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
+		chartSearchCriteria.setProjectId(new NumberSearchField(
+				CurrentProjectVariables.getProjectId()));
+		BugChartComponent bugChartComponent = new BugChartComponent(
+				chartSearchCriteria);
 		rightColumn.addComponent(bugChartComponent);
-		
+
 		DueBugWidget dueBugWidget = new DueBugWidget();
 		LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(dueBugWidget);
 		rightColumn.addComponent(dueBugWidgetWrapper);
@@ -202,8 +206,5 @@ public class BugDashboardViewImpl extends AbstractView implements
 								BugStatusConstants.OPEN,
 								BugStatusConstants.REOPENNED }));
 		dueBugWidget.setSearchCriteria(dueDefectsCriteria);
-
-		
-
 	}
 }

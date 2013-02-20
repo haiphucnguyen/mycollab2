@@ -5,8 +5,8 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Milestone;
+import com.esofthead.mycollab.module.project.view.bug.BugChartComponent;
 import com.esofthead.mycollab.module.project.view.bug.BugListWidget;
-import com.esofthead.mycollab.module.project.view.bug.BugTableDisplay;
 import com.esofthead.mycollab.module.project.view.bug.IBugReportDisplayContainer;
 import com.esofthead.mycollab.module.project.view.bug.UnresolvedBugsByAssigneeWidget;
 import com.esofthead.mycollab.module.project.view.bug.UnresolvedBugsByPriorityWidget;
@@ -20,23 +20,13 @@ public class MilestoneBugListComp extends VerticalLayout implements
 	private static final long serialVersionUID = 1L;
 
 	private Milestone milestone;
-	private BugTableDisplay bugTableDisplay;
 
 	public MilestoneBugListComp() {
-		bugTableDisplay = new BugTableDisplay(new String[] { "summary",
-				"severity", "resolution", "duedate", "assignuserFullName" },
-				new String[] { "Summary", "Severity", "Resolution", "Due",
-						"Assignee" });
-		this.addComponent(bugTableDisplay);
+		this.setMargin(true);
 	}
 
 	public void displayBugs(Milestone milestone) {
 		this.milestone = milestone;
-		BugSearchCriteria criteria = new BugSearchCriteria();
-		criteria.setProjectId(new NumberSearchField(milestone.getProjectid()));
-		criteria.setMilestoneIds(new SetSearchField<Integer>(milestone.getId()));
-
-		bugTableDisplay.setSearchCriteria(criteria);
 		displayBugReports();
 	}
 
@@ -46,9 +36,12 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		HorizontalLayout bodyLayout = new HorizontalLayout();
 		VerticalLayout leftColumn = new VerticalLayout();
 		bodyLayout.addComponent(leftColumn);
+		VerticalLayout rightColumn = new VerticalLayout();
+		bodyLayout.addComponent(rightColumn);
+
 		UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(
 				this);
-		unresolvedBugWidget.setWidth("450px");
+		unresolvedBugWidget.setWidth("400px");
 		leftColumn.addComponent(unresolvedBugWidget);
 
 		BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
@@ -64,13 +57,10 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		unresolvedBugWidget
 				.setSearchCriteria(unresolvedByPrioritySearchCriteria);
 
-		VerticalLayout rightColumn = new VerticalLayout();
-		bodyLayout.addComponent(rightColumn);
-
 		UnresolvedBugsByAssigneeWidget unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget(
 				this);
-		unresolvedByAssigneeWidget.setWidth("450px");
-		rightColumn.addComponent(unresolvedByAssigneeWidget);
+		unresolvedByAssigneeWidget.setWidth("400px");
+		leftColumn.addComponent(unresolvedByAssigneeWidget);
 
 		BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
 		unresolvedByAssigneeSearchCriteria.setProjectId(new NumberSearchField(
@@ -84,6 +74,16 @@ public class MilestoneBugListComp extends VerticalLayout implements
 								BugStatusConstants.REOPENNED }));
 		unresolvedByAssigneeWidget
 				.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
+
+		BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
+		chartSearchCriteria.setProjectId(new NumberSearchField(
+				CurrentProjectVariables.getProjectId()));
+		chartSearchCriteria.setMilestoneIds(new SetSearchField<Integer>(
+				milestone.getId()));
+		BugChartComponent bugChartComponent = new BugChartComponent(
+				chartSearchCriteria);
+		rightColumn.addComponent(bugChartComponent);
+
 		this.addComponent(bodyLayout);
 	}
 
