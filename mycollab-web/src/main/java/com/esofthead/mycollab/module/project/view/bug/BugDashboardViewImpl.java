@@ -154,6 +154,18 @@ public class BugDashboardViewImpl extends AbstractView implements
 		rightColumn.removeAllComponents();
 
 		SimpleProject project = CurrentProjectVariables.getProject();
+		
+		MyBugListWidget myBugListWidget = new MyBugListWidget();
+		LazyLoadWrapper myBugsWidgetWrapper = new LazyLoadWrapper(
+				myBugListWidget);
+		leftColumn.addComponent(myBugsWidgetWrapper);
+		BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
+		myBugsSearchCriteria
+				.setProjectId(new NumberSearchField(project.getId()));
+		myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext
+				.getUsername()));
+		
+		myBugListWidget.setSearchCriteria(myBugsSearchCriteria);
 
 		DueBugWidget dueBugWidget = new DueBugWidget();
 		LazyLoadWrapper dueBugWidgetWrapper = new LazyLoadWrapper(dueBugWidget);
@@ -164,27 +176,20 @@ public class BugDashboardViewImpl extends AbstractView implements
 				new String[] { BugResolutionConstants.NEWISSUE }));
 		dueBugWidget.setSearchCriteria(dueDefectsCriteria);
 
+		BugChartComponent bugChartComponent = new BugChartComponent();
+		rightColumn.addComponent(bugChartComponent);
+		
 		RecentBugUpdateWidget updateBugWidget = new RecentBugUpdateWidget();
 		LazyLoadWrapper updateBugWidgetWrapper = new LazyLoadWrapper(
 				updateBugWidget);
-		leftColumn.addComponent(updateBugWidgetWrapper);
+		rightColumn.addComponent(updateBugWidgetWrapper);
 		BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
 		recentDefectsCriteria.setProjectId(new NumberSearchField(project
 				.getId()));
 		updateBugWidget.setSearchCriteria(recentDefectsCriteria);
 
-		BugChartComponent bugChartComponent = new BugChartComponent();
-		rightColumn.addComponent(bugChartComponent);
+		
 
-		MyBugListWidget myBugListWidget = new MyBugListWidget();
-		LazyLoadWrapper myBugsWidgetWrapper = new LazyLoadWrapper(
-				myBugListWidget);
-		rightColumn.addComponent(myBugsWidgetWrapper);
-		BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
-		myBugsSearchCriteria
-				.setProjectId(new NumberSearchField(project.getId()));
-		myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext
-				.getUsername()));
-		myBugListWidget.setSearchCriteria(myBugsSearchCriteria);
+		
 	}
 }

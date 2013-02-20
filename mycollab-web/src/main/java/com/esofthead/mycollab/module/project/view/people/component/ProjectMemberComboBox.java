@@ -43,7 +43,7 @@ public class ProjectMemberComboBox extends ComboBox {
 	private void loadUserList(List<SimpleProjectMember> memberList) {
 		BeanContainer<String, SimpleProjectMember> beanItem = new BeanContainer<String, SimpleProjectMember>(
 				SimpleProjectMember.class);
-		beanItem.setBeanIdProperty("id");
+		beanItem.setBeanIdProperty("username");
 
 		for (SimpleProjectMember member : memberList) {
 			beanItem.addBean(member);
