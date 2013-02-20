@@ -22,6 +22,7 @@ public class MilestoneBugListComp extends VerticalLayout implements
 	private Milestone milestone;
 
 	public MilestoneBugListComp() {
+		this.setMargin(true);
 	}
 
 	public void displayBugs(Milestone milestone) {
