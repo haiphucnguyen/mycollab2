@@ -39,7 +39,7 @@ public class BugTrendReportWidget extends
 			patternDate);
 
 	public BugTrendReportWidget() {
-		super("Bugs Trend", 450, 300);
+		super("Bugs Trend", 500, 300);
 	}
 
 	@Override

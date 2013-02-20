@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.vaadin.ui.chart;
 
+import java.awt.Color;
+
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.vaadin.ui.JFreeChartWrapper;
 import com.vaadin.ui.VerticalLayout;
@@ -18,8 +20,8 @@ import org.jfree.util.Rotation;
  * @author haiphucnguyen
  */
 public abstract class PieChartWrapper<S extends SearchCriteria> extends VerticalLayout {
-
-    private String title;
+	private static final long serialVersionUID = 1L;
+	private String title;
     private int height;
     private int width;
 
@@ -46,6 +48,7 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends Vertical
         // set the background color for the chart...
         final PiePlot3D plot = (PiePlot3D) chart.getPlot();
         plot.setStartAngle(290);
+        plot.setBackgroundPaint(Color.white);
         plot.setDirection(Rotation.CLOCKWISE);
         plot.setForegroundAlpha(0.5f);
         plot.setNoDataMessage("No data to display");
