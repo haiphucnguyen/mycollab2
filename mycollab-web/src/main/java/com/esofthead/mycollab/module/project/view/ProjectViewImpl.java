@@ -34,7 +34,6 @@ import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.ButtonTooltip;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.github.wolfie.detachedtabs.DetachedTabs;
@@ -292,15 +291,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		topPanel.setExpandRatio(breadCrumb, 1.0f);
 
 		breadCrumb.setProject(project);
-		breadCrumb.select(0);
-		breadCrumb.addLink(new ButtonTooltip(project.getName(),
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						dashboardPresenter.go(ProjectViewImpl.this, null);
-					}
-				}));
-		breadCrumb.setLinkEnabled(true, 1);
+		breadCrumb.initBreadcrumb();
 
 		SplitButton controlsBtn = new SplitButton();
 		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
