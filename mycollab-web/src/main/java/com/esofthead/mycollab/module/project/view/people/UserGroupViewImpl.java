@@ -14,6 +14,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.vaadin.ui.Button;
@@ -30,15 +31,17 @@ public class UserGroupViewImpl extends AbstractView implements UserGroupView {
 	private static final long serialVersionUID = 1L;
 	private ProjectMemberPresenter userPresenter;
 	private ProjectRolePresenter rolePresenter;
-	private DetachedTabs myProjectTab;
-	private CssLayout mySpaceArea = new CssLayout();
+	private final DetachedTabs myProjectTab;
+	private final CssLayout mySpaceArea = new CssLayout();
 
 	public UserGroupViewImpl() {
 
 		myProjectTab = new DetachedTabs.Horizontal(mySpaceArea);
-		myProjectTab.setSizeFull();
+		myProjectTab.setSizeUndefined();
 
 		HorizontalLayout menu = new HorizontalLayout();
+		menu.setWidth("100%");
+		menu.setStyleName(UIConstants.THEME_TAB_STYLE3);
 		menu.setHeight("40px");
 		menu.addComponent(myProjectTab);
 

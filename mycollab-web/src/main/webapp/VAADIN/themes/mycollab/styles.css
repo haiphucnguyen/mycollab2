@@ -35,7 +35,10 @@ only screen and (max-device-width : 1024px) {
 /* 		min-width: 900px; */
 /* 	} */
 }
-
+button::-moz-focus-inner {
+  border: 0;
+}
+* :focus, * :active { outline: 0px none; -moz-outline: 0px none; }
 input.noBorderRight {
 	border-radius: 2px 0px 0px 2px;
 }
@@ -2085,3 +2088,38 @@ div.v-lazyloadingwrapper-loading {
 }
 
 /* End Vertical Detached Tabs 2 */
+.tab-style3 .detachedtabs {
+	background: url("icons/border-bottom2.png") repeat-x left bottom transparent;
+	position: relative;
+}
+.tab-style3 .detachedtabs .v-nativebutton {
+	background: none;
+	border: none;
+	padding: 0px 20px 0px 0px;
+	color: #918e8e;
+}
+.tab-style3 .detachedtabs .v-nativebutton:hover {
+	color: rgb(94,94,94);
+}
+.tab-style3 .detachedtabs .v-nativebutton.v-nativebutton-tab-selected, .tab-style3 .detachedtabs .v-nativebutton.v-nativebutton-tab-selected:hover {
+	position: relative;
+	color: rgb(40, 126, 206);
+}
+.tab-style3 .detachedtabs .v-nativebutton .v-nativebutton-caption, .tab-style3 .detachedtabs .v-nativebutton.tab-selected .v-nativebutton-caption {
+/* 	padding: 5px 7px 4px !important; */
+	background: none;
+	font-weight: bold;
+	width: 100%;
+	text-align: center;
+	padding: 5px 0px 4px 10px !important;
+} 
+.tab-style3 .detachedtabs .v-nativebutton-tab-selected:after {
+	content:" ";
+	display:block;
+	width:100%;
+	height:2px;
+	background:#2E9DFF;
+	position:absolute;
+	bottom:0px;
+	left:0px;
+}
