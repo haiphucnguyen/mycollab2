@@ -14,6 +14,7 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 	private TaskGroupDisplayWidget taskGroupDisplayWidget;
 
 	public MilestoneTaskGroupListComp() {
+		this.setMargin(true);
 		taskGroupDisplayWidget = new TaskGroupDisplayWidget();
 		this.addComponent(taskGroupDisplayWidget);
 	}

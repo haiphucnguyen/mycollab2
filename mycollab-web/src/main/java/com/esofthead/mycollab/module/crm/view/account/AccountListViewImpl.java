@@ -59,7 +59,9 @@ public class AccountListViewImpl extends AbstractView implements
                     "Email Address", "Assign User"});
 
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public Class<? extends ApplicationEvent> getEventType() {
                 return TableClickEvent.class;
             }
