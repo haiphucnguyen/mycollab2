@@ -20,6 +20,7 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -64,7 +65,6 @@ public class TaskStatusComponent extends Depot {
             layout.setStyleName("activity-stream");
             
             CssLayout header = new CssLayout();
-			header.setWidth("100%");
 			header.setStyleName("stream-content");
             
             Button taskLink = generateActivityStreamLink(genericTask.getName(), new Button.ClickListener() {
@@ -79,6 +79,7 @@ public class TaskStatusComponent extends Depot {
             header.addComponent(taskLink);
             
             Label projectLbl = new Label(" in project ");
+            projectLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
             header.addComponent(projectLbl);
             
             Button projectLink = generateActivityStreamLink(genericTask.getProjectName(), new Button.ClickListener() {

@@ -127,7 +127,6 @@ public class ActivityStreamComponent extends Depot {
 			layout.setStyleName("activity-stream");
 
 			CssLayout header = new CssLayout();
-			header.setWidth("100%");
 			header.setStyleName("stream-content");
 			// header.setSpacing(true);
 			header.addComponent(new ProjectUserLink(activityStream
@@ -173,7 +172,6 @@ public class ActivityStreamComponent extends Depot {
 					});
 			header.addComponent(projectLink);
 			projectLink.setStyleName("link");
-			projectLink.setWidth("100%");
 			layout.addComponent(header);
 
 			CssLayout body = new CssLayout();
@@ -218,7 +216,6 @@ public class ActivityStreamComponent extends Depot {
 
 			this.setIcon(ProjectResources.getIconResource16size(type));
 			this.setStyleName("link");
-			this.setWidth("100%");
 			this.setDescription(activityStream.getNamefield());
 			this.addListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;

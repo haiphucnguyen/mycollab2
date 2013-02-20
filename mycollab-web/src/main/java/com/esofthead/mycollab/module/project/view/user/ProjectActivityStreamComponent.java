@@ -28,6 +28,7 @@ import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLi
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.Sizeable;
@@ -44,7 +45,8 @@ import com.vaadin.ui.VerticalLayout;
 public class ProjectActivityStreamComponent extends Depot {
 	private static final long serialVersionUID = 1L;
 	private final DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
-
+	private static LabelStringGenerator menuLinkGenerator = new ActivityLinkLabelStringGenerator();
+	
 	public ProjectActivityStreamComponent() {
 		super("Project Feeds", new VerticalLayout());
 		activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
@@ -110,13 +112,27 @@ public class ProjectActivityStreamComponent extends Depot {
 		}
 	}
 
+	private static class ActivityLinkLabelStringGenerator implements
+			LabelStringGenerator {
+
+		@Override
+		public String handleText(String value) {
+			if (value.length() > 45) {
+				return value.substring(0, 45) + "...";
+			}
+			return value;
+		}
+
+	}
+
 	private static class ActivitylLink extends Button {
 		private static final long serialVersionUID = 1L;
 
 		public ActivitylLink(final String type, final String fieldName,
 				final int typeid) {
-			super(fieldName);
+			super(menuLinkGenerator.handleText(fieldName));
 
+			this.setDescription(fieldName);
 			this.setIcon(ProjectResources.getIconResource16size(type));
 			this.setStyleName("link");
 
