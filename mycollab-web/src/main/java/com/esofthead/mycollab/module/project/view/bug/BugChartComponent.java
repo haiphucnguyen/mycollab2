@@ -8,13 +8,11 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.rits.cloning.Cloner;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -32,11 +30,12 @@ public class BugChartComponent extends Depot {
 	private String[] reportDashboard = { "BugTrend", "BugsByPriority",
 			"BugsByStatus", "BugByResolution" };
 	private int currentReportIndex = 0;
-	private SimpleProject project;
 
-	public BugChartComponent() {
+	private BugSearchCriteria baseSearchCriteria;
+
+	public BugChartComponent(BugSearchCriteria baseSearchCriteria) {
 		super("Bugs Dashboard", new HorizontalLayout(), new VerticalLayout());
-		project = CurrentProjectVariables.getProject();
+		this.baseSearchCriteria = baseSearchCriteria;
 		initUI();
 	}
 
@@ -91,7 +90,6 @@ public class BugChartComponent extends Depot {
 
 		VerticalLayout bodyContent = (VerticalLayout) this.bodyContent;
 		bodyContent.removeAllComponents();
-		;
 
 		if ("BugTrend".equals(reportName)) {
 			BugTrendReportWidget bugTrendWidget = new BugTrendReportWidget();
@@ -99,10 +97,8 @@ public class BugChartComponent extends Depot {
 			bodyContent.addComponent(lazyComp);
 			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
-			BugSearchCriteria trendSearchCriteria = new BugSearchCriteria();
-			trendSearchCriteria.setProjectId(new NumberSearchField(project
-					.getId()));
-
+			BugSearchCriteria trendSearchCriteria = new Cloner()
+					.deepClone(baseSearchCriteria);
 			Date last30Days = DateTimeUtils.subtractOrAddDayDuration(
 					new GregorianCalendar().getTime(), -30);
 			trendSearchCriteria.setUpdatedDate(new DateTimeSearchField(
@@ -116,9 +112,8 @@ public class BugChartComponent extends Depot {
 			bodyContent.addComponent(lazyComp);
 			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
-			BugSearchCriteria prioritySearchCriteria = new BugSearchCriteria();
-			prioritySearchCriteria.setProjectId(new NumberSearchField(project
-					.getId()));
+			BugSearchCriteria prioritySearchCriteria = new Cloner()
+					.deepClone(baseSearchCriteria);
 			prioritySummaryWidget.setSearchCriteria(prioritySearchCriteria);
 		} else if ("BugsByStatus".equals(reportName)) {
 			StatusSummaryWidget statusSummaryWidget = new StatusSummaryWidget();
@@ -126,9 +121,8 @@ public class BugChartComponent extends Depot {
 			bodyContent.addComponent(lazyComp);
 			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
-			BugSearchCriteria statusSearchCriteria = new BugSearchCriteria();
-			statusSearchCriteria.setProjectId(new NumberSearchField(project
-					.getId()));
+			BugSearchCriteria statusSearchCriteria = new Cloner()
+					.deepClone(baseSearchCriteria);
 			statusSummaryWidget.setSearchCriteria(statusSearchCriteria);
 		} else if ("BugByResolution".equals(reportName)) {
 			BugResolutionSummaryWidget resolutionSummaryWdiget = new BugResolutionSummaryWidget();
@@ -137,9 +131,8 @@ public class BugChartComponent extends Depot {
 			bodyContent.addComponent(lazyComp);
 			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
-			BugSearchCriteria statusSearchCriteria = new BugSearchCriteria();
-			statusSearchCriteria.setProjectId(new NumberSearchField(project
-					.getId()));
+			BugSearchCriteria statusSearchCriteria = new Cloner()
+					.deepClone(baseSearchCriteria);
 			resolutionSummaryWdiget.setSearchCriteria(statusSearchCriteria);
 		}
 	}
