@@ -78,7 +78,9 @@ public class AssignBugWindow extends Window {
                 layout.addComponent(controlsBtn);
 
                 Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public void buttonClick(Button.ClickEvent event) {
                         AssignBugWindow.this.close();
                     }
@@ -87,7 +89,9 @@ public class AssignBugWindow extends Window {
                 controlsBtn.addComponent(cancelBtn);
 
                 Button approveBtn = new Button("Assign", new Button.ClickListener() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public void buttonClick(Button.ClickEvent event) {
 
                         //Save bug status and assignee
@@ -95,16 +99,21 @@ public class AssignBugWindow extends Window {
                         bugService.updateWithSession(bug, AppContext.getUsername());
 
                         //Save comment
-                        Comment comment = new Comment();
-                        comment.setComment((String) commentArea.getValue());
-                        comment.setCreatedtime(new GregorianCalendar().getTime());
-                        comment.setCreateduser(AppContext.getUsername());
-                        comment.setSaccountid(AppContext.getAccountId());
-                        comment.setType(CommentTypeConstants.PRJ_BUG);
-                        comment.setTypeid(bug.getId());
+                        String commentValue = (String)commentArea.getValue();
+                        if (commentValue != null && !commentValue.trim().equals("")) {
+                        	Comment comment = new Comment();
+                            comment.setComment((String) commentArea.getValue());
+                            comment.setCreatedtime(new GregorianCalendar().getTime());
+                            comment.setCreateduser(AppContext.getUsername());
+                            comment.setSaccountid(AppContext.getAccountId());
+                            comment.setType(CommentTypeConstants.PRJ_BUG);
+                            comment.setTypeid(bug.getId());
 
-                        CommentService commentService = AppContext.getSpringBean(CommentService.class);
-                        commentService.saveWithSession(comment, AppContext.getUsername());
+                            CommentService commentService = AppContext.getSpringBean(CommentService.class);
+                            commentService.saveWithSession(comment, AppContext.getUsername());
+                        }
+                        
+                        
                         AssignBugWindow.this.close();
                         EventBus.getInstance().fireEvent(new BugEvent.GotoRead(AssignBugWindow.this, bug.getId()));
                     }

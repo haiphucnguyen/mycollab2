@@ -188,7 +188,6 @@ public class ActivityStreamComponent extends Depot {
 
 		public ActivitylLink(final ProjectActivityStream activityStream) {
 			super(activityStream.getNamefield());
-
 			final String type = activityStream.getType();
 			final int typeid = activityStream.getTypeid();
 			final int projectid = activityStream.getExtratypeid();

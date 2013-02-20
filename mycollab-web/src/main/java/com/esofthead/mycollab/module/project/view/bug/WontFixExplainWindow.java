@@ -110,18 +110,29 @@ public class WontFixExplainWindow extends Window {
                         
 
                         //Save comment
-                        Comment comment = new Comment();
-                        comment.setComment((String) commentArea.getValue());
-                        comment.setCreatedtime(new GregorianCalendar().getTime());
-                        comment.setCreateduser(AppContext.getUsername());
-                        comment.setSaccountid(AppContext.getAccountId());
-                        comment.setType(CommentTypeConstants.PRJ_BUG);
-                        comment.setTypeid(bug.getId());
+                        String commentValue = (String) commentArea.getValue();
+                        if (commentValue != null && !commentValue.trim().equals("")) {
+                        	Comment comment = new Comment();
+                            comment.setComment(commentValue);
+                            comment.setCreatedtime(new GregorianCalendar().getTime());
+                            comment.setCreateduser(AppContext.getUsername());
+                            comment.setSaccountid(AppContext.getAccountId());
+                            comment.setType(CommentTypeConstants.PRJ_BUG);
+                            comment.setTypeid(bug.getId());
 
-                        CommentService commentService = AppContext.getSpringBean(CommentService.class);
-                        commentService.saveWithSession(comment, AppContext.getUsername());
-                        WontFixExplainWindow.this.close();
-                        EventBus.getInstance().fireEvent(new BugEvent.GotoRead(WontFixExplainWindow.this, bug.getId()));
+                            CommentService commentService = AppContext.getSpringBean(CommentService.class);
+                            commentService.saveWithSession(comment, AppContext.getUsername());
+                            
+                            WontFixExplainWindow.this.close();
+                            EventBus.getInstance().fireEvent(new BugEvent.GotoRead(WontFixExplainWindow.this, bug.getId()));
+                        } else {
+                        	AppContext
+    						.getApplication()
+    						.getMainWindow()
+    						.showNotification("Error",
+    								"You must enter a comment to explain for won't fix resolution",
+    								Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                        }
                     }
                 });
                 wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

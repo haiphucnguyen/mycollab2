@@ -107,16 +107,20 @@ public class ResolvedInputWindow extends Window {
                         bugService.updateWithSession(bug, AppContext.getUsername());
 
                         //Save comment
-                        Comment comment = new Comment();
-                        comment.setComment((String) commentArea.getValue());
-                        comment.setCreatedtime(new GregorianCalendar().getTime());
-                        comment.setCreateduser(AppContext.getUsername());
-                        comment.setSaccountid(AppContext.getAccountId());
-                        comment.setType(CommentTypeConstants.PRJ_BUG);
-                        comment.setTypeid(bug.getId());
+                        String commentValue = (String) commentArea.getValue();
+                        if (commentValue != null && !commentValue.trim().equals("")) {
+                        	 Comment comment = new Comment();
+                             comment.setComment(commentValue);
+                             comment.setCreatedtime(new GregorianCalendar().getTime());
+                             comment.setCreateduser(AppContext.getUsername());
+                             comment.setSaccountid(AppContext.getAccountId());
+                             comment.setType(CommentTypeConstants.PRJ_BUG);
+                             comment.setTypeid(bug.getId());
 
-                        CommentService commentService = AppContext.getSpringBean(CommentService.class);
-                        commentService.saveWithSession(comment, AppContext.getUsername());
+                             CommentService commentService = AppContext.getSpringBean(CommentService.class);
+                             commentService.saveWithSession(comment, AppContext.getUsername());
+                        }
+                       
                         ResolvedInputWindow.this.close();
                         EventBus.getInstance().fireEvent(new BugEvent.GotoRead(ResolvedInputWindow.this, bug.getId()));
                     }
