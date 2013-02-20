@@ -33,8 +33,10 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
+import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.Sizeable;
@@ -52,6 +54,7 @@ import com.vaadin.ui.VerticalLayout;
 public class ActivityStreamComponent extends Depot {
 	private static final long serialVersionUID = 1L;
 	private final ProjectActivityStreamPagedList activityStreamList;
+	private static LabelStringGenerator menuLinkGenerator = new ActivityLinkLabelStringGenerator();
 
 	public ActivityStreamComponent() {
 		super("User Feeds", new VerticalLayout());
@@ -124,6 +127,7 @@ public class ActivityStreamComponent extends Depot {
 			layout.setStyleName("activity-stream");
 
 			CssLayout header = new CssLayout();
+			header.setWidth("100%");
 			header.setStyleName("stream-content");
 			// header.setSpacing(true);
 			header.addComponent(new ProjectUserLink(activityStream
@@ -150,7 +154,7 @@ public class ActivityStreamComponent extends Depot {
 			prjLabel.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 			header.addComponent(prjLabel);
 			// header.setComponentAlignment(prjLabel, Alignment.TOP_CENTER);
-			Button projectLink = new Button(activityStream.getProjectName(),
+			Button projectLink = generateActivityStreamLink(activityStream.getProjectName(),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -169,6 +173,7 @@ public class ActivityStreamComponent extends Depot {
 					});
 			header.addComponent(projectLink);
 			projectLink.setStyleName("link");
+			projectLink.setWidth("100%");
 			layout.addComponent(header);
 
 			CssLayout body = new CssLayout();
@@ -183,17 +188,38 @@ public class ActivityStreamComponent extends Depot {
 		}
 	}
 
+	private static Button generateActivityStreamLink(String linkname,
+			Button.ClickListener listener) {
+		return CommonUIFactory.createButtonTooltip(
+				menuLinkGenerator.handleText(linkname), linkname, listener);
+	}
+
+	private static class ActivityLinkLabelStringGenerator implements
+			LabelStringGenerator {
+
+		@Override
+		public String handleText(String value) {
+			if (value.length() > 45) {
+				return value.substring(0, 45) + "...";
+			}
+			return value;
+		}
+
+	}
+
 	private static class ActivitylLink extends Button {
 		private static final long serialVersionUID = 1L;
 
 		public ActivitylLink(final ProjectActivityStream activityStream) {
-			super(activityStream.getNamefield());
+			super(menuLinkGenerator.handleText(activityStream.getNamefield()));
 			final String type = activityStream.getType();
 			final int typeid = activityStream.getTypeid();
 			final int projectid = activityStream.getExtratypeid();
 
 			this.setIcon(ProjectResources.getIconResource16size(type));
 			this.setStyleName("link");
+			this.setWidth("100%");
+			this.setDescription(activityStream.getNamefield());
 			this.addListener(new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
