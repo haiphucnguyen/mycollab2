@@ -25,7 +25,6 @@ public class DbLoggingAppender extends AppenderSkeleton {
 
 	@Override
 	protected void append(LoggingEvent event) {
-		System.out.print("ERROR: log to database");
 		if (this.layout == null) {
 			errorHandler.error("No layout for appender " + name, null,
 					ErrorCode.MISSING_LAYOUT);

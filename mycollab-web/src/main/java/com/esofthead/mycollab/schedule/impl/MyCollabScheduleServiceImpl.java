@@ -7,19 +7,23 @@ package com.esofthead.mycollab.schedule.impl;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
-import org.apache.velocity.VelocityContext;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.dao.ReportBugIssueMapper;
+import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
 import com.esofthead.mycollab.common.domain.ReportBugIssueExample;
 import com.esofthead.mycollab.common.domain.ReportBugIssueWithBLOBs;
 import com.esofthead.mycollab.common.logging.MyBatisFactory;
-import com.esofthead.mycollab.module.mail.VelocityTemplate;
+import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.module.mail.service.MailService;
 import com.esofthead.mycollab.schedule.MyCollabScheduleService;
+import com.thoughtworks.xstream.XStream;
 
 /**
  * 
@@ -28,8 +32,14 @@ import com.esofthead.mycollab.schedule.MyCollabScheduleService;
 @Service
 public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 
+	private static final Logger log = LoggerFactory
+			.getLogger(MyCollabScheduleServiceImpl.class);
+
 	@Autowired
 	private MailService mailService;
+
+	@Autowired
+	private MailRelayService mailRelayService;
 
 	@Override
 	@Scheduled(fixedDelay = 600000)
@@ -49,13 +59,15 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 				mapper.deleteByExample(ex);
 				session.commit(true);
 
-				VelocityContext context = new VelocityContext();
-				context.put("issueCol", listIssues);
-				String msg = VelocityTemplate.format(context,
+				TemplateGenerator templateGenerator = new TemplateGenerator(
 						"templates/email/errorReport.mt");
+				templateGenerator.putVariable("issueCol", listIssues);
+				String msg = templateGenerator.generateContent();
 				mailService.sendHTMLMail("mail@esofthead.com", "Error Agent",
-						new String[] { ApplicationProperties.getSendErrorEmail() },
-						new String[] { ApplicationProperties.getSendErrorEmail() },
+						new String[] { ApplicationProperties
+								.getSendErrorEmail() },
+						new String[] { ApplicationProperties
+								.getSendErrorEmail() },
 						"My Collab Error Report", msg);
 			}
 		} finally {
@@ -63,7 +75,25 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 		}
 	}
 
-	public static void main(String[] args) {
-		new MyCollabScheduleServiceImpl().sendErrorReports();
+	@Override
+	@Scheduled(fixedDelay = 60000)
+	public void sendRelayEmails() {
+		List<RelayEmailWithBLOBs> relayEmails = mailRelayService
+				.getRelayEmails();
+		mailRelayService.cleanEmails();
+		for (RelayEmailWithBLOBs relayEmail : relayEmails) {
+			String recipientVal = relayEmail.getRecipients();
+			XStream xstream = new XStream();
+			String[][] recipientArr = (String[][]) xstream
+					.fromXML(recipientVal);
+			try {
+				mailService.sendHTMLMail(relayEmail.getFromemail(),
+						relayEmail.getFromemail(), recipientArr[0],
+						recipientArr[1], relayEmail.getSubject(),
+						relayEmail.getBodycontent());
+			} catch (Exception e) {
+				log.error("Error when send relay email", e);
+			}
+		}
 	}
 }

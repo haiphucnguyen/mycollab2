@@ -9,4 +9,6 @@ import java.lang.annotation.Target;
 @Target(value = { ElementType.METHOD, ElementType.TYPE })
 public @interface Watchable {
 	String type();
+	
+	String userFieldName() default "";
 }
