@@ -10,12 +10,16 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
@@ -56,6 +60,7 @@ public class TaskDisplayComponent extends CssLayout {
 
 	private void showTaskGroupInfo() {
 		if (isDisplayTaskListInfo) {
+			System.out.println("task id: " + taskList.getId() + "task name: " + taskList.getName() + " milestone name: " + taskList.getMilestoneName() + " owner: " + taskList.getOwner() + " num open task: " + taskList.getNumOpenTasks());;
 			GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(2, 3);
 			layoutHelper.getLayout().setWidth("100%");
 			this.addComponent(layoutHelper.getLayout());
@@ -64,15 +69,25 @@ public class TaskDisplayComponent extends CssLayout {
 					"Description", 0, 0, 2, "100%", Alignment.TOP_RIGHT);
 			descLbl.setValue(taskList.getDescription());
 
-			Button userLink = (Button) layoutHelper.addComponent(new Button(
-					taskList.getOwnerFullName()), "Responsible User", 0, 1,
+			System.out.println("milsetone: " + taskList.getMilestoneName());
+			layoutHelper.addComponent(new ProjectUserFormLinkField(
+					taskList.getOwner(), taskList
+					.getOwnerFullName()), "Responsible User", 0, 1,
 					Alignment.TOP_RIGHT);
-			userLink.setStyleName("link");
 
-			Button milestoneLink = (Button) layoutHelper.addComponent(
-					new Button(taskList.getMilestoneName()), "Milestone", 1, 1,
+			DefaultFormViewFieldFactory.FormLinkViewField milestoneLink = new DefaultFormViewFieldFactory.FormLinkViewField(taskList.getMilestoneName(), new Button.ClickListener() {
+				@Override
+				public void buttonClick(
+						Button.ClickEvent event) {
+					EventBus.getInstance()
+							.fireEvent(
+									new MilestoneEvent.GotoRead(
+											this,
+											taskList.getMilestoneid()));
+				}
+			});
+			layoutHelper.addComponent(milestoneLink, "Milestone", 1, 1,
 					Alignment.TOP_RIGHT);
-			milestoneLink.setStyleName("link");
 
 			taskListProgress = (ProgressIndicator) layoutHelper.addComponent(
 					new ProgressIndicator(new Float(taskList

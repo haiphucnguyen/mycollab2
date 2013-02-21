@@ -1972,6 +1972,30 @@ white-space: normal;
 }
 /* End Background has SELECT icon */
 
+/* Background has PLUS icon */
+.v-button.plus-bg {
+	height: 16px;
+	width: 16px;
+	background: url('icons/16/plus.png') no-repeat center center rgb(201,201,201);
+}
+.v-button.plus-bg .v-button-wrap {
+	padding: 0px;
+	margin: 0px;
+}
+/* End Background has PLUS icon */
+
+/* Background has MINUS icon */
+.v-button.minus-bg {
+	height: 16px;
+	width: 16px;
+	background: url('icons/16/minus.png') no-repeat center center rgb(201,201,201);
+}
+.v-button.minus-bg .v-button-wrap {
+	padding: 0px;
+	margin: 0px;
+}
+/* End Background has MINUS icon */
+
 /* Popup Window */
 .v-window, .v-Notification {
 	background-color: white;
