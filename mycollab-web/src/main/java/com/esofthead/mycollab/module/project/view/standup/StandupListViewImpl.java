@@ -6,8 +6,6 @@ import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
@@ -38,10 +36,10 @@ public class StandupListViewImpl extends AbstractView implements
 	private static final long serialVersionUID = 1L;
 
 	private Label titleLbl;
-	private VerticalLayout reportContent;
-	private InlineDateField dateSelection;
+	private final VerticalLayout reportContent;
+	private final InlineDateField dateSelection;
 
-	private BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport> reportInDay;
+	private final BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport> reportInDay;
 
 	public StandupListViewImpl() {
 		super();
@@ -149,20 +147,23 @@ public class StandupListViewImpl extends AbstractView implements
 					"What I did in the last day/week");
 			whatYesterdayLbl.setStyleName("h2");
 			bodyContent.addComponent(whatYesterdayLbl);
-			Label whatYesterdayField = new Label(report.getWhatlastday());
+			Label whatYesterdayField = new Label(report.getWhatlastday(),
+					Label.CONTENT_XHTML);
 			bodyContent.addComponent(whatYesterdayField);
 
 			Label whatTodayLbl = new Label("What I will do today/week");
 			whatTodayLbl.setStyleName("h2");
 			bodyContent.addComponent(whatTodayLbl);
-			Label whatTodayField = new Label(report.getWhattoday());
+			Label whatTodayField = new Label(report.getWhattoday(),
+					Label.CONTENT_XHTML);
 			bodyContent.addComponent(whatTodayField);
 
 			Label roadblockLbl = new Label(
 					"Do you have roadblocks? If you have questions or you need help, please write your questions or needs here");
 			roadblockLbl.setStyleName("h2");
 			bodyContent.addComponent(roadblockLbl);
-			Label whatProblemField = new Label(report.getWhatproblem());
+			Label whatProblemField = new Label(report.getWhatproblem(),
+					Label.CONTENT_XHTML);
 			bodyContent.addComponent(whatProblemField);
 		}
 	}
