@@ -92,7 +92,7 @@ public class TaskTableDisplay extends
 						final SimpleTask task = TaskTableDisplay.this
 								.getBeanByIndex(itemId);
 						Double percomp = (task.getPercentagecomplete() == null) ? new Double(
-								0) : task.getPercentagecomplete() / 100;
+								0) : task.getPercentagecomplete();
 						ProgressPercentageIndicator progress = new ProgressPercentageIndicator(
 								percomp);
 						progress.setWidth("100px");

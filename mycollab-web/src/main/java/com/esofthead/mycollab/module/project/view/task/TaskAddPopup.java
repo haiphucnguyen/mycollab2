@@ -196,6 +196,10 @@ public class TaskAddPopup extends CustomComponent {
                   tf.setRequiredError("Please enter a Task Name");
                   return tf;
             } else if (propertyId.equals("percentagecomplete")) {
+            	if (task.getPercentagecomplete() == null) {
+            		task.setPercentagecomplete(0d);
+            	}
+            		
                 return new TaskPercentageCompleteComboBox();
             } else if ("priority".equals(propertyId)) {
                 return new TaskPriorityComboBox();

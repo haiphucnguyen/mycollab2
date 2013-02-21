@@ -194,7 +194,7 @@ public class TaskDisplayComponent extends CssLayout {
 		int newAllTasks = taskList.getNumAllTasks() + 1;
 		double newProgressTask = (taskList.getPercentageComplete() * taskList
 				.getNumAllTasks()) / newAllTasks;
-		taskListProgress.setValue(newProgressTask / 100);
+		taskListProgress.setValue(newProgressTask);
 	}
 
 	public void saveTaskSuccess(SimpleTask task) {

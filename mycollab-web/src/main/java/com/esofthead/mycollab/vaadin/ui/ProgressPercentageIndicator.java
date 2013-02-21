@@ -6,7 +6,7 @@ public class ProgressPercentageIndicator extends Label {
 	private static final long serialVersionUID = 1L;
 
 	public ProgressPercentageIndicator(double val) {
-		String perVal = val + "%";
+		String perVal = ((int) (val * 100)) / 100 + "%";
 		this.setValue(perVal);
 	}
 }
