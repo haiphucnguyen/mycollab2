@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.BeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -93,9 +94,8 @@ public class TaskTableDisplay extends
 								.getBeanByIndex(itemId);
 						Double percomp = (task.getPercentagecomplete() == null) ? new Double(
 								0) : task.getPercentagecomplete() / 100;
-						ProgressIndicator progress = new ProgressIndicator(
-								new Float(percomp));
-						progress.setPollingInterval(1000 * 60 * 60 * 24);
+						ProgressPercentageIndicator progress = new ProgressPercentageIndicator(
+								percomp);
 						progress.setWidth("100px");
 						return progress;
 					}

@@ -1,12 +1,12 @@
 package com.esofthead.mycollab.web;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.Application;
 import com.vaadin.ui.Window.Notification;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class MyCollabApplication extends Application {
 
