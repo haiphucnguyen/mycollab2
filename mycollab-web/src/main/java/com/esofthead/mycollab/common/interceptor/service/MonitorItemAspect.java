@@ -13,9 +13,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
+import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.service.MonitorItemService;
+import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.web.AppContext;
 
@@ -28,6 +30,8 @@ public class MonitorItemAspect {
 
 	@Autowired
 	private MonitorItemService monitorItemService;
+	@Autowired
+	private RelayEmailNotificationService relayEmailNotificationService;
 
 	@After("execution(public * com.esofthead.mycollab..service..*.saveWithSession(..)) && args(bean, username)")
 	public void traceSaveActivity(JoinPoint joinPoint, Object bean,
@@ -70,8 +74,12 @@ public class MonitorItemAspect {
 						"saccountid");
 				relayNotification.setSaccountid(sAccountId);
 				relayNotification.setType(watchableAnnotation.type());
+				relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
 				int typeid = (Integer) PropertyUtils.getProperty(bean, "id");
 				relayNotification.setTypeid(typeid);
+				relayEmailNotificationService.saveWithSession(
+						relayNotification, username);
+
 			} catch (Exception e) {
 				log.error(
 						"Error when save activity for save action of service "

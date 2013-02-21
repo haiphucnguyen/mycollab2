@@ -60,15 +60,16 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 				session.commit(true);
 
 				TemplateGenerator templateGenerator = new TemplateGenerator(
+						"My Collab Error Report",
 						"templates/email/errorReport.mt");
 				templateGenerator.putVariable("issueCol", listIssues);
-				String msg = templateGenerator.generateContent();
 				mailService.sendHTMLMail("mail@esofthead.com", "Error Agent",
 						new String[] { ApplicationProperties
 								.getSendErrorEmail() },
 						new String[] { ApplicationProperties
-								.getSendErrorEmail() },
-						"My Collab Error Report", msg);
+								.getSendErrorEmail() }, templateGenerator
+								.generateSubjectContent(), templateGenerator
+								.generateBodyContent());
 			}
 		} finally {
 			session.close();
