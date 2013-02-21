@@ -10,8 +10,8 @@ only screen and (max-device-width : 1024px) {
 	.crmContainer {
 	    margin: 15px;
 	}
-	.projectDashboardView {
-		margin: 20px 15px;
+	.projectDashboardView  {
+		margin: 20px 15px 20px 0px;
 	}
 	.accountViewContainer {
 		margin: 20px 15px;
@@ -929,7 +929,6 @@ input.v-textfield-errorField {
 /* End Account Settings */
 
 /* Project Management */
-
 .projectDashboardView {
 	background-color: #F3F3F3;
 	background-image: -webkit-gradient(linear,left top,left bottom,from(#F3F3F3),to(#DDDDDD));

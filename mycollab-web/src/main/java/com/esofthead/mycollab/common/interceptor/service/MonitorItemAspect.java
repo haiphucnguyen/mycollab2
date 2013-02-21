@@ -14,6 +14,7 @@ import org.springframework.beans.factory.annotation.Configurable;
 import org.springframework.stereotype.Component;
 
 import com.esofthead.mycollab.common.domain.MonitorItem;
+import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.web.AppContext;
@@ -49,6 +50,28 @@ public class MonitorItemAspect {
 				monitorItemService.saveWithSession(monitorItem, username);
 				log.debug("Save monitor item: "
 						+ BeanUtility.printBeanObj(monitorItem));
+
+				if (!watchableAnnotation.userFieldName().equals("")) {
+					String moreUser = (String) PropertyUtils.getProperty(bean,
+							watchableAnnotation.userFieldName());
+					if (moreUser != null && !moreUser.equals(username)) {
+						monitorItem.setId(null);
+						monitorItem.setUser(moreUser);
+						monitorItemService.saveWithSession(monitorItem,
+								moreUser);
+					}
+				}
+
+				// Save notification item
+				RelayEmailNotification relayNotification = new RelayEmailNotification();
+				relayNotification.setChangeby(username);
+				relayNotification.setChangecomment("");
+				int sAccountId = (Integer) PropertyUtils.getProperty(bean,
+						"saccountid");
+				relayNotification.setSaccountid(sAccountId);
+				relayNotification.setType(watchableAnnotation.type());
+				int typeid = (Integer) PropertyUtils.getProperty(bean, "id");
+				relayNotification.setTypeid(typeid);
 			} catch (Exception e) {
 				log.error(
 						"Error when save activity for save action of service "

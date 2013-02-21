@@ -64,6 +64,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 	}
 
 	private class PreviewForm extends TaskFormComponent {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		TaskFormLayoutFactory getFormLayoutFactory() {

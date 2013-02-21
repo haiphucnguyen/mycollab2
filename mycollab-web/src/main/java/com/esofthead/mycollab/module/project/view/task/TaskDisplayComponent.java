@@ -21,6 +21,7 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
@@ -31,7 +32,6 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.ProgressIndicator;
 
 /**
  * 
@@ -43,7 +43,7 @@ public class TaskDisplayComponent extends CssLayout {
 	private TaskSearchCriteria criteria;
 	private TaskTableDisplay taskDisplay;
 	private Button createTaskBtn;
-	private ProgressIndicator taskListProgress;
+	private ProgressPercentageIndicator taskListProgress;
 	private Label taskNumberLbl;
 
 	private SimpleTaskList taskList;
@@ -89,12 +89,11 @@ public class TaskDisplayComponent extends CssLayout {
 			layoutHelper.addComponent(milestoneLink, "Milestone", 1, 1,
 					Alignment.TOP_RIGHT);
 
-			taskListProgress = (ProgressIndicator) layoutHelper.addComponent(
-					new ProgressIndicator(new Float(taskList
-							.getPercentageComplete())), "Progress", 0, 2);
+			taskListProgress = (ProgressPercentageIndicator) layoutHelper
+					.addComponent(
+							new ProgressPercentageIndicator(taskList
+									.getPercentageComplete()), "Progress", 0, 2);
 			taskListProgress.setWidth("100px");
-			taskListProgress.setValue(taskList.getPercentageComplete() / 100);
-			taskListProgress.setPollingInterval(1000000000);
 
 			HorizontalLayout taskNumberProgress = new HorizontalLayout();
 			taskNumberProgress.setSpacing(true);
