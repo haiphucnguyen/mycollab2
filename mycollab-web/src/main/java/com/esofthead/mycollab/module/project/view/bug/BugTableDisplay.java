@@ -133,7 +133,7 @@ public class BugTableDisplay extends PagedBeanTable2<BugService, BugSearchCriter
         this.setColumnWidth("assignuserFullName",
                 UIConstants.TABLE_X_LABEL_WIDTH);
         this.setColumnWidth("severity", UIConstants.TABLE_S_LABEL_WIDTH);
-        this.setColumnWidth("resolution", UIConstants.TABLE_S_LABEL_WIDTH);
+        this.setColumnWidth("resolution", UIConstants.TABLE_M_LABEL_WIDTH);
         this.setColumnWidth("duedate", UIConstants.TABLE_DATE_WIDTH);
 
         this.setWidth("100%");

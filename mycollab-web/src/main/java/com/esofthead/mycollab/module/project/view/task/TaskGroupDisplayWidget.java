@@ -63,7 +63,7 @@ public class TaskGroupDisplayWidget
 			headerLayout.setSpacing(true);
 
 			taskListFilterControl = new PopupButton("Active Tasks");
-			taskListFilterControl.setWidth("90px");
+			taskListFilterControl.setWidth("100px");
 			taskListFilterControl.addStyleName("link");
 
 			VerticalLayout filterBtnLayout = new VerticalLayout();
