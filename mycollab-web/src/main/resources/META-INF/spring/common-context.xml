@@ -56,6 +56,12 @@
                   value="com.esofthead.mycollab.common.dao.MonitorItemMapperExt" />
     </bean>
     
+     <bean id="relayEmailMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+                  value="com.esofthead.mycollab.common.dao.RelayEmailMapper" />
+    </bean>
+    
     <bean id="userPreferenceMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"

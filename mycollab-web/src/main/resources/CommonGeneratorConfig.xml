@@ -72,6 +72,11 @@
             tableName="m_comment" />
         
         <table
+            domainObjectName="RelayEmail"
+            schema="mycollab"
+            tableName="s_relay_mail" />
+        
+        <table
             domainObjectName="UserPreference"
             schema="mycollab"
             tableName="s_user_preference" />

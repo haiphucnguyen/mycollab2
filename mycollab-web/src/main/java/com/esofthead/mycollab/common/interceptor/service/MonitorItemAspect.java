@@ -49,6 +49,17 @@ public class MonitorItemAspect {
 				monitorItemService.saveWithSession(monitorItem, username);
 				log.debug("Save monitor item: "
 						+ BeanUtility.printBeanObj(monitorItem));
+
+				if (!watchableAnnotation.userFieldName().equals("")) {
+					String moreUser = (String) PropertyUtils.getProperty(bean,
+							watchableAnnotation.userFieldName());
+					if (moreUser != null && !moreUser.equals(username)) {
+						monitorItem.setId(null);
+						monitorItem.setUser(moreUser);
+						monitorItemService.saveWithSession(monitorItem,
+								moreUser);
+					}
+				}
 			} catch (Exception e) {
 				log.error(
 						"Error when save activity for save action of service "
