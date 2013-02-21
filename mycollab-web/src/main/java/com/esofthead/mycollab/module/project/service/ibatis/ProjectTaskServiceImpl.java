@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -68,6 +69,12 @@ public class ProjectTaskServiceImpl extends
 			record.setStatus("Open");
 		}
 		return super.updateWithSession(record, username);
+	}
+	
+	@Scheduled(fixedDelay = 10000)
+	@Override
+	public void runNotification() {
+		System.out.println("Run task schedule notification");
 	}
 
 }

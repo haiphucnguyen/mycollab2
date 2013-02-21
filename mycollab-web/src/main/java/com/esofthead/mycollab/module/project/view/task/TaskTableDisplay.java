@@ -20,7 +20,6 @@ import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.Table;
 
 /**

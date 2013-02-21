@@ -77,6 +77,11 @@
             tableName="s_relay_mail" />
         
         <table
+            domainObjectName="RelayEmailNotification"
+            schema="mycollab"
+            tableName="s_relay_email_notification" />
+        
+        <table
             domainObjectName="UserPreference"
             schema="mycollab"
             tableName="s_user_preference" />

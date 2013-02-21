@@ -1,0 +1,44 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
+<mapper
+    namespace="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapperExt">
+    <resultMap id="SimpleEmailRelayNotificationResult"
+        type="com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification"
+        extends="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapper.BaseResultMap">
+        <result column="changeByUserFullName" jdbcType="VARCHAR"
+            property="changeByUserFullName" />
+
+        <collection property="notifyUsers" columnPrefix="notifiers_"
+            ofType="com.esofthead.mycollab.module.user.domain.SimpleUser"
+            resultMap="com.esofthead.mycollab.module.user.dao.UserMapperExt.SimpleUserResult" />
+    </resultMap>
+
+    <sql id="querySearchCriteria">
+        <if test="type != null">
+            <![CDATA[${type.operation} s_relay_email_notification.type=#{type.value}]]>
+        </if>
+    </sql>
+
+    <sql id="selectSimpleRelayEmailNotification">
+        <![CDATA[
+            SELECT s_relay_email_notification.id, s_relay_email_notification.sAccountId, s_relay_email_notification.type, 
+                    s_relay_email_notification.typeid, s_relay_email_notification.action, 
+                    s_relay_email_notification.changeBy, s_relay_email_notification.changeComment,
+                    s_user.firstname AS notifiers_firstname, s_user.lastname AS notifiers_lastname,
+                    s_user.email AS notifiers_email
+                FROM s_relay_email_notification
+                LEFT OUTER JOIN s_user ON (s_user.username=s_relay_email_notification.changeBy)
+        ]]>
+    </sql>
+
+    <select id="findPagableListByCriteria" parameterType="RelayEmailNotificationSearchCriteria"
+        resultMap="SimpleEmailRelayNotificationResult">
+        <include
+            refid="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapperExt.selectSimpleRelayEmailNotification" />
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1
+            <include
+                refid="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapperExt.querySearchCriteria" />
+        </trim>
+    </select>
+</mapper>
