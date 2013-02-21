@@ -12,8 +12,9 @@ import com.vaadin.ui.Button;
  * @author haiphucnguyen
  */
 public class UserAvatar extends Button {
+	private static final long serialVersionUID = 1L;
 
-    public UserAvatar(String username, String displayName) {
+	public UserAvatar(String username, String displayName) {
         this.setIcon(new ThemeResource("icons/default_user_avatar_48_48.png"));
         this.setStyleName("link");
     }

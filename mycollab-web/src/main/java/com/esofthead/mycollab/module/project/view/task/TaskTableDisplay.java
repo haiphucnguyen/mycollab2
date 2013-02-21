@@ -178,7 +178,7 @@ public class TaskTableDisplay extends
 		this.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);
 		this.setColumnWidth("deadline", UIConstants.TABLE_DATE_WIDTH);
 		this.setColumnWidth("percentagecomplete",
-				UIConstants.TABLE_M_LABEL_WIDTH);
+				UIConstants.TABLE_S_LABEL_WIDTH);
 		this.setWidth("100%");
 	}
 }

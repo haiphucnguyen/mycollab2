@@ -149,11 +149,6 @@
             <version>0.2</version>
         </dependency>
         <dependency>
-            <groupId>org.vaadin.addons</groupId>
-            <artifactId>overlays</artifactId>
-            <version>0.9.8</version>
-        </dependency>
-        <dependency>
             <groupId>org.vaadin.hene.splitbutton</groupId>
             <artifactId>splitbutton</artifactId>
             <version>0.9.7</version>
