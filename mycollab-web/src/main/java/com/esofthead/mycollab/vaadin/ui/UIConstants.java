@@ -26,6 +26,8 @@ public class UIConstants {
 	public static final String SPLIT_BUTTON = "esofthead";
 	public static final String MESSAGE_IMPORTANT = "important-message";
 	// TODO: remove widget title?
+	public static final String REPORT_ROW_BLOCK = "report-row-block";
+	public static final String REPORT_ROW_HEADER = "report-row-header";
 	public static final String WIDGET_TITLE = "widget-title";
 	public static final String WIDGET_ROW = "widget-row";
 	public static final String BUG_LIST = "bug-list";

@@ -48,6 +48,9 @@ input:focus, textarea:focus {
     /*box-shadow: 0 0 1px #1185DE inset;*/
     box-shadow: 0 0 1px #0a58cd inset;
 }
+ul {
+	padding-left: 20px;
+}
 
 .v-button, .v-button-caption {
 	text-shadow: none;
@@ -2087,6 +2090,8 @@ div.v-lazyloadingwrapper-loading {
 }
 
 /* End Vertical Detached Tabs 2 */
+
+/* Horizontal Detached Tabs 3 */
 .tab-style3 .detachedtabs {
 	background: url("icons/border-bottom2.png") repeat-x left bottom transparent;
 	position: relative;
@@ -2105,7 +2110,6 @@ div.v-lazyloadingwrapper-loading {
 	color: rgb(40, 126, 206);
 }
 .tab-style3 .detachedtabs .v-nativebutton .v-nativebutton-caption, .tab-style3 .detachedtabs .v-nativebutton.tab-selected .v-nativebutton-caption {
-/* 	padding: 5px 7px 4px !important; */
 	background: none;
 	font-weight: bold;
 	width: 100%;
@@ -2122,3 +2126,23 @@ div.v-lazyloadingwrapper-loading {
 	bottom:0px;
 	left:0px;
 }
+/* End Horizontal Detached Tabs 3 */
+
+/* StandUp Report List */
+.report-row-header {
+	text-align: center;
+	font-weight: bold;
+	background: url("icons/report-header.png") no-repeat center center transparent;
+}
+.report-row-content > div > div > div {
+	/*height: 100% !important;*/
+}
+.report-row-block {
+	height: 100%;
+}
+.report-row-block > .v-csslayout-margin {
+	padding: 5px 5px 0px;
+	border: 1px solid #b7b7b7;
+	background-color: #f3f3f3;
+}
+/* End StandUp Report List */
