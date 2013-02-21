@@ -86,7 +86,7 @@ public class ProjectTaskServiceImpl extends
 		return super.updateWithSession(record, username);
 	}
 
-	@Scheduled(fixedDelay = 10000)
+	@Scheduled(fixedDelay = 300000)
 	@Override
 	public void runNotification() {
 		RelayEmailNotificationSearchCriteria criteria = new RelayEmailNotificationSearchCriteria();
