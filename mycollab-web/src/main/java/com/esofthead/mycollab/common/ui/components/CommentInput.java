@@ -25,9 +25,8 @@ import org.vaadin.easyuploads.MultiFileUploadExt;
  * @author haiphucnguyen
  */
 public class CommentInput extends VerticalLayout {
-
-    private RichTextArea commentArea;
-    private ReloadableComponent component;
+	private static final long serialVersionUID = 1L;
+	private RichTextArea commentArea;
     private String type;
     private Integer typeid;
 
@@ -35,14 +34,13 @@ public class CommentInput extends VerticalLayout {
         this(component, type, typeid, false);
     }
 
-    public CommentInput(final ReloadableComponent component, final String type, final Integer typeid, boolean cancelButtonEnable) {
+    public CommentInput(final ReloadableComponent component, final String typeVal, final Integer typeidVal, boolean cancelButtonEnable) {
         this.setWidth("600px");
         this.setSpacing(true);
         this.setMargin(true);
-
-        this.component = component;
-        this.type = type;
-        this.typeid = typeid;
+        
+        this.type = typeVal;
+        this.typeid = typeidVal;
 
         commentArea = new RichTextArea();
         commentArea.setWidth("560px");
@@ -63,7 +61,9 @@ public class CommentInput extends VerticalLayout {
 
         if (cancelButtonEnable) {
             Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-                @Override
+				private static final long serialVersionUID = 1L;
+
+				@Override
                 public void buttonClick(ClickEvent event) {
                     component.cancel();
                 }
@@ -73,7 +73,9 @@ public class CommentInput extends VerticalLayout {
         }
 
         Button newCommentBtn = new Button("Post", new Button.ClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void buttonClick(Button.ClickEvent event) {
                 Comment comment = new Comment();
                 comment.setComment((String) commentArea.getValue());
@@ -99,5 +101,10 @@ public class CommentInput extends VerticalLayout {
         this.addComponent(commentArea);
         this.addComponent(attachments);
         this.addComponent(controlsLayout);
+    }
+    
+    public void setTypeAndId(String type, int typeid) {
+    	this.type = type;
+    	this.typeid = typeid;
     }
 }

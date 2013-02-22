@@ -5,6 +5,7 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
+import com.esofthead.mycollab.common.ui.components.CommentListDepot.CommentDisplay;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -39,6 +40,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
+import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
@@ -301,15 +303,17 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 			}
 
 			private ComponentContainer createBottomLayout() {
-				VerticalLayout bottomLayout = new VerticalLayout();
-				historyList = new BugHistoryList(bug.getId());
-				bottomLayout.addComponent(historyList);
-
-				CommentListDepot commentList = new CommentListDepot(
+				TabSheet tabBugDetail = new TabSheet();
+				tabBugDetail.setWidth("100%");
+				
+				CommentDisplay commentList = new CommentDisplay(
 						CommentTypeConstants.PRJ_BUG, bug.getId());
-				bottomLayout.addComponent(commentList);
+				tabBugDetail.addTab(commentList, "Comments");
 
-				return bottomLayout;
+				historyList = new BugHistoryList(bug.getId());
+				tabBugDetail.addTab(historyList, "History");
+				
+				return tabBugDetail;
 			}
 
 			@Override

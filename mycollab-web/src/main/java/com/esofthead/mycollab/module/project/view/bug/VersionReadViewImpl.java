@@ -218,7 +218,10 @@ public class VersionReadViewImpl extends AbstractView implements
 						@Override
 						protected Field onCreateField(Item item,
 								Object propertyId, Component uiContext) {
-
+							if (propertyId.equals("duedate")) {
+								return new FormDateViewField(version
+										.getDuedate());
+							}
 							return null;
 						}
 					});

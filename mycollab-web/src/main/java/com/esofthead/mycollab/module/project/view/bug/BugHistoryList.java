@@ -11,34 +11,30 @@ import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @SuppressWarnings("serial")
-public class BugHistoryList extends Depot {
+public class BugHistoryList extends HistoryLogComponent {
 
-    private HistoryLogComponent historyLogComponent;
+	public BugHistoryList(int bugId) {
+		super(ModuleNameConstants.PRJ, ProjectContants.BUG, bugId);
+		this.addStyleName("activity-panel");
 
-    public BugHistoryList(int bugId) {
-        super("History", new VerticalLayout());
-        this.addStyleName("activity-panel");
-
-        VerticalLayout contentContainer = (VerticalLayout) this.bodyContent;
-        historyLogComponent = new HistoryLogComponent(ModuleNameConstants.PRJ, ProjectContants.BUG, bugId);
-        contentContainer.addComponent(historyLogComponent);
-        
-        historyLogComponent.generateFieldDisplayHandler("description", "Description");
-        historyLogComponent.generateFieldDisplayHandler("summary", "Summary");
-        historyLogComponent.generateFieldDisplayHandler("detail", "Detail");
-        historyLogComponent.generateFieldDisplayHandler("status", "Status");
-        historyLogComponent.generateFieldDisplayHandler("priority", "Priority");
-        historyLogComponent.generateFieldDisplayHandler("severity", "Severity");
-        historyLogComponent.generateFieldDisplayHandler("resolution", "Resolution");
-        historyLogComponent.generateFieldDisplayHandler("duedate", "Due Date", HistoryLogComponent.DATE_FIELD);
-        historyLogComponent.generateFieldDisplayHandler("createdTime", "Created Time", HistoryLogComponent.DATE_FIELD);
-        historyLogComponent.generateFieldDisplayHandler("loguserFullName", "Logged by");
-        historyLogComponent.generateFieldDisplayHandler("assignuserFullName", "Assigned to");
-        historyLogComponent.generateFieldDisplayHandler("assignuser", "Assigned to");
-        historyLogComponent.generateFieldDisplayHandler("milestoneid", "Milestone");
-    }
+		this.generateFieldDisplayHandler("description", "Description");
+		this.generateFieldDisplayHandler("summary", "Summary");
+		this.generateFieldDisplayHandler("detail", "Detail");
+		this.generateFieldDisplayHandler("status", "Status");
+		this.generateFieldDisplayHandler("priority", "Priority");
+		this.generateFieldDisplayHandler("severity", "Severity");
+		this.generateFieldDisplayHandler("resolution", "Resolution");
+		this.generateFieldDisplayHandler("duedate", "Due Date",
+				HistoryLogComponent.DATE_FIELD);
+		this.generateFieldDisplayHandler("createdTime", "Created Time",
+				HistoryLogComponent.DATE_FIELD);
+		this.generateFieldDisplayHandler("loguserFullName", "Logged by");
+		this.generateFieldDisplayHandler("assignuserFullName", "Assigned to");
+		this.generateFieldDisplayHandler("assignuser", "Assigned to");
+		this.generateFieldDisplayHandler("milestoneid", "Milestone");
+	}
 }

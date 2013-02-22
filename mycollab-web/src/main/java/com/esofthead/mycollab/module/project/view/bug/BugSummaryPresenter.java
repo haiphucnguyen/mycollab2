@@ -25,7 +25,7 @@ import java.util.Collection;
 import java.util.List;
 import org.vaadin.dialogs.ConfirmDialog;
 
-public class BugListPresenter extends AbstractPresenter<BugListView> implements
+public class BugSummaryPresenter extends AbstractPresenter<BugSummaryView> implements
         ListPresenter<BugSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
@@ -38,8 +38,8 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
     private BugSearchCriteria searchCriteria;
     private boolean isSelectAll = false;
 
-    public BugListPresenter() {
-        super(BugListView.class);
+    public BugSummaryPresenter() {
+        super(BugSummaryView.class);
 
         bugService = AppContext.getSpringBean(BugService.class);
 

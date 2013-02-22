@@ -23,7 +23,7 @@ import com.vaadin.ui.VerticalLayout;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 @ViewComponent
-public class BugListViewImpl extends AbstractView implements BugListView {
+public class BugSummaryViewImpl extends AbstractView implements BugSummaryView {
 
     private static final long serialVersionUID = 1L;
     private final BugSearchPanel problemSearchPanel;
@@ -33,7 +33,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
     private PopupButtonControl tableActionControls;
     private final Label selectedItemsNumberLabel = new Label();
 
-    public BugListViewImpl() {
+    public BugSummaryViewImpl() {
         this.setSpacing(true);
 
         problemSearchPanel = new BugSearchPanel();
@@ -63,7 +63,7 @@ public class BugListViewImpl extends AbstractView implements BugListView {
             public void handle(TableClickEvent event) {
                 SimpleBug bug = (SimpleBug) event.getData();
                 if ("summary".equals(event.getFieldName())) {
-                    EventBus.getInstance().fireEvent(new BugEvent.GotoRead(BugListViewImpl.this, bug.getId()));
+                    EventBus.getInstance().fireEvent(new BugEvent.GotoRead(BugSummaryViewImpl.this, bug.getId()));
                 }
             }
         });
