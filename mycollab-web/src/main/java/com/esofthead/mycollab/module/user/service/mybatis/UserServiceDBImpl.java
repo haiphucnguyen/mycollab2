@@ -111,7 +111,8 @@ public class UserServiceDBImpl extends
 			}
 
 			log.debug("User " + username + " login to system successfully!");
-			if (user.getIsadmin() != null && !user.getIsadmin()) {
+			if (user.getIsadmin() == null
+					|| (user.getIsadmin() != null && !user.getIsadmin())) {
 				if (user.getRoleid() != null) {
 					log.debug("User " + username
 							+ " is not admin. Getting his role");

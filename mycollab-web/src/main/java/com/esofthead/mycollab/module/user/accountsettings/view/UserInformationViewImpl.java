@@ -43,9 +43,11 @@ public class UserInformationViewImpl extends AbstractView implements
 	}
 
 	private void displayUserAvatar() {
+		VerticalLayout userAvatar = new VerticalLayout();
 		CropField cropField = new CropField(new ThemeResource(
 				"icons/default_user_avatar_256_256.png"));
-		viewLayout.addComponent(cropField);
+		userAvatar.addComponent(cropField);
+		viewLayout.addComponent(userAvatar);
 	}
 
 	private static class EditForm extends AdvancedEditBeanForm<User> {
