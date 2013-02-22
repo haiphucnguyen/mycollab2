@@ -217,6 +217,9 @@ public class ProjectInformationComponent extends VerticalLayout {
 								.getActualenddate()));
 					} else if (propertyId.equals("homepage")) {
 						return new FormUrlLinkViewField(project.getHomepage());
+					} else if (propertyId.equals("description")) {
+						return new FormViewField(project.getDescription(),
+								Label.CONTENT_XHTML);
 					}
 					return null;
 				}

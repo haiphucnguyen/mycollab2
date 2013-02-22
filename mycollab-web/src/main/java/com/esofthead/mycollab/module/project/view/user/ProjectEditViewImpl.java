@@ -12,5 +12,6 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
  */
 @ViewComponent
 public class ProjectEditViewImpl extends ProjectAddViewImpl implements ProjectEditView {
+	private static final long serialVersionUID = 1L;
     
 }

@@ -14,8 +14,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class ProjectEditPresenter extends AbstractPresenter<ProjectEditView> {
+	private static final long serialVersionUID = 1L;
 
-    public ProjectEditPresenter() {
+	public ProjectEditPresenter() {
         super(ProjectEditView.class);
     }
 

@@ -17,8 +17,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboardContainer> {
-    
-    public ProjectDashboardPresenter() {
+	private static final long serialVersionUID = 1L;
+
+	public ProjectDashboardPresenter() {
         super(ProjectDashboardContainer.class);
     }
     
