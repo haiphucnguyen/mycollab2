@@ -1,7 +1,11 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.module.user.accountsettings.billing.view.AccountSettingsPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.profile.view.UserInformationPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -26,6 +30,8 @@ public class AccountDashboardViewImpl extends AbstractView implements
 	private AccountSettingsPresenter accountSettingPresenter;
 
 	public AccountDashboardViewImpl() {
+		ControllerRegistry.getInstance().addController(
+				new UserAccountController(this));
 		this.setStyleName("accountViewContainer");
 		this.setMargin(false);
 		root = new HorizontalLayout();

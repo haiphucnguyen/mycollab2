@@ -217,6 +217,7 @@ public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
     public void doSearch(ContactSearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
         view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+        checkWhetherEnableTableActionControl();
     }
 
     private void deleteSelectedItems() {

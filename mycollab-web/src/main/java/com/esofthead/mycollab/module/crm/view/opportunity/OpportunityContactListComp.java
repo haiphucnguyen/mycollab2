@@ -88,7 +88,8 @@ public class OpportunityContactListComp extends RelatedListComp<SimpleContact, C
         selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
         selectBtn.setStyleName("link");
         controlsBtn.addComponent(selectBtn);
-
+        controlsBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_CONTACT));
         contentContainer.addComponent(controlsBtn);
 
         tableItem = new ContactTableDisplay(

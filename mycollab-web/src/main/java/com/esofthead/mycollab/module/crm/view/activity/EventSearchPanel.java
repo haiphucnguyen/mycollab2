@@ -1,11 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import org.vaadin.hene.splitbutton.SplitButton;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
-import com.esofthead.mycollab.module.project.events.BugComponentEvent;
-import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -22,7 +23,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.themes.Reindeer;
-import org.vaadin.hene.splitbutton.SplitButton;
 
 public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
 
@@ -55,6 +55,7 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
         layout.addComponent(searchtitle);
         
         final SplitButton controlsBtn = new SplitButton();
+        controlsBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CALL) || AppContext.canWrite(RolePermissionCollections.CRM_MEETING));
         controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
         controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
         controlsBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
@@ -83,7 +84,7 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
                 });
         createMeetingBtn.setStyleName("link");
         btnControlsLayout.addComponent(createMeetingBtn);
-        
+        createMeetingBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_MEETING));
         Button createCallBtn = new Button("Create Call",
                 new Button.ClickListener() {
                     @Override
@@ -93,8 +94,8 @@ public class EventSearchPanel extends GenericSearchPanel<EventSearchCriteria> {
                     }
                 });
         createCallBtn.setStyleName("link");
+        createCallBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_CALL));
         btnControlsLayout.addComponent(createCallBtn);
-
         UiUtils.addComponent(layout, controlsBtn, Alignment.MIDDLE_RIGHT);
 
         return layout;

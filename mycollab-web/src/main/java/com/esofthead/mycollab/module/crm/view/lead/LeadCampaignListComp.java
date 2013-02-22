@@ -88,7 +88,8 @@ public class LeadCampaignListComp  extends RelatedListComp<SimpleCampaign, Campa
         selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
         selectBtn.setStyleName("link");
         controlsBtn.addComponent(selectBtn);
-
+        controlsBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
         contentContainer.addComponent(controlsBtn);
 
         tableItem = new CampaignTableDisplay(

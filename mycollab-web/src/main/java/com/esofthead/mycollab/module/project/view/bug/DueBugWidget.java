@@ -55,6 +55,10 @@ public class DueBugWidget extends BugDisplayWidget {
 			layout.addComponent(defectLink);
 			layout.setColumnExpandRatio(1, 1.0f);
 
+			BugDescriptionFieldDisplayWidget descInfo = new BugDescriptionFieldDisplayWidget(obj.getDescription());
+			descInfo.setWidth("100%");
+			layout.addComponent(descInfo);
+			
 			Label dateInfo = new Label("due on "
 					+ AppContext.formatDate(obj.getDuedate()) + ". Assignee: "
 					+ obj.getAssignuserFullName());

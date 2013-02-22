@@ -86,6 +86,9 @@ public class ProblemReadViewImpl extends AbstractView implements
 						return new ProjectUserFormLinkField(problem
 								.getAssigntouser(), problem
 								.getAssignedUserFullName());
+					} else if (propertyId.equals("description")) {
+						return new FormViewField(problem.getDescription(),
+								Label.CONTENT_XHTML);
 					}
 
 					return null;
