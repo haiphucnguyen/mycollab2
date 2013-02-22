@@ -21,12 +21,10 @@ import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.Sizeable;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -35,8 +33,8 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class TaskStatusComponent extends Depot {
-    
-    private DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
+	private static final long serialVersionUID = 1L;
+	private DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
     private static LabelStringGenerator menuLinkGenerator = new TaskStatusLinkLabelStringGenerator();
     
     public TaskStatusComponent() {
@@ -68,8 +66,9 @@ public class TaskStatusComponent extends Depot {
 			header.setStyleName("stream-content");
             
             Button taskLink = generateActivityStreamLink(genericTask.getName(), new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
 
-                @Override
+				@Override
                 public void buttonClick(ClickEvent event) {
                     
                 }
@@ -83,8 +82,9 @@ public class TaskStatusComponent extends Depot {
             header.addComponent(projectLbl);
             
             Button projectLink = generateActivityStreamLink(genericTask.getProjectName(), new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
 
-                @Override
+				@Override
                 public void buttonClick(ClickEvent event) {
                     
                 }

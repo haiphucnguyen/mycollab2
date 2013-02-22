@@ -10,10 +10,8 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
@@ -74,6 +72,7 @@ public class ProjectTaskStatusComponent extends Depot {
 
 			Button taskLink = new Button(genericTask.getName(),
 					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(Button.ClickEvent event) {
