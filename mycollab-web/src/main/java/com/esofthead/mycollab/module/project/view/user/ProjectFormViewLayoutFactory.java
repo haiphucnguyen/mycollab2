@@ -18,7 +18,8 @@ import com.vaadin.ui.VerticalLayout;
  * 
  * @author haiphucnguyen
  */
-public abstract class ProjectFormViewLayoutFactory implements IFormLayoutFactory {
+public abstract class ProjectFormViewLayoutFactory implements
+		IFormLayoutFactory {
 
 	private final String title;
 
@@ -60,10 +61,6 @@ public abstract class ProjectFormViewLayoutFactory implements IFormLayoutFactory
 		@Override
 		public Layout getLayout() {
 			VerticalLayout layout = new VerticalLayout();
-
-			// Label organizationHeader = new Label("Project Information");
-			// organizationHeader.setStyleName("h2");
-			// layout.addComponent(organizationHeader);
 
 			moreInfoLayout = new GridFormLayoutHelper(2, 6);
 			moreInfoLayout.getLayout().setWidth("900px");

@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
-
+import com.esofthead.mycollab.module.project.ui.components.ProjectUiUtils;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -21,7 +21,7 @@ import com.vaadin.ui.VerticalLayout;
 public abstract class ProjectMemberFormLayoutFactory implements
 		IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
-	private String title;
+	private final String title;
 	private ProjectMemberInformationLayout userInformationLayout;
 
 	public ProjectMemberFormLayoutFactory(String title) {
@@ -71,7 +71,7 @@ public abstract class ProjectMemberFormLayoutFactory implements
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
-			informationLayout = new GridFormLayoutHelper(1, 2);
+			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(1, 2);
 			informationLayout.getLayout().setWidth("100%");
 
 			layout.addComponent(informationLayout.getLayout());

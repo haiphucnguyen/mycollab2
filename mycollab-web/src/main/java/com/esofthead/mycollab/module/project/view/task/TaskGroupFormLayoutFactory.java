@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.module.project.ui.components.ProjectUiUtils;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -13,75 +14,78 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 
-    private String title;
-    private TaskListInformationLayout informationLayout;
+	private final String title;
+	private TaskListInformationLayout informationLayout;
 
-    public TaskGroupFormLayoutFactory(String title) {
-        this.title = title;
-    }
+	public TaskGroupFormLayoutFactory(String title) {
+		this.title = title;
+	}
 
-    @Override
-    public Layout getLayout() {
-        AddViewLayout accountAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/project/tasklist.png"));
+	@Override
+	public Layout getLayout() {
+		AddViewLayout accountAddLayout = new AddViewLayout(title,
+				new ThemeResource("icons/48/project/tasklist.png"));
 
-        Layout topPanel = createTopPanel();
-        if (topPanel != null) {
-            accountAddLayout.addTopControls(topPanel);
-        }
+		Layout topPanel = createTopPanel();
+		if (topPanel != null) {
+			accountAddLayout.addTopControls(topPanel);
+		}
 
-        informationLayout = new TaskListInformationLayout();
-        accountAddLayout.addBody(informationLayout.getLayout());
+		informationLayout = new TaskListInformationLayout();
+		accountAddLayout.addBody(informationLayout.getLayout());
 
-        Layout bottomPanel = createBottomPanel();
-        if (bottomPanel != null) {
-            accountAddLayout.addBottomControls(bottomPanel);
-        }
+		Layout bottomPanel = createBottomPanel();
+		if (bottomPanel != null) {
+			accountAddLayout.addBottomControls(bottomPanel);
+		}
 
-        return accountAddLayout;
-    }
+		return accountAddLayout;
+	}
 
-    @Override
-    public void attachField(Object propertyId, Field field) {
-        informationLayout.attachField(propertyId, field);
-    }
+	@Override
+	public void attachField(Object propertyId, Field field) {
+		informationLayout.attachField(propertyId, field);
+	}
 
-    protected abstract Layout createTopPanel();
+	protected abstract Layout createTopPanel();
 
-    protected abstract Layout createBottomPanel();
+	protected abstract Layout createBottomPanel();
 
-    @SuppressWarnings("serial")
-    public static class TaskListInformationLayout implements IFormLayoutFactory {
+	@SuppressWarnings("serial")
+	public static class TaskListInformationLayout implements IFormLayoutFactory {
 
-        private GridFormLayoutHelper informationLayout;
+		private GridFormLayoutHelper informationLayout;
 
-        @Override
-        public Layout getLayout() {
-            informationLayout = new GridFormLayoutHelper(2, 4);
-            VerticalLayout layout = new VerticalLayout();
-            layout.addComponent(informationLayout.getLayout());
-            return layout;
-        }
+		@Override
+		public Layout getLayout() {
+			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 4);
+			VerticalLayout layout = new VerticalLayout();
+			layout.addComponent(informationLayout.getLayout());
+			return layout;
+		}
 
-        @Override
-        public void attachField(Object propertyId, Field field) {
-            if (propertyId.equals("name")) {
-                informationLayout.addComponent(field, "Name", 0, 0, 2, "100%");
-            } else if (propertyId.equals("description")) {
-                informationLayout.addComponent(field, "Description", 0, 1, 2, "100%");
-            } else if (propertyId.equals("owner")) {
-                informationLayout.addComponent(field, "Responsible User", 0, 2);
-            } else if (propertyId.equals("milestoneid")) {
-                informationLayout.addComponent(field, "Related Milestone", 1, 2);
-            } else if (propertyId.equals("percentageComplete")) {
-                informationLayout.addComponent(field, "Progress", 0, 3);
-            } else if (propertyId.equals("numOpenTasks")) {
-                informationLayout.addComponent(field, "% Task Complete", 1, 3);
-            }
-        }
-    }
+		@Override
+		public void attachField(Object propertyId, Field field) {
+			if (propertyId.equals("name")) {
+				informationLayout.addComponent(field, "Name", 0, 0, 2, "100%");
+			} else if (propertyId.equals("description")) {
+				informationLayout.addComponent(field, "Description", 0, 1, 2,
+						"100%");
+			} else if (propertyId.equals("owner")) {
+				informationLayout.addComponent(field, "Responsible User", 0, 2);
+			} else if (propertyId.equals("milestoneid")) {
+				informationLayout
+						.addComponent(field, "Related Milestone", 1, 2);
+			} else if (propertyId.equals("percentageComplete")) {
+				informationLayout.addComponent(field, "Progress", 0, 3);
+			} else if (propertyId.equals("numOpenTasks")) {
+				informationLayout.addComponent(field, "% Task Complete", 1, 3);
+			}
+		}
+	}
 }

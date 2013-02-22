@@ -13,34 +13,34 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 
 @SuppressWarnings("serial")
 public abstract class MultiSelectComp extends CustomField {
 
-	private TextField componentsDisplay;
-	private MultipleItemsPopupSelection componentPopupSelection;
+	private final TextField componentsDisplay;
+	private final MultipleItemsPopupSelection componentPopupSelection;
 	private boolean isClicked = false;
 	private String displayName;
-	private HashMap<String, CheckBox> componentPoupMap = new HashMap<String, CheckBox>();
-	
+	private final HashMap<String, CheckBox> componentPoupMap = new HashMap<String, CheckBox>();
+
 	@SuppressWarnings("rawtypes")
 	private List selectedItemsList = new ArrayList();
-	
+
 	@SuppressWarnings("rawtypes")
 	protected List dataList = new ArrayList();
 
 	public MultiSelectComp() {
 		this.setWidth("100%");
-		GridLayout content = new GridLayout(2, 1);
+		HorizontalLayout content = new HorizontalLayout();
 		content.setSpacing(false);
 
 		componentsDisplay = new TextField();
 		componentsDisplay.setNullRepresentation("");
 		componentsDisplay.setReadOnly(true);
-		componentsDisplay.setWidth("210px");
 		componentsDisplay.addStyleName("noBorderRight");
+		componentsDisplay.setWidth("100%");
 
 		componentPopupSelection = new MultipleItemsPopupSelection();
 		componentPopupSelection.addListener(new Button.ClickListener() {
@@ -53,15 +53,19 @@ public abstract class MultiSelectComp extends CustomField {
 			}
 		});
 
-		content.addComponent(componentsDisplay, 0, 0);
+		content.addComponent(componentsDisplay);
 		content.setComponentAlignment(componentsDisplay,
 				Alignment.MIDDLE_CENTER);
 
 		componentPopupSelection.addStyleName("nonPopupIndicator");
 		componentPopupSelection.addStyleName(UIConstants.SELECT_BG);
-		content.addComponent(componentPopupSelection, 1, 0);
+		componentPopupSelection.setWidth("23px");
+		content.addComponent(componentPopupSelection);
 		content.setComponentAlignment(componentPopupSelection,
 				Alignment.MIDDLE_CENTER);
+
+		content.setWidth("100%");
+		content.setExpandRatio(componentsDisplay, 1.0f);
 
 		this.setCompositionRoot(content);
 	}
