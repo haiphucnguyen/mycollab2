@@ -9,27 +9,31 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
 @SuppressWarnings("serial")
-public class BugDescriptionFieldDisplayWidget extends HorizontalLayout implements LayoutClickListener {
-	private LabelStringGenerator menuLinkGenerator = new BugDescriptionLinkLabelStringGenerator();
-	private Label lbDes;
+public class BugDescriptionFieldDisplayWidget extends HorizontalLayout
+		implements LayoutClickListener {
+	private final LabelStringGenerator menuLinkGenerator = new BugDescriptionLinkLabelStringGenerator();
+	private final Label lbDes;
 	private boolean hasShowLess;
-	private String description;
+	private final String description;
 	private String pathIconPlus;
 	private String pathIconMinus;
 	private static int NUM_CUT = 100;
-	
+
 	public BugDescriptionFieldDisplayWidget(String content) {
 		description = content;
 		ThemeResource iconPlus = new ThemeResource("icons/16/plus.png");
 		ThemeResource iconMinus = new ThemeResource("icons/16/minus.png");
-		
+
 		String contentLabel = menuLinkGenerator.handleText(content);
 		lbDes = new Label(description, Label.CONTENT_XHTML);
-		if ( contentLabel != null && contentLabel.length() > NUM_CUT) {
-			
+		if (contentLabel != null && contentLabel.length() > NUM_CUT) {
+
 			hasShowLess = true;
-			pathIconPlus = " <img src=\"VAADIN/themes/mycollab/" + iconPlus.getResourceId() + "\" />";
-			pathIconMinus = " <img src=\"VAADIN/themes/mycollab/" + iconMinus.getResourceId() + "\" />";;
+			pathIconPlus = " <img class='plus-btn' src=\"VAADIN/themes/mycollab/"
+					+ iconPlus.getResourceId() + "\" />";
+			pathIconMinus = " <img class='plus-btn' src=\"VAADIN/themes/mycollab/"
+					+ iconMinus.getResourceId() + "\" />";
+			;
 			contentLabel += " " + pathIconPlus;
 			lbDes.setValue(contentLabel);
 			lbDes.addStyleName(UIConstants.LABEL_CLICKABLE);
@@ -38,7 +42,7 @@ public class BugDescriptionFieldDisplayWidget extends HorizontalLayout implement
 		this.addComponent(lbDes);
 		this.addListener(this);
 	}
-	
+
 	private static class BugDescriptionLinkLabelStringGenerator implements
 			LabelStringGenerator {
 
@@ -59,7 +63,8 @@ public class BugDescriptionFieldDisplayWidget extends HorizontalLayout implement
 				if (hasShowLess) {
 					lbDes.setValue(description + " " + pathIconMinus);
 				} else {
-					lbDes.setValue(menuLinkGenerator.handleText(description) + " " +  pathIconPlus);
+					lbDes.setValue(menuLinkGenerator.handleText(description)
+							+ " " + pathIconPlus);
 				}
 				lbDes.setContentMode(Label.CONTENT_XHTML);
 				hasShowLess = !hasShowLess;

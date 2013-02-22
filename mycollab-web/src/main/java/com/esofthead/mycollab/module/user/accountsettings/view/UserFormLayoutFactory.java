@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
+import com.esofthead.mycollab.module.project.ui.components.ProjectUiUtils;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -14,86 +15,87 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @SuppressWarnings("serial")
 public abstract class UserFormLayoutFactory implements IFormLayoutFactory {
 
-    private String title;
-    private UserInformationLayout userInformationLayout;
+	private final String title;
+	private UserInformationLayout userInformationLayout;
 
-    public UserFormLayoutFactory(String title) {
-        this.title = title;
-    }
+	public UserFormLayoutFactory(String title) {
+		this.title = title;
+	}
 
-    @Override
-    public Layout getLayout() {
-        AddViewLayout userAddLayout = new AddViewLayout(title, new ThemeResource("icons/48/user/user.png"));
-       
-        Layout topPanel = createTopPanel();
-        if (topPanel != null) {
-            userAddLayout.addTopControls(topPanel);
-        }
+	@Override
+	public Layout getLayout() {
+		AddViewLayout userAddLayout = new AddViewLayout(title,
+				new ThemeResource("icons/48/user/user.png"));
 
-        userInformationLayout = new UserInformationLayout();
-        userInformationLayout.getLayout().setWidth("100%");
-        userAddLayout.addBody(userInformationLayout.getLayout());
+		Layout topPanel = createTopPanel();
+		if (topPanel != null) {
+			userAddLayout.addTopControls(topPanel);
+		}
 
-        Layout bottomPanel = createBottomPanel();
-        if (bottomPanel != null) {
-            userAddLayout.addBottomControls(bottomPanel);
-        }
+		userInformationLayout = new UserInformationLayout();
+		userInformationLayout.getLayout().setWidth("100%");
+		userAddLayout.addBody(userInformationLayout.getLayout());
 
-        return userAddLayout;
-    }
+		Layout bottomPanel = createBottomPanel();
+		if (bottomPanel != null) {
+			userAddLayout.addBottomControls(bottomPanel);
+		}
 
-    protected abstract Layout createTopPanel();
+		return userAddLayout;
+	}
 
-    protected abstract Layout createBottomPanel();
+	protected abstract Layout createTopPanel();
 
-    @Override
-    public void attachField(Object propertyId, Field field) {
-        userInformationLayout.attachField(propertyId, field);
-    }
+	protected abstract Layout createBottomPanel();
+
+	@Override
+	public void attachField(Object propertyId, Field field) {
+		userInformationLayout.attachField(propertyId, field);
+	}
 
 	public static class UserInformationLayout implements IFormLayoutFactory {
 
-        private GridFormLayoutHelper informationLayout;
+		private GridFormLayoutHelper informationLayout;
 
-        @Override
-        public Layout getLayout() {
-            VerticalLayout layout = new VerticalLayout();
-            Label organizationHeader = new Label("User Information");
-            organizationHeader.setStyleName("h2");
-            layout.addComponent(organizationHeader);
+		@Override
+		public Layout getLayout() {
+			VerticalLayout layout = new VerticalLayout();
+			Label organizationHeader = new Label("User Information");
+			organizationHeader.setStyleName("h2");
+			layout.addComponent(organizationHeader);
 
-            informationLayout = new GridFormLayoutHelper(2, 6);
-            informationLayout.getLayout().setWidth("100%");
+			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 6);
+			informationLayout.getLayout().setWidth("100%");
 
-            layout.addComponent(informationLayout.getLayout());
-            return layout;
-        }
+			layout.addComponent(informationLayout.getLayout());
+			return layout;
+		}
 
-        @Override
-        public void attachField(Object propertyId, Field field) {
-            if (propertyId.equals("firstname")) {
-                informationLayout.addComponent(field, "First Name", 0, 0);
-            } else if (propertyId.equals("lastname")) {
-                informationLayout.addComponent(field, "Last Name", 0, 1);
-            } else if (propertyId.equals("nickname")) {
-                informationLayout.addComponent(field, "Nick Name", 1, 0);
-            } else if (propertyId.equals("dateofbirth")) {
-                informationLayout.addComponent(field, "Birthday", 1, 1);
-            } else if (propertyId.equals("email")) {
-                informationLayout.addComponent(field, "Email", 0, 2);
-            } else if (propertyId.equals("isadmin")) {
-                informationLayout.addComponent(field, "Is Admin", 1, 2);
-            } else if (propertyId.equals("company")) {
-                informationLayout.addComponent(field, "Company", 0, 3);
-            } else if (propertyId.equals("website")) {
-                informationLayout.addComponent(field, "Website", 1, 3);
-            }
-        }
-    }
+		@Override
+		public void attachField(Object propertyId, Field field) {
+			if (propertyId.equals("firstname")) {
+				informationLayout.addComponent(field, "First Name", 0, 0);
+			} else if (propertyId.equals("lastname")) {
+				informationLayout.addComponent(field, "Last Name", 0, 1);
+			} else if (propertyId.equals("nickname")) {
+				informationLayout.addComponent(field, "Nick Name", 1, 0);
+			} else if (propertyId.equals("dateofbirth")) {
+				informationLayout.addComponent(field, "Birthday", 1, 1);
+			} else if (propertyId.equals("email")) {
+				informationLayout.addComponent(field, "Email", 0, 2);
+			} else if (propertyId.equals("isadmin")) {
+				informationLayout.addComponent(field, "Is Admin", 1, 2);
+			} else if (propertyId.equals("company")) {
+				informationLayout.addComponent(field, "Company", 0, 3);
+			} else if (propertyId.equals("website")) {
+				informationLayout.addComponent(field, "Website", 1, 3);
+			}
+		}
+	}
 }

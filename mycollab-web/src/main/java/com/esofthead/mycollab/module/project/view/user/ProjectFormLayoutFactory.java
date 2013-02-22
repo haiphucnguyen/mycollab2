@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
+import com.esofthead.mycollab.module.project.ui.components.ProjectUiUtils;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
@@ -69,8 +70,8 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
-			informationLayout = new GridFormLayoutHelper(2, 2);
-			informationLayout.getLayout().setWidth("900px");
+			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 2);
+			informationLayout.getLayout().setWidth("100%");
 			layout.addComponent(informationLayout.getLayout());
 			layout.setComponentAlignment(informationLayout.getLayout(),
 					Alignment.BOTTOM_CENTER);
@@ -80,8 +81,8 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
 			financialHeader.setStyleName("h2");
 			layout.addComponent(financialHeader);
 
-			financialLayout = new GridFormLayoutHelper(2, 4);
-			financialLayout.getLayout().setWidth("900px");
+			financialLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 4);
+			financialLayout.getLayout().setWidth("100%");
 			layout.addComponent(financialLayout.getLayout());
 			layout.setComponentAlignment(financialLayout.getLayout(),
 					Alignment.BOTTOM_CENTER);
@@ -90,8 +91,8 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
 			descHeader.setStyleName("h2");
 			layout.addComponent(descHeader);
 
-			descriptionLayout = new GridFormLayoutHelper(2, 1);
-			descriptionLayout.getLayout().setWidth("900px");
+			descriptionLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 1);
+			descriptionLayout.getLayout().setWidth("100%");
 			layout.addComponent(descriptionLayout.getLayout());
 			layout.setComponentAlignment(descriptionLayout.getLayout(),
 					Alignment.BOTTOM_CENTER);

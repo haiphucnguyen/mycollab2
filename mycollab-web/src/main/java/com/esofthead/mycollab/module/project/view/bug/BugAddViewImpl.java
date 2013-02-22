@@ -29,7 +29,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 
 	private static final long serialVersionUID = 1L;
 
-	private EditForm editForm;
+	private final EditForm editForm;
 	private SimpleBug bug;
 	private FormAttachmentUploadField attachmentUploadField;
 
@@ -136,14 +136,14 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 				} else if (propertyId.equals("severity")) {
 					return new BugSeverityComboBox();
 				} else if (propertyId.equals("components")) {
-					componentSelect = new ComponentMultiSelectField("227px");
+					componentSelect = new ComponentMultiSelectField();
 					if (bug.getComponents() != null
 							&& bug.getComponents().size() > 0) {
 						componentSelect.setSelectedItems(bug.getComponents());
 					}
 					return componentSelect;
 				} else if (propertyId.equals("affectedVersions")) {
-					affectedVersionSelect = new VersionMultiSelectField("227px");
+					affectedVersionSelect = new VersionMultiSelectField();
 					if (bug.getAffectedVersions() != null
 							&& bug.getAffectedVersions().size() > 0) {
 						affectedVersionSelect.setSelectedItems(bug
@@ -151,7 +151,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 					}
 					return affectedVersionSelect;
 				} else if (propertyId.equals("fixedVersions")) {
-					fixedVersionSelect = new VersionMultiSelectField("227px");
+					fixedVersionSelect = new VersionMultiSelectField();
 					if (bug.getFixedVersions() != null
 							&& bug.getFixedVersions().size() > 0) {
 						fixedVersionSelect.setSelectedItems(bug
