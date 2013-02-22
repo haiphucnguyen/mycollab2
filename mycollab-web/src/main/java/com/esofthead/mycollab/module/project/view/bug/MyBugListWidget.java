@@ -43,8 +43,13 @@ public class MyBugListWidget extends BugDisplayWidget {
 									new BugEvent.GotoRead(this, obj.getId()));
 						}
 					});
+			defectLink.setWidth("100%");
 			layout.addComponent(defectLink);
 			layout.setColumnExpandRatio(1, 1.0f);
+			
+			BugDescriptionFieldDisplayWidget descInfo = new BugDescriptionFieldDisplayWidget(obj.getDescription());
+			descInfo.setWidth("100%");
+			layout.addComponent(descInfo);
 			
 			Label dateInfo = new Label("last updated on "
 					+ AppContext.formatDate(obj.getLastupdatedtime()));
