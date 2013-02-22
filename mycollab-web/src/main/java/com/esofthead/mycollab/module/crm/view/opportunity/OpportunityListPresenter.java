@@ -204,6 +204,7 @@ public class OpportunityListPresenter extends CrmGenericPresenter<OpportunityLis
     public void doSearch(OpportunitySearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
         view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+        checkWhetherEnableTableActionControl();
     }
 
     private void deleteSelectedItems() {

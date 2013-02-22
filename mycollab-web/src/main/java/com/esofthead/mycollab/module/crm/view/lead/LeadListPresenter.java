@@ -220,6 +220,7 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
     public void doSearch(LeadSearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
         view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+        checkWhetherEnableTableActionControl();
     }
 
     private void deleteSelectedItems() {

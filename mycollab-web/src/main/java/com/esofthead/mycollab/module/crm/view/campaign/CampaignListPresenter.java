@@ -204,6 +204,7 @@ public class CampaignListPresenter extends CrmGenericPresenter<CampaignListView>
     public void doSearch(CampaignSearchCriteria searchCriteria) {
         this.searchCriteria = searchCriteria;
         view.getPagedBeanTable().setSearchCriteria(searchCriteria);
+        checkWhetherEnableTableActionControl();
     }
 
     private void deleteSelectedItems() {

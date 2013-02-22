@@ -120,6 +120,7 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 	@Override
 	public void disableActionControls() {
 		tableActionControls.setVisible(false);
+		selectOptionButton.setSelectedChecbox(false);
 		selectedItemsNumberLabel.setValue("");
 	}
 

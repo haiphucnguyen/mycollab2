@@ -211,6 +211,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 	@Override
 	public void disableActionControls() {
 		tableActionControls.setVisible(false);
+		selectOptionButton.setSelectedChecbox(false);
 		selectedItemsNumberLabel.setValue("");
 	}
 

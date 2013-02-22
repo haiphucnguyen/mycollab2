@@ -94,6 +94,7 @@ public class ContactListViewImpl extends AbstractView implements
         HorizontalLayout layout = new HorizontalLayout();
         layout.setSpacing(true);
 
+        System.out.println("constructTableActionControls: ");
         selectOptionButton = new SelectionOptionButton(tableItem);
         layout.addComponent(selectOptionButton);
         
@@ -121,6 +122,8 @@ public class ContactListViewImpl extends AbstractView implements
     @Override
     public void disableActionControls() {
         tableActionControls.setVisible(false);
+        System.out.println("contact disable: ");
+        selectOptionButton.setSelectedChecbox(false);
         selectedItemsNumberLabel.setValue("");
     }
 

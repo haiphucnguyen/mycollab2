@@ -175,6 +175,7 @@ public class ComponentListViewImpl extends AbstractView implements ComponentList
     @Override
     public void disableActionControls() {
         tableActionControls.setVisible(false);
+        selectOptionButton.setSelectedChecbox(false);
         selectedItemsNumberLabel.setValue("");
     }
 

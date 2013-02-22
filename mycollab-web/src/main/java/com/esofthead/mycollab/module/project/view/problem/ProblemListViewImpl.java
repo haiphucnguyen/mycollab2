@@ -213,6 +213,7 @@ public class ProblemListViewImpl extends AbstractView implements
 	@Override
 	public void disableActionControls() {
 		tableActionControls.setVisible(false);
+		selectOptionButton.setSelectedChecbox(false);
 		selectedItemsNumberLabel.setValue("");
 	}
 
