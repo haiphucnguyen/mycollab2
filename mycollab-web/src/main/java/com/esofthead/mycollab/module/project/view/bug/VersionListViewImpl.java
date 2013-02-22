@@ -167,6 +167,7 @@ public class VersionListViewImpl extends AbstractView implements VersionListView
     @Override
     public void disableActionControls() {
         tableActionControls.setVisible(false);
+        selectOptionButton.setSelectedChecbox(false);
         selectedItemsNumberLabel.setValue("");
     }
 

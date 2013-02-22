@@ -157,6 +157,7 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 	@Override
 	public void disableActionControls() {
 		tableActionControls.setEnabled(false);
+		selectOptionButton.setSelectedChecbox(false);
 		selectedItemsNumberLabel.setValue("");
 	}
 

@@ -117,6 +117,7 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 	@Override
 	public void disableActionControls() {
 		tableActionControls.setEnabled(false);
+		selectOptionButton.setSelectedChecbox(false);
 		selectedItemsNumberLabel.setValue("");
 	}
 
