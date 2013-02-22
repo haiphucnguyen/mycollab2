@@ -20,6 +20,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
+	private static final long serialVersionUID = 1L;
 
 	private final String title;
 
@@ -55,7 +56,7 @@ public abstract class ProjectFormLayoutFactory implements IFormLayoutFactory {
 	protected abstract Layout createBottomPanel();
 
 	public static class ProjectInformationLayout implements IFormLayoutFactory {
-
+		private static final long serialVersionUID = 1L;
 		private GridFormLayoutHelper informationLayout;
 		private GridFormLayoutHelper financialLayout;
 		private GridFormLayoutHelper descriptionLayout;

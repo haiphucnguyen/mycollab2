@@ -10,12 +10,20 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.events.ProblemEvent;
+import com.esofthead.mycollab.module.project.events.RiskEvent;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
+import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Button;
@@ -32,13 +40,14 @@ import com.vaadin.ui.VerticalLayout;
 public class ProjectTaskStatusComponent extends Depot {
 	private static final long serialVersionUID = 1L;
 	private DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask> taskList;
+	private static LabelStringGenerator menuLinkGenerator = new TaskStatusLinkLabelStringGenerator();
 
 	public ProjectTaskStatusComponent() {
 		super("My Openned Tasks", new VerticalLayout());
 
 		taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>(
 				AppContext.getSpringBean(ProjectGenericTaskService.class),
-				TaskStatusComponent.ActivityStreamRowDisplayHandler.class, 15);
+				TaskRowDisplayHandler.class, 15);
 		this.bodyContent.addComponent(new LazyLoadWrapper(taskList));
 		this.addStyleName("activity-panel");
 		((VerticalLayout) this.bodyContent).setMargin(false);
@@ -57,11 +66,11 @@ public class ProjectTaskStatusComponent extends Depot {
 		taskList.setSearchCriteria(searchCriteria);
 	}
 
-	public static class ActivityStreamRowDisplayHandler implements
+	public static class TaskRowDisplayHandler implements
 			DefaultBeanPagedList.RowDisplayHandler<ProjectGenericTask> {
 
 		@Override
-		public Component generateRow(ProjectGenericTask genericTask,
+		public Component generateRow(final ProjectGenericTask genericTask,
 				int rowIndex) {
 			CssLayout layout = new CssLayout();
 			layout.setWidth("100%");
@@ -70,13 +79,29 @@ public class ProjectTaskStatusComponent extends Depot {
 			HorizontalLayout header = new HorizontalLayout();
 			header.setSpacing(true);
 
-			Button taskLink = new Button(genericTask.getName(),
+			Button taskLink = generateActivationLink(genericTask.getName(),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
 						public void buttonClick(Button.ClickEvent event) {
-
+							String type = genericTask.getType();
+							int typeid = genericTask.getTypeId();
+							if (ProjectContants.PROBLEM.equals(type)) {
+								EventBus.getInstance()
+										.fireEvent(
+												new ProblemEvent.GotoRead(this,
+														typeid));
+							} else if (ProjectContants.RISK.equals(type)) {
+								EventBus.getInstance().fireEvent(
+										new RiskEvent.GotoRead(this, typeid));
+							} else if (ProjectContants.TASK.equals(type)) {
+								EventBus.getInstance().fireEvent(
+										new TaskEvent.GotoRead(this, typeid));
+							} else if (ProjectContants.BUG.equals(type)) {
+								EventBus.getInstance().fireEvent(
+										new BugEvent.GotoRead(this, typeid));
+							}
 						}
 					});
 			taskLink.setIcon(ProjectResources.getIconResource16size(genericTask
@@ -97,5 +122,24 @@ public class ProjectTaskStatusComponent extends Depot {
 
 			return layout;
 		}
+	}
+
+	private static Button generateActivationLink(String linkname,
+			Button.ClickListener listener) {
+		return CommonUIFactory.createButtonTooltip(
+				menuLinkGenerator.handleText(linkname), linkname, listener);
+	}
+
+	private static class TaskStatusLinkLabelStringGenerator implements
+			LabelStringGenerator {
+
+		@Override
+		public String handleText(String value) {
+			if (value.length() > 45) {
+				return value.substring(0, 45) + "...";
+			}
+			return value;
+		}
+
 	}
 }
