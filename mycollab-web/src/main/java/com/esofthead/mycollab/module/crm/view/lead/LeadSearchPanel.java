@@ -9,6 +9,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
@@ -74,7 +75,7 @@ public class LeadSearchPanel extends GenericSearchPanel<LeadSearchCriteria> {
 				});
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-
+		createAccountBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_LEAD));
 		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
 
 		return layout;

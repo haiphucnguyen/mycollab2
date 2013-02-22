@@ -88,7 +88,8 @@ public class CampaignLeadListComp  extends RelatedListComp<SimpleLead, LeadSearc
         selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
         selectBtn.setStyleName("link");
         controlsBtn.addComponent(selectBtn);
-
+        controlsBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_LEAD));
         contentContainer.addComponent(controlsBtn);
 
         tableItem = new LeadTableDisplay(
