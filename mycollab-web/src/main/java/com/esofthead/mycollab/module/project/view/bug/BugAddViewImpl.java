@@ -21,7 +21,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.TextArea;
+import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
 @ViewComponent
@@ -114,11 +114,11 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 					com.vaadin.ui.Component uiContext) {
 
 				if (propertyId.equals("environment")) {
-					TextArea field = new TextArea("", "");
+					RichTextArea field = new RichTextArea("", "");
 					field.setNullRepresentation("");
 					return field;
 				} else if (propertyId.equals("description")) {
-					TextArea field = new TextArea("", "");
+					RichTextArea field = new RichTextArea("", "");
 					field.setNullRepresentation("");
 					return field;
 				} else if (propertyId.equals("priority")) {
