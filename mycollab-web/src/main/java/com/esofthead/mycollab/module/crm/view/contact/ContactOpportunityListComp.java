@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityTableDisplay;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -86,7 +87,8 @@ public class ContactOpportunityListComp extends RelatedListComp<SimpleOpportunit
         selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
         selectBtn.setStyleName("link");
         controlsBtn.addComponent(selectBtn);
-
+        controlsBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
         contentContainer.addComponent(controlsBtn);
 
         tableItem = new OpportunityTableDisplay(new String[]{"opportunityname",

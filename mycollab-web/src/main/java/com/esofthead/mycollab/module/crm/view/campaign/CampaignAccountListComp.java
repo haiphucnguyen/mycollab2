@@ -4,6 +4,11 @@
  */
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import java.util.Set;
+
+import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.hene.splitbutton.SplitButton;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
@@ -26,9 +31,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
-import java.util.Set;
-import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.hene.splitbutton.SplitButton;
 
 /**
  *
@@ -88,7 +90,8 @@ public class CampaignAccountListComp extends RelatedListComp<SimpleAccount, Acco
         selectBtn.setIcon(new ThemeResource("icons/16/select.png"));
         selectBtn.setStyleName("link");
         controlsBtn.addComponent(selectBtn);
-
+        controlsBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
         contentContainer.addComponent(controlsBtn);
 
         tableItem = new AccountTableDisplay(
