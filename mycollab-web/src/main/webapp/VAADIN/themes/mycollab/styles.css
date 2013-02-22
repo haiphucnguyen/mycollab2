@@ -139,7 +139,7 @@ div.v-button-link.v-button-no-margin .v-button-wrap, div.v-button-link:focus {
 	padding: 0px;
 }
 
-.v-button-bluebtn {
+.v-button-bluebtn, .v-button.v-button-bluebtn.v-disabled:active {
 	background: url("icons/grad-dark-bottom.png") repeat-x left bottom #357ed0;
 /* 	background-color: #357ed0; */
 /* 	background-image: -webkit-gradient(linear,left top,left bottom,from(#357ed0),to(#1c5bc3)); */
@@ -164,7 +164,7 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	display: none;
 }
 
-.v-button-bluebtn .v-button-wrap {
+.v-button-bluebtn .v-button-wrap, .v-button-bluebtn.v-disabled .v-button-wrap {
 	background-image: none;
 }
 
@@ -1573,7 +1573,7 @@ white-space: normal;
 .v-splitbutton .v-button {
 	height: 26px !important;
 }
-.v-splitbutton-esofthead .v-button-esofthead {
+.v-splitbutton-esofthead .v-button-esofthead, .v-splitbutton-esofthead .v-button-esofthead.v-disabled {
 	background: url("icons/grad-dark-bottom.png") repeat-x left bottom #fcfcfc;
 /* 	background:-webkit-gradient( linear, left top, left bottom, color-stop(0.05, #fcfcfc), color-stop(1, #dcdcdc) ); */
 /* 	background:-moz-linear-gradient( center top, #fcfcfc 5%, #dcdcdc 100% ); */
@@ -2151,5 +2151,8 @@ div.v-lazyloadingwrapper-loading {
 /* Clickable Label */
 .clickable-label {
 	cursor: pointer;
+}
+.clickable-label > img.plus-btn {
+	vertical-align: bottom;
 }
 /* End Clickable Label */
