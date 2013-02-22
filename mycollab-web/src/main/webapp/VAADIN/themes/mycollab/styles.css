@@ -2170,3 +2170,9 @@ div.v-lazyloadingwrapper-loading {
 	background-color: #f3f3f3;
 }
 /* End StandUp Report List */
+
+/* Clickable Label */
+.clickable-label {
+	cursor: pointer;
+}
+/* End Clickable Label */
