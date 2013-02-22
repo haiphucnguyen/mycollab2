@@ -124,7 +124,7 @@ public class BeanList<SearchService extends ISearchableService<S>, S extends Sea
     	return (contentLayout != null) && (contentLayout.getComponentCount() > 0);
     }
 
-    public interface RowDisplayHandler<T> {
+    public static interface RowDisplayHandler<T> {
 
         Component generateRow(T obj, int rowIndex);
     }

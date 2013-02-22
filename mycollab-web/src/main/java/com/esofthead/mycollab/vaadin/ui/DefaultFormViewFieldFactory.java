@@ -77,7 +77,9 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 			l.setWidth("100%");
 			l.setContentMode(contentMode);
 			this.setCompositionRoot(l);
-			l.setValue(value);
+			if (value != null) {
+				l.setValue(value);	
+			}
 		}
 
 		@Override

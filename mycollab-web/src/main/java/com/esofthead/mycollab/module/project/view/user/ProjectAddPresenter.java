@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
@@ -57,8 +59,15 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 					public void onCancel() {
 						ViewState viewState = HistoryViewManager.back();
 						if (viewState instanceof NullViewState) {
-							EventBus.getInstance().fireEvent(
-									new ProjectEvent.GotoMyProject(this, null));
+							EventBus.getInstance()
+									.fireEvent(
+											new ProjectEvent.GotoMyProject(
+													this,
+													new PageActionChain(
+															new ProjectPageAction(
+																	new ScreenData(
+																			CurrentProjectVariables
+																					.getProjectId())))));
 						}
 					}
 
@@ -80,6 +89,7 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 			projectService.saveWithSession(project, AppContext.getUsername());
 		} else {
 			projectService.updateWithSession(project, AppContext.getUsername());
+			AppContext.putVariable(ProjectContants.CURRENT_PROJECT, project);
 		}
 
 	}

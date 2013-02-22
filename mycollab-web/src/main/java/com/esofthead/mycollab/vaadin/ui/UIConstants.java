@@ -38,6 +38,4 @@ public class UIConstants {
 	public static final String PROJECT_NAME = "project-name";
 	public static final String PROJECT_SHORT_NAME = "project-shortname";
 	public static final String WORD_WRAP = "wordWrap";
-	public static final String PLUS_BG = "plus-bg";
-	public static final String MINUS_BG = "minus-bg";
 }

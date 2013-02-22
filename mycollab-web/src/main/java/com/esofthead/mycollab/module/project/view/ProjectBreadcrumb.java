@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
+import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
@@ -28,6 +29,8 @@ import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
+import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -75,9 +78,16 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.select(0);
 		this.addLink(generateBreadcrumbLink(project.getName(),
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(ClickEvent event) {
-						// TODO: add event to navigate to project dashboard
+						EventBus.getInstance().fireEvent(
+								new ProjectEvent.GotoMyProject(this,
+										new PageActionChain(
+												new ProjectPageAction(
+														new ScreenData(project
+																.getId())))));
 					}
 				}));
 		this.setLinkEnabled(true, 1);
@@ -189,6 +199,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(milestone.getName(),
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(ClickEvent event) {
 						EventBus.getInstance().fireEvent(
@@ -328,6 +340,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(generateBreadcrumbLink(
 				"Task Group: " + taskList.getName(),
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(ClickEvent event) {
 						EventBus.getInstance().fireEvent(
@@ -425,6 +439,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(bug.getSummary(),
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(ClickEvent event) {
 						EventBus.getInstance().fireEvent(
@@ -473,6 +489,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 3);
 		this.addLink(generateBreadcrumbLink(version.getVersionname(),
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(ClickEvent event) {
 						EventBus.getInstance().fireEvent(
@@ -499,6 +517,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 	}
 
 	private class GotoVersionListener implements Button.ClickListener {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void buttonClick(ClickEvent event) {
@@ -535,6 +554,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 3);
 		this.addLink(generateBreadcrumbLink(component.getComponentname(),
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(ClickEvent event) {
 						EventBus.getInstance().fireEvent(
@@ -561,6 +582,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 	}
 
 	private static class GotoComponentListener implements Button.ClickListener {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void buttonClick(ClickEvent event) {
@@ -571,6 +593,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 
 	private static class GotoBugDashboardListener implements
 			Button.ClickListener {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void buttonClick(ClickEvent event) {

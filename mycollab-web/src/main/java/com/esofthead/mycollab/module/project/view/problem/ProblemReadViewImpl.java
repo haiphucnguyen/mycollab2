@@ -22,6 +22,7 @@ import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.Window;
 
@@ -179,6 +180,12 @@ public class ProblemReadViewImpl extends AbstractView implements
 							} else if (propertyId.equals("datedue")) {
 								return new FormViewField(AppContext
 										.formatDate(problem.getDatedue()));
+							} else if (propertyId.equals("description")) {
+								return new FormViewField(problem
+										.getDescription(), Label.CONTENT_XHTML);
+							} else if (propertyId.equals("resolution")) {
+								return new FormViewField(problem
+										.getResolution(), Label.CONTENT_XHTML);
 							}
 
 							return null;
