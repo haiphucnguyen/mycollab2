@@ -4,7 +4,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
 @ViewComponent
-public class UserPhotoUploadViewImpl extends AbstractView implements UserPhotoUploadView {
+public class ProfilePhotoUploadViewImpl extends AbstractView implements ProfilePhotoUploadView {
 	private static final long serialVersionUID = 1L;
 
 }

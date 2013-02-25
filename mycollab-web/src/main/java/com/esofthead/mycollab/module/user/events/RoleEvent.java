@@ -10,9 +10,10 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class RoleEvent {
 
-    public static class Search extends ApplicationEvent {
+	public static class Search extends ApplicationEvent {
 
         public Search(Object source, Object data) {
             super(source, data);

@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.module.user.accountsettings.profile.view.UserFormLayoutFactory;
+import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.view.component.RoleComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
@@ -64,7 +64,7 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 			super.setItemDataSource(newDataSource, propertyIds);
 		}
 
-		private class FormLayoutFactory extends UserFormLayoutFactory {
+		private class FormLayoutFactory extends ProfileFormLayoutFactory {
 
 			private static final long serialVersionUID = 1L;
 

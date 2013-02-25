@@ -1,15 +1,19 @@
 package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
 import com.davengo.web.vaadin.crop.CropField;
+import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
+import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
@@ -26,28 +30,44 @@ import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class UserInformationViewImpl extends AbstractView implements
-		UserInformationView, IFormAddView<User> {
+public class ProfileEditViewImpl extends AbstractView implements
+		ProfileEditView, IFormAddView<User> {
 
 	private final EditForm formItem;
 	private final HorizontalLayout viewLayout;
+	private VerticalLayout userAvatar;
 
-	public UserInformationViewImpl() {
+	public ProfileEditViewImpl() {
 		super();
 		viewLayout = new HorizontalLayout();
+		viewLayout.setWidth("100%");
+		viewLayout.setSpacing(true);
 		this.setStyleName("userInfoContainer");
 		this.setMargin(true);
 		formItem = new EditForm();
 		viewLayout.addComponent(formItem);
 		this.addComponent(viewLayout);
+		userAvatar = new VerticalLayout();
+		viewLayout.addComponent(userAvatar);
 	}
 
 	private void displayUserAvatar() {
-		VerticalLayout userAvatar = new VerticalLayout();
+		userAvatar.removeAllComponents();
 		CropField cropField = new CropField(new ThemeResource(
 				"icons/default_user_avatar_256_256.png"));
 		userAvatar.addComponent(cropField);
-		viewLayout.addComponent(userAvatar);
+
+		Button changePhotoBtn = new Button("Change photo",
+				new Button.ClickListener() {
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new ProfileEvent.GotoUploadPhoto(this, null));
+					}
+				});
+		changePhotoBtn.setStyleName("link");
+		userAvatar.addComponent(changePhotoBtn);
 	}
 
 	private static class EditForm extends AdvancedEditBeanForm<User> {
@@ -91,46 +111,57 @@ public class UserInformationViewImpl extends AbstractView implements
 
 		private class FormLayoutFactory implements IFormLayoutFactory {
 
-			protected GridFormLayoutHelper informationLayout;
+			protected GridFormLayoutHelper basicInformation;
+
+			protected GridFormLayoutHelper contactInformation;
 
 			@Override
 			public Layout getLayout() {
+				AddViewLayout accountAddLayout = new AddViewLayout(AppContext
+						.getSession().getDisplayName(), new ThemeResource(
+						"icons/48/user/profile.png"));
+				accountAddLayout.setWidth("600px");
 				VerticalLayout layout = new VerticalLayout();
+				layout.setSpacing(true);
 
 				Label informationHeader = new Label("User Information");
 				informationHeader.setStyleName("h2");
 				layout.addComponent(informationHeader);
 
-				informationLayout = new GridFormLayoutHelper(1, 8);
-				layout.addComponent(informationLayout.getLayout());
-				layout.setComponentAlignment(informationLayout.getLayout(),
+				basicInformation = new GridFormLayoutHelper(1, 5);
+				layout.addComponent(basicInformation.getLayout());
+				layout.setComponentAlignment(basicInformation.getLayout(),
 						Alignment.MIDDLE_LEFT);
+
+				Label contactHeader = new Label("Contact Information");
+				contactHeader.setStyleName("h2");
+				layout.addComponent(contactHeader);
+
+				contactInformation = new GridFormLayoutHelper(1, 2);
+				layout.addComponent(contactInformation.getLayout());
 
 				HorizontalLayout userInfoControls = createButtonControls();
 				layout.addComponent(userInfoControls);
-				layout.setComponentAlignment(userInfoControls,
-						Alignment.BOTTOM_CENTER);
-				return layout;
+				accountAddLayout.addBody(layout);
+				return accountAddLayout;
 			}
 
 			@Override
 			public void attachField(Object propertyId, Field field) {
 				if (propertyId.equals("firstname")) {
-					informationLayout.addComponent(field, "First Name", 0, 0);
+					basicInformation.addComponent(field, "First Name", 0, 0);
 				} else if (propertyId.equals("lastname")) {
-					informationLayout.addComponent(field, "Last Name", 0, 1);
+					basicInformation.addComponent(field, "Last Name", 0, 1);
 				} else if (propertyId.equals("email")) {
-					informationLayout.addComponent(field, "Email", 0, 2);
+					basicInformation.addComponent(field, "Email", 0, 2);
 				} else if (propertyId.equals("password")) {
-					informationLayout.addComponent(field, "Password", 0, 3);
+					basicInformation.addComponent(field, "Password", 0, 3);
 				} else if (propertyId.equals("dateofbirth")) {
-					informationLayout.addComponent(field, "Birthday", 0, 4);
+					basicInformation.addComponent(field, "Birthday", 0, 4);
 				} else if (propertyId.equals("website")) {
-					informationLayout.addComponent(field, "Website", 0, 5);
-				} else if (propertyId.equals("displayname")) {
-					informationLayout.addComponent(field, "Display Name", 0, 6);
+					contactInformation.addComponent(field, "Website", 0, 0);
 				} else if (propertyId.equals("company")) {
-					informationLayout.addComponent(field, "Company", 0, 7);
+					contactInformation.addComponent(field, "Company", 0, 1);
 				}
 			}
 		}

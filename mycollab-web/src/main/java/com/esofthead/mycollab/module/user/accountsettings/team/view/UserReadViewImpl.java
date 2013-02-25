@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.module.user.accountsettings.profile.view.UserFormLayoutFactory;
+import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
@@ -104,7 +104,7 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 			super.setItemDataSource(newDataSource);
 		}
 
-		class FormLayoutFactory extends UserFormLayoutFactory {
+		class FormLayoutFactory extends ProfileFormLayoutFactory {
 
 			private static final long serialVersionUID = 1L;
 

@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.AccountSettingsPresenter;
-import com.esofthead.mycollab.module.user.accountsettings.profile.view.UserInformationPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileEditPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
@@ -25,7 +25,7 @@ public class AccountDashboardViewImpl extends AbstractView implements
 	private final DetachedTabs accountTab;
 	private final CssLayout accountSpace = new CssLayout();
 
-	private UserInformationPresenter userInformationPresenter;
+	private ProfileEditPresenter userInformationPresenter;
 	private UserPermissionManagementPresenter userPermissionPresenter;
 	private AccountSettingsPresenter accountSettingPresenter;
 
@@ -96,7 +96,7 @@ public class AccountDashboardViewImpl extends AbstractView implements
 
 	private ComponentContainer constructUserInformationComponent() {
 		userInformationPresenter = PresenterResolver
-				.getPresenter(UserInformationPresenter.class);
+				.getPresenter(ProfileEditPresenter.class);
 		return userInformationPresenter.getView();
 	}
 

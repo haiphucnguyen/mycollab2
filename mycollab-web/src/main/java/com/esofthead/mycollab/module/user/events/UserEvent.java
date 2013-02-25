@@ -10,9 +10,11 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class UserEvent {
 
-    public static class PlainLogin extends ApplicationEvent {
+    
+	public static class PlainLogin extends ApplicationEvent {
 
         public PlainLogin(Object source, Object data) {
             super(source, data);

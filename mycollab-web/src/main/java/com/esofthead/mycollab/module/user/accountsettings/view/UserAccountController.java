@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.user.accountsettings.team.view.RoleReadPres
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserAddPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserListPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserReadPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -34,8 +35,29 @@ public class UserAccountController implements IController {
 	public UserAccountController(AccountDashboardView container) {
 		this.container = container;
 		
+		bindProfileEvents();
 		bindRoleEvents();
 		bindUserEvents();
+	}
+	
+	private void bindProfileEvents() {
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ProfileEvent.GotoUploadPhoto>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ProfileEvent.GotoUploadPhoto.class;
+					}
+
+					@Override
+					public void handle(ProfileEvent.GotoUploadPhoto event) {
+						UserAddPresenter presenter = PresenterResolver
+								.getPresenter(UserAddPresenter.class);
+						presenter.go(container, new ScreenData.Add<User>(
+								new User()));
+					}
+				});
 	}
 	
 	private void bindUserEvents() {
