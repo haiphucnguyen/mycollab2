@@ -30,7 +30,7 @@
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_center_white.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 14px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 32px 32px 0px;">
 				<p style="font-weight: bold;">Hi there,</p>
-				<p>Just wanna let you know that a new task <a href="${hyperLinks.taskUrl}" style="color: #4283c4; text-decoration: none;">ABCDEFG</a> has been created i project <a href="${hyperLinks.projectUrl}" style="color: #4283c4; text-decoration: underline;">${task.projectName}</a>. Here're details about it:</p>
+				<p>Just wanna let you know that a new task <a href="${hyperLinks.taskUrl}" style="color: #4283c4; text-decoration: none;">$task.taskname</a> has been created i project <a href="${hyperLinks.projectUrl}" style="color: #4283c4; text-decoration: underline;">${task.projectName}</a>. Here're details about it:</p>
 				<table width="446" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
 					<tr>
 						<td style="background: url('${defaultUrls.cdn_url}border_small_top.png') no-repeat 0 0 transparent; line-height: 7px;" height="7">&nbsp;</td>
@@ -44,7 +44,7 @@
 								</tr>
 								<tr>
 									<td style="text-align: right;">Start Date:&nbsp;</td>
-									<td>$dateTool.format('short_date', $task.startDate)</td>
+									<td>$date.format('short_date', $task.Startdate)</td>
 									<td style="text-align: right;">Actual Start Date:&nbsp;</td>
 									<td>$date.format($task.getActualStartDate())</td>		
 								</tr>
@@ -58,7 +58,7 @@
 									<td style="text-align: right;">Deadline:&nbsp;</td>
 									<td>$date.format($task.getDeadline())</td>
 									<td style="text-align: right;">Priority:&nbsp;</td>
-									<td>$task.getPriority()</td>		
+									<td>$task.priority</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Assign:&nbsp;</td>
