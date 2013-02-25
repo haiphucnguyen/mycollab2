@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.RoleAddPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.RoleListPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.RoleReadPresenter;
@@ -9,6 +10,7 @@ import com.esofthead.mycollab.module.user.accountsettings.team.view.UserAddPrese
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserListPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserReadPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
+import com.esofthead.mycollab.module.user.accountsettings.view.parameters.ProfileScreenData;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -31,15 +33,15 @@ public class UserAccountController implements IController {
 	private static final long serialVersionUID = 1L;
 
 	private AccountDashboardView container;
-	
+
 	public UserAccountController(AccountDashboardView container) {
 		this.container = container;
-		
+
 		bindProfileEvents();
 		bindRoleEvents();
 		bindUserEvents();
 	}
-	
+
 	private void bindProfileEvents() {
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ProfileEvent.GotoUploadPhoto>() {
@@ -52,14 +54,16 @@ public class UserAccountController implements IController {
 
 					@Override
 					public void handle(ProfileEvent.GotoUploadPhoto event) {
-						UserAddPresenter presenter = PresenterResolver
-								.getPresenter(UserAddPresenter.class);
-						presenter.go(container, new ScreenData.Add<User>(
-								new User()));
+						ProfilePresenter presenter = PresenterResolver
+								.getPresenter(ProfilePresenter.class);
+						presenter.go(
+								container,
+								new ProfileScreenData.UploadPhoto(AppContext
+										.getUsername()));
 					}
 				});
 	}
-	
+
 	private void bindUserEvents() {
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<UserEvent.GotoAdd>() {
@@ -141,7 +145,7 @@ public class UserAccountController implements IController {
 					}
 				});
 	}
-	
+
 	private void bindRoleEvents() {
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<RoleEvent.GotoAdd>() {
