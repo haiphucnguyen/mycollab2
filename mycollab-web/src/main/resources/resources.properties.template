@@ -16,3 +16,10 @@ error.sendTo=<Your email>
 
 content.rawContentServiceImpl=com.esofthead.mycollab.module.file.service.impl.RawContentServiceImpl
 cdn.url=<cdn url>
+
+app.url=<app_url>
+
+facebook.url=<facebook_url>
+google.url=<google_url>
+linkedin.url=<linkedin_url>
+twitter.url=<twitter_url>

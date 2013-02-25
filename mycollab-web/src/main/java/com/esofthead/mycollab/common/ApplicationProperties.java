@@ -11,8 +11,16 @@ public class ApplicationProperties {
 	private static final String DECRYPT_PASS = "esofthead321";
 
 	private static Properties properties;
-	
+
 	public static final String CDN_URL = "cdn.url";
+
+	public static final String APP_URL = "app.url";
+
+	public static final String FACEBOOK_URL = "facebook.url";
+	public static final String GOOGLE_URL = "google.url";
+	public static final String LINKEDIN_URL = "linkedin.url";
+	public static final String TWITTER_URL = "twitter.url";
+
 	public static final String ERROR_SENDTO = "error.sendTo";
 
 	static {
