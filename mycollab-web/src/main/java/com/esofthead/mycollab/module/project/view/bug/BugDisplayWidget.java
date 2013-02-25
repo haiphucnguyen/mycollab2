@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -37,6 +38,7 @@ public class BugDisplayWidget extends Depot {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				System.out.println("SEACR CRITERA: " + BeanUtility.printBeanObj(searchCriteria));
 				EventBus.getInstance().fireEvent(
 						new BugEvent.GotoList(BugDisplayWidget.this,
 								new ScreenData.Search<BugSearchCriteria>(

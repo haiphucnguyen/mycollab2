@@ -5,6 +5,7 @@ import java.util.GregorianCalendar;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
@@ -41,6 +42,7 @@ import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskContainer;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
+import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
@@ -534,6 +536,11 @@ public class ProjectController implements IController {
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, CurrentProjectVariables
 										.getProjectId()));
+						criteria.setStatuses(new SetSearchField<String>(
+								SearchField.AND, new String[] {
+										BugStatusConstants.INPROGRESS,
+										BugStatusConstants.OPEN,
+										BugStatusConstants.REOPENNED }));
 						projectView
 								.gotoBugView(new ScreenData.Search<BugSearchCriteria>(
 										criteria));

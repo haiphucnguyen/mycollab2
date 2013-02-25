@@ -59,6 +59,16 @@ public class MainWindowContainer extends Window implements View {
 				return null;
 			}
 		});
+
+		this.setImmediate(true);
+		this.addListener(new Window.ResizeListener() {
+			private static final long serialVersionUID = 1L;
+
+			public void windowResized(ResizeEvent e) {
+				ScreenSize.setWidth(MainWindowContainer.this
+						.getBrowserWindowWidth());
+			}
+		});
 		setDefaultView(true);
 	}
 
