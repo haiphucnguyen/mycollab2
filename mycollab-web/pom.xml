@@ -416,6 +416,7 @@
                     <!-- <scanIntervalSeconds>10</scanIntervalSeconds> -->
                     <webAppConfig>
                         <contextPath>/${project.name}</contextPath>
+                        <overrideDescriptor>src/main/webapp/override-web.xml</overrideDescriptor>
                     </webAppConfig>
                 </configuration>
             </plugin>

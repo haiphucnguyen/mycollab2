@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
-import com.davengo.web.vaadin.crop.CropField;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.vaadin.events.EventBus;

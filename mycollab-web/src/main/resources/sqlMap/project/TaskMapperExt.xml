@@ -8,6 +8,7 @@
         <result column="numComments" property="numComments" jdbcType="INTEGER" />
         <result column="taskListName" property="taskListName" jdbcType="VARCHAR" />
         <result column="assignUserFullName" property="assignUserFullName" jdbcType="VARCHAR" /> 
+        <result column="logByFullName" property="logByFullName" jdbcType="VARCHAR" />
     </resultMap>
 
     <sql id="querySearchCriteria">
@@ -50,11 +51,14 @@
                  m_prj_task.actualStartDate, m_prj_task.actualEndDate, m_prj_task.cost, m_prj_task.actualCost, 
                  m_prj_task.ismilestone, m_prj_task.tasklistid, m_prj_task.createdTime, m_prj_task.lastUpdatedTime, m_prj_task.assignUser, m_prj_task.sAccountId,
                  m_prj_task_list.name AS taskListName, m_prj_project.name AS projectName, m_prj_task.status,
-                 concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS assignUserFullName
+                 m_prj_task_list.logBy,
+                 concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS assignUserFullName,
+                 concat(log_user.firstname, IFNULL(concat(' ', log_user.middlename, ' '), ' '), log_user.lastname) AS logByFullName
           FROM m_prj_task
               LEFT OUTER JOIN m_prj_project ON (m_prj_task.projectid = m_prj_project.id) 
               LEFT OUTER JOIN m_prj_task_list ON (m_prj_task_list.id = m_prj_task.tasklistid)
               LEFT OUTER JOIN s_user ON (s_user.username = m_prj_task.assignUser)
+              LEFT OUTER JOIN s_user AS log_user ON (log_user.username = m_prj_task.logBy)
         ]]>
     </sql>
     

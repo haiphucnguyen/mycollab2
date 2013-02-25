@@ -6,6 +6,7 @@ public class SimpleTask extends Task {
     private String projectName;
     private String taskListName;
     private String assignUserFullName;
+    private String logByFullName;
     private int numComments;
 
     public int getNumComments() {
@@ -39,4 +40,12 @@ public class SimpleTask extends Task {
     public void setAssignUserFullName(String assignUserFullName) {
         this.assignUserFullName = assignUserFullName;
     }
+
+	public String getLogByFullName() {
+		return logByFullName;
+	}
+
+	public void setLogByFullName(String logByFullName) {
+		this.logByFullName = logByFullName;
+	}
 }
