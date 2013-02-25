@@ -61,8 +61,6 @@ public class TemplateGenerator {
 				TemplateGenerator.class.getClassLoader().getResourceAsStream(
 						contentTemplatePathFile)));
 		Velocity.evaluate(velocityContext, writer, "log task", reader);
-		String result = writer.toString();
-		System.out.println("Result: " + result);
-		return result;
+		return writer.toString();
 	}
 }

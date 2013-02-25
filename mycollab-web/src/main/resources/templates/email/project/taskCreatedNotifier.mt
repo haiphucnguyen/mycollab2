@@ -40,11 +40,11 @@
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px;">
 								<tr>
 									<td style="text-align: right;">Task Name:&nbsp;</td>
-									<td style="font-weight: bold; text-transform: uppercase;"><a href="${hyperLinks.taskUrl}" style="color: #4283c4; text-decoration: none;">$task.getTaskName()</a></td>
+									<td style="font-weight: bold; text-transform: uppercase;"><a href="${hyperLinks.taskUrl}" style="color: #4283c4; text-decoration: none;">$task.taskname</a></td>
 								</tr>
 								<tr>
 									<td style="text-align: right;">Start Date:&nbsp;</td>
-									<td>$date.format($task.getStartDate())</td>
+									<td>$dateTool.format('short_date', $task.startDate)</td>
 									<td style="text-align: right;">Actual Start Date:&nbsp;</td>
 									<td>$date.format($task.getActualStartDate())</td>		
 								</tr>

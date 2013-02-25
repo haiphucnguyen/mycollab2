@@ -105,7 +105,7 @@ public class ProjectTaskServiceImpl extends
 					SimpleTask task = this.findTaskById(taskId);
 					TemplateGenerator templateGenerator = new TemplateGenerator(
 							"[$task.projectName]: $task.taskname",
-							"templates/email/project/taskChangeNotifier.mt");
+							"templates/email/project/taskCreatedNotifier.mt");
 					templateGenerator.putVariable("task", task);
 					mailService.sendHTMLMail("mail@esofthead.com",
 							emailNotification.getChangeByUserFullName(),
