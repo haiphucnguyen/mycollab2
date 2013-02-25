@@ -72,6 +72,7 @@ public class ProjectTaskServiceImpl extends
 		} else {
 			record.setStatus("Open");
 		}
+		record.setLogby(username);
 		return super.saveWithSession(record, username);
 	}
 
