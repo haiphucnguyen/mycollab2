@@ -20,6 +20,7 @@ import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -53,7 +54,7 @@ public class ProfileEditViewImpl extends AbstractView implements
 
 	private void displayUserAvatar() {
 		userAvatar.removeAllComponents();
-		CropField cropField = new CropField(new ThemeResource(
+		Embedded cropField = new Embedded("", new ThemeResource(
 				"icons/default_user_avatar_256_256.png"));
 		userAvatar.addComponent(cropField);
 

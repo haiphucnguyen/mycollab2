@@ -4,18 +4,16 @@
  */
 package com.esofthead.mycollab.common.logging;
 
+import org.apache.ibatis.session.SqlSession;
+import org.apache.log4j.AppenderSkeleton;
+import org.apache.log4j.spi.ErrorCode;
+import org.apache.log4j.spi.LoggingEvent;
+
 import com.esofthead.mycollab.common.dao.ReportBugIssueMapper;
 import com.esofthead.mycollab.common.domain.ReportBugIssueWithBLOBs;
 import com.esofthead.mycollab.usertracking.Ip2CountryCode;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.gwt.server.AbstractWebApplicationContext;
-import java.io.StringReader;
-import org.apache.ibatis.session.SqlSession;
-import org.apache.ibatis.session.SqlSessionFactory;
-import org.apache.ibatis.session.SqlSessionFactoryBuilder;
-import org.apache.log4j.AppenderSkeleton;
-import org.apache.log4j.spi.ErrorCode;
-import org.apache.log4j.spi.LoggingEvent;
 
 /**
  * 

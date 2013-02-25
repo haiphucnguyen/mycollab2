@@ -56,6 +56,8 @@ public class AccountDashboardViewImpl extends AbstractView implements
 		buildComponents();
 
 		this.addComponent(root);
+		
+		profilePresenter.go(AccountDashboardViewImpl.this, null);
 	}
 
 	private void buildComponents() {

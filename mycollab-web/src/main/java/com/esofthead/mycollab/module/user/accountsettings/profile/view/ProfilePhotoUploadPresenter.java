@@ -15,10 +15,10 @@ public class ProfilePhotoUploadPresenter extends
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProfileContainer profileContainer = (ProfileContainer) container;
-		container.removeAllComponents();
-		
-		container.addComponent(view.getWidget());
-		
+		profileContainer.removeAllComponents();
+
+		profileContainer.addComponent(view.getWidget());
+		view.editPhoto();
 	}
 
 }

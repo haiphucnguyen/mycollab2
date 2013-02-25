@@ -18,7 +18,6 @@ public class ProfilePresenter extends AbstractPresenter<ProfileContainer> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		AccountDashboardView accountContainer = (AccountDashboardView) container;
-		accountContainer.removeAllComponents();
 
 		accountContainer.gotoSubView(ViewNameConstants.USER_INFORMATION);
 
@@ -26,7 +25,7 @@ public class ProfilePresenter extends AbstractPresenter<ProfileContainer> {
 		if (data == null) {
 			presenter = PresenterResolver
 					.getPresenter(ProfileEditPresenter.class);
-		} else if (data.getParams() instanceof ProfileScreenData.UploadPhoto) {
+		} else if (data instanceof ProfileScreenData.UploadPhoto) {
 			presenter = PresenterResolver
 					.getPresenter(ProfilePhotoUploadPresenter.class);
 		}

@@ -9,8 +9,7 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class ProfileEditPresenter extends
-		AbstractPresenter<ProfileEditView> {
+public class ProfileEditPresenter extends AbstractPresenter<ProfileEditView> {
 
 	private static final long serialVersionUID = 1L;
 
@@ -46,6 +45,9 @@ public class ProfileEditPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		ProfileContainer profileContainer = (ProfileContainer) container;
+		profileContainer.removeAllComponents();
+		profileContainer.addComponent(view.getWidget());
 		User currentUser = AppContext.getSession();
 		view.editItem(currentUser);
 	}
