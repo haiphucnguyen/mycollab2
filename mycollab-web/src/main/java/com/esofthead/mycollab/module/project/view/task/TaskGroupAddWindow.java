@@ -11,7 +11,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
@@ -184,7 +184,7 @@ public class TaskGroupAddWindow extends Window {
 					area.setNullRepresentation("");
 					return area;
 				} else if (propertyId.equals("owner")) {
-					return new UserComboBox();
+					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("milestoneid")) {
 					return new MilestoneComboBox();
 				}

@@ -65,6 +65,8 @@ public class MainWindowContainer extends Window implements View {
 			private static final long serialVersionUID = 1L;
 
 			public void windowResized(ResizeEvent e) {
+				log.debug("Application size is changed. New value is: "
+						+ MainWindowContainer.this.getBrowserWindowWidth());
 				ScreenSize.setWidth(MainWindowContainer.this
 						.getBrowserWindowWidth());
 			}

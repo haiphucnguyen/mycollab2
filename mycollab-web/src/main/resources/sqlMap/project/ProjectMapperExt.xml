@@ -148,6 +148,14 @@
 			1=1 <include refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.queryTotalCountSearchCriteria" />
 		</trim>
 	</select>
+    
+    <select id="getUserProjectKeys" resultType="java.lang.Integer">
+        SELECT m_prj_project.id
+        FROM m_prj_project
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1 <include refid="com.esofthead.mycollab.module.project.dao.ProjectMapperExt.querySearchCriteria" />
+        </trim>
+    </select>
 
 
 	<select id="findPagableListByCriteria" resultMap="SimpleProjectResult"

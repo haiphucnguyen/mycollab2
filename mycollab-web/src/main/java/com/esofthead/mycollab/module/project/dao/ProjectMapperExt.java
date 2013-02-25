@@ -10,9 +10,12 @@ import org.apache.ibatis.session.RowBounds;
 
 public interface ProjectMapperExt extends ISearchableDAO<ProjectSearchCriteria> {
 
-    int getTotalActivityStream(ActivityStreamSearchCriteria criteria);
+	int getTotalActivityStream(ActivityStreamSearchCriteria criteria);
 
-    List<ProjectActivityStream> getProjectActivityStreams(ActivityStreamSearchCriteria criteria, RowBounds rowBounds);
-    
-    SimpleProject findProjectById(int projectId);
+	List<ProjectActivityStream> getProjectActivityStreams(
+			ActivityStreamSearchCriteria criteria, RowBounds rowBounds);
+
+	List<Integer> getUserProjectKeys(ProjectSearchCriteria criteria);
+
+	SimpleProject findProjectById(int projectId);
 }

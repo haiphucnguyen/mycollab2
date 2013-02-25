@@ -11,8 +11,8 @@ import com.esofthead.mycollab.common.domain.ActivityStream;
  * @author haiphucnguyen
  */
 public class ProjectActivityStream extends ActivityStream {
-
-    private int projectId;
+	private static final long serialVersionUID = 1L;
+	private int projectId;
     private String projectName;
     private String createdUserFullName;
 

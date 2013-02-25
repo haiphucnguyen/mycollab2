@@ -65,11 +65,18 @@ public class ActivityStreamComponent extends Depot {
 	}
 
 	public void showFeeds() {
-		ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
-				new String[] { ModuleNameConstants.PRJ }));
-
-		activityStreamList.setSearchCriteria(searchCriteria);
+		ProjectService prjService = AppContext
+				.getSpringBean(ProjectService.class);
+		List<Integer> prjKeys = prjService.getUserProjectKeys(AppContext
+				.getUsername());
+		if (prjKeys != null && !prjKeys.isEmpty()) {
+			ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
+			searchCriteria.setModuleSet(new SetSearchField<String>(
+					SearchField.AND, new String[] { ModuleNameConstants.PRJ }));
+			searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
+					.toArray(new Integer[0])));
+			activityStreamList.setSearchCriteria(searchCriteria);
+		}
 	}
 
 	static class ProjectActivityStreamPagedList
@@ -153,7 +160,8 @@ public class ActivityStreamComponent extends Depot {
 			prjLabel.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 			header.addComponent(prjLabel);
 			// header.setComponentAlignment(prjLabel, Alignment.TOP_CENTER);
-			Button projectLink = generateActivityStreamLink(activityStream.getProjectName(),
+			Button projectLink = generateActivityStreamLink(
+					activityStream.getProjectName(),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

@@ -20,6 +20,7 @@ import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -43,54 +44,66 @@ import org.springframework.transaction.annotation.Transactional;
 @Service
 @Transactional
 @Traceable(module = ModuleNameConstants.PRJ, nameField = "name", type = ProjectContants.PROJECT, extraFieldName = "id")
-public class ProjectServiceImpl extends DefaultService<Integer, Project, ProjectSearchCriteria> implements
-        ProjectService {
+public class ProjectServiceImpl extends
+		DefaultService<Integer, Project, ProjectSearchCriteria> implements
+		ProjectService {
 
-    @Autowired
-    private ProjectMapper projectMapper;
-    @Autowired
-    private ProjectMapperExt projectMapperExt;
-    @Autowired
-    private ProjectMemberMapper projectMemberMapper;
+	@Autowired
+	private ProjectMapper projectMapper;
+	@Autowired
+	private ProjectMapperExt projectMapperExt;
+	@Autowired
+	private ProjectMemberMapper projectMemberMapper;
 
-    @Override
-    public ICrudGenericDAO<Integer, Project> getCrudMapper() {
-        return projectMapper;
-    }
+	@Override
+	public ICrudGenericDAO<Integer, Project> getCrudMapper() {
+		return projectMapper;
+	}
 
-    @Override
-    public ISearchableDAO<ProjectSearchCriteria> getSearchMapper() {
-        return projectMapperExt;
-    }
+	@Override
+	public ISearchableDAO<ProjectSearchCriteria> getSearchMapper() {
+		return projectMapperExt;
+	}
 
-    @Override
-    public int saveWithSession(Project record, String username) {
-        int projectid = super.saveWithSession(record, username);
+	@Override
+	public int saveWithSession(Project record, String username) {
+		int projectid = super.saveWithSession(record, username);
 
-        ProjectMember projectMember = new ProjectMember();
-        projectMember.setIsadmin(Boolean.TRUE);
-        projectMember.setJoindate(new GregorianCalendar().getTime());
-        projectMember.setProjectid(projectid);
-        projectMember.setUsername(username);
-        projectMemberMapper.insert(projectMember);
-        
-        return projectid;
-    }
+		ProjectMember projectMember = new ProjectMember();
+		projectMember.setIsadmin(Boolean.TRUE);
+		projectMember.setJoindate(new GregorianCalendar().getTime());
+		projectMember.setProjectid(projectid);
+		projectMember.setUsername(username);
+		projectMemberMapper.insert(projectMember);
 
-    @Override
-    public List<ProjectActivityStream> getProjectActivityStreams(SearchRequest<ActivityStreamSearchCriteria> searchRequest) {
-        return projectMapperExt.getProjectActivityStreams(searchRequest.getSearchCriteria(),
-                new RowBounds((searchRequest.getCurrentPage() - 1)
-                * searchRequest.getNumberOfItems(), searchRequest.getNumberOfItems()));
-    }
+		return projectid;
+	}
 
-    @Override
-    public int getTotalActivityStream(ActivityStreamSearchCriteria searchCriteria) {
-        return projectMapperExt.getTotalActivityStream(searchCriteria);
-    }
+	@Override
+	public List<ProjectActivityStream> getProjectActivityStreams(
+			SearchRequest<ActivityStreamSearchCriteria> searchRequest) {
+		return projectMapperExt.getProjectActivityStreams(
+				searchRequest.getSearchCriteria(),
+				new RowBounds((searchRequest.getCurrentPage() - 1)
+						* searchRequest.getNumberOfItems(), searchRequest
+						.getNumberOfItems()));
+	}
 
-    @Override
-    public SimpleProject findProjectById(int projectId) {
-        return projectMapperExt.findProjectById(projectId);
-    }
+	@Override
+	public int getTotalActivityStream(
+			ActivityStreamSearchCriteria searchCriteria) {
+		return projectMapperExt.getTotalActivityStream(searchCriteria);
+	}
+
+	@Override
+	public SimpleProject findProjectById(int projectId) {
+		return projectMapperExt.findProjectById(projectId);
+	}
+
+	@Override
+	public List<Integer> getUserProjectKeys(String username) {
+		ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
+		searchCriteria.setInvolvedMember(new StringSearchField(username));
+		return projectMapperExt.getUserProjectKeys(searchCriteria);
+	}
 }
