@@ -11,6 +11,8 @@ import java.util.Map;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.apache.velocity.runtime.RuntimeServices;
+import org.apache.velocity.runtime.log.LogChute;
 import org.apache.velocity.tools.Scope;
 import org.apache.velocity.tools.ToolManager;
 import org.apache.velocity.tools.config.EasyFactoryConfiguration;
@@ -19,7 +21,7 @@ import org.apache.velocity.tools.generic.DateTool;
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 
-public class TemplateGenerator {
+public class TemplateGenerator implements LogChute{
 	private final String subjectTemplate;
 	private final String contentTemplatePathFile;
 	private final VelocityContext velocityContext;
@@ -36,6 +38,8 @@ public class TemplateGenerator {
 
 	public TemplateGenerator(String subjectTemplate,
 			String contentTemplatePathFile) {
+		Velocity.setProperty(Velocity.RUNTIME_LOG_LOGSYSTEM, this );
+		Velocity.init();
 		velocityContext = new VelocityContext(toolManager.createContext());
 		this.subjectTemplate = subjectTemplate;
 		this.contentTemplatePathFile = contentTemplatePathFile;
@@ -63,7 +67,6 @@ public class TemplateGenerator {
 	}
 
 	public String generateSubjectContent() {
-		Velocity.init();
 		StringWriter writer = new StringWriter();
 		Reader reader = new StringReader(subjectTemplate);
 		Velocity.evaluate(velocityContext, writer, "log task", reader);
@@ -71,7 +74,6 @@ public class TemplateGenerator {
 	}
 
 	public String generateBodyContent() {
-		Velocity.init();
 		StringWriter writer = new StringWriter();
 		Reader reader = new BufferedReader(new InputStreamReader(
 				TemplateGenerator.class.getClassLoader().getResourceAsStream(
@@ -88,5 +90,27 @@ public class TemplateGenerator {
 		task.setStartdate(new GregorianCalendar().getTime());
 		a.putVariable("task", task);
 		System.out.println(a.generateBodyContent());
+	}
+
+	@Override
+	public void init(RuntimeServices rs) throws Exception {
+		System.out.println("init");
+	}
+
+	@Override
+	public void log(int level, String message) {
+		System.out.println("log: " + message);
+	}
+
+	@Override
+	public void log(int level, String message, Throwable t) {
+		System.out.println("log error");
+		
+	}
+
+	@Override
+	public boolean isLevelEnabled(int level) {
+		System.out.println("level: " + level);
+		return true;
 	}
 }
