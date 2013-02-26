@@ -2,15 +2,19 @@ package com.esofthead.mycollab.module.mail;
 
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class Mailer {
+	private static Logger log = LoggerFactory.getLogger(Mailer.class);
 	protected String host;
 	protected String username = null;
 	protected String password = null;
 	protected boolean isTLS = false;
 	protected int port;
 
-	public Mailer(String host, String username, String password, int port, boolean isTLS) {
+	public Mailer(String host, String username, String password, int port,
+			boolean isTLS) {
 		this.host = host;
 		this.username = username;
 		this.password = password;
@@ -33,7 +37,12 @@ public class Mailer {
 		email.setHostName(host);
 		email.setFrom(fromEmail, fromName);
 		for (int i = 0; i < toEmail.length; i++) {
-			email.addTo(toEmail[i], toName[i]);
+			if (isValidate(toEmail[i]) && isValidate(toName[i])) {
+				email.addTo(toEmail[i], toName[i]);
+			} else {
+				log.error("Invalid email input: " + toEmail[i] + "---"
+						+ toName[i]);
+			}
 		}
 		if (username != null) {
 			email.setAuthentication(username, password);
@@ -42,5 +51,9 @@ public class Mailer {
 		email.setSubject(subject);
 		email.setHtmlMsg(html);
 		email.send();
+	}
+
+	private boolean isValidate(String val) {
+		return (val != null) && (val.trim().length() > 0);
 	}
 }
