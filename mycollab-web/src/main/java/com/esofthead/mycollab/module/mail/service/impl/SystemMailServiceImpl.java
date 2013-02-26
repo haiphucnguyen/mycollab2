@@ -13,9 +13,11 @@ public class SystemMailServiceImpl extends AbstractMailService implements
 
 	static {
 		gmailer = new Mailer(
-				ApplicationProperties.getProperty("mail.smtphost"),
-				ApplicationProperties.getProperty("mail.username"),
-				ApplicationProperties.getProperty("mail.password"), true);
+				ApplicationProperties.getProperty(ApplicationProperties.MAIL_SMTPHOST),
+				ApplicationProperties.getProperty(ApplicationProperties.MAIL_USERNAME),
+				ApplicationProperties.getProperty(ApplicationProperties.MAIL_PASSWORD), 
+				Integer.parseInt(ApplicationProperties.getProperty(ApplicationProperties.MAIL_PORT)),
+				true);
 	}
 
 	@Override
