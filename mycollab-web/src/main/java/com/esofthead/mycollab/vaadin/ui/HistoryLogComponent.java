@@ -4,6 +4,11 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 import com.esofthead.mycollab.common.domain.AuditChangeItem;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.criteria.AuditLogSearchCriteria;
@@ -19,10 +24,6 @@ import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import java.util.Date;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 
 /**
  *
@@ -196,7 +197,9 @@ public class HistoryLogComponent extends VerticalLayout {
 
         @Override
         public Component formatField(String value) {
-            return new Label(value);
+        	LabelHTMLDisplayWidget lbHtml = new LabelHTMLDisplayWidget(value);
+        	lbHtml.setWidth("90%");
+            return lbHtml;
         }
     }
 

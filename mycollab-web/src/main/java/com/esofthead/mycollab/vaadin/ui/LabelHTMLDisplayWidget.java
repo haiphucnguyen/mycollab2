@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.bug;
+package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
@@ -9,7 +9,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
 @SuppressWarnings("serial")
-public class BugDescriptionFieldDisplayWidget extends HorizontalLayout
+public class LabelHTMLDisplayWidget extends HorizontalLayout
 		implements LayoutClickListener {
 	private final LabelStringGenerator menuLinkGenerator = new BugDescriptionLinkLabelStringGenerator();
 	private final Label lbDes;
@@ -19,7 +19,7 @@ public class BugDescriptionFieldDisplayWidget extends HorizontalLayout
 	private String pathIconMinus;
 	private static int NUM_CUT = 100;
 
-	public BugDescriptionFieldDisplayWidget(String content) {
+	public LabelHTMLDisplayWidget(String content) {
 		description = content;
 		ThemeResource iconPlus = new ThemeResource("icons/16/plus.png");
 		ThemeResource iconMinus = new ThemeResource("icons/16/minus.png");

@@ -17,7 +17,6 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
-import com.esofthead.mycollab.module.project.view.bug.BugSummaryViewImpl;
 import com.esofthead.mycollab.module.project.view.bug.BugTableDisplay;
 import com.esofthead.mycollab.module.project.view.standup.StandupReportListDisplay;
 import com.esofthead.mycollab.module.project.view.task.TaskTableDisplay;

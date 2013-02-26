@@ -6,9 +6,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.module.project.ProjectContants;
-import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.HistoryLogComponent;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  * 

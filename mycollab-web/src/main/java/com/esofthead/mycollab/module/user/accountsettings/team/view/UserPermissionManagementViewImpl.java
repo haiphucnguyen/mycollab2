@@ -35,6 +35,7 @@ public class UserPermissionManagementViewImpl extends AbstractView implements
 		menu.setWidth("100%");
 		menu.setStyleName(UIConstants.THEME_TAB_STYLE3);
 		menu.setHeight("40px");
+		menu.setStyleName(UIConstants.THEME_TAB_STYLE3);
 		menu.addComponent(myProjectTab);
 
 		this.addComponent(menu);
