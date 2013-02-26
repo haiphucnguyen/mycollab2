@@ -20,6 +20,8 @@ import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import java.util.List;
 
+import net.bull.javamelody.MonitoredWithSpring;
+
 /**
  * Engroup serivice supports pagable/search data.
  *
@@ -33,6 +35,7 @@ public interface ISearchableService<S extends SearchCriteria> extends IService {
      * @param criteria
      * @return
      */
+	@MonitoredWithSpring
     int getTotalCount(S criteria);
 
     /**
@@ -42,6 +45,7 @@ public interface ISearchableService<S extends SearchCriteria> extends IService {
      * @param maxResult
      * @return
      */
+    @MonitoredWithSpring
     List findPagableListByCriteria(SearchRequest<S> searchRequest);
 
     void removeByCriteria(S criteria);
