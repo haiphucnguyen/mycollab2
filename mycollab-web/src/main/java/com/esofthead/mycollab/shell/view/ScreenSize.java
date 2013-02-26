@@ -3,6 +3,8 @@ package com.esofthead.mycollab.shell.view;
 public class ScreenSize {
 
 	private static int width = 1024;
+	
+	private static int DEVIATION = 50;
 
 	public static int PIXELS_1024_WIDTH = 1024;
 
@@ -13,10 +15,10 @@ public class ScreenSize {
 	}
 
 	public static boolean hasSupport1024Pixels() {
-		return width >= PIXELS_1024_WIDTH && width < PIXELS_1280_WIDTH;
+		return width >= (PIXELS_1024_WIDTH - DEVIATION) && width < (PIXELS_1280_WIDTH - DEVIATION);
 	}
 
 	public static boolean hasSupport1280Pixels() {
-		return width >= PIXELS_1280_WIDTH;
+		return width >= (PIXELS_1280_WIDTH - DEVIATION);
 	}
 }

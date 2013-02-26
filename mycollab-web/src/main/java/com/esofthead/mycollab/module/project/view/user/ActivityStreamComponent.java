@@ -29,6 +29,7 @@ import com.esofthead.mycollab.module.project.view.problem.ProblemReadPageAction;
 import com.esofthead.mycollab.module.project.view.risk.RiskReadPageAction;
 import com.esofthead.mycollab.module.project.view.task.TaskGroupReadPageAction;
 import com.esofthead.mycollab.module.project.view.task.TaskReadPageAction;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -205,8 +206,12 @@ public class ActivityStreamComponent extends Depot {
 
 		@Override
 		public String handleText(String value) {
-			if (value.length() > 45) {
-				return value.substring(0, 45) + "...";
+			int limitValue = 45;
+			if (ScreenSize.hasSupport1024Pixels()) {
+				limitValue = 35;
+			}
+			if (value.length() > limitValue) {
+				return value.substring(0, limitValue) + "...";
 			}
 			return value;
 		}

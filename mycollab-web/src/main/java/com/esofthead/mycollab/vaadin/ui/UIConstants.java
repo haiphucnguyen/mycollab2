@@ -4,6 +4,7 @@ public class UIConstants {
 
 	public static final String DEFAULT_CAPTION_FORM_WIDTH = "120px";
 	public static final String DEFAULT_CONTROL_WIDTH = "250px";
+	public static final String DEFAULT_CONTROL_WIDTH_1024_RESOLUTION = "200px";
 	public static final String DEFAULT_CONTROL_EXT_WIDTH = "350px";
 	public static final String DEFAULT_2XCONTROL_WIDTH = "600px";
 	public static final String DEFAULT_2XCONTROL_HEIGHT = "400px";

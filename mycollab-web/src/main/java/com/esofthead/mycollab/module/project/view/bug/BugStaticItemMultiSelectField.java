@@ -13,9 +13,9 @@ package com.esofthead.mycollab.module.project.view.bug;
 public class BugStaticItemMultiSelectField extends MultiSelectComp {
 
 	private String[] arrItemData;
-
-	public BugStaticItemMultiSelectField(String[] arrItemData) {
-		super("", "225px");
+	
+	public BugStaticItemMultiSelectField(String[] arrItemData, String width) {
+		super("", width);
 		this.arrItemData = arrItemData;
 	}
 

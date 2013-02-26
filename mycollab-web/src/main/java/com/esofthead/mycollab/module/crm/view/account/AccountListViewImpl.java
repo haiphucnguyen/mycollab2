@@ -1,9 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import org.vaadin.hene.splitbutton.PopupButtonControl;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -25,7 +28,6 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 @ViewComponent
 public class AccountListViewImpl extends AbstractView implements
@@ -53,10 +55,16 @@ public class AccountListViewImpl extends AbstractView implements
     }
 
     private void generateDisplayTable() {
-        tableItem = new AccountTableDisplay(new String[]{"selected", "accountname",
+        if (ScreenSize.hasSupport1024Pixels()) {
+        	tableItem = new AccountTableDisplay(new String[]{"selected", "accountname", "phoneoffice", "email", "assignUserFullName"},
+                new String[]{"", "Name", "Phone Office",
+                    "Email Address", "Assign User"});
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			tableItem = new AccountTableDisplay(new String[]{"selected", "accountname",
                     "city", "phoneoffice", "email", "assignUserFullName"},
                 new String[]{"", "Name", "City", "Phone Office",
                     "Email Address", "Assign User"});
+		}
 
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 			private static final long serialVersionUID = 1L;

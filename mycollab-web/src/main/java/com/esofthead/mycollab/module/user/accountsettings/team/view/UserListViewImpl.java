@@ -4,9 +4,12 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import org.vaadin.hene.splitbutton.PopupButtonControl;
+
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -24,7 +27,6 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 /**
  * 
@@ -55,10 +57,18 @@ public class UserListViewImpl extends AbstractView implements UserListView {
 	}
 
 	private void generateDisplayTable() {
-		tableItem = new UserTableDisplay(new String[] { "selected",
-				"displayName", "username", "email", "lastAccessedTime" },
-				new String[] { "", "Name", "User Name", "Email",
-						"Last Accessed Time" });
+		if (ScreenSize.hasSupport1024Pixels()) {
+			tableItem = new UserTableDisplay(new String[] { "selected",
+					"displayName", "username", "email" },
+					new String[] { "", "Name", "User Name", "Email" });
+
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			tableItem = new UserTableDisplay(new String[] { "selected",
+					"displayName", "username", "email", "lastAccessedTime" },
+					new String[] { "", "Name", "User Name", "Email",
+							"Last Accessed Time" });
+
+		}
 
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

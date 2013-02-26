@@ -11,14 +11,18 @@ import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.AbstractSelect.Filtering;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupDateField;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  *
@@ -173,7 +177,6 @@ public class DateSelectionField extends GridLayout{
 		Calendar c = Calendar.getInstance();
 		c.set(yearDuration, 0, 1);
 		int yearMaxDays = c.getActualMaximum(Calendar.DAY_OF_YEAR);
-		System.out.println("days of year " + yearMaxDays);
 		Date fDate = c.getTime();
 		Date tDate = DateTimeUtils.subtractOrAddDayDuration((Date) fDate.clone(), yearMaxDays -1);
 		return new RangeDateSearchField(fDate, tDate);
@@ -200,11 +203,38 @@ public class DateSelectionField extends GridLayout{
 	
 	private void addRangeDate() {
 		this.setRows(2);
-		HorizontalLayout hLayout = new HorizontalLayout();
-		hLayout.setSpacing(true);
-		hLayout.addComponent(dateStart);
-		hLayout.addComponent(dateEnd);
-		this.addComponent(hLayout, 0, 1);
+		if (ScreenSize.hasSupport1024Pixels()) {
+			HorizontalLayout dateStartGroup = new HorizontalLayout();
+			dateStartGroup.setSpacing(true);
+			Label lbFrom = new Label("From:");
+			lbFrom.setWidth("30px");
+			dateStartGroup.addComponent(lbFrom);
+			dateStartGroup.setComponentAlignment(lbFrom, Alignment.MIDDLE_RIGHT);
+			dateStartGroup.addComponent(dateStart);
+			dateStartGroup.setComponentAlignment(dateStart, Alignment.MIDDLE_LEFT);
+			
+			HorizontalLayout dateEndGroup = new HorizontalLayout();
+			dateEndGroup.setSpacing(true);
+			Label lbTo = new Label("To:");
+			lbTo.setWidth("30px");
+			dateEndGroup.addComponent(lbTo);
+			dateEndGroup.setComponentAlignment(lbTo, Alignment.MIDDLE_RIGHT);
+			dateEndGroup.addComponent(dateEnd);
+			dateEndGroup.setComponentAlignment(dateEnd, Alignment.MIDDLE_LEFT);
+			
+			VerticalLayout vLayout = new VerticalLayout();
+			vLayout.setSpacing(true);
+			vLayout.addComponent(dateStartGroup);
+			vLayout.addComponent(dateEndGroup);
+			this.addComponent(vLayout, 0, 1);
+			
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			HorizontalLayout hLayout = new HorizontalLayout();
+			hLayout.setSpacing(true);
+			hLayout.addComponent(dateStart);
+			hLayout.addComponent(dateEnd);
+			this.addComponent(hLayout, 0, 1);
+		}
 	}
 	
 	private void removeAllDatefield() {

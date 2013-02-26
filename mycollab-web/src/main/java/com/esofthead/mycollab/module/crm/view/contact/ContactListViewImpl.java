@@ -1,10 +1,13 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import org.vaadin.hene.splitbutton.PopupButtonControl;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -24,7 +27,6 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 @ViewComponent
 public class ContactListViewImpl extends AbstractView implements
@@ -53,11 +55,19 @@ public class ContactListViewImpl extends AbstractView implements
 
     @SuppressWarnings("serial")
     private void generateDisplayTable() {
-        tableItem = new ContactTableDisplay(new String[]{"selected",
+    	
+    	if (ScreenSize.hasSupport1024Pixels()) {
+    		tableItem = new ContactTableDisplay(new String[]{"selected",
+                    "contactName", "title", "accountName", "email"}, 
+                    new String[]{"", "Name", "Title",
+                    "Account Name", "Email"});
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			tableItem = new ContactTableDisplay(new String[]{"selected",
                     "contactName", "title", "accountName", "email", "officephone"}, 
                     new String[]{"", "Name", "Title",
                     "Account Name", "Email", "Office Phone"});
-
+		}
+    	
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override
             public Class<? extends ApplicationEvent> getEventType() {

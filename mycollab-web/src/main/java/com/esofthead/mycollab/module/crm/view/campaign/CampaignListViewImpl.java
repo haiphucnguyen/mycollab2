@@ -1,9 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import org.vaadin.hene.splitbutton.PopupButtonControl;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -23,7 +26,6 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 @SuppressWarnings("serial")
 @ViewComponent
@@ -51,11 +53,20 @@ public class CampaignListViewImpl extends AbstractView implements
     }
 
     private void generateDisplayTable() {
-        tableItem = new CampaignTableDisplay(new String[]{"selected",
+    	
+    	if (ScreenSize.hasSupport1024Pixels()) {
+    		tableItem = new CampaignTableDisplay(new String[]{"selected",
+                    "campaignname", "status", "type",
+                    "enddate", "assignUserFullName"}, new String[]{"",
+                    "Campaign", "Status", "Type",
+                    "End Date", "Assign User"});
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			tableItem = new CampaignTableDisplay(new String[]{"selected",
                     "campaignname", "status", "type", "expectedrevenue",
                     "enddate", "assignUserFullName"}, new String[]{"",
                     "Campaign", "Status", "Type", "Expected Revenue",
                     "End Date", "Assign User"});
+		}
 
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override
