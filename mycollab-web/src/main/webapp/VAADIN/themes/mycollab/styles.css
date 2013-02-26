@@ -321,7 +321,7 @@ input.v-textfield-pagedtable-pagefield {
 	margin-top: 1px;
 }
 input.v-textfield[type="text"], textarea.v-textarea, .v-filterselect {
-	padding: 3px 3px 4px;
+	padding: 3px 3px 5px;
 }
 
 .v-textfield.v-readonly {

@@ -92,6 +92,7 @@ public class ProjectTaskServiceImpl extends
 	@Scheduled(fixedDelay = 3000)
 	@Override
 	public void runNotification() {
+		System.out.print("Run task email");
 		RelayEmailNotificationSearchCriteria criteria = new RelayEmailNotificationSearchCriteria();
 		criteria.setType(new StringSearchField(MonitorTypeConstants.PRJ_TASK));
 		List<SimpleRelayEmailNotification> relayEmaiNotifications = relayEmailNotificationService

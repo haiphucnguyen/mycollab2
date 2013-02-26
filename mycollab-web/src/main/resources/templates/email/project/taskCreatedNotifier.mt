@@ -21,7 +21,7 @@
 				</table
 		</tr>
 		<tr>
-			<td style="background: url('${defaultUrls.cdn_url}border_large_top.png') no-repeat 0 0 transparent; height: 39px;">&nbsp;</td>
+			<td style="background: url('${defaultUrls.cdn_url}border_large_top.png') no-repeat 0 0 transparent;" height="39">&nbsp;</td>
 		</tr>
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_center_blue.png') repeat-y 0 0 transparent; text-align: center; padding-bottom: 10px;"><span style="font: bold 18px Tahoma, Geneva, sans-serif;text-transform: uppercase; color: white;">New task created</span>
@@ -39,24 +39,24 @@
 						<td style="background: url('${defaultUrls.cdn_url}border_small_center.png') repeat-y 0 0 transparent; color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px;">
 								<tr>
-									<td style="text-align: right;">Task Name:&nbsp;</td>
+									<td style="text-align: right; min-width: 70px;">Task Name:&nbsp;</td>
 									<td style="font-weight: bold; text-transform: uppercase;"><a href="$hyperLinks.taskUrl" style="color: #4283c4; text-decoration: none;">$task.taskname</a></td>
 								</tr>
 								<tr>
 									<td style="text-align: right;">Start Date:&nbsp;</td>
 									<td>$date.format('short_date', $task.Startdate)</td>
-									<td style="text-align: right;">Actual Start Date:&nbsp;</td>
-									<td>$date.format($task.Actualstartdate)</td>		
+									<td style="text-align: right; min-width: 70px;">Actual Start Date:&nbsp;</td>
+									<td>$date.format('short_date', $task.Actualstartdate)</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">End Date:&nbsp;</td>
-									<td>$date.format($task.getEndDate())</td>
+									<td>$date.format('short_date', $task.Enddate)</td>
 									<td style="text-align: right;">Actual End Date:&nbsp;</td>
-									<td>$date.format($task.getActualEndDate())</td>		
+									<td>$date.format('short_date', $task.Actualenddate)</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Deadline:&nbsp;</td>
-									<td>$date.format($task.getDeadline())</td>
+									<td>$date.format('short_date', $task.getDeadline())</td>
 									<td style="text-align: right;">Priority:&nbsp;</td>
 									<td>$task.priority</td>		
 								</tr>
@@ -88,7 +88,7 @@
 			</td>
 		</tr>
 		<tr>
-			<td style="background: url('${defaultUrls.cdn_url}border_large_bottom.png') no-repeat 0 0 transparent; height: 16px;">&nbsp;</td>
+			<td style="background: url('${defaultUrls.cdn_url}border_large_bottom.png') no-repeat 0 0 transparent;" height="16">&nbsp;</td>
 		</tr>
 		<tr>
 			<td>
