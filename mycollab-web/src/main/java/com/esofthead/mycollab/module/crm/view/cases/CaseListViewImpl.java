@@ -1,10 +1,13 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
+import org.vaadin.hene.splitbutton.PopupButtonControl;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -24,7 +27,6 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 @ViewComponent
 public class CaseListViewImpl extends AbstractView implements CaseListView {
@@ -52,13 +54,23 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 
 	@SuppressWarnings("serial")
 	private void generateDisplayTable() {
-		tableItem = new CaseTableDisplay(new String[]{"selected", "subject", "accountName",
-                            "priority", "status", "assignUserFullName",
-                            "createdtime"}, new String[]{"", "Subject",
-                            "Account Name", "Priority", "Status", "Assigned To",
-                            "Date Created"});
 
-		tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+		if (ScreenSize.hasSupport1024Pixels()) {
+			tableItem = new CaseTableDisplay(new String[] { "selected",
+					"subject", "accountName", "priority", "status",
+					"assignUserFullName" }, new String[] { "",
+					"Subject", "Account Name", "Priority", "Status",
+					"Assigned To"});
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			tableItem = new CaseTableDisplay(new String[] { "selected",
+					"subject", "accountName", "priority", "status",
+					"assignUserFullName", "createdtime" }, new String[] { "",
+					"Subject", "Account Name", "Priority", "Status",
+					"Assigned To", "Date Created" });	
+		}
+
+		tableItem
+				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
 						return TableClickEvent.class;
@@ -95,9 +107,10 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 
 		selectOptionButton = new SelectionOptionButton(tableItem);
 		layout.addComponent(selectOptionButton);
-		
+
 		Button deleteBtn = new Button("Delete");
-        deleteBtn.setEnabled(AppContext.canAccess(RolePermissionCollections.CRM_ACCOUNT));
+		deleteBtn.setEnabled(AppContext
+				.canAccess(RolePermissionCollections.CRM_ACCOUNT));
 
 		tableActionControls = new PopupButtonControl("delete", deleteBtn);
 		tableActionControls.addOptionItem("mail", "Mail");

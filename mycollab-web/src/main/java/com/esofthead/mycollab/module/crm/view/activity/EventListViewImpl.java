@@ -1,8 +1,11 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import org.vaadin.hene.splitbutton.PopupButtonControl;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleEvent;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -20,7 +23,6 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 @ViewComponent
 public class EventListViewImpl extends AbstractView implements EventListView {
@@ -46,11 +48,20 @@ public class EventListViewImpl extends AbstractView implements EventListView {
         generateDisplayTable();
     }
 
-    private void generateDisplayTable() {
-        tableItem = new EventTableDisplay(new String[]{"selected", "status",
-                    "eventType", "subject", "startDate", "endDate"},
-                new String[]{"", "Status", "Type", "Subject", "Start Date",
-                    "End Date"});
+    @SuppressWarnings("serial")
+	private void generateDisplayTable() {
+    	
+    	if (ScreenSize.hasSupport1024Pixels()) {
+    		 tableItem = new EventTableDisplay(new String[]{"selected", "status",
+                     "eventType", "subject", "endDate"},
+                 new String[]{"", "Status", "Type", "Subject",
+                     "End Date"});
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			 tableItem = new EventTableDisplay(new String[]{"selected", "status",
+	                    "eventType", "subject", "startDate", "endDate"},
+	                new String[]{"", "Status", "Type", "Subject", "Start Date",
+	                    "End Date"});	
+		}
 
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override

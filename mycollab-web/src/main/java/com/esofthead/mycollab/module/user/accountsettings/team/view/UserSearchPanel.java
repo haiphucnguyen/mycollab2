@@ -10,6 +10,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.UserEvent;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -34,6 +35,9 @@ public class UserSearchPanel extends GenericSearchPanel<UserSearchCriteria> {
 
 	public UserSearchPanel() {
 		this.setCompositionRoot(new UserBasicSearchLayout());
+		if (ScreenSize.hasSupport1024Pixels()) {
+			this.setWidth("750px");
+		}
 	}
 
 	private HorizontalLayout createSearchTopPanel() {

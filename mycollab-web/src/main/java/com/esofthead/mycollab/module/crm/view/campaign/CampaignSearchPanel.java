@@ -11,8 +11,10 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
+import com.esofthead.mycollab.module.crm.view.activity.EventTableDisplay;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DateSelectionField;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
@@ -185,9 +187,18 @@ public class CampaignSearchPanel extends
 
 		@Override
 		public ComponentContainer constructBody() {
+			
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3,
-					"90px");
-
+			"90px");
+			
+			if (ScreenSize.hasSupport1024Pixels()) {
+				gridLayout = new GridFormLayoutHelper(3, 3, UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
+				"90px");
+			} else if (ScreenSize.hasSupport1280Pixels()) {
+				gridLayout = new GridFormLayoutHelper(3, 3,
+				"90px");
+			}
+			
 			nameField = (TextField) gridLayout.addComponent(new TextField(),
 					"Name", 0, 0);
 			startDateField = (DateSelectionField) gridLayout.addComponent(

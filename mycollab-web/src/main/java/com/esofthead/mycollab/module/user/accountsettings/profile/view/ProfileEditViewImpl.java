@@ -1,7 +1,9 @@
 package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
+import com.esofthead.mycollab.module.user.accountsettings.team.view.UserTableDisplay;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -11,6 +13,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
@@ -126,18 +129,25 @@ public class ProfileEditViewImpl extends AbstractView implements
 
 				Label informationHeader = new Label("User Information");
 				informationHeader.setStyleName("h2");
-				layout.addComponent(informationHeader);
+				
+				Label contactHeader = new Label("Contact Information");
+				contactHeader.setStyleName("h2");
 
-				basicInformation = new GridFormLayoutHelper(1, 5);
+				if (ScreenSize.hasSupport1024Pixels()) {
+					basicInformation = new GridFormLayoutHelper(1, 5, UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION, "90px");
+					contactInformation = new GridFormLayoutHelper(1, 2, UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION, "90px");
+					informationHeader.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION);
+					contactHeader.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION);
+				} else if (ScreenSize.hasSupport1280Pixels()) {
+					basicInformation = new GridFormLayoutHelper(1, 5);
+					contactInformation = new GridFormLayoutHelper(1, 2);
+				}
+				
+				layout.addComponent(informationHeader);
 				layout.addComponent(basicInformation.getLayout());
 				layout.setComponentAlignment(basicInformation.getLayout(),
 						Alignment.MIDDLE_LEFT);
-
-				Label contactHeader = new Label("Contact Information");
-				contactHeader.setStyleName("h2");
 				layout.addComponent(contactHeader);
-
-				contactInformation = new GridFormLayoutHelper(1, 2);
 				layout.addComponent(contactInformation.getLayout());
 
 				HorizontalLayout userInfoControls = createButtonControls();

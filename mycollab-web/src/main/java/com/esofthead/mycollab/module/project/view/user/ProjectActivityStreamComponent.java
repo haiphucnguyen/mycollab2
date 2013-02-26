@@ -25,6 +25,7 @@ import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -117,8 +118,12 @@ public class ProjectActivityStreamComponent extends Depot {
 
 		@Override
 		public String handleText(String value) {
-			if (value.length() > 45) {
-				return value.substring(0, 45) + "...";
+			int limitValue = 45;
+			if (ScreenSize.hasSupport1024Pixels()) {
+				limitValue = 35;
+			}
+			if (value.length() > limitValue) {
+				return value.substring(0, limitValue) + "...";
 			}
 			return value;
 		}

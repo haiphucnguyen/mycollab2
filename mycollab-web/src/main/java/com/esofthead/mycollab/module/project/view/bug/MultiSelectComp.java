@@ -40,7 +40,7 @@ public abstract class MultiSelectComp extends CustomField {
 		componentsDisplay.setNullRepresentation("");
 		componentsDisplay.setReadOnly(true);
 		componentsDisplay.addStyleName("noBorderRight");
-		componentsDisplay.setWidth("100%");
+		componentsDisplay.setWidth("195px");
 
 		componentPopupSelection = new MultipleItemsPopupSelection();
 		componentPopupSelection.addListener(new Button.ClickListener() {
@@ -55,17 +55,17 @@ public abstract class MultiSelectComp extends CustomField {
 
 		content.addComponent(componentsDisplay);
 		content.setComponentAlignment(componentsDisplay,
-				Alignment.MIDDLE_CENTER);
+				Alignment.TOP_RIGHT);
 
 		componentPopupSelection.addStyleName("nonPopupIndicator");
 		componentPopupSelection.addStyleName(UIConstants.SELECT_BG);
 		componentPopupSelection.setWidth("23px");
 		content.addComponent(componentPopupSelection);
 		content.setComponentAlignment(componentPopupSelection,
-				Alignment.MIDDLE_CENTER);
+				Alignment.TOP_LEFT);
 
 		content.setWidth("100%");
-		content.setExpandRatio(componentsDisplay, 1.0f);
+		//content.setExpandRatio(componentsDisplay, 1.0f);
 
 		this.setCompositionRoot(content);
 	}

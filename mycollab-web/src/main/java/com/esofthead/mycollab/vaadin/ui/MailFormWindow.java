@@ -123,7 +123,14 @@ public class MailFormWindow extends Window {
 		if (lstMail != null) {
 			for (String mail : lstMail) {
 				if (mail != null && !mail.equals("")) {
-					tokenFieldMailTo.addToken(mail);
+					if (mail.indexOf("<") > -1) {
+						String strMail = mail.substring(mail.indexOf("<") + 1, mail.lastIndexOf(">"));
+						if (strMail != null && !strMail.equalsIgnoreCase("null")) {
+							tokenFieldMailTo.addToken(mail);
+						}
+					} else {
+						tokenFieldMailTo.addToken(mail);
+					}
 				}
 			}
 		}

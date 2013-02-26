@@ -13,6 +13,7 @@ import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -72,8 +73,16 @@ public class CaseSearchPanel extends GenericSearchPanel<CaseSearchCriteria> {
 
 		@Override
 		public ComponentContainer constructBody() {
-			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 2,
-					"90px");
+			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3,
+			"90px");
+			
+			if (ScreenSize.hasSupport1024Pixels()) {
+				gridLayout = new GridFormLayoutHelper(3, 3, UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
+				"90px");
+			} else if (ScreenSize.hasSupport1280Pixels()) {
+				gridLayout = new GridFormLayoutHelper(3, 3,
+				"90px");
+			}
 
 			numberField = (TextField) gridLayout.addComponent(new TextField(),
 					"Number", 0, 0);

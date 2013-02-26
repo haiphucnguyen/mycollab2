@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.view.lead.LeadSourceListSelect;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.CountryListSelect;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
@@ -191,7 +192,15 @@ public class ContactSearchPanel extends
 		@Override
 		public ComponentContainer constructBody() {
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 4,
-					"90px");
+			"90px");
+			
+			if (ScreenSize.hasSupport1024Pixels()) {
+				gridLayout = new GridFormLayoutHelper(3, 4, UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
+				"90px");
+			} else if (ScreenSize.hasSupport1280Pixels()) {
+				gridLayout = new GridFormLayoutHelper(3, 4,
+				"90px");
+			}
 
 			firstnameField = (TextField) gridLayout.addComponent(
 					new TextField(), "First Name", 0, 0);

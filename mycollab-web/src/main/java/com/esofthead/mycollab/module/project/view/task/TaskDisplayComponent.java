@@ -59,7 +59,6 @@ public class TaskDisplayComponent extends CssLayout {
 
 	private void showTaskGroupInfo() {
 		if (isDisplayTaskListInfo) {
-			System.out.println("task id: " + taskList.getId() + "task name: " + taskList.getName() + " milestone name: " + taskList.getMilestoneName() + " owner: " + taskList.getOwner() + " num open task: " + taskList.getNumOpenTasks());;
 			GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(2, 3);
 			layoutHelper.getLayout().setWidth("100%");
 			this.addComponent(layoutHelper.getLayout());
@@ -68,7 +67,6 @@ public class TaskDisplayComponent extends CssLayout {
 					"Description", 0, 0, 2, "100%", Alignment.TOP_RIGHT);
 			descLbl.setValue(taskList.getDescription());
 
-			System.out.println("milsetone: " + taskList.getMilestoneName());
 			layoutHelper.addComponent(new ProjectUserFormLinkField(
 					taskList.getOwner(), taskList
 					.getOwnerFullName()), "Responsible User", 0, 1,

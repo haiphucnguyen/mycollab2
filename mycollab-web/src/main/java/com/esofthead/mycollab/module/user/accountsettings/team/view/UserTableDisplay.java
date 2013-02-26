@@ -8,6 +8,7 @@ import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.EmailLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -31,6 +32,10 @@ public class UserTableDisplay extends
 			String[] columnHeaders) {
 		super(AppContext.getSpringBean(UserService.class), SimpleUser.class,
 				visibleColumns, columnHeaders);
+		
+		if (ScreenSize.hasSupport1024Pixels()) {
+			this.setWidth("750px");
+		}
 
 		this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -135,6 +140,7 @@ public class UserTableDisplay extends
 				});
 
 		this.setColumnExpandRatio("username", 1.0f);
+		this.setColumnWidth("displayName", UIConstants.TABLE_X_LABEL_WIDTH);
 		this.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
 		this.setColumnWidth("lastAccessedTime",
 				UIConstants.TABLE_DATE_TIME_WIDTH);
