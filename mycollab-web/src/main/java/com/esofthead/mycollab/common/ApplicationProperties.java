@@ -20,6 +20,16 @@ public class ApplicationProperties {
 	public static final String GOOGLE_URL = "google.url";
 	public static final String LINKEDIN_URL = "linkedin.url";
 	public static final String TWITTER_URL = "twitter.url";
+	
+	public static final String MAIL_SMTPHOST = "mail.smtphost";
+	public static final String MAIL_PORT = "mail.port";
+	public static final String MAIL_USERNAME = "mail.username";
+	public static final String MAIL_PASSWORD = "mail.password";
+	
+	public static final String RELAYMAIL_SMTPHOST = "relaymail.smtphost";
+	public static final String RELAYMAIL_PORT = "relaymail.port";
+	public static final String RELAYMAIL_USERNAME = "relaymail.username";
+	public static final String RELAYMAIL_PASSWORD = "relaymail.password";
 
 	public static final String ERROR_SENDTO = "error.sendTo";
 
