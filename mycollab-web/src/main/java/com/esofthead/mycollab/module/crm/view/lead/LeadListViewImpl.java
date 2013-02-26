@@ -1,9 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import org.vaadin.hene.splitbutton.PopupButtonControl;
+
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -23,7 +26,6 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 @ViewComponent
 public class LeadListViewImpl extends AbstractView implements LeadListView {
@@ -51,11 +53,18 @@ public class LeadListViewImpl extends AbstractView implements LeadListView {
 
     @SuppressWarnings("serial")
     private void generateDisplayTable() {
-        tableItem = new LeadTableDisplay(
-                new String[]{"selected", "leadName", "status", "accountname",
-                    "officephone", "email", "assignUserFullName"},
-                new String[]{"", "Name", "Status", "Account Name",
-                    "Office Phone", "Email", "Assign User"});
+    	
+    	if (ScreenSize.hasSupport1024Pixels()) {
+    		 tableItem = new LeadTableDisplay(
+    	                new String[]{"selected", "leadName", "status", "accountname", "email", "assignUserFullName"},
+    	                new String[]{"", "Name", "Status", "Account Name", "Email", "Assign User"});
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			 tableItem = new LeadTableDisplay(
+		                new String[]{"selected", "leadName", "status", "accountname",
+		                    "officephone", "email", "assignUserFullName"},
+		                new String[]{"", "Name", "Status", "Account Name",
+		                    "Office Phone", "Email", "Assign User"});
+		}
 
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override

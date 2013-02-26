@@ -9,6 +9,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -21,14 +22,21 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class LeadListDashlet extends Depot {
 
     private LeadTableDisplay tableItem;
 
     public LeadListDashlet() {
         super("My Leads", new VerticalLayout());
-        tableItem = new LeadTableDisplay(new String[]{"leadName", "officephone", "email"},
-                new String[]{"Name", "Phone", "Email"});
+        
+        if (ScreenSize.hasSupport1024Pixels()) {
+        	tableItem = new LeadTableDisplay(new String[]{"leadName", "email"},
+                    new String[]{"Name", "Email"});
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			tableItem = new LeadTableDisplay(new String[]{"leadName", "officephone", "email"},
+	                new String[]{"Name", "Phone", "Email"});
+		}
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override
             public Class<? extends ApplicationEvent> getEventType() {

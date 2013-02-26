@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.ui.components.TaskPercentageCompleteComboBox;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.AttachmentPanel;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
@@ -122,6 +123,11 @@ public class TaskAddPopup extends CustomComponent {
         @Override
         public Layout getLayout() {
             informationLayout = new GridFormLayoutHelper(2, 5);
+            
+            if (ScreenSize.hasSupport1024Pixels()) {
+            	informationLayout = new GridFormLayoutHelper(2, 5, UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION, "150px");
+            }
+            
             VerticalLayout layout = new VerticalLayout();
             layout.addComponent(informationLayout.getLayout());
             return layout;

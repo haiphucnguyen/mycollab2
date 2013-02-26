@@ -10,6 +10,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.criteria.CallSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CallService;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -21,6 +22,7 @@ import com.vaadin.ui.VerticalLayout;
  *
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class CallListDashlet extends Depot {
 
     private CallTableDisplay tableItem;
@@ -28,7 +30,11 @@ public class CallListDashlet extends Depot {
     public CallListDashlet() {
         super("My Calls", new VerticalLayout());
 
-        tableItem = new CallTableDisplay(new String[]{"isClosed", "subject", "startdate", "status"}, new String[]{"", "Subject", "Start Date", "Status"});
+        if (ScreenSize.hasSupport1024Pixels()) {
+        	tableItem = new CallTableDisplay(new String[]{"isClosed", "subject", "status"}, new String[]{"", "Subject", "Status"});
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			tableItem = new CallTableDisplay(new String[]{"isClosed", "subject", "startdate", "status"}, new String[]{"", "Subject", "Start Date", "Status"});
+		}
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
             @Override
             public Class<? extends ApplicationEvent> getEventType() {

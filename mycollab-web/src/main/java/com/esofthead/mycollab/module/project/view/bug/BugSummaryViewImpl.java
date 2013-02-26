@@ -5,6 +5,7 @@ import org.vaadin.hene.splitbutton.PopupButtonControl;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -49,10 +50,19 @@ public class BugSummaryViewImpl extends AbstractView implements BugSummaryView {
 	}
 
 	private void generateDisplayTable() {
-		tableItem = new BugTableDisplay(new String[] { "selected", "summary",
-				"assignuserFullName", "severity", "resolution", "duedate" },
-				new String[] { "", "Summary", "Assigned User", "Severity",
-						"Resolution", "Due Date" });
+
+		if (ScreenSize.hasSupport1024Pixels()) {
+			tableItem = new BugTableDisplay(
+					new String[] { "selected", "summary", "assignuserFullName",
+							"severity", "resolution" }, new String[] { "",
+							"Summary", "Assigned User", "Severity",
+							"Resolution" });
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			tableItem = new BugTableDisplay(new String[] { "selected",
+					"summary", "assignuserFullName", "severity", "resolution",
+					"duedate" }, new String[] { "", "Summary", "Assigned User",
+					"Severity", "Resolution", "Due Date" });
+		}
 
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

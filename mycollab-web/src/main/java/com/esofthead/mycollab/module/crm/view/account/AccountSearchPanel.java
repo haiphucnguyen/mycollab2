@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.ui.components.UserListSelect;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -173,8 +174,18 @@ public class AccountSearchPanel extends GenericSearchPanel<AccountSearchCriteria
 
         @Override
         public ComponentContainer constructBody() {
-            GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3,
-                    "90px");
+        	
+        	GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(3, 3,
+			"90px");
+			
+			if (ScreenSize.hasSupport1024Pixels()) {
+				gridLayout = new GridFormLayoutHelper(3, 3, UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
+				"90px");
+			} else if (ScreenSize.hasSupport1280Pixels()) {
+				gridLayout = new GridFormLayoutHelper(3, 3,
+				"90px");
+			}
+			
             nameField = (TextField) gridLayout.addComponent(new TextField(),
                     "Name", 0, 0);
 

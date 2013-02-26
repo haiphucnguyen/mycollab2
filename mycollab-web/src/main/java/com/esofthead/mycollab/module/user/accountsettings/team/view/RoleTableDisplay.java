@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.service.RoleService;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -25,7 +26,10 @@ public class RoleTableDisplay extends PagedBeanTable2<RoleService, RoleSearchCri
 
 	public RoleTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
         super(AppContext.getSpringBean(RoleService.class), Role.class, visibleColumns, columnHeaders);
-
+        
+        if (ScreenSize.hasSupport1024Pixels()) {
+			this.setWidth("750px");
+		}
         this.addGeneratedColumn("selected", new Table.ColumnGenerator() {
             private static final long serialVersionUID = 1L;
 
