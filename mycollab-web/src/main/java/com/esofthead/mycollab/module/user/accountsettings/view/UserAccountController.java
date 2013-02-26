@@ -3,15 +3,12 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
-import com.esofthead.mycollab.module.user.accountsettings.team.view.RoleAddPresenter;
-import com.esofthead.mycollab.module.user.accountsettings.team.view.RoleListPresenter;
-import com.esofthead.mycollab.module.user.accountsettings.team.view.RoleReadPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserAddPresenter;
-import com.esofthead.mycollab.module.user.accountsettings.team.view.UserListPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
-import com.esofthead.mycollab.module.user.accountsettings.team.view.UserReadPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.ProfileScreenData;
+import com.esofthead.mycollab.module.user.accountsettings.view.parameters.RoleScreenData;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.UserScreenData;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
@@ -27,7 +24,6 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Window;
 
@@ -78,9 +74,9 @@ public class UserAccountController implements IController {
 
 					@Override
 					public void handle(UserEvent.GotoAdd event) {
-						UserAddPresenter presenter = PresenterResolver
-								.getPresenter(UserAddPresenter.class);
-						presenter.go(container, new ScreenData.Add<User>(
+						UserPresenter presenter = PresenterResolver
+								.getPresenter(UserPresenter.class);
+						presenter.go(container, new UserScreenData.Add(
 								new User()));
 					}
 				});
@@ -100,8 +96,7 @@ public class UserAccountController implements IController {
 								.getPresenter(UserAddPresenter.class);
 
 						SimpleUser user = (SimpleUser) event.getData();
-						presenter
-								.go(container, new ScreenData.Edit<User>(user));
+						presenter.go(container, new UserScreenData.Edit(user));
 					}
 				});
 
@@ -140,9 +135,8 @@ public class UserAccountController implements IController {
 						UserSearchCriteria criteria = new UserSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(
 								SearchField.AND, AppContext.getAccountId()));
-						presenter.go(container,
-								new ScreenData.Search<UserSearchCriteria>(
-										criteria));
+						presenter.go(container, new UserScreenData.Search(
+								criteria));
 					}
 				});
 	}
@@ -159,9 +153,9 @@ public class UserAccountController implements IController {
 
 					@Override
 					public void handle(RoleEvent.GotoAdd event) {
-						RoleAddPresenter presenter = PresenterResolver
-								.getPresenter(RoleAddPresenter.class);
-						presenter.go(container, new ScreenData.Add<Role>(
+						UserPermissionManagementPresenter presenter = PresenterResolver
+								.getPresenter(UserPermissionManagementPresenter.class);
+						presenter.go(container, new RoleScreenData.Add(
 								new Role()));
 					}
 				});
@@ -177,12 +171,11 @@ public class UserAccountController implements IController {
 
 					@Override
 					public void handle(RoleEvent.GotoEdit event) {
-						RoleAddPresenter presenter = PresenterResolver
-								.getPresenter(RoleAddPresenter.class);
+						UserPermissionManagementPresenter presenter = PresenterResolver
+								.getPresenter(UserPermissionManagementPresenter.class);
 
 						Role role = (Role) event.getData();
-						presenter
-								.go(container, new ScreenData.Edit<Role>(role));
+						presenter.go(container, new RoleScreenData.Edit(role));
 					}
 				});
 
@@ -197,13 +190,11 @@ public class UserAccountController implements IController {
 
 					@Override
 					public void handle(RoleEvent.GotoRead event) {
-						RoleReadPresenter presenter = PresenterResolver
-								.getPresenter(RoleReadPresenter.class);
+						UserPermissionManagementPresenter presenter = PresenterResolver
+								.getPresenter(UserPermissionManagementPresenter.class);
 						if (event.getData() instanceof SimpleRole) {
-							presenter.go(
-									container,
-									new ScreenData.Preview<Role>((Role) event
-											.getData()));
+							presenter.go(container, new RoleScreenData.Read(
+									(Role) event.getData()));
 						} else if (event.getData() instanceof Integer) {
 							RoleService roleService = AppContext
 									.getSpringBean(RoleService.class);
@@ -219,7 +210,7 @@ public class UserAccountController implements IController {
 												Window.Notification.TYPE_HUMANIZED_MESSAGE);
 							} else {
 								presenter.go(container,
-										new ScreenData.Preview<Role>(role));
+										new RoleScreenData.Read(role));
 							}
 						}
 					}
@@ -236,15 +227,14 @@ public class UserAccountController implements IController {
 
 					@Override
 					public void handle(RoleEvent.GotoList event) {
-						RoleListPresenter presenter = PresenterResolver
-								.getPresenter(RoleListPresenter.class);
+						UserPermissionManagementPresenter presenter = PresenterResolver
+								.getPresenter(UserPermissionManagementPresenter.class);
 
 						RoleSearchCriteria criteria = new RoleSearchCriteria();
 						criteria.setsAccountId(new NumberSearchField(
 								SearchField.AND, AppContext.getAccountId()));
-						presenter.go(container,
-								new ScreenData.Search<RoleSearchCriteria>(
-										criteria));
+						presenter.go(container, new RoleScreenData.Search(
+								criteria));
 					}
 				});
 	}

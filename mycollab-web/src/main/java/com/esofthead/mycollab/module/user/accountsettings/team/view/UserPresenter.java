@@ -34,6 +34,12 @@ public class UserPresenter extends AbstractPresenter<UserContainer> {
         } else if (data instanceof UserScreenData.Read) {
         	UserReadPresenter presenter = PresenterResolver.getPresenter(UserReadPresenter.class);
         	presenter.go(view.getWidget(), data);
+        } else if (data instanceof UserScreenData.Search) {
+        	UserListPresenter presenter = PresenterResolver.getPresenter(UserListPresenter.class);
+        	presenter.go(view.getWidget(), data);
+        } else if (data instanceof UserScreenData.Add || data instanceof UserScreenData.Edit) {
+        	UserAddPresenter presenter = PresenterResolver.getPresenter(UserAddPresenter.class);
+        	presenter.go(view.getWidget(), data);
         }
     }
 }
