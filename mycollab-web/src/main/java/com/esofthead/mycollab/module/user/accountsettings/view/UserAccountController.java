@@ -8,9 +8,11 @@ import com.esofthead.mycollab.module.user.accountsettings.team.view.RoleListPres
 import com.esofthead.mycollab.module.user.accountsettings.team.view.RoleReadPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserAddPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserListPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserReadPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.ProfileScreenData;
+import com.esofthead.mycollab.module.user.accountsettings.view.parameters.UserScreenData;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -114,11 +116,10 @@ public class UserAccountController implements IController {
 
 					@Override
 					public void handle(UserEvent.GotoRead event) {
-						UserReadPresenter presenter = PresenterResolver
-								.getPresenter(UserReadPresenter.class);
-						presenter.go(container,
-								new ScreenData.Preview<SimpleUser>(
-										(SimpleUser) event.getData()));
+						UserPermissionManagementPresenter presenter = PresenterResolver
+								.getPresenter(UserPermissionManagementPresenter.class);
+						presenter.go(container, new UserScreenData.Read(
+								(SimpleUser) event.getData()));
 					}
 				});
 
@@ -133,8 +134,8 @@ public class UserAccountController implements IController {
 
 					@Override
 					public void handle(UserEvent.GotoList event) {
-						UserListPresenter presenter = PresenterResolver
-								.getPresenter(UserListPresenter.class);
+						UserPermissionManagementPresenter presenter = PresenterResolver
+								.getPresenter(UserPermissionManagementPresenter.class);
 
 						UserSearchCriteria criteria = new UserSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(

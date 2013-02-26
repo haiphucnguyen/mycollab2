@@ -29,9 +29,11 @@ public class UserPermissionManagementViewImpl extends AbstractView implements
 	public UserPermissionManagementViewImpl() {
 		this.setMargin(true);
 		myProjectTab = new DetachedTabs.Horizontal(mySpaceArea);
-		myProjectTab.setSizeFull();
+		myProjectTab.setSizeUndefined();
 
 		HorizontalLayout menu = new HorizontalLayout();
+		menu.setWidth("100%");
+		menu.setStyleName(UIConstants.THEME_TAB_STYLE3);
 		menu.setHeight("40px");
 		menu.setStyleName(UIConstants.THEME_TAB_STYLE3);
 		menu.addComponent(myProjectTab);
@@ -45,14 +47,12 @@ public class UserPermissionManagementViewImpl extends AbstractView implements
 
 		buildComponents();
 	}
-	
+
 	private void buildComponents() {
-		userPresenter = PresenterResolver
-				.getPresenter(UserPresenter.class);
+		userPresenter = PresenterResolver.getPresenter(UserPresenter.class);
 		myProjectTab.addTab(userPresenter.getView(), "Users");
 
-		rolePresenter = PresenterResolver
-				.getPresenter(RolePresenter.class);
+		rolePresenter = PresenterResolver.getPresenter(RolePresenter.class);
 		myProjectTab.addTab(rolePresenter.getView(), "Roles");
 
 		myProjectTab
@@ -64,7 +64,6 @@ public class UserPermissionManagementViewImpl extends AbstractView implements
 						if ("Users".equals(caption)) {
 							userPresenter.go(myProjectTab, null);
 						} else if ("Roles".equals(caption)) {
-							
 							rolePresenter.go(myProjectTab, null);
 						}
 					}
