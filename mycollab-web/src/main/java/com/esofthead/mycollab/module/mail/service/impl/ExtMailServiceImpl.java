@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.mail.service.impl;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.module.mail.Mailer;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 
@@ -16,7 +17,27 @@ public class ExtMailServiceImpl extends AbstractMailService implements
 
 	@Override
 	protected Mailer getMailer() {
-		throw new UnsupportedOperationException("Not supported yet.");
+		String smtphost, port, username, password;
+		smtphost = ApplicationProperties.getProperty(ApplicationProperties.RELAYMAIL_SMTPHOST);
+		port = ApplicationProperties.getProperty(ApplicationProperties.RELAYMAIL_PORT);
+		username = ApplicationProperties.getProperty(ApplicationProperties.RELAYMAIL_USERNAME);
+		password = ApplicationProperties.getProperty(ApplicationProperties.RELAYMAIL_PASSWORD);
+		
+		if (null == smtphost || smtphost.trim().length() == 0
+				|| null == port || port.trim().length() == 0
+				|| null == username || username.trim().length() == 0
+				|| null == password || password.trim().length() == 0)
+		{
+			smtphost = ApplicationProperties.getProperty(ApplicationProperties.MAIL_SMTPHOST);
+			port = ApplicationProperties.getProperty(ApplicationProperties.MAIL_PORT);
+			username = ApplicationProperties.getProperty(ApplicationProperties.MAIL_USERNAME);
+			password = ApplicationProperties.getProperty(ApplicationProperties.MAIL_PASSWORD);
+		}
+		
+		return new Mailer(smtphost, username, password);
 	}
+	
 
 }
+
+

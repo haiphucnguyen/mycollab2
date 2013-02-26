@@ -46,18 +46,18 @@ public class TemplateGenerator implements LogChute {
 
 		Map<String, String> defaultUrls = new HashMap<String, String>();
 
-		defaultUrls
-				.put("app_url", ApplicationProperties.getProperty("APP_URL"));
+		defaultUrls.put("app_url", ApplicationProperties
+				.getProperty(ApplicationProperties.APP_URL));
 		defaultUrls.put("cdn_url", ApplicationProperties
 				.getProperty(ApplicationProperties.CDN_URL));
-		defaultUrls.put("facebook_url",
-				ApplicationProperties.getProperty("FACEBOOK_URL"));
-		defaultUrls.put("google_url",
-				ApplicationProperties.getProperty("GOOGLE_URL"));
-		defaultUrls.put("linkedin_url",
-				ApplicationProperties.getProperty("LINKEDIN_URL"));
-		defaultUrls.put("twitter_url",
-				ApplicationProperties.getProperty("TWITTER_URL"));
+		defaultUrls.put("facebook_url", ApplicationProperties
+				.getProperty(ApplicationProperties.FACEBOOK_URL));
+		defaultUrls.put("google_url", ApplicationProperties
+				.getProperty(ApplicationProperties.GOOGLE_URL));
+		defaultUrls.put("linkedin_url", ApplicationProperties
+				.getProperty(ApplicationProperties.LINKEDIN_URL));
+		defaultUrls.put("twitter_url", ApplicationProperties
+				.getProperty(ApplicationProperties.TWITTER_URL));
 
 		velocityContext.put("defaultUrls", defaultUrls);
 	}
