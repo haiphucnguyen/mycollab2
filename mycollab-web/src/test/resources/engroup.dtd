@@ -48,6 +48,7 @@
     m_prj_risk*,
     m_prj_role*,
     m_prj_role_permission*,
+    m_prj_standup*,
     m_prj_task*,
     m_prj_task_list*,
     m_rss_agreegator*,
@@ -71,6 +72,8 @@
     s_billing_plan*,
     s_country*,
     s_currency*,
+    s_relay_email_notification*,
+    s_relay_mail*,
     s_report_bug_issue*,
     s_role_permission*,
     s_roles*,
@@ -896,11 +899,25 @@
     projectid CDATA #REQUIRED
 >
 
+<!ELEMENT m_prj_standup EMPTY>
+<!ATTLIST m_prj_standup
+    id CDATA #REQUIRED
+    sAccountId CDATA #REQUIRED
+    projectId CDATA #REQUIRED
+    whatlastday CDATA #IMPLIED
+    whattoday CDATA #IMPLIED
+    whatproblem CDATA #IMPLIED
+    forday CDATA #REQUIRED
+    logBy CDATA #REQUIRED
+    createdTime CDATA #REQUIRED
+    lastUpdatedTime CDATA #REQUIRED
+>
+
 <!ELEMENT m_prj_task EMPTY>
 <!ATTLIST m_prj_task
     id CDATA #REQUIRED
     taskname CDATA #REQUIRED
-    percentagecomplete CDATA #IMPLIED
+    percentagecomplete CDATA #REQUIRED
     startdate CDATA #IMPLIED
     enddate CDATA #IMPLIED
     priority CDATA #IMPLIED
@@ -921,6 +938,8 @@
     assignUser CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
     status CDATA #IMPLIED
+    investHours CDATA #IMPLIED
+    logBy CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_task_list EMPTY>
@@ -1059,6 +1078,7 @@
     estimateRemainTime CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
     milestoneId CDATA #IMPLIED
+    investHours CDATA #IMPLIED
 >
 
 <!ELEMENT m_tracker_bug_related_item EMPTY>
@@ -1136,8 +1156,8 @@
 <!ATTLIST s_activitystream
     id CDATA #REQUIRED
     sAccountId CDATA #REQUIRED
-    type CDATA #IMPLIED
-    typeId CDATA #IMPLIED
+    type CDATA #REQUIRED
+    typeId CDATA #REQUIRED
     createdTime CDATA #IMPLIED
     action CDATA #IMPLIED
     createdUser CDATA #IMPLIED
@@ -1168,6 +1188,28 @@
     isocode CDATA #REQUIRED
     symbol CDATA #REQUIRED
     conversionrate CDATA #IMPLIED
+>
+
+<!ELEMENT s_relay_email_notification EMPTY>
+<!ATTLIST s_relay_email_notification
+    id CDATA #REQUIRED
+    sAccountId CDATA #REQUIRED
+    type CDATA #REQUIRED
+    typeid CDATA #REQUIRED
+    action CDATA #REQUIRED
+    changeBy CDATA #REQUIRED
+    changeComment CDATA #REQUIRED
+>
+
+<!ELEMENT s_relay_mail EMPTY>
+<!ATTLIST s_relay_mail
+    id CDATA #REQUIRED
+    bodyContent CDATA #REQUIRED
+    recipients CDATA #REQUIRED
+    subject CDATA #REQUIRED
+    sAccountId CDATA #REQUIRED
+    fromName CDATA #REQUIRED
+    fromEmail CDATA #REQUIRED
 >
 
 <!ELEMENT s_report_bug_issue EMPTY>
