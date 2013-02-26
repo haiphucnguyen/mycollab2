@@ -1,6 +1,9 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
+import java.text.SimpleDateFormat;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
@@ -103,10 +106,21 @@ public class ProjectTaskServiceImpl extends
 				if (notifiers != null && !notifiers.isEmpty()) {
 					int taskId = emailNotification.getTypeid();
 					SimpleTask task = this.findTaskById(taskId);
+
+					Map<String, String> hyperLinks = new HashMap<String, String>();
+					hyperLinks.put("taskUrl", "#");
+					hyperLinks.put("projectUrl", "#");
+					hyperLinks.put("assignUserUrl", "#");
+					hyperLinks.put("taskListUrl", "#");
+
 					TemplateGenerator templateGenerator = new TemplateGenerator(
-							"[$task.projectName]: $task.taskname",
-							"templates/email/project/taskChangeNotifier.mt");
+							"[$task.projectName]: Task $task.taskname created",
+							"templates/email/project/taskCreatedNotifier.mt");
 					templateGenerator.putVariable("task", task);
+					templateGenerator.putVariable("hyperLinks", hyperLinks);
+					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+							"MM/dd/yyyy");
+					templateGenerator.putVariable("date", simpleDateFormat);
 					mailService.sendHTMLMail("mail@esofthead.com",
 							emailNotification.getChangeByUserFullName(),
 							notifiers,
