@@ -39,13 +39,13 @@
 						<td style="background: url('${defaultUrls.cdn_url}border_small_center.png') repeat-y 0 0 transparent; color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px;">
 								<tr>
-									<td style="text-align: right; min-width: 70px;">Task Name:&nbsp;</td>
-									<td style="font-weight: bold; text-transform: uppercase;"><a href="$hyperLinks.taskUrl" style="color: #4283c4; text-decoration: none;">$task.taskname</a></td>
+									<td style="text-align: right; min-width: 90px; vertical-align: top;">Task Name:&nbsp;</td>
+									<td style="font-weight: bold; text-transform: uppercase;" colspan="3"><a href="$hyperLinks.taskUrl" style="color: #4283c4; text-decoration: none;">$task.taskname</a></td>
 								</tr>
 								<tr>
 									<td style="text-align: right;">Start Date:&nbsp;</td>
 									<td>$date.format('short_date', $task.Startdate)</td>
-									<td style="text-align: right; min-width: 70px;">Actual Start Date:&nbsp;</td>
+									<td style="text-align: right; min-width: 90px;">Actual Start Date:&nbsp;</td>
 									<td>$date.format('short_date', $task.Actualstartdate)</td>		
 								</tr>
 								<tr>
