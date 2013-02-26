@@ -51,6 +51,7 @@ public class UserGroupViewImpl extends AbstractView implements UserGroupView {
 		this.addComponent(mySpaceArea);
 		this.setExpandRatio(mySpaceArea, 1.0f);
 		this.setWidth("100%");
+		this.setMargin(false, true, true, true);
 		buildComponents();
 	}
 

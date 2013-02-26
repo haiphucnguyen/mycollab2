@@ -47,6 +47,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 
 	public RiskListViewImpl() {
 		this.setSpacing(true);
+		this.setMargin(false, true, true, true);
 
 		riskSearchPanel = new RiskSearchPanel();
 		this.addComponent(riskSearchPanel);

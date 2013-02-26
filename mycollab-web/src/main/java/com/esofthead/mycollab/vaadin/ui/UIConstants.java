@@ -26,6 +26,7 @@ public class UIConstants {
 	public static final String LINK_OVERDUE = "overdue";
 	public static final String SPLIT_BUTTON = "esofthead";
 	public static final String MESSAGE_IMPORTANT = "important-message";
+	public static final String PREVIEW = "preview";
 	// TODO: remove widget title?
 	public static final String REPORT_ROW_BLOCK = "report-row-block";
 	public static final String REPORT_ROW_HEADER = "report-row-header";
@@ -38,4 +39,5 @@ public class UIConstants {
 	public static final String PROJECT_NAME = "project-name";
 	public static final String PROJECT_SHORT_NAME = "project-shortname";
 	public static final String WORD_WRAP = "wordWrap";
+	public static final String WHITE_TABSHEET = "white-tabsheet";
 }

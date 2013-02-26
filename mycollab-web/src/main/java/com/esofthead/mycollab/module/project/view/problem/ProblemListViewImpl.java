@@ -48,6 +48,7 @@ public class ProblemListViewImpl extends AbstractView implements
 
 	public ProblemListViewImpl() {
 		this.setSpacing(true);
+		this.setMargin(false, true, true, true);
 
 		problemSearchPanel = new ProblemSearchPanel();
 		this.addComponent(problemSearchPanel);

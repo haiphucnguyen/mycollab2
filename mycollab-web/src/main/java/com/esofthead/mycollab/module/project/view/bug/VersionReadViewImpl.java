@@ -42,6 +42,7 @@ public class VersionReadViewImpl extends AbstractView implements
 
 	public VersionReadViewImpl() {
 		super();
+		this.setMargin(false, true, true, true);
 		previewForm = new PreviewForm();
 		this.addComponent(previewForm);
 	}

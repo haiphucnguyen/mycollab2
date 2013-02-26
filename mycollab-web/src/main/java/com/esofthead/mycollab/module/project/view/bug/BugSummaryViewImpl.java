@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import org.vaadin.hene.splitbutton.PopupButtonControl;
+
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -20,112 +22,117 @@ import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 @ViewComponent
 public class BugSummaryViewImpl extends AbstractView implements BugSummaryView {
 
-    private static final long serialVersionUID = 1L;
-    private final BugSearchPanel problemSearchPanel;
-    private SelectionOptionButton selectOptionButton;
-    private BugTableDisplay tableItem;
-    private final VerticalLayout problemListLayout;
-    private PopupButtonControl tableActionControls;
-    private final Label selectedItemsNumberLabel = new Label();
+	private static final long serialVersionUID = 1L;
+	private final BugSearchPanel problemSearchPanel;
+	private SelectionOptionButton selectOptionButton;
+	private BugTableDisplay tableItem;
+	private final VerticalLayout problemListLayout;
+	private PopupButtonControl tableActionControls;
+	private final Label selectedItemsNumberLabel = new Label();
 
-    public BugSummaryViewImpl() {
-        this.setSpacing(true);
+	public BugSummaryViewImpl() {
+		this.setSpacing(true);
+		this.setMargin(false, true, true, true);
 
-        problemSearchPanel = new BugSearchPanel();
-        this.addComponent(problemSearchPanel);
+		problemSearchPanel = new BugSearchPanel();
+		this.addComponent(problemSearchPanel);
 
-        problemListLayout = new VerticalLayout();
-        problemListLayout.setSpacing(true);
-        this.addComponent(problemListLayout);
+		problemListLayout = new VerticalLayout();
+		problemListLayout.setSpacing(true);
+		this.addComponent(problemListLayout);
 
-        generateDisplayTable();
-    }
+		generateDisplayTable();
+	}
 
-    private void generateDisplayTable() {
-        tableItem = new BugTableDisplay(new String[]{"selected", "summary",
-                    "assignuserFullName", "severity", "resolution", "duedate"},
-                new String[]{"", "Summary", "Assigned User", "Severity", "Resolution", "Due Date"});
+	private void generateDisplayTable() {
+		tableItem = new BugTableDisplay(new String[] { "selected", "summary",
+				"assignuserFullName", "severity", "resolution", "duedate" },
+				new String[] { "", "Summary", "Assigned User", "Severity",
+						"Resolution", "Due Date" });
 
-        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-			private static final long serialVersionUID = 1L;
+		tableItem
+				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-            public Class<? extends ApplicationEvent> getEventType() {
-                return TableClickEvent.class;
-            }
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return TableClickEvent.class;
+					}
 
-            @Override
-            public void handle(TableClickEvent event) {
-                SimpleBug bug = (SimpleBug) event.getData();
-                if ("summary".equals(event.getFieldName())) {
-                    EventBus.getInstance().fireEvent(new BugEvent.GotoRead(BugSummaryViewImpl.this, bug.getId()));
-                }
-            }
-        });
+					@Override
+					public void handle(TableClickEvent event) {
+						SimpleBug bug = (SimpleBug) event.getData();
+						if ("summary".equals(event.getFieldName())) {
+							EventBus.getInstance().fireEvent(
+									new BugEvent.GotoRead(
+											BugSummaryViewImpl.this, bug
+													.getId()));
+						}
+					}
+				});
 
-        problemListLayout.addComponent(constructTableActionControls());
-        problemListLayout.addComponent(tableItem);
-    }
+		problemListLayout.addComponent(constructTableActionControls());
+		problemListLayout.addComponent(tableItem);
+	}
 
-    @Override
-    public HasSearchHandlers<BugSearchCriteria> getSearchHandlers() {
-        return problemSearchPanel;
-    }
+	@Override
+	public HasSearchHandlers<BugSearchCriteria> getSearchHandlers() {
+		return problemSearchPanel;
+	}
 
-    private ComponentContainer constructTableActionControls() {
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setSpacing(true);
+	private ComponentContainer constructTableActionControls() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
 
-        selectOptionButton = new SelectionOptionButton(tableItem);
-        layout.addComponent(selectOptionButton);
+		selectOptionButton = new SelectionOptionButton(tableItem);
+		layout.addComponent(selectOptionButton);
 
-        tableActionControls = new PopupButtonControl("delete", "Delete");
-        tableActionControls.addOptionItem("mail", "Mail");
-        tableActionControls.addOptionItem("export", "Export");
-        tableActionControls.setVisible(false);
+		tableActionControls = new PopupButtonControl("delete", "Delete");
+		tableActionControls.addOptionItem("mail", "Mail");
+		tableActionControls.addOptionItem("export", "Export");
+		tableActionControls.setVisible(false);
 
-        layout.addComponent(tableActionControls);
-        layout.addComponent(selectedItemsNumberLabel);
-        layout.setComponentAlignment(selectedItemsNumberLabel,
-                Alignment.MIDDLE_CENTER);
-        return layout;
-    }
+		layout.addComponent(tableActionControls);
+		layout.addComponent(selectedItemsNumberLabel);
+		layout.setComponentAlignment(selectedItemsNumberLabel,
+				Alignment.MIDDLE_CENTER);
+		return layout;
+	}
 
-    @Override
-    public void enableActionControls(int numOfSelectedItems) {
-        tableActionControls.setVisible(true);
-        selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
-    }
+	@Override
+	public void enableActionControls(int numOfSelectedItems) {
+		tableActionControls.setVisible(true);
+		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+	}
 
-    @Override
-    public void disableActionControls() {
-        tableActionControls.setVisible(false);
-        selectOptionButton.setSelectedChecbox(false);
-        selectedItemsNumberLabel.setValue("");
-    }
+	@Override
+	public void disableActionControls() {
+		tableActionControls.setVisible(false);
+		selectOptionButton.setSelectedChecbox(false);
+		selectedItemsNumberLabel.setValue("");
+	}
 
-    @Override
-    public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-        return selectOptionButton;
-    }
+	@Override
+	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+		return selectOptionButton;
+	}
 
-    @Override
-    public HasPopupActionHandlers getPopupActionHandlers() {
-        return tableActionControls;
-    }
+	@Override
+	public HasPopupActionHandlers getPopupActionHandlers() {
+		return tableActionControls;
+	}
 
-    @Override
-    public HasSelectableItemHandlers<SimpleBug> getSelectableItemHandlers() {
-        return tableItem;
-    }
+	@Override
+	public HasSelectableItemHandlers<SimpleBug> getSelectableItemHandlers() {
+		return tableItem;
+	}
 
-    @Override
-    public IPagedBeanTable<BugSearchCriteria, SimpleBug> getPagedBeanTable() {
-        return tableItem;
-    }
+	@Override
+	public IPagedBeanTable<BugSearchCriteria, SimpleBug> getPagedBeanTable() {
+		return tableItem;
+	}
 }

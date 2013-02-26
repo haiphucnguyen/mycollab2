@@ -62,6 +62,7 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 
 	public ProjectMemberReadViewImpl() {
 		super();
+		this.setMargin(false, true, true, true);
 		previewForm = new PreviewForm();
 		this.addComponent(previewForm);
 	}

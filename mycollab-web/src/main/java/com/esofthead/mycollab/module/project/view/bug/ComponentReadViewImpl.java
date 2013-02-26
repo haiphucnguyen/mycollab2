@@ -45,6 +45,7 @@ public class ComponentReadViewImpl extends AbstractView implements
 
 	public ComponentReadViewImpl() {
 		super();
+		this.setMargin(false, true, true, true);
 		previewForm = new PreviewForm();
 		this.addComponent(previewForm);
 	}

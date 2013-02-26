@@ -39,6 +39,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 
 	public BugDashboardViewImpl() {
 		super();
+		this.setMargin(true);
 		initUI();
 	}
 

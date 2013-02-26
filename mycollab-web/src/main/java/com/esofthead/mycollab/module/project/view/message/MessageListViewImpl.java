@@ -65,6 +65,7 @@ public class MessageListViewImpl extends AbstractView implements
 	public MessageListViewImpl() {
 		super();
 		this.setSpacing(true);
+		this.setMargin(false, true, true, true);
 		this.setWidth("100%");
 		topMessagePanel = new TopMessagePanel();
 		topMessagePanel.setWidth("100%");
@@ -198,7 +199,7 @@ public class MessageListViewImpl extends AbstractView implements
 	private class MessageSearchPanel extends
 			GenericSearchPanel<MessageSearchCriteria> {
 
-		private SimpleProject project;
+		private final SimpleProject project;
 		private MessageSearchCriteria messageSearchCriteria;
 		private String textSearch = "";
 
@@ -272,7 +273,7 @@ public class MessageListViewImpl extends AbstractView implements
 	private final class TopMessagePanel extends VerticalLayout {
 
 		private static final long serialVersionUID = 1L;
-		private MessageSearchPanel messageSearchPanel;
+		private final MessageSearchPanel messageSearchPanel;
 
 		public TopMessagePanel() {
 			this.setWidth("100%");

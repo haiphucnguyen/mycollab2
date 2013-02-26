@@ -4,7 +4,6 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
-import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot.CommentDisplay;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
@@ -35,20 +34,17 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.FormFieldFactory;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class BugReadViewImpl extends AbstractView implements BugReadView {
 
 	private static final long serialVersionUID = 1L;
 	private SimpleBug bug;
-	private BugPreviewForm previewForm;
+	private final BugPreviewForm previewForm;
 	private HorizontalLayout bugWorkflowControl;
 
 	public BugReadViewImpl() {
@@ -305,14 +301,17 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 			private ComponentContainer createBottomLayout() {
 				TabSheet tabBugDetail = new TabSheet();
 				tabBugDetail.setWidth("100%");
-				
+				tabBugDetail.setStyleName(UIConstants.WHITE_TABSHEET);
+
 				CommentDisplay commentList = new CommentDisplay(
 						CommentTypeConstants.PRJ_BUG, bug.getId());
+				commentList.setMargin(true);
 				tabBugDetail.addTab(commentList, "Comments");
 
 				historyList = new BugHistoryList(bug.getId());
+				historyList.setMargin(true);
 				tabBugDetail.addTab(historyList, "History");
-				
+
 				return tabBugDetail;
 			}
 

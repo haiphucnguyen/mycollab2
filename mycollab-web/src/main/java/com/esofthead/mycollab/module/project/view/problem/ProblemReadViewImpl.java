@@ -36,6 +36,7 @@ public class ProblemReadViewImpl extends AbstractView implements
 
 	public ProblemReadViewImpl() {
 		super();
+		this.setMargin(false, true, true, true);
 		previewForm = new PreviewForm();
 		this.addComponent(previewForm);
 	}

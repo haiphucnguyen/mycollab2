@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import org.vaadin.hene.splitbutton.PopupButtonControl;
+
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
@@ -31,7 +33,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
-import org.vaadin.hene.splitbutton.PopupButtonControl;
 
 /**
  * 
@@ -114,7 +115,8 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
 					Object columnId) {
-				final SimpleProjectMember item = tableItem.getBeanByIndex(itemId);
+				final SimpleProjectMember item = tableItem
+						.getBeanByIndex(itemId);
 				if (item.getIsadmin() != null
 						&& Boolean.TRUE.equals(item.getIsadmin())) {
 					return new Label("Admin");

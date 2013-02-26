@@ -10,6 +10,7 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
@@ -97,10 +98,11 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 		public ReadView() {
 			milestoneAddLayout = new AddViewLayout("", new ThemeResource(
 					"icons/48/project/milestone.png"));
-			milestoneAddLayout.addStyleName("preview");
+			milestoneAddLayout.addStyleName(UIConstants.PREVIEW);
 			this.addComponent(milestoneAddLayout);
 
 			tabContainer = new TabSheet();
+			tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
 
 			initRelatedComponents();
 

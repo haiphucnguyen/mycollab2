@@ -45,11 +45,12 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 		ProjectMemberAddView {
 
 	private static final long serialVersionUID = 1L;
-	private EditForm editForm;
+	private final EditForm editForm;
 	private ProjectMember user;
 
 	public ProjectMemberAddViewImpl() {
 		super();
+		this.setMargin(false, true, true, true);
 		editForm = new EditForm();
 		this.addComponent(editForm);
 	}
@@ -132,10 +133,10 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 		private class AdminRoleSelectionField extends CustomField {
 			private static final long serialVersionUID = 1L;
-			private CheckBox isAdminCheck;
-			private HorizontalLayout layout;
-			private HorizontalLayout roleLayout;
-			private ProjectRoleComboBox roleComboBox;
+			private final CheckBox isAdminCheck;
+			private final HorizontalLayout layout;
+			private final HorizontalLayout roleLayout;
+			private final ProjectRoleComboBox roleComboBox;
 
 			public AdminRoleSelectionField() {
 				layout = new HorizontalLayout();

@@ -28,7 +28,7 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
 		IFormAddView<Problem> {
 
 	private static final long serialVersionUID = 1L;
-	private EditForm editForm;
+	private final EditForm editForm;
 	private static Map<Integer, String> valueCaptions = new HashMap<Integer, String>(
 			5);
 
@@ -42,6 +42,7 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
 
 	public ProblemAddViewImpl() {
 		super();
+		this.setMargin(false, true, true, true);
 		editForm = new EditForm();
 		this.addComponent(editForm);
 	}

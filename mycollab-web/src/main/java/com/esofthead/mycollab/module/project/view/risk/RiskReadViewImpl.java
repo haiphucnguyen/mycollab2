@@ -35,6 +35,7 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 
 	public RiskReadViewImpl() {
 		super();
+		this.setMargin(false, true, true, true);
 		previewForm = new PreviewForm();
 		this.addComponent(previewForm);
 	}

@@ -29,6 +29,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 
 	public TaskGroupDisplayViewImpl() {
 		super();
+		this.setMargin(false, true, true, true);
 
 		constructHeader();
 	}

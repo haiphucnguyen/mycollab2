@@ -43,6 +43,7 @@ public class StandupListViewImpl extends AbstractView implements
 
 	public StandupListViewImpl() {
 		super();
+		this.setMargin(false, true, true, true);
 		constructHeader();
 
 		HorizontalLayout layout = new HorizontalLayout();

@@ -25,148 +25,149 @@ import com.vaadin.ui.TextField;
 @ViewComponent
 public class RiskAddViewImpl extends AbstractView implements RiskAddView {
 
-    private static final long serialVersionUID = 1L;
-    private EditForm editForm;
-    
-    private static Map<Integer, String> valueCaptions = new HashMap<Integer, String>(
-            5);
+	private static final long serialVersionUID = 1L;
+	private final EditForm editForm;
 
-    static {
-        valueCaptions.put(1, "Epic Fail");
-        valueCaptions.put(2, "Poor");
-        valueCaptions.put(3, "OK");
-        valueCaptions.put(4, "Good");
-        valueCaptions.put(5, "Excellent");
-    }
+	private static Map<Integer, String> valueCaptions = new HashMap<Integer, String>(
+			5);
 
-    public RiskAddViewImpl() {
-        super();
-        editForm = new EditForm();
-        this.addComponent(editForm);
-    }
+	static {
+		valueCaptions.put(1, "Epic Fail");
+		valueCaptions.put(2, "Poor");
+		valueCaptions.put(3, "OK");
+		valueCaptions.put(4, "Good");
+		valueCaptions.put(5, "Excellent");
+	}
 
-    @Override
-    public void editItem(Risk risk) {
-        editForm.setItemDataSource(new BeanItem<Risk>(risk));
-    }
+	public RiskAddViewImpl() {
+		super();
+		this.setMargin(false, true, true, true);
+		editForm = new EditForm();
+		this.addComponent(editForm);
+	}
 
-    private class EditForm extends AdvancedEditBeanForm<Risk> {
+	@Override
+	public void editItem(Risk risk) {
+		editForm.setItemDataSource(new BeanItem<Risk>(risk));
+	}
 
-        private static final long serialVersionUID = 1L;
+	private class EditForm extends AdvancedEditBeanForm<Risk> {
 
-        @Override
-        public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new EditFormFieldFactory());
-            super.setItemDataSource(newDataSource);
-        }
+		private static final long serialVersionUID = 1L;
 
-        class FormLayoutFactory extends RiskFormLayoutFactory {
+		@Override
+		public void setItemDataSource(Item newDataSource) {
+			this.setFormLayoutFactory(new FormLayoutFactory());
+			this.setFormFieldFactory(new EditFormFieldFactory());
+			super.setItemDataSource(newDataSource);
+		}
 
-            private static final long serialVersionUID = 1L;
+		class FormLayoutFactory extends RiskFormLayoutFactory {
 
-            public FormLayoutFactory() {
-                super("Create Risk");
-            }
+			private static final long serialVersionUID = 1L;
 
-            private Layout createButtonControls() {
-                return (new EditFormControlsGenerator<Risk>(EditForm.this))
-                        .createButtonControls();
-            }
+			public FormLayoutFactory() {
+				super("Create Risk");
+			}
 
-            @Override
-            protected Layout createTopPanel() {
-                return createButtonControls();
-            }
+			private Layout createButtonControls() {
+				return (new EditFormControlsGenerator<Risk>(EditForm.this))
+						.createButtonControls();
+			}
 
-            @Override
-            protected Layout createBottomPanel() {
-                return createButtonControls();
-            }
-        }
+			@Override
+			protected Layout createTopPanel() {
+				return createButtonControls();
+			}
 
-        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
+			@Override
+			protected Layout createBottomPanel() {
+				return createButtonControls();
+			}
+		}
 
-            private static final long serialVersionUID = 1L;
+		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
-            @Override
-            protected Field onCreateField(Item item, Object propertyId,
-                    com.vaadin.ui.Component uiContext) {
-                if (propertyId.equals("description")) {
-                    RichTextArea risk = new RichTextArea();
-                    risk.setRequired(true);
-                    risk.setNullRepresentation("");
-                    risk.setRequiredError("Please enter a Desciption");
-                    return risk;
-                } else if (propertyId.equals("raisedbyuser")) {
-                    return new ProjectMemberComboBox();
-                } else if (propertyId.equals("assigntouser")) {
-                    return new ProjectMemberComboBox();
-                } else if (propertyId.equals("response")) {
-                    return new RichTextArea();
-                } else if (propertyId.equals("consequence")) {
-                    ValueComboBox box = new ValueComboBox();
-                    box.loadData(new String[]{"Catastrophic", "Critical",
-                                "Marginal", "Negligible"});
-                    return box;
-                } else if (propertyId.equals("probalitity")) {
-                    ValueComboBox box = new ValueComboBox();
-                    box.loadData(new String[]{"Certain", "Likely",
-                                "Possible", "Unlikely", "Rare"});
-                    return box;
-                } else if (propertyId.equals("status")) {
-                    ValueComboBox box = new ValueComboBox();
-                    box.loadData(new String[]{"Open", "Closed"});
-                    return box;
-                } else if (propertyId.equals("level")) {
-                    final RatingStars ratingField = new RatingStars();
-                    ratingField.setMaxValue(5);
-                    ratingField.setImmediate(true);
-                    ratingField.setDescription("Risk level");
-                    ratingField.setValueCaption(valueCaptions.values().toArray(
-                            new String[5]));
+			private static final long serialVersionUID = 1L;
 
-                    ratingField.addListener(new Property.ValueChangeListener() {
-                        private static final long serialVersionUID = -3277119031169194273L;
+			@Override
+			protected Field onCreateField(Item item, Object propertyId,
+					com.vaadin.ui.Component uiContext) {
+				if (propertyId.equals("description")) {
+					RichTextArea risk = new RichTextArea();
+					risk.setRequired(true);
+					risk.setNullRepresentation("");
+					risk.setRequiredError("Please enter a Desciption");
+					return risk;
+				} else if (propertyId.equals("raisedbyuser")) {
+					return new ProjectMemberComboBox();
+				} else if (propertyId.equals("assigntouser")) {
+					return new ProjectMemberComboBox();
+				} else if (propertyId.equals("response")) {
+					return new RichTextArea();
+				} else if (propertyId.equals("consequence")) {
+					ValueComboBox box = new ValueComboBox();
+					box.loadData(new String[] { "Catastrophic", "Critical",
+							"Marginal", "Negligible" });
+					return box;
+				} else if (propertyId.equals("probalitity")) {
+					ValueComboBox box = new ValueComboBox();
+					box.loadData(new String[] { "Certain", "Likely",
+							"Possible", "Unlikely", "Rare" });
+					return box;
+				} else if (propertyId.equals("status")) {
+					ValueComboBox box = new ValueComboBox();
+					box.loadData(new String[] { "Open", "Closed" });
+					return box;
+				} else if (propertyId.equals("level")) {
+					final RatingStars ratingField = new RatingStars();
+					ratingField.setMaxValue(5);
+					ratingField.setImmediate(true);
+					ratingField.setDescription("Risk level");
+					ratingField.setValueCaption(valueCaptions.values().toArray(
+							new String[5]));
 
-                        @Override
-                        public void valueChange(Property.ValueChangeEvent event) {
-                            Double value = (Double) event.getProperty()
-                                    .getValue();
-                            RatingStars changedRs = (RatingStars) event
-                                    .getProperty();
+					ratingField.addListener(new Property.ValueChangeListener() {
+						private static final long serialVersionUID = -3277119031169194273L;
 
-                            // reset value captions
-                            changedRs.setValueCaption(valueCaptions.values()
-                                    .toArray(new String[5]));
-                            // set "Your Rating" caption
-                            if (value == null) {
-                                changedRs.setValue(1);
-                            } else {
-                                changedRs.setValueCaption(
-                                        (int) Math.round(value), "Your Rating");
-                            }
+						@Override
+						public void valueChange(Property.ValueChangeEvent event) {
+							Double value = (Double) event.getProperty()
+									.getValue();
+							RatingStars changedRs = (RatingStars) event
+									.getProperty();
 
-                        }
-                    });
-                    return ratingField;
-                }
-                
-                if (propertyId.equals("riskname")) {
-                    TextField tf = new TextField();
-                    tf.setNullRepresentation("");
-                    tf.setRequired(true);
-                    tf.setRequiredError("Please enter a Summary");
-                    return tf;
-                }
-                
-                return null;
-            }
-        }
-    }
+							// reset value captions
+							changedRs.setValueCaption(valueCaptions.values()
+									.toArray(new String[5]));
+							// set "Your Rating" caption
+							if (value == null) {
+								changedRs.setValue(1);
+							} else {
+								changedRs.setValueCaption(
+										(int) Math.round(value), "Your Rating");
+							}
 
-    @Override
-    public HasEditFormHandlers<Risk> getEditFormHandlers() {
-        return editForm;
-    }
+						}
+					});
+					return ratingField;
+				}
+
+				if (propertyId.equals("riskname")) {
+					TextField tf = new TextField();
+					tf.setNullRepresentation("");
+					tf.setRequired(true);
+					tf.setRequiredError("Please enter a Summary");
+					return tf;
+				}
+
+				return null;
+			}
+		}
+	}
+
+	@Override
+	public HasEditFormHandlers<Risk> getEditFormHandlers() {
+		return editForm;
+	}
 }

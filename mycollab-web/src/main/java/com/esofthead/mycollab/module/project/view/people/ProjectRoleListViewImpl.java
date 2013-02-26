@@ -67,59 +67,60 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 				ProjectRole.class, new String[] { "selected", "rolename",
 						"description" }, new String[] { "", "Name",
 						"Description" });
-		
+
 		tableItem.addGeneratedColumn("selected", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public Object generateCell(final Table source, final Object itemId,
-                    Object columnId) {
-                final CheckBox cb = new CheckBox("", false);
-                cb.setImmediate(true);
-                cb.addListener(new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+			@Override
+			public Object generateCell(final Table source, final Object itemId,
+					Object columnId) {
+				final CheckBox cb = new CheckBox("", false);
+				cb.setImmediate(true);
+				cb.addListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        ProjectRole role = tableItem
-                                .getBeanByIndex(itemId);
-                        tableItem.fireSelectItemEvent(role);
-                    }
-                });
+					@Override
+					public void buttonClick(Button.ClickEvent event) {
+						ProjectRole role = tableItem.getBeanByIndex(itemId);
+						tableItem.fireSelectItemEvent(role);
+					}
+				});
 
-                ProjectRole role = tableItem.getBeanByIndex(itemId);
-                role.setExtraData(cb);
-                return cb;
-            }
-        });
-		
+				ProjectRole role = tableItem.getBeanByIndex(itemId);
+				role.setExtraData(cb);
+				return cb;
+			}
+		});
+
 		tableItem.addGeneratedColumn("rolename", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+			private static final long serialVersionUID = 1L;
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-                final ProjectRole role = tableItem.getBeanByIndex(itemId);
-                ButtonLink b = new ButtonLink(role.getRolename(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final ProjectRole role = tableItem.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(role.getRolename(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-                            @Override
-                            public void buttonClick(Button.ClickEvent event) {
-                            	EventBus.getInstance().fireEvent(
-    									new ProjectRoleEvent.GotoRead(
-    											ProjectRoleListViewImpl.this, role.getId()));
-                            }
-                        });
-                b.addStyleName("medium-text");
-                return b;
+							@Override
+							public void buttonClick(Button.ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new ProjectRoleEvent.GotoRead(
+												ProjectRoleListViewImpl.this,
+												role.getId()));
+							}
+						});
+				b.addStyleName("medium-text");
+				return b;
 
-            }
-        });
-		
+			}
+		});
+
 		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
 		tableItem.setColumnExpandRatio("rolename", 1);
-		tableItem.setColumnWidth("description", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem
+				.setColumnWidth("description", UIConstants.TABLE_X_LABEL_WIDTH);
 
 		listLayout.addComponent(constructTableActionControls());
 		listLayout.addComponent(tableItem);

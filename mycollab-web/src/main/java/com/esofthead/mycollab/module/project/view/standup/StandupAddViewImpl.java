@@ -20,10 +20,11 @@ import com.vaadin.ui.RichTextArea;
 public class StandupAddViewImpl extends AbstractView implements StandupAddView {
 
 	private static final long serialVersionUID = 1L;
-	private EditForm editForm;
+	private final EditForm editForm;
 
 	public StandupAddViewImpl() {
 		super();
+		this.setMargin(false, true, true, true);
 		editForm = new EditForm();
 		this.addComponent(editForm);
 	}
@@ -77,8 +78,10 @@ public class StandupAddViewImpl extends AbstractView implements StandupAddView {
 			@Override
 			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
-				if (propertyId.equals("whatlastday") || propertyId.equals("whattoday") || propertyId.equals("whatproblem")) {
-		        	return new RichTextArea();
+				if (propertyId.equals("whatlastday")
+						|| propertyId.equals("whattoday")
+						|| propertyId.equals("whatproblem")) {
+					return new RichTextArea();
 				}
 				return null;
 			}

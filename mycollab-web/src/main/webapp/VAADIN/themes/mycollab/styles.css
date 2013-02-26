@@ -76,6 +76,9 @@ ul {
 	display: inline-block;
 	vertical-align: top;
 }
+.v-label {
+	word-wrap: break-word;
+}
 .v-label.h2 {
 	font-size: 14px;
 	padding: 0px;
@@ -1047,7 +1050,7 @@ input.v-textfield-errorField {
 	height: 100%;
 }
 .v-csslayout-projectTabContent > .v-csslayout-margin {
-	padding: 10px;
+	padding: 10px 0px 0px;
 	border-style: solid;
 	border-color: #8f8f8f;
 	border-width: 1px 0px 0px 1px;
@@ -1370,6 +1373,10 @@ input.v-textfield-errorField {
 .v-table-cell-wrapper {
 white-space: normal;
 }
+.white-tabsheet > .v-tabsheet-content {
+	border-width: 0px;
+	background-color: white;
+}
 .v-tabsheet-content {
 	background-color: white;
 	border-width: 1px;
@@ -1438,27 +1445,27 @@ white-space: normal;
 	padding-left: 10px;
 }
 
-.preview .v-tabsheet-tabitem.v-tabsheet-tabitem-selected .v-caption {
+.white-tabsheet .v-tabsheet-tabitem.v-tabsheet-tabitem-selected .v-caption {
 /* 	border-color: #F1F1F1; */
 /* 	background-color: #FFF; */
 	background: url('icons/selected-tab-right.png') no-repeat top right transparent;
 	border: none;
 	border-radius: 0px;
 }
-.preview .v-tabsheet-tabitem.v-tabsheet-tabitem-selected {
+.white-tabsheet .v-tabsheet-tabitem.v-tabsheet-tabitem-selected {
 /* 	border-radius: 3px 3px 0px 0px; */
 	border:none;
 	background: url('icons/selected-tab-bg.png') repeat-x 0 0 transparent;
 	border-radius: 0px;
 }
 
-.preview .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected {
+.white-tabsheet .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected {
 	background: url("icons/selected-tab-left.png") no-repeat 0 0 transparent;
 	padding-top: 0px;
 	vertical-align: top;
 	padding-left: 7px;
 }
-.preview .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected.v-tabsheet-tabitemcell-selected-first {
+.white-tabsheet .v-tabsheet-tabitemcell.v-tabsheet-tabitemcell-selected.v-tabsheet-tabitemcell-selected-first {
 	background: url("icons/first-selected-tab-left.png") no-repeat 0 0 transparent;
 	padding-left: 10px;
 }
@@ -1476,6 +1483,7 @@ white-space: normal;
 .activity-stream > .v-csslayout-margin {
 	border: 1px solid rgba(0,0,0,0.25);
 	padding-left: 5px;
+	padding-right: 5px;
 }
 .stream-content > .v-csslayout-margin {
 	padding-top: 3px;
