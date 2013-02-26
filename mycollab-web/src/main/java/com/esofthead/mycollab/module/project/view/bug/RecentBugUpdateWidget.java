@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.LabelHTMLDisplayWidget;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
@@ -57,7 +58,7 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 			layout.addComponent(defectLink);
 			layout.setColumnExpandRatio(1, 1.0f);
 			
-			BugDescriptionFieldDisplayWidget descInfo = new BugDescriptionFieldDisplayWidget(obj.getDescription());
+			LabelHTMLDisplayWidget descInfo = new LabelHTMLDisplayWidget(obj.getDescription());
 			descInfo.setWidth("100%");
 			layout.addComponent(descInfo);
 			

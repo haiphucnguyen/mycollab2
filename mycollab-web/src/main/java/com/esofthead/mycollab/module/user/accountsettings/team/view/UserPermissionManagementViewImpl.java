@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.vaadin.ui.Button;
@@ -32,6 +33,7 @@ public class UserPermissionManagementViewImpl extends AbstractView implements
 
 		HorizontalLayout menu = new HorizontalLayout();
 		menu.setHeight("40px");
+		menu.setStyleName(UIConstants.THEME_TAB_STYLE3);
 		menu.addComponent(myProjectTab);
 
 		this.addComponent(menu);
