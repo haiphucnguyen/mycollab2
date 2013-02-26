@@ -23,6 +23,7 @@ import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
 import com.esofthead.mycollab.module.mail.service.SystemMailService;
 import com.esofthead.mycollab.schedule.MyCollabScheduleService;
+import com.esofthead.mycollab.schedule.ScheduleConfig;
 import com.thoughtworks.xstream.XStream;
 
 /**
@@ -42,7 +43,7 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 	private MailRelayService mailRelayService;
 
 	@Override
-	@Scheduled(fixedDelay = 600000)
+	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_RELAY_INTERVAL)
 	public void sendErrorReports() {
 		SqlSession session = MyBatisFactory.build().openSession();
 		try {
