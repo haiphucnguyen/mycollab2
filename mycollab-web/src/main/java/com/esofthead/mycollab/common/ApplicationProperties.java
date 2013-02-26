@@ -41,7 +41,10 @@ public class ApplicationProperties {
 	}
 
 	public static String getProperty(String key) {
-		return properties.getProperty(key, "");
+		String result = properties.getProperty(key);
+		System.out.println("PROPERTIES: " + properties);
+		System.out.println("RESULT: " + result + "---" + key);
+		return result;
 	}
 
 	public static String getSendErrorEmail() {

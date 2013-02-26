@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
-import java.text.SimpleDateFormat;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -118,9 +117,6 @@ public class ProjectTaskServiceImpl extends
 							"templates/email/project/taskCreatedNotifier.mt");
 					templateGenerator.putVariable("task", task);
 					templateGenerator.putVariable("hyperLinks", hyperLinks);
-					SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-							"MM/dd/yyyy");
-					templateGenerator.putVariable("date", simpleDateFormat);
 					mailService.sendHTMLMail("mail@esofthead.com",
 							emailNotification.getChangeByUserFullName(),
 							notifiers,
