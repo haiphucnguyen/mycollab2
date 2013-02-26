@@ -21,6 +21,9 @@ public class RawContentServiceImpl implements RawContentService {
         String userFolder = System.getProperty("user.home");
         baseContentFolder = new File(userFolder + "/.mycollab");
         baseContentFolder.mkdirs();
+        
+        File avatarFolder = new File(userFolder + "/.mycollab/avatar");
+        avatarFolder.mkdirs();
 
         log.debug("Create content folder for mycollab application at "
                 + baseContentFolder.getAbsolutePath());
