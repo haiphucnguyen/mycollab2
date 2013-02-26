@@ -11,6 +11,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
@@ -56,20 +57,20 @@ public class AccountDashboardViewImpl extends AbstractView implements
 		buildComponents();
 
 		this.addComponent(root);
-		
+
 		profilePresenter.go(AccountDashboardViewImpl.this, null);
 	}
 
 	private void buildComponents() {
-		accountTab.addTab(constructUserInformationComponent(),
-				"User Information");
-		accountTab.addTab(constructAccountSettingsComponent(),
-				"Account Settings");
+		accountTab.addTab(constructUserInformationComponent(), new MenuButton(
+				"User Information", "menu_profile.png"));
+		accountTab.addTab(constructAccountSettingsComponent(), new MenuButton(
+				"Account Settings", "menu_account.png"));
 
 		if (AppContext.canRead(RolePermissionCollections.USER_USER)
 				|| AppContext.canRead(RolePermissionCollections.USER_ROLE)) {
 			accountTab.addTab(constructUserPermissionComponent(),
-					"Users & Permissions");
+					new MenuButton("Users & Permissions", "menu_team.png"));
 		}
 
 		accountTab.addTabChangedListener(new DetachedTabs.TabChangedListener() {
@@ -110,5 +111,13 @@ public class AccountDashboardViewImpl extends AbstractView implements
 	@Override
 	public void gotoSubView(String viewName) {
 		accountTab.selectTab(viewName);
+	}
+
+	private static class MenuButton extends Button {
+		public MenuButton(String caption, String iconResource) {
+			super(caption);
+			this.setIcon(new ThemeResource("icons/22/user/" + iconResource));
+			this.setStyleName("link");
+		}
 	}
 }

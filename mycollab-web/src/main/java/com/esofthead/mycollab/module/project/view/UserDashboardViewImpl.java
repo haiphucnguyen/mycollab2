@@ -14,11 +14,11 @@ import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickEvent;
 import com.vaadin.event.LayoutEvents.LayoutClickListener;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
@@ -42,7 +42,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 		root.setWidth("100%");
 
 		mySpaceArea.setWidth("100%");
-		mySpaceArea.setStyleName("project-dashboard");
+		mySpaceArea.setStyleName("projectTabContent");
 		mySpaceTabs = new DetachedTabs.Vertical(mySpaceArea);
 		mySpaceTabs.setSizeFull();
 		mySpaceTabs.setHeight(null);
@@ -89,15 +89,17 @@ public class UserDashboardViewImpl extends AbstractView implements
 		this.addComponent(root);
 	}
 
-	private void showWelcomeScreen() {
-		CustomLayout welcome = new CustomLayout("projectWelcomeScreen");
-		welcome.setSizeFull();
-		root.addComponent(welcome);
-	}
+	// private void showWelcomeScreen() {
+	// CustomLayout welcome = new CustomLayout("projectWelcomeScreen");
+	// welcome.setSizeFull();
+	// root.addComponent(welcome);
+	// }
 
 	private void buildComponents() {
-		mySpaceTabs.addTab(constructMyFeedsComponents(), "My Feeds");
-		mySpaceTabs.addTab(constructMyProjectsComponents(), "My Projects");
+		mySpaceTabs.addTab(constructMyFeedsComponents(), new MenuButton(
+				"My Feeds", "menu_myfeeds.png"));
+		mySpaceTabs.addTab(constructMyProjectsComponents(), new MenuButton(
+				"My Projects", "menu_myprojects.png"));
 
 		mySpaceTabs
 				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
@@ -145,5 +147,13 @@ public class UserDashboardViewImpl extends AbstractView implements
 	public Component gotoSubView(String name) {
 		View component = (View) mySpaceTabs.selectTab(name);
 		return component;
+	}
+
+	private static class MenuButton extends Button {
+		public MenuButton(String caption, String iconResource) {
+			super(caption);
+			this.setIcon(new ThemeResource("icons/22/project/" + iconResource));
+			this.setStyleName("link");
+		}
 	}
 }

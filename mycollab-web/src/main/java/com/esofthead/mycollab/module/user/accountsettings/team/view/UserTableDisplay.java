@@ -139,8 +139,8 @@ public class UserTableDisplay extends
 					}
 				});
 
-		this.setColumnExpandRatio("username", 1.0f);
-		this.setColumnWidth("displayName", UIConstants.TABLE_X_LABEL_WIDTH);
+		this.setColumnExpandRatio("displayName", 1.0f);
+		this.setColumnWidth("username", UIConstants.TABLE_EX_LABEL_WIDTH);
 		this.setColumnWidth("email", UIConstants.TABLE_EMAIL_WIDTH);
 		this.setColumnWidth("lastAccessedTime",
 				UIConstants.TABLE_DATE_TIME_WIDTH);
