@@ -8,20 +8,22 @@ public class Mailer {
 	protected String username = null;
 	protected String password = null;
 	protected boolean isTLS = false;
+	protected int port;
 
-	public Mailer(String host, String username, String password, boolean isTLS) {
+	public Mailer(String host, String username, String password, int port, boolean isTLS) {
 		this.host = host;
 		this.username = username;
 		this.password = password;
 		this.isTLS = isTLS;
+		this.port = port;
 	}
 
-	public Mailer(String host, String username, String password) {
-		this(host, username, password, false);
+	public Mailer(String host, String username, String password, int port) {
+		this(host, username, password, port, false);
 	}
 
 	public Mailer(String host) {
-		this(host, null, null, false);
+		this(host, null, null, 587, false);
 	}
 
 	public void sendHTMLMail(String fromEmail, String fromName,
