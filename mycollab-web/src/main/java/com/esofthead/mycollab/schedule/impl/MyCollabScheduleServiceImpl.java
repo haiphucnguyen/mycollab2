@@ -21,7 +21,7 @@ import com.esofthead.mycollab.common.domain.ReportBugIssueWithBLOBs;
 import com.esofthead.mycollab.common.logging.MyBatisFactory;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.MailRelayService;
-import com.esofthead.mycollab.module.mail.service.MailService;
+import com.esofthead.mycollab.module.mail.service.SystemMailService;
 import com.esofthead.mycollab.schedule.MyCollabScheduleService;
 import com.thoughtworks.xstream.XStream;
 
@@ -36,7 +36,7 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 			.getLogger(MyCollabScheduleServiceImpl.class);
 
 	@Autowired
-	private MailService mailService;
+	private SystemMailService mailService;
 
 	@Autowired
 	private MailRelayService mailRelayService;

@@ -3,32 +3,21 @@ package com.esofthead.mycollab.module.mail.service.impl;
 import java.util.List;
 
 import org.apache.commons.mail.EmailException;
-import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.module.mail.Mailer;
-import com.esofthead.mycollab.module.mail.service.MailService;
+import com.esofthead.mycollab.module.mail.service.IGenericService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
-@Service
-public class MailServiceImpl implements MailService {
+public abstract class AbstractMailService implements IGenericService {
 
-	private static Mailer gmailer;
-
-	static {
-
-		gmailer = new Mailer(
-				ApplicationProperties.getProperty("mail.smtphost"),
-				ApplicationProperties.getProperty("mail.username"),
-				ApplicationProperties.getProperty("mail.password"), true);
-	}
+	protected abstract Mailer getMailer();
 
 	@Override
 	public void sendHTMLMail(String fromEmail, String fromName,
 			String[] toEmail, String[] toName, String subject, String html) {
 		try {
-			gmailer.sendHTMLMail(fromEmail, fromName, toEmail, toName, subject,
-					html);
+			getMailer().sendHTMLMail(fromEmail, fromName, toEmail, toName,
+					subject, html);
 		} catch (EmailException ex) {
 			ex.printStackTrace();
 		}
