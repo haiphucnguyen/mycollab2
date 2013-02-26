@@ -23,7 +23,7 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
-import com.esofthead.mycollab.module.mail.service.MailService;
+import com.esofthead.mycollab.module.mail.service.SystemMailService;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.dao.TaskMapper;
 import com.esofthead.mycollab.module.project.dao.TaskMapperExt;
@@ -32,6 +32,7 @@ import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.schedule.ScheduleConfig;
 
 @Service
 @Transactional
@@ -48,8 +49,9 @@ public class ProjectTaskServiceImpl extends
 	private TaskMapperExt taskMapperExt;
 	@Autowired
 	private RelayEmailNotificationService relayEmailNotificationService;
+	
 	@Autowired
-	private MailService mailService;
+	private SystemMailService mailService;
 
 	@Override
 	public ICrudGenericDAO<Integer, Task> getCrudMapper() {
@@ -89,7 +91,7 @@ public class ProjectTaskServiceImpl extends
 		return super.updateWithSession(record, username);
 	}
 
-	@Scheduled(fixedDelay = 3000)
+	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_NOTIFICATION_INTERVAL)
 	@Override
 	public void runNotification() {
 		RelayEmailNotificationSearchCriteria criteria = new RelayEmailNotificationSearchCriteria();
