@@ -141,7 +141,7 @@ public class ResolvedInputWindow extends Window {
                 } else if (propertyId.equals("assignuser")) {
                     informationLayout.addComponent(field, "Assign User", 0, 1);
                 } else if (propertyId.equals("fixedVersions")) {
-                    informationLayout.addComponent(field, "Fixed Versions", 0, 2, 2, "100%");
+                    informationLayout.addComponent(field, "Fixed Versions", 0, 2);
                 } else if (propertyId.equals("comment")) {
                     informationLayout.addComponent(field, "Comments", 0, 3, 2, UIConstants.DEFAULT_2XCONTROL_WIDTH);
                 }
@@ -160,7 +160,7 @@ public class ResolvedInputWindow extends Window {
                 } else if (propertyId.equals("assignuser")) {
                     return new UserComboBox();
                 } else if (propertyId.equals("fixedVersions")) {
-                    fixedVersionSelect = new VersionMultiSelectField();
+                    fixedVersionSelect = new VersionMultiSelectField("227px");
                     if (bug.getFixedVersions().size() > 0) {
                     	fixedVersionSelect.setSelectedItems(bug.getFixedVersions());
                     }

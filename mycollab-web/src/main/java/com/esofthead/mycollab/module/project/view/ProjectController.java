@@ -19,6 +19,8 @@ import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
@@ -846,6 +848,31 @@ public class ProjectController implements IController {
 	}
 
 	private void bindUserGroupEvents() {
+		
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ProjectRoleEvent.GotoList>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ProjectRoleEvent.GotoList.class;
+					}
+
+					@Override
+					public void handle(ProjectRoleEvent.GotoList event) {
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
+
+						SimpleProject project = CurrentProjectVariables
+								.getProject();
+						ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
+						criteria.setProjectId(new NumberSearchField(project
+								.getId()));
+						projectView
+								.gotoUsersAndGroup(new ProjectRoleScreenData.Search(criteria));
+					}
+				});
+		
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ProjectRoleEvent.GotoAdd>() {
 					private static final long serialVersionUID = 1L;
@@ -900,6 +927,31 @@ public class ProjectController implements IController {
 						ProjectRoleScreenData.Read data = new ProjectRoleScreenData.Read(
 								(Integer) event.getData());
 						projectView.gotoUsersAndGroup(data);
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ProjectMemberEvent.GotoList>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ProjectMemberEvent.GotoList.class;
+					}
+
+					@Override
+					public void handle(ProjectMemberEvent.GotoList event) {
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
+
+						SimpleProject project = CurrentProjectVariables
+								.getProject();
+						ProjectMemberSearchCriteria criteria = new ProjectMemberSearchCriteria();
+						criteria.setProjectId(new NumberSearchField(project
+								.getId()));
+						projectView
+								.gotoUsersAndGroup(new ScreenData.Search<ProjectMemberSearchCriteria>(
+										criteria));
 					}
 				});
 

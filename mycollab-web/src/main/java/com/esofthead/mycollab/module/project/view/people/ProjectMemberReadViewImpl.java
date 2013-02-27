@@ -4,11 +4,13 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -157,7 +159,10 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 
 		@Override
 		protected void showHistory() {
-
+			ProjectMemberHistoryLogWindow historyLog = new ProjectMemberHistoryLogWindow(
+                    ModuleNameConstants.PRJ, ProjectContants.PROJECT_MEMBER,
+                    projectMember.getId());
+            getWindow().addWindow(historyLog);
 		}
 
 		class FormLayoutFactory extends ProjectMemberFormLayoutFactory {
@@ -343,7 +348,11 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 
 			@Override
 			protected Layout createBottomPanel() {
-				return new VerticalLayout();
+				VerticalLayout relatedItemsPanel = new VerticalLayout();
+				relatedItemsPanel.addComponent(new UserTaskDepot());
+				relatedItemsPanel.addComponent(new UserBugDepot());
+				relatedItemsPanel.addComponent(new UserStandupReportDepot());
+				return relatedItemsPanel;
 			}
 		}
 	}

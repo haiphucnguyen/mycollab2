@@ -4,8 +4,12 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.user.domain.Role;
@@ -15,6 +19,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Window;
 
 /**
  * 
@@ -61,6 +66,56 @@ public class ProjectRoleReadPresenter extends
 					public void onCancel() {
 						EventBus.getInstance().fireEvent(
 								new ProjectRoleEvent.GotoList(this, null));
+					}
+
+					@Override
+					public void gotoNext(ProjectRole data) {
+						ProjectRoleService projectRoleService = AppContext
+								.getSpringBean(ProjectRoleService.class);
+						ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
+						SimpleProject project = (SimpleProject) AppContext
+								.getVariable("project");
+						criteria.setProjectId(new NumberSearchField(
+								SearchField.AND, project.getId()));
+						criteria.setId(new NumberSearchField(data.getId(),
+								NumberSearchField.GREATHER));
+						Integer nextId = projectRoleService
+								.getNextItemKey(criteria);
+						if (nextId != null) {
+							EventBus.getInstance()
+									.fireEvent(
+											new ProjectRoleEvent.GotoRead(this,
+													nextId));
+						} else {
+							view.getWindow().showNotification("Information",
+									"You are already in the last record",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+						}
+
+					}
+
+					@Override
+					public void gotoPrevious(ProjectRole data) {
+						ProjectRoleService projectRoleService = AppContext
+								.getSpringBean(ProjectRoleService.class);
+						ProjectRoleSearchCriteria criteria = new ProjectRoleSearchCriteria();
+						SimpleProject project = (SimpleProject) AppContext
+								.getVariable("project");
+						criteria.setProjectId(new NumberSearchField(
+								SearchField.AND, project.getId()));
+						criteria.setId(new NumberSearchField(data.getId(),
+								NumberSearchField.LESSTHAN));
+						Integer nextId = projectRoleService
+								.getPreviousItemKey(criteria);
+						if (nextId != null) {
+							EventBus.getInstance().fireEvent(
+									new ProjectRoleEvent.GotoRead(this,
+											nextId));
+						} else {
+							view.getWindow().showNotification("Information",
+									"You are already in the first record",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+						}
 					}
 				});
 	}
