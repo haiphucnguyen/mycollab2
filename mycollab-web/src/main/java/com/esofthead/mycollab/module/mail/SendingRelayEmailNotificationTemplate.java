@@ -2,6 +2,8 @@ package com.esofthead.mycollab.module.mail;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -17,9 +19,10 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.web.AppContext;
 
 public class SendingRelayEmailNotificationTemplate {
-	private SendingRelayEmailNotificationAction sendingAction;
-
+	private static Logger log = LoggerFactory
+			.getLogger(SendingRelayEmailNotificationTemplate.class);
 	private static ApplicationContext springContext;
+	private SendingRelayEmailNotificationAction sendingAction;
 	private RelayEmailNotificationService relayEmailNotificationService;
 
 	static {
@@ -90,6 +93,7 @@ public class SendingRelayEmailNotificationTemplate {
 				}
 
 			} catch (Exception e) {
+				log.error("Error when sending notification email", e);
 				relayEmailNotificationService.saveWithSession(
 						emailNotification, "");
 			}
