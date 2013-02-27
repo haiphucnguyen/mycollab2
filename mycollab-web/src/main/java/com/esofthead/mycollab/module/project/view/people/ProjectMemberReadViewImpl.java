@@ -160,9 +160,9 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 		@Override
 		protected void showHistory() {
 			ProjectMemberHistoryLogWindow historyLog = new ProjectMemberHistoryLogWindow(
-                    ModuleNameConstants.PRJ, ProjectContants.PROJECT_MEMBER,
-                    projectMember.getId());
-            getWindow().addWindow(historyLog);
+					ModuleNameConstants.PRJ, ProjectContants.PROJECT_MEMBER,
+					projectMember.getId());
+			getWindow().addWindow(historyLog);
 		}
 
 		class FormLayoutFactory extends ProjectMemberFormLayoutFactory {
@@ -298,7 +298,7 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 	}
 
 	@SuppressWarnings("serial")
-	public static class PrintView extends ProjectMemberReadViewImpl {
+	private class PrintView extends ProjectMemberReadViewImpl {
 
 		public PrintView() {
 			previewForm = new AdvancedPreviewBeanForm<ProjectMember>() {
