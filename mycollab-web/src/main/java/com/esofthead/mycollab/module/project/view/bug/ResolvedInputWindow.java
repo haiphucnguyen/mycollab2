@@ -36,144 +36,167 @@ import java.util.GregorianCalendar;
 import java.util.List;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @SuppressWarnings("serial")
 public class ResolvedInputWindow extends Window {
-    private SimpleBug bug;
-    private EditForm editForm;
-    private VersionMultiSelectField fixedVersionSelect;
+	private SimpleBug bug;
+	private EditForm editForm;
+	private VersionMultiSelectField fixedVersionSelect;
 
-    public ResolvedInputWindow(SimpleBug bug) {
-        this.bug = bug;
-        this.setWidth("830px");
-        editForm = new EditForm();
-        this.addComponent(editForm);
-        editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
-        center();
-    }
+	public ResolvedInputWindow(SimpleBug bug) {
+		this.bug = bug;
+		this.setWidth("830px");
+		editForm = new EditForm();
+		this.addComponent(editForm);
+		editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+		center();
+	}
 
-    private class EditForm extends AdvancedEditBeanForm<Bug> {
+	private class EditForm extends AdvancedEditBeanForm<Bug> {
 
-        private static final long serialVersionUID = 1L;
-        private RichTextArea commentArea;
+		private static final long serialVersionUID = 1L;
+		private RichTextArea commentArea;
 
-        @Override
-        public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new EditForm.FormLayoutFactory());
-            this.setFormFieldFactory(new EditForm.EditFormFieldFactory());
-            super.setItemDataSource(newDataSource);
-        }
+		@Override
+		public void setItemDataSource(Item newDataSource) {
+			this.setFormLayoutFactory(new EditForm.FormLayoutFactory());
+			this.setFormFieldFactory(new EditForm.EditFormFieldFactory());
+			super.setItemDataSource(newDataSource);
+		}
 
-        class FormLayoutFactory implements IFormLayoutFactory {
+		class FormLayoutFactory implements IFormLayoutFactory {
 
-            private static final long serialVersionUID = 1L;
-            private GridFormLayoutHelper informationLayout;
+			private static final long serialVersionUID = 1L;
+			private GridFormLayoutHelper informationLayout;
 
-            @Override
-            public Layout getLayout() {
-                VerticalLayout layout = new VerticalLayout();
-                informationLayout = new GridFormLayoutHelper(2, 6);
-                informationLayout.getLayout().setWidth("800px");
+			@Override
+			public Layout getLayout() {
+				VerticalLayout layout = new VerticalLayout();
+				informationLayout = new GridFormLayoutHelper(2, 6);
+				informationLayout.getLayout().setWidth("800px");
 
-                layout.addComponent(informationLayout.getLayout());
+				layout.addComponent(informationLayout.getLayout());
 
-                HorizontalLayout controlsBtn = new HorizontalLayout();
-                controlsBtn.setSpacing(true);
-                layout.addComponent(controlsBtn);
+				HorizontalLayout controlsBtn = new HorizontalLayout();
+				controlsBtn.setSpacing(true);
+				layout.addComponent(controlsBtn);
 
-                Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        ResolvedInputWindow.this.close();
-                    }
-                });
-                cancelBtn.setStyleName("link");
-                controlsBtn.addComponent(cancelBtn);
-                controlsBtn.setComponentAlignment(cancelBtn, Alignment.MIDDLE_LEFT);
+				Button cancelBtn = new Button("Cancel",
+						new Button.ClickListener() {
+							@Override
+							public void buttonClick(Button.ClickEvent event) {
+								ResolvedInputWindow.this.close();
+							}
+						});
+				cancelBtn.setStyleName("link");
+				controlsBtn.addComponent(cancelBtn);
+				controlsBtn.setComponentAlignment(cancelBtn,
+						Alignment.MIDDLE_LEFT);
 
-                Button wonFixBtn = new Button("Resolved", new Button.ClickListener() {
-                    @SuppressWarnings("unchecked")
-					@Override
-                    public void buttonClick(Button.ClickEvent event) {
-                        bug.setStatus(BugStatusConstants.TESTPENDING);
-                        
-                        BugRelatedItemService bugRelatedItemService = AppContext.getSpringBean(BugRelatedItemService.class);
-                        bugRelatedItemService.updateFixedVersionsOfBug(bug.getId(), (List<Version>)fixedVersionSelect.getSelectedItems());
+				Button wonFixBtn = new Button("Resolved",
+						new Button.ClickListener() {
+							@SuppressWarnings("unchecked")
+							@Override
+							public void buttonClick(Button.ClickEvent event) {
+								bug.setStatus(BugStatusConstants.TESTPENDING);
 
-                        //Save bug status and assignee
-                        BugService bugService = AppContext.getSpringBean(BugService.class);
-                        bugService.updateWithSession(bug, AppContext.getUsername());
+								BugRelatedItemService bugRelatedItemService = AppContext
+										.getSpringBean(BugRelatedItemService.class);
+								bugRelatedItemService.updateFixedVersionsOfBug(
+										bug.getId(),
+										(List<Version>) fixedVersionSelect
+												.getSelectedItems());
 
-                        //Save comment
-                        String commentValue = (String) commentArea.getValue();
-                        if (commentValue != null && !commentValue.trim().equals("")) {
-                        	 Comment comment = new Comment();
-                             comment.setComment(commentValue);
-                             comment.setCreatedtime(new GregorianCalendar().getTime());
-                             comment.setCreateduser(AppContext.getUsername());
-                             comment.setSaccountid(AppContext.getAccountId());
-                             comment.setType(CommentTypeConstants.PRJ_BUG);
-                             comment.setTypeid(bug.getId());
+								// Save bug status and assignee
+								BugService bugService = AppContext
+										.getSpringBean(BugService.class);
+								bugService.updateWithSession(bug,
+										AppContext.getUsername());
 
-                             CommentService commentService = AppContext.getSpringBean(CommentService.class);
-                             commentService.saveWithSession(comment, AppContext.getUsername());
-                        }
-                       
-                        ResolvedInputWindow.this.close();
-                        EventBus.getInstance().fireEvent(new BugEvent.GotoRead(ResolvedInputWindow.this, bug.getId()));
-                    }
-                });
-                wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-                controlsBtn.addComponent(wonFixBtn);
-                controlsBtn.setComponentAlignment(wonFixBtn, Alignment.MIDDLE_RIGHT);
+								// Save comment
+								String commentValue = (String) commentArea
+										.getValue();
+								if (commentValue != null
+										&& !commentValue.trim().equals("")) {
+									Comment comment = new Comment();
+									comment.setComment(commentValue);
+									comment.setCreatedtime(new GregorianCalendar()
+											.getTime());
+									comment.setCreateduser(AppContext
+											.getUsername());
+									comment.setSaccountid(AppContext
+											.getAccountId());
+									comment.setType(CommentTypeConstants.PRJ_BUG);
+									comment.setTypeid(bug.getId());
 
-                layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
+									CommentService commentService = AppContext
+											.getSpringBean(CommentService.class);
+									commentService.saveWithSession(comment,
+											AppContext.getUsername());
+								}
 
-                return layout;
-            }
+								ResolvedInputWindow.this.close();
+								EventBus.getInstance().fireEvent(
+										new BugEvent.GotoRead(
+												ResolvedInputWindow.this, bug
+														.getId()));
+							}
+						});
+				wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+				controlsBtn.addComponent(wonFixBtn);
+				controlsBtn.setComponentAlignment(wonFixBtn,
+						Alignment.MIDDLE_RIGHT);
 
-            @Override
-            public void attachField(Object propertyId, Field field) {
-                if (propertyId.equals("resolution")) {
-                    informationLayout.addComponent(field, "Resolution", 0, 0);
-                } else if (propertyId.equals("assignuser")) {
-                    informationLayout.addComponent(field, "Assign User", 0, 1);
-                } else if (propertyId.equals("fixedVersions")) {
-                    informationLayout.addComponent(field, "Fixed Versions", 0, 2, 2, "100%");
-                } else if (propertyId.equals("comment")) {
-                    informationLayout.addComponent(field, "Comments", 0, 3, 2, UIConstants.DEFAULT_2XCONTROL_WIDTH);
-                }
-            }
-        }
+				layout.setComponentAlignment(controlsBtn,
+						Alignment.MIDDLE_RIGHT);
 
-        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
+				return layout;
+			}
 
-            private static final long serialVersionUID = 1L;
+			@Override
+			public void attachField(Object propertyId, Field field) {
+				if (propertyId.equals("resolution")) {
+					informationLayout.addComponent(field, "Resolution", 0, 0);
+				} else if (propertyId.equals("assignuser")) {
+					informationLayout.addComponent(field, "Assign User", 0, 1);
+				} else if (propertyId.equals("fixedVersions")) {
+					informationLayout.addComponent(field, "Fixed Versions", 0,
+							2);
+				} else if (propertyId.equals("comment")) {
+					informationLayout.addComponent(field, "Comments", 0, 3, 2,
+							UIConstants.DEFAULT_2XCONTROL_WIDTH);
+				}
+			}
+		}
 
-            @Override
-            protected Field onCreateField(Item item, Object propertyId,
-                    com.vaadin.ui.Component uiContext) {
-                if (propertyId.equals("resolution")) {
-                    return new BugResolutionComboBox();
-                } else if (propertyId.equals("assignuser")) {
-                    return new UserComboBox();
-                } else if (propertyId.equals("fixedVersions")) {
-                    fixedVersionSelect = new VersionMultiSelectField();
-                    if (bug.getFixedVersions().size() > 0) {
-                    	fixedVersionSelect.setSelectedItems(bug.getFixedVersions());
-                    }
-                    return fixedVersionSelect;
-                } else if (propertyId.equals("comment")) {
-                    commentArea = new RichTextArea();
-                    commentArea.setNullRepresentation("");
-                    return commentArea;
-                }
+		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
+			private static final long serialVersionUID = 1L;
 
-                return null;
-            }
-        }
-    }
+			@Override
+			protected Field onCreateField(Item item, Object propertyId,
+					com.vaadin.ui.Component uiContext) {
+				if (propertyId.equals("resolution")) {
+					return new BugResolutionComboBox();
+				} else if (propertyId.equals("assignuser")) {
+					return new UserComboBox();
+				} else if (propertyId.equals("fixedVersions")) {
+					fixedVersionSelect = new VersionMultiSelectField();
+					if (bug.getFixedVersions().size() > 0) {
+						fixedVersionSelect.setSelectedItems(bug
+								.getFixedVersions());
+					}
+					return fixedVersionSelect;
+				} else if (propertyId.equals("comment")) {
+					commentArea = new RichTextArea();
+					commentArea.setNullRepresentation("");
+					return commentArea;
+				}
+
+				return null;
+			}
+		}
+	}
 }

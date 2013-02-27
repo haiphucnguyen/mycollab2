@@ -317,6 +317,9 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 									return new DefaultFormViewFieldFactory.FormContainerField(
 											layout);
 								}
+							} else if (propertyId.equals("username")) {
+								return new FormViewField(projectMember
+										.getMemberFullName());
 							}
 							return null;
 						}
@@ -338,12 +341,12 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 
 			@Override
 			protected Layout createTopPanel() {
-				return new HorizontalLayout();
+				return null;
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
-				return new VerticalLayout();
+				return null;
 			}
 		}
 	}

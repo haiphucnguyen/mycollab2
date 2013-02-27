@@ -133,6 +133,8 @@ public class WontFixExplainWindow extends Window {
     								"You must enter a comment to explain for won't fix resolution",
     								Window.Notification.TYPE_HUMANIZED_MESSAGE);
                         }
+                        
+                        WontFixExplainWindow.this.close();
                     }
                 });
                 wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -151,7 +153,7 @@ public class WontFixExplainWindow extends Window {
                 } else if (propertyId.equals("assignuser")) {
                     informationLayout.addComponent(field, "Assign User", 0, 1);
                 } else if (propertyId.equals("fixedVersions")) {
-                    informationLayout.addComponent(field, "Fixed Versions", 0, 2, 2, "100%");
+                    informationLayout.addComponent(field, "Fixed Versions", 0, 2);
                 } else if (propertyId.equals("comment")) {
                     informationLayout.addComponent(field, "Comments", 0, 3, 2, UIConstants.DEFAULT_2XCONTROL_WIDTH);
                 }
