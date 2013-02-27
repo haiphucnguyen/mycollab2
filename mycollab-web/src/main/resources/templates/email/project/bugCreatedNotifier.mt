@@ -60,7 +60,7 @@
 								</tr>
 								<tr>
 									<td style="text-align: right;">Due date:&nbsp;</td>
-									<td>$date.format('short_date', $bug.Duedate)</td>
+									<td>$!date.format('short_date', $bug.Duedate)</td>
 									<td style="text-align: right;">Milestone:&nbsp;</td>
 									<td><a href="$hyperLinks.milestoneUrl" style="color: #4283c4; text-decoration: none;">$!bug.milestoneName</td>		
 								</tr>
