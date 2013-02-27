@@ -41,7 +41,7 @@ public class ApplicationProperties {
 		try {
 			properties.load(Thread.currentThread().getContextClassLoader()
 					.getResourceAsStream(RESOURCE_PROPERTIES));
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -52,6 +52,10 @@ public class ApplicationProperties {
 
 	public static String getProperty(String key) {
 		return properties.getProperty(key);
+	}
+
+	public static String getProperty(String key, String defaultValue) {
+		return properties.getProperty(key, defaultValue);
 	}
 
 	public static String getSendErrorEmail() {
