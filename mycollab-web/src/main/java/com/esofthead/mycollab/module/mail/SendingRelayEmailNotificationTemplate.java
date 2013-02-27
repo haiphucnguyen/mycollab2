@@ -2,6 +2,8 @@ package com.esofthead.mycollab.module.mail;
 
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -11,15 +13,17 @@ import com.esofthead.mycollab.common.domain.criteria.RelayEmailNotificationSearc
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.mail.service.SendingRelayEmailNotificationAction;
-import com.esofthead.mycollab.module.mail.service.SystemMailService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.web.AppContext;
 
 public class SendingRelayEmailNotificationTemplate {
-	private final SendingRelayEmailNotificationAction sendingAction;
 
+	private static Logger log = LoggerFactory
+			.getLogger(SendingRelayEmailNotificationTemplate.class);
 	private static ApplicationContext springContext;
+	private final SendingRelayEmailNotificationAction sendingAction;
 	private final RelayEmailNotificationService relayEmailNotificationService;
 
 	static {
@@ -79,8 +83,8 @@ public class SendingRelayEmailNotificationTemplate {
 					}
 
 					if (templateGenerator != null) {
-						SystemMailService mailService = springContext
-								.getBean(SystemMailService.class);
+						ExtMailService mailService = springContext
+								.getBean(ExtMailService.class);
 						mailService.sendHTMLMail("mail@esofthead.com",
 								emailNotification.getChangeByUserFullName(),
 								notifiers,
@@ -90,6 +94,7 @@ public class SendingRelayEmailNotificationTemplate {
 				}
 
 			} catch (Exception e) {
+				log.error("Error when sending notification email", e);
 				relayEmailNotificationService.saveWithSession(
 						emailNotification, "");
 			}

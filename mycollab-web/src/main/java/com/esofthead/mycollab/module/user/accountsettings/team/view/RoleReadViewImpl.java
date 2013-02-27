@@ -19,11 +19,13 @@ import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Window;
 
 /**
  *
@@ -33,8 +35,8 @@ import com.vaadin.ui.VerticalLayout;
 public class RoleReadViewImpl extends AbstractView implements RoleReadView {
 
     private static final long serialVersionUID = 1L;
-    private PreviewForm previewForm;
-    private SimpleRole role;
+    protected AdvancedPreviewBeanForm<Role> previewForm;
+    protected SimpleRole role;
 
     public RoleReadViewImpl() {
         super();
@@ -71,6 +73,35 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
             });
             super.setItemDataSource(newDataSource);
         }
+        
+        @Override
+		protected void doPrint() {
+			// Create a window that contains what you want to print
+			Window window = new Window("Window to Print");
+
+			RoleReadViewImpl printView = new RoleReadViewImpl.PrintView();
+			printView.previewItem(role);
+			window.addComponent(printView);
+
+			// Add the printing window as a new application-level window
+			getApplication().addWindow(window);
+
+			// Open it as a popup window with no decorations
+			getWindow().open(new ExternalResource(window.getURL()), "_blank",
+					1100, 200, // Width and height
+					Window.BORDER_NONE); // No decorations
+
+			// Print automatically when the window opens.
+			// This call will block until the print dialog exits!
+			window.executeJavaScript("print();");
+
+			// Close the window automatically after printing
+			window.executeJavaScript("self.close();");
+		}
+        
+        @Override
+		protected void showHistory() {
+		}
 
         class FormLayoutFactory extends RoleFormLayoutFactory {
 
@@ -128,6 +159,86 @@ public class RoleReadViewImpl extends AbstractView implements RoleReadView {
             }
         }
     }
+    
+    @SuppressWarnings("serial")
+	public static class PrintView extends RoleReadViewImpl {
+
+		public PrintView() {
+			previewForm = new AdvancedPreviewBeanForm<Role>() {
+				@Override
+				public void setItemDataSource(Item newDataSource) {
+					this.setFormLayoutFactory(new FormLayoutFactory());
+					this.setFormFieldFactory(new DefaultFormViewFieldFactory() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						protected Field onCreateField(Item item,
+								Object propertyId, Component uiContext) {
+							return null;
+						}
+					});
+					super.setItemDataSource(newDataSource);
+				}
+			};
+
+			this.addComponent(previewForm);
+		}
+
+		class FormLayoutFactory extends RoleFormLayoutFactory {
+
+            private static final long serialVersionUID = 1L;
+
+            public FormLayoutFactory() {
+                super(role.getRolename());
+            }
+
+            @Override
+            protected Layout createTopPanel() {
+                return new VerticalLayout();
+            }
+
+            @Override
+            protected Layout createBottomPanel() {
+                VerticalLayout permissionsPanel = new VerticalLayout();
+                Label organizationHeader = new Label("Permissions");
+                organizationHeader.setStyleName("h2");
+                permissionsPanel.addComponent(organizationHeader);
+
+                PermissionMap permissionMap = role.getPermissionMap();
+
+                GridFormLayoutHelper crmFormHelper = new GridFormLayoutHelper(2, RolePermissionCollections.CRM_PERMISSIONS_ARR.length);
+                Depot crmHeader = new Depot("Customer Relationship Management", crmFormHelper.getLayout());
+
+                for (int i = 0; i < RolePermissionCollections.CRM_PERMISSIONS_ARR.length; i++) {
+                    String permissionPath = RolePermissionCollections.CRM_PERMISSIONS_ARR[i];
+                    crmFormHelper.addComponent(new Label(getValueFromPerPath(permissionMap, permissionPath)), permissionPath, 0, i);
+                }
+
+                permissionsPanel.addComponent(crmHeader);
+
+                GridFormLayoutHelper userFormHelper = new GridFormLayoutHelper(2, RolePermissionCollections.USER_PERMISSION_ARR.length);
+                Depot userHeader = new Depot("User Management", userFormHelper.getLayout());
+
+                for (int i = 0; i < RolePermissionCollections.USER_PERMISSION_ARR.length; i++) {
+                    String permissionPath = RolePermissionCollections.USER_PERMISSION_ARR[i];
+                    userFormHelper.addComponent(new Label(getValueFromPerPath(permissionMap, permissionPath)), permissionPath, 0, i);
+                }
+
+                permissionsPanel.addComponent(userHeader);
+
+                return permissionsPanel;
+            }
+
+            private String getValueFromPerPath(PermissionMap permissionMap, String permissionItem) {
+                Integer perVal = permissionMap.get(permissionItem);
+                if (perVal == null) {
+                    return "No Access";
+                } else {
+                    return PermissionFlag.toString(perVal);
+                }
+            }
+        }
+	}
 
     @Override
     public SimpleRole getItem() {

@@ -12,9 +12,9 @@
     <s_account id="1"/>
     <s_user accountId="1" username="hainguyen" firstname="Nguyen" lastname="Hai"/>
     
-    <s_activitystream id="1" module="aa" action="save" sAccountId="1"/>
-    <s_activitystream id="2" module="aa" action="save" sAccountId="1"/>
-    <s_activitystream id="3" module="bb" action="update" sAccountId="1"/>
+    <s_activitystream id="1" module="aa" type="task" typeId="1" action="save" sAccountId="1"/>
+    <s_activitystream id="2" module="aa" type="task" typeId="1" action="save" sAccountId="1"/>
+    <s_activitystream id="3" module="bb" type="task" typeId="1" action="update" sAccountId="1"/>
     
     <m_comment id="1" comment="comment1" createdUser="hainguyen" sAccountId="1" type="Common_ActivityStream" typeId="3" createdTime="2011-11-5 00:00:00"/>
     <m_comment id="2" comment="comment2" createdUser="hainguyen" sAccountId="1" type="Common_ActivityStream" typeId="3" createdTime="2011-11-5 00:00:00"/>

@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
@@ -13,11 +14,13 @@ import com.esofthead.mycollab.vaadin.ui.LabelHTMLDisplayWidget;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
 /**
@@ -60,11 +63,20 @@ public class DueBugWidget extends BugDisplayWidget {
 			descInfo.setWidth("100%");
 			layout.addComponent(descInfo);
 			
+			HorizontalLayout hLayoutDateInfo = new HorizontalLayout();
+			hLayoutDateInfo.setSpacing(true);
 			Label dateInfo = new Label("due on "
-					+ AppContext.formatDate(obj.getDuedate()) + ". Assignee: "
-					+ obj.getAssignuserFullName());
+					+ AppContext.formatDate(obj.getDuedate()) + ". Assignee: ");
 			dateInfo.setStyleName(UIConstants.WIDGET_ROW_METADATA);
-			layout.addComponent(dateInfo, 1, 2);
+			hLayoutDateInfo.addComponent(dateInfo);
+			hLayoutDateInfo.setComponentAlignment(dateInfo, Alignment.MIDDLE_LEFT);
+			
+			ProjectUserFormLinkField userLink =  new ProjectUserFormLinkField(obj.getAssignuser(),
+					obj.getAssignuserFullName());
+			hLayoutDateInfo.addComponent(userLink);
+			hLayoutDateInfo.setComponentAlignment(userLink, Alignment.TOP_CENTER);
+			
+			layout.addComponent(hLayoutDateInfo, 1, 2);
 
 			CssLayout rowLayout = new CssLayout();
 			rowLayout.addComponent(layout);

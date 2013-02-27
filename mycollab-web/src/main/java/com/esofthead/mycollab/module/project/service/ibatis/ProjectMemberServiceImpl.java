@@ -6,9 +6,15 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 
 import java.util.List;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
@@ -17,14 +23,12 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearch
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-
 /**
  * 
  * @author haiphucnguyen
  */
 @Service
+@Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.PROJECT_MEMBER)
 public class ProjectMemberServiceImpl extends
 		DefaultService<Integer, ProjectMember, ProjectMemberSearchCriteria>
 		implements ProjectMemberService {

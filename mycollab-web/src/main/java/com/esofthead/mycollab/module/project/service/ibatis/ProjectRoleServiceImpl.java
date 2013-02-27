@@ -3,10 +3,13 @@ package com.esofthead.mycollab.module.project.service.ibatis;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.PermissionMap;
+import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.dao.ProjectRoleMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectRoleMapperExt;
 import com.esofthead.mycollab.module.project.dao.ProjectRolePermissionMapper;
@@ -20,6 +23,7 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 @Service
+@Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.PROJECT_ROLE)
 public class ProjectRoleServiceImpl extends
 		DefaultService<Integer, ProjectRole, ProjectRoleSearchCriteria>
 		implements ProjectRoleService {
