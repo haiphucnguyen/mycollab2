@@ -9,6 +9,7 @@ import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
@@ -145,6 +146,10 @@ public class AppContext implements TransactionListener, Serializable {
     public static <T> T getSpringBean(Class<T> requiredType) {
 
         return springContext.getBean(requiredType);
+    }
+    
+    public static ApplicationContext getSpringContext() {
+    	return springContext;
     }
 
     public static boolean isAdmin() {

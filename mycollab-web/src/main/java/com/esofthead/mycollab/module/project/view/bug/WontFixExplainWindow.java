@@ -133,6 +133,8 @@ public class WontFixExplainWindow extends Window {
     								"You must enter a comment to explain for won't fix resolution",
     								Window.Notification.TYPE_HUMANIZED_MESSAGE);
                         }
+                        
+                        WontFixExplainWindow.this.close();
                     }
                 });
                 wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

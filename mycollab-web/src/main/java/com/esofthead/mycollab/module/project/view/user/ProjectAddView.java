@@ -15,4 +15,5 @@ import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 public interface ProjectAddView  extends IFormAddView<Project> {
 	HasEditFormHandlers<Project> getEditFormHandlers();
     
+	Project getItem();
 }

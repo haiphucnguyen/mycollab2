@@ -205,6 +205,9 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 											.addComponentField(lbPriority);
 									return containerField;
 								}
+							} else if (propertyId.equals("notes")) {
+								return new FormViewField(task.getNotes(),
+										Label.CONTENT_XHTML);
 							}
 							return null;
 						}
