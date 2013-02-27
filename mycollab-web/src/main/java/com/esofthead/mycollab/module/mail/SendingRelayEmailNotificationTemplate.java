@@ -11,8 +11,8 @@ import com.esofthead.mycollab.common.domain.criteria.RelayEmailNotificationSearc
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.mail.service.SendingRelayEmailNotificationAction;
-import com.esofthead.mycollab.module.mail.service.SystemMailService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.web.AppContext;
 
@@ -79,8 +79,8 @@ public class SendingRelayEmailNotificationTemplate {
 					}
 
 					if (templateGenerator != null) {
-						SystemMailService mailService = springContext
-								.getBean(SystemMailService.class);
+						ExtMailService mailService = springContext
+								.getBean(ExtMailService.class);
 						mailService.sendHTMLMail("mail@esofthead.com",
 								emailNotification.getChangeByUserFullName(),
 								notifiers,
