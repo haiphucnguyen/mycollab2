@@ -251,11 +251,7 @@
         </dependency>
         <!-- <dependency> <groupId>info.bliki.wiki</groupId> <artifactId>bliki-core</artifactId> 
             <version>3.0.19</version> </dependency> -->
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>javax.servlet-api</artifactId>
-            <version>3.1-b06</version>
-        </dependency>
+        
         <dependency>
             <groupId>uk.com.robust-it</groupId>
             <artifactId>cloning</artifactId>
