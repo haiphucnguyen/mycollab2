@@ -9,6 +9,7 @@ public class ProjectRoleSearchCriteria extends SearchCriteria {
     private StringSearchField rolename;
     private NumberSearchField projectId;
     private NumberSearchField saccountid;
+    private NumberSearchField id;
 
     public StringSearchField getRolename() {
         return rolename;
@@ -32,5 +33,13 @@ public class ProjectRoleSearchCriteria extends SearchCriteria {
 
 	public void setProjectId(NumberSearchField projectId) {
 		this.projectId = projectId;
+	}
+
+	public void setId(NumberSearchField id) {
+		this.id = id;
+	}
+
+	public NumberSearchField getId() {
+		return id;
 	}
 }

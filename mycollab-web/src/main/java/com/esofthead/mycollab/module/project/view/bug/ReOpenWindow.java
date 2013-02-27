@@ -184,7 +184,7 @@ public class ReOpenWindow extends Window {
 				} else if (propertyId.equals("assignuser")) {
 					return new UserComboBox();
 				} else if (propertyId.equals("fixedVersions")) {
-					fixedVersionSelect = new VersionMultiSelectField();
+					fixedVersionSelect = new VersionMultiSelectField("227px");
 					if (bug.getFixedVersions().size() > 0) {
 						fixedVersionSelect.setSelectedItems(bug
 								.getFixedVersions());
