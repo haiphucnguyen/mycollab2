@@ -134,4 +134,9 @@ public class ProjectAddViewImpl extends AbstractView implements ProjectAddView {
             super(false, ProjectDataTypeFactory.getProjectStatusList());
         }
     }
+
+	@Override
+	public Project getItem() {
+		return project;
+	}
 }

@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.ProjectPageAction;
+import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -57,8 +58,11 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 
 					@Override
 					public void onCancel() {
-						ViewState viewState = HistoryViewManager.back();
-						if (viewState instanceof NullViewState) {
+						if (view.getItem().getId() == null) {
+							EventBus.getInstance().fireEvent(
+									new ShellEvent.GotoProjectPage(
+											ProjectAddPresenter.this, null));
+						} else {
 							EventBus.getInstance()
 									.fireEvent(
 											new ProjectEvent.GotoMyProject(
@@ -66,8 +70,8 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 													new PageActionChain(
 															new ProjectPageAction(
 																	new ScreenData(
-																			CurrentProjectVariables
-																					.getProjectId())))));
+																			view.getItem()
+																					.getId())))));
 						}
 					}
 
