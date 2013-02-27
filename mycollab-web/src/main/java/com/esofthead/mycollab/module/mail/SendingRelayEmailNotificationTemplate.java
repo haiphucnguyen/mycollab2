@@ -90,7 +90,8 @@ public class SendingRelayEmailNotificationTemplate {
 				}
 
 			} catch (Exception e) {
-
+				relayEmailNotificationService.saveWithSession(
+						emailNotification, "");
 			}
 		}
 	}
