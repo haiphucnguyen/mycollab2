@@ -15,6 +15,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
@@ -29,6 +30,8 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
 
 	private static final long serialVersionUID = 1L;
 	private final EditForm editForm;
+	private Problem problem;
+	
 	private static Map<Integer, String> valueCaptions = new HashMap<Integer, String>(
 			5);
 
@@ -49,6 +52,7 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
 
 	@Override
 	public void editItem(Problem problem) {
+		this.problem = problem;
 		editForm.setItemDataSource(new BeanItem<Problem>(problem));
 	}
 
@@ -102,17 +106,24 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
 					risk.setRequiredError("Please enter a Desciption");
 					return risk;
 				} else if (propertyId.equals("raisedbyuser")) {
+					if (problem.getRaisedbyuser() == null) {
+						problem.setRaisedbyuser(AppContext.getUsername());
+					}
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("type")) {
 				} else if (propertyId.equals("assigntouser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("priority")) {
-					ValueComboBox box = new ValueComboBox();
-					box.loadData(new String[] { "High", "Medium", "Low" });
+					if (problem.getPriority() == null) {
+						problem.setPriority("Medium");
+					}
+					ValueComboBox box = new ValueComboBox(false, "High", "Medium", "Low");
 					return box;
 				} else if (propertyId.equals("status")) {
-					ValueComboBox box = new ValueComboBox();
-					box.loadData(new String[] { "Open", "Closed" });
+					if (problem.getStatus() == null) {
+						problem.setStatus("Open");
+					}
+					ValueComboBox box = new ValueComboBox(false, "Open", "Closed");
 					return box;
 				} else if (propertyId.equals("level")) {
 					final RatingStars ratingField = new RatingStars();
@@ -137,7 +148,7 @@ public class ProblemAddViewImpl extends AbstractView implements ProblemAddView,
 									.toArray(new String[5]));
 							// set "Your Rating" caption
 							if (value == null) {
-								changedRs.setValue(1);
+								changedRs.setValue(3);
 							} else {
 								changedRs.setValueCaption(
 										(int) Math.round(value), "Your Rating");

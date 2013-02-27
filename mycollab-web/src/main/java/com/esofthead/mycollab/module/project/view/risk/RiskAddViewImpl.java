@@ -14,6 +14,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
@@ -27,6 +28,7 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
 
 	private static final long serialVersionUID = 1L;
 	private final EditForm editForm;
+	private Risk risk;
 
 	private static Map<Integer, String> valueCaptions = new HashMap<Integer, String>(
 			5);
@@ -48,6 +50,7 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
 
 	@Override
 	public void editItem(Risk risk) {
+		this.risk = risk;
 		editForm.setItemDataSource(new BeanItem<Risk>(risk));
 	}
 
@@ -100,24 +103,33 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
 					risk.setRequiredError("Please enter a Desciption");
 					return risk;
 				} else if (propertyId.equals("raisedbyuser")) {
+					if (risk.getRaisedbyuser() == null) {
+						risk.setRaisedbyuser(AppContext.getUsername());
+					}
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("assigntouser")) {
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("response")) {
 					return new RichTextArea();
 				} else if (propertyId.equals("consequence")) {
-					ValueComboBox box = new ValueComboBox();
-					box.loadData(new String[] { "Catastrophic", "Critical",
-							"Marginal", "Negligible" });
+					if (risk.getConsequence() == null) {
+						risk.setConsequence("Marginal");
+					}
+					ValueComboBox box = new ValueComboBox(false, "Catastrophic", "Critical",
+							"Marginal", "Negligible");
 					return box;
 				} else if (propertyId.equals("probalitity")) {
-					ValueComboBox box = new ValueComboBox();
-					box.loadData(new String[] { "Certain", "Likely",
-							"Possible", "Unlikely", "Rare" });
+					if (risk.getProbalitity() == null) {
+						risk.setProbalitity("Possible");
+					}
+					ValueComboBox box = new ValueComboBox(false, "Certain", "Likely",
+							"Possible", "Unlikely", "Rare");
 					return box;
 				} else if (propertyId.equals("status")) {
-					ValueComboBox box = new ValueComboBox();
-					box.loadData(new String[] { "Open", "Closed" });
+					if (risk.getStatus() == null) {
+						risk.setStatus("Open");
+					}
+					ValueComboBox box = new ValueComboBox(false, "Open", "Closed");
 					return box;
 				} else if (propertyId.equals("level")) {
 					final RatingStars ratingField = new RatingStars();
@@ -142,7 +154,7 @@ public class RiskAddViewImpl extends AbstractView implements RiskAddView {
 									.toArray(new String[5]));
 							// set "Your Rating" caption
 							if (value == null) {
-								changedRs.setValue(1);
+								changedRs.setValue(3);
 							} else {
 								changedRs.setValueCaption(
 										(int) Math.round(value), "Your Rating");
