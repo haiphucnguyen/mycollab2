@@ -82,10 +82,39 @@ public class MonitorItemAspect {
 
 			} catch (Exception e) {
 				log.error(
-						"Error when save activity for save action of service "
+						"Error when save relay email notification for save action of service "
 								+ cls.getName(), e);
 			}
 		}
 
+	}
+
+	@After("execution(public * com.esofthead.mycollab..service..*.updateWithSession(..)) && args(bean, username)")
+	public void traceUpdateActivity(JoinPoint joinPoint, Object bean,
+			String username) {
+		Advised advised = (Advised) joinPoint.getThis();
+		Class<?> cls = advised.getTargetSource().getTargetClass();
+		Watchable watchableAnnotation = cls.getAnnotation(Watchable.class);
+		if (watchableAnnotation != null) {
+			// save notification item
+			try {
+				RelayEmailNotification relayNotification = new RelayEmailNotification();
+				relayNotification.setChangeby(username);
+				relayNotification.setChangecomment("");
+				int sAccountId = (Integer) PropertyUtils.getProperty(bean,
+						"saccountid");
+				relayNotification.setSaccountid(sAccountId);
+				relayNotification.setType(watchableAnnotation.type());
+				relayNotification.setAction(MonitorTypeConstants.UPDATE_ACTION);
+				int typeid = (Integer) PropertyUtils.getProperty(bean, "id");
+				relayNotification.setTypeid(typeid);
+				relayEmailNotificationService.saveWithSession(
+						relayNotification, username);
+			} catch (Exception e) {
+				log.error(
+						"Error when save relay email notification for update action of service "
+								+ cls.getName(), e);
+			}
+		}
 	}
 }

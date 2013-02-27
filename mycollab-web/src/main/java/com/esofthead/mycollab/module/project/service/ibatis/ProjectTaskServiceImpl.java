@@ -14,16 +14,14 @@ import org.springframework.transaction.annotation.Transactional;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
-import com.esofthead.mycollab.common.domain.criteria.RelayEmailNotificationSearchCriteria;
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.common.interceptor.service.Watchable;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
-import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.mail.SendingRelayEmailNotificationTemplate;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.SystemMailService;
 import com.esofthead.mycollab.module.project.ProjectContants;
@@ -49,9 +47,10 @@ public class ProjectTaskServiceImpl extends
 	private TaskMapper taskMapper;
 	@Autowired
 	private TaskMapperExt taskMapperExt;
+	
 	@Autowired
 	private RelayEmailNotificationService relayEmailNotificationService;
-	
+
 	@Autowired
 	private SystemMailService mailService;
 
@@ -97,39 +96,27 @@ public class ProjectTaskServiceImpl extends
 	@MonitoredWithSpring
 	@Override
 	public void runNotification() {
-		System.out.print("Run task email");
-		RelayEmailNotificationSearchCriteria criteria = new RelayEmailNotificationSearchCriteria();
-		criteria.setType(new StringSearchField(MonitorTypeConstants.PRJ_TASK));
-		List<SimpleRelayEmailNotification> relayEmaiNotifications = relayEmailNotificationService
-				.findPagableListByCriteria(new SearchRequest<RelayEmailNotificationSearchCriteria>(
-						criteria, 0, Integer.MAX_VALUE));
-		relayEmailNotificationService.removeByCriteria(criteria);
-		for (SimpleRelayEmailNotification emailNotification : relayEmaiNotifications) {
-			if (MonitorTypeConstants.CREATE_ACTION.equals(emailNotification
-					.getAction())) {
-				List<SimpleUser> notifiers = emailNotification.getNotifyUsers();
-				if (notifiers != null && !notifiers.isEmpty()) {
-					int taskId = emailNotification.getTypeid();
-					SimpleTask task = this.findTaskById(taskId);
+		new SendingRelayEmailNotificationTemplate(this).run();
+	}
 
-					Map<String, String> hyperLinks = new HashMap<String, String>();
-					hyperLinks.put("taskUrl", "#");
-					hyperLinks.put("projectUrl", "#");
-					hyperLinks.put("assignUserUrl", "#");
-					hyperLinks.put("taskListUrl", "#");
+	@Override
+	public TemplateGenerator sendRelayEmailNotificationForCreateAction(
+			SimpleRelayEmailNotification emailNotification,
+			List<SimpleUser> notifiers) {
+		int taskId = emailNotification.getTypeid();
+		SimpleTask task = this.findTaskById(taskId);
 
-					TemplateGenerator templateGenerator = new TemplateGenerator(
-							"[$task.projectName]: Task $task.taskname created",
-							"templates/email/project/taskCreatedNotifier.mt");
-					templateGenerator.putVariable("task", task);
-					templateGenerator.putVariable("hyperLinks", hyperLinks);
-					mailService.sendHTMLMail("mail@esofthead.com",
-							emailNotification.getChangeByUserFullName(),
-							notifiers,
-							templateGenerator.generateSubjectContent(),
-							templateGenerator.generateBodyContent());
-				}
-			}
-		}
+		Map<String, String> hyperLinks = new HashMap<String, String>();
+		hyperLinks.put("taskUrl", "#");
+		hyperLinks.put("projectUrl", "#");
+		hyperLinks.put("assignUserUrl", "#");
+		hyperLinks.put("taskListUrl", "#");
+
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				"[$task.projectName]: Task $task.taskname created",
+				"templates/email/project/taskCreatedNotifier.mt");
+		templateGenerator.putVariable("task", task);
+		templateGenerator.putVariable("hyperLinks", hyperLinks);
+		return templateGenerator;
 	}
 }

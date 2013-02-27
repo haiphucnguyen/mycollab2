@@ -7,7 +7,10 @@ import java.util.List;
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
+import net.bull.javamelody.MonitoredWithSpring;
+
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
@@ -18,12 +21,17 @@ import org.xml.sax.InputSource;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
+import com.esofthead.mycollab.common.domain.criteria.RelayEmailNotificationSearchCriteria;
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.common.interceptor.service.Watchable;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.common.service.MonitorItemService;
+import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -41,6 +49,7 @@ import com.esofthead.mycollab.module.tracker.domain.MetaOptionField;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.schedule.ScheduleConfig;
 
 @Service
 @Transactional
@@ -62,6 +71,8 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
     protected AttachmentService attachmentService;
     @Autowired
     protected MonitorItemService monitorItemService;
+    @Autowired
+	private RelayEmailNotificationService relayEmailNotificationService;
 
     @Override
     public ICrudGenericDAO<Integer, Bug> getCrudMapper() {
@@ -186,4 +197,17 @@ public class BugServiceImpl extends DefaultService<Integer, Bug, BugSearchCriter
     public List<GroupItem> getBugStatusTrendSummary(BugSearchCriteria criteria) {
         return bugMapperExt.getBugStatusTrendSummary(criteria);
     }
+
+	@Override
+	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_NOTIFICATION_INTERVAL)
+	@MonitoredWithSpring
+	public void runNotification() {
+		RelayEmailNotificationSearchCriteria criteria = new RelayEmailNotificationSearchCriteria();
+		criteria.setType(new StringSearchField(MonitorTypeConstants.PRJ_BUG));
+		List<SimpleRelayEmailNotification> relayEmaiNotifications = relayEmailNotificationService
+				.findPagableListByCriteria(new SearchRequest<RelayEmailNotificationSearchCriteria>(
+						criteria, 0, Integer.MAX_VALUE));
+		relayEmailNotificationService.removeByCriteria(criteria);
+		
+	}
 }
