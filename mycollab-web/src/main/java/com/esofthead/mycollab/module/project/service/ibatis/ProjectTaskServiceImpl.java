@@ -47,7 +47,7 @@ public class ProjectTaskServiceImpl extends
 	private TaskMapper taskMapper;
 	@Autowired
 	private TaskMapperExt taskMapperExt;
-	
+
 	@Autowired
 	private RelayEmailNotificationService relayEmailNotificationService;
 
@@ -96,11 +96,12 @@ public class ProjectTaskServiceImpl extends
 	@MonitoredWithSpring
 	@Override
 	public void runNotification() {
-		new SendingRelayEmailNotificationTemplate(this).run();
+		new SendingRelayEmailNotificationTemplate(this)
+				.run(MonitorTypeConstants.PRJ_TASK);
 	}
 
 	@Override
-	public TemplateGenerator sendRelayEmailNotificationForCreateAction(
+	public TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification,
 			List<SimpleUser> notifiers) {
 		int taskId = emailNotification.getTypeid();

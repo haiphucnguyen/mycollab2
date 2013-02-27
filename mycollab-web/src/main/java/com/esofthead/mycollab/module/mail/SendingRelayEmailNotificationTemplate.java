@@ -17,10 +17,10 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.web.AppContext;
 
 public class SendingRelayEmailNotificationTemplate {
-	private SendingRelayEmailNotificationAction sendingAction;
+	private final SendingRelayEmailNotificationAction sendingAction;
 
 	private static ApplicationContext springContext;
-	private RelayEmailNotificationService relayEmailNotificationService;
+	private final RelayEmailNotificationService relayEmailNotificationService;
 
 	static {
 		springContext = AppContext.getSpringContext();
@@ -45,8 +45,8 @@ public class SendingRelayEmailNotificationTemplate {
 				.getBean(RelayEmailNotificationService.class);
 	}
 
-	public void run() {
-		List<SimpleRelayEmailNotification> relayEmaiNotifications = filterMailRelayNotification(MonitorTypeConstants.PRJ_TASK);
+	public void run(String type) {
+		List<SimpleRelayEmailNotification> relayEmaiNotifications = filterMailRelayNotification(type);
 		sendRelayEmailNotifications(relayEmaiNotifications);
 	}
 
@@ -71,7 +71,7 @@ public class SendingRelayEmailNotificationTemplate {
 					if (MonitorTypeConstants.CREATE_ACTION
 							.equals(emailNotification.getAction())) {
 						templateGenerator = sendingAction
-								.sendRelayEmailNotificationForCreateAction(
+								.templateGeneratorForCreateAction(
 										emailNotification, notifiers);
 
 					} else if (MonitorTypeConstants.UPDATE_ACTION
