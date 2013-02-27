@@ -125,6 +125,9 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 							return new DefaultFormViewFieldFactory.FormContainerField(
 									layout);
 						}
+					} else if (propertyId.equals("username")) {
+						return new FormViewField(projectMember
+								.getMemberFullName());
 					}
 					return null;
 				}

@@ -29,6 +29,7 @@ public class TemplateGenerator implements LogChute {
 	private static ToolManager toolManager;
 
 	static {
+		Velocity.init();
 		EasyFactoryConfiguration config = new EasyFactoryConfiguration();
 		config.toolbox(Scope.APPLICATION).tool(DateTool.class);
 
@@ -38,8 +39,8 @@ public class TemplateGenerator implements LogChute {
 
 	public TemplateGenerator(String subjectTemplate,
 			String contentTemplatePathFile) {
-		Velocity.setProperty(Velocity.RUNTIME_LOG_LOGSYSTEM, this);
-		Velocity.init();
+//		Velocity.setProperty(Velocity.RUNTIME_LOG_LOGSYSTEM, this);
+		
 		velocityContext = new VelocityContext(toolManager.createContext());
 		this.subjectTemplate = subjectTemplate;
 		this.contentTemplatePathFile = contentTemplatePathFile;
