@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.mail.service.impl;
 
+import org.springframework.stereotype.Service;
+
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.module.mail.Mailer;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
@@ -12,6 +14,7 @@ import com.esofthead.mycollab.module.mail.service.ExtMailService;
  * 
  * @author haiphucnguyen
  */
+@Service
 public class ExtMailServiceImpl extends AbstractMailService implements
 		ExtMailService {
 
