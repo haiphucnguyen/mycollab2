@@ -76,6 +76,9 @@ ul {
 	display: inline-block;
 	vertical-align: top;
 }
+.v-datefield-button {
+	height: 15px;
+}
 .v-label {
 	word-wrap: break-word;
 }
@@ -1971,7 +1974,7 @@ white-space: normal;
 
 /* Background has SELECT icon */
 .v-button.select-bg {
-	height: 23px;
+	height: 24px;
 	width: 22px;
 	background: url('icons/16/select.png') no-repeat center center rgb(201,201,201);
 	border-radius: 0px 2px 2px 0px;

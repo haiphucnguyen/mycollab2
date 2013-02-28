@@ -18,7 +18,7 @@
                             <p style="font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; color: #4e4e4e; margin: 0px; padding: 0px;">People make you successful.<br>Gain more customers by building a relationship network that care about you.</p> 
                         </td>
                     </tr>
-                </table
+                </table>
         </tr>
         <tr>
             <td style="background: url('${defaultUrls.cdn_url}border_large_top.png') no-repeat 0 0 transparent;" height="39">&nbsp;</td>
@@ -44,7 +44,7 @@
                                 </tr>
                                 <tr>
                                     <td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
-                                    <td style="font-weight: bold; text-transform: uppercase;" colspan="3">$bug.description</td>
+                                    <td style="font-weight: bold; text-transform: uppercase;" colspan="3">$!bug.description</td>
                                 </tr>
                                 <tr>
                                     <td style="text-align: right;">Status:&nbsp;</td>
@@ -68,7 +68,7 @@
                                     <td style="text-align: right; vertical-align: top;">Logged by:&nbsp;</td>
                                     <td><a href="${hyperLinks.loggedUserUrl}" style="color: #4283c4; text-decoration: none;">$bug.logby</a></td>
                                     <td style="text-align: right; vertical-align: top;">Assigned to:&nbsp;</td>
-                                    <td><a href="${hyperLinks.assignUserUrl}" style="color: #4283c4; text-decoration: none;">$bug.assignuser</a></td>       
+                                    <td><a href="${hyperLinks.assignUserUrl}" style="color: #4283c4; text-decoration: none;">$!bug.assignuser</a></td>       
                                 </tr>
                                 <tr>
                                     <td style="text-align: right; vertical-align: top;">Components:&nbsp;</td>
@@ -98,7 +98,34 @@
                                         #else
                                             N/A
                                         #end
-                                    </td>   
+                                    </td>  
+                                </tr>
+                                <tr>
+                                	<td colspan="4">
+                                		<p>Changes (by $historyLog.postedUserFullName):</p>
+                                		<table border="1">
+                                			<tr>
+                                				<td>Fields</td>
+                                				<td>Old Value</td>
+                                				<td>New Value</td>
+                                			</tr>
+                                			#foreach ($item in $historyLog.changeItems)
+                                				#if ($item.field != "lastupdatedtime" && $mapper.hasField($item.field))
+                                				<tr>
+                                					<td>
+                                						$mapper.getFieldLabel($item.field)
+                                					</td>
+                                					<td>
+                                						$item.oldvalue
+                                					</td>
+                                					<td>
+                                						$item.newvalue
+                                					</td>
+                                				</tr>
+                                				#end
+                                			#end
+                                		</table>
+                                	</td>
                                 </tr>
                             </table>
                         </td>
@@ -121,7 +148,7 @@
         </tr>
         <tr>
             <td>
-                <p style="margin-top: 5px; color: #4e4e4e; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">NetConference technology created by The Illusion Factory<br>&copy; 2013 NxtGen, LLC. All rights reserved. Terms of service . Privacy Policy</p>
+                <p style="margin-top: 5px; color: #4e4e4e; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">Copyright by eSoftHead<br>&copy; 2013 MyCollab, LLC. All rights reserved.</p>
             </td>
         </tr>
     </table>

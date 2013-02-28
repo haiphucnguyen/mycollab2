@@ -18,7 +18,7 @@
 							<p style="font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; color: #4e4e4e; margin: 0px; padding: 0px;">People make you successful.<br>Gain more customers by building a relationship network that care about you.</p> 
 						</td>
 					</tr>
-				</table
+				</table>
 		</tr>
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_top.png') no-repeat 0 0 transparent;" height="39">&nbsp;</td>
@@ -44,7 +44,7 @@
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
-									<td style="font-weight: bold; text-transform: uppercase;" colspan="3">$bug.description</td>
+									<td colspan="3">$bug.description</td>
 								</tr>
 								<tr>
 									<td style="text-align: right;">Status:&nbsp;</td>
@@ -121,7 +121,7 @@
 		</tr>
 		<tr>
 			<td>
-				<p style="margin-top: 5px; color: #4e4e4e; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">NetConference technology created by The Illusion Factory<br>&copy; 2013 NxtGen, LLC. All rights reserved. Terms of service . Privacy Policy</p>
+				<p style="margin-top: 5px; color: #4e4e4e; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">Copyright by eSoftHead<br>&copy; 2013 MyCollab, LLC. All rights reserved.</p>
 			</td>
 		</tr>
 	</table>
