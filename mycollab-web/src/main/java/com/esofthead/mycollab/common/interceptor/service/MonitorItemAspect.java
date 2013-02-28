@@ -19,7 +19,6 @@ import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.web.AppContext;
 
 @Aspect
 @Component
@@ -48,9 +47,7 @@ public class MonitorItemAspect {
 				monitorItem.setTypeid((Integer) PropertyUtils.getProperty(bean,
 						"id"));
 				monitorItem.setUser(username);
-
-				MonitorItemService monitorItemService = AppContext
-						.getSpringBean(MonitorItemService.class);
+				
 				monitorItemService.saveWithSession(monitorItem, username);
 				log.debug("Save monitor item: "
 						+ BeanUtility.printBeanObj(monitorItem));
@@ -87,34 +84,5 @@ public class MonitorItemAspect {
 			}
 		}
 
-	}
-
-	@After("execution(public * com.esofthead.mycollab..service..*.updateWithSession(..)) && args(bean, username)")
-	public void traceUpdateActivity(JoinPoint joinPoint, Object bean,
-			String username) {
-		Advised advised = (Advised) joinPoint.getThis();
-		Class<?> cls = advised.getTargetSource().getTargetClass();
-		Watchable watchableAnnotation = cls.getAnnotation(Watchable.class);
-		if (watchableAnnotation != null) {
-			// save notification item
-			try {
-				RelayEmailNotification relayNotification = new RelayEmailNotification();
-				relayNotification.setChangeby(username);
-				relayNotification.setChangecomment("");
-				int sAccountId = (Integer) PropertyUtils.getProperty(bean,
-						"saccountid");
-				relayNotification.setSaccountid(sAccountId);
-				relayNotification.setType(watchableAnnotation.type());
-				relayNotification.setAction(MonitorTypeConstants.UPDATE_ACTION);
-				int typeid = (Integer) PropertyUtils.getProperty(bean, "id");
-				relayNotification.setTypeid(typeid);
-				relayEmailNotificationService.saveWithSession(
-						relayNotification, username);
-			} catch (Exception e) {
-				log.error(
-						"Error when save relay email notification for update action of service "
-								+ cls.getName(), e);
-			}
-		}
 	}
 }

@@ -10,4 +10,8 @@ public interface SendingRelayEmailNotificationAction {
 	TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification,
 			List<SimpleUser> notifiers);
+
+	TemplateGenerator templateGeneratorForUpdateAction(
+			SimpleRelayEmailNotification emailNotification,
+			List<SimpleUser> notifiers);
 }

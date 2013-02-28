@@ -3,6 +3,7 @@ package com.esofthead.mycollab.common.service.ibatis;
 import com.esofthead.mycollab.common.dao.AuditLogMapper;
 import com.esofthead.mycollab.common.dao.AuditLogMapperExt;
 import com.esofthead.mycollab.common.domain.AuditLog;
+import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.criteria.AuditLogSearchCriteria;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -33,120 +34,127 @@ import org.w3c.dom.Document;
 import org.w3c.dom.Element;
 
 @Service
-public class AuditLogServiceImpl extends DefaultService<Integer, AuditLog, AuditLogSearchCriteria>
-        implements AuditLogService {
+public class AuditLogServiceImpl extends
+		DefaultService<Integer, AuditLog, AuditLogSearchCriteria> implements
+		AuditLogService {
 
-    private static Logger log = LoggerFactory.getLogger(AuditLogServiceImpl.class);
-    @Autowired
-    protected AuditLogMapper auditLogMapper;
-    @Autowired
-    protected AuditLogMapperExt auditLogMapperExt;
+	private static Logger log = LoggerFactory
+			.getLogger(AuditLogServiceImpl.class);
+	@Autowired
+	protected AuditLogMapper auditLogMapper;
+	@Autowired
+	protected AuditLogMapperExt auditLogMapperExt;
 
-    @Override
-    public ICrudGenericDAO<Integer, AuditLog> getCrudMapper() {
-        return auditLogMapper;
-    }
+	@Override
+	public ICrudGenericDAO<Integer, AuditLog> getCrudMapper() {
+		return auditLogMapper;
+	}
 
-    @Override
-    public ISearchableDAO<AuditLogSearchCriteria> getSearchMapper() {
-        return auditLogMapperExt;
-    }
+	@Override
+	public ISearchableDAO<AuditLogSearchCriteria> getSearchMapper() {
+		return auditLogMapperExt;
+	}
 
-    @Override
-    public void saveAuditLog(String username, String module, String type, int typeid, int sAccountId, Object oldObj,
-            Object newObj) {
-        AuditLog auditLog = new AuditLog();
-        auditLog.setPosteduser(username);
-        auditLog.setModule(module);
-        auditLog.setType(type);
-        auditLog.setTypeid(typeid);
-        auditLog.setSaccountid(sAccountId);
-        auditLog.setPosteddate(new GregorianCalendar().getTime());
-        auditLog.setChangeset(AuditLogUtil.getChangeSet(oldObj, newObj));
-        auditLog.setObjectClass(oldObj.getClass().getName());
-        auditLogMapper.insert(auditLog);
-    }
+	@Override
+	public int saveAuditLog(String username, String module, String type,
+			int typeid, int sAccountId, Object oldObj, Object newObj) {
+		AuditLog auditLog = new AuditLog();
+		auditLog.setPosteduser(username);
+		auditLog.setModule(module);
+		auditLog.setType(type);
+		auditLog.setTypeid(typeid);
+		auditLog.setSaccountid(sAccountId);
+		auditLog.setPosteddate(new GregorianCalendar().getTime());
+		auditLog.setChangeset(AuditLogUtil.getChangeSet(oldObj, newObj));
+		auditLog.setObjectClass(oldObj.getClass().getName());
+		return auditLogMapper.insert(auditLog);
+	}
 
-    public static class AuditLogUtil {
+	public static class AuditLogUtil {
 
-        static public String getChangeSet(Object oldObj, Object newObj) {
-            Class cl = oldObj.getClass();
+		static public String getChangeSet(Object oldObj, Object newObj) {
+			Class cl = oldObj.getClass();
 
-            DocumentBuilderFactory builderFactory = DocumentBuilderFactory
-                    .newInstance();
-            Document document;
-            try {
-                DocumentBuilder docBuilder = builderFactory
-                        .newDocumentBuilder();
-                document = docBuilder.newDocument();
-            } catch (ParserConfigurationException e1) {
-                return "";
-            }
+			DocumentBuilderFactory builderFactory = DocumentBuilderFactory
+					.newInstance();
+			Document document;
+			try {
+				DocumentBuilder docBuilder = builderFactory
+						.newDocumentBuilder();
+				document = docBuilder.newDocument();
+			} catch (ParserConfigurationException e1) {
+				return "";
+			}
 
-            Element changesetElement = document.createElement("changeset");
-            document.appendChild(changesetElement);
-            try {
-                BeanInfo beanInfo = Introspector.getBeanInfo(cl,
-                        Object.class);
+			Element changesetElement = document.createElement("changeset");
+			document.appendChild(changesetElement);
+			try {
+				BeanInfo beanInfo = Introspector.getBeanInfo(cl, Object.class);
 
-                for (PropertyDescriptor propertyDescriptor : beanInfo
-                        .getPropertyDescriptors()) {
-                    String fieldname = propertyDescriptor.getName();
-                    String oldProp = getValue(PropertyUtils.getProperty(oldObj, fieldname));
-                    String newProp = getValue(PropertyUtils.getProperty(newObj, fieldname));
+				for (PropertyDescriptor propertyDescriptor : beanInfo
+						.getPropertyDescriptors()) {
+					String fieldname = propertyDescriptor.getName();
+					String oldProp = getValue(PropertyUtils.getProperty(oldObj,
+							fieldname));
+					String newProp = getValue(PropertyUtils.getProperty(newObj,
+							fieldname));
 
-                    if (!oldProp.equals(newProp)) {
-                        Element changelogElement = document
-                                .createElement("changelog");
-                        changelogElement.setAttribute("field", fieldname);
-                        changelogElement.setAttribute("newvalue",
-                                newProp);
-                        changelogElement.setAttribute("oldvalue", oldProp);
-                        changesetElement.appendChild(changelogElement);
-                    }
-                }
-            } catch (Exception e) {
-                log.error("There is error when convert changeset", e);
-                return "";
-            }
+					if (!oldProp.equals(newProp)) {
+						Element changelogElement = document
+								.createElement("changelog");
+						changelogElement.setAttribute("field", fieldname);
+						changelogElement.setAttribute("newvalue", newProp);
+						changelogElement.setAttribute("oldvalue", oldProp);
+						changesetElement.appendChild(changelogElement);
+					}
+				}
+			} catch (Exception e) {
+				log.error("There is error when convert changeset", e);
+				return "";
+			}
 
-            // convert xml document to string
-            return getStringFromDocument(document);
-        }
+			// convert xml document to string
+			return getStringFromDocument(document);
+		}
 
-        static String getValue(Object obj) {
-            if (obj != null) {
-                if (obj instanceof Date) {
-                    return formatDateW3C((Date) obj);
-                } else {
-                    return obj.toString();
-                }
-            } else {
-                return "";
-            }
-        }
+		static String getValue(Object obj) {
+			if (obj != null) {
+				if (obj instanceof Date) {
+					return formatDateW3C((Date) obj);
+				} else {
+					return obj.toString();
+				}
+			} else {
+				return "";
+			}
+		}
 
-        static private String formatDateW3C(Date date) {
-            DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
-            String text = df.format(date);
-            String result = text.substring(0, 22) + ":" + text.substring(22);
-            return result;
-        }
+		static private String formatDateW3C(Date date) {
+			DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+			String text = df.format(date);
+			String result = text.substring(0, 22) + ":" + text.substring(22);
+			return result;
+		}
 
-        // method to convert Document to String
-        static private String getStringFromDocument(Document doc) {
-            try {
-                DOMSource domSource = new DOMSource(doc);
-                StringWriter writer = new StringWriter();
-                StreamResult result = new StreamResult(writer);
-                TransformerFactory tf = TransformerFactory.newInstance();
-                Transformer transformer = tf.newTransformer();
-                transformer.transform(domSource, result);
-                return writer.toString();
-            } catch (TransformerException ex) {
-                log.error("Convert xml to string is failed", ex);
-                return "";
-            }
-        }
-    }
+		// method to convert Document to String
+		static private String getStringFromDocument(Document doc) {
+			try {
+				DOMSource domSource = new DOMSource(doc);
+				StringWriter writer = new StringWriter();
+				StreamResult result = new StreamResult(writer);
+				TransformerFactory tf = TransformerFactory.newInstance();
+				Transformer transformer = tf.newTransformer();
+				transformer.transform(domSource, result);
+				return writer.toString();
+			} catch (TransformerException ex) {
+				log.error("Convert xml to string is failed", ex);
+				return "";
+			}
+		}
+	}
+
+	@Override
+	public SimpleAuditLog findById(int auditLogId) {
+		return auditLogMapperExt.findById(auditLogId);
+	}
 }
