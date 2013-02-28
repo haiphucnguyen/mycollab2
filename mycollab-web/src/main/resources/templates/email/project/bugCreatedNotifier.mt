@@ -6,7 +6,20 @@
 </head>
 <body>
 	<table width="650" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
-		#include ("notifierHeader.mt")
+		<tr>
+			<td>
+				<table>
+					<tr>
+						<td>
+							<img src="${defaultUrls.cdn_url}logo.png" alt="esofthead-logo" width="70" height="72" style="margin: 0px 5px 0px 0px; padding: 0px;">
+						</td>
+						<td>
+							<p style="font: bold 30px Tahoma, Geneva, sans-serif; color: #3b80c2; margin: 0px; padding: 0px;">MY COLLAB</p>
+							<p style="font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; color: #4e4e4e; margin: 0px; padding: 0px;">People make you successful.<br>Gain more customers by building a relationship network that care about you.</p> 
+						</td>
+					</tr>
+				</table
+		</tr>
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_top.png') no-repeat 0 0 transparent;" height="39">&nbsp;</td>
 		</tr>
@@ -31,19 +44,19 @@
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
-									<td colspan="3">$!bug.description</td>
+									<td style="font-weight: bold; text-transform: uppercase;" colspan="3">$bug.description</td>
 								</tr>
 								<tr>
 									<td style="text-align: right;">Status:&nbsp;</td>
-									<td>$!bug.status</td>
+									<td>$bug.status</td>
 									<td style="text-align: right; min-width: 90px;">Priority:&nbsp;</td>
-									<td>$!bug.priority</td>		
+									<td>$bug.priority</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Severity:&nbsp;</td>
-									<td>$!bug.severity</td>
+									<td>$bug.severity</td>
 									<td style="text-align: right;">Resolution:&nbsp;</td>
-									<td>$!bug.resolution</td>		
+									<td>$bug.resolution</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Due date:&nbsp;</td>
@@ -55,7 +68,7 @@
 									<td style="text-align: right; vertical-align: top;">Logged by:&nbsp;</td>
 									<td><a href="${hyperLinks.loggedUserUrl}" style="color: #4283c4; text-decoration: none;">$bug.logby</a></td>
 									<td style="text-align: right; vertical-align: top;">Assigned to:&nbsp;</td>
-									<td><a href="${hyperLinks.assignUserUrl}" style="color: #4283c4; text-decoration: none;">$!bug.assignuser</a></td>		
+									<td><a href="${hyperLinks.assignUserUrl}" style="color: #4283c4; text-decoration: none;">$bug.assignuser</a></td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Components:&nbsp;</td>
@@ -94,13 +107,23 @@
 						<td style="background: url('${defaultUrls.cdn_url}border_small_bottom.png') no-repeat 0 0 transparent; line-height: 7px;" height="7">&nbsp;</td>
 					</tr>
 				</table>
-				#include ("notifierSocialLinks.mt")
+				<div style="text-align: right; font-size: 10px; width: 100%;">
+				<span style="display: inline-block; vertical-align: top; margin-top: 10px;">Connect with us:&nbsp;</span>
+				<a href="${defaultUrls.facebook_url}"><img src="${defaultUrls.cdn_url}fb_social_icon.png" height="25" width="25"></a>
+				<a href="${defaultUrls.google_url}"><img src="${defaultUrls.cdn_url}google_social_icon.png" height="25" width="25"></a>
+				<a href="${defaultUrls.linkedin_url}"><img src="${defaultUrls.cdn_url}linkedin_social_icon.png" height="25" width="25"></a>
+				<a href="${defaultUrls.twitter_url}"><img src="${defaultUrls.cdn_url}twitter_social_icon.png" height="25" width="25"></a>
+				</div>
 			</td>
 		</tr>
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_bottom.png') no-repeat 0 0 transparent;" height="16">&nbsp;</td>
 		</tr>
-		#include ("notifierFooter.mt")
+		<tr>
+			<td>
+				<p style="margin-top: 5px; color: #4e4e4e; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">NetConference technology created by The Illusion Factory<br>&copy; 2013 NxtGen, LLC. All rights reserved. Terms of service . Privacy Policy</p>
+			</td>
+		</tr>
 	</table>
 </body>
 </html>
