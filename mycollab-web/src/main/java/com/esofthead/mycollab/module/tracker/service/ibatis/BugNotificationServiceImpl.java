@@ -32,6 +32,13 @@ public class BugNotificationServiceImpl implements INotificationSchedulable,
 	@Autowired
 	private AuditLogService auditLogService;
 
+	private final BugFieldNameMapper mapper;
+
+	public BugNotificationServiceImpl() {
+		// TODO Auto-generated constructor stub
+		mapper = new BugFieldNameMapper();
+	}
+
 	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_NOTIFICATION_INTERVAL)
 	@MonitoredWithSpring
 	@Override
@@ -85,10 +92,44 @@ public class BugNotificationServiceImpl implements INotificationSchedulable,
 			SimpleAuditLog auditLog = auditLogService
 					.findById(emailNotification.getExtratypeid());
 			templateGenerator.putVariable("historyLog", auditLog);
+
+			templateGenerator.putVariable("mapper", mapper);
 			System.out.println("Log of bug: "
 					+ BeanUtility.printBeanObj(auditLog));
 		}
 		return templateGenerator;
+	}
+
+	public class BugFieldNameMapper {
+		private final Map<String, String> fieldNameMap;
+
+		BugFieldNameMapper() {
+			fieldNameMap = new HashMap<String, String>();
+
+			fieldNameMap.put("summary", "Bug Summary");
+			fieldNameMap.put("description", "Description");
+			fieldNameMap.put("status", "Status");
+			fieldNameMap.put("assignuser", "Assigned to");
+			fieldNameMap.put("resolution", "Resolution");
+			fieldNameMap.put("severity", "Serverity");
+			fieldNameMap.put("environment", "Environment");
+			fieldNameMap.put("priority", "Priority");
+			fieldNameMap.put("duedate", "Due Date");
+		}
+
+		public boolean hasField(String fieldName) {
+			return fieldNameMap.containsKey(fieldName);
+		}
+
+		public String getFieldLabel(String fieldName) {
+			return fieldNameMap.get(fieldName);
+		}
+	}
+
+	public static void main(String[] args) {
+		BugNotificationServiceImpl a = new BugNotificationServiceImpl();
+
+		System.out.println(a.mapper.getFieldLabel("description"));
 	}
 
 }
