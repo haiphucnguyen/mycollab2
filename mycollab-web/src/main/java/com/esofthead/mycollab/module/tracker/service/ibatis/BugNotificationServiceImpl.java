@@ -11,9 +11,10 @@ import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.MonitorTypeConstants;
-import com.esofthead.mycollab.common.domain.ActivityStream;
+import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
-import com.esofthead.mycollab.common.service.ActivityStreamService;
+import com.esofthead.mycollab.common.service.AuditLogService;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.mail.SendingRelayEmailNotificationTemplate;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.SendingRelayEmailNotificationAction;
@@ -29,7 +30,7 @@ public class BugNotificationServiceImpl implements INotificationSchedulable,
 	@Autowired
 	private BugService bugService;
 	@Autowired
-	private ActivityStreamService activityStreamService;
+	private AuditLogService auditLogService;
 
 	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_NOTIFICATION_INTERVAL)
 	@MonitoredWithSpring
@@ -75,16 +76,17 @@ public class BugNotificationServiceImpl implements INotificationSchedulable,
 		hyperLinks.put("milestoneUrl", "#");
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$bug.projectname]: New bug created",
-				"templates/email/project/bugCreatedNotifier.mt");
+				"[$bug.projectname]: Bug updated",
+				"templates/email/project/bugUpdatedNotifier.mt");
 		templateGenerator.putVariable("bug", bug);
 		templateGenerator.putVariable("hyperLinks", hyperLinks);
 
 		if (emailNotification.getExtratypeid() != null) {
-			ActivityStream activityStream = activityStreamService
-					.findByPrimaryKey(emailNotification.getExtratypeid());
-			templateGenerator.putVariable("historyLog", activityStream);
-			System.out.println("Log of bug: " + activityStream);
+			SimpleAuditLog auditLog = auditLogService
+					.findById(emailNotification.getExtratypeid());
+			templateGenerator.putVariable("historyLog", auditLog);
+			System.out.println("Log of bug: "
+					+ BeanUtility.printBeanObj(auditLog));
 		}
 		return templateGenerator;
 	}

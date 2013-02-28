@@ -3,6 +3,7 @@ package com.esofthead.mycollab.common.service.ibatis;
 import com.esofthead.mycollab.common.dao.AuditLogMapper;
 import com.esofthead.mycollab.common.dao.AuditLogMapperExt;
 import com.esofthead.mycollab.common.domain.AuditLog;
+import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.criteria.AuditLogSearchCriteria;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -150,5 +151,10 @@ public class AuditLogServiceImpl extends
 				return "";
 			}
 		}
+	}
+
+	@Override
+	public SimpleAuditLog findById(int auditLogId) {
+		return auditLogMapperExt.findById(auditLogId);
 	}
 }
