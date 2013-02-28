@@ -204,7 +204,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 
 				VerticalLayout topPanelVerticalLayout = new VerticalLayout();
 				topPanelVerticalLayout.setSpacing(true);
-				topPanelVerticalLayout.setMargin(true);
+				topPanelVerticalLayout.setMargin(false, true, true, true);
 				topPanelVerticalLayout.setWidth("100%");
 				
 				Button createAccountBtn = new Button("Create",
