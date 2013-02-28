@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.dao.MonitorItemMapper;
-import com.esofthead.mycollab.common.dao.MonitorItemMapperExt;
 import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.MonitorItemExample;
 import com.esofthead.mycollab.common.service.MonitorItemService;
@@ -19,10 +18,7 @@ public class MonitorItemServiceImpl extends
 
 	@Autowired
 	private MonitorItemMapper monitorItemMapper;
-	
-	@Autowired
-	private MonitorItemMapperExt monitorItemMapperExt;
-	
+
 	@Override
 	public ICrudGenericDAO<Integer, MonitorItem> getCrudMapper() {
 		return monitorItemMapper;
@@ -38,7 +34,8 @@ public class MonitorItemServiceImpl extends
 	@Override
 	public Boolean isWatchingItem(String username, String type, int typeid) {
 		MonitorItemExample ex = new MonitorItemExample();
-		ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeid).andUserEqualTo(username);
+		ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeid)
+				.andUserEqualTo(username);
 		return (monitorItemMapper.countByExample(ex) != 0);
 	}
 
@@ -59,7 +56,16 @@ public class MonitorItemServiceImpl extends
 	@Override
 	public void deleteWatchingItem(String username, String type, int typeid) {
 		MonitorItemExample ex = new MonitorItemExample();
-		ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeid).andUserEqualTo(username);
+		ex.createCriteria().andTypeEqualTo(type).andTypeidEqualTo(typeid)
+				.andUserEqualTo(username);
 		monitorItemMapper.deleteByExample(ex);
+	}
+
+	@Override
+	public boolean isUserWatchingItem(String username, String type, int typeid) {
+		MonitorItemExample ex = new MonitorItemExample();
+		ex.createCriteria().andUserEqualTo(username).andTypeEqualTo(type)
+				.andTypeidEqualTo(typeid);
+		return monitorItemMapper.countByExample(ex) > 0;
 	}
 }
