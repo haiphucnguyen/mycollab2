@@ -20,6 +20,7 @@ public class BugHistoryList extends HistoryLogComponent {
 		this.addStyleName("activity-panel");
 
 		this.generateFieldDisplayHandler("description", "Description");
+		this.generateFieldDisplayHandler("environment", "Environment");
 		this.generateFieldDisplayHandler("summary", "Summary");
 		this.generateFieldDisplayHandler("detail", "Detail");
 		this.generateFieldDisplayHandler("status", "Status");
