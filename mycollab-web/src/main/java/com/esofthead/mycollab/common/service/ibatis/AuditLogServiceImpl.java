@@ -67,7 +67,8 @@ public class AuditLogServiceImpl extends
 		auditLog.setPosteddate(new GregorianCalendar().getTime());
 		auditLog.setChangeset(AuditLogUtil.getChangeSet(oldObj, newObj));
 		auditLog.setObjectClass(oldObj.getClass().getName());
-		return auditLogMapper.insert(auditLog);
+		auditLogMapper.insertAndReturnKey(auditLog);
+		return auditLog.getId();
 	}
 
 	public static class AuditLogUtil {

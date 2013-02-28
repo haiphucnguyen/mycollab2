@@ -95,7 +95,6 @@ public class AuditLogAspect {
 						"saccountid");
 				Object oldValue = caches.get(key);
 				if (oldValue != null) {
-					log.debug("Save audit log for service " + bean);
 					int auditLogId = auditLogService.saveAuditLog(username,
 							auditAnnotation.module(), auditAnnotation.type(),
 							typeid, sAccountId, oldValue, bean);
@@ -123,6 +122,7 @@ public class AuditLogAspect {
 						}
 
 						// Save notification email
+						log.debug("AUDIT LOG ID: " + auditLogId);
 						RelayEmailNotification relayNotification = new RelayEmailNotification();
 						relayNotification.setChangeby(username);
 						relayNotification.setChangecomment("");
