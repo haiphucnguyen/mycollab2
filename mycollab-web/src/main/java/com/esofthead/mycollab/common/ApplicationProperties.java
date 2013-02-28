@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.common;
 
-import java.io.IOException;
 import java.util.Properties;
 
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
@@ -25,11 +24,13 @@ public class ApplicationProperties {
 	public static final String MAIL_PORT = "mail.port";
 	public static final String MAIL_USERNAME = "mail.username";
 	public static final String MAIL_PASSWORD = "mail.password";
+	public static final String MAIL_IS_TLS = "mail.isTLS";
 
 	public static final String RELAYMAIL_SMTPHOST = "relaymail.smtphost";
 	public static final String RELAYMAIL_PORT = "relaymail.port";
 	public static final String RELAYMAIL_USERNAME = "relaymail.username";
 	public static final String RELAYMAIL_PASSWORD = "relaymail.password";
+	public static final String RELAYMAIL_IS_TLS = "relaymail.isTLS";
 
 	public static final String ERROR_SENDTO = "error.sendTo";
 

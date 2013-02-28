@@ -2,17 +2,12 @@ package com.esofthead.mycollab.module.tracker.service.ibatis;
 
 import java.io.StringReader;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 import javax.xml.parsers.DocumentBuilder;
 import javax.xml.parsers.DocumentBuilderFactory;
 
-import net.bull.javamelody.MonitoredWithSpring;
-
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.w3c.dom.Document;
@@ -23,7 +18,6 @@ import org.xml.sax.InputSource;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.common.interceptor.service.Watchable;
@@ -35,8 +29,6 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
-import com.esofthead.mycollab.module.mail.SendingRelayEmailNotificationTemplate;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.tracker.dao.BugMapper;
 import com.esofthead.mycollab.module.tracker.dao.BugMapperExt;
@@ -50,8 +42,6 @@ import com.esofthead.mycollab.module.tracker.domain.MetaOptionField;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.schedule.ScheduleConfig;
 
 @Service
 @Transactional
@@ -200,35 +190,5 @@ public class BugServiceImpl extends
 	@Override
 	public List<GroupItem> getBugStatusTrendSummary(BugSearchCriteria criteria) {
 		return bugMapperExt.getBugStatusTrendSummary(criteria);
-	}
-
-	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_NOTIFICATION_INTERVAL)
-	@MonitoredWithSpring
-	@Override
-	public void runNotification() {
-		new SendingRelayEmailNotificationTemplate(this)
-				.run(MonitorTypeConstants.PRJ_BUG);
-	}
-
-	@Override
-	public TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification,
-			List<SimpleUser> notifiers) {
-		int taskId = emailNotification.getTypeid();
-		SimpleBug bug = this.findBugById(taskId);
-
-		Map<String, String> hyperLinks = new HashMap<String, String>();
-		hyperLinks.put("bugUrl", "#");
-		hyperLinks.put("projectUrl", "#");
-		hyperLinks.put("loggedUserUrl", "#");
-		hyperLinks.put("assignUserUrl", "#");
-		hyperLinks.put("milestoneUrl", "#");
-
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$bug.projectname]: New bug created",
-				"templates/email/project/bugCreatedNotifier.mt");
-		templateGenerator.putVariable("bug", bug);
-		templateGenerator.putVariable("hyperLinks", hyperLinks);
-		return templateGenerator;
 	}
 }
