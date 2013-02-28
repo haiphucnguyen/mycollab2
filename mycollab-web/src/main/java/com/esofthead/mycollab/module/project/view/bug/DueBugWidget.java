@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.GregorianCalendar;
+
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -56,6 +58,11 @@ public class DueBugWidget extends BugDisplayWidget {
 						}
 					});
 			defectLink.setWidth("100%");
+			
+			if (obj.getDuedate() != null && (obj.getDuedate().before(new GregorianCalendar().getTime()))) {
+				defectLink.addStyleName(UIConstants.LINK_OVERDUE);
+            }
+			
 			layout.addComponent(defectLink);
 			layout.setColumnExpandRatio(1, 1.0f);
 
@@ -69,12 +76,12 @@ public class DueBugWidget extends BugDisplayWidget {
 					+ AppContext.formatDate(obj.getDuedate()) + ". Assignee: ");
 			dateInfo.setStyleName(UIConstants.WIDGET_ROW_METADATA);
 			hLayoutDateInfo.addComponent(dateInfo);
-			hLayoutDateInfo.setComponentAlignment(dateInfo, Alignment.MIDDLE_LEFT);
+			hLayoutDateInfo.setComponentAlignment(dateInfo, Alignment.MIDDLE_CENTER);
 			
 			ProjectUserFormLinkField userLink =  new ProjectUserFormLinkField(obj.getAssignuser(),
 					obj.getAssignuserFullName());
 			hLayoutDateInfo.addComponent(userLink);
-			hLayoutDateInfo.setComponentAlignment(userLink, Alignment.TOP_CENTER);
+			hLayoutDateInfo.setComponentAlignment(userLink, Alignment.MIDDLE_CENTER);
 			
 			layout.addComponent(hLayoutDateInfo, 1, 2);
 

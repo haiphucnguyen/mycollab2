@@ -4,7 +4,6 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.module.project.view.people.ProjectMemberFormLayoutFactory;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory;
 import com.esofthead.mycollab.module.user.accountsettings.view.UserFormLayoutFactory;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
