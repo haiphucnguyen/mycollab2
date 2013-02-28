@@ -56,4 +56,12 @@ public class Mailer {
 	private boolean isValidate(String val) {
 		return (val != null) && (val.trim().length() > 0);
 	}
+
+	public static void main(String[] args) throws EmailException {
+		Mailer mailer = new Mailer("smtp.gmail.com", "mail@esofthead.com",
+				"esofthead321", 465, true);
+		mailer.sendHTMLMail("mail@esofthead.com", "A",
+				new String[] { "hainguyen@esofthead.com" },
+				new String[] { "Hai Nguyen" }, "AAA", "bbb");
+	}
 }

@@ -120,4 +120,12 @@ public class ProjectTaskServiceImpl extends
 		templateGenerator.putVariable("hyperLinks", hyperLinks);
 		return templateGenerator;
 	}
+
+	@Override
+	public TemplateGenerator templateGeneratorForUpdateAction(
+			SimpleRelayEmailNotification emailNotification,
+			List<SimpleUser> notifiers) {
+		// TODO Auto-generated method stub
+		return null;
+	}
 }

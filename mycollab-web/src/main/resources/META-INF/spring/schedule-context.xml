@@ -14,5 +14,5 @@
         scheduler="myScheduler" />
 
     <task:executor id="myExecutor" pool-size="5" />
-    <task:scheduler id="myScheduler" pool-size="10" />
+    <task:scheduler id="myScheduler" pool-size="10"/>
 </beans>

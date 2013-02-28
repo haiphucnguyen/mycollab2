@@ -1,0 +1,1 @@
+ALTER TABLE `s_relay_email_notification` ADD COLUMN `extraTypeId` INT NULL;

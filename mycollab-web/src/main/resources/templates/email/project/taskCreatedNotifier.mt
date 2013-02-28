@@ -6,20 +6,7 @@
 </head>
 <body>
 	<table width="650" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
-		<tr>
-			<td>
-				<table>
-					<tr>
-						<td>
-							<img src="${defaultUrls.cdn_url}logo.png" alt="esofthead-logo" width="70" height="72" style="margin: 0px 5px 0px 0px; padding: 0px;">
-						</td>
-						<td>
-							<p style="font: bold 30px Tahoma, Geneva, sans-serif; color: #3b80c2; margin: 0px; padding: 0px;">MY COLLAB</p>
-							<p style="font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; color: #4e4e4e; margin: 0px; padding: 0px;">People make you successful.<br>Gain more customers by building a relationship network that care about you.</p> 
-						</td>
-					</tr>
-				</table
-		</tr>
+		#include ("notifierHeader.mt")
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_top.png') no-repeat 0 0 transparent;" height="39">&nbsp;</td>
 		</tr>
@@ -44,32 +31,32 @@
 								</tr>
 								<tr>
 									<td style="text-align: right;">Start Date:&nbsp;</td>
-									<td>$date.format('short_date', $task.Startdate)</td>
+									<td>$!date.format('short_date', $task.Startdate)</td>
 									<td style="text-align: right; min-width: 90px;">Actual Start Date:&nbsp;</td>
-									<td>$date.format('short_date', $task.Actualstartdate)</td>		
+									<td>$!date.format('short_date', $task.Actualstartdate)</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">End Date:&nbsp;</td>
-									<td>$date.format('short_date', $task.Enddate)</td>
+									<td>$!date.format('short_date', $task.Enddate)</td>
 									<td style="text-align: right;">Actual End Date:&nbsp;</td>
-									<td>$date.format('short_date', $task.Actualenddate)</td>		
+									<td>$!date.format('short_date', $task.Actualenddate)</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right;">Deadline:&nbsp;</td>
-									<td>$date.format('short_date', $task.Deadline)</td>
+									<td>$!date.format('short_date', $task.Deadline)</td>
 									<td style="text-align: right;">Priority:&nbsp;</td>
-									<td>$task.priority</td>		
+									<td>$!task.priority</td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Assign:&nbsp;</td>
-									<td><a href="${hyperLinks.assignUserUrl}" style="color: #4283c4; text-decoration: none;">$task.getAssignUserFullName()</a>
+									<td><a href="${hyperLinks.assignUserUrl}" style="color: #4283c4; text-decoration: none;">$!task.assignUserFullName</a>
 									</td>
 									<td style="text-align: right; vertical-align: top;"> Task list:&nbsp;</td>
-									<td style="vertical-align: top;"><a href="${hyperLinks.taskListUrl}" style="color: #4283c4; text-decoration: none;">$task.getTaskListName()</a></td>		
+									<td style="vertical-align: top;"><a href="${hyperLinks.taskListUrl}" style="color: #4283c4; text-decoration: none;">$!task.taskListName</a></td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Notes:&nbsp;</td>
-									<td style=" vertical-align: top;" colspan="3">$task.getNotes()</td>	
+									<td style=" vertical-align: top;" colspan="3">$!task.Notes</td>	
 								</tr>
 							</table>
 						</td>
@@ -78,23 +65,13 @@
 						<td style="background: url('${defaultUrls.cdn_url}border_small_bottom.png') no-repeat 0 0 transparent; line-height: 7px;" height="7">&nbsp;</td>
 					</tr>
 				</table>
-				<div style="text-align: right; font-size: 10px; width: 100%;">
-				<span style="display: inline-block; vertical-align: top; margin-top: 10px;">Connect with us:&nbsp;</span>
-				<a href="${defaultUrls.facebook_url}"><img src="${defaultUrls.cdn_url}fb_social_icon.png" height="25" width="25"></a>
-				<a href="${defaultUrls.google_url}"><img src="${defaultUrls.cdn_url}google_social_icon.png" height="25" width="25"></a>
-				<a href="${defaultUrls.linkedin_url}"><img src="${defaultUrls.cdn_url}linkedin_social_icon.png" height="25" width="25"></a>
-				<a href="${defaultUrls.twitter_url}"><img src="${defaultUrls.cdn_url}twitter_social_icon.png" height="25" width="25"></a>
-				</div>
+				#include ("notifierSocialLinks.mt")
 			</td>
 		</tr>
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_bottom.png') no-repeat 0 0 transparent;" height="16">&nbsp;</td>
 		</tr>
-		<tr>
-			<td>
-				<p style="margin-top: 5px; color: #4e4e4e; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif;">NetConference technology created by The Illusion Factory<br>&copy; 2013 NxtGen, LLC. All rights reserved. Terms of service . Privacy Policy</p>
-			</td>
-		</tr>
+		#include ("notifierFooter.mt")
 	</table>
 </body>
 </html>

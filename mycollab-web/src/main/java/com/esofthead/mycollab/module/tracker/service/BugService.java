@@ -12,8 +12,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.schedule.INotificationSchedulable;
 
 public interface BugService extends
-		IDefaultService<Integer, Bug, BugSearchCriteria>,
-		INotificationSchedulable, SendingRelayEmailNotificationAction {
+		IDefaultService<Integer, Bug, BugSearchCriteria> {
 
 	List<MetaField> getProjectTrackerMetaData(int projectid);
 
