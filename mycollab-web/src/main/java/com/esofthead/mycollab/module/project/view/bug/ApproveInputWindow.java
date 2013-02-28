@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.GregorianCalendar;
+
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
@@ -30,7 +32,6 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import java.util.GregorianCalendar;
 
 /**
  *
@@ -86,6 +87,8 @@ public class ApproveInputWindow extends Window {
                 });
                 cancelBtn.setStyleName("link");
                 controlsBtn.addComponent(cancelBtn);
+                controlsBtn.setComponentAlignment(cancelBtn,
+						Alignment.MIDDLE_LEFT);
                 
                 Button approveBtn = new Button("Approve & Close", new Button.ClickListener() {
                     @Override
@@ -112,7 +115,8 @@ public class ApproveInputWindow extends Window {
                 });
                 approveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
                 controlsBtn.addComponent(approveBtn);
-                
+                controlsBtn.setComponentAlignment(approveBtn,
+						Alignment.MIDDLE_RIGHT);
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
                 
                 return layout;

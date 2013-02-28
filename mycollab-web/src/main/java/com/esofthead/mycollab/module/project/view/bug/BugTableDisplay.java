@@ -8,6 +8,7 @@ import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
+import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -107,7 +108,7 @@ public class BugTableDisplay extends PagedBeanTable2<BugService, BugSearchCriter
                 }
                 
                 b.addStyleName("medium-text");
-                if ("Close".equals(bug.getStatus())) {
+                if (BugStatusConstants.CLOSE.equals(bug.getStatus()) || BugStatusConstants.WONFIX.equals(bug.getStatus())) {
                 	b.addStyleName(UIConstants.LINK_COMPLETED);
                 } else if (bug.getDuedate() != null && (bug.getDuedate().before(new GregorianCalendar().getTime()))) {
                     b.addStyleName(UIConstants.LINK_OVERDUE);
