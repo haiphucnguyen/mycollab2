@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.mail.service.impl;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.mail.Mailer;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 
@@ -49,15 +50,12 @@ public class ExtMailServiceImpl extends AbstractMailService implements
 			isTLS = Boolean.parseBoolean(ApplicationProperties.getProperty(
 					ApplicationProperties.MAIL_IS_TLS, "false"));
 		}
-
 		try {
-			new Mailer(smtphost, username, password, Integer.parseInt(port),
-					isTLS);
+			return new Mailer(smtphost, username, password,
+					Integer.parseInt(port), isTLS);
 		} catch (Exception ex) {
-
+			throw new MyCollabException(ex);
 		}
-
-		return new Mailer(smtphost, username, password, 587);
 	}
 
 }
