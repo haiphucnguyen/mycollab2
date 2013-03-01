@@ -65,4 +65,12 @@ public class ProjectTaskNotificationServiceImpl implements
 		return null;
 	}
 
+	@Override
+	public TemplateGenerator templateGeneratorForCommentAction(
+			SimpleRelayEmailNotification emailNotification,
+			List<SimpleUser> notifiers) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
 }

@@ -14,4 +14,8 @@ public interface SendingRelayEmailNotificationAction {
 	TemplateGenerator templateGeneratorForUpdateAction(
 			SimpleRelayEmailNotification emailNotification,
 			List<SimpleUser> notifiers);
+
+	TemplateGenerator templateGeneratorForCommentAction(
+			SimpleRelayEmailNotification emailNotification,
+			List<SimpleUser> notifiers);
 }

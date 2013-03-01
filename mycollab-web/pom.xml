@@ -169,6 +169,11 @@
             <version>1.0.2</version>
         </dependency>
         <dependency>
+            <groupId>org.vaadin.addons</groupId>
+            <artifactId>gwt-graphics</artifactId>
+            <version>1.0.0</version>
+        </dependency>
+        <dependency>
             <groupId>com.lexaden.components</groupId>
             <artifactId>breadcrumb</artifactId>
             <version>1.6.0</version>
@@ -251,13 +256,13 @@
         </dependency>
         <!-- <dependency> <groupId>info.bliki.wiki</groupId> <artifactId>bliki-core</artifactId> 
             <version>3.0.19</version> </dependency> -->
-        
+
         <dependency>
             <groupId>uk.com.robust-it</groupId>
             <artifactId>cloning</artifactId>
             <version>1.9.0</version>
         </dependency>
-        
+
     </dependencies>
     <build>
         <plugins>

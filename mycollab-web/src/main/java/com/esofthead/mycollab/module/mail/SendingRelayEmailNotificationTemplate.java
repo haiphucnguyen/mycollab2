@@ -83,6 +83,11 @@ public class SendingRelayEmailNotificationTemplate {
 						templateGenerator = sendingAction
 								.templateGeneratorForUpdateAction(
 										emailNotification, notifiers);
+					} else if (MonitorTypeConstants.ADD_COMMENT_ACTION
+							.equals(emailNotification.getAction())) {
+						templateGenerator = sendingAction
+								.templateGeneratorForCommentAction(
+										emailNotification, notifiers);
 					}
 
 					if (templateGenerator != null) {
@@ -103,5 +108,4 @@ public class SendingRelayEmailNotificationTemplate {
 			}
 		}
 	}
-
 }
