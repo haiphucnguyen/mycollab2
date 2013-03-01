@@ -33,6 +33,7 @@ public class ApplicationProperties {
 	public static final String RELAYMAIL_IS_TLS = "relaymail.isTLS";
 
 	public static final String ERROR_SENDTO = "error.sendTo";
+	public static final String STORAGE_SYSTEM = "storageSystem";
 
 	static {
 		StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
@@ -60,6 +61,6 @@ public class ApplicationProperties {
 	}
 
 	public static String getSendErrorEmail() {
-		return properties.getProperty("error.sendTo");
+		return properties.getProperty("error.sendTo", "hainguyen@esofthead.com");
 	}
 }
