@@ -38,7 +38,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class BugReadViewImpl extends AbstractView implements BugReadView {
@@ -202,11 +201,6 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 						bug.getSummary(), new ThemeResource(
 								"icons/48/project/bug.png"));
 
-				VerticalLayout topPanelVerticalLayout = new VerticalLayout();
-				topPanelVerticalLayout.setSpacing(true);
-				topPanelVerticalLayout.setMargin(false, true, true, true);
-				topPanelVerticalLayout.setWidth("100%");
-				
 				Button createAccountBtn = new Button("Create",
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
@@ -218,36 +212,36 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 							}
 						});
 				createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-				createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
-				
-				topPanelVerticalLayout.addComponent(createAccountBtn);
-				topPanelVerticalLayout.setComponentAlignment(createAccountBtn, Alignment.MIDDLE_RIGHT);
-				
+				createAccountBtn.setIcon(new ThemeResource(
+						"icons/16/addRecord.png"));
+
+				HorizontalLayout headerRight = new HorizontalLayout();
+				headerRight.addComponent(createAccountBtn);
+				taskListAddLayout.addHeaderRight(headerRight);
+
 				HorizontalLayout topPanel = new HorizontalLayout();
 				topPanel.setSpacing(true);
 				topPanel.setMargin(true, false, true, true);
 				topPanel.setWidth("100%");
-				
-				topPanelVerticalLayout.addComponent(topPanel);
 
 				HorizontalLayout buttonControls = new HorizontalLayout();
 				buttonControls.setSpacing(true);
-				
+
 				Button backBtn;
-		        backBtn = new Button(null, new Button.ClickListener() {
+				backBtn = new Button(null, new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-		            public void buttonClick(ClickEvent event) {
+					public void buttonClick(ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new BugEvent.GotoList(this, null));
-		            }
-		        });
-		        backBtn.setIcon(new ThemeResource("icons/16/back.png"));
-		        backBtn.setDescription("Back to list");
-		        backBtn.setStyleName("link");
-		        topPanel.addComponent(backBtn);
-		        topPanel.setComponentAlignment(backBtn, Alignment.MIDDLE_LEFT);
+					}
+				});
+				backBtn.setIcon(new ThemeResource("icons/16/back.png"));
+				backBtn.setDescription("Back to list");
+				backBtn.setStyleName("link");
+				topPanel.addComponent(backBtn);
+				topPanel.setComponentAlignment(backBtn, Alignment.MIDDLE_LEFT);
 
 				Button assignBtn = new Button("Assign",
 						new Button.ClickListener() {
@@ -329,12 +323,12 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 				topPanel.setComponentAlignment(bugWorkflowControl,
 						Alignment.MIDDLE_RIGHT);
 
-				taskListAddLayout.addTopControls(topPanelVerticalLayout);
+				taskListAddLayout.addTopControls(topPanel);
 
 				informationLayout = new GridFormLayoutHelper(2, 11);
 				informationLayout.getLayout().setMargin(true);
 				taskListAddLayout.addBody(informationLayout.getLayout());
-				
+
 				taskListAddLayout.addBottomControls(createBottomLayout());
 				return taskListAddLayout;
 			}
@@ -352,7 +346,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 				historyList = new BugHistoryList(bug.getId());
 				historyList.setMargin(true);
 				tabBugDetail.addTab(historyList, "History");
-				
+
 				return tabBugDetail;
 			}
 
@@ -439,7 +433,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 							componentContainer.addComponentField(componentLink);
 							componentLink.setStyleName("link");
 						}
-						componentContainer.setStyleName(UIConstants.FORM_CONTAINER_VIEW);
+						componentContainer
+								.setStyleName(UIConstants.FORM_CONTAINER_VIEW);
 						return componentContainer;
 					}
 				} else if (propertyId.equals("affectedVersions")) {

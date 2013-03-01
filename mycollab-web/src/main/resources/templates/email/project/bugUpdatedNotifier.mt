@@ -103,7 +103,7 @@
                                 <tr>
                                 	<td colspan="4">
                                 		<p>Changes (by $historyLog.postedUserFullName):</p>
-                                		<table border="1">
+                                		<table border="1" style="width:100%;">
                                 			<tr>
                                 				<td>Fields</td>
                                 				<td>Old Value</td>
