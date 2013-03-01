@@ -11,6 +11,7 @@ import java.util.Map;
 
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
+import org.apache.velocity.app.VelocityEngine;
 import org.apache.velocity.runtime.RuntimeServices;
 import org.apache.velocity.runtime.log.LogChute;
 import org.apache.velocity.tools.Scope;
@@ -27,6 +28,7 @@ public class TemplateGenerator implements LogChute {
 	private final VelocityContext velocityContext;
 
 	private static ToolManager toolManager;
+	private VelocityEngine voEngine;
 
 	static {
 		EasyFactoryConfiguration config = new EasyFactoryConfiguration();
@@ -38,8 +40,11 @@ public class TemplateGenerator implements LogChute {
 
 	public TemplateGenerator(String subjectTemplate,
 			String contentTemplatePathFile) {
-		Velocity.setProperty(Velocity.RUNTIME_LOG_LOGSYSTEM, this);
-		Velocity.init();
+		voEngine = new VelocityEngine();
+		voEngine.init();
+
+		// Velocity.setProperty(Velocity.RUNTIME_LOG_LOGSYSTEM, this);
+
 		velocityContext = new VelocityContext(toolManager.createContext());
 		this.subjectTemplate = subjectTemplate;
 		this.contentTemplatePathFile = contentTemplatePathFile;
@@ -78,7 +83,7 @@ public class TemplateGenerator implements LogChute {
 		Reader reader = new BufferedReader(new InputStreamReader(
 				TemplateGenerator.class.getClassLoader().getResourceAsStream(
 						contentTemplatePathFile)));
-		Velocity.evaluate(velocityContext, writer, "log task", reader);
+		voEngine.evaluate(velocityContext, writer, "log task", reader);
 		return writer.toString();
 	}
 

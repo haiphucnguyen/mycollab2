@@ -201,13 +201,47 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 						bug.getSummary(), new ThemeResource(
 								"icons/48/project/bug.png"));
 
+				Button createAccountBtn = new Button("Create",
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new BugEvent.GotoAdd(this, null));
+							}
+						});
+				createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+				createAccountBtn.setIcon(new ThemeResource(
+						"icons/16/addRecord.png"));
+
+				HorizontalLayout headerRight = new HorizontalLayout();
+				headerRight.addComponent(createAccountBtn);
+				taskListAddLayout.addHeaderRight(headerRight);
+
 				HorizontalLayout topPanel = new HorizontalLayout();
 				topPanel.setSpacing(true);
-				topPanel.setMargin(true);
+				topPanel.setMargin(true, false, true, true);
 				topPanel.setWidth("100%");
 
 				HorizontalLayout buttonControls = new HorizontalLayout();
 				buttonControls.setSpacing(true);
+
+				Button backBtn;
+				backBtn = new Button(null, new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new BugEvent.GotoList(this, null));
+					}
+				});
+				backBtn.setIcon(new ThemeResource("icons/16/back.png"));
+				backBtn.setDescription("Back to list");
+				backBtn.setStyleName("link");
+				topPanel.addComponent(backBtn);
+				topPanel.setComponentAlignment(backBtn, Alignment.MIDDLE_LEFT);
 
 				Button assignBtn = new Button("Assign",
 						new Button.ClickListener() {
@@ -292,6 +326,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 				taskListAddLayout.addTopControls(topPanel);
 
 				informationLayout = new GridFormLayoutHelper(2, 11);
+				informationLayout.getLayout().setMargin(true);
 				taskListAddLayout.addBody(informationLayout.getLayout());
 
 				taskListAddLayout.addBottomControls(createBottomLayout());
@@ -398,6 +433,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 							componentContainer.addComponentField(componentLink);
 							componentLink.setStyleName("link");
 						}
+						componentContainer
+								.setStyleName(UIConstants.FORM_CONTAINER_VIEW);
 						return componentContainer;
 					}
 				} else if (propertyId.equals("affectedVersions")) {

@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
-import com.esofthead.mycollab.module.user.accountsettings.team.view.UserTableDisplay;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.shell.view.ScreenSize;
@@ -59,8 +58,9 @@ public class ProfileEditViewImpl extends AbstractView implements
 		Embedded cropField = new Embedded("", new ThemeResource(
 				"icons/default_user_avatar_256_256.png"));
 		userAvatar.addComponent(cropField);
+		
 
-		Button changePhotoBtn = new Button("Change photo",
+		Button changePhotoBtn = new Button("Choose another photo",
 				new Button.ClickListener() {
 
 					@Override

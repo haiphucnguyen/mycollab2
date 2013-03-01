@@ -44,6 +44,14 @@
         
     </select>
     
+    <select id="findById" parameterType="java.lang.Integer"
+            resultMap="SimpleAuditLogResult">
+        <include
+            refid="com.esofthead.mycollab.common.dao.AuditLogMapperExt.selectSimpleAuditLog" />
+
+        WHERE m_audit_log.id=#{auditLogId, javaType=INTEGER}
+    </select>
+    
     <sql id="orderStatement">
         ORDER BY <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[

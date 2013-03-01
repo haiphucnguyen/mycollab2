@@ -19,9 +19,14 @@ relaymail.password=esofthead321
 
 error.sendTo=<Your email>
 
+storageSystem=<file or s3>
 content.rawContentServiceImpl=com.esofthead.mycollab.module.file.service.impl.RawContentServiceImpl
-cdn.url=<cdn url>
+s3.key=
+s3.secretKey=
+s3.bucket=
+s3.downloadurl=
 
+cdn.url=<cdn url>
 app.url=<app_url>
 
 facebook.url=<facebook_url>

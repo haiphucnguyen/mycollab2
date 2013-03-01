@@ -32,32 +32,38 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
 @RunWith(EngroupClassRunner.class)
-@ContextConfiguration(locations = {"classpath:META-INF/spring/service-test-context.xml"})
-public class ActivityStreamServiceTest extends ServiceTest{
+@ContextConfiguration(locations = { "classpath:META-INF/spring/service-test-context.xml" })
+public class ActivityStreamServiceTest extends ServiceTest {
 
-    @Autowired
-    protected ActivityStreamService activityStreamService;
+	@Autowired
+	protected ActivityStreamService activityStreamService;
 
-    @Test
-    @DataSet
-    public void testSearchActivityStreams() {
-        ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-        searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{"aa", "bb"}));
+	@Test
+	@DataSet
+	public void testSearchActivityStreams() {
+		ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
+		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
+				new String[] { "aa", "bb" }));
 
-        List<SimpleActivityStream> activities = activityStreamService.findPagableListByCriteria(new SearchRequest<ActivityStreamSearchCriteria>(searchCriteria, 0, Integer.MAX_VALUE));
-        Assert.assertEquals(3, activities.size());
-    }
-    
-    @Test
-    @DataSet
-    public void testQueryActivityWithComments() {
-         ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-        searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND, new String[]{"bb"}));
-        
-        List<SimpleActivityStream> activities = activityStreamService.findPagableListByCriteria(new SearchRequest<ActivityStreamSearchCriteria>(searchCriteria, 0, Integer.MAX_VALUE));
-        Assert.assertEquals(1, activities.size());
-        
-        SimpleActivityStream activity = activities.get(0);
-        Assert.assertEquals(2, activity.getComments().size());
-    }
+		List<SimpleActivityStream> activities = activityStreamService
+				.findPagableListByCriteria(new SearchRequest<ActivityStreamSearchCriteria>(
+						searchCriteria, 0, Integer.MAX_VALUE));
+		Assert.assertEquals(3, activities.size());
+	}
+
+	@Test
+	@DataSet
+	public void testQueryActivityWithComments() {
+		ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
+		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
+				new String[] { "bb" }));
+
+		List<SimpleActivityStream> activities = activityStreamService
+				.findPagableListByCriteria(new SearchRequest<ActivityStreamSearchCriteria>(
+						searchCriteria, 0, Integer.MAX_VALUE));
+		Assert.assertEquals(1, activities.size());
+
+		SimpleActivityStream activity = activities.get(0);
+		Assert.assertEquals(2, activity.getComments().size());
+	}
 }

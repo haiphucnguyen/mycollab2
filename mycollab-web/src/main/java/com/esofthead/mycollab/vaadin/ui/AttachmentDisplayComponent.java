@@ -5,9 +5,12 @@
 package com.esofthead.mycollab.vaadin.ui;
 
 import com.esofthead.mycollab.module.file.StreamDownloadResource;
+import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.Resource;
+import com.vaadin.terminal.StreamResource;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -74,8 +77,8 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				StreamDownloadResource downloadResource = new StreamDownloadResource(
-						attachment.getDocumentpath());
+				Resource downloadResource = StreamDownloadResourceFactory
+						.getStreamResource(attachment.getDocumentpath());
 				AppContext.getApplication().getMainWindow()
 						.open(downloadResource, "_self");
 			}

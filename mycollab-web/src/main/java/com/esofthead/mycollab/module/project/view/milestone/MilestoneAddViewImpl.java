@@ -91,6 +91,10 @@ public class MilestoneAddViewImpl extends AbstractView implements
 					userbox.setRequiredError("Please enter a owner");
 					return userbox;
 				} else if (propertyId.equals("flag")) {
+					if (milestone.getFlag() == null)
+					{
+						milestone.setFlag("External");
+					}
 					return new ValueComboBox(false, "External", "Internal");
 				}
 

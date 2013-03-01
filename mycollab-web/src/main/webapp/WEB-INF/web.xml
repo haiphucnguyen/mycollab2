@@ -5,13 +5,13 @@
     id="WebApp_ID" version="3.0">
     <display-name>mycollab-web</display-name>
     <listener>
+        <listener-class>net.bull.javamelody.SessionListener</listener-class>
+    </listener>
+    <listener>
         <listener-class>org.springframework.web.context.request.RequestContextListener</listener-class>
     </listener>
     <listener>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
-    </listener>
-    <listener>
-        <listener-class>net.bull.javamelody.SessionListener</listener-class>
     </listener>
     <filter>
         <filter-name>monitoring</filter-name>

@@ -31,7 +31,7 @@ public class ProjectMemberComboBox extends ComboBox {
 				.findPagableListByCriteria(new SearchRequest<ProjectMemberSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
 		loadUserList(memberList);
-
+		this.setNullSelectionAllowed(false);
 	}
 
 	public ProjectMemberComboBox(List<SimpleProjectMember> userList) {

@@ -19,11 +19,12 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.web.AppContext;
 
 public class SendingRelayEmailNotificationTemplate {
+
 	private static Logger log = LoggerFactory
 			.getLogger(SendingRelayEmailNotificationTemplate.class);
 	private static ApplicationContext springContext;
-	private SendingRelayEmailNotificationAction sendingAction;
-	private RelayEmailNotificationService relayEmailNotificationService;
+	private final SendingRelayEmailNotificationAction sendingAction;
+	private final RelayEmailNotificationService relayEmailNotificationService;
 
 	static {
 		springContext = AppContext.getSpringContext();
@@ -48,8 +49,8 @@ public class SendingRelayEmailNotificationTemplate {
 				.getBean(RelayEmailNotificationService.class);
 	}
 
-	public void run() {
-		List<SimpleRelayEmailNotification> relayEmaiNotifications = filterMailRelayNotification(MonitorTypeConstants.PRJ_TASK);
+	public void run(String type) {
+		List<SimpleRelayEmailNotification> relayEmaiNotifications = filterMailRelayNotification(type);
 		sendRelayEmailNotifications(relayEmaiNotifications);
 	}
 
@@ -74,11 +75,19 @@ public class SendingRelayEmailNotificationTemplate {
 					if (MonitorTypeConstants.CREATE_ACTION
 							.equals(emailNotification.getAction())) {
 						templateGenerator = sendingAction
-								.sendRelayEmailNotificationForCreateAction(
+								.templateGeneratorForCreateAction(
 										emailNotification, notifiers);
 
 					} else if (MonitorTypeConstants.UPDATE_ACTION
 							.equals(emailNotification.getAction())) {
+						templateGenerator = sendingAction
+								.templateGeneratorForUpdateAction(
+										emailNotification, notifiers);
+					} else if (MonitorTypeConstants.ADD_COMMENT_ACTION
+							.equals(emailNotification.getAction())) {
+						templateGenerator = sendingAction
+								.templateGeneratorForCommentAction(
+										emailNotification, notifiers);
 					}
 
 					if (templateGenerator != null) {
@@ -99,19 +108,4 @@ public class SendingRelayEmailNotificationTemplate {
 			}
 		}
 	}
-
-	public static void main(String[] args) {
-		ClassPathXmlApplicationContext springContext = new ClassPathXmlApplicationContext(
-				"META-INF/spring/datasource-context.xml",
-				"META-INF/spring/core-context.xml",
-				"META-INF/spring/common-context.xml",
-				"META-INF/spring/crm-context.xml",
-				"META-INF/spring/file-context.xml",
-				"META-INF/spring/project-context.xml",
-				"META-INF/spring/tracker-context.xml",
-				"META-INF/spring/user-context.xml");
-		System.out.println(springContext
-				.getBean(RelayEmailNotificationService.class));
-	}
-
 }

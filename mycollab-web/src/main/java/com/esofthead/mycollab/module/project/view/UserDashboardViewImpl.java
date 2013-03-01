@@ -60,8 +60,8 @@ public class UserDashboardViewImpl extends AbstractView implements
 		menu.addComponent(myHome);
 		menu.addComponent(mySpaceTabs);
 
-		mySpaceTabs.setStyleName("hide-selection");
-		calendarToolTabs.setStyleName("hide-selection");
+		mySpaceTabs.addStyleName("hide-selection");
+		calendarToolTabs.addStyleName("hide-selection");
 		menu.addListener(new LayoutClickListener() {
 			@Override
 			public void layoutClick(LayoutClickEvent event) {
@@ -70,11 +70,11 @@ public class UserDashboardViewImpl extends AbstractView implements
 					root.setExpandRatio(root.getComponent(1), 1.0f);
 				}
 				if (event.getChildComponent() == mySpaceTabs) {
-					calendarToolTabs.setStyleName("hide-selection");
-					mySpaceTabs.setStyleName("");
+					calendarToolTabs.addStyleName("hide-selection");
+					mySpaceTabs.removeStyleName("hide-selection");
 				} else if (event.getChildComponent() == calendarToolTabs) {
-					mySpaceTabs.setStyleName("hide-selection");
-					calendarToolTabs.setStyleName("");
+					mySpaceTabs.addStyleName("hide-selection");
+					calendarToolTabs.removeStyleName("hide-selection");
 				}
 			}
 		});

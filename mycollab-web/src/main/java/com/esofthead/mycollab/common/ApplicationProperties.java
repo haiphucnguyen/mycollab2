@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.common;
 
-import java.io.IOException;
 import java.util.Properties;
 
 import org.jasypt.encryption.pbe.StandardPBEStringEncryptor;
@@ -25,13 +24,16 @@ public class ApplicationProperties {
 	public static final String MAIL_PORT = "mail.port";
 	public static final String MAIL_USERNAME = "mail.username";
 	public static final String MAIL_PASSWORD = "mail.password";
+	public static final String MAIL_IS_TLS = "mail.isTLS";
 
 	public static final String RELAYMAIL_SMTPHOST = "relaymail.smtphost";
 	public static final String RELAYMAIL_PORT = "relaymail.port";
 	public static final String RELAYMAIL_USERNAME = "relaymail.username";
 	public static final String RELAYMAIL_PASSWORD = "relaymail.password";
+	public static final String RELAYMAIL_IS_TLS = "relaymail.isTLS";
 
 	public static final String ERROR_SENDTO = "error.sendTo";
+	public static final String STORAGE_SYSTEM = "storageSystem";
 
 	static {
 		StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
@@ -41,7 +43,7 @@ public class ApplicationProperties {
 		try {
 			properties.load(Thread.currentThread().getContextClassLoader()
 					.getResourceAsStream(RESOURCE_PROPERTIES));
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
@@ -54,7 +56,11 @@ public class ApplicationProperties {
 		return properties.getProperty(key);
 	}
 
+	public static String getProperty(String key, String defaultValue) {
+		return properties.getProperty(key, defaultValue);
+	}
+
 	public static String getSendErrorEmail() {
-		return properties.getProperty("error.sendTo");
+		return properties.getProperty("error.sendTo", "hainguyen@esofthead.com");
 	}
 }

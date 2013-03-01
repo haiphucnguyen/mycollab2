@@ -40,4 +40,6 @@ public interface MonitorItemService extends ICrudService<Integer, MonitorItem> {
 	 * @param itemid
 	 */
 	void deleteWatchingItem(String username, String type, int typeid);
+
+	boolean isUserWatchingItem(String username, String type, int typeid);
 }

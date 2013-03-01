@@ -4,51 +4,100 @@
  */
 package com.esofthead.mycollab.module.crm.view.opportunity;
 
+import java.util.List;
+
+import org.jfree.data.general.DefaultPieDataset;
+
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.module.crm.CrmDataTypeFactory;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.web.AppContext;
-import java.util.List;
-import org.jfree.data.general.DefaultPieDataset;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public class OpportunitySalesStageDashboard extends PieChartWrapper<OpportunitySearchCriteria> {
+public class OpportunitySalesStageDashboard extends
+		PieChartWrapper<OpportunitySearchCriteria> {
+	private static final long serialVersionUID = 1L;
 
-    public OpportunitySalesStageDashboard() {
-        super("Deals By Stages", 530, 400);
-    }
+	public OpportunitySalesStageDashboard() {
+		super("Deals By Stages", 530, 350);
+	}
 
-    @Override
-    protected DefaultPieDataset createDataset(OpportunitySearchCriteria criteria) {
-        // create the dataset...
-        final DefaultPieDataset dataset = new DefaultPieDataset();
+	@Override
+	protected DefaultPieDataset createDataset() {
+		// create the dataset...
+		final DefaultPieDataset dataset = new DefaultPieDataset();
 
-        OpportunityService opportunityService = AppContext.getSpringBean(OpportunityService.class);
+		OpportunityService opportunityService = AppContext
+				.getSpringBean(OpportunityService.class);
 
-        List<GroupItem> groupItems = opportunityService.getSalesStageSummary(criteria);
+		List<GroupItem> groupItems = opportunityService
+				.getSalesStageSummary(searchCriteria);
 
-        String[] salesStages = CrmDataTypeFactory.getOpportunitySalesStageList();
-        for (String status : salesStages) {
-            boolean isFound = false;
-            for (GroupItem item : groupItems) {
-                if (status.equals(item.getGroupid())) {
-                    dataset.setValue(status, item.getValue());
-                    isFound = true;
-                    break;
-                }
-            }
+		String[] salesStages = CrmDataTypeFactory
+				.getOpportunitySalesStageList();
+		for (String status : salesStages) {
+			boolean isFound = false;
+			for (GroupItem item : groupItems) {
+				if (status.equals(item.getGroupid())) {
+					dataset.setValue(status, item.getValue());
+					isFound = true;
+					break;
+				}
+			}
 
-            if (!isFound) {
-                dataset.setValue(status, 0);
-            }
-        }
+			if (!isFound) {
+				dataset.setValue(status, 0);
+			}
+		}
 
+		return dataset;
+	}
 
-        return dataset;
-    }
+	@SuppressWarnings("rawtypes")
+	@Override
+	protected ComponentContainer createLegendBox() {
+		CssLayout mainLayout = new CssLayout();
+		mainLayout.addStyleName("border-box");
+		mainLayout.setWidth("100%");
+		List keys = pieDataSet.getKeys();
+		for (int i = 0; i < keys.size(); i++) {
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.setMargin(false, false, false, true);
+			layout.addStyleName("inline-block");
+			Comparable key = (Comparable) keys.get(i);
+			String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #" + CHART_COLOR_STR[i % CHART_COLOR_STR.length] + "\" />";
+			Label lblCircle = new Label(color);
+			lblCircle.setContentMode(Label.CONTENT_XHTML);
+			
+			Button btnLink = new Button(key + "("
+					+ String.valueOf(pieDataSet.getValue(key)) + ")",
+					new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+				}
+			});
+			btnLink.addStyleName("link");
+			layout.addComponent(lblCircle);
+			layout.setComponentAlignment(lblCircle, Alignment.MIDDLE_CENTER);
+			layout.addComponent(btnLink);
+			layout.setComponentAlignment(btnLink, Alignment.MIDDLE_CENTER);
+			layout.setSizeUndefined();
+			mainLayout.addComponent(layout);
+		}
+		return mainLayout;
+	}
 }

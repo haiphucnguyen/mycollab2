@@ -122,6 +122,9 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 					field.setNullRepresentation("");
 					return field;
 				} else if (propertyId.equals("priority")) {
+					if (bug.getPriority() == null) {
+						bug.setPriority(BugPriorityComboBox.PRIORITY_MAJOR);
+					}
 					return new BugPriorityComboBox();
 				} else if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();
@@ -134,6 +137,9 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 					}
 					return attachmentUploadField;
 				} else if (propertyId.equals("severity")) {
+					if (bug.getSeverity() == null) {
+						bug.setSeverity("Major");
+					}
 					return new BugSeverityComboBox();
 				} else if (propertyId.equals("components")) {
 					componentSelect = new ComponentMultiSelectField();

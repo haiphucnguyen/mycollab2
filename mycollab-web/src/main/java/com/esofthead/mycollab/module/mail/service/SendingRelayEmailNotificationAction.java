@@ -7,7 +7,15 @@ import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
 public interface SendingRelayEmailNotificationAction {
-	TemplateGenerator sendRelayEmailNotificationForCreateAction(
+	TemplateGenerator templateGeneratorForCreateAction(
+			SimpleRelayEmailNotification emailNotification,
+			List<SimpleUser> notifiers);
+
+	TemplateGenerator templateGeneratorForUpdateAction(
+			SimpleRelayEmailNotification emailNotification,
+			List<SimpleUser> notifiers);
+
+	TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification,
 			List<SimpleUser> notifiers);
 }
