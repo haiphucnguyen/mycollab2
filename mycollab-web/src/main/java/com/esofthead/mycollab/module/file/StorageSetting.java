@@ -9,13 +9,13 @@ public class StorageSetting {
 
 	public static boolean isFileStorage() {
 		String storageSystem = ApplicationProperties.getProperty(
-				ApplicationProperties.STORAGE_SYSTEM, "");
+				ApplicationProperties.STORAGE_SYSTEM, "file");
 		return StorageSetting.FILE_STORAGE_SYSTEM.equals(storageSystem.trim());
 	}
 
 	public static boolean isS3Storage() {
 		String storageSystem = ApplicationProperties.getProperty(
-				ApplicationProperties.STORAGE_SYSTEM, "");
+				ApplicationProperties.STORAGE_SYSTEM, "file");
 		return StorageSetting.S3_STORAGE_SYSTEM.equals(storageSystem.trim());
 	}
 }
