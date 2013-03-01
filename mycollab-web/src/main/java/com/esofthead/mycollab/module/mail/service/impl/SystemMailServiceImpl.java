@@ -11,22 +11,21 @@ public class SystemMailServiceImpl extends AbstractMailService implements
 		SystemMailService {
 	private static Mailer gmailer;
 
-	static {
-		gmailer = new Mailer(
-				ApplicationProperties
-						.getProperty(ApplicationProperties.MAIL_SMTPHOST),
-				ApplicationProperties
-						.getProperty(ApplicationProperties.MAIL_USERNAME),
-				ApplicationProperties
-						.getProperty(ApplicationProperties.MAIL_PASSWORD),
-				Integer.parseInt(ApplicationProperties
-						.getProperty(ApplicationProperties.MAIL_PORT)), Boolean
-						.parseBoolean(ApplicationProperties.getProperty(
-								ApplicationProperties.MAIL_IS_TLS, "false")));
-	}
-
 	@Override
 	protected Mailer getMailer() {
+		if (gmailer == null) {
+			gmailer = new Mailer(
+					ApplicationProperties
+							.getProperty(ApplicationProperties.MAIL_SMTPHOST),
+					ApplicationProperties
+							.getProperty(ApplicationProperties.MAIL_USERNAME),
+					ApplicationProperties
+							.getProperty(ApplicationProperties.MAIL_PASSWORD),
+					Integer.parseInt(ApplicationProperties
+							.getProperty(ApplicationProperties.MAIL_PORT)),
+					Boolean.parseBoolean(ApplicationProperties.getProperty(
+							ApplicationProperties.MAIL_IS_TLS, "false")));
+		}
 		return gmailer;
 	}
 }

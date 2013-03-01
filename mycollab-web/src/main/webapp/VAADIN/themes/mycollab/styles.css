@@ -811,6 +811,13 @@ input.v-textfield-errorField {
 .addViewHeader {
 	margin: 10px 10px 15px;
 }
+.addViewHeader .addViewHeaderLeft {
+	float: left;
+}
+.addViewHeader .addViewHeaderRight {
+	float: right;
+	min-height: 48px;
+}
 .addViewHeaderIcon, .addViewHeaderTitle {
 	float: left;
 }

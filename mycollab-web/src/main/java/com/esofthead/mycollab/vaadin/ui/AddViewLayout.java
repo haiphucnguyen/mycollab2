@@ -33,6 +33,10 @@ public class AddViewLayout extends CustomLayout {
 		}
 	}
 
+	public void addHeaderRight(ComponentContainer headerRight) {
+		this.addComponent(headerRight, "addViewHeaderRight");
+	}
+
 	public void setTitle(String title) {
 		this.titleLbl.setValue(title);
 	}

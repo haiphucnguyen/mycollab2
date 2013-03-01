@@ -30,7 +30,7 @@
         <tr>
             <td style="background: url('${defaultUrls.cdn_url}border_large_center_white.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 14px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 32px 32px 0px;">
                 <p style="font-weight: bold;">Hi there,</p>
-                <p>Just wanna let you know that a new bug has been created i project <a href="$hyperLinks.projectUrl" style="color: #4283c4; text-decoration: underline;">$bug.projectname</a>. Here're details about it:</p>
+                <p style="line-height: 28px;">Just wanna let you know that a new bug has been created i project <a href="$hyperLinks.projectUrl" style="color: #4283c4; text-decoration: underline;">$bug.projectname</a>. Here're details about it:</p>
                 <table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
                     <tr>
                         <td style="background: url('${defaultUrls.cdn_url}border_small_top.png') no-repeat 0 0 transparent; line-height: 7px;" height="7">&nbsp;</td>
@@ -103,7 +103,7 @@
                                 <tr>
                                 	<td colspan="4">
                                 		<p>Changes (by $historyLog.postedUserFullName):</p>
-                                		<table border="1">
+                                		<table border="1" style="width:100%;">
                                 			<tr>
                                 				<td>Fields</td>
                                 				<td>Old Value</td>
