@@ -15,7 +15,7 @@
     </listener>
     <filter>
         <filter-name>monitoring</filter-name>
-        <filter-class>net.bull.javamelody.MonitoringFilter</filter-class>
+        <filter-class>net.bull.javamelody.CustomMonitoringFilter</filter-class>
         <async-supported>true</async-supported>
     </filter>
     <filter-mapping>
