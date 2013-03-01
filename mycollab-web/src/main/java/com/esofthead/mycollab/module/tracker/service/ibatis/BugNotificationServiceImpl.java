@@ -14,7 +14,6 @@ import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.mail.SendingRelayEmailNotificationTemplate;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.SendingRelayEmailNotificationAction;
@@ -35,7 +34,6 @@ public class BugNotificationServiceImpl implements INotificationSchedulable,
 	private final BugFieldNameMapper mapper;
 
 	public BugNotificationServiceImpl() {
-		// TODO Auto-generated constructor stub
 		mapper = new BugFieldNameMapper();
 	}
 
@@ -94,10 +92,16 @@ public class BugNotificationServiceImpl implements INotificationSchedulable,
 			templateGenerator.putVariable("historyLog", auditLog);
 
 			templateGenerator.putVariable("mapper", mapper);
-			System.out.println("Log of bug: "
-					+ BeanUtility.printBeanObj(auditLog));
 		}
 		return templateGenerator;
+	}
+	
+	@Override
+	public TemplateGenerator templateGeneratorForCommentAction(
+			SimpleRelayEmailNotification emailNotification,
+			List<SimpleUser> notifiers) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	public class BugFieldNameMapper {
@@ -125,11 +129,4 @@ public class BugNotificationServiceImpl implements INotificationSchedulable,
 			return fieldNameMap.get(fieldName);
 		}
 	}
-
-	public static void main(String[] args) {
-		BugNotificationServiceImpl a = new BugNotificationServiceImpl();
-
-		System.out.println(a.mapper.getFieldLabel("description"));
-	}
-
 }
