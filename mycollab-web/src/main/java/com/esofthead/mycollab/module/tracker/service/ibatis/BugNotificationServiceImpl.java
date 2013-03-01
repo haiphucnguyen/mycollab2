@@ -22,6 +22,7 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.INotificationSchedulable;
 import com.esofthead.mycollab.schedule.ScheduleConfig;
+import com.esofthead.mycollab.utils.StringUtils;
 
 @Service
 public class BugNotificationServiceImpl implements INotificationSchedulable,
@@ -59,8 +60,10 @@ public class BugNotificationServiceImpl implements INotificationSchedulable,
 		hyperLinks.put("assignUserUrl", "#");
 		hyperLinks.put("milestoneUrl", "#");
 
+		String subject = StringUtils.subString(bug.getSummary(), 150);
+
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$bug.projectname]: New bug created",
+				"[$bug.projectname]: Bug \"" + subject + "...\" created",
 				"templates/email/project/bugCreatedNotifier.mt");
 		templateGenerator.putVariable("bug", bug);
 		templateGenerator.putVariable("hyperLinks", hyperLinks);
@@ -80,8 +83,10 @@ public class BugNotificationServiceImpl implements INotificationSchedulable,
 		hyperLinks.put("assignUserUrl", "#");
 		hyperLinks.put("milestoneUrl", "#");
 
+		String subject = StringUtils.subString(bug.getSummary(), 150);
+
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$bug.projectname]: Bug updated",
+				"[$bug.projectname]: Bug \"" + subject + "...\" updated",
 				"templates/email/project/bugUpdatedNotifier.mt");
 		templateGenerator.putVariable("bug", bug);
 		templateGenerator.putVariable("hyperLinks", hyperLinks);
@@ -95,7 +100,7 @@ public class BugNotificationServiceImpl implements INotificationSchedulable,
 		}
 		return templateGenerator;
 	}
-	
+
 	@Override
 	public TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification,

@@ -8,17 +8,8 @@
 	<table width="650" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
 		<tr>
 			<td>
-				<table>
-					<tr>
-						<td>
-							<img src="${defaultUrls.cdn_url}logo.png" alt="esofthead-logo" width="70" height="72" style="margin: 0px 5px 0px 0px; padding: 0px;">
-						</td>
-						<td>
-							<p style="font: bold 30px Tahoma, Geneva, sans-serif; color: #3b80c2; margin: 0px; padding: 0px;">MY COLLAB</p>
-							<p style="font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; color: #4e4e4e; margin: 0px; padding: 0px;">People make you successful.<br>Gain more customers by building a relationship network that care about you.</p> 
-						</td>
-					</tr>
-				</table>
+				<img src="${defaultUrls.cdn_url}logo_full.png" alt="esofthead-logo" width="650" height="100" style="margin: 0px; padding: 0px;">
+			</td>
 		</tr>
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_top.png') no-repeat 0 0 transparent;" height="39">&nbsp;</td>
@@ -30,17 +21,17 @@
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_center_white.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 14px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 32px 32px 0px;">
 				<p style="font-weight: bold;">Hi there,</p>
-				<p style="line-height: 28px;">Just wanna let you know that a new bug has been created i project <a href="$hyperLinks.projectUrl" style="color: #4283c4; text-decoration: underline;">$bug.projectname</a>. Here're details about it:</p>
+				<p style="line-height: 28px;">Just wanna let you know that a new bug has been created in project <a href="$hyperLinks.projectUrl" style="color: #4283c4; text-decoration: underline;">$bug.projectname</a>. Here're details about it:</p>
 				<table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
 					<tr>
 						<td style="background: url('${defaultUrls.cdn_url}border_small_top.png') no-repeat 0 0 transparent; line-height: 7px;" height="7">&nbsp;</td>
 					</tr>
 					<tr>
 						<td style="background: url('${defaultUrls.cdn_url}border_small_center.png') repeat-y 0 0 transparent; color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
-							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px;">
+							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Bug Summary:&nbsp;</td>
-									<td style="font-weight: bold; text-transform: uppercase;" colspan="3"><a href="$hyperLinks.taskUrl" style="color: #4283c4; text-decoration: none;">$bug.summary</a></td>
+									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$hyperLinks.bugUrl" style="color: #4283c4; text-decoration: none;">$bug.summary</a></td>
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>

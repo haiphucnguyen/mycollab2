@@ -48,6 +48,8 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 	public TaskReadViewImpl() {
 		super();
+		this.setMargin(false, true, true, true);
+
 		previewForm = new PreviewForm();
 		this.addComponent(previewForm);
 	}
@@ -71,6 +73,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			return new FormLayoutFactory();
 		}
 
+		@Override
 		protected void taskDoPrint() {
 			// Create a window that contains what you want to print
 			Window window = new Window("Window to Print");
@@ -95,6 +98,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			window.executeJavaScript("self.close();");
 		}
 
+		@Override
 		protected void taskShowHistory() {
 			TaskHistoryLogWindow historyLog = new TaskHistoryLogWindow(
 					ModuleNameConstants.PRJ, ProjectContants.TASK, task.getId());

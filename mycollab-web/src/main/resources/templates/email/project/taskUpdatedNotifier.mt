@@ -2,7 +2,7 @@
 <html>
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-<title>Task updated</title>
+<title>Task Updated</title>
 </head>
 <body>
 	<table width="650" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
@@ -15,13 +15,13 @@
 			<td style="background: url('${defaultUrls.cdn_url}border_large_top.png') no-repeat 0 0 transparent;" height="39">&nbsp;</td>
 		</tr>
 		<tr>
-			<td style="background: url('${defaultUrls.cdn_url}border_large_center_blue.png') repeat-y 0 0 transparent; text-align: center; padding-bottom: 10px;"><span style="font: bold 18px Tahoma, Geneva, sans-serif;text-transform: uppercase; color: white;">New task created</span>
+			<td style="background: url('${defaultUrls.cdn_url}border_large_center_blue.png') repeat-y 0 0 transparent; text-align: center; padding-bottom: 10px;"><span style="font: bold 18px Tahoma, Geneva, sans-serif;text-transform: uppercase; color: white;">Task Updated</span>
 			</td>
 		</tr>
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_center_white.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 14px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 32px 32px 0px;">
 				<p style="font-weight: bold;">Hi there,</p>
-				<p style="line-height: 28px;">Just wanna let you know that a new task <a href="$hyperLinks.taskUrl" style="color: #4283c4; text-decoration: none;">$task.taskname</a> has been created in project <a href="$hyperLinks.projectUrl" style="color: #4283c4; text-decoration: underline;">$task.projectName</a>. Here're details about it:</p>
+				<p style="line-height: 28px;">Just wanna let you know that the task <a href="$hyperLinks.taskUrl" style="color: #4283c4; text-decoration: none;">$task.taskname</a> in project <a href="$hyperLinks.projectUrl" style="color: #4283c4; text-decoration: underline;">$task.projectName</a> has been updated. Here're details about it:</p>
 				<table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
 					<tr>
 						<td style="background: url('${defaultUrls.cdn_url}border_small_top.png') no-repeat 0 0 transparent; line-height: 7px;" height="7">&nbsp;</td>
@@ -62,6 +62,33 @@
 									<td style="text-align: right; vertical-align: top;">Notes:&nbsp;</td>
 									<td style=" vertical-align: top;" colspan="3">$!task.Notes</td>	
 								</tr>
+								<tr>
+                                	<td colspan="4">
+                                		<p>Changes (by $historyLog.postedUserFullName):</p>
+                                		<table border="1" style="width:100%;">
+                                			<tr>
+                                				<td>Fields</td>
+                                				<td>Old Value</td>
+                                				<td>New Value</td>
+                                			</tr>
+                                			#foreach ($item in $historyLog.changeItems)
+                                				#if ($mapper.hasField($item.field))
+                                				<tr>
+                                					<td valign="top">
+                                						$mapper.getFieldLabel($item.field)
+                                					</td>
+                                					<td valign="top">
+                                						$item.oldvalue
+                                					</td>
+                                					<td valign="top">
+                                						$item.newvalue
+                                					</td>
+                                				</tr>
+                                				#end
+                                			#end
+                                		</table>
+                                	</td>
+                                </tr>
 							</table>
 						</td>
 					</tr>

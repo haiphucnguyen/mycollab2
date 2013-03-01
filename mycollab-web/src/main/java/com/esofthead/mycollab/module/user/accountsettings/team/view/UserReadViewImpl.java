@@ -79,8 +79,9 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 							return new FormViewField("True");
 						} else {
 							FormContainerViewField formContainer = new FormContainerViewField();
-							formContainer.addComponentField(new Label(
-									"False. Role: "));
+							Label roleLbl = new Label("False. Role: ");
+							roleLbl.setSizeUndefined();
+							formContainer.addComponentField(roleLbl);
 							Button roleLink = new Button(user.getRoleName(),
 									new Button.ClickListener() {
 										private static final long serialVersionUID = 1L;
@@ -107,7 +108,7 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 			});
 			super.setItemDataSource(newDataSource);
 		}
-		
+
 		@Override
 		protected void doPrint() {
 			// Create a window that contains what you want to print
@@ -159,7 +160,7 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("serial")
 	public static class PrintView extends UserReadViewImpl {
 
@@ -175,7 +176,8 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 						protected Field onCreateField(Item item,
 								Object propertyId, Component uiContext) {
 							if (propertyId.equals("email")) {
-								return new FormEmailLinkViewField(user.getEmail());
+								return new FormEmailLinkViewField(user
+										.getEmail());
 							} else if (propertyId.equals("isadmin")) {
 								if (user.getIsadmin() != null
 										&& user.getIsadmin() == Boolean.TRUE) {

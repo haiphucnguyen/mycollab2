@@ -35,6 +35,10 @@ only screen and (max-device-width : 1024px) {
 /* 		min-width: 900px; */
 /* 	} */
 }
+
+.v-label-undef-w {
+	float: left;
+}
 button::-moz-focus-inner {
   border: 0;
 }
