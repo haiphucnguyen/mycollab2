@@ -43,6 +43,7 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends
 		// NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
 
 		// set the background color for the chart...
+		chart.removeLegend();
 		final PiePlot3D plot = (PiePlot3D) chart.getPlot();
 		plot.setStartAngle(290);
 		plot.setBackgroundPaint(Color.white);
@@ -54,7 +55,7 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends
 		List keys = pieDataSet.getKeys();
 		for (int i = 0; i < keys.size(); i++) {
 			Comparable key = (Comparable) keys.get(i);
-			plot.setSectionPaint(key, CHART_COLOR[i % CHART_COLOR.length]);
+			plot.setSectionPaint(key, Color.decode("0x" + CHART_COLOR_STR[i % CHART_COLOR_STR.length]));
 		}
 		// OPTIONAL CUSTOMISATION COMPLETED.
 		return chart;

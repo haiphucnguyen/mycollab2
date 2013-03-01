@@ -2167,3 +2167,12 @@ div.v-lazyloadingwrapper-loading {
 	vertical-align: bottom;
 }
 /* End Clickable Label */
+
+/* Border Box */
+.v-csslayout.border-box > .v-csslayout-margin {
+	border: 1px solid #444;
+}
+.border-box .inline-block {
+	display: inline-block;
+}
+/* End Border Box */
