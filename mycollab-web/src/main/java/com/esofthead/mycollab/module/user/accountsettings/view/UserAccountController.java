@@ -54,10 +54,9 @@ public class UserAccountController implements IController {
 					public void handle(ProfileEvent.GotoUploadPhoto event) {
 						ProfilePresenter presenter = PresenterResolver
 								.getPresenter(ProfilePresenter.class);
-						presenter.go(
-								container,
-								new ProfileScreenData.UploadPhoto(AppContext
-										.getUsername()));
+						presenter.go(container,
+								new ProfileScreenData.UploadPhoto(
+										(byte[]) event.getData()));
 					}
 				});
 	}

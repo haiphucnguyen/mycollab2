@@ -29,8 +29,8 @@ import java.util.logging.Logger;
  * @author haiphucnguyen
  */
 public class MultiFileUploadExt extends CssLayout implements DropHandler {
-
-    private AttachmentUploadComponent attachmentDisplayComponent;
+	private static final long serialVersionUID = 1L;
+	private AttachmentUploadComponent attachmentDisplayComponent;
     private CssLayout progressBars = new CssLayout();
     private CssLayout uploads = new CssLayout();
     private String uploadButtonCaption = "Attach File(s)";

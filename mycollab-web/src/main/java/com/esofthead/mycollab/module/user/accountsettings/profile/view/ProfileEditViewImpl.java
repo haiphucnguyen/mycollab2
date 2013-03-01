@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
+import org.vaadin.easyuploads.UploadField;
+import org.vaadin.easyuploads.UploadField.FieldType;
+
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.shell.view.ScreenSize;
@@ -22,7 +25,6 @@ import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -60,17 +62,21 @@ public class ProfileEditViewImpl extends AbstractView implements
 				AppContext.getUsername(), 100);
 		userAvatar.addComponent(cropField);
 
-		Button changePhotoBtn = new Button("Choose another photo",
-				new Button.ClickListener() {
-
-					@Override
-					public void buttonClick(ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new ProfileEvent.GotoUploadPhoto(this, null));
-					}
-				});
-		changePhotoBtn.setStyleName("link");
-		userAvatar.addComponent(changePhotoBtn);
+		final UploadField avatarUploadField = new UploadField() {
+			@Override
+			protected void updateDisplay() {
+				final byte[] pngData = (byte[]) getValue();
+				String mimeType = getLastMimeType();
+				if (mimeType.equals("image/png")) {
+					EventBus.getInstance().fireEvent(
+							new ProfileEvent.GotoUploadPhoto(
+									ProfileEditViewImpl.this, pngData));
+				}
+			}
+		};
+		avatarUploadField.setFieldType(FieldType.BYTE_ARRAY);
+		avatarUploadField.setMaxUploadSize(1024 * 1024);
+		userAvatar.addComponent(avatarUploadField);
 	}
 
 	private static class EditForm extends AdvancedEditBeanForm<User> {

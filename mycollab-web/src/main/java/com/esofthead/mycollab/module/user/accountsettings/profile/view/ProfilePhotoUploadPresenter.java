@@ -18,7 +18,7 @@ public class ProfilePhotoUploadPresenter extends
 		profileContainer.removeAllComponents();
 
 		profileContainer.addComponent(view.getWidget());
-		view.editPhoto();
+		view.editPhoto((byte[])data.getParams());
 	}
 
 }

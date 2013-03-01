@@ -13,4 +13,14 @@ public class FileStorageConfig {
 		File avatarFolder = new File(userFolder + "/.mycollab/avatar");
 		avatarFolder.mkdirs();
 	}
+
+	public static File getAvatarFile(String username, int size) {
+		File userAvatarFile = new File(baseContentFolder, "avatar/" + username
+				+ "_" + size + ".png");
+		if (userAvatarFile.exists()) {
+			return userAvatarFile;
+		} else {
+			return null;
+		}
+	}
 }
