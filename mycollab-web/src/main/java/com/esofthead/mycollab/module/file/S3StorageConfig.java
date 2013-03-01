@@ -6,7 +6,7 @@ import com.amazonaws.services.s3.AmazonS3;
 import com.amazonaws.services.s3.AmazonS3Client;
 import com.esofthead.mycollab.common.ApplicationProperties;
 
-public class S3RepoConfig {
+public class S3StorageConfig {
 	private static final String AWS_KEY = "s3.key";
 	private static final String AWS_SECRET_KEY = "s3.secretKey";
 	private static final String BUCKET = "s3.bucket";
@@ -15,9 +15,9 @@ public class S3RepoConfig {
 	private String awsSecretKey;
 	private String bucket;
 
-	private static S3RepoConfig instance;
+	private static S3StorageConfig instance;
 
-	private S3RepoConfig(String awsKey, String awsSecretKey, String bucket) {
+	private S3StorageConfig(String awsKey, String awsSecretKey, String bucket) {
 		this.awsKey = awsKey;
 		this.awsSecretKey = awsSecretKey;
 		this.bucket = bucket;
@@ -30,7 +30,7 @@ public class S3RepoConfig {
 					.getProperty(AWS_SECRET_KEY);
 			String bucket = ApplicationProperties.getProperty(BUCKET);
 
-			instance = new S3RepoConfig(awsKey, awsSecretKey, bucket);
+			instance = new S3StorageConfig(awsKey, awsSecretKey, bucket);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

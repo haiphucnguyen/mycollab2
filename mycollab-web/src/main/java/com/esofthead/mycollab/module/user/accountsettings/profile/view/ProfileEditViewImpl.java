@@ -13,6 +13,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarResource;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
@@ -55,10 +56,9 @@ public class ProfileEditViewImpl extends AbstractView implements
 
 	private void displayUserAvatar() {
 		userAvatar.removeAllComponents();
-		Embedded cropField = new Embedded("", new ThemeResource(
-				"icons/default_user_avatar_256_256.png"));
+		UserAvatarResource cropField = new UserAvatarResource(
+				AppContext.getUsername(), 100);
 		userAvatar.addComponent(cropField);
-		
 
 		Button changePhotoBtn = new Button("Choose another photo",
 				new Button.ClickListener() {
@@ -129,20 +129,26 @@ public class ProfileEditViewImpl extends AbstractView implements
 
 				Label informationHeader = new Label("User Information");
 				informationHeader.setStyleName("h2");
-				
+
 				Label contactHeader = new Label("Contact Information");
 				contactHeader.setStyleName("h2");
 
 				if (ScreenSize.hasSupport1024Pixels()) {
-					basicInformation = new GridFormLayoutHelper(1, 5, UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION, "90px");
-					contactInformation = new GridFormLayoutHelper(1, 2, UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION, "90px");
-					informationHeader.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION);
-					contactHeader.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION);
+					basicInformation = new GridFormLayoutHelper(1, 5,
+							UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
+							"90px");
+					contactInformation = new GridFormLayoutHelper(1, 2,
+							UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
+							"90px");
+					informationHeader
+							.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION);
+					contactHeader
+							.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION);
 				} else if (ScreenSize.hasSupport1280Pixels()) {
 					basicInformation = new GridFormLayoutHelper(1, 5);
 					contactInformation = new GridFormLayoutHelper(1, 2);
 				}
-				
+
 				layout.addComponent(informationHeader);
 				layout.addComponent(basicInformation.getLayout());
 				layout.setComponentAlignment(basicInformation.getLayout(),

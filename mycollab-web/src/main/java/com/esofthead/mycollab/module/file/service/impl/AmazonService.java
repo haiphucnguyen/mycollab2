@@ -11,7 +11,7 @@ import com.amazonaws.services.s3.model.GetObjectRequest;
 import com.amazonaws.services.s3.model.PutObjectRequest;
 import com.amazonaws.services.s3.model.S3Object;
 import com.esofthead.mycollab.core.MyCollabException;
-import com.esofthead.mycollab.module.file.S3RepoConfig;
+import com.esofthead.mycollab.module.file.S3StorageConfig;
 import com.esofthead.mycollab.module.file.service.RawContentService;
 
 public class AmazonService implements RawContentService {
@@ -20,7 +20,7 @@ public class AmazonService implements RawContentService {
 
 	public void saveContent(String objectPath, InputStream stream) {
 
-		AmazonS3 s3client = S3RepoConfig.getS3Client();
+		AmazonS3 s3client = S3StorageConfig.getS3Client();
 		try {
 			/*
 			 * need to save to temporary buffer
@@ -46,7 +46,7 @@ public class AmazonService implements RawContentService {
 			stream.close();
 
 			PutObjectRequest request = new PutObjectRequest(
-					S3RepoConfig.getBucket(), objectPath, tmpFile);
+					S3StorageConfig.getBucket(), objectPath, tmpFile);
 			s3client.putObject(request
 					.withCannedAcl(CannedAccessControlList.PublicRead));
 
@@ -57,10 +57,10 @@ public class AmazonService implements RawContentService {
 	}
 
 	public InputStream getContent(String objectPath) {
-		AmazonS3 s3client = S3RepoConfig.getS3Client();
+		AmazonS3 s3client = S3StorageConfig.getS3Client();
 
 		try {
-			S3Object obj = s3client.getObject(new GetObjectRequest(S3RepoConfig
+			S3Object obj = s3client.getObject(new GetObjectRequest(S3StorageConfig
 					.getBucket(), objectPath));
 
 			return obj.getObjectContent();
@@ -70,10 +70,10 @@ public class AmazonService implements RawContentService {
 	}
 
 	public void removeContent(String object) {
-		AmazonS3 s3client = S3RepoConfig.getS3Client();
+		AmazonS3 s3client = S3StorageConfig.getS3Client();
 
 		try {
-			s3client.deleteObject(S3RepoConfig.getBucket(), object);
+			s3client.deleteObject(S3StorageConfig.getBucket(), object);
 		} catch (Exception e) {
 			throw new RuntimeException(e);
 		}

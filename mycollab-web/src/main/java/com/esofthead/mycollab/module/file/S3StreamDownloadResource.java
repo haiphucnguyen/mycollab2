@@ -69,10 +69,10 @@ public class S3StreamDownloadResource extends StreamResource {
 		public InputStream getStream() {
 			String fileName = getFilename(documentPath);
 			fileName = fileName.replaceAll(" ", "_").replaceAll("-", "_");
-			AmazonS3 s3Client = S3RepoConfig.getS3Client();
+			AmazonS3 s3Client = S3StorageConfig.getS3Client();
 			try {
 				S3Object obj = s3Client.getObject(new GetObjectRequest(
-						S3RepoConfig.getBucket(), AppContext.getAccountId()
+						S3StorageConfig.getBucket(), AppContext.getAccountId()
 								+ "/" + documentPath));
 
 				return obj.getObjectContent();
