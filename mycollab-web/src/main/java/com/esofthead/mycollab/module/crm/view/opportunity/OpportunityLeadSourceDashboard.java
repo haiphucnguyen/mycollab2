@@ -10,44 +10,54 @@ import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriter
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HorizontalLayout;
+
 import java.util.List;
 import org.jfree.data.general.DefaultPieDataset;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public class OpportunityLeadSourceDashboard extends PieChartWrapper<OpportunitySearchCriteria> {
-    
-    public OpportunityLeadSourceDashboard() {
-        super("Deals By Sources", 530, 400);
-    }
-    
-    @Override
-    protected DefaultPieDataset createDataset(OpportunitySearchCriteria criteria) {
-        final DefaultPieDataset dataset = new DefaultPieDataset();
+public class OpportunityLeadSourceDashboard extends
+		PieChartWrapper<OpportunitySearchCriteria> {
 
-        OpportunityService opportunityService = AppContext.getSpringBean(OpportunityService.class);
+	public OpportunityLeadSourceDashboard() {
+		super("Deals By Sources", 530, 400);
+	}
 
-        List<GroupItem> groupItems = opportunityService.getLeadSourcesSummary(criteria);
+	@Override
+	protected DefaultPieDataset createDataset() {
+		final DefaultPieDataset dataset = new DefaultPieDataset();
 
-        String[] leadSources = CrmDataTypeFactory.getLeadSourceList();
-        for (String source : leadSources) {
-            boolean isFound = false;
-            for (GroupItem item : groupItems) {
-                if (source.equals(item.getGroupid())) {
-                    dataset.setValue(source, item.getValue());
-                    isFound = true;
-                    break;
-                }
-            }
+		OpportunityService opportunityService = AppContext
+				.getSpringBean(OpportunityService.class);
 
-            if (!isFound) {
-                dataset.setValue(source, 0);
-            }
-        }
+		List<GroupItem> groupItems = opportunityService
+				.getLeadSourcesSummary(searchCriteria);
 
+		String[] leadSources = CrmDataTypeFactory.getLeadSourceList();
+		for (String source : leadSources) {
+			boolean isFound = false;
+			for (GroupItem item : groupItems) {
+				if (source.equals(item.getGroupid())) {
+					dataset.setValue(source, item.getValue());
+					isFound = true;
+					break;
+				}
+			}
 
-        return dataset;
-    }
+			if (!isFound) {
+				dataset.setValue(source, 0);
+			}
+		}
+
+		return dataset;
+	}
+
+	@Override
+	protected ComponentContainer createLegendBox() {
+		return new HorizontalLayout();
+	}
 }

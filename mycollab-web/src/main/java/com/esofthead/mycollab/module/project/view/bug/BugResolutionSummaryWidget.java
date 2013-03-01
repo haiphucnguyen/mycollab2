@@ -10,51 +10,60 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.HorizontalLayout;
+
 import java.util.List;
 import org.jfree.data.general.DefaultPieDataset;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public class BugResolutionSummaryWidget extends PieChartWrapper<BugSearchCriteria> {
+public class BugResolutionSummaryWidget extends
+		PieChartWrapper<BugSearchCriteria> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public BugResolutionSummaryWidget() {
-        super("Bugs By Resolution", 450, 300);
+	public BugResolutionSummaryWidget() {
+		super("Bugs By Resolution", 450, 300);
 
-    }
+	}
 
-    @Override
-    protected DefaultPieDataset createDataset(BugSearchCriteria criteria) {
+	@Override
+	protected DefaultPieDataset createDataset() {
 
-        // create the dataset...
-        final DefaultPieDataset dataset = new DefaultPieDataset();
+		// create the dataset...
+		final DefaultPieDataset dataset = new DefaultPieDataset();
 
-        BugService bugService = AppContext.getSpringBean(BugService.class);
-        
-        List<GroupItem> groupItems = bugService.getResolutionDefectsSummary(criteria);
+		BugService bugService = AppContext.getSpringBean(BugService.class);
 
-        String[] bugPriorities = ProjectDataTypeFactory.getBugResolutionList();
-        for (String priority : bugPriorities) {
-            boolean isFound = false;
-            for (GroupItem item : groupItems) {
-                if (priority.equals(item.getGroupid())) {
-                    dataset.setValue(priority, item.getValue());
-                    isFound = true;
-                    break;
-                }
-            }
+		List<GroupItem> groupItems = bugService
+				.getResolutionDefectsSummary(searchCriteria);
 
-            if (!isFound) {
-                dataset.setValue(priority, 0);
-            }
-        }
+		String[] bugPriorities = ProjectDataTypeFactory.getBugResolutionList();
+		for (String priority : bugPriorities) {
+			boolean isFound = false;
+			for (GroupItem item : groupItems) {
+				if (priority.equals(item.getGroupid())) {
+					dataset.setValue(priority, item.getValue());
+					isFound = true;
+					break;
+				}
+			}
 
+			if (!isFound) {
+				dataset.setValue(priority, 0);
+			}
+		}
 
-        return dataset;
+		return dataset;
 
-    }
-    
+	}
+
+	@Override
+	protected ComponentContainer createLegendBox() {
+		return new HorizontalLayout();
+	}
+
 }
