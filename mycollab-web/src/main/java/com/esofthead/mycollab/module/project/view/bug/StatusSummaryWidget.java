@@ -1,16 +1,17 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.List;
+
+import org.jfree.data.general.DefaultPieDataset;
+
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.vaadin.ui.chart.PieChartDescriptionBox;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.HorizontalLayout;
-
-import java.util.List;
-import org.jfree.data.general.DefaultPieDataset;
 
 public class StatusSummaryWidget extends PieChartWrapper<BugSearchCriteria> {
 
@@ -50,6 +51,6 @@ public class StatusSummaryWidget extends PieChartWrapper<BugSearchCriteria> {
 
 	@Override
 	protected ComponentContainer createLegendBox() {
-		return new HorizontalLayout();
+		return PieChartDescriptionBox.createLegendBox(pieDataSet);
 	}
 }

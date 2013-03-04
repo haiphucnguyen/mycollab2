@@ -8,11 +8,11 @@ public class BugPriorityComboBox extends ComboBox {
 
     private static final long serialVersionUID = 1L;
     
-    public static final String PRIORITY_BLOCKER_IMG = "icons/16/priority_urgent.png";
-	public static final String PRIORITY_CRITICAL_IMG = "icons/16/priority_high.png";
-	public static final String PRIORITY_MAJOR_IMG = "icons/16/priority_medium.png";
-	public static final String PRIORITY_MINOR_IMG = "icons/16/priority_low.png";
-	public static final String PRIORITY_TRIVIAL_IMG = "icons/16/priority_none.png";
+    public static final String PRIORITY_BLOCKER_IMG = "icons/12/priority_urgent.png";
+	public static final String PRIORITY_CRITICAL_IMG = "icons/12/priority_high.png";
+	public static final String PRIORITY_MAJOR_IMG = "icons/12/priority_medium.png";
+	public static final String PRIORITY_MINOR_IMG = "icons/12/priority_low.png";
+	public static final String PRIORITY_TRIVIAL_IMG = "icons/12/priority_none.png";
 
 	public static final String PRIORITY_BLOCKER= "Blocker";
 	public static final String PRIORITY_CRITICAL = "Critical";
@@ -41,5 +41,6 @@ public class BugPriorityComboBox extends ComboBox {
 		this.setItemIcon(PRIORITY_TRIVIAL,
 				new ThemeResource(PRIORITY_TRIVIAL_IMG));
 		this.setNullSelectionAllowed(false);
+		this.setSizeUndefined();
     }
 }

@@ -20,8 +20,16 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.vaadin.ui.chart.GenericChartWrapper;
 import com.esofthead.mycollab.vaadin.ui.chart.TimeSeriesChartWrapper;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 
 /**
  * 
@@ -43,10 +51,10 @@ public class BugTrendReportWidget extends
 	}
 
 	@Override
-	protected XYDataset createDataset(BugSearchCriteria criteria) {
+	protected XYDataset createDataset() {
 		BugService bugService = AppContext.getSpringBean(BugService.class);
 		List<GroupItem> groupItems = bugService
-				.getBugStatusTrendSummary(criteria);
+				.getBugStatusTrendSummary(searchCriteria);
 
 		Map<String, TimeSeries> seriesMap = new HashMap<String, TimeSeries>();
 
@@ -69,6 +77,39 @@ public class BugTrendReportWidget extends
 			dataset.addSeries(series);
 		}
 		return dataset;
+	}
+
+	@Override
+	protected ComponentContainer createLegendBox() {
+		CssLayout mainLayout = new CssLayout();
+		mainLayout.addStyleName("border-box");
+		mainLayout.setWidth("100%");
+		for (int i = 0; i < xyDataSet.getSeriesCount(); i++) {
+			HorizontalLayout layout = new HorizontalLayout();
+			layout.setMargin(false, false, false, true);
+			layout.addStyleName("inline-block");
+			Comparable key = (Comparable) xyDataSet.getSeriesKey(i);
+			String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #" + GenericChartWrapper.CHART_COLOR_STR[i % GenericChartWrapper.CHART_COLOR_STR.length] + "\" />";
+			Label lblCircle = new Label(color);
+			lblCircle.setContentMode(Label.CONTENT_XHTML);
+			
+			Button btnLink = new Button(key + "",
+					new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+				}
+			});
+			btnLink.addStyleName("link");
+			layout.addComponent(lblCircle);
+			layout.setComponentAlignment(lblCircle, Alignment.MIDDLE_CENTER);
+			layout.addComponent(btnLink);
+			layout.setComponentAlignment(btnLink, Alignment.MIDDLE_CENTER);
+			layout.setSizeUndefined();
+			mainLayout.addComponent(layout);
+		}
+		return mainLayout;
 	}
 
 }

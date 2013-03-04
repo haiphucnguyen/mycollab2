@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
-import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberMultiSelectField;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -36,6 +36,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 	private ComponentMultiSelectField componentSelect;
 	private VersionMultiSelectField affectedVersionSelect;
 	private VersionMultiSelectField fixedVersionSelect;
+	private ProjectMemberMultiSelectField projectMemberSelect;
 
 	public BugAddViewImpl() {
 		super();
@@ -127,7 +128,11 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 					}
 					return new BugPriorityComboBox();
 				} else if (propertyId.equals("assignuser")) {
-					return new ProjectMemberComboBox();
+					projectMemberSelect = new ProjectMemberMultiSelectField();
+					if (bug.getAssignuser() != null) {
+						//componentSelect.setSelectedItems(bug.getComponents());
+					}
+					return projectMemberSelect;
 				} else if (propertyId.equals("id")) {
 					attachmentUploadField = new FormAttachmentUploadField();
 					if (bug.getId() != null) {

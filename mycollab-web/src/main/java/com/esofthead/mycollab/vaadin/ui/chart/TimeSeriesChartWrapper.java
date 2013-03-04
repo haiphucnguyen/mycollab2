@@ -19,68 +19,60 @@ import org.jfree.data.xy.XYDataset;
 import org.jfree.ui.RectangleInsets;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
-import com.esofthead.mycollab.vaadin.ui.JFreeChartWrapper;
-import com.vaadin.ui.VerticalLayout;
 
 /**
  *
  * @author haiphucnguyen
  */
-public abstract class TimeSeriesChartWrapper<S extends SearchCriteria> extends VerticalLayout {
+public abstract class TimeSeriesChartWrapper<S extends SearchCriteria> extends GenericChartWrapper<S> {
 	private static final long serialVersionUID = 1L;
-	private String title;
-    private int height;
-    private int width;
+	
+    protected XYDataset xyDataSet;
 
     public TimeSeriesChartWrapper(String title, int width, int height) {
-        this.width = width;
-        this.height = height;
-        this.title = title;
+       super(title, width, height);
+    }
+    
+    protected JFreeChart createChart() {
+    	 this.removeAllComponents();
+         
+         xyDataSet = createDataset();
+
+         // create the chart...
+         JFreeChart chart = ChartFactory.createTimeSeriesChart(
+                 title,
+                 "",
+                 "",
+                 xyDataSet,
+                 false, // Show Legend
+                 true, // Use tooltips
+                 false // Configure chart to generate URLs?
+                 );
+
+         XYPlot plot = (XYPlot) chart.getPlot();
+         plot.setBackgroundPaint(Color.white);
+         plot.setDomainGridlinePaint(Color.lightGray);
+         plot.setRangeGridlinePaint(Color.lightGray);
+         plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
+         plot.setDomainCrosshairVisible(true);
+         plot.setRangeCrosshairVisible(true);
+         
+         XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
+         renderer.setSeriesLinesVisible(0, true);
+         renderer.setSeriesShapesVisible(0, true);
+         for (int i = 0; i < xyDataSet.getSeriesCount(); i++) {
+        	 renderer.setSeriesPaint(i, Color.decode("0x" + CHART_COLOR_STR[i % CHART_COLOR_STR.length]));
+  		}
+         plot.setRenderer(renderer);
+         
+         plot.getRangeAxis().setStandardTickUnits(NumberAxis.createIntegerTickUnits());
+         
+         DateAxis axis = (DateAxis) plot.getDomainAxis();
+         axis.setDateFormatOverride(new SimpleDateFormat("MM/dd"));
+         axis.setTickUnit(new DateTickUnit(DateTickUnitType.DAY, 5));
+
+         return chart;
     }
 
-    public void setSearchCriteria(S criteria) {
-        this.removeAllComponents();
-
-        // create the chart...
-        JFreeChart chart = ChartFactory.createTimeSeriesChart(
-                title,
-                "",
-                "",
-                createDataset(criteria),
-                true, // Show Legend
-                true, // Use tooltips
-                false // Configure chart to generate URLs?
-                );
-
-        XYPlot plot = (XYPlot) chart.getPlot();
-        plot.setBackgroundPaint(Color.white);
-        plot.setDomainGridlinePaint(Color.lightGray);
-        plot.setRangeGridlinePaint(Color.lightGray);
-        plot.setAxisOffset(new RectangleInsets(5.0, 5.0, 5.0, 5.0));
-        plot.setDomainCrosshairVisible(true);
-        plot.setRangeCrosshairVisible(true);
-        
-        XYLineAndShapeRenderer renderer = new XYLineAndShapeRenderer();
-        renderer.setSeriesLinesVisible(0, true);
-        renderer.setSeriesShapesVisible(0, true);
-        plot.setRenderer(renderer);
-        
-        plot.getRangeAxis().setStandardTickUnits(NumberAxis.createIntegerTickUnits());
-        
-        DateAxis axis = (DateAxis) plot.getDomainAxis();
-        axis.setDateFormatOverride(new SimpleDateFormat("MM/dd"));
-        axis.setTickUnit(new DateTickUnit(DateTickUnitType.DAY, 5));
-
-        JFreeChartWrapper wrapper = new JFreeChartWrapper(chart);
-        wrapper.setHeight(height + "px");
-        wrapper.setWidth(width + "px");
-        wrapper.setGraphHeight(height);
-        wrapper.setGraphWidth(width);
-
-
-        /////////////////////////////////////////////
-        this.addComponent(wrapper);
-    }
-
-    protected abstract XYDataset createDataset(S criteria);
+    protected abstract XYDataset createDataset();
 }

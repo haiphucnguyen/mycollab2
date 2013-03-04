@@ -24,7 +24,7 @@ public class TaskPriorityComboBox extends ComboBox {
 		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
 
 		IndexedContainer ic = new IndexedContainer();
-		this.addItem(PRIORITY_URGENT);
+		ic.addItem(PRIORITY_URGENT);
 		ic.addItem(PRIORITY_HIGHT);
 		ic.addItem(PRIORITY_MEDIUM);
 		ic.addItem(PRIORITY_LOW);

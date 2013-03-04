@@ -8,10 +8,10 @@ import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.vaadin.ui.chart.PieChartDescriptionBox;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.HorizontalLayout;
 
 public class PrioritySummaryWidget extends PieChartWrapper<BugSearchCriteria> {
 
@@ -55,6 +55,6 @@ public class PrioritySummaryWidget extends PieChartWrapper<BugSearchCriteria> {
 
 	@Override
 	protected ComponentContainer createLegendBox() {
-		return new HorizontalLayout();
+		return PieChartDescriptionBox.createLegendBox(pieDataSet);
 	}
 }
