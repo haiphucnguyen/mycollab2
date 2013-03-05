@@ -76,7 +76,7 @@ public class ProfileEditViewImpl extends AbstractView implements
 			}
 		};
 		avatarUploadField.setFieldType(FieldType.BYTE_ARRAY);
-		avatarUploadField.setMaxUploadSize(4 * 1024 * 1024);
+		avatarUploadField.setMaxUploadSize(20 * 1024 * 1024);
 		userAvatar.addComponent(avatarUploadField);
 	}
 
