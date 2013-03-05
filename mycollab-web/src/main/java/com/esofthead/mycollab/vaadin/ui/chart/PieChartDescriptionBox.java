@@ -30,7 +30,7 @@ public class PieChartDescriptionBox {
 			lblCircle.setContentMode(Label.CONTENT_XHTML);
 			
 			Button btnLink = new Button(key + "("
-					+ String.valueOf(pieDataSet.getValue(key)) + ")",
+					+ String.valueOf(pieDataSet.getValue(key).intValue()) + ")",
 					new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
