@@ -41,6 +41,5 @@ public class BugPriorityComboBox extends ComboBox {
 		this.setItemIcon(PRIORITY_TRIVIAL,
 				new ThemeResource(PRIORITY_TRIVIAL_IMG));
 		this.setNullSelectionAllowed(false);
-		this.setSizeUndefined();
     }
 }
