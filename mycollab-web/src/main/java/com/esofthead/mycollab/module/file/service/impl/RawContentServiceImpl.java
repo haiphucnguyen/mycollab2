@@ -55,7 +55,6 @@ public class RawContentServiceImpl implements RawContentService {
 		try {
 			File file = new File(FileStorageConfig.baseContentFolder,
 					objectPath);
-			System.out.println("File: " + file.getAbsolutePath());
 			return new FileInputStream(file);
 		} catch (Exception e) {
 			throw new RuntimeException(e);

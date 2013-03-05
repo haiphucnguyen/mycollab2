@@ -30,7 +30,7 @@ import com.esofthead.mycollab.vaadin.ui.PagedBeanList;
 import com.esofthead.mycollab.vaadin.ui.PagedBeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
-import com.esofthead.mycollab.vaadin.ui.UserAvatar;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
@@ -100,8 +100,9 @@ public class MessageListViewImpl extends AbstractView implements
 			HorizontalLayout messageLayout = new HorizontalLayout();
 			messageLayout.setStyleName("message");
 			messageLayout.setWidth("100%");
-			messageLayout.addComponent(new UserAvatar(message.getPosteduser(),
-					message.getFullPostedUserName()));
+			messageLayout.addComponent(UserAvatarControlFactory
+					.createUserAvatarLink(message.getPosteduser(),
+							message.getFullPostedUserName()));
 
 			CssLayout rowLayout = new CssLayout();
 			rowLayout.setStyleName("message-container");

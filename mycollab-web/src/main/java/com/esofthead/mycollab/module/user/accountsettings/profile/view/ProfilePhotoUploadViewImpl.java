@@ -13,16 +13,21 @@ import org.slf4j.LoggerFactory;
 import com.davengo.web.vaadin.crop.CropField;
 import com.davengo.web.vaadin.crop.widgetset.client.ui.VCropSelection;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.vaadin.mvp.HAbstractView;
 import com.esofthead.mycollab.vaadin.ui.ByteArrayImageResource;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.terminal.Resource;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 @ViewComponent
 public class ProfilePhotoUploadViewImpl extends HAbstractView implements
@@ -49,6 +54,7 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 		} catch (IOException e) {
 			throw new MyCollabException("Invalid image type");
 		}
+		VerticalLayout leftColumn = new VerticalLayout();
 		Panel currentPhotoBox = new Panel();
 		Resource resource = new ByteArrayImageResource(imageData, "image/png");
 		CropField cropField = new CropField(resource);
@@ -81,7 +87,46 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 		currentPhotoBox.setHeight("500px");
 		currentPhotoBox.getContent().setSizeUndefined();
 		currentPhotoBox.addComponent(cropField);
-		this.addComponent(currentPhotoBox);
+
+		leftColumn.addComponent(currentPhotoBox);
+
+		HorizontalLayout controlBtns = new HorizontalLayout();
+		Button acceptBtn = new Button("Accept", new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (scaleImageData != null && scaleImageData.length > 0) {
+
+					try {
+						BufferedImage image = ImageIO
+								.read(new ByteArrayInputStream(scaleImageData));
+						UserAvatarService userAvatarService = AppContext
+								.getSpringBean(UserAvatarService.class);
+						userAvatarService.uploadAvatar(image,
+								AppContext.getUsername(),
+								AppContext.getAccountId());
+					} catch (IOException e) {
+						throw new MyCollabException(
+								"Error when saving user avatar", e);
+					}
+
+				}
+
+			}
+		});
+		controlBtns.addComponent(acceptBtn);
+
+		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+
+			}
+		});
+		controlBtns.addComponent(cancelBtn);
+
+		leftColumn.addComponent(controlBtns);
+		this.addComponent(leftColumn);
 
 		VerticalLayout previewBox = new VerticalLayout();
 		previewBox.setWidth("200px");

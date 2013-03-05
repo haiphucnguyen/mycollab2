@@ -16,7 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UserAvatarResource;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
@@ -25,6 +25,7 @@ import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -58,8 +59,8 @@ public class ProfileEditViewImpl extends AbstractView implements
 
 	private void displayUserAvatar() {
 		userAvatar.removeAllComponents();
-		UserAvatarResource cropField = new UserAvatarResource(
-				AppContext.getUsername(), 100);
+		Embedded cropField = UserAvatarControlFactory
+				.createUserAvatarEmbeddedControl(AppContext.getUsername(), 100);
 		userAvatar.addComponent(cropField);
 
 		final UploadField avatarUploadField = new UploadField() {
@@ -75,7 +76,7 @@ public class ProfileEditViewImpl extends AbstractView implements
 			}
 		};
 		avatarUploadField.setFieldType(FieldType.BYTE_ARRAY);
-		avatarUploadField.setMaxUploadSize(1024 * 1024);
+		avatarUploadField.setMaxUploadSize(4 * 1024 * 1024);
 		userAvatar.addComponent(avatarUploadField);
 	}
 
