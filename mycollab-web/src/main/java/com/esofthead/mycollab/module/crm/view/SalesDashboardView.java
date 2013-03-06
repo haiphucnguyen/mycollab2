@@ -30,7 +30,7 @@ public class SalesDashboardView extends Depot {
 	private int currentReportIndex = 0;
 
 	public SalesDashboardView() {
-		super("Sales Dashboard", new HorizontalLayout(), new VerticalLayout());
+		super("Sales Dashboard", new HorizontalLayout(), new VerticalLayout(), "390px", "200px");
 
 		initUI();
 	}
@@ -43,7 +43,8 @@ public class SalesDashboardView extends Depot {
 		headerContainer.addComponent(emptySpace);
 		headerContainer.setExpandRatio(emptySpace, 1.0f);
 
-		Button prevButton = new Button(null, new Button.ClickListener() {
+
+		Button prevButton = new Button("", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -62,7 +63,7 @@ public class SalesDashboardView extends Depot {
 		prevButton.addStyleName("no-margin");
 		headerContainer.addComponent(prevButton);
 
-		Button nextBtn = new Button(null, new Button.ClickListener() {
+		Button nextBtn = new Button("", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override

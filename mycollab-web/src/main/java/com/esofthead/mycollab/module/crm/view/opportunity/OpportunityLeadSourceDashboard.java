@@ -26,7 +26,11 @@ public class OpportunityLeadSourceDashboard extends
 		PieChartWrapper<OpportunitySearchCriteria> {
 
 	public OpportunityLeadSourceDashboard() {
-		super("Deals By Sources", 530, 350);
+		this(390, 278);
+	}
+	
+	public OpportunityLeadSourceDashboard(int width, int height) {
+		super("Deals By Sources", width, height); //530, 350
 	}
 
 	@Override

@@ -46,17 +46,17 @@ public class CrmHomeViewImpl extends AbstractView implements CrmHomeView {
         layout.addComponent(myAssignmentsLayout);
 
         VerticalLayout streamsLayout = new VerticalLayout();
-        streamsLayout.setWidth("550px");
+        streamsLayout.setWidth("410px");
         
         salesDashboard = new SalesDashboardView();
-        salesDashboard.setWidth("540px");
+        salesDashboard.setWidth("400px");
         LazyLoadWrapper salesDashboardLazycomp = new LazyLoadWrapper(salesDashboard);
         streamsLayout.addComponent(salesDashboardLazycomp);
         streamsLayout.setComponentAlignment(salesDashboardLazycomp,
                 Alignment.MIDDLE_RIGHT);
         
         activityStreamPanel = new ActivityStreamPanel();
-        activityStreamPanel.setWidth("540px");
+        activityStreamPanel.setWidth("400px");
         LazyLoadWrapper activityLazyLoad = new LazyLoadWrapper(
                 activityStreamPanel);
         streamsLayout.addComponent(activityLazyLoad);

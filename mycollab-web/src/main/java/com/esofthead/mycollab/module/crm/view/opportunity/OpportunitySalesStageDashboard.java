@@ -26,7 +26,11 @@ public class OpportunitySalesStageDashboard extends
 	private static final long serialVersionUID = 1L;
 
 	public OpportunitySalesStageDashboard() {
-		super("Deals By Stages", 530, 350);
+		this(390, 278);
+	}
+	
+	public OpportunitySalesStageDashboard(int width, int height) {
+		super("Deals By Stages", width, height);
 	}
 
 	@Override

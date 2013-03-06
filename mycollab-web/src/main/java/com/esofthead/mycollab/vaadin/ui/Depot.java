@@ -22,13 +22,18 @@ public class Depot extends VerticalLayout {
 	public Depot(String title, ComponentContainer component) {
 		this(title, null, component);
 	}
-
+	
 	public Depot(String title, ComponentContainer headerElement,
 			ComponentContainer component) {
+		this(title, headerElement, component, "500px", "250px");
+	}
+
+	public Depot(String title, ComponentContainer headerElement,
+			ComponentContainer component, String headerWidth, String headerLeftWidth) {
 		this.setStyleName("depotComp");
 		header = new HorizontalLayout();
 		header.setStyleName("depotHeader");
-		header.setWidth("500px");
+		header.setWidth(headerWidth);
 		this.headerContent = headerElement;
 		this.bodyContent = component;
 		// this.headerContent = header;
@@ -39,7 +44,7 @@ public class Depot extends VerticalLayout {
 		headerLbl.setStyleName("h2");
 		headerLeft.addComponent(headerLbl);
 		headerLeft.setStyleName("depot-title");
-		headerLeft.setWidth("250px");
+		headerLeft.setWidth(headerLeftWidth);
 		headerLeft.addListener(new LayoutClickListener() {
 			private static final long serialVersionUID = 1L;
 
