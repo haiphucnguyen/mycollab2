@@ -36,10 +36,6 @@
 	/* 	} */
 }
 
-.v-label-undef-w {
-	float: left;
-}
-
 button::-moz-focus-inner {
 	border: 0;
 }
