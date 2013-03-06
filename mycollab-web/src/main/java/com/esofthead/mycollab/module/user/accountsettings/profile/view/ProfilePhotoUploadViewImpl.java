@@ -22,11 +22,12 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 @ViewComponent
 public class ProfilePhotoUploadViewImpl extends HAbstractView implements
@@ -51,7 +52,7 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 		try {
 			originalImage = ImageIO.read(new ByteArrayInputStream(imageData));
 		} catch (IOException e) {
-			throw new MyCollabException("Invalid image type", e);
+			throw new MyCollabException("Invalid image type");
 		}
 		VerticalLayout leftColumn = new VerticalLayout();
 		Panel currentPhotoBox = new Panel();
@@ -129,6 +130,7 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 
 		VerticalLayout previewBox = new VerticalLayout();
 		previewBox.setWidth("200px");
+		previewBox.addComponent(new Label("AAA"));
 		previewImage = new Embedded(null);
 		previewImage.setWidth("150px");
 		previewBox.addComponent(previewImage);
@@ -138,7 +140,7 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 	private void displayPreviewImage() {
 		if (scaleImageData != null && scaleImageData.length > 0) {
 			ByteArrayImageResource previewResource = new ByteArrayImageResource(
-					scaleImageData, "image/jpg");
+					scaleImageData, "image/png");
 			previewImage.setIcon(previewResource);
 		}
 	}

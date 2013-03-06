@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 import org.vaadin.easyuploads.UploadField;
 import org.vaadin.easyuploads.UploadField.FieldType;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.shell.view.ScreenSize;
@@ -68,12 +69,23 @@ public class ProfileEditViewImpl extends AbstractView implements
 		final UploadField avatarUploadField = new UploadField() {
 			@Override
 			protected void updateDisplay() {
-				final byte[] pngData = (byte[]) getValue();
+				byte[] imageData = (byte[]) getValue();
 				String mimeType = getLastMimeType();
+				if (mimeType.equals("image/jpeg")) {
+					// convert jpg to png file format
+					imageData = ImageUtil.convertJpgToPngFormat(imageData);
+					if (imageData == null) {
+						throw new MyCollabException(
+								"Do not support image format for avatar");
+					} else {
+						mimeType = "image/png";
+					}
+				}
+
 				if (mimeType.equals("image/png")) {
 					EventBus.getInstance().fireEvent(
 							new ProfileEvent.GotoUploadPhoto(
-									ProfileEditViewImpl.this, pngData));
+									ProfileEditViewImpl.this, imageData));
 				}
 			}
 		};
