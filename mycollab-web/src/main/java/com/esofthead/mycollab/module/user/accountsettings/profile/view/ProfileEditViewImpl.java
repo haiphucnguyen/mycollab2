@@ -39,6 +39,8 @@ import com.vaadin.ui.VerticalLayout;
 public class ProfileEditViewImpl extends AbstractView implements
 		ProfileEditView, IFormAddView<User> {
 
+	public static final int MAX_UPLOAD_SIZE = 20 * 1024 * 1024;
+
 	private final EditForm formItem;
 	private final HorizontalLayout viewLayout;
 	private VerticalLayout userAvatar;
@@ -76,7 +78,7 @@ public class ProfileEditViewImpl extends AbstractView implements
 			}
 		};
 		avatarUploadField.setFieldType(FieldType.BYTE_ARRAY);
-		avatarUploadField.setMaxUploadSize(20 * 1024 * 1024);
+		avatarUploadField.setMaxUploadSize(MAX_UPLOAD_SIZE);
 		userAvatar.addComponent(avatarUploadField);
 	}
 
