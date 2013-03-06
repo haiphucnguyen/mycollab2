@@ -22,12 +22,11 @@ import com.vaadin.data.Property.ValueChangeEvent;
 import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 @ViewComponent
 public class ProfilePhotoUploadViewImpl extends HAbstractView implements
@@ -83,8 +82,8 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 			}
 
 		});
-		currentPhotoBox.setWidth("500px");
-		currentPhotoBox.setHeight("500px");
+		currentPhotoBox.setWidth("600px");
+		currentPhotoBox.setHeight("600px");
 		currentPhotoBox.getContent().setSizeUndefined();
 		currentPhotoBox.addComponent(cropField);
 
@@ -130,7 +129,6 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 
 		VerticalLayout previewBox = new VerticalLayout();
 		previewBox.setWidth("200px");
-		previewBox.addComponent(new Label("AAA"));
 		previewImage = new Embedded(null);
 		previewImage.setWidth("150px");
 		previewBox.addComponent(previewImage);
