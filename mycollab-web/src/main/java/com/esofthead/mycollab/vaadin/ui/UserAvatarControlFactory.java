@@ -3,8 +3,10 @@ package com.esofthead.mycollab.vaadin.ui;
 import java.io.File;
 
 import com.esofthead.mycollab.module.file.FileStorageConfig;
+import com.esofthead.mycollab.module.file.S3StorageConfig;
 import com.esofthead.mycollab.module.file.StorageSetting;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.FileResource;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.ThemeResource;
@@ -34,7 +36,8 @@ public class UserAvatarControlFactory {
 			}
 
 		} else if (StorageSetting.isS3Storage()) {
-
+			avatarRes = new ExternalResource(S3StorageConfig.getAvatarLink(
+					username, size));
 		}
 		return avatarRes;
 	}
