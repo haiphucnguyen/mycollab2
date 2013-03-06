@@ -15,7 +15,7 @@ import com.vaadin.ui.Button.ClickEvent;
 public class PieChartDescriptionBox {
 
 	@SuppressWarnings("rawtypes")
-	public static ComponentContainer createLegendBox(DefaultPieDataset pieDataSet) {
+	public static ComponentContainer createLegendBox(final PieChartWrapper pieChartHost, DefaultPieDataset pieDataSet) {
 		CssLayout mainLayout = new CssLayout();
 		mainLayout.addStyleName("border-box");
 		mainLayout.setWidth("100%");
@@ -36,6 +36,11 @@ public class PieChartDescriptionBox {
 
 				@Override
 				public void buttonClick(ClickEvent event) {
+					String caption = event.getButton().getCaption();
+					if (caption.indexOf("(") > -1) {
+						String keyStatus = caption.substring(0, caption.indexOf("("));
+						pieChartHost.onClickedDescription(keyStatus);
+					}
 				}
 			});
 			btnLink.addStyleName("link");
@@ -48,5 +53,7 @@ public class PieChartDescriptionBox {
 		}
 		return mainLayout;
 	}
+	
+	
 	
 }

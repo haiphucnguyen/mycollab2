@@ -64,7 +64,13 @@ public class BugResolutionSummaryWidget extends
 
 	@Override
 	protected ComponentContainer createLegendBox() {
-		return PieChartDescriptionBox.createLegendBox(pieDataSet);
+		return PieChartDescriptionBox.createLegendBox(this, pieDataSet);
+	}
+
+	@Override
+	protected void onClickedDescription(String key) {
+		// TODO Auto-generated method stub
+		
 	}
 
 }
