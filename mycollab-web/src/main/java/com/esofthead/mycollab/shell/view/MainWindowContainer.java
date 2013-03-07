@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.shell.view;
 
-import java.net.URL;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.browsercookies.BrowserCookies;
@@ -14,8 +12,6 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.View;
-import com.vaadin.terminal.DownloadStream;
-import com.vaadin.terminal.URIHandler;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.UriFragmentUtility;
 import com.vaadin.ui.UriFragmentUtility.FragmentChangedEvent;
@@ -30,6 +26,7 @@ public class MainWindowContainer extends Window implements View {
 
 	private UriFragmentUtility urifu;
 	private FragmentNavigator fragmentNavigator;
+	
 
 	public MainWindowContainer() {
 		urifu = new UriFragmentUtility();
@@ -46,19 +43,20 @@ public class MainWindowContainer extends Window implements View {
 						.getUriFragmentUtility().getFragment());
 			}
 		});
+		
 		this.setCaption("MyCollab");
 		ControllerRegistry.getInstance().addController(
 				new ShellController(this));
 
-		this.addURIHandler(new URIHandler() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public DownloadStream handleURI(URL context, String relativeUri) {
-				log.debug("URI: " + relativeUri + "---" + context.getPath());
-				return null;
-			}
-		});
+//		this.addURIHandler(new URIHandler() {
+//			private static final long serialVersionUID = 1L;
+//
+//			@Override
+//			public DownloadStream handleURI(URL context, String relativeUri) {
+//				log.debug("URI: " + relativeUri + "---" + context.getPath());
+//				return null;
+//			}
+//		});
 
 		this.setImmediate(true);
 		this.addListener(new Window.ResizeListener() {
@@ -77,7 +75,6 @@ public class MainWindowContainer extends Window implements View {
 	@Override
 	public void setContent(ComponentContainer newContent) {
 		super.setContent(newContent);
-		log.debug(newContent + "   " + urifu);
 
 		if (newContent != null) {
 			newContent.addComponent(urifu);
@@ -86,7 +83,7 @@ public class MainWindowContainer extends Window implements View {
 
 	public void addFragement(String fragement) {
 		log.debug("Add fragement: " + fragement);
-		urifu.setFragment(fragement);
+		urifu.setFragment(fragement, false);
 	}
 
 	public final void setDefaultView(final boolean isAutoLogin) {

@@ -14,10 +14,10 @@
 		</tr>
 		#foreach( $issue in $issueCol )
 		<tr>
-			<th>$issue.Saccountid</th>
-			<th>$issue.Username</th>
-			<th>$issue.Useragent</th>
-			<th>$issue.Errortrace</th>
+			<th>$!issue.Saccountid</th>
+			<th>$!issue.Username</th>
+			<th>$!issue.Useragent</th>
+			<th>$!issue.Errortrace</th>
 		</tr>
 		#end
 	</table>

@@ -4,15 +4,27 @@
  */
 package com.esofthead.mycollab.shell.view;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class FragmentNavigator {
-    public void navigateByFragement(String fragement) {
-        if (fragement != null && fragement.length() > 0) {
-            String[] tokens = fragement.split("/");
-            
-        }
-    }
+	private static Logger log = LoggerFactory
+			.getLogger(FragmentNavigator.class);
+
+	private ShellUrlResolver shellUrlResolver = new ShellUrlResolver();
+
+	public FragmentNavigator() {
+
+	}
+
+	public void navigateByFragement(String fragement) {
+		if (fragement != null && fragement.length() > 0) {
+			String[] tokens = fragement.split("/");
+			shellUrlResolver.handle(tokens);
+		}
+	}
 }

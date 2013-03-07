@@ -27,251 +27,252 @@ import com.vaadin.terminal.gwt.server.WebApplicationContext;
 
 public class AppContext implements TransactionListener, Serializable {
 
-    private static final long serialVersionUID = 1L;
-    private static int UPDATE_TIME_DURATION = 300000;
-    private static Logger log = LoggerFactory.getLogger(AppContext.class);
-    private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
-    private final Application app;
-    private final Map<String, Object> variables = new HashMap<String, Object>();
-    
-    private SimpleUser session;
-    private UserPreference userPreference;
-    
-    private long lastAccessTime = 0;
-    private static org.springframework.web.context.WebApplicationContext springContext;
+	private static final long serialVersionUID = 1L;
+	private static int UPDATE_TIME_DURATION = 300000;
+	private static Logger log = LoggerFactory.getLogger(AppContext.class);
+	private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
+	private final Application app;
+	private final Map<String, Object> variables = new HashMap<String, Object>();
 
-    public AppContext(Application application) {
-        this.app = application;
-        if (springContext == null) {
-            WebApplicationContext context = (WebApplicationContext) application
-                    .getContext();
-            springContext = WebApplicationContextUtils
-                    .getRequiredWebApplicationContext(context.getHttpSession()
-                    .getServletContext());
-        }
+	private SimpleUser session;
+	private UserPreference userPreference;
 
+	private long lastAccessTime = 0;
+	private static org.springframework.web.context.WebApplicationContext springContext;
 
-        // It's usable from now on in the current request
-        instance.set(this);
-    }
+	public AppContext(Application application) {
+		this.app = application;
+		if (springContext == null) {
+			WebApplicationContext context = (WebApplicationContext) application
+					.getContext();
+			springContext = WebApplicationContextUtils
+					.getRequiredWebApplicationContext(context.getHttpSession()
+							.getServletContext());
+		}
 
-    public AppContext getInstance() {
-        return instance.get();
-    }
+		// It's usable from now on in the current request
+		instance.set(this);
+	}
 
-    @Override
-    public void transactionStart(Application application, Object transactionData) {
-        // Set this data instance of this application
-        // as the one active in the current thread.
-        if (this.app == application) {
-            instance.set(this);
-        }
+	public AppContext getInstance() {
+		return instance.get();
+	}
 
-        log.debug("Transaction start: " + transactionData);
-    }
+	@Override
+	public void transactionStart(Application application, Object transactionData) {
+		// Set this data instance of this application
+		// as the one active in the current thread.
+		if (this.app == application) {
+			instance.set(this);
+		}
 
-    @Override
-    public void transactionEnd(Application application, Object transactionData) {
-        log.debug("Transaction end: " + transactionData);
+		// log.debug("Transaction start: " + transactionData);
+	}
 
-        long currentTime = new GregorianCalendar().getTimeInMillis();
-        if (currentTime - lastAccessTime > UPDATE_TIME_DURATION) {
-            try {
-                if (instance.get() != null
-                        && instance.get().userPreference != null) {
-                    UserPreference pref = instance.get().userPreference;
-                    UserPreferenceService prefService = AppContext
-                            .getSpringBean(UserPreferenceService.class);
-                    pref.setLastaccessedtime(new GregorianCalendar().getTime());
-                    prefService.updateWithSession(pref,
-                            AppContext.getUsername());
+	@Override
+	public void transactionEnd(Application application, Object transactionData) {
+		// log.debug("Transaction end: " + transactionData);
 
-                    lastAccessTime = currentTime;
-                    log.debug("Update last access time of user "
-                            + AppContext.getUsername());
-                }
+		long currentTime = new GregorianCalendar().getTimeInMillis();
+		if (currentTime - lastAccessTime > UPDATE_TIME_DURATION) {
+			try {
+				if (instance.get() != null
+						&& instance.get().userPreference != null) {
+					UserPreference pref = instance.get().userPreference;
+					UserPreferenceService prefService = AppContext
+							.getSpringBean(UserPreferenceService.class);
+					pref.setLastaccessedtime(new GregorianCalendar().getTime());
+					prefService.updateWithSession(pref,
+							AppContext.getUsername());
 
-            } catch (Exception e) {
-                log.error("There is error when try to update user preference",
-                        e);
-            }
-        }
+					lastAccessTime = currentTime;
+					log.debug("Update last access time of user "
+							+ AppContext.getUsername());
+				}
 
-        // Clear the reference to avoid potential problems
-        if (this.app == application) {
-            instance.set(null);
-        }
-    }
+			} catch (Exception e) {
+				log.error("There is error when try to update user preference",
+						e);
+			}
+		}
 
-    public static void updateLastModuleVisit(String moduleName) {
-        try {
-            UserPreference pref = instance.get().userPreference;
-            UserPreferenceService prefService = AppContext
-                    .getSpringBean(UserPreferenceService.class);
-            pref.setLastmodulevisit(moduleName);
-            prefService.updateWithSession(pref, AppContext.getUsername());
-        } catch (Exception e) {
-            log.error(
-                    "There is error when try to update user preference for last module visit",
-                    e);
-        }
-    }
+		// Clear the reference to avoid potential problems
+		if (this.app == application) {
+			instance.set(null);
+		}
+	}
 
-    public static void setSession(SimpleUser userSession,
-            UserPreference userPreference) {
-        instance.get().session = userSession;
-        instance.get().userPreference = userPreference;
-    }
+	public static void updateLastModuleVisit(String moduleName) {
+		try {
+			UserPreference pref = instance.get().userPreference;
+			UserPreferenceService prefService = AppContext
+					.getSpringBean(UserPreferenceService.class);
+			pref.setLastmodulevisit(moduleName);
+			prefService.updateWithSession(pref, AppContext.getUsername());
+		} catch (Exception e) {
+			log.error(
+					"There is error when try to update user preference for last module visit",
+					e);
+		}
+	}
 
-    public static SimpleUser getSession() {
-        return instance.get().session;
-    }
+	public static void setSession(SimpleUser userSession,
+			UserPreference userPreference) {
+		instance.get().session = userSession;
+		instance.get().userPreference = userPreference;
+	}
 
-    public static Integer getAccountId() {
-        return instance.get().session.getAccountid();
-    }
+	public static SimpleUser getSession() {
+		return instance.get().session;
+	}
 
-    public static String getUsername() {
-        return instance.get().session.getUsername();
-    }
+	public static Integer getAccountId() {
+		return instance.get().session.getAccountid();
+	}
 
-    public static UserPreference getUserPreference() {
-        return instance.get().userPreference;
-    }
+	public static String getUsername() {
+		return instance.get().session.getUsername();
+	}
 
-    public static Application getApplication() {
-        return instance.get().app;
-    }
+	public static UserPreference getUserPreference() {
+		return instance.get().userPreference;
+	}
 
-    public static <T> T getSpringBean(Class<T> requiredType) {
+	public static Application getApplication() {
+		return instance.get().app;
+	}
 
-        return springContext.getBean(requiredType);
-    }
-    
-    public static ApplicationContext getSpringContext() {
-    	return springContext;
-    }
+	public static <T> T getSpringBean(Class<T> requiredType) {
 
-    public static boolean isAdmin() {
-        Boolean isAdmin = instance.get().session.getIsadmin();
-        if (isAdmin == null) {
-        	return Boolean.FALSE;
-        } else {
-        	return isAdmin;
-        }
-    }
+		return springContext.getBean(requiredType);
+	}
 
-    public static boolean canRead(String permissionItem) {
-        if (isAdmin()) {
-            return true;
-        }
+	public static ApplicationContext getSpringContext() {
+		return springContext;
+	}
 
-        PermissionMap permissionMap = instance.get().session
-                .getPermissionMaps();
-        if (permissionMap == null) {
-            return false;
-        } else {
-            return permissionMap.canRead(permissionItem);
-        }
-    }
+	public static boolean isAdmin() {
+		Boolean isAdmin = instance.get().session.getIsadmin();
+		if (isAdmin == null) {
+			return Boolean.FALSE;
+		} else {
+			return isAdmin;
+		}
+	}
 
-    public static boolean canWrite(String permissionItem) {
-        if (isAdmin()) {
-            return true;
-        }
-        PermissionMap permissionMap = instance.get().session
-                .getPermissionMaps();
-        if (permissionMap == null) {
-            return false;
-        } else {
-            return permissionMap.canWrite(permissionItem);
-        }
-    }
+	public static boolean canRead(String permissionItem) {
+		if (isAdmin()) {
+			return true;
+		}
 
-    public static boolean canAccess(String permissionItem) {
-        if (isAdmin()) {
-            return true;
-        }
-        PermissionMap permissionMap = instance.get().session
-                .getPermissionMaps();
-        if (permissionMap == null) {
-            return false;
-        } else {
-            return permissionMap.canAccess(permissionItem);
-        }
-    }
+		PermissionMap permissionMap = instance.get().session
+				.getPermissionMaps();
+		if (permissionMap == null) {
+			return false;
+		} else {
+			return permissionMap.canRead(permissionItem);
+		}
+	}
 
-    public static void putVariable(String key, Object value) {
-        if (instance.get() != null) {
-            instance.get().variables.put(key, value);
-        }
-    }
+	public static boolean canWrite(String permissionItem) {
+		if (isAdmin()) {
+			return true;
+		}
+		PermissionMap permissionMap = instance.get().session
+				.getPermissionMaps();
+		if (permissionMap == null) {
+			return false;
+		} else {
+			return permissionMap.canWrite(permissionItem);
+		}
+	}
 
-    public static Object getVariable(String key) {
-        if (instance.get() != null) {
-            return instance.get().variables.get(key);
-        }
-        return null;
-    }
+	public static boolean canAccess(String permissionItem) {
+		if (isAdmin()) {
+			return true;
+		}
+		PermissionMap permissionMap = instance.get().session
+				.getPermissionMaps();
+		if (permissionMap == null) {
+			return false;
+		} else {
+			return permissionMap.canAccess(permissionItem);
+		}
+	}
 
-    public static void removeVariable(String key) {
-        if (instance.get() != null) {
-            instance.get().variables.remove(key);
-        }
-    }
+	public static void putVariable(String key, Object value) {
+		if (instance.get() != null) {
+			instance.get().variables.put(key, value);
+		}
+	}
 
-    public static void clearSession() {
-        ViewManager.clearResources();
-        PresenterResolver.clearResources();
-        EventBus.getInstance().clear();
-        ControllerRegistry.getInstance().clearRegistries();
-        clearAllVariables();
-    }
+	public static Object getVariable(String key) {
+		if (instance.get() != null) {
+			return instance.get().variables.get(key);
+		}
+		return null;
+	}
 
-    static void clearAllVariables() {
-        if (instance.get() != null) {
-            instance.get().variables.clear();
-        }
+	public static void removeVariable(String key) {
+		if (instance.get() != null) {
+			instance.get().variables.remove(key);
+		}
+	}
 
-    }
-    private static SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
-            "MM/dd/yyyy hh:mm a");
-    private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
-            "MM/dd/yyyy");
-    private static SimpleDateFormat df = new SimpleDateFormat(
-            "EEE MMM dd, hh:mm aa");
+	public static void clearSession() {
+		ViewManager.clearResources();
+		PresenterResolver.clearResources();
+		EventBus.getInstance().clear();
+		ControllerRegistry.getInstance().clearRegistries();
+		clearAllVariables();
+	}
 
-    public static String formatDateTime(Date date) {
-        if (date == null) {
-            return "";
-        }
-        return simpleDateTimeFormat.format(date);
-    }
+	static void clearAllVariables() {
+		if (instance.get() != null) {
+			instance.get().variables.clear();
+		}
 
-    public static String formatDate(Date date) {
-        if (date == null) {
-            return "";
-        }
-        return simpleDateFormat.format(date);
-    }
+	}
 
-    public static String getDateFormat() {
-        return "MM/dd/yyyy";
-    }
+	private static SimpleDateFormat simpleDateTimeFormat = new SimpleDateFormat(
+			"MM/dd/yyyy hh:mm a");
+	private static SimpleDateFormat simpleDateFormat = new SimpleDateFormat(
+			"MM/dd/yyyy");
+	private static SimpleDateFormat df = new SimpleDateFormat(
+			"EEE MMM dd, hh:mm aa");
 
-    public static String getDateTimeFormat() {
-        return "MM/dd/yyyy hh:mm a";
-    }
+	public static String formatDateTime(Date date) {
+		if (date == null) {
+			return "";
+		}
+		return simpleDateTimeFormat.format(date);
+	}
 
-    public static String formatDateToHumanRead(Date date) {
-        if (date == null) {
-            return "";
-        }
-        return df.format(date);
+	public static String formatDate(Date date) {
+		if (date == null) {
+			return "";
+		}
+		return simpleDateFormat.format(date);
+	}
 
-    }
+	public static String getDateFormat() {
+		return "MM/dd/yyyy";
+	}
 
-    public static void addFragment(String fragement) {
-        ((MainWindowContainer) getApplication().getMainWindow()).addFragement(fragement);
-    }
+	public static String getDateTimeFormat() {
+		return "MM/dd/yyyy hh:mm a";
+	}
+
+	public static String formatDateToHumanRead(Date date) {
+		if (date == null) {
+			return "";
+		}
+		return df.format(date);
+
+	}
+
+	public static void addFragment(String fragement) {
+		((MainWindowContainer) getApplication().getMainWindow())
+				.addFragement(fragement);
+	}
 }
