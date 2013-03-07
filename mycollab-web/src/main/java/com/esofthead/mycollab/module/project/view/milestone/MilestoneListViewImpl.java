@@ -139,7 +139,8 @@ public class MilestoneListViewImpl extends AbstractView implements
 						final SimpleMilestone milestone = tableItem
 								.getBeanByIndex(itemId);
 						ProjectUserLink b = new ProjectUserLink(milestone
-								.getOwner(), milestone.getOwnerFullName());
+								.getOwner(), milestone.getOwnerFullName(),
+								false);
 						return b;
 
 					}
