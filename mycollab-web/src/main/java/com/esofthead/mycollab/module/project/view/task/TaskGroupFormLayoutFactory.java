@@ -84,7 +84,7 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("percentageComplete")) {
 				informationLayout.addComponent(field, "Progress", 0, 3);
 			} else if (propertyId.equals("numOpenTasks")) {
-				informationLayout.addComponent(field, "% Task Complete", 1, 3);
+				informationLayout.addComponent(field, "Number of open tasks", 1, 3);
 			}
 		}
 	}

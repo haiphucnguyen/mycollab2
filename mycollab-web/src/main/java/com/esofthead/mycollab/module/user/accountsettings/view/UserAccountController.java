@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileEditPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserAddPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
@@ -57,6 +58,23 @@ public class UserAccountController implements IController {
 						presenter.go(container,
 								new ProfileScreenData.UploadPhoto(
 										(byte[]) event.getData()));
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ProfileEvent.GotoProfileView>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ProfileEvent.GotoProfileView.class;
+					}
+
+					@Override
+					public void handle(ProfileEvent.GotoProfileView event) {
+						ProfilePresenter presenter = PresenterResolver
+								.getPresenter(ProfilePresenter.class);
+						presenter.go(container, null);
 					}
 				});
 	}
