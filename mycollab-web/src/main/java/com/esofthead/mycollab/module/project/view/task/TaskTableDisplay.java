@@ -18,7 +18,10 @@ import com.esofthead.mycollab.vaadin.ui.table.BeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Embedded;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
@@ -43,6 +46,8 @@ public class TaskTableDisplay extends
 				final SimpleTask task = TaskTableDisplay.this
 						.getBeanByIndex(itemId);
 
+				HorizontalLayout taskName = new HorizontalLayout();
+
 				ButtonLink b = new ButtonLink(task.getTaskname(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
@@ -58,8 +63,10 @@ public class TaskTableDisplay extends
 				if (StringUtil.isNotNullOrEmpty(task.getPriority())) {
 					ThemeResource iconPriority = TaskPriorityComboBox
 							.getIconResourceByPriority(task.getPriority());
-
-					b.setIcon(iconPriority);
+					Embedded icon = new Embedded(null, iconPriority);
+					taskName.addComponent(icon);
+					taskName.setComponentAlignment(icon,
+							Alignment.MIDDLE_CENTER);
 				}
 
 				if (task.getPercentagecomplete() != null
@@ -77,7 +84,11 @@ public class TaskTableDisplay extends
 						b.addStyleName(UIConstants.LINK_OVERDUE);
 					}
 				}
-				return b;
+				b.setWidth("100%");
+				taskName.addComponent(b);
+				taskName.setExpandRatio(b, 1.0f);
+				taskName.setWidth("100%");
+				return taskName;
 
 			}
 		});

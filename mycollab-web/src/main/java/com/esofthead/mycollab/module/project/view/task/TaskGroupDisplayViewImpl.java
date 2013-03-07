@@ -36,7 +36,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 
 	private void constructHeader() {
 		HorizontalLayout header = new HorizontalLayout();
-		header.setMargin(true);
+		header.setMargin(true, false, false, false);
 		header.setSpacing(true);
 		header.setWidth("100%");
 		taskGroupSelection = new PopupButton("Active Tasks");

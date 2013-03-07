@@ -28,6 +28,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
@@ -81,20 +82,23 @@ public class BugTrendReportWidget extends
 
 	@Override
 	protected ComponentContainer createLegendBox() {
+		CustomLayout boxWrapper = new CustomLayout("centerContent");
 		CssLayout mainLayout = new CssLayout();
 		mainLayout.addStyleName("border-box");
-		mainLayout.setWidth("100%");
+		mainLayout.setSizeUndefined();
 		for (int i = 0; i < xyDataSet.getSeriesCount(); i++) {
 			HorizontalLayout layout = new HorizontalLayout();
 			layout.setMargin(false, false, false, true);
 			layout.addStyleName("inline-block");
-			Comparable key = (Comparable) xyDataSet.getSeriesKey(i);
-			String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #" + GenericChartWrapper.CHART_COLOR_STR[i % GenericChartWrapper.CHART_COLOR_STR.length] + "\" />";
+			Comparable key = xyDataSet.getSeriesKey(i);
+			String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #"
+					+ GenericChartWrapper.CHART_COLOR_STR[i
+							% GenericChartWrapper.CHART_COLOR_STR.length]
+					+ "\" />";
 			Label lblCircle = new Label(color);
 			lblCircle.setContentMode(Label.CONTENT_XHTML);
-			
-			Button btnLink = new Button(key + "",
-					new Button.ClickListener() {
+
+			Button btnLink = new Button(key + "", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
@@ -109,7 +113,9 @@ public class BugTrendReportWidget extends
 			layout.setSizeUndefined();
 			mainLayout.addComponent(layout);
 		}
-		return mainLayout;
+		boxWrapper.setWidth("100%");
+		boxWrapper.addComponent(mainLayout, "centerContent");
+		return boxWrapper;
 	}
 
 }

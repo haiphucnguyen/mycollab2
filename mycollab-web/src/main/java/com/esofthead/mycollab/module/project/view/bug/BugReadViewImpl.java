@@ -217,6 +217,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 
 				HorizontalLayout headerRight = new HorizontalLayout();
 				headerRight.addComponent(createAccountBtn);
+				headerRight.setMargin(true);
 				taskListAddLayout.addHeaderRight(headerRight);
 
 				HorizontalLayout topPanel = new HorizontalLayout();

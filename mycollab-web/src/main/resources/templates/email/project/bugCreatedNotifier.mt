@@ -35,7 +35,7 @@
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
-									<td colspan="3">$bug.description</td>
+									<td colspan="3">$!bug.description</td>
 								</tr>
 								<tr>
 									<td style="text-align: right;">Status:&nbsp;</td>

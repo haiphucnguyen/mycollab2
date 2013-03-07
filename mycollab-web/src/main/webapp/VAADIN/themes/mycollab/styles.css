@@ -262,7 +262,7 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 }
 
 .v-button-link.v-button-wordWrap {
-	width: 100%;
+ 	width: 100%;
 }
 
 .v-button-link.no-margin {
@@ -2443,14 +2443,21 @@ div.v-lazyloadingwrapper-loading {
 /* End Clickable Label */
 
 /* Border Box */
-.v-csslayout.border-box>.v-csslayout-margin {
+.v-csslayout.border-box {
+	max-width: 400px;
+	margin: 0 auto;
+}
+.v-csslayout.border-box >.v-csslayout-margin {
 	border: 1px solid #444;
+	padding-right: 5px;
 }
 
 .border-box .inline-block {
 	display: inline-block;
 }
 /* End Border Box */
+
+/* Filter Select */
 .v-filterselect .v-icon {
 	float: left;
 	margin-top: 3px !important;
@@ -2460,3 +2467,12 @@ div.v-lazyloadingwrapper-loading {
 	margin-left: 0;
 	margin-top: 2px;
 }
+/* End Filter Select */
+
+/* H2 Popup Button */
+.v-popupbutton.h2 .v-button-wrap .v-button-caption {
+	font-size: 14px;
+	font-weight: bold;
+	color: rgb(34,34,34);
+}
+/* End H2 Popup Button */
