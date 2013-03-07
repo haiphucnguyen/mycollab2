@@ -634,13 +634,19 @@ public class CrmController implements IController {
 					public void handle(OpportunityEvent.GotoList event) {
 						OpportunityListPresenter presenter = PresenterResolver
 								.getPresenter(OpportunityListPresenter.class);
-						OpportunitySearchCriteria searchCriteria = new OpportunitySearchCriteria();
-						searchCriteria.setSaccountid(new NumberSearchField(
-								SearchField.AND, AppContext.getAccountId()));
+						OpportunitySearchCriteria searchCriteria;
+						if (event.getData() != null) {
+							searchCriteria = (OpportunitySearchCriteria) event.getData();
+						} else {
+							searchCriteria = new OpportunitySearchCriteria();
+							searchCriteria.setSaccountid(new NumberSearchField(
+									SearchField.AND, AppContext.getAccountId()));
+						}
+						
 						presenter
-								.go(container,
-										new ScreenData.Search<OpportunitySearchCriteria>(
-												searchCriteria));
+						.go(container,
+								new ScreenData.Search<OpportunitySearchCriteria>(
+										searchCriteria));
 					}
 				});
 

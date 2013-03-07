@@ -332,6 +332,7 @@
                     <warName>root</warName>
                 </configuration>
             </plugin>
+            <!-- 
             <plugin>
                 <groupId>com.vaadin</groupId>
                 <artifactId>vaadin-maven-plugin</artifactId>
@@ -363,6 +364,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
             <plugin>
                 <artifactId>maven-antrun-plugin</artifactId>
                 <version>1.7</version>

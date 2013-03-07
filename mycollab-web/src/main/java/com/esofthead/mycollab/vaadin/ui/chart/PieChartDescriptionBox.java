@@ -17,7 +17,7 @@ public class PieChartDescriptionBox {
 
 	@SuppressWarnings("rawtypes")
 	public static ComponentContainer createLegendBox(
-			DefaultPieDataset pieDataSet) {
+			final PieChartWrapper pieChartHost, DefaultPieDataset pieDataSet) {
 		CustomLayout boxWrapper = new CustomLayout("centerContent");
 		CssLayout mainLayout = new CssLayout();
 		mainLayout.addStyleName("border-box");
@@ -45,6 +45,12 @@ public class PieChartDescriptionBox {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
+							String caption = event.getButton().getCaption();
+							if (caption.indexOf("(") > -1) {
+								String keyStatus = caption.substring(0,
+										caption.indexOf("("));
+								pieChartHost.onClickedDescription(keyStatus);
+							}
 						}
 					});
 			btnLink.addStyleName("link");
@@ -59,5 +65,4 @@ public class PieChartDescriptionBox {
 		boxWrapper.addComponent(mainLayout, "centerContent");
 		return boxWrapper;
 	}
-
 }

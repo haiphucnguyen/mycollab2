@@ -179,6 +179,8 @@ public class ActivityStreamComponent extends Depot {
 																					.getProjectId())))));
 						}
 					});
+			projectLink.setIcon(ProjectResources
+					.getIconResource16size(ProjectContants.PROJECT));
 			header.addComponent(projectLink);
 			projectLink.setStyleName("link");
 			layout.addComponent(header);

@@ -51,7 +51,7 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 		try {
 			originalImage = ImageIO.read(new ByteArrayInputStream(imageData));
 		} catch (IOException e) {
-			throw new MyCollabException("Invalid image type", e);
+			throw new MyCollabException("Invalid image type");
 		}
 		VerticalLayout leftColumn = new VerticalLayout();
 		Panel currentPhotoBox = new Panel();
@@ -82,8 +82,8 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 			}
 
 		});
-		currentPhotoBox.setWidth("500px");
-		currentPhotoBox.setHeight("500px");
+		currentPhotoBox.setWidth("600px");
+		currentPhotoBox.setHeight("600px");
 		currentPhotoBox.getContent().setSizeUndefined();
 		currentPhotoBox.addComponent(cropField);
 
@@ -138,7 +138,7 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 	private void displayPreviewImage() {
 		if (scaleImageData != null && scaleImageData.length > 0) {
 			ByteArrayImageResource previewResource = new ByteArrayImageResource(
-					scaleImageData, "image/jpg");
+					scaleImageData, "image/png");
 			previewImage.setIcon(previewResource);
 		}
 	}

@@ -35,7 +35,7 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends
 		final JFreeChart chart = ChartFactory.createPieChart3D(title, // chart
 																		// title
 				pieDataSet, // data
-				true, // include legend
+				false, // include legend
 				true, // tooltips?
 				false // URLs?
 				);
@@ -43,7 +43,6 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends
 		// NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
 
 		// set the background color for the chart...
-		chart.removeLegend();
 		final PiePlot3D plot = (PiePlot3D) chart.getPlot();
 		plot.setStartAngle(290);
 		plot.setBackgroundPaint(Color.white);
@@ -62,4 +61,6 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends
 	}
 
 	protected abstract DefaultPieDataset createDataset();
+	
+	protected abstract void onClickedDescription(String key);
 }

@@ -9,9 +9,14 @@ import java.util.List;
 import org.jfree.data.general.DefaultPieDataset;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.crm.CrmDataTypeFactory;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartDescriptionBox;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.web.AppContext;
@@ -26,7 +31,11 @@ public class OpportunityLeadSourceDashboard extends
 		PieChartWrapper<OpportunitySearchCriteria> {
 
 	public OpportunityLeadSourceDashboard() {
-		super("Deals By Sources", 530, 350);
+		this(390, 278);
+	}
+	
+	public OpportunityLeadSourceDashboard(int width, int height) {
+		super("Deals By Sources", width, height); //530, 350
 	}
 
 	@Override
@@ -60,6 +69,17 @@ public class OpportunityLeadSourceDashboard extends
 
 	@Override
 	protected ComponentContainer createLegendBox() {
-		return PieChartDescriptionBox.createLegendBox(pieDataSet);
+		return PieChartDescriptionBox.createLegendBox(this, pieDataSet);
+	}
+	
+	@Override
+	protected void onClickedDescription(String key) {
+		OpportunitySearchCriteria searchCriteria = new OpportunitySearchCriteria();
+		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		searchCriteria.setLeadSources(new SetSearchField<String>(
+				SearchField.AND, new String[] { key }));
+		EventBus.getInstance().fireEvent(
+				new OpportunityEvent.GotoList(this, searchCriteria));
 	}
 }
