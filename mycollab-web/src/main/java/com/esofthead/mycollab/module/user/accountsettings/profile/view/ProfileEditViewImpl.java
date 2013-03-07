@@ -86,6 +86,9 @@ public class ProfileEditViewImpl extends AbstractView implements
 					EventBus.getInstance().fireEvent(
 							new ProfileEvent.GotoUploadPhoto(
 									ProfileEditViewImpl.this, imageData));
+				} else {
+					throw new MyCollabException(
+							"Upload file does not have valid image format. The supported formats are jpg/png");
 				}
 			}
 		};
