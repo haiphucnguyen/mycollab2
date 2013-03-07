@@ -96,8 +96,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 	public void gotoMessageList() {
 		this.select(1);
 		this.addLink(new Button("Messages"));
-		AppContext.addFragment("project/message/list/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/message/list/"
+						+ UrlEncodeDecoder.encode(project.getId()),
+				"Message List");
 	}
 
 	public void gotoMessage(Message message) {
@@ -113,16 +115,21 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		}));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(message.getTitle()));
-		AppContext.addFragment("project/message/preview/"
-				+ UrlEncodeDecoder.encode(project.getId() + "/"
-						+ message.getId()));
+		AppContext.addFragment(
+				"project/message/preview/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ message.getId()), "Preview Message: "
+						+ message.getTitle());
 	}
 
 	public void gotoRiskList() {
 		this.select(1);
 		this.addLink(new Button("Risks"));
-		AppContext.addFragment("project/risk/list/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext
+				.addFragment(
+						"project/risk/list/"
+								+ UrlEncodeDecoder.encode(project.getId()),
+						"Risk List");
 	}
 
 	public void gotoRiskRead(Risk risk) {
@@ -130,10 +137,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Risks", new GotoRiskListListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(risk.getRiskname()));
-		AppContext
-				.addFragment("project/risk/preview/"
+		AppContext.addFragment(
+				"project/risk/preview/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ risk.getId()));
+								+ risk.getId()),
+				"Preview Risk: " + risk.getRiskname());
 	}
 
 	public void gotoRiskEdit(final Risk risk) {
@@ -151,10 +159,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 					}
 				}));
 		this.addLink(new Button("Edit"));
-		AppContext
-				.addFragment("project/risk/edit/"
+		AppContext.addFragment(
+				"project/risk/edit/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ risk.getId()));
+								+ risk.getId()),
+				"Edit Risk: " + risk.getRiskname());
 	}
 
 	public void gotoRiskAdd() {
@@ -162,8 +171,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Risks", new GotoRiskListListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button("Add"));
-		AppContext.addFragment("project/risk/add/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/risk/add/" + UrlEncodeDecoder.encode(project.getId()),
+				"Risk Add");
 	}
 
 	private static class GotoRiskListListener implements Button.ClickListener {
@@ -179,8 +189,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 	public void gotoMilestoneList() {
 		this.select(1);
 		this.addLink(new Button("Milestones"));
-		AppContext.addFragment("project/milestone/list/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/milestone/list/"
+						+ UrlEncodeDecoder.encode(project.getId()),
+				"Milestone List");
 	}
 
 	public void gotoMilestoneRead(Milestone milestone) {
@@ -188,9 +200,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Milestones", new GotoMilestoneListListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(milestone.getName()));
-		AppContext.addFragment("project/milestone/preview/"
-				+ UrlEncodeDecoder.encode(project.getId() + "/"
-						+ milestone.getId()));
+		AppContext.addFragment(
+				"project/milestone/preview/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ milestone.getId()), "Preview Milestone: "
+						+ milestone.getName());
 	}
 
 	public void gotoMilestoneEdit(final Milestone milestone) {
@@ -209,9 +223,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 					}
 				}));
 		this.addLink(new Button("Edit"));
-		AppContext.addFragment("project/milestone/edit/"
-				+ UrlEncodeDecoder.encode(project.getId() + "/"
-						+ milestone.getId()));
+		AppContext.addFragment(
+				"project/milestone/edit/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ milestone.getId()), "Edit Milestone: "
+						+ milestone.getName());
 	}
 
 	public void gotoMilestoneAdd() {
@@ -219,8 +235,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Milestones", new GotoMilestoneListListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button("Add"));
-		AppContext.addFragment("project/milestone/add/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/milestone/add/"
+						+ UrlEncodeDecoder.encode(project.getId()),
+				"Add Milestone");
 	}
 
 	private static class GotoMilestoneListListener implements
@@ -237,8 +255,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 	public void gotoProblemList() {
 		this.select(1);
 		this.addLink(new Button("Problems"));
-		AppContext.addFragment("project/problem/list/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/problem/list/"
+						+ UrlEncodeDecoder.encode(project.getId()),
+				"Problem List");
 	}
 
 	public void gotoProblemRead(Problem problem) {
@@ -246,9 +266,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Problems", new GotoProblemListListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(problem.getIssuename()));
-		AppContext.addFragment("project/problem/preview/"
-				+ UrlEncodeDecoder.encode(project.getId() + "/"
-						+ problem.getId()));
+		AppContext.addFragment(
+				"project/problem/preview/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ problem.getId()), "Preview Problem: "
+						+ problem.getIssuename());
 	}
 
 	public void gotoProblemEdit(final Problem problem) {
@@ -269,9 +291,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				}));
 		this.setLinkEnabled(true, 3);
 		this.addLink(new Button("Edit"));
-		AppContext.addFragment("project/problem/edit/"
-				+ UrlEncodeDecoder.encode(project.getId() + "/"
-						+ problem.getId()));
+		AppContext.addFragment(
+				"project/problem/edit/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ problem.getId()),
+				"Edit Problem: " + problem.getIssuename());
 	}
 
 	public void gotoProblemAdd() {
@@ -279,8 +303,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Problems", new GotoProblemListListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button("Add"));
-		AppContext.addFragment("project/problem/add/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/problem/add/"
+						+ UrlEncodeDecoder.encode(project.getId()),
+				"New Problem");
 	}
 
 	private static class GotoProblemListListener implements
@@ -297,8 +323,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 	public void gotoTaskDashboard() {
 		this.select(1);
 		this.addLink(new Button("Task Assignments"));
-		AppContext.addFragment("project/task/dashboard/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/task/dashboard/"
+						+ UrlEncodeDecoder.encode(project.getId()),
+				"Task Dashboard");
 	}
 
 	public void gotoTaskListReorder() {
@@ -308,7 +336,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button("Task Group: Reorder"));
 		AppContext.addFragment("project/task/dashboard/reorder/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+				+ UrlEncodeDecoder.encode(project.getId()),
+				"ReOrder Task Group");
 	}
 
 	public void gotoTaskGroupAdd() {
@@ -317,8 +346,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				new GotoTaskAssignmentDashboard()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button("Task Group: Add"));
-		AppContext.addFragment("project/task/taskgroup/add/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/task/taskgroup/add/"
+						+ UrlEncodeDecoder.encode(project.getId()),
+				"New TaskGroup");
 	}
 
 	public void gotoTaskGroupRead(TaskList taskList) {
@@ -327,9 +358,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				new GotoTaskAssignmentDashboard()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink("Task Group: " + taskList.getName()));
-		AppContext.addFragment("project/task/taskgroup/preview/"
-				+ UrlEncodeDecoder.encode(project.getId() + "/"
-						+ taskList.getId()));
+		AppContext.addFragment(
+				"project/task/taskgroup/preview/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ taskList.getId()),
+				"TaskGroup: " + taskList.getName());
 	}
 
 	public void gotoTaskGroupEdit(final TaskList taskList) {
@@ -351,9 +384,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				}));
 		this.setLinkEnabled(true, 3);
 		this.addLink(new Button("Edit"));
-		AppContext.addFragment("project/task/taskgroup/edit/"
-				+ UrlEncodeDecoder.encode(project.getId() + "/"
-						+ taskList.getId()));
+		AppContext.addFragment(
+				"project/task/taskgroup/edit/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ taskList.getId()), "Edit TaskGroup: "
+						+ taskList.getName());
 	}
 
 	public void gotoTaskAdd() {
@@ -362,8 +397,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				new GotoTaskAssignmentDashboard()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button("Task: Add"));
-		AppContext.addFragment("project/task/task/add/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/task/task/add/"
+						+ UrlEncodeDecoder.encode(project.getId()), "New Task");
 	}
 
 	public void gotoTaskRead(Task task) {
@@ -372,10 +408,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				new GotoTaskAssignmentDashboard()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink("Task: " + task.getTaskname()));
-		AppContext
-				.addFragment("project/task/task/preview/"
+		AppContext.addFragment(
+				"project/task/task/preview/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ task.getId()));
+								+ task.getId()), "Task: " + task.getTaskname());
 	}
 
 	public void gotoTaskEdit(final Task task) {
@@ -385,6 +421,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink("Task: " + task.getTaskname(),
 				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
 					@Override
 					public void buttonClick(ClickEvent event) {
 						EventBus.getInstance().fireEvent(
@@ -393,13 +431,15 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				}));
 		this.setLinkEnabled(true, 3);
 		this.addLink(new Button("Edit"));
-		AppContext
-				.addFragment("project/task/task/edit/"
+		AppContext.addFragment(
+				"project/task/task/edit/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ task.getId()));
+								+ task.getId()),
+				"Edit Task: " + task.getTaskname());
 	}
 
 	public class GotoTaskAssignmentDashboard implements Button.ClickListener {
+		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void buttonClick(ClickEvent event) {
@@ -411,8 +451,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 	public void gotoBugDashboard() {
 		this.select(1);
 		this.addLink(new Button("Bugs"));
-		AppContext.addFragment("project/bug/dashboard/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/bug/dashboard/"
+						+ UrlEncodeDecoder.encode(project.getId()),
+				"Bug Dashboard");
 	}
 
 	public void gotoBugList() {
@@ -420,8 +462,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button("List"));
-		AppContext.addFragment("project/bug/list/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/bug/list/" + UrlEncodeDecoder.encode(project.getId()),
+				"Bug List");
 	}
 
 	public void gotoBugAdd() {
@@ -429,8 +472,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button("Add"));
-		AppContext.addFragment("project/bug/add/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/bug/add/" + UrlEncodeDecoder.encode(project.getId()),
+				"New Bug");
 	}
 
 	public void gotoBugEdit(final Bug bug) {
@@ -448,8 +492,12 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 					}
 				}));
 		this.addLink(new Button("Edit"));
-		AppContext.addFragment("project/bug/edit/"
-				+ UrlEncodeDecoder.encode(project.getId() + "/" + bug.getId()));
+		AppContext
+				.addFragment(
+						"project/bug/edit/"
+								+ UrlEncodeDecoder.encode(project.getId() + "/"
+										+ bug.getId()),
+						"Edit Bug: " + bug.getSummary());
 	}
 
 	public void gotoBugRead(Bug bug) {
@@ -457,8 +505,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(bug.getSummary()));
-		AppContext.addFragment("project/bug/preview/"
-				+ UrlEncodeDecoder.encode(project.getId() + "/" + bug.getId()));
+		AppContext.addFragment(
+				"project/bug/preview/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ bug.getId()),
+				"Preview Bug: " + bug.getSummary());
 	}
 
 	public void gotoVersionList() {
@@ -466,8 +517,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button("Versions"));
-		AppContext.addFragment("project/bug/version/list/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/bug/version/list/"
+						+ UrlEncodeDecoder.encode(project.getId()),
+				"Version List");
 	}
 
 	public void gotoVersionAdd() {
@@ -477,8 +530,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Versions", new GotoVersionListener()));
 		this.setLinkEnabled(true, 3);
 		this.addLink(new Button("Add"));
-		AppContext.addFragment("project/bug/version/add/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/bug/version/add/"
+						+ UrlEncodeDecoder.encode(project.getId()),
+				"New Version");
 	}
 
 	public void gotoVersionEdit(final Version version) {
@@ -499,9 +554,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 					}
 				}));
 		this.addLink(new Button("Edit"));
-		AppContext.addFragment("project/bug/version/edit/"
-				+ UrlEncodeDecoder.encode(project.getId() + "/"
-						+ version.getId()));
+		AppContext.addFragment(
+				"project/bug/version/edit/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ version.getId()),
+				"Edit Version: " + version.getVersionname());
 	}
 
 	public void gotoVersionRead(Version version) {
@@ -511,9 +568,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Versions", new GotoVersionListener()));
 		this.setLinkEnabled(true, 3);
 		this.addLink(generateBreadcrumbLink(version.getVersionname()));
-		AppContext.addFragment("project/bug/version/preview/"
-				+ UrlEncodeDecoder.encode(project.getId() + "/"
-						+ version.getId()));
+		AppContext.addFragment(
+				"project/bug/version/preview/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ version.getId()), "Preview Version: "
+						+ version.getVersionname());
 	}
 
 	private class GotoVersionListener implements Button.ClickListener {
@@ -531,8 +590,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button("Components"));
-		AppContext.addFragment("project/bug/component/list/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/bug/component/list/"
+						+ UrlEncodeDecoder.encode(project.getId()),
+				"Component List");
 	}
 
 	public void gotoComponentAdd() {
@@ -542,8 +603,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Components", new GotoComponentListener()));
 		this.setLinkEnabled(true, 3);
 		this.addLink(new Button("Add"));
-		AppContext.addFragment("project/bug/component/add/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/bug/component/add/"
+						+ UrlEncodeDecoder.encode(project.getId()),
+				"New Component");
 	}
 
 	public void gotoComponentEdit(final Component component) {
@@ -565,9 +628,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				}));
 		this.setLinkEnabled(true, 4);
 		this.addLink(new Button("Edit"));
-		AppContext.addFragment("project/bug/component/edit/"
-				+ UrlEncodeDecoder.encode(project.getId() + "/"
-						+ component.getId()));
+		AppContext.addFragment(
+				"project/bug/component/edit/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ component.getId()), "Edit Component: "
+						+ component.getComponentname());
 	}
 
 	public void gotoComponentRead(Component component) {
@@ -576,9 +641,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button("Components", new GotoComponentListener()));
 		this.addLink(generateBreadcrumbLink(component.getComponentname()));
-		AppContext.addFragment("project/bug/component/preview/"
-				+ UrlEncodeDecoder.encode(project.getId() + "/"
-						+ component.getId()));
+		AppContext.addFragment(
+				"project/bug/component/preview/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ component.getId()), "Preview Component: "
+						+ component.getComponentname());
 	}
 
 	private static class GotoComponentListener implements Button.ClickListener {
@@ -611,8 +678,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 	public void gotoProjectEdit() {
 		this.select(1);
 		this.addLink(new Button("Edit"));
-		AppContext.addFragment("project/edit/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/edit/" + UrlEncodeDecoder.encode(project.getId()),
+				"Edit Project: " + project.getName());
 	}
 
 	@Override
