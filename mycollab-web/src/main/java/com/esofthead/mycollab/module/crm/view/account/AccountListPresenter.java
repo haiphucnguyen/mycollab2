@@ -239,6 +239,6 @@ public class AccountListPresenter extends CrmGenericPresenter<AccountListView>
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         super.onGo(container, data);
         doSearch((AccountSearchCriteria) data.getParams());
-        AppContext.addFragment("crm/account/list");
+        AppContext.addFragment("crm/account/list", "Account List");
     }
 }

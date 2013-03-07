@@ -281,6 +281,6 @@ public class AppContext implements TransactionListener, Serializable {
 		MainWindowContainer mainWindow = (MainWindowContainer) getApplication()
 				.getMainWindow();
 		mainWindow.addFragement(fragement);
-		mainWindow.setCaption("MyCollab: " + windowTitle);
+		mainWindow.setCaption(windowTitle + " [MyCollab]");
 	}
 }

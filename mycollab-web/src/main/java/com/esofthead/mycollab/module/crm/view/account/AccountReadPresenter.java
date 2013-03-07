@@ -277,7 +277,8 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 				super.onGo(container, data);
 				view.previewItem((SimpleAccount) account);
 				AppContext.addFragment("crm/account/preview/"
-						+ UrlEncodeDecoder.encode(account.getId()));
+						+ UrlEncodeDecoder.encode(account.getId()),
+						"Preview account: " + account.getAccountname());
 			} else {
 				AppContext
 						.getApplication()
