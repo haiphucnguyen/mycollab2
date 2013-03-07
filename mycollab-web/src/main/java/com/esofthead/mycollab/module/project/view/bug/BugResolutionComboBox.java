@@ -12,7 +12,9 @@ import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
  * @author haiphucnguyen
  */
 public class BugResolutionComboBox extends ValueComboBox {
-    public BugResolutionComboBox() {
+	private static final long serialVersionUID = 1L;
+
+	public BugResolutionComboBox() {
         super(false, ProjectDataTypeFactory.getBugResolutionList());
         
     }

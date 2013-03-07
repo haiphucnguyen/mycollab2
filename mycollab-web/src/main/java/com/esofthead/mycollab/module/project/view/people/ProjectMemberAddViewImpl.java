@@ -154,6 +154,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 					@Override
 					public void valueChange(Property.ValueChangeEvent event) {
 						user.setProjectroleid((Integer) roleComboBox.getValue());
+						user.setIsadmin(Boolean.FALSE);
 					}
 				});
 
@@ -175,6 +176,11 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 						} else {
 							if (roleComboBox.getContainerPropertyIds().size() > 0) {
 								layout.addComponent(roleLayout);
+
+								if (user.getProjectroleid() != null) {
+									roleComboBox.setValue(user
+											.getProjectroleid());
+								}
 							} else {
 								AppContext
 										.getApplication()

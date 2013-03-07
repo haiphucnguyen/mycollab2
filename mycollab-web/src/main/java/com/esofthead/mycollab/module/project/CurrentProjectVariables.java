@@ -26,15 +26,15 @@ public class CurrentProjectVariables {
 		// get member permission
 		ProjectMemberService prjMemberService = AppContext
 				.getSpringBean(ProjectMemberService.class);
-		SimpleProjectMember prjMember = prjMemberService
-				.findMemberByUsername(AppContext.getUsername(), project.getId());
+		SimpleProjectMember prjMember = prjMemberService.findMemberByUsername(
+				AppContext.getUsername(), project.getId());
 		if (prjMember != null) {
 			if (prjMember.getIsadmin() != null
 					&& prjMember.getIsadmin() == Boolean.FALSE
 					&& prjMember.getProjectroleid() != null) {
 				ProjectRolePermissionExample ex = new ProjectRolePermissionExample();
 				ex.createCriteria()
-						.andIdEqualTo(prjMember.getProjectroleid())
+						.andRoleidEqualTo(prjMember.getProjectroleid())
 						.andProjectidEqualTo(
 								CurrentProjectVariables.getProjectId());
 				ProjectRolePermissionMapper rolePermissionMapper = AppContext

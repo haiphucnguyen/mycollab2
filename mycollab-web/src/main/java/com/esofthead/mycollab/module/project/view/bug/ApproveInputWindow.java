@@ -38,8 +38,8 @@ import com.vaadin.ui.Window;
  * @author haiphucnguyen
  */
 public class ApproveInputWindow extends Window {
-
-    private SimpleBug bug;
+	private static final long serialVersionUID = 1L;
+	private SimpleBug bug;
     private EditForm editForm;
     
     public ApproveInputWindow(SimpleBug bug) {
@@ -80,7 +80,9 @@ public class ApproveInputWindow extends Window {
                 layout.addComponent(controlsBtn);
                 
                 Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public void buttonClick(Button.ClickEvent event) {
                         ApproveInputWindow.this.close();
                     }
@@ -91,7 +93,9 @@ public class ApproveInputWindow extends Window {
 						Alignment.MIDDLE_LEFT);
                 
                 Button approveBtn = new Button("Approve & Close", new Button.ClickListener() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public void buttonClick(Button.ClickEvent event) {
                         //Save bug status and assignee
                         bug.setStatus(BugStatusConstants.CLOSE);
@@ -99,16 +103,20 @@ public class ApproveInputWindow extends Window {
                         bugService.updateWithSession(bug, AppContext.getUsername());
 
                         //Save comment
-                        Comment comment = new Comment();
-                        comment.setComment((String) commentArea.getValue());
-                        comment.setCreatedtime(new GregorianCalendar().getTime());
-                        comment.setCreateduser(AppContext.getUsername());
-                        comment.setSaccountid(AppContext.getAccountId());
-                        comment.setType(CommentTypeConstants.PRJ_BUG);
-                        comment.setTypeid(bug.getId());
+                        String commentValue = (String)commentArea.getValue();
+                        if (commentValue != null && !commentValue.trim().equals("")) {
+                        	Comment comment = new Comment();
+                            comment.setComment((String) commentArea.getValue());
+                            comment.setCreatedtime(new GregorianCalendar().getTime());
+                            comment.setCreateduser(AppContext.getUsername());
+                            comment.setSaccountid(AppContext.getAccountId());
+                            comment.setType(CommentTypeConstants.PRJ_BUG);
+                            comment.setTypeid(bug.getId());
+                            
+                            CommentService commentService = AppContext.getSpringBean(CommentService.class);
+                            commentService.saveWithSession(comment, AppContext.getUsername());
+                        }
                         
-                        CommentService commentService = AppContext.getSpringBean(CommentService.class);
-                        commentService.saveWithSession(comment, AppContext.getUsername());
                         ApproveInputWindow.this.close();
                         EventBus.getInstance().fireEvent(new BugEvent.GotoRead(ApproveInputWindow.this, bug.getId()));
                     }
