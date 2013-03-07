@@ -13,6 +13,7 @@ public class MyCollabApplication extends Application {
     private static final long serialVersionUID = 1L;
     private static Logger log = LoggerFactory
             .getLogger(MyCollabApplication.class);
+    
     private ViewManager viewManager;
 
     public MyCollabApplication() {

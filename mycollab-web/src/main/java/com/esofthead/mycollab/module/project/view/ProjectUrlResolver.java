@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.view;
 
-public class ProjectUrlResolver {
+import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
+
+public class ProjectUrlResolver extends UrlResolver {
 
 }
