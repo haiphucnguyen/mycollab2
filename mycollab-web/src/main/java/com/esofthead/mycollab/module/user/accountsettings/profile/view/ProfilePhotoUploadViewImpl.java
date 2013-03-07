@@ -48,6 +48,7 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 	@Override
 	public void editPhoto(final byte[] imageData) {
 		this.removeAllComponents();
+		log.debug("Receive avatar upload with size: " + imageData.length);
 		try {
 			originalImage = ImageIO.read(new ByteArrayInputStream(imageData));
 		} catch (IOException e) {
