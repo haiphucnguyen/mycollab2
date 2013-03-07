@@ -288,6 +288,10 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	height: 100%;
 }
 
+.v-button .v-button-caption {
+	line-height: 16px !important;
+}
+
 .h-sidebar-menu {
 	height: 30px;
 	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
