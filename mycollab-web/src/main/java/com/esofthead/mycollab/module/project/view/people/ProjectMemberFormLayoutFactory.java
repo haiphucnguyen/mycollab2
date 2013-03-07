@@ -8,7 +8,7 @@ import com.esofthead.mycollab.module.project.ui.components.ProjectUiUtils;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
-import com.vaadin.terminal.ThemeResource;
+import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -23,15 +23,16 @@ public abstract class ProjectMemberFormLayoutFactory implements
 	private static final long serialVersionUID = 1L;
 	private final String title;
 	private ProjectMemberInformationLayout userInformationLayout;
+	private Resource avatarRes;
 
-	public ProjectMemberFormLayoutFactory(String title) {
+	public ProjectMemberFormLayoutFactory(String title, Resource avatarRes) {
 		this.title = title;
+		this.avatarRes = avatarRes;
 	}
 
 	@Override
 	public Layout getLayout() {
-		AddViewLayout userAddLayout = new AddViewLayout(title,
-				new ThemeResource("icons/48/user/user.png"));
+		AddViewLayout userAddLayout = new AddViewLayout(title, avatarRes);
 
 		Layout topPanel = createTopPanel();
 		if (topPanel != null) {

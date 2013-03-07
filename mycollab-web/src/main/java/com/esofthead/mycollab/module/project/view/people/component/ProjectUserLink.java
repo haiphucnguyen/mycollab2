@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.view.people.component;
 
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.vaadin.ui.Button;
 
 public class ProjectUserLink extends Button {
@@ -18,6 +19,7 @@ public class ProjectUserLink extends Button {
 			}
 		});
 
+		this.setIcon(UserAvatarControlFactory.getResource(username, 16));
 		this.setStyleName("link");
 	}
 }
