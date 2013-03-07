@@ -86,6 +86,11 @@ ul {
 	vertical-align: top;
 }
 
+.v-button-link:active {
+	background-color: transparent;
+	border-radius: 0px;
+}
+
 .v-datefield-button {
 	height: 15px;
 }
