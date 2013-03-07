@@ -126,16 +126,18 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 		} else if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
 			bugWorkflowControl.removeAllComponents();
 			ButtonGroup navButton = new ButtonGroup();
-			navButton.addButton(new Button("Reopen",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+			Button reopenBtn = new Button("Reopen", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							AppContext.getApplication().getMainWindow()
-									.addWindow(new ReOpenWindow(bug));
-						}
-					}));
+				@Override
+				public void buttonClick(ClickEvent event) {
+					AppContext.getApplication().getMainWindow()
+							.addWindow(new ReOpenWindow(bug));
+				}
+			});
+			reopenBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			navButton.addButton(reopenBtn);
+
 			bugWorkflowControl.addComponent(navButton);
 		} else if (BugStatusConstants.TESTPENDING.equals(bug.getStatus())) {
 			bugWorkflowControl.removeAllComponents();
@@ -164,16 +166,17 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 		} else if (BugStatusConstants.WONFIX.equals(bug.getStatus())) {
 			bugWorkflowControl.removeAllComponents();
 			ButtonGroup navButton = new ButtonGroup();
-			navButton.addButton(new Button("Reopen",
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+			Button reopenBtn = new Button("Reopen", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
 
-						@Override
-						public void buttonClick(ClickEvent event) {
-							AppContext.getApplication().getMainWindow()
-									.addWindow(new ReOpenWindow(bug));
-						}
-					}));
+				@Override
+				public void buttonClick(ClickEvent event) {
+					AppContext.getApplication().getMainWindow()
+							.addWindow(new ReOpenWindow(bug));
+				}
+			});
+			reopenBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			navButton.addButton(reopenBtn);
 
 			bugWorkflowControl.addComponent(navButton);
 		}
@@ -222,7 +225,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 
 				HorizontalLayout topPanel = new HorizontalLayout();
 				topPanel.setSpacing(true);
-				topPanel.setMargin(true, false, true, true);
+				topPanel.setMargin(true);
 				topPanel.setWidth("100%");
 
 				HorizontalLayout buttonControls = new HorizontalLayout();
