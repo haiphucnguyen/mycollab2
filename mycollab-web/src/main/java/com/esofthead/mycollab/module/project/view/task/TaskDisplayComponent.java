@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
@@ -67,25 +68,23 @@ public class TaskDisplayComponent extends CssLayout {
 					"Description", 0, 0, 2, "100%", Alignment.TOP_RIGHT);
 			descLbl.setValue(taskList.getDescription());
 
-			layoutHelper.addComponent(new ProjectUserFormLinkField(
-					taskList.getOwner(), taskList
-					.getOwnerFullName()), "Responsible User", 0, 1,
+			layoutHelper.addComponent(
+					new ProjectUserFormLinkField(taskList.getOwner(), taskList
+							.getOwnerFullName()), "Responsible User", 0, 1,
 					Alignment.TOP_RIGHT);
 
-			DefaultFormViewFieldFactory.FormLinkViewField milestoneLink = new DefaultFormViewFieldFactory.FormLinkViewField(taskList.getMilestoneName(), new Button.ClickListener() {
-				
-				private static final long serialVersionUID = 1L;
+			DefaultFormViewFieldFactory.FormLinkViewField milestoneLink = new DefaultFormViewFieldFactory.FormLinkViewField(
+					taskList.getMilestoneName(), new Button.ClickListener() {
 
-				@Override
-				public void buttonClick(
-						Button.ClickEvent event) {
-					EventBus.getInstance()
-							.fireEvent(
-									new MilestoneEvent.GotoRead(
-											this,
-											taskList.getMilestoneid()));
-				}
-			});
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(Button.ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new MilestoneEvent.GotoRead(this, taskList
+											.getMilestoneid()));
+						}
+					});
 			layoutHelper.addComponent(milestoneLink, "Milestone", 1, 1,
 					Alignment.TOP_RIGHT);
 
@@ -173,6 +172,7 @@ public class TaskDisplayComponent extends CssLayout {
 	public void setSearchCriteria(TaskSearchCriteria criteria) {
 		this.criteria = criteria;
 		displayTasks();
+
 	}
 
 	private void displayTasks() {
@@ -188,17 +188,25 @@ public class TaskDisplayComponent extends CssLayout {
 		taskDisplay.setSearchCriteria(criteria);
 
 		// Update tasklist progress and number of open task/all task
-		taskNumberLbl.setValue("(" + (taskList.getNumOpenTasks() + 1) + "/"
-				+ (taskList.getNumAllTasks() + 1) + ")");
+		if (taskNumberLbl != null) {
+			taskNumberLbl.setValue("(" + (taskList.getNumOpenTasks() + 1) + "/"
+					+ (taskList.getNumAllTasks() + 1) + ")");
+		}
 
 		int newAllTasks = taskList.getNumAllTasks() + 1;
 		double newProgressTask = (taskList.getPercentageComplete() * taskList
 				.getNumAllTasks()) / newAllTasks;
-		taskListProgress.setValue(newProgressTask);
+		if (taskListProgress != null) {
+			taskListProgress.setValue(newProgressTask);
+		}
 	}
 
 	public void saveTaskSuccess(SimpleTask task) {
 		displayTasks();
+		if (!isDisplayTaskListInfo) {
+			EventBus.getInstance().fireEvent(
+					new TaskListEvent.GotoRead(this, taskList.getId()));
+		}
 	}
 
 	public void closeTaskAdd() {

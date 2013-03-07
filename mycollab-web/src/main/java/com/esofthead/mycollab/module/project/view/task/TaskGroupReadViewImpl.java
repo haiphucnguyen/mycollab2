@@ -23,6 +23,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -33,7 +34,6 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -102,23 +102,12 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 										.getOwnerFullName());
 					} else if (propertyId.equals("percentageComplete")) {
 						FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
-						ProgressIndicator progressField = new ProgressIndicator(
-								new Float(
-										taskList.getPercentageComplete() / 100));
-						progressField.setPollingInterval(1000 * 60 * 60 * 24);
-						progressField.setWidth("100px");
+						ProgressPercentageIndicator progressField = new ProgressPercentageIndicator(taskList
+								.getPercentageComplete());
 						fieldContainer.addComponentField(progressField);
 						return fieldContainer;
 					} else if (propertyId.equals("numOpenTasks")) {
 						FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
-						ProgressIndicator progressField = new ProgressIndicator(
-								new Float(1
-										- (float) taskList.getNumOpenTasks()
-										/ taskList.getNumAllTasks()));
-						progressField.setPollingInterval(1000 * 60 * 60 * 24);
-						progressField.setWidth("100px");
-						fieldContainer.addComponentField(progressField);
-
 						Label numTaskLbl = new Label("("
 								+ taskList.getNumOpenTasks() + "/"
 								+ taskList.getNumAllTasks() + ")");
