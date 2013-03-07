@@ -272,7 +272,15 @@ public class AppContext implements TransactionListener, Serializable {
 	}
 
 	public static void addFragment(String fragement) {
-		((MainWindowContainer) getApplication().getMainWindow())
-				.addFragement(fragement);
+		MainWindowContainer mainWindow = (MainWindowContainer) getApplication()
+				.getMainWindow();
+		mainWindow.addFragement(fragement);
+	}
+
+	public static void addFragment(String fragement, String windowTitle) {
+		MainWindowContainer mainWindow = (MainWindowContainer) getApplication()
+				.getMainWindow();
+		mainWindow.addFragement(fragement);
+		mainWindow.setCaption("MyCollab: " + windowTitle);
 	}
 }
