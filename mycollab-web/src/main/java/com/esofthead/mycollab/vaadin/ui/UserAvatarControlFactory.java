@@ -22,7 +22,7 @@ public class UserAvatarControlFactory {
 
 	}
 
-	private static Resource getResource(String username, int size) {
+	public static Resource getResource(String username, int size) {
 		Resource avatarRes = null;
 
 		if (StorageSetting.isFileStorage()) {

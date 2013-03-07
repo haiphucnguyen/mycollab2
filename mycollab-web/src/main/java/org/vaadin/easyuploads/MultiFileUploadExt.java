@@ -34,20 +34,28 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
     private CssLayout progressBars = new CssLayout();
     private CssLayout uploads = new CssLayout();
     private String uploadButtonCaption = "Attach File(s)";
+    private MultiUpload upload;
 
     public MultiFileUploadExt(AttachmentUploadComponent attachmentDisplayComponent) {
         this.attachmentDisplayComponent = attachmentDisplayComponent;
+        this.attachmentDisplayComponent.registerMultiUpload(this);
         setWidth("200px");
         addComponent(progressBars);
         uploads.setStyleName("v-multifileupload-uploads");
         addComponent(uploads);
         prepareUpload();
     }
+    
+    public void removeAndReInitMultiUpload() {
+    	uploads.removeComponent(upload);
+    	upload = null;
+    	prepareUpload();
+    }
 
     private void prepareUpload() {
         final FileBuffer receiver = createReceiver();
 
-        final MultiUpload upload = new MultiUpload();
+        upload = new MultiUpload();
         MultiUploadHandler handler = new MultiUploadHandler() {
             private LinkedList<ProgressIndicator> indicators;
 
@@ -59,6 +67,7 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
                     progressBars.removeComponent(indicators.remove(0));
                 }
                 File file = receiver.getFile();
+                
                 handleFile(file, event.getFileName(), event.getMimeType(),
                         event.getBytesReceived());
                 receiver.setValue(null);

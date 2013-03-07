@@ -34,6 +34,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.vaadin.data.Item;
@@ -173,7 +174,9 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(projectMember.getMemberFullName());
+				super(projectMember.getMemberFullName(),
+						UserAvatarControlFactory.getResource(
+								projectMember.getUsername(), 48));
 			}
 
 			@Override
@@ -344,7 +347,9 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(projectMember.getMemberFullName());
+				super(projectMember.getMemberFullName(),
+						UserAvatarControlFactory.getResource(
+								projectMember.getUsername(), 48));
 			}
 
 			@Override

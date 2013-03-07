@@ -16,7 +16,7 @@ public class ByteArrayImageResource extends StreamResource {
 			public InputStream getStream() {
 				return new ByteArrayInputStream(imageData);
 			}
-		}, "", AppContext.getApplication());
+		}, "avatar", AppContext.getApplication());
 
 		this.setMIMEType(mimeType);
 	}

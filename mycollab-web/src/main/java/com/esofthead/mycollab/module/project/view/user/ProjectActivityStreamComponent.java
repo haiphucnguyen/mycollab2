@@ -47,7 +47,7 @@ public class ProjectActivityStreamComponent extends Depot {
 	private static final long serialVersionUID = 1L;
 	private final DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
 	private static LabelStringGenerator menuLinkGenerator = new ActivityLinkLabelStringGenerator();
-	
+
 	public ProjectActivityStreamComponent() {
 		super("Project Feeds", new VerticalLayout());
 		activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
@@ -81,7 +81,8 @@ public class ProjectActivityStreamComponent extends Depot {
 			CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
 			header.addComponent(new ProjectUserLink(activityStream
-					.getCreateduser(), activityStream.getCreatedUserFullName()));
+					.getCreateduser(), activityStream.getCreatedUserFullName(),
+					true));
 			StringBuilder action = new StringBuilder();
 
 			if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream

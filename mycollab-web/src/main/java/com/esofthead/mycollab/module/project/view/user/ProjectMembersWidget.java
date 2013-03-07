@@ -59,7 +59,7 @@ public class ProjectMembersWidget extends Depot {
 			CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
 			header.addComponent(new ProjectUserLink(obj.getUsername(), obj
-					.getMemberFullName()));
+					.getMemberFullName(), true));
 			layout.addComponent(header);
 
 			CssLayout body = new CssLayout();

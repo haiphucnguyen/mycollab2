@@ -1,5 +1,16 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.vaadin.easyuploads.MultiFileUploadExt;
+
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.file.service.ContentService;
@@ -12,14 +23,6 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import java.io.File;
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class AttachmentPanel extends VerticalLayout implements AttachmentUploadComponent {
 
@@ -28,12 +31,18 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
     private Map<String, File> fileStores;
     private ContentService contentService;
     private AttachmentService attachmentService;
+    
+    private MultiFileUploadExt multiFileUpload;
 
     public AttachmentPanel() {
         contentService = AppContext.getSpringBean(ContentService.class);
         this.setSpacing(true);
     }
-
+    
+    public void registerMultiUpload(MultiFileUploadExt fileUpload) {
+    	multiFileUpload = fileUpload;
+    }
+    
     private void displayFileName(final String fileName) {
         final HorizontalLayout fileAttachmentLayout = new HorizontalLayout();
         fileAttachmentLayout.setSpacing(true);
@@ -48,6 +57,9 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
                 }
                 fileStores.remove(fileName);
                 AttachmentPanel.this.removeComponent(fileAttachmentLayout);
+                if (multiFileUpload != null) {
+                	multiFileUpload.removeAndReInitMultiUpload();
+                }
             }
         });
         removeBtn.setIcon(new ThemeResource("icons/16/trash.png"));
@@ -109,7 +121,6 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
         if (fileStores == null) {
             fileStores = new HashMap<String, File>();
         }
-
         if (fileStores.containsKey(fileName)) {
             getWindow().showNotification(
                     "File name " + fileName + " is already existed.");

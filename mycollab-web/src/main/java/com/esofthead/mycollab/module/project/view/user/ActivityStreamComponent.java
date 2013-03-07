@@ -138,7 +138,8 @@ public class ActivityStreamComponent extends Depot {
 			header.setStyleName("stream-content");
 			// header.setSpacing(true);
 			header.addComponent(new ProjectUserLink(activityStream
-					.getCreateduser(), activityStream.getCreatedUserFullName()));
+					.getCreateduser(), activityStream.getCreatedUserFullName(),
+					true));
 			StringBuilder action = new StringBuilder();
 
 			if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream

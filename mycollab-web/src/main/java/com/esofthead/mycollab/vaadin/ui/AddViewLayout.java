@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.vaadin.terminal.ThemeResource;
+import com.vaadin.terminal.Resource;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Embedded;
@@ -13,7 +13,7 @@ public class AddViewLayout extends CustomLayout {
 	private final Label titleLbl;
 	private final Embedded icon;
 
-	public AddViewLayout(String title, ThemeResource resource) {
+	public AddViewLayout(String title, Resource resource) {
 		super("addView");
 
 		icon = new Embedded();
