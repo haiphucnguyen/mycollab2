@@ -185,6 +185,9 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 	private class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
 		private static final long serialVersionUID = 1L;
 		private BugHistoryList historyList;
+		private BugFollowersSheet bugFollowersList;
+		private BugTimeLogSheet bugTimeLogList;
+		private BugRelatedItemSheet bugRelatedItemsList;
 
 		@Override
 		public void setItemDataSource(Item newDataSource) {
@@ -351,6 +354,14 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 				historyList.setMargin(true);
 				tabBugDetail.addTab(historyList, "History");
 
+				bugRelatedItemsList = new BugRelatedItemSheet();
+				tabBugDetail.addTab(bugRelatedItemsList, "Related Bugs");
+
+				bugFollowersList = new BugFollowersSheet();
+				tabBugDetail.addTab(bugFollowersList, "Followers");
+
+				bugTimeLogList = new BugTimeLogSheet();
+				tabBugDetail.addTab(bugTimeLogList, "Time");
 				return tabBugDetail;
 			}
 
