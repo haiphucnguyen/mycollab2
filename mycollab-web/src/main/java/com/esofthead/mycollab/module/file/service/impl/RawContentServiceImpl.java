@@ -17,7 +17,7 @@ public class RawContentServiceImpl implements RawContentService {
 
 	@Override
 	public void saveContent(String objectPath, InputStream stream) {
-		int startFileNameIndex = objectPath.lastIndexOf(File.separatorChar);
+		int startFileNameIndex = objectPath.lastIndexOf("/");
 		if (startFileNameIndex > 0) {
 			/*
 			 * make sure the directory exist

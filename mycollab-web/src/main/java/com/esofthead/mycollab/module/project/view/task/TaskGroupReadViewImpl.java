@@ -52,6 +52,7 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 		super();
 		previewForm = new PreviewForm();
 		this.addComponent(previewForm);
+		this.setMargin(true);
 	}
 
 	@Override
@@ -78,8 +79,6 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 				@Override
 				protected Field onCreateField(Item item, Object propertyId,
 						Component uiContext) {
-					
-					System.out.println("task id: " + taskList.getId() + "task name: " + taskList.getName() + " milestone name: " + taskList.getMilestoneName() + " owner: " + taskList.getOwner() + " num open task: " + taskList.getNumOpenTasks());;
 					
 					if (propertyId.equals("milestoneid")) {
 						return new FormLinkViewField(taskList
