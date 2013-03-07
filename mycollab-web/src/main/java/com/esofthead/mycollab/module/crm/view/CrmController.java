@@ -154,10 +154,8 @@ public class CrmController implements IController {
 					public void handle(AccountEvent.GotoEdit event) {
 						AccountAddPresenter presenter = PresenterResolver
 								.getPresenter(AccountAddPresenter.class);
-
-						Account account = (Account) event.getData();
-						presenter.go(container, new ScreenData.Edit<Account>(
-								account));
+						presenter.go(container, new ScreenData.Edit<Object>(
+								event.getData()));
 					}
 				});
 
@@ -636,17 +634,18 @@ public class CrmController implements IController {
 								.getPresenter(OpportunityListPresenter.class);
 						OpportunitySearchCriteria searchCriteria;
 						if (event.getData() != null) {
-							searchCriteria = (OpportunitySearchCriteria) event.getData();
+							searchCriteria = (OpportunitySearchCriteria) event
+									.getData();
 						} else {
 							searchCriteria = new OpportunitySearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
 						}
-						
+
 						presenter
-						.go(container,
-								new ScreenData.Search<OpportunitySearchCriteria>(
-										searchCriteria));
+								.go(container,
+										new ScreenData.Search<OpportunitySearchCriteria>(
+												searchCriteria));
 					}
 				});
 

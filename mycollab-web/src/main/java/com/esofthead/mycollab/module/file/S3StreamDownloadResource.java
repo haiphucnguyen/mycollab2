@@ -77,7 +77,9 @@ public class S3StreamDownloadResource extends StreamResource {
 
 				return obj.getObjectContent();
 			} catch (Exception e) {
-				throw new MyCollabException(e);
+				throw new MyCollabException(
+						"Error when get input stream from s3 with path "
+								+ documentPath, e);
 			}
 		}
 

@@ -63,13 +63,17 @@ public class AccountLeadListComp extends RelatedListComp<SimpleLead, LeadSearchC
         controlsBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
         controlsBtn.setEnabled(AppContext.canWrite(RolePermissionCollections.CRM_LEAD));
         controlsBtn.addClickListener(new SplitButton.SplitButtonClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void splitButtonClick(SplitButton.SplitButtonClickEvent event) {
                 fireNewRelatedItem("");
             }
         });
         Button selectBtn = new Button("Select from existing leads", new Button.ClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void buttonClick(ClickEvent event) {
                 AccountLeadSelectionWindow leadsWindow = new AccountLeadSelectionWindow(AccountLeadListComp.this);
                 LeadSearchCriteria criteria = new LeadSearchCriteria();
@@ -90,7 +94,9 @@ public class AccountLeadListComp extends RelatedListComp<SimpleLead, LeadSearchC
                     "Office Phone", "Email", "Action"});
 
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public Class<? extends ApplicationEvent> getEventType() {
                 return TableClickEvent.class;
             }
@@ -107,13 +113,17 @@ public class AccountLeadListComp extends RelatedListComp<SimpleLead, LeadSearchC
         });
 
         tableItem.addGeneratedColumn("id", new ColumnGenerator() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public Object generateCell(Table source, Object itemId,
                     Object columnId) {
                 final SimpleLead lead = (SimpleLead) tableItem.getBeanByIndex(itemId);
                 HorizontalLayout controlLayout = new HorizontalLayout();
                 Button editBtn = new Button(null, new Button.ClickListener() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public void buttonClick(ClickEvent event) {
                         EventBus.getInstance().fireEvent(
                                 new LeadEvent.GotoRead(
@@ -126,7 +136,9 @@ public class AccountLeadListComp extends RelatedListComp<SimpleLead, LeadSearchC
                 controlLayout.addComponent(editBtn);
 
                 Button deleteBtn = new Button(null, new Button.ClickListener() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public void buttonClick(ClickEvent event) {
                         ConfirmDialog.show(AppContext.getApplication().getMainWindow(),
                                 "Please Confirm:",
