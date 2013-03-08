@@ -103,10 +103,8 @@ public class MailFormWindow extends Window {
 		mainLayout.setSpacing(true);
 
 		CssLayout inputPanel = new CssLayout();
-		// inputPanel.setHeight("120px");
 		inputPanel.setWidth("100%");
 		inputPanel.setStyleName("mail-panel");
-		// inputPanel.getContent().setSizeUndefined();
 
 		inputLayout = new GridLayout(3, 4);
 		inputLayout.setSpacing(true);
@@ -124,8 +122,10 @@ public class MailFormWindow extends Window {
 			for (String mail : lstMail) {
 				if (mail != null && !mail.equals("")) {
 					if (mail.indexOf("<") > -1) {
-						String strMail = mail.substring(mail.indexOf("<") + 1, mail.lastIndexOf(">"));
-						if (strMail != null && !strMail.equalsIgnoreCase("null")) {
+						String strMail = mail.substring(mail.indexOf("<") + 1,
+								mail.lastIndexOf(">"));
+						if (strMail != null
+								&& !strMail.equalsIgnoreCase("null")) {
 							tokenFieldMailTo.addToken(mail);
 						}
 					} else {
@@ -176,31 +176,31 @@ public class MailFormWindow extends Window {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-//				MailService mailService = AppContext
-//						.getSpringBean(MailService.class);
-//				try {
-//
-//					List<MailRecipientField> toFields = ParsingUtils
-//							.parseEmailField((String) tokenFieldMailTo
-//									.getValue());
-//					List<MailRecipientField> ccFields = ParsingUtils
-//							.parseEmailField((String) tokenFieldMailCc
-//									.getValue());
-//					List<MailRecipientField> bccFields = ParsingUtils
-//							.parseEmailField((String) tokenFieldMailBcc
-//									.getValue());
-//
-//					mailService.sendMail(toFields, ccFields, bccFields,
-//							(String) subject.getValue(),
-//							(String) noteArea.getValue());
-//				} catch (InvalidEmailException e) {
-//					// TODO: add more descriptive error message
-//					getWindow()
-//							.showNotification("Error", "Email invalid error");
-//				} catch (EmailException e1) {
-//					getWindow().showNotification("Error", "Send email error");
-//					e1.printStackTrace();
-//				}
+				// MailService mailService = AppContext
+				// .getSpringBean(MailService.class);
+				// try {
+				//
+				// List<MailRecipientField> toFields = ParsingUtils
+				// .parseEmailField((String) tokenFieldMailTo
+				// .getValue());
+				// List<MailRecipientField> ccFields = ParsingUtils
+				// .parseEmailField((String) tokenFieldMailCc
+				// .getValue());
+				// List<MailRecipientField> bccFields = ParsingUtils
+				// .parseEmailField((String) tokenFieldMailBcc
+				// .getValue());
+				//
+				// mailService.sendMail(toFields, ccFields, bccFields,
+				// (String) subject.getValue(),
+				// (String) noteArea.getValue());
+				// } catch (InvalidEmailException e) {
+				// // TODO: add more descriptive error message
+				// getWindow()
+				// .showNotification("Error", "Email invalid error");
+				// } catch (EmailException e1) {
+				// getWindow().showNotification("Error", "Send email error");
+				// e1.printStackTrace();
+				// }
 			}
 		});
 		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

@@ -113,7 +113,7 @@ input.v-textfield[type="text"],.v-filterselect {
 }
 
 .v-app { /*background: #E1E1E1;*/
-	background: #FFFFFF;
+	background: rgb(243, 243, 243);
 }
 
 .v-button {
@@ -289,7 +289,7 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 }
 
 .v-button .v-button-caption {
-	line-height: 16px !important;
+	line-height: 16px;
 }
 
 .h-sidebar-menu {
@@ -396,9 +396,12 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 }
 
 /* Top Menu */
+.topNavigation {
+	background-color: #FFF;
+}
 #topNavigation {
 	height: 40px;
-	background: #444;
+	background: #FFF;
 	background: -moz-linear-gradient(top, #444 0, #222 100%);
 	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #444),
 		color-stop(100%, #222) );
@@ -2481,3 +2484,28 @@ div.v-lazyloadingwrapper-loading {
 	color: rgb(34,34,34);
 }
 /* End H2 Popup Button */
+.main-body {
+	min-height: 560px;
+	background-color: #FFFFFF;
+}
+
+/* Footer */
+.footer {
+	width: 100%;
+	border-top: 1px solid rgb(143, 143, 143);
+	padding: 10px 0px;
+	background-color: rgb(243, 243, 243);
+}
+.footer-wrapper {
+	max-width: 1130px;
+	min-width: 910px;
+	margin: 0 auto;
+}
+.footer-left {
+	float:left;
+	text-shadow: 0px 1px 0px rgb(255, 255, 255);
+}
+.footer-right {
+	float: right;
+}
+/* End Footer */
