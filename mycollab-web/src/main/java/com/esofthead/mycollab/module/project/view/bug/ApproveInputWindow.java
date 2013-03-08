@@ -10,11 +10,11 @@ import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
@@ -48,6 +48,7 @@ public class ApproveInputWindow extends Window {
         editForm = new EditForm();
         this.addComponent(editForm);
         editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+        center();
     }
     
     private class EditForm extends AdvancedEditBeanForm<Bug> {
@@ -148,7 +149,7 @@ public class ApproveInputWindow extends Window {
             protected Field onCreateField(Item item, Object propertyId,
                     com.vaadin.ui.Component uiContext) {
                 if (propertyId.equals("assignuser")) {
-                    return new UserComboBox();
+                    return new ProjectMemberComboBox();
                 } else if (propertyId.equals("comment")) {
                     commentArea = new RichTextArea();
                     commentArea.setNullRepresentation("");

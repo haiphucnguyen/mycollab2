@@ -167,11 +167,10 @@ public class BugDashboardViewImpl extends AbstractView implements
 		BugSearchCriteria myBugsSearchCriteria = new BugSearchCriteria();
 		myBugsSearchCriteria
 				.setProjectId(new NumberSearchField(project.getId()));
-		myBugsSearchCriteria
-				.setStatuses(new SetSearchField<String>(SearchField.AND,
-						new String[] { BugStatusConstants.INPROGRESS,
-								BugStatusConstants.OPEN,
-								BugStatusConstants.REOPENNED }));
+		myBugsSearchCriteria.setStatuses(new SetSearchField<String>(
+				SearchField.AND, new String[] { BugStatusConstants.INPROGRESS,
+						BugStatusConstants.OPEN, BugStatusConstants.REOPENNED,
+						BugStatusConstants.TESTPENDING }));
 		myBugsSearchCriteria.setAssignuser(new StringSearchField(AppContext
 				.getUsername()));
 
