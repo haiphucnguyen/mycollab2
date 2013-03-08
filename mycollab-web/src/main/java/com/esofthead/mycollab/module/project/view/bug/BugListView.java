@@ -10,6 +10,8 @@ import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 
 public interface BugListView extends View {
+	
+	void setTitle(String title);
 
     void enableActionControls(int numOfSelectedItem);
 

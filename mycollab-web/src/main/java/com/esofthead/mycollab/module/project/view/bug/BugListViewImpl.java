@@ -34,10 +34,15 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 	private final VerticalLayout problemListLayout;
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
+	private Label titleLbl;
 
 	public BugListViewImpl() {
 		this.setSpacing(true);
 		this.setMargin(false, true, true, true);
+
+		titleLbl = new Label();
+		titleLbl.setStyleName("h2");
+		this.addComponent(titleLbl);
 
 		problemSearchPanel = new BugSearchPanel();
 		this.addComponent(problemSearchPanel);
@@ -78,9 +83,8 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 						SimpleBug bug = (SimpleBug) event.getData();
 						if ("summary".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(
-									new BugEvent.GotoRead(
-											BugListViewImpl.this, bug
-													.getId()));
+									new BugEvent.GotoRead(BugListViewImpl.this,
+											bug.getId()));
 						}
 					}
 				});
@@ -144,5 +148,10 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 	@Override
 	public IPagedBeanTable<BugSearchCriteria, SimpleBug> getPagedBeanTable() {
 		return tableItem;
+	}
+
+	@Override
+	public void setTitle(String title) {
+		titleLbl.setValue(title);
 	}
 }

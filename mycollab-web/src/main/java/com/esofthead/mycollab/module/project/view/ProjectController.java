@@ -2,10 +2,12 @@ package com.esofthead.mycollab.module.project.view;
 
 import java.util.GregorianCalendar;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
@@ -536,7 +538,6 @@ public class ProjectController implements IController {
 								.getView(ProjectView.class);
 
 						Object params = event.getData();
-						BugSearchParameter parameter = null;
 						if (params == null) {
 							BugSearchCriteria criteria = new BugSearchCriteria();
 
@@ -548,14 +549,19 @@ public class ProjectController implements IController {
 											BugStatusConstants.INPROGRESS,
 											BugStatusConstants.OPEN,
 											BugStatusConstants.REOPENNED }));
-							parameter = new BugSearchParameter("Open Bugs",
-									criteria);
-						} else if (params instanceof BugSearchParameter) {
-							parameter = (BugSearchParameter) params;
+							BugSearchParameter parameter = new BugSearchParameter(
+									"Open Bugs", criteria);
+							projectView.gotoBugView(new BugScreenData.Search(
+									parameter));
+						} else if (params instanceof BugScreenData.Search) {
+							projectView
+									.gotoBugView((BugScreenData.Search) params);
+						} else {
+							throw new MyCollabException(
+									"Invalid search parameter: "
+											+ BeanUtility.printBeanObj(params));
 						}
 
-						projectView.gotoBugView(new BugScreenData.Search(
-								parameter));
 					}
 				});
 
