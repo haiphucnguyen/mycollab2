@@ -5,6 +5,7 @@ import org.jfree.chart.JFreeChart;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.vaadin.ui.ColorConstants;
 import com.esofthead.mycollab.vaadin.ui.JFreeChartWrapper;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.VerticalLayout;
 
@@ -46,6 +47,7 @@ public abstract class GenericChartWrapper<S extends SearchCriteria> extends
 
 		this.removeAllComponents();
 		this.addComponent(chartWrapper);
+		this.setComponentAlignment(chartWrapper, Alignment.MIDDLE_CENTER);
 		this.addComponent(createLegendBox());
 	}
 
