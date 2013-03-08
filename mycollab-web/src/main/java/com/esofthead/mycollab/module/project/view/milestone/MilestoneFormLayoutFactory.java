@@ -89,7 +89,8 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("flag")) {
 				informationLayout.addComponent(field, "Flag", 1, 2);
 			} else if (propertyId.equals("description")) {
-				informationLayout.addComponent(field, "Name", 0, 0, 3, "100%");
+				informationLayout.addComponent(field, "Description", 0, 3, 2,
+						"100%");
 			}
 		}
 
