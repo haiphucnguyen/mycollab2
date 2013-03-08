@@ -38,6 +38,8 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.view.bug.BugContainer;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
+import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
@@ -533,19 +535,27 @@ public class ProjectController implements IController {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
 
-						BugSearchCriteria criteria = new BugSearchCriteria();
+						Object params = event.getData();
+						BugSearchParameter parameter = null;
+						if (params == null) {
+							BugSearchCriteria criteria = new BugSearchCriteria();
 
-						criteria.setProjectId(new NumberSearchField(
-								SearchField.AND, CurrentProjectVariables
-										.getProjectId()));
-						criteria.setStatuses(new SetSearchField<String>(
-								SearchField.AND, new String[] {
-										BugStatusConstants.INPROGRESS,
-										BugStatusConstants.OPEN,
-										BugStatusConstants.REOPENNED }));
-						projectView
-								.gotoBugView(new ScreenData.Search<BugSearchCriteria>(
-										criteria));
+							criteria.setProjectId(new NumberSearchField(
+									SearchField.AND, CurrentProjectVariables
+											.getProjectId()));
+							criteria.setStatuses(new SetSearchField<String>(
+									SearchField.AND, new String[] {
+											BugStatusConstants.INPROGRESS,
+											BugStatusConstants.OPEN,
+											BugStatusConstants.REOPENNED }));
+							parameter = new BugSearchParameter("Open Bugs",
+									criteria);
+						} else if (params instanceof BugSearchParameter) {
+							parameter = (BugSearchParameter) params;
+						}
+
+						projectView.gotoBugView(new BugScreenData.Search(
+								parameter));
 					}
 				});
 
@@ -848,7 +858,7 @@ public class ProjectController implements IController {
 	}
 
 	private void bindUserGroupEvents() {
-		
+
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ProjectRoleEvent.GotoList>() {
 					private static final long serialVersionUID = 1L;
@@ -869,10 +879,11 @@ public class ProjectController implements IController {
 						criteria.setProjectId(new NumberSearchField(project
 								.getId()));
 						projectView
-								.gotoUsersAndGroup(new ProjectRoleScreenData.Search(criteria));
+								.gotoUsersAndGroup(new ProjectRoleScreenData.Search(
+										criteria));
 					}
 				});
-		
+
 		EventBus.getInstance().addListener(
 				new ApplicationEventListener<ProjectRoleEvent.GotoAdd>() {
 					private static final long serialVersionUID = 1L;

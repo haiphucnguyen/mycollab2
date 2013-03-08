@@ -1,13 +1,13 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -18,11 +18,12 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.VerticalLayout;
 
-public class BugDisplayWidget extends Depot {
+public abstract class BugDisplayWidget extends Depot {
 
 	private static final long serialVersionUID = 1L;
 	public static int MAX_ITEM_DISPLAY = 10;
-	private BugSearchCriteria searchCriteria;
+
+	protected BugSearchCriteria searchCriteria;
 	private final BeanList<BugService, BugSearchCriteria, SimpleBug> dataList;
 
 	public BugDisplayWidget(String title,
@@ -38,11 +39,10 @@ public class BugDisplayWidget extends Depot {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				System.out.println("SEACR CRITERA: " + BeanUtility.printBeanObj(searchCriteria));
 				EventBus.getInstance().fireEvent(
 						new BugEvent.GotoList(BugDisplayWidget.this,
-								new ScreenData.Search<BugSearchCriteria>(
-										searchCriteria)));
+								new BugScreenData.Search(
+										constructMoreDisplayFilter())));
 			}
 		});
 		moreBtn.setStyleName(UIConstants.THEME_LINK);
@@ -59,4 +59,6 @@ public class BugDisplayWidget extends Depot {
 		dataList.setSearchRequest(searchRequest);
 
 	}
+
+	protected abstract BugSearchParameter constructMoreDisplayFilter();
 }

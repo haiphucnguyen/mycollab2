@@ -37,8 +37,8 @@ import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class ProfileEditViewImpl extends AbstractView implements
-		ProfileEditView, IFormAddView<User> {
+public class ProfileReadViewImpl extends AbstractView implements
+		ProfileReadView, IFormAddView<User> {
 
 	public static final int MAX_UPLOAD_SIZE = 20 * 1024 * 1024;
 
@@ -46,7 +46,7 @@ public class ProfileEditViewImpl extends AbstractView implements
 	private final HorizontalLayout viewLayout;
 	private VerticalLayout userAvatar;
 
-	public ProfileEditViewImpl() {
+	public ProfileReadViewImpl() {
 		super();
 		viewLayout = new HorizontalLayout();
 		viewLayout.setWidth("100%");
@@ -85,7 +85,7 @@ public class ProfileEditViewImpl extends AbstractView implements
 				if (mimeType.equals("image/png")) {
 					EventBus.getInstance().fireEvent(
 							new ProfileEvent.GotoUploadPhoto(
-									ProfileEditViewImpl.this, imageData));
+									ProfileReadViewImpl.this, imageData));
 				} else {
 					throw new MyCollabException(
 							"Upload file does not have valid image format. The supported formats are jpg/png");

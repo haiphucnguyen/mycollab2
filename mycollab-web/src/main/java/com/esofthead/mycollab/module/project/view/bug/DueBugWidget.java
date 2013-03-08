@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -58,31 +59,36 @@ public class DueBugWidget extends BugDisplayWidget {
 						}
 					});
 			defectLink.setWidth("100%");
-			
-			if (obj.getDuedate() != null && (obj.getDuedate().before(new GregorianCalendar().getTime()))) {
+
+			if (obj.getDuedate() != null
+					&& (obj.getDuedate().before(new GregorianCalendar()
+							.getTime()))) {
 				defectLink.addStyleName(UIConstants.LINK_OVERDUE);
-            }
-			
+			}
+
 			layout.addComponent(defectLink);
 			layout.setColumnExpandRatio(1, 1.0f);
 
-			LabelHTMLDisplayWidget descInfo = new LabelHTMLDisplayWidget(obj.getDescription());
+			LabelHTMLDisplayWidget descInfo = new LabelHTMLDisplayWidget(
+					obj.getDescription());
 			descInfo.setWidth("100%");
 			layout.addComponent(descInfo);
-			
+
 			HorizontalLayout hLayoutDateInfo = new HorizontalLayout();
 			hLayoutDateInfo.setSpacing(true);
 			Label dateInfo = new Label("due on "
 					+ AppContext.formatDate(obj.getDuedate()) + ". Assignee: ");
 			dateInfo.setStyleName(UIConstants.WIDGET_ROW_METADATA);
 			hLayoutDateInfo.addComponent(dateInfo);
-			hLayoutDateInfo.setComponentAlignment(dateInfo, Alignment.MIDDLE_CENTER);
-			
-			ProjectUserFormLinkField userLink =  new ProjectUserFormLinkField(obj.getAssignuser(),
-					obj.getAssignuserFullName());
+			hLayoutDateInfo.setComponentAlignment(dateInfo,
+					Alignment.MIDDLE_CENTER);
+
+			ProjectUserFormLinkField userLink = new ProjectUserFormLinkField(
+					obj.getAssignuser(), obj.getAssignuserFullName());
 			hLayoutDateInfo.addComponent(userLink);
-			hLayoutDateInfo.setComponentAlignment(userLink, Alignment.MIDDLE_CENTER);
-			
+			hLayoutDateInfo.setComponentAlignment(userLink,
+					Alignment.MIDDLE_CENTER);
+
 			layout.addComponent(hLayoutDateInfo, 1, 2);
 
 			CssLayout rowLayout = new CssLayout();
@@ -91,5 +97,10 @@ public class DueBugWidget extends BugDisplayWidget {
 			rowLayout.setWidth("100%");
 			return rowLayout;
 		}
+	}
+
+	@Override
+	protected BugSearchParameter constructMoreDisplayFilter() {
+		return new BugSearchParameter("Due Bugs", searchCriteria);
 	}
 }

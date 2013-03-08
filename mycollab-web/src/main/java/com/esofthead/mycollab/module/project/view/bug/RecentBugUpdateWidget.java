@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -59,7 +60,7 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 						}
 					});
 			defectLink.setWidth("100%");
-			
+
 			if (BugStatusConstants.CLOSE.equals(obj.getStatus())) {
 				defectLink.addStyleName(UIConstants.LINK_COMPLETED);
 			} else if (obj.getDuedate() != null
@@ -79,25 +80,32 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 					+ AppContext.formatDateTime(obj.getLastupdatedtime()));
 			dateInfo.setStyleName(UIConstants.WIDGET_ROW_METADATA);
 			layout.addComponent(dateInfo, 1, 2);
-			
+
 			HorizontalLayout hLayoutAssigneeInfo = new HorizontalLayout();
 			hLayoutAssigneeInfo.setSpacing(true);
 			Label assignee = new Label("Assignee: ");
 			assignee.setStyleName(UIConstants.WIDGET_ROW_METADATA);
 			hLayoutAssigneeInfo.addComponent(assignee);
-			hLayoutAssigneeInfo.setComponentAlignment(assignee, Alignment.MIDDLE_CENTER);
-			
-			ProjectUserFormLinkField userLink =  new ProjectUserFormLinkField(obj.getAssignuser(),
-					obj.getAssignuserFullName());
+			hLayoutAssigneeInfo.setComponentAlignment(assignee,
+					Alignment.MIDDLE_CENTER);
+
+			ProjectUserFormLinkField userLink = new ProjectUserFormLinkField(
+					obj.getAssignuser(), obj.getAssignuserFullName());
 			hLayoutAssigneeInfo.addComponent(userLink);
-			hLayoutAssigneeInfo.setComponentAlignment(userLink, Alignment.MIDDLE_CENTER);
+			hLayoutAssigneeInfo.setComponentAlignment(userLink,
+					Alignment.MIDDLE_CENTER);
 			layout.addComponent(hLayoutAssigneeInfo, 1, 3);
-			
+
 			CssLayout rowLayout = new CssLayout();
 			rowLayout.addComponent(layout);
 			rowLayout.setStyleName(UIConstants.WIDGET_ROW);
 			rowLayout.setWidth("100%");
 			return rowLayout;
 		}
+	}
+
+	@Override
+	protected BugSearchParameter constructMoreDisplayFilter() {
+		return new BugSearchParameter("Recent Bugs", searchCriteria);
 	}
 }

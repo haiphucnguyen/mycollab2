@@ -24,7 +24,7 @@ public class ProfilePresenter extends AbstractPresenter<ProfileContainer> {
 		AbstractPresenter<?> presenter = null;
 		if (data == null) {
 			presenter = PresenterResolver
-					.getPresenter(ProfileEditPresenter.class);
+					.getPresenter(ProfileReadPresenter.class);
 		} else if (data instanceof ProfileScreenData.UploadPhoto) {
 			presenter = PresenterResolver
 					.getPresenter(ProfilePhotoUploadPresenter.class);

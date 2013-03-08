@@ -9,12 +9,12 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class ProfileEditPresenter extends AbstractPresenter<ProfileEditView> {
+public class ProfileReadPresenter extends AbstractPresenter<ProfileReadView> {
 
 	private static final long serialVersionUID = 1L;
 
-	public ProfileEditPresenter() {
-		super(ProfileEditView.class);
+	public ProfileReadPresenter() {
+		super(ProfileReadView.class);
 		bind();
 	}
 

@@ -25,7 +25,7 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class BugSummaryViewImpl extends AbstractView implements BugSummaryView {
+public class BugListViewImpl extends AbstractView implements BugListView {
 
 	private static final long serialVersionUID = 1L;
 	private final BugSearchPanel problemSearchPanel;
@@ -35,7 +35,7 @@ public class BugSummaryViewImpl extends AbstractView implements BugSummaryView {
 	private PopupButtonControl tableActionControls;
 	private final Label selectedItemsNumberLabel = new Label();
 
-	public BugSummaryViewImpl() {
+	public BugListViewImpl() {
 		this.setSpacing(true);
 		this.setMargin(false, true, true, true);
 
@@ -79,7 +79,7 @@ public class BugSummaryViewImpl extends AbstractView implements BugSummaryView {
 						if ("summary".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(
 									new BugEvent.GotoRead(
-											BugSummaryViewImpl.this, bug
+											BugListViewImpl.this, bug
 													.getId()));
 						}
 					}

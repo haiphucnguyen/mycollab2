@@ -17,6 +17,7 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
 /**
@@ -96,14 +97,16 @@ public class MilestoneAddViewImpl extends AbstractView implements
 						milestone.setFlag("External");
 					}
 					return new ValueComboBox(false, "External", "Internal");
-				}
-
-				if (propertyId.equals("name")) {
+				} else if (propertyId.equals("name")) {
 					TextField tf = new TextField();
 					tf.setNullRepresentation("");
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter a Name");
 					return tf;
+				} else if (propertyId.equals("description")) {
+					RichTextArea descArea = new RichTextArea();
+					descArea.setNullRepresentation("");
+					return descArea;
 				}
 
 				return null;

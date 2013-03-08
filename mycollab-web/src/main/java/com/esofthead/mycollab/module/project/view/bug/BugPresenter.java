@@ -33,7 +33,7 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
 
         if (data instanceof ScreenData.Search) {
             presenter = PresenterResolver
-                    .getPresenter(BugSummaryPresenter.class);
+                    .getPresenter(BugListPresenter.class);
         } else if (data instanceof ScreenData.Add
                 || data instanceof ScreenData.Edit) {
             presenter = PresenterResolver
