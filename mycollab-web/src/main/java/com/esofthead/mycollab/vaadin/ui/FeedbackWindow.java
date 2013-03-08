@@ -22,7 +22,7 @@ public class FeedbackWindow extends Window {
 
 	private void initLayout() {
 		this.setWidth(Sizeable.SIZE_UNDEFINED, 0);
-		this.setHeight("400px");
+		this.setHeight("360px");
 		this.setCaption("Send us feedback for MyCollab ");
 		initUI();
 		center();
@@ -90,9 +90,6 @@ public class FeedbackWindow extends Window {
 			}
 		});
 		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		controlsLayout.addComponent(sendBtn);
-		controlsLayout.setComponentAlignment(sendBtn, Alignment.MIDDLE_RIGHT);
-		controlsLayout.setExpandRatio(sendBtn, 1.0f);
 
 		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -106,6 +103,9 @@ public class FeedbackWindow extends Window {
 		cancelBtn.setStyleName("link");
 		controlsLayout.addComponent(cancelBtn);
 		controlsLayout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);
+		controlsLayout.addComponent(sendBtn);
+		controlsLayout.setComponentAlignment(sendBtn, Alignment.MIDDLE_RIGHT);
+		controlsLayout.setExpandRatio(cancelBtn, 1.0f);
 		mainLayout.addComponent(controlsLayout, 0, 3, 1, 3);
 
 		this.setContent(mainLayout);
