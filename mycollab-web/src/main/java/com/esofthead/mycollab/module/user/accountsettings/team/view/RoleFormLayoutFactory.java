@@ -79,7 +79,7 @@ public abstract class RoleFormLayoutFactory implements IFormLayoutFactory {
             if (propertyId.equals("rolename")) {
                 informationLayout.addComponent(field, "Role Name", 0, 0);
             } else if (propertyId.equals("description")) {
-                informationLayout.addComponent(field, "Description", 0, 1);
+                informationLayout.addComponent(field, "Description", 0, 1, 2, "100%");
             }
         }
     }
