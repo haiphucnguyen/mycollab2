@@ -5,6 +5,7 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot.CommentDisplay;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -58,6 +59,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 	public void previewItem(SimpleBug item) {
 		this.bug = item;
 		previewForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+		System.out.println("Assign user: " + BeanUtility.printBeanObj(item));
 	}
 
 	@Override
@@ -185,6 +187,9 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 	private class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
 		private static final long serialVersionUID = 1L;
 		private BugHistoryList historyList;
+		private BugFollowersSheet bugFollowersList;
+		private BugTimeLogSheet bugTimeLogList;
+		private BugRelatedItemSheet bugRelatedItemsList;
 
 		@Override
 		public void setItemDataSource(Item newDataSource) {
@@ -351,6 +356,14 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 				historyList.setMargin(true);
 				tabBugDetail.addTab(historyList, "History");
 
+				bugRelatedItemsList = new BugRelatedItemSheet();
+				tabBugDetail.addTab(bugRelatedItemsList, "Related Bugs");
+
+				bugFollowersList = new BugFollowersSheet();
+				tabBugDetail.addTab(bugFollowersList, "Followers");
+
+				bugTimeLogList = new BugTimeLogSheet();
+				tabBugDetail.addTab(bugTimeLogList, "Time");
 				return tabBugDetail;
 			}
 

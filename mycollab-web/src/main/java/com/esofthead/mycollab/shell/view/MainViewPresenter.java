@@ -21,7 +21,7 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class MainViewPresenter extends AbstractPresenter<MainView> {
-
+	private static final long serialVersionUID = 1L;
 	private static Logger log = LoggerFactory
 			.getLogger(MainViewPresenter.class);
 

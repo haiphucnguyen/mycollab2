@@ -1,3 +1,0 @@
-02-04 15:50:18 jdbc[2]: exception
-org.h2.jdbc.JdbcSQLException: Table "SCHEMA_VERSION" not found; SQL statement:
-select count(*) from schema_version [42102-170]

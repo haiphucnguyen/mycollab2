@@ -68,7 +68,7 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
-			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 3);
+			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 4);
 			informationLayout.getLayout().setWidth("100%");
 			layout.addComponent(informationLayout.getLayout());
 			layout.setComponentAlignment(informationLayout.getLayout(),
@@ -88,6 +88,9 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 				informationLayout.addComponent(field, "Responsible User", 1, 1);
 			} else if (propertyId.equals("flag")) {
 				informationLayout.addComponent(field, "Flag", 1, 2);
+			} else if (propertyId.equals("description")) {
+				informationLayout.addComponent(field, "Description", 0, 3, 2,
+						"100%");
 			}
 		}
 

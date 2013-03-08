@@ -14,7 +14,11 @@ import com.davengo.web.vaadin.crop.CropField;
 import com.davengo.web.vaadin.crop.widgetset.client.ui.VCropSelection;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountDashboardViewImpl;
+import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HAbstractView;
+import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.ByteArrayImageResource;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -40,8 +44,12 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 	private Embedded previewImage;
 	private byte[] scaleImageData;
 
+	private ProfilePresenter profilePresenter;
+
 	public ProfilePhotoUploadViewImpl() {
 		this.setMargin(true);
+		profilePresenter = PresenterResolver
+				.getPresenter(ProfilePresenter.class);
 	}
 
 	@SuppressWarnings("serial")
@@ -108,6 +116,9 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 						userAvatarService.uploadAvatar(image,
 								AppContext.getUsername(),
 								AppContext.getAccountId());
+						EventBus.getInstance().fireEvent(
+								new ProfileEvent.GotoProfileView(
+										ProfilePhotoUploadViewImpl.this, null));
 					} catch (IOException e) {
 						throw new MyCollabException(
 								"Error when saving user avatar", e);

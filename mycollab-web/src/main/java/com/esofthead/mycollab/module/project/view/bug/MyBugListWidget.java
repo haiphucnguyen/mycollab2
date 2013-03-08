@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -50,40 +51,50 @@ public class MyBugListWidget extends BugDisplayWidget {
 						}
 					});
 			defectLink.setWidth("100%");
-			
-			if (obj.getDuedate() != null && (obj.getDuedate().before(new GregorianCalendar().getTime()))) {
+
+			if (obj.getDuedate() != null
+					&& (obj.getDuedate().before(new GregorianCalendar()
+							.getTime()))) {
 				defectLink.addStyleName(UIConstants.LINK_OVERDUE);
-            }
+			}
 			layout.addComponent(defectLink);
 			layout.setColumnExpandRatio(1, 1.0f);
-			
-			LabelHTMLDisplayWidget descInfo = new LabelHTMLDisplayWidget(obj.getDescription());
+
+			LabelHTMLDisplayWidget descInfo = new LabelHTMLDisplayWidget(
+					obj.getDescription());
 			descInfo.setWidth("100%");
 			layout.addComponent(descInfo);
-			
+
 			Label dateInfo = new Label("Last updated on "
 					+ AppContext.formatDateTime(obj.getLastupdatedtime()));
 			dateInfo.setStyleName(UIConstants.WIDGET_ROW_METADATA);
 			layout.addComponent(dateInfo, 1, 2);
-			
+
 			HorizontalLayout hLayoutAssigneeInfo = new HorizontalLayout();
 			hLayoutAssigneeInfo.setSpacing(true);
 			Label assignee = new Label("Assignee: ");
 			assignee.setStyleName(UIConstants.WIDGET_ROW_METADATA);
 			hLayoutAssigneeInfo.addComponent(assignee);
-			hLayoutAssigneeInfo.setComponentAlignment(assignee, Alignment.MIDDLE_CENTER);
-			
-			ProjectUserFormLinkField userLink =  new ProjectUserFormLinkField(obj.getAssignuser(),
-					obj.getAssignuserFullName());
+			hLayoutAssigneeInfo.setComponentAlignment(assignee,
+					Alignment.MIDDLE_CENTER);
+
+			ProjectUserFormLinkField userLink = new ProjectUserFormLinkField(
+					obj.getAssignuser(), obj.getAssignuserFullName());
 			hLayoutAssigneeInfo.addComponent(userLink);
-			hLayoutAssigneeInfo.setComponentAlignment(userLink, Alignment.MIDDLE_CENTER);
+			hLayoutAssigneeInfo.setComponentAlignment(userLink,
+					Alignment.MIDDLE_CENTER);
 			layout.addComponent(hLayoutAssigneeInfo, 1, 3);
-			
+
 			CssLayout rowLayout = new CssLayout();
 			rowLayout.addComponent(layout);
 			rowLayout.setStyleName(UIConstants.WIDGET_ROW);
 			rowLayout.setWidth("100%");
 			return rowLayout;
 		}
+	}
+
+	@Override
+	protected BugSearchParameter constructMoreDisplayFilter() {
+		return new BugSearchParameter("My Bugs", searchCriteria);
 	}
 }

@@ -24,6 +24,9 @@
         <if test='assignUser != null'>
             ${assignUser.operation} m_prj_problem.assigntouser = #{assignUser.value}
         </if>
+        <if test='isOpenned != null'>
+            ${isOpenned.operation} m_prj_problem.status='Open'
+        </if>
     </sql>
     
     <sql id="queryRiskSearchCriteria" >
@@ -37,6 +40,9 @@
         <if test='assignUser != null'>
             ${assignUser.operation} m_prj_risk.assigntouser = #{assignUser.value}
         </if>
+        <if test='isOpenned != null'>
+            ${isOpenned.operation} m_prj_risk.status='Open'
+        </if>
     </sql>
     
     <sql id="queryBugSearchCriteria" >
@@ -49,6 +55,9 @@
     	<if test='assignUser != null'>
             ${assignUser.operation} m_tracker_bug.assignuser = #{assignUser.value}
         </if>
+        <if test='isOpenned != null'>
+            ${isOpenned.operation} (m_tracker_bug.status='Open' OR m_tracker_bug.status='In Progress' OR m_tracker_bug.status='Reopenned' OR m_tracker_bug.status='Test Pending') 
+        </if>
     </sql>
     
     <sql id="queryTaskSearchCriteria" >
@@ -60,6 +69,9 @@
         </if>
     	<if test='assignUser != null'>
             ${assignUser.operation} m_prj_task.assignUser = #{assignUser.value}
+        </if>
+        <if test='isOpenned != null'>
+            ${isOpenned.operation} m_prj_task.status='Open'
         </if>
     </sql>
 

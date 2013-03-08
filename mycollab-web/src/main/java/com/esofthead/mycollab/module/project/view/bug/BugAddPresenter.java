@@ -57,7 +57,7 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 						ViewState viewState = HistoryViewManager.back();
 						if (viewState instanceof NullViewState) {
 							EventBus.getInstance().fireEvent(
-									new BugEvent.GotoList(this, null));
+									new BugEvent.GotoDashboard(this, null));
 						}
 					}
 
@@ -66,7 +66,7 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 						ViewState viewState = HistoryViewManager.back();
 						if (viewState instanceof NullViewState) {
 							EventBus.getInstance().fireEvent(
-									new BugEvent.GotoList(this, null));
+									new BugEvent.GotoDashboard(this, null));
 						}
 					}
 

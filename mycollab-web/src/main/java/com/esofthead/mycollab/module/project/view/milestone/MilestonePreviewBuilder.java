@@ -17,6 +17,7 @@ import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
@@ -83,6 +84,9 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			} else if (propertyId.equals("owner")) {
 				return new ProjectUserFormLinkField(milestone.getOwner(),
 						milestone.getOwnerFullName());
+			} else if (propertyId.equals("description")) {
+				return new DefaultFormViewFieldFactory.FormViewField(
+						milestone.getDescription(), Label.CONTENT_XHTML);
 			}
 			return null;
 		}

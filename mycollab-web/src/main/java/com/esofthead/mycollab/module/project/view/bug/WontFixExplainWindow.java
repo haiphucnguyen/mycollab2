@@ -4,17 +4,20 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.GregorianCalendar;
+import java.util.List;
+
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
@@ -33,8 +36,6 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import java.util.GregorianCalendar;
-import java.util.List;
 
 /**
  *
@@ -132,6 +133,7 @@ public class WontFixExplainWindow extends Window {
     						.showNotification("Error",
     								"You must enter a comment to explain for won't fix resolution",
     								Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                        	return;
                         }
                         
                         WontFixExplainWindow.this.close();
@@ -170,7 +172,7 @@ public class WontFixExplainWindow extends Window {
                 if (propertyId.equals("resolution")) {
                     return new BugResolutionComboBox();
                 } else if (propertyId.equals("assignuser")) {
-                    return new UserComboBox();
+                    return new ProjectMemberComboBox();
                 } else if (propertyId.equals("fixedVersions")) {
                     fixedVersionSelect = new VersionMultiSelectField("227px");
                     if (bug.getFixedVersions().size() > 0) {

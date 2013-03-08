@@ -12,6 +12,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
@@ -303,7 +304,7 @@ public class MessageListViewImpl extends AbstractView implements
 			layout.setComponentAlignment(messageSearchPanel,
 					Alignment.MIDDLE_CENTER);
 
-			Button createAccountBtn = new Button("New Message",
+			Button createMessageBtn = new Button("New Message",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -312,12 +313,14 @@ public class MessageListViewImpl extends AbstractView implements
 							createAddMessageLayout();
 						}
 					});
-			createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			createAccountBtn
+			createMessageBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			createMessageBtn
 					.setIcon(new ThemeResource("icons/16/addRecord.png"));
+			createMessageBtn.setEnabled(CurrentProjectVariables
+					.canWrite(ProjectRolePermissionCollections.MESSAGES));
 
-			layout.addComponent(createAccountBtn);
-			layout.setComponentAlignment(createAccountBtn,
+			layout.addComponent(createMessageBtn);
+			layout.setComponentAlignment(createMessageBtn,
 					Alignment.MIDDLE_CENTER);
 			this.addComponent(layout);
 		}

@@ -84,7 +84,6 @@ public class UserDashboardViewImpl extends AbstractView implements
 		root.setExpandRatio(mySpaceArea, 1.0f);
 
 		buildComponents();
-		gotoMyFeeds();
 
 		this.addComponent(root);
 	}

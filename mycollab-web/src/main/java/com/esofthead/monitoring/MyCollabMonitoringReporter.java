@@ -5,10 +5,16 @@ import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Collections;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.module.mail.Mailer;
 
 public class MyCollabMonitoringReporter {
+	private static Logger log = LoggerFactory
+			.getLogger(MyCollabMonitoringReporter.class);
+
 	public void sendDailyReport(String attachment) {
 		/*
 		 * do send mail here
@@ -26,14 +32,14 @@ public class MyCollabMonitoringReporter {
 				Integer.parseInt(port));
 		try {
 			mailer.sendHTMLMail(userName, "eSofthead reporter",
-					new String[] { userName },
+					new String[] { ApplicationProperties
+							.getProperty(ApplicationProperties.ERROR_SENDTO) },
 					new String[] { "eSofthead" }, "Daily Report Monitoring - "
-							+ toDayString(), "<h1>This is the sample of daily monitoring report</h1>",
+							+ toDayString(),
+					"<h1>This is the sample of daily monitoring report</h1>",
 					Collections.singletonList(attachment));
 		} catch (Exception e) {
-			System.out.println("\r\n\r\n\r\n");
-			System.out.println(e.getMessage());
-			System.out.println("\r\n\r\n\r\n");
+			log.error("Send monitoring failed", e);
 		} finally {
 			File file = new File(attachment);
 			if (file.exists()) {
