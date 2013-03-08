@@ -6,7 +6,6 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -58,8 +57,7 @@ public class ProjectTaskStatusComponent extends Depot {
 		ProjectGenericTaskSearchCriteria searchCriteria = new ProjectGenericTaskSearchCriteria();
 		searchCriteria.setsAccountId(new NumberSearchField(AppContext
 				.getAccountId()));
-		searchCriteria.setStatuses(new SetSearchField<String>(SearchField.AND,
-				new String[] { ProjectGenericTaskSearchCriteria.OPEN_STATUS }));
+		searchCriteria.setIsOpenned(new SearchField());
 		searchCriteria.setAssignUser(new StringSearchField(SearchField.AND,
 				AppContext.getUsername()));
 		searchCriteria.setProjectId(new NumberSearchField(
