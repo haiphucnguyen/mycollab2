@@ -1,14 +1,8 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -21,21 +15,13 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.VerticalLayout;
 
-/**
- * 
- * @author haiphucnguyen
- */
-public class UnresolvedBugsByPriorityWidget extends Depot {
+public class UnresolvedBugsByPriorityWidget2 extends Depot {
 	private static final long serialVersionUID = 1L;
-
-	private IBugReportDisplayContainer componentLayout;
+	
 	private BugSearchCriteria bugSearchCriteria;
 
-	public UnresolvedBugsByPriorityWidget(
-			IBugReportDisplayContainer componentLayout) {
-		super("Unresolved by Priority", new VerticalLayout());
-
-		this.componentLayout = componentLayout;
+	public UnresolvedBugsByPriorityWidget2() {
+		super("Unresolved by priority", new VerticalLayout());
 	}
 
 	public void setSearchCriteria(BugSearchCriteria searchCriteria) {
@@ -93,17 +79,13 @@ public class UnresolvedBugsByPriorityWidget extends Depot {
 
 		}
 	}
-
-	class BugPriorityClickListener implements Button.ClickListener {
+	
+	private class BugPriorityClickListener implements Button.ClickListener {
 		private static final long serialVersionUID = 1L;
 
 		@Override
 		public void buttonClick(ClickEvent event) {
-			String caption = event.getButton().getCaption();
-			bugSearchCriteria.setPriorities(new SetSearchField<String>(
-					SearchField.AND, new String[] { caption }));
-			componentLayout.displayBugListWidget(caption, bugSearchCriteria);
+			
 		}
-
 	}
 }

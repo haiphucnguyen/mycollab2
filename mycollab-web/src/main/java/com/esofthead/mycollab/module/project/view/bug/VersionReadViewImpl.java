@@ -196,7 +196,7 @@ public class VersionReadViewImpl extends AbstractView implements
 			public void displayBugListWidget(String title,
 					BugSearchCriteria criteria) {
 				bottomLayout.removeAllComponents();
-				BugListWidget bugListWidget = new BugListWidget(title,
+				BugListWidget bugListWidget = new BugListWidget(title + " Bug List",
 						"Back to version dashboard", criteria, this);
 				bugListWidget.setWidth("100%");
 				this.bottomLayout.addComponent(bugListWidget);
