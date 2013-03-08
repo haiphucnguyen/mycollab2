@@ -14,12 +14,12 @@ import com.davengo.web.vaadin.crop.CropField;
 import com.davengo.web.vaadin.crop.widgetset.client.ui.VCropSelection;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
-import com.esofthead.mycollab.module.user.accountsettings.view.AccountDashboardViewImpl;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HAbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.ui.ByteArrayImageResource;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -27,8 +27,10 @@ import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
@@ -44,12 +46,8 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 	private Embedded previewImage;
 	private byte[] scaleImageData;
 
-	private ProfilePresenter profilePresenter;
-
 	public ProfilePhotoUploadViewImpl() {
 		this.setMargin(true);
-		profilePresenter = PresenterResolver
-				.getPresenter(ProfilePresenter.class);
 	}
 
 	@SuppressWarnings("serial")
@@ -102,6 +100,7 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 		leftColumn.addComponent(currentPhotoBox);
 
 		HorizontalLayout controlBtns = new HorizontalLayout();
+		controlBtns.setMargin(true);
 		Button acceptBtn = new Button("Accept", new Button.ClickListener() {
 
 			@Override
@@ -128,25 +127,37 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 
 			}
 		});
+		acceptBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		controlBtns.addComponent(acceptBtn);
 
 		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-
+				EventBus.getInstance().fireEvent(
+						new ProfileEvent.GotoProfileView(
+								ProfilePhotoUploadViewImpl.this, null));
 			}
 		});
+		cancelBtn.setStyleName("link");
 		controlBtns.addComponent(cancelBtn);
 
 		leftColumn.addComponent(controlBtns);
 		this.addComponent(leftColumn);
 
 		VerticalLayout previewBox = new VerticalLayout();
-		previewBox.setWidth("200px");
+		previewBox.setSpacing(true);
+		previewBox.setMargin(true);
+		previewBox.setWidth("320px");
+		
+		Label lbPreview = new Label("Preview: ");
+		previewBox.addComponent(lbPreview);
+		previewBox.setComponentAlignment(lbPreview, Alignment.TOP_LEFT);
+		
 		previewImage = new Embedded(null);
 		previewImage.setWidth("150px");
 		previewBox.addComponent(previewImage);
+		previewBox.setComponentAlignment(previewImage, Alignment.MIDDLE_CENTER);
 		this.addComponent(previewBox);
 	}
 
