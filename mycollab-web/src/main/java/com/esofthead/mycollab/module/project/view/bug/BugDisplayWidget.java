@@ -21,10 +21,11 @@ import com.vaadin.ui.VerticalLayout;
 public abstract class BugDisplayWidget extends Depot {
 
 	private static final long serialVersionUID = 1L;
-	public static int MAX_ITEM_DISPLAY = 10;
+	public static int MAX_ITEM_DISPLAY = 5;
 
 	protected BugSearchCriteria searchCriteria;
 	private final BeanList<BugService, BugSearchCriteria, SimpleBug> dataList;
+	private Button moreBtn;
 
 	public BugDisplayWidget(String title,
 			Class<? extends RowDisplayHandler<SimpleBug>> rowDisplayHandler) {
@@ -34,7 +35,7 @@ public abstract class BugDisplayWidget extends Depot {
 				AppContext.getSpringBean(BugService.class), rowDisplayHandler);
 		bodyContent.addComponent(dataList);
 
-		Button moreBtn = new Button("More ...", new Button.ClickListener() {
+		moreBtn = new Button("More ...", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -46,6 +47,7 @@ public abstract class BugDisplayWidget extends Depot {
 			}
 		});
 		moreBtn.setStyleName(UIConstants.THEME_LINK);
+		moreBtn.setVisible(false);
 		bodyContent.addComponent(moreBtn);
 		((VerticalLayout) bodyContent).setComponentAlignment(moreBtn,
 				Alignment.TOP_RIGHT);
@@ -56,8 +58,8 @@ public abstract class BugDisplayWidget extends Depot {
 		this.searchCriteria = searchCriteria;
 		SearchRequest<BugSearchCriteria> searchRequest = new SearchRequest<BugSearchCriteria>(
 				searchCriteria, 0, MAX_ITEM_DISPLAY);
-		dataList.setSearchRequest(searchRequest);
-
+		int displayItemsCount = dataList.setSearchRequest(searchRequest);
+		moreBtn.setVisible((displayItemsCount == MAX_ITEM_DISPLAY));
 	}
 
 	protected abstract BugSearchParameter constructMoreDisplayFilter();
