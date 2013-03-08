@@ -77,7 +77,8 @@ public class DueBugWidget extends BugDisplayWidget {
 			HorizontalLayout hLayoutDateInfo = new HorizontalLayout();
 			hLayoutDateInfo.setSpacing(true);
 			Label dateInfo = new Label("due on "
-					+ AppContext.formatDate(obj.getDuedate()) + ". Assignee: ");
+					+ AppContext.formatDate(obj.getDuedate()) + ". Status: "
+					+ obj.getStatus() + ". Assignee: ");
 			dateInfo.setStyleName(UIConstants.WIDGET_ROW_METADATA);
 			hLayoutDateInfo.addComponent(dateInfo);
 			hLayoutDateInfo.setComponentAlignment(dateInfo,

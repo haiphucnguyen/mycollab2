@@ -44,6 +44,13 @@
         <if test="status != null">
             ${status.operation} m_prj_task_list.status = #{status.value}
         </if>
+        <if test='milestoneIds != null'>
+            ${milestoneIds.operation} m_prj_task_list.milestoneId IN
+            <foreach close=")" collection="milestoneIds.values"
+                item="milestoneid" open="(" separator="OR">
+                #{milestoneid}
+            </foreach>    
+        </if>
     </sql>
     
     <sql id="selectTaskList">
