@@ -2485,7 +2485,7 @@ div.v-lazyloadingwrapper-loading {
 }
 /* End H2 Popup Button */
 .main-body {
-	min-height: 560px;
+	overflow-y: auto;
 	background-color: #FFFFFF;
 }
 

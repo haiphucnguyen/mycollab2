@@ -33,8 +33,11 @@ public final class MainView extends AbstractView {
 		bodyLayout = new CssLayout();
 		bodyLayout.addStyleName("main-body");
 		bodyLayout.setWidth("100%");
+		bodyLayout.setHeight("100%");
 		this.addComponent(bodyLayout);
+		this.setExpandRatio(bodyLayout, 1.0f);
 		this.addComponent(createFooter());
+		this.setSizeFull();
 		controller = new MainViewController(this);
 	}
 
