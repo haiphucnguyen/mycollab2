@@ -195,18 +195,6 @@ public class BugDashboardViewImpl extends AbstractView implements
 				updateBugWidget);
 		leftColumn.addComponent(updateBugWidgetWrapper);
 
-		BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
-		recentDefectsCriteria.setProjectId(new NumberSearchField(project
-				.getId()));
-		updateBugWidget.setSearchCriteria(recentDefectsCriteria);
-
-		BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
-		chartSearchCriteria.setProjectId(new NumberSearchField(
-				CurrentProjectVariables.getProjectId()));
-		BugChartComponent bugChartComponent = new BugChartComponent(
-				chartSearchCriteria);
-		rightColumn.addComponent(bugChartComponent);
-
 		// Unresolved by assignee
 		UnresolvedBugsByAssigneeWidget2 unresolvedByAssigneeWidget = new UnresolvedBugsByAssigneeWidget2();
 		BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
@@ -236,5 +224,18 @@ public class BugDashboardViewImpl extends AbstractView implements
 				.setSearchCriteria(unresolvedByPrioritySearchCriteria);
 		rightColumn
 				.addComponent(new LazyLoadWrapper(unresolvedByPriorityWidget));
+
+		// bug chart
+		BugSearchCriteria recentDefectsCriteria = new BugSearchCriteria();
+		recentDefectsCriteria.setProjectId(new NumberSearchField(project
+				.getId()));
+		updateBugWidget.setSearchCriteria(recentDefectsCriteria);
+
+		BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
+		chartSearchCriteria.setProjectId(new NumberSearchField(
+				CurrentProjectVariables.getProjectId()));
+		BugChartComponent bugChartComponent = new BugChartComponent(
+				chartSearchCriteria);
+		rightColumn.addComponent(bugChartComponent);
 	}
 }

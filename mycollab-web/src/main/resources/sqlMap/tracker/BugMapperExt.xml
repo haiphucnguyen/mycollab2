@@ -33,17 +33,12 @@
     </resultMap>
 
     <sql id="queryTotalCountSearchCriteria">
-        <choose>
-            <when test="assignuser == &apos;&apos;">
-                AND
-                m_tracker_bug.assignuser IS NULL
-            </when>
-
-            <when test="assignuser != null">
-                AND
-                m_tracker_bug.assignuser=#{assignuser.value}
-            </when>
-        </choose>
+        <if test="assignuser != null and assignuser.value != null">
+             ${assignuser.operation} m_tracker_bug.assignuser=#{assignuser.value}
+        </if>
+        <if test="assignuser != null and assignuser.value == null">
+             ${assignuser.operation} m_tracker_bug.assignuser IS NULL
+        </if>
 
         <if test="summary != null">
             <![CDATA[${summary.operation} m_tracker_bug.summary LIKE '%${summary.value}%']]>
@@ -197,7 +192,7 @@
                 #{severityitem}
             </foreach>
         </if>
-        
+
         <if test="milestoneIds != null">
             ${milestoneIds.operation} m_tracker_bug.milestoneId IN
             <foreach close=")" collection="milestoneIds.values"
@@ -208,17 +203,12 @@
     </sql>
 
     <sql id="querySearchCriteria">
-        <choose>
-            <when test="assignuser == &apos;&apos;">
-                AND
-                m_tracker_bug.assignuser IS NULL
-            </when>
-
-            <when test="assignuser != null">
-                AND
-                m_tracker_bug.assignuser=#{assignuser.value}
-            </when>
-        </choose>
+        <if test="assignuser != null and assignuser.value != null">
+             ${assignuser.operation} m_tracker_bug.assignuser=#{assignuser.value}
+        </if>
+        <if test="assignuser != null and assignuser.value == null">
+             ${assignuser.operation} m_tracker_bug.assignuser IS NULL
+        </if>
 
         <if test="summary != null">
             <![CDATA[${summary.operation} m_tracker_bug.summary LIKE '%${summary.value}%']]>

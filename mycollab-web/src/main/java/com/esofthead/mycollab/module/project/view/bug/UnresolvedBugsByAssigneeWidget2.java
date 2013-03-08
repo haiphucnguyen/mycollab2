@@ -5,8 +5,12 @@ import java.util.List;
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
@@ -37,7 +41,7 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 				assigneeLayout.setSpacing(true);
 
 				String assignUser = item.getGroupid();
-				String assignUserFullName = (item.getGroupid() == null) ? "Undefnined"
+				String assignUserFullName = (item.getGroupid() == null) ? "Undefined"
 						: item.getGroupname();
 				BugAssigneeButton userLbl = new BugAssigneeButton(assignUser,
 						assignUserFullName);
@@ -68,6 +72,12 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 				public void buttonClick(ClickEvent event) {
 					bugSearchCriteria.setAssignuser(new StringSearchField(
 							SearchField.AND, assignee));
+					BugSearchParameter param = new BugSearchParameter(
+							"Unresolved Bug List of " + assigneeFullName,
+							bugSearchCriteria);
+					EventBus.getInstance().fireEvent(
+							new BugEvent.GotoList(this,
+									new BugScreenData.Search(param)));
 				}
 			});
 
