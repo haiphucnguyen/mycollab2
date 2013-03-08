@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
+import java.util.GregorianCalendar;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -26,6 +28,7 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
@@ -131,7 +134,12 @@ public class TaskStatusComponent extends Depot {
 					});
 			taskLink.setIcon(ProjectResources.getIconResource16size(genericTask
 					.getType()));
-			taskLink.setStyleName("link");
+			if (genericTask.getDueDate() != null
+					&& (genericTask.getDueDate()
+							.before(new GregorianCalendar().getTime()))) {
+				taskLink.addStyleName(UIConstants.LINK_OVERDUE);
+			}
+			taskLink.addStyleName("link");
 			header.addComponent(taskLink);
 
 			Label projectLbl = new Label(" in project ");
