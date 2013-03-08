@@ -47,9 +47,9 @@ public class CurrentProjectVariables {
 					PermissionMap permissionMap = (PermissionMap) xstream
 							.fromXML(rolePer.getRoleval());
 					prjMember.setPermissionMaps(permissionMap);
-					AppContext.putVariable(ProjectContants.PROJECT_MEMBER,
-							prjMember);
 				}
+				AppContext.putVariable(ProjectContants.PROJECT_MEMBER,
+						prjMember);
 			}
 		} else if (!AppContext.isAdmin()) {
 			throw new MyCollabException("You are not belong to this project");

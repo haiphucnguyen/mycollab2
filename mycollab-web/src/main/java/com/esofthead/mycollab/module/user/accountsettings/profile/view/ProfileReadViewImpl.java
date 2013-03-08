@@ -126,11 +126,13 @@ public class ProfileReadViewImpl extends AbstractView implements
 							}
 						}
 					});
+			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			layout.addComponent(saveBtn);
 			layout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
 
 			Button cancelBtn = new Button(CANCEL_ACTION);
 			layout.addComponent(cancelBtn);
+			cancelBtn.setStyleName("link");
 			layout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
 
 			return layout;
