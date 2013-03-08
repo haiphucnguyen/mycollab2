@@ -132,6 +132,7 @@ public class WontFixExplainWindow extends Window {
     						.showNotification("Error",
     								"You must enter a comment to explain for won't fix resolution",
     								Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                        	return;
                         }
                         
                         WontFixExplainWindow.this.close();
