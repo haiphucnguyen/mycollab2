@@ -670,4 +670,8 @@
             refid="com.esofthead.mycollab.module.tracker.dao.BugMapperExt.querySearchCriteria" />
     </select>
 
+    <select id="getMaxKey" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT MAX(bugkey) FROM m_tracker_bug
+            WHERE m_tracker_bug.projectid=#{projectId, javaType=INTEGER}
+    </select>
 </mapper>

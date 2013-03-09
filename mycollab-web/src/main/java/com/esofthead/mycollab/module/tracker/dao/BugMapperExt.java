@@ -25,4 +25,6 @@ public interface BugMapperExt extends ISearchableDAO<BugSearchCriteria> {
     List<GroupItem> getComponentDefectsSummary(BugSearchCriteria criteria);
     
     List<GroupItem> getBugStatusTrendSummary(BugSearchCriteria criteria);
+    
+    Integer getMaxKey(int projectId);
 }

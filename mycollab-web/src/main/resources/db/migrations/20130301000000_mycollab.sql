@@ -1,0 +1,1 @@
+ALTER TABLE `m_tracker_bug` DROP COLUMN `investHours` , ADD COLUMN `bugkey` INT NULL;

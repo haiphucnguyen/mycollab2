@@ -78,6 +78,18 @@ public class BugServiceImpl extends
 	}
 
 	@Override
+	public int saveWithSession(Bug record, String username) {
+		Integer maxKey = bugMapperExt.getMaxKey(record.getProjectid());
+		if (maxKey == null) {
+			record.setBugkey(1);
+		} else {
+			record.setBugkey(maxKey + 1);
+		}
+		
+		return super.saveWithSession(record, username);
+	}
+
+	@Override
 	public List<MetaField> getProjectTrackerMetaData(int projectid) {
 		MetaDataExample ex = new MetaDataExample();
 		ex.createCriteria().andProjectidEqualTo(projectid);

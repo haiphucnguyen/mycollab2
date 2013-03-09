@@ -1,5 +1,5 @@
 /*
- * To change this template, choose Tools | Templates
+1 * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
 package com.esofthead.mycollab.module.project.view.task;
@@ -28,7 +28,7 @@ import com.vaadin.ui.Label;
  * @author haiphucnguyen
  */
 public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
-
+	private static final long serialVersionUID = 1L;
 	private SimpleTask task;
 
 	@Override

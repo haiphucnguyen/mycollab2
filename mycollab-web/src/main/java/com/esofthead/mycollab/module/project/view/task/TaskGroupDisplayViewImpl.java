@@ -11,11 +11,17 @@ import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.vaadin.event.FieldEvents.TextChangeEvent;
+import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
@@ -93,6 +99,40 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		filterBtnLayout.addComponent(archievedTasksFilterBtn);
 
 		taskGroupSelection.addComponent(filterBtnLayout);
+		
+		//Search button
+		HorizontalLayout basicSearchBody = new HorizontalLayout();
+		basicSearchBody.setSpacing(true);
+		basicSearchBody.setMargin(true);
+
+		final TextField nameField = new TextField();
+		nameField.addListener(new TextChangeListener() {
+			@Override
+			public void textChange(TextChangeEvent event) {
+				
+
+				String textSearch = event.getText().toString().trim();
+			}
+		});
+
+		nameField.setTextChangeEventMode(TextChangeEventMode.LAZY);
+		nameField.setTextChangeTimeout(200);
+		nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+		basicSearchBody.addComponent(nameField);
+
+		Button searchBtn = new Button();
+		searchBtn.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(Button.ClickEvent event) {
+				
+			}
+		});
+		searchBtn.setIcon(new ThemeResource("icons/22/search.png"));
+		searchBtn.setStyleName("link");
+		basicSearchBody.addComponent(searchBtn);
+		header.addComponent(basicSearchBody);
 
 		reOrderBtn = new Button("Reorder", new Button.ClickListener() {
 			@Override
