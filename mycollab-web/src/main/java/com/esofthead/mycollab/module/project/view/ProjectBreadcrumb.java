@@ -8,8 +8,10 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
+import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
@@ -19,6 +21,7 @@ import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
@@ -50,8 +53,9 @@ import com.vaadin.ui.ComponentContainer;
 @ViewComponent
 public class ProjectBreadcrumb extends Breadcrumb implements View {
 	private static final long serialVersionUID = 1L;
-	private SimpleProject project;
 	private static LabelStringGenerator menuLinkGenerator = new BreadcrumbLabelStringGenerator();
+
+	private SimpleProject project;
 
 	public ProjectBreadcrumb() {
 		this.setShowAnimationSpeed(Breadcrumb.AnimSpeed.SLOW);
@@ -585,7 +589,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		}
 	}
 
-	public void gotoComponentnList() {
+	public void gotoComponentList() {
 		this.select(1);
 		this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
 		this.setLinkEnabled(true, 2);
@@ -646,6 +650,71 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
 								+ component.getId()), "Preview Component: "
 						+ component.getComponentname());
+	}
+
+	public void gotoStandupList() {
+		this.select(1);
+		this.addLink(new Button("Standups"));
+		AppContext.addFragment(
+				"project/standup/list/"
+						+ UrlEncodeDecoder.encode(project.getId()),
+				"Standup List");
+	}
+
+	public void gotoUserList() {
+		this.select(1);
+		this.addLink(new Button("Users"));
+		AppContext
+				.addFragment(
+						"project/user/list/"
+								+ UrlEncodeDecoder.encode(project.getId()),
+						"Project Members");
+	}
+	
+	public void gotoUserAdd() {
+		this.select(1);
+		this.addLink(new Button("Users", new GotoUserListener()));
+		this.setLinkEnabled(true, 2);
+		this.addLink(new Button("Add"));
+		AppContext
+				.addFragment(
+						"project/user/add/"
+								+ UrlEncodeDecoder.encode(project.getId()),
+						"New Project Member");
+	}
+
+	public void gotoUserRead(SimpleProjectMember member) {
+		this.select(1);
+		this.addLink(new Button("Users", new GotoUserListener()));
+		this.setLinkEnabled(true, 2);
+		this.addLink(generateBreadcrumbLink(member.getMemberFullName()));
+		AppContext.addFragment(
+				"project/user/preview/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ member.getId()),
+				"View Project Member: " + member.getMemberFullName());
+	}
+	
+	public void gotoUserEdit(SimpleProjectMember member) {
+		this.select(1);
+		this.addLink(new Button("Users", new GotoUserListener()));
+		this.setLinkEnabled(true, 2);
+		this.addLink(generateBreadcrumbLink(member.getMemberFullName()));
+		AppContext.addFragment(
+				"project/user/edit/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ member.getId()),
+				"Edit Project Member: " + member.getMemberFullName());
+	}
+
+	private static class GotoUserListener implements Button.ClickListener {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void buttonClick(ClickEvent event) {
+			EventBus.getInstance().fireEvent(
+					new ProjectMemberEvent.GotoList(this, null));
+		}
 	}
 
 	private static class GotoComponentListener implements Button.ClickListener {

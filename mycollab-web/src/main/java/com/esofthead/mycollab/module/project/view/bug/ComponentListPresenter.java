@@ -207,7 +207,7 @@ public class ComponentListPresenter extends AbstractPresenter<ComponentListView>
         doSearch((ComponentSearchCriteria) data.getParams());
         
         ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
-        breadcrumb.gotoComponentnList();
+        breadcrumb.gotoComponentList();
     }
 
     @Override

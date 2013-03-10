@@ -15,10 +15,12 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
@@ -161,6 +163,9 @@ public class ProjectMemberReadPresenter extends
 			userGroupContainer.removeAllComponents();
 			userGroupContainer.addComponent(view.getWidget());
 			view.previewItem(prjMember);
+			ProjectBreadcrumb breadCrumb = ViewManager
+					.getView(ProjectBreadcrumb.class);
+			breadCrumb.gotoUserRead(prjMember);
 		} else {
 			AppContext
 					.getApplication()

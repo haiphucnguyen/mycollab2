@@ -8,14 +8,17 @@ import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
@@ -73,7 +76,17 @@ public class ProjectMemberAddPresenter extends
 		ProjectMemberContainer userGroupContainer = (ProjectMemberContainer) container;
 		userGroupContainer.removeAllComponents();
 		userGroupContainer.addComponent(view.getWidget());
-		view.editItem((ProjectMember) data.getParams());
+
+		ProjectMember member = (ProjectMember) data.getParams();
+		view.editItem(member);
+
+		ProjectBreadcrumb breadcrumb = ViewManager
+				.getView(ProjectBreadcrumb.class);
+		if (member.getId() == null) {
+			breadcrumb.gotoUserAdd();
+		} else {
+			breadcrumb.gotoUserEdit((SimpleProjectMember) member);
+		}
 	}
 
 	public void saveProjectMember(ProjectMember projectMember) {
