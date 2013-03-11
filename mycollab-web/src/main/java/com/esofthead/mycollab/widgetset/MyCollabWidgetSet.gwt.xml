@@ -57,4 +57,8 @@
     <inherits name="com.lexaden.breadcrumb.BreadcrumbWidgetset" />
 
     <inherits name="org.vaadin.addon.componentexport.widgetset.ComponentexportdemoWidgetset" />
+
+    <inherits name="ru.bazon.vaadin.ganttdiagram.GanttDiagramWidgetset" />
+
+    
 </module>
