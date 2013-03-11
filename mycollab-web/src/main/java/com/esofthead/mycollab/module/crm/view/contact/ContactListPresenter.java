@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.file.ExportStreamResource;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -19,6 +20,7 @@ import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
@@ -208,9 +210,13 @@ public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
-        doSearch((ContactSearchCriteria) data.getParams());
-        AppContext.addFragment("crm/contact/list");
+    	if (AppContext.canRead(RolePermissionCollections.CRM_CONTACT)) {
+    		 super.onGo(container, data);
+    	        doSearch((ContactSearchCriteria) data.getParams());
+    	        AppContext.addFragment("crm/contact/list");
+    	} else {
+    		MessageConstants.showMessagePermissionAlert();
+    	}
     }
 
     @Override

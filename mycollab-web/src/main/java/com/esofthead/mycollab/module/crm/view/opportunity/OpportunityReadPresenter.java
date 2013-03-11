@@ -22,9 +22,11 @@ import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
@@ -231,25 +233,29 @@ public class OpportunityReadPresenter extends CrmGenericPresenter<OpportunityRea
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (data.getParams() instanceof Integer) {
-            OpportunityService opportunityService = AppContext
-                    .getSpringBean(OpportunityService.class);
-            SimpleOpportunity opportunity = opportunityService
-                    .findOpportunityById((Integer) data.getParams());
-            if (opportunity != null) {
-                super.onGo(container, data);
-                view.previewItem(opportunity);
-                
-                AppContext.addFragment("crm/opportunity/preview/" + UrlEncodeDecoder.encode(opportunity.getId()));
-            } else {
-                AppContext
-                        .getApplication()
-                        .getMainWindow()
-                        .showNotification("Information",
-                        "The record is not existed",
-                        Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                return;
-            }
-        }
+    	if (AppContext.canRead(RolePermissionCollections.CRM_OPPORTUNITY)) {
+    		 if (data.getParams() instanceof Integer) {
+    	            OpportunityService opportunityService = AppContext
+    	                    .getSpringBean(OpportunityService.class);
+    	            SimpleOpportunity opportunity = opportunityService
+    	                    .findOpportunityById((Integer) data.getParams());
+    	            if (opportunity != null) {
+    	                super.onGo(container, data);
+    	                view.previewItem(opportunity);
+    	                
+    	                AppContext.addFragment("crm/opportunity/preview/" + UrlEncodeDecoder.encode(opportunity.getId()));
+    	            } else {
+    	                AppContext
+    	                        .getApplication()
+    	                        .getMainWindow()
+    	                        .showNotification("Information",
+    	                        "The record is not existed",
+    	                        Window.Notification.TYPE_HUMANIZED_MESSAGE);
+    	                return;
+    	            }
+    	        }
+    	} else {
+    		MessageConstants.showMessagePermissionAlert();
+    	}
     }
 }

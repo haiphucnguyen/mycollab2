@@ -5,12 +5,14 @@ import com.esofthead.mycollab.module.crm.domain.Call;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -52,15 +54,19 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
-        Call call = (Call) data.getParams();
-        view.editItem(call);
-        
-        if (call.getId() == null) {
-            AppContext.addFragment("crm/call/add");
-        } else {
-            AppContext.addFragment("crm/call/edit/" + UrlEncodeDecoder.encode(call.getId()));
-        }
+    	if (AppContext.canWrite(RolePermissionCollections.CRM_TASK)) {
+    		super.onGo(container, data);
+            Call call = (Call) data.getParams();
+            view.editItem(call);
+            
+            if (call.getId() == null) {
+                AppContext.addFragment("crm/call/add");
+            } else {
+                AppContext.addFragment("crm/call/edit/" + UrlEncodeDecoder.encode(call.getId()));
+            }
+    	} else {
+    		MessageConstants.showMessagePermissionAlert();
+    	}
     }
 
     public void save(Call item) {

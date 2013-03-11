@@ -1,5 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Set;
+
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
@@ -25,17 +32,14 @@ import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Set;
-import org.vaadin.dialogs.ConfirmDialog;
 
 public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 
@@ -268,26 +272,30 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 
-		if (data.getParams() instanceof Integer) {
-			AccountService accountService = AppContext
-					.getSpringBean(AccountService.class);
-			SimpleAccount account = accountService
-					.findAccountById((Integer) data.getParams());
-			if (account != null) {
-				super.onGo(container, data);
-				view.previewItem((SimpleAccount) account);
-				AppContext.addFragment("crm/account/preview/"
-						+ UrlEncodeDecoder.encode(account.getId()),
-						"Preview account: " + account.getAccountname());
-			} else {
-				AppContext
-						.getApplication()
-						.getMainWindow()
-						.showNotification("Information",
-								"The record is not existed",
-								Window.Notification.TYPE_HUMANIZED_MESSAGE);
-				return;
+		if (AppContext.canRead(RolePermissionCollections.CRM_ACCOUNT)) {
+			if (data.getParams() instanceof Integer) {
+				AccountService accountService = AppContext
+						.getSpringBean(AccountService.class);
+				SimpleAccount account = accountService
+						.findAccountById((Integer) data.getParams());
+				if (account != null) {
+					super.onGo(container, data);
+					view.previewItem((SimpleAccount) account);
+					AppContext.addFragment("crm/account/preview/"
+							+ UrlEncodeDecoder.encode(account.getId()),
+							"Preview account: " + account.getAccountname());
+				} else {
+					AppContext
+							.getApplication()
+							.getMainWindow()
+							.showNotification("Information",
+									"The record is not existed",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					return;
+				}
 			}
+		} else {
+			MessageConstants.showMessagePermissionAlert();
 		}
 	}
 }

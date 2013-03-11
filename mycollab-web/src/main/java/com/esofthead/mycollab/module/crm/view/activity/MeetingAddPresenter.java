@@ -5,12 +5,14 @@ import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -53,15 +55,19 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
-        Meeting meeting = (Meeting) data.getParams();
-        view.editItem(meeting);
-        
-        if (meeting.getId() == null) {
-            AppContext.addFragment("crm/meeting/add");
-        } else {
-            AppContext.addFragment("crm/meeting/edit/" + UrlEncodeDecoder.encode(meeting.getId()));
-        }
+    	if (AppContext.canWrite(RolePermissionCollections.CRM_MEETING)) {
+    		super.onGo(container, data);
+            Meeting meeting = (Meeting) data.getParams();
+            view.editItem(meeting);
+            
+            if (meeting.getId() == null) {
+                AppContext.addFragment("crm/meeting/add");
+            } else {
+                AppContext.addFragment("crm/meeting/edit/" + UrlEncodeDecoder.encode(meeting.getId()));
+            }
+    	} else {
+    		MessageConstants.showMessagePermissionAlert();
+    	}
     }
 
     public void save(Meeting item) {

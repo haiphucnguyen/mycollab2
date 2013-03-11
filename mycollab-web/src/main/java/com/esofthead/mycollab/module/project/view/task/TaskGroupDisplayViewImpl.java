@@ -50,6 +50,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		taskGroupSelection.addStyleName("h2");
 		header.addComponent(taskGroupSelection);
 		header.setExpandRatio(taskGroupSelection, 1.0f);
+		header.setComponentAlignment(taskGroupSelection, Alignment.MIDDLE_LEFT);
 
 		VerticalLayout filterBtnLayout = new VerticalLayout();
 		filterBtnLayout.setMargin(true);
@@ -132,6 +133,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		searchBtn.setStyleName("link");
 		basicSearchBody.addComponent(searchBtn);
 		header.addComponent(basicSearchBody);
+		header.setComponentAlignment(basicSearchBody, Alignment.MIDDLE_RIGHT);
 
 		reOrderBtn = new Button("Reorder", new Button.ClickListener() {
 			@Override

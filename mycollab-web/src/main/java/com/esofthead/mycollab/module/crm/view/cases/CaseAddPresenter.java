@@ -5,12 +5,14 @@ import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -55,15 +57,19 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
-        Case cases = (Case) data.getParams();
-        view.editItem(cases);
-        
-        if (cases.getId() == null) {
-            AppContext.addFragment("crm/cases/add");
-        } else {
-            AppContext.addFragment("crm/cases/edit/" + UrlEncodeDecoder.encode(cases.getId()));
-        }
+    	if (AppContext.canWrite(RolePermissionCollections.CRM_CASE)) {
+    		 super.onGo(container, data);
+    	        Case cases = (Case) data.getParams();
+    	        view.editItem(cases);
+    	        
+    	        if (cases.getId() == null) {
+    	            AppContext.addFragment("crm/cases/add");
+    	        } else {
+    	            AppContext.addFragment("crm/cases/edit/" + UrlEncodeDecoder.encode(cases.getId()));
+    	        }
+    	} else {
+    		MessageConstants.showMessagePermissionAlert();
+    	}
     }
 
     public void saveCase(Case cases) {

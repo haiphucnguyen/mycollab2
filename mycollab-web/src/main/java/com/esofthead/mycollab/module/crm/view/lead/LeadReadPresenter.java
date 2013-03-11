@@ -1,5 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.lead;
 
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Set;
+
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
@@ -19,17 +26,14 @@ import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Set;
-import org.vaadin.dialogs.ConfirmDialog;
 
 public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 
@@ -192,25 +196,29 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (data.getParams() instanceof Integer) {
-            LeadService leadService = AppContext
-                    .getSpringBean(LeadService.class);
-            SimpleLead lead = leadService.findLeadById((Integer) data
-                    .getParams());
-            if (lead != null) {
-                super.onGo(container, data);
-                view.previewItem(lead);
-                
-                AppContext.addFragment("crm/lead/preview/" + UrlEncodeDecoder.encode(lead.getId()));
-            } else {
-                AppContext
-                        .getApplication()
-                        .getMainWindow()
-                        .showNotification("Information",
-                        "The record is not existed",
-                        Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                return;
-            }
-        }
+    	if (AppContext.canRead(RolePermissionCollections.CRM_LEAD)) {
+    		 if (data.getParams() instanceof Integer) {
+    	            LeadService leadService = AppContext
+    	                    .getSpringBean(LeadService.class);
+    	            SimpleLead lead = leadService.findLeadById((Integer) data
+    	                    .getParams());
+    	            if (lead != null) {
+    	                super.onGo(container, data);
+    	                view.previewItem(lead);
+    	                
+    	                AppContext.addFragment("crm/lead/preview/" + UrlEncodeDecoder.encode(lead.getId()));
+    	            } else {
+    	                AppContext
+    	                        .getApplication()
+    	                        .getMainWindow()
+    	                        .showNotification("Information",
+    	                        "The record is not existed",
+    	                        Window.Notification.TYPE_HUMANIZED_MESSAGE);
+    	                return;
+    	            }
+    	        }
+    	} else {
+    		MessageConstants.showMessagePermissionAlert();
+    	}
     }
 }
