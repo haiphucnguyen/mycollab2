@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.file.ExportStreamResource;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -19,6 +20,7 @@ import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
@@ -194,10 +196,14 @@ public class CampaignListPresenter extends CrmGenericPresenter<CampaignListView>
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
-        doSearch((CampaignSearchCriteria) data.getParams());
-        
-        AppContext.addFragment("crm/campaign/list");
+    	if (AppContext.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
+    		super.onGo(container, data);
+            doSearch((CampaignSearchCriteria) data.getParams());
+            
+            AppContext.addFragment("crm/campaign/list");
+    	} else {
+    		MessageConstants.showMessagePermissionAlert();
+    	}
     }
 
     @Override

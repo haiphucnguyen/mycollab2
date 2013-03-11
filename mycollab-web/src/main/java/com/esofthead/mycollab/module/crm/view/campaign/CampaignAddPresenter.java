@@ -7,12 +7,14 @@ import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import java.util.Arrays;
@@ -60,15 +62,19 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
-        Campaign campaign = (Campaign) data.getParams();
-        view.editItem(campaign);
-        
-        if (campaign.getId() == null) {
-            AppContext.addFragment("crm/campaign/add");
-        } else {
-            AppContext.addFragment("crm/campaign/edit/" + UrlEncodeDecoder.encode(campaign.getId()));
-        }
+    	if (AppContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN)) {
+    		super.onGo(container, data);
+            Campaign campaign = (Campaign) data.getParams();
+            view.editItem(campaign);
+            
+            if (campaign.getId() == null) {
+                AppContext.addFragment("crm/campaign/add");
+            } else {
+                AppContext.addFragment("crm/campaign/edit/" + UrlEncodeDecoder.encode(campaign.getId()));
+            }
+    	} else {
+    		MessageConstants.showMessagePermissionAlert();
+    	}
     }
 
     public void saveCampaign(Campaign campaign) {

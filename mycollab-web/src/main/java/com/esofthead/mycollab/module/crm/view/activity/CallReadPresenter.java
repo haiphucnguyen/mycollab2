@@ -10,9 +10,11 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CallSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
@@ -122,25 +124,29 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
-        if (data.getParams() instanceof Integer) {
-            CallService callService = AppContext
-                    .getSpringBean(CallService.class);
-            SimpleCall call = callService.findCallById((Integer) data
-                    .getParams());
-            if (call != null) {
-                view.previewItem(call);
-                AppContext.addFragment("crm/call/preview/" + UrlEncodeDecoder.encode(call.getId()));
-            } else {
-                AppContext
-                        .getApplication()
-                        .getMainWindow()
-                        .showNotification("Information",
-                        "The record is not existed",
-                        Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                return;
+    	if (AppContext.canRead(RolePermissionCollections.CRM_CALL)) {
+    		super.onGo(container, data);
+            if (data.getParams() instanceof Integer) {
+                CallService callService = AppContext
+                        .getSpringBean(CallService.class);
+                SimpleCall call = callService.findCallById((Integer) data
+                        .getParams());
+                if (call != null) {
+                    view.previewItem(call);
+                    AppContext.addFragment("crm/call/preview/" + UrlEncodeDecoder.encode(call.getId()));
+                } else {
+                    AppContext
+                            .getApplication()
+                            .getMainWindow()
+                            .showNotification("Information",
+                            "The record is not existed",
+                            Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                    return;
+                }
             }
-        }
-        view.previewItem((SimpleCall) data.getParams());
+            view.previewItem((SimpleCall) data.getParams());
+    	} else {
+    		MessageConstants.showMessagePermissionAlert();
+    	}
     }
 }

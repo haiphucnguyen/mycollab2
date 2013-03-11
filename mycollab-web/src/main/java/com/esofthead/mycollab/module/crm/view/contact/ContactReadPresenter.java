@@ -18,9 +18,11 @@ import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
@@ -193,21 +195,25 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (data.getParams() instanceof Integer) {
-            ContactService contactService = AppContext
-                    .getSpringBean(ContactService.class);
-            SimpleContact contact = contactService
-                    .findContactById((Integer) data.getParams());
-            if (contact != null) {
-                super.onGo(container, data);
-                view.previewItem(contact);
-                
-                AppContext.addFragment("crm/contact/preview/" + UrlEncodeDecoder.encode(contact.getId()));
-            } else {
-                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                return;
-            }
-        }
+    	if (AppContext.canRead(RolePermissionCollections.CRM_CONTACT)) {
+    		 if (data.getParams() instanceof Integer) {
+    	            ContactService contactService = AppContext
+    	                    .getSpringBean(ContactService.class);
+    	            SimpleContact contact = contactService
+    	                    .findContactById((Integer) data.getParams());
+    	            if (contact != null) {
+    	                super.onGo(container, data);
+    	                view.previewItem(contact);
+    	                
+    	                AppContext.addFragment("crm/contact/preview/" + UrlEncodeDecoder.encode(contact.getId()));
+    	            } else {
+    	                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
+    	                return;
+    	            }
+    	        }
+    	} else {
+    		MessageConstants.showMessagePermissionAlert();
+    	}
 
     }
 }

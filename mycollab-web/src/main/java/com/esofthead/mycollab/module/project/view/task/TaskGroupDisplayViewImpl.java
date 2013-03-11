@@ -11,7 +11,6 @@ import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
@@ -50,6 +49,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		taskGroupSelection.addStyleName("h2");
 		header.addComponent(taskGroupSelection);
 		header.setExpandRatio(taskGroupSelection, 1.0f);
+		header.setComponentAlignment(taskGroupSelection, Alignment.MIDDLE_LEFT);
 
 		VerticalLayout filterBtnLayout = new VerticalLayout();
 		filterBtnLayout.setMargin(true);
@@ -133,6 +133,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		searchBtn.setStyleName("link");
 		basicSearchBody.addComponent(searchBtn);
 		header.addComponent(basicSearchBody);
+		header.setComponentAlignment(basicSearchBody, Alignment.MIDDLE_RIGHT);
 
 		reOrderBtn = new Button("Reorder", new Button.ClickListener() {
 			@Override

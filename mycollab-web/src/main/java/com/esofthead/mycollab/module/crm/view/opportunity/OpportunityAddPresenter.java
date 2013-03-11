@@ -8,12 +8,14 @@ import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.service.OpportunityService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import java.util.Arrays;
@@ -61,15 +63,19 @@ public class OpportunityAddPresenter extends CrmGenericPresenter<OpportunityAddV
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
-        Opportunity opportunity = (Opportunity) data.getParams();
-        view.editItem(opportunity);
-        
-        if (opportunity.getId() == null) {
-            AppContext.addFragment("crm/opportunity/add");
-        } else {
-            AppContext.addFragment("crm/opportunity/edit/" + UrlEncodeDecoder.encode(opportunity.getId()));
-        }
+    	if (AppContext.canWrite(RolePermissionCollections.CRM_OPPORTUNITY)) {
+    		 super.onGo(container, data);
+    	        Opportunity opportunity = (Opportunity) data.getParams();
+    	        view.editItem(opportunity);
+    	        
+    	        if (opportunity.getId() == null) {
+    	            AppContext.addFragment("crm/opportunity/add");
+    	        } else {
+    	            AppContext.addFragment("crm/opportunity/edit/" + UrlEncodeDecoder.encode(opportunity.getId()));
+    	        }
+    	} else {
+    		MessageConstants.showMessagePermissionAlert();
+    	}
     }
 
     public void saveOpportunity(Opportunity opportunity) {

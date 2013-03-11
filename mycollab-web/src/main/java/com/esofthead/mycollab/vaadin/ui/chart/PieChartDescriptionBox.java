@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.vaadin.ui.chart;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.jfree.data.general.DefaultPieDataset;
 
@@ -13,9 +15,11 @@ import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
+@SuppressWarnings("rawtypes")
 public class PieChartDescriptionBox {
 
-	@SuppressWarnings("rawtypes")
+	private static Map<String, Comparable> mapKeyStatus = new HashMap<String, Comparable>();
+
 	public static ComponentContainer createLegendBox(
 			final PieChartWrapper pieChartHost, DefaultPieDataset pieDataSet) {
 		CustomLayout boxWrapper = new CustomLayout("centerContent");
@@ -28,6 +32,7 @@ public class PieChartDescriptionBox {
 			layout.setMargin(false, false, false, true);
 			layout.addStyleName("inline-block");
 			Comparable key = (Comparable) keys.get(i);
+
 			String color = "<div style = \" width:8px;height:8px;border-radius:5px;background: #"
 					+ GenericChartWrapper.CHART_COLOR_STR[i
 							% GenericChartWrapper.CHART_COLOR_STR.length]
@@ -46,13 +51,14 @@ public class PieChartDescriptionBox {
 						@Override
 						public void buttonClick(ClickEvent event) {
 							String caption = event.getButton().getCaption();
-							if (caption.indexOf("(") > -1) {
-								String keyStatus = caption.substring(0,
-										caption.indexOf("("));
+							if (mapKeyStatus.containsKey(caption)) {
+								String keyStatus = mapKeyStatus.get(caption)
+										+ "";
 								pieChartHost.onClickedDescription(keyStatus);
 							}
 						}
 					});
+			mapKeyStatus.put(btnLink.getCaption(), key);
 			btnLink.addStyleName("link");
 			layout.addComponent(lblCircle);
 			layout.setComponentAlignment(lblCircle, Alignment.MIDDLE_CENTER);

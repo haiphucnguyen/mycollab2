@@ -1,5 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Set;
+
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
@@ -26,17 +33,14 @@ import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Set;
-import org.vaadin.dialogs.ConfirmDialog;
 
 public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView> {
 
@@ -265,25 +269,28 @@ public class CampaignReadPresenter extends CrmGenericPresenter<CampaignReadView>
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        if (data.getParams() instanceof Integer) {
-            CampaignService campaignService = AppContext
-                    .getSpringBean(CampaignService.class);
-            SimpleCampaign campaign = campaignService
-                    .findCampaignById((Integer) data.getParams());
-            if (campaign != null) {
-                super.onGo(container, data);
-                view.previewItem(campaign);
-                AppContext.addFragment("crm/campaign/preview/" + UrlEncodeDecoder.encode(campaign.getId()));
-            } else {
-                AppContext
-                        .getApplication()
-                        .getMainWindow()
-                        .showNotification("Information",
-                        "The record is not existed",
-                        Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                return;
+    	if (AppContext.canRead(RolePermissionCollections.CRM_CAMPAIGN)) {
+    		if (data.getParams() instanceof Integer) {
+                CampaignService campaignService = AppContext
+                        .getSpringBean(CampaignService.class);
+                SimpleCampaign campaign = campaignService
+                        .findCampaignById((Integer) data.getParams());
+                if (campaign != null) {
+                    super.onGo(container, data);
+                    view.previewItem(campaign);
+                    AppContext.addFragment("crm/campaign/preview/" + UrlEncodeDecoder.encode(campaign.getId()));
+                } else {
+                    AppContext
+                            .getApplication()
+                            .getMainWindow()
+                            .showNotification("Information",
+                            "The record is not existed",
+                            Window.Notification.TYPE_HUMANIZED_MESSAGE);
+                    return;
+                }
             }
-        }
-
+    	} else {
+    		MessageConstants.showMessagePermissionAlert();
+    	}
     }
 }

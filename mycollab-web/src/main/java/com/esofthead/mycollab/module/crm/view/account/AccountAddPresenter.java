@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import java.util.Arrays;
+import java.util.GregorianCalendar;
+
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
@@ -8,18 +11,17 @@ import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
-
-import java.util.Arrays;
-import java.util.GregorianCalendar;
 
 public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 
@@ -63,35 +65,39 @@ public class AccountAddPresenter extends CrmGenericPresenter<AccountAddView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		Account account = null;
-		if (data.getParams() instanceof Account) {
-			account = (Account) data.getParams();
-		} else if (data.getParams() instanceof Integer) {
-			AccountService accountService = AppContext
-					.getSpringBean(AccountService.class);
-			account = accountService.findByPrimaryKey((Integer) data
-					.getParams());
-			if (account == null) {
-				AppContext
-						.getApplication()
-						.getMainWindow()
-						.showNotification("Information",
-								"The record is not existed",
-								Window.Notification.TYPE_HUMANIZED_MESSAGE);
-				return;
+		if (AppContext.canWrite(RolePermissionCollections.CRM_ACCOUNT)) {
+			Account account = null;
+			if (data.getParams() instanceof Account) {
+				account = (Account) data.getParams();
+			} else if (data.getParams() instanceof Integer) {
+				AccountService accountService = AppContext
+						.getSpringBean(AccountService.class);
+				account = accountService.findByPrimaryKey((Integer) data
+						.getParams());
+				if (account == null) {
+					AppContext
+							.getApplication()
+							.getMainWindow()
+							.showNotification("Information",
+									"The record is not existed",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					return;
+				}
 			}
-		}
 
-		super.onGo(container, data);
-		view.editItem(account);
-		if (account.getId() == null) {
-			AppContext.addFragment("crm/account/add", "Add Account");
+			super.onGo(container, data);
+			view.editItem(account);
+			if (account.getId() == null) {
+				AppContext.addFragment("crm/account/add", "Add Account");
 
+			} else {
+				AppContext.addFragment(
+						"crm/account/edit/"
+								+ UrlEncodeDecoder.encode(account.getId()),
+						"Edit Account: " + account.getAccountname());
+			}
 		} else {
-			AppContext.addFragment(
-					"crm/account/edit/"
-							+ UrlEncodeDecoder.encode(account.getId()),
-					"Edit Account: " + account.getAccountname());
+			MessageConstants.showMessagePermissionAlert();
 		}
 	}
 

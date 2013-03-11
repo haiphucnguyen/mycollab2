@@ -5,12 +5,14 @@ import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -52,15 +54,19 @@ public class TaskAddPresenter extends CrmGenericPresenter<TaskAddView> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
-        Task task = (Task) data.getParams();
-        view.editItem(task);
-        
-        if (task.getId() == null) {
-            AppContext.addFragment("crm/task/add");
-        } else {
-            AppContext.addFragment("crm/task/edit/" + UrlEncodeDecoder.encode(task.getId()));
-        }
+    	if (AppContext.canWrite(RolePermissionCollections.CRM_TASK)) {
+    		super.onGo(container, data);
+            Task task = (Task) data.getParams();
+            view.editItem(task);
+            
+            if (task.getId() == null) {
+                AppContext.addFragment("crm/task/add");
+            } else {
+                AppContext.addFragment("crm/task/edit/" + UrlEncodeDecoder.encode(task.getId()));
+            }
+    	} else {
+    		MessageConstants.showMessagePermissionAlert();
+    	}
     }
 
     public void save(Task item) {
