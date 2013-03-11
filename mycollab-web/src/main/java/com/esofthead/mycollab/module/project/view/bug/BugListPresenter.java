@@ -197,6 +197,7 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		BugContainer bugContainer = (BugContainer) container;
+		bugContainer.removeAllComponents();
 		bugContainer.addComponent(view.getWidget());
 
 		BugSearchParameter param = (BugSearchParameter) data.getParams();

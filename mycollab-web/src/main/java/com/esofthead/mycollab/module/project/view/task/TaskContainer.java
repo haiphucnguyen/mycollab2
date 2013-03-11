@@ -6,6 +6,8 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -33,9 +35,10 @@ public class TaskContainer extends AbstractView {
 	}
 
 	public static class DisplayGanttChartRequest extends ScreenData {
+		private TaskListSearchCriteria searchCriteria;
 
-		public DisplayGanttChartRequest() {
-			super(null);
+		public DisplayGanttChartRequest(TaskSearchCriteria searchCriteria) {
+			super(searchCriteria);
 		}
 	}
 

@@ -193,8 +193,9 @@ public class ProjectController implements IController {
 									TaskListEvent.GotoGanttChartView event) {
 								ProjectView projectView = ViewManager
 										.getView(ProjectView.class);
-								TaskContainer.DisplayGanttChartRequest data = new TaskContainer.DisplayGanttChartRequest();
-								projectView.gotoTaskList(data);
+								projectView
+										.gotoTaskList((TaskContainer.DisplayGanttChartRequest) event
+												.getData());
 							}
 						});
 

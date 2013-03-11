@@ -7,6 +7,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -156,17 +157,21 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		newTaskListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		header.addComponent(newTaskListBtn);
 		header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
-		
+
 		Button showGanttChartBtn = new Button("Show Gantt Chart",
 				new Button.ClickListener() {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
+						TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
+						searchCriteria.setProjectid(new NumberSearchField(
+								CurrentProjectVariables.getProjectId()));
 						EventBus.getInstance()
 								.fireEvent(
 										new TaskListEvent.GotoGanttChartView(
 												this,
-												new TaskContainer.DisplayGanttChartRequest()));
+												new TaskContainer.DisplayGanttChartRequest(
+														searchCriteria)));
 					}
 				});
 		showGanttChartBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
