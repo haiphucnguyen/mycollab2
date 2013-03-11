@@ -7,6 +7,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -99,8 +100,8 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		filterBtnLayout.addComponent(archievedTasksFilterBtn);
 
 		taskGroupSelection.addComponent(filterBtnLayout);
-		
-		//Search button
+
+		// Search button
 		HorizontalLayout basicSearchBody = new HorizontalLayout();
 		basicSearchBody.setSpacing(true);
 		basicSearchBody.setMargin(true);
@@ -109,7 +110,6 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		nameField.addListener(new TextChangeListener() {
 			@Override
 			public void textChange(TextChangeEvent event) {
-				
 
 				String textSearch = event.getText().toString().trim();
 			}
@@ -126,7 +126,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(Button.ClickEvent event) {
-				
+
 			}
 		});
 		searchBtn.setIcon(new ThemeResource("icons/22/search.png"));
@@ -159,6 +159,26 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		newTaskListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		header.addComponent(newTaskListBtn);
 		header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
+
+		Button showGanttChartBtn = new Button("Show Gantt Chart",
+				new Button.ClickListener() {
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
+						searchCriteria.setProjectid(new NumberSearchField(
+								CurrentProjectVariables.getProjectId()));
+						EventBus.getInstance()
+								.fireEvent(
+										new TaskListEvent.GotoGanttChartView(
+												this,
+												new TaskContainer.DisplayGanttChartRequest(
+														searchCriteria)));
+					}
+				});
+		showGanttChartBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		header.addComponent(showGanttChartBtn);
+		header.setComponentAlignment(showGanttChartBtn, Alignment.MIDDLE_RIGHT);
 
 		this.addComponent(header);
 		taskLists = new TaskGroupDisplayWidget();

@@ -6,12 +6,14 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @ViewComponent
@@ -20,50 +22,58 @@ public class TaskContainer extends AbstractView {
 
 	public static class PreviewTaskListData extends ScreenData<Integer> {
 
-        public PreviewTaskListData(Integer taskListId) {
-            super(taskListId);
-        }
-    }
-    
-    public static class ReorderTaskListRequest extends ScreenData {
+		public PreviewTaskListData(Integer taskListId) {
+			super(taskListId);
+		}
+	}
 
-        public ReorderTaskListRequest() {
-            super(null);
-        }
-    }
-    
-    public static class EditTaskListData extends ScreenData<TaskList> {
+	public static class ReorderTaskListRequest extends ScreenData {
 
-        public EditTaskListData(TaskList taskList) {
-            super(taskList);
-        }
-    }
+		public ReorderTaskListRequest() {
+			super(null);
+		}
+	}
 
-    public static class AddTaskListData extends ScreenData<TaskList> {
+	public static class DisplayGanttChartRequest extends ScreenData {
+		private TaskListSearchCriteria searchCriteria;
 
-        public AddTaskListData(TaskList taskList) {
-            super(taskList);
-        }
-    }
+		public DisplayGanttChartRequest(TaskSearchCriteria searchCriteria) {
+			super(searchCriteria);
+		}
+	}
 
-    public static class PreviewTaskData extends ScreenData<Integer> {
+	public static class EditTaskListData extends ScreenData<TaskList> {
 
-        public PreviewTaskData(Integer taskId) {
-            super(taskId);
-        }
-    }
+		public EditTaskListData(TaskList taskList) {
+			super(taskList);
+		}
+	}
 
-    public static class EditTaskData extends ScreenData<Task> {
+	public static class AddTaskListData extends ScreenData<TaskList> {
 
-        public EditTaskData(Task task) {
-            super(task);
-        }
-    }
+		public AddTaskListData(TaskList taskList) {
+			super(taskList);
+		}
+	}
 
-    public static class AddTaskData extends ScreenData<Task> {
+	public static class PreviewTaskData extends ScreenData<Integer> {
 
-        public AddTaskData(Task task) {
-            super(task);
-        }
-    }
+		public PreviewTaskData(Integer taskId) {
+			super(taskId);
+		}
+	}
+
+	public static class EditTaskData extends ScreenData<Task> {
+
+		public EditTaskData(Task task) {
+			super(task);
+		}
+	}
+
+	public static class AddTaskData extends ScreenData<Task> {
+
+		public AddTaskData(Task task) {
+			super(task);
+		}
+	}
 }
