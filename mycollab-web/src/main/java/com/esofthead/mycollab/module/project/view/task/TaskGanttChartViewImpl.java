@@ -35,10 +35,13 @@ import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Label;
+import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class TaskGanttChartViewImpl extends AbstractView implements
@@ -50,11 +53,38 @@ public class TaskGanttChartViewImpl extends AbstractView implements
 
 	private TaskSearchCriteria searchCriteria;
 
+	private VerticalLayout bodyContent;
+
+	public TaskGanttChartViewImpl() {
+		this.setSpacing(true);
+		Label titleLbl = new Label("Gantt View");
+		titleLbl.setStyleName("h2");
+		this.addComponent(titleLbl);
+
+		Button backToListBtn = new Button("Back to list view",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance()
+								.fireEvent(
+										new TaskListEvent.GotoTaskListScreen(
+												this, null));
+					}
+				});
+		backToListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		this.addComponent(backToListBtn);
+
+		bodyContent = new VerticalLayout();
+		bodyContent.setSizeFull();
+		this.addComponent(bodyContent);
+	}
+
 	@Override
 	public void displayGanttChart(TaskSearchCriteria searchCriteria) {
 		this.searchCriteria = searchCriteria;
-		this.removeAllComponents();
-		this.setSizeFull();
+		bodyContent.removeAllComponents();
 
 		TaskListSearchCriteria criteria = new TaskListSearchCriteria();
 		criteria.setStatus(new StringSearchField("Open"));
@@ -166,8 +196,8 @@ public class TaskGanttChartViewImpl extends AbstractView implements
 		diagram.addAvailableScale(GANTTDIAGRAMSCALE.MONTH, "Month");
 
 		diagram.setScale(GANTTDIAGRAMSCALE.DAY);
-		this.addComponent(diagram);
-		this.setExpandRatio(diagram, 1.0f);
+		bodyContent.addComponent(diagram);
+		bodyContent.setExpandRatio(diagram, 1.0f);
 	}
 
 	private static DateTime convertDateTime(Date date) {
