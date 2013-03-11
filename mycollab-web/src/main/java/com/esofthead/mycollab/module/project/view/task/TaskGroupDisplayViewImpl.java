@@ -11,7 +11,6 @@ import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
@@ -99,8 +98,8 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		filterBtnLayout.addComponent(archievedTasksFilterBtn);
 
 		taskGroupSelection.addComponent(filterBtnLayout);
-		
-		//Search button
+
+		// Search button
 		HorizontalLayout basicSearchBody = new HorizontalLayout();
 		basicSearchBody.setSpacing(true);
 		basicSearchBody.setMargin(true);
@@ -109,7 +108,6 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		nameField.addListener(new TextChangeListener() {
 			@Override
 			public void textChange(TextChangeEvent event) {
-				
 
 				String textSearch = event.getText().toString().trim();
 			}
@@ -126,7 +124,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(Button.ClickEvent event) {
-				
+
 			}
 		});
 		searchBtn.setIcon(new ThemeResource("icons/22/search.png"));
@@ -158,6 +156,22 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		newTaskListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		header.addComponent(newTaskListBtn);
 		header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
+		
+		Button showGanttChartBtn = new Button("Show Gantt Chart",
+				new Button.ClickListener() {
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance()
+								.fireEvent(
+										new TaskListEvent.GotoGanttChartView(
+												this,
+												new TaskContainer.DisplayGanttChartRequest()));
+					}
+				});
+		showGanttChartBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		header.addComponent(showGanttChartBtn);
+		header.setComponentAlignment(showGanttChartBtn, Alignment.MIDDLE_RIGHT);
 
 		this.addComponent(header);
 		taskLists = new TaskGroupDisplayWidget();
