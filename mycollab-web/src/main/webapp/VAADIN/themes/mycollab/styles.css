@@ -2519,3 +2519,10 @@ div.v-lazyloadingwrapper-loading {
 	font-weight: bold;
 }
 /* End Bold Label */
+
+/* Photo Cropbox */
+.photo-cropbox > .v-csslayout-margin {
+	padding-top: 10px;
+	border-top: 1px solid rgb(143, 143, 143);
+}
+/* End Photo Cropbox */

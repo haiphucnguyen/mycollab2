@@ -16,9 +16,10 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.mvp.HAbstractView;
+import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ByteArrayImageResource;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -27,6 +28,7 @@ import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -34,7 +36,7 @@ import com.vaadin.ui.Panel;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class ProfilePhotoUploadViewImpl extends HAbstractView implements
+public class ProfilePhotoUploadViewImpl extends AbstractView implements
 		ProfilePhotoUploadView {
 	private static final long serialVersionUID = 1L;
 
@@ -59,9 +61,87 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 		} catch (IOException e) {
 			throw new MyCollabException("Invalid image type");
 		}
-		VerticalLayout leftColumn = new VerticalLayout();
+		originalImage = ImageUtil.scaleImage(originalImage, 650, 650);
+
+		HorizontalLayout previewBox = new HorizontalLayout();
+		previewBox.setSpacing(true);
+		previewBox.setMargin(false, true, true, false);
+		previewBox.setWidth("100%");
+		previewBox.setHeight(SIZE_UNDEFINED, 0);
+
+		Resource defaultPhoto = UserAvatarControlFactory.getResource(
+				AppContext.getUsername(), 100);
+		previewImage = new Embedded(null, defaultPhoto);
+		previewImage.setWidth("100px");
+		previewBox.addComponent(previewImage);
+		previewBox.setComponentAlignment(previewImage, Alignment.TOP_LEFT);
+
+		VerticalLayout previewBoxRight = new VerticalLayout();
+		previewBoxRight.setMargin(false, true, false, true);
+		Label lbPreview = new Label(
+				"<p style='margin: 0px;'><strong>To the left is what your profile photo will look like.</strong></p><p style='margin-top: 0px;'>To make adjustments, you can drag around and resize the selection square below. When you are happy with your photo click the &ldquo;Accept&ldquo; button.</p>",
+				Label.CONTENT_XHTML);
+		previewBoxRight.addComponent(lbPreview);
+
+		HorizontalLayout controlBtns = new HorizontalLayout();
+		controlBtns.setSizeUndefined();
+		Button acceptBtn = new Button("Accept", new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				if (scaleImageData != null && scaleImageData.length > 0) {
+
+					try {
+						BufferedImage image = ImageIO
+								.read(new ByteArrayInputStream(scaleImageData));
+						UserAvatarService userAvatarService = AppContext
+								.getSpringBean(UserAvatarService.class);
+						userAvatarService.uploadAvatar(image,
+								AppContext.getUsername(),
+								AppContext.getAccountId());
+						EventBus.getInstance().fireEvent(
+								new ProfileEvent.GotoProfileView(
+										ProfilePhotoUploadViewImpl.this, null));
+					} catch (IOException e) {
+						throw new MyCollabException(
+								"Error when saving user avatar", e);
+					}
+
+				}
+
+			}
+		});
+		acceptBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		controlBtns.addComponent(acceptBtn);
+		controlBtns.setComponentAlignment(acceptBtn, Alignment.TOP_LEFT);
+
+		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance().fireEvent(
+						new ProfileEvent.GotoProfileView(
+								ProfilePhotoUploadViewImpl.this, null));
+			}
+		});
+		cancelBtn.setStyleName("link");
+		controlBtns.addComponent(cancelBtn);
+		controlBtns.setComponentAlignment(cancelBtn, Alignment.MIDDLE_LEFT);
+
+		previewBoxRight.addComponent(controlBtns);
+		previewBoxRight.setComponentAlignment(controlBtns, Alignment.TOP_LEFT);
+
+		previewBox.addComponent(previewBoxRight);
+		previewBox.setExpandRatio(previewBoxRight, 1.0f);
+
+		this.addComponent(previewBox);
+
+		CssLayout cropBox = new CssLayout();
+		cropBox.addStyleName(UIConstants.PHOTO_CROPBOX);
+		cropBox.setWidth("100%");
 		Panel currentPhotoBox = new Panel();
-		Resource resource = new ByteArrayImageResource(imageData, "image/png");
+		Resource resource = new ByteArrayImageResource(
+				ImageUtil.convertImageToByteArray(originalImage), "image/png");
 		CropField cropField = new CropField(resource);
 		cropField.setImmediate(true);
 		cropField.setSelectionAspectRatio(1.0f);
@@ -91,80 +171,25 @@ public class ProfilePhotoUploadViewImpl extends HAbstractView implements
 			}
 
 		});
-		currentPhotoBox.setWidth("600px");
-		currentPhotoBox.setHeight("600px");
+		currentPhotoBox.setWidth("650px");
+		currentPhotoBox.setHeight("650px");
+		currentPhotoBox.addStyleName(UIConstants.PANEL_WITHOUT_BORDER);
 		currentPhotoBox.getContent().setSizeUndefined();
 		currentPhotoBox.addComponent(cropField);
+		((VerticalLayout) currentPhotoBox.getContent()).setMargin(false);
 
-		leftColumn.addComponent(currentPhotoBox);
+		cropBox.addComponent(currentPhotoBox);
 
-		HorizontalLayout controlBtns = new HorizontalLayout();
-		controlBtns.setMargin(true);
-		Button acceptBtn = new Button("Accept", new Button.ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (scaleImageData != null && scaleImageData.length > 0) {
-
-					try {
-						BufferedImage image = ImageIO
-								.read(new ByteArrayInputStream(scaleImageData));
-						UserAvatarService userAvatarService = AppContext
-								.getSpringBean(UserAvatarService.class);
-						userAvatarService.uploadAvatar(image,
-								AppContext.getUsername(),
-								AppContext.getAccountId());
-						EventBus.getInstance().fireEvent(
-								new ProfileEvent.GotoProfileView(
-										ProfilePhotoUploadViewImpl.this, null));
-					} catch (IOException e) {
-						throw new MyCollabException(
-								"Error when saving user avatar", e);
-					}
-
-				}
-
-			}
-		});
-		acceptBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		controlBtns.addComponent(acceptBtn);
-
-		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new ProfileEvent.GotoProfileView(
-								ProfilePhotoUploadViewImpl.this, null));
-			}
-		});
-		cancelBtn.setStyleName("link");
-		controlBtns.addComponent(cancelBtn);
-
-		leftColumn.addComponent(controlBtns);
-		this.addComponent(leftColumn);
-
-		VerticalLayout previewBox = new VerticalLayout();
-		previewBox.setSpacing(true);
-		previewBox.setMargin(true);
-		previewBox.setWidth("320px");
-		
-		Label lbPreview = new Label("Preview: ");
-		previewBox.addComponent(lbPreview);
-		previewBox.setComponentAlignment(lbPreview, Alignment.TOP_LEFT);
-		
-		previewImage = new Embedded(null);
-		previewImage.setWidth("150px");
-		previewBox.addComponent(previewImage);
-		previewBox.setComponentAlignment(previewImage, Alignment.MIDDLE_CENTER);
 		this.addComponent(previewBox);
+		this.addComponent(cropBox);
+		this.setExpandRatio(cropBox, 1.0f);
 	}
 
 	private void displayPreviewImage() {
 		if (scaleImageData != null && scaleImageData.length > 0) {
 			ByteArrayImageResource previewResource = new ByteArrayImageResource(
 					scaleImageData, "image/png");
-			previewImage.setIcon(previewResource);
+			previewImage.setSource(previewResource);
 		}
 	}
 

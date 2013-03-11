@@ -27,6 +27,8 @@ public class UIConstants {
 	public static final String LINK_OVERDUE = "overdue";
 	public static final String SPLIT_BUTTON = "esofthead";
 	public static final String MESSAGE_IMPORTANT = "important-message";
+	public static final String PANEL_WITHOUT_BORDER = "noneBorder-panel";
+	public static final String PHOTO_CROPBOX = "photo-cropbox";
 	public static final String PREVIEW = "preview";
 	// TODO: remove widget title?
 	public static final String REPORT_ROW_BLOCK = "report-row-block";
