@@ -69,7 +69,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 		tableItem = new PagedBeanTable2<MilestoneService, MilestoneSearchCriteria, SimpleMilestone>(
 				AppContext.getSpringBean(MilestoneService.class),
 				SimpleMilestone.class, new String[] { "selected", "name",
-						"iscompleted", "startdate", "enddate", "flag",
+						"status", "startdate", "enddate", "flag",
 						"ownerFullName" }, new String[] { "", "Name", "Status",
 						"Start Date", "End Date", "Flag", "Responsible User" });
 

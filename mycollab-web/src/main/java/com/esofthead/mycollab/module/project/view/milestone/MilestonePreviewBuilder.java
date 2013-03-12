@@ -2,7 +2,6 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
-import com.esofthead.mycollab.module.crm.view.account.AccountFormLayoutFactory;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
@@ -169,10 +168,8 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			milestoneAddLayout.addBody(tabContainer);
 		}
 	}
-
-	/**
-    *
-    */
+	
+	
 	public static class PrintView extends MilestonePreviewBuilder {
 		private static final long serialVersionUID = 1L;
 
@@ -192,7 +189,7 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			this.addComponent(previewForm);
 		}
 
-		class FormLayoutFactory extends AccountFormLayoutFactory {
+		class FormLayoutFactory extends MilestoneFormLayoutFactory {
 
 			private static final long serialVersionUID = 1L;
 

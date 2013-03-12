@@ -39,7 +39,7 @@
     <sql id="selectMilestone" >
         <![CDATA[
             SELECT m_prj_milestone.id, m_prj_milestone.name, m_prj_milestone.description, m_prj_milestone.startdate, m_prj_milestone.enddate, 
-                   m_prj_milestone.owner, m_prj_milestone.flag, m_prj_milestone.projectid, m_prj_milestone.iscompleted, m_prj_milestone.createdTime, 
+                   m_prj_milestone.owner, m_prj_milestone.flag, m_prj_milestone.projectid, m_prj_milestone.status, m_prj_milestone.createdTime, 
                    m_prj_milestone.lastUpdatedTime, m_prj_milestone.sAccountId,
                    concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS ownerFullName
                 FROM m_prj_milestone
