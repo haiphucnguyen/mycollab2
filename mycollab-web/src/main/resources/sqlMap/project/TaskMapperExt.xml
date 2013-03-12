@@ -51,7 +51,7 @@
                  m_prj_task.actualStartDate, m_prj_task.actualEndDate, m_prj_task.cost, m_prj_task.actualCost, 
                  m_prj_task.ismilestone, m_prj_task.tasklistid, m_prj_task.createdTime, m_prj_task.lastUpdatedTime, m_prj_task.assignUser, m_prj_task.sAccountId,
                  m_prj_task_list.name AS taskListName, m_prj_project.name AS projectName, m_prj_task.status,
-                 m_prj_task.logBy,
+                 m_prj_task.logBy, m_prj_task.taskkey,
                  concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS assignUserFullName,
                  concat(log_user.firstname, IFNULL(concat(' ', log_user.middlename, ' '), ' '), log_user.lastname) AS logByFullName
           FROM m_prj_task
@@ -116,5 +116,10 @@
             <include 
                 refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria"/>
         </trim>
+    </select>
+    
+    <select id="getMaxKey" parameterType="java.lang.Integer" resultType="java.lang.Integer">
+        SELECT MAX(bugkey) FROM m_prj_task
+            WHERE m_prj_task.projectid=#{projectId, javaType=INTEGER}
     </select>
 </mapper>

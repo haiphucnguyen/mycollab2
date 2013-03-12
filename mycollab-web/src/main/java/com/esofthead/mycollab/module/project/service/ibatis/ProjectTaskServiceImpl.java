@@ -66,6 +66,9 @@ public class ProjectTaskServiceImpl extends
 			record.setStatus("Open");
 		}
 		record.setLogby(username);
+
+		Integer key = taskMapperExt.getMaxKey(record.getProjectid());
+		record.setTaskkey((key == null) ? 1 : (key + 1));
 		return super.saveWithSession(record, username);
 	}
 

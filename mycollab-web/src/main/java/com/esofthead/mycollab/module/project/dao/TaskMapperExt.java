@@ -7,4 +7,6 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 public interface TaskMapperExt extends ISearchableDAO<TaskSearchCriteria> {
 
     SimpleTask findTaskById(int taskId);
+    
+    Integer getMaxKey(int projectId);
 }
