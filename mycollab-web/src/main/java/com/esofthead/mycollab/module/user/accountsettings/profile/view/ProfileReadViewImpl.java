@@ -8,12 +8,12 @@ import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEve
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
-import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -25,15 +25,13 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.PasswordField;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 @SuppressWarnings("serial")
 @ViewComponent
@@ -42,7 +40,7 @@ public class ProfileReadViewImpl extends AbstractView implements
 
 	public static final int MAX_UPLOAD_SIZE = 20 * 1024 * 1024;
 
-	private final EditForm formItem;
+	private final PreviewForm formItem;
 	private final HorizontalLayout viewLayout;
 	private VerticalLayout userAvatar;
 
@@ -53,7 +51,8 @@ public class ProfileReadViewImpl extends AbstractView implements
 		viewLayout.setSpacing(true);
 		this.setStyleName("userInfoContainer");
 		this.setMargin(true);
-		formItem = new EditForm();
+		formItem = new PreviewForm();
+		formItem.setWidth("200px");
 		viewLayout.addComponent(formItem);
 		this.addComponent(viewLayout);
 		userAvatar = new VerticalLayout();
@@ -97,45 +96,21 @@ public class ProfileReadViewImpl extends AbstractView implements
 		userAvatar.addComponent(avatarUploadField);
 	}
 
-	private static class EditForm extends AdvancedEditBeanForm<User> {
+	private class PreviewForm extends AdvancedPreviewBeanForm<User> {
 
 		private static final long serialVersionUID = 1L;
+		
+		private User user;
+		
+		public void setUser(User user) {
+			this.user = user;
+		}
 
 		@Override
 		public void setItemDataSource(Item newDataSource) {
 			this.setFormLayoutFactory(new FormLayoutFactory());
-			this.setFormFieldFactory(new EditFormFieldFactory());
+			this.setFormFieldFactory(new PreviewFormFieldFactory());
 			super.setItemDataSource(newDataSource);
-		}
-
-		private HorizontalLayout createButtonControls() {
-			HorizontalLayout layout = new HorizontalLayout();
-			layout.setSpacing(true);
-			layout.setStyleName("editInfoControl");
-			Button saveBtn = new Button(SAVE_ACTION,
-					new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							@SuppressWarnings("unchecked")
-							User item = ((BeanItem<User>) EditForm.this
-									.getItemDataSource()).getBean();
-							if (EditForm.this.validateForm(item)) {
-								EditForm.this.fireSaveForm(item);
-							}
-						}
-					});
-			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			layout.addComponent(saveBtn);
-			layout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
-
-			Button cancelBtn = new Button(CANCEL_ACTION);
-			layout.addComponent(cancelBtn);
-			cancelBtn.setStyleName("link");
-			layout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
-
-			return layout;
 		}
 
 		private class FormLayoutFactory implements IFormLayoutFactory {
@@ -149,14 +124,31 @@ public class ProfileReadViewImpl extends AbstractView implements
 				AddViewLayout accountAddLayout = new AddViewLayout(AppContext
 						.getSession().getDisplayName(), new ThemeResource(
 						"icons/48/user/profile.png"));
-				accountAddLayout.setWidth("600px");
+				accountAddLayout.setWidth("550px");
 				VerticalLayout layout = new VerticalLayout();
 				layout.setSpacing(true);
+				
+				HorizontalLayout passLayout = new HorizontalLayout();
+				passLayout.setSpacing(true);
+				Label lbPassword = new Label("Password");
+				passLayout.addComponent(lbPassword);
+				passLayout.setComponentAlignment(lbPassword, Alignment.MIDDLE_CENTER);
+				Button btnChangePassword = new Button("Change", new Button.ClickListener() {
+					
+					@Override
+					public void buttonClick(ClickEvent event) {
+						getWidget().getWindow().addWindow(new PasswordChangeWindow(user));
+					}
+				});
+				passLayout.addComponent(btnChangePassword);
+				btnChangePassword.setStyleName("link");
+				passLayout.setComponentAlignment(btnChangePassword, Alignment.MIDDLE_CENTER);
+				layout.addComponent(passLayout);
 
-				Label informationHeader = new Label("User Information");
+				Label informationHeader = new Label("Basic Information");
 				informationHeader.setStyleName("h2");
 
-				Label contactHeader = new Label("Contact Information");
+				Label contactHeader = new Label("Advance Information");
 				contactHeader.setStyleName("h2");
 
 				if (ScreenSize.hasSupport1024Pixels()) {
@@ -179,11 +171,29 @@ public class ProfileReadViewImpl extends AbstractView implements
 				layout.addComponent(basicInformation.getLayout());
 				layout.setComponentAlignment(basicInformation.getLayout(),
 						Alignment.MIDDLE_LEFT);
+				Button btnChangeBasicInfo = new Button("Change Basic Information", new Button.ClickListener() {
+					
+					@Override
+					public void buttonClick(ClickEvent event) {
+						getWidget().getWindow().addWindow(new BasicInfoChangeWindow(user));
+					}
+				});
+				btnChangeBasicInfo.addStyleName("link");
+				layout.addComponent(btnChangeBasicInfo);
+				layout.setComponentAlignment(btnChangeBasicInfo, Alignment.MIDDLE_RIGHT);
 				layout.addComponent(contactHeader);
 				layout.addComponent(contactInformation.getLayout());
+				Button btnChangeAdvanceInfo = new Button("Change Advanced Information", new Button.ClickListener() {
+					
+					@Override
+					public void buttonClick(ClickEvent event) {
+						getWidget().getWindow().addWindow(new AdvancedInfoChangeWindow(user));
+					}
+				});
+				btnChangeAdvanceInfo.addStyleName("link");
+				layout.addComponent(btnChangeAdvanceInfo);
+				layout.setComponentAlignment(btnChangeAdvanceInfo, Alignment.MIDDLE_RIGHT);
 
-				HorizontalLayout userInfoControls = createButtonControls();
-				layout.addComponent(userInfoControls);
 				accountAddLayout.addBody(layout);
 				return accountAddLayout;
 			}
@@ -196,10 +206,8 @@ public class ProfileReadViewImpl extends AbstractView implements
 					basicInformation.addComponent(field, "Last Name", 0, 1);
 				} else if (propertyId.equals("email")) {
 					basicInformation.addComponent(field, "Email", 0, 2);
-				} else if (propertyId.equals("password")) {
-					basicInformation.addComponent(field, "Password", 0, 3);
 				} else if (propertyId.equals("dateofbirth")) {
-					basicInformation.addComponent(field, "Birthday", 0, 4);
+					basicInformation.addComponent(field, "Birthday", 0, 3);
 				} else if (propertyId.equals("website")) {
 					contactInformation.addComponent(field, "Website", 0, 0);
 				} else if (propertyId.equals("company")) {
@@ -208,35 +216,34 @@ public class ProfileReadViewImpl extends AbstractView implements
 			}
 		}
 
-		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
+		private class PreviewFormFieldFactory extends DefaultEditFormFieldFactory {
 
 			@Override
 			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
-
-				if (propertyId.equals("email")) {
-					TextField tf = new TextField();
-					tf.setNullRepresentation("");
-					tf.setRequired(true);
-					tf.setRequiredError("Please enter a valid email");
-					return tf;
-				} else if (propertyId.equals("password")) {
-					PasswordField pf = new PasswordField();
-					return pf;
-				}
-
-				return null;
+				String value = "";
+				if (propertyId.equals("firstname")) {
+					value = user.getFirstname();
+				} else if (propertyId.equals("lastname")) {
+					value = user.getLastname();
+				} else if (propertyId.equals("email")) {
+					value = user.getEmail();
+				} else if (propertyId.equals("dateofbirth")) {
+					value = AppContext.formatDate(user.getDateofbirth());
+				} else if (propertyId.equals("website")) {
+					value = user.getWebsite();
+					return new DefaultFormViewFieldFactory.FormUrlLinkViewField(value);
+				} else if (propertyId.equals("company")) {
+					value = user.getCompany();
+				} 
+				return new DefaultFormViewFieldFactory.LabelViewField(value);
 			}
 		}
 	}
 
 	@Override
-	public HasEditFormHandlers<User> getEditFormHandlers() {
-		return formItem;
-	}
-
-	@Override
 	public void editItem(User user) {
+		formItem.setUser(user);
 		formItem.setItemDataSource(new BeanItem<User>(user));
 		displayUserAvatar();
 	}

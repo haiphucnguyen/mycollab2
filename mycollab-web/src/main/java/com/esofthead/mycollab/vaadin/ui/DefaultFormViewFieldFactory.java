@@ -134,6 +134,21 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 			return Object.class;
 		}
 	}
+	
+	public static class LabelViewField extends CustomField {
+		private static final long serialVersionUID = 1L;
+
+		public LabelViewField(String value) {
+			Label lbName = new Label(value);
+			lbName.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			this.setCompositionRoot(lbName);
+		}
+
+		@Override
+		public Class<?> getType() {
+			return Object.class;
+		}
+	}
 
 	public static class FormUrlLinkViewField extends CustomField {
 
