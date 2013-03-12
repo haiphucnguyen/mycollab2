@@ -29,11 +29,15 @@
 
     <sql id="selectUser">
         <![CDATA[
-        SELECT s_user.username, s_user.firstname, s_user.lastname, s_user.nickname, s_user.dateofbirth, s_user.email, s_user.password, 
-                s_user.website, s_user.registeredTime, s_user.accountId, s_user.countryid, s_user.company, s_user.roleid,
-                s_user_preference.lastAccessedTime, s_roles.rolename AS roleName,
-                s_user.timezoneid, s_user.registrationSource, s_user.isAdmin, s_user.registerStatus, s_country.countryname as country 
-        FROM s_user LEFT OUTER JOIN s_country ON (s_user.countryid=s_country.id)   
+        SELECT s_user.username, s_user.firstname, s_user.middlename, s_user.lastname, s_user.nickname, s_user.dateofbirth, 
+      s_user.email, s_user.website, s_user.registeredTime, 
+      s_user.lastAccessedTime, s_user.accountId, s_user.company, 
+      s_user.timezone, s_user.registrationSource, s_user.isAdmin, 
+      s_user.registerStatus, s_user.roleid, s_user.language, 
+      s_user.country, s_user.workPhone, s_user.homePhone, 
+      s_user.facebookAccount, s_user.twitterAccount, s_user.skypeContact, 
+      s_user.password, s_roles.rolename AS roleName 
+        FROM s_user 
                 LEFT OUTER JOIN s_user_preference ON (s_user.username = s_user_preference.username)
                 LEFT OUTER JOIN s_roles ON (s_roles.id = s_user.roleid)
         ]]>
