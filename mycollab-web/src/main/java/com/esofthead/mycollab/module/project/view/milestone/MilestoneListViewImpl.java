@@ -4,36 +4,22 @@
  */
 package com.esofthead.mycollab.module.project.view.milestone;
 
-import java.util.GregorianCalendar;
-
-import org.vaadin.hene.splitbutton.PopupButtonControl;
+import java.util.List;
 
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
-import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
-import com.esofthead.mycollab.module.project.service.MilestoneService;
-import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
-import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
-import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
-import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
-import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * 
@@ -42,210 +28,114 @@ import com.vaadin.ui.VerticalLayout;
 @ViewComponent
 public class MilestoneListViewImpl extends AbstractView implements
 		MilestoneListView {
-
 	private static final long serialVersionUID = 1L;
-	private final MilestoneSearchPanel riskSearchPanel;
-	private SelectionOptionButton selectOptionButton;
-	private PagedBeanTable2<MilestoneService, MilestoneSearchCriteria, SimpleMilestone> tableItem;
-	private final VerticalLayout riskListLayout;
-	private PopupButtonControl tableActionControls;
-	private final Label selectedItemsNumberLabel = new Label();
+
+	private VerticalLayout inProgressContainer;
+
+	private VerticalLayout futureContainer;
+
+	private VerticalLayout closeContainer;
 
 	public MilestoneListViewImpl() {
-		this.setSpacing(true);
-		this.setMargin(false, true, true, true);
 
-		riskSearchPanel = new MilestoneSearchPanel();
-		this.addComponent(riskSearchPanel);
+		HorizontalLayout header = new HorizontalLayout();
+		Label titleLbl = new Label("Milestones");
+		header.addComponent(titleLbl);
+		header.setExpandRatio(titleLbl, 1.0f);
 
-		riskListLayout = new VerticalLayout();
-		riskListLayout.setSpacing(true);
-		this.addComponent(riskListLayout);
-
-		generateDisplayTable();
-	}
-
-	private void generateDisplayTable() {
-		tableItem = new PagedBeanTable2<MilestoneService, MilestoneSearchCriteria, SimpleMilestone>(
-				AppContext.getSpringBean(MilestoneService.class),
-				SimpleMilestone.class, new String[] { "selected", "name",
-						"status", "startdate", "enddate", "flag",
-						"ownerFullName" }, new String[] { "", "Name", "Status",
-						"Start Date", "End Date", "Flag", "Responsible User" });
-
-		tableItem.addGeneratedColumn("selected", new Table.ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+		Button createBtn = new Button("Create", new Button.ClickListener() {
 
 			@Override
-			public Object generateCell(final Table source, final Object itemId,
-					Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
-				cb.setImmediate(true);
-				cb.addListener(new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(Button.ClickEvent event) {
-						SimpleMilestone account = tableItem
-								.getBeanByIndex(itemId);
-						tableItem.fireSelectItemEvent(account);
-
-					}
-				});
-
-				SimpleMilestone account = tableItem.getBeanByIndex(itemId);
-				account.setExtraData(cb);
-				return cb;
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance().fireEvent(
+						new MilestoneEvent.GotoAdd(MilestoneListViewImpl.this,
+								null));
 			}
 		});
+		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		header.addComponent(createBtn);
+		this.addComponent(header);
 
-		tableItem.addGeneratedColumn("name", new Table.ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
+		HorizontalLayout bodyContent = new HorizontalLayout();
+		bodyContent.setMargin(true);
+		bodyContent.setSpacing(true);
 
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					final Object itemId, Object columnId) {
-				final SimpleMilestone milestone = tableItem
-						.getBeanByIndex(itemId);
-				ButtonLink b = new ButtonLink(milestone.getName(),
-						new Button.ClickListener() {
-							private static final long serialVersionUID = 1L;
+		closeContainer = new VerticalLayout();
+		bodyContent.addComponent(closeContainer);
+		bodyContent.setExpandRatio(closeContainer, 1f);
 
-							@Override
-							public void buttonClick(Button.ClickEvent event) {
-								EventBus.getInstance().fireEvent(
-										new MilestoneEvent.GotoRead(this,
-												milestone.getId()));
-							}
-						});
-				b.addStyleName("medium-text");
-				if (milestone.getEnddate() != null
-						&& (milestone.getEnddate()
-								.before(new GregorianCalendar().getTime()))) {
-					b.addStyleName(UIConstants.LINK_OVERDUE);
-				}
-				return b;
+		inProgressContainer = new VerticalLayout();
+		bodyContent.addComponent(inProgressContainer);
+		bodyContent.setExpandRatio(inProgressContainer, 1f);
 
-			}
-		});
+		futureContainer = new VerticalLayout();
+		bodyContent.addComponent(futureContainer);
+		bodyContent.setExpandRatio(futureContainer, 1f);
 
-		tableItem.addGeneratedColumn("ownerFullName",
-				new Table.ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public com.vaadin.ui.Component generateCell(Table source,
-							final Object itemId, Object columnId) {
-						final SimpleMilestone milestone = tableItem
-								.getBeanByIndex(itemId);
-						ProjectUserLink b = new ProjectUserLink(milestone
-								.getOwner(), milestone.getOwnerFullName(),
-								false);
-						return b;
-
-					}
-				});
-
-		tableItem.addGeneratedColumn("startdate", new Table.ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					Object itemId, Object columnId) {
-				final SimpleMilestone milestone = tableItem
-						.getBeanByIndex(itemId);
-				Label l = new Label();
-
-				l.setValue(AppContext.formatDate(milestone.getStartdate()));
-				return l;
-			}
-		});
-
-		tableItem.addGeneratedColumn("enddate", new Table.ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					Object itemId, Object columnId) {
-				final SimpleMilestone milestone = tableItem
-						.getBeanByIndex(itemId);
-				Label l = new Label();
-
-				l.setValue(AppContext.formatDate(milestone.getEnddate()));
-				return l;
-			}
-		});
-
-		tableItem.setWidth("100%");
-
-		tableItem.setColumnExpandRatio("accountname", 1);
-		tableItem.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
-		tableItem.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);
-		tableItem.setColumnWidth("enddate", UIConstants.TABLE_DATE_WIDTH);
-		tableItem
-				.setColumnWidth("iscompleted", UIConstants.TABLE_S_LABEL_WIDTH);
-		tableItem.setColumnWidth("flag", UIConstants.TABLE_S_LABEL_WIDTH);
-		tableItem.setColumnWidth("ownerFullName",
-				UIConstants.TABLE_X_LABEL_WIDTH);
-
-		riskListLayout.addComponent(constructTableActionControls());
-		riskListLayout.addComponent(tableItem);
+		this.addComponent(bodyContent);
 	}
 
 	@Override
-	public HasSearchHandlers<MilestoneSearchCriteria> getSearchHandlers() {
-		return riskSearchPanel;
+	public void displayMilestones(List<SimpleMilestone> milestones) {
+		inProgressContainer.removeAllComponents();
+		inProgressContainer.addComponent(new Label("In Progress"));
+
+		futureContainer.removeAllComponents();
+		futureContainer.addComponent(new Label("Future"));
+
+		closeContainer.removeAllComponents();
+		closeContainer.addComponent(new Label("Close"));
+
+		for (SimpleMilestone milestone : milestones) {
+			if (SimpleMilestone.STATUS_INPROGRESS.equals(milestone.getStatus())) {
+				inProgressContainer
+						.addComponent(constructMilestoneBox(milestone));
+			} else if (SimpleMilestone.STATUS_FUTURE.equals(milestone
+					.getStatus())) {
+				futureContainer.addComponent(constructMilestoneBox(milestone));
+			} else if (SimpleMilestone.STATUS_CLOSE.equals(milestone
+					.getStatus())) {
+				closeContainer.addComponent(constructMilestoneBox(milestone));
+			}
+		}
+
 	}
 
-	private ComponentContainer constructTableActionControls() {
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setSpacing(true);
+	private ComponentContainer constructMilestoneBox(
+			final SimpleMilestone milestone) {
+		VerticalLayout layout = new VerticalLayout();
+		Button milestoneLink = new Button(milestone.getName(),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		layout.addComponent(selectOptionButton);
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new MilestoneEvent.GotoRead(
+										MilestoneListViewImpl.this, milestone
+												.getId()));
+					}
+				});
+		milestoneLink.setStyleName("link");
+		milestone.setDescription(milestone.getDescription());
+		layout.addComponent(milestoneLink);
 
-		tableActionControls = new PopupButtonControl("delete", "Delete");
-		tableActionControls.addOptionItem("mail", "Mail");
-		tableActionControls.addOptionItem("export", "Export");
-		tableActionControls.setVisible(false);
+		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 4);
+		layoutHelper.addComponent(
+				new Label(AppContext.formatDate(milestone.getStartdate())),
+				"Start Date", 0, 0);
+		layoutHelper.addComponent(
+				new Label(AppContext.formatDate(milestone.getEnddate())),
+				"End Date", 0, 1);
 
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
-				Alignment.MIDDLE_CENTER);
+		layoutHelper.addComponent(new Label(milestone.getNumOpenTasks() + "/"
+				+ milestone.getNumTasks()), "Tasks", 0, 2);
+
+		layoutHelper.addComponent(new Label(milestone.getNumOpenBugs() + "/"
+				+ milestone.getNumBugs()), "Bugs", 0, 3);
+
+		layout.addComponent(layoutHelper.getLayout());
+
 		return layout;
-	}
-
-	@Override
-	public void enableActionControls(int numOfSelectedItems) {
-		tableActionControls.setVisible(true);
-		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
-	}
-
-	@Override
-	public void disableActionControls() {
-		tableActionControls.setVisible(false);
-		selectOptionButton.setSelectedChecbox(false);
-		selectedItemsNumberLabel.setValue("");
-	}
-
-	@Override
-	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return selectOptionButton;
-	}
-
-	@Override
-	public HasPopupActionHandlers getPopupActionHandlers() {
-		return tableActionControls;
-	}
-
-	@Override
-	public HasSelectableItemHandlers<SimpleMilestone> getSelectableItemHandlers() {
-		return tableItem;
-	}
-
-	@Override
-	public IPagedBeanTable<MilestoneSearchCriteria, SimpleMilestone> getPagedBeanTable() {
-		return tableItem;
 	}
 }

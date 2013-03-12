@@ -20,16 +20,13 @@
         </if>
 
         <if test="assignUser != null">
-            <![CDATA[${assignUser.operation} m_prj_milestone.owner = ${assignUser.value}]]>
-        </if>
-        <if test="completedField != null">
-            <![CDATA[${completedField.operation} m_prj_milestone.iscompleted IS ${completedField.value}]]>
+            <![CDATA[${assignUser.operation} m_prj_milestone.owner = #{assignUser.value}]]>
         </if>
         <if test="status != null">
-            <![CDATA[${status.operation} m_prj_milestone.status = ${flag.value}]]>
+            <![CDATA[${status.operation} m_prj_milestone.status = #{status.value}]]>
         </if>
         <if test="projectId != null">
-            <![CDATA[${projectId.operation} m_prj_milestone.projectid = ${projectId.value}]]>
+            <![CDATA[${projectId.operation} m_prj_milestone.projectid = #{projectId.value,javaType=INTEGER}]]>
         </if>
         <if test="milestoneName != null">
           <![CDATA[
@@ -43,7 +40,11 @@
             SELECT m_prj_milestone.id, m_prj_milestone.name, m_prj_milestone.description, m_prj_milestone.startdate, m_prj_milestone.enddate, 
                    m_prj_milestone.owner, m_prj_milestone.status, m_prj_milestone.projectid, m_prj_milestone.status, m_prj_milestone.createdTime, 
                    m_prj_milestone.lastUpdatedTime, m_prj_milestone.sAccountId,
-                   concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS ownerFullName
+                   concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS ownerFullName,
+                   (SELECT COUNT(*) FROM m_prj_task, m_prj_task_list WHERE m_prj_task.tasklistid=m_prj_task_list.id AND m_prj_task_list.milestoneId=m_prj_milestone.id) AS numTasks,
+                   (SELECT COUNT(*) FROM m_prj_task, m_prj_task_list WHERE m_prj_task.tasklistid=m_prj_task_list.id AND m_prj_task.status='Open' AND m_prj_task_list.milestoneId=m_prj_milestone.id) AS numOpenTasks,
+                   (SELECT COUNT(*) FROM m_tracker_bug WHERE m_tracker_bug.milestoneId=m_prj_milestone.id) AS numBugs,
+                    (SELECT COUNT(*) FROM m_tracker_bug WHERE m_tracker_bug.milestoneId=m_prj_milestone.id AND m_tracker_bug.status IN ('Open', 'In Progress', 'Reopenned')) AS numOpenBugs
                    
                 FROM m_prj_milestone
                     LEFT OUTER JOIN s_user ON (m_prj_milestone.owner = s_user.username)

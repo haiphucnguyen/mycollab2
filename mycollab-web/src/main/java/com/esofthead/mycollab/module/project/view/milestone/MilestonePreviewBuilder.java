@@ -14,8 +14,11 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TabSheet;
@@ -153,8 +156,25 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 
 			milestoneInformation = new VerticalLayout();
 			milestoneInformation.setMargin(true);
-			Layout actionControls = new PreviewFormControlsGenerator<Milestone>(
+			HorizontalLayout actionControls = new PreviewFormControlsGenerator<Milestone>(
 					previewForm).createButtonControls();
+
+			Button reportBtn = new Button(null, new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					// TODO Auto-generated method stub
+
+				}
+
+			});
+			reportBtn.setIcon(new ThemeResource("icons/16/statistic.png"));
+			reportBtn.setStyleName("link");
+			reportBtn.setDescription("Display Report View");
+
+			actionControls.addComponent(reportBtn);
+			
 			milestoneInformation.addComponent(actionControls);
 			milestoneInformation.addComponent(previewForm);
 
@@ -168,8 +188,7 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			milestoneAddLayout.addBody(tabContainer);
 		}
 	}
-	
-	
+
 	public static class PrintView extends MilestonePreviewBuilder {
 		private static final long serialVersionUID = 1L;
 

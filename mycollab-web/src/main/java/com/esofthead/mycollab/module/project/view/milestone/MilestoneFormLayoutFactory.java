@@ -34,11 +34,17 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 		AddViewLayout milestoneAddLayout = new AddViewLayout(title,
 				new ThemeResource("icons/48/project/milestone.png"));
 
-		milestoneAddLayout.addTopControls(createTopPanel());
+		Layout topLayout = createTopPanel();
+		if (topLayout != null) {
+			milestoneAddLayout.addTopControls(topLayout);
+		}
 
 		milestoneInformationLayout = new MilestoneInformationLayout();
 
-		milestoneAddLayout.addBottomControls(createBottomPanel());
+		Layout bottomLayout = createBottomPanel();
+		if (bottomLayout != null) {
+			milestoneAddLayout.addBottomControls(bottomLayout);
+		}
 
 		milestoneAddLayout.addBody(milestoneInformationLayout.getLayout());
 
@@ -86,8 +92,8 @@ public abstract class MilestoneFormLayoutFactory implements IFormLayoutFactory {
 				informationLayout.addComponent(field, "End Date", 0, 2);
 			} else if (propertyId.equals("owner")) {
 				informationLayout.addComponent(field, "Responsible User", 1, 1);
-			} else if (propertyId.equals("flag")) {
-				informationLayout.addComponent(field, "Flag", 1, 2);
+			} else if (propertyId.equals("status")) {
+				informationLayout.addComponent(field, "Status", 1, 2);
 			} else if (propertyId.equals("description")) {
 				informationLayout.addComponent(field, "Description", 0, 3, 2,
 						"100%");

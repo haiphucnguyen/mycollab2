@@ -4,45 +4,35 @@
  */
 package com.esofthead.mycollab.module.project.domain.criteria;
 
-import com.esofthead.mycollab.core.arguments.BooleanSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public class MilestoneSearchCriteria extends SearchCriteria{
-    private BooleanSearchField completedField;
-    
-    private StringSearchField assignUser;
-    
-    private StringSearchField status;
-    
-    private NumberSearchField projectId;
-    
-    private NumberSearchField id;
-    
-    private StringSearchField milestoneName;
+public class MilestoneSearchCriteria extends SearchCriteria {
 
-    public BooleanSearchField getCompletedField() {
-        return completedField;
-    }
+	private StringSearchField assignUser;
 
-    public void setCompletedField(BooleanSearchField completedField) {
-        this.completedField = completedField;
-    }
+	private StringSearchField status;
 
-    public StringSearchField getAssignUser() {
-        return assignUser;
-    }
+	private NumberSearchField projectId;
 
-    public void setAssignUser(StringSearchField assignUser) {
-        this.assignUser = assignUser;
-    }
+	private NumberSearchField id;
 
-    public StringSearchField getStatus() {
+	private StringSearchField milestoneName;
+
+	public StringSearchField getAssignUser() {
+		return assignUser;
+	}
+
+	public void setAssignUser(StringSearchField assignUser) {
+		this.assignUser = assignUser;
+	}
+
+	public StringSearchField getStatus() {
 		return status;
 	}
 
@@ -51,12 +41,12 @@ public class MilestoneSearchCriteria extends SearchCriteria{
 	}
 
 	public NumberSearchField getProjectId() {
-        return projectId;
-    }
+		return projectId;
+	}
 
-    public void setProjectId(NumberSearchField projectId) {
-        this.projectId = projectId;
-    }
+	public void setProjectId(NumberSearchField projectId) {
+		this.projectId = projectId;
+	}
 
 	public void setId(NumberSearchField id) {
 		this.id = id;
@@ -73,5 +63,5 @@ public class MilestoneSearchCriteria extends SearchCriteria{
 	public StringSearchField getMilestoneName() {
 		return milestoneName;
 	}
-    
+
 }

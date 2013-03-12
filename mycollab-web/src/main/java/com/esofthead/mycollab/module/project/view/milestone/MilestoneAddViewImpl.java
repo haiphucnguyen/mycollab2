@@ -91,12 +91,12 @@ public class MilestoneAddViewImpl extends AbstractView implements
 					userbox.setRequired(true);
 					userbox.setRequiredError("Please enter a owner");
 					return userbox;
-				} else if (propertyId.equals("flag")) {
-					if (milestone.getFlag() == null)
-					{
-						milestone.setFlag("External");
+				} else if (propertyId.equals("status")) {
+					if (milestone.getStatus() == null) {
+						milestone.setStatus("In Progress");
 					}
-					return new ValueComboBox(false, "External", "Internal");
+					return new ValueComboBox(false, "In Progress", "Future",
+							"Closed");
 				} else if (propertyId.equals("name")) {
 					TextField tf = new TextField();
 					tf.setNullRepresentation("");
