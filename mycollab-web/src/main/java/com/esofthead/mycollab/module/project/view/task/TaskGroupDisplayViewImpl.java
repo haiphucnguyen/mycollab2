@@ -212,6 +212,6 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 
 	@Override
 	public void insertTaskList(SimpleTaskList taskList) {
-		taskLists.insertItemOnTop(taskList);
+		taskLists.insetItemOnBottom(taskList);
 	}
 }

@@ -12,6 +12,7 @@ import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
+import com.esofthead.mycollab.module.tracker.BugResolutionConstants;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -180,6 +181,7 @@ public class ResolvedInputWindow extends Window {
 			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("resolution")) {
+					bug.setResolution(BugResolutionConstants.FIXED);
 					return new BugResolutionComboBox();
 				} else if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();

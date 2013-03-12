@@ -18,7 +18,7 @@ public class MilestoneSearchCriteria extends SearchCriteria{
     
     private StringSearchField assignUser;
     
-    private StringSearchField flag;
+    private StringSearchField status;
     
     private NumberSearchField projectId;
     
@@ -42,15 +42,15 @@ public class MilestoneSearchCriteria extends SearchCriteria{
         this.assignUser = assignUser;
     }
 
-    public StringSearchField getFlag() {
-        return flag;
-    }
+    public StringSearchField getStatus() {
+		return status;
+	}
 
-    public void setFlag(StringSearchField flag) {
-        this.flag = flag;
-    }
+	public void setStatus(StringSearchField status) {
+		this.status = status;
+	}
 
-    public NumberSearchField getProjectId() {
+	public NumberSearchField getProjectId() {
         return projectId;
     }
 

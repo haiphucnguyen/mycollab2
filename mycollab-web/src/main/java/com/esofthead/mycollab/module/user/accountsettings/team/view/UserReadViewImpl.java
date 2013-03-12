@@ -16,6 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
@@ -102,6 +103,9 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 					} else if (propertyId.equals("website")) {
 						return new DefaultFormViewFieldFactory.FormUrlLinkViewField(
 								user.getWebsite());
+					} else if (propertyId.equals("dateofbirth")) {
+						return new DefaultFormViewFieldFactory.FormViewField(
+								AppContext.formatDate(user.getDateofbirth()));
 					}
 					return null;
 				}
@@ -191,6 +195,10 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 							} else if (propertyId.equals("website")) {
 								return new DefaultFormViewFieldFactory.FormUrlLinkViewField(
 										user.getWebsite());
+							} else if (propertyId.equals("dateofbirth")) {
+								return new DefaultFormViewFieldFactory.FormViewField(
+										AppContext.formatDate(user
+												.getDateofbirth()));
 							}
 							return null;
 						}

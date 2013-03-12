@@ -277,6 +277,11 @@
             <artifactId>java-image-scaling</artifactId>
             <version>0.8.5</version>
         </dependency>
+        <dependency>
+            <groupId>com.google.api-client</groupId>
+            <artifactId>google-api-client</artifactId>
+            <version>1.13.2-beta</version>
+        </dependency>
     </dependencies>
     <build>
         <plugins>

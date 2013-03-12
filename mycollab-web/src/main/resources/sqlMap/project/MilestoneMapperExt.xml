@@ -1,32 +1,34 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt">
-    <resultMap
-        id="MilestoneResult"
+    <resultMap id="MilestoneResult"
         extends="com.esofthead.mycollab.module.project.dao.MilestoneMapper.BaseResultMap"
-        type="com.esofthead.mycollab.module.project.domain.SimpleMilestone" >
-        <result
-            column="ownerFullName"
-            jdbcType="VARCHAR"
+        type="com.esofthead.mycollab.module.project.domain.SimpleMilestone">
+        <result column="ownerFullName" jdbcType="VARCHAR"
             property="ownerFullName" />
+        <result column="numOpenTasks" jdbcType="INTEGER"
+            property="numOpenTasks" />
+        <result column="numTasks" jdbcType="INTEGER" property="numTasks" />
+        <result column="numOpenBugs" jdbcType="INTEGER" property="numOpenBugs" />
+        <result column="numBugs" jdbcType="INTEGER" property="numBugs" />
     </resultMap>
-    
-    <sql id="querySearchCriteria" >
-	
-		<if test="id != null">
+
+    <sql id="querySearchCriteria">
+
+        <if test="id != null">
             <![CDATA[${id.operation} m_prj_milestone.id ${id.compareOperator} #{id.value,javaType=INTEGER}]]>
         </if>
 
-        <if test="assignUser != null" >
+        <if test="assignUser != null">
             <![CDATA[${assignUser.operation} m_prj_milestone.owner = ${assignUser.value}]]>
         </if>
-        <if test="completedField != null" >
+        <if test="completedField != null">
             <![CDATA[${completedField.operation} m_prj_milestone.iscompleted IS ${completedField.value}]]>
         </if>
-        <if test="flag != null" >
-            <![CDATA[${flag.operation} m_prj_milestone.flag = ${flag.value}]]>
+        <if test="status != null">
+            <![CDATA[${status.operation} m_prj_milestone.status = ${flag.value}]]>
         </if>
-        <if test="projectId != null" >
+        <if test="projectId != null">
             <![CDATA[${projectId.operation} m_prj_milestone.projectid = ${projectId.value}]]>
         </if>
         <if test="milestoneName != null">
@@ -35,76 +37,73 @@
             ]]>
         </if>
     </sql>
-    
-    <sql id="selectMilestone" >
+
+    <sql id="selectMilestone">
         <![CDATA[
             SELECT m_prj_milestone.id, m_prj_milestone.name, m_prj_milestone.description, m_prj_milestone.startdate, m_prj_milestone.enddate, 
-                   m_prj_milestone.owner, m_prj_milestone.flag, m_prj_milestone.projectid, m_prj_milestone.status, m_prj_milestone.createdTime, 
+                   m_prj_milestone.owner, m_prj_milestone.status, m_prj_milestone.projectid, m_prj_milestone.status, m_prj_milestone.createdTime, 
                    m_prj_milestone.lastUpdatedTime, m_prj_milestone.sAccountId,
                    concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS ownerFullName
+                   
                 FROM m_prj_milestone
                     LEFT OUTER JOIN s_user ON (m_prj_milestone.owner = s_user.username)
         ]]>
     </sql>
-    
-    <select
-        id="getTotalCount"
-        parameterType="MilestoneSearchCriteria"
-        resultType="int" >
-		SELECT count(*) as totalCount FROM m_prj_milestone
+
+    <select id="getTotalCount" parameterType="MilestoneSearchCriteria"
+        resultType="int">
+        SELECT count(*) as totalCount FROM m_prj_milestone
 
 
-        <trim
-            prefix="WHERE"
-            prefixOverrides="AND | OR " >
-			1=1 
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1
 
-            <include refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.querySearchCriteria" />
+            <include
+                refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.querySearchCriteria" />
         </trim>
     </select>
 
-    <select
-        id="findPagableListByCriteria"
-        parameterType="ProblemSearchCriteria"
-        resultMap="MilestoneResult" >
+    <select id="findPagableListByCriteria" parameterType="ProblemSearchCriteria"
+        resultMap="MilestoneResult">
 
-        <include refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.selectMilestone" />
+        <include
+            refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.selectMilestone" />
 
-        <trim
-            prefix="WHERE"
-            prefixOverrides="AND | OR " >
-			1=1 
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            1=1
 
-            <include refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.querySearchCriteria" />
+            <include
+                refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.querySearchCriteria" />
         </trim>
     </select>
-    
+
     <select id="findMilestoneById" parameterType="java.lang.Integer"
-                resultMap="MilestoneResult">
+        resultMap="MilestoneResult">
         <include
             refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.selectMilestone" />
 
         WHERE m_prj_milestone.id=#{milestoneId, javaType=INTEGER}
     </select>
-    
-     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
+
+    <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
         SELECT MIN(id) FROM m_prj_milestone
 
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 
-            <include 
-                refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.querySearchCriteria"/>
+            1=1
+            <include
+                refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.querySearchCriteria" />
         </trim>
     </select>
-    
-    <select id="getPreviousItemKey" parameterType="map" resultType="java.lang.Integer">
+
+    <select id="getPreviousItemKey" parameterType="map"
+        resultType="java.lang.Integer">
         SELECT MAX(id) FROM m_prj_milestone
 
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 
-            <include 
-                refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.querySearchCriteria"/>
+            1=1
+            <include
+                refid="com.esofthead.mycollab.module.project.dao.MilestoneMapperExt.querySearchCriteria" />
         </trim>
     </select>
-    
+
 </mapper>    

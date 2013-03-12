@@ -15,117 +15,139 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class BeanList<SearchService extends ISearchableService<S>, S extends SearchCriteria, T>
-        extends CustomComponent {
+		extends CustomComponent {
 
-    private static Logger log = LoggerFactory.getLogger(BeanList.class);
-    private static final long serialVersionUID = 1L;
-    private Object parentComponent;
-    private SearchService searchService;
-    private Class<? extends RowDisplayHandler<T>> rowDisplayHandler;
-    private LazyLoadWrapper contentWrapper;
-    private VerticalLayout contentLayout;
-    private boolean isLazyLoadComponent = false;
+	private static Logger log = LoggerFactory.getLogger(BeanList.class);
+	private static final long serialVersionUID = 1L;
+	private Object parentComponent;
+	private SearchService searchService;
+	private Class<? extends RowDisplayHandler<T>> rowDisplayHandler;
+	private LazyLoadWrapper contentWrapper;
+	private VerticalLayout contentLayout;
+	private boolean isLazyLoadComponent = false;
 
-    public BeanList(Object parentComponent, SearchService searchService,
-            Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
-        this(parentComponent, searchService, rowDisplayHandler, new VerticalLayout(), false);
-    }
-    
-    public BeanList(Object parentComponent, SearchService searchService,
-            Class<? extends RowDisplayHandler<T>> rowDisplayHandler, boolean isLazyLoadComponent) {
-        this(parentComponent, searchService, rowDisplayHandler, new VerticalLayout(), isLazyLoadComponent);
-        
-    }
+	public BeanList(Object parentComponent, SearchService searchService,
+			Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
+		this(parentComponent, searchService, rowDisplayHandler,
+				new VerticalLayout(), false);
+	}
 
-    public BeanList(Object parentComponent, SearchService searchService,
-            Class<? extends RowDisplayHandler<T>> rowDisplayHandler, VerticalLayout contentLayout, boolean isLazyLoadComponent) {
-        this.parentComponent = parentComponent;
-        this.searchService = searchService;
-        this.rowDisplayHandler = rowDisplayHandler;
-        this.isLazyLoadComponent = isLazyLoadComponent;
+	public BeanList(Object parentComponent, SearchService searchService,
+			Class<? extends RowDisplayHandler<T>> rowDisplayHandler,
+			boolean isLazyLoadComponent) {
+		this(parentComponent, searchService, rowDisplayHandler,
+				new VerticalLayout(), isLazyLoadComponent);
 
-        this.contentWrapper = new LazyLoadWrapper(contentLayout);
-        this.contentLayout = contentLayout;
-        this.setCompositionRoot(contentWrapper);
-    }
+	}
 
-    public BeanList(SearchService searchService,
-            Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
-        this(null, searchService, rowDisplayHandler);
-    }
+	public BeanList(Object parentComponent, SearchService searchService,
+			Class<? extends RowDisplayHandler<T>> rowDisplayHandler,
+			VerticalLayout contentLayout, boolean isLazyLoadComponent) {
+		this.parentComponent = parentComponent;
+		this.searchService = searchService;
+		this.rowDisplayHandler = rowDisplayHandler;
+		this.isLazyLoadComponent = isLazyLoadComponent;
 
-    public void insertItemOnTop(T item) {
-        RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
-        Component row = rowHandler.generateRow(item, 0);
-        if (row != null && contentLayout != null) {
-        	if (isLazyLoadComponent) {
-        		contentLayout.addComponent(new LazyLoadWrapper(row), 0);
-        	} else {
-        		contentLayout.addComponent(row, 0);
-        	}
-        }
-    }
+		this.contentWrapper = new LazyLoadWrapper(contentLayout);
+		this.contentLayout = contentLayout;
+		this.setCompositionRoot(contentWrapper);
+	}
 
-    private RowDisplayHandler<T> constructRowndisplayHandler() {
-        RowDisplayHandler<T> rowHandler = null;
-        try {
+	public BeanList(SearchService searchService,
+			Class<? extends RowDisplayHandler<T>> rowDisplayHandler) {
+		this(null, searchService, rowDisplayHandler);
+	}
 
-            if (rowDisplayHandler.getEnclosingClass() != null && !Modifier.isStatic(rowDisplayHandler.getModifiers())) {
+	public void insertItemOnTop(T item) {
+		RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
+		Component row = rowHandler.generateRow(item, 0);
+		if (row != null && contentLayout != null) {
+			if (isLazyLoadComponent) {
+				contentLayout.addComponent(new LazyLoadWrapper(row), 0);
+			} else {
+				contentLayout.addComponent(row, 0);
+			}
+		}
+	}
 
-                Constructor constructor = rowDisplayHandler.getDeclaredConstructor(rowDisplayHandler.getEnclosingClass());
-                rowHandler = (RowDisplayHandler<T>) constructor.newInstance(parentComponent);
-            } else {
-                rowHandler = rowDisplayHandler.newInstance();
-            }
-            return rowHandler;
-        } catch (Exception e) {
-            throw new MyCollabException(e);
-        }
-    }
+	public void insetItemOnBottom(T item) {
+		RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
+		Component row = rowHandler.generateRow(item,
+				contentLayout.getComponentCount());
+		if (row != null && contentLayout != null) {
+			if (isLazyLoadComponent) {
+				contentLayout.addComponent(new LazyLoadWrapper(row));
+			} else {
+				contentLayout.addComponent(row);
+			}
+		}
+	}
 
-    
-    public int setSearchCriteria(S searchCriteria) {
-        SearchRequest<S> searchRequest = new SearchRequest<S>(searchCriteria,
-                0, Integer.MAX_VALUE);
-        return setSearchRequest(searchRequest);
-    }
+	private RowDisplayHandler<T> constructRowndisplayHandler() {
+		RowDisplayHandler<T> rowHandler = null;
+		try {
 
-    public int setSearchRequest(SearchRequest<S> searchRequest) {
-        List<T> currentListData = searchService.findPagableListByCriteria(searchRequest);
-        loadItems(currentListData);
-        return currentListData.size();
-    }
+			if (rowDisplayHandler.getEnclosingClass() != null
+					&& !Modifier.isStatic(rowDisplayHandler.getModifiers())) {
 
-    public void loadItems(List<T> currentListData) {
-        contentLayout.removeAllComponents();
+				Constructor constructor = rowDisplayHandler
+						.getDeclaredConstructor(rowDisplayHandler
+								.getEnclosingClass());
+				rowHandler = (RowDisplayHandler<T>) constructor
+						.newInstance(parentComponent);
+			} else {
+				rowHandler = rowDisplayHandler.newInstance();
+			}
+			return rowHandler;
+		} catch (Exception e) {
+			throw new MyCollabException(e);
+		}
+	}
 
-        int i = 0;
-        try {
-            for (T item : currentListData) {
-                RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
-                
-                Component row = rowHandler.generateRow(item, i);
-                if (row != null) {
-                	if (isLazyLoadComponent) {
-                		contentLayout.addComponent(new LazyLoadWrapper(row));
-                	} else {
-                		contentLayout.addComponent(row);
-                	}
-                }
+	public int setSearchCriteria(S searchCriteria) {
+		SearchRequest<S> searchRequest = new SearchRequest<S>(searchCriteria,
+				0, Integer.MAX_VALUE);
+		return setSearchRequest(searchRequest);
+	}
 
-                i++;
-            }
-        } catch (Exception e) {
-            log.error("Error while generate column display", e);
-        }
-    }
-    
-    public boolean isEmpty() {
-    	return (contentLayout != null) && (contentLayout.getComponentCount() > 0);
-    }
+	public int setSearchRequest(SearchRequest<S> searchRequest) {
+		List<T> currentListData = searchService
+				.findPagableListByCriteria(searchRequest);
+		loadItems(currentListData);
+		return currentListData.size();
+	}
 
-    public static interface RowDisplayHandler<T> {
+	public void loadItems(List<T> currentListData) {
+		contentLayout.removeAllComponents();
 
-        Component generateRow(T obj, int rowIndex);
-    }
+		int i = 0;
+		try {
+			for (T item : currentListData) {
+				RowDisplayHandler<T> rowHandler = constructRowndisplayHandler();
+
+				Component row = rowHandler.generateRow(item, i);
+				if (row != null) {
+					if (isLazyLoadComponent) {
+						contentLayout.addComponent(new LazyLoadWrapper(row));
+					} else {
+						contentLayout.addComponent(row);
+					}
+				}
+
+				i++;
+			}
+		} catch (Exception e) {
+			log.error("Error while generate column display", e);
+		}
+	}
+
+	public boolean isEmpty() {
+		return (contentLayout != null)
+				&& (contentLayout.getComponentCount() > 0);
+	}
+
+	public static interface RowDisplayHandler<T> {
+
+		Component generateRow(T obj, int rowIndex);
+	}
 }

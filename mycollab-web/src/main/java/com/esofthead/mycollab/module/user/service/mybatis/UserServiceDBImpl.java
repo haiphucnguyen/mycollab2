@@ -135,6 +135,7 @@ public class UserServiceDBImpl extends
 					log.debug("User " + username + " has no any role");
 				}
 			}
+			user.setPassword(null);
 			return user;
 		}
 	}

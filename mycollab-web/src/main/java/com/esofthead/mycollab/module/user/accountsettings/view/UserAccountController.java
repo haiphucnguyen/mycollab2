@@ -108,8 +108,8 @@ public class UserAccountController implements IController {
 
 					@Override
 					public void handle(UserEvent.GotoEdit event) {
-						UserAddPresenter presenter = PresenterResolver
-								.getPresenter(UserAddPresenter.class);
+						UserPresenter presenter = PresenterResolver
+								.getPresenter(UserPresenter.class);
 
 						SimpleUser user = (SimpleUser) event.getData();
 						presenter.go(container, new UserScreenData.Edit(user));
