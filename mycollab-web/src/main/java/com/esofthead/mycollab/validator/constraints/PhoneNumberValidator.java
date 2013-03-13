@@ -12,7 +12,7 @@ public class PhoneNumberValidator implements
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value != null) {
+        if (value != null && value != "") {
             return value
                     .matches("[(]?\\d{3}[)]?\\s?-?\\s?\\d{3}\\s?-?\\s?\\d{4}");
         } else {

@@ -22,7 +22,6 @@ import de.steinwedel.vaadin.MessageBox.ButtonType;
 @SuppressWarnings("serial")
 public class PasswordChangeWindow extends Window {
 
-	private PasswordField txtOldPassword;
 	private PasswordField txtNewPassword;
 	private PasswordField txtConfirmPassword;
 	
@@ -56,9 +55,8 @@ public class PasswordChangeWindow extends Window {
 				UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
 				"150px");
 		
-		txtOldPassword = (PasswordField) passInfo.addComponent(new PasswordField(), "Old password", 0, 0);
-		txtNewPassword = (PasswordField) passInfo.addComponent(new PasswordField(), "New password", 0, 1);
-		txtConfirmPassword = (PasswordField) passInfo.addComponent(new PasswordField(), "Confirm new password", 0, 2);
+		txtNewPassword = (PasswordField) passInfo.addComponent(new PasswordField(), "New password", 0, 0);
+		txtConfirmPassword = (PasswordField) passInfo.addComponent(new PasswordField(), "Confirm new password", 0, 1);
 		
 		mainLayout.addComponent(passInfo.getLayout());
 		mainLayout.setComponentAlignment(passInfo.getLayout(), Alignment.MIDDLE_CENTER);
@@ -80,6 +78,8 @@ public class PasswordChangeWindow extends Window {
 
 		cancelBtn.setStyleName("link");
 		hlayoutControls.addComponent(cancelBtn);
+		hlayoutControls.setSpacing(true);
+		hlayoutControls.setMargin(true);
 		hlayoutControls.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
 		
 		Button sendBtn = new Button("Save", new Button.ClickListener() {
@@ -111,15 +111,8 @@ public class PasswordChangeWindow extends Window {
 	
 	private void changePassword() {
 		
-		txtOldPassword.removeStyleName("errorField");
 		txtNewPassword.removeStyleName("errorField");
 		txtConfirmPassword.removeStyleName("errorField");
-		
-		if (!user.getPassword().equals(txtOldPassword.getValue())) {
-			showMessage("Warning!", "Your old password is not correct, please check it again.");
-			txtOldPassword.addStyleName("errorField");
-			return;
-		}
 		
 		if (!txtNewPassword.getValue().equals(txtConfirmPassword.getValue())) {
 			showMessage("Warning!", "Your new password is not matching with confirm password, please check it again.");

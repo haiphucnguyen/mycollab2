@@ -116,8 +116,10 @@ public class ProfileReadViewImpl extends AbstractView implements
 		private class FormLayoutFactory implements IFormLayoutFactory {
 
 			protected GridFormLayoutHelper basicInformation;
-
+			
 			protected GridFormLayoutHelper contactInformation;
+
+			protected GridFormLayoutHelper advanceInformation;
 
 			@Override
 			public Layout getLayout() {
@@ -145,32 +147,37 @@ public class ProfileReadViewImpl extends AbstractView implements
 				passLayout.setComponentAlignment(btnChangePassword, Alignment.MIDDLE_CENTER);
 				layout.addComponent(passLayout);
 
-				Label informationHeader = new Label("Basic Information");
-				informationHeader.setStyleName("h2");
+				Label basicInformationHeader = new Label("Basic Information");
+				basicInformationHeader.setStyleName("h2");
+				
+				Label contactInformationHeader = new Label("Contact Information");
+				contactInformationHeader.setStyleName("h2");
 
-				Label contactHeader = new Label("Advance Information");
-				contactHeader.setStyleName("h2");
+				Label advanceInfoHeader = new Label("Advanced Information");
+				advanceInfoHeader.setStyleName("h2");
 
 				if (ScreenSize.hasSupport1024Pixels()) {
 					basicInformation = new GridFormLayoutHelper(1, 5,
 							UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
 							"90px");
-					contactInformation = new GridFormLayoutHelper(1, 2,
+					contactInformation = new GridFormLayoutHelper(1, 5,
 							UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
 							"90px");
-					informationHeader
+					advanceInformation = new GridFormLayoutHelper(1, 3,
+							UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
+							"90px");
+					basicInformationHeader
 							.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION);
-					contactHeader
+					advanceInfoHeader
 							.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION);
 				} else if (ScreenSize.hasSupport1280Pixels()) {
 					basicInformation = new GridFormLayoutHelper(1, 5);
-					contactInformation = new GridFormLayoutHelper(1, 2);
+					contactInformation = new GridFormLayoutHelper(1, 5);
+					advanceInformation = new GridFormLayoutHelper(1, 3);
 				}
 
-				layout.addComponent(informationHeader);
+				layout.addComponent(basicInformationHeader);
 				layout.addComponent(basicInformation.getLayout());
-				layout.setComponentAlignment(basicInformation.getLayout(),
-						Alignment.MIDDLE_LEFT);
 				Button btnChangeBasicInfo = new Button("Change Basic Information", new Button.ClickListener() {
 					
 					@Override
@@ -181,8 +188,22 @@ public class ProfileReadViewImpl extends AbstractView implements
 				btnChangeBasicInfo.addStyleName("link");
 				layout.addComponent(btnChangeBasicInfo);
 				layout.setComponentAlignment(btnChangeBasicInfo, Alignment.MIDDLE_RIGHT);
-				layout.addComponent(contactHeader);
+				
+				layout.addComponent(contactInformationHeader);
 				layout.addComponent(contactInformation.getLayout());
+				Button btnChangeContactInfo = new Button("Change Contact Information", new Button.ClickListener() {
+					
+					@Override
+					public void buttonClick(ClickEvent event) {
+						getWidget().getWindow().addWindow(new ContactInfoChangeWindow(user));
+					}
+				});
+				btnChangeContactInfo.addStyleName("link");
+				layout.addComponent(btnChangeContactInfo);
+				layout.setComponentAlignment(btnChangeContactInfo, Alignment.MIDDLE_RIGHT);
+				
+				layout.addComponent(advanceInfoHeader);
+				layout.addComponent(advanceInformation.getLayout());
 				Button btnChangeAdvanceInfo = new Button("Change Advanced Information", new Button.ClickListener() {
 					
 					@Override
@@ -209,9 +230,21 @@ public class ProfileReadViewImpl extends AbstractView implements
 				} else if (propertyId.equals("dateofbirth")) {
 					basicInformation.addComponent(field, "Birthday", 0, 3);
 				} else if (propertyId.equals("website")) {
-					contactInformation.addComponent(field, "Website", 0, 0);
+					advanceInformation.addComponent(field, "Website", 0, 0);
 				} else if (propertyId.equals("company")) {
-					contactInformation.addComponent(field, "Company", 0, 1);
+					advanceInformation.addComponent(field, "Company", 0, 1);
+				} else if (propertyId.equals("country")) {
+					advanceInformation.addComponent(field, "Country", 0, 2);
+				} else if (propertyId.equals("workphone")) {
+					contactInformation.addComponent(field, "Work phone", 0, 0);
+				} else if (propertyId.equals("homephone")) {
+					contactInformation.addComponent(field, "Home phone", 0, 1);
+				} else if (propertyId.equals("facebookaccount")) {
+					contactInformation.addComponent(field, "Facebook", 0, 2);
+				} else if (propertyId.equals("twitteraccount")) {
+					contactInformation.addComponent(field, "Twitter", 0, 3);
+				} else if (propertyId.equals("skypecontact")) {
+					contactInformation.addComponent(field, "Skype", 0, 4);
 				}
 			}
 		}
@@ -235,7 +268,19 @@ public class ProfileReadViewImpl extends AbstractView implements
 					return new DefaultFormViewFieldFactory.FormUrlLinkViewField(value);
 				} else if (propertyId.equals("company")) {
 					value = user.getCompany();
-				} 
+				}  else if (propertyId.equals("country")) {
+					value = user.getCountry();
+				}  else if (propertyId.equals("workphone")) {
+					value = user.getWorkphone();
+				} else if (propertyId.equals("homephone")) {
+					value = user.getHomephone();
+				} else if (propertyId.equals("facebookaccount")) {
+					value = user.getFacebookaccount();
+				} else if (propertyId.equals("twitteraccount")) {
+					value = user.getTwitteraccount();
+				} else if (propertyId.equals("skypecontact")) {
+					value = user.getSkypecontact();
+				}
 				return new DefaultFormViewFieldFactory.LabelViewField(value);
 			}
 		}

@@ -21,6 +21,18 @@
 				<message>The last name must be not null</message>
 			</constraint>
 		</field>
+		<field name="workphone">
+			<constraint
+                annotation="com.esofthead.mycollab.validator.constraints.PhoneNumber">
+                <message>Please enter a valid phone number</message>
+            </constraint>
+		</field>
+		<field name="homephone">
+			<constraint
+                annotation="com.esofthead.mycollab.validator.constraints.PhoneNumber">
+                <message>Please enter a valid phone number</message>
+            </constraint>
+		</field>
 	</bean>
 	
 	<bean class="Role" ignore-annotations="true" >

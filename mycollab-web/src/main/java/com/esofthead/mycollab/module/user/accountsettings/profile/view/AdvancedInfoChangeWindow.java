@@ -4,6 +4,7 @@ import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEve
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
@@ -21,6 +22,7 @@ public class AdvancedInfoChangeWindow extends Window {
 
 	private TextField txtWebsite;
 	private TextField txtCompany;
+	private CountryComboBox cboCountry;
 	
 	private User user;
 	
@@ -46,9 +48,11 @@ public class AdvancedInfoChangeWindow extends Window {
 		
 		txtWebsite = (TextField) passInfo.addComponent(new TextField(), "Website", 0, 0);
 		txtCompany = (TextField) passInfo.addComponent(new TextField(), "Company", 0, 1);
+		cboCountry = (CountryComboBox) passInfo.addComponent(new CountryComboBox(), "Country", 0, 2);
 		
 		txtWebsite.setValue(user.getWebsite() == null ? "" : user.getWebsite());
 		txtCompany.setValue(user.getCompany() == null ? "" : user.getCompany());
+		cboCountry.setValue(user.getCountry() == null ? "" : user.getCountry());
 		
 		mainLayout.addComponent(passInfo.getLayout());
 		mainLayout.setComponentAlignment(passInfo.getLayout(), Alignment.TOP_LEFT);
@@ -58,7 +62,8 @@ public class AdvancedInfoChangeWindow extends Window {
 		mainLayout.setExpandRatio(lbSpace, 1.0f);
 		
 		HorizontalLayout hlayoutControls = new HorizontalLayout();
-		
+		hlayoutControls.setSpacing(true);
+		hlayoutControls.setMargin(true);
 		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -94,6 +99,7 @@ public class AdvancedInfoChangeWindow extends Window {
 	private void changePassword() {
 		user.setWebsite((String) txtWebsite.getValue());
 		user.setCompany((String) txtCompany.getValue());
+		user.setCountry((String) cboCountry.getValue());
 
 		UserService userService = AppContext.getSpringBean(UserService.class);
 		userService.updateWithSession(user, AppContext.getUsername());

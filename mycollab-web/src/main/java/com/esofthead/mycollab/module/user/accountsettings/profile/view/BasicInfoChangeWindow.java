@@ -79,7 +79,8 @@ public class BasicInfoChangeWindow extends Window {
 		mainLayout.setExpandRatio(lbSpace, 1.0f);
 
 		HorizontalLayout hlayoutControls = new HorizontalLayout();
-
+		hlayoutControls.setSpacing(true);
+		hlayoutControls.setMargin(true);
 		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
