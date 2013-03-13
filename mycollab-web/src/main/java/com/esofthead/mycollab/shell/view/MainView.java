@@ -94,8 +94,6 @@ public final class MainView extends AbstractView {
 								.getView(AccountDashboardView.class);
 						bodyLayout.removeAllComponents();
 						bodyLayout.addComponent(accountView);
-						// bodyLayout.setComponentAlignment(accountView,
-						// Alignment.MIDDLE_CENTER);
 					}
 				});
 		myAccountBtn.setStyleName("link");
@@ -140,7 +138,5 @@ public final class MainView extends AbstractView {
 		bodyLayout.removeAllComponents();
 		LazyLoadWrapper comp = new LazyLoadWrapper(view.getWidget());
 		bodyLayout.addComponent(comp);
-		// bodyLayout.setComponentAlignment(comp,
-		// Alignment.MIDDLE_CENTER);
 	}
 }

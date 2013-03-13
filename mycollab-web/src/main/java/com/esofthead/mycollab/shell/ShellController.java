@@ -50,19 +50,9 @@ public class ShellController implements IController {
 
 					@Override
 					public void handle(GotoMainPage event) {
-						Calendar cal = Calendar.getInstance();
-						cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
-						Date expiryDate = cal.getTime();
-						BrowserCookies cookies = new BrowserCookies();
-
 						MainViewPresenter mainViewPresenter = PresenterResolver
 								.getPresenter(MainViewPresenter.class);
 						MainView mainView = mainViewPresenter.getView();
-						mainView.addComponent(cookies);
-						cookies.setCookie("loginInfo", AppContext.getUsername()
-								+ "$" + AppContext.getSession().getPassword(),
-								expiryDate);
-
 						if (mainView.getParent() == null
 								|| mainView.getParent() == container) {
 							((Window) container).setContent(mainView);

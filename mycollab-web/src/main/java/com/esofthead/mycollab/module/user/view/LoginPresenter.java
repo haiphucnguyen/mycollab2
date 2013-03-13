@@ -1,11 +1,14 @@
 package com.esofthead.mycollab.module.user.view;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.browsercookies.BrowserCookies;
 
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.module.user.events.UserEvent.PlainLogin;
@@ -53,6 +56,16 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 		UserService userService = AppContext.getSpringBean(UserService.class);
 		SimpleUser user = userService.authentication(username, password,
 				isPasswordEncrypt);
+
+		// Remember password
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
+		Date expiryDate = cal.getTime();
+		BrowserCookies cookies = new BrowserCookies();
+		view.addComponent(cookies);
+		cookies.setCookie("loginInfo", username + "$"
+				+ password, expiryDate);
+
 		UserPreferenceService preferenceService = AppContext
 				.getSpringBean(UserPreferenceService.class);
 		UserPreference pref = preferenceService.getPreferenceOfUser(username);

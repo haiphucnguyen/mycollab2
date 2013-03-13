@@ -22,6 +22,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
@@ -162,8 +163,8 @@ public class TaskDisplayComponent extends CssLayout {
 				}
 			}
 		});
-		createTaskBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
-		createTaskBtn.setStyleName("link");
+		createTaskBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		this.addComponent(createTaskBtn);
 
 		taskDisplay.setItems(taskList.getSubTasks());
