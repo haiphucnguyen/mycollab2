@@ -24,6 +24,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -99,14 +100,14 @@ public class UserServiceDBImpl extends
 		List<SimpleUser> users = findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
 				criteria, 0, Integer.MAX_VALUE));
 		if (users == null || users.isEmpty()) {
-			throw new AuthenticationException("Invalid username or password");
+			throw new UserInvalidInputException("Invalid username or password");
 		} else {
 			SimpleUser user = users.get(0);
 			if (user.getPassword() == null
 					|| !PasswordEncryptHelper.checkPassword(password,
 							user.getPassword(), isPasswordEncrypt)) {
 				log.debug("PASS: " + password + "   " + user.getPassword());
-				throw new AuthenticationException(
+				throw new UserInvalidInputException(
 						"Invalid username or password");
 			}
 
