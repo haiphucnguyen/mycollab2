@@ -149,7 +149,7 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 			public FormLayoutFactory() {
 				super(user.getDisplayName());
 			}
-
+			
 			@Override
 			protected Layout createTopPanel() {
 				return (new PreviewFormControlsGenerator<User>(PreviewForm.this))

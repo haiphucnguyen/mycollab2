@@ -25,6 +25,11 @@ public class RolePresenter extends AbstractPresenter<RoleContainer> {
 	}
 
 	@Override
+	public void go(ComponentContainer container, ScreenData<?> data) {
+		super.go(container, data, false);
+	}
+
+	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (data == null) {
 			RoleListPresenter listPresenter = PresenterResolver

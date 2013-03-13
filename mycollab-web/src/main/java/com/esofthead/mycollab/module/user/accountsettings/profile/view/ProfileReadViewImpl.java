@@ -260,7 +260,8 @@ public class ProfileReadViewImpl extends AbstractView implements
 				} else if (propertyId.equals("lastname")) {
 					value = user.getLastname();
 				} else if (propertyId.equals("email")) {
-					value = user.getEmail();
+					return new DefaultFormViewFieldFactory.FormEmailLinkViewField(
+	                        user.getEmail());
 				} else if (propertyId.equals("dateofbirth")) {
 					value = AppContext.formatDate(user.getDateofbirth());
 				} else if (propertyId.equals("website")) {

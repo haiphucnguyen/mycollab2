@@ -27,6 +27,12 @@ public class UserPermissionManagementPresenter extends
 	}
 
 	@Override
+	public void go(ComponentContainer container, ScreenData<?> data) {
+		super.go(container, data, false);
+	}
+
+
+	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		AccountDashboardView accountContaier = (AccountDashboardView) container;
 		accountContaier.gotoSubView("Users & Permissions");
@@ -47,6 +53,6 @@ public class UserPermissionManagementPresenter extends
 					+ BeanUtility.printBeanObj(data));
 		}
 
-		presenter.go(view.getWidget(), data, false);
+		presenter.go(view.getWidget(), data);
 	}
 }

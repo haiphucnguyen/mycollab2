@@ -60,8 +60,25 @@ public class TaskGroupReorderViewImpl extends AbstractView implements
 		header.setSpacing(true);
 		header.setWidth("100%");
 		Label headerLbl = new Label("All Tasks");
+		headerLbl.setStyleName("h2");
 		header.addComponent(headerLbl);
 		header.setExpandRatio(headerLbl, 1.0f);
+		
+		Button backToListBtn = new Button("Back to task list",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(Button.ClickEvent event) {
+						EventBus.getInstance()
+								.fireEvent(
+										new TaskListEvent.GotoTaskListScreen(
+												this, null));
+					}
+				});
+		backToListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		header.addComponent(backToListBtn);
+		header.setComponentAlignment(backToListBtn, Alignment.MIDDLE_RIGHT);
 
 		saveOrderBtn = new Button("Save", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -75,22 +92,6 @@ public class TaskGroupReorderViewImpl extends AbstractView implements
 		saveOrderBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		header.addComponent(saveOrderBtn);
 		header.setComponentAlignment(saveOrderBtn, Alignment.MIDDLE_RIGHT);
-
-		Button newTaskListBtn = new Button("Back to task list",
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public void buttonClick(Button.ClickEvent event) {
-						EventBus.getInstance()
-								.fireEvent(
-										new TaskListEvent.GotoTaskListScreen(
-												this, null));
-					}
-				});
-		newTaskListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		header.addComponent(newTaskListBtn);
-		header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
 
 		this.addComponent(header);
 

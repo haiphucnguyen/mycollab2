@@ -59,41 +59,73 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
 
 	public static class UserInformationLayout implements IFormLayoutFactory {
 
-        private GridFormLayoutHelper informationLayout;
+        private GridFormLayoutHelper basicInformationLayout;
+        private GridFormLayoutHelper advancedInformationLayout;
+        private GridFormLayoutHelper contactInformationLayout;
 
         @Override
         public Layout getLayout() {
             VerticalLayout layout = new VerticalLayout();
-            Label organizationHeader = new Label("User Information");
+            Label organizationHeader = new Label("Basic User Information");
             organizationHeader.setStyleName("h2");
             layout.addComponent(organizationHeader);
 
-            informationLayout = new GridFormLayoutHelper(2, 6);
-            informationLayout.getLayout().setWidth("100%");
+            basicInformationLayout = new GridFormLayoutHelper(2, 6);
+            basicInformationLayout.getLayout().setWidth("100%");
 
-            layout.addComponent(informationLayout.getLayout());
+            layout.addComponent(basicInformationLayout.getLayout());
+            
+            Label contactHeader = new Label("Contact User Information");
+            contactHeader.setStyleName("h2");
+            layout.addComponent(contactHeader);
+
+            contactInformationLayout = new GridFormLayoutHelper(2, 6);
+            contactInformationLayout.getLayout().setWidth("100%");
+
+            layout.addComponent(contactInformationLayout.getLayout());
+            
+            Label advancedHeader = new Label("Advanced User Information");
+            advancedHeader.setStyleName("h2");
+            layout.addComponent(advancedHeader);
+
+            advancedInformationLayout = new GridFormLayoutHelper(2, 2);
+            advancedInformationLayout.getLayout().setWidth("100%");
+
+            layout.addComponent(advancedInformationLayout.getLayout());
             return layout;
         }
 
         @Override
         public void attachField(Object propertyId, Field field) {
             if (propertyId.equals("firstname")) {
-                informationLayout.addComponent(field, "First Name", 0, 0);
+                basicInformationLayout.addComponent(field, "First Name", 0, 0);
             } else if (propertyId.equals("lastname")) {
-                informationLayout.addComponent(field, "Last Name", 0, 1);
+                basicInformationLayout.addComponent(field, "Last Name", 0, 1);
             } else if (propertyId.equals("nickname")) {
-                informationLayout.addComponent(field, "Nick Name", 1, 0);
+                basicInformationLayout.addComponent(field, "Nick Name", 1, 0);
             } else if (propertyId.equals("dateofbirth")) {
-                informationLayout.addComponent(field, "Birthday", 1, 1);
+                basicInformationLayout.addComponent(field, "Birthday", 1, 1);
             } else if (propertyId.equals("email")) {
-                informationLayout.addComponent(field, "Email", 0, 2);
+                basicInformationLayout.addComponent(field, "Email", 0, 2);
             } else if (propertyId.equals("isadmin")) {
-                informationLayout.addComponent(field, "Is Admin", 1, 2);
+                basicInformationLayout.addComponent(field, "Is Admin", 1, 2);
             } else if (propertyId.equals("company")) {
-                informationLayout.addComponent(field, "Company", 0, 3);
-            } else if (propertyId.equals("website")) {
-                informationLayout.addComponent(field, "Website", 1, 3);
-            }
+            	advancedInformationLayout.addComponent(field, "Company", 0, 0);
+            } else if (propertyId.equals("country")) {
+            	advancedInformationLayout.addComponent(field, "Country", 0, 1);
+			} else if (propertyId.equals("website")) {
+				advancedInformationLayout.addComponent(field, "Website", 1, 0);
+            } else if (propertyId.equals("workphone")) {
+            	contactInformationLayout.addComponent(field, "Work phone", 0, 0);
+			} else if (propertyId.equals("homephone")) {
+				contactInformationLayout.addComponent(field, "Home phone", 0, 1);
+			} else if (propertyId.equals("facebookaccount")) {
+				contactInformationLayout.addComponent(field, "Facebook", 1, 0);
+			} else if (propertyId.equals("twitteraccount")) {
+				contactInformationLayout.addComponent(field, "Twitter", 1, 1);
+			} else if (propertyId.equals("skypecontact")) {
+				contactInformationLayout.addComponent(field, "Skype", 0, 2);
+			}
         }
     }
 }
