@@ -2,22 +2,25 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd" >
 <mapper namespace="com.esofthead.mycollab.module.tracker.dao.VersionMapperExt">
 
-    <resultMap type="com.esofthead.mycollab.module.tracker.domain.Version"
-                   extends="com.esofthead.mycollab.module.tracker.dao.VersionMapper.BaseResultMap"
-                   id="SimpleVersionResult">
+    <resultMap
+        type="com.esofthead.mycollab.module.tracker.domain.SimpleVersion"
+        extends="com.esofthead.mycollab.module.tracker.dao.VersionMapper.BaseResultMap"
+        id="SimpleVersionResult">
+        <result column="numOpenBugs" jdbcType="INTEGER" property="numOpenBugs" />
+        <result column="numBugs" jdbcType="INTEGER" property="numBugs" />
     </resultMap>
-    
+
     <sql id="querySearchCriteria">
         <if test="projectId != null">
             ${projectId.operation} m_tracker_version.projectid =
             #{projectId.value,javaType=INTEGER}
         </if>
-         <if test="versionname != null">
+        <if test="versionname != null">
           <![CDATA[
             ${versionname.operation} m_tracker_version.versionname like '%${versionname.value}%'
             ]]>
         </if>
-        
+
         <if test="id != null">
             <![CDATA[${id.operation} m_tracker_version.id ${id.compareOperator} #{id.value,javaType=INTEGER}]]>
         </if>
@@ -28,22 +31,32 @@
         SELECT  m_tracker_version.id, m_tracker_version.projectid, m_tracker_version.description, 
                 m_tracker_version.duedate, m_tracker_version.versionname, m_tracker_version.createdUser, 
                 m_tracker_version.sAccountId, m_tracker_version.lastUpdatedTime, 
-                m_tracker_version.createdTime
+                m_tracker_version.createdTime,
+                 (SELECT COUNT(*) 
+                        FROM m_tracker_bug, m_tracker_bug_related_item 
+                        WHERE m_tracker_bug.id=m_tracker_bug_related_item.bugid 
+                            AND m_tracker_bug_related_item.type IN ('AffVersion','Fix Version') 
+                            AND m_tracker_bug_related_item.typeid=m_tracker_version.id) AS numBugs,
+                (SELECT COUNT(*) 
+                        FROM m_tracker_bug, m_tracker_bug_related_item 
+                        WHERE m_tracker_bug.id=m_tracker_bug_related_item.bugid  AND m_tracker_bug.status IN ('Open', 'In Progress', 'Reopenned')
+                            AND m_tracker_bug_related_item.type IN ('AffVersion','Fix Version') 
+                            AND m_tracker_bug_related_item.typeid=m_tracker_version.id) AS numOpenBugs            
         FROM m_tracker_version
     ]]>
     </sql>
-    
+
     <select id="getTotalCount" resultType="int" parameterType="VersionSearchCriteria">
         SELECT count(*) as totalCount FROM m_tracker_version
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 
+            1=1
             <include
                 refid="com.esofthead.mycollab.module.tracker.dao.VersionMapperExt.querySearchCriteria" />
         </trim>
     </select>
-    
+
     <sql id="orderStatement">
-        ORDER BY 
+        ORDER BY
         <if test="orderByField != null">${orderByField} ${sortDirection}, </if>
         <![CDATA[
             m_tracker_version.lastUpdatedTime DESC
@@ -51,43 +64,44 @@
     </sql>
 
     <select id="findPagableListByCriteria" resultMap="SimpleVersionResult"
-                parameterType="VersionSearchCriteria">
+        parameterType="VersionSearchCriteria">
         <include
             refid="com.esofthead.mycollab.module.tracker.dao.VersionMapperExt.selectVersion" />
 
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 
+            1=1
             <include
                 refid="com.esofthead.mycollab.module.tracker.dao.VersionMapperExt.querySearchCriteria" />
         </trim>
-        <include refid="orderStatement"/>
+        <include refid="orderStatement" />
     </select>
-        
+
     <select id="findVersionById" parameterType="java.lang.Integer"
-                resultMap="SimpleVersionResult">
+        resultMap="SimpleVersionResult">
         <include
             refid="com.esofthead.mycollab.module.tracker.dao.VersionMapperExt.selectVersion" />
 
         WHERE m_tracker_version.id=#{versionId, javaType=INTEGER}
     </select>
-    
+
     <select id="getNextItemKey" parameterType="map" resultType="java.lang.Integer">
         SELECT MIN(id) FROM m_tracker_version
 
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 
-            <include 
-                refid="com.esofthead.mycollab.module.tracker.dao.VersionMapperExt.querySearchCriteria"/>
+            1=1
+            <include
+                refid="com.esofthead.mycollab.module.tracker.dao.VersionMapperExt.querySearchCriteria" />
         </trim>
     </select>
-    
-    <select id="getPreviousItemKey" parameterType="map" resultType="java.lang.Integer">
+
+    <select id="getPreviousItemKey" parameterType="map"
+        resultType="java.lang.Integer">
         SELECT MAX(id) FROM m_tracker_version
 
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
-            1=1 
-            <include 
-                refid="com.esofthead.mycollab.module.tracker.dao.VersionMapperExt.querySearchCriteria"/>
+            1=1
+            <include
+                refid="com.esofthead.mycollab.module.tracker.dao.VersionMapperExt.querySearchCriteria" />
         </trim>
     </select>
 </mapper>

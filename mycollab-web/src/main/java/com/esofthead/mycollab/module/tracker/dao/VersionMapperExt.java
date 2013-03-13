@@ -5,7 +5,7 @@
 package com.esofthead.mycollab.module.tracker.dao;
 
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
-import com.esofthead.mycollab.module.tracker.domain.Version;
+import com.esofthead.mycollab.module.tracker.domain.SimpleVersion;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 
 /**
@@ -14,6 +14,6 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriter
  */
 public interface VersionMapperExt extends ISearchableDAO<VersionSearchCriteria> {
 
-    Version findVersionById(int versionId);
+    SimpleVersion findVersionById(int versionId);
     
 }

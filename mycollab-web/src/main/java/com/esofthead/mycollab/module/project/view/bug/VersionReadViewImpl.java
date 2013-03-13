@@ -76,7 +76,10 @@ public class VersionReadViewImpl extends AbstractView implements
 				@Override
 				protected Field onCreateField(Item item, Object propertyId,
 						Component uiContext) {
-
+					if (propertyId.equals("duedate")) {
+						return new DefaultFormViewFieldFactory.FormDateViewField(
+								version.getDuedate());
+					}
 					return null;
 				}
 			});
@@ -190,14 +193,17 @@ public class VersionReadViewImpl extends AbstractView implements
 										BugStatusConstants.REOPENNED }));
 				unresolvedByAssigneeWidget
 						.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
+				
+				
 			}
 
 			@Override
 			public void displayBugListWidget(String title,
 					BugSearchCriteria criteria) {
 				bottomLayout.removeAllComponents();
-				BugListWidget bugListWidget = new BugListWidget(title + " Bug List",
-						"Back to version dashboard", criteria, this);
+				BugListWidget bugListWidget = new BugListWidget(title
+						+ " Bug List", "Back to version dashboard", criteria,
+						this);
 				bugListWidget.setWidth("100%");
 				this.bottomLayout.addComponent(bugListWidget);
 
