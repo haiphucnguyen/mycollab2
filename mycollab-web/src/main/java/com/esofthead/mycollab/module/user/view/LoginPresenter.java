@@ -50,33 +50,26 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 
 	public void doLogin(String username, String password,
 			boolean isPasswordEncrypt) {
-		try {
-			UserService userService = AppContext
-					.getSpringBean(UserService.class);
-			SimpleUser user = userService.authentication(username, password,
-					isPasswordEncrypt);
-			UserPreferenceService preferenceService = AppContext
-					.getSpringBean(UserPreferenceService.class);
-			UserPreference pref = preferenceService
-					.getPreferenceOfUser(username);
+		UserService userService = AppContext.getSpringBean(UserService.class);
+		SimpleUser user = userService.authentication(username, password,
+				isPasswordEncrypt);
+		UserPreferenceService preferenceService = AppContext
+				.getSpringBean(UserPreferenceService.class);
+		UserPreference pref = preferenceService.getPreferenceOfUser(username);
 
-			log.debug("Login to system successfully. Save user and preference "
-					+ pref + " to session");
+		log.debug("Login to system successfully. Save user and preference "
+				+ pref + " to session");
 
-			AppContext.setSession(user, pref);
-			EventBus.getInstance().fireEvent(
-					new ShellEvent.GotoMainPage(this, null));
+		AppContext.setSession(user, pref);
+		EventBus.getInstance().fireEvent(
+				new ShellEvent.GotoMainPage(this, null));
 
-			// Tracking user service
-			AbstractWebApplicationContext context = (AbstractWebApplicationContext) AppContext
-					.getApplication().getContext();
+		// Tracking user service
+		AbstractWebApplicationContext context = (AbstractWebApplicationContext) AppContext
+				.getApplication().getContext();
 
-			log.debug("User agent: "
-					+ context.getBrowser().getBrowserApplication() + "  "
-					+ context.getBrowser().getAddress());
-		} catch (MyCollabException e) {
-			throw e;
-		}
+		log.debug("User agent: " + context.getBrowser().getBrowserApplication()
+				+ "  " + context.getBrowser().getAddress());
 	}
 
 	@Override

@@ -69,7 +69,8 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super("Create User");
+				super((user.getUsername() == null) ? "Create User" : (user
+						.getFirstname() + " " + user.getLastname()));
 			}
 
 			private Layout createButtonControls() {

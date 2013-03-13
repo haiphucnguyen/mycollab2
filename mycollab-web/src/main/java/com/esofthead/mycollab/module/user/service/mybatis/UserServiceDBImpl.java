@@ -30,7 +30,6 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
-import com.esofthead.mycollab.module.user.AuthenticationException;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
 import com.esofthead.mycollab.module.user.dao.RolePermissionMapper;
 import com.esofthead.mycollab.module.user.dao.UserMapper;

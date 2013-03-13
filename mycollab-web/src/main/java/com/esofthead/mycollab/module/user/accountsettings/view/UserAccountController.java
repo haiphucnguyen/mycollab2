@@ -3,7 +3,6 @@ package com.esofthead.mycollab.module.user.accountsettings.view;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
-import com.esofthead.mycollab.module.user.accountsettings.team.view.UserAddPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
@@ -108,8 +107,8 @@ public class UserAccountController implements IController {
 
 					@Override
 					public void handle(UserEvent.GotoEdit event) {
-						UserPresenter presenter = PresenterResolver
-								.getPresenter(UserPresenter.class);
+						UserPermissionManagementPresenter presenter = PresenterResolver
+								.getPresenter(UserPermissionManagementPresenter.class);
 
 						SimpleUser user = (SimpleUser) event.getData();
 						presenter.go(container, new UserScreenData.Edit(user));

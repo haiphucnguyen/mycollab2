@@ -4,7 +4,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.browsercookies.BrowserCookies;
 
-import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.shell.ShellController;
@@ -26,7 +25,6 @@ public class MainWindowContainer extends Window implements View {
 
 	private UriFragmentUtility urifu;
 	private FragmentNavigator fragmentNavigator;
-	
 
 	public MainWindowContainer() {
 		urifu = new UriFragmentUtility();
@@ -43,20 +41,20 @@ public class MainWindowContainer extends Window implements View {
 						.getUriFragmentUtility().getFragment());
 			}
 		});
-		
+
 		this.setCaption("MyCollab");
 		ControllerRegistry.getInstance().addController(
 				new ShellController(this));
 
-//		this.addURIHandler(new URIHandler() {
-//			private static final long serialVersionUID = 1L;
-//
-//			@Override
-//			public DownloadStream handleURI(URL context, String relativeUri) {
-//				log.debug("URI: " + relativeUri + "---" + context.getPath());
-//				return null;
-//			}
-//		});
+		// this.addURIHandler(new URIHandler() {
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// public DownloadStream handleURI(URL context, String relativeUri) {
+		// log.debug("URI: " + relativeUri + "---" + context.getPath());
+		// return null;
+		// }
+		// });
 
 		this.setImmediate(true);
 		this.addListener(new Window.ResizeListener() {
@@ -103,12 +101,8 @@ public class MainWindowContainer extends Window implements View {
 							if (loginInfo != null) {
 								String[] loginParams = loginInfo.split("\\$");
 								if (loginParams.length == 2) {
-									try {
-										presenter.doLogin(loginParams[0],
-												loginParams[1], true);
-									} catch (MyCollabException e) {
-										throw e;
-									}
+									presenter.doLogin(loginParams[0],
+											loginParams[1], true);
 								}
 							}
 						}

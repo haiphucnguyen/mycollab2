@@ -47,6 +47,6 @@ public class UserPermissionManagementPresenter extends
 					+ BeanUtility.printBeanObj(data));
 		}
 
-		presenter.go(view.getWidget(), data);
+		presenter.go(view.getWidget(), data, false);
 	}
 }
