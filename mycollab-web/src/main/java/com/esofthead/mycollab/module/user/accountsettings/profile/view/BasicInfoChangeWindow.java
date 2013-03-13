@@ -1,21 +1,21 @@
 package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
+import java.util.Calendar;
 import java.util.Date;
 
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -29,18 +29,19 @@ public class BasicInfoChangeWindow extends Window {
 	private TextField txtFirstName;
 	private TextField txtLastName;
 	private TextField txtEmail;
-	private DateField birthdayField;
+	private DateComboboxSelectionField birthdayField;
 
 	private User user;
 
 	public BasicInfoChangeWindow(User user) {
 		this.user = user;
 		this.setWidth("450px");
-		this.setHeight("250px");
+		this.setHeight("270px");
 		initUI();
 		center();
 		this.setCaption("Change your basic information");
 	}
+	
 
 	private void initUI() {
 
@@ -56,12 +57,14 @@ public class BasicInfoChangeWindow extends Window {
 				"First Name", 0, 0);
 		txtLastName = (TextField) passInfo.addComponent(new TextField(),
 				"Last Name", 0, 1);
+		txtLastName.setRequired(true);
 		txtEmail = (TextField) passInfo.addComponent(new TextField(), "Email",
 				0, 2);
-		birthdayField = (DateField) passInfo.addComponent(new DateField(),
+		txtEmail.setRequired(true);
+		birthdayField = (DateComboboxSelectionField) passInfo.addComponent(new DateComboboxSelectionField(),
 				"Birthday", 0, 3);
-		birthdayField.setDateFormat(AppContext.getDateFormat());
-		birthdayField.setResolution(PopupDateField.RESOLUTION_DAY);
+//		birthdayField.setDateFormat(AppContext.getDateFormat());
+//		birthdayField.setResolution(PopupDateField.RESOLUTION_DAY);
 
 		txtFirstName.setValue(user.getFirstname() == null ? "" : user
 				.getFirstname());
