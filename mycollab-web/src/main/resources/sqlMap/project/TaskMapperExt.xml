@@ -119,7 +119,7 @@
     </select>
     
     <select id="getMaxKey" parameterType="java.lang.Integer" resultType="java.lang.Integer">
-        SELECT MAX(bugkey) FROM m_prj_task
+        SELECT MAX(taskkey) FROM m_prj_task
             WHERE m_prj_task.projectid=#{projectId, javaType=INTEGER}
     </select>
 </mapper>

@@ -135,32 +135,37 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		header.addComponent(basicSearchBody);
 		header.setComponentAlignment(basicSearchBody, Alignment.MIDDLE_RIGHT);
 
-		reOrderBtn = new Button("Reorder", new Button.ClickListener() {
+		reOrderBtn = new Button(null, new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				EventBus.getInstance().fireEvent(
 						new TaskListEvent.ReoderTaskList(this, null));
 			}
 		});
+		reOrderBtn.setIcon(new ThemeResource(
+				"icons/16/project/reorder.png"));
 		reOrderBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		reOrderBtn.setDescription("Reorder taskgroup");
 		header.addComponent(reOrderBtn);
 		header.setComponentAlignment(reOrderBtn, Alignment.MIDDLE_RIGHT);
 
-		Button newTaskListBtn = new Button("New Task List",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						TaskGroupAddWindow taskListWindow = new TaskGroupAddWindow(
-								TaskGroupDisplayViewImpl.this);
-						TaskGroupDisplayViewImpl.this.getWindow().addWindow(
-								taskListWindow);
-					}
-				});
+		Button newTaskListBtn = new Button(null, new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				TaskGroupAddWindow taskListWindow = new TaskGroupAddWindow(
+						TaskGroupDisplayViewImpl.this);
+				TaskGroupDisplayViewImpl.this.getWindow().addWindow(
+						taskListWindow);
+			}
+		});
+		newTaskListBtn.setIcon(new ThemeResource(
+				"icons/16/project/new_task_list.png"));
+		newTaskListBtn.setDescription("New Task Group");
 		newTaskListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		header.addComponent(newTaskListBtn);
 		header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
 
-		Button showGanttChartBtn = new Button("Show Gantt Chart",
+		Button showGanttChartBtn = new Button(null,
 				new Button.ClickListener() {
 
 					@Override
@@ -176,6 +181,9 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 														searchCriteria)));
 					}
 				});
+		showGanttChartBtn.setDescription("Display Gantt Chart");
+		showGanttChartBtn.setIcon(new ThemeResource(
+				"icons/16/project/gantt_chart.png"));
 		showGanttChartBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		header.addComponent(showGanttChartBtn);
 		header.setComponentAlignment(showGanttChartBtn, Alignment.MIDDLE_RIGHT);
