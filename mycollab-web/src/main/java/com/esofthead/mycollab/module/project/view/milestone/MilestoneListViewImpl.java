@@ -14,12 +14,15 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * 
@@ -30,18 +33,21 @@ public class MilestoneListViewImpl extends AbstractView implements
 		MilestoneListView {
 	private static final long serialVersionUID = 1L;
 
-	private VerticalLayout inProgressContainer;
+	private final VerticalLayout inProgressContainer;
 
-	private VerticalLayout futureContainer;
+	private final VerticalLayout futureContainer;
 
-	private VerticalLayout closeContainer;
+	private final VerticalLayout closeContainer;
 
 	public MilestoneListViewImpl() {
 
 		HorizontalLayout header = new HorizontalLayout();
 		Label titleLbl = new Label("Milestones");
+		titleLbl.addStyleName("h2");
+		header.setMargin(true, true, false, true);
+		header.setWidth("100%");
 		header.addComponent(titleLbl);
-		header.setExpandRatio(titleLbl, 1.0f);
+		header.setComponentAlignment(titleLbl, Alignment.MIDDLE_LEFT);
 
 		Button createBtn = new Button("Create", new Button.ClickListener() {
 
@@ -54,11 +60,13 @@ public class MilestoneListViewImpl extends AbstractView implements
 		});
 		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		header.addComponent(createBtn);
+		header.setComponentAlignment(createBtn, Alignment.MIDDLE_RIGHT);
 		this.addComponent(header);
 
 		HorizontalLayout bodyContent = new HorizontalLayout();
 		bodyContent.setMargin(true);
 		bodyContent.setSpacing(true);
+		bodyContent.setWidth("100%");
 
 		closeContainer = new VerticalLayout();
 		bodyContent.addComponent(closeContainer);
@@ -78,13 +86,25 @@ public class MilestoneListViewImpl extends AbstractView implements
 	@Override
 	public void displayMilestones(List<SimpleMilestone> milestones) {
 		inProgressContainer.removeAllComponents();
-		inProgressContainer.addComponent(new Label("In Progress"));
+		Label inProgressHeader = new Label("In Progress");
+		inProgressHeader.setSizeUndefined();
+		inProgressContainer.addComponent(inProgressHeader);
+		inProgressContainer.setComponentAlignment(inProgressHeader,
+				Alignment.MIDDLE_CENTER);
 
 		futureContainer.removeAllComponents();
-		futureContainer.addComponent(new Label("Future"));
+		Label futureHeader = new Label("Future");
+		futureHeader.setSizeUndefined();
+		futureContainer.addComponent(futureHeader);
+		futureContainer.setComponentAlignment(futureHeader,
+				Alignment.MIDDLE_CENTER);
 
 		closeContainer.removeAllComponents();
-		closeContainer.addComponent(new Label("Close"));
+		Label closeHeader = new Label("Close");
+		closeHeader.setSizeUndefined();
+		closeContainer.addComponent(closeHeader);
+		closeContainer.setComponentAlignment(closeHeader,
+				Alignment.MIDDLE_CENTER);
 
 		for (SimpleMilestone milestone : milestones) {
 			if (SimpleMilestone.STATUS_INPROGRESS.equals(milestone.getStatus())) {
@@ -103,7 +123,9 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 	private ComponentContainer constructMilestoneBox(
 			final SimpleMilestone milestone) {
-		VerticalLayout layout = new VerticalLayout();
+		CssLayout layout = new CssLayout();
+		layout.addStyleName(UIConstants.MILESTONE_BOX);
+		layout.setWidth("100%");
 		Button milestoneLink = new Button(milestone.getName(),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -117,24 +139,28 @@ public class MilestoneListViewImpl extends AbstractView implements
 					}
 				});
 		milestoneLink.setStyleName("link");
+		milestoneLink.addStyleName("medium-text");
+		milestoneLink.addStyleName("bold");
 		milestone.setDescription(milestone.getDescription());
 		layout.addComponent(milestoneLink);
 
 		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 4);
 		layoutHelper.addComponent(
 				new Label(AppContext.formatDate(milestone.getStartdate())),
-				"Start Date", 0, 0);
+				"Start Date", 0, 0, Alignment.MIDDLE_LEFT);
 		layoutHelper.addComponent(
 				new Label(AppContext.formatDate(milestone.getEnddate())),
-				"End Date", 0, 1);
+				"End Date", 0, 1, Alignment.MIDDLE_LEFT);
 
 		layoutHelper.addComponent(new Label(milestone.getNumOpenTasks() + "/"
-				+ milestone.getNumTasks()), "Tasks", 0, 2);
+				+ milestone.getNumTasks()), "Tasks", 0, 2,
+				Alignment.MIDDLE_LEFT);
 
 		layoutHelper.addComponent(new Label(milestone.getNumOpenBugs() + "/"
-				+ milestone.getNumBugs()), "Bugs", 0, 3);
-
-		layout.addComponent(layoutHelper.getLayout());
+				+ milestone.getNumBugs()), "Bugs", 0, 3, Alignment.MIDDLE_LEFT);
+		GridLayout milestoneInfoLayout = layoutHelper.getLayout();
+		milestoneInfoLayout.setMargin(false);
+		layout.addComponent(milestoneInfoLayout);
 
 		return layout;
 	}
