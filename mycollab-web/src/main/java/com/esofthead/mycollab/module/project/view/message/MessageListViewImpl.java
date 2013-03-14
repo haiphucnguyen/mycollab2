@@ -8,6 +8,7 @@ import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
@@ -227,8 +228,9 @@ public class MessageListViewImpl extends AbstractView implements
 				public void textChange(TextChangeEvent event) {
 					messageSearchCriteria = new MessageSearchCriteria();
 
-					messageSearchCriteria.setProjectid(new NumberSearchField(
-							SearchField.AND, project.getId()));
+					messageSearchCriteria
+							.setProjectids(new SetSearchField<Integer>(
+									SearchField.AND, project.getId()));
 
 					textSearch = event.getText().toString().trim();
 
@@ -254,8 +256,9 @@ public class MessageListViewImpl extends AbstractView implements
 				public void buttonClick(Button.ClickEvent event) {
 					messageSearchCriteria = new MessageSearchCriteria();
 
-					messageSearchCriteria.setProjectid(new NumberSearchField(
-							SearchField.AND, project.getId()));
+					messageSearchCriteria
+							.setProjectids(new SetSearchField<Integer>(
+									SearchField.AND, project.getId()));
 
 					messageSearchCriteria.setMessage(new StringSearchField(
 							textSearch));
@@ -360,7 +363,7 @@ public class MessageListViewImpl extends AbstractView implements
 			controls.addComponent(uploadExt);
 			controls.setExpandRatio(uploadExt, 1.0f);
 			controls.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
-			
+
 			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 

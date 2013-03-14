@@ -2,12 +2,13 @@ package com.esofthead.mycollab.module.project.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class MessageSearchCriteria extends SearchCriteria {
 	private NumberSearchField id;
 	
-    private NumberSearchField projectid;
+    private SetSearchField<Integer> projectids;
     
     private StringSearchField category;
     
@@ -23,12 +24,12 @@ public class MessageSearchCriteria extends SearchCriteria {
 		this.id = id;
 	}
 
-	public NumberSearchField getProjectid() {
-		return projectid;
+	public SetSearchField<Integer> getProjectids() {
+		return projectids;
 	}
 
-	public void setProjectid(NumberSearchField projectid) {
-		this.projectid = projectid;
+	public void setProjectids(SetSearchField<Integer> projectids) {
+		this.projectids = projectids;
 	}
 
 	public StringSearchField getCategory() {

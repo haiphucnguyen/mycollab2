@@ -184,6 +184,7 @@ public class ResolvedInputWindow extends Window {
 					bug.setResolution(BugResolutionConstants.FIXED);
 					return new BugResolutionComboBox();
 				} else if (propertyId.equals("assignuser")) {
+					bug.setAssignuser(bug.getLogby());
 					return new ProjectMemberComboBox();
 				} else if (propertyId.equals("fixedVersions")) {
 					fixedVersionSelect = new VersionMultiSelectField("227px");

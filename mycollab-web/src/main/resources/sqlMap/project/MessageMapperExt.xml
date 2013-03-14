@@ -15,8 +15,12 @@
         <if test="id != null">
             ${id.operation} m_prj_message.id = #{id.value,javaType=INTEGER}
         </if>
-        <if test="projectid != null">
-            ${projectid.operation} m_prj_message.projectid = #{projectid.value,javaType=INTEGER}
+        <if test="projectids != null">
+            ${projectids.operation}  m_prj_message.projectid IN 
+            <foreach close=")" collection="projectids.values"
+                item="projectid" open="(" separator="OR">
+                #{projectid.value,javaType=INTEGER}
+            </foreach>  
         </if>
         <if test="category != null">
             ${category.operation} m_prj_message.category = #{category.value,javaType=VARCHAR}

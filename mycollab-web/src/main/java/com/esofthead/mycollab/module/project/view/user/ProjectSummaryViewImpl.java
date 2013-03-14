@@ -27,8 +27,11 @@ public class ProjectSummaryViewImpl extends AbstractView implements ProjectSumma
         layout.setSpacing(true);
         this.addComponent(layout);
         
+        VerticalLayout leftPanel = new VerticalLayout();
+        
         activityPanel = new ProjectActivityStreamComponent();
-        layout.addComponent(activityPanel);
+        leftPanel.addComponent(activityPanel);
+        layout.addComponent(leftPanel);
         
         VerticalLayout rightPanel = new VerticalLayout();
         rightPanel.setSpacing(true);
