@@ -44,7 +44,7 @@ public final class MainView extends AbstractView {
 	private CustomLayout createTopMenu() {
 		CustomLayout layout = new CustomLayout("topNavigation");
 		layout.setStyleName("topNavigation");
-		layout.setHeight("44px");
+		layout.setHeight("40px");
 		layout.setWidth("100%");
 		final PopupButton serviceMenu = new PopupButton("Services");
 		serviceMenu.setStyleName("serviceMenu");

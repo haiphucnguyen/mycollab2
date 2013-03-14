@@ -100,7 +100,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 				Alignment.MIDDLE_CENTER);
 
 		closeContainer.removeAllComponents();
-		Label closeHeader = new Label("Close");
+		Label closeHeader = new Label("Closed");
 		closeHeader.setSizeUndefined();
 		closeContainer.addComponent(closeHeader);
 		closeContainer.setComponentAlignment(closeHeader,
