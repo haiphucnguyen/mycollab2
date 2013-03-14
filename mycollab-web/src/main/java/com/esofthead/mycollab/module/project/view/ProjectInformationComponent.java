@@ -160,7 +160,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 								Label.CONTENT_XHTML);
 					} else if (propertyId.equals("numBugs")) {
 						return new DefaultFormViewFieldFactory.FormLinkViewField(
-								project.getNumOpenBugs() + " open /"
+								project.getNumOpenBugs() + " open / "
 										+ project.getNumBugs(),
 								new Button.ClickListener() {
 									private static final long serialVersionUID = 1L;
@@ -263,7 +263,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 								Label.CONTENT_XHTML);
 					} else if (propertyId.equals("numBugs")) {
 						return new DefaultFormViewFieldFactory.FormLinkViewField(
-								project.getNumOpenBugs() + " open /"
+								project.getNumOpenBugs() + " open / "
 										+ project.getNumBugs(),
 								new Button.ClickListener() {
 									private static final long serialVersionUID = 1L;
