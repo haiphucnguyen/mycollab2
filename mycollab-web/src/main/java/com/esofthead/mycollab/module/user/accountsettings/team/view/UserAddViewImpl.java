@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.user.view.component.RoleComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
@@ -122,6 +123,17 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 						cboDateBirthday.setDate(user.getDateofbirth());
 					}
 					return cboDateBirthday;
+				} else if (propertyId.equals("country")) {
+					final CountryComboBox cboCountry = new CountryComboBox();
+					cboCountry.addListener(new Property.ValueChangeListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void valueChange(Property.ValueChangeEvent event) {
+							user.setCountry((String) cboCountry.getValue());
+						}
+					});
+					return cboCountry;
 				}
 				return null;
 			}
