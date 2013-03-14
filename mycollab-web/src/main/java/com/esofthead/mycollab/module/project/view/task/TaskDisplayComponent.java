@@ -14,7 +14,6 @@ import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
-import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -131,14 +130,11 @@ public class TaskDisplayComponent extends CssLayout {
 									new TaskEvent.GotoRead(
 											TaskDisplayComponent.this, task
 													.getId()));
-						} else if ("id".equals(event.getFieldName())) {
-							task.setStatus("Closed");
-							task.setPercentagecomplete(100d);
-
-							ProjectTaskService projectTaskService = AppContext
-									.getSpringBean(ProjectTaskService.class);
-							projectTaskService.updateWithSession(task,
-									AppContext.getUsername());
+						} else if ("closeTask".equals(event.getFieldName())
+								|| "reopenTask".equals(event.getFieldName())
+								|| "pendingTask".equals(event.getFieldName())
+								|| "reopenTask".equals(event.getFieldName())
+								|| "deleteTask".equals(event.getFieldName())) {
 							TaskDisplayComponent.this.removeAllComponents();
 							ProjectTaskListService taskListService = AppContext
 									.getSpringBean(ProjectTaskListService.class);

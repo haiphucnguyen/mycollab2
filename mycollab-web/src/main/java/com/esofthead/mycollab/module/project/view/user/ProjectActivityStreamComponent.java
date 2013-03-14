@@ -52,7 +52,7 @@ public class ProjectActivityStreamComponent extends Depot {
 		super("Project Feeds", new VerticalLayout());
 		activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
 				AppContext.getSpringBean(ActivityStreamService.class),
-				ActivityStreamRowDisplayHandler.class, 15);
+				ActivityStreamRowDisplayHandler.class, 10);
 		this.bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
 		this.addStyleName("activity-panel");
 		((VerticalLayout) this.bodyContent).setMargin(false);

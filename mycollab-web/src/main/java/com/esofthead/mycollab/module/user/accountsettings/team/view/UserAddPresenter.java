@@ -61,6 +61,7 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 
 		item.setAccountid(AppContext.getAccountId());
 		User user = userService.findByPrimaryKey(item.getUsername());
+		item.setDateofbirth(view.getBirthday());
 		if (user == null) {
 			userService.saveWithSession(item, AppContext.getUsername());
 		} else {

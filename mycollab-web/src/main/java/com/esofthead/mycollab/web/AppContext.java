@@ -15,8 +15,10 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
+import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
+import com.esofthead.mycollab.utils.StringUtils;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
@@ -271,6 +273,7 @@ public class AppContext implements TransactionListener, Serializable {
 
 	}
 
+	@Deprecated
 	public static void addFragment(String fragement) {
 		MainWindowContainer mainWindow = (MainWindowContainer) getApplication()
 				.getMainWindow();
@@ -281,6 +284,7 @@ public class AppContext implements TransactionListener, Serializable {
 		MainWindowContainer mainWindow = (MainWindowContainer) getApplication()
 				.getMainWindow();
 		mainWindow.addFragement(fragement);
-		mainWindow.setCaption(windowTitle + " [MyCollab]");
+		mainWindow.setCaption(StringUtils.subString(windowTitle, 150)
+				+ " [MyCollab]");
 	}
 }

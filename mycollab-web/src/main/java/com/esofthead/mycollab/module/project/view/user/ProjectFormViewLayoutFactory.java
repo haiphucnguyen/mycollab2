@@ -20,6 +20,7 @@ import com.vaadin.ui.VerticalLayout;
  */
 public abstract class ProjectFormViewLayoutFactory implements
 		IFormLayoutFactory {
+	private static final long serialVersionUID = 1L;
 
 	private final String title;
 
@@ -55,14 +56,14 @@ public abstract class ProjectFormViewLayoutFactory implements
 	protected abstract Layout createBottomPanel();
 
 	public static class ProjectInformationLayout implements IFormLayoutFactory {
-
+		private static final long serialVersionUID = 1L;
 		private GridFormLayoutHelper moreInfoLayout;
 
 		@Override
 		public Layout getLayout() {
 			VerticalLayout layout = new VerticalLayout();
 
-			moreInfoLayout = new GridFormLayoutHelper(2, 6);
+			moreInfoLayout = new GridFormLayoutHelper(2, 7);
 			moreInfoLayout.getLayout().setWidth("900px");
 			moreInfoLayout.getLayout().setMargin(false, false, true, false);
 			layout.addComponent(moreInfoLayout.getLayout());
@@ -108,6 +109,12 @@ public abstract class ProjectFormViewLayoutFactory implements
 						.addComponent(field, "Description", 0, 5, 2,
 								UIConstants.DEFAULT_2XCONTROL_WIDTH,
 								Alignment.TOP_LEFT);
+			} else if (propertyId.equals("numBugs")) {
+				moreInfoLayout.addComponent(field, "Bug", 0, 6,
+						Alignment.TOP_LEFT);
+			} else if (propertyId.equals("numTasks")) {
+				moreInfoLayout.addComponent(field, "Task", 1, 6,
+						Alignment.TOP_LEFT);
 			}
 		}
 	}

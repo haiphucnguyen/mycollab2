@@ -1,39 +1,105 @@
 package com.esofthead.mycollab.module.project.domain;
 
-
 public class SimpleProject extends Project {
 	private static final long serialVersionUID = 1L;
 
 	private String ownerName;
 
-    private String accountName;
+	private String accountName;
 
-    // 0 if project is belong to user in query string, 1 if project has member
-    // has username belong in query string,
-    // 2 if undefine
-    private int ownerType;
+	private int numOpenBugs;
 
-    public int getOwnerType() {
-        return ownerType;
-    }
+	private int numBugs;
 
-    public void setOwnerType(int ownerType) {
-        this.ownerType = ownerType;
-    }
+	private int numOpenTasks;
 
-    public String getOwnerName() {
-        return ownerName;
-    }
+	private int numTasks;
 
-    public void setOwnerName(String ownerName) {
-        this.ownerName = ownerName;
-    }
+	private int numOpenProblems;
 
-    public String getAccountName() {
-        return accountName;
-    }
+	private int numProblems;
 
-    public void setAccountName(String accountName) {
-        this.accountName = accountName;
-    }
+	private int numOpenRisks;
+
+	private int numRisks;
+
+	public String getOwnerName() {
+		return ownerName;
+	}
+
+	public void setOwnerName(String ownerName) {
+		this.ownerName = ownerName;
+	}
+
+	public String getAccountName() {
+		return accountName;
+	}
+
+	public void setAccountName(String accountName) {
+		this.accountName = accountName;
+	}
+
+	public int getNumOpenBugs() {
+		return numOpenBugs;
+	}
+
+	public void setNumOpenBugs(int numOpenBugs) {
+		this.numOpenBugs = numOpenBugs;
+	}
+
+	public int getNumBugs() {
+		return numBugs;
+	}
+
+	public void setNumBugs(int numBugs) {
+		this.numBugs = numBugs;
+	}
+
+	public int getNumOpenTasks() {
+		return numOpenTasks;
+	}
+
+	public void setNumOpenTasks(int numOpenTasks) {
+		this.numOpenTasks = numOpenTasks;
+	}
+
+	public int getNumTasks() {
+		return numTasks;
+	}
+
+	public void setNumTasks(int numTasks) {
+		this.numTasks = numTasks;
+	}
+
+	public int getNumOpenProblems() {
+		return numOpenProblems;
+	}
+
+	public void setNumOpenProblems(int numOpenProblems) {
+		this.numOpenProblems = numOpenProblems;
+	}
+
+	public int getNumProblems() {
+		return numProblems;
+	}
+
+	public void setNumProblems(int numProblems) {
+		this.numProblems = numProblems;
+	}
+
+	public int getNumOpenRisks() {
+		return numOpenRisks;
+	}
+
+	public void setNumOpenRisks(int numOpenRisks) {
+		this.numOpenRisks = numOpenRisks;
+	}
+
+	public int getNumRisks() {
+		return numRisks;
+	}
+
+	public void setNumRisks(int numRisks) {
+		this.numRisks = numRisks;
+	}
 }

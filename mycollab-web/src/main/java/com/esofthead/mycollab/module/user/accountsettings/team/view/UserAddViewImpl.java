@@ -10,6 +10,8 @@ import com.esofthead.mycollab.module.user.view.component.RoleComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
+import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -27,6 +29,8 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
 import java.util.Collection;
+import java.util.Date;
+
 import org.vaadin.addon.customfield.CustomField;
 
 /**
@@ -39,6 +43,7 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 	private static final long serialVersionUID = 1L;
 	private UserAddViewImpl.EditForm editForm;
 	private User user;
+	private DateComboboxSelectionField cboDateBirthday;
 
 	public UserAddViewImpl() {
 		super();
@@ -50,6 +55,11 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 	public void editItem(User item) {
 		this.user = item;
 		editForm.setItemDataSource(new BeanItem<User>(user));
+	}
+	
+	@Override
+	public Date getBirthday() {
+		return cboDateBirthday.getDate();
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<User> {
@@ -107,6 +117,23 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 					tf.setRequired(true);
 					tf.setRequiredError("This field must be not null");
 					return tf;
+				} else if (propertyId.equals("dateofbirth")) {
+					cboDateBirthday = new DateComboboxSelectionField();
+					if (user.getDateofbirth() != null) {
+						cboDateBirthday.setDate(user.getDateofbirth());
+					}
+					return cboDateBirthday;
+				} else if (propertyId.equals("country")) {
+					final CountryComboBox cboCountry = new CountryComboBox();
+					cboCountry.addListener(new Property.ValueChangeListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void valueChange(Property.ValueChangeEvent event) {
+							user.setCountry((String) cboCountry.getValue());
+						}
+					});
+					return cboCountry;
 				}
 				return null;
 			}

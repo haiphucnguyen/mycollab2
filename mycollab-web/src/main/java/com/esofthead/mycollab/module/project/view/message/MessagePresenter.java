@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.view.message;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.view.ProjectView;
@@ -43,7 +44,7 @@ public class MessagePresenter extends AbstractPresenter<MessageContainer> {
 			presenter.go(view, data);
 		} else if (data == null) {
 			MessageSearchCriteria searchCriteria = new MessageSearchCriteria();
-			searchCriteria.setProjectid(new NumberSearchField(
+			searchCriteria.setProjectids(new SetSearchField<Integer>(
 					CurrentProjectVariables.getProjectId()));
 			MessageListPresenter presenter = PresenterResolver
 					.getPresenter(MessageListPresenter.class);
