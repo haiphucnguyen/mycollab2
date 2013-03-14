@@ -54,7 +54,7 @@ public class TaskStatusComponent extends Depot {
 
 		taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>(
 				AppContext.getSpringBean(ProjectGenericTaskService.class),
-				ActivityStreamRowDisplayHandler.class, 15);
+				ActivityStreamRowDisplayHandler.class, 10);
 		this.bodyContent.addComponent(new LazyLoadWrapper(taskList));
 		this.addStyleName("activity-panel");
 		((VerticalLayout) this.bodyContent).setMargin(false);

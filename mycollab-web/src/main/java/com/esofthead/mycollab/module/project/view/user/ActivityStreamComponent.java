@@ -89,7 +89,7 @@ public class ActivityStreamComponent extends Depot {
 		public ProjectActivityStreamPagedList() {
 			super(
 					ActivityStreamComponent.ActivityStreamRowDisplayHandler.class,
-					15);
+					10);
 
 			projectService = AppContext.getSpringBean(ProjectService.class);
 		}

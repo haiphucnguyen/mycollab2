@@ -254,10 +254,10 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 		public UserBugDepot() {
 			super("Open Bugs", new VerticalLayout());
 
-			BugTableDisplay bugDisplay = new BugTableDisplay(
-					new String[] { "selected", "summary", "severity",
-							"resolution", "duedate" }, new String[] { "",
-							"Summary", "Severity", "Resolution", "Due Date" });
+			BugTableDisplay bugDisplay = new BugTableDisplay(new String[] {
+					"summary", "severity", "resolution", "duedate" },
+					new String[] { "Summary", "Severity", "Resolution",
+							"Due Date" });
 			bugDisplay
 					.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 						private static final long serialVersionUID = 1L;
