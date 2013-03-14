@@ -53,7 +53,7 @@ public class TaskGanttChartViewImpl extends AbstractView implements
 
 	private TaskSearchCriteria searchCriteria;
 
-	private VerticalLayout bodyContent;
+	private final VerticalLayout bodyContent;
 
 	public TaskGanttChartViewImpl() {
 		this.setSpacing(true);
@@ -189,6 +189,7 @@ public class TaskGanttChartViewImpl extends AbstractView implements
 			gdata.addTask(parentGanttTask);
 		}
 		GanttDiagram diagram = new GanttDiagram(gdata);
+		diagram.addStyleName("gantt-chart");
 		diagram.setGanttDiagramCellStyleGenerator(new GanttDiagramDemoCellStyleGenerator());
 		diagram.addAvailableScale(GANTTDIAGRAMSCALE.DAY, "Day");
 		diagram.addAvailableScale(GANTTDIAGRAMSCALE.DAY_MONTH, "Day of Month");
@@ -196,6 +197,8 @@ public class TaskGanttChartViewImpl extends AbstractView implements
 		diagram.addAvailableScale(GANTTDIAGRAMSCALE.MONTH, "Month");
 
 		diagram.setScale(GANTTDIAGRAMSCALE.DAY);
+		diagram.setWidth("100%");
+		diagram.setHeight("100%");
 		bodyContent.addComponent(diagram);
 		bodyContent.setExpandRatio(diagram, 1.0f);
 	}

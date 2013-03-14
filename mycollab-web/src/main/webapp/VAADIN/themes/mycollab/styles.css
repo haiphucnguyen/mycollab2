@@ -160,7 +160,7 @@ input.v-textfield.v-datefield-textfield {
 }
 
 .v-table-row-odd {
-	background: none repeat scroll 0% 0% rgb(219, 222, 227) !important;
+	background: none repeat scroll 0% 0% rgb(219, 222, 227);
 }
 
 div.v-button-link.v-button-no-margin:focus {
@@ -233,6 +233,10 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 
 .list-view .v-table-header .v-table-caption-container {
 	padding-top: 2px;
+}
+
+.v-scrollable {
+	overflow: auto !important;
 }
 
 .v-table-cell-wrapper {
@@ -2541,3 +2545,33 @@ div.v-lazyloadingwrapper-loading {
 	margin: 0 auto;
 }
 /* End Milestone Box */
+
+/* Gantt Chart */
+.v-table-focus .v-table-cell-content {
+	border: none;
+}
+.v-table-row.v-selected .v-button-link .v-button-caption, .v-table-row-odd.v-selected .v-button-link .v-button-caption {
+	color: #FFF;
+}
+.gantt-chart {
+	border-width: 0px;
+}
+.gantt-chart .v-table-body {
+	border: none;
+}
+.gantt-chart .v-table-header-wrap {
+	background: url("icons/grad-light-top.png") repeat-x scroll 0% 0% rgb(201, 201, 201);
+	border-radius: 0px;
+}
+.gantt-chart .v-table-header-wrap .v-table-caption-container {
+	color: rgb(34,34,34);
+}
+.gantt-chart input.v-textfield[type="text"] {
+	padding: 0px;
+	border-radius: 0px;
+	height: 17px !important;
+}
+.gantt-chart div[id^='ganttFilterApplyButton'], .gantt-chart div[id^='ganttFilterResetButton'] {
+	border-top: 1px solid rgb(129, 129, 129);
+}
+/* End Gantt Chart */
