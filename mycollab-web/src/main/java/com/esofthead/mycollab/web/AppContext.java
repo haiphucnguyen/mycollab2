@@ -271,6 +271,7 @@ public class AppContext implements TransactionListener, Serializable {
 
 	}
 
+	@Deprecated
 	public static void addFragment(String fragement) {
 		MainWindowContainer mainWindow = (MainWindowContainer) getApplication()
 				.getMainWindow();

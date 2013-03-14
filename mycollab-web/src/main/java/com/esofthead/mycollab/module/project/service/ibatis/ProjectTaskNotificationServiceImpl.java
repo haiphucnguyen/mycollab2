@@ -76,6 +76,9 @@ public class ProjectTaskNotificationServiceImpl implements
 			List<SimpleUser> notifiers) {
 		int taskId = emailNotification.getTypeid();
 		SimpleTask task = projectTaskService.findTaskById(taskId);
+		if (task == null) {
+			return null;
+		}
 
 		Map<String, String> hyperLinks = new HashMap<String, String>();
 		hyperLinks.put("taskUrl", "#");

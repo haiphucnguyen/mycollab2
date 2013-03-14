@@ -60,7 +60,7 @@ public class DbLoggingAppender extends AppenderSkeleton {
 						.getIpaddress()));
 			}
 		} catch (Exception e) {
-			e.printStackTrace();
+		
 		}
 
 		record.setErrortrace(message.toString());

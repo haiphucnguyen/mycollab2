@@ -199,19 +199,21 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 	private class UserTaskDepot extends Depot {
 		private static final long serialVersionUID = 1L;
 
-		public UserTaskDepot() {
-			super("Open Task", new VerticalLayout());
+		private TaskSearchCriteria searchCriteria;
 
-			TaskSearchCriteria searchCriteria = new TaskSearchCriteria();
+		public UserTaskDepot() {
+			super("Tasks", new VerticalLayout());
+
+			searchCriteria = new TaskSearchCriteria();
 			searchCriteria.setProjectid(new NumberSearchField(
 					CurrentProjectVariables.getProjectId()));
 			searchCriteria.setStatus(new StringSearchField("Open"));
 			searchCriteria.setAssignUser(new StringSearchField(projectMember
 					.getUsername()));
-			TaskTableDisplay taskDisplay = new TaskTableDisplay(new String[] {
-					"id", "taskname", "startdate", "deadline",
-					"percentagecomplete" }, new String[] { "", "Task Name",
-					"Start", "Due", "% Complete" });
+			final TaskTableDisplay taskDisplay = new TaskTableDisplay(
+					new String[] { "id", "taskname", "startdate", "deadline",
+							"percentagecomplete" }, new String[] { "",
+							"Task Name", "Start", "Due", "% Complete" });
 
 			taskDisplay
 					.addTableListener(new ApplicationEventListener<TableClickEvent>() {
@@ -230,6 +232,13 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 										new TaskEvent.GotoRead(
 												ProjectMemberReadViewImpl.this,
 												task.getId()));
+							} else if ("closeTask".equals(event.getFieldName())
+									|| "reopenTask".equals(event.getFieldName())
+									|| "pendingTask".equals(event
+											.getFieldName())
+									|| "reopenTask".equals(event.getFieldName())
+									|| "deleteTask".equals(event.getFieldName())) {
+								taskDisplay.setSearchCriteria(searchCriteria);
 							}
 						}
 					});

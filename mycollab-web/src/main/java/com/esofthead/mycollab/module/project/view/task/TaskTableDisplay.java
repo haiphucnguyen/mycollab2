@@ -6,6 +6,8 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.GregorianCalendar;
 
+import org.vaadin.hene.popupbutton.PopupButton;
+
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
@@ -24,6 +26,8 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
+import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * 
@@ -145,26 +149,129 @@ public class TaskTableDisplay extends
 					final Object itemId, Object columnId) {
 				final SimpleTask task = TaskTableDisplay.this
 						.getBeanByIndex(itemId);
+				PopupButton taskSettingPopupBtn = new PopupButton();
+				VerticalLayout filterBtnLayout = new VerticalLayout();
+				filterBtnLayout.setMargin(true);
+				filterBtnLayout.setSpacing(true);
+				filterBtnLayout.setWidth("100px");
+
 				if ((task.getPercentagecomplete() != null && task
 						.getPercentagecomplete() != 100)
 						|| task.getPercentagecomplete() == null) {
-					Button b = new Button(null, new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
+					Button closeBtn = new Button("Close",
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
 
-						@Override
-						public void buttonClick(Button.ClickEvent event) {
-							fireTableEvent(new TableClickEvent(
-									TaskTableDisplay.this, task, "id"));
-						}
-					});
-					b.setIcon(new ThemeResource("icons/16/close.png"));
-					b.setStyleName("link");
-					b.setDescription("Close this task");
-					return b;
+								@Override
+								public void buttonClick(Button.ClickEvent event) {
+									task.setStatus("Closed");
+									task.setPercentagecomplete(100d);
+
+									ProjectTaskService projectTaskService = AppContext
+											.getSpringBean(ProjectTaskService.class);
+									projectTaskService.updateWithSession(task,
+											AppContext.getUsername());
+
+									fireTableEvent(new TableClickEvent(
+											TaskTableDisplay.this, task,
+											"closeTask"));
+								}
+							});
+					closeBtn.setStyleName("link");
+					filterBtnLayout.addComponent(closeBtn);
 				} else {
-					return new Label();
+					Button reOpenBtn = new Button("ReOpen",
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void buttonClick(Button.ClickEvent event) {
+									task.setStatus("Open");
+									task.setPercentagecomplete(0d);
+
+									ProjectTaskService projectTaskService = AppContext
+											.getSpringBean(ProjectTaskService.class);
+									projectTaskService.updateWithSession(task,
+											AppContext.getUsername());
+									fireTableEvent(new TableClickEvent(
+											TaskTableDisplay.this, task,
+											"reopenTask"));
+								}
+							});
+					reOpenBtn.setStyleName("link");
+					filterBtnLayout.addComponent(reOpenBtn);
 				}
 
+				if (!"Pending".equals(task.getStatus())) {
+					if (!"Closed".equals(task.getStatus())) {
+						Button pendingBtn = new Button("Pending",
+								new Button.ClickListener() {
+									private static final long serialVersionUID = 1L;
+
+									@Override
+									public void buttonClick(ClickEvent event) {
+										task.setStatus("Pending");
+										task.setPercentagecomplete(0d);
+
+										ProjectTaskService projectTaskService = AppContext
+												.getSpringBean(ProjectTaskService.class);
+										projectTaskService.updateWithSession(
+												task, AppContext.getUsername());
+										fireTableEvent(new TableClickEvent(
+												TaskTableDisplay.this, task,
+												"pendingTask"));
+									}
+								});
+						pendingBtn.setStyleName("link");
+						filterBtnLayout.addComponent(pendingBtn);
+					}
+				} else {
+					Button reOpenBtn = new Button("ReOpen",
+							new Button.ClickListener() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public void buttonClick(Button.ClickEvent event) {
+									task.setStatus("Open");
+									task.setPercentagecomplete(0d);
+
+									ProjectTaskService projectTaskService = AppContext
+											.getSpringBean(ProjectTaskService.class);
+									projectTaskService.updateWithSession(task,
+											AppContext.getUsername());
+
+									fireTableEvent(new TableClickEvent(
+											TaskTableDisplay.this, task,
+											"reopenTask"));
+								}
+							});
+					reOpenBtn.setStyleName("link");
+					filterBtnLayout.addComponent(reOpenBtn);
+				}
+
+				Button deleteBtn = new Button("Delete",
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								ProjectTaskService projectTaskService = AppContext
+										.getSpringBean(ProjectTaskService.class);
+								projectTaskService.removeWithSession(
+										task.getId(), AppContext.getUsername());
+								fireTableEvent(new TableClickEvent(
+										TaskTableDisplay.this, task,
+										"deleteTask"));
+							}
+						});
+				deleteBtn.setStyleName("link");
+				filterBtnLayout.addComponent(deleteBtn);
+
+				taskSettingPopupBtn.setIcon(new ThemeResource(
+						"icons/12/project/task_menu.png"));
+				taskSettingPopupBtn.setStyleName("link");
+				taskSettingPopupBtn.addComponent(filterBtnLayout);
+				return taskSettingPopupBtn;
 			}
 		});
 
@@ -184,6 +291,7 @@ public class TaskTableDisplay extends
 				});
 
 		this.setColumnExpandRatio("taskname", 1);
+		this.setColumnWidth("id", 30);
 		this.setColumnWidth("assignUserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
 		this.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);
