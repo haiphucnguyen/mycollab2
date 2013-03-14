@@ -88,12 +88,6 @@ public class UserDashboardViewImpl extends AbstractView implements
 		this.addComponent(root);
 	}
 
-	// private void showWelcomeScreen() {
-	// CustomLayout welcome = new CustomLayout("projectWelcomeScreen");
-	// welcome.setSizeFull();
-	// root.addComponent(welcome);
-	// }
-
 	private void buildComponents() {
 		mySpaceTabs.addTab(constructMyFeedsComponents(), new MenuButton(
 				"My Feeds", "menu_myfeeds.png"));

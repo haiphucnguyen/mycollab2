@@ -360,6 +360,17 @@ public class MessageListViewImpl extends AbstractView implements
 			controls.addComponent(uploadExt);
 			controls.setExpandRatio(uploadExt, 1.0f);
 			controls.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
+			
+			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					createBasicLayout();
+				}
+			});
+			cancelBtn.setStyleName("link");
+			controls.addComponent(cancelBtn);
 
 			Button saveBtn = new Button("Post", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -393,17 +404,6 @@ public class MessageListViewImpl extends AbstractView implements
 			});
 			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			controls.addComponent(saveBtn);
-
-			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					createBasicLayout();
-				}
-			});
-			cancelBtn.setStyleName("link");
-			controls.addComponent(cancelBtn);
 
 			this.addComponent(controls);
 		}
