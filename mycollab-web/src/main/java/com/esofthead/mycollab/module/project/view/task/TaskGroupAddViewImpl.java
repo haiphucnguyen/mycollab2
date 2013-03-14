@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.Collection;
 
+import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.ui.components.ProjectMilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
@@ -13,11 +14,14 @@ import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
@@ -31,7 +35,7 @@ public class TaskGroupAddViewImpl extends AbstractView implements
 		TaskGroupAddView {
 	private static final long serialVersionUID = 1L;
 	private EditForm editForm;
-	private TaskList taskList;
+	private SimpleTaskList taskList;
 
 	public TaskGroupAddViewImpl() {
 		super();
@@ -41,8 +45,8 @@ public class TaskGroupAddViewImpl extends AbstractView implements
 
 	@Override
 	public void editItem(TaskList item) {
-		this.taskList = item;
-		editForm.setItemDataSource(new BeanItem<TaskList>(taskList));
+		this.taskList = (SimpleTaskList) item;
+		editForm.setItemDataSource(new BeanItem<SimpleTaskList>(taskList));
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<TaskList> {
@@ -103,6 +107,19 @@ public class TaskGroupAddViewImpl extends AbstractView implements
 					tf.setRequired(true);
 					tf.setRequiredError("Please enter a Name");
 					return tf;
+				} else if (propertyId.equals("percentageComplete")) {
+					FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
+					ProgressPercentageIndicator progressField = new ProgressPercentageIndicator(taskList
+							.getPercentageComplete());
+					fieldContainer.addComponentField(progressField);
+					return fieldContainer;
+				} else if (propertyId.equals("numOpenTasks")) {
+					FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
+					Label numTaskLbl = new Label("("
+							+ taskList.getNumOpenTasks() + "/"
+							+ taskList.getNumAllTasks() + ")");
+					fieldContainer.addComponentField(numTaskLbl);
+					return fieldContainer;
 				}
 
 				return null;
