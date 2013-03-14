@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import java.util.Arrays;
+import java.util.GregorianCalendar;
+
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.crm.domain.CampaignContact;
 import com.esofthead.mycollab.module.crm.domain.Contact;
@@ -7,6 +10,7 @@ import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
+import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
@@ -23,8 +27,6 @@ import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
-import java.util.Arrays;
-import java.util.GregorianCalendar;
 
 public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 
@@ -72,13 +74,14 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
     	if (AppContext.canWrite(RolePermissionCollections.CRM_CONTACT)) {
     		 super.onGo(container, data);
-    	        Contact contact = (Contact) data.getParams();
+    	        SimpleContact contact = (SimpleContact) data.getParams();
     	        view.editItem(contact);
     	        
     	        if (contact.getId() == null) {
-    	            AppContext.addFragment("crm/contact/add");
+    	            AppContext.addFragment("crm/contact/add", "Add Contact");
     	        } else {
-    	            AppContext.addFragment("crm/contact/edit/" + UrlEncodeDecoder.encode(contact.getId()));
+    	            AppContext.addFragment("crm/contact/edit/" + UrlEncodeDecoder.encode(contact.getId()), 
+    	            		"Edit Contact: " + contact.getContactName());
     	        }
     	} else {
     		MessageConstants.showMessagePermissionAlert();

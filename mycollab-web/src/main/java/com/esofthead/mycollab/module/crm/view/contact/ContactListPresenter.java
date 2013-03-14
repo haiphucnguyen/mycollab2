@@ -213,7 +213,7 @@ public class ContactListPresenter extends CrmGenericPresenter<ContactListView>
     	if (AppContext.canRead(RolePermissionCollections.CRM_CONTACT)) {
     		 super.onGo(container, data);
     	        doSearch((ContactSearchCriteria) data.getParams());
-    	        AppContext.addFragment("crm/contact/list");
+    	        AppContext.addFragment("crm/contact/list", "Contact List");
     	} else {
     		MessageConstants.showMessagePermissionAlert();
     	}

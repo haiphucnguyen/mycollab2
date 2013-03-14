@@ -205,7 +205,8 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
     	                super.onGo(container, data);
     	                view.previewItem(contact);
     	                
-    	                AppContext.addFragment("crm/contact/preview/" + UrlEncodeDecoder.encode(contact.getId()));
+    	                AppContext.addFragment("crm/contact/preview/" + UrlEncodeDecoder.encode(contact.getId()),
+    							"Preview contact: " + contact.getContactName());
     	            } else {
     	                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
     	                return;

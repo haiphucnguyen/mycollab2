@@ -200,7 +200,7 @@ public class CampaignListPresenter extends CrmGenericPresenter<CampaignListView>
     		super.onGo(container, data);
             doSearch((CampaignSearchCriteria) data.getParams());
             
-            AppContext.addFragment("crm/campaign/list");
+            AppContext.addFragment("crm/campaign/list", "Campaign List");
     	} else {
     		MessageConstants.showMessagePermissionAlert();
     	}

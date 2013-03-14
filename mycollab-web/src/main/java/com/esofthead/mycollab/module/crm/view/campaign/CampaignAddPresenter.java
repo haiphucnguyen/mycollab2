@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
@@ -64,13 +65,13 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
     	if (AppContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN)) {
     		super.onGo(container, data);
-            Campaign campaign = (Campaign) data.getParams();
+            SimpleCampaign campaign = (SimpleCampaign) data.getParams();
             view.editItem(campaign);
             
             if (campaign.getId() == null) {
-                AppContext.addFragment("crm/campaign/add");
+                AppContext.addFragment("crm/campaign/add", "Add Campaign");
             } else {
-                AppContext.addFragment("crm/campaign/edit/" + UrlEncodeDecoder.encode(campaign.getId()));
+                AppContext.addFragment("crm/campaign/edit/" + UrlEncodeDecoder.encode(campaign.getId()), "Edit Campaign: " + campaign.getCampaignname());
             }
     	} else {
     		MessageConstants.showMessagePermissionAlert();

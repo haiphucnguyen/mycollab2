@@ -4,13 +4,13 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.Call;
-import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.Case;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
+import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.Task;
@@ -434,8 +434,8 @@ public class CrmController implements IController {
 					public void handle(CampaignEvent.GotoAdd event) {
 						CampaignAddPresenter presenter = PresenterResolver
 								.getPresenter(CampaignAddPresenter.class);
-						presenter.go(container, new ScreenData.Add<Campaign>(
-								new Campaign()));
+						presenter.go(container, new ScreenData.Add<SimpleCampaign>(
+								new SimpleCampaign()));
 					}
 				});
 
@@ -450,8 +450,8 @@ public class CrmController implements IController {
 					public void handle(CampaignEvent.GotoEdit event) {
 						CampaignAddPresenter presenter = PresenterResolver
 								.getPresenter(CampaignAddPresenter.class);
-						presenter.go(container, new ScreenData.Edit<Campaign>(
-								(Campaign) event.getData()));
+						presenter.go(container, new ScreenData.Edit<SimpleCampaign>(
+								(SimpleCampaign) event.getData()));
 					}
 				});
 
