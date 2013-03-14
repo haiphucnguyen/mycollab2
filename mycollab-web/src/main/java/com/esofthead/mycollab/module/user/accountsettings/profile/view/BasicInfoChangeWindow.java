@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
-import java.util.Calendar;
 import java.util.Date;
 
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
@@ -63,8 +62,7 @@ public class BasicInfoChangeWindow extends Window {
 		txtEmail.setRequired(true);
 		birthdayField = (DateComboboxSelectionField) passInfo.addComponent(new DateComboboxSelectionField(),
 				"Birthday", 0, 3);
-//		birthdayField.setDateFormat(AppContext.getDateFormat());
-//		birthdayField.setResolution(PopupDateField.RESOLUTION_DAY);
+		birthdayField.setDate(user.getDateofbirth());
 
 		txtFirstName.setValue(user.getFirstname() == null ? "" : user
 				.getFirstname());
@@ -145,7 +143,7 @@ public class BasicInfoChangeWindow extends Window {
 		user.setFirstname((String) txtFirstName.getValue());
 		user.setLastname((String) txtLastName.getValue());
 		user.setEmail((String) txtEmail.getValue());
-		user.setDateofbirth((Date) birthdayField.getValue());
+		user.setDateofbirth((Date) birthdayField.getDate());
 
 		UserService userService = AppContext.getSpringBean(UserService.class);
 		userService.updateWithSession(user, AppContext.getUsername());
