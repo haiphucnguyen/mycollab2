@@ -58,6 +58,7 @@
             1=1
             <include refid="querySearchCriteria" />
         </trim>
+        <include refid="orderStatement" />
     </select>
 
     <select id="findReportById" parameterType="java.lang.Integer"
