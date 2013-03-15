@@ -82,14 +82,14 @@ public class CustomMonitoringFilter extends MonitoringFilter {
 
 	static Date getNextExecutionDate(Period period) {
 		final Calendar calendar = Calendar.getInstance();
-		// calendar.set(Calendar.HOUR_OF_DAY, 0);
-		// calendar.set(Calendar.MINUTE, 0);
-		// calendar.set(Calendar.SECOND, 0);
-		// calendar.set(Calendar.MILLISECOND, 0);
+		 calendar.set(Calendar.HOUR_OF_DAY, 0);
+		 calendar.set(Calendar.MINUTE, 0);
+		 calendar.set(Calendar.SECOND, 0);
+		 calendar.set(Calendar.MILLISECOND, 0);
 		switch (period) {
 		case JOUR:
-			// calendar.add(Calendar.DAY_OF_YEAR, 1);
-			calendar.add(Calendar.MINUTE, 1);
+			 calendar.add(Calendar.DAY_OF_YEAR, 1);
+//			calendar.add(Calendar.MINUTE, 1);
 			break;
 		case SEMAINE:
 			calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);
