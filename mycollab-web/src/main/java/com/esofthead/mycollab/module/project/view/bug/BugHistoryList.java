@@ -34,6 +34,6 @@ public class BugHistoryList extends HistoryLogComponent {
 		this.generateFieldDisplayHandler("loguserFullName", "Logged by");
 		this.generateFieldDisplayHandler("assignuserFullName", "Assigned to");
 		this.generateFieldDisplayHandler("assignuser", "Assigned to");
-		this.generateFieldDisplayHandler("milestoneid", "Milestone");
+		this.generateFieldDisplayHandler("milestoneid", "Phase");
 	}
 }

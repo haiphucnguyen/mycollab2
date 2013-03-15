@@ -107,9 +107,6 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			milestoneAddLayout.addStyleName(UIConstants.PREVIEW);
 			this.addComponent(milestoneAddLayout);
 
-			tabContainer = new TabSheet();
-			tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
-
 			initRelatedComponents();
 
 			previewForm = new AdvancedPreviewBeanForm<Milestone>() {
@@ -174,18 +171,22 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			reportBtn.setDescription("Display Report View");
 
 			actionControls.addComponent(reportBtn);
-			
+
 			milestoneInformation.addComponent(actionControls);
 			milestoneInformation.addComponent(previewForm);
 
-			associateCommentListComp = new CommentListDepot(true);
-			milestoneInformation.addComponent(associateCommentListComp);
+			tabContainer = new TabSheet();
+			tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
+			tabContainer.setWidth("100%");
 
-			tabContainer.addTab(milestoneInformation, "Milestone Information");
+			associateCommentListComp = new CommentListDepot(true);
+			tabContainer.addTab(associateCommentListComp, "Comments");
 			tabContainer.addTab(associateTaskGroupListComp, "Related Tasks");
 			tabContainer.addTab(associateBugListComp, "Related Bugs");
 
-			milestoneAddLayout.addBody(tabContainer);
+			milestoneInformation.addComponent(tabContainer);
+
+			milestoneAddLayout.addBody(milestoneInformation);
 		}
 	}
 

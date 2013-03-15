@@ -13,39 +13,42 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.ui.ComponentContainer;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public class ProjectDashboardPresenter extends AbstractPresenter<ProjectDashboardContainer> {
+public class ProjectDashboardPresenter extends
+		AbstractPresenter<ProjectDashboardContainer> {
 	private static final long serialVersionUID = 1L;
 
 	public ProjectDashboardPresenter() {
-        super(ProjectDashboardContainer.class);
-    }
-    
-    @Override
-    public void go(ComponentContainer container, ScreenData<?> data) {
-        super.go(container, data, false);
-    }
-    
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        ProjectView projectViewContainer = (ProjectView) container;
-        projectViewContainer.gotoSubView("Dashboard");
-        
-        view.removeAllComponents();
-        
-        ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
-        
-        if (data instanceof ScreenData.Add
-                || data instanceof ScreenData.Edit) {
-            ProjectEditPresenter presenter = PresenterResolver.getPresenter(ProjectEditPresenter.class);
-            presenter.go(view, data);
-            breadcrumb.gotoProjectEdit();
-        } else {
-            ProjectSummaryPresenter presenter = PresenterResolver.getPresenter(ProjectSummaryPresenter.class);
-            presenter.go(view, data);
-            breadcrumb.gotoProjectDashboard();
-        }
-    }
+		super(ProjectDashboardContainer.class);
+	}
+
+	@Override
+	public void go(ComponentContainer container, ScreenData<?> data) {
+		super.go(container, data, false);
+	}
+
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		ProjectView projectViewContainer = (ProjectView) container;
+		projectViewContainer.gotoSubView("Dashboard");
+
+		view.removeAllComponents();
+
+		ProjectBreadcrumb breadcrumb = ViewManager
+				.getView(ProjectBreadcrumb.class);
+
+		if (data instanceof ScreenData.Add || data instanceof ScreenData.Edit) {
+			ProjectAddPresenter presenter = PresenterResolver
+					.getPresenter(ProjectAddPresenter.class);
+			presenter.go(view, data);
+			breadcrumb.gotoProjectEdit();
+		} else {
+			ProjectSummaryPresenter presenter = PresenterResolver
+					.getPresenter(ProjectSummaryPresenter.class);
+			presenter.go(view, data);
+			breadcrumb.gotoProjectDashboard();
+		}
+	}
 }

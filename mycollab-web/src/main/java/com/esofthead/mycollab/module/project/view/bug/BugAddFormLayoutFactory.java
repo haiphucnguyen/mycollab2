@@ -75,7 +75,7 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
 			informationLayout
 					.addComponent(field, "Attachment", 0, 7, 2, "100%");
 		} else if (propertyId.equals("milestoneid")) {
-			informationLayout.addComponent(field, "Milestone", 1, 4);
+			informationLayout.addComponent(field, "Phase", 1, 4);
 		}
 
 	}

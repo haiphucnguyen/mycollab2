@@ -5,7 +5,6 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot.CommentDisplay;
-import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -59,7 +58,6 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 	public void previewItem(SimpleBug item) {
 		this.bug = item;
 		previewForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
-		System.out.println("Assign user: " + BeanUtility.printBeanObj(item));
 	}
 
 	@Override
@@ -392,7 +390,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 				} else if (propertyId.equals("assignuserFullName")) {
 					informationLayout.addComponent(field, "Assigned to", 1, 5);
 				} else if (propertyId.equals("milestoneName")) {
-					informationLayout.addComponent(field, "Milestone", 0, 6);
+					informationLayout.addComponent(field, "Phase", 0, 6);
 				} else if (propertyId.equals("components")) {
 					informationLayout.addComponent(field, "Components", 0, 7,
 							2, "100%");

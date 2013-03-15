@@ -9,10 +9,14 @@ import java.util.GregorianCalendar;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -155,6 +159,22 @@ public class TaskTableDisplay extends
 				filterBtnLayout.setSpacing(true);
 				filterBtnLayout.setWidth("100px");
 
+				Button editButton = new Button("Edit",
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new TaskEvent.GotoEdit(
+												TaskTableDisplay.this, task));
+							}
+						});
+				editButton.setEnabled(CurrentProjectVariables
+						.canAccess(ProjectRolePermissionCollections.TASKS));
+				editButton.setStyleName("link");
+				filterBtnLayout.addComponent(editButton);
+
 				if ((task.getPercentagecomplete() != null && task
 						.getPercentagecomplete() != 100)
 						|| task.getPercentagecomplete() == null) {
@@ -178,6 +198,8 @@ public class TaskTableDisplay extends
 								}
 							});
 					closeBtn.setStyleName("link");
+					closeBtn.setEnabled(CurrentProjectVariables
+							.canAccess(ProjectRolePermissionCollections.TASKS));
 					filterBtnLayout.addComponent(closeBtn);
 				} else {
 					Button reOpenBtn = new Button("ReOpen",
@@ -199,6 +221,8 @@ public class TaskTableDisplay extends
 								}
 							});
 					reOpenBtn.setStyleName("link");
+					reOpenBtn.setEnabled(CurrentProjectVariables
+							.canAccess(ProjectRolePermissionCollections.TASKS));
 					filterBtnLayout.addComponent(reOpenBtn);
 				}
 
@@ -223,6 +247,8 @@ public class TaskTableDisplay extends
 									}
 								});
 						pendingBtn.setStyleName("link");
+						pendingBtn.setEnabled(CurrentProjectVariables
+								.canAccess(ProjectRolePermissionCollections.TASKS));
 						filterBtnLayout.addComponent(pendingBtn);
 					}
 				} else {
@@ -246,6 +272,8 @@ public class TaskTableDisplay extends
 								}
 							});
 					reOpenBtn.setStyleName("link");
+					reOpenBtn.setEnabled(CurrentProjectVariables
+							.canAccess(ProjectRolePermissionCollections.TASKS));
 					filterBtnLayout.addComponent(reOpenBtn);
 				}
 
@@ -265,6 +293,8 @@ public class TaskTableDisplay extends
 							}
 						});
 				deleteBtn.setStyleName("link");
+				deleteBtn.setEnabled(CurrentProjectVariables
+						.canAccess(ProjectRolePermissionCollections.TASKS));
 				filterBtnLayout.addComponent(deleteBtn);
 
 				taskSettingPopupBtn.setIcon(new ThemeResource(
