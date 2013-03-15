@@ -160,7 +160,8 @@ public class MilestoneListViewImpl extends AbstractView implements
 		taskComp.setWidth("100%");
 		taskComp.setSpacing(true);
 		ProgressIndicator progressTask = new ProgressIndicator(new Float(
-				(float) milestone.getNumOpenTasks() / milestone.getNumTasks()));
+				(float) (milestone.getNumTasks() - milestone.getNumOpenTasks())
+						/ milestone.getNumTasks()));
 		progressTask.setPollingInterval(1000000000);
 		progressTask.setWidth("100%");
 		taskComp.addComponent(progressTask);
@@ -178,7 +179,8 @@ public class MilestoneListViewImpl extends AbstractView implements
 		bugComp.setWidth("100%");
 		bugComp.setSpacing(true);
 		ProgressIndicator progressBug = new ProgressIndicator(new Float(
-				(float) milestone.getNumOpenTasks() / milestone.getNumTasks()));
+				(float) (milestone.getNumBugs() - milestone.getNumOpenBugs())
+						/ milestone.getNumBugs()));
 		progressBug.setPollingInterval(1000000000);
 		progressBug.setWidth("100%");
 		bugComp.addComponent(progressBug);
