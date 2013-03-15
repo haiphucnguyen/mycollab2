@@ -125,26 +125,29 @@ public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (AppContext.canRead(RolePermissionCollections.CRM_TASK)) {
+			SimpleTask task = null;
 			if (data.getParams() instanceof Integer) {
 				TaskService taskService = AppContext
 						.getSpringBean(TaskService.class);
-				SimpleTask task = taskService.findTaskById((Integer) data
+				task = taskService.findTaskById((Integer) data
 						.getParams());
-				if (task != null) {
-					super.onGo(container, data);
-					view.previewItem(task);
-					AppContext.addFragment("crm/task/preview/"
-							+ UrlEncodeDecoder.encode(task.getId()));
-				} else {
+				if (task == null) {
 					AppContext
-							.getApplication()
-							.getMainWindow()
-							.showNotification("Information",
-									"The record is not existed",
-									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					.getApplication()
+					.getMainWindow()
+					.showNotification("Information",
+							"The record is not existed",
+							Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					return;
 				}
-
+			} else if (data.getParams() instanceof SimpleTask) {
+				task = (SimpleTask) data.getParams();
 			}
+			
+			super.onGo(container, data);
+			view.previewItem(task);
+			AppContext.addFragment("crm/activity/task/preview/"
+					+ UrlEncodeDecoder.encode(task.getId()), "Preview Task: " + task.getSubject());
 
 		} else {
 			MessageConstants.showMessagePermissionAlert();

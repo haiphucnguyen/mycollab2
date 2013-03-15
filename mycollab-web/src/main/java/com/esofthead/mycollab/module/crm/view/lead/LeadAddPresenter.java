@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.crm.domain.CampaignLead;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
@@ -24,6 +25,7 @@ import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Window;
 
 public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 
@@ -67,15 +69,33 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (AppContext.canWrite(RolePermissionCollections.CRM_LEAD)) {
+			Lead lead = null;
+
+			if (data.getParams() instanceof Lead) {
+				lead = (SimpleLead) data.getParams();
+			} else if (data.getParams() instanceof Integer) {
+				LeadService leadService = AppContext
+						.getSpringBean(LeadService.class);
+				lead = (Lead) leadService.findByPrimaryKey((Integer) data.getParams());
+				if (lead == null) {
+					AppContext
+							.getApplication()
+							.getMainWindow()
+							.showNotification("Information",
+									"The record is not existed",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					return;
+				}
+			}
+
 			super.onGo(container, data);
-			Lead lead = (Lead) data.getParams();
 			view.editItem(lead);
 
 			if (lead.getId() == null) {
-				AppContext.addFragment("crm/lead/add");
+				AppContext.addFragment("crm/lead/add", "Add Lead");
 			} else {
 				AppContext.addFragment("crm/lead/edit/"
-						+ UrlEncodeDecoder.encode(lead.getId()));
+						+ UrlEncodeDecoder.encode(lead.getId()), "Edit Lead: " + lead.getLastname());
 			}
 		} else {
 			MessageConstants.showMessagePermissionAlert();

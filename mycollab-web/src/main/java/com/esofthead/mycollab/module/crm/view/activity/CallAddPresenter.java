@@ -15,69 +15,89 @@ import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Window;
 
 public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public CallAddPresenter() {
-        super(CallAddView.class);
+	public CallAddPresenter() {
+		super(CallAddView.class);
 
-        view.getEditFormHandlers().addFormHandler(new EditFormHandler<Call>() {
-            @Override
-            public void onSave(final Call item) {
-                save(item);
-                ViewState viewState = HistoryViewManager.back();
-                if (viewState instanceof NullViewState) {
-                    EventBus.getInstance().fireEvent(
-                            new ActivityEvent.GotoTodoList(this, null));
-                }
-            }
+		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Call>() {
+			@Override
+			public void onSave(final Call item) {
+				save(item);
+				ViewState viewState = HistoryViewManager.back();
+				if (viewState instanceof NullViewState) {
+					EventBus.getInstance().fireEvent(
+							new ActivityEvent.GotoTodoList(this, null));
+				}
+			}
 
-            @Override
-            public void onCancel() {
-                ViewState viewState = HistoryViewManager.back();
-                if (viewState instanceof NullViewState) {
-                    EventBus.getInstance().fireEvent(
-                            new ActivityEvent.GotoTodoList(this, null));
-                }
-            }
+			@Override
+			public void onCancel() {
+				ViewState viewState = HistoryViewManager.back();
+				if (viewState instanceof NullViewState) {
+					EventBus.getInstance().fireEvent(
+							new ActivityEvent.GotoTodoList(this, null));
+				}
+			}
 
-            @Override
-            public void onSaveAndNew(final Call item) {
-                save(item);
-                EventBus.getInstance().fireEvent(
-                        new ActivityEvent.CallAdd(this, null));
-            }
-        });
-    }
+			@Override
+			public void onSaveAndNew(final Call item) {
+				save(item);
+				EventBus.getInstance().fireEvent(
+						new ActivityEvent.CallAdd(this, null));
+			}
+		});
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-    	if (AppContext.canWrite(RolePermissionCollections.CRM_TASK)) {
-    		super.onGo(container, data);
-            Call call = (Call) data.getParams();
-            view.editItem(call);
-            
-            if (call.getId() == null) {
-                AppContext.addFragment("crm/call/add");
-            } else {
-                AppContext.addFragment("crm/call/edit/" + UrlEncodeDecoder.encode(call.getId()));
-            }
-    	} else {
-    		MessageConstants.showMessagePermissionAlert();
-    	}
-    }
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		if (AppContext.canWrite(RolePermissionCollections.CRM_TASK)) {
+			Call call = null;
+			if (data.getParams() instanceof Call) {
+				call = (Call) data.getParams();
+			} else if (data.getParams() instanceof Integer) {
+				CallService callService = AppContext
+						.getSpringBean(CallService.class);
+				call = callService.findByPrimaryKey((Integer) data
+						.getParams());
+				if (call == null) {
+					AppContext
+							.getApplication()
+							.getMainWindow()
+							.showNotification("Information",
+									"The record is not existed",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					return;
+				}
+			}
+			super.onGo(container, data);
+			view.editItem(call);
 
-    public void save(Call item) {
-        CallService taskService = AppContext.getSpringBean(CallService.class);
+			if (call.getId() == null) {
+				AppContext.addFragment("crm/activity/call/add/", "Add Call");
+			} else {
+				AppContext.addFragment("crm/activity/call/edit/"
+						+ UrlEncodeDecoder.encode(call.getId()), "Edit Call: "
+						+ call.getSubject());
+			}
+		} else {
+			MessageConstants.showMessagePermissionAlert();
+		}
+	}
 
-        item.setSaccountid(AppContext.getAccountId());
-        if (item.getId() == null) {
-            taskService.saveWithSession(item, AppContext.getUsername());
-        } else {
-            taskService.updateWithSession(item, AppContext.getUsername());
-        }
+	public void save(Call item) {
+		CallService taskService = AppContext.getSpringBean(CallService.class);
 
-    }
+		item.setSaccountid(AppContext.getAccountId());
+		if (item.getId() == null) {
+			taskService.saveWithSession(item, AppContext.getUsername());
+		} else {
+			taskService.updateWithSession(item, AppContext.getUsername());
+		}
+
+	}
 }
