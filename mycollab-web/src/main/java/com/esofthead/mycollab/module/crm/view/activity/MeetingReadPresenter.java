@@ -130,12 +130,28 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (AppContext.canRead(RolePermissionCollections.CRM_MEETING)) {
+			SimpleMeeting meeting = null;
+			if (data.getParams() instanceof Integer) {
+				MeetingService meetingService = AppContext
+						.getSpringBean(MeetingService.class);
+				meeting = meetingService.findMeetingById((Integer) data.getParams());
+				if (meeting == null) {
+					AppContext
+							.getApplication()
+							.getMainWindow()
+							.showNotification("Information",
+									"The record is not existed",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					return;
+				}
+			} else if (data.getParams() instanceof SimpleMeeting) {
+				meeting = (SimpleMeeting) data.getParams();
+			}
 			super.onGo(container, data);
-			SimpleMeeting meeting = (SimpleMeeting) data.getParams();
 			view.previewItem(meeting);
 
-			AppContext.addFragment("crm/meeting/preview/"
-					+ UrlEncodeDecoder.encode(meeting.getId()));
+			AppContext.addFragment("crm/activity/meeting/preview/"
+					+ UrlEncodeDecoder.encode(meeting.getId()), "Preview Meeting: " + meeting.getSubject());
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}

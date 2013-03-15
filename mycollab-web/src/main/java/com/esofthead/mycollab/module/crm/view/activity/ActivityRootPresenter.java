@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class ActivityRootPresenter extends
@@ -18,8 +19,10 @@ public class ActivityRootPresenter extends
 
 		if (data == null || data.getParams().equals("calendar")) {
 			view.gotoCalendar();
+			AppContext.addFragment("crm/activity/calendar", "Activity Calendar");
 		} else if (data.getParams().equals("todo")) {
 			view.gotoActivityList();
+			AppContext.addFragment("crm/activity/todo", "Activity To Do");
 		}
 	}
 

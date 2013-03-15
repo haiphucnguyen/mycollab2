@@ -199,7 +199,7 @@ public class OpportunityListPresenter extends CrmGenericPresenter<OpportunityLis
     		super.onGo(container, data);
             doSearch((OpportunitySearchCriteria) data.getParams());
 
-            AppContext.addFragment("crm/opportunity/list");
+            AppContext.addFragment("crm/opportunity/list", "Lead List");
     	} else {
     		MessageConstants.showMessagePermissionAlert();
     	}
