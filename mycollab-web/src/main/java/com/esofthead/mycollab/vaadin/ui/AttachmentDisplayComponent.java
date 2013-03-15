@@ -4,13 +4,13 @@
  */
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.esofthead.mycollab.module.file.StreamDownloadResource;
+import java.util.List;
+
 import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Resource;
-import com.vaadin.terminal.StreamResource;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -21,7 +21,6 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
-import java.util.List;
 
 /**
  * 
@@ -54,6 +53,34 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 		attachmentLayout.addComponent(attachmentLink);
 		attachmentLayout.setComponentAlignment(attachmentLink,
 				Alignment.MIDDLE_CENTER);
+		String fileExt = "";
+		int index = docName.lastIndexOf(".");
+		if (index > 0) {
+			fileExt = docName.substring(index + 1, docName.length());
+		}
+
+		if ("jpg".equalsIgnoreCase(fileExt) || "png".equalsIgnoreCase(fileExt)) {
+
+			Button previewBtn = new Button(null, new Button.ClickListener() {
+
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(ClickEvent event) {
+					Resource previewResource = StreamDownloadResourceFactory
+							.getImagePreviewResource(attachment
+									.getDocumentpath());
+					AppContext
+							.getApplication()
+							.getMainWindow()
+							.addWindow(
+									new AttachmentPreviewWindow(previewResource));
+				}
+			});
+			previewBtn.setIcon(new ThemeResource("icons/16/search.png"));
+			previewBtn.setStyleName("link");
+			attachmentLayout.addComponent(previewBtn);
+		}
 
 		Button trashBtn = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
