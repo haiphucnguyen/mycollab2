@@ -4,7 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view.user;
 
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
@@ -14,11 +13,8 @@ import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
-import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
-import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -36,7 +32,7 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		MyProjectsContainer projectContainer = (MyProjectsContainer) container;
+		ComponentContainer projectContainer = (ComponentContainer) container;
 		projectContainer.removeAllComponents();
 		projectContainer.addComponent(view.getWidget());
 		view.editItem((Project) data.getParams());

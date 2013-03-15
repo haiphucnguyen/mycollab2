@@ -85,7 +85,7 @@ public class TaskDisplayComponent extends CssLayout {
 											.getMilestoneid()));
 						}
 					});
-			layoutHelper.addComponent(milestoneLink, "Milestone", 1, 1,
+			layoutHelper.addComponent(milestoneLink, "Phase", 1, 1,
 					Alignment.TOP_RIGHT);
 
 			taskListProgress = (ProgressPercentageIndicator) layoutHelper

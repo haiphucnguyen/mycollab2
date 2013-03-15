@@ -44,6 +44,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		extends VerticalLayout implements IPagedBeanTable<S, T> {
 
 	private static final long serialVersionUID = 1L;
+	private int displayNumItems = SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS;
 	private String[] visibleColumns;
 	private String[] columnHeaders;
 	private int currentPage = 1;
@@ -97,7 +98,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 	@Override
 	public void setSearchCriteria(S searchCriteria) {
 		searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
-				SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
+				displayNumItems);
 		doSearch();
 	}
 
@@ -109,7 +110,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		if (searchRequest.getCurrentPage() > totalPage) {
 			searchRequest.setCurrentPage(totalPage);
 		}
-		
+
 		if (totalPage > 1) {
 			if (this.getComponentCount() == 1) {
 				this.addComponent(createControls());
@@ -210,7 +211,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		} else {
 			this.addComponent(tableLazyLoadContainer, 0);
 		}
-		
+
 	}
 
 	@SuppressWarnings("unchecked")
@@ -260,6 +261,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		itemsPerPageSelect.addItem("50");
 		itemsPerPageSelect.addItem("100");
 		itemsPerPageSelect.addItem("600");
+		itemsPerPageSelect.select(displayNumItems);
 		itemsPerPageSelect.setImmediate(true);
 		itemsPerPageSelect.setNullSelectionAllowed(false);
 		itemsPerPageSelect.setWidth("50px");
@@ -269,9 +271,9 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 			@Override
 			public void valueChange(
 					com.vaadin.data.Property.ValueChangeEvent event) {
-				Integer numberOfItems = Integer
-						.parseInt((String) itemsPerPageSelect.getValue());
-				displayItemChange(numberOfItems);
+				displayNumItems = Integer.parseInt((String) itemsPerPageSelect
+						.getValue());
+				displayItemChange(displayNumItems);
 			}
 		});
 
@@ -389,8 +391,6 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 				Alignment.MIDDLE_CENTER);
 		controlBar.setWidth("100%");
 		controlBar.setExpandRatio(pageSize, 1);
-
-		itemsPerPageSelect.select("25");
 		return controlBar;
 	}
 
