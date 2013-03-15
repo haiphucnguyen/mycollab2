@@ -1,10 +1,12 @@
 package com.esofthead.db.sqldump.data;
 
+import java.io.Writer;
 import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.esofthead.db.sqldump.DataAdapter;
+import com.esofthead.db.sqldump.DbConfiguration;
 import com.esofthead.db.sqldump.INFORMATION_SCHEMA;
 import com.esofthead.db.sqldump.data.parser.ConstraintParser;
 import com.esofthead.db.sqldump.data.parser.InnoDBSysForeignParser;
@@ -82,7 +84,7 @@ public class Schema {
 		loadSysForeign();
 	}
 	
-	public String dumpSchema() {
+	public void dumpSchema(Writer writer) throws Exception {
 		StringBuilder script = new StringBuilder();
 		for (Table table : Tables) {
 			script.append(table.serialTable());
@@ -108,7 +110,8 @@ public class Schema {
 			script.append("\r\n\r\n");
 		}
 		
-		return script.toString();
+		writer.append(script.subSequence(0, script.length()));
+//		return script.toString();
 	}
 	
 	public static final Schema loadSchema(String schemaName) throws Exception {
@@ -116,4 +119,13 @@ public class Schema {
 		schema.loadSchema();
 		return schema;
 	}
+	
+	public static final Schema loadSchema(DbConfiguration config) throws Exception {
+		DataAdapter.initContext(config.getUserName(), config.getPassword(), config.getUrl());
+		
+		Schema schema = new Schema(config.getSchema());
+		schema.loadSchema();
+		return schema;
+	}
+	
 }

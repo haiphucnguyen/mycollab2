@@ -32,19 +32,25 @@ public class DataAdapter {
 	// return properties.getProperty(key);
 	// return null;
 	// }
+	
+	private static final String USER_NAME = "user";
+	private static final String PASSWORD = "password";
+	private static final String URL = "url";
+	
+	public static final void initContext(String userName, String password, String url) {
+		prop.clear();
+		prop.put(USER_NAME, userName);
+		prop.put(PASSWORD, password);
+		prop.put(URL, url);
+	}
+	
+	private static final Properties prop = new Properties();
 
 	public static List<Object> getData(String query, ISqlParser parser)
 			throws Exception {
 		Class.forName("com.mysql.jdbc.Driver");
-
-		Properties prop = new Properties();
-		prop.put("user", DbConfiguration
-				.getProperty(DbConfiguration.USER_NAME));
-		prop.put("password", DbConfiguration
-				.getProperty(DbConfiguration.PASSWORD));
 		Connection con = (Connection) DriverManager.getConnection(
-				DbConfiguration
-						.getProperty(DbConfiguration.URL), prop);
+				prop.getProperty(URL), prop);
 
 		Statement stmt = (Statement) con.createStatement();
 		ResultSet rs = stmt.executeQuery(query);
