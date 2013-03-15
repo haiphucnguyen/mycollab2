@@ -95,7 +95,7 @@ ul {
 	height: 15px;
 }
 
-.v-label {
+.wordWrap.v-label {
 	word-wrap: break-word;
 }
 
@@ -236,7 +236,7 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 }
 
 .v-scrollable {
-	overflow: auto !important;
+	/*overflow: auto !important;*/
 }
 
 .v-table-cell-wrapper {
@@ -2573,5 +2573,8 @@ div.v-lazyloadingwrapper-loading {
 }
 .gantt-chart div[id^='ganttFilterApplyButton'], .gantt-chart div[id^='ganttFilterResetButton'] {
 	border-top: 1px solid rgb(129, 129, 129);
+}
+.gantt-chart div[id^='canvas'] {
+	overflow: hidden !important;
 }
 /* End Gantt Chart */

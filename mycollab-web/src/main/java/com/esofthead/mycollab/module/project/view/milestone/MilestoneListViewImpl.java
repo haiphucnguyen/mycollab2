@@ -148,7 +148,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 		layout.addComponent(milestoneLink);
 
 		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 4,
-				"60px");
+				"100%", "60px");
 		layoutHelper.addComponent(
 				new Label(AppContext.formatDate(milestone.getStartdate())),
 				"Start Date", 0, 0, Alignment.MIDDLE_LEFT);
@@ -157,29 +157,40 @@ public class MilestoneListViewImpl extends AbstractView implements
 				"End Date", 0, 1, Alignment.MIDDLE_LEFT);
 
 		HorizontalLayout taskComp = new HorizontalLayout();
+		taskComp.setWidth("100%");
+		taskComp.setSpacing(true);
 		ProgressIndicator progressTask = new ProgressIndicator(new Float(
 				(float) milestone.getNumOpenTasks() / milestone.getNumTasks()));
 		progressTask.setPollingInterval(1000000000);
-		progressTask.setWidth("120px");
+		progressTask.setWidth("100%");
 		taskComp.addComponent(progressTask);
-		taskComp.addComponent(new Label("(" + milestone.getNumOpenTasks() + "/"
-				+ milestone.getNumTasks() + ")"));
+		Label taskNumber = new Label("(" + milestone.getNumOpenTasks() + "/"
+				+ milestone.getNumTasks() + ")");
+		taskNumber.setWidth("35px");
+		taskComp.addComponent(taskNumber);
+		taskComp.setExpandRatio(progressTask, 1.0f);
+		// taskComp.setComponentAlignment(taskNumber, Alignment.MIDDLE_CENTER);
 
 		layoutHelper.addComponent(taskComp, "Tasks", 0, 2,
 				Alignment.MIDDLE_LEFT);
 
 		HorizontalLayout bugComp = new HorizontalLayout();
+		bugComp.setWidth("100%");
+		bugComp.setSpacing(true);
 		ProgressIndicator progressBug = new ProgressIndicator(new Float(
 				(float) milestone.getNumOpenTasks() / milestone.getNumTasks()));
 		progressBug.setPollingInterval(1000000000);
-		progressBug.setWidth("120px");
+		progressBug.setWidth("100%");
 		bugComp.addComponent(progressBug);
-		bugComp.addComponent(new Label("(" + milestone.getNumOpenBugs() + "/"
-				+ milestone.getNumBugs() + ")"));
+		Label bugNumber = new Label("(" + milestone.getNumOpenBugs() + "/"
+				+ milestone.getNumBugs() + ")");
+		bugNumber.setWidth("35px");
+		bugComp.addComponent(bugNumber);
+		bugComp.setExpandRatio(progressBug, 1.0f);
 
-		layoutHelper.addComponent(bugComp, "Bugs", 0, 3,
-				Alignment.MIDDLE_LEFT);
+		layoutHelper.addComponent(bugComp, "Bugs", 0, 3, Alignment.MIDDLE_LEFT);
 		GridLayout milestoneInfoLayout = layoutHelper.getLayout();
+		milestoneInfoLayout.setWidth("100%");
 		milestoneInfoLayout.setMargin(false);
 		layout.addComponent(milestoneInfoLayout);
 

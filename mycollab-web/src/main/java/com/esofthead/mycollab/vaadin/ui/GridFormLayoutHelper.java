@@ -65,6 +65,7 @@ public class GridFormLayoutHelper implements Serializable {
 			layout.setComponentAlignment(l, alignment);
 		}
 		layout.addComponent(field, 2 * columns + 1, rows + 1);
+		layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
 		field.setCaption(null);
 		field.setWidth(width);
 		return field;
@@ -90,6 +91,7 @@ public class GridFormLayoutHelper implements Serializable {
 
 		layout.addComponent(field, 2 * columns + 1, rows + 1, 2 * (columns
 				+ colspan - 1) + 1, rows + 1);
+		layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
 		field.setCaption(null);
 		field.setWidth(width);
 		return field;
@@ -110,6 +112,7 @@ public class GridFormLayoutHelper implements Serializable {
 
 		layout.addComponent(field, 2 * columns + 1, rows + 1, 2 * (columns
 				+ colspan - 1) + 1, rows + 1);
+		layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
 		field.setCaption(null);
 		field.setWidth(width);
 		return field;
@@ -131,11 +134,13 @@ public class GridFormLayoutHelper implements Serializable {
 
 			layout.addComponent(field, 2 * columns + 1, rows + 1, 2 * (columns
 					+ colspan - 1) + 1, rows + rowspan);
+			layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
 			field.setCaption(null);
 			return field;
 		} else {
 			layout.addComponent(field, 2 * columns, rows + 1, 2 * (columns
 					+ colspan - 1) + 1, rows + rowspan);
+			layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
 			field.setCaption(null);
 			field.setWidth("100%");
 			return field;
@@ -152,14 +157,14 @@ public class GridFormLayoutHelper implements Serializable {
 	public Component addComponent(Component field, String caption, int columns,
 			int rows, Alignment alignment) {
 		return addComponent(field, caption, columns, rows,
-				UIConstants.DEFAULT_CONTROL_WIDTH, alignment);
+				this.fieldControlWidth, alignment);
 	}
 
 	public Component addComponent(boolean condition, Field field,
 			String caption, int columns, int rows) {
 		if (condition) {
 			return addComponent(field, caption, columns, rows,
-					UIConstants.DEFAULT_CONTROL_WIDTH);
+					this.fieldControlWidth);
 		} else {
 			return null;
 		}
@@ -169,7 +174,7 @@ public class GridFormLayoutHelper implements Serializable {
 			String caption, int columns, int rows, Alignment alignment) {
 		if (condition) {
 			return addComponent(field, caption, columns, rows,
-					UIConstants.DEFAULT_CONTROL_WIDTH, alignment);
+					this.fieldControlWidth, alignment);
 		} else {
 			return null;
 		}
