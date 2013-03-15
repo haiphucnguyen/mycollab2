@@ -1,5 +1,6 @@
 package com.esofthead.db.sqldump;
 
+import java.io.StringWriter;
 import java.io.Writer;
 
 public class DbExport {
@@ -8,6 +9,8 @@ public class DbExport {
 	}
 
 	public static void main(String[] args) {
-
+		StringWriter writer = new StringWriter();
+		DbExport.exportDb(DbConfiguration.loadDefault(), writer);
+		System.out.println(writer.toString());
 	}
 }
