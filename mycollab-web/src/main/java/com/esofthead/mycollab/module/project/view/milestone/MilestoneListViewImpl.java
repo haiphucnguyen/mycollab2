@@ -22,6 +22,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -50,6 +51,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 		header.setComponentAlignment(titleLbl, Alignment.MIDDLE_LEFT);
 
 		Button createBtn = new Button("Create", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -145,7 +147,8 @@ public class MilestoneListViewImpl extends AbstractView implements
 		milestone.setDescription(milestone.getDescription());
 		layout.addComponent(milestoneLink);
 
-		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 4);
+		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 4,
+				"60px");
 		layoutHelper.addComponent(
 				new Label(AppContext.formatDate(milestone.getStartdate())),
 				"Start Date", 0, 0, Alignment.MIDDLE_LEFT);
@@ -153,12 +156,29 @@ public class MilestoneListViewImpl extends AbstractView implements
 				new Label(AppContext.formatDate(milestone.getEnddate())),
 				"End Date", 0, 1, Alignment.MIDDLE_LEFT);
 
-		layoutHelper.addComponent(new Label(milestone.getNumOpenTasks() + "/"
-				+ milestone.getNumTasks()), "Tasks", 0, 2,
+		HorizontalLayout taskComp = new HorizontalLayout();
+		ProgressIndicator progressTask = new ProgressIndicator(new Float(
+				(float) milestone.getNumOpenTasks() / milestone.getNumTasks()));
+		progressTask.setPollingInterval(1000000000);
+		progressTask.setWidth("120px");
+		taskComp.addComponent(progressTask);
+		taskComp.addComponent(new Label("(" + milestone.getNumOpenTasks() + "/"
+				+ milestone.getNumTasks() + ")"));
+
+		layoutHelper.addComponent(taskComp, "Tasks", 0, 2,
 				Alignment.MIDDLE_LEFT);
 
-		layoutHelper.addComponent(new Label(milestone.getNumOpenBugs() + "/"
-				+ milestone.getNumBugs()), "Bugs", 0, 3, Alignment.MIDDLE_LEFT);
+		HorizontalLayout bugComp = new HorizontalLayout();
+		ProgressIndicator progressBug = new ProgressIndicator(new Float(
+				(float) milestone.getNumOpenTasks() / milestone.getNumTasks()));
+		progressBug.setPollingInterval(1000000000);
+		progressBug.setWidth("120px");
+		bugComp.addComponent(progressBug);
+		bugComp.addComponent(new Label("(" + milestone.getNumOpenBugs() + "/"
+				+ milestone.getNumBugs() + ")"));
+
+		layoutHelper.addComponent(bugComp, "Bugs", 0, 3,
+				Alignment.MIDDLE_LEFT);
 		GridLayout milestoneInfoLayout = layoutHelper.getLayout();
 		milestoneInfoLayout.setMargin(false);
 		layout.addComponent(milestoneInfoLayout);
