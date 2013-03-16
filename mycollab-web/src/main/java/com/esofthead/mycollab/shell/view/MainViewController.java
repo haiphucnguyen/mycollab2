@@ -4,21 +4,20 @@
  */
 package com.esofthead.mycollab.shell.view;
 
-import java.io.Serializable;
-
 import com.esofthead.mycollab.module.crm.view.CrmPresenter;
 import com.esofthead.mycollab.module.project.view.ProjectPresenter;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 
 /**
  * 
  * @author haiphucnguyen
  */
-public class MainViewController implements Serializable {
+public class MainViewController implements IController {
 	private static final long serialVersionUID = 1L;
 	private MainView container;
 

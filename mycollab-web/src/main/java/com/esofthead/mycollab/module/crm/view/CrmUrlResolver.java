@@ -22,8 +22,16 @@ public class CrmUrlResolver extends UrlResolver {
 		this.addSubResolver("cases", new CaseUrlResolver());
 		this.addSubResolver("activity", new ActivityUrlResolver());
 	}
-	
-	public static class CrmDashboardUrlResolver extends UrlResolver {
+
+	@Override
+	protected void preHandle() {
+		// TODO Auto-generated method stub
+		super.preHandle();
+	}
+
+
+
+	public static class CrmDashboardUrlResolver extends CrmUrlResolver {
 
 		@Override
 		protected void handlePage(String... params) {
