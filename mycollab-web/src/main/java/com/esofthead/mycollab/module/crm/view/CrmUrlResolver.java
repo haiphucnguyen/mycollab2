@@ -25,13 +25,11 @@ public class CrmUrlResolver extends UrlResolver {
 
 	@Override
 	protected void preHandle() {
-		// TODO Auto-generated method stub
-		super.preHandle();
 	}
 
 
 
-	public static class CrmDashboardUrlResolver extends CrmUrlResolver {
+	public static class CrmDashboardUrlResolver extends UrlResolver {
 
 		@Override
 		protected void handlePage(String... params) {
