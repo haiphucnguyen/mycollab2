@@ -204,7 +204,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 			@Override
 			public Layout getLayout() {
 				AddViewLayout taskListAddLayout = new AddViewLayout(
-						bug.getSummary(), new ThemeResource(
+						"[Issue " + bug.getBugkey() + "#]: " + bug.getSummary(), new ThemeResource(
 								"icons/48/project/bug.png"));
 
 				Button createAccountBtn = new Button("Create",
