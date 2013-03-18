@@ -108,9 +108,9 @@ public class TaskDisplayComponent extends CssLayout {
 			taskInfo.setMargin(false, false, true, false);
 		}
 
-		taskDisplay = new TaskTableDisplay(new String[] { "id", "taskname",
-				"startdate", "deadline", "percentagecomplete",
-				"assignUserFullName" }, new String[] { "", "Task Name",
+		taskDisplay = new TaskTableDisplay(new String[] { "id", "taskkey",
+				"taskname", "startdate", "deadline", "percentagecomplete",
+				"assignUserFullName" }, new String[] { "", "#", "Task Name",
 				"Start", "Due", "% Complete", "Owner" });
 		this.addComponent(taskDisplay);
 

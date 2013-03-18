@@ -212,9 +212,10 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			searchCriteria.setAssignUser(new StringSearchField(projectMember
 					.getUsername()));
 			final TaskTableDisplay taskDisplay = new TaskTableDisplay(
-					new String[] { "id", "taskname", "startdate", "deadline",
-							"percentagecomplete" }, new String[] { "",
-							"Task Name", "Start", "Due", "% Complete" });
+					new String[] { "id", "taskkey", "taskname", "startdate",
+							"deadline", "percentagecomplete" },
+					new String[] { "", "#", "Task Name", "Start", "Due",
+							"% Complete" });
 
 			taskDisplay
 					.addTableListener(new ApplicationEventListener<TableClickEvent>() {
@@ -256,8 +257,8 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			super("Open Bugs", new VerticalLayout());
 
 			BugTableDisplay bugDisplay = new BugTableDisplay(new String[] {
-					"summary", "severity", "resolution", "duedate" },
-					new String[] { "Summary", "Severity", "Resolution",
+					"bugkey", "summary", "severity", "resolution", "duedate" },
+					new String[] { "#", "Summary", "Severity", "Resolution",
 							"Due Date" });
 			bugDisplay
 					.addTableListener(new ApplicationEventListener<TableClickEvent>() {
