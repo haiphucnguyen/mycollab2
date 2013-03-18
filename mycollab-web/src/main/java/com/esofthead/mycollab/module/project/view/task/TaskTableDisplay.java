@@ -81,7 +81,9 @@ public class TaskTableDisplay extends
 						&& 100d == task.getPercentagecomplete()) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);
 				} else {
-					if ((task.getEnddate() != null && (task.getEnddate()
+					if ("Pending".equals(task.getStatus())) {
+						b.addStyleName(UIConstants.LINK_PENDING);
+					} else if ((task.getEnddate() != null && (task.getEnddate()
 							.before(new GregorianCalendar().getTime())))
 							|| (task.getActualenddate() != null && (task
 									.getActualenddate()

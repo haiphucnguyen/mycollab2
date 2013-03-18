@@ -21,10 +21,12 @@
                 ${projectid.operation} m_prj_task.projectid=#{projectid.value,javaType=INTEGER}
             ]]>
         </if>
-        <if test="status != null">
-            <![CDATA[
-                ${status.operation} m_prj_task.status=#{status.value}
-            ]]>
+        <if test='statuses != null'>
+            ${statuses.operation} m_prj_task.status IN
+            <foreach close=")" collection="statuses.values"
+                item="status" open="(" separator="OR">
+                #{status}
+            </foreach>    
         </if>
         <if test="lessThan != null">
           <![CDATA[

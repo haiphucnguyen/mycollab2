@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.domain.criteria;
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class TaskSearchCriteria extends SearchCriteria {
@@ -13,17 +14,17 @@ public class TaskSearchCriteria extends SearchCriteria {
     private NumberSearchField id;
     private StringSearchField assignUser;
     
-    private StringSearchField status;
+    private SetSearchField<String> statuses;
 
-    public StringSearchField getStatus() {
-        return status;
-    }
+    public SetSearchField<String> getStatuses() {
+		return statuses;
+	}
 
-    public void setStatus(StringSearchField status) {
-        this.status = status;
-    }
+	public void setStatuses(SetSearchField<String> statuses) {
+		this.statuses = statuses;
+	}
 
-    public NumberSearchField getProjectid() {
+	public NumberSearchField getProjectid() {
         return projectid;
     }
 

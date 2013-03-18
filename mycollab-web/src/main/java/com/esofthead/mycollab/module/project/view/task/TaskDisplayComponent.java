@@ -5,7 +5,8 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
@@ -178,7 +179,8 @@ public class TaskDisplayComponent extends CssLayout {
 			criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
 					.getProjectId()));
 			criteria.setTaskListId(new NumberSearchField(taskList.getId()));
-			criteria.setStatus(new StringSearchField("Open"));
+			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
+					new String[] { "Open", "Pending" }));
 			this.criteria = criteria;
 		}
 

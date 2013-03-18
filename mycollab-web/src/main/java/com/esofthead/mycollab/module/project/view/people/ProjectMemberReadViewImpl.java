@@ -207,7 +207,8 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			searchCriteria = new TaskSearchCriteria();
 			searchCriteria.setProjectid(new NumberSearchField(
 					CurrentProjectVariables.getProjectId()));
-			searchCriteria.setStatus(new StringSearchField("Open"));
+			searchCriteria.setStatuses(new SetSearchField<String>(
+					SearchField.AND, new String[] { "Open", "Pending" }));
 			searchCriteria.setAssignUser(new StringSearchField(projectMember
 					.getUsername()));
 			final TaskTableDisplay taskDisplay = new TaskTableDisplay(
