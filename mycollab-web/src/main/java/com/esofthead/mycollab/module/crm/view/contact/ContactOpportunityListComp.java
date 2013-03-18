@@ -97,7 +97,9 @@ public class ContactOpportunityListComp extends RelatedListComp<SimpleOpportunit
                     "Sales Stage", "Amount", "Close", "User", "Action"});
 
         tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public Class<? extends ApplicationEvent> getEventType() {
                 return TableClickEvent.class;
             }
@@ -114,13 +116,17 @@ public class ContactOpportunityListComp extends RelatedListComp<SimpleOpportunit
         });
 
         tableItem.addGeneratedColumn("id", new Table.ColumnGenerator() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public Object generateCell(Table source, Object itemId,
                     Object columnId) {
                 final SimpleOpportunity opportunity = (SimpleOpportunity) tableItem.getBeanByIndex(itemId);
                 HorizontalLayout controlLayout = new HorizontalLayout();
                 Button editBtn = new Button(null, new Button.ClickListener() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public void buttonClick(Button.ClickEvent event) {
                         EventBus.getInstance().fireEvent(
                                 new OpportunityEvent.GotoRead(
@@ -133,7 +139,9 @@ public class ContactOpportunityListComp extends RelatedListComp<SimpleOpportunit
                 controlLayout.addComponent(editBtn);
 
                 Button deleteBtn = new Button(null, new Button.ClickListener() {
-                    @Override
+					private static final long serialVersionUID = 1L;
+
+					@Override
                     public void buttonClick(Button.ClickEvent event) {
                         ConfirmDialog.show(AppContext.getApplication().getMainWindow(),
                                 "Please Confirm:",
