@@ -166,7 +166,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 		taskComp.addComponent(progressTask);
 		Label taskNumber = new Label("(" + milestone.getNumOpenTasks() + "/"
 				+ milestone.getNumTasks() + ")");
-		taskNumber.setWidth("35px");
+		taskNumber.setWidth("90px");
 		taskComp.addComponent(taskNumber);
 		taskComp.setExpandRatio(progressTask, 1.0f);
 		// taskComp.setComponentAlignment(taskNumber, Alignment.MIDDLE_CENTER);
@@ -184,7 +184,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 		bugComp.addComponent(progressBug);
 		Label bugNumber = new Label("(" + milestone.getNumOpenBugs() + "/"
 				+ milestone.getNumBugs() + ")");
-		bugNumber.setWidth("35px");
+		bugNumber.setWidth("90px");
 		bugComp.addComponent(bugNumber);
 		bugComp.setExpandRatio(progressBug, 1.0f);
 
