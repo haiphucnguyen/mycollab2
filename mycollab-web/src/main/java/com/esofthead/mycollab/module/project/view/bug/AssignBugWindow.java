@@ -46,6 +46,7 @@ public class AssignBugWindow extends Window {
         editForm = new EditForm();
         this.addComponent(editForm);
         editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+        center();
     }
 
     private class EditForm extends AdvancedEditBeanForm<Bug> {
@@ -87,6 +88,8 @@ public class AssignBugWindow extends Window {
                 });
                 cancelBtn.setStyleName("link");
                 controlsBtn.addComponent(cancelBtn);
+                controlsBtn.setComponentAlignment(cancelBtn,
+						Alignment.MIDDLE_LEFT);
 
                 Button approveBtn = new Button("Assign", new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -120,6 +123,8 @@ public class AssignBugWindow extends Window {
                 });
                 approveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
                 controlsBtn.addComponent(approveBtn);
+                controlsBtn.setComponentAlignment(approveBtn,
+						Alignment.MIDDLE_RIGHT);
 
                 layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
 

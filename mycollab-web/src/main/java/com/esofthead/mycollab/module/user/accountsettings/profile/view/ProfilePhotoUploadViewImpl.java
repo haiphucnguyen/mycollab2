@@ -84,7 +84,22 @@ public class ProfilePhotoUploadViewImpl extends AbstractView implements
 		previewBoxRight.addComponent(lbPreview);
 
 		HorizontalLayout controlBtns = new HorizontalLayout();
+		controlBtns.setSpacing(true);
 		controlBtns.setSizeUndefined();
+		
+		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance().fireEvent(
+						new ProfileEvent.GotoProfileView(
+								ProfilePhotoUploadViewImpl.this, null));
+			}
+		});
+		cancelBtn.setStyleName("link");
+		controlBtns.addComponent(cancelBtn);
+		controlBtns.setComponentAlignment(cancelBtn, Alignment.MIDDLE_LEFT);
+		
 		Button acceptBtn = new Button("Accept", new Button.ClickListener() {
 
 			@Override
@@ -114,19 +129,6 @@ public class ProfilePhotoUploadViewImpl extends AbstractView implements
 		acceptBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		controlBtns.addComponent(acceptBtn);
 		controlBtns.setComponentAlignment(acceptBtn, Alignment.TOP_LEFT);
-
-		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new ProfileEvent.GotoProfileView(
-								ProfilePhotoUploadViewImpl.this, null));
-			}
-		});
-		cancelBtn.setStyleName("link");
-		controlBtns.addComponent(cancelBtn);
-		controlBtns.setComponentAlignment(cancelBtn, Alignment.MIDDLE_LEFT);
 
 		previewBoxRight.addComponent(controlBtns);
 		previewBoxRight.setComponentAlignment(controlBtns, Alignment.TOP_LEFT);
