@@ -84,6 +84,13 @@ public class Mailer {
 		props.put("mail.smtp.port", String.valueOf(port));
 		props.put("mail.smtp.user", username);
 		props.put("mail.smtp.password", password);
+		
+		if (465 == port) {
+			props.put("mail.smtp.socketFactory.port", port);
+			props.put("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
+			props.put("mail.smtp.socketFactory.fallback", "false");
+			props.put("mail.smtp.starttls.enable", "true");
+		}
 
 		Session session = Session.getInstance(props,
 				new javax.mail.Authenticator() {
@@ -122,6 +129,7 @@ public class Mailer {
 		}
 
 		message.setContent(multipart);
+		
 
 		Transport transport = session.getTransport("smtp");
 		transport.connect(host, username, password);

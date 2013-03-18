@@ -31,9 +31,15 @@ public class MyCollabMonitoringReporter {
 		Mailer mailer = new Mailer(host, userName, password,
 				Integer.parseInt(port), true);
 		try {
-			mailer.sendHTMLMail(userName, "eSofthead reporter",
-					new String[] { ApplicationProperties
-							.getProperty(ApplicationProperties.ERROR_SENDTO) },
+//			mailer.sendHTMLMail(userName, "eSofthead reporter",
+//					new String[] { ApplicationProperties
+//							.getProperty(ApplicationProperties.ERROR_SENDTO) },
+//					new String[] { "eSofthead" }, "Daily Report Monitoring - "
+//							+ toDayString(),
+//					"<h1>This is the sample of daily monitoring report</h1>",
+//					Collections.singletonList(attachment));
+			mailer.sendHTMLMail("manhtran@esofthead.com", "eSofthead reporter",
+					new String[] { "nobugz@live.com" },
 					new String[] { "eSofthead" }, "Daily Report Monitoring - "
 							+ toDayString(),
 					"<h1>This is the sample of daily monitoring report</h1>",

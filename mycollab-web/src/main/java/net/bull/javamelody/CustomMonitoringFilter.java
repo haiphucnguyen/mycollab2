@@ -38,13 +38,17 @@ public class CustomMonitoringFilter extends MonitoringFilter {
 		scheduleReportMailForLocalServer(timer, Period.JOUR);
 	}
 
+	private static int counter = 0;
+	
 	static void scheduleReportMailForLocalServer(final Timer timer,
 			final Period period) {
+		System.out.println(counter++);
 		final TimerTask task = new TimerTask() {
 			/** {@inheritDoc} */
 			@Override
 			public void run() {
 				doStatistic(period);
+				System.out.println("shcedule next round");
 				scheduleReportMailForLocalServer(timer, period);
 			}
 		};
@@ -76,7 +80,6 @@ public class CustomMonitoringFilter extends MonitoringFilter {
 			reporter.sendDailyReport(tmpFile.getAbsolutePath());
 			log.debug("Run statistic report successfully");
 		} catch (Exception ex) {
-			log.error("Run statistic report error", ex);
 		}
 	}
 
