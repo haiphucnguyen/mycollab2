@@ -150,6 +150,8 @@ public class StandupListViewImpl extends AbstractView implements
 			bodyContent.addComponent(whatYesterdayLbl);
 			Label whatYesterdayField = new Label(report.getWhatlastday(),
 					Label.CONTENT_XHTML);
+			whatYesterdayField.setSizeUndefined();
+			whatYesterdayField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);
 			bodyContent.addComponent(whatYesterdayField);
 
 			Label whatTodayLbl = new Label("What I will do today/week");
@@ -157,6 +159,8 @@ public class StandupListViewImpl extends AbstractView implements
 			bodyContent.addComponent(whatTodayLbl);
 			Label whatTodayField = new Label(report.getWhattoday(),
 					Label.CONTENT_XHTML);
+			whatTodayField.setSizeUndefined();
+			whatTodayField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);
 			bodyContent.addComponent(whatTodayField);
 
 			Label roadblockLbl = new Label(
@@ -165,6 +169,8 @@ public class StandupListViewImpl extends AbstractView implements
 			bodyContent.addComponent(roadblockLbl);
 			Label whatProblemField = new Label(report.getWhatproblem(),
 					Label.CONTENT_XHTML);
+			whatProblemField.setSizeUndefined();
+			whatProblemField.addStyleName(UIConstants.STANDUP_ROW_CONTENT);
 			bodyContent.addComponent(whatProblemField);
 		}
 	}

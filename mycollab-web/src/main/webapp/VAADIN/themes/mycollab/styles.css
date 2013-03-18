@@ -1329,7 +1329,7 @@ input.v-textfield-errorField {
 		transparent;
 }
 
-.depotComp .h2 {
+.depotHeader .h2 {
 	border: 0px;
 	color: #5E5E5E;
 	text-shadow: #F0F0F0 0 1px 0;
@@ -2587,3 +2587,14 @@ div.v-lazyloadingwrapper-loading {
 	overflow: hidden !important;
 }
 /* End Gantt Chart */
+
+/* Stand Up List View */
+.v-label.standup-row-content {
+	padding: 10px 0px 10px 20px;
+	font-size: 13px
+}
+.v-label.standup-row-content ul {
+	padding-left: 14px;
+	margin: 0px;
+}
+/* End Stand Up List View */

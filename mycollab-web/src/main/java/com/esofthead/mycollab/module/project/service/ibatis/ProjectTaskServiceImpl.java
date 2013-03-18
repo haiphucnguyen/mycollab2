@@ -77,7 +77,7 @@ public class ProjectTaskServiceImpl extends
 		if ((record.getPercentagecomplete() != null)
 				&& (record.getPercentagecomplete() == 100)) {
 			record.setStatus("Closed");
-		} else {
+		} else if (record.getStatus() == null) {
 			record.setStatus("Open");
 		}
 		return super.updateWithSession(record, username);

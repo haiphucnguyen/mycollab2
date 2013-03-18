@@ -19,6 +19,7 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -121,16 +122,17 @@ public class CasePreviewBuilder extends VerticalLayout {
     public static class ReadView extends CasePreviewBuilder {
 
         private TabSheet tabContainer;
-        private VerticalLayout accountInformation;
+        private VerticalLayout caseInformationLayout;
         private VerticalLayout relatedItemsContainer;
-        private AddViewLayout accountAddLayout;
+        private AddViewLayout caseAddLayout;
 
         public ReadView() {
-            accountAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/case.png"));
-            accountAddLayout.addStyleName("preview");
-            this.addComponent(accountAddLayout);
+            caseAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/case.png"));
+            caseAddLayout.addStyleName("preview");
+            this.addComponent(caseAddLayout);
 
             tabContainer = new TabSheet();
+            tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
             initRelatedComponent();
 
             previewForm = new AdvancedPreviewBeanForm<Case>() {
@@ -139,7 +141,7 @@ public class CasePreviewBuilder extends VerticalLayout {
                     this.setFormLayoutFactory(new CaseFormLayoutFactory.CaseInformationLayout());
                     this.setFormFieldFactory(new CaseFormFieldFactory());
                     super.setItemDataSource(newDataSource);
-                    accountAddLayout.setTitle(cases.getSubject());
+                    caseAddLayout.setTitle(cases.getSubject());
                 }
 
                 @Override
@@ -174,15 +176,15 @@ public class CasePreviewBuilder extends VerticalLayout {
                 }
             };
 
-            accountInformation = new VerticalLayout();
-            accountInformation.setMargin(true);
+            caseInformationLayout = new VerticalLayout();
+            caseInformationLayout.setMargin(true);
             Layout actionControls = new PreviewFormControlsGenerator<Case>(
                     previewForm).createButtonControls(RolePermissionCollections.CRM_CASE);
-            accountInformation.addComponent(actionControls);
-            accountInformation.addComponent(previewForm);
-            accountInformation.addComponent(noteListItems);
+            caseInformationLayout.addComponent(actionControls);
+            caseInformationLayout.addComponent(previewForm);
+            caseInformationLayout.addComponent(noteListItems);
 
-            tabContainer.addTab(accountInformation, "Case Information");
+            tabContainer.addTab(caseInformationLayout, "Case Information");
 
             relatedItemsContainer = new VerticalLayout();
             relatedItemsContainer.setMargin(true);
@@ -190,7 +192,7 @@ public class CasePreviewBuilder extends VerticalLayout {
             relatedItemsContainer.addComponent(associateContactList);
             tabContainer.addTab(relatedItemsContainer, "More Information");
 
-            accountAddLayout.addBody(tabContainer);
+            caseAddLayout.addBody(tabContainer);
         }
     }
 

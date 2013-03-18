@@ -12,6 +12,7 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -110,6 +111,7 @@ public class CallPreviewBuilder extends VerticalLayout {
 			this.addComponent(callAddLayout);
 
 			tabContainer = new TabSheet();
+			tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
 
 			previewForm = new AdvancedPreviewBeanForm<SimpleCall>() {
 				@Override
