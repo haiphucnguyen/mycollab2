@@ -81,7 +81,11 @@ public class Schema {
 		}
 		
 		loadConstraint();
-		loadSysForeign();
+		try {
+			loadSysForeign();
+		} catch (Exception e) {
+			
+		}
 	}
 	
 	public void dumpSchema(Writer writer) throws Exception {
