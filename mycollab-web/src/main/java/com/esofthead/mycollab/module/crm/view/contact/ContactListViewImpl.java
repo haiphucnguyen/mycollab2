@@ -132,7 +132,6 @@ public class ContactListViewImpl extends AbstractView implements
     @Override
     public void disableActionControls() {
         tableActionControls.setVisible(false);
-        System.out.println("contact disable: ");
         selectOptionButton.setSelectedChecbox(false);
         selectedItemsNumberLabel.setValue("");
     }
