@@ -6,6 +6,8 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.tracker.domain.SimpleComponent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
@@ -164,8 +166,11 @@ public class ComponentListViewImpl extends AbstractView implements
 
 		selectOptionButton = new SelectionOptionButton(tableItem);
 		layout.addComponent(selectOptionButton);
-
-		tableActionControls = new PopupButtonControl("delete", "Delete");
+		
+		Button deleteBtn = new Button("Delete");
+        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.COMPONENTS));
+        
+		tableActionControls = new PopupButtonControl("delete", deleteBtn);
 		tableActionControls.addOptionItem("mail", "Mail");
 		tableActionControls.addOptionItem("export", "Export");
 

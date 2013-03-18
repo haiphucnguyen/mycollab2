@@ -6,6 +6,8 @@ package com.esofthead.mycollab.module.project.view.people;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
@@ -67,6 +69,7 @@ public class ProjectMemberSearchPanel extends GenericSearchPanel<ProjectMemberSe
                                 new ProjectMemberEvent.GotoAdd(this, null));
                     }
                 });
+        createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.USERS));
         createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
         createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 

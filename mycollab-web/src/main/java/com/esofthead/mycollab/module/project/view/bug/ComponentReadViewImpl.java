@@ -10,6 +10,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
@@ -139,7 +140,7 @@ public class ComponentReadViewImpl extends AbstractView implements
 			@Override
 			protected Layout createTopPanel() {
 				return (new PreviewFormControlsGenerator<SimpleComponent>(
-						PreviewForm.this)).createButtonControls();
+						PreviewForm.this)).createButtonControls(ProjectRolePermissionCollections.COMPONENTS, ModuleNameConstants.PRJ);
 			}
 
 			@Override

@@ -5,6 +5,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
@@ -46,6 +47,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		header.setSpacing(true);
 		header.setWidth("100%");
 		taskGroupSelection = new PopupButton("Active Tasks");
+		taskGroupSelection.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
 		taskGroupSelection.addStyleName("link");
 		taskGroupSelection.addStyleName("h2");
 		header.addComponent(taskGroupSelection);
@@ -144,6 +146,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 						taskListWindow);
 			}
 		});
+		newTaskListBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 		newTaskListBtn.setIcon(new ThemeResource(
 				"icons/16/project/new_task_list.png"));
 		newTaskListBtn.setDescription("New Task Group");
@@ -158,7 +161,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 						new TaskListEvent.ReoderTaskList(this, null));
 			}
 		});
-		
+		reOrderBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 		reOrderBtn.setIcon(new ThemeResource(
 				"icons/16/project/reorder.png"));
 		reOrderBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -182,6 +185,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 														searchCriteria)));
 					}
 				});
+		showGanttChartBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
 		showGanttChartBtn.setDescription("Display Gantt Chart");
 		showGanttChartBtn.setIcon(new ThemeResource(
 				"icons/16/project/gantt_chart.png"));

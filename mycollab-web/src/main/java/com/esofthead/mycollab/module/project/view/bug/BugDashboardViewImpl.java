@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.GregorianCalendar;
 
-import org.vaadin.hene.splitbutton.SplitButton;
+import org.vaadin.hene.splitbutton.SplitButtonExt;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
@@ -11,6 +11,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -88,19 +89,19 @@ public class BugDashboardViewImpl extends AbstractView implements
 		header.addComponent(navButton);
 		header.setExpandRatio(navButton, 0.5f);
 
-		final SplitButton controlsBtn = new SplitButton();
-		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
-		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
-		controlsBtn.setCaption("Create Bug");
-		controlsBtn
-				.addClickListener(new SplitButton.SplitButtonClickListener() {
+		Button createBugBtn = new Button("Create Bug",
+				new Button.ClickListener() {
 					@Override
-					public void splitButtonClick(
-							SplitButton.SplitButtonClickEvent event) {
+					public void buttonClick(ClickEvent event) {
 						EventBus.getInstance().fireEvent(
 								new BugEvent.GotoAdd(this, null));
 					}
 				});
+		createBugBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
+		
+		final SplitButtonExt controlsBtn = new SplitButtonExt(createBugBtn);
+		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
+		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 
 		VerticalLayout btnControlsLayout = new VerticalLayout();
 		btnControlsLayout.setWidth("150px");
@@ -114,6 +115,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 					}
 				});
 		createComponentBtn.setStyleName("link");
+		createComponentBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
 		btnControlsLayout.addComponent(createComponentBtn);
 
 		Button createVersionBtn = new Button("Create Version",
@@ -126,6 +128,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 					}
 				});
 		createVersionBtn.setStyleName("link");
+		createVersionBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
 		btnControlsLayout.addComponent(createVersionBtn);
 		controlsBtn.addComponent(btnControlsLayout);
 

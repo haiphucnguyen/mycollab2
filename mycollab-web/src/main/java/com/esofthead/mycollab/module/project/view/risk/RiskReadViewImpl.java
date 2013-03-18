@@ -6,6 +6,7 @@ import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
@@ -144,7 +145,7 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 			@Override
 			protected Layout createTopPanel() {
 				return (new PreviewFormControlsGenerator<Risk>(PreviewForm.this))
-						.createButtonControls();
+						.createButtonControls(ProjectRolePermissionCollections.RISKS, ModuleNameConstants.PRJ);
 			}
 
 			@Override
