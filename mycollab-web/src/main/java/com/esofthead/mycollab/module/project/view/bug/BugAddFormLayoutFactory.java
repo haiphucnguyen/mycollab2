@@ -34,7 +34,7 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
 		organizationHeader.setStyleName("h2");
 		layout.addComponent(organizationHeader);
 
-		informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 8);
+		informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 9);
 		informationLayout.getLayout().setWidth("100%");
 		layout.addComponent(informationLayout.getLayout());
 		layout.setComponentAlignment(informationLayout.getLayout(),
@@ -65,6 +65,10 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
 			informationLayout.addComponent(field, "Affected Versions", 1, 2);
 		} else if (propertyId.equals("fixedVersions")) {
 			informationLayout.addComponent(field, "Fixed Versions", 1, 3);
+		} else if (propertyId.equals("estimatetime")) {
+			informationLayout.addComponent(field, "Original Estimate", 0, 4);
+		} else if (propertyId.equals("estimateremaintime")) {
+			informationLayout.addComponent(field, "Remain Estimate", 1, 4);
 		} else if (propertyId.equals("environment")) {
 			informationLayout.addComponent(field, "Environment", 0, 5, 2,
 					"100%");

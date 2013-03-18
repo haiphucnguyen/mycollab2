@@ -191,28 +191,28 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 
 	public void gotoMilestoneList() {
 		this.select(1);
-		this.addLink(new Button("Milestones"));
+		this.addLink(new Button("Phases"));
 		AppContext.addFragment(
 				"project/milestone/list/"
 						+ UrlEncodeDecoder.encode(project.getId()),
-				"Milestone List");
+				"Phase List");
 	}
 
 	public void gotoMilestoneRead(Milestone milestone) {
 		this.select(1);
-		this.addLink(new Button("Milestones", new GotoMilestoneListListener()));
+		this.addLink(new Button("Phases", new GotoMilestoneListListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(milestone.getName()));
 		AppContext.addFragment(
 				"project/milestone/preview/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ milestone.getId()), "Preview Milestone: "
+								+ milestone.getId()), "Preview Phase: "
 						+ milestone.getName());
 	}
 
 	public void gotoMilestoneEdit(final Milestone milestone) {
 		this.select(1);
-		this.addLink(new Button("Milestones", new GotoMilestoneListListener()));
+		this.addLink(new Button("Phases", new GotoMilestoneListListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(milestone.getName(),
 				new Button.ClickListener() {
@@ -229,19 +229,19 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		AppContext.addFragment(
 				"project/milestone/edit/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ milestone.getId()), "Edit Milestone: "
+								+ milestone.getId()), "Edit Phase: "
 						+ milestone.getName());
 	}
 
 	public void gotoMilestoneAdd() {
 		this.select(1);
-		this.addLink(new Button("Milestones", new GotoMilestoneListListener()));
+		this.addLink(new Button("Phases", new GotoMilestoneListListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button("Add"));
 		AppContext.addFragment(
 				"project/milestone/add/"
 						+ UrlEncodeDecoder.encode(project.getId()),
-				"Add Milestone");
+				"Add Phase");
 	}
 
 	private static class GotoMilestoneListListener implements

@@ -46,7 +46,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 	public MilestoneListViewImpl() {
 
 		HorizontalLayout header = new HorizontalLayout();
-		Label titleLbl = new Label("Milestones");
+		Label titleLbl = new Label("Phases");
 		titleLbl.addStyleName("h2");
 		header.setMargin(true, true, false, true);
 		header.setWidth("100%");
