@@ -13,13 +13,17 @@ import java.util.TimerTask;
 import javax.servlet.FilterConfig;
 import javax.servlet.ServletException;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.monitoring.MyCollabMonitoringReporter;
 
 public class CustomMonitoringFilter extends MonitoringFilter {
+	private static Logger log = LoggerFactory
+			.getLogger(CustomMonitoringFilter.class);
+
 	private static Collector theCollector;
 	private static final MyCollabMonitoringReporter reporter = new MyCollabMonitoringReporter();
-
-//	private static Date startDate;
 
 	@Override
 	public void init(FilterConfig config) throws ServletException {
@@ -28,7 +32,7 @@ public class CustomMonitoringFilter extends MonitoringFilter {
 		/*
 		 * Get the reference of collector
 		 */
-//		startDate = Calendar.getInstance().getTime();
+		// startDate = Calendar.getInstance().getTime();
 		theCollector = getFilterContext().getCollector();
 		final Timer timer = new Timer("mycollab-monitoring-timer");
 		scheduleReportMailForLocalServer(timer, Period.JOUR);
@@ -64,29 +68,28 @@ public class CustomMonitoringFilter extends MonitoringFilter {
 						output);
 				pdfReport.toPdf();
 			} catch (Exception ex) {
-				/*
-				 * log this exception
-				 */
+				log.error("Error while do statistic", ex);
 			} finally {
 				output.close();
 			}
+
 			reporter.sendDailyReport(tmpFile.getAbsolutePath());
+			log.debug("Run statistic report successfully");
 		} catch (Exception ex) {
-			/*
-			 * log this exception
-			 */
+			log.error("Run statistic report error", ex);
 		}
 	}
 
 	static Date getNextExecutionDate(Period period) {
 		final Calendar calendar = Calendar.getInstance();
-		calendar.set(Calendar.HOUR_OF_DAY, 0);
-		calendar.set(Calendar.MINUTE, 0);
-		calendar.set(Calendar.SECOND, 0);
-		calendar.set(Calendar.MILLISECOND, 0);
+		 calendar.set(Calendar.HOUR_OF_DAY, 0);
+		 calendar.set(Calendar.MINUTE, 0);
+		 calendar.set(Calendar.SECOND, 0);
+		 calendar.set(Calendar.MILLISECOND, 0);
 		switch (period) {
 		case JOUR:
-			calendar.add(Calendar.DAY_OF_YEAR, 1);
+			 calendar.add(Calendar.DAY_OF_YEAR, 1);
+//			calendar.add(Calendar.MINUTE, 1);
 			break;
 		case SEMAINE:
 			calendar.set(Calendar.DAY_OF_WEEK, Calendar.SUNDAY);

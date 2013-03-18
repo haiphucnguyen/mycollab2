@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.user.accountsettings.view.AccountDashboardV
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.FeedbackWindow;
@@ -26,7 +27,6 @@ import com.vaadin.ui.VerticalLayout;
 public final class MainView extends AbstractView {
 
 	private final CssLayout bodyLayout;
-	private final MainViewController controller;
 
 	public MainView() {
 		this.addComponent(createTopMenu());
@@ -38,7 +38,8 @@ public final class MainView extends AbstractView {
 		this.setExpandRatio(bodyLayout, 1.0f);
 		this.addComponent(createFooter());
 		this.setSizeFull();
-		controller = new MainViewController(this);
+		ControllerRegistry.getInstance().addController(
+				new MainViewController(this));
 	}
 
 	private CustomLayout createTopMenu() {

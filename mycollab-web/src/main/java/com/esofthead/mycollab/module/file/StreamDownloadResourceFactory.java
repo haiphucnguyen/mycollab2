@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.file;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.Resource;
 
 public class StreamDownloadResourceFactory {
@@ -19,7 +20,8 @@ public class StreamDownloadResourceFactory {
 		if (StorageSetting.isFileStorage()) {
 			return new ImagePreviewResource(documentPath);
 		} else if (StorageSetting.isS3Storage()) {
-			return new ImagePreviewResource(documentPath);
+			return new ExternalResource(
+					S3StorageConfig.getResourceLink(documentPath));
 		} else {
 			throw new MyCollabException(
 					"Do not support storage system setting. Accept file or s3 only");

@@ -6,18 +6,18 @@ import com.vaadin.ui.ComponentContainer;
 
 public class CrmHomePresenter extends CrmGenericPresenter<CrmHomeView> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public CrmHomePresenter() {
-        super(CrmHomeView.class);
-    }
+	public CrmHomePresenter() {
+		super(CrmHomeView.class);
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        super.onGo(container, data);
-        
-        view.displayDashboard();
-        AppContext.addFragment("crm/dashboard");
-    }
-    
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		super.onGo(container, data);
+
+		view.displayDashboard();
+		AppContext.addFragment("crm/dashboard", "Crm Dashboard");
+	}
+
 }

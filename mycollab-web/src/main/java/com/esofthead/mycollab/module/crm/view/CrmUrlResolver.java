@@ -22,7 +22,13 @@ public class CrmUrlResolver extends UrlResolver {
 		this.addSubResolver("cases", new CaseUrlResolver());
 		this.addSubResolver("activity", new ActivityUrlResolver());
 	}
-	
+
+	@Override
+	protected void preHandle() {
+	}
+
+
+
 	public static class CrmDashboardUrlResolver extends UrlResolver {
 
 		@Override
