@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
-import com.esofthead.mycollab.common.ui.components.CommentListDepot;
+import com.esofthead.mycollab.common.ui.components.CommentListDepot.CommentDisplay;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
@@ -30,7 +30,7 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 
 	protected SimpleMilestone milestone;
 	protected AdvancedPreviewBeanForm<Milestone> previewForm;
-	protected CommentListDepot associateCommentListComp;
+	protected CommentDisplay associateCommentListComp;
 	protected MilestoneBugListComp associateBugListComp;
 	protected MilestoneTaskGroupListComp associateTaskGroupListComp;
 
@@ -152,7 +152,7 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			};
 
 			milestoneInformation = new VerticalLayout();
-			milestoneInformation.setMargin(true);
+			milestoneInformation.setMargin(false);
 			HorizontalLayout actionControls = new PreviewFormControlsGenerator<Milestone>(
 					previewForm).createButtonControls();
 
@@ -172,14 +172,20 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 
 			actionControls.addComponent(reportBtn);
 
-			milestoneInformation.addComponent(actionControls);
-			milestoneInformation.addComponent(previewForm);
+			VerticalLayout marginLayout = new VerticalLayout();
+			marginLayout.setMargin(true);
+			marginLayout.addComponent(actionControls);
+			marginLayout.addComponent(previewForm);
+
+			milestoneInformation.addComponent(marginLayout);
 
 			tabContainer = new TabSheet();
 			tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
 			tabContainer.setWidth("100%");
+			tabContainer.setHeight(SIZE_UNDEFINED, 0);
 
-			associateCommentListComp = new CommentListDepot(true);
+			associateCommentListComp = new CommentDisplay(true);
+			associateCommentListComp.setMargin(true);
 			tabContainer.addTab(associateCommentListComp, "Comments");
 			tabContainer.addTab(associateTaskGroupListComp, "Related Tasks");
 			tabContainer.addTab(associateBugListComp, "Related Bugs");
@@ -229,7 +235,8 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 
 				relatedItemsPanel.addComponent(associateTaskGroupListComp);
 				relatedItemsPanel.addComponent(associateBugListComp);
-				associateCommentListComp = new CommentListDepot(true);
+				associateCommentListComp = new CommentDisplay(true);
+				associateCommentListComp.setMargin(true);
 				relatedItemsPanel.addComponent(associateCommentListComp);
 
 				return relatedItemsPanel;

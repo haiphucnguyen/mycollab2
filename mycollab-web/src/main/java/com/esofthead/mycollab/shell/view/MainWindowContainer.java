@@ -46,16 +46,6 @@ public class MainWindowContainer extends Window implements View {
 		ControllerRegistry.getInstance().addController(
 				new ShellController(this));
 
-		// this.addURIHandler(new URIHandler() {
-		// private static final long serialVersionUID = 1L;
-		//
-		// @Override
-		// public DownloadStream handleURI(URL context, String relativeUri) {
-		// log.debug("URI: " + relativeUri + "---" + context.getPath());
-		// return null;
-		// }
-		// });
-
 		this.setImmediate(true);
 		this.addListener(new Window.ResizeListener() {
 			private static final long serialVersionUID = 1L;

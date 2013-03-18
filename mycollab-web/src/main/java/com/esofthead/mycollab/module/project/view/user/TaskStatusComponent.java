@@ -83,7 +83,7 @@ public class TaskStatusComponent extends Depot {
 			CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
 
-			Button taskLink = generateActivationLink(genericTask.getName(),
+			Button taskLink = generateProjectLink(genericTask.getName(),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -146,7 +146,7 @@ public class TaskStatusComponent extends Depot {
 			projectLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 			header.addComponent(projectLbl);
 
-			Button projectLink = generateActivationLink(
+			Button projectLink = generateProjectLink(
 					genericTask.getProjectName(), new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -183,7 +183,7 @@ public class TaskStatusComponent extends Depot {
 		}
 	}
 
-	private static Button generateActivationLink(String linkname,
+	private static Button generateProjectLink(String linkname,
 			Button.ClickListener listener) {
 		return CommonUIFactory.createButtonTooltip(
 				menuLinkGenerator.handleText(linkname), linkname, listener);

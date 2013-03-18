@@ -21,132 +21,134 @@ import com.vaadin.ui.Window;
 
 public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public CallReadPresenter() {
-        super(CallReadView.class);
-        bind();
-    }
+	public CallReadPresenter() {
+		super(CallReadView.class);
+		bind();
+	}
 
-    private void bind() {
-        view.getPreviewFormHandlers().addFormHandler(
-                new DefaultPreviewFormHandler<SimpleCall>() {
-                    @Override
-                    public void onEdit(SimpleCall data) {
-                        EventBus.getInstance().fireEvent(
-                                new ActivityEvent.CallEdit(this, data));
-                    }
+	private void bind() {
+		view.getPreviewFormHandlers().addFormHandler(
+				new DefaultPreviewFormHandler<SimpleCall>() {
+					@Override
+					public void onEdit(SimpleCall data) {
+						EventBus.getInstance().fireEvent(
+								new ActivityEvent.CallEdit(this, data));
+					}
 
-                    @Override
-                    public void onDelete(final SimpleCall data) {
-                        ConfirmDialog.show(
-                                view.getWindow(),
-                                "Please Confirm:",
-                                "Are you sure to delete call '"
-                                + data.getSubject() + "' ?", "Yes",
-                                "No", new ConfirmDialog.Listener() {
-                            private static final long serialVersionUID = 1L;
+					@Override
+					public void onDelete(final SimpleCall data) {
+						ConfirmDialog.show(
+								view.getWindow(),
+								"Please Confirm:",
+								"Are you sure to delete call '"
+										+ data.getSubject() + "' ?", "Yes",
+								"No", new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
 
-                            @Override
-                            public void onClose(ConfirmDialog dialog) {
-                                if (dialog.isConfirmed()) {
-                                    CallService callService = AppContext
-                                            .getSpringBean(CallService.class);
-                                    callService.removeWithSession(
-                                            data.getId(),
-                                            AppContext.getUsername());
-                                    EventBus.getInstance()
-                                            .fireEvent(
-                                            new ActivityEvent.GotoTodoList(
-                                            this, null));
-                                }
-                            }
-                        });
-                    }
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											CallService callService = AppContext
+													.getSpringBean(CallService.class);
+											callService.removeWithSession(
+													data.getId(),
+													AppContext.getUsername());
+											EventBus.getInstance()
+													.fireEvent(
+															new ActivityEvent.GotoTodoList(
+																	this, null));
+										}
+									}
+								});
+					}
 
-                    @Override
-                    public void onClone(SimpleCall data) {
-                        Call cloneData = (Call) data.copy();
-                        cloneData.setId(null);
-                        EventBus.getInstance().fireEvent(
-                                new ActivityEvent.CallEdit(this, cloneData));
-                    }
+					@Override
+					public void onClone(SimpleCall data) {
+						Call cloneData = (Call) data.copy();
+						cloneData.setId(null);
+						EventBus.getInstance().fireEvent(
+								new ActivityEvent.CallEdit(this, cloneData));
+					}
 
-                    @Override
-                    public void onCancel() {
-                        EventBus.getInstance().fireEvent(
-                                new ActivityEvent.GotoTodoList(this, null));
-                    }
+					@Override
+					public void onCancel() {
+						EventBus.getInstance().fireEvent(
+								new ActivityEvent.GotoTodoList(this, null));
+					}
 
-                    @Override
-                    public void gotoNext(SimpleCall data) {
-                        CallService callService = AppContext
-                                .getSpringBean(CallService.class);
-                        CallSearchCriteria criteria = new CallSearchCriteria();
-                        criteria.setSaccountid(new NumberSearchField(AppContext
-                                .getAccountId()));
-                        criteria.setId(new NumberSearchField(data.getId(),
-                                NumberSearchField.GREATHER));
-                        Integer nextId = callService.getNextItemKey(criteria);
-                        if (nextId != null) {
-                            EventBus.getInstance().fireEvent(
-                                    new ActivityEvent.CallRead(this, nextId));
-                        } else {
-                            view.getWindow().showNotification("Information",
-                                    "You are already in the last record",
-                                    Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                        }
+					@Override
+					public void gotoNext(SimpleCall data) {
+						CallService callService = AppContext
+								.getSpringBean(CallService.class);
+						CallSearchCriteria criteria = new CallSearchCriteria();
+						criteria.setSaccountid(new NumberSearchField(AppContext
+								.getAccountId()));
+						criteria.setId(new NumberSearchField(data.getId(),
+								NumberSearchField.GREATHER));
+						Integer nextId = callService.getNextItemKey(criteria);
+						if (nextId != null) {
+							EventBus.getInstance().fireEvent(
+									new ActivityEvent.CallRead(this, nextId));
+						} else {
+							view.getWindow().showNotification("Information",
+									"You are already in the last record",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+						}
 
-                    }
+					}
 
-                    @Override
-                    public void gotoPrevious(SimpleCall data) {
-                        CallService callService = AppContext
-                                .getSpringBean(CallService.class);
-                        CallSearchCriteria criteria = new CallSearchCriteria();
-                        criteria.setSaccountid(new NumberSearchField(AppContext
-                                .getAccountId()));
-                        criteria.setId(new NumberSearchField(data.getId(),
-                                NumberSearchField.LESSTHAN));
-                        Integer nextId = callService
-                                .getPreviousItemKey(criteria);
-                        if (nextId != null) {
-                            EventBus.getInstance().fireEvent(
-                                    new ActivityEvent.CallRead(this, nextId));
-                        } else {
-                            view.getWindow().showNotification("Information",
-                                    "You are already in the first record",
-                                    Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                        }
-                    }
-                });
-    }
+					@Override
+					public void gotoPrevious(SimpleCall data) {
+						CallService callService = AppContext
+								.getSpringBean(CallService.class);
+						CallSearchCriteria criteria = new CallSearchCriteria();
+						criteria.setSaccountid(new NumberSearchField(AppContext
+								.getAccountId()));
+						criteria.setId(new NumberSearchField(data.getId(),
+								NumberSearchField.LESSTHAN));
+						Integer nextId = callService
+								.getPreviousItemKey(criteria);
+						if (nextId != null) {
+							EventBus.getInstance().fireEvent(
+									new ActivityEvent.CallRead(this, nextId));
+						} else {
+							view.getWindow().showNotification("Information",
+									"You are already in the first record",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+						}
+					}
+				});
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
-    	if (AppContext.canRead(RolePermissionCollections.CRM_CALL)) {
-    		super.onGo(container, data);
-            if (data.getParams() instanceof Integer) {
-                CallService callService = AppContext
-                        .getSpringBean(CallService.class);
-                SimpleCall call = callService.findCallById((Integer) data
-                        .getParams());
-                if (call != null) {
-                    view.previewItem(call);
-                    AppContext.addFragment("crm/call/preview/" + UrlEncodeDecoder.encode(call.getId()));
-                } else {
-                    AppContext
-                            .getApplication()
-                            .getMainWindow()
-                            .showNotification("Information",
-                            "The record is not existed",
-                            Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                    return;
-                }
-            }
-            view.previewItem((SimpleCall) data.getParams());
-    	} else {
-    		MessageConstants.showMessagePermissionAlert();
-    	}
-    }
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		if (AppContext.canRead(RolePermissionCollections.CRM_CALL)) {
+			SimpleCall call = null;
+			if (data.getParams() instanceof Integer) {
+				CallService callService = AppContext
+						.getSpringBean(CallService.class);
+				call = callService.findCallById((Integer) data.getParams());
+				if (call == null) {
+					AppContext
+							.getApplication()
+							.getMainWindow()
+							.showNotification("Information",
+									"The record is not existed",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					return;
+				}
+			} else if (data.getParams() instanceof SimpleCall) {
+				call = (SimpleCall) data.getParams();
+			}
+			super.onGo(container, data);
+			view.previewItem(call);
+			AppContext.addFragment("crm/activity/call/preview/"
+					+ UrlEncodeDecoder.encode(call.getId()), "Preiview Call: "
+					+ call.getSubject());
+		} else {
+			MessageConstants.showMessagePermissionAlert();
+		}
+	}
 }

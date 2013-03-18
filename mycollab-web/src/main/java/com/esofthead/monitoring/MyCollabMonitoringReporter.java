@@ -29,7 +29,7 @@ public class MyCollabMonitoringReporter {
 				.getProperty(ApplicationProperties.MAIL_PORT);
 
 		Mailer mailer = new Mailer(host, userName, password,
-				Integer.parseInt(port));
+				Integer.parseInt(port), true);
 		try {
 //			mailer.sendHTMLMail(userName, "eSofthead reporter",
 //					new String[] { ApplicationProperties

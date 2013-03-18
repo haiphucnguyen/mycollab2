@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
 public class ActivityCalendarPresenter extends
@@ -14,8 +15,7 @@ public class ActivityCalendarPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		// TODO Auto-generated method stub
-		
+		AppContext.addFragment("crm/activity/calendar", "Activity Calendar");
 	}
 
 }

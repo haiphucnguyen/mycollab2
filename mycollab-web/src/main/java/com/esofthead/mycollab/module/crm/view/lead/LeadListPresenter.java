@@ -221,7 +221,7 @@ public class LeadListPresenter extends CrmGenericPresenter<LeadListView>
 			super.onGo(container, data);
 			doSearch((LeadSearchCriteria) data.getParams());
 
-			AppContext.addFragment("crm/lead/list");
+			AppContext.addFragment("crm/lead/list", "Lead List");
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}

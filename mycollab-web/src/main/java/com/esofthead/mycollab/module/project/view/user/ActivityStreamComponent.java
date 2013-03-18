@@ -65,19 +65,14 @@ public class ActivityStreamComponent extends Depot {
 		((VerticalLayout) this.bodyContent).setMargin(false);
 	}
 
-	public void showFeeds() {
-		ProjectService prjService = AppContext
-				.getSpringBean(ProjectService.class);
-		List<Integer> prjKeys = prjService.getUserProjectKeys(AppContext
-				.getUsername());
-		if (prjKeys != null && !prjKeys.isEmpty()) {
-			ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-			searchCriteria.setModuleSet(new SetSearchField<String>(
-					SearchField.AND, new String[] { ModuleNameConstants.PRJ }));
-			searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
-					.toArray(new Integer[0])));
-			activityStreamList.setSearchCriteria(searchCriteria);
-		}
+	public void showFeeds(List<Integer> prjKeys) {
+		ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
+		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
+				new String[] { ModuleNameConstants.PRJ }));
+		searchCriteria.setExtraTypeIds(new SetSearchField<Integer>(prjKeys
+				.toArray(new Integer[0])));
+		activityStreamList.setSearchCriteria(searchCriteria);
+
 	}
 
 	static class ProjectActivityStreamPagedList

@@ -35,6 +35,7 @@ public class UrlResolver {
 							"Can not register resolver key " + key
 									+ " for Resolver: " + this);
 				} else {
+					preHandle();
 					List<String> paramList = Arrays.asList(params).subList(1,
 							params.length);
 					log.debug("Handle url in resolver: " + urlResolver);
@@ -44,6 +45,9 @@ public class UrlResolver {
 		} else {
 			handlePage(new String[0]);
 		}
+	}
+
+	protected void preHandle() {
 	}
 
 	protected void handlePage(String... params) {

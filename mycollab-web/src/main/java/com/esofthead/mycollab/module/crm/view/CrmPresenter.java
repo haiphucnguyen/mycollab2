@@ -16,8 +16,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class CrmPresenter extends AbstractPresenter<CrmContainer> {
+	private static final long serialVersionUID = 1L;
 
-    public CrmPresenter() {
+	public CrmPresenter() {
         super(CrmContainer.class);
     }
 

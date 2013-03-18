@@ -215,7 +215,7 @@ public class CaseListPresenter extends CrmGenericPresenter<CaseListView>
     		super.onGo(container, data);
             doSearch((CaseSearchCriteria) data.getParams());
             
-            AppContext.addFragment("crm/cases/list");
+            AppContext.addFragment("crm/cases/list", "Cases List");
     	} else {
     		MessageConstants.showMessagePermissionAlert();
     	}

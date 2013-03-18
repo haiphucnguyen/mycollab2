@@ -25,6 +25,7 @@ public class UIConstants {
 	public static final String LABEL_CLICKABLE = "clickable-label";
 	public static final String LINK_COMPLETED = "completed";
 	public static final String LINK_OVERDUE = "overdue";
+	public static final String LINK_PENDING = "pending";
 	public static final String SPLIT_BUTTON = "esofthead";
 	public static final String MESSAGE_IMPORTANT = "important-message";
 	public static final String MILESTONE_BOX = "milestone-box";

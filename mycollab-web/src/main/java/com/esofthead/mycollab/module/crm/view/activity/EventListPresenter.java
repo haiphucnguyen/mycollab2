@@ -210,6 +210,7 @@ public class EventListPresenter extends AbstractPresenter<EventListView>
 				|| AppContext.canRead(RolePermissionCollections.CRM_TASK)
 				|| AppContext.canRead(RolePermissionCollections.CRM_CALL)) {
 			doSearch((EventSearchCriteria) data.getParams());
+			AppContext.addFragment("crm/activity/todo", "Activity To Do");
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}

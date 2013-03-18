@@ -4,6 +4,7 @@ public class SimpleMessage extends Message {
 
     private static final long serialVersionUID = 1L;
     private int commentsCount;
+    private String projectName;
     private String messageCategoryName;
     private String fullPostedUserName;
 
@@ -30,4 +31,12 @@ public class SimpleMessage extends Message {
     public void setFullPostedUserName(String fullPostedUserName) {
         this.fullPostedUserName = fullPostedUserName;
     }
+
+	public String getProjectName() {
+		return projectName;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
 }

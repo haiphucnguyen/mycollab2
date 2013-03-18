@@ -59,4 +59,15 @@ public class S3StorageConfig {
 					+ username + "_" + size + ".png";
 		}
 	}
+
+	public static String getResourceLink(String documentPath) {
+		String s3UrlPath = ApplicationProperties.getProperty(S3_DOWNLOAD_URL,
+				"");
+		if ("".equals(s3UrlPath)) {
+			return "";
+		} else {
+			return s3UrlPath + "/" + AppContext.getAccountId() + "/"
+					+ documentPath;
+		}
+	}
 }

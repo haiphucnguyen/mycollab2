@@ -5,8 +5,9 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
 
 public class ProjectSummaryPresenter extends AbstractPresenter<ProjectSummaryView> {
-    
-    public ProjectSummaryPresenter() {
+	private static final long serialVersionUID = 1L;
+
+	public ProjectSummaryPresenter() {
         super(ProjectSummaryView.class);
     }
     

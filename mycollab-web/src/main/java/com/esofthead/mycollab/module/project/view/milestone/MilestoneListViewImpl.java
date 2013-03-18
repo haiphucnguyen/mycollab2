@@ -160,13 +160,14 @@ public class MilestoneListViewImpl extends AbstractView implements
 		taskComp.setWidth("100%");
 		taskComp.setSpacing(true);
 		ProgressIndicator progressTask = new ProgressIndicator(new Float(
-				(float) milestone.getNumOpenTasks() / milestone.getNumTasks()));
+				(float) (milestone.getNumTasks() - milestone.getNumOpenTasks())
+						/ milestone.getNumTasks()));
 		progressTask.setPollingInterval(1000000000);
 		progressTask.setWidth("100%");
 		taskComp.addComponent(progressTask);
 		Label taskNumber = new Label("(" + milestone.getNumOpenTasks() + "/"
 				+ milestone.getNumTasks() + ")");
-		taskNumber.setWidth("35px");
+		taskNumber.setWidth("90px");
 		taskComp.addComponent(taskNumber);
 		taskComp.setExpandRatio(progressTask, 1.0f);
 		// taskComp.setComponentAlignment(taskNumber, Alignment.MIDDLE_CENTER);
@@ -178,13 +179,14 @@ public class MilestoneListViewImpl extends AbstractView implements
 		bugComp.setWidth("100%");
 		bugComp.setSpacing(true);
 		ProgressIndicator progressBug = new ProgressIndicator(new Float(
-				(float) milestone.getNumOpenTasks() / milestone.getNumTasks()));
+				(float) (milestone.getNumBugs() - milestone.getNumOpenBugs())
+						/ milestone.getNumBugs()));
 		progressBug.setPollingInterval(1000000000);
 		progressBug.setWidth("100%");
 		bugComp.addComponent(progressBug);
 		Label bugNumber = new Label("(" + milestone.getNumOpenBugs() + "/"
 				+ milestone.getNumBugs() + ")");
-		bugNumber.setWidth("35px");
+		bugNumber.setWidth("90px");
 		bugComp.addComponent(bugNumber);
 		bugComp.setExpandRatio(progressBug, 1.0f);
 

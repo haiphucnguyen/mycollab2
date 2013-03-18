@@ -68,8 +68,16 @@ ul {
 	vertical-align: top;
 }
 
+div.v-button-link {
+	margin: 0px;
+}
+
 .v-button-link .v-button-caption {
 	text-decoration: none;
+}
+
+.v-button-link.pending .v-button-caption {
+	color: #108e2a;
 }
 
 .v-button-link.overdue .v-button-caption {
@@ -89,6 +97,7 @@ ul {
 .v-button-link:active {
 	background-color: transparent;
 	border-radius: 0px;
+	margin: 0px;
 }
 
 .v-datefield-button {
@@ -2181,9 +2190,9 @@ input.v-textfield-errorField {
 	border-color: #444;
 }
 
-.taskdisplay-component>.v-csslayout-margin>.v-csslayout-container>div.v-button-link
-	{
-	margin-top: 5px;
+.taskdisplay-component > .v-csslayout-margin > .v-csslayout-container > div.v-button
+{
+	margin-top: 10px;
 }
 
 .task-component {
