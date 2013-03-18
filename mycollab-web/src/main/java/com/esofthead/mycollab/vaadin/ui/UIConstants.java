@@ -27,6 +27,7 @@ public class UIConstants {
 	public static final String LINK_OVERDUE = "overdue";
 	public static final String LINK_PENDING = "pending";
 	public static final String SPLIT_BUTTON = "esofthead";
+	public static final String STANDUP_ROW_CONTENT = "standup-row-content";
 	public static final String MESSAGE_IMPORTANT = "important-message";
 	public static final String MILESTONE_BOX = "milestone-box";
 	public static final String PANEL_WITHOUT_BORDER = "noneBorder-panel";
