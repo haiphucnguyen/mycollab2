@@ -6,6 +6,8 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import java.util.List;
 
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -39,6 +41,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 	private final VerticalLayout futureContainer;
 
 	private final VerticalLayout closeContainer;
+	private Button createBtn;
 
 	public MilestoneListViewImpl() {
 
@@ -50,7 +53,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 		header.addComponent(titleLbl);
 		header.setComponentAlignment(titleLbl, Alignment.MIDDLE_LEFT);
 
-		Button createBtn = new Button("Create", new Button.ClickListener() {
+		createBtn = new Button("Create", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -87,6 +90,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 	@Override
 	public void displayMilestones(List<SimpleMilestone> milestones) {
+		createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
 		inProgressContainer.removeAllComponents();
 		Label inProgressHeader = new Label("In Progress");
 		inProgressHeader.setSizeUndefined();

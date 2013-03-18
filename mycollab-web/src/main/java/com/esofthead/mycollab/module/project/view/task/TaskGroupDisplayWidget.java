@@ -6,6 +6,7 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
@@ -137,6 +138,7 @@ public class TaskGroupDisplayWidget
 											.getId()));
 				}
 			});
+			readBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
 			readBtn.setStyleName("link");
 			actionBtnLayout.addComponent(readBtn);
 
@@ -150,6 +152,7 @@ public class TaskGroupDisplayWidget
 							new TaskListEvent.GotoEdit(event, taskList));
 				}
 			});
+			editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 			editBtn.setStyleName("link");
 			actionBtnLayout.addComponent(editBtn);
 
@@ -170,6 +173,7 @@ public class TaskGroupDisplayWidget
 							.removeComponent(parentComp);
 				}
 			});
+			closeBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
 			closeBtn.setStyleName("link");
 			actionBtnLayout.addComponent(closeBtn);
 
@@ -204,6 +208,7 @@ public class TaskGroupDisplayWidget
 							});
 				}
 			});
+			deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
 			deleteBtn.setStyleName("link");
 			actionBtnLayout.addComponent(deleteBtn);
 		}

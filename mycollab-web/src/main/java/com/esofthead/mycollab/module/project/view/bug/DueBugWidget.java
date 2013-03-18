@@ -42,7 +42,7 @@ public class DueBugWidget extends BugDisplayWidget {
 
 		@Override
 		public Component generateRow(final SimpleBug obj, int rowIndex) {
-			GridLayout layout = new GridLayout(2, 3);
+			GridLayout layout = new GridLayout(2, 4);
 			layout.setWidth("100%");
 			layout.setSpacing(false);
 			layout.addComponent(new Embedded(null, new ThemeResource(
@@ -74,14 +74,18 @@ public class DueBugWidget extends BugDisplayWidget {
 			descInfo.setWidth("70%");
 			layout.addComponent(descInfo);
 
+			Label dateInfo = new Label("Due on "
+					+ AppContext.formatDate(obj.getDuedate()) + ". Status: "
+					+ obj.getStatus());
+			dateInfo.setStyleName(UIConstants.WIDGET_ROW_METADATA);
+			layout.addComponent(dateInfo, 1, 2);
+			
 			HorizontalLayout hLayoutDateInfo = new HorizontalLayout();
 			hLayoutDateInfo.setSpacing(true);
-			Label dateInfo = new Label("due on "
-					+ AppContext.formatDate(obj.getDuedate()) + ". Status: "
-					+ obj.getStatus() + ". Assignee: ");
-			dateInfo.setStyleName(UIConstants.WIDGET_ROW_METADATA);
-			hLayoutDateInfo.addComponent(dateInfo);
-			hLayoutDateInfo.setComponentAlignment(dateInfo,
+			Label lbAssignee = new Label("Assignee: ");
+			lbAssignee.setStyleName(UIConstants.WIDGET_ROW_METADATA);
+			hLayoutDateInfo.addComponent(lbAssignee);
+			hLayoutDateInfo.setComponentAlignment(lbAssignee,
 					Alignment.MIDDLE_CENTER);
 
 			ProjectUserFormLinkField userLink = new ProjectUserFormLinkField(
@@ -90,7 +94,7 @@ public class DueBugWidget extends BugDisplayWidget {
 			hLayoutDateInfo.setComponentAlignment(userLink,
 					Alignment.MIDDLE_CENTER);
 
-			layout.addComponent(hLayoutDateInfo, 1, 2);
+			layout.addComponent(hLayoutDateInfo, 1, 3);
 
 			CssLayout rowLayout = new CssLayout();
 			rowLayout.addComponent(layout);

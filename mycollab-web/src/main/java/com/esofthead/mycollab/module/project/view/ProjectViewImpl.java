@@ -4,12 +4,13 @@ import java.util.GregorianCalendar;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.hene.splitbutton.SplitButton;
+import org.vaadin.hene.splitbutton.SplitButtonExt;
 
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
@@ -293,19 +294,20 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		breadCrumb.setProject(project);
 		breadCrumb.initBreadcrumb();
 
-		SplitButton controlsBtn = new SplitButton();
-		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
-		controlsBtn.setCaption("Edit Project");
-		controlsBtn.setIcon(new ThemeResource("icons/16/edit.png"));
-		controlsBtn
-				.addClickListener(new SplitButton.SplitButtonClickListener() {
+		Button editProjectBtn = new Button("EditProject",
+				new Button.ClickListener() {
 					@Override
-					public void splitButtonClick(
-							SplitButton.SplitButtonClickEvent event) {
+					public void buttonClick(ClickEvent event) {
 						dashboardPresenter.go(ProjectViewImpl.this,
 								new ScreenData.Edit<Project>(project));
 					}
 				});
+		editProjectBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROJECT));
+		SplitButtonExt controlsBtn = new SplitButtonExt(editProjectBtn);
+		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
+		controlsBtn.setCaption("Edit Project");
+		controlsBtn.setIcon(new ThemeResource("icons/16/edit.png"));
+		
 		Button selectBtn = new Button("View Project Detail",
 				new Button.ClickListener() {
 					@Override
@@ -313,6 +315,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 						dashboardPresenter.go(ProjectViewImpl.this, null);
 					}
 				});
+		selectBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.PROJECT));
 		selectBtn.setIcon(new ThemeResource("icons/16/view.png"));
 		selectBtn.setStyleName("link");
 		controlsBtn.addComponent(selectBtn);

@@ -8,6 +8,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.tracker.domain.criteria.ComponentSearchCriteria;
@@ -69,6 +70,7 @@ public class ComponentSearchPanel extends
 						new BugComponentEvent.GotoAdd(this, null));
 			}
 		});
+		createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
 		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 

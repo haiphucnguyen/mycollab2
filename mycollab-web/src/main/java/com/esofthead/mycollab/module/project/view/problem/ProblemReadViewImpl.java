@@ -6,6 +6,7 @@ import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
@@ -142,7 +143,9 @@ public class ProblemReadViewImpl extends AbstractView implements
 			@Override
 			protected Layout createTopPanel() {
 				return (new PreviewFormControlsGenerator<Problem>(
-						PreviewForm.this)).createButtonControls();
+						PreviewForm.this)).createButtonControls(
+						ProjectRolePermissionCollections.PROBLEMS,
+						ModuleNameConstants.PRJ);
 			}
 
 			@Override

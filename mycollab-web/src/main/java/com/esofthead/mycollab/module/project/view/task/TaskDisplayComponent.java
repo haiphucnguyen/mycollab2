@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.project.view.task;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
@@ -159,6 +160,7 @@ public class TaskDisplayComponent extends CssLayout {
 				}
 			}
 		});
+		createTaskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 		createTaskBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 		createTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		this.addComponent(createTaskBtn);

@@ -5,6 +5,7 @@ import java.util.List;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.dao.ProjectRolePermissionMapper;
+import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.ProjectRolePermission;
 import com.esofthead.mycollab.module.project.domain.ProjectRolePermissionExample;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
@@ -61,9 +62,17 @@ public class CurrentProjectVariables {
 		return (SimpleProjectMember) AppContext
 				.getVariable(ProjectContants.PROJECT_MEMBER);
 	}
+	
+	private static boolean isAdmin() {
+		ProjectMember member = (ProjectMember) AppContext.getVariable(ProjectContants.PROJECT_MEMBER);
+		if (member != null && member.getIsadmin() != null) {
+			return member.getIsadmin();
+		}
+		return false;
+	}
 
 	public static boolean canRead(String permissionItem) {
-		if (AppContext.isAdmin()) {
+		if (isAdmin()) {
 			return true;
 		}
 
@@ -74,9 +83,9 @@ public class CurrentProjectVariables {
 			return permissionMap.canRead(permissionItem);
 		}
 	}
-
+	
 	public static boolean canWrite(String permissionItem) {
-		if (AppContext.isAdmin()) {
+		if (isAdmin()) {
 			return true;
 		}
 		PermissionMap permissionMap = getProjectMember().getPermissionMaps();
@@ -88,7 +97,7 @@ public class CurrentProjectVariables {
 	}
 
 	public static boolean canAccess(String permissionItem) {
-		if (AppContext.isAdmin()) {
+		if (isAdmin()) {
 			return true;
 		}
 		PermissionMap permissionMap = getProjectMember().getPermissionMaps();
