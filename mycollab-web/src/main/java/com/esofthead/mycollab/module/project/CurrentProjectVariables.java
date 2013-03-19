@@ -30,8 +30,8 @@ public class CurrentProjectVariables {
 		SimpleProjectMember prjMember = prjMemberService.findMemberByUsername(
 				AppContext.getUsername(), project.getId());
 		if (prjMember != null) {
-			if (prjMember.getIsadmin() != null
-					&& prjMember.getIsadmin() == Boolean.FALSE
+			if (((prjMember.getIsadmin() != null && prjMember.getIsadmin() == Boolean.FALSE) || (prjMember
+					.getIsadmin() == null))
 					&& prjMember.getProjectroleid() != null) {
 				ProjectRolePermissionExample ex = new ProjectRolePermissionExample();
 				ex.createCriteria()
@@ -50,9 +50,8 @@ public class CurrentProjectVariables {
 					prjMember.setPermissionMaps(permissionMap);
 				}
 			}
-			
-			AppContext.putVariable(ProjectContants.PROJECT_MEMBER,
-					prjMember);
+
+			AppContext.putVariable(ProjectContants.PROJECT_MEMBER, prjMember);
 		} else if (!AppContext.isAdmin()) {
 			throw new MyCollabException("You are not belong to this project");
 		}
@@ -62,9 +61,10 @@ public class CurrentProjectVariables {
 		return (SimpleProjectMember) AppContext
 				.getVariable(ProjectContants.PROJECT_MEMBER);
 	}
-	
+
 	private static boolean isAdmin() {
-		ProjectMember member = (ProjectMember) AppContext.getVariable(ProjectContants.PROJECT_MEMBER);
+		ProjectMember member = (ProjectMember) AppContext
+				.getVariable(ProjectContants.PROJECT_MEMBER);
 		if (member != null && member.getIsadmin() != null) {
 			return member.getIsadmin();
 		}
@@ -83,7 +83,7 @@ public class CurrentProjectVariables {
 			return permissionMap.canRead(permissionItem);
 		}
 	}
-	
+
 	public static boolean canWrite(String permissionItem) {
 		if (isAdmin()) {
 			return true;
