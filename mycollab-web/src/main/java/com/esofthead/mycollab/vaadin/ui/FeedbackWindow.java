@@ -7,6 +7,7 @@ import java.util.List;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.core.utils.EmailValidator;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
 import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
 import com.esofthead.mycollab.module.mail.service.SystemMailService;
@@ -137,8 +138,9 @@ public class FeedbackWindow extends Window {
 			public void buttonClick(ClickEvent event) {
 				String email = emailTextField.getValue().toString().trim();
 				String subject = subjectTextField.getValue().toString().trim();
-
-				if (!email.equals("") && !subject.equals("")) {
+				
+				EmailValidator emailValidator = new EmailValidator();
+				if (!email.equals("") && !subject.equals("") && emailValidator.validate(email)) {
 					SystemMailService systemMailService = AppContext
 							.getSpringBean(SystemMailService.class);
 					List<File> listFile = attachments.getListFile();
