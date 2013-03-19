@@ -1,0 +1,53 @@
+CustomField Add-on project
+==========================
+
+CustomField is an extension to CustomComponent from Vaadin core, but it is 
+used to create composites that can work as Field implementation in Form.
+Customization of both the visual presentation and the logic of the field is
+possible.
+
+Subclasses must at least implement the method {@link #getType()} and set the
+composition root (typically in the constructor). In addition, other methods
+can be overridden to customize the functionality.
+
+Most custom fields can simply compose a user interface that calls the methods
+setValue(Object)  and getValue(). It is also possible to override commit(),
+setPropertyDataSource(Property) and other logic of the field.
+
+The add-on also contains another related class called FieldWrapper. Similarly
+it is a helper to composite a custom field of several Vaadin components. 
+When using FieldWrapper most of the field logic is delegated to the "wrapped 
+field". An example use case: Developer wants to bind a field to a property 
+which actual value is a city. The value is defined by a drop down select 
+which is then again filtered by continent and country drop downs (which 
+are irrelevant from business logic's POV).
+
+Refer to JavaDocs and examples/tests in the project page for more information.
+
+Project page, SVN repository and issue tracker
+==============================================
+
+The project page with source code, issue tracker etc. can be found from 
+following address:
+http://code.google.com/p/customfield/
+
+Use the project page for issue reports and contributing enhancements, 
+vaadin.com/forum or Pro support is best source for help and general questions.
+
+Building and development instructions
+=====================================
+
+The project is built with Maven. Tests contain some integration tests run 
+with FirefoxDriver, so be sure to have Firefox installed. To build the 
+project run following command:
+mvn install
+
+GUI demos/tests can be launch straight from IDE as CustomFieldApplication 
+has main method that launches examples in embedded jetty.
+
+Closely related helpers are in sister project customfield-utils.
+
+Demos can be packages to war in sister project customfield-demo with 
+"mvn package". Projects have no umbrella project so be sure to update 
+versions as needed.
+

@@ -55,9 +55,20 @@ public class BugTableDisplay extends
 					}
 				});
 
-				SimpleBug account = BugTableDisplay.this.getBeanByIndex(itemId);
-				account.setExtraData(cb);
+				SimpleBug bug = BugTableDisplay.this.getBeanByIndex(itemId);
+				bug.setExtraData(cb);
 				return cb;
+			}
+		});
+
+		this.addGeneratedColumn("bugkey", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				SimpleBug bug = BugTableDisplay.this.getBeanByIndex(itemId);
+				return new Label("" + bug.getBugkey());
 			}
 		});
 
@@ -153,6 +164,8 @@ public class BugTableDisplay extends
 		this.setColumnExpandRatio("summary", 1);
 		this.setColumnWidth("assignuserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
+		this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+		this.setColumnWidth("bugkey", UIConstants.TABLE_CONTROL_WIDTH);
 		this.setColumnWidth("severity", UIConstants.TABLE_S_LABEL_WIDTH);
 		this.setColumnWidth("resolution", UIConstants.TABLE_M_LABEL_WIDTH);
 		this.setColumnWidth("duedate", UIConstants.TABLE_DATE_WIDTH);

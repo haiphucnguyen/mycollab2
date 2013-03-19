@@ -34,7 +34,7 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
 		organizationHeader.setStyleName("h2");
 		layout.addComponent(organizationHeader);
 
-		informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 8);
+		informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 9);
 		informationLayout.getLayout().setWidth("100%");
 		layout.addComponent(informationLayout.getLayout());
 		layout.setComponentAlignment(informationLayout.getLayout(),
@@ -65,15 +65,19 @@ public abstract class BugAddFormLayoutFactory implements IFormLayoutFactory {
 			informationLayout.addComponent(field, "Affected Versions", 1, 2);
 		} else if (propertyId.equals("fixedVersions")) {
 			informationLayout.addComponent(field, "Fixed Versions", 1, 3);
+		} else if (propertyId.equals("estimatetime")) {
+			informationLayout.addComponent(field, "Original Estimate", 0, 5);
+		} else if (propertyId.equals("estimateremaintime")) {
+			informationLayout.addComponent(field, "Remain Estimate", 1, 5);
 		} else if (propertyId.equals("environment")) {
-			informationLayout.addComponent(field, "Environment", 0, 5, 2,
+			informationLayout.addComponent(field, "Environment", 0, 6, 2,
 					"100%");
 		} else if (propertyId.equals("description")) {
-			informationLayout.addComponent(field, "Description", 0, 6, 2,
+			informationLayout.addComponent(field, "Description", 0, 7, 2,
 					"100%");
 		} else if (propertyId.equals("id")) {// add attachment box
 			informationLayout
-					.addComponent(field, "Attachment", 0, 7, 2, "100%");
+					.addComponent(field, "Attachment", 0, 8, 2, "100%");
 		} else if (propertyId.equals("milestoneid")) {
 			informationLayout.addComponent(field, "Phase", 1, 4);
 		}

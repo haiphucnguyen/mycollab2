@@ -10,6 +10,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -132,7 +133,9 @@ public class VersionReadViewImpl extends AbstractView implements
 			@Override
 			protected Layout createTopPanel() {
 				return (new PreviewFormControlsGenerator<Version>(
-						PreviewForm.this)).createButtonControls();
+						PreviewForm.this)).createButtonControls(
+						ProjectRolePermissionCollections.VERSIONS,
+						ModuleNameConstants.PRJ);
 			}
 
 			@Override
@@ -193,8 +196,7 @@ public class VersionReadViewImpl extends AbstractView implements
 										BugStatusConstants.REOPENNED }));
 				unresolvedByAssigneeWidget
 						.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
-				
-				
+
 			}
 
 			@Override

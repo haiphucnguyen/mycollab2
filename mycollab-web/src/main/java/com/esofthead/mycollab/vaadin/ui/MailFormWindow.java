@@ -171,6 +171,20 @@ public class MailFormWindow extends Window {
 		controlsLayout.setExpandRatio(attachedFilepanel, 1.0f);
 
 		controlsLayout.setSpacing(true);
+		
+		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				MailFormWindow.this.close();
+			}
+		});
+
+		cancelBtn.setStyleName("link");
+		controlsLayout.addComponent(cancelBtn);
+		controlsLayout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);
+		
 		Button sendBtn = new Button("Send", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -206,19 +220,6 @@ public class MailFormWindow extends Window {
 		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsLayout.addComponent(sendBtn);
 		controlsLayout.setComponentAlignment(sendBtn, Alignment.MIDDLE_RIGHT);
-
-		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				MailFormWindow.this.close();
-			}
-		});
-
-		cancelBtn.setStyleName("link");
-		controlsLayout.addComponent(cancelBtn);
-		controlsLayout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);
 		mainLayout.addComponent(controlsLayout, 0, 2);
 
 		this.setContent(mainLayout);

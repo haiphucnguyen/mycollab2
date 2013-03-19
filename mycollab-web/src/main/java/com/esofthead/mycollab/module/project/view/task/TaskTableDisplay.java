@@ -81,7 +81,9 @@ public class TaskTableDisplay extends
 						&& 100d == task.getPercentagecomplete()) {
 					b.addStyleName(UIConstants.LINK_COMPLETED);
 				} else {
-					if ((task.getEnddate() != null && (task.getEnddate()
+					if ("Pending".equals(task.getStatus())) {
+						b.addStyleName(UIConstants.LINK_PENDING);
+					} else if ((task.getEnddate() != null && (task.getEnddate()
 							.before(new GregorianCalendar().getTime())))
 							|| (task.getActualenddate() != null && (task
 									.getActualenddate()
@@ -98,6 +100,18 @@ public class TaskTableDisplay extends
 				taskName.setWidth("100%");
 				return taskName;
 
+			}
+		});
+
+		this.addGeneratedColumn("taskkey", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleTask task = TaskTableDisplay.this
+						.getBeanByIndex(itemId);
+				return new Label("" + task.getTaskkey());
 			}
 		});
 
@@ -322,6 +336,7 @@ public class TaskTableDisplay extends
 
 		this.setColumnExpandRatio("taskname", 1);
 		this.setColumnWidth("id", 30);
+		this.setColumnWidth("taskkey", UIConstants.TABLE_CONTROL_WIDTH);
 		this.setColumnWidth("assignUserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
 		this.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);

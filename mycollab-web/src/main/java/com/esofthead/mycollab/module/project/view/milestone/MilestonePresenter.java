@@ -35,7 +35,7 @@ public class MilestonePresenter  extends AbstractPresenter<MilestoneContainer> {
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
         ProjectView projectViewContainer = (ProjectView) container;
-        projectViewContainer.gotoSubView("Milestones");
+        projectViewContainer.gotoSubView("Phases");
 
         if (data instanceof ScreenData.Search) {
             log.debug("Go to milestone list view");
@@ -60,7 +60,7 @@ public class MilestonePresenter  extends AbstractPresenter<MilestoneContainer> {
     @Override
     public void handleChain(ComponentContainer container, PageActionChain pageActionChain) {
         ProjectView projectViewContainer = (ProjectView) container;
-        projectViewContainer.gotoSubView("Milestones");
+        projectViewContainer.gotoSubView("Phases");
 
         view.removeAllComponents();
         

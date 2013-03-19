@@ -16,7 +16,7 @@
 
     <inherits name="org.vaadin.weelayout.WeelayoutWidgetset" />
 
-    <inherits name="org.vaadin.peter.buttongroup.ButtongroupWidgetset" />
+    
 
     <inherits name="org.vaadin.hene.popupbutton.widgetset.PopupbuttonWidgetset" />
 
@@ -61,4 +61,8 @@
     <inherits name="ru.bazon.vaadin.ganttdiagram.GanttDiagramWidgetset" />
 
     
+
+    
+
+    <inherits name="org.vaadin.peter.buttongroup.ButtongroupWidgetset" />
 </module>

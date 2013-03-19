@@ -13,6 +13,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.tracker.domain.Component;
@@ -82,6 +83,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 								new BugEvent.GotoAdd(this, null));
 					}
 				});
+		createAccountBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
 		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 

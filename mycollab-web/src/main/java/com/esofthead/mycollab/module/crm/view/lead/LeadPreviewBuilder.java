@@ -15,6 +15,7 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -130,16 +131,17 @@ public class LeadPreviewBuilder extends VerticalLayout {
 
         private static final long serialVersionUID = 1L;
         private TabSheet tabContainer;
-        private VerticalLayout campaignInformationLayout;
+        private VerticalLayout leadInformationLayout;
         private VerticalLayout relatedItemsContainer;
-        private AddViewLayout campaignAddLayout;
+        private AddViewLayout leadAddLayout;
 
         public ReadView() {
-            campaignAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/lead.png"));
-            campaignAddLayout.addStyleName("preview");
-            this.addComponent(campaignAddLayout);
+            leadAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/lead.png"));
+            leadAddLayout.addStyleName("preview");
+            this.addComponent(leadAddLayout);
 
             tabContainer = new TabSheet();
+            tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
             initRelatedComponent();
 
             previewForm = new AdvancedPreviewBeanForm<Lead>() {
@@ -148,7 +150,7 @@ public class LeadPreviewBuilder extends VerticalLayout {
                     this.setFormLayoutFactory(new LeadFormLayoutFactory.LeadInformationLayout());
                     this.setFormFieldFactory(new LeadFormFieldFactory());
                     super.setItemDataSource(newDataSource);
-                    campaignAddLayout.setTitle(lead.getLeadName());
+                    leadAddLayout.setTitle(lead.getLeadName());
                 }
 
                 @Override
@@ -183,15 +185,15 @@ public class LeadPreviewBuilder extends VerticalLayout {
                 }
             };
 
-            campaignInformationLayout = new VerticalLayout();
-            campaignInformationLayout.setMargin(true);
+            leadInformationLayout = new VerticalLayout();
+            leadInformationLayout.setMargin(true);
             Layout actionControls = new PreviewFormControlsGenerator<Lead>(
                     previewForm).createButtonControls(RolePermissionCollections.CRM_LEAD);
-            campaignInformationLayout.addComponent(actionControls);
-            campaignInformationLayout.addComponent(previewForm);
-            campaignInformationLayout.addComponent(noteListItems);
+            leadInformationLayout.addComponent(actionControls);
+            leadInformationLayout.addComponent(previewForm);
+            leadInformationLayout.addComponent(noteListItems);
 
-            tabContainer.addTab(campaignInformationLayout, "Lead Information");
+            tabContainer.addTab(leadInformationLayout, "Lead Information");
 
 
 
@@ -201,7 +203,7 @@ public class LeadPreviewBuilder extends VerticalLayout {
             relatedItemsContainer.addComponent(associateCampaignList);
             tabContainer.addTab(relatedItemsContainer, "More Information");
 
-            campaignAddLayout.addBody(tabContainer);
+            leadAddLayout.addBody(tabContainer);
         }
     }
 

@@ -21,10 +21,12 @@
                 ${projectid.operation} m_prj_task.projectid=#{projectid.value,javaType=INTEGER}
             ]]>
         </if>
-        <if test="status != null">
-            <![CDATA[
-                ${status.operation} m_prj_task.status=#{status.value}
-            ]]>
+        <if test='statuses != null'>
+            ${statuses.operation} m_prj_task.status IN
+            <foreach close=")" collection="statuses.values"
+                item="status" open="(" separator="OR">
+                #{status}
+            </foreach>    
         </if>
         <if test="lessThan != null">
           <![CDATA[
@@ -48,8 +50,8 @@
         <![CDATA[
           SELECT m_prj_task.id, m_prj_task.taskname, m_prj_task.percentagecomplete, m_prj_task.startdate, m_prj_task.enddate, m_prj_task.priority, 
                  m_prj_task.duration, m_prj_task.isestimated, m_prj_task.projectid, m_prj_task.deadline, m_prj_task.notes, m_prj_task.taskindex, 
-                 m_prj_task.actualStartDate, m_prj_task.actualEndDate, m_prj_task.cost, m_prj_task.actualCost, 
-                 m_prj_task.ismilestone, m_prj_task.tasklistid, m_prj_task.createdTime, m_prj_task.lastUpdatedTime, m_prj_task.assignUser, m_prj_task.sAccountId,
+                 m_prj_task.actualStartDate, m_prj_task.actualEndDate, m_prj_task.originalEstimate, m_prj_task.remainEstimate,
+                 m_prj_task.tasklistid, m_prj_task.createdTime, m_prj_task.lastUpdatedTime, m_prj_task.assignUser, m_prj_task.sAccountId,
                  m_prj_task_list.name AS taskListName, m_prj_project.name AS projectName, m_prj_task.status,
                  m_prj_task.logBy, m_prj_task.taskkey,
                  concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS assignUserFullName,

@@ -11,6 +11,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -182,7 +183,9 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			@Override
 			protected Layout createTopPanel() {
 				return (new PreviewFormControlsGenerator<ProjectMember>(
-						PreviewForm.this)).createButtonControls();
+						PreviewForm.this)).createButtonControls(
+						ProjectRolePermissionCollections.USERS,
+						ModuleNameConstants.PRJ);
 			}
 
 			@Override
@@ -207,13 +210,15 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			searchCriteria = new TaskSearchCriteria();
 			searchCriteria.setProjectid(new NumberSearchField(
 					CurrentProjectVariables.getProjectId()));
-			searchCriteria.setStatus(new StringSearchField("Open"));
+			searchCriteria.setStatuses(new SetSearchField<String>(
+					SearchField.AND, new String[] { "Open", "Pending" }));
 			searchCriteria.setAssignUser(new StringSearchField(projectMember
 					.getUsername()));
 			final TaskTableDisplay taskDisplay = new TaskTableDisplay(
-					new String[] { "id", "taskname", "startdate", "deadline",
-							"percentagecomplete" }, new String[] { "",
-							"Task Name", "Start", "Due", "% Complete" });
+					new String[] { "id", "taskkey", "taskname", "startdate",
+							"deadline", "percentagecomplete" },
+					new String[] { "", "#", "Task Name", "Start", "Due",
+							"% Complete" });
 
 			taskDisplay
 					.addTableListener(new ApplicationEventListener<TableClickEvent>() {
@@ -255,8 +260,8 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			super("Open Bugs", new VerticalLayout());
 
 			BugTableDisplay bugDisplay = new BugTableDisplay(new String[] {
-					"summary", "severity", "resolution", "duedate" },
-					new String[] { "Summary", "Severity", "Resolution",
+					"bugkey", "summary", "severity", "resolution", "duedate" },
+					new String[] { "#", "Summary", "Severity", "Resolution",
 							"Due Date" });
 			bugDisplay
 					.addTableListener(new ApplicationEventListener<TableClickEvent>() {

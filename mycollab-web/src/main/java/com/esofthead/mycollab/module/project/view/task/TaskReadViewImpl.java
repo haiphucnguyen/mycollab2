@@ -10,6 +10,7 @@ import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
@@ -116,7 +117,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			@Override
 			protected Layout createTopPanel() {
 				return (new PreviewFormControlsGenerator<Task>(PreviewForm.this))
-						.createButtonControls();
+						.createButtonControls(ProjectRolePermissionCollections.TASKS, ModuleNameConstants.PRJ);
 			}
 
 			@Override
