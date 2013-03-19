@@ -122,7 +122,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		myProjectTab.addTab(constructProjectMessageComponent(), new MenuButton(
 				"Messages", "menu_message.png"));
 		myProjectTab.addTab(constructProjectMilestoneComponent(),
-				new MenuButton("Milestones", "menu_milestone.png"));
+				new MenuButton("Phases", "menu_milestone.png"));
 		myProjectTab.addTab(constructTaskDashboardComponent(), new MenuButton(
 				"Tasks", "menu_task.png"));
 		myProjectTab.addTab(constructProjectBugComponent(), new MenuButton(
@@ -145,8 +145,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 						mySpaceArea.setStyleName("projectTabContent");
 						if ("Messages".equals(caption)) {
 							messagePresenter.go(ProjectViewImpl.this, null);
-						} else if ("Milestones".equals(caption)) {
-							mySpaceArea.addStyleName("Milestones");
+						} else if ("Phases".equals(caption)) {
+							mySpaceArea.addStyleName("Phases");
 							MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
 							searchCriteria.setProjectId(new NumberSearchField(
 									SearchField.AND, CurrentProjectVariables

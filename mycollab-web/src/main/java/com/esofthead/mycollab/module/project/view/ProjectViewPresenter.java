@@ -47,22 +47,28 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				Alignment.TOP_CENTER);
 
 		if (data.getParams() instanceof Integer) {
-			ProjectService projectService = (ProjectService) AppContext
-					.getSpringBean(ProjectService.class);
-			SimpleProject project = (SimpleProject) projectService
-					.findProjectById((Integer) data.getParams());
-
-			if (project == null) {
-				AppContext
-						.getApplication()
-						.getMainWindow()
-						.showNotification("Information",
-								"The record is not existed",
-								Window.Notification.TYPE_HUMANIZED_MESSAGE);
+			if (CurrentProjectVariables.getProjectId() == (Integer) data
+					.getParams()) {
+				// do nothing
 			} else {
-				CurrentProjectVariables.setProject(project);
-				view.constructProjectHeaderPanel(project, null);
+				ProjectService projectService = (ProjectService) AppContext
+						.getSpringBean(ProjectService.class);
+				SimpleProject project = (SimpleProject) projectService
+						.findProjectById((Integer) data.getParams());
+
+				if (project == null) {
+					AppContext
+							.getApplication()
+							.getMainWindow()
+							.showNotification("Information",
+									"The record is not existed",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+				} else {
+					CurrentProjectVariables.setProject(project);
+					view.constructProjectHeaderPanel(project, null);
+				}
 			}
+
 		}
 	}
 
@@ -80,7 +86,8 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 
 		AbstractPresenter<?> presenter = null;
 
-		if (pageAction instanceof MilestoneScreenData.Read) {
+		if (ClassUtils.instanceOf(pageAction, MilestoneScreenData.Read.class,
+				MilestoneScreenData.Search.class)) {
 			presenter = PresenterResolver
 					.getPresenter(MilestonePresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction,

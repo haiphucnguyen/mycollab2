@@ -110,6 +110,11 @@ public class CurrentProjectVariables {
 
 	public static int getProjectId() {
 		SimpleProject project = getProject();
-		return project.getId();
+		if (project != null) {
+			return project.getId();
+		} else {
+			return -1;
+		}
+		
 	}
 }

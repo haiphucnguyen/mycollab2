@@ -68,11 +68,18 @@ public class MilestonePresenter extends AbstractPresenter<MilestoneContainer> {
 		view.removeAllComponents();
 
 		ScreenData pageAction = pageActionChain.peek();
+		AbstractPresenter presenter = null;
+
 		if (pageAction instanceof MilestoneScreenData.Read) {
-			MilestoneReadPresenter presenter = PresenterResolver
+			presenter = PresenterResolver
 					.getPresenter(MilestoneReadPresenter.class);
-			presenter.go(view, pageAction);
+
+		} else if (pageAction instanceof MilestoneScreenData.Search) {
+			presenter = PresenterResolver
+					.getPresenter(MilestoneListPresenter.class);
 		}
+
+		presenter.go(view, pageAction);
 	}
 
 }

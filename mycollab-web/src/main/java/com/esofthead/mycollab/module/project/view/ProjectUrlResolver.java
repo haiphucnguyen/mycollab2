@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view;
 
 import com.esofthead.mycollab.module.project.view.message.MessageUrlResolver;
+import com.esofthead.mycollab.module.project.view.milestone.MilestoneUrlResolver;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
@@ -9,6 +10,7 @@ public class ProjectUrlResolver extends UrlResolver {
 	public ProjectUrlResolver() {
 		this.addSubResolver("dashboard", new ProjectPageUrlResolver());
 		this.addSubResolver("message", new MessageUrlResolver());
+		this.addSubResolver("milestone", new MilestoneUrlResolver());
 	}
 
 	public static class ProjectPageUrlResolver extends UrlResolver {
