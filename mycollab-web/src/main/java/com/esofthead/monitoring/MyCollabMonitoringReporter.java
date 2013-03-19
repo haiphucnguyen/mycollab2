@@ -3,11 +3,9 @@ package com.esofthead.monitoring;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
-import java.util.Collections;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.module.mail.Mailer;
@@ -15,7 +13,6 @@ import com.esofthead.mycollab.module.mail.Mailer;
 public class MyCollabMonitoringReporter {
 	private static Logger log = LoggerFactory
 			.getLogger(MyCollabMonitoringReporter.class);
-ButtonGroup g;
 	public void sendDailyReport(String attachment) {
 		/*
 		 * do send mail here
