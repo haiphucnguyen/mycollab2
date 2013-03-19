@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view;
 
+import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectService;
@@ -82,7 +83,8 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 		if (pageAction instanceof MilestoneScreenData.Read) {
 			presenter = PresenterResolver
 					.getPresenter(MilestonePresenter.class);
-		} else if (pageAction instanceof MessageScreenData.Read) {
+		} else if (ClassUtils.instanceOf(pageAction,
+				MessageScreenData.Read.class, MessageScreenData.Search.class)) {
 			presenter = PresenterResolver.getPresenter(MessagePresenter.class);
 		} else if (pageAction instanceof ProblemScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(ProblemPresenter.class);

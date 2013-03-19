@@ -61,11 +61,17 @@ public class MessagePresenter extends AbstractPresenter<MessageContainer> {
 		view.removeAllComponents();
 
 		ScreenData pageAction = pageActionChain.pop();
+		AbstractPresenter presenter = null;
 		if (pageAction instanceof MessageScreenData.Read) {
-			MessageReadPresenter presenter = PresenterResolver
+			presenter = PresenterResolver
 					.getPresenter(MessageReadPresenter.class);
-			presenter.go(this.view, pageAction);
+
+		} else if (pageAction instanceof MessageScreenData.Search) {
+			presenter = PresenterResolver
+					.getPresenter(MessageListPresenter.class);
 		}
+
+		presenter.go(this.view, pageAction);
 	}
 
 }
