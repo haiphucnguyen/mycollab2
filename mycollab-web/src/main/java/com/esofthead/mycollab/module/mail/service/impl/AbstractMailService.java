@@ -4,20 +4,22 @@ import java.util.List;
 
 import org.apache.commons.mail.EmailException;
 
+import com.esofthead.mycollab.module.mail.EmailAttachementSource;
 import com.esofthead.mycollab.module.mail.Mailer;
-import com.esofthead.mycollab.module.mail.service.IGenericService;
+import com.esofthead.mycollab.module.mail.service.IGenericMailService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
-public abstract class AbstractMailService implements IGenericService {
+public abstract class AbstractMailService implements IGenericMailService {
 
 	protected abstract Mailer getMailer();
 
 	@Override
 	public void sendHTMLMail(String fromEmail, String fromName,
-			String[] toEmail, String[] toName, String subject, String html) {
+			String[] toEmail, String[] toName, String subject, String html,
+			List<EmailAttachementSource> attachment) {
 		try {
 			getMailer().sendHTMLMail(fromEmail, fromName, toEmail, toName,
-					subject, html);
+					subject, html, attachment);
 		} catch (EmailException ex) {
 			ex.printStackTrace();
 		}
@@ -25,7 +27,8 @@ public abstract class AbstractMailService implements IGenericService {
 
 	@Override
 	public void sendHTMLMail(String fromEmail, String fromName,
-			List<SimpleUser> users, String subject, String html) {
+			List<SimpleUser> users, String subject, String html,
+			List<EmailAttachementSource> attachment) {
 		String[] toEmails = new String[users.size()];
 		String[] toNames = new String[users.size()];
 
@@ -34,6 +37,6 @@ public abstract class AbstractMailService implements IGenericService {
 			toNames[i] = users.get(i).getDisplayName();
 		}
 
-		this.sendHTMLMail(fromEmail, fromName, toEmails, toNames, subject, html);
+		this.sendHTMLMail(fromEmail, fromName, toEmails, toNames, subject, html, attachment);
 	}
 }

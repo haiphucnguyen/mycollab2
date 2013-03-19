@@ -97,7 +97,7 @@ public class SendingRelayEmailNotificationTemplate {
 								emailNotification.getChangeByUserFullName(),
 								notifiers,
 								templateGenerator.generateSubjectContent(),
-								templateGenerator.generateBodyContent());
+								templateGenerator.generateBodyContent(), null);
 					}
 				}
 

@@ -4,16 +4,20 @@ import java.io.File;
 
 import org.apache.commons.mail.EmailAttachment;
 
-public class FileEmailAttachmentSource implements EmailSource {
+public class FileEmailAttachmentSource implements EmailAttachementSource {
+	private File file;
+
 	public FileEmailAttachmentSource(File file) {
-		
+		this.file = file;
 	}
-	
 
 	@Override
 	public EmailAttachment getAttachmentObj() {
-		// TODO Auto-generated method stub
-		return null;
+		EmailAttachment attachment = new EmailAttachment();
+		attachment.setPath(file.getPath());
+		attachment.setDisposition(EmailAttachment.ATTACHMENT);
+		attachment.setName(file.getName());
+		return attachment;
 	}
 
 }

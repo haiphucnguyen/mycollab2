@@ -8,9 +8,6 @@ public class DbConfiguration {
 	public static final String PASSWORD = "db.password";
 	public static final String URL = "db.url";
 
-	public static final String H2_DRIVER = "h2.driverClassName";
-	public static final String H2_URL = "h2.url";
-
 	private static final String RESOURCE_PROPERTIES = "config.properties";
 	
 	private String userName;
