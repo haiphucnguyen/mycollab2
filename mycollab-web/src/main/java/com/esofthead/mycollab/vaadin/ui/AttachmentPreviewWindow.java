@@ -1,8 +1,8 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.Resource;
 import com.vaadin.ui.Embedded;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 public class AttachmentPreviewWindow extends Window {
@@ -23,11 +23,9 @@ public class AttachmentPreviewWindow extends Window {
 	}
 
 	private void initUI() {
-		VerticalLayout mainLayout = new VerticalLayout();
 		Embedded previewImage = new Embedded(null, this.previewResource);
-		mainLayout.addComponent(previewImage);
-		mainLayout.setSizeUndefined();
-		this.setContent(mainLayout);
+		LazyLoadWrapper imageLazyLoader = new LazyLoadWrapper(previewImage);
+		this.setContent(imageLazyLoader);
 		this.setResizable(false);
 	}
 }
