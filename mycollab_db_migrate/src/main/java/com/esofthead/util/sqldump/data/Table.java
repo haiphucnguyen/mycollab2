@@ -3,15 +3,18 @@ package com.esofthead.util.sqldump.data;
 import java.util.LinkedList;
 import java.util.List;
 
-import com.esofthead.util.sqldump.DataAdapter;
 import com.esofthead.util.sqldump.INFORMATION_SCHEMA;
 import com.esofthead.util.sqldump.data.parser.ColumnParser;
 import com.esofthead.util.sqldump.data.parser.PrimaryKeyColumnParser;
 
 public class Table {
+	
+	public Table(Schema owner) {
+		this.owner = owner;
+	}
+	
+	Schema owner;
 	private String tableName;
-	private String tableSchema;
-	private String tableType;
 
 	public String getTableName() {
 		return tableName;
@@ -25,7 +28,7 @@ public class Table {
 	public final List<PrimaryKeyColumn> PrimaryKeys = new LinkedList<PrimaryKeyColumn>();
 
 	public void loadColumn() throws Exception {
-		List<Object> lsObjects = DataAdapter.getData(
+		List<Object> lsObjects = owner.adapter.getData(
 				INFORMATION_SCHEMA.COLUMNS.getMethodName(),
 				INFORMATION_SCHEMA.COLUMNS.getParameterTypes(),
 				INFORMATION_SCHEMA.COLUMNS.getQueryParameters(tableName),
@@ -37,7 +40,7 @@ public class Table {
 			Columns.add(column);
 		}
 
-		lsObjects = DataAdapter.getData(
+		lsObjects = owner.adapter.getData(
 				INFORMATION_SCHEMA.PRIMARY_KEY.getMethodName(),
 				INFORMATION_SCHEMA.PRIMARY_KEY.getParameterTypes(),
 				INFORMATION_SCHEMA.PRIMARY_KEY.getQueryParameters(tableName),
@@ -47,36 +50,6 @@ public class Table {
 
 			PrimaryKeys.add(column);
 		}
-	}
-
-	/**
-	 * @return the tableSchema
-	 */
-	public String getTableSchema() {
-		return tableSchema;
-	}
-
-	/**
-	 * @param tableSchema
-	 *            the tableSchema to set
-	 */
-	public void setTableSchema(String tableSchema) {
-		this.tableSchema = tableSchema;
-	}
-
-	/**
-	 * @return the tableType
-	 */
-	public String getTableType() {
-		return tableType;
-	}
-
-	/**
-	 * @param tableType
-	 *            the tableType to set
-	 */
-	public void setTableType(String tableType) {
-		this.tableType = tableType;
 	}
 
 	public String serialTable() {

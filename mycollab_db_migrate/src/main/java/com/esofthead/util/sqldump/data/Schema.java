@@ -11,19 +11,22 @@ import com.esofthead.util.sqldump.data.parser.TableParser;
 import com.esofthead.util.sqldump.data.parser.UniqueIndexParser;
 
 public class Schema {
-	private Schema() {
+	private Schema(DataAdapter adapter) {
+		this.adapter = adapter;
 	}
+
+	DataAdapter adapter;
 
 	final public List<Table> Tables = new LinkedList<Table>();
 	final public List<UniqueIndex> UniqueIndexs = new LinkedList<UniqueIndex>();
 	final public List<ForeignKeyConstraint> ForeignKeyConstraints = new LinkedList<ForeignKeyConstraint>();
 
 	private void loadTable() throws Exception {
-		List<Object> lsObjects = DataAdapter.getData(
+		List<Object> lsObjects = adapter.getData(
 				INFORMATION_SCHEMA.TABLES.getMethodName(),
 				INFORMATION_SCHEMA.TABLES.getParameterTypes(),
 				INFORMATION_SCHEMA.TABLES.getQueryParameters(),
-				new TableParser());
+				new TableParser(this));
 
 		Tables.clear();
 		for (Object obj : lsObjects) {
@@ -33,7 +36,7 @@ public class Schema {
 	}
 
 	private void loadUniqueIndex(String tableName) throws Exception {
-		List<Object> lsObjects = DataAdapter
+		List<Object> lsObjects = adapter
 				.getData(INFORMATION_SCHEMA.UNIQUE_INDEX_INFO.getMethodName(),
 						INFORMATION_SCHEMA.UNIQUE_INDEX_INFO
 								.getParameterTypes(),
@@ -48,7 +51,7 @@ public class Schema {
 	}
 
 	private void loadForeignKeyConstraint(String tableName) throws Exception {
-		List<Object> lsObjects = DataAdapter.getData(
+		List<Object> lsObjects = adapter.getData(
 				INFORMATION_SCHEMA.FOREIGN_KEY_CONSTRAINT.getMethodName(),
 				INFORMATION_SCHEMA.FOREIGN_KEY_CONSTRAINT.getParameterTypes(),
 				INFORMATION_SCHEMA.FOREIGN_KEY_CONSTRAINT
@@ -86,9 +89,10 @@ public class Schema {
 
 	public static final Schema loadSchema(DbConfiguration config)
 			throws Exception {
-		DataAdapter.initContext(config.getUserName(), config.getPassword(),
-				config.getUrl());
-		Schema schema = new Schema();
+		// DataAdapter.initContext(config.getUserName(), config.getPassword(),
+		// config.getUrl());
+		Schema schema = new Schema(new DataAdapter(config.getUserName(),
+				config.getPassword(), config.getUrl()));
 		schema.loadTable();
 
 		schema.UniqueIndexs.clear();
