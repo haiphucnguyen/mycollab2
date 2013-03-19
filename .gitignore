@@ -19,3 +19,11 @@ Servers
 RemoteSystemsTempFiles
 MyCollabMobile/bin
 /MyCollabMobile/nbproject/private/
+extras/vaadin/addons/buttongroup/.classpath
+extras/vaadin/addons/buttongroup/.project
+extras/vaadin/addons/buttongroup/.settings/org.eclipse.jdt.core.prefs
+extras/vaadin/addons/buttongroup/README
+extras/vaadin/addons/buttongroup/assembly.xml
+extras/vaadin/addons/customfield-addon/.classpath
+extras/vaadin/addons/customfield-addon/.project
+extras/vaadin/addons/customfield-addon/.settings/org.eclipse.jdt.core.prefs
