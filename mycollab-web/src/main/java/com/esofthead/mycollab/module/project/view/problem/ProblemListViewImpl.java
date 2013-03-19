@@ -5,6 +5,8 @@ import java.util.GregorianCalendar;
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 import org.vaadin.teemu.ratingstars.RatingStars;
 
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
@@ -193,7 +195,10 @@ public class ProblemListViewImpl extends AbstractView implements
 		selectOptionButton = new SelectionOptionButton(tableItem);
 		layout.addComponent(selectOptionButton);
 
-		tableActionControls = new PopupButtonControl("delete", "Delete");
+		Button deleteBtn = new Button("Delete");
+        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.PROBLEMS));
+        
+		tableActionControls = new PopupButtonControl("delete", deleteBtn);
 		tableActionControls.addOptionItem("mail", "Mail");
 		tableActionControls.addOptionItem("export", "Export");
 		tableActionControls.setVisible(false);

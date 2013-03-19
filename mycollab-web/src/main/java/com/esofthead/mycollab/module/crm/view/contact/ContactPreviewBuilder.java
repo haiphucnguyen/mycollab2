@@ -16,6 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -128,16 +129,17 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 
     public static class ReadView extends ContactPreviewBuilder {
         private TabSheet tabContainer;
-        private VerticalLayout accountInformation;
+        private VerticalLayout contactInformation;
         private VerticalLayout relatedItemsContainer;
-        private AddViewLayout accountAddLayout;
+        private AddViewLayout contactAddLayout;
         
         public ReadView() {
-            accountAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/account.png"));
-            accountAddLayout.addStyleName("preview");
-            this.addComponent(accountAddLayout);
+            contactAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/account.png"));
+            contactAddLayout.addStyleName("preview");
+            this.addComponent(contactAddLayout);
 
             tabContainer = new TabSheet();
+            tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
             initRelatedComponent();
 
             previewForm = new AdvancedPreviewBeanForm<Contact>() {
@@ -146,7 +148,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
                     this.setFormLayoutFactory(new ContactFormLayoutFactory.ContactInformationLayout());
                     this.setFormFieldFactory(new ContactFormFieldFactory());
                     super.setItemDataSource(newDataSource);
-                    accountAddLayout.setTitle(contact.getContactName());
+                    contactAddLayout.setTitle(contact.getContactName());
                 }
 
                 @Override
@@ -181,15 +183,15 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
                 }
             };
 
-            accountInformation = new VerticalLayout();
-            accountInformation.setMargin(true);
+            contactInformation = new VerticalLayout();
+            contactInformation.setMargin(true);
             Layout actionControls = new PreviewFormControlsGenerator<Contact>(
                     previewForm).createButtonControls(RolePermissionCollections.CRM_CONTACT);
-            accountInformation.addComponent(actionControls);
-            accountInformation.addComponent(previewForm);
-            accountInformation.addComponent(noteListItems);
+            contactInformation.addComponent(actionControls);
+            contactInformation.addComponent(previewForm);
+            contactInformation.addComponent(noteListItems);
 
-            tabContainer.addTab(accountInformation, "Contact Information");
+            tabContainer.addTab(contactInformation, "Contact Information");
 
             relatedItemsContainer = new VerticalLayout();
             relatedItemsContainer.setMargin(true);
@@ -197,7 +199,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
             relatedItemsContainer.addComponent(associateOpportunityList);
             tabContainer.addTab(relatedItemsContainer, "More Information");
 
-            accountAddLayout.addBody(tabContainer);
+            contactAddLayout.addBody(tabContainer);
         }
     }
     

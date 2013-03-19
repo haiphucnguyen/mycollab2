@@ -16,12 +16,10 @@ import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
@@ -114,11 +112,6 @@ public class AccountListViewImpl extends AbstractView implements
                 Alignment.MIDDLE_CENTER);
         
         layout.setExpandRatio(selectedItemsNumberLabel, 1.0f);
-        
-        Button reportBtn = new Button("Reports");
-        reportBtn.setIcon(new ThemeResource("icons/16/report.png"));
-        reportBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-        layout.addComponent(reportBtn);
         return layout;
     }
 

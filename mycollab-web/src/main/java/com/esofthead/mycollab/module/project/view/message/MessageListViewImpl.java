@@ -6,7 +6,6 @@ import java.util.Set;
 
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
@@ -316,6 +315,7 @@ public class MessageListViewImpl extends AbstractView implements
 							createAddMessageLayout();
 						}
 					});
+			createMessageBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));
 			createMessageBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			createMessageBtn
 					.setIcon(new ThemeResource("icons/16/addRecord.png"));

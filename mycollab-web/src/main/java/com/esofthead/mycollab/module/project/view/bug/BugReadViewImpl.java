@@ -6,6 +6,8 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot.CommentDisplay;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
@@ -180,6 +182,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 
 			bugWorkflowControl.addComponent(navButton);
 		}
+		bugWorkflowControl.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
 	}
 
 	private class BugPreviewForm extends AdvancedPreviewBeanForm<SimpleBug> {
@@ -204,7 +207,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 			@Override
 			public Layout getLayout() {
 				AddViewLayout taskListAddLayout = new AddViewLayout(
-						bug.getSummary(), new ThemeResource(
+						"[Issue " + bug.getBugkey() + "#]: " + bug.getSummary(), new ThemeResource(
 								"icons/48/project/bug.png"));
 
 				Button createAccountBtn = new Button("Create",
@@ -217,6 +220,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 										new BugEvent.GotoAdd(this, null));
 							}
 						});
+				createAccountBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
 				createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 				createAccountBtn.setIcon(new ThemeResource(
 						"icons/16/addRecord.png"));
@@ -260,6 +264,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 										.addWindow(new AssignBugWindow(bug));
 							}
 						});
+				assignBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
 				assignBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 				buttonControls.addComponent(assignBtn);
 				buttonControls.setComponentAlignment(assignBtn,
@@ -276,6 +281,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 												BugReadViewImpl.this, bug));
 					}
 				});
+				editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
 				editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 				buttonControls.addComponent(editBtn);
 				buttonControls.setComponentAlignment(editBtn,
@@ -315,6 +321,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView {
 										});
 							}
 						});
+				deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.BUGS));
 				deleteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 				buttonControls.addComponent(deleteBtn);
 				buttonControls.setComponentAlignment(deleteBtn,

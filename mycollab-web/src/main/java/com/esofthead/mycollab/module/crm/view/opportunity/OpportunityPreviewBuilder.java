@@ -18,6 +18,7 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -98,16 +99,17 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
     public static class ReadView extends OpportunityPreviewBuilder {
 
         private TabSheet tabContainer;
-        private VerticalLayout accountInformation;
+        private VerticalLayout opportunityInformationLayout;
         private VerticalLayout relatedItemsContainer;
-        private AddViewLayout accountAddLayout;
+        private AddViewLayout opportunityAddLayout;
 
         public ReadView() {
-            accountAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/opportunity.png"));
-            accountAddLayout.addStyleName("preview");
-            this.addComponent(accountAddLayout);
+            opportunityAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/opportunity.png"));
+            opportunityAddLayout.addStyleName("preview");
+            this.addComponent(opportunityAddLayout);
 
             tabContainer = new TabSheet();
+            tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
             initRelatedComponent();
 
             previewForm = new AdvancedPreviewBeanForm<Opportunity>() {
@@ -116,7 +118,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
                     this.setFormLayoutFactory(new OpportunityFormLayoutFactory.OpportunityInformationLayout());
                     this.setFormFieldFactory(new OpportunityFormFieldFactory());
                     super.setItemDataSource(newDataSource);
-                    accountAddLayout.setTitle(opportunity.getOpportunityname());
+                    opportunityAddLayout.setTitle(opportunity.getOpportunityname());
                 }
 
                 @Override
@@ -151,15 +153,15 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
                 }
             };
 
-            accountInformation = new VerticalLayout();
-            accountInformation.setMargin(true);
+            opportunityInformationLayout = new VerticalLayout();
+            opportunityInformationLayout.setMargin(true);
             Layout actionControls = new PreviewFormControlsGenerator<Opportunity>(
                     previewForm).createButtonControls(RolePermissionCollections.CRM_OPPORTUNITY);
-            accountInformation.addComponent(actionControls);
-            accountInformation.addComponent(previewForm);
-            accountInformation.addComponent(noteListItems);
+            opportunityInformationLayout.addComponent(actionControls);
+            opportunityInformationLayout.addComponent(previewForm);
+            opportunityInformationLayout.addComponent(noteListItems);
 
-            tabContainer.addTab(accountInformation, "Opportunity Information");
+            tabContainer.addTab(opportunityInformationLayout, "Opportunity Information");
 
 
 
@@ -170,7 +172,7 @@ public class OpportunityPreviewBuilder extends VerticalLayout {
             relatedItemsContainer.addComponent(associateLeadList);
             tabContainer.addTab(relatedItemsContainer, "More Information");
 
-            accountAddLayout.addBody(tabContainer);
+            opportunityAddLayout.addBody(tabContainer);
         }
     }
 

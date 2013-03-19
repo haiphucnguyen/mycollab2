@@ -8,6 +8,8 @@ import java.util.GregorianCalendar;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
@@ -152,7 +154,10 @@ public class VersionListViewImpl extends AbstractView implements
 		selectOptionButton = new SelectionOptionButton(tableItem);
 		layout.addComponent(selectOptionButton);
 
-		tableActionControls = new PopupButtonControl("delete", "Delete");
+		Button deleteBtn = new Button("Delete");
+        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.VERSIONS));
+		
+		tableActionControls = new PopupButtonControl("delete", deleteBtn);
 		tableActionControls.addOptionItem("mail", "Mail");
 		tableActionControls.addOptionItem("export", "Export");
 

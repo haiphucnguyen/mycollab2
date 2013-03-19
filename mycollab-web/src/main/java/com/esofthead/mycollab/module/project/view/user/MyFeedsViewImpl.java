@@ -2,6 +2,8 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import java.util.List;
 
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.vaadin.events.EventBus;

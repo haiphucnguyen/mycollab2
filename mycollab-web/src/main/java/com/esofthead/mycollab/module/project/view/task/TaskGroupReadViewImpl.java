@@ -9,7 +9,8 @@ import org.vaadin.hene.popupbutton.PopupButton;
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
@@ -79,7 +80,7 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 				@Override
 				protected Field onCreateField(Item item, Object propertyId,
 						Component uiContext) {
-					
+
 					if (propertyId.equals("milestoneid")) {
 						return new FormLinkViewField(taskList
 								.getMilestoneName(),
@@ -101,8 +102,8 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 										.getOwnerFullName());
 					} else if (propertyId.equals("percentageComplete")) {
 						FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
-						ProgressPercentageIndicator progressField = new ProgressPercentageIndicator(taskList
-								.getPercentageComplete());
+						ProgressPercentageIndicator progressField = new ProgressPercentageIndicator(
+								taskList.getPercentageComplete());
 						fieldContainer.addComponentField(progressField);
 						return fieldContainer;
 					} else if (propertyId.equals("numOpenTasks")) {
@@ -221,7 +222,8 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 
 		private void displayActiveTasksOnly() {
 			TaskSearchCriteria criteria = createBaseSearchCriteria();
-			criteria.setStatus(new StringSearchField("Open"));
+			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
+					new String[] { "Open", "Pending" }));
 			taskDisplayComponent.setSearchCriteria(criteria);
 		}
 
@@ -232,7 +234,8 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 
 		private void displayInActiveTasks() {
 			TaskSearchCriteria criteria = createBaseSearchCriteria();
-			criteria.setStatus(new StringSearchField("Closed"));
+			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
+					new String[] { "Closed" }));
 			taskDisplayComponent.setSearchCriteria(criteria);
 		}
 	}

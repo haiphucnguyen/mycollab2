@@ -21,7 +21,9 @@ public class ProjectRolePermissionCollections {
 	public static final String USERS = "User";
 
 	public static final String ROLES = "Role";
+	
+	public static final String PROJECT = "Project";
 
 	public static final String[] PROJECT_PERMISSIONS = { MESSAGES, MILESTONES,
-			TASKS, BUGS, COMPONENTS, VERSIONS, RISKS, PROBLEMS, USERS, ROLES };
+			TASKS, BUGS, COMPONENTS, VERSIONS, RISKS, PROBLEMS, USERS, ROLES, PROJECT };
 }

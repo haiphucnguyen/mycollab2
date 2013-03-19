@@ -6,6 +6,8 @@ package com.esofthead.mycollab.module.project.view.people;
 
 import org.vaadin.hene.splitbutton.PopupButtonControl;
 
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
@@ -137,8 +139,11 @@ public class ProjectRoleListViewImpl extends AbstractView implements
 
 		selectOptionButton = new SelectionOptionButton(tableItem);
 		layout.addComponent(selectOptionButton);
+		
+		Button deleteBtn = new Button("Delete");
+        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.ROLES));
 
-		tableActionControls = new PopupButtonControl("delete", "Delete");
+		tableActionControls = new PopupButtonControl("delete", deleteBtn);
 		tableActionControls.addOptionItem("mail", "Mail");
 		tableActionControls.addOptionItem("export", "Export");
 

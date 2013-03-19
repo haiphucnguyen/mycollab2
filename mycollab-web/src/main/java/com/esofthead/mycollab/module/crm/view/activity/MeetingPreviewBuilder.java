@@ -11,6 +11,7 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
@@ -72,6 +73,7 @@ public class MeetingPreviewBuilder extends VerticalLayout {
 	            this.addComponent(meetingAddLayout);
 	            
 	            tabContainer = new TabSheet();
+	            tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
 	            
 	            previewForm = new AdvancedPreviewBeanForm<Meeting>() {
 	                @Override

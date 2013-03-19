@@ -7,6 +7,7 @@ import java.util.Collections;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.module.mail.Mailer;
@@ -14,7 +15,7 @@ import com.esofthead.mycollab.module.mail.Mailer;
 public class MyCollabMonitoringReporter {
 	private static Logger log = LoggerFactory
 			.getLogger(MyCollabMonitoringReporter.class);
-
+ButtonGroup g;
 	public void sendDailyReport(String attachment) {
 		/*
 		 * do send mail here
@@ -38,12 +39,6 @@ public class MyCollabMonitoringReporter {
 //							+ toDayString(),
 //					"<h1>This is the sample of daily monitoring report</h1>",
 //					Collections.singletonList(attachment));
-			mailer.sendHTMLMail("manhtran@esofthead.com", "eSofthead reporter",
-					new String[] { "nobugz@live.com" },
-					new String[] { "eSofthead" }, "Daily Report Monitoring - "
-							+ toDayString(),
-					"<h1>This is the sample of daily monitoring report</h1>",
-					Collections.singletonList(attachment));
 		} catch (Exception e) {
 			log.error("Send monitoring failed", e);
 		} finally {

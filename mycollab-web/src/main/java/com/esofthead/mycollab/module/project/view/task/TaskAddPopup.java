@@ -70,6 +70,19 @@ public class TaskAddPopup extends CustomComponent {
 
 		HorizontalLayout controlsLayout = new HorizontalLayout();
 		controlsLayout.setSpacing(true);
+		
+		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				taskDisplayComp.closeTaskAdd();
+			}
+		});
+
+		cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		controlsLayout.addComponent(cancelBtn);
+		
 		Button saveBtn = new Button("Save", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -92,18 +105,7 @@ public class TaskAddPopup extends CustomComponent {
 		});
 		saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsLayout.addComponent(saveBtn);
-
-		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				taskDisplayComp.closeTaskAdd();
-			}
-		});
-
-		cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		controlsLayout.addComponent(cancelBtn);
+		
 		taskLayout.addComponent(controlsLayout);
 
 		this.setCompositionRoot(taskLayout);

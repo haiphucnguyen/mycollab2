@@ -24,7 +24,9 @@ import com.vaadin.ui.ComponentContainer;
  * @author haiphucnguyen
  */
 public class TaskGroupAddPresenter extends AbstractPresenter<TaskGroupAddView> {
-    public TaskGroupAddPresenter() {
+	private static final long serialVersionUID = 1L;
+
+	public TaskGroupAddPresenter() {
         super(TaskGroupAddView.class);
         
         view.getEditFormHandlers().addFormHandler(new EditFormHandler<TaskList>() {

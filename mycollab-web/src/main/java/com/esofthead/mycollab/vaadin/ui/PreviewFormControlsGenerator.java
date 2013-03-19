@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
@@ -11,13 +13,42 @@ import com.vaadin.ui.HorizontalLayout;
 public class PreviewFormControlsGenerator<T> {
 
     private AdvancedPreviewBeanForm<T> previewForm;
-
+    private Button backBtn;
+    private Button editBtn;
+    private Button deleteBtn;
+    private Button cloneBtn;
+    private Button previousItem;
+    private Button nextItemBtn;
+    private Button historyBtn;
+    private Button printBtn;
+    
     public PreviewFormControlsGenerator(AdvancedPreviewBeanForm<T> editForm) {
         this.previewForm = editForm;
     }
     
     public HorizontalLayout createButtonControls() {
         return createButtonControls(null);
+    }
+    
+    public HorizontalLayout createButtonControls(String permissionItem, String moduleChecking) {
+    	HorizontalLayout layout = createButtonControls(permissionItem);
+    	if (moduleChecking != null) {
+    		if (moduleChecking.equals(ModuleNameConstants.PRJ)) {
+    			if (permissionItem != null) {
+    	            boolean canRead = CurrentProjectVariables.canRead(permissionItem);
+    	            boolean canWrite = CurrentProjectVariables.canWrite(permissionItem);
+    	            boolean canAccess = CurrentProjectVariables.canAccess(permissionItem);
+    	            
+    	            backBtn.setEnabled(canRead);
+    	            editBtn.setEnabled(canWrite);
+    	            cloneBtn.setEnabled(canWrite);
+    	            deleteBtn.setEnabled(canAccess);
+    	            printBtn.setEnabled(canRead);
+    	            historyBtn.setEnabled(canRead);
+    	        }
+    		}
+    	}
+    	return layout;
     }
 
     public HorizontalLayout createButtonControls(String permissionItem) {
@@ -26,7 +57,6 @@ public class PreviewFormControlsGenerator<T> {
         layout.setStyleName("addNewControl");
         layout.setWidth("100%");
 
-        Button backBtn;
         backBtn = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -46,7 +76,7 @@ public class PreviewFormControlsGenerator<T> {
         HorizontalLayout editButtons = new HorizontalLayout();
         editButtons.setSpacing(true);
 
-        Button editBtn = new Button(GenericForm.EDIT_ACTION,
+        editBtn = new Button(GenericForm.EDIT_ACTION,
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
@@ -62,7 +92,7 @@ public class PreviewFormControlsGenerator<T> {
         editButtons.addComponent(editBtn);
         editButtons.setComponentAlignment(editBtn, Alignment.MIDDLE_CENTER);
 
-        Button deleteBtn = new Button(GenericForm.DELETE_ACTION,
+        deleteBtn = new Button(GenericForm.DELETE_ACTION,
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
@@ -78,7 +108,7 @@ public class PreviewFormControlsGenerator<T> {
         editButtons.addComponent(deleteBtn);
         editButtons.setComponentAlignment(deleteBtn, Alignment.MIDDLE_CENTER);
 
-        Button cloneBtn = new Button(GenericForm.CLONE_ACTION,
+        cloneBtn = new Button(GenericForm.CLONE_ACTION,
                 new Button.ClickListener() {
                     private static final long serialVersionUID = 1L;
 
@@ -98,7 +128,7 @@ public class PreviewFormControlsGenerator<T> {
         layout.setComponentAlignment(editButtons, Alignment.MIDDLE_CENTER);
         layout.setExpandRatio(editButtons, 1.0f);
 
-        Button previousItem = new Button(null, new Button.ClickListener() {
+        previousItem = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -115,7 +145,7 @@ public class PreviewFormControlsGenerator<T> {
         layout.addComponent(previousItem);
         layout.setComponentAlignment(previousItem, Alignment.MIDDLE_RIGHT);
 
-        Button nextItemBtn = new Button(null, new Button.ClickListener() {
+        nextItemBtn = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -133,7 +163,7 @@ public class PreviewFormControlsGenerator<T> {
         layout.setComponentAlignment(nextItemBtn, Alignment.MIDDLE_RIGHT);
 
 
-        Button historyBtn = new Button(null, new Button.ClickListener() {
+        historyBtn = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -147,7 +177,7 @@ public class PreviewFormControlsGenerator<T> {
         layout.addComponent(historyBtn);
         layout.setComponentAlignment(historyBtn, Alignment.MIDDLE_RIGHT);
 
-        Button printBtn = new Button(null, new Button.ClickListener() {
+        printBtn = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
