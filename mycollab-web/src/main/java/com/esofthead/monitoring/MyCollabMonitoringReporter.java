@@ -17,7 +17,6 @@ import com.esofthead.mycollab.module.mail.Mailer;
 public class MyCollabMonitoringReporter {
 	private static Logger log = LoggerFactory
 			.getLogger(MyCollabMonitoringReporter.class);
-
 	public void sendDailyReport(String attachment) {
 		/*
 		 * do send mail here
