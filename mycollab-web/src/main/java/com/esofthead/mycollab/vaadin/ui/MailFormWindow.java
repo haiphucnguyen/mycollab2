@@ -51,6 +51,7 @@ public class MailFormWindow extends Window {
 		this.setHeight("500px");
 		initUI();
 		center();
+		this.setModal(true);
 	}
 
 	@SuppressWarnings("serial")

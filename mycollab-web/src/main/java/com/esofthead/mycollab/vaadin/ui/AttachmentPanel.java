@@ -3,14 +3,19 @@ package com.esofthead.mycollab.vaadin.ui;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.commons.io.FileUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
+import com.esofthead.mycollab.module.file.FileStorageConfig;
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.file.service.ContentService;
@@ -114,6 +119,29 @@ public class AttachmentPanel extends VerticalLayout implements AttachmentUploadC
                 }
             }
         }
+    }
+    
+    public List<File> getListFile() {
+    	List<File> listFile = null;
+    	if (fileStores != null && fileStores.size() > 0) {
+    		listFile = new ArrayList<File>();
+    		for (String fileName : fileStores.keySet()) {
+    			File oldFile = fileStores.get(fileName);
+    			
+    			int startFileNameIndex = oldFile.getPath().lastIndexOf("\\");
+    			if (startFileNameIndex > 0) {
+    				String folderPath = oldFile.getPath().substring(0, startFileNameIndex);
+    				File newFile = new File(folderPath + "/" + fileName);
+    				if (newFile.exists()) newFile.delete();
+    				if (oldFile.renameTo(newFile)) {
+    					listFile.add(newFile);
+    				}
+    			}
+    			if (listFile.size() <= 0) return null;
+    			
+    		}
+    	}
+    	return listFile;
     }
 
     @Override
