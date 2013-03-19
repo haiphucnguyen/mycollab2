@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.mail;
 
 import org.apache.commons.mail.EmailAttachment;
 
-public class S3EmailAttachmentSource implements EmailSource {
+public class S3EmailAttachmentSource implements EmailAttachementSource {
 
 	public S3EmailAttachmentSource(String path) {
 

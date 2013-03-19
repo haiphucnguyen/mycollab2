@@ -70,7 +70,7 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 						new String[] { ApplicationProperties
 								.getSendErrorEmail() }, templateGenerator
 								.generateSubjectContent(), templateGenerator
-								.generateBodyContent());
+								.generateBodyContent(), null);
 			}
 		} finally {
 			session.close();
@@ -92,7 +92,7 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 				mailService.sendHTMLMail(relayEmail.getFromemail(),
 						relayEmail.getFromemail(), recipientArr[0],
 						recipientArr[1], relayEmail.getSubject(),
-						relayEmail.getBodycontent());
+						relayEmail.getBodycontent(), null);
 			} catch (Exception e) {
 				log.error("Error when send relay email", e);
 			}

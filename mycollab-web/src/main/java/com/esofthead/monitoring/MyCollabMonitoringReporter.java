@@ -2,12 +2,16 @@ package com.esofthead.monitoring;
 
 import java.io.File;
 import java.text.SimpleDateFormat;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.module.mail.EmailAttachementSource;
+import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
 import com.esofthead.mycollab.module.mail.Mailer;
 
 public class MyCollabMonitoringReporter {
@@ -28,18 +32,26 @@ public class MyCollabMonitoringReporter {
 
 		Mailer mailer = new Mailer(host, userName, password,
 				Integer.parseInt(port), true);
+
+		File file = new File(attachment);
+		List<EmailAttachementSource> emailAttachmentSource = null;
+		if (file != null) {
+			emailAttachmentSource = new ArrayList<EmailAttachementSource>();
+			emailAttachmentSource.add(new FileEmailAttachmentSource(file));
+		}
+		
 		try {
-//			mailer.sendHTMLMail(userName, "eSofthead reporter",
-//					new String[] { ApplicationProperties
-//							.getProperty(ApplicationProperties.ERROR_SENDTO) },
-//					new String[] { "eSofthead" }, "Daily Report Monitoring - "
-//							+ toDayString(),
-//					"<h1>This is the sample of daily monitoring report</h1>",
-//					Collections.singletonList(attachment));
+			mailer.sendHTMLMail(userName, "eSofthead reporter",
+					new String[] { ApplicationProperties
+							.getProperty(ApplicationProperties.ERROR_SENDTO) },
+					new String[] { "eSofthead" }, "Daily Report Monitoring - "
+							+ toDayString(),
+					"<h1>This is the sample of daily monitoring report</h1>",
+					emailAttachmentSource);
 		} catch (Exception e) {
 			log.error("Send monitoring failed", e);
 		} finally {
-			File file = new File(attachment);
+
 			if (file.exists()) {
 				file.deleteOnExit();
 			}

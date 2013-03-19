@@ -51,15 +51,44 @@ public class Mailer {
 		}
 		email.setStartTLSEnabled(isTLS);
 		email.setSubject(subject);
-		email.setHtmlMsg(html);
+		
+		if (html != null && !html.equals("")) {
+			email.setHtmlMsg(html);
+		}
 		email.send();
 	}
 
 	public void sendHTMLMail(String fromEmail, String fromName,
 			String[] toEmail, String[] toName, String subject, String html,
-			List<EmailSource> attachments) throws EmailException {
+			List<EmailAttachementSource> attachments) throws EmailException {
 		if (attachments == null || attachments.isEmpty()) {
 			sendHTMLMail(fromEmail, fromName, toEmail, toName, subject, html);
+		} else {
+			HtmlEmail email = new HtmlEmail();
+			email.setHostName(host);
+			email.setFrom(fromEmail, fromName);
+			for (int i = 0; i < toEmail.length; i++) {
+				if (isValidate(toEmail[i]) && isValidate(toName[i])) {
+					email.addTo(toEmail[i], toName[i]);
+				} else {
+					log.error("Invalid email input: " + toEmail[i] + "---"
+							+ toName[i]);
+				}
+			}
+			if (username != null) {
+				email.setAuthentication(username, password);
+			}
+			email.setStartTLSEnabled(isTLS);
+			email.setSubject(subject);
+			if (html != null && !html.equals("")) {
+				email.setHtmlMsg(html);
+			}
+			
+			for (EmailAttachementSource attachment : attachments) {
+				email.attach(attachment.getAttachmentObj());
+			}
+			
+			email.send();
 		}
 	}
 
