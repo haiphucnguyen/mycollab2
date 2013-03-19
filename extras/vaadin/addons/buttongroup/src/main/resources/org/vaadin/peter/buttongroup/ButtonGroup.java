@@ -156,6 +156,13 @@ public class ButtonGroup extends AbstractComponent {
 			button.removeStyleName(rightButtonCss);
 		}
 	}
+	
+	public void removeButtonsCss(String styleName) {
+		for (Button button : buttons) {
+			button.removeStyleName(styleName);
+		}
+	}
+
 
 	private void addNewButtonCss() {
 		if (getNumberOfVisibleButtons() <= 1) {

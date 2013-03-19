@@ -2598,3 +2598,21 @@ div.v-lazyloadingwrapper-loading {
 	margin: 0px;
 }
 /* End Stand Up List View */
+
+/* Toggle Button Group */
+.v-buttongroup.toggle-btn-group .v-button.selected, .v-buttongroup.toggle-btn-group .v-button.selected:active, .v-buttongroup.toggle-btn-group .v-button.selected:focus {
+	background: url("icons/grad-dark-top2.png") repeat-x scroll left bottom rgb(20, 108, 253);
+	border-color: rgb(129, 129, 129);
+}
+.v-buttongroup.toggle-btn-group .v-button.selected .v-button-wrap {
+	background: none;
+}
+.v-buttongroup.toggle-btn-group .v-button:active .v-button-wrap .v-button-caption, .v-buttongroup.toggle-btn-group .v-button:focus .v-button-wrap .v-button-caption, .v-buttongroup.toggle-btn-group .v-button.selected .v-button-wrap .v-button-caption {
+	color: white;
+}
+.v-buttongroup.toggle-btn-group .v-button.v-button-left:active,.v-buttongroup.toggle-btn-group .v-button.v-button-middle:active,.v-buttongroup.toggle-btn-group .v-button.v-button-right:active,.v-buttongroup.toggle-btn-group .v-button.v-button-left:focus,.v-buttongroup.toggle-btn-group .v-button.v-button-middle:focus,.v-buttongroup.toggle-btn-group .v-button.v-button-right:focus
+{
+	background: url("icons/grad-dark-top2.png") repeat-x scroll left bottom rgb(20, 108, 253);
+	border-color: rgb(129, 129, 129);
+}
+/* End Toggle Button Group */
