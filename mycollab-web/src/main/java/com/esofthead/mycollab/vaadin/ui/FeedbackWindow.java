@@ -9,6 +9,7 @@ import org.vaadin.easyuploads.MultiFileUploadExt;
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
 import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
+import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.mail.service.SystemMailService;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Sizeable;
@@ -139,8 +140,8 @@ public class FeedbackWindow extends Window {
 				String subject = subjectTextField.getValue().toString().trim();
 
 				if (!email.equals("") && !subject.equals("")) {
-					SystemMailService systemMailService = AppContext
-							.getSpringBean(SystemMailService.class);
+					ExtMailService systemMailService = AppContext
+							.getSpringBean(ExtMailService.class);
 					List<File> listFile = attachments.getListFile();
 					List<EmailAttachementSource> emailAttachmentSource = null;
 					if (listFile != null && listFile.size() > 0) {
@@ -153,18 +154,18 @@ public class FeedbackWindow extends Window {
 
 					String nameEmailFrom = emailNameTextField.getValue()
 							.toString().trim();
-					nameEmailFrom = nameEmailFrom.equals("") ? email : nameEmailFrom;
+					nameEmailFrom = nameEmailFrom.equals("") ? email
+							: nameEmailFrom;
 					String toEmail = ApplicationProperties
 							.getProperty(ApplicationProperties.MAIL_SENDTO);
 
 					FeedbackWindow.this.close();
 
 					systemMailService.sendHTMLMail(email, nameEmailFrom,
-							new String[] { toEmail },
-							new String[] { toEmail }, subject, contentArea
-									.getValue().toString(),
+							new String[] { toEmail }, new String[] { toEmail },
+							subject, contentArea.getValue().toString(),
 							emailAttachmentSource);
-					
+
 				} else {
 					MessageBox mb = new MessageBox(
 							AppContext.getApplication().getMainWindow(),
