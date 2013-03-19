@@ -93,7 +93,7 @@
                     </execution>
                 </executions>
             </plugin>
-            
+
 
         </plugins>
         <pluginManagement>
@@ -112,8 +112,10 @@
                             <manifestEntries>
                                 <!-- Package format version - do not change -->
                                 <Vaadin-Package-Version>1</Vaadin-Package-Version>
+                                <Vaadin-License-Title>Apache License 2.0</Vaadin-License-Title>
                                 <Vaadin-Addon>${project.build.finalName}.jar</Vaadin-Addon>
-
+                                <Vaadin-Widgetsets>org.vaadin.peter.buttongroup.ButtongroupWidgetset</Vaadin-Widgetsets>
+                                <Class-Path></Class-Path>
                                 <!-- Add-on specific fields to update -->
 
                                 <!-- Implementation-Title and Implementation-Version 

@@ -61,4 +61,8 @@
     <inherits name="ru.bazon.vaadin.ganttdiagram.GanttDiagramWidgetset" />
 
     
+
+    
+
+    <inherits name="org.vaadin.peter.buttongroup.ButtongroupWidgetset" />
 </module>
