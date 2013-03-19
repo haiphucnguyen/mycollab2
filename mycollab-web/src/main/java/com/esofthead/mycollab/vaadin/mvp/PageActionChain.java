@@ -18,28 +18,28 @@ import org.slf4j.LoggerFactory;
 public class PageActionChain {
 	private static Logger log = LoggerFactory.getLogger(PageActionChain.class);
 	
-    private List<PageAction> chains = new ArrayList<PageAction>();
+    private List<ScreenData> chains = new ArrayList<ScreenData>();
     
-    public PageActionChain(PageAction... pageActionArr) {
+    public PageActionChain(ScreenData... pageActionArr) {
         chains.addAll(Arrays.asList(pageActionArr));
         log.debug("Chain size: " + this + "---" + chains.size());
     }
     
-    public PageActionChain add(PageAction pageAction) {
+    public PageActionChain add(ScreenData pageAction) {
         chains.add(pageAction);
         log.debug("Chain size: " + this + "---" + chains.size());
         return this;
     }
     
-    public PageAction pop() {
+    public ScreenData pop() {
     	log.debug("Pop pageActionChain " + this + "---" + chains.size());
-        PageAction pageAction = chains.get(0);
+    	ScreenData pageAction = chains.get(0);
         chains.remove(0);
         return pageAction;
     }
     
-    public PageAction peek() {
-        PageAction pageAction = chains.get(0);
+    public ScreenData peek() {
+    	ScreenData pageAction = chains.get(0);
         return pageAction;
     }
     

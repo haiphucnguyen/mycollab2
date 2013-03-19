@@ -4,13 +4,12 @@
  */
 package com.esofthead.mycollab.module.project.view.message;
 
-import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.view.ProjectView;
+import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.mvp.PageAction;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -61,11 +60,11 @@ public class MessagePresenter extends AbstractPresenter<MessageContainer> {
 
 		view.removeAllComponents();
 
-		PageAction pageAction = pageActionChain.pop();
-		if (pageAction instanceof MessageReadPageAction) {
+		ScreenData pageAction = pageActionChain.pop();
+		if (pageAction instanceof MessageScreenData.Read) {
 			MessageReadPresenter presenter = PresenterResolver
 					.getPresenter(MessageReadPresenter.class);
-			presenter.go(this.view, pageAction.getScreenData());
+			presenter.go(this.view, pageAction);
 		}
 	}
 

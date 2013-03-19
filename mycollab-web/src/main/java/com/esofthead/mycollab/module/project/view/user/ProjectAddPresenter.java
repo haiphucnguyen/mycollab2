@@ -8,7 +8,7 @@ import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.ProjectPageAction;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -47,9 +47,8 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this,
 										new PageActionChain(
-												new ProjectPageAction(
-														new ScreenData(project
-																.getId())))));
+												new ProjectScreenData.Goto(view
+														.getItem().getId()))));
 					}
 
 					@Override
@@ -64,10 +63,9 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 											new ProjectEvent.GotoMyProject(
 													this,
 													new PageActionChain(
-															new ProjectPageAction(
-																	new ScreenData(
-																			view.getItem()
-																					.getId())))));
+															new ProjectScreenData.Goto(
+																	view.getItem()
+																			.getId()))));
 						}
 					}
 

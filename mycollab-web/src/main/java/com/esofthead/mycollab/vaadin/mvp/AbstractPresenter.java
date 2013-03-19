@@ -54,8 +54,8 @@ public abstract class AbstractPresenter<V extends View> implements Presenter {
     @Override
     public void handleChain(ComponentContainer container, PageActionChain pageActionChain) {
     	log.debug("Handle chain: " + BeanUtility.printBeanObj(pageActionChain) + "---" + this);
-        PageAction pageAction = pageActionChain.pop();
-        go(container, pageAction.getScreenData());
+    	ScreenData pageAction = pageActionChain.pop();
+        go(container, pageAction);
         
         if (pageActionChain.hasNext()) {
             onHandleChain(container, pageActionChain);

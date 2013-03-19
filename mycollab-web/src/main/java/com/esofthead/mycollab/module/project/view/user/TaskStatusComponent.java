@@ -16,15 +16,14 @@ import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
-import com.esofthead.mycollab.module.project.view.ProjectPageAction;
-import com.esofthead.mycollab.module.project.view.bug.BugReadPageAction;
-import com.esofthead.mycollab.module.project.view.problem.ProblemReadPageAction;
-import com.esofthead.mycollab.module.project.view.risk.RiskReadPageAction;
-import com.esofthead.mycollab.module.project.view.task.TaskReadPageAction;
+import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -95,37 +94,29 @@ public class TaskStatusComponent extends Depot {
 
 							if (ProjectContants.PROBLEM.equals(type)) {
 								PageActionChain chain = new PageActionChain(
-										new ProjectPageAction(new ScreenData(
-												projectid)),
-										new ProblemReadPageAction(
-												new ScreenData(typeid)));
+										new ProjectScreenData.Goto(projectid),
+										new ProblemScreenData.Read(typeid));
 								EventBus.getInstance().fireEvent(
 										new ProjectEvent.GotoMyProject(this,
 												chain));
 							} else if (ProjectContants.RISK.equals(type)) {
 								PageActionChain chain = new PageActionChain(
-										new ProjectPageAction(new ScreenData(
-												projectid)),
-										new RiskReadPageAction(new ScreenData(
-												typeid)));
+										new ProjectScreenData.Goto(projectid),
+										new RiskScreenData.Read(typeid));
 								EventBus.getInstance().fireEvent(
 										new ProjectEvent.GotoMyProject(this,
 												chain));
 							} else if (ProjectContants.TASK.equals(type)) {
 								PageActionChain chain = new PageActionChain(
-										new ProjectPageAction(new ScreenData(
-												projectid)),
-										new TaskReadPageAction(new ScreenData(
-												typeid)));
+										new ProjectScreenData.Goto(projectid),
+										new TaskScreenData.Read(typeid));
 								EventBus.getInstance().fireEvent(
 										new ProjectEvent.GotoMyProject(this,
 												chain));
 							} else if (ProjectContants.BUG.equals(type)) {
 								PageActionChain chain = new PageActionChain(
-										new ProjectPageAction(new ScreenData(
-												projectid)),
-										new BugReadPageAction(new ScreenData(
-												typeid)));
+										new ProjectScreenData.Goto(projectid),
+										new BugScreenData.Read(typeid));
 								EventBus.getInstance().fireEvent(
 										new ProjectEvent.GotoMyProject(this,
 												chain));
@@ -135,8 +126,8 @@ public class TaskStatusComponent extends Depot {
 			taskLink.setIcon(ProjectResources.getIconResource16size(genericTask
 					.getType()));
 			if (genericTask.getDueDate() != null
-					&& (genericTask.getDueDate()
-							.before(new GregorianCalendar().getTime()))) {
+					&& (genericTask.getDueDate().before(new GregorianCalendar()
+							.getTime()))) {
 				taskLink.addStyleName(UIConstants.LINK_OVERDUE);
 			}
 			taskLink.addStyleName("link");
@@ -157,10 +148,9 @@ public class TaskStatusComponent extends Depot {
 											new ProjectEvent.GotoMyProject(
 													this,
 													new PageActionChain(
-															new ProjectPageAction(
-																	new ScreenData(
-																			genericTask
-																					.getProjectId())))));
+															new ProjectScreenData.Goto(
+																	genericTask
+																			.getProjectId()))));
 						}
 					});
 			projectLink.setIcon(ProjectResources

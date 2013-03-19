@@ -4,23 +4,22 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
-import com.esofthead.mycollab.module.project.view.bug.BugReadPageAction;
-import com.esofthead.mycollab.module.project.view.bug.ComponentReadPageAction;
-import com.esofthead.mycollab.module.project.view.bug.VersionReadPageAction;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
-import com.esofthead.mycollab.module.project.view.message.MessageReadPageAction;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
-import com.esofthead.mycollab.module.project.view.milestone.MilestoneReadPageAction;
+import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.VersionScreenData;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
-import com.esofthead.mycollab.module.project.view.problem.ProblemReadPageAction;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
-import com.esofthead.mycollab.module.project.view.risk.RiskReadPageAction;
-import com.esofthead.mycollab.module.project.view.task.TaskGroupReadPageAction;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
-import com.esofthead.mycollab.module.project.view.task.TaskReadPageAction;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.mvp.PageAction;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -76,28 +75,28 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 	@Override
 	protected void onHandleChain(ComponentContainer container,
 			PageActionChain pageActionChain) {
-		PageAction pageAction = pageActionChain.peek();
+		ScreenData pageAction = pageActionChain.peek();
 
 		AbstractPresenter<?> presenter = null;
 
-		if (pageAction instanceof MilestoneReadPageAction) {
+		if (pageAction instanceof MilestoneScreenData.Read) {
 			presenter = PresenterResolver
 					.getPresenter(MilestonePresenter.class);
-		} else if (pageAction instanceof MessageReadPageAction) {
+		} else if (pageAction instanceof MessageScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(MessagePresenter.class);
-		} else if (pageAction instanceof ProblemReadPageAction) {
+		} else if (pageAction instanceof ProblemScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(ProblemPresenter.class);
-		} else if (pageAction instanceof RiskReadPageAction) {
+		} else if (pageAction instanceof RiskScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(RiskPresenter.class);
-		} else if (pageAction instanceof TaskReadPageAction) {
+		} else if (pageAction instanceof TaskScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(TaskPresenter.class);
-		} else if (pageAction instanceof TaskGroupReadPageAction) {
+		} else if (pageAction instanceof TaskGroupScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(TaskPresenter.class);
-		} else if (pageAction instanceof BugReadPageAction) {
+		} else if (pageAction instanceof BugScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(BugPresenter.class);
-		} else if (pageAction instanceof ComponentReadPageAction) {
+		} else if (pageAction instanceof ComponentScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(BugPresenter.class);
-		} else if (pageAction instanceof VersionReadPageAction) {
+		} else if (pageAction instanceof VersionScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(BugPresenter.class);
 		} else {
 			throw new UnsupportedOperationException(

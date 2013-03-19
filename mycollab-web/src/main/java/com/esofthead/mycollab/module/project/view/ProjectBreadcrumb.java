@@ -24,6 +24,7 @@ import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.Version;
@@ -32,7 +33,6 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -88,9 +88,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this,
 										new PageActionChain(
-												new ProjectPageAction(
-														new ScreenData(project
-																.getId())))));
+												new ProjectScreenData.Goto(
+														project.getId()))));
 					}
 				}));
 		this.setLinkEnabled(true, 1);
@@ -238,10 +237,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Phases", new GotoMilestoneListListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button("Add"));
-		AppContext.addFragment(
-				"project/milestone/add/"
-						+ UrlEncodeDecoder.encode(project.getId()),
-				"Add Phase");
+		AppContext
+				.addFragment(
+						"project/milestone/add/"
+								+ UrlEncodeDecoder.encode(project.getId()),
+						"Add Phase");
 	}
 
 	private static class GotoMilestoneListListener implements
@@ -669,17 +669,15 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 								+ UrlEncodeDecoder.encode(project.getId()),
 						"Project Members");
 	}
-	
+
 	public void gotoUserAdd() {
 		this.select(1);
 		this.addLink(new Button("Users", new GotoUserListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(new Button("Add"));
-		AppContext
-				.addFragment(
-						"project/user/add/"
-								+ UrlEncodeDecoder.encode(project.getId()),
-						"New Project Member");
+		AppContext.addFragment(
+				"project/user/add/" + UrlEncodeDecoder.encode(project.getId()),
+				"New Project Member");
 	}
 
 	public void gotoUserRead(SimpleProjectMember member) {
@@ -690,10 +688,10 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		AppContext.addFragment(
 				"project/user/preview/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ member.getId()),
-				"View Project Member: " + member.getMemberFullName());
+								+ member.getId()), "View Project Member: "
+						+ member.getMemberFullName());
 	}
-	
+
 	public void gotoUserEdit(SimpleProjectMember member) {
 		this.select(1);
 		this.addLink(new Button("Users", new GotoUserListener()));
@@ -702,8 +700,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		AppContext.addFragment(
 				"project/user/edit/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ member.getId()),
-				"Edit Project Member: " + member.getMemberFullName());
+								+ member.getId()), "Edit Project Member: "
+						+ member.getMemberFullName());
 	}
 
 	private static class GotoUserListener implements Button.ClickListener {

@@ -9,7 +9,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriter
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.ui.components.ProjectSearchPanel;
-import com.esofthead.mycollab.module.project.view.ProjectPageAction;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
@@ -17,7 +17,6 @@ import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -38,174 +37,186 @@ import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class MyProjectsListViewImpl extends AbstractView implements MyProjectsListView {
+public class MyProjectsListViewImpl extends AbstractView implements
+		MyProjectsListView {
 
-    private PagedBeanTable2<ProjectService, ProjectSearchCriteria, SimpleProject> tableItem;
-    private ProjectSearchPanel searchPanel;
-    private VerticalLayout listLayout;
-    private SelectionOptionButton selectOptionButton;
-    private PopupButtonControl tableActionControls;
-    private final Label selectedItemsNumberLabel = new Label();
+	private PagedBeanTable2<ProjectService, ProjectSearchCriteria, SimpleProject> tableItem;
+	private ProjectSearchPanel searchPanel;
+	private VerticalLayout listLayout;
+	private SelectionOptionButton selectOptionButton;
+	private PopupButtonControl tableActionControls;
+	private final Label selectedItemsNumberLabel = new Label();
 
-    public MyProjectsListViewImpl() {
-        this.setSpacing(true);
-        this.setMargin(true);
+	public MyProjectsListViewImpl() {
+		this.setSpacing(true);
+		this.setMargin(true);
 
-        searchPanel = new ProjectSearchPanel();
-        searchPanel.addSearchHandler( new SearchHandler<ProjectSearchCriteria>() {
+		searchPanel = new ProjectSearchPanel();
+		searchPanel
+				.addSearchHandler(new SearchHandler<ProjectSearchCriteria>() {
+
+					@Override
+					public void onSearch(ProjectSearchCriteria criteria) {
+						tableItem.setSearchCriteria(criteria);
+					}
+				});
+
+		this.addComponent(searchPanel);
+
+		listLayout = new VerticalLayout();
+		listLayout.setSpacing(true);
+		this.addComponent(listLayout);
+
+		generateDisplayTable();
+	}
+
+	private void generateDisplayTable() {
+		tableItem = new PagedBeanTable2<ProjectService, ProjectSearchCriteria, SimpleProject>(
+				AppContext.getSpringBean(ProjectService.class),
+				SimpleProject.class,
+				new String[] { "selected", "name", "shortname",
+						"actualstartdate", "projectstatus" },
+				new String[] { "", "Name", "Short Name", "Start Date", "Status" });
+
+		tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
-			public void onSearch(ProjectSearchCriteria criteria) {
-				tableItem.setSearchCriteria(criteria);
+			public Object generateCell(final Table source, final Object itemId,
+					Object columnId) {
+				final CheckBox cb = new CheckBox("", false);
+				cb.setImmediate(true);
+				cb.addListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						final SimpleProject project = tableItem
+								.getBeanByIndex(itemId);
+						tableItem.fireSelectItemEvent(project);
+
+					}
+				});
+
+				SimpleProject project = tableItem.getBeanByIndex(itemId);
+				project.setExtraData(cb);
+				return cb;
 			}
-        });
-        
-        this.addComponent(searchPanel);
+		});
 
-        listLayout = new VerticalLayout();
-        listLayout.setSpacing(true);
-        this.addComponent(listLayout);
+		tableItem.addGeneratedColumn("name", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-        generateDisplayTable();
-    }
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleProject project = tableItem.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(project.getName(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-    private void generateDisplayTable() {
-        tableItem = new PagedBeanTable2<ProjectService, ProjectSearchCriteria, SimpleProject>(
-                AppContext.getSpringBean(ProjectService.class),
-                SimpleProject.class, new String[]{"selected", "name", "shortname",
-                    "actualstartdate", "projectstatus"}, new String[]{
-                    "", "Name", "Short Name", "Start Date", "Status"});
+							@Override
+							public void buttonClick(ClickEvent event) {
+								EventBus.getInstance()
+										.fireEvent(
+												new ProjectEvent.GotoMyProject(
+														this,
+														new PageActionChain(
+																new ProjectScreenData.Goto(
+																		project.getId()))));
+							}
+						});
+				b.addStyleName("medium-text");
+				if ("Closed".equals(project.getProjectstatus())) {
+					b.addStyleName(UIConstants.LINK_COMPLETED);
+				} else {
+					if ((project.getPlanenddate() != null && (project
+							.getPlanenddate().before(new GregorianCalendar()
+							.getTime())))
+							|| (project.getActualenddate() != null && (project
+									.getActualenddate()
+									.before(new GregorianCalendar().getTime())))) {
+						b.addStyleName(UIConstants.LINK_OVERDUE);
+					}
+				}
+				return b;
 
-        tableItem.addGeneratedColumn("selected", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+			}
+		});
 
-            @Override
-            public Object generateCell(final Table source, final Object itemId,
-                    Object columnId) {
-                final CheckBox cb = new CheckBox("", false);
-                cb.setImmediate(true);
-                cb.addListener(new Button.ClickListener() {
-                    private static final long serialVersionUID = 1L;
+		tableItem.addGeneratedColumn("actualstartdate", new ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                    	final SimpleProject project = tableItem.getBeanByIndex(itemId);
-                        tableItem.fireSelectItemEvent(project);
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleProject project = tableItem.getBeanByIndex(itemId);
+				return new Label(AppContext.formatDate(project
+						.getActualstartdate()));
 
-                    }
-                });
+			}
+		});
 
-                SimpleProject project = tableItem.getBeanByIndex(itemId);
-                project.setExtraData(cb);
-                return cb;
-            }
-        });
-        
-        tableItem.addGeneratedColumn("name", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+		tableItem.setWidth("100%");
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleProject project = tableItem.getBeanByIndex(itemId);
-                ButtonLink b = new ButtonLink(project.getName(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
+		tableItem.setColumnExpandRatio("name", 1f);
+		tableItem.setColumnWidth("shortname", UIConstants.TABLE_S_LABEL_WIDTH);
+		tableItem.setColumnWidth("actualstartdate",
+				UIConstants.TABLE_DATE_WIDTH);
+		tableItem.setColumnWidth("projectstatus",
+				UIConstants.TABLE_M_LABEL_WIDTH);
 
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                EventBus.getInstance().fireEvent(
-                                        new ProjectEvent.GotoMyProject(this,
-                                        new PageActionChain(new ProjectPageAction(new ScreenData<Integer>(project.getId())))));
-                            }
-                        });
-                b.addStyleName("medium-text");
-                if ("Closed".equals(project.getProjectstatus())) {
-                    b.addStyleName(UIConstants.LINK_COMPLETED);
-                } else {
-                    if ((project.getPlanenddate() != null && (project.getPlanenddate().before(new GregorianCalendar().getTime()))) 
-                    		|| (project.getActualenddate() != null && (project.getActualenddate().before(new GregorianCalendar().getTime())))) {
-                        b.addStyleName(UIConstants.LINK_OVERDUE);
-                    }
-                }
-                return b;
+		listLayout.addComponent(constructTableActionControls());
+		listLayout.addComponent(tableItem);
+	}
 
-            }
-        });
-        
-        tableItem.addGeneratedColumn("actualstartdate", new ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
+	@Override
+	public IPagedBeanTable<ProjectSearchCriteria, SimpleProject> getPagedBeanTable() {
+		return tableItem;
+	}
 
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleProject project = tableItem.getBeanByIndex(itemId);
-                return new Label(AppContext.formatDate(project.getActualstartdate()));
+	private ComponentContainer constructTableActionControls() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
 
-            }
-        });
+		selectOptionButton = new SelectionOptionButton(tableItem);
+		layout.addComponent(selectOptionButton);
 
-        tableItem.setWidth("100%");
+		tableActionControls = new PopupButtonControl("delete", "Delete");
+		tableActionControls.addOptionItem("export", "Export");
 
-        tableItem.setColumnExpandRatio("name", 1f);
-        tableItem
-                .setColumnWidth("shortname", UIConstants.TABLE_S_LABEL_WIDTH);
-        tableItem
-                .setColumnWidth("actualstartdate", UIConstants.TABLE_DATE_WIDTH);
-        tableItem.setColumnWidth("projectstatus",
-                UIConstants.TABLE_M_LABEL_WIDTH);
+		layout.addComponent(tableActionControls);
+		layout.addComponent(selectedItemsNumberLabel);
+		layout.setComponentAlignment(selectedItemsNumberLabel,
+				Alignment.MIDDLE_CENTER);
+		return layout;
+	}
 
-        listLayout.addComponent(constructTableActionControls());
-        listLayout.addComponent(tableItem);
-    }
+	@Override
+	public void enableActionControls(int numOfSelectedItems) {
+		tableActionControls.setVisible(true);
+		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+	}
 
-    @Override
-    public IPagedBeanTable<ProjectSearchCriteria, SimpleProject> getPagedBeanTable() {
-        return tableItem;
-    }
-    
-    private ComponentContainer constructTableActionControls() {
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setSpacing(true);
+	@Override
+	public void disableActionControls() {
+		tableActionControls.setVisible(false);
+		selectOptionButton.setSelectedChecbox(false);
+		selectedItemsNumberLabel.setValue("");
+	}
 
-        selectOptionButton = new SelectionOptionButton(tableItem);
-        layout.addComponent(selectOptionButton);
+	@Override
+	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+		return selectOptionButton;
+	}
 
-        tableActionControls = new PopupButtonControl("delete", "Delete");
-        tableActionControls.addOptionItem("export", "Export");
+	@Override
+	public HasPopupActionHandlers getPopupActionHandlers() {
+		return tableActionControls;
+	}
 
-        layout.addComponent(tableActionControls);
-        layout.addComponent(selectedItemsNumberLabel);
-        layout.setComponentAlignment(selectedItemsNumberLabel,
-                Alignment.MIDDLE_CENTER);
-        return layout;
-    }
-
-    @Override
-    public void enableActionControls(int numOfSelectedItems) {
-        tableActionControls.setVisible(true);
-        selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
-    }
-
-    @Override
-    public void disableActionControls() {
-        tableActionControls.setVisible(false);
-        selectOptionButton.setSelectedChecbox(false);
-        selectedItemsNumberLabel.setValue("");
-    }
-
-    @Override
-    public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-        return selectOptionButton;
-    }
-
-    @Override
-    public HasPopupActionHandlers getPopupActionHandlers() {
-        return tableActionControls;
-    }
-
-    @Override
-    public HasSelectableItemHandlers<SimpleProject> getSelectableItemHandlers() {
-        return tableItem;
-    }
+	@Override
+	public HasSelectableItemHandlers<SimpleProject> getSelectableItemHandlers() {
+		return tableItem;
+	}
 }
