@@ -6,11 +6,12 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Label;
 
 public class TaskDisplayWidget extends
@@ -39,6 +40,12 @@ public class TaskDisplayWidget extends
 						}
 					});
 			taskLink.setStyleName("link");
+			String taskStatus = task.getStatus();
+			if ("Closed".equalsIgnoreCase(taskStatus)) {
+				taskLink.addStyleName(UIConstants.LINK_COMPLETED);
+			} else if (task.isOverdue()) {
+				taskLink.addStyleName(UIConstants.LINK_OVERDUE);
+			}
 			layout.addComponent(taskLink);
 			layout.addComponent(new Label(task.getTaskname()));
 			layout.setDescription("Task Information");
