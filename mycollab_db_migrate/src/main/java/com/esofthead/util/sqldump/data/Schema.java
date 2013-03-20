@@ -1,7 +1,10 @@
 package com.esofthead.util.sqldump.data;
 
+import java.io.Writer;
+import java.util.Hashtable;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Queue;
 
 import com.esofthead.db.sqldump.DbConfiguration;
 import com.esofthead.util.sqldump.DataAdapter;
@@ -63,34 +66,37 @@ public class Schema {
 		}
 	}
 
-	public String dumpSchema() {
-		StringBuilder script = new StringBuilder();
+	public void dumpSchema(Writer writer, boolean isDumpData) throws Exception {
 		for (Table table : Tables) {
-			script.append(table.serialTable());
-			script.append("\r\n\r\n");
+			writer.append(table.serialTable());
+			writer.append("\r\n\r\n");
+		}
+		
+		if (isDumpData) {
+			writer.append("\r\n-- dump data -------------------------------------------\r\n\r\n\r\n");
+			List<Table> lsTables = resolveDependencies();
+			for (Table table : lsTables) {
+				table.dumpTableData(writer);
+			}
 		}
 
-		script.append("\r\n-- Add unique constraint -------------------------------------------\r\n\r\n\r\n");
+		writer.append("\r\n-- Add unique constraint -------------------------------------------\r\n\r\n\r\n");
 
 		for (UniqueIndex index : UniqueIndexs) {
-			script.append(index.serialUniqueIndex());
-			script.append("\r\n\r\n");
+			writer.append(index.serialUniqueIndex());
+			writer.append("\r\n\r\n");
 		}
 
-		script.append("\r\n-- Add foreign key constraint -------------------------------------------\r\n\r\n\r\n");
+		writer.append("\r\n-- Add foreign key constraint -------------------------------------------\r\n\r\n\r\n");
 
 		for (ForeignKeyConstraint constraint : ForeignKeyConstraints) {
-			script.append(constraint.serialForeignConstraint());
-			script.append("\r\n\r\n");
+			writer.append(constraint.serialForeignConstraint());
+			writer.append("\r\n");
 		}
-
-		return script.toString();
 	}
 
 	public static final Schema loadSchema(DbConfiguration config)
 			throws Exception {
-		// DataAdapter.initContext(config.getUserName(), config.getPassword(),
-		// config.getUrl());
 		Schema schema = new Schema(new DataAdapter(config.getUserName(),
 				config.getPassword(), config.getUrl()));
 		schema.loadTable();
@@ -104,5 +110,74 @@ public class Schema {
 			schema.loadForeignKeyConstraint(table.getTableName());
 		}
 		return schema;
+	}
+	
+	private List<Table> resolveDependencies() {
+		List<Table> lsResult = new LinkedList<Table>();
+		
+		Hashtable<String, Integer> childTables = new Hashtable<String, Integer>();
+		Hashtable<String, List<String>> parentTables = new Hashtable<String, List<String>>();
+		
+		for (ForeignKeyConstraint constraint : ForeignKeyConstraints) {
+			List<String> match = parentTables.get(constraint.getPkTableName());
+			if (null == match) {
+				match = new LinkedList<String>();
+				match.add(constraint.getFkTableName());
+				parentTables.put(constraint.getPkTableName(), match);
+			} else {
+				match.add(constraint.getFkTableName());
+			}
+			
+			Integer value = childTables.get(constraint.getFkTableName());
+			if (null == value) {
+				childTables.put(constraint.getFkTableName(), new Integer(1));
+			} else {
+				value += 1;
+			}
+		}
+		
+		Queue<Table> unstackTables = new LinkedList<Table>();
+		
+		for (Table table : Tables) {
+			unstackTables.add(table);
+		}
+		
+		while (unstackTables.size() > 0) {
+			Table table = unstackTables.poll();
+			
+			Integer match = childTables.get(table.getTableName());
+			if (null == match) { /* This table do not have any parent */
+				// add this table to processing list
+				lsResult.add(table);
+				
+				List<String> lsChild = parentTables.get(table.getTableName());
+				if (null != lsChild) {
+					for (String tableName : lsChild) {
+						Integer value = childTables.get(tableName);
+						if (null != value) {
+							value -= 1;
+							if (0 == value) {
+								childTables.remove(tableName);
+							}
+						}
+					}
+					lsChild.clear();
+					lsChild = null;
+					parentTables.remove(table.getTableName());
+				}
+				/* if this table have childs */
+				
+			} else {
+				// add this table to the tail
+				unstackTables.add(table);
+			}
+		}
+		
+		if (parentTables.size() > 0)
+			parentTables.clear();
+		if (childTables.size() > 0)
+			childTables.clear();
+		
+		return lsResult;
 	}
 }

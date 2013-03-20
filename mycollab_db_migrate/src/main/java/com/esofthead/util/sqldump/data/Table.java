@@ -1,18 +1,23 @@
 package com.esofthead.util.sqldump.data;
 
+import java.io.Writer;
 import java.util.LinkedList;
 import java.util.List;
 
 import com.esofthead.util.sqldump.INFORMATION_SCHEMA;
 import com.esofthead.util.sqldump.data.parser.ColumnParser;
+import com.esofthead.util.sqldump.data.parser.IntegerParser;
 import com.esofthead.util.sqldump.data.parser.PrimaryKeyColumnParser;
+import com.esofthead.util.sqldump.data.parser.SqlStringDataParser;
 
 public class Table {
-	
+
+	private static final int MAX_ITEM_PER_QUERY = 100;
+
 	public Table(Schema owner) {
 		this.owner = owner;
 	}
-	
+
 	Schema owner;
 	private String tableName;
 
@@ -89,6 +94,123 @@ public class Table {
 		}
 
 		script.append("\r\n);");
+
+		return script.toString();
+	}
+
+	public void dumpTableData(Writer writer) throws Exception {
+		int count = getCountOfRecords();
+		if (count == 0) {
+			/* Do nothing if no record found */
+			return;
+		}
+
+		final String selectCommand = getSelectCommand();
+		final String insertCommand = getInsertCommand();
+
+		int queryTimes = count / MAX_ITEM_PER_QUERY;
+		if ((count % MAX_ITEM_PER_QUERY) > 0) {
+			queryTimes += 1;
+		}
+
+		writer.append("\r\n\r\n-- Generate script insert data for " + tableName
+				+ " -----------------------------------\r\n");
+		writer.append(disableAutoIncrementColumn());
+
+		SqlStringDataParser parser = new SqlStringDataParser(Columns.size());
+
+		for (int i = 0; i < queryTimes; i++) {
+			int recordIndex = i * MAX_ITEM_PER_QUERY;
+			final String query = String.format(selectCommand, recordIndex,
+					MAX_ITEM_PER_QUERY);
+			List<Object> lsObject = owner.adapter.getData(query, parser);
+
+			for (int j = 0; j < lsObject.size(); j++) {
+				@SuppressWarnings("unchecked")
+				List<SqlStringData> values = (List<SqlStringData>) lsObject
+						.get(j);
+				writer.append(dumpRow(insertCommand, values));
+			}
+		}
+
+		writer.append(enableAutoIncrementColumn());
+
+	}
+
+	private final String getSelectCommand() {
+
+		final String selectTemplate = "SELECT %s FROM %s";
+
+		StringBuilder script = new StringBuilder();
+		Column col = Columns.get(0);
+		script.append(col.getSelectColumn());
+		for (int i = 1; i < Columns.size(); i++) {
+			script.append(", " + Columns.get(i).getSelectColumn());
+		}
+
+		return String.format(selectTemplate, script.toString(), tableName)
+				+ " LIMIT %d, %d";
+	}
+
+	private final String getInsertCommand() {
+		final String insertTemplate = "INSERT INTO %s(%s) VALUES"; // %s;\r\n";
+
+		StringBuilder scriptColumns = new StringBuilder();
+		StringBuilder scriptValues = new StringBuilder();
+
+		Column col = Columns.get(0);
+		scriptColumns.append(col.getColumnName());
+		scriptValues.append(" (%s");
+
+		for (int i = 1; i < Columns.size(); i++) {
+			scriptColumns.append(", " + Columns.get(i).getColumnName());
+			scriptValues.append(", %s");
+		}
+		scriptValues.append(");\r\n");
+
+		return String.format(insertTemplate, tableName, scriptColumns.toString()) + scriptValues.toString();
+	}
+
+	private final int getCountOfRecords() throws Exception {
+		final String selectCount = "SELECT COUNT(*) FROM %s";
+		return (Integer) owner.adapter.getSingleResult(
+				String.format(selectCount, tableName), new IntegerParser());
+	}
+
+	private final String dumpRow(String insertTemplate,
+			List<SqlStringData> values) {
+		Object[] arrs = new String[Columns.size()];
+		for (int i = 0; i < arrs.length; i++) {
+			SqlStringData data = values.get(i);
+			Column col = Columns.get(i);
+			if (data instanceof NullSqlStringData) {
+				arrs[i] = col.representData(null);
+			} else {
+				arrs[i] = col.representData(data.getData());
+			}
+		}
+		return String.format(insertTemplate, arrs);
+	}
+
+	private final String disableAutoIncrementColumn() {
+		StringBuilder script = new StringBuilder();
+		for (Column col : Columns) {
+			String query = col.disableAutoIncrement(tableName);
+			if (null != query) {
+				script.append(query);
+			}
+		}
+		return script.toString();
+	}
+
+	private final String enableAutoIncrementColumn() {
+		StringBuilder script = new StringBuilder();
+		for (Column col : Columns) {
+			String query = col.enableAutoIncrement(tableName);
+			if (null != query) {
+				script.append(query);
+			}
+		}
 		return script.toString();
 	}
 
