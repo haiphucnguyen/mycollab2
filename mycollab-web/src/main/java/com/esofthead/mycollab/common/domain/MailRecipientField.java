@@ -6,7 +6,11 @@ public class MailRecipientField {
 
 	public MailRecipientField(String email, String name) {
 		this.email = email;
-		this.name = name;
+		if (name != null && name.length() > 0) {
+			this.name = name;
+		} else {
+			this.name = email;
+		}
 	}
 	
 	public MailRecipientField(String email) {

@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.schedule.impl;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
@@ -90,11 +91,14 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 			String[][] recipientArr = (String[][]) xstream
 					.fromXML(recipientVal);
 			try {
-//				mailService.sendHTMLMail(relayEmail.getFromemail(),
-//						relayEmail.getFromemail(), recipientArr[0],
-//						recipientArr[1], null, null, null, null,
-//						relayEmail.getSubject(), relayEmail.getBodycontent(),
-//						null);
+				List<MailRecipientField> toMailList = new ArrayList<MailRecipientField>();
+				for (int i = 0; i < recipientArr[0].length; i++) {
+					toMailList.add(new MailRecipientField(recipientArr[0][i], recipientArr[1][i]));
+				}
+				mailService.sendHTMLMail(relayEmail.getFromemail(),
+						relayEmail.getFromemail(), toMailList, null, null,
+						relayEmail.getSubject(), relayEmail.getBodycontent(),
+						null);
 			} catch (Exception e) {
 				log.error("Error when send relay email", e);
 			}
