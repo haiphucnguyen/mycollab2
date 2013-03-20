@@ -53,9 +53,15 @@ public class SimpleTask extends Task {
 	}
 
 	public boolean isOverdue() {
-		Calendar today = Calendar.getInstance();
-		today.set(Calendar.HOUR_OF_DAY, 0);
-		Date todayDate = today.getTime();
-		return todayDate.after(this.getDeadline());
+		if (this.getDeadline() != null) {
+			Calendar today = Calendar.getInstance();
+			today.set(Calendar.HOUR_OF_DAY, 0);
+			Date todayDate = today.getTime();
+
+			return todayDate.after(this.getDeadline());
+		} else {
+			return false;
+		}
+
 	}
 }

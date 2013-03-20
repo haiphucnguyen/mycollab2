@@ -45,7 +45,7 @@
             <![CDATA[${assignUser.operation} m_prj_task.assignUser = #{assignUser.value}]]>
         </if>
         <if test="milestoneId != null">
-            <![CDATA[${milestoneId.operation} ]]>
+            <![CDATA[${milestoneId.operation} m_prj_task_list.milestoneId=#{milestoneId.value,javaType=INTEGER}]]>
         </if>
     </sql>
     
@@ -83,7 +83,7 @@
             <![CDATA[${assignUser.operation} m_prj_task.assignUser = #{assignUser.value}]]>
         </if>
         <if test="milestoneId != null">
-            <![CDATA[${milestoneId.operation} ]]>
+            <![CDATA[${milestoneId.operation} (SELECT COUNT(*) FROM m_prj_task_list WHERE m_prj_task_list.id=m_prj_task.id AND m_prj_task_list.milestoneId=#{milestoneId.value,javaType=INTEGER}) > 0 ]]>
         </if>
     </sql>
 
