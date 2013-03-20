@@ -47,10 +47,9 @@ public class ToggleButtonGroup extends ButtonGroup {
 					"Given old button does not exist in this group");
 		}
 
-		this.defaultSelection = this.buttons.indexOf(defaultChoice);
-		this.requestRepaint();
+		setDefaultSelectionByIndex(this.buttons.indexOf(defaultChoice));
 	}
-	
+
 	public void setDefaultSelectionByIndex(int buttonIndex) {
 		this.defaultSelection = buttonIndex;
 		this.requestRepaint();
@@ -61,6 +60,7 @@ public class ToggleButtonGroup extends ButtonGroup {
 		if (this.defaultSelection == -1)
 			return;
 
+		this.removeButtonsCss("selected");
 		this.buttons.get(defaultSelection).addStyleName("selected");
 
 	}
