@@ -40,28 +40,28 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
 			presenter = PresenterResolver.getPresenter(BugAddPresenter.class);
 		} else if (data instanceof ScreenData.Preview) {
 			presenter = PresenterResolver.getPresenter(BugReadPresenter.class);
-		} else if (data instanceof BugContainer.AddComponentData) {
+		} else if (data instanceof ComponentScreenData.Add) {
 			presenter = PresenterResolver
 					.getPresenter(ComponentAddPresenter.class);
-		} else if (data instanceof BugContainer.EditComponentData) {
+		} else if (data instanceof ComponentScreenData.Edit) {
 			presenter = PresenterResolver
 					.getPresenter(ComponentAddPresenter.class);
-		} else if (data instanceof BugContainer.SearchComponentData) {
+		} else if (data instanceof ComponentScreenData.Search) {
 			presenter = PresenterResolver
 					.getPresenter(ComponentListPresenter.class);
-		} else if (data instanceof BugContainer.ReadComponentData) {
+		} else if (data instanceof ComponentScreenData.Read) {
 			presenter = PresenterResolver
 					.getPresenter(ComponentReadPresenter.class);
-		} else if (data instanceof BugContainer.AddVersionData) {
+		} else if (data instanceof VersionScreenData.Add) {
 			presenter = PresenterResolver
 					.getPresenter(VersionAddPresenter.class);
-		} else if (data instanceof BugContainer.EditVersionData) {
+		} else if (data instanceof VersionScreenData.Edit) {
 			presenter = PresenterResolver
 					.getPresenter(VersionAddPresenter.class);
-		} else if (data instanceof BugContainer.SearchVersionData) {
+		} else if (data instanceof VersionScreenData.Search) {
 			presenter = PresenterResolver
 					.getPresenter(VersionListPresenter.class);
-		} else if (data instanceof BugContainer.ReadVersionData) {
+		} else if (data instanceof VersionScreenData.Search) {
 			presenter = PresenterResolver
 					.getPresenter(VersionReadPresenter.class);
 		} else {
@@ -75,28 +75,9 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
 	@Override
 	public void handleChain(ComponentContainer container,
 			PageActionChain pageActionChain) {
-		ProjectView projectViewContainer = (ProjectView) container;
-		projectViewContainer.gotoSubView("Bugs");
-
-		view.removeAllComponents();
 
 		ScreenData pageAction = pageActionChain.pop();
-
-		AbstractPresenter presenter;
-		if (pageAction instanceof BugScreenData.Read) {
-			presenter = PresenterResolver.getPresenter(BugReadPresenter.class);
-		} else if (pageAction instanceof ComponentScreenData.Read) {
-			presenter = PresenterResolver
-					.getPresenter(ComponentReadPresenter.class);
-		} else if (pageAction instanceof VersionScreenData.Read) {
-			presenter = PresenterResolver
-					.getPresenter(VersionReadPresenter.class);
-		} else {
-			throw new UnsupportedOperationException(
-					"Do not support handle page action " + pageAction);
-		}
-
-		presenter.go(view, pageAction);
+		onGo(container, pageAction);
 	}
 
 }

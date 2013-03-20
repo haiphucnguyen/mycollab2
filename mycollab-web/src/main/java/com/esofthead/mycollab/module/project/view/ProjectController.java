@@ -38,15 +38,16 @@ import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
-import com.esofthead.mycollab.module.project.view.bug.BugContainer;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
+import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.VersionScreenData;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
@@ -598,7 +599,7 @@ public class ProjectController implements IController {
 					public void handle(BugComponentEvent.GotoAdd event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						BugContainer.AddComponentData data = new BugContainer.AddComponentData(
+						ComponentScreenData.Add data = new ComponentScreenData.Add(
 								new Component());
 						projectView.gotoBugView(data);
 					}
@@ -615,7 +616,7 @@ public class ProjectController implements IController {
 					public void handle(BugComponentEvent.GotoEdit event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						BugContainer.EditComponentData data = new BugContainer.EditComponentData(
+						ComponentScreenData.Edit data = new ComponentScreenData.Edit(
 								(Component) event.getData());
 						projectView.gotoBugView(data);
 					}
@@ -632,7 +633,7 @@ public class ProjectController implements IController {
 					public void handle(BugComponentEvent.GotoRead event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						BugContainer.ReadComponentData data = new BugContainer.ReadComponentData(
+						ComponentScreenData.Read data = new ComponentScreenData.Read(
 								(Integer) event.getData());
 						projectView.gotoBugView(data);
 					}
@@ -652,9 +653,8 @@ public class ProjectController implements IController {
 						ComponentSearchCriteria criteria = new ComponentSearchCriteria();
 						criteria.setProjectid(new NumberSearchField(
 								CurrentProjectVariables.getProjectId()));
-						projectView
-								.gotoBugView(new BugContainer.SearchComponentData(
-										criteria));
+						projectView.gotoBugView(new ComponentScreenData.Search(
+								criteria));
 					}
 				});
 
@@ -669,7 +669,7 @@ public class ProjectController implements IController {
 					public void handle(BugVersionEvent.GotoAdd event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						BugContainer.AddVersionData data = new BugContainer.AddVersionData(
+						VersionScreenData.Add data = new VersionScreenData.Add(
 								new Version());
 						projectView.gotoBugView(data);
 					}
@@ -686,7 +686,7 @@ public class ProjectController implements IController {
 					public void handle(BugVersionEvent.GotoEdit event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						BugContainer.EditVersionData data = new BugContainer.EditVersionData(
+						VersionScreenData.Edit data = new VersionScreenData.Edit(
 								(Version) event.getData());
 						projectView.gotoBugView(data);
 					}
@@ -703,7 +703,7 @@ public class ProjectController implements IController {
 					public void handle(BugVersionEvent.GotoRead event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						BugContainer.ReadVersionData data = new BugContainer.ReadVersionData(
+						VersionScreenData.Read data = new VersionScreenData.Read(
 								(Integer) event.getData());
 						projectView.gotoBugView(data);
 					}
@@ -723,9 +723,8 @@ public class ProjectController implements IController {
 						VersionSearchCriteria criteria = new VersionSearchCriteria();
 						criteria.setProjectId(new NumberSearchField(
 								CurrentProjectVariables.getProjectId()));
-						projectView
-								.gotoBugView(new BugContainer.SearchVersionData(
-										criteria));
+						projectView.gotoBugView(new VersionScreenData.Search(
+								criteria));
 					}
 				});
 	}
