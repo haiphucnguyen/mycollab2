@@ -45,8 +45,9 @@ import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
-import com.esofthead.mycollab.module.project.view.task.TaskContainer;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Component;
@@ -153,7 +154,7 @@ public class ProjectController implements IController {
 					public void handle(TaskListEvent.GotoRead event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						TaskContainer.PreviewTaskListData data = new TaskContainer.PreviewTaskListData(
+						TaskGroupScreenData.Read data = new TaskGroupScreenData.Read(
 								(Integer) event.getData());
 						projectView.gotoTaskList(data);
 					}
@@ -172,7 +173,7 @@ public class ProjectController implements IController {
 					public void handle(TaskListEvent.GotoEdit event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						TaskContainer.EditTaskListData data = new TaskContainer.EditTaskListData(
+						TaskGroupScreenData.Edit data = new TaskGroupScreenData.Edit(
 								(TaskList) event.getData());
 						projectView.gotoTaskList(data);
 					}
@@ -194,7 +195,7 @@ public class ProjectController implements IController {
 								ProjectView projectView = ViewManager
 										.getView(ProjectView.class);
 								projectView
-										.gotoTaskList((TaskContainer.DisplayGanttChartRequest) event
+										.gotoTaskList((TaskGroupScreenData.DisplayGanttChartRequest) event
 												.getData());
 							}
 						});
@@ -212,7 +213,7 @@ public class ProjectController implements IController {
 					public void handle(TaskListEvent.GotoAdd event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						TaskContainer.AddTaskListData data = new TaskContainer.AddTaskListData(
+						TaskGroupScreenData.Add data = new TaskGroupScreenData.Add(
 								new TaskList());
 						projectView.gotoTaskList(data);
 					}
@@ -250,7 +251,7 @@ public class ProjectController implements IController {
 					public void handle(TaskListEvent.ReoderTaskList event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						TaskContainer.ReorderTaskListRequest data = new TaskContainer.ReorderTaskListRequest();
+						TaskGroupScreenData.ReorderTaskListRequest data = new TaskGroupScreenData.ReorderTaskListRequest();
 						projectView.gotoTaskList(data);
 					}
 				});
@@ -271,7 +272,7 @@ public class ProjectController implements IController {
 					public void handle(TaskEvent.GotoRead event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						TaskContainer.PreviewTaskData data = new TaskContainer.PreviewTaskData(
+						TaskScreenData.Read data = new TaskScreenData.Read(
 								(Integer) event.getData());
 						projectView.gotoTaskList(data);
 					}
@@ -290,7 +291,7 @@ public class ProjectController implements IController {
 					public void handle(TaskEvent.GotoAdd event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						TaskContainer.AddTaskData data = new TaskContainer.AddTaskData(
+						TaskScreenData.Add data = new TaskScreenData.Add(
 								new Task());
 						projectView.gotoTaskList(data);
 					}
@@ -309,7 +310,7 @@ public class ProjectController implements IController {
 					public void handle(TaskEvent.GotoEdit event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						TaskContainer.EditTaskData data = new TaskContainer.EditTaskData(
+						TaskScreenData.Edit data = new TaskScreenData.Edit(
 								(Task) event.getData());
 						projectView.gotoTaskList(data);
 					}

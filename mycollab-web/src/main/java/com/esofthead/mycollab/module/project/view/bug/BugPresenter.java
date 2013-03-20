@@ -2,8 +2,9 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.VersionScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.mvp.PageAction;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.Presenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
@@ -79,15 +80,15 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
 
 		view.removeAllComponents();
 
-		PageAction pageAction = pageActionChain.pop();
+		ScreenData pageAction = pageActionChain.pop();
 
 		AbstractPresenter presenter;
-		if (pageAction instanceof BugReadPageAction) {
+		if (pageAction instanceof BugScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(BugReadPresenter.class);
-		} else if (pageAction instanceof ComponentReadPageAction) {
+		} else if (pageAction instanceof ComponentScreenData.Read) {
 			presenter = PresenterResolver
 					.getPresenter(ComponentReadPresenter.class);
-		} else if (pageAction instanceof VersionReadPageAction) {
+		} else if (pageAction instanceof VersionScreenData.Read) {
 			presenter = PresenterResolver
 					.getPresenter(VersionReadPresenter.class);
 		} else {
@@ -95,7 +96,7 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
 					"Do not support handle page action " + pageAction);
 		}
 
-		presenter.go(view, pageAction.getScreenData());
+		presenter.go(view, pageAction);
 	}
 
 }

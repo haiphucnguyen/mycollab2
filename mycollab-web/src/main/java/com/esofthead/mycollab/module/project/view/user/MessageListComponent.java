@@ -7,15 +7,14 @@ import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
-import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.MessageService;
-import com.esofthead.mycollab.module.project.view.ProjectPageAction;
+import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -29,7 +28,7 @@ import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
-public class MessageListComponent  extends Depot {
+public class MessageListComponent extends Depot {
 	private static final long serialVersionUID = 1L;
 
 	private DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage> messageList;
@@ -47,7 +46,6 @@ public class MessageListComponent  extends Depot {
 
 	public void showLatestMessages(List<Integer> prjKeys) {
 		MessageSearchCriteria searchCriteria = new MessageSearchCriteria();
-		
 
 		messageList.setSearchCriteria(searchCriteria);
 	}
@@ -65,7 +63,7 @@ public class MessageListComponent  extends Depot {
 			header.setStyleName("stream-content");
 			header.addComponent(new ProjectUserLink(obj.getPosteduser(), obj
 					.getFullPostedUserName(), true));
-			
+
 			Label actionLbl = new Label(" added news ");
 			actionLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 			header.addComponent(actionLbl);
@@ -76,23 +74,28 @@ public class MessageListComponent  extends Depot {
 
 						@Override
 						public void buttonClick(ClickEvent event) {
-							EventBus.getInstance().fireEvent(
-									new MessageEvent.GotoRead(
-											MessageRowDisplayHandler.this, obj
-													.getId()));
+							EventBus.getInstance()
+									.fireEvent(
+											new ProjectEvent.GotoMyProject(
+													this,
+													new PageActionChain(
+															new ProjectScreenData.Goto(
+																	obj.getProjectid()),
+															new MessageScreenData.Read(
+																	obj.getId()))));
 						}
 					});
 			messageLink.setStyleName("link");
 			messageLink.setIcon(ProjectResources
 					.getIconResource16size(ProjectContants.MESSAGE));
 			header.addComponent(messageLink);
-			
+
 			Label projectLbl = new Label(" in project ");
 			projectLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 			header.addComponent(projectLbl);
-			
-			Button projectLink = generateProjectLink(
-					obj.getProjectName(), new Button.ClickListener() {
+
+			Button projectLink = generateProjectLink(obj.getProjectName(),
+					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
 						@Override
@@ -102,17 +105,15 @@ public class MessageListComponent  extends Depot {
 											new ProjectEvent.GotoMyProject(
 													this,
 													new PageActionChain(
-															new ProjectPageAction(
-																	new ScreenData(
-																			obj
-																					.getProjectid())))));
+															new ProjectScreenData.Goto(
+																	obj.getProjectid()))));
 						}
 					});
 			projectLink.setIcon(ProjectResources
 					.getIconResource16size(ProjectContants.PROJECT));
 			projectLink.setStyleName("link");
 			header.addComponent(projectLink);
-			
+
 			layout.addComponent(header);
 
 			CssLayout body = new CssLayout();
@@ -126,11 +127,11 @@ public class MessageListComponent  extends Depot {
 		}
 
 	}
-	
+
 	private static Button generateProjectLink(String linkname,
 			Button.ClickListener listener) {
-		return CommonUIFactory.createButtonTooltip(
-				handleText(linkname), linkname, listener);
+		return CommonUIFactory.createButtonTooltip(handleText(linkname),
+				linkname, listener);
 	}
 
 	private static String handleText(String value) {

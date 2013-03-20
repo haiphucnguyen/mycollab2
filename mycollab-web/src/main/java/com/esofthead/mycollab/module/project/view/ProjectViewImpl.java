@@ -122,7 +122,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		myProjectTab.addTab(constructProjectMessageComponent(), new MenuButton(
 				"Messages", "menu_message.png"));
 		myProjectTab.addTab(constructProjectMilestoneComponent(),
-				new MenuButton("Milestones", "menu_milestone.png"));
+				new MenuButton("Phases", "menu_milestone.png"));
 		myProjectTab.addTab(constructTaskDashboardComponent(), new MenuButton(
 				"Tasks", "menu_task.png"));
 		myProjectTab.addTab(constructProjectBugComponent(), new MenuButton(
@@ -145,8 +145,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 						mySpaceArea.setStyleName("projectTabContent");
 						if ("Messages".equals(caption)) {
 							messagePresenter.go(ProjectViewImpl.this, null);
-						} else if ("Milestones".equals(caption)) {
-							mySpaceArea.addStyleName("Milestones");
+						} else if ("Phases".equals(caption)) {
+							mySpaceArea.addStyleName("Phases");
 							MilestoneSearchCriteria searchCriteria = new MilestoneSearchCriteria();
 							searchCriteria.setProjectId(new NumberSearchField(
 									SearchField.AND, CurrentProjectVariables
@@ -154,11 +154,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 							gotoMilestoneView(new ScreenData.Search<MilestoneSearchCriteria>(
 									searchCriteria));
 						} else if ("Tasks".equals(caption)) {
-							taskPresenter.go(
-									ProjectViewImpl.this,
-									new ScreenData<SimpleProject>(
-											CurrentProjectVariables
-													.getProject()));
+							taskPresenter.go(ProjectViewImpl.this, null);
 						} else if ("Bugs".equals(caption)) {
 							gotoBugView(null);
 						} else if ("Risks".equals(caption)) {
@@ -302,12 +298,13 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 								new ScreenData.Edit<Project>(project));
 					}
 				});
-		editProjectBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.PROJECT));
+		editProjectBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.PROJECT));
 		SplitButtonExt controlsBtn = new SplitButtonExt(editProjectBtn);
 		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
 		controlsBtn.setCaption("Edit Project");
 		controlsBtn.setIcon(new ThemeResource("icons/16/edit.png"));
-		
+
 		Button selectBtn = new Button("View Project Detail",
 				new Button.ClickListener() {
 					@Override
@@ -315,7 +312,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 						dashboardPresenter.go(ProjectViewImpl.this, null);
 					}
 				});
-		selectBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.PROJECT));
+		selectBtn.setEnabled(CurrentProjectVariables
+				.canRead(ProjectRolePermissionCollections.PROJECT));
 		selectBtn.setIcon(new ThemeResource("icons/16/view.png"));
 		selectBtn.setStyleName("link");
 		controlsBtn.addComponent(selectBtn);

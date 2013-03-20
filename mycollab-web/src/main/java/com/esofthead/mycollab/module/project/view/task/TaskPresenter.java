@@ -5,8 +5,9 @@
 package com.esofthead.mycollab.module.project.view.task;
 
 import com.esofthead.mycollab.module.project.view.ProjectView;
+import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
-import com.esofthead.mycollab.vaadin.mvp.PageAction;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -37,22 +38,22 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 
 		AbstractPresenter presenter = null;
 
-		if (data instanceof TaskContainer.PreviewTaskData) {
+		if (data instanceof TaskScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(TaskReadPresenter.class);
-		} else if (data instanceof TaskContainer.PreviewTaskListData) {
+		} else if (data instanceof TaskGroupScreenData.Read) {
 			presenter = PresenterResolver
 					.getPresenter(TaskGroupReadPresenter.class);
-		} else if (data instanceof TaskContainer.EditTaskData) {
+		} else if (data instanceof TaskScreenData.Edit) {
 			presenter = PresenterResolver.getPresenter(TaskAddPresenter.class);
-		} else if (data instanceof TaskContainer.AddTaskData) {
+		} else if (data instanceof TaskScreenData.Add) {
 			presenter = PresenterResolver.getPresenter(TaskAddPresenter.class);
-		} else if (data instanceof TaskContainer.EditTaskListData) {
+		} else if (data instanceof TaskGroupScreenData.Edit) {
 			presenter = PresenterResolver
 					.getPresenter(TaskGroupAddPresenter.class);
-		} else if (data instanceof TaskContainer.ReorderTaskListRequest) {
+		} else if (data instanceof TaskGroupScreenData.ReorderTaskListRequest) {
 			presenter = PresenterResolver
 					.getPresenter(TaskGroupReorderPresenter.class);
-		} else if (data instanceof TaskContainer.DisplayGanttChartRequest) {
+		} else if (data instanceof TaskGroupScreenData.DisplayGanttChartRequest) {
 			presenter = PresenterResolver
 					.getPresenter(TaskGanttChatPresenter.class);
 		} else {
@@ -73,10 +74,10 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 
 		AbstractPresenter presenter;
 
-		PageAction pageAction = pageActionChain.peek();
-		if (pageAction instanceof TaskReadPageAction) {
+		ScreenData pageAction = pageActionChain.peek();
+		if (pageAction instanceof TaskScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(TaskReadPresenter.class);
-		} else if (pageAction instanceof TaskGroupReadPageAction) {
+		} else if (pageAction instanceof TaskGroupScreenData.Read) {
 			presenter = PresenterResolver
 					.getPresenter(TaskGroupReadPresenter.class);
 		} else {
@@ -84,6 +85,6 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 					"Do not support page action " + pageAction);
 		}
 
-		presenter.go(view, pageAction.getScreenData());
+		presenter.go(view, pageAction);
 	}
 }

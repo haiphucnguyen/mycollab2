@@ -18,21 +18,20 @@ import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.ProjectPageAction;
-import com.esofthead.mycollab.module.project.view.bug.BugReadPageAction;
-import com.esofthead.mycollab.module.project.view.bug.ComponentReadPageAction;
-import com.esofthead.mycollab.module.project.view.bug.VersionReadPageAction;
-import com.esofthead.mycollab.module.project.view.message.MessageReadPageAction;
-import com.esofthead.mycollab.module.project.view.milestone.MilestoneReadPageAction;
+import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.VersionScreenData;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
-import com.esofthead.mycollab.module.project.view.problem.ProblemReadPageAction;
-import com.esofthead.mycollab.module.project.view.risk.RiskReadPageAction;
-import com.esofthead.mycollab.module.project.view.task.TaskGroupReadPageAction;
-import com.esofthead.mycollab.module.project.view.task.TaskReadPageAction;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
@@ -169,10 +168,9 @@ public class ActivityStreamComponent extends Depot {
 											new ProjectEvent.GotoMyProject(
 													this,
 													new PageActionChain(
-															new ProjectPageAction(
-																	new ScreenData(
-																			activityStream
-																					.getProjectId())))));
+															new ProjectScreenData.Goto(
+																	activityStream
+																			.getProjectId()))));
 						}
 					});
 			projectLink.setIcon(ProjectResources
@@ -237,67 +235,60 @@ public class ActivityStreamComponent extends Depot {
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this,
 										new PageActionChain(
-												new ProjectPageAction(
-														new ScreenData(
-																projectid)))));
+												new ProjectScreenData.Goto(
+														projectid))));
 					} else if (ProjectContants.MESSAGE.equals(type)) {
 						PageActionChain chain = new PageActionChain(
-								new ProjectPageAction(new ScreenData(projectid)),
-								new MessageReadPageAction(
-										new ScreenData(typeid)));
+								new ProjectScreenData.Goto(projectid),
+								new MessageScreenData.Read(typeid));
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this, chain));
 					} else if (ProjectContants.MILESTONE.equals(type)) {
 						PageActionChain chain = new PageActionChain(
-								new ProjectPageAction(new ScreenData(projectid)),
-								new MilestoneReadPageAction(new ScreenData(
-										typeid)));
+								new ProjectScreenData.Goto(projectid),
+								new MilestoneScreenData.Read(typeid));
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this, chain));
 					} else if (ProjectContants.PROBLEM.equals(type)) {
 						PageActionChain chain = new PageActionChain(
-								new ProjectPageAction(new ScreenData(projectid)),
-								new ProblemReadPageAction(
-										new ScreenData(typeid)));
+								new ProjectScreenData.Goto(projectid),
+								new ProblemScreenData.Read(typeid));
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this, chain));
 					} else if (ProjectContants.RISK.equals(type)) {
 						PageActionChain chain = new PageActionChain(
-								new ProjectPageAction(new ScreenData(projectid)),
-								new RiskReadPageAction(new ScreenData(typeid)));
+								new ProjectScreenData.Goto(projectid),
+								new RiskScreenData.Read(typeid));
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this, chain));
 					} else if (ProjectContants.TASK.equals(type)) {
 						PageActionChain chain = new PageActionChain(
-								new ProjectPageAction(new ScreenData(projectid)),
-								new TaskReadPageAction(new ScreenData(typeid)));
+								new ProjectScreenData.Goto(projectid),
+								new TaskScreenData.Read(typeid));
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this, chain));
 					} else if (ProjectContants.TASK_LIST.equals(type)) {
 						PageActionChain chain = new PageActionChain(
-								new ProjectPageAction(new ScreenData(projectid)),
-								new TaskGroupReadPageAction(new ScreenData(
-										typeid)));
+								new ProjectScreenData.Goto(projectid),
+								new TaskGroupScreenData.Read(typeid));
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this, chain));
 					} else if (ProjectContants.BUG.equals(type)) {
 						PageActionChain chain = new PageActionChain(
-								new ProjectPageAction(new ScreenData(projectid)),
-								new BugReadPageAction(new ScreenData(typeid)));
+								new ProjectScreenData.Goto(projectid),
+								new BugScreenData.Read(typeid));
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this, chain));
 					} else if (ProjectContants.BUG_COMPONENT.equals(type)) {
 						PageActionChain chain = new PageActionChain(
-								new ProjectPageAction(new ScreenData(projectid)),
-								new ComponentReadPageAction(new ScreenData(
-										typeid)));
+								new ProjectScreenData.Goto(projectid),
+								new ComponentScreenData.Read(typeid));
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this, chain));
 					} else if (ProjectContants.BUG_VERSION.equals(type)) {
 						PageActionChain chain = new PageActionChain(
-								new ProjectPageAction(new ScreenData(projectid)),
-								new VersionReadPageAction(
-										new ScreenData(typeid)));
+								new ProjectScreenData.Goto(projectid),
+								new VersionScreenData.Read(typeid));
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this, chain));
 					}
