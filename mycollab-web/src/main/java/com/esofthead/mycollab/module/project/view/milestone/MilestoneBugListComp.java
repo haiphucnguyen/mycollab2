@@ -12,8 +12,14 @@ import com.esofthead.mycollab.module.project.view.bug.UnresolvedBugsByAssigneeWi
 import com.esofthead.mycollab.module.project.view.bug.UnresolvedBugsByPriorityWidget;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
+import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
+import com.vaadin.ui.Button.ClickEvent;
 
 public class MilestoneBugListComp extends VerticalLayout implements
 		IBugReportDisplayContainer {
@@ -23,15 +29,61 @@ public class MilestoneBugListComp extends VerticalLayout implements
 
 	public MilestoneBugListComp() {
 		this.setMargin(true);
+		constructHeader();
+	}
+	
+	private void constructHeader() {
+		HorizontalLayout header = new HorizontalLayout();
+		header.setMargin(true, false, false, false);
+		header.setSpacing(true);
+		header.setWidth("100%");
+		Label taskGroupSelection = new Label("Tasks");
+		taskGroupSelection.addStyleName("h2");
+		header.addComponent(taskGroupSelection);
+		header.setExpandRatio(taskGroupSelection, 1.0f);
+		header.setComponentAlignment(taskGroupSelection, Alignment.MIDDLE_LEFT);
+
+		ToggleButtonGroup viewGroup = new ToggleButtonGroup();
+
+		Button simpleDisplay = new Button(null, new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				displaySimpleView();
+			}
+		});
+		simpleDisplay.setIcon(new ThemeResource(
+				"icons/16/project/list_display.png"));
+
+		viewGroup.addButton(simpleDisplay);
+
+		Button advanceDisplay = new Button(null, new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				displayAdvancedView();
+			}
+		});
+		advanceDisplay.setIcon(new ThemeResource(
+				"icons/16/project/bug_advanced_display.png"));
+		viewGroup.addButton(advanceDisplay);
+		header.addComponent(viewGroup);
+		header.setComponentAlignment(viewGroup, Alignment.MIDDLE_RIGHT);
+		this.addComponent(header);
 	}
 
 	public void displayBugs(Milestone milestone) {
 		this.milestone = milestone;
 		displayBugReports();
 	}
-
-	@Override
-	public void displayBugReports() {
+	
+	private void displaySimpleView() {
+		
+	}
+	
+	private void displayAdvancedView() {
 		this.removeAllComponents();
 		HorizontalLayout bodyLayout = new HorizontalLayout();
 		bodyLayout.setSpacing(true);
@@ -86,6 +138,11 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		rightColumn.addComponent(bugChartComponent);
 
 		this.addComponent(bodyLayout);
+	}
+
+	@Override
+	public void displayBugReports() {
+		displayAdvancedView();
 	}
 
 	@Override

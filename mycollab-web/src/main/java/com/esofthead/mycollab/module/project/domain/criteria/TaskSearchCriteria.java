@@ -11,6 +11,7 @@ public class TaskSearchCriteria extends SearchCriteria {
     private DateTimeSearchField greaterThan;
     private DateTimeSearchField lessThan;
     private NumberSearchField taskListId;
+    private NumberSearchField milestoneId;
     private NumberSearchField id;
     private StringSearchField assignUser;
     
@@ -70,5 +71,13 @@ public class TaskSearchCriteria extends SearchCriteria {
 
 	public void setAssignUser(StringSearchField assignUser) {
 		this.assignUser = assignUser;
+	}
+
+	public NumberSearchField getMilestoneId() {
+		return milestoneId;
+	}
+
+	public void setMilestoneId(NumberSearchField milestoneId) {
+		this.milestoneId = milestoneId;
 	}
 }
