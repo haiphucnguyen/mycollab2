@@ -2604,10 +2604,19 @@ div.v-lazyloadingwrapper-loading {
 
 /* Toggle Button Group */
 .v-buttongroup.toggle-btn-group .v-button.selected, .v-buttongroup.toggle-btn-group .v-button.selected:active, .v-buttongroup.toggle-btn-group .v-button.selected:focus {
-	background: none no-repeat scroll left bottom rgb(40, 126, 206);
+	background: url("icons/grad-dark-top2.png") no-repeat scroll left bottom rgb(40, 126, 206);
 }
 .v-buttongroup.toggle-btn-group .v-button.v-button-left, .v-buttongroup.toggle-btn-group .v-button.v-button-middle, .v-buttongroup.toggle-btn-group .v-button.v-button-right {
-	border-color: rgb(221, 221, 221);
+	border: none;
+}
+.v-buttongroup.toggle-btn-group .v-button.v-button-left {
+	margin-right: 1px;
+}
+.v-buttongroup.toggle-btn-group .v-button.v-button-right {
+	margin-left: 1px;
+}
+.v-buttongroup.toggle-btn-group .v-button.v-button-middle {
+	margin: 0px 1px;
 }
 .v-buttongroup.toggle-btn-group .v-button .v-button-wrap {
 	background: none;
@@ -2623,7 +2632,7 @@ div.v-lazyloadingwrapper-loading {
 }
 .v-buttongroup.toggle-btn-group .v-button.v-button-left:active,.v-buttongroup.toggle-btn-group .v-button.v-button-middle:active,.v-buttongroup.toggle-btn-group .v-button.v-button-right:active,.v-buttongroup.toggle-btn-group .v-button.v-button-left:focus,.v-buttongroup.toggle-btn-group .v-button.v-button-middle:focus,.v-buttongroup.toggle-btn-group .v-button.v-button-right:focus
 {
-	background: none no-repeat scroll left bottom rgb(40, 126, 206);
+	background: url("icons/grad-dark-top2.png") no-repeat scroll left bottom rgb(40, 126, 206);
 }
 .v-buttongroup.toggle-btn-group .v-button {
 	background: url("icons/grad-dark-bottom2.png") repeat-x scroll left bottom rgb(123, 123, 123);

@@ -2,11 +2,13 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.core.utils.EmailValidator;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
 import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
@@ -139,7 +141,15 @@ public class FeedbackWindow extends Window {
 				String email = emailTextField.getValue().toString().trim();
 				String subject = subjectTextField.getValue().toString().trim();
 				EmailValidator emailValidator = new EmailValidator();
-				if (!email.equals("") && !subject.equals("") && emailValidator.validate(email)) {
+				if (!emailValidator.validate(email)) {
+					MessageBox mb = new MessageBox(AppContext.getApplication()
+							.getMainWindow(), "Warming!", MessageBox.Icon.WARN,
+							"The email is not valid, please check it again!",
+							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
+					mb.show();
+					return;
+				}
+				if (!email.equals("") && !subject.equals("")) {
 					ExtMailService systemMailService = AppContext
 							.getSpringBean(ExtMailService.class);
 					List<File> listFile = attachments.getListFile();
@@ -161,10 +171,10 @@ public class FeedbackWindow extends Window {
 
 					FeedbackWindow.this.close();
 
-					systemMailService.sendHTMLMail(email, nameEmailFrom,
-							new String[] { toEmail }, new String[] { toEmail },
-							subject, contentArea.getValue().toString(),
-							emailAttachmentSource);
+					systemMailService.sendHTMLMail(email, nameEmailFrom, Arrays
+							.asList(new MailRecipientField(toEmail, toEmail)),
+							null, null, subject, contentArea.getValue()
+									.toString(), emailAttachmentSource);
 
 				} else {
 					MessageBox mb = new MessageBox(

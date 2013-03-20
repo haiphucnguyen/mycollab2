@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.schedule.impl;
 
+import java.util.Arrays;
 import java.util.List;
 
 import org.apache.ibatis.session.SqlSession;
@@ -15,6 +16,7 @@ import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.dao.ReportBugIssueMapper;
+import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.RelayEmailWithBLOBs;
 import com.esofthead.mycollab.common.domain.ReportBugIssueExample;
 import com.esofthead.mycollab.common.domain.ReportBugIssueWithBLOBs;
@@ -65,12 +67,11 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 						"templates/email/errorReport.mt");
 				templateGenerator.putVariable("issueCol", listIssues);
 				mailService.sendHTMLMail("mail@esofthead.com", "Error Agent",
-						new String[] { ApplicationProperties
-								.getSendErrorEmail() },
-						new String[] { ApplicationProperties
-								.getSendErrorEmail() }, templateGenerator
-								.generateSubjectContent(), templateGenerator
-								.generateBodyContent(), null);
+						Arrays.asList(new MailRecipientField(
+								ApplicationProperties.getSendErrorEmail(),
+								ApplicationProperties.getSendErrorEmail())),
+						null, null, templateGenerator.generateSubjectContent(),
+						templateGenerator.generateBodyContent(), null);
 			}
 		} finally {
 			session.close();
@@ -89,10 +90,11 @@ public class MyCollabScheduleServiceImpl implements MyCollabScheduleService {
 			String[][] recipientArr = (String[][]) xstream
 					.fromXML(recipientVal);
 			try {
-				mailService.sendHTMLMail(relayEmail.getFromemail(),
-						relayEmail.getFromemail(), recipientArr[0],
-						recipientArr[1], relayEmail.getSubject(),
-						relayEmail.getBodycontent(), null);
+//				mailService.sendHTMLMail(relayEmail.getFromemail(),
+//						relayEmail.getFromemail(), recipientArr[0],
+//						recipientArr[1], null, null, null, null,
+//						relayEmail.getSubject(), relayEmail.getBodycontent(),
+//						null);
 			} catch (Exception e) {
 				log.error("Error when send relay email", e);
 			}

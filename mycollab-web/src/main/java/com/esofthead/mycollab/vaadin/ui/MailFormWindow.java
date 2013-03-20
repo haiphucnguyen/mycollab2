@@ -1,9 +1,15 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.io.File;
+import java.util.ArrayList;
 import java.util.List;
 
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
+import com.esofthead.mycollab.module.mail.EmailAttachementSource;
+import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
+import com.esofthead.mycollab.module.mail.service.ExtMailService;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -18,12 +24,15 @@ import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
 
+import de.steinwedel.vaadin.MessageBox;
+import de.steinwedel.vaadin.MessageBox.ButtonType;
+
 public class MailFormWindow extends Window {
 
 	private static final long serialVersionUID = 1L;
-	private TokenFieldTextField tokenFieldMailTo;
-	private final TokenFieldTextField tokenFieldMailCc = new TokenFieldTextField();
-	private final TokenFieldTextField tokenFieldMailBcc = new TokenFieldTextField();
+	private EmailTokenField tokenFieldMailTo;
+	private EmailTokenField tokenFieldMailCc = new EmailTokenField();
+	private final EmailTokenField tokenFieldMailBcc = new EmailTokenField();
 	private GridLayout inputLayout;
 	private Layout subjectField;
 	private Layout ccField;
@@ -48,7 +57,7 @@ public class MailFormWindow extends Window {
 
 	private void initLayout() {
 		this.setWidth("830px");
-		this.setHeight("500px");
+		this.setHeight("510px");
 		initUI();
 		center();
 		this.setModal(true);
@@ -115,7 +124,9 @@ public class MailFormWindow extends Window {
 
 		mainLayout.addComponent(inputPanel);
 
-		tokenFieldMailTo = new TokenFieldTextField();
+		tokenFieldMailTo = new EmailTokenField();
+		tokenFieldMailTo.setRequired(true);
+
 		inputLayout.addComponent(createTextFieldMail("To:", tokenFieldMailTo),
 				0, 0);
 
@@ -137,6 +148,7 @@ public class MailFormWindow extends Window {
 		}
 
 		final TextField subject = new TextField();
+		subject.setRequired(true);
 		subject.setWidth("550px");
 		subjectField = createTextFieldMail("Subject:", subject);
 		inputLayout.addComponent(subjectField, 0, 1);
@@ -172,7 +184,7 @@ public class MailFormWindow extends Window {
 		controlsLayout.setExpandRatio(attachedFilepanel, 1.0f);
 
 		controlsLayout.setSpacing(true);
-		
+
 		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -185,37 +197,57 @@ public class MailFormWindow extends Window {
 		cancelBtn.setStyleName("link");
 		controlsLayout.addComponent(cancelBtn);
 		controlsLayout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);
-		
+
 		Button sendBtn = new Button("Send", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				// MailService mailService = AppContext
-				// .getSpringBean(MailService.class);
-				// try {
-				//
-				// List<MailRecipientField> toFields = ParsingUtils
-				// .parseEmailField((String) tokenFieldMailTo
-				// .getValue());
-				// List<MailRecipientField> ccFields = ParsingUtils
-				// .parseEmailField((String) tokenFieldMailCc
-				// .getValue());
-				// List<MailRecipientField> bccFields = ParsingUtils
-				// .parseEmailField((String) tokenFieldMailBcc
-				// .getValue());
-				//
-				// mailService.sendMail(toFields, ccFields, bccFields,
-				// (String) subject.getValue(),
-				// (String) noteArea.getValue());
-				// } catch (InvalidEmailException e) {
-				// // TODO: add more descriptive error message
-				// getWindow()
-				// .showNotification("Error", "Email invalid error");
-				// } catch (EmailException e1) {
-				// getWindow().showNotification("Error", "Send email error");
-				// e1.printStackTrace();
-				// }
+
+				if (tokenFieldMailTo.getListRecipient().size() <= 0 || subject.toString().equals("")) {
+					MessageBox mb = new MessageBox(
+							AppContext.getApplication().getMainWindow(),
+							"Warming!",
+							MessageBox.Icon.WARN,
+							"The To Email field and Subject field must be not empty! Please fulfil them before pressing enter button.",
+							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
+					mb.show();
+					return;
+				}
+				if (AppContext.getSession().getEmail() != null
+						&& AppContext.getSession().getEmail().length() > 0) {
+					ExtMailService systemMailService = AppContext
+							.getSpringBean(ExtMailService.class);
+
+					List<File> listFile = attachments.getListFile();
+					List<EmailAttachementSource> emailAttachmentSource = null;
+					if (listFile != null && listFile.size() > 0) {
+						emailAttachmentSource = new ArrayList<EmailAttachementSource>();
+						for (File file : listFile) {
+							emailAttachmentSource
+									.add(new FileEmailAttachmentSource(file));
+						}
+					}
+
+					systemMailService.sendHTMLMail(AppContext.getSession()
+							.getEmail(), AppContext.getSession()
+							.getDisplayName(),
+							tokenFieldMailTo.getListRecipient(), tokenFieldMailCc
+									.getListRecipient(), tokenFieldMailBcc
+									.getListRecipient(), subject.getValue()
+									.toString(),
+							noteArea.getValue().toString(),
+							emailAttachmentSource);
+					MailFormWindow.this.close();
+				} else {
+					MessageBox mb = new MessageBox(
+							AppContext.getApplication().getMainWindow(),
+							"Warming!",
+							MessageBox.Icon.WARN,
+							"Your email is not configured, please fulfil it before sending email!",
+							new MessageBox.ButtonConfig(ButtonType.OK, "Ok"));
+					mb.show();
+				}
 			}
 		});
 		sendBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -250,6 +282,7 @@ public class MailFormWindow extends Window {
 				addFullInputFieldByOrder();
 			}
 		} else {
+			tokenFieldMailCc.removeAllRecipients();
 			btnLinkCc.setCaption("Add Cc");
 
 			if (isAddBcc) {
@@ -292,7 +325,6 @@ public class MailFormWindow extends Window {
 
 		if (!isAddBcc) {
 			btnLinkBcc.setCaption("Remove Bcc");
-
 			if (!isAddCc) {
 				inputLayout.addComponent(bccField, 0, 1);
 				inputLayout.addComponent(btnLinkCc, 1, 1);
@@ -303,7 +335,7 @@ public class MailFormWindow extends Window {
 			}
 		} else {
 			btnLinkBcc.setCaption("Add Bcc");
-
+			tokenFieldMailBcc.removeAllRecipients();
 			if (isAddCc) {
 				inputLayout.addComponent(ccField, 0, 1);
 				inputLayout.addComponent(btnLinkCc, 1, 1);

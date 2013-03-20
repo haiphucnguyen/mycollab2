@@ -1,9 +1,11 @@
 package com.esofthead.mycollab.module.mail.service.impl;
 
+import java.util.ArrayList;
 import java.util.List;
 
 import org.apache.commons.mail.EmailException;
 
+import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
 import com.esofthead.mycollab.module.mail.Mailer;
 import com.esofthead.mycollab.module.mail.service.IGenericMailService;
@@ -15,11 +17,12 @@ public abstract class AbstractMailService implements IGenericMailService {
 
 	@Override
 	public void sendHTMLMail(String fromEmail, String fromName,
-			String[] toEmail, String[] toName, String subject, String html,
-			List<EmailAttachementSource> attachment) {
+			List<MailRecipientField> toEmail, List<MailRecipientField> ccEmail,
+			List<MailRecipientField> bccEmail, String subject, String html,
+			List<EmailAttachementSource> attachments) {
 		try {
-			getMailer().sendHTMLMail(fromEmail, fromName, toEmail, toName,
-					subject, html, attachment);
+			getMailer().sendHTMLMail(fromEmail, fromName, toEmail, ccEmail,
+					bccEmail, subject, html, attachments);
 		} catch (EmailException ex) {
 			ex.printStackTrace();
 		}
@@ -29,14 +32,17 @@ public abstract class AbstractMailService implements IGenericMailService {
 	public void sendHTMLMail(String fromEmail, String fromName,
 			List<SimpleUser> users, String subject, String html,
 			List<EmailAttachementSource> attachment) {
-		String[] toEmails = new String[users.size()];
-		String[] toNames = new String[users.size()];
 
+		List<MailRecipientField> lstRecipient = new ArrayList<MailRecipientField>();
 		for (int i = 0; i < users.size(); i++) {
-			toEmails[i] = users.get(i).getEmail();
-			toNames[i] = users.get(i).getDisplayName();
+			String mail = users.get(i).getEmail();
+			String mailName = (users.get(i).getDisplayName() == null || users
+					.get(i).getDisplayName().equals("")) ? mail : users.get(i)
+					.getDisplayName();
+			lstRecipient.add(new MailRecipientField(mail, mailName));
 		}
 
-		this.sendHTMLMail(fromEmail, fromName, toEmails, toNames, subject, html, attachment);
+		this.sendHTMLMail(fromEmail, fromName, lstRecipient, null, null,
+				subject, html, attachment);
 	}
 }
