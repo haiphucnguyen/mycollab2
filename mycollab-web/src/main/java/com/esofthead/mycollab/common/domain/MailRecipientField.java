@@ -10,7 +10,7 @@ public class MailRecipientField {
 	}
 	
 	public MailRecipientField(String email) {
-		this(email, null);
+		this(email, email);
 	}
 
 	public String getEmail() {

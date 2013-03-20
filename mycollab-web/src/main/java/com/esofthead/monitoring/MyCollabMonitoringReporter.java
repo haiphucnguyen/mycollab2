@@ -3,6 +3,7 @@ package com.esofthead.monitoring;
 import java.io.File;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.List;
 
@@ -10,6 +11,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.module.mail.EmailAttachementSource;
 import com.esofthead.mycollab.module.mail.FileEmailAttachmentSource;
 import com.esofthead.mycollab.module.mail.Mailer;
@@ -17,6 +19,7 @@ import com.esofthead.mycollab.module.mail.Mailer;
 public class MyCollabMonitoringReporter {
 	private static Logger log = LoggerFactory
 			.getLogger(MyCollabMonitoringReporter.class);
+
 	public void sendDailyReport(String attachment) {
 		/*
 		 * do send mail here
@@ -39,13 +42,13 @@ public class MyCollabMonitoringReporter {
 			emailAttachmentSource = new ArrayList<EmailAttachementSource>();
 			emailAttachmentSource.add(new FileEmailAttachmentSource(file));
 		}
-		
+
 		try {
-			mailer.sendHTMLMail(userName, "eSofthead reporter",
-					new String[] { ApplicationProperties
-							.getProperty(ApplicationProperties.ERROR_SENDTO) },
-					new String[] { "eSofthead" }, "Daily Report Monitoring - "
-							+ toDayString(),
+			mailer.sendHTMLMail(userName, "eSofthead reporter", Arrays
+					.asList(new MailRecipientField(ApplicationProperties
+							.getProperty(ApplicationProperties.ERROR_SENDTO),
+							"eSofthead")), null, null,
+					"Daily Report Monitoring - " + toDayString(),
 					"<h1>This is the sample of daily monitoring report</h1>",
 					emailAttachmentSource);
 		} catch (Exception e) {
