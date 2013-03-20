@@ -139,9 +139,9 @@ public class MilestoneReadPresenter extends AbstractPresenter<MilestoneReadView>
             SimpleMilestone milestone = riskService.findMilestoneById((Integer) data
                     .getParams());
             if (milestone != null) {
-                MilestoneContainer riskContainer = (MilestoneContainer) container;
-                riskContainer.removeAllComponents();
-                riskContainer.addComponent(view.getWidget());
+                MilestoneContainer milestoneContainer = (MilestoneContainer) container;
+                milestoneContainer.removeAllComponents();
+                milestoneContainer.addComponent(view.getWidget());
                 view.previewItem(milestone);
                 
                 ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);

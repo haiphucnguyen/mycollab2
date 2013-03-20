@@ -9,6 +9,8 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.view.task.TaskGroupDisplayWidget;
+import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -89,7 +91,44 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 		filterBtnLayout.addComponent(archievedTasksFilterBtn);
 
 		taskGroupSelection.addComponent(filterBtnLayout);
+
+		ToggleButtonGroup viewGroup = new ToggleButtonGroup();
+
+		Button simpleDisplay = new Button(null, new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				displaySimpleView();
+			}
+		});
+		simpleDisplay.setIcon(new ThemeResource(
+				"icons/16/project/list_display.png"));
+
+		viewGroup.addButton(simpleDisplay);
+
+		Button advanceDisplay = new Button(null, new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				displayAdvancedView();
+			}
+		});
+		advanceDisplay.setIcon(new ThemeResource(
+				"icons/16/project/advanced_display.png"));
+		viewGroup.addButton(advanceDisplay);
+		header.addComponent(viewGroup);
+		header.setComponentAlignment(viewGroup, Alignment.MIDDLE_RIGHT);
 		this.addComponent(header);
+	}
+	
+	private void displaySimpleView() {
+		
+	}
+	
+	private void displayAdvancedView() {
+		
 	}
 
 	public void displayTakLists(Milestone milestone) {

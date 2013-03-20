@@ -166,7 +166,7 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 				}
 
 			});
-			reportBtn.setIcon(new ThemeResource("icons/16/statistic.png"));
+			reportBtn.setIcon(new ThemeResource("icons/16/project/release_note.png"));
 			reportBtn.setStyleName("link");
 			reportBtn.setDescription("Display Report View");
 
