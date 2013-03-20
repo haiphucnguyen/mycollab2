@@ -215,7 +215,7 @@ public class Column {
 	
 	public final String disableAutoIncrement(String tableName) {
 		if (isAutoIncrement) {
-			final String template = "ALTER TABLE %s MODIFY COLUMN %s %s %s;\r\n";
+			final String template = "ALTER TABLE %s ALTER COLUMN %s %s %s;\r\n";
 			
 			String __typeName = typeName.toUpperCase();
 			
@@ -259,7 +259,7 @@ public class Column {
 	
 	public final String enableAutoIncrement(String tableName) {
 		if (isAutoIncrement) {
-			final String template = "ALTER TABLE %s MODIFY COLUMN %s %s AUTO_INCREMENT %s;\r\n";
+			final String template = "ALTER TABLE %s ALTER COLUMN %s %s AUTO_INCREMENT %s;\r\n";
 			
 			String __typeName = typeName.toUpperCase();
 			
