@@ -31,14 +31,14 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
 
 		view.removeAllComponents();
 
-		Presenter presenter;
+		Presenter presenter = null;
 
 		if (data instanceof BugScreenData.Search) {
 			presenter = PresenterResolver.getPresenter(BugListPresenter.class);
 		} else if (data instanceof ScreenData.Add
 				|| data instanceof ScreenData.Edit) {
 			presenter = PresenterResolver.getPresenter(BugAddPresenter.class);
-		} else if (data instanceof ScreenData.Preview) {
+		} else if (data instanceof BugScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(BugReadPresenter.class);
 		} else if (data instanceof ComponentScreenData.Add) {
 			presenter = PresenterResolver
@@ -64,7 +64,7 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
 		} else if (data instanceof VersionScreenData.Search) {
 			presenter = PresenterResolver
 					.getPresenter(VersionReadPresenter.class);
-		} else {
+		} else if (data == null || data instanceof BugScreenData.GotoDashboard) {
 			presenter = PresenterResolver
 					.getPresenter(BugDashboardPresenter.class);
 		}

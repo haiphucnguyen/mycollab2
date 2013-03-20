@@ -542,7 +542,7 @@ public class ProjectController implements IController {
 					public void handle(BugEvent.GotoRead event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
+						BugScreenData.Read data = new BugScreenData.Read(
 								(Integer) event.getData());
 						projectView.gotoBugView(data);
 					}

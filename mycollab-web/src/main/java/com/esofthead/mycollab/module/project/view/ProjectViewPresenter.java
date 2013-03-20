@@ -101,11 +101,11 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				TaskGroupScreenData.GotoDashboard.class,
 				TaskGroupScreenData.Read.class)) {
 			presenter = PresenterResolver.getPresenter(TaskPresenter.class);
-		} else if (pageAction instanceof BugScreenData.Read) {
-			presenter = PresenterResolver.getPresenter(BugPresenter.class);
-		} else if (pageAction instanceof ComponentScreenData.Read) {
-			presenter = PresenterResolver.getPresenter(BugPresenter.class);
-		} else if (pageAction instanceof VersionScreenData.Read) {
+		} else if (ClassUtils.instanceOf(pageAction, BugScreenData.Read.class,
+				BugScreenData.GotoDashboard.class,
+				ComponentScreenData.Read.class,
+				ComponentScreenData.Search.class, VersionScreenData.Read.class,
+				VersionScreenData.Search.class)) {
 			presenter = PresenterResolver.getPresenter(BugPresenter.class);
 		} else {
 			throw new UnsupportedOperationException(
@@ -114,5 +114,4 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 
 		presenter.handleChain(view, pageActionChain);
 	}
-
 }
