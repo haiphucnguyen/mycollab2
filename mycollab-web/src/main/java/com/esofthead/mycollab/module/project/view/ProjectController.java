@@ -44,6 +44,7 @@ import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
@@ -365,7 +366,7 @@ public class ProjectController implements IController {
 					public void handle(RiskEvent.GotoRead event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
+						RiskScreenData.Read data = new RiskScreenData.Read(
 								(Integer) event.getData());
 						projectView.gotoRiskView(data);
 					}
@@ -388,9 +389,8 @@ public class ProjectController implements IController {
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, CurrentProjectVariables
 										.getProjectId()));
-						projectView
-								.gotoRiskView(new ScreenData.Search<RiskSearchCriteria>(
-										criteria));
+						projectView.gotoRiskView(new RiskScreenData.Search(
+								criteria));
 					}
 				});
 	}

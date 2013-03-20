@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.view.risk;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -31,40 +32,29 @@ public class RiskPresenter extends AbstractPresenter<RiskContainer> {
 		projectViewContainer.gotoSubView("Risks");
 
 		view.removeAllComponents();
+		AbstractPresenter presenter = null;
 
-		if (data instanceof ScreenData.Search) {
-			RiskListPresenter presenter = PresenterResolver
-					.getPresenter(RiskListPresenter.class);
-			presenter.go(view, data);
-
+		if (data instanceof RiskScreenData.Search) {
+			presenter = PresenterResolver.getPresenter(RiskListPresenter.class);
 		} else if (data instanceof ScreenData.Add
 				|| data instanceof ScreenData.Edit) {
 			log.debug("Go to projectMember add view");
-			RiskAddPresenter presenter = PresenterResolver
-					.getPresenter(RiskAddPresenter.class);
-			presenter.go(view, data);
-		} else if (data instanceof ScreenData.Preview) {
+			presenter = PresenterResolver.getPresenter(RiskAddPresenter.class);
+		} else if (data instanceof RiskScreenData.Read) {
 			log.debug("Go to projectMember preview view");
-			RiskReadPresenter presenter = PresenterResolver
-					.getPresenter(RiskReadPresenter.class);
-			presenter.go(view, data);
+			presenter = PresenterResolver.getPresenter(RiskReadPresenter.class);
+		} else {
+			throw new MyCollabException("No support screen data " + data);
 		}
+
+		presenter.go(view, data);
 	}
 
 	@Override
 	public void handleChain(ComponentContainer container,
 			PageActionChain pageActionChain) {
-		ProjectView projectViewContainer = (ProjectView) container;
-		projectViewContainer.gotoSubView("Risks");
-
-		view.removeAllComponents();
-
 		ScreenData pageAction = pageActionChain.pop();
-		if (pageAction instanceof RiskScreenData.Read) {
-			RiskReadPresenter presenter = PresenterResolver
-					.getPresenter(RiskReadPresenter.class);
-			presenter.go(this.view, pageAction);
-		}
+		onGo(container, pageAction);
 	}
 
 }
