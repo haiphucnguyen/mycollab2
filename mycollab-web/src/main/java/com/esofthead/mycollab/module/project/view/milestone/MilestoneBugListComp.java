@@ -98,6 +98,7 @@ public class MilestoneBugListComp extends VerticalLayout implements
 	}
 
 	private void displayAdvancedView() {
+		
 		if (this.getComponentCount() > 1) {
 			this.removeComponent(this.getComponent(1));
 		}
@@ -159,12 +160,15 @@ public class MilestoneBugListComp extends VerticalLayout implements
 
 	@Override
 	public void displayBugReports() {
+		viewGroup.setDefaultSelectionByIndex(1);
 		displayAdvancedView();
 	}
 
 	@Override
 	public void displayBugListWidget(String title, BugSearchCriteria criteria) {
-		this.removeAllComponents();
+		if (this.getComponentCount() > 1) {
+			this.removeComponent(this.getComponent(1));
+		}
 		BugListWidget bugListWidget = new BugListWidget(title,
 				"Back to milestone dashboard", criteria, this);
 		bugListWidget.setWidth("100%");

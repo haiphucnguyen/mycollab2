@@ -21,6 +21,7 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 
 	private Milestone milestone;
+	private ToggleButtonGroup viewGroup;
 
 	public MilestoneTaskGroupListComp() {
 		this.setMargin(true);
@@ -38,7 +39,7 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 		header.setExpandRatio(taskGroupSelection, 1.0f);
 		header.setComponentAlignment(taskGroupSelection, Alignment.MIDDLE_LEFT);
 
-		ToggleButtonGroup viewGroup = new ToggleButtonGroup();
+		viewGroup = new ToggleButtonGroup();
 
 		Button simpleDisplay = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -99,6 +100,7 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 
 	public void displayTakLists(Milestone milestone) {
 		this.milestone = milestone;
+		viewGroup.setDefaultSelectionByIndex(1);
 		displayAdvancedView();
 	}
 
