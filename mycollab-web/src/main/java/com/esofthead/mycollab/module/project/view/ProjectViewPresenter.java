@@ -97,9 +97,9 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 			presenter = PresenterResolver.getPresenter(ProblemPresenter.class);
 		} else if (pageAction instanceof RiskScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(RiskPresenter.class);
-		} else if (pageAction instanceof TaskScreenData.Read) {
-			presenter = PresenterResolver.getPresenter(TaskPresenter.class);
-		} else if (pageAction instanceof TaskGroupScreenData.Read) {
+		} else if (ClassUtils.instanceOf(pageAction, TaskScreenData.Read.class,
+				TaskGroupScreenData.GotoDashboard.class,
+				TaskGroupScreenData.Read.class)) {
 			presenter = PresenterResolver.getPresenter(TaskPresenter.class);
 		} else if (pageAction instanceof BugScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(BugPresenter.class);

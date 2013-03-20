@@ -6,6 +6,12 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
 public class TaskGroupScreenData {
+	public static class GotoDashboard extends ScreenData {
+		public GotoDashboard() {
+			super(null);
+		}
+	}
+
 	public static class Read extends ScreenData<Integer> {
 
 		public Read(Integer params) {

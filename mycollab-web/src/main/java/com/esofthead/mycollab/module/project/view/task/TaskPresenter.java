@@ -56,7 +56,8 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 		} else if (data instanceof TaskGroupScreenData.DisplayGanttChartRequest) {
 			presenter = PresenterResolver
 					.getPresenter(TaskGanttChatPresenter.class);
-		} else {
+		} else if (data instanceof TaskGroupScreenData.GotoDashboard
+				|| data == null) {
 			presenter = PresenterResolver
 					.getPresenter(TaskGroupDisplayPresenter.class);
 		}
@@ -67,24 +68,8 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 	@Override
 	public void handleChain(ComponentContainer container,
 			PageActionChain pageActionChain) {
-		ProjectView projectViewContainer = (ProjectView) container;
-		projectViewContainer.gotoSubView("Tasks");
-
-		view.removeAllComponents();
-
-		AbstractPresenter presenter;
 
 		ScreenData pageAction = pageActionChain.peek();
-		if (pageAction instanceof TaskScreenData.Read) {
-			presenter = PresenterResolver.getPresenter(TaskReadPresenter.class);
-		} else if (pageAction instanceof TaskGroupScreenData.Read) {
-			presenter = PresenterResolver
-					.getPresenter(TaskGroupReadPresenter.class);
-		} else {
-			throw new UnsupportedOperationException(
-					"Do not support page action " + pageAction);
-		}
-
-		presenter.go(view, pageAction);
+		onGo(container, pageAction);
 	}
 }

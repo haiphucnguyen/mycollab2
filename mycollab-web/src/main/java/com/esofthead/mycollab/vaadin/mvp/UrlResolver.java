@@ -49,6 +49,7 @@ public class UrlResolver {
 				handlePage(new String[0]);
 			}
 		} catch (Exception e) {
+			log.error("Error while navigation", e);
 			AppContext
 					.getApplication()
 					.getMainWindow()
