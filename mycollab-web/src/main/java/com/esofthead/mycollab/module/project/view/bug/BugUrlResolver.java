@@ -13,6 +13,7 @@ public class BugUrlResolver extends UrlResolver {
 		this.addSubResolver("dashboard", new DashboardUrlResolver());
 		this.addSubResolver("preview", new PreviewUrlResolver());
 		this.addSubResolver("component", new ComponentUrlResolver());
+		this.addSubResolver("version", new VersionUrlResolver());
 	}
 
 	private static class DashboardUrlResolver extends UrlResolver {
