@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
+import com.esofthead.mycollab.module.project.view.task.GanttChartDisplayWidget;
 import com.esofthead.mycollab.module.project.view.task.TaskDisplayWidget;
 import com.esofthead.mycollab.module.project.view.task.TaskGroupDisplayWidget;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
@@ -65,6 +66,20 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 		advanceDisplay.setIcon(new ThemeResource(
 				"icons/16/project/advanced_display.png"));
 		viewGroup.addButton(advanceDisplay);
+
+		Button ganttChartDisplay = new Button(null, new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				displayGanttView();
+			}
+		});
+		ganttChartDisplay.setStyleName("link");
+		ganttChartDisplay.setIcon(new ThemeResource(
+				"icons/16/project/gantt_chart.png"));
+		viewGroup.addButton(ganttChartDisplay);
+
 		header.addComponent(viewGroup);
 		header.setComponentAlignment(viewGroup, Alignment.MIDDLE_RIGHT);
 		this.addComponent(header);
@@ -83,6 +98,18 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 		TaskDisplayWidget taskDisplayWidget = new TaskDisplayWidget();
 		this.addComponent(taskDisplayWidget);
 		taskDisplayWidget.setSearchCriteria(criteria);
+	}
+
+	private void displayGanttView() {
+		if (this.getComponentCount() > 1) {
+			this.removeComponent(this.getComponent(1));
+		}
+
+		TaskListSearchCriteria criteria = createBaseSearchCriteria();
+		GanttChartDisplayWidget ganttChartWidget = new GanttChartDisplayWidget();
+		ganttChartWidget.setSearchCriteria(criteria);
+		this.addComponent(ganttChartWidget);
+		this.setExpandRatio(ganttChartWidget, 1.0f);
 	}
 
 	private void displayAdvancedView() {
