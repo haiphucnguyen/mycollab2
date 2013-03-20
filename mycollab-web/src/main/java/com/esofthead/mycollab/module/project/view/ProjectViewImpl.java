@@ -21,6 +21,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearch
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
+import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
@@ -172,7 +173,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 											.getProjectId()));
 							problemPresenter
 									.go(ProjectViewImpl.this,
-											new ScreenData.Search<ProblemSearchCriteria>(
+											new ProblemScreenData.Search(
 													searchCriteria));
 						} else if ("Dashboard".equals(caption)) {
 							dashboardPresenter.go(ProjectViewImpl.this, null);
