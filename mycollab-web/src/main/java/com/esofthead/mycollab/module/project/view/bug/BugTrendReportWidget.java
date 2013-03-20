@@ -82,7 +82,7 @@ public class BugTrendReportWidget extends
 
 	@Override
 	protected ComponentContainer createLegendBox() {
-		CustomLayout boxWrapper = new CustomLayout("centerContent");
+		CustomLayout boxWrapper = new CustomLayout("legendBox");
 		CssLayout mainLayout = new CssLayout();
 		mainLayout.addStyleName("border-box");
 		mainLayout.setSizeUndefined();
@@ -114,7 +114,7 @@ public class BugTrendReportWidget extends
 			mainLayout.addComponent(layout);
 		}
 		boxWrapper.setWidth("100%");
-		boxWrapper.addComponent(mainLayout, "centerContent");
+		boxWrapper.addComponent(mainLayout, "legendBoxContent");
 		return boxWrapper;
 	}
 
