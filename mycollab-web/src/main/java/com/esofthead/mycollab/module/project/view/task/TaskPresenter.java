@@ -38,22 +38,22 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 
 		AbstractPresenter presenter = null;
 
-		if (data instanceof TaskContainer.PreviewTaskData) {
+		if (data instanceof TaskScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(TaskReadPresenter.class);
-		} else if (data instanceof TaskContainer.PreviewTaskListData) {
+		} else if (data instanceof TaskGroupScreenData.Read) {
 			presenter = PresenterResolver
 					.getPresenter(TaskGroupReadPresenter.class);
-		} else if (data instanceof TaskContainer.EditTaskData) {
+		} else if (data instanceof TaskScreenData.Edit) {
 			presenter = PresenterResolver.getPresenter(TaskAddPresenter.class);
-		} else if (data instanceof TaskContainer.AddTaskData) {
+		} else if (data instanceof TaskScreenData.Add) {
 			presenter = PresenterResolver.getPresenter(TaskAddPresenter.class);
-		} else if (data instanceof TaskContainer.EditTaskListData) {
+		} else if (data instanceof TaskGroupScreenData.Edit) {
 			presenter = PresenterResolver
 					.getPresenter(TaskGroupAddPresenter.class);
-		} else if (data instanceof TaskContainer.ReorderTaskListRequest) {
+		} else if (data instanceof TaskGroupScreenData.ReorderTaskListRequest) {
 			presenter = PresenterResolver
 					.getPresenter(TaskGroupReorderPresenter.class);
-		} else if (data instanceof TaskContainer.DisplayGanttChartRequest) {
+		} else if (data instanceof TaskGroupScreenData.DisplayGanttChartRequest) {
 			presenter = PresenterResolver
 					.getPresenter(TaskGanttChatPresenter.class);
 		} else {
