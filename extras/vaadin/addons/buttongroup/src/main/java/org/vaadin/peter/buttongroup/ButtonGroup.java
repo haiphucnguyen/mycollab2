@@ -26,7 +26,7 @@ public class ButtonGroup extends AbstractComponent {
 
 	private static final long serialVersionUID = 8638442408634664677L;
 
-	private final LinkedList<Button> buttons;
+	protected final LinkedList<Button> buttons;
 
 	private static String leftButtonCss = "left";
 	private static String middleButtonCss = "middle";
