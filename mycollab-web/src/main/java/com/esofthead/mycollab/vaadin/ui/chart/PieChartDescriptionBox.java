@@ -22,7 +22,7 @@ public class PieChartDescriptionBox {
 
 	public static ComponentContainer createLegendBox(
 			final PieChartWrapper pieChartHost, DefaultPieDataset pieDataSet) {
-		CustomLayout boxWrapper = new CustomLayout("centerContent");
+		CustomLayout boxWrapper = new CustomLayout("legendBox");
 		CssLayout mainLayout = new CssLayout();
 		mainLayout.addStyleName("border-box");
 		mainLayout.setSizeUndefined();
@@ -67,8 +67,8 @@ public class PieChartDescriptionBox {
 			layout.setSizeUndefined();
 			mainLayout.addComponent(layout);
 		}
-		boxWrapper.setSizeFull();
-		boxWrapper.addComponent(mainLayout, "centerContent");
+		boxWrapper.setWidth("100%");
+		boxWrapper.addComponent(mainLayout, "legendBoxContent");
 		return boxWrapper;
 	}
 }

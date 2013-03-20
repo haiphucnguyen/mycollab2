@@ -921,10 +921,13 @@ input.v-textfield-errorField {
 }
 
 .addViewLayout .h2 {
+	width: 500px !important;
+}
+
+.addViewLayout .v-label-h2 {
 	border-bottom: 1px solid #B7B7B7;
 	color: #5E5E5E;
 	text-shadow: #F0F0F0 0 1px 0;
-	width: 500px !important;
 }
 
 .addViewBody {
@@ -1564,7 +1567,7 @@ input.v-textfield-errorField {
 }
 
 .preview .v-tabsheet-content {
-	border-style: none;
+/* 	border-style: none; */
 }
 
 .v-tabsheet-content .v-tabsheet-tabsheetpanel {
@@ -2601,18 +2604,38 @@ div.v-lazyloadingwrapper-loading {
 
 /* Toggle Button Group */
 .v-buttongroup.toggle-btn-group .v-button.selected, .v-buttongroup.toggle-btn-group .v-button.selected:active, .v-buttongroup.toggle-btn-group .v-button.selected:focus {
-	background: url("icons/grad-dark-top2.png") repeat-x scroll left bottom rgb(20, 108, 253);
-	border-color: rgb(129, 129, 129);
+	background: none no-repeat scroll left bottom rgb(40, 126, 206);
+}
+.v-buttongroup.toggle-btn-group .v-button.v-button-left, .v-buttongroup.toggle-btn-group .v-button.v-button-middle, .v-buttongroup.toggle-btn-group .v-button.v-button-right {
+	border-color: rgb(221, 221, 221);
+}
+.v-buttongroup.toggle-btn-group .v-button .v-button-wrap {
+	background: none;
 }
 .v-buttongroup.toggle-btn-group .v-button.selected .v-button-wrap {
 	background: none;
+}
+.v-buttongroup.toggle-btn-group .v-button .v-button-wrap img {
+	margin: 0px;
 }
 .v-buttongroup.toggle-btn-group .v-button:active .v-button-wrap .v-button-caption, .v-buttongroup.toggle-btn-group .v-button:focus .v-button-wrap .v-button-caption, .v-buttongroup.toggle-btn-group .v-button.selected .v-button-wrap .v-button-caption {
 	color: white;
 }
 .v-buttongroup.toggle-btn-group .v-button.v-button-left:active,.v-buttongroup.toggle-btn-group .v-button.v-button-middle:active,.v-buttongroup.toggle-btn-group .v-button.v-button-right:active,.v-buttongroup.toggle-btn-group .v-button.v-button-left:focus,.v-buttongroup.toggle-btn-group .v-button.v-button-middle:focus,.v-buttongroup.toggle-btn-group .v-button.v-button-right:focus
 {
-	background: url("icons/grad-dark-top2.png") repeat-x scroll left bottom rgb(20, 108, 253);
-	border-color: rgb(129, 129, 129);
+	background: none no-repeat scroll left bottom rgb(40, 126, 206);
+}
+.v-buttongroup.toggle-btn-group .v-button {
+	background: url("icons/grad-dark-bottom2.png") repeat-x scroll left bottom rgb(123, 123, 123);
+	color: white;
 }
 /* End Toggle Button Group */
+
+/* Pie Chart Legend Box */
+.addViewLayout .depotContent .legendBoxContent .v-button-link {
+	margin-bottom: 3px;
+}
+.legendBoxContent .v-button .v-button-caption {
+	line-height: 20px;
+}
+/* End Pie Chart Legend Box */

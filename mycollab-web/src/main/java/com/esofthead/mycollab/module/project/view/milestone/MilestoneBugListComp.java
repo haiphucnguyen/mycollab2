@@ -86,6 +86,7 @@ public class MilestoneBugListComp extends VerticalLayout implements
 	private void displayAdvancedView() {
 		this.removeAllComponents();
 		HorizontalLayout bodyLayout = new HorizontalLayout();
+		bodyLayout.setSpacing(true);
 		VerticalLayout leftColumn = new VerticalLayout();
 		bodyLayout.addComponent(leftColumn);
 		VerticalLayout rightColumn = new VerticalLayout();
