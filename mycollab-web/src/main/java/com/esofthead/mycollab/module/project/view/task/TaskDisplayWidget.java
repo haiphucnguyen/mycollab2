@@ -19,7 +19,7 @@ public class TaskDisplayWidget extends
 
 	public TaskDisplayWidget() {
 		super(null, AppContext.getSpringBean(ProjectTaskService.class),
-				TaskRowDisplayHandler.class, true);
+				TaskRowDisplayHandler.class, false);
 	}
 
 	public static class TaskRowDisplayHandler implements

@@ -48,6 +48,12 @@ public class ToggleButtonGroup extends ButtonGroup {
 		}
 
 		this.defaultSelection = this.buttons.indexOf(defaultChoice);
+		this.requestRepaint();
+	}
+	
+	public void setDefaultSelectionByIndex(int buttonIndex) {
+		this.defaultSelection = buttonIndex;
+		this.requestRepaint();
 	}
 
 	private void setDefaultButtonCss() {

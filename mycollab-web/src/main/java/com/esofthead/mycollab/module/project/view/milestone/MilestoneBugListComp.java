@@ -7,12 +7,14 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.view.bug.BugChartComponent;
 import com.esofthead.mycollab.module.project.view.bug.BugListWidget;
+import com.esofthead.mycollab.module.project.view.bug.BugSimpleDisplayWidget;
 import com.esofthead.mycollab.module.project.view.bug.IBugReportDisplayContainer;
 import com.esofthead.mycollab.module.project.view.bug.UnresolvedBugsByAssigneeWidget;
 import com.esofthead.mycollab.module.project.view.bug.UnresolvedBugsByPriorityWidget;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -26,24 +28,25 @@ public class MilestoneBugListComp extends VerticalLayout implements
 	private static final long serialVersionUID = 1L;
 
 	private Milestone milestone;
+	private ToggleButtonGroup viewGroup;
 
 	public MilestoneBugListComp() {
 		this.setMargin(true);
 		constructHeader();
 	}
-	
+
 	private void constructHeader() {
 		HorizontalLayout header = new HorizontalLayout();
 		header.setMargin(true, false, false, false);
 		header.setSpacing(true);
 		header.setWidth("100%");
-		Label taskGroupSelection = new Label("Tasks");
+		Label taskGroupSelection = new Label("Related Bugs");
 		taskGroupSelection.addStyleName("h2");
 		header.addComponent(taskGroupSelection);
 		header.setExpandRatio(taskGroupSelection, 1.0f);
 		header.setComponentAlignment(taskGroupSelection, Alignment.MIDDLE_LEFT);
 
-		ToggleButtonGroup viewGroup = new ToggleButtonGroup();
+		viewGroup = new ToggleButtonGroup();
 
 		Button simpleDisplay = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -78,13 +81,27 @@ public class MilestoneBugListComp extends VerticalLayout implements
 		this.milestone = milestone;
 		displayBugReports();
 	}
-	
+
 	private void displaySimpleView() {
+		if (this.getComponentCount() > 1) {
+			this.removeComponent(this.getComponent(1));
+		}
+
+		BugSearchCriteria criteria = new BugSearchCriteria();
+		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
+				.getProjectId()));
+		criteria.setMilestoneIds(new SetSearchField<Integer>(milestone.getId()));
 		
+		BugSimpleDisplayWidget displayWidget = new BugSimpleDisplayWidget();
+		this.addComponent(new LazyLoadWrapper(displayWidget));
+		displayWidget.setSearchCriteria(criteria);
 	}
-	
+
 	private void displayAdvancedView() {
-		this.removeAllComponents();
+		if (this.getComponentCount() > 1) {
+			this.removeComponent(this.getComponent(1));
+		}
+
 		HorizontalLayout bodyLayout = new HorizontalLayout();
 		bodyLayout.setSpacing(true);
 		VerticalLayout leftColumn = new VerticalLayout();
