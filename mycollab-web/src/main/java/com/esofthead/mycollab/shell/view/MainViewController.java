@@ -4,10 +4,10 @@
  */
 package com.esofthead.mycollab.shell.view;
 
-import com.esofthead.mycollab.module.crm.view.CrmPresenter;
-import com.esofthead.mycollab.module.project.view.ProjectPresenter;
-import com.esofthead.mycollab.module.user.accountsettings.view.AccountDashboardPresenter;
-import com.esofthead.mycollab.module.user.accountsettings.view.AccountDashboardView;
+import com.esofthead.mycollab.module.crm.view.CrmModulePresenter;
+import com.esofthead.mycollab.module.project.view.ProjectModulePresenter;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountModulePresenter;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -41,9 +41,9 @@ public class MainViewController implements IController {
 
 					@Override
 					public void handle(ShellEvent.GotoCrmPage event) {
-						CrmPresenter crmPresenter = PresenterResolver
-								.getPresenter(CrmPresenter.class);
-						crmPresenter.go(container, null);
+						CrmModulePresenter crmModulePresenter = PresenterResolver
+								.getPresenter(CrmModulePresenter.class);
+						crmModulePresenter.go(container, null);
 					}
 				});
 
@@ -58,8 +58,8 @@ public class MainViewController implements IController {
 
 					@Override
 					public void handle(ShellEvent.GotoProjectPage event) {
-						ProjectPresenter prjPresenter = PresenterResolver
-								.getPresenter(ProjectPresenter.class);
+						ProjectModulePresenter prjPresenter = PresenterResolver
+								.getPresenter(ProjectModulePresenter.class);
 						prjPresenter.go(container, null);
 					}
 				});
@@ -75,8 +75,8 @@ public class MainViewController implements IController {
 
 					@Override
 					public void handle(ShellEvent.GotoAccountPage event) {
-						AccountDashboardPresenter presenter = PresenterResolver
-								.getPresenter(AccountDashboardPresenter.class);
+						AccountModulePresenter presenter = PresenterResolver
+								.getPresenter(AccountModulePresenter.class);
 						presenter.go(container, null);
 					}
 				});

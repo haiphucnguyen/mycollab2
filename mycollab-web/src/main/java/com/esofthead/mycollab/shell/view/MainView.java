@@ -6,7 +6,7 @@ import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.IModule;
 import com.esofthead.mycollab.vaadin.ui.FeedbackWindow;
 import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -132,9 +132,9 @@ public final class MainView extends AbstractView {
 		return footer;
 	}
 
-	public void addView(View view) {
+	public void addModule(IModule module) {
 		bodyLayout.removeAllComponents();
-		LazyLoadWrapper comp = new LazyLoadWrapper(view.getWidget());
+		LazyLoadWrapper comp = new LazyLoadWrapper(module.getWidget());
 		bodyLayout.addComponent(comp);
 	}
 }

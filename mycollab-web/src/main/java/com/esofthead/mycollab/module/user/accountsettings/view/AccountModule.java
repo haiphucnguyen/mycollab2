@@ -1,8 +1,8 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
-import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.vaadin.mvp.IModule;
 
-public interface AccountDashboardView extends View {
+public interface AccountModule extends IModule {
 	void gotoSubView(String viewName);
 
 }

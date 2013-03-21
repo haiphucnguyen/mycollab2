@@ -68,9 +68,9 @@ import com.esofthead.mycollab.web.AppContext;
 
 public class CrmController implements IController {
 	private static final long serialVersionUID = 1L;
-	private CrmContainer container;
+	private CrmModule container;
 
-	public CrmController(CrmContainer container) {
+	public CrmController(CrmModule container) {
 		this.container = container;
 
 		bindCrmEvents();

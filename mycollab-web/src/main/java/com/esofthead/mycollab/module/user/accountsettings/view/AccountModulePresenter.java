@@ -6,18 +6,18 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class AccountDashboardPresenter extends
-		AbstractPresenter<AccountDashboardView> {
+public class AccountModulePresenter extends
+		AbstractPresenter<AccountModule> {
 	private static final long serialVersionUID = 1L;
 
-	public AccountDashboardPresenter() {
-		super(AccountDashboardView.class);
+	public AccountModulePresenter() {
+		super(AccountModule.class);
 	}
 	
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		MainView mainView = (MainView) container;
-		mainView.addView(view);
+		mainView.addModule(view);
 		AppContext.addFragment("account", "Account Page");
 	}
 }

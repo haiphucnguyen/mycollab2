@@ -70,9 +70,9 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 
 public class ProjectController implements IController {
 	private static final long serialVersionUID = 1L;
-	private ProjectContainer container;
+	private ProjectModule container;
 
-	public ProjectController(ProjectContainer container) {
+	public ProjectController(ProjectModule container) {
 		this.container = container;
 		bindProjectEvents();
 		bindRiskEvents();

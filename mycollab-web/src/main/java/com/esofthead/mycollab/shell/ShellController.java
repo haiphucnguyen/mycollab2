@@ -53,15 +53,8 @@ public class ShellController implements IController {
 						MainViewPresenter mainViewPresenter = PresenterResolver
 								.getPresenter(MainViewPresenter.class);
 						MainView mainView = mainViewPresenter.getView();
-						if (mainView.getParent() == null
-								|| mainView.getParent() == container) {
-							((MainWindowContainer) container)
-									.setMainContent(mainView);
-						} else {
-							log.debug("Do nothing. The main view parent is "
-									+ mainView.getParent() + " --- "
-									+ container);
-						}
+						((MainWindowContainer) container)
+								.setMainContent(mainView);
 
 						container.setStyleName("mainView");
 
@@ -95,7 +88,8 @@ public class ShellController implements IController {
 
 						if (loginView.getParent() == null
 								|| loginView.getParent() == container) {
-							((Window) container).setContent(loginView);
+							((MainWindowContainer) container)
+									.setMainContent(loginView);
 						} else {
 							presenter.go(container, null);
 						}
