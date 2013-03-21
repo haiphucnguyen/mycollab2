@@ -24,9 +24,13 @@ import com.vaadin.ui.ComponentContainer;
 public class PrioritySummaryWidget extends PieChartWrapper<BugSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
+	
+	public PrioritySummaryWidget(int width, int height) {
+		super("Bugs By Priority", width, height);
+	}
 
 	public PrioritySummaryWidget() {
-		super("Bugs By Priority", 450, 300);
+		super("Bugs By Priority", 400, 280);
 
 	}
 
