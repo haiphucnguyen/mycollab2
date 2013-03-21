@@ -13,6 +13,7 @@ import com.esofthead.mycollab.module.project.view.bug.UnresolvedBugsByAssigneeWi
 import com.esofthead.mycollab.module.project.view.bug.UnresolvedBugsByPriorityWidget;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ThemeResource;
@@ -151,8 +152,12 @@ public class MilestoneBugListComp extends VerticalLayout implements
 				CurrentProjectVariables.getProjectId()));
 		chartSearchCriteria.setMilestoneIds(new SetSearchField<Integer>(
 				milestone.getId()));
-		BugChartComponent bugChartComponent = new BugChartComponent(
-				chartSearchCriteria);
+		BugChartComponent bugChartComponent = null;
+		if (ScreenSize.hasSupport1024Pixels()) {
+			bugChartComponent = new BugChartComponent(chartSearchCriteria, 300, 200);
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400, 200);
+		}
 		rightColumn.addComponent(bugChartComponent);
 
 		this.addComponent(bodyLayout);
