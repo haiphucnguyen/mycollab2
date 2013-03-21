@@ -12,12 +12,16 @@ import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData
 import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.VersionScreenData;
+import com.esofthead.mycollab.module.project.view.people.UserGroupPresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
+import com.esofthead.mycollab.module.project.view.standup.StandupPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -109,6 +113,14 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				ComponentScreenData.Search.class, VersionScreenData.Read.class,
 				VersionScreenData.Search.class)) {
 			presenter = PresenterResolver.getPresenter(BugPresenter.class);
+		} else if (ClassUtils.instanceOf(pageAction,
+				StandupScreenData.Search.class)) {
+			presenter = PresenterResolver.getPresenter(StandupPresenter.class);
+		} else if (ClassUtils.instanceOf(pageAction,
+				ProjectMemberScreenData.Search.class,
+				ProjectMemberScreenData.Read.class)) {
+			presenter = PresenterResolver
+					.getPresenter(UserGroupPresenter.class);
 		} else {
 			throw new UnsupportedOperationException(
 					"Not support page action chain " + pageAction);

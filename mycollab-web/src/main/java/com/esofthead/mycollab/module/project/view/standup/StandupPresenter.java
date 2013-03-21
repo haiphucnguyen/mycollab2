@@ -1,8 +1,10 @@
 package com.esofthead.mycollab.module.project.view.standup;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
+import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -26,21 +28,29 @@ public class StandupPresenter extends AbstractPresenter<StandupContainer> {
 
 		view.removeAllComponents();
 
-		if (data instanceof StandupScreenData.Search) {
-			StandupListPresenter presenter = PresenterResolver
-					.getPresenter(StandupListPresenter.class);
-			presenter.go(view, data);
+		AbstractPresenter presenter;
 
+		if (data instanceof StandupScreenData.Search) {
+			presenter = PresenterResolver
+					.getPresenter(StandupListPresenter.class);
 		} else if (data instanceof StandupScreenData.Add
 				|| data instanceof StandupScreenData.Edit) {
-			StandupAddPresenter presenter = PresenterResolver
+			presenter = PresenterResolver
 					.getPresenter(StandupAddPresenter.class);
-			presenter.go(view, data);
 		} else if (data instanceof StandupScreenData.Read) {
-			StandupReadPresenter presenter = PresenterResolver
+			presenter = PresenterResolver
 					.getPresenter(StandupReadPresenter.class);
-			presenter.go(view, data);
+		} else {
+			throw new MyCollabException("Do not support screen data: " + data);
 		}
+
+		presenter.go(view, data);
 	}
 
+	@Override
+	public void handleChain(ComponentContainer container,
+			PageActionChain pageActionChain) {
+		ScreenData pageAction = pageActionChain.pop();
+		onGo(container, pageAction);
+	}
 }

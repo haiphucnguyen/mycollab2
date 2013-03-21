@@ -55,23 +55,8 @@ public class MessagePresenter extends AbstractPresenter<MessageContainer> {
 	@Override
 	public void handleChain(ComponentContainer container,
 			PageActionChain pageActionChain) {
-		ProjectView projectViewContainer = (ProjectView) container;
-		projectViewContainer.gotoSubView("Messages");
-
-		view.removeAllComponents();
-
 		ScreenData pageAction = pageActionChain.pop();
-		AbstractPresenter presenter = null;
-		if (pageAction instanceof MessageScreenData.Read) {
-			presenter = PresenterResolver
-					.getPresenter(MessageReadPresenter.class);
-
-		} else if (pageAction instanceof MessageScreenData.Search) {
-			presenter = PresenterResolver
-					.getPresenter(MessageListPresenter.class);
-		}
-
-		presenter.go(this.view, pageAction);
+		onGo(container, pageAction);
 	}
 
 }
