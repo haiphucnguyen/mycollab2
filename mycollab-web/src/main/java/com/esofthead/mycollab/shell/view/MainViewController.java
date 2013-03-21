@@ -6,6 +6,8 @@ package com.esofthead.mycollab.shell.view;
 
 import com.esofthead.mycollab.module.crm.view.CrmPresenter;
 import com.esofthead.mycollab.module.project.view.ProjectPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountDashboardPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountDashboardView;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -59,6 +61,23 @@ public class MainViewController implements IController {
 						ProjectPresenter prjPresenter = PresenterResolver
 								.getPresenter(ProjectPresenter.class);
 						prjPresenter.go(container, null);
+					}
+				});
+
+		EventBus.getInstance().addListener(
+				new ApplicationEventListener<ShellEvent.GotoAccountPage>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return ShellEvent.GotoAccountPage.class;
+					}
+
+					@Override
+					public void handle(ShellEvent.GotoAccountPage event) {
+						AccountDashboardPresenter presenter = PresenterResolver
+								.getPresenter(AccountDashboardPresenter.class);
+						presenter.go(container, null);
 					}
 				});
 	}

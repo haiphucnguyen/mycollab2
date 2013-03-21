@@ -2,13 +2,11 @@ package com.esofthead.mycollab.shell.view;
 
 import org.vaadin.hene.popupbutton.PopupButton;
 
-import com.esofthead.mycollab.module.user.accountsettings.view.AccountDashboardView;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.View;
-import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.FeedbackWindow;
 import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
@@ -29,6 +27,7 @@ public final class MainView extends AbstractView {
 	private final CssLayout bodyLayout;
 
 	public MainView() {
+		this.setSizeFull();
 		this.addComponent(createTopMenu());
 		bodyLayout = new CssLayout();
 		bodyLayout.addStyleName("main-body");
@@ -91,10 +90,8 @@ public final class MainView extends AbstractView {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						accountMenu.setPopupVisible(false);
-						AccountDashboardView accountView = ViewManager
-								.getView(AccountDashboardView.class);
-						bodyLayout.removeAllComponents();
-						bodyLayout.addComponent(accountView);
+						EventBus.getInstance().fireEvent(
+								new ShellEvent.GotoAccountPage(this, null));
 					}
 				});
 		myAccountBtn.setStyleName("link");

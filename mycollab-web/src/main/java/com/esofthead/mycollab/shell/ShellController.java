@@ -55,7 +55,8 @@ public class ShellController implements IController {
 						MainView mainView = mainViewPresenter.getView();
 						if (mainView.getParent() == null
 								|| mainView.getParent() == container) {
-							((Window) container).setContent(mainView);
+							((MainWindowContainer) container)
+									.setMainContent(mainView);
 						} else {
 							log.debug("Do nothing. The main view parent is "
 									+ mainView.getParent() + " --- "

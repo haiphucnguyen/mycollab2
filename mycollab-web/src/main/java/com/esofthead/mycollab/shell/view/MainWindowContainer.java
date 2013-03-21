@@ -11,7 +11,9 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.View;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UriFragmentUtility;
 import com.vaadin.ui.UriFragmentUtility.FragmentChangedEvent;
 import com.vaadin.ui.Window;
@@ -22,6 +24,8 @@ public class MainWindowContainer extends Window implements View {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(MainWindowContainer.class);
+
+	private Content content;
 
 	private UriFragmentUtility urifu;
 	private FragmentNavigator fragmentNavigator;
@@ -57,16 +61,23 @@ public class MainWindowContainer extends Window implements View {
 						.getBrowserWindowWidth());
 			}
 		});
+
+		content = new Content();
+		this.setContent(content);
+		content.setSizeFull();
+		content.addComponent(urifu);
+
 		setDefaultView(true);
 	}
 
-	@Override
-	public void setContent(ComponentContainer newContent) {
-		super.setContent(newContent);
-
-		if (newContent != null) {
-			newContent.addComponent(urifu);
+	public void setMainContent(ComponentContainer newContent) {
+		for (int i = content.getComponentCount() - 1; i >= 0; i--) {
+			Component component = content.getComponent(i);
+			if (!(component instanceof UriFragmentUtility)) {
+				content.removeComponent(component);
+			}
 		}
+		content.addComponent(newContent);
 	}
 
 	public void addFragement(String fragement) {
@@ -74,7 +85,7 @@ public class MainWindowContainer extends Window implements View {
 		urifu.setFragment(fragement, false);
 	}
 
-	public final void setDefaultView(final boolean isAutoLogin) {
+	private final void setDefaultView(final boolean isAutoLogin) {
 		final LoginPresenter presenter = PresenterResolver
 				.getPresenter(LoginPresenter.class);
 		LoginView loginView = presenter.getView();
@@ -102,8 +113,8 @@ public class MainWindowContainer extends Window implements View {
 			}
 		});
 
-		this.setStyleName("loginView");
-		this.setContent(loginView.getWidget());
+		// this.setStyleName("loginView");
+		this.setMainContent(loginView.getWidget());
 	}
 
 	@Override
@@ -115,5 +126,10 @@ public class MainWindowContainer extends Window implements View {
 	public void addViewListener(
 			@SuppressWarnings("rawtypes") ApplicationEventListener listener) {
 		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	private static class Content extends CssLayout {
+		private static final long serialVersionUID = 1L;
+
 	}
 }

@@ -63,8 +63,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 		Date expiryDate = cal.getTime();
 		BrowserCookies cookies = new BrowserCookies();
 		view.addComponent(cookies);
-		cookies.setCookie("loginInfo", username + "$"
-				+ password, expiryDate);
+		cookies.setCookie("loginInfo", username + "$" + password, expiryDate);
 
 		UserPreferenceService preferenceService = AppContext
 				.getSpringBean(UserPreferenceService.class);
@@ -90,6 +89,6 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 		container.removeAllComponents();
 		container.addComponent(view.getWidget());
 
-		AppContext.addFragment("user/login");
+		AppContext.addFragment("user/login", "Login Page");
 	}
 }
