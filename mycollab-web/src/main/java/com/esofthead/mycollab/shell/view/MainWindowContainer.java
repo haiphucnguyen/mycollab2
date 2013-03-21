@@ -1,9 +1,13 @@
 package com.esofthead.mycollab.shell.view;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.browsercookies.BrowserCookies;
 
+import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
 import com.esofthead.mycollab.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.shell.ShellController;
@@ -73,11 +77,46 @@ public class MainWindowContainer extends Window implements View {
 	public void setMainContent(ComponentContainer newContent) {
 		for (int i = content.getComponentCount() - 1; i >= 0; i--) {
 			Component component = content.getComponent(i);
-			if (!(component instanceof UriFragmentUtility)) {
+			if (!(component instanceof UriFragmentUtility)
+					&& !(component instanceof BrowserCookies)) {
 				content.removeComponent(component);
 			}
 		}
 		content.addComponent(newContent);
+	}
+
+	private BrowserCookies getCookieComponent() {
+		for (int i = 0; i < content.getComponentCount(); i++) {
+			Component component = content.getComponent(i);
+			if (component instanceof BrowserCookies) {
+				return ((BrowserCookies) component);
+			}
+		}
+
+		BrowserCookies cookies = new BrowserCookies();
+		content.addComponent(cookies);
+		return cookies;
+	}
+
+	public void unsetRememberPassword() {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) - 3);
+		Date expiryDate = cal.getTime();
+
+		BrowserCookies cookies = getCookieComponent();
+		cookies.setCookie("loginInfo", "", expiryDate);
+	}
+
+	public void rememberPassword(String username, String password) {
+		// Remember password
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
+		Date expiryDate = cal.getTime();
+		BrowserCookies cookies = getCookieComponent();
+
+		cookies.setCookie("loginInfo",
+				username + "$" + PasswordEncryptHelper.encyptText(password),
+				expiryDate);
 	}
 
 	public void addFragement(String fragement) {
@@ -90,8 +129,7 @@ public class MainWindowContainer extends Window implements View {
 				.getPresenter(LoginPresenter.class);
 		LoginView loginView = presenter.getView();
 
-		BrowserCookies cookies = new BrowserCookies();
-		loginView.addComponent(cookies);
+		BrowserCookies cookies = getCookieComponent();
 		cookies.addListener(new BrowserCookies.UpdateListener() {
 			@Override
 			public void cookiesUpdated(BrowserCookies bc) {
@@ -102,8 +140,12 @@ public class MainWindowContainer extends Window implements View {
 							if (loginInfo != null) {
 								String[] loginParams = loginInfo.split("\\$");
 								if (loginParams.length == 2) {
-									presenter.doLogin(loginParams[0],
-											loginParams[1], true);
+									presenter
+											.doLogin(
+													loginParams[0],
+													PasswordEncryptHelper
+															.decryptText(loginParams[1]),
+													false);
 								}
 							}
 						}

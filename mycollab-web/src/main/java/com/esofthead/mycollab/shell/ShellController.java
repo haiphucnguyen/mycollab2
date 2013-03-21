@@ -1,11 +1,7 @@
 package com.esofthead.mycollab.shell;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.browsercookies.BrowserCookies;
 
 import com.esofthead.mycollab.module.user.view.ForgotPasswordPresenter;
 import com.esofthead.mycollab.module.user.view.LoginPresenter;
@@ -25,7 +21,6 @@ import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.ui.Window;
 
 public class ShellController implements IController {
 
@@ -73,16 +68,11 @@ public class ShellController implements IController {
 
 					@Override
 					public void handle(LogOut event) {
-						Calendar cal = Calendar.getInstance();
-						cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) - 3);
-						Date expiryDate = cal.getTime();
-						BrowserCookies cookies = new BrowserCookies();
 						LoginPresenter presenter = PresenterResolver
 								.getPresenter(LoginPresenter.class);
 						LoginView loginView = presenter.getView();
-
-						loginView.addComponent(cookies);
-						cookies.setCookie("loginInfo", "", expiryDate);
+						((MainWindowContainer) container)
+								.unsetRememberPassword();
 
 						container.setStyleName("loginView");
 

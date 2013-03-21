@@ -69,7 +69,7 @@ public class UserServiceDBImpl extends
 	@Override
 	public int saveWithSession(User record, String username) {
 		if (record.getPassword() != null) {
-			record.setPassword(PasswordEncryptHelper.encryptPassword(record
+			record.setPassword(PasswordEncryptHelper.encryptSaltPassword(record
 					.getPassword()));
 		}
 		record.setUsername(record.getEmail());
@@ -80,7 +80,7 @@ public class UserServiceDBImpl extends
 	@Override
 	public int updateWithSession(User record, String username) {
 		if (record.getPassword() != null) {
-			record.setPassword(PasswordEncryptHelper.encryptPassword(record
+			record.setPassword(PasswordEncryptHelper.encryptSaltPassword(record
 					.getPassword()));
 		}
 		return super.updateWithSession(record, username);
