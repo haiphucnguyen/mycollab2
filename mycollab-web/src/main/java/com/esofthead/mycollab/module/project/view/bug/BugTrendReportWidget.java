@@ -46,9 +46,13 @@ public class BugTrendReportWidget extends
 	private static String patternDate = "yyyy-MM-dd";
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat(
 			patternDate);
+	
+	public BugTrendReportWidget(int width, int height) {
+		super("Bugs Trend", width, height);
+	}
 
 	public BugTrendReportWidget() {
-		super("Bugs Trend", 500, 300);
+		super("Bugs Trend", 400, 300);
 	}
 
 	@Override

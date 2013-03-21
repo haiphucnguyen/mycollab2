@@ -10,7 +10,6 @@ import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
@@ -30,7 +29,6 @@ import com.esofthead.mycollab.module.crm.events.CrmEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent.GotoHome;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
-import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountListPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountReadPresenter;
@@ -68,9 +66,9 @@ import com.esofthead.mycollab.web.AppContext;
 
 public class CrmController implements IController {
 	private static final long serialVersionUID = 1L;
-	private CrmContainer container;
+	private CrmModule container;
 
-	public CrmController(CrmContainer container) {
+	public CrmController(CrmModule container) {
 		this.container = container;
 
 		bindCrmEvents();

@@ -42,8 +42,11 @@ import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
@@ -68,9 +71,9 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 
 public class ProjectController implements IController {
 	private static final long serialVersionUID = 1L;
-	private ProjectContainer container;
+	private ProjectModule container;
 
-	public ProjectController(ProjectContainer container) {
+	public ProjectController(ProjectModule container) {
 		this.container = container;
 		bindProjectEvents();
 		bindRiskEvents();
@@ -365,7 +368,7 @@ public class ProjectController implements IController {
 					public void handle(RiskEvent.GotoRead event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
+						RiskScreenData.Read data = new RiskScreenData.Read(
 								(Integer) event.getData());
 						projectView.gotoRiskView(data);
 					}
@@ -388,9 +391,8 @@ public class ProjectController implements IController {
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, CurrentProjectVariables
 										.getProjectId()));
-						projectView
-								.gotoRiskView(new ScreenData.Search<RiskSearchCriteria>(
-										criteria));
+						projectView.gotoRiskView(new RiskScreenData.Search(
+								criteria));
 					}
 				});
 	}
@@ -427,7 +429,7 @@ public class ProjectController implements IController {
 					public void handle(ProblemEvent.GotoRead event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
+						ProblemScreenData.Read data = new ProblemScreenData.Read(
 								(Integer) event.getData());
 						ProblemPresenter presenter = PresenterResolver
 								.getPresenter(ProblemPresenter.class);
@@ -743,7 +745,7 @@ public class ProjectController implements IController {
 					public void handle(MessageEvent.GotoRead event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
+						MessageScreenData.Read data = new MessageScreenData.Read(
 								(Integer) event.getData());
 						MessagePresenter presenter = PresenterResolver
 								.getPresenter(MessagePresenter.class);

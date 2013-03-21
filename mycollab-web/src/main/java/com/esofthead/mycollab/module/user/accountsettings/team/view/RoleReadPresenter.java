@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
@@ -65,12 +66,16 @@ public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		SimpleRole role = (SimpleRole) data.getParams();
 		RoleContainer roleContainer = (RoleContainer) container;
 		roleContainer.removeAllComponents();
 		roleContainer.addComponent(view.getWidget());
+		view.previewItem(role);
 
-		if (data.getParams() instanceof SimpleRole) {
-			view.previewItem((SimpleRole) data.getParams());
-		}
+		AppContext
+				.addFragment(
+						"account/role/preview/"
+								+ UrlEncodeDecoder.encode(role.getId()),
+						"Preview Role " + role.getRolename());
 	}
 }

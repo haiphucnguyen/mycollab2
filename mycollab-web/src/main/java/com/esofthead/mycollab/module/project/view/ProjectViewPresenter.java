@@ -12,12 +12,17 @@ import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData
 import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.VersionScreenData;
+import com.esofthead.mycollab.module.project.view.people.UserGroupPresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
+import com.esofthead.mycollab.module.project.view.standup.StandupPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -40,7 +45,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 
 	@Override
 	public void onGo(ComponentContainer container, ScreenData<?> data) {
-		ProjectContainer prjContainer = (ProjectContainer) container;
+		ProjectModule prjContainer = (ProjectModule) container;
 		prjContainer.removeAllComponents();
 		prjContainer.addComponent((Component) view);
 		prjContainer.setComponentAlignment((Component) view,
@@ -93,9 +98,11 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 		} else if (ClassUtils.instanceOf(pageAction,
 				MessageScreenData.Read.class, MessageScreenData.Search.class)) {
 			presenter = PresenterResolver.getPresenter(MessagePresenter.class);
-		} else if (pageAction instanceof ProblemScreenData.Read) {
+		} else if (ClassUtils.instanceOf(pageAction,
+				ProblemScreenData.Read.class, ProblemScreenData.Search.class)) {
 			presenter = PresenterResolver.getPresenter(ProblemPresenter.class);
-		} else if (pageAction instanceof RiskScreenData.Read) {
+		} else if (ClassUtils.instanceOf(pageAction, RiskScreenData.Read.class,
+				RiskScreenData.Search.class)) {
 			presenter = PresenterResolver.getPresenter(RiskPresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction, TaskScreenData.Read.class,
 				TaskGroupScreenData.GotoDashboard.class,
@@ -107,6 +114,17 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				ComponentScreenData.Search.class, VersionScreenData.Read.class,
 				VersionScreenData.Search.class)) {
 			presenter = PresenterResolver.getPresenter(BugPresenter.class);
+		} else if (ClassUtils.instanceOf(pageAction,
+				StandupScreenData.Search.class)) {
+			presenter = PresenterResolver.getPresenter(StandupPresenter.class);
+		} else if (ClassUtils.instanceOf(pageAction,
+				ProjectMemberScreenData.Search.class,
+				ProjectMemberScreenData.Read.class,
+				ProjectRoleScreenData.Search.class,
+				ProjectRoleScreenData.Add.class,
+				ProjectRoleScreenData.Read.class)) {
+			presenter = PresenterResolver
+					.getPresenter(UserGroupPresenter.class);
 		} else {
 			throw new UnsupportedOperationException(
 					"Not support page action chain " + pageAction);

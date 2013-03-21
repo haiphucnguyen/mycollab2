@@ -2301,6 +2301,9 @@ div.v-window-header {
 /* End Rating Stars */
 
 /* No border Panel */
+.v-label-h2.no-border {
+	border: none;
+}
 .v-panel.no-border .v-panel-nocaption {
 	border-top: none;
 }

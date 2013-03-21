@@ -12,14 +12,6 @@ public class ProfileReadPresenter extends AbstractPresenter<ProfileReadView> {
 
 	public ProfileReadPresenter() {
 		super(ProfileReadView.class);
-		bind();
-	}
-
-	private void bind() {
-	}
-
-	public void saveUser(User user) {
-		
 	}
 
 	@Override
@@ -28,6 +20,8 @@ public class ProfileReadPresenter extends AbstractPresenter<ProfileReadView> {
 		profileContainer.removeAllComponents();
 		profileContainer.addComponent(view.getWidget());
 		User currentUser = AppContext.getSession();
-		view.editItem(currentUser);
+		view.previewItem(currentUser);
+
+		AppContext.addFragment("account/preview", "User Profile");
 	}
 }

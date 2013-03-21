@@ -15,7 +15,6 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
-import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.utils.StringUtils;
@@ -33,6 +32,7 @@ public class AppContext implements TransactionListener, Serializable {
 	private static int UPDATE_TIME_DURATION = 300000;
 	private static Logger log = LoggerFactory.getLogger(AppContext.class);
 	private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
+	
 	private final Application app;
 	private final Map<String, Object> variables = new HashMap<String, Object>();
 

@@ -28,4 +28,6 @@ public interface UserService extends IDefaultService<String, User, UserSearchCri
     public static int FREE_BILLING = 0;
     
     SimpleUser authentication(String username, String password, boolean isPasswordEncrypt);
+    
+    SimpleUser findUserByUserName(String username);
 }

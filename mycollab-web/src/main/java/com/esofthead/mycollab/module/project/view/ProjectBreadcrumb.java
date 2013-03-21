@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
@@ -21,6 +22,7 @@ import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
+import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
@@ -702,6 +704,60 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
 								+ member.getId()), "Edit Project Member: "
 						+ member.getMemberFullName());
+	}
+
+	public void gotoRoleList() {
+		this.select(1);
+		this.addLink(new Button("Roles"));
+		AppContext
+				.addFragment(
+						"project/role/list/"
+								+ UrlEncodeDecoder.encode(project.getId()),
+						"Project Roles");
+	}
+
+	public void gotoRoleRead(SimpleProjectRole role) {
+		this.select(1);
+		this.addLink(new Button("Roles", new GotoRoleListener()));
+		this.setLinkEnabled(true, 2);
+		this.addLink(generateBreadcrumbLink(role.getRolename()));
+		AppContext.addFragment(
+				"project/role/preview/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ role.getId()),
+				"View Project Role: " + role.getRolename());
+	}
+
+	public void gotoRoleAdd() {
+		this.select(1);
+		this.addLink(new Button("Roles", new GotoRoleListener()));
+		this.setLinkEnabled(true, 2);
+		this.addLink(new Button("Add"));
+		AppContext.addFragment(
+				"project/role/add/" + UrlEncodeDecoder.encode(project.getId()),
+				"New Project Role");
+	}
+
+	public void gotoRoleEdit(SimpleProjectRole role) {
+		this.select(1);
+		this.addLink(new Button("Roles", new GotoUserListener()));
+		this.setLinkEnabled(true, 2);
+		this.addLink(generateBreadcrumbLink(role.getRolename()));
+		AppContext.addFragment(
+				"project/role/edit/"
+						+ UrlEncodeDecoder.encode(project.getId() + "/"
+								+ role.getId()),
+				"Edit Project Role: " + role.getRolename());
+	}
+
+	private static class GotoRoleListener implements Button.ClickListener {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void buttonClick(ClickEvent event) {
+			EventBus.getInstance().fireEvent(
+					new ProjectRoleEvent.GotoList(this, null));
+		}
 	}
 
 	private static class GotoUserListener implements Button.ClickListener {

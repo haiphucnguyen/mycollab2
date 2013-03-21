@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.problem;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -28,36 +29,30 @@ public class ProblemPresenter extends AbstractPresenter<ProblemContainer> {
 
 		view.removeAllComponents();
 
-		if (data instanceof ScreenData.Search) {
-			ProblemListPresenter presenter = PresenterResolver
-					.getPresenter(ProblemListPresenter.class);
-			presenter.go(view, data);
+		AbstractPresenter presenter;
 
+		if (data instanceof ProblemScreenData.Search) {
+			presenter = PresenterResolver
+					.getPresenter(ProblemListPresenter.class);
 		} else if (data instanceof ScreenData.Add
 				|| data instanceof ScreenData.Edit) {
-			ProblemAddPresenter presenter = PresenterResolver
+			presenter = PresenterResolver
 					.getPresenter(ProblemAddPresenter.class);
-			presenter.go(view, data);
-		} else if (data instanceof ScreenData.Preview) {
-			ProblemReadPresenter presenter = PresenterResolver
+		} else if (data instanceof ProblemScreenData.Read) {
+			presenter = PresenterResolver
 					.getPresenter(ProblemReadPresenter.class);
-			presenter.go(view, data);
+		} else {
+			throw new MyCollabException("Do not support screen data " + data);
 		}
+
+		presenter.go(view, data);
 	}
 
 	@Override
 	public void handleChain(ComponentContainer container,
 			PageActionChain pageActionChain) {
-		ProjectView projectViewContainer = (ProjectView) container;
-		projectViewContainer.gotoSubView("Problems");
-
-		view.removeAllComponents();
 		ScreenData pageAction = pageActionChain.pop();
-		if (pageAction instanceof ProblemScreenData.Read) {
-			ProblemReadPresenter presenter = PresenterResolver
-					.getPresenter(ProblemReadPresenter.class);
-			presenter.go(view, pageAction);
-		}
+		onGo(container, pageAction);
 	}
 
 }

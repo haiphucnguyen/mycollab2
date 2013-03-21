@@ -9,7 +9,6 @@ import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.mvp.IFormAddView;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
@@ -25,18 +24,18 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
-import com.vaadin.ui.Button.ClickEvent;
 
 @SuppressWarnings("serial")
 @ViewComponent
 public class ProfileReadViewImpl extends AbstractView implements
-		ProfileReadView, IFormAddView<User> {
+		ProfileReadView {
 
 	public static final int MAX_UPLOAD_SIZE = 20 * 1024 * 1024;
 
@@ -288,9 +287,14 @@ public class ProfileReadViewImpl extends AbstractView implements
 	}
 
 	@Override
-	public void editItem(User user) {
+	public void previewItem(User user) {
 		formItem.setUser(user);
 		formItem.setItemDataSource(new BeanItem<User>(user));
 		displayUserAvatar();
+	}
+
+	@Override
+	public User getItem() {
+		return null;
 	}
 }

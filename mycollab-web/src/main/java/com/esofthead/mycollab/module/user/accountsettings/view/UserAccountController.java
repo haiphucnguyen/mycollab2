@@ -29,9 +29,9 @@ import com.vaadin.ui.Window;
 public class UserAccountController implements IController {
 	private static final long serialVersionUID = 1L;
 
-	private AccountDashboardView container;
+	private AccountModule container;
 
-	public UserAccountController(AccountDashboardView container) {
+	public UserAccountController(AccountModule container) {
 		this.container = container;
 
 		bindProfileEvents();

@@ -27,7 +27,7 @@ public class SignupPresenter extends AbstractPresenter<SignupView> {
         windowContainer.removeAllComponents();
         
         windowContainer.addComponent(view.getWidget());
-        AppContext.addFragment("user/signup");
+        AppContext.addFragment("user/signup", "Signup Page");
     }
     
 }

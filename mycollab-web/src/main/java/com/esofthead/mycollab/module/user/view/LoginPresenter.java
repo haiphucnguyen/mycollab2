@@ -1,11 +1,7 @@
 package com.esofthead.mycollab.module.user.view;
 
-import java.util.Calendar;
-import java.util.Date;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.vaadin.browsercookies.BrowserCookies;
 
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
@@ -14,6 +10,7 @@ import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.module.user.events.UserEvent.PlainLogin;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.shell.events.ShellEvent;
+import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -46,25 +43,20 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 			@Override
 			public void handle(PlainLogin event) {
 				String[] data = (String[]) event.getData();
-				doLogin(data[0], data[1], false);
+				doLogin(data[0], data[1], true);
 			}
 		});
 	}
 
 	public void doLogin(String username, String password,
-			boolean isPasswordEncrypt) {
+			boolean isRemmeberPassword) {
 		UserService userService = AppContext.getSpringBean(UserService.class);
-		SimpleUser user = userService.authentication(username, password,
-				isPasswordEncrypt);
+		SimpleUser user = userService.authentication(username, password, false);
 
-		// Remember password
-		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
-		Date expiryDate = cal.getTime();
-		BrowserCookies cookies = new BrowserCookies();
-		view.addComponent(cookies);
-		cookies.setCookie("loginInfo", username + "$"
-				+ password, expiryDate);
+		if (isRemmeberPassword) {
+			((MainWindowContainer) AppContext.getApplication().getMainWindow())
+					.rememberPassword(username, password);
+		}
 
 		UserPreferenceService preferenceService = AppContext
 				.getSpringBean(UserPreferenceService.class);
@@ -90,6 +82,6 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 		container.removeAllComponents();
 		container.addComponent(view.getWidget());
 
-		AppContext.addFragment("user/login");
+		AppContext.addFragment("user/login", "Login Page");
 	}
 }

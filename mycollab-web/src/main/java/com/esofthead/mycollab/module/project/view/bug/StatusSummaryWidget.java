@@ -24,9 +24,13 @@ import com.vaadin.ui.ComponentContainer;
 public class StatusSummaryWidget extends PieChartWrapper<BugSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
+	
+	public StatusSummaryWidget(int width, int height) {
+		super("Bugs By Status", width, height);
+	}
 
 	public StatusSummaryWidget() {
-		super("Bugs By Status", 450, 300);
+		super("Bugs By Status", 400, 280);
 	}
 
 	@Override

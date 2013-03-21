@@ -44,6 +44,47 @@
         <if test="assignUser != null">
             <![CDATA[${assignUser.operation} m_prj_task.assignUser = #{assignUser.value}]]>
         </if>
+        <if test="milestoneId != null">
+            <![CDATA[${milestoneId.operation} m_prj_task_list.milestoneId=#{milestoneId.value,javaType=INTEGER}]]>
+        </if>
+    </sql>
+    
+    <sql id="queryTotalCountSearchCriteria">
+        <if test="id != null">
+            <![CDATA[${id.operation} m_prj_task.id ${id.compareOperator} #{id.value,javaType=INTEGER}]]>
+        </if>
+        
+        <if test="projectid != null">
+            <![CDATA[
+                ${projectid.operation} m_prj_task.projectid=#{projectid.value,javaType=INTEGER}
+            ]]>
+        </if>
+        <if test='statuses != null'>
+            ${statuses.operation} m_prj_task.status IN
+            <foreach close=")" collection="statuses.values"
+                item="status" open="(" separator="OR">
+                #{status}
+            </foreach>    
+        </if>
+        <if test="lessThan != null">
+          <![CDATA[
+              ${lessThan.operation} m_prj_task.startdate < #{lessThan.value,javaType=DATE}
+          ]]>
+        </if>
+        <if test="greaterThan != null">
+          <![CDATA[
+              ${greaterThan.operation} m_prj_task.startdate > #{greaterThan.value,javaType=DATE}
+          ]]>
+        </if>
+        <if test="taskListId != null">
+            <![CDATA[${taskListId.operation} m_prj_task.tasklistid = #{taskListId.value,javaType=INTEGER}]]>
+        </if>
+        <if test="assignUser != null">
+            <![CDATA[${assignUser.operation} m_prj_task.assignUser = #{assignUser.value}]]>
+        </if>
+        <if test="milestoneId != null">
+            <![CDATA[${milestoneId.operation} (SELECT COUNT(*) FROM m_prj_task_list WHERE m_prj_task_list.id=m_prj_task.id AND m_prj_task_list.milestoneId=#{milestoneId.value,javaType=INTEGER}) > 0 ]]>
+        </if>
     </sql>
 
     <sql id="selectTask">
@@ -77,7 +118,7 @@
         SELECT count(*) as totalCount FROM m_prj_task
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1 
-            <include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.querySearchCriteria" />
+            <include refid="com.esofthead.mycollab.module.project.dao.TaskMapperExt.queryTotalCountSearchCriteria" />
         </trim>
     </select>
 
