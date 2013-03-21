@@ -46,7 +46,7 @@ public class DueBugWidget extends BugDisplayWidget {
 			layout.setWidth("100%");
 			layout.setSpacing(false);
 			layout.addComponent(new Embedded(null, new ThemeResource(
-					"icons/22/project/bug.png")), 0, 0, 0, 1);
+					"icons/22/project/bug.png")), 0, 0, 0, 3);
 
 			ButtonLink defectLink = new ButtonLink(obj.getSummary(),
 					new Button.ClickListener() {
@@ -79,7 +79,7 @@ public class DueBugWidget extends BugDisplayWidget {
 					+ obj.getStatus());
 			dateInfo.setStyleName(UIConstants.WIDGET_ROW_METADATA);
 			layout.addComponent(dateInfo, 1, 2);
-			
+
 			HorizontalLayout hLayoutDateInfo = new HorizontalLayout();
 			hLayoutDateInfo.setSpacing(true);
 			Label lbAssignee = new Label("Assignee: ");
