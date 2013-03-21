@@ -16,6 +16,7 @@ import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
@@ -166,11 +167,14 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 				}
 
 			});
-			reportBtn.setIcon(new ThemeResource("icons/16/project/release_note.png"));
+			reportBtn.setIcon(new ThemeResource(
+					"icons/16/project/release_note.png"));
 			reportBtn.setStyleName("link");
 			reportBtn.setDescription("Display Report View");
 
 			actionControls.addComponent(reportBtn);
+			actionControls.setComponentAlignment(reportBtn,
+					Alignment.MIDDLE_LEFT);
 
 			VerticalLayout marginLayout = new VerticalLayout();
 			marginLayout.setMargin(true);

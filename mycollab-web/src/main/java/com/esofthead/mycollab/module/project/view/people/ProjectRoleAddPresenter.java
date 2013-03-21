@@ -7,14 +7,18 @@ package com.esofthead.mycollab.module.project.view.people;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
@@ -84,6 +88,16 @@ public class ProjectRoleAddPresenter extends
 		ProjectRoleContainer roleContainer = (ProjectRoleContainer) container;
 		roleContainer.removeAllComponents();
 		roleContainer.addComponent(view.getWidget());
-		view.editItem((ProjectRole) data.getParams());
+
+		ProjectRole role = (ProjectRole) data.getParams();
+
+		view.editItem(role);
+		ProjectBreadcrumb breadcrumb = ViewManager
+				.getView(ProjectBreadcrumb.class);
+		if (role.getId() == null) {
+			breadcrumb.gotoRoleAdd();
+		} else {
+			breadcrumb.gotoRoleEdit((SimpleProjectRole) role);
+		}
 	}
 }

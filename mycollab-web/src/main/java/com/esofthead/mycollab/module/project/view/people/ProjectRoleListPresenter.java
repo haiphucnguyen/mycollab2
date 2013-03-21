@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.file.ExportStreamResource;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
 import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
@@ -22,6 +23,7 @@ import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
@@ -145,7 +147,8 @@ public class ProjectRoleListPresenter extends
 												searchCriteria), "export.csv",
 										view.getApplication());
 							} else {
-								List<ProjectRole> tableData = view.getPagedBeanTable()
+								List<ProjectRole> tableData = view
+										.getPagedBeanTable()
 										.getCurrentDataList();
 								res = new StreamResource(
 										new ExportStreamResource.ListData(
@@ -234,5 +237,9 @@ public class ProjectRoleListPresenter extends
 		roleContainer.removeAllComponents();
 		roleContainer.addComponent(view.getWidget());
 		doSearch((ProjectRoleSearchCriteria) data.getParams());
+
+		ProjectBreadcrumb breadCrumb = ViewManager
+				.getView(ProjectBreadcrumb.class);
+		breadCrumb.gotoRoleList();
 	}
 }

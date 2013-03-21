@@ -13,6 +13,7 @@ import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
@@ -118,7 +119,10 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 			presenter = PresenterResolver.getPresenter(StandupPresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction,
 				ProjectMemberScreenData.Search.class,
-				ProjectMemberScreenData.Read.class)) {
+				ProjectMemberScreenData.Read.class,
+				ProjectRoleScreenData.Search.class,
+				ProjectRoleScreenData.Add.class,
+				ProjectRoleScreenData.Read.class)) {
 			presenter = PresenterResolver
 					.getPresenter(UserGroupPresenter.class);
 		} else {

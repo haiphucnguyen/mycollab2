@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
@@ -12,11 +13,13 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectRoleSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
@@ -108,9 +111,10 @@ public class ProjectRoleReadPresenter extends
 						Integer nextId = projectRoleService
 								.getPreviousItemKey(criteria);
 						if (nextId != null) {
-							EventBus.getInstance().fireEvent(
-									new ProjectRoleEvent.GotoRead(this,
-											nextId));
+							EventBus.getInstance()
+									.fireEvent(
+											new ProjectRoleEvent.GotoRead(this,
+													nextId));
 						} else {
 							view.getWindow().showNotification("Information",
 									"You are already in the first record",
@@ -123,15 +127,31 @@ public class ProjectRoleReadPresenter extends
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		ProjectRoleContainer roleContainer = (ProjectRoleContainer) container;
-		roleContainer.removeAllComponents();
-		roleContainer.addComponent(view.getWidget());
 
 		if (data.getParams() instanceof Integer) {
 			ProjectRoleService projectRoleService = AppContext
 					.getSpringBean(ProjectRoleService.class);
 			SimpleProjectRole role = projectRoleService
 					.findRoleById((Integer) data.getParams());
-			view.previewItem(role);
+			if (role == null) {
+				AppContext
+						.getApplication()
+						.getMainWindow()
+						.showNotification("Information",
+								"The record is not existed",
+								Window.Notification.TYPE_HUMANIZED_MESSAGE);
+				return;
+			} else {
+				roleContainer.removeAllComponents();
+				roleContainer.addComponent(view.getWidget());
+				view.previewItem(role);
+
+				ProjectBreadcrumb breadCrumb = ViewManager
+						.getView(ProjectBreadcrumb.class);
+				breadCrumb.gotoRoleRead(role);
+			}
+		} else {
+			throw new MyCollabException("Do not support screen data: " + data);
 		}
 	}
 }
