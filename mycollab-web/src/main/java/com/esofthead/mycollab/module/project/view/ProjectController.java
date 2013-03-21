@@ -42,6 +42,7 @@ import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
@@ -744,7 +745,7 @@ public class ProjectController implements IController {
 					public void handle(MessageEvent.GotoRead event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
+						MessageScreenData.Read data = new MessageScreenData.Read(
 								(Integer) event.getData());
 						MessagePresenter presenter = PresenterResolver
 								.getPresenter(MessagePresenter.class);
