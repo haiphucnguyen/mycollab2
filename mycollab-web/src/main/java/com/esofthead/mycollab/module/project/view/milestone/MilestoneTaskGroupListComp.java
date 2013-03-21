@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.view.task.GanttChartDisplayWidget;
 import com.esofthead.mycollab.module.project.view.task.TaskDisplayWidget;
 import com.esofthead.mycollab.module.project.view.task.TaskGroupDisplayWidget;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -36,6 +37,7 @@ public class MilestoneTaskGroupListComp extends VerticalLayout {
 		header.setWidth("100%");
 		Label taskGroupSelection = new Label("Tasks");
 		taskGroupSelection.addStyleName("h2");
+		taskGroupSelection.addStyleName(UIConstants.THEME_NO_BORDER);
 		header.addComponent(taskGroupSelection);
 		header.setExpandRatio(taskGroupSelection, 1.0f);
 		header.setComponentAlignment(taskGroupSelection, Alignment.MIDDLE_LEFT);
