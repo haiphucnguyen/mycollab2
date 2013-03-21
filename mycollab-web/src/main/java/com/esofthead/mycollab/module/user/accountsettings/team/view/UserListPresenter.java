@@ -201,6 +201,8 @@ public class UserListPresenter extends AbstractPresenter<UserListView>
 		userContainer.removeAllComponents();
 		userContainer.addComponent(view.getWidget());
 		doSearch((UserSearchCriteria) data.getParams());
+
+		AppContext.addFragment("account/user/list", "Account Users");
 	}
 
 }

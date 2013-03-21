@@ -4,6 +4,8 @@ import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.AccountSettingsPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
@@ -19,8 +21,7 @@ import com.vaadin.ui.HorizontalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class AccountModuleImpl extends AbstractView implements
-		AccountModule {
+public class AccountModuleImpl extends AbstractView implements AccountModule {
 
 	private final HorizontalLayout root;
 	private final DetachedTabs accountTab;
@@ -58,7 +59,8 @@ public class AccountModuleImpl extends AbstractView implements
 
 		this.addComponent(root);
 
-		profilePresenter.go(AccountModuleImpl.this, null);
+		EventBus.getInstance().fireEvent(
+				new ProfileEvent.GotoProfileView(this, null));
 	}
 
 	private void buildComponents() {
@@ -83,8 +85,7 @@ public class AccountModuleImpl extends AbstractView implements
 				} else if ("Account Settings".equals(caption)) {
 
 				} else if ("Users & Permissions".equals(caption)) {
-					userPermissionPresenter.go(AccountModuleImpl.this,
-							null);
+					userPermissionPresenter.go(AccountModuleImpl.this, null);
 				}
 			}
 		});

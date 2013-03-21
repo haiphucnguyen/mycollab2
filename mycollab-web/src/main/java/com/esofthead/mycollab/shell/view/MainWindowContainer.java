@@ -65,7 +65,6 @@ public class MainWindowContainer extends Window implements View {
 						.getBrowserWindowWidth());
 			}
 		});
-
 		content = new Content();
 		this.setContent(content);
 		content.setSizeFull();

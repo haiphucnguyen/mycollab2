@@ -139,4 +139,9 @@ public class UserServiceDBImpl extends
 			return user;
 		}
 	}
+
+	@Override
+	public SimpleUser findUserByUserName(String username) {
+		return userMapperExt.findUserByUserName(username);
+	}
 }
