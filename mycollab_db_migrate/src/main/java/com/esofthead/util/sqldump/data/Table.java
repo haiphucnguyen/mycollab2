@@ -98,7 +98,7 @@ public class Table {
 		return script.toString();
 	}
 
-	public void dumpTableData(Writer writer) throws Exception {
+	public void dumpTableData(Writer writer, boolean isMySQL) throws Exception {
 		int count = getCountOfRecords();
 		if (count == 0) {
 			/* Do nothing if no record found */
@@ -115,7 +115,7 @@ public class Table {
 
 		writer.append("\r\n\r\n-- Generate script insert data for " + tableName
 				+ " -----------------------------------\r\n");
-		writer.append(disableAutoIncrementColumn());
+		writer.append(disableAutoIncrementColumn(isMySQL));
 
 		SqlStringDataParser parser = new SqlStringDataParser(Columns.size());
 
@@ -133,7 +133,7 @@ public class Table {
 			}
 		}
 
-		writer.append(enableAutoIncrementColumn());
+		writer.append(enableAutoIncrementColumn(isMySQL));
 
 	}
 
@@ -192,10 +192,10 @@ public class Table {
 		return String.format(insertTemplate, arrs);
 	}
 
-	private final String disableAutoIncrementColumn() {
+	private final String disableAutoIncrementColumn(boolean isMySQL) {
 		StringBuilder script = new StringBuilder();
 		for (Column col : Columns) {
-			String query = col.disableAutoIncrement(tableName);
+			String query = col.disableAutoIncrement(tableName, isMySQL);
 			if (null != query) {
 				script.append(query);
 			}
@@ -203,10 +203,10 @@ public class Table {
 		return script.toString();
 	}
 
-	private final String enableAutoIncrementColumn() {
+	private final String enableAutoIncrementColumn(boolean isMySQL) {
 		StringBuilder script = new StringBuilder();
 		for (Column col : Columns) {
-			String query = col.enableAutoIncrement(tableName);
+			String query = col.enableAutoIncrement(tableName, isMySQL);
 			if (null != query) {
 				script.append(query);
 			}
