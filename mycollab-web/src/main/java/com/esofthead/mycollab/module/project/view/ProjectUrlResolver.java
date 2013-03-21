@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.project.view.standup.StandupUrlResolver;
 import com.esofthead.mycollab.module.project.view.task.ScheduleUrlResolver;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
 import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
 public class ProjectUrlResolver extends UrlResolver {
@@ -25,6 +26,13 @@ public class ProjectUrlResolver extends UrlResolver {
 		this.addSubResolver("standup", new StandupUrlResolver());
 		this.addSubResolver("user", new UserUrlResolver());
 		this.addSubResolver("role", new RoleUrlResolver());
+	}
+
+	@Override
+	protected void preHandle() {
+		if (!ModuleHelper.isCurrentProjectModule()) {
+			System.out.println("Should move to project page");
+		}
 	}
 
 	public static class ProjectPageUrlResolver extends UrlResolver {

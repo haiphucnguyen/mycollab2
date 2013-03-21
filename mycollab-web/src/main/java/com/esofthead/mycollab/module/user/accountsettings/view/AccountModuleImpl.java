@@ -4,6 +4,8 @@ import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.module.user.accountsettings.billing.view.AccountSettingsPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
+import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
@@ -19,8 +21,7 @@ import com.vaadin.ui.HorizontalLayout;
 
 @SuppressWarnings("serial")
 @ViewComponent
-public class AccountDashboardViewImpl extends AbstractView implements
-		AccountDashboardView {
+public class AccountModuleImpl extends AbstractView implements AccountModule {
 
 	private final HorizontalLayout root;
 	private final DetachedTabs accountTab;
@@ -30,7 +31,7 @@ public class AccountDashboardViewImpl extends AbstractView implements
 	private UserPermissionManagementPresenter userPermissionPresenter;
 	private AccountSettingsPresenter accountSettingPresenter;
 
-	public AccountDashboardViewImpl() {
+	public AccountModuleImpl() {
 		ControllerRegistry.getInstance().addController(
 				new UserAccountController(this));
 		this.setStyleName("accountViewContainer");
@@ -58,7 +59,8 @@ public class AccountDashboardViewImpl extends AbstractView implements
 
 		this.addComponent(root);
 
-		profilePresenter.go(AccountDashboardViewImpl.this, null);
+		EventBus.getInstance().fireEvent(
+				new ProfileEvent.GotoProfileView(this, null));
 	}
 
 	private void buildComponents() {
@@ -79,12 +81,11 @@ public class AccountDashboardViewImpl extends AbstractView implements
 				Button btn = event.getSource();
 				String caption = btn.getCaption();
 				if ("User Information".equals(caption)) {
-					profilePresenter.go(AccountDashboardViewImpl.this, null);
+					profilePresenter.go(AccountModuleImpl.this, null);
 				} else if ("Account Settings".equals(caption)) {
 
 				} else if ("Users & Permissions".equals(caption)) {
-					userPermissionPresenter.go(AccountDashboardViewImpl.this,
-							null);
+					userPermissionPresenter.go(AccountModuleImpl.this, null);
 				}
 			}
 		});

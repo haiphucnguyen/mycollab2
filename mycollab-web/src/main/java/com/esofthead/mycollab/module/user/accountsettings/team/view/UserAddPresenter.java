@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -75,6 +76,18 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 		UserContainer userContainer = (UserContainer) container;
 		userContainer.removeAllComponents();
 		userContainer.addComponent(view.getWidget());
-		view.editItem((User) data.getParams());
+
+		User user = (User) data.getParams();
+		view.editItem(user);
+
+		if (user.getUsername() == null) {
+			AppContext.addFragment("account/user/add", "New User Account");
+		} else {
+			AppContext.addFragment(
+					"account/user/edit/"
+							+ UrlEncodeDecoder.encode(user.getUsername()),
+					"Edit User " + user.getUsername());
+		}
+
 	}
 }

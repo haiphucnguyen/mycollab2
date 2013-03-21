@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
 import com.esofthead.mycollab.module.user.service.RoleService;
@@ -75,6 +76,18 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
 		RoleContainer roleContainer = (RoleContainer) container;
 		roleContainer.removeAllComponents();
 		roleContainer.addComponent(view.getWidget());
-		view.editItem((Role) data.getParams());
+
+		Role role = (Role) data.getParams();
+		view.editItem(role);
+
+		if (role.getId() == null) {
+			AppContext.addFragment("account/role", "New Role");
+		} else {
+			AppContext
+					.addFragment(
+							"acount/role/edit/"
+									+ UrlEncodeDecoder.encode(role.getId()),
+							"Edit Role: " + role.getRolename());
+		}
 	}
 }

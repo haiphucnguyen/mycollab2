@@ -18,8 +18,10 @@ import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -97,8 +99,9 @@ public class BugDashboardViewImpl extends AbstractView implements
 								new BugEvent.GotoAdd(this, null));
 					}
 				});
-		createBugBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
-		
+		createBugBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.BUGS));
+
 		final SplitButtonExt controlsBtn = new SplitButtonExt(createBugBtn);
 		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
 		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
@@ -115,7 +118,8 @@ public class BugDashboardViewImpl extends AbstractView implements
 					}
 				});
 		createComponentBtn.setStyleName("link");
-		createComponentBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.COMPONENTS));
+		createComponentBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.COMPONENTS));
 		btnControlsLayout.addComponent(createComponentBtn);
 
 		Button createVersionBtn = new Button("Create Version",
@@ -128,7 +132,8 @@ public class BugDashboardViewImpl extends AbstractView implements
 					}
 				});
 		createVersionBtn.setStyleName("link");
-		createVersionBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
+		createVersionBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.VERSIONS));
 		btnControlsLayout.addComponent(createVersionBtn);
 		controlsBtn.addComponent(btnControlsLayout);
 
@@ -149,7 +154,11 @@ public class BugDashboardViewImpl extends AbstractView implements
 
 		rightColumn = new VerticalLayout();
 		rightColumn.setSpacing(true);
-		rightColumn.setWidth("500px");
+		if (ScreenSize.hasSupport1024Pixels()) {
+			rightColumn.setWidth("310px");
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			rightColumn.setWidth("400px");
+		}
 		body.addComponent(rightColumn);
 		body.setComponentAlignment(rightColumn, Alignment.TOP_RIGHT);
 
@@ -237,8 +246,12 @@ public class BugDashboardViewImpl extends AbstractView implements
 		BugSearchCriteria chartSearchCriteria = new BugSearchCriteria();
 		chartSearchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
-		BugChartComponent bugChartComponent = new BugChartComponent(
-				chartSearchCriteria);
+		BugChartComponent bugChartComponent = null;
+		if (ScreenSize.hasSupport1024Pixels()) {
+			bugChartComponent = new BugChartComponent(chartSearchCriteria, 300, 200);
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400, 200);
+		}
 		rightColumn.addComponent(bugChartComponent);
 	}
 }

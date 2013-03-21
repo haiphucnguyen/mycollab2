@@ -23,7 +23,7 @@ public class UserDashboardPresenter extends AbstractPresenter<UserDashboardView>
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        ProjectContainer prjContainer = (ProjectContainer) container;
+        ProjectModule prjContainer = (ProjectModule) container;
         prjContainer.removeAllComponents();
         prjContainer.addComponent((Component) view);
         prjContainer.setComponentAlignment(view, Alignment.TOP_CENTER);

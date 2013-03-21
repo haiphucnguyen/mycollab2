@@ -58,7 +58,7 @@ public class DueBugWidget extends BugDisplayWidget {
 									new BugEvent.GotoRead(this, obj.getId()));
 						}
 					});
-			defectLink.setWidth("70%");
+			defectLink.setWidth("100%");
 
 			if (obj.getDuedate() != null
 					&& (obj.getDuedate().before(new GregorianCalendar()
@@ -71,7 +71,7 @@ public class DueBugWidget extends BugDisplayWidget {
 
 			LabelHTMLDisplayWidget descInfo = new LabelHTMLDisplayWidget(
 					obj.getDescription());
-			descInfo.setWidth("70%");
+			descInfo.setWidth("100%");
 			layout.addComponent(descInfo);
 
 			Label dateInfo = new Label("Due on "

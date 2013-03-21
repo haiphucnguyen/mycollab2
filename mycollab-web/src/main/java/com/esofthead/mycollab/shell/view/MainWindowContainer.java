@@ -1,9 +1,13 @@
 package com.esofthead.mycollab.shell.view;
 
+import java.util.Calendar;
+import java.util.Date;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.browsercookies.BrowserCookies;
 
+import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
 import com.esofthead.mycollab.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
 import com.esofthead.mycollab.shell.ShellController;
@@ -11,7 +15,9 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.View;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.UriFragmentUtility;
 import com.vaadin.ui.UriFragmentUtility.FragmentChangedEvent;
 import com.vaadin.ui.Window;
@@ -22,6 +28,8 @@ public class MainWindowContainer extends Window implements View {
 
 	private static final Logger log = LoggerFactory
 			.getLogger(MainWindowContainer.class);
+
+	private Content content;
 
 	private UriFragmentUtility urifu;
 	private FragmentNavigator fragmentNavigator;
@@ -57,16 +65,57 @@ public class MainWindowContainer extends Window implements View {
 						.getBrowserWindowWidth());
 			}
 		});
+		content = new Content();
+		this.setContent(content);
+		content.setSizeFull();
+		content.addComponent(urifu);
+
 		setDefaultView(true);
 	}
 
-	@Override
-	public void setContent(ComponentContainer newContent) {
-		super.setContent(newContent);
-
-		if (newContent != null) {
-			newContent.addComponent(urifu);
+	public void setMainContent(ComponentContainer newContent) {
+		for (int i = content.getComponentCount() - 1; i >= 0; i--) {
+			Component component = content.getComponent(i);
+			if (!(component instanceof UriFragmentUtility)
+					&& !(component instanceof BrowserCookies)) {
+				content.removeComponent(component);
+			}
 		}
+		content.addComponent(newContent);
+	}
+
+	private BrowserCookies getCookieComponent() {
+		for (int i = 0; i < content.getComponentCount(); i++) {
+			Component component = content.getComponent(i);
+			if (component instanceof BrowserCookies) {
+				return ((BrowserCookies) component);
+			}
+		}
+
+		BrowserCookies cookies = new BrowserCookies();
+		content.addComponent(cookies);
+		return cookies;
+	}
+
+	public void unsetRememberPassword() {
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) - 3);
+		Date expiryDate = cal.getTime();
+
+		BrowserCookies cookies = getCookieComponent();
+		cookies.setCookie("loginInfo", "", expiryDate);
+	}
+
+	public void rememberPassword(String username, String password) {
+		// Remember password
+		Calendar cal = Calendar.getInstance();
+		cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
+		Date expiryDate = cal.getTime();
+		BrowserCookies cookies = getCookieComponent();
+
+		cookies.setCookie("loginInfo",
+				username + "$" + PasswordEncryptHelper.encyptText(password),
+				expiryDate);
 	}
 
 	public void addFragement(String fragement) {
@@ -74,13 +123,12 @@ public class MainWindowContainer extends Window implements View {
 		urifu.setFragment(fragement, false);
 	}
 
-	public final void setDefaultView(final boolean isAutoLogin) {
+	private final void setDefaultView(final boolean isAutoLogin) {
 		final LoginPresenter presenter = PresenterResolver
 				.getPresenter(LoginPresenter.class);
 		LoginView loginView = presenter.getView();
 
-		BrowserCookies cookies = new BrowserCookies();
-		loginView.addComponent(cookies);
+		BrowserCookies cookies = getCookieComponent();
 		cookies.addListener(new BrowserCookies.UpdateListener() {
 			@Override
 			public void cookiesUpdated(BrowserCookies bc) {
@@ -91,8 +139,12 @@ public class MainWindowContainer extends Window implements View {
 							if (loginInfo != null) {
 								String[] loginParams = loginInfo.split("\\$");
 								if (loginParams.length == 2) {
-									presenter.doLogin(loginParams[0],
-											loginParams[1], true);
+									presenter
+											.doLogin(
+													loginParams[0],
+													PasswordEncryptHelper
+															.decryptText(loginParams[1]),
+													false);
 								}
 							}
 						}
@@ -102,8 +154,8 @@ public class MainWindowContainer extends Window implements View {
 			}
 		});
 
-		this.setStyleName("loginView");
-		this.setContent(loginView.getWidget());
+		// this.setStyleName("loginView");
+		this.setMainContent(loginView.getWidget());
 	}
 
 	@Override
@@ -115,5 +167,10 @@ public class MainWindowContainer extends Window implements View {
 	public void addViewListener(
 			@SuppressWarnings("rawtypes") ApplicationEventListener listener) {
 		throw new UnsupportedOperationException("Not supported yet.");
+	}
+
+	private static class Content extends CssLayout {
+		private static final long serialVersionUID = 1L;
+
 	}
 }

@@ -60,6 +60,12 @@
         </trim>
     </select>
 
+    <select id="findUserByUserName" resultMap="SimpleUserResult"
+        parameterType="java.lang.String">
+        <include refid="selectUser" />
+        WHERE s_user.username=#{username}
+    </select>
+
     <delete id="removeKeysWithSession" parameterType="java.util.List">
         <!--WARNING - @mbggenerated -->
         delete from s_user where username IN

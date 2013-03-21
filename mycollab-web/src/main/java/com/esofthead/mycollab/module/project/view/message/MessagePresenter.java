@@ -33,11 +33,11 @@ public class MessagePresenter extends AbstractPresenter<MessageContainer> {
 
 		view.removeAllComponents();
 
-		if (data instanceof ScreenData.Preview) {
+		if (data instanceof MessageScreenData.Read) {
 			MessageReadPresenter presenter = PresenterResolver
 					.getPresenter(MessageReadPresenter.class);
 			presenter.go(view, data);
-		} else if (data instanceof ScreenData.Search) {
+		} else if (data instanceof MessageScreenData.Search) {
 			MessageListPresenter presenter = PresenterResolver
 					.getPresenter(MessageListPresenter.class);
 			presenter.go(view, data);

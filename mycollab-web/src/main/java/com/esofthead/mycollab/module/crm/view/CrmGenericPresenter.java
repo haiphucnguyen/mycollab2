@@ -15,7 +15,7 @@ public class CrmGenericPresenter<V extends View> extends AbstractPresenter<V> {
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        CrmContainer crmContainer = (CrmContainer) container;
-        crmContainer.addView(view);
+        CrmModule crmModule = (CrmModule) container;
+        crmModule.addView(view);
     }
 }

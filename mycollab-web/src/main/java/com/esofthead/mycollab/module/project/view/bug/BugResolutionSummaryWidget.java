@@ -34,8 +34,12 @@ public class BugResolutionSummaryWidget extends
 
 	private static final long serialVersionUID = 1L;
 
+	public BugResolutionSummaryWidget(int width, int height) {
+		super("Bugs By Resolution", width, height);
+	}
+	
 	public BugResolutionSummaryWidget() {
-		super("Bugs By Resolution", 450, 300);
+		super("Bugs By Resolution", 400, 280);
 
 	}
 

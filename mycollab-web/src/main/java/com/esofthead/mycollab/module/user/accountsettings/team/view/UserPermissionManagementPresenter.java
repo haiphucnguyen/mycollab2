@@ -6,7 +6,7 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.module.user.accountsettings.view.AccountDashboardView;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.RoleScreenData;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.UserScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -34,7 +34,7 @@ public class UserPermissionManagementPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		AccountDashboardView accountContaier = (AccountDashboardView) container;
+		AccountModule accountContaier = (AccountModule) container;
 		accountContaier.gotoSubView("Users & Permissions");
 
 		AbstractPresenter<?> presenter = null;

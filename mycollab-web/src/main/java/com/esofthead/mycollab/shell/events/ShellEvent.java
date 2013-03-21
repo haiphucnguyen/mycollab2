@@ -32,6 +32,13 @@ public class ShellEvent {
             super(source, data);
         }
     }
+    
+    public static class GotoAccountPage extends ApplicationEvent {
+
+        public GotoAccountPage(Object source, Object data) {
+            super(source, data);
+        }
+    }
 
     public static class GotoConsolePage extends ApplicationEvent {
 
