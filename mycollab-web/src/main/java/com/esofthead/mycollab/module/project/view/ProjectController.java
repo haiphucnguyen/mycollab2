@@ -43,6 +43,7 @@ import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
@@ -768,7 +769,7 @@ public class ProjectController implements IController {
 					public void handle(MilestoneEvent.GotoAdd event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Add<Milestone> data = new ScreenData.Add<Milestone>(
+						MilestoneScreenData.Add data = new MilestoneScreenData.Add(
 								new Milestone());
 						projectView.gotoMilestoneView(data);
 					}
@@ -787,7 +788,7 @@ public class ProjectController implements IController {
 					public void handle(MilestoneEvent.GotoRead event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Preview<Integer> data = new ScreenData.Preview<Integer>(
+						MilestoneScreenData.Read data = new MilestoneScreenData.Read(
 								(Integer) event.getData());
 						projectView.gotoMilestoneView(data);
 					}
@@ -813,7 +814,7 @@ public class ProjectController implements IController {
 								SearchField.AND, CurrentProjectVariables
 										.getProjectId()));
 						projectView
-								.gotoMilestoneView(new ScreenData.Search<MilestoneSearchCriteria>(
+								.gotoMilestoneView(new MilestoneScreenData.Search(
 										criteria));
 					}
 				});
@@ -831,7 +832,7 @@ public class ProjectController implements IController {
 					public void handle(MilestoneEvent.GotoEdit event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Edit<Milestone> data = new ScreenData.Edit<Milestone>(
+						MilestoneScreenData.Edit data = new MilestoneScreenData.Edit(
 								(Milestone) event.getData());
 						projectView.gotoMilestoneView(data);
 					}

@@ -43,6 +43,8 @@ public class TaskDisplayWidget extends
 			String taskStatus = task.getStatus();
 			if ("Closed".equalsIgnoreCase(taskStatus)) {
 				taskLink.addStyleName(UIConstants.LINK_COMPLETED);
+			} else if ("Pending".equalsIgnoreCase(taskStatus)) {
+				taskLink.addStyleName(UIConstants.LINK_PENDING);
 			} else if (task.isOverdue()) {
 				taskLink.addStyleName(UIConstants.LINK_OVERDUE);
 			}

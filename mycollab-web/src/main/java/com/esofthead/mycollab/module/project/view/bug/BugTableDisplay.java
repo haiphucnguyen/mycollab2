@@ -6,7 +6,12 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.GregorianCalendar;
 
+import org.vaadin.hene.popupbutton.PopupButton;
+import org.vaadin.peter.contextmenu.ContextMenu;
+import org.vaadin.peter.contextmenu.ContextMenu.ContextMenuItem;
+
 import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -17,9 +22,13 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
+import com.vaadin.data.Property.ValueChangeNotifier;
+import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
-import com.vaadin.ui.CheckBox;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
@@ -41,23 +50,117 @@ public class BugTableDisplay extends
 			@Override
 			public Object generateCell(final Table source, final Object itemId,
 					Object columnId) {
-				final CheckBox cb = new CheckBox("", false);
-				cb.setImmediate(true);
-				cb.addListener(new Button.ClickListener() {
+				final SimpleBug bug = BugTableDisplay.this
+						.getBeanByIndex(itemId);
+				final PopupButton bugSettingBtn = new PopupButton();
+				bugSettingBtn.setIcon(new ThemeResource(
+						"icons/12/project/task_menu.png"));
+				bugSettingBtn.setStyleName("link");
+
+				final ContextMenu menu = new ContextMenu();
+
+				menu.addListener(new ContextMenu.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(Button.ClickEvent event) {
-						SimpleBug bug = BugTableDisplay.this
-								.getBeanByIndex(itemId);
-						BugTableDisplay.this.fireSelectItemEvent(bug);
+					public void contextItemClick(
+							org.vaadin.peter.contextmenu.ContextMenu.ClickEvent event) {
+						bugSettingBtn.setPopupVisible(false);
+						String itemId = event.getClickedItem().getId();
+						bug.setStatus(BugStatusConstants.CLOSE);
+						// if (("status-" + BugStatusConstants.CLOSE)
+						// .equals(itemId)) {
+						// AppContext.getApplication().getMainWindow()
+						// .addWindow(new ApproveInputWindow(bug));
+						// } else if (("status-" +
+						// BugStatusConstants.INPROGRESS)
+						// .equals(itemId)) {
+						// bug.setStatus(BugStatusConstants.INPROGRESS);
+						// BugService bugService = AppContext
+						// .getSpringBean(BugService.class);
+						// bugService.updateWithSession(bug,
+						// AppContext.getUsername());
+						// } else if (("status-" + BugStatusConstants.OPEN)
+						// .equals(itemId)) {
+						// AppContext.getApplication().getMainWindow()
+						// .addWindow(new ReOpenWindow(bug));
+						// } else if (("status-" +
+						// BugStatusConstants.TESTPENDING)
+						// .equals(itemId)) {
+						// AppContext.getApplication().getMainWindow()
+						// .addWindow(new ResolvedInputWindow(bug));
+						// }
+					}
 
+				});
+				bugSettingBtn.addComponent(menu);
+
+				bugSettingBtn.addListener(new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						menu.show(event.getClientX() - 25, event.getClientY());
+						menu.removeAllItems();
+
+						ContextMenuItem statusMenuItem = menu.addItem("Status");
+						if (BugStatusConstants.OPEN.equals(bug.getStatus())
+								|| BugStatusConstants.REOPENNED.equals(bug
+										.getStatus())) {
+							statusMenuItem.addItem("Start Progress", "status-"
+									+ BugStatusConstants.INPROGRESS);
+							statusMenuItem.addItem("Resolved", "status-"
+									+ BugStatusConstants.TESTPENDING);
+							statusMenuItem.addItem("Won't Fix", "status-"
+									+ BugStatusConstants.WONFIX);
+						} else if (BugStatusConstants.INPROGRESS.equals(bug
+								.getStatus())) {
+							statusMenuItem.addItem("Stop Progress", "status-"
+									+ BugStatusConstants.OPEN);
+							statusMenuItem.addItem("Resolved", "status-"
+									+ BugStatusConstants.TESTPENDING);
+						} else if (BugStatusConstants.CLOSE.equals(bug
+								.getStatus())) {
+							statusMenuItem.addItem("ReOpen", "status-"
+									+ BugStatusConstants.REOPENNED);
+						} else if (BugStatusConstants.TESTPENDING.equals(bug
+								.getStatus())) {
+							statusMenuItem.addItem("ReOpen", "status-"
+									+ BugStatusConstants.REOPENNED);
+							statusMenuItem.addItem("Approve & Close", "status-"
+									+ BugStatusConstants.CLOSE);
+						} else if (BugStatusConstants.WONFIX.equals(bug
+								.getStatus())) {
+							statusMenuItem.addItem("ReOpen", "status-"
+									+ BugStatusConstants.REOPENNED);
+						}
+
+						// Show bug priority
+						ContextMenuItem priorityMenuItem = menu
+								.addItem("Priority");
+						for (String bugPriority : ProjectDataTypeFactory
+								.getBugPriorityList()) {
+							ContextMenuItem prioritySubMenuItem = priorityMenuItem
+									.addItem(bugPriority);
+							if (bugPriority.equals(bug.getPriority())) {
+								prioritySubMenuItem.setEnabled(false);
+							}
+						}
+
+						// Show bug severity
+						ContextMenuItem severityMenuItem = menu
+								.addItem("Severity");
+						for (String bugSeverity : ProjectDataTypeFactory
+								.getBugSeverityList()) {
+							ContextMenuItem severitySubMenuItem = severityMenuItem
+									.addItem(bugSeverity);
+							if (bugSeverity.equals(bug.getSeverity())) {
+								severitySubMenuItem.setEnabled(false);
+							}
+						}
 					}
 				});
-
-				SimpleBug bug = BugTableDisplay.this.getBeanByIndex(itemId);
-				bug.setExtraData(cb);
-				return cb;
+				return bugSettingBtn;
 			}
 		});
 
@@ -93,8 +196,10 @@ public class BugTableDisplay extends
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
+
 				final SimpleBug bug = BugTableDisplay.this
 						.getBeanByIndex(itemId);
+
 				ButtonLink b = new ButtonLink(bug.getSummary(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
@@ -164,7 +269,7 @@ public class BugTableDisplay extends
 		this.setColumnExpandRatio("summary", 1);
 		this.setColumnWidth("assignuserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
-		this.setColumnWidth("selected", UIConstants.TABLE_CONTROL_WIDTH);
+		this.setColumnWidth("selected", 30);
 		this.setColumnWidth("bugkey", UIConstants.TABLE_CONTROL_WIDTH);
 		this.setColumnWidth("severity", UIConstants.TABLE_S_LABEL_WIDTH);
 		this.setColumnWidth("resolution", UIConstants.TABLE_M_LABEL_WIDTH);

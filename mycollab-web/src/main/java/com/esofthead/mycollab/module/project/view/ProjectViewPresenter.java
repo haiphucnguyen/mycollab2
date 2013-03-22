@@ -92,7 +92,8 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 		AbstractPresenter<?> presenter = null;
 
 		if (ClassUtils.instanceOf(pageAction, MilestoneScreenData.Read.class,
-				MilestoneScreenData.Search.class)) {
+				MilestoneScreenData.Search.class,
+				MilestoneScreenData.Add.class, MilestoneScreenData.Edit.class)) {
 			presenter = PresenterResolver
 					.getPresenter(MilestonePresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction,
@@ -106,7 +107,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 			presenter = PresenterResolver.getPresenter(RiskPresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction, TaskScreenData.Read.class,
 				TaskGroupScreenData.GotoDashboard.class,
-				TaskGroupScreenData.Read.class)) {
+				TaskGroupScreenData.Read.class, TaskGroupScreenData.Edit.class)) {
 			presenter = PresenterResolver.getPresenter(TaskPresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction, BugScreenData.Read.class,
 				BugScreenData.GotoDashboard.class,

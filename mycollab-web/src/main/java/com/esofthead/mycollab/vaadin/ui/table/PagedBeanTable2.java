@@ -213,6 +213,11 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		}
 
 	}
+	
+	public BeanItem<T> getBeanItem(Object itemId) {
+		Container container = tableItem.getContainerDataSource();
+		return (BeanItem<T>) container.getItem(itemId);
+	}
 
 	@SuppressWarnings("unchecked")
 	public T getBeanByIndex(Object itemId) {
