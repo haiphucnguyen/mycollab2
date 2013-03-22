@@ -25,6 +25,10 @@ public class UrlResolver {
 		subResolvers.put(key, subResolver);
 	}
 
+	public UrlResolver getSubResolver(String key) {
+		return subResolvers.get(key);
+	}
+
 	public void handle(String... params) {
 		try {
 			if (params != null && params.length > 0) {
@@ -38,11 +42,13 @@ public class UrlResolver {
 								"Can not register resolver key " + key
 										+ " for Resolver: " + this);
 					} else {
-						preHandle();
 						List<String> paramList = Arrays.asList(params).subList(
 								1, params.length);
+						String[] nxtParams = paramList.toArray(new String[0]);
+
 						log.debug("Handle url in resolver: " + urlResolver);
-						urlResolver.handle(paramList.toArray(new String[0]));
+						urlResolver.handle(nxtParams);
+
 					}
 				}
 			} else {
@@ -57,9 +63,6 @@ public class UrlResolver {
 							"The record is not existed",
 							Window.Notification.TYPE_HUMANIZED_MESSAGE);
 		}
-	}
-
-	protected void preHandle() {
 	}
 
 	protected void handlePage(String... params) {

@@ -29,9 +29,12 @@ public class ProjectUrlResolver extends UrlResolver {
 	}
 
 	@Override
-	protected void preHandle() {
+	public void handle(String... params) {
 		if (!ModuleHelper.isCurrentProjectModule()) {
-			System.out.println("Should move to project page");
+			EventBus.getInstance().fireEvent(
+					new ShellEvent.GotoProjectModule(this, params));
+		} else {
+			super.handle(params);
 		}
 	}
 

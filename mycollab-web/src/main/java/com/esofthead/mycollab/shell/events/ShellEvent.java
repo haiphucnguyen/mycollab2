@@ -26,12 +26,6 @@ public class ShellEvent {
 		}
 	}
 
-	public static class GotoProjectModuleByLink extends ApplicationEvent {
-		public GotoProjectModuleByLink(Object source, String... data) {
-			super(source, data);
-		}
-	}
-
 	public static class GotoCrmModule extends ApplicationEvent {
 
 		public GotoCrmModule(Object source, Object data) {

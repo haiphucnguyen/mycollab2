@@ -60,7 +60,8 @@ public class MainViewController implements IController {
 					public void handle(ShellEvent.GotoProjectModule event) {
 						ProjectModulePresenter prjPresenter = PresenterResolver
 								.getPresenter(ProjectModulePresenter.class);
-						ProjectModuleScreenData.GotoDefaultView screenData = new ProjectModuleScreenData.GotoDefaultView();
+						ProjectModuleScreenData.GotoModule screenData = new ProjectModuleScreenData.GotoModule(
+								(String[]) event.getData());
 						prjPresenter.go(container, screenData);
 					}
 				});
