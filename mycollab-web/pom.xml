@@ -161,7 +161,7 @@
         <dependency>
             <groupId>org.vaadin.addons</groupId>
             <artifactId>maskedtextfield</artifactId>
-            <version>0.1.1</version>
+            <version>0.1.2-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>org.vaadin.addons</groupId>
@@ -208,7 +208,6 @@
             <artifactId>confirmdialog</artifactId>
             <version>1.2.1</version>
         </dependency>
-
         <dependency>
             <groupId>org.dbunit</groupId>
             <artifactId>dbunit</artifactId>

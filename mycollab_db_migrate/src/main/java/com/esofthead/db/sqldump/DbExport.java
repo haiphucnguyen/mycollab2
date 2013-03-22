@@ -98,30 +98,6 @@ public class DbExport {
 		schema.dumpSchema(writer, true);
 	}
 
-	public static final void zipFile(String sourceFile, String destFile)
-			throws Exception {
-		zipFile(new FileInputStream(new File(sourceFile)),
-				new FileOutputStream(new File(destFile)));
-	}
-
-	public static final void zipFile(InputStream in, OutputStream out)
-			throws Exception {
-		final int buffSize = 4096;
-
-		byte[] buffer = new byte[buffSize];
-		GZIPOutputStream gzos = new GZIPOutputStream(out);
-
-		int byteRead;
-		while ((byteRead = in.read(buffer)) != -1) {
-			gzos.write(buffer, 0, byteRead);
-		}
-		gzos.finish();
-		gzos.flush();
-		gzos.close();
-
-		in.close();
-	}
-
 	public static void main(String[] args) throws Exception {
 //		StringWriter writer = new StringWriter();
 //		DbExport.exportDb(DbConfiguration.loadDefault(), writer);
