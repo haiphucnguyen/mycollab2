@@ -22,7 +22,6 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.MaskedTextField;
 import com.vaadin.ui.NumericField;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
@@ -113,6 +112,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 
 			private static final long serialVersionUID = 1L;
 
+			@SuppressWarnings("serial")
 			@Override
 			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
@@ -176,9 +176,10 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 					return tf;
 				} else if (propertyId.equals("milestoneid")) {
 					return new MilestoneComboBox();
-				} else if (propertyId.equals("estimatetime") || (propertyId.equals("estimateremaintime"))) {
+				} else if (propertyId.equals("estimatetime")
+						|| (propertyId.equals("estimateremaintime"))) {
 					return new NumericField();
-				} 
+				}
 
 				return null;
 			}
