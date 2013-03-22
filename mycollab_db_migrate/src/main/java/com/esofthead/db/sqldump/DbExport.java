@@ -3,6 +3,7 @@ package com.esofthead.db.sqldump;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
 import java.io.Writer;
@@ -21,8 +22,16 @@ public class DbExport {
 		schema.dumpSchema(writer, true);
 	}
 
-	public static void exportDb(DbConfiguration configuration,
+	public static void backupDB(DbConfiguration configuration,
 			OutputStream out, boolean isZipped) throws Exception {
+
+		DbConfiguration config = new DbConfiguration();
+		config.setPassword(configuration.getPassword());
+		config.setUrl(configuration.getUrl());
+		config.setUserName(configuration.getUserName());
+		config.setMySqlModel(null != config.getUrl()
+				&& config.getUrl().toLowerCase().startsWith("jdbc:mysql"));
+
 		final OutputStreamWriter writer;
 		if (isZipped) {
 			writer = new OutputStreamWriter(new GZIPOutputStream(out));
@@ -30,7 +39,7 @@ public class DbExport {
 			writer = new OutputStreamWriter(out);
 		}
 
-		exportDb(configuration, writer);
+		exportDb(config, writer);
 
 		writer.flush();
 		writer.close();
@@ -38,11 +47,17 @@ public class DbExport {
 
 	public static void main(String[] args) throws Exception {
 
+		File outFile = File.createTempFile(
+				String.valueOf(System.currentTimeMillis()), ".sql");
+		OutputStreamWriter writer = new OutputStreamWriter(
+				new FileOutputStream(outFile));
+		exportDb(DbConfiguration.loadDefault(), writer);
+		writer.flush();
+		writer.close();
 		/*
 		 * Code migrate h2 database
 		 */
-		File file = new File("D:/out/data");
-		FileInputStream fin = new FileInputStream(file);
+		FileInputStream fin = new FileInputStream(outFile);
 		ByteArrayOutputStream sout = new ByteArrayOutputStream();
 		byte[] buffer = new byte[4096];
 		int byteRead;

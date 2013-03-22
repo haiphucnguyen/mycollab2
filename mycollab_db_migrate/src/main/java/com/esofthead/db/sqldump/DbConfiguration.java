@@ -7,12 +7,14 @@ public class DbConfiguration {
 	public static final String USER_NAME = "db.username";
 	public static final String PASSWORD = "db.password";
 	public static final String URL = "db.url";
+	public static final String DB_MODEL = "db.model";
 
 	private static final String RESOURCE_PROPERTIES = "config.properties";
 	
 	private String userName;
 	private String password;
 	private String url;
+	private boolean isMySqlModel;
 
 	public static DbConfiguration loadDefault() {
 		Properties properties = new Properties();
@@ -26,10 +28,12 @@ public class DbConfiguration {
 			config.setUserName(properties.getProperty(USER_NAME));
 			config.setUrl(properties.getProperty(URL));
 			
-//			if (config.getUrl().toLowerCase().startsWith("jdbc:mysql"))
-//				config.setMySqlModel(true);
-//			else 
-//				config.setMySqlModel(false);
+			String model = properties.getProperty(DB_MODEL);
+			if (null != model && model.toUpperCase().equals("MYSQL")) {
+				config.setMySqlModel(true);
+			} else {
+				config.setMySqlModel(false);
+			}
 			
 			return config;
 		} catch (Exception e) {
@@ -83,6 +87,13 @@ public class DbConfiguration {
 	 * @return the isMySqlModel
 	 */
 	public boolean isMySqlModel() {
-		return null != url && url.toLowerCase().startsWith("jdbc:mysql");
+		return isMySqlModel;
+	}
+
+	/**
+	 * @param isMySQL the isMySQL to set
+	 */
+	public void setMySqlModel(boolean isMySqlModel) {
+		this.isMySqlModel = isMySqlModel;
 	}
 }
