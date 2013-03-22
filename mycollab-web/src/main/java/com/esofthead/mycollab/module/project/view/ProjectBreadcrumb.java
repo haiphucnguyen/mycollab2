@@ -68,7 +68,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 			@Override
 			public void buttonClick(ClickEvent event) {
 				EventBus.getInstance().fireEvent(
-						new ShellEvent.GotoProjectPage(this, null));
+						new ShellEvent.GotoProjectModule(this, null));
 			}
 		}));
 

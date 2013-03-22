@@ -15,7 +15,7 @@ public class FragmentNavigator {
 	private static Logger log = LoggerFactory
 			.getLogger(FragmentNavigator.class);
 
-	private ShellUrlResolver shellUrlResolver = new ShellUrlResolver();
+	private static ShellUrlResolver shellUrlResolver = new ShellUrlResolver();
 
 	public FragmentNavigator() {
 

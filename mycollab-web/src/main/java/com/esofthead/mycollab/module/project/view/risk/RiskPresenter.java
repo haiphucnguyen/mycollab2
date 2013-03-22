@@ -36,8 +36,8 @@ public class RiskPresenter extends AbstractPresenter<RiskContainer> {
 
 		if (data instanceof RiskScreenData.Search) {
 			presenter = PresenterResolver.getPresenter(RiskListPresenter.class);
-		} else if (data instanceof ScreenData.Add
-				|| data instanceof ScreenData.Edit) {
+		} else if (data instanceof RiskScreenData.Add
+				|| data instanceof RiskScreenData.Edit) {
 			log.debug("Go to projectMember add view");
 			presenter = PresenterResolver.getPresenter(RiskAddPresenter.class);
 		} else if (data instanceof RiskScreenData.Read) {

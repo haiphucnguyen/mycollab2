@@ -31,6 +31,9 @@ public class RolePresenter extends AbstractPresenter<RoleContainer> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
+		UserPermissionManagementView groupContainer = (UserPermissionManagementView) container;
+		groupContainer.gotoSubView("Roles");
+		
 		if (data == null) {
 			RoleListPresenter listPresenter = PresenterResolver
 					.getPresenter(RoleListPresenter.class);
