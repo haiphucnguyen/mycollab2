@@ -101,7 +101,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		blockContent.addComponent(blockTop);
 
 		Label memberRole = new Label();
-		if (member.getIsadmin()) {
+		if (member.getIsadmin() != null && member.getIsadmin() == Boolean.TRUE) {
 			memberRole.setValue("Project Admin");
 			memberRole.addStyleName("is-admin");
 		} else {
