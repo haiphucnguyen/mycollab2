@@ -31,16 +31,16 @@ public class MainViewController implements IController {
 
 	private void bind() {
 		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ShellEvent.GotoCrmPage>() {
+				new ApplicationEventListener<ShellEvent.GotoCrmModule>() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
-						return ShellEvent.GotoCrmPage.class;
+						return ShellEvent.GotoCrmModule.class;
 					}
 
 					@Override
-					public void handle(ShellEvent.GotoCrmPage event) {
+					public void handle(ShellEvent.GotoCrmModule event) {
 						CrmModulePresenter crmModulePresenter = PresenterResolver
 								.getPresenter(CrmModulePresenter.class);
 						crmModulePresenter.go(container, null);
@@ -48,16 +48,16 @@ public class MainViewController implements IController {
 				});
 
 		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ShellEvent.GotoProjectPage>() {
+				new ApplicationEventListener<ShellEvent.GotoProjectModule>() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
-						return ShellEvent.GotoProjectPage.class;
+						return ShellEvent.GotoProjectModule.class;
 					}
 
 					@Override
-					public void handle(ShellEvent.GotoProjectPage event) {
+					public void handle(ShellEvent.GotoProjectModule event) {
 						ProjectModulePresenter prjPresenter = PresenterResolver
 								.getPresenter(ProjectModulePresenter.class);
 						prjPresenter.go(container, null);
@@ -65,16 +65,16 @@ public class MainViewController implements IController {
 				});
 
 		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ShellEvent.GotoAccountPage>() {
+				new ApplicationEventListener<ShellEvent.GotoUserAccountModule>() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
-						return ShellEvent.GotoAccountPage.class;
+						return ShellEvent.GotoUserAccountModule.class;
 					}
 
 					@Override
-					public void handle(ShellEvent.GotoAccountPage event) {
+					public void handle(ShellEvent.GotoUserAccountModule event) {
 						AccountModulePresenter presenter = PresenterResolver
 								.getPresenter(AccountModulePresenter.class);
 						presenter.go(container, null);

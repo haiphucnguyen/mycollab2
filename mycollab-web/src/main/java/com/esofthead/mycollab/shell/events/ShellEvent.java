@@ -19,23 +19,23 @@ public class ShellEvent {
         }
     }
 
-    public static class GotoProjectPage extends ApplicationEvent {
+    public static class GotoProjectModule extends ApplicationEvent {
 
-        public GotoProjectPage(Object source, Object data) {
+        public GotoProjectModule(Object source, Object data) {
             super(source, data);
         }
     }
 
-    public static class GotoCrmPage extends ApplicationEvent {
+    public static class GotoCrmModule extends ApplicationEvent {
 
-        public GotoCrmPage(Object source, Object data) {
+        public GotoCrmModule(Object source, Object data) {
             super(source, data);
         }
     }
     
-    public static class GotoAccountPage extends ApplicationEvent {
+    public static class GotoUserAccountModule extends ApplicationEvent {
 
-        public GotoAccountPage(Object source, Object data) {
+        public GotoUserAccountModule(Object source, Object data) {
             super(source, data);
         }
     }

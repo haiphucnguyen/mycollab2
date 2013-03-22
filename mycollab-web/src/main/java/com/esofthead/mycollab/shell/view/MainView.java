@@ -59,7 +59,7 @@ public final class MainView extends AbstractView {
 					public void buttonClick(ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
 						EventBus.getInstance().fireEvent(
-								new ShellEvent.GotoCrmPage(this, null));
+								new ShellEvent.GotoCrmModule(this, null));
 					}
 				});
 		crmLink.setStyleName("link");
@@ -71,7 +71,7 @@ public final class MainView extends AbstractView {
 					public void buttonClick(ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
 						EventBus.getInstance().fireEvent(
-								new ShellEvent.GotoProjectPage(this, null));
+								new ShellEvent.GotoProjectModule(this, null));
 					}
 				});
 		prjLink.setStyleName("link");
@@ -92,7 +92,7 @@ public final class MainView extends AbstractView {
 					public void buttonClick(ClickEvent event) {
 						accountMenu.setPopupVisible(false);
 						EventBus.getInstance().fireEvent(
-								new ShellEvent.GotoAccountPage(this, null));
+								new ShellEvent.GotoUserAccountModule(this, null));
 					}
 				});
 		myAccountBtn.setStyleName("link");

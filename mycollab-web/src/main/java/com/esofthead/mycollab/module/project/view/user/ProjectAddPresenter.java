@@ -55,7 +55,7 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 					public void onCancel() {
 						if (view.getItem().getId() == null) {
 							EventBus.getInstance().fireEvent(
-									new ShellEvent.GotoProjectPage(
+									new ShellEvent.GotoProjectModule(
 											ProjectAddPresenter.this, null));
 						} else {
 							EventBus.getInstance()

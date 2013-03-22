@@ -40,7 +40,7 @@ public class ProjectUrlResolver extends UrlResolver {
 		@Override
 		protected void handlePage(String... params) {
 			EventBus.getInstance().fireEvent(
-					new ShellEvent.GotoProjectPage(this, null));
+					new ShellEvent.GotoProjectModule(this, null));
 		}
 	}
 }
