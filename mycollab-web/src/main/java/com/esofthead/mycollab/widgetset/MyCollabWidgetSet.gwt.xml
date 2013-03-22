@@ -53,5 +53,5 @@
     
     
 
-    <inherits name="de.essendi.vaadin.ui.component.numberfield.widgetset.NumberFieldWidgetset" />
+    
 </module>
