@@ -103,6 +103,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		Label memberRole = new Label();
 		if (member.getIsadmin()) {
 			memberRole.setValue("Project Admin");
+			memberRole.addStyleName("is-admin");
 		} else {
 			memberRole.setValue(member.getRoleName());
 		}

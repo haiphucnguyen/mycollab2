@@ -24,6 +24,7 @@ public class AttachmentPreviewWindow extends Window {
 
 	private void initUI() {
 		Embedded previewImage = new Embedded(null, this.previewResource);
+		previewImage.setSizeUndefined();
 		LazyLoadWrapper imageLazyLoader = new LazyLoadWrapper(previewImage);
 		this.setContent(imageLazyLoader);
 		this.setResizable(false);

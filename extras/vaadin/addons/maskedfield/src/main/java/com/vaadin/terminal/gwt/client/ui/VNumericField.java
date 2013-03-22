@@ -5,6 +5,10 @@ import com.google.gwt.event.dom.client.KeyDownEvent;
 import com.google.gwt.event.dom.client.KeyDownHandler;
 import com.google.gwt.event.dom.client.KeyPressEvent;
 import com.google.gwt.event.dom.client.KeyPressHandler;
+import com.google.gwt.event.dom.client.KeyUpEvent;
+import com.google.gwt.event.dom.client.KeyUpHandler;
+import com.vaadin.data.Property.ConversionException;
+import com.vaadin.data.Property.ReadOnlyException;
 
 public class VNumericField extends VTextField {
 	public VNumericField() {
@@ -21,7 +25,7 @@ public class VNumericField extends VTextField {
 						|| e.getCharCode() == KeyCodes.KEY_PAGEUP
 						|| e.getCharCode() == KeyCodes.KEY_RIGHT
 						|| e.getCharCode() == KeyCodes.KEY_TAB
-						|| e.isAnyModifierKeyDown())
+						|| e.isAnyModifierKeyDown() || e.getCharCode() == KeyCodes.KEY_UP)
 					return;
 				if (!Character.isDigit(e.getCharCode()))
 					e.preventDefault();
@@ -31,28 +35,16 @@ public class VNumericField extends VTextField {
 		addKeyDownHandler(new KeyDownHandler() {
 			@Override
 			public void onKeyDown(KeyDownEvent event) {
-				try {
-					if (event.getNativeKeyCode() == KeyCodes.KEY_UP) {
-						int value = Integer.parseInt(getValue());
-
-						value++;
-
-						setValue(String.valueOf(value));
-
-						event.preventDefault();
-					} else if (event.getNativeKeyCode() == KeyCodes.KEY_DOWN) {
-						int value = Integer.parseInt(getValue());
-
-						value--;
-
-						setValue(String.valueOf(value));
-
-						event.preventDefault();
-					}
-				} catch (Exception e) {
-					setValue("0");
-				}
 			}
+		});
+		
+		addKeyUpHandler(new KeyUpHandler() {
+
+			@Override
+			public void onKeyUp(KeyUpEvent event) {
+			}
+			
+			
 		});
 	}
 

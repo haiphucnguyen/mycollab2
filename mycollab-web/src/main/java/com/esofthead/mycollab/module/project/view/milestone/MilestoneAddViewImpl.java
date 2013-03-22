@@ -5,17 +5,20 @@
 package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.module.project.domain.Milestone;
+import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ValueComboBox;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
@@ -30,7 +33,7 @@ public class MilestoneAddViewImpl extends AbstractView implements
 
 	private static final long serialVersionUID = 1L;
 	private EditForm editForm;
-	private Milestone milestone;
+	private SimpleMilestone milestone;
 
 	public MilestoneAddViewImpl() {
 		super();
@@ -40,7 +43,7 @@ public class MilestoneAddViewImpl extends AbstractView implements
 
 	@Override
 	public void editItem(Milestone milestone) {
-		this.milestone = milestone;
+		this.milestone = (SimpleMilestone) milestone;
 		editForm.setItemDataSource(new BeanItem<Milestone>(milestone));
 	}
 
@@ -107,6 +110,21 @@ public class MilestoneAddViewImpl extends AbstractView implements
 					RichTextArea descArea = new RichTextArea();
 					descArea.setNullRepresentation("");
 					return descArea;
+				} else if (propertyId.equals("numOpenTasks")) {
+					FormContainerHorizontalViewField taskComp = new FormContainerHorizontalViewField();
+
+					Label taskNumber = new Label("(" + milestone.getNumOpenTasks() + "/"
+							+ milestone.getNumTasks() + ")");
+					taskNumber.setWidth("90px");
+					taskComp.addComponentField(taskNumber);
+					return taskComp;
+				} else if (propertyId.equals("numOpenBugs")) {
+					FormContainerHorizontalViewField bugComp = new FormContainerHorizontalViewField();
+					Label bugNumber = new Label("(" + milestone.getNumOpenBugs() + "/"
+							+ milestone.getNumBugs() + ")");
+					bugNumber.setWidth("90px");
+					bugComp.addComponentField(bugNumber);
+					return bugComp;
 				}
 
 				return null;

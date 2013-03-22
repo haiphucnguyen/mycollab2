@@ -198,8 +198,8 @@ public class Column {
 	private final String processingStringValue(String data) {
 		String result = data.replace("\\", "\\\\");
 		result = result.replace("\0", "\\0");
-		result = result.replace("'", "\\'");
-		result = result.replace("\"", "\\\"");
+		result = result.replace("'", "''");
+		result = result.replace("\"", "\"\"");
 		result = result.replace("\b", "\\b");
 		result = result.replace("\n", "\\n");
 		result = result.replace("\r", "\\r");

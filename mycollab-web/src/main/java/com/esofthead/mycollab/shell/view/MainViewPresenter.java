@@ -36,10 +36,10 @@ public class MainViewPresenter extends AbstractPresenter<MainView> {
 				|| ModuleNameConstants.CRM.equals(pref.getLastmodulevisit())) {
 			// go to crm module
 			EventBus.getInstance().fireEvent(
-					new ShellEvent.GotoCrmPage(this, null));
+					new ShellEvent.GotoCrmModule(this, null));
 		} else if (ModuleNameConstants.PRJ.equals(pref.getLastmodulevisit())) {
 			EventBus.getInstance().fireEvent(
-					new ShellEvent.GotoProjectPage(this, null));
+					new ShellEvent.GotoProjectModule(this, null));
 		} else {
 			EventBus.getInstance().fireEvent(
 					new ShellEvent.GotoConsolePage(this, null));

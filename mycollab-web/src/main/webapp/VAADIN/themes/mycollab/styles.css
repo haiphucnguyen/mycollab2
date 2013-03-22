@@ -2651,7 +2651,6 @@ div.v-lazyloadingwrapper-loading {
 	line-height: 20px;
 }
 /* End Pie Chart Legend Box */
-
 /* Project Member Block */
 .member-block {
 	display: inline-block;
@@ -2672,6 +2671,9 @@ div.v-lazyloadingwrapper-loading {
 	font-size: 12px;
 	padding-right: 3px;
 }
+.member-block .member-role.is-admin {
+	color: #b00000;
+}
 .member-block > .v-csslayout-margin {
 	border-width: 1px 1px 2px;
 	border-radius: 3px;
@@ -2680,3 +2682,10 @@ div.v-lazyloadingwrapper-loading {
 	border-color: #bebebe;
 }
 /* End Project Member Block */
+
+/* Label complete */
+.v-label.completed {
+	color: black;
+	text-decoration: line-through;
+}
+/* End Label complete */

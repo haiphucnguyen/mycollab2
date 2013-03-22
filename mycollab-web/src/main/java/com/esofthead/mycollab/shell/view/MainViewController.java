@@ -6,8 +6,8 @@ package com.esofthead.mycollab.shell.view;
 
 import com.esofthead.mycollab.module.crm.view.CrmModulePresenter;
 import com.esofthead.mycollab.module.project.view.ProjectModulePresenter;
+import com.esofthead.mycollab.module.project.view.ProjectModuleScreenData;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModulePresenter;
-import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -31,16 +31,16 @@ public class MainViewController implements IController {
 
 	private void bind() {
 		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ShellEvent.GotoCrmPage>() {
+				new ApplicationEventListener<ShellEvent.GotoCrmModule>() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
-						return ShellEvent.GotoCrmPage.class;
+						return ShellEvent.GotoCrmModule.class;
 					}
 
 					@Override
-					public void handle(ShellEvent.GotoCrmPage event) {
+					public void handle(ShellEvent.GotoCrmModule event) {
 						CrmModulePresenter crmModulePresenter = PresenterResolver
 								.getPresenter(CrmModulePresenter.class);
 						crmModulePresenter.go(container, null);
@@ -48,37 +48,41 @@ public class MainViewController implements IController {
 				});
 
 		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ShellEvent.GotoProjectPage>() {
+				new ApplicationEventListener<ShellEvent.GotoProjectModule>() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public Class<? extends ApplicationEvent> getEventType() {
-						return ShellEvent.GotoProjectPage.class;
+						return ShellEvent.GotoProjectModule.class;
 					}
 
 					@Override
-					public void handle(ShellEvent.GotoProjectPage event) {
+					public void handle(ShellEvent.GotoProjectModule event) {
 						ProjectModulePresenter prjPresenter = PresenterResolver
 								.getPresenter(ProjectModulePresenter.class);
-						prjPresenter.go(container, null);
+						ProjectModuleScreenData.GotoModule screenData = new ProjectModuleScreenData.GotoModule(
+								(String[]) event.getData());
+						prjPresenter.go(container, screenData);
 					}
 				});
 
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ShellEvent.GotoAccountPage>() {
-					private static final long serialVersionUID = 1L;
+		EventBus.getInstance()
+				.addListener(
+						new ApplicationEventListener<ShellEvent.GotoUserAccountModule>() {
+							private static final long serialVersionUID = 1L;
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return ShellEvent.GotoAccountPage.class;
-					}
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return ShellEvent.GotoUserAccountModule.class;
+							}
 
-					@Override
-					public void handle(ShellEvent.GotoAccountPage event) {
-						AccountModulePresenter presenter = PresenterResolver
-								.getPresenter(AccountModulePresenter.class);
-						presenter.go(container, null);
-					}
-				});
+							@Override
+							public void handle(
+									ShellEvent.GotoUserAccountModule event) {
+								AccountModulePresenter presenter = PresenterResolver
+										.getPresenter(AccountModulePresenter.class);
+								presenter.go(container, null);
+							}
+						});
 	}
 }

@@ -15,7 +15,7 @@ public class Depot extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 	private boolean isOpenned = true;
 	protected HorizontalLayout header;
-	private final Label headerLbl;
+	protected final Label headerLbl;
 	protected ComponentContainer headerContent;
 	protected ComponentContainer bodyContent;
 	

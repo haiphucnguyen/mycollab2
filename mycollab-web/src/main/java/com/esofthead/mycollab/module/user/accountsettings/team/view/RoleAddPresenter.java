@@ -85,7 +85,7 @@ public class RoleAddPresenter extends AbstractPresenter<RoleAddView> {
 		} else {
 			AppContext
 					.addFragment(
-							"acount/role/edit/"
+							"account/role/edit/"
 									+ UrlEncodeDecoder.encode(role.getId()),
 							"Edit Role: " + role.getRolename());
 		}
