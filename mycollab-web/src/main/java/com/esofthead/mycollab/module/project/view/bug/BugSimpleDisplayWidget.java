@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -28,7 +29,7 @@ public class BugSimpleDisplayWidget extends
 		@Override
 		public Component generateRow(final SimpleBug bug, int rowIndex) {
 			HorizontalLayout layout = new HorizontalLayout();
-			Button taskLink = new Button("Issue #" + bug.getBugkey() + ": ",
+			Button bugLink = new Button("Issue #" + bug.getBugkey() + ": ",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
@@ -38,8 +39,14 @@ public class BugSimpleDisplayWidget extends
 									new BugEvent.GotoRead(this, bug.getId()));
 						}
 					});
-			taskLink.setStyleName("link");
-			layout.addComponent(taskLink);
+			bugLink.setStyleName("link");
+			String bugStatus = bug.getStatus();
+			if ("Close".equalsIgnoreCase(bugStatus)) {
+				bugLink.addStyleName(UIConstants.LINK_COMPLETED);
+			} else if (bug.isOverdue()) {
+				bugLink.addStyleName(UIConstants.LINK_OVERDUE);
+			}
+			layout.addComponent(bugLink);
 			layout.addComponent(new Label(bug.getSummary()));
 			return layout;
 		}
