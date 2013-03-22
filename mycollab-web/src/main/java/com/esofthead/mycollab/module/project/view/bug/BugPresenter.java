@@ -35,8 +35,8 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
 
 		if (data instanceof BugScreenData.Search) {
 			presenter = PresenterResolver.getPresenter(BugListPresenter.class);
-		} else if (data instanceof ScreenData.Add
-				|| data instanceof ScreenData.Edit) {
+		} else if (data instanceof BugScreenData.Add
+				|| data instanceof BugScreenData.Edit) {
 			presenter = PresenterResolver.getPresenter(BugAddPresenter.class);
 		} else if (data instanceof BugScreenData.Read) {
 			presenter = PresenterResolver.getPresenter(BugReadPresenter.class);

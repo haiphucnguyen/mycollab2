@@ -31,4 +31,11 @@ public class BugScreenData {
 			super(params);
 		}
 	}
+	
+	public static class Edit extends ScreenData<Bug> {
+
+		public Edit(Bug params) {
+			super(params);
+		}
+	}
 }

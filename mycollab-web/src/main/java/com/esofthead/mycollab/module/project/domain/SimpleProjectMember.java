@@ -18,6 +18,12 @@ public class SimpleProjectMember extends ProjectMember {
     private String roleName;
     
     private PermissionMap permissionMaps;
+    
+    private int numOpenTasks;
+	private int numTasks;
+	
+	private int numOpenBugs;
+	private int numBugs;
 
     public String getMemberFullName() {
         return memberFullName;
@@ -41,5 +47,37 @@ public class SimpleProjectMember extends ProjectMember {
 
 	public void setPermissionMaps(PermissionMap permissionMaps) {
 		this.permissionMaps = permissionMaps;
+	}
+
+	public int getNumOpenTasks() {
+		return numOpenTasks;
+	}
+
+	public void setNumOpenTasks(int numOpenTasks) {
+		this.numOpenTasks = numOpenTasks;
+	}
+
+	public int getNumTasks() {
+		return numTasks;
+	}
+
+	public void setNumTasks(int numTasks) {
+		this.numTasks = numTasks;
+	}
+
+	public int getNumOpenBugs() {
+		return numOpenBugs;
+	}
+
+	public void setNumOpenBugs(int numOpenBugs) {
+		this.numOpenBugs = numOpenBugs;
+	}
+
+	public int getNumBugs() {
+		return numBugs;
+	}
+
+	public void setNumBugs(int numBugs) {
+		this.numBugs = numBugs;
 	}
 }

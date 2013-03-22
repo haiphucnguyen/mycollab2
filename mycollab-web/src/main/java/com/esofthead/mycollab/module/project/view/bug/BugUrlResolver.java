@@ -4,6 +4,8 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
+import com.esofthead.mycollab.module.tracker.domain.Bug;
+import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
@@ -11,6 +13,7 @@ import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 public class BugUrlResolver extends UrlResolver {
 	public BugUrlResolver() {
 		this.addSubResolver("dashboard", new DashboardUrlResolver());
+		this.addSubResolver("add", new AddUrlResolver());
 		this.addSubResolver("preview", new PreviewUrlResolver());
 		this.addSubResolver("component", new ComponentUrlResolver());
 		this.addSubResolver("version", new VersionUrlResolver());
@@ -40,6 +43,20 @@ public class BugUrlResolver extends UrlResolver {
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
 					new BugScreenData.Read(bugId));
+			EventBus.getInstance().fireEvent(
+					new ProjectEvent.GotoMyProject(this, chain));
+		}
+	}
+
+	private static class AddUrlResolver extends UrlResolver {
+		@Override
+		protected void handlePage(String... params) {
+			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
+			int projectId = Integer.parseInt(decodeUrl);
+
+			PageActionChain chain = new PageActionChain(
+					new ProjectScreenData.Goto(projectId),
+					new BugScreenData.Add(new SimpleBug()));
 			EventBus.getInstance().fireEvent(
 					new ProjectEvent.GotoMyProject(this, chain));
 		}
