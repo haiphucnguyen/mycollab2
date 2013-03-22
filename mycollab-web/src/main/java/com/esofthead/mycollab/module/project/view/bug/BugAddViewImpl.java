@@ -22,9 +22,10 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.MaskedTextField;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
+
+import de.essendi.vaadin.ui.component.numberfield.NumberField;
 
 @ViewComponent
 public class BugAddViewImpl extends AbstractView implements BugAddView {
@@ -112,6 +113,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 
 			private static final long serialVersionUID = 1L;
 
+			@SuppressWarnings("serial")
 			@Override
 			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
@@ -175,9 +177,24 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 					return tf;
 				} else if (propertyId.equals("milestoneid")) {
 					return new MilestoneComboBox();
-				} else if (propertyId.equals("estimatetime") || (propertyId.equals("estimatetime"))) {
-					return new MaskedTextField("", "########");
-				} 
+				} else if (propertyId.equals("estimateremaintime")) {
+					NumberField numberField = new NumberField() {
+						@Override
+						public Object getValue() {
+							Object o = super.getValue();
+							if (o == null) {
+								return "";
+							} else {
+								return o;
+							}
+						}
+					};
+					numberField.setNullRepresentation("");
+					numberField.setRequired(false);
+					numberField.setNullSettingAllowed(true);
+					numberField.setDecimalSeparator('.');
+					return numberField;
+				}
 
 				return null;
 			}
