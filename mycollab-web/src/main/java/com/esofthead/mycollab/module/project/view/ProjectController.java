@@ -511,7 +511,7 @@ public class ProjectController implements IController {
 					public void handle(BugEvent.GotoAdd event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Add<SimpleBug> data = new ScreenData.Add<SimpleBug>(
+						BugScreenData.Add data = new BugScreenData.Add(
 								new SimpleBug());
 						projectView.gotoBugView(data);
 					}
@@ -528,7 +528,7 @@ public class ProjectController implements IController {
 					public void handle(BugEvent.GotoEdit event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Edit<SimpleBug> data = new ScreenData.Edit<SimpleBug>(
+						BugScreenData.Edit data = new BugScreenData.Edit(
 								(SimpleBug) event.getData());
 						projectView.gotoBugView(data);
 					}

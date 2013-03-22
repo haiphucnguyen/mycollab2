@@ -45,11 +45,7 @@ public class MilestoneUrlResolver extends UrlResolver {
 		protected void handlePage(String... params) {
 			String decodeUrl = UrlEncodeDecoder.decode(params[0]);
 			int projectId = Integer.parseInt(decodeUrl);
-
-			MilestoneSearchCriteria milestoneSearchCriteria = new MilestoneSearchCriteria();
-			milestoneSearchCriteria.setProjectId(new NumberSearchField(
-					projectId));
-
+			
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
 					new MilestoneScreenData.Add(new Milestone()));
