@@ -335,7 +335,7 @@ public class ProjectController implements IController {
 					public void handle(RiskEvent.GotoAdd event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Add<Risk> data = new ScreenData.Add<Risk>(
+						RiskScreenData.Add data = new RiskScreenData.Add(
 								new Risk());
 						projectView.gotoRiskView(data);
 					}
@@ -352,7 +352,7 @@ public class ProjectController implements IController {
 					public void handle(RiskEvent.GotoEdit event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Edit<Risk> data = new ScreenData.Edit<Risk>(
+						RiskScreenData.Edit data = new RiskScreenData.Edit(
 								(Risk) event.getData());
 						projectView.gotoRiskView(data);
 					}
@@ -411,7 +411,7 @@ public class ProjectController implements IController {
 					public void handle(ProblemEvent.GotoAdd event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Add<Problem> data = new ScreenData.Add<Problem>(
+						ProblemScreenData.Add data = new ProblemScreenData.Add(
 								new Problem());
 						ProblemPresenter presenter = PresenterResolver
 								.getPresenter(ProblemPresenter.class);
@@ -455,7 +455,7 @@ public class ProjectController implements IController {
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, CurrentProjectVariables
 										.getProjectId()));
-						ScreenData.Search<ProblemSearchCriteria> data = new ScreenData.Search<ProblemSearchCriteria>(
+						ProblemScreenData.Search data = new ProblemScreenData.Search(
 								criteria);
 						ProblemPresenter presenter = PresenterResolver
 								.getPresenter(ProblemPresenter.class);
@@ -474,7 +474,7 @@ public class ProjectController implements IController {
 					public void handle(ProblemEvent.GotoEdit event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
-						ScreenData.Edit<Problem> data = new ScreenData.Edit<Problem>(
+						ProblemScreenData.Edit data = new ProblemScreenData.Edit(
 								(Problem) event.getData());
 						ProblemPresenter presenter = PresenterResolver
 								.getPresenter(ProblemPresenter.class);
