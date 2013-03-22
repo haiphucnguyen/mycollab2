@@ -12,7 +12,7 @@ import com.esofthead.util.sqldump.data.parser.SqlStringDataParser;
 
 public class Table {
 
-	private static final int MAX_ITEM_PER_QUERY = 100;
+	private static final int MAX_ITEM_PER_QUERY = 1000;
 
 	public Table(Schema owner) {
 		this.owner = owner;

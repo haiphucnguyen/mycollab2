@@ -157,7 +157,7 @@ public class Column {
 		
 		
 		String colDef;// = columnDef == null ? "" : "DEFAULT '" + columnDef + "'";
-		if (columnDef != null) {
+		if (columnDef != null && !isAutoIncrement) {
 			if (columnDef.toUpperCase().equals("CURRENT_TIMESTAMP"))
 				colDef = "DEFAULT " + columnDef;
 			else if (isQuote)
@@ -245,7 +245,7 @@ public class Column {
 			}
 			
 			String colDef;// = columnDef == null ? "" : "DEFAULT '" + columnDef + "'";
-			if (columnDef != null) {
+			if (columnDef != null && !isAutoIncrement) {
 				if (isQuote)
 					colDef = "DEFAULT '" + columnDef + "'";
 				else 
@@ -291,7 +291,7 @@ public class Column {
 			}
 			
 			String colDef;// = columnDef == null ? "" : "DEFAULT '" + columnDef + "'";
-			if (columnDef != null) {
+			if (columnDef != null && !isAutoIncrement) {
 				if (isQuote)
 					colDef = "DEFAULT '" + columnDef + "'";
 				else 
