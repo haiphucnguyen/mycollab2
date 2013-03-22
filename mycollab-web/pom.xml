@@ -160,11 +160,6 @@
         </dependency>
         <dependency>
             <groupId>org.vaadin.addons</groupId>
-            <artifactId>maskedtextfield</artifactId>
-            <version>0.1.2-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>org.vaadin.addons</groupId>
             <artifactId>browsercookies</artifactId>
             <version>1.0.4</version>
         </dependency>

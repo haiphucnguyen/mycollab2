@@ -49,9 +49,5 @@
 
     <inherits name="com.vaadin.addon.calendar.gwt.CalendarWidgetset" />
 
-    <inherits name="com.vaadin.maskedtextfield.widgetset.MaskedTextFieldWidgetset" />
-    
-    
-
     
 </module>
