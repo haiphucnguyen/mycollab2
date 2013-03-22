@@ -24,30 +24,33 @@ public class DbExport {
 
 	public static void backupDB(DbConfiguration configuration,
 			OutputStream out, boolean isZipped) throws Exception {
-		
+
 		DbConfiguration config = new DbConfiguration();
 		config.setPassword(configuration.getPassword());
 		config.setUrl(configuration.getUrl());
 		config.setUserName(configuration.getUserName());
-		config.setMySqlModel(null != config.getUrl() && config.getUrl().toLowerCase().startsWith("jdbc:mysql"));
-		
+		config.setMySqlModel(null != config.getUrl()
+				&& config.getUrl().toLowerCase().startsWith("jdbc:mysql"));
+
 		final OutputStreamWriter writer;
 		if (isZipped) {
 			writer = new OutputStreamWriter(new GZIPOutputStream(out));
 		} else {
 			writer = new OutputStreamWriter(out);
 		}
-		
+
 		exportDb(config, writer);
-		
+
 		writer.flush();
 		writer.close();
 	}
-	
+
 	public static void main(String[] args) throws Exception {
 
-		File outFile = File.createTempFile(String.valueOf(System.currentTimeMillis()), ".sql");
-		OutputStreamWriter writer = new OutputStreamWriter(new FileOutputStream(outFile));
+		File outFile = File.createTempFile(
+				String.valueOf(System.currentTimeMillis()), ".sql");
+		OutputStreamWriter writer = new OutputStreamWriter(
+				new FileOutputStream(outFile));
 		exportDb(DbConfiguration.loadDefault(), writer);
 		writer.flush();
 		writer.close();
@@ -67,7 +70,7 @@ public class DbExport {
 
 		executeNonQuery(new String(sout.toByteArray()));
 	}
-	
+
 	public static void executeNonQuery(String query) throws Exception {
 		Class.forName("org.h2.Driver");
 		Connection con = (Connection) DriverManager
