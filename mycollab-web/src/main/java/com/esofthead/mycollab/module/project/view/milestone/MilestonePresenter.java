@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.project.view.milestone;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -39,47 +40,33 @@ public class MilestonePresenter extends AbstractPresenter<MilestoneContainer> {
 		ProjectView projectViewContainer = (ProjectView) container;
 		projectViewContainer.gotoSubView("Phases");
 
-		if (data instanceof ScreenData.Search) {
+		AbstractPresenter presenter = null;
+		if (data instanceof MilestoneScreenData.Search) {
 			log.debug("Go to milestone list view");
-			MilestoneListPresenter presenter = PresenterResolver
+			presenter = PresenterResolver
 					.getPresenter(MilestoneListPresenter.class);
-			presenter.go(view, data);
-
-		} else if (data instanceof ScreenData.Add
-				|| data instanceof ScreenData.Edit) {
+		} else if (data instanceof MilestoneScreenData.Add
+				|| data instanceof MilestoneScreenData.Edit) {
 			log.debug("Go to milestone add view");
-			MilestoneAddPresenter presenter = PresenterResolver
+			presenter = PresenterResolver
 					.getPresenter(MilestoneAddPresenter.class);
-			presenter.go(view, data);
-		} else if (data instanceof ScreenData.Preview) {
+		} else if (data instanceof MilestoneScreenData.Read) {
 			log.debug("Go to milestone preview view");
-			MilestoneReadPresenter presenter = PresenterResolver
+			presenter = PresenterResolver
 					.getPresenter(MilestoneReadPresenter.class);
-			presenter.go(view, data);
+		} else {
+			throw new MyCollabException("Do not support screen data " + data);
 		}
+
+		presenter.go(view, data);
 	}
 
 	@Override
 	public void handleChain(ComponentContainer container,
 			PageActionChain pageActionChain) {
-		ProjectView projectViewContainer = (ProjectView) container;
-		projectViewContainer.gotoSubView("Phases");
-
-		view.removeAllComponents();
 
 		ScreenData pageAction = pageActionChain.peek();
-		AbstractPresenter presenter = null;
-
-		if (pageAction instanceof MilestoneScreenData.Read) {
-			presenter = PresenterResolver
-					.getPresenter(MilestoneReadPresenter.class);
-
-		} else if (pageAction instanceof MilestoneScreenData.Search) {
-			presenter = PresenterResolver
-					.getPresenter(MilestoneListPresenter.class);
-		}
-
-		presenter.go(view, pageAction);
+		onGo(container, pageAction);
 	}
 
 }

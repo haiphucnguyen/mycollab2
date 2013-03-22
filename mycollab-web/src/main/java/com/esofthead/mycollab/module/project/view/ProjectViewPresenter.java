@@ -92,7 +92,8 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 		AbstractPresenter<?> presenter = null;
 
 		if (ClassUtils.instanceOf(pageAction, MilestoneScreenData.Read.class,
-				MilestoneScreenData.Search.class)) {
+				MilestoneScreenData.Search.class,
+				MilestoneScreenData.Add.class, MilestoneScreenData.Edit.class)) {
 			presenter = PresenterResolver
 					.getPresenter(MilestonePresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction,
