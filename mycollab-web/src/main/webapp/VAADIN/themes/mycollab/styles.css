@@ -2651,3 +2651,10 @@ div.v-lazyloadingwrapper-loading {
 	line-height: 20px;
 }
 /* End Pie Chart Legend Box */
+
+/* Label complete */
+.v-label.completed {
+	color: black;
+	text-decoration: line-through;
+}
+/* End Label complete */

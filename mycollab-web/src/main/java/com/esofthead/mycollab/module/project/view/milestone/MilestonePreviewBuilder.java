@@ -14,14 +14,15 @@ import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -90,6 +91,34 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 			} else if (propertyId.equals("description")) {
 				return new DefaultFormViewFieldFactory.FormViewField(
 						milestone.getDescription(), Label.CONTENT_XHTML);
+			} else if (propertyId.equals("numOpenTasks")) {
+				FormContainerHorizontalViewField taskComp = new FormContainerHorizontalViewField();
+
+				ProgressIndicator progressTask = new ProgressIndicator(new Float(
+						(float) (milestone.getNumTasks() - milestone.getNumOpenTasks())
+								/ milestone.getNumTasks()));
+				progressTask.setPollingInterval(1000000000);
+				progressTask.setWidth("120px");
+				taskComp.addComponentField(progressTask);
+				Label taskNumber = new Label("(" + milestone.getNumOpenTasks() + "/"
+						+ milestone.getNumTasks() + ")");
+				taskNumber.setWidth("90px");
+				taskComp.addComponentField(taskNumber);
+				return taskComp;
+			} else if (propertyId.equals("numOpenBugs")) {
+				FormContainerHorizontalViewField bugComp = new FormContainerHorizontalViewField();
+
+				ProgressIndicator progressBug = new ProgressIndicator(new Float(
+						(float) (milestone.getNumBugs() - milestone.getNumOpenBugs())
+								/ milestone.getNumBugs()));
+				progressBug.setPollingInterval(1000000000);
+				progressBug.setWidth("120px");
+				bugComp.addComponentField(progressBug);
+				Label bugNumber = new Label("(" + milestone.getNumOpenBugs() + "/"
+						+ milestone.getNumBugs() + ")");
+				bugNumber.setWidth("90px");
+				bugComp.addComponentField(bugNumber);
+				return bugComp;
 			}
 			return null;
 		}

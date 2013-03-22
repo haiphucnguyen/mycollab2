@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Button;
@@ -54,6 +55,9 @@ public class TaskGroupDisplayWidget
 		public TaskListDepot(SimpleTaskList taskListParam) {
 			super(taskListParam.getName(), new HorizontalLayout(),
 					new TaskDisplayComponent(taskListParam, true));
+			if ("Closed".equals(taskListParam.getStatus())) {
+				headerLbl.addStyleName(UIConstants.LINK_COMPLETED);
+			}
 			this.taskList = taskListParam;
 			this.addStyleName("task-list");
 			initHeader();
