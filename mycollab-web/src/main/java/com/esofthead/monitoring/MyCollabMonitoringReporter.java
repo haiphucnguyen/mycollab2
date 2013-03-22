@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.vaadin.peter.contextmenu.client.ui.VContextMenu;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
@@ -19,7 +20,7 @@ import com.esofthead.mycollab.module.mail.Mailer;
 public class MyCollabMonitoringReporter {
 	private static Logger log = LoggerFactory
 			.getLogger(MyCollabMonitoringReporter.class);
-
+	VContextMenu a;
 	public void sendDailyReport(String attachment) {
 		/*
 		 * do send mail here

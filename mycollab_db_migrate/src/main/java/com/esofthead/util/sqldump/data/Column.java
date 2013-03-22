@@ -213,9 +213,11 @@ public class Column {
 		return columnName;
 	}
 	
-	public final String disableAutoIncrement(String tableName) {
+	public final String disableAutoIncrement(String tableName, boolean isMySQL) {
 		if (isAutoIncrement) {
-			final String template = "ALTER TABLE %s ALTER COLUMN %s %s %s;\r\n";
+			String template = "ALTER TABLE %s ALTER COLUMN %s %s %s;\r\n";
+			if (isMySQL)
+				template = "ALTER TABLE %s MODIFY COLUMN %s %s %s;\r\n";
 			
 			String __typeName = typeName.toUpperCase();
 			
@@ -257,9 +259,11 @@ public class Column {
 		return null;
 	}
 	
-	public final String enableAutoIncrement(String tableName) {
+	public final String enableAutoIncrement(String tableName, boolean isMySQL) {
 		if (isAutoIncrement) {
-			final String template = "ALTER TABLE %s ALTER COLUMN %s %s AUTO_INCREMENT %s;\r\n";
+			String template = "ALTER TABLE %s ALTER COLUMN %s %s AUTO_INCREMENT %s;\r\n";
+			if (isMySQL)
+				template = "ALTER TABLE %s MODIFY COLUMN %s %s AUTO_INCREMENT %s;\r\n";
 			
 			String __typeName = typeName.toUpperCase();
 			

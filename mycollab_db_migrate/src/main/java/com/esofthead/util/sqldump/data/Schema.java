@@ -19,6 +19,7 @@ public class Schema {
 	}
 
 	DataAdapter adapter;
+	boolean isMySQL = false;
 
 	final public List<Table> Tables = new LinkedList<Table>();
 	final public List<UniqueIndex> UniqueIndexs = new LinkedList<UniqueIndex>();
@@ -71,12 +72,12 @@ public class Schema {
 			writer.append(table.serialTable());
 			writer.append("\r\n\r\n");
 		}
-		
+
 		if (isDumpData) {
 			writer.append("\r\n-- dump data -------------------------------------------\r\n\r\n\r\n");
 			List<Table> lsTables = resolveDependencies();
 			for (Table table : lsTables) {
-				table.dumpTableData(writer);
+				table.dumpTableData(writer, isMySQL);
 			}
 		}
 
@@ -99,8 +100,10 @@ public class Schema {
 			throws Exception {
 		Schema schema = new Schema(new DataAdapter(config.getUserName(),
 				config.getPassword(), config.getUrl()));
+		schema.isMySQL = config.isMySqlModel();
+		
 		schema.loadTable();
-
+		
 		schema.UniqueIndexs.clear();
 		schema.ForeignKeyConstraints.clear();
 
@@ -111,13 +114,13 @@ public class Schema {
 		}
 		return schema;
 	}
-	
+
 	private List<Table> resolveDependencies() {
 		List<Table> lsResult = new LinkedList<Table>();
-		
+
 		Hashtable<String, Integer> childTables = new Hashtable<String, Integer>();
 		Hashtable<String, List<String>> parentTables = new Hashtable<String, List<String>>();
-		
+
 		for (ForeignKeyConstraint constraint : ForeignKeyConstraints) {
 			List<String> match = parentTables.get(constraint.getPkTableName());
 			if (null == match) {
@@ -127,7 +130,7 @@ public class Schema {
 			} else {
 				match.add(constraint.getFkTableName());
 			}
-			
+
 			Integer value = childTables.get(constraint.getFkTableName());
 			if (null == value) {
 				childTables.put(constraint.getFkTableName(), new Integer(1));
@@ -135,21 +138,21 @@ public class Schema {
 				value += 1;
 			}
 		}
-		
+
 		Queue<Table> unstackTables = new LinkedList<Table>();
-		
+
 		for (Table table : Tables) {
 			unstackTables.add(table);
 		}
-		
+
 		while (unstackTables.size() > 0) {
 			Table table = unstackTables.poll();
-			
+
 			Integer match = childTables.get(table.getTableName());
 			if (null == match) { /* This table do not have any parent */
 				// add this table to processing list
 				lsResult.add(table);
-				
+
 				List<String> lsChild = parentTables.get(table.getTableName());
 				if (null != lsChild) {
 					for (String tableName : lsChild) {
@@ -166,18 +169,18 @@ public class Schema {
 					parentTables.remove(table.getTableName());
 				}
 				/* if this table have childs */
-				
+
 			} else {
 				// add this table to the tail
 				unstackTables.add(table);
 			}
 		}
-		
+
 		if (parentTables.size() > 0)
 			parentTables.clear();
 		if (childTables.size() > 0)
 			childTables.clear();
-		
+
 		return lsResult;
 	}
 }
