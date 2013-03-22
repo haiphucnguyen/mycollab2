@@ -2651,3 +2651,32 @@ div.v-lazyloadingwrapper-loading {
 	line-height: 20px;
 }
 /* End Pie Chart Legend Box */
+
+/* Project Member Block */
+.member-block {
+	display: inline-block;
+	background-color: #f7f7f7;
+	margin-right: 10px;
+	margin-bottom: 15px;
+	font-size: 13px;
+}
+.member-block div.v-button-link .v-button-wrap .v-button-caption {
+	font-weight: bold;
+}
+.member-block .member-email {
+	color: gray;
+}
+.member-block .member-role {
+	color: gray;
+	font-style: italic;
+	font-size: 12px;
+	padding-right: 3px;
+}
+.member-block > .v-csslayout-margin {
+	border-width: 1px 1px 2px;
+	border-radius: 3px;
+	border-style: solid;
+	padding: 10px 10px 3px;
+	border-color: #bebebe;
+}
+/* End Project Member Block */
