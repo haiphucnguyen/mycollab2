@@ -178,10 +178,24 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 					return new MilestoneComboBox();
 				} else if (propertyId.equals("estimatetime")
 						|| (propertyId.equals("estimateremaintime"))) {
-					return new NumericField();
+					return new NumbericTextField();
 				}
 
 				return null;
+			}
+		}
+	}
+
+	private static class NumbericTextField extends TextField {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		protected void setValue(Object newValue, boolean repaintIsNotNeeded) {
+			try {
+				double d = Double.parseDouble((String) newValue);
+				super.setValue(d, repaintIsNotNeeded);
+			} catch (Exception e) {
+				super.setValue(0, repaintIsNotNeeded);
 			}
 		}
 	}
