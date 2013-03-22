@@ -6,6 +6,7 @@ package com.esofthead.mycollab.shell.view;
 
 import com.esofthead.mycollab.module.crm.view.CrmModulePresenter;
 import com.esofthead.mycollab.module.project.view.ProjectModulePresenter;
+import com.esofthead.mycollab.module.project.view.ProjectModuleScreenData;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModulePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModule;
 import com.esofthead.mycollab.shell.events.ShellEvent;
@@ -60,25 +61,28 @@ public class MainViewController implements IController {
 					public void handle(ShellEvent.GotoProjectModule event) {
 						ProjectModulePresenter prjPresenter = PresenterResolver
 								.getPresenter(ProjectModulePresenter.class);
-						prjPresenter.go(container, null);
+						ProjectModuleScreenData.GotoDefaultView screenData = new ProjectModuleScreenData.GotoDefaultView();
+						prjPresenter.go(container, screenData);
 					}
 				});
 
-		EventBus.getInstance().addListener(
-				new ApplicationEventListener<ShellEvent.GotoUserAccountModule>() {
-					private static final long serialVersionUID = 1L;
+		EventBus.getInstance()
+				.addListener(
+						new ApplicationEventListener<ShellEvent.GotoUserAccountModule>() {
+							private static final long serialVersionUID = 1L;
 
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return ShellEvent.GotoUserAccountModule.class;
-					}
+							@Override
+							public Class<? extends ApplicationEvent> getEventType() {
+								return ShellEvent.GotoUserAccountModule.class;
+							}
 
-					@Override
-					public void handle(ShellEvent.GotoUserAccountModule event) {
-						AccountModulePresenter presenter = PresenterResolver
-								.getPresenter(AccountModulePresenter.class);
-						presenter.go(container, null);
-					}
-				});
+							@Override
+							public void handle(
+									ShellEvent.GotoUserAccountModule event) {
+								AccountModulePresenter presenter = PresenterResolver
+										.getPresenter(AccountModulePresenter.class);
+								presenter.go(container, null);
+							}
+						});
 	}
 }
