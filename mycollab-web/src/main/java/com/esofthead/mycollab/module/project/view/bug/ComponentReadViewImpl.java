@@ -21,6 +21,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -43,6 +44,8 @@ public class ComponentReadViewImpl extends AbstractView implements
 	private static final long serialVersionUID = 1L;
 	protected SimpleComponent component;
 	protected AdvancedPreviewBeanForm<SimpleComponent> previewForm;
+	
+	private ToggleButtonGroup viewGroup;
 
 	public ComponentReadViewImpl() {
 		super();

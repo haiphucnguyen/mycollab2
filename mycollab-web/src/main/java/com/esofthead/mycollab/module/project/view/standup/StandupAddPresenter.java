@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.view.standup;
 
 import java.util.GregorianCalendar;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.StandupReport;
@@ -81,6 +82,16 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 		StandupReport standupReport = (StandupReport) data.getParams();
 		view.editItem(standupReport);
 
+		AppContext.addFragment(
+				"project/standup/add/"
+						+ UrlEncodeDecoder.encode(CurrentProjectVariables
+								.getProjectId()
+								+ "/"
+								+ AppContext.formatDate(new GregorianCalendar()
+										.getTime())),
+				"Standup Report for "
+						+ AppContext.formatDate(new GregorianCalendar()
+								.getTime()));
 	}
 
 }

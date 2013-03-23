@@ -107,7 +107,7 @@ public class StandupListViewImpl extends AbstractView implements
 		header.setComponentAlignment(titleLbl, Alignment.MIDDLE_RIGHT);
 		header.setExpandRatio(titleLbl, 1.0f);
 
-		Button addNewReport = new Button("Add New Report",
+		Button addNewReport = new Button("Add/Edit Report",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
