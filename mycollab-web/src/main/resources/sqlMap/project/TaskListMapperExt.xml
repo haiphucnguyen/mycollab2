@@ -58,7 +58,7 @@
                     m_prj_task_list.projectid, m_prj_task_list.createdTime, m_prj_task_list.lastUpdatedTime, 
                     m_prj_task_list.sAccountId, m_prj_task_list.milestoneId, m_prj_task_list.groupIndex,
                     m_prj_task_list.owner, m_prj_task_list.status, m_prj_milestone.name AS milestoneName,
-                    concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS ownerFullName,
+                    concat(s_user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), s_user.lastname) AS ownerFullName,
                     m_prj_task.id AS subTask_id, m_prj_task.taskname AS subTask_taskname, m_prj_task.percentagecomplete AS subTask_percentagecomplete, 
                     m_prj_task.startdate AS subTask_startdate, m_prj_task.enddate AS subTask_enddate, m_prj_task.priority AS subTask_priority, 
                     m_prj_task.duration AS subTask_duration, m_prj_task.isestimated AS subTask_isestimated, m_prj_task.projectid AS subTask_projectid, 
@@ -68,7 +68,7 @@
                     m_prj_task.createdTime AS subTask_createdTime, m_prj_task.lastUpdatedTime AS subTask_lastUpdatedTime, 
                     m_prj_task.assignUser AS subTask_assignUser, m_prj_task.sAccountId AS subTask_sAccountId, m_prj_task.status AS subTask_status,
                      m_prj_task.taskkey AS subTask_taskkey,
-                    concat(taskUser.firstname, IFNULL(concat(' ', taskUser.middlename, ' '), ' '), taskUser.lastname) AS subTask_assignUserFullName,
+                    concat(taskUser.firstname, ' ', IFNULL(taskUser.middlename + ' ', ''), taskUser.lastname) AS subTask_assignUserFullName,
                     (SELECT AVG(task.percentagecomplete) FROM m_prj_task AS task WHERE m_prj_task_list.id = task.tasklistid) AS percentageComplete,
                     (SELECT COUNT(task_all.id) FROM  m_prj_task AS task_all WHERE m_prj_task_list.id = task_all.tasklistid) AS numAllTasks,
                     (SELECT COUNT(task_open.id) FROM  m_prj_task AS task_open WHERE m_prj_task_list.id = task_open.tasklistid AND task_open.status='Open') AS numOpenTasks

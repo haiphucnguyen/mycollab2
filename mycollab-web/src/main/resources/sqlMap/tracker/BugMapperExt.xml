@@ -572,8 +572,8 @@
 
         <![CDATA[
         SELECT m_tracker_bug.assignuser AS groupid,
-            COUNT(IFNULL(m_tracker_bug.assignuser,'')) AS value,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as groupname
+            COUNT(IFNULL(m_tracker_bug.assignuser, '')) AS value,
+            concat(s_user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), s_user.lastname) as groupname
         FROM m_tracker_bug
             LEFT OUTER JOIN s_user ON (m_tracker_bug.assignuser = s_user.username)
         ]]>
@@ -592,7 +592,7 @@
         <![CDATA[
         SELECT m_tracker_bug.logby AS groupid,
             COUNT(IFNULL(m_tracker_bug.logby,'')) AS value,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as groupname
+            concat(s_user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), s_user.lastname) as groupname
         FROM m_tracker_bug
             LEFT OUTER JOIN s_user ON (m_tracker_bug.logby = s_user.username)
         ]]>
