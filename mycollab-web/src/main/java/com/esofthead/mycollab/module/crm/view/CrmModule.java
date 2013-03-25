@@ -178,7 +178,9 @@ public class CrmModule extends AbstractView implements IModule {
 		container.addComponent(currentView, "currentView");
 		this.addComponent(container);
 		this.setComponentAlignment(container, Alignment.MIDDLE_CENTER);
-
+	}
+	
+	public void gotoCrmDashboard() {
 		EventBus.getInstance().fireEvent(new CrmEvent.GotoHome(this, null));
 	}
 

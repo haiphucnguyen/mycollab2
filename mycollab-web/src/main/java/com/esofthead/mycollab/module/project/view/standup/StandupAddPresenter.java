@@ -8,12 +8,14 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.StandupReport;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
+import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.HistoryViewManager;
 import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
@@ -82,16 +84,9 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 		StandupReport standupReport = (StandupReport) data.getParams();
 		view.editItem(standupReport);
 
-		AppContext.addFragment(
-				"project/standup/add/"
-						+ UrlEncodeDecoder.encode(CurrentProjectVariables
-								.getProjectId()
-								+ "/"
-								+ AppContext.formatDate(new GregorianCalendar()
-										.getTime())),
-				"Standup Report for "
-						+ AppContext.formatDate(new GregorianCalendar()
-								.getTime()));
+		ProjectBreadcrumb breadCrumb = ViewManager
+				.getView(ProjectBreadcrumb.class);
+		breadCrumb.gotoStandupAdd(new GregorianCalendar().getTime());
 	}
 
 }

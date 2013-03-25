@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.web;
 
 import java.io.Serializable;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
@@ -32,7 +33,7 @@ public class AppContext implements TransactionListener, Serializable {
 	private static int UPDATE_TIME_DURATION = 300000;
 	private static Logger log = LoggerFactory.getLogger(AppContext.class);
 	private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
-	
+
 	private final Application app;
 	private final Map<String, Object> variables = new HashMap<String, Object>();
 
@@ -255,6 +256,14 @@ public class AppContext implements TransactionListener, Serializable {
 			return "";
 		}
 		return simpleDateFormat.format(date);
+	}
+
+	public static Date convertDate(String dateVal) {
+		try {
+			return simpleDateFormat.parse(dateVal);
+		} catch (ParseException e) {
+			return new GregorianCalendar().getTime();
+		}
 	}
 
 	public static String getDateFormat() {
