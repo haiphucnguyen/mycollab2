@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.service.RoleService;
@@ -16,6 +18,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
@@ -195,11 +198,16 @@ public class RoleListPresenter extends AbstractPresenter<RoleListView>
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		RoleContainer roleContainer = (RoleContainer) container;
-		roleContainer.removeAllComponents();
-		roleContainer.addComponent(view.getWidget());
-		doSearch((RoleSearchCriteria) data.getParams());
+		if (CurrentProjectVariables
+				.canRead(ProjectRolePermissionCollections.ROLES)) {
+			RoleContainer roleContainer = (RoleContainer) container;
+			roleContainer.removeAllComponents();
+			roleContainer.addComponent(view.getWidget());
+			doSearch((RoleSearchCriteria) data.getParams());
 
-		AppContext.addFragment("account/role/list", "List Roles");
+			AppContext.addFragment("account/role/list", "List Roles");
+		} else {
+			MessageConstants.showMessagePermissionAlert();
+		}
 	}
 }

@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view.problem;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.service.ProblemService;
@@ -13,6 +14,7 @@ import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -27,19 +29,24 @@ public class ProblemAddPresenter extends AbstractPresenter<ProblemAddView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		ProblemContainer problemContainer = (ProblemContainer) container;
-		problemContainer.removeAllComponents();
-		problemContainer.addComponent(view.getWidget());
+		if (CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.PROBLEMS)) {
+			ProblemContainer problemContainer = (ProblemContainer) container;
+			problemContainer.removeAllComponents();
+			problemContainer.addComponent(view.getWidget());
 
-		Problem problem = (Problem) data.getParams();
-		view.editItem(problem);
+			Problem problem = (Problem) data.getParams();
+			view.editItem(problem);
 
-		ProjectBreadcrumb breadcrumb = ViewManager
-				.getView(ProjectBreadcrumb.class);
-		if (problem.getId() == null) {
-			breadcrumb.gotoProblemAdd();
+			ProjectBreadcrumb breadcrumb = ViewManager
+					.getView(ProjectBreadcrumb.class);
+			if (problem.getId() == null) {
+				breadcrumb.gotoProblemAdd();
+			} else {
+				breadcrumb.gotoProblemEdit(problem);
+			}
 		} else {
-			breadcrumb.gotoProblemEdit(problem);
+			MessageConstants.showMessagePermissionAlert();
 		}
 	}
 

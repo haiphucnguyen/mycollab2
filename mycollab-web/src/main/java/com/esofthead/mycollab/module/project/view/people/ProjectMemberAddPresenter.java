@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.project.view.people;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
@@ -20,6 +21,7 @@ import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -73,19 +75,24 @@ public class ProjectMemberAddPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		ProjectMemberContainer userGroupContainer = (ProjectMemberContainer) container;
-		userGroupContainer.removeAllComponents();
-		userGroupContainer.addComponent(view.getWidget());
+		if (CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.USERS)) {
+			ProjectMemberContainer userGroupContainer = (ProjectMemberContainer) container;
+			userGroupContainer.removeAllComponents();
+			userGroupContainer.addComponent(view.getWidget());
 
-		ProjectMember member = (ProjectMember) data.getParams();
-		view.editItem(member);
+			ProjectMember member = (ProjectMember) data.getParams();
+			view.editItem(member);
 
-		ProjectBreadcrumb breadcrumb = ViewManager
-				.getView(ProjectBreadcrumb.class);
-		if (member.getId() == null) {
-			breadcrumb.gotoUserAdd();
+			ProjectBreadcrumb breadcrumb = ViewManager
+					.getView(ProjectBreadcrumb.class);
+			if (member.getId() == null) {
+				breadcrumb.gotoUserAdd();
+			} else {
+				breadcrumb.gotoUserEdit((SimpleProjectMember) member);
+			}
 		} else {
-			breadcrumb.gotoUserEdit((SimpleProjectMember) member);
+			MessageConstants.showMessagePermissionAlert();
 		}
 	}
 

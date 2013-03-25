@@ -9,6 +9,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
@@ -21,6 +22,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
@@ -145,35 +147,39 @@ public class ProjectMemberReadPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		ProjectMemberService prjMemberService = AppContext
-				.getSpringBean(ProjectMemberService.class);
-		SimpleProjectMember prjMember = null;
-		if (data.getParams() instanceof Integer) {
-			prjMember = prjMemberService.findMemberById((Integer) data
-					.getParams());
+		if (CurrentProjectVariables
+				.canRead(ProjectRolePermissionCollections.USERS)) {
+			ProjectMemberService prjMemberService = AppContext
+					.getSpringBean(ProjectMemberService.class);
+			SimpleProjectMember prjMember = null;
+			if (data.getParams() instanceof Integer) {
+				prjMember = prjMemberService.findMemberById((Integer) data
+						.getParams());
 
-		} else if (data.getParams() instanceof String) {
-			String username = (String) data.getParams();
-			prjMember = prjMemberService.findMemberByUsername(username,
-					CurrentProjectVariables.getProjectId());
-		}
+			} else if (data.getParams() instanceof String) {
+				String username = (String) data.getParams();
+				prjMember = prjMemberService.findMemberByUsername(username,
+						CurrentProjectVariables.getProjectId());
+			}
 
-		if (prjMember != null) {
-			ProjectMemberContainer userGroupContainer = (ProjectMemberContainer) container;
-			userGroupContainer.removeAllComponents();
-			userGroupContainer.addComponent(view.getWidget());
-			view.previewItem(prjMember);
-			ProjectBreadcrumb breadCrumb = ViewManager
-					.getView(ProjectBreadcrumb.class);
-			breadCrumb.gotoUserRead(prjMember);
+			if (prjMember != null) {
+				ProjectMemberContainer userGroupContainer = (ProjectMemberContainer) container;
+				userGroupContainer.removeAllComponents();
+				userGroupContainer.addComponent(view.getWidget());
+				view.previewItem(prjMember);
+				ProjectBreadcrumb breadCrumb = ViewManager
+						.getView(ProjectBreadcrumb.class);
+				breadCrumb.gotoUserRead(prjMember);
+			} else {
+				AppContext
+						.getApplication()
+						.getMainWindow()
+						.showNotification("Information",
+								"The record is not existed",
+								Window.Notification.TYPE_HUMANIZED_MESSAGE);
+			}
 		} else {
-			AppContext
-					.getApplication()
-					.getMainWindow()
-					.showNotification("Information",
-							"The record is not existed",
-							Window.Notification.TYPE_HUMANIZED_MESSAGE);
+			MessageConstants.showMessagePermissionAlert();
 		}
-
 	}
 }

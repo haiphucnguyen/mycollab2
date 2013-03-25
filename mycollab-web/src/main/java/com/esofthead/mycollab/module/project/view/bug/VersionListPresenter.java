@@ -5,6 +5,8 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.file.ExportStreamResource;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
@@ -19,6 +21,7 @@ import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
@@ -200,14 +203,19 @@ public class VersionListPresenter extends AbstractPresenter<VersionListView> imp
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        BugContainer bugContainer = (BugContainer) container;
-        bugContainer.removeAllComponents();
-        bugContainer.addComponent(view.getWidget());
-        
-        doSearch((VersionSearchCriteria) data.getParams());
-        
-        ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
-        breadcrumb.gotoVersionList();
+    	if (CurrentProjectVariables
+				.canRead(ProjectRolePermissionCollections.VERSIONS)) {
+    		 BugContainer bugContainer = (BugContainer) container;
+    	        bugContainer.removeAllComponents();
+    	        bugContainer.addComponent(view.getWidget());
+    	        
+    	        doSearch((VersionSearchCriteria) data.getParams());
+    	        
+    	        ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
+    	        breadcrumb.gotoVersionList();
+    	} else {
+    		MessageConstants.showMessagePermissionAlert();
+    	}
     }
 
     @Override

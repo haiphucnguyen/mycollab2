@@ -8,6 +8,7 @@ import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.domain.Component;
@@ -19,6 +20,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
@@ -125,32 +127,37 @@ public class ComponentReadPresenter extends
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (data.getParams() instanceof Integer) {
-			ComponentService componentService = AppContext
-					.getSpringBean(ComponentService.class);
-			SimpleComponent component = componentService
-					.findComponentById((Integer) data.getParams());
-			if (component != null) {
-				ComponentContainer riskContainer = (ComponentContainer) container;
-				riskContainer.removeAllComponents();
-				riskContainer.addComponent(view.getWidget());
-				view.previewItem(component);
+		if (CurrentProjectVariables
+				.canRead(ProjectRolePermissionCollections.COMPONENTS)) {
+			if (data.getParams() instanceof Integer) {
+				ComponentService componentService = AppContext
+						.getSpringBean(ComponentService.class);
+				SimpleComponent component = componentService
+						.findComponentById((Integer) data.getParams());
+				if (component != null) {
+					ComponentContainer riskContainer = (ComponentContainer) container;
+					riskContainer.removeAllComponents();
+					riskContainer.addComponent(view.getWidget());
+					view.previewItem(component);
 
-				ProjectBreadcrumb breadcrumb = ViewManager
-						.getView(ProjectBreadcrumb.class);
-				breadcrumb.gotoComponentRead(component);
+					ProjectBreadcrumb breadcrumb = ViewManager
+							.getView(ProjectBreadcrumb.class);
+					breadcrumb.gotoComponentRead(component);
+				} else {
+					AppContext
+							.getApplication()
+							.getMainWindow()
+							.showNotification("Information",
+									"The record is not existed",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					return;
+				}
 			} else {
-				AppContext
-						.getApplication()
-						.getMainWindow()
-						.showNotification("Information",
-								"The record is not existed",
-								Window.Notification.TYPE_HUMANIZED_MESSAGE);
-				return;
+				throw new MyCollabException("Unhanddle this case yet");
 			}
 		} else {
-			throw new MyCollabException("Unhanddle this case yet");
-		}
+    		MessageConstants.showMessagePermissionAlert();
+    	}
 	}
 
 }
