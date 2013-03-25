@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view.risk;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.service.RiskService;
@@ -13,6 +14,7 @@ import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -27,18 +29,23 @@ public class RiskAddPresenter extends AbstractPresenter<RiskAddView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		RiskContainer riskContainer = (RiskContainer) container;
-		riskContainer.removeAllComponents();
-		riskContainer.addComponent(view.getWidget());
-		Risk risk = (Risk) data.getParams();
-		view.editItem(risk);
+		if (CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.RISKS)) {
+			RiskContainer riskContainer = (RiskContainer) container;
+			riskContainer.removeAllComponents();
+			riskContainer.addComponent(view.getWidget());
+			Risk risk = (Risk) data.getParams();
+			view.editItem(risk);
 
-		ProjectBreadcrumb breadCrumb = ViewManager
-				.getView(ProjectBreadcrumb.class);
-		if (risk.getId() == null) {
-			breadCrumb.gotoRiskAdd();
+			ProjectBreadcrumb breadCrumb = ViewManager
+					.getView(ProjectBreadcrumb.class);
+			if (risk.getId() == null) {
+				breadCrumb.gotoRiskAdd();
+			} else {
+				breadCrumb.gotoRiskEdit(risk);
+			}
 		} else {
-			breadCrumb.gotoRiskEdit(risk);
+			MessageConstants.showMessagePermissionAlert();
 		}
 	}
 

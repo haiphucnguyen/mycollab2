@@ -8,6 +8,8 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
@@ -21,6 +23,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
@@ -30,6 +33,8 @@ import com.vaadin.ui.Window;
  * @author haiphucnguyen
  */
 public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
+
+	private static final long serialVersionUID = 1L;
 
 	public TaskReadPresenter() {
 		super(TaskReadView.class);
@@ -139,20 +144,25 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		TaskContainer taskContainer = (TaskContainer) container;
-		taskContainer.removeAllComponents();
+		if (CurrentProjectVariables
+				.canRead(ProjectRolePermissionCollections.TASKS)) {
+			TaskContainer taskContainer = (TaskContainer) container;
+			taskContainer.removeAllComponents();
 
-		taskContainer.addComponent(view.getWidget());
-		if (data.getParams() instanceof Integer) {
-			ProjectTaskService taskService = AppContext
-					.getSpringBean(ProjectTaskService.class);
-			SimpleTask task = taskService.findTaskById((Integer) data
-					.getParams());
-			view.previewItem(task);
+			taskContainer.addComponent(view.getWidget());
+			if (data.getParams() instanceof Integer) {
+				ProjectTaskService taskService = AppContext
+						.getSpringBean(ProjectTaskService.class);
+				SimpleTask task = taskService.findTaskById((Integer) data
+						.getParams());
+				view.previewItem(task);
 
-			ProjectBreadcrumb breadCrumb = ViewManager
-					.getView(ProjectBreadcrumb.class);
-			breadCrumb.gotoTaskRead(task);
+				ProjectBreadcrumb breadCrumb = ViewManager
+						.getView(ProjectBreadcrumb.class);
+				breadCrumb.gotoTaskRead(task);
+			}
+		} else {
+			MessageConstants.showMessagePermissionAlert();
 		}
 	}
 }
