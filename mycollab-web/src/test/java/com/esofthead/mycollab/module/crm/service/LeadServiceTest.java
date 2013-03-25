@@ -94,7 +94,7 @@ public class LeadServiceTest extends ServiceTest{
     @DataSet
     public void testSearchAssignUser() {
         LeadSearchCriteria criteria = new LeadSearchCriteria();
-        criteria.setAssignUsers(new SetSearchField<String>(SetSearchField.AND, new String[]{"linh", "Hai"}));
+        criteria.setAssignUsers(new SetSearchField<String>(SetSearchField.AND, new String[]{"linh", "hai"}));
         Assert.assertEquals(2, leadService.getTotalCount(criteria));
         Assert.assertEquals(
                 2,
