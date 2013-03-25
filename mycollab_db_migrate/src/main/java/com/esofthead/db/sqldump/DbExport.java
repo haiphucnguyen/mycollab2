@@ -47,8 +47,9 @@ public class DbExport {
 
 	public static void main(String[] args) throws Exception {
 
-		File outFile = File.createTempFile(
-				String.valueOf(System.currentTimeMillis()), ".sql");
+//		File outFile = File.createTempFile(
+//				String.valueOf(System.currentTimeMillis()), ".sql");
+		File outFile = new File("D:/export.sql");
 		OutputStreamWriter writer = new OutputStreamWriter(
 				new FileOutputStream(outFile));
 		exportDb(DbConfiguration.loadDefault(), writer);
@@ -57,18 +58,18 @@ public class DbExport {
 		/*
 		 * Code migrate h2 database
 		 */
-		FileInputStream fin = new FileInputStream(outFile);
-		ByteArrayOutputStream sout = new ByteArrayOutputStream();
-		byte[] buffer = new byte[4096];
-		int byteRead;
-		while ((byteRead = fin.read(buffer)) != -1) {
-			sout.write(buffer, 0, byteRead);
-		}
-		fin.close();
-		sout.flush();
-		sout.close();
-
-		executeNonQuery(new String(sout.toByteArray()));
+//		FileInputStream fin = new FileInputStream(outFile);
+//		ByteArrayOutputStream sout = new ByteArrayOutputStream();
+//		byte[] buffer = new byte[4096];
+//		int byteRead;
+//		while ((byteRead = fin.read(buffer)) != -1) {
+//			sout.write(buffer, 0, byteRead);
+//		}
+//		fin.close();
+//		sout.flush();
+//		sout.close();
+//
+//		executeNonQuery(new String(sout.toByteArray()));
 	}
 
 	public static void executeNonQuery(String query) throws Exception {
