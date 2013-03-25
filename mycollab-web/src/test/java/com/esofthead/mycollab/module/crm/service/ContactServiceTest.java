@@ -200,9 +200,9 @@ public class ContactServiceTest extends ServiceTest {
     public void testSearchLastname() {
         ContactSearchCriteria criteria = new ContactSearchCriteria();
         criteria.setLastname(new StringSearchField(SearchField.AND, "linh"));
-        Assert.assertEquals(1, contactService.getTotalCount(criteria));
+        Assert.assertEquals(0, contactService.getTotalCount(criteria));
         Assert.assertEquals(
-                1,
+                0,
                 contactService.findPagableListByCriteria(
                 new SearchRequest<ContactSearchCriteria>(criteria, 0,
                 Integer.MAX_VALUE)).size());
