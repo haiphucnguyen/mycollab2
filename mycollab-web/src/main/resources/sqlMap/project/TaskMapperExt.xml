@@ -24,7 +24,7 @@
         <if test='statuses != null'>
             ${statuses.operation} m_prj_task.status IN
             <foreach close=")" collection="statuses.values"
-                item="status" open="(" separator="OR">
+                item="status" open="(" separator=",">
                 #{status}
             </foreach>    
         </if>
@@ -62,7 +62,7 @@
         <if test='statuses != null'>
             ${statuses.operation} m_prj_task.status IN
             <foreach close=")" collection="statuses.values"
-                item="status" open="(" separator="OR">
+                item="status" open="(" separator=",">
                 #{status}
             </foreach>    
         </if>
