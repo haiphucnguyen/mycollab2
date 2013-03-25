@@ -58,6 +58,9 @@ public class StandupUrlResolver extends UrlResolver {
 			SimpleStandupReport report = reportService
 					.findStandupReportByDateUser(projectId,
 							AppContext.getUsername(), onDate);
+			if (report == null) {
+				report = new SimpleStandupReport();
+			}
 
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
