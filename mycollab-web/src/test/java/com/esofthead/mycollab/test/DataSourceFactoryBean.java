@@ -23,9 +23,16 @@ import java.util.Properties;
 import javax.sql.DataSource;
 
 import org.apache.commons.dbcp.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.config.AbstractFactoryBean;
 
 public class DataSourceFactoryBean extends AbstractFactoryBean {
+
+	private static Logger log = LoggerFactory
+			.getLogger(DataSourceFactoryBean.class);
+
+	private BasicDataSource dataSource;
 
 	public DataSource getDataSource() {
 		try {
@@ -51,15 +58,25 @@ public class DataSourceFactoryBean extends AbstractFactoryBean {
 			Properties props = new Properties();
 			props.load(stream);
 
-			System.out.println("Use database settings is: " + props);
+			log.debug("Use database settings is: " + props);
 
-			BasicDataSource dataSource = new BasicDataSource();
+			dataSource = new BasicDataSource();
 			dataSource.setDriverClassName(props
 					.getProperty("db.driverClassName"));
 			dataSource.setUrl(props.getProperty("db.url"));
 			dataSource.setUsername(props.getProperty("db.username"));
 			dataSource.setPassword(props.getProperty("db.password"));
 			return dataSource;
+		}
+	}
+
+	@Override
+	public void destroy() throws Exception {
+		super.destroy();
+
+		if (dataSource != null) {
+			dataSource.close();
+			log.debug("Close connection");
 		}
 	}
 

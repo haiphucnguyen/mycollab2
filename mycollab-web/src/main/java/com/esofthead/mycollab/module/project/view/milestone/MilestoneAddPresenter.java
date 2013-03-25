@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.view.milestone;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.service.MilestoneService;
@@ -17,6 +18,7 @@ import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -35,20 +37,25 @@ public class MilestoneAddPresenter extends AbstractPresenter<MilestoneAddView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		MilestoneContainer milestoneContainer = (MilestoneContainer) container;
-		milestoneContainer.removeAllComponents();
-		milestoneContainer.addComponent(view.getWidget());
+		if (CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.MILESTONES)) {
+			MilestoneContainer milestoneContainer = (MilestoneContainer) container;
+			milestoneContainer.removeAllComponents();
+			milestoneContainer.addComponent(view.getWidget());
 
-		Milestone milestone = (Milestone) data.getParams();
-		view.editItem(milestone);
+			Milestone milestone = (Milestone) data.getParams();
+			view.editItem(milestone);
 
-		ProjectBreadcrumb breadcrumb = ViewManager
-				.getView(ProjectBreadcrumb.class);
-		if (milestone.getId() == null) {
-			breadcrumb.gotoMilestoneAdd();
+			ProjectBreadcrumb breadcrumb = ViewManager
+					.getView(ProjectBreadcrumb.class);
+			if (milestone.getId() == null) {
+				breadcrumb.gotoMilestoneAdd();
+			} else {
+				breadcrumb.gotoMilestoneEdit(milestone);
+			}
 		} else {
-			breadcrumb.gotoMilestoneEdit(milestone);
-		}
+    		MessageConstants.showMessagePermissionAlert();
+    	}
 	}
 
 	private void bind() {

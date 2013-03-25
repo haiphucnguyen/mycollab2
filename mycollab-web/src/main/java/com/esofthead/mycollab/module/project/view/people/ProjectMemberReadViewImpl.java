@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.people;
 
+import org.vaadin.hene.popupbutton.PopupButton;
+
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -202,19 +204,13 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 	private class UserTaskDepot extends Depot {
 		private static final long serialVersionUID = 1L;
 
-		private TaskSearchCriteria searchCriteria;
+		private PopupButton taskListFilterControl;
+		private TaskTableDisplay taskDisplay;
 
 		public UserTaskDepot() {
-			super("Tasks", new VerticalLayout());
-
-			searchCriteria = new TaskSearchCriteria();
-			searchCriteria.setProjectid(new NumberSearchField(
-					CurrentProjectVariables.getProjectId()));
-			searchCriteria.setStatuses(new SetSearchField<String>(
-					SearchField.AND, new String[] { "Open", "Pending" }));
-			searchCriteria.setAssignUser(new StringSearchField(projectMember
-					.getUsername()));
-			final TaskTableDisplay taskDisplay = new TaskTableDisplay(
+			super("Tasks", new HorizontalLayout(), new VerticalLayout());
+			
+			taskDisplay = new TaskTableDisplay(
 					new String[] { "id", "taskkey", "taskname", "startdate",
 							"deadline", "percentagecomplete" },
 					new String[] { "", "#", "Task Name", "Start", "Due",
@@ -243,21 +239,111 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 											.getFieldName())
 									|| "reopenTask".equals(event.getFieldName())
 									|| "deleteTask".equals(event.getFieldName())) {
-								taskDisplay.setSearchCriteria(searchCriteria);
+								
+//								taskDisplay.setSearchCriteria(searchCriteria);
 							}
 						}
 					});
 
-			taskDisplay.setSearchCriteria(searchCriteria);
 			bodyContent.addComponent(taskDisplay);
+			initHeader();
+			displayActiveTasksOnly();
+		}
+
+		private void initHeader() {
+			HorizontalLayout headerLayout = (HorizontalLayout) this.headerContent;
+			headerLayout.setSpacing(true);
+
+			taskListFilterControl = new PopupButton("Active Tasks");
+			taskListFilterControl.setWidth("120px");
+			taskListFilterControl.addStyleName("link");
+
+			VerticalLayout filterBtnLayout = new VerticalLayout();
+			filterBtnLayout.setMargin(true);
+			filterBtnLayout.setSpacing(true);
+			filterBtnLayout.setWidth("200px");
+
+			Button allTasksFilterBtn = new Button("All Tasks",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							taskListFilterControl.setPopupVisible(false);
+							taskListFilterControl.setCaption("All Tasks");
+							displayAllTasks();
+						}
+					});
+			allTasksFilterBtn.setStyleName("link");
+			filterBtnLayout.addComponent(allTasksFilterBtn);
+
+			Button activeTasksFilterBtn = new Button("Active Tasks Only",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							taskListFilterControl.setPopupVisible(false);
+							taskListFilterControl
+									.setCaption("Active Tasks");
+							displayActiveTasksOnly();
+						}
+					});
+			activeTasksFilterBtn.setStyleName("link");
+			filterBtnLayout.addComponent(activeTasksFilterBtn);
+
+			Button archievedTasksFilterBtn = new Button("Archieved Tasks Only",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							taskListFilterControl.setCaption("Archieved Tasks");
+							taskListFilterControl.setPopupVisible(false);
+							displayInActiveTasks();
+						}
+					});
+			archievedTasksFilterBtn.setStyleName("link");
+			filterBtnLayout.addComponent(archievedTasksFilterBtn);
+			taskListFilterControl.addComponent(filterBtnLayout);
+			headerLayout.addComponent(taskListFilterControl);
+		}
+
+		private TaskSearchCriteria createBaseSearchCriteria() {
+			TaskSearchCriteria criteria = new TaskSearchCriteria();
+			criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
+					.getProjectId()));
+			return criteria;
+		}
+
+		private void displayActiveTasksOnly() {
+			TaskSearchCriteria criteria = createBaseSearchCriteria();
+			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
+					new String[] { "Open", "Pending" }));
+			taskDisplay.setSearchCriteria(criteria);
+		}
+
+		private void displayAllTasks() {
+			TaskSearchCriteria criteria = createBaseSearchCriteria();
+			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
+					new String[] { "Open", "Pending", "Closed" }));
+			taskDisplay.setSearchCriteria(criteria);
+		}
+
+		private void displayInActiveTasks() {
+			TaskSearchCriteria criteria = createBaseSearchCriteria();
+			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
+					new String[] { "Closed" }));
+			taskDisplay.setSearchCriteria(criteria);
 		}
 	}
 
 	private class UserBugDepot extends Depot {
 		private static final long serialVersionUID = 1L;
+		private PopupButton bugActionControl;
 
 		public UserBugDepot() {
-			super("Open Bugs", new VerticalLayout());
+			super("Bugs", new HorizontalLayout(), new VerticalLayout());
 
 			BugTableDisplay bugDisplay = new BugTableDisplay(new String[] {
 					"bugkey", "summary", "severity", "resolution", "duedate" },
@@ -297,6 +383,52 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			bugDisplay.setSearchCriteria(searchCriteria);
 
 			this.bodyContent.addComponent(bugDisplay);
+
+			initHeader();
+		}
+
+		private void initHeader() {
+			HorizontalLayout headerLayout = (HorizontalLayout) this.headerContent;
+			headerLayout.setSpacing(true);
+
+			bugActionControl = new PopupButton("Open Bugs");
+			bugActionControl.addStyleName("link");
+			headerLayout.addComponent(bugActionControl);
+
+			VerticalLayout actionBtnLayout = new VerticalLayout();
+			actionBtnLayout.setMargin(true);
+			actionBtnLayout.setSpacing(true);
+			actionBtnLayout.setWidth("200px");
+			bugActionControl.addComponent(actionBtnLayout);
+
+			Button pendingBugBtn = new Button("Pending Bugs",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							bugActionControl.setPopupVisible(false);
+
+						}
+					});
+			pendingBugBtn.setEnabled(CurrentProjectVariables
+					.canRead(ProjectRolePermissionCollections.BUGS));
+			pendingBugBtn.setStyleName("link");
+			actionBtnLayout.addComponent(pendingBugBtn);
+
+			Button closeBugBtn = new Button("Closed Bug",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							bugActionControl.setPopupVisible(false);
+						}
+					});
+			closeBugBtn.setEnabled(CurrentProjectVariables
+					.canWrite(ProjectRolePermissionCollections.BUGS));
+			closeBugBtn.setStyleName("link");
+			actionBtnLayout.addComponent(closeBugBtn);
 		}
 	}
 

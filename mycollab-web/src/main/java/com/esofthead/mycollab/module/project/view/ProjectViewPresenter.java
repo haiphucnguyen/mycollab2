@@ -122,7 +122,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				VersionScreenData.Edit.class)) {
 			presenter = PresenterResolver.getPresenter(BugPresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction,
-				StandupScreenData.Search.class)) {
+				StandupScreenData.Search.class, StandupScreenData.Add.class)) {
 			presenter = PresenterResolver.getPresenter(StandupPresenter.class);
 		} else if (ClassUtils.instanceOf(pageAction,
 				ProjectMemberScreenData.Search.class,

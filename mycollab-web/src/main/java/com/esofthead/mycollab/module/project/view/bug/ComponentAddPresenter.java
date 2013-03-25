@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
@@ -18,6 +19,7 @@ import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -79,19 +81,24 @@ public class ComponentAddPresenter extends AbstractPresenter<ComponentAddView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		BugContainer bugContainer = (BugContainer) container;
-		bugContainer.addComponent(view.getWidget());
+		if (CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.COMPONENTS)) {
+			BugContainer bugContainer = (BugContainer) container;
+			bugContainer.addComponent(view.getWidget());
 
-		Component component = (Component) data.getParams();
-		view.editItem(component);
+			Component component = (Component) data.getParams();
+			view.editItem(component);
 
-		ProjectBreadcrumb breadcrumb = ViewManager
-				.getView(ProjectBreadcrumb.class);
+			ProjectBreadcrumb breadcrumb = ViewManager
+					.getView(ProjectBreadcrumb.class);
 
-		if (component.getId() == null) {
-			breadcrumb.gotoComponentAdd();
+			if (component.getId() == null) {
+				breadcrumb.gotoComponentAdd();
+			} else {
+				breadcrumb.gotoComponentEdit(component);
+			}
 		} else {
-			breadcrumb.gotoComponentEdit(component);
-		}
+    		MessageConstants.showMessagePermissionAlert();
+    	}
 	}
 }

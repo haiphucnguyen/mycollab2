@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.shell.view;
 
 import com.esofthead.mycollab.module.crm.view.CrmModulePresenter;
+import com.esofthead.mycollab.module.crm.view.CrmModuleScreenData;
 import com.esofthead.mycollab.module.project.view.ProjectModulePresenter;
 import com.esofthead.mycollab.module.project.view.ProjectModuleScreenData;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountModulePresenter;
@@ -43,7 +44,9 @@ public class MainViewController implements IController {
 					public void handle(ShellEvent.GotoCrmModule event) {
 						CrmModulePresenter crmModulePresenter = PresenterResolver
 								.getPresenter(CrmModulePresenter.class);
-						crmModulePresenter.go(container, null);
+						CrmModuleScreenData.GotoModule screenData = new CrmModuleScreenData.GotoModule(
+								(String[]) event.getData());
+						crmModulePresenter.go(container, screenData);
 					}
 				});
 

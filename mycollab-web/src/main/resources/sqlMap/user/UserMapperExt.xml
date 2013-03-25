@@ -14,7 +14,7 @@
     <sql id="querySearchCriteria">
         <if test="displayName != null">
           <![CDATA[
-            ${displayName.operation} (concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) like '%${displayName.value}%')
+            ${displayName.operation} (concat(s_user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), s_user.lastname) like '%${displayName.value}%')
             ]]>
         </if>
         <if test="username != null">

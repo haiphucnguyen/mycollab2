@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.domain.Version;
@@ -17,6 +18,7 @@ import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -75,19 +77,24 @@ public class VersionAddPresenter extends AbstractPresenter<VersionAddView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		BugContainer bugContainer = (BugContainer) container;
-		bugContainer.addComponent(view.getWidget());
+		if (CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.VERSIONS)) {
+			BugContainer bugContainer = (BugContainer) container;
+			bugContainer.addComponent(view.getWidget());
 
-		Version version = (Version) data.getParams();
-		view.editItem(version);
+			Version version = (Version) data.getParams();
+			view.editItem(version);
 
-		ProjectBreadcrumb breadcrumb = ViewManager
-				.getView(ProjectBreadcrumb.class);
-		if (version.getId() == null) {
-			breadcrumb.gotoVersionAdd();
+			ProjectBreadcrumb breadcrumb = ViewManager
+					.getView(ProjectBreadcrumb.class);
+			if (version.getId() == null) {
+				breadcrumb.gotoVersionAdd();
+			} else {
+				breadcrumb.gotoVersionEdit(version);
+			}
 		} else {
-			breadcrumb.gotoVersionEdit(version);
-		}
+    		MessageConstants.showMessagePermissionAlert();
+    	}
 	}
 
 }

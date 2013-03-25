@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.project.view.problem;
 
 import com.esofthead.mycollab.module.file.ExportStreamResource;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProblemService;
@@ -15,6 +17,7 @@ import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
@@ -194,14 +197,19 @@ public class ProblemListPresenter extends AbstractPresenter<ProblemListView>
 
     @Override
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
-        ProblemContainer problemContainer = (ProblemContainer) container;
-        problemContainer.removeAllComponents();
-        problemContainer.addComponent(view.getWidget());
+    	if (CurrentProjectVariables
+				.canRead(ProjectRolePermissionCollections.PROBLEMS)) {
+    		ProblemContainer problemContainer = (ProblemContainer) container;
+            problemContainer.removeAllComponents();
+            problemContainer.addComponent(view.getWidget());
 
-        doSearch((ProblemSearchCriteria) data.getParams());
-        
-        ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
-        breadcrumb.gotoProblemList();
+            doSearch((ProblemSearchCriteria) data.getParams());
+            
+            ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
+            breadcrumb.gotoProblemList();
+    	} else {
+			MessageConstants.showMessagePermissionAlert();
+		}
     }
 
     @Override

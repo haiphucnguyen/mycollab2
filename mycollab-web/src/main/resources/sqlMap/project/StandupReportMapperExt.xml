@@ -35,7 +35,7 @@
           SELECT m_prj_standup.id, m_prj_standup.sAccountId, m_prj_standup.projectId, m_prj_standup.forday, 
             m_prj_standup.logBy, m_prj_standup.createdTime, m_prj_standup.lastUpdatedTime, 
             m_prj_standup.whatlastday, m_prj_standup.whattoday, m_prj_standup.whatproblem, 
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS logByFullName
+            concat(s_user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), s_user.lastname) AS logByFullName
           FROM m_prj_standup
             LEFT OUTER JOIN s_user ON ( m_prj_standup.logBy=s_user.username)
         ]]>

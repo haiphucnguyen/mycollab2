@@ -8,7 +8,9 @@ import com.esofthead.mycollab.module.crm.view.cases.CaseUrlResolver;
 import com.esofthead.mycollab.module.crm.view.contact.ContactUrlResolver;
 import com.esofthead.mycollab.module.crm.view.lead.LeadUrlResolver;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityUrlResolver;
+import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
 import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
 public class CrmUrlResolver extends UrlResolver {
@@ -23,7 +25,15 @@ public class CrmUrlResolver extends UrlResolver {
 		this.addSubResolver("activity", new ActivityUrlResolver());
 	}
 
-
+	@Override
+	public void handle(String... params) {
+		if (!ModuleHelper.isCurrentCrmModule()) {
+			EventBus.getInstance().fireEvent(
+					new ShellEvent.GotoCrmModule(this, params));
+		} else {
+			super.handle(params);
+		}
+	}
 
 	public static class CrmDashboardUrlResolver extends UrlResolver {
 

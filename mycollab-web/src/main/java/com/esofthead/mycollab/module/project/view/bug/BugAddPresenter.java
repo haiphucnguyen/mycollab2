@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.tracker.BugResolutionConstants;
@@ -17,6 +18,7 @@ import com.esofthead.mycollab.vaadin.mvp.NullViewState;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.AttachmentUploadField;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
@@ -32,20 +34,25 @@ public class BugAddPresenter extends AbstractPresenter<BugAddView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		BugContainer bugContainer = (BugContainer) container;
-		bugContainer.removeAllComponents();
-		bugContainer.addComponent(view.getWidget());
+		if (CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.BUGS)) {
+			BugContainer bugContainer = (BugContainer) container;
+			bugContainer.removeAllComponents();
+			bugContainer.addComponent(view.getWidget());
 
-		SimpleBug bug = (SimpleBug) data.getParams();
-		view.editItem(bug);
+			SimpleBug bug = (SimpleBug) data.getParams();
+			view.editItem(bug);
 
-		ProjectBreadcrumb breadcrumb = ViewManager
-				.getView(ProjectBreadcrumb.class);
-		if (bug.getId() == null) {
-			breadcrumb.gotoBugAdd();
+			ProjectBreadcrumb breadcrumb = ViewManager
+					.getView(ProjectBreadcrumb.class);
+			if (bug.getId() == null) {
+				breadcrumb.gotoBugAdd();
+			} else {
+				breadcrumb.gotoBugEdit(bug);
+			}
 		} else {
-			breadcrumb.gotoBugEdit(bug);
-		}
+    		MessageConstants.showMessagePermissionAlert();
+    	}
 	}
 
 	private void bind() {

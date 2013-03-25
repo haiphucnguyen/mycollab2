@@ -49,6 +49,7 @@ public class DbExport {
 
 		File outFile = File.createTempFile(
 				String.valueOf(System.currentTimeMillis()), ".sql");
+//		File outFile = new File("D:/export.sql");
 		OutputStreamWriter writer = new OutputStreamWriter(
 				new FileOutputStream(outFile));
 		exportDb(DbConfiguration.loadDefault(), writer);

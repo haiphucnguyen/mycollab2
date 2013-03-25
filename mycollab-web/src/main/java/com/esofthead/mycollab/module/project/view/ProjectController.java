@@ -38,6 +38,7 @@ import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
@@ -69,6 +70,7 @@ import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.web.AppContext;
 
 public class ProjectController implements IController {
 	private static final long serialVersionUID = 1L;
@@ -853,8 +855,18 @@ public class ProjectController implements IController {
 					public void handle(StandUpEvent.GotoAdd event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
+						StandupReportService reportService = AppContext
+								.getSpringBean(StandupReportService.class);
+						SimpleStandupReport report = reportService
+								.findStandupReportByDateUser(
+										CurrentProjectVariables.getProjectId(),
+										AppContext.getUsername(),
+										new GregorianCalendar().getTime());
+						if (report == null) {
+							report = new SimpleStandupReport();
+						}
 						StandupScreenData.Add data = new StandupScreenData.Add(
-								new SimpleStandupReport());
+								report);
 						projectView.gotoStandupReportView(data);
 					}
 				});
@@ -991,7 +1003,7 @@ public class ProjectController implements IController {
 						criteria.setProjectId(new NumberSearchField(project
 								.getId()));
 						projectView
-								.gotoUsersAndGroup(new ScreenData.Search<ProjectMemberSearchCriteria>(
+								.gotoUsersAndGroup(new ProjectMemberScreenData.Search(
 										criteria));
 					}
 				});

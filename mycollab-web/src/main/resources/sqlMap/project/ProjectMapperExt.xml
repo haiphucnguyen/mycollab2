@@ -45,7 +45,7 @@
             (SELECT COUNT(*) 
              FROM s_user AS user
              WHERE m_prj_project.owner = user.username 
-                 AND (concat(user.firstname, IFNULL(concat(' ', user.middlename, ' '), ' '), user.lastname) like '%${ownerName.value}%') ) > 0
+                 AND (concat(user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), user.lastname) like '%${ownerName.value}%') ) > 0
             ]]>
         </if>
         <if test="accountName != null">
@@ -96,7 +96,7 @@
             (SELECT COUNT(*) 
              FROM s_user as user 
              WHERE m_prj_project.owner = user.username 
-                 AND (concat(user.firstname, IFNULL(concat(' ', user.middlename, ' '), ' '), user.lastname) like '%${ownerName.value}%') ) > 0
+                 AND (concat(user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), user.lastname) like '%${ownerName.value}%') ) > 0
             ]]>
         </if>
         <if test="accountName != null">
@@ -138,7 +138,7 @@
         m_prj_project.targetBudget, m_prj_project.homePage, m_prj_project.actualBudget, m_prj_project.projectType, 
         m_prj_project.projectStatus, m_prj_project.description, m_prj_project.defaultBillingRate, m_prj_project.actualStartDate, 
         m_prj_project.actualEndDate, m_prj_project.defaultOvertimeBillingRate, 
-        concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) AS ownerName, 
+        concat(s_user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), s_user.lastname) AS ownerName, 
         m_crm_account.accountName, m_prj_project.currencyid, m_prj_project.progress,
         (SELECT COUNT(*) FROM m_tracker_bug WHERE m_tracker_bug.projectid=m_prj_project.id) AS numBugs,
         (SELECT COUNT(*) FROM m_tracker_bug WHERE m_tracker_bug.projectid=m_prj_project.id AND m_tracker_bug.status IN ('Open', 'In Progress', 'Reopenned')) AS numOpenBugs, 
@@ -203,7 +203,7 @@
         <![CDATA[
         SELECT s_activitystream.id, s_activitystream.sAccountId, s_activitystream.type, s_activitystream.typeId, 
                s_activitystream.createdTime, s_activitystream.action, s_activitystream.createdUser, s_activitystream.nameField, s_activitystream.extraTypeId,
-               s_activitystream.module, concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as createdUserFullName,
+               s_activitystream.module, concat(s_user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), s_user.lastname) as createdUserFullName,
                s_activitystream.extraTypeId AS projectId, m_prj_project.name AS projectName
         FROM s_activitystream
         LEFT OUTER JOIN s_user ON (s_user.username = s_activitystream.createdUser)

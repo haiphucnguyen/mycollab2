@@ -4,6 +4,8 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Problem;
 import com.esofthead.mycollab.module.project.domain.SimpleProblem;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
@@ -16,6 +18,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
@@ -40,9 +43,12 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 
 					@Override
 					public void onDelete(final Problem data) {
-						ConfirmDialog.show(view.getWindow(), "Please Confirm:",
-								"Are you sure to delete this item: " + data.getIssuename(),
-								"Yes", "No", new ConfirmDialog.Listener() {
+						ConfirmDialog.show(
+								view.getWindow(),
+								"Please Confirm:",
+								"Are you sure to delete this item: "
+										+ data.getIssuename(), "Yes", "No",
+								new ConfirmDialog.Listener() {
 									private static final long serialVersionUID = 1L;
 
 									@Override
@@ -126,30 +132,35 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (data.getParams() instanceof Integer) {
-			ProblemService problemService = AppContext
-					.getSpringBean(ProblemService.class);
-			SimpleProblem problem = problemService
-					.findProblemById((Integer) data.getParams());
-			if (problem != null) {
-				ProblemContainer problemContainer = (ProblemContainer) container;
-				problemContainer.removeAllComponents();
-				problemContainer.addComponent(view.getWidget());
-				view.previewItem(problem);
+		if (CurrentProjectVariables
+				.canRead(ProjectRolePermissionCollections.PROBLEMS)) {
+			if (data.getParams() instanceof Integer) {
+				ProblemService problemService = AppContext
+						.getSpringBean(ProblemService.class);
+				SimpleProblem problem = problemService
+						.findProblemById((Integer) data.getParams());
+				if (problem != null) {
+					ProblemContainer problemContainer = (ProblemContainer) container;
+					problemContainer.removeAllComponents();
+					problemContainer.addComponent(view.getWidget());
+					view.previewItem(problem);
 
-				ProjectBreadcrumb breadcrumb = ViewManager
-						.getView(ProjectBreadcrumb.class);
-				breadcrumb.gotoProblemRead(problem);
-			} else {
-				AppContext
-						.getApplication()
-						.getMainWindow()
-						.showNotification("Information",
-								"The record is not existed",
-								Window.Notification.TYPE_HUMANIZED_MESSAGE);
-				return;
+					ProjectBreadcrumb breadcrumb = ViewManager
+							.getView(ProjectBreadcrumb.class);
+					breadcrumb.gotoProblemRead(problem);
+				} else {
+					AppContext
+							.getApplication()
+							.getMainWindow()
+							.showNotification("Information",
+									"The record is not existed",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					return;
+				}
+
 			}
-
+		} else {
+			MessageConstants.showMessagePermissionAlert();
 		}
 	}
 }

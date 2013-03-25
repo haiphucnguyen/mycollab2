@@ -5,6 +5,8 @@ import org.vaadin.dialogs.ConfirmDialog;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Risk;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleRisk;
@@ -17,6 +19,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
+import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
@@ -42,9 +45,12 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 					@Override
 					public void onDelete(final Risk data) {
 
-						ConfirmDialog.show(view.getWindow(), "Please Confirm:",
-								"Are you sure to delete this item: " + data.getRiskname(),
-								"Yes", "No", new ConfirmDialog.Listener() {
+						ConfirmDialog.show(
+								view.getWindow(),
+								"Please Confirm:",
+								"Are you sure to delete this item: "
+										+ data.getRiskname(), "Yes", "No",
+								new ConfirmDialog.Listener() {
 									private static final long serialVersionUID = 1L;
 
 									@Override
@@ -127,31 +133,36 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		if (data.getParams() instanceof Integer) {
-			RiskService riskService = AppContext
-					.getSpringBean(RiskService.class);
-			SimpleRisk risk = riskService.findRiskById((Integer) data
-					.getParams());
-			if (risk != null) {
-				RiskContainer riskContainer = (RiskContainer) container;
-				riskContainer.removeAllComponents();
-				riskContainer.addComponent(view.getWidget());
-				view.previewItem(risk);
+		if (CurrentProjectVariables
+				.canRead(ProjectRolePermissionCollections.RISKS)) {
+			if (data.getParams() instanceof Integer) {
+				RiskService riskService = AppContext
+						.getSpringBean(RiskService.class);
+				SimpleRisk risk = riskService.findRiskById((Integer) data
+						.getParams());
+				if (risk != null) {
+					RiskContainer riskContainer = (RiskContainer) container;
+					riskContainer.removeAllComponents();
+					riskContainer.addComponent(view.getWidget());
+					view.previewItem(risk);
 
-				ProjectBreadcrumb breadCrumb = ViewManager
-						.getView(ProjectBreadcrumb.class);
-				breadCrumb.gotoRiskRead(risk);
+					ProjectBreadcrumb breadCrumb = ViewManager
+							.getView(ProjectBreadcrumb.class);
+					breadCrumb.gotoRiskRead(risk);
+				} else {
+					AppContext
+							.getApplication()
+							.getMainWindow()
+							.showNotification("Information",
+									"The record is not existed",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					return;
+				}
 			} else {
-				AppContext
-						.getApplication()
-						.getMainWindow()
-						.showNotification("Information",
-								"The record is not existed",
-								Window.Notification.TYPE_HUMANIZED_MESSAGE);
-				return;
+				throw new MyCollabException("Unhanddle this case yet");
 			}
 		} else {
-			throw new MyCollabException("Unhanddle this case yet");
+			MessageConstants.showMessagePermissionAlert();
 		}
 	}
 }

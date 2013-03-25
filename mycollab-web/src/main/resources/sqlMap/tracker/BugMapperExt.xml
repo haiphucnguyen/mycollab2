@@ -386,8 +386,8 @@
                  m_tracker_bug.cus_dbl_02, m_tracker_bug.cus_dbl_03, m_tracker_bug.projectid, 
                  m_tracker_bug.resolveddate, m_tracker_bug.sAccountId, m_tracker_bug.description, m_tracker_bug.estimateTime,
                  m_tracker_bug.estimateRemainTime, m_tracker_bug.milestoneId, bugkey, milestone.name as milestoneName,
-                 concat(assignuserTbl.firstname, IFNULL(concat(' ', assignuserTbl.middlename, ' '), ' '), assignuserTbl.lastname) as assignuserFullName,
-                 concat(loguserTbl.firstname, IFNULL(concat(' ', loguserTbl.middlename, ' '), ' '), loguserTbl.lastname) as loguserFullName,
+                 concat(assignuserTbl.firstname, ' ', IFNULL(assignuserTbl.middlename + ' ', ''), assignuserTbl.lastname) as assignuserFullName,
+                 concat(loguserTbl.firstname, ' ', IFNULL(loguserTbl.middlename + ' ', ''), loguserTbl.lastname) as loguserFullName,
                  m_prj_project.name as projectname, 
                  affectedversion.id as affectedversion_id, affectedversion.projectid as affectedversion_projectid, 
                  affectedversion.description as affectedversion_description, affectedversion.duedate as affectedversion_duedate, 
@@ -572,8 +572,8 @@
 
         <![CDATA[
         SELECT m_tracker_bug.assignuser AS groupid,
-            COUNT(IFNULL(m_tracker_bug.assignuser,'')) AS value,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as groupname
+            COUNT(IFNULL(m_tracker_bug.assignuser, '')) AS value,
+            concat(s_user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), s_user.lastname) as groupname
         FROM m_tracker_bug
             LEFT OUTER JOIN s_user ON (m_tracker_bug.assignuser = s_user.username)
         ]]>
@@ -592,7 +592,7 @@
         <![CDATA[
         SELECT m_tracker_bug.logby AS groupid,
             COUNT(IFNULL(m_tracker_bug.logby,'')) AS value,
-            concat(s_user.firstname, IFNULL(concat(' ', s_user.middlename, ' '), ' '), s_user.lastname) as groupname
+            concat(s_user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), s_user.lastname) as groupname
         FROM m_tracker_bug
             LEFT OUTER JOIN s_user ON (m_tracker_bug.logby = s_user.username)
         ]]>

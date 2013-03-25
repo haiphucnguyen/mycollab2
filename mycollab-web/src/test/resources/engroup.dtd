@@ -51,6 +51,7 @@
     m_prj_standup*,
     m_prj_task*,
     m_prj_task_list*,
+    m_prj_time_logging*,
     m_rss_agreegator*,
     m_social_message*,
     m_social_user_message*,
@@ -68,6 +69,7 @@
     m_tracker_related_bug*,
     m_tracker_version*,
     s_account*,
+    s_account_settings*,
     s_activitystream*,
     s_billing_plan*,
     s_country*,
@@ -77,7 +79,6 @@
     s_report_bug_issue*,
     s_role_permission*,
     s_roles*,
-    s_title*,
     s_user*,
     s_user_information*,
     s_user_permission*,
@@ -799,10 +800,10 @@
     owner CDATA #REQUIRED
     flag CDATA #IMPLIED
     projectid CDATA #REQUIRED
-    iscompleted CDATA #IMPLIED
     createdTime CDATA #IMPLIED
     lastUpdatedTime CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
+    status CDATA #REQUIRED
 >
 
 <!ELEMENT m_prj_problem EMPTY>
@@ -929,17 +930,16 @@
     taskindex CDATA #IMPLIED
     actualStartDate CDATA #IMPLIED
     actualEndDate CDATA #IMPLIED
-    cost CDATA #IMPLIED
-    actualCost CDATA #IMPLIED
-    ismilestone CDATA #IMPLIED
     tasklistid CDATA #IMPLIED
     createdTime CDATA #IMPLIED
     lastUpdatedTime CDATA #IMPLIED
     assignUser CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
     status CDATA #IMPLIED
-    investHours CDATA #IMPLIED
     logBy CDATA #IMPLIED
+    taskkey CDATA #IMPLIED
+    originalEstimate CDATA #IMPLIED
+    remainEstimate CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_task_list EMPTY>
@@ -955,6 +955,17 @@
     owner CDATA #IMPLIED
     groupIndex CDATA #IMPLIED
     status CDATA #REQUIRED
+>
+
+<!ELEMENT m_prj_time_logging EMPTY>
+<!ATTLIST m_prj_time_logging
+    id CDATA #REQUIRED
+    projectId CDATA #REQUIRED
+    type CDATA #REQUIRED
+    typeid CDATA #REQUIRED
+    note CDATA #IMPLIED
+    logValue CDATA #REQUIRED
+    loguser CDATA #IMPLIED
 >
 
 <!ELEMENT m_rss_agreegator EMPTY>
@@ -1078,7 +1089,7 @@
     estimateRemainTime CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
     milestoneId CDATA #IMPLIED
-    investHours CDATA #IMPLIED
+    bugkey CDATA #IMPLIED
 >
 
 <!ELEMENT m_tracker_bug_related_item EMPTY>
@@ -1150,6 +1161,15 @@
     createdTime CDATA #IMPLIED
     billingPlanId CDATA #IMPLIED
     accountName CDATA #IMPLIED
+    status CDATA #IMPLIED
+    paymentMethod CDATA #IMPLIED
+>
+
+<!ELEMENT s_account_settings EMPTY>
+<!ATTLIST s_account_settings
+    id CDATA #REQUIRED
+    sAccountId CDATA #REQUIRED
+    logoPath CDATA #IMPLIED
 >
 
 <!ELEMENT s_activitystream EMPTY>
@@ -1198,7 +1218,8 @@
     typeid CDATA #REQUIRED
     action CDATA #REQUIRED
     changeBy CDATA #REQUIRED
-    changeComment CDATA #REQUIRED
+    changeComment CDATA #IMPLIED
+    extraTypeId CDATA #IMPLIED
 >
 
 <!ELEMENT s_relay_mail EMPTY>
@@ -1238,12 +1259,6 @@
     id CDATA #REQUIRED
 >
 
-<!ELEMENT s_title EMPTY>
-<!ATTLIST s_title
-    id CDATA #REQUIRED
-    name CDATA #REQUIRED
->
-
 <!ELEMENT s_user EMPTY>
 <!ATTLIST s_user
     username CDATA #REQUIRED
@@ -1258,13 +1273,19 @@
     registeredTime CDATA #IMPLIED
     lastAccessedTime CDATA #IMPLIED
     accountId CDATA #REQUIRED
-    countryid CDATA #IMPLIED
     company CDATA #IMPLIED
-    timezoneid CDATA #IMPLIED
+    timezone CDATA #IMPLIED
     registrationSource CDATA #IMPLIED
     isAdmin CDATA #IMPLIED
     registerStatus CDATA #IMPLIED
     roleid CDATA #IMPLIED
+    language CDATA #IMPLIED
+    country CDATA #IMPLIED
+    workPhone CDATA #IMPLIED
+    homePhone CDATA #IMPLIED
+    facebookAccount CDATA #IMPLIED
+    twitterAccount CDATA #IMPLIED
+    skypeContact CDATA #IMPLIED
 >
 
 <!ELEMENT s_user_information EMPTY>
