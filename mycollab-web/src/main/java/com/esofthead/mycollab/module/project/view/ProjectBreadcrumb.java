@@ -4,7 +4,13 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
+import java.util.List;
+
+import org.vaadin.hene.popupbutton.PopupButton;
+
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
@@ -14,6 +20,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.domain.TaskList;
+import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
@@ -26,6 +33,7 @@ import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.Component;
@@ -46,6 +54,7 @@ import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.VerticalLayout;
 
 /**
  * 
@@ -81,19 +90,46 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 
 	public void initBreadcrumb() {
 		this.select(0);
-		this.addLink(generateBreadcrumbLink(project.getName(),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		PopupButton taskSettingPopupBtn = CommonUIFactory
+				.createPopupButtonTooltip(
+						menuLinkGenerator.handleText(project.getName()),
+						project.getName());
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new ProjectEvent.GotoMyProject(this,
-										new PageActionChain(
-												new ProjectScreenData.Goto(
-														project.getId()))));
-					}
-				}));
+		VerticalLayout filterBtnLayout = new VerticalLayout();
+		filterBtnLayout.setMargin(true);
+		filterBtnLayout.setSpacing(true);
+		filterBtnLayout.setWidth("260px");
+
+		ProjectService projectService = AppContext
+				.getSpringBean(ProjectService.class);
+		ProjectSearchCriteria criteria = new ProjectSearchCriteria();
+		criteria.setInvolvedMember(new StringSearchField(StringSearchField.AND,
+				AppContext.getUsername()));
+		List<SimpleProject> projects = projectService
+				.findPagableListByCriteria(new SearchRequest<ProjectSearchCriteria>(
+						criteria, 0, Integer.MAX_VALUE));
+
+		for (final SimpleProject item : projects) {
+			Button btnProject = generateBreadcrumbLink(item.getName(),
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							EventBus.getInstance().fireEvent(
+									new ProjectEvent.GotoMyProject(this,
+											new PageActionChain(
+													new ProjectScreenData.Goto(
+															item.getId()))));
+						}
+					});
+
+			btnProject.setStyleName("link");
+			filterBtnLayout.addComponent(btnProject);
+		}
+
+		taskSettingPopupBtn.addComponent(filterBtnLayout);
+		this.addLink(taskSettingPopupBtn);
 		this.setLinkEnabled(true, 1);
 	}
 
