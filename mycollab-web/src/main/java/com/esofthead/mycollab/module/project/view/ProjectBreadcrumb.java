@@ -859,7 +859,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 	public void gotoProjectDashboard() {
 		this.select(1);
 		AppContext.addFragment(
-				"project/" + UrlEncodeDecoder.encode(project.getId()),
+				"project/dashboard/" + UrlEncodeDecoder.encode(project.getId()),
 				"Dashboard");
 	}
 

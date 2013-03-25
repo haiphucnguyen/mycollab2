@@ -1,8 +1,11 @@
 package com.esofthead.mycollab.module.project.view;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.view.bug.BugUrlResolver;
 import com.esofthead.mycollab.module.project.view.message.MessageUrlResolver;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneUrlResolver;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.people.RoleUrlResolver;
 import com.esofthead.mycollab.module.project.view.people.UserUrlResolver;
 import com.esofthead.mycollab.module.project.view.problem.ProblemUrlResolver;
@@ -12,6 +15,7 @@ import com.esofthead.mycollab.module.project.view.task.ScheduleUrlResolver;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
+import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
 import com.esofthead.mycollab.vaadin.mvp.UrlResolver;
 
 public class ProjectUrlResolver extends UrlResolver {
@@ -42,8 +46,18 @@ public class ProjectUrlResolver extends UrlResolver {
 
 		@Override
 		protected void handlePage(String... params) {
-			EventBus.getInstance().fireEvent(
-					new ShellEvent.GotoProjectModule(this, null));
+			if (params == null || params.length == 0) {
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.GotoProjectModule(this, null));
+			} else {
+				String decodeUrl = UrlEncodeDecoder.decode(params[0]);
+				int projectId = Integer.parseInt(decodeUrl);
+				PageActionChain chain = new PageActionChain(
+						new ProjectScreenData.Goto(projectId));
+				EventBus.getInstance().fireEvent(
+						new ProjectEvent.GotoMyProject(this, chain));
+			}
+
 		}
 	}
 }
