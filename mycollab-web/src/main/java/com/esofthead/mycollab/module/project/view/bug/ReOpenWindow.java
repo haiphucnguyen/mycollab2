@@ -45,9 +45,11 @@ public class ReOpenWindow extends Window {
 	private SimpleBug bug;
 	private EditForm editForm;
 	private VersionMultiSelectField fixedVersionSelect;
+	private IBugCallbackStatusComp callbackForm;
 
-	public ReOpenWindow(SimpleBug bug) {
+	public ReOpenWindow(IBugCallbackStatusComp callbackForm, SimpleBug bug) {
 		this.bug = bug;
+		this.callbackForm = callbackForm;
 		this.setWidth("830px");
 		editForm = new EditForm();
 		this.addComponent(editForm);
@@ -139,11 +141,7 @@ public class ReOpenWindow extends Window {
 								}
 
 								ReOpenWindow.this.close();
-								EventBus.getInstance()
-										.fireEvent(
-												new BugEvent.GotoRead(
-														ReOpenWindow.this, bug
-																.getId()));
+								callbackForm.refreshBugItem();
 							}
 						});
 				wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

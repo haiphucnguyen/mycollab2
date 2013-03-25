@@ -40,6 +40,7 @@ import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
@@ -209,7 +210,7 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 
 		public UserTaskDepot() {
 			super("Tasks", new HorizontalLayout(), new VerticalLayout());
-			
+
 			taskDisplay = new TaskTableDisplay(
 					new String[] { "id", "taskkey", "taskname", "startdate",
 							"deadline", "percentagecomplete" },
@@ -239,8 +240,8 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 											.getFieldName())
 									|| "reopenTask".equals(event.getFieldName())
 									|| "deleteTask".equals(event.getFieldName())) {
-								
-//								taskDisplay.setSearchCriteria(searchCriteria);
+
+								// taskDisplay.setSearchCriteria(searchCriteria);
 							}
 						}
 					});
@@ -284,8 +285,7 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 						@Override
 						public void buttonClick(ClickEvent event) {
 							taskListFilterControl.setPopupVisible(false);
-							taskListFilterControl
-									.setCaption("Active Tasks");
+							taskListFilterControl.setCaption("Active Tasks");
 							displayActiveTasksOnly();
 						}
 					});
@@ -313,6 +313,8 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			TaskSearchCriteria criteria = new TaskSearchCriteria();
 			criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
 					.getProjectId()));
+			criteria.setAssignUser(new StringSearchField(AppContext
+					.getUsername()));
 			return criteria;
 		}
 

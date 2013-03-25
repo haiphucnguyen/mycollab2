@@ -71,6 +71,7 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				} else {
 					CurrentProjectVariables.setProject(project);
 					view.constructProjectHeaderPanel(project, null);
+					
 				}
 			}
 

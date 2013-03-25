@@ -9,12 +9,10 @@ import java.util.GregorianCalendar;
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
-import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -40,9 +38,11 @@ public class AssignBugWindow extends Window {
 	private static final long serialVersionUID = 1L;
 	private SimpleBug bug;
 	private EditForm editForm;
+	private IBugCallbackStatusComp callbackForm;
 
-	public AssignBugWindow(SimpleBug bug) {
+	public AssignBugWindow(IBugCallbackStatusComp callbackForm, SimpleBug bug) {
 		this.bug = bug;
+		this.callbackForm = callbackForm;
 		this.setWidth("830px");
 		editForm = new EditForm();
 		this.addComponent(editForm);
@@ -130,10 +130,7 @@ public class AssignBugWindow extends Window {
 								}
 
 								AssignBugWindow.this.close();
-								EventBus.getInstance().fireEvent(
-										new BugEvent.GotoRead(
-												AssignBugWindow.this, bug
-														.getId()));
+								callbackForm.refreshBugItem();
 							}
 						});
 				approveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
