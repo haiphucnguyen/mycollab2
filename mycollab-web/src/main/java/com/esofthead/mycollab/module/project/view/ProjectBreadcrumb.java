@@ -4,7 +4,11 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
+import java.util.Date;
+import java.util.GregorianCalendar;
+
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.Message;
 import com.esofthead.mycollab.module.project.domain.Milestone;
 import com.esofthead.mycollab.module.project.domain.Problem;
@@ -24,6 +28,7 @@ import com.esofthead.mycollab.module.project.events.ProjectEvent;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
+import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
@@ -662,6 +667,21 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				"Standup List");
 	}
 
+	public void gotoStandupAdd(Date date) {
+		this.select(1);
+		this.addLink(new Button("Standups", new GotoStandupListener()));
+		this.setLinkEnabled(true, 2);
+		this.addLink(new Button("Add"));
+
+		AppContext.addFragment(
+				"project/standup/add/"
+						+ UrlEncodeDecoder.encode(CurrentProjectVariables
+								.getProjectId()
+								+ "/"
+								+ AppContext.formatDate(date)),
+				"Standup Report for " + AppContext.formatDate(date));
+	}
+
 	public void gotoUserList() {
 		this.select(1);
 		this.addLink(new Button("Users"));
@@ -759,6 +779,16 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 					new ProjectRoleEvent.GotoList(this, null));
 		}
 	}
+	
+	private static class GotoStandupListener implements Button.ClickListener {
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		public void buttonClick(ClickEvent event) {
+			EventBus.getInstance().fireEvent(
+					new StandUpEvent.GotoList(this, null));
+		}
+	}
 
 	private static class GotoUserListener implements Button.ClickListener {
 		private static final long serialVersionUID = 1L;
@@ -793,8 +823,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 
 	public void gotoProjectDashboard() {
 		this.select(1);
-		AppContext.addFragment("project/"
-				+ UrlEncodeDecoder.encode(project.getId()));
+		AppContext.addFragment(
+				"project/" + UrlEncodeDecoder.encode(project.getId()),
+				"Dashboard");
 	}
 
 	public void gotoProjectEdit() {
