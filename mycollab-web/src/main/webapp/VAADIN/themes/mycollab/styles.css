@@ -19,6 +19,12 @@
 	.menuContent .v-csslayout-projectTabContent {
 		min-width: 700px;
 	}
+	
+	.member-block {
+		width: 345px;
+		margin-right: 5px;
+		margin-left: 7px;
+	}
 }
 
 @media screen and (min-width: 1024px) {
@@ -34,6 +40,10 @@
 	/* 	.menuContent .v-csslayout-projectTabContent { */
 	/* 		min-width: 900px; */
 	/* 	} */
+	.member-block {
+		width: 290px;
+		margin-right: 11px;
+	}
 }
 
 button::-moz-focus-inner {
@@ -2655,21 +2665,26 @@ div.v-lazyloadingwrapper-loading {
 .member-block {
 	display: inline-block;
 	background-color: #f7f7f7;
-	margin-right: 10px;
 	margin-bottom: 15px;
 	font-size: 13px;
+/* 	width: 290px; */
 }
 .member-block div.v-button-link .v-button-wrap .v-button-caption {
 	font-weight: bold;
 }
 .member-block .member-email {
 	color: gray;
+	word-wrap: break-word;
+}
+.member-block .member-email a {
+	color: gray;
+	text-decoration: none;
+	font-size: 12px;
 }
 .member-block .member-role {
 	color: gray;
 	font-style: italic;
 	font-size: 12px;
-	padding-right: 3px;
 }
 .member-block .member-role.is-admin {
 	color: #b00000;

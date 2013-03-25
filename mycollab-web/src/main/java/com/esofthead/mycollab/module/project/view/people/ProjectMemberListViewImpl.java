@@ -56,7 +56,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 	private Component generateMemberBlock(final SimpleProjectMember member) {
 		CssLayout memberBlock = new CssLayout();
 		memberBlock.addStyleName("member-block");
-		memberBlock.setWidth(SIZE_UNDEFINED, 0);
+
 		VerticalLayout blockContent = new VerticalLayout();
 		HorizontalLayout blockTop = new HorizontalLayout();
 		blockTop.setSpacing(true);
@@ -79,10 +79,15 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 												.getId()));
 			}
 		});
+		memberLink.setWidth("100%");
+		memberLink.setHeight(SIZE_UNDEFINED, 0);
 		memberInfo.addComponent(memberLink);
 
-		Label memberEmailLabel = new Label(member.getUsername());
+		Label memberEmailLabel = new Label("<a href='mailto:"
+				+ member.getUsername() + "'>" + member.getUsername() + "</a>",
+				Label.CONTENT_XHTML);
 		memberEmailLabel.addStyleName("member-email");
+		memberEmailLabel.setWidth("100%");
 		memberInfo.addComponent(memberEmailLabel);
 
 		String bugStatus = member.getNumOpenBugs() + " open bug";
@@ -95,9 +100,11 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 
 		Label memberWorkStatus = new Label(bugStatus + " – " + taskStatus);
 		memberInfo.addComponent(memberWorkStatus);
+		memberInfo.setWidth("100%");
 
 		blockTop.addComponent(memberInfo);
 		blockTop.setExpandRatio(memberInfo, 1.0f);
+		blockTop.setWidth("100%");
 		blockContent.addComponent(blockTop);
 
 		Label memberRole = new Label();
@@ -111,7 +118,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		memberRole.setSizeUndefined();
 		blockContent.addComponent(memberRole);
 		blockContent.setComponentAlignment(memberRole, Alignment.MIDDLE_RIGHT);
-		blockContent.setSizeUndefined();
+		blockContent.setWidth("100%");
 
 		memberBlock.addComponent(blockContent);
 		return memberBlock;
