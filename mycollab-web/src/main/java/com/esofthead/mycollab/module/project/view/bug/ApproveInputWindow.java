@@ -44,7 +44,7 @@ public class ApproveInputWindow extends Window {
 	public ApproveInputWindow(IBugCallbackStatusComp callbackForm, SimpleBug bug) {
 		this.bug = bug;
 		this.callbackForm = callbackForm;
-		this.setWidth("830px");
+		this.setWidth("750px");
 		editForm = new EditForm();
 		this.addComponent(editForm);
 		editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));

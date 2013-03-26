@@ -185,7 +185,7 @@ public class TaskTableDisplay extends
 							}
 						});
 				editButton.setEnabled(CurrentProjectVariables
-						.canAccess(ProjectRolePermissionCollections.TASKS));
+						.canWrite(ProjectRolePermissionCollections.TASKS));
 				editButton.setStyleName("link");
 				filterBtnLayout.addComponent(editButton);
 
@@ -213,7 +213,7 @@ public class TaskTableDisplay extends
 							});
 					closeBtn.setStyleName("link");
 					closeBtn.setEnabled(CurrentProjectVariables
-							.canAccess(ProjectRolePermissionCollections.TASKS));
+							.canWrite(ProjectRolePermissionCollections.TASKS));
 					filterBtnLayout.addComponent(closeBtn);
 				} else {
 					Button reOpenBtn = new Button("ReOpen",
@@ -236,7 +236,7 @@ public class TaskTableDisplay extends
 							});
 					reOpenBtn.setStyleName("link");
 					reOpenBtn.setEnabled(CurrentProjectVariables
-							.canAccess(ProjectRolePermissionCollections.TASKS));
+							.canWrite(ProjectRolePermissionCollections.TASKS));
 					filterBtnLayout.addComponent(reOpenBtn);
 				}
 
@@ -262,7 +262,7 @@ public class TaskTableDisplay extends
 								});
 						pendingBtn.setStyleName("link");
 						pendingBtn.setEnabled(CurrentProjectVariables
-								.canAccess(ProjectRolePermissionCollections.TASKS));
+								.canWrite(ProjectRolePermissionCollections.TASKS));
 						filterBtnLayout.addComponent(pendingBtn);
 					}
 				} else {
@@ -287,7 +287,7 @@ public class TaskTableDisplay extends
 							});
 					reOpenBtn.setStyleName("link");
 					reOpenBtn.setEnabled(CurrentProjectVariables
-							.canAccess(ProjectRolePermissionCollections.TASKS));
+							.canWrite(ProjectRolePermissionCollections.TASKS));
 					filterBtnLayout.addComponent(reOpenBtn);
 				}
 

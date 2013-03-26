@@ -80,8 +80,9 @@ public class TaskAddPopup extends CustomComponent {
 			}
 		});
 
-		cancelBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		cancelBtn.setStyleName("link");
 		controlsLayout.addComponent(cancelBtn);
+		controlsLayout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
 		
 		Button saveBtn = new Button("Save", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -105,6 +106,7 @@ public class TaskAddPopup extends CustomComponent {
 		});
 		saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsLayout.addComponent(saveBtn);
+		controlsLayout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
 		
 		taskLayout.addComponent(controlsLayout);
 
