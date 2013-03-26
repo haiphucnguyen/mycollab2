@@ -161,8 +161,8 @@ public class ContextMenu extends AbstractComponent {
 	 * @param name
 	 * @return ContextMenuItem
 	 */
-	public ContextMenuItem addItem(String name, String itemId) {
-		ContextMenuItem item = new ContextMenuItem(name, itemId);
+	public ContextMenuItem addItem(String name, String category, String value) {
+		ContextMenuItem item = new ContextMenuItem(name, category, value);
 		this.items.add(item);
 
 		requestRepaint();
@@ -171,7 +171,7 @@ public class ContextMenu extends AbstractComponent {
 	}
 
 	public ContextMenuItem addItem(String name) {
-		return this.addItem(name, "");
+		return this.addItem(name, "", "");
 	}
 
 	/**
@@ -385,21 +385,23 @@ public class ContextMenu extends AbstractComponent {
 
 		private final List<ContextMenuItem> children;
 
-		private String id;
+		private String category;
+		private String value;
 
 		private boolean separator;
 
 		private ContextMenuItem(String name) {
-			this(name, "");
+			this(name, "", "");
 		}
 
-		private ContextMenuItem(String name, String id) {
+		private ContextMenuItem(String name, String category, String value) {
 			if (name == null) {
 				throw new IllegalArgumentException(
 						"Menu item name cannot be null");
 			}
 
-			this.id = id;
+			this.category = category;
+			this.value = value;
 
 			this.styleNames = new LinkedList<String>();
 			this.children = new LinkedList<ContextMenuItem>();
@@ -513,8 +515,9 @@ public class ContextMenu extends AbstractComponent {
 		 * @param name
 		 * @return ContextMenuItem
 		 */
-		public ContextMenuItem addItem(String name, String itemId) {
-			ContextMenuItem item = new ContextMenuItem(name, itemId);
+		public ContextMenuItem addItem(String name, String category,
+				String value) {
+			ContextMenuItem item = new ContextMenuItem(name, category, value);
 			this.children.add(item);
 			requestRepaint();
 
@@ -522,7 +525,7 @@ public class ContextMenu extends AbstractComponent {
 		}
 
 		public ContextMenuItem addItem(String name) {
-			return this.addItem(name, "");
+			return this.addItem(name, "", "");
 		}
 
 		/**
@@ -614,12 +617,20 @@ public class ContextMenu extends AbstractComponent {
 			return this.icon != null;
 		}
 
-		public String getId() {
-			return id;
+		public String getCategory() {
+			return category;
 		}
 
-		public void setId(String id) {
-			this.id = id;
+		public void setCategory(String category) {
+			this.category = category;
+		}
+
+		public String getValue() {
+			return value;
+		}
+
+		public void setValue(String value) {
+			this.value = value;
 		}
 
 		/**

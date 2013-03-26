@@ -10,7 +10,6 @@ import java.util.List;
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
-import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Bug;
@@ -18,7 +17,6 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -38,156 +36,179 @@ import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @SuppressWarnings("serial")
 public class WontFixExplainWindow extends Window {
 
-    private SimpleBug bug;
-    private EditForm editForm;
-    private VersionMultiSelectField fixedVersionSelect;
+	private SimpleBug bug;
+	private EditForm editForm;
+	private VersionMultiSelectField fixedVersionSelect;
+	private IBugCallbackStatusComp callbackForm;
 
-    public WontFixExplainWindow(SimpleBug bug) {
-        this.bug = bug;
-        this.setWidth("830px");
-        editForm = new EditForm();
-        this.addComponent(editForm);
-        editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
-        center();
-    }
+	public WontFixExplainWindow(IBugCallbackStatusComp callbackForm,
+			SimpleBug bug) {
+		this.bug = bug;
+		this.callbackForm = callbackForm;
+		this.setWidth("830px");
+		editForm = new EditForm();
+		this.addComponent(editForm);
+		editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+		center();
+	}
 
-    private class EditForm extends AdvancedEditBeanForm<Bug> {
+	private class EditForm extends AdvancedEditBeanForm<Bug> {
 
-        private static final long serialVersionUID = 1L;
-        private RichTextArea commentArea;
+		private static final long serialVersionUID = 1L;
+		private RichTextArea commentArea;
 
-        @Override
-        public void setItemDataSource(Item newDataSource) {
-            this.setFormLayoutFactory(new FormLayoutFactory());
-            this.setFormFieldFactory(new EditFormFieldFactory());
-            super.setItemDataSource(newDataSource);
-        }
+		@Override
+		public void setItemDataSource(Item newDataSource) {
+			this.setFormLayoutFactory(new FormLayoutFactory());
+			this.setFormFieldFactory(new EditFormFieldFactory());
+			super.setItemDataSource(newDataSource);
+		}
 
-        class FormLayoutFactory implements IFormLayoutFactory {
+		class FormLayoutFactory implements IFormLayoutFactory {
 
-            private static final long serialVersionUID = 1L;
-            private GridFormLayoutHelper informationLayout;
+			private static final long serialVersionUID = 1L;
+			private GridFormLayoutHelper informationLayout;
 
-            @Override
-            public Layout getLayout() {
-                VerticalLayout layout = new VerticalLayout();
-                informationLayout = new GridFormLayoutHelper(2, 6);
-                informationLayout.getLayout().setWidth("800px");
+			@Override
+			public Layout getLayout() {
+				VerticalLayout layout = new VerticalLayout();
+				informationLayout = new GridFormLayoutHelper(2, 6);
+				informationLayout.getLayout().setWidth("800px");
 
-                layout.addComponent(informationLayout.getLayout());
+				layout.addComponent(informationLayout.getLayout());
 
-                HorizontalLayout controlsBtn = new HorizontalLayout();
-                controlsBtn.setSpacing(true);
-                layout.addComponent(controlsBtn);
+				HorizontalLayout controlsBtn = new HorizontalLayout();
+				controlsBtn.setSpacing(true);
+				layout.addComponent(controlsBtn);
 
-                Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-                    @Override
-                    public void buttonClick(ClickEvent event) {
-                        WontFixExplainWindow.this.close();
-                    }
-                });
-                cancelBtn.setStyleName("link");
-                controlsBtn.addComponent(cancelBtn);
-                controlsBtn.setComponentAlignment(cancelBtn, Alignment.MIDDLE_LEFT);
+				Button cancelBtn = new Button("Cancel",
+						new Button.ClickListener() {
+							@Override
+							public void buttonClick(ClickEvent event) {
+								WontFixExplainWindow.this.close();
+							}
+						});
+				cancelBtn.setStyleName("link");
+				controlsBtn.addComponent(cancelBtn);
+				controlsBtn.setComponentAlignment(cancelBtn,
+						Alignment.MIDDLE_LEFT);
 
-                Button wonFixBtn = new Button("Won't Fix", new Button.ClickListener() {
-                    @SuppressWarnings("unchecked")
-					@Override
-                    public void buttonClick(ClickEvent event) {
-                        bug.setStatus(BugStatusConstants.WONFIX);
-                        
-                        BugRelatedItemService bugRelatedItemService = AppContext.getSpringBean(BugRelatedItemService.class);
-                        bugRelatedItemService.updateFixedVersionsOfBug(bug.getId(), (List<Version>)fixedVersionSelect.getSelectedItems());
+				Button wonFixBtn = new Button("Won't Fix",
+						new Button.ClickListener() {
+							@SuppressWarnings("unchecked")
+							@Override
+							public void buttonClick(ClickEvent event) {
+								bug.setStatus(BugStatusConstants.WONFIX);
 
-                        //Save bug status and assignee
-                        BugService bugService = AppContext.getSpringBean(BugService.class);
-                        bugService.updateWithSession(bug, AppContext.getUsername());
-                        
+								BugRelatedItemService bugRelatedItemService = AppContext
+										.getSpringBean(BugRelatedItemService.class);
+								bugRelatedItemService.updateFixedVersionsOfBug(
+										bug.getId(),
+										(List<Version>) fixedVersionSelect
+												.getSelectedItems());
 
-                        //Save comment
-                        String commentValue = (String) commentArea.getValue();
-                        if (commentValue != null && !commentValue.trim().equals("")) {
-                        	Comment comment = new Comment();
-                            comment.setComment(commentValue);
-                            comment.setCreatedtime(new GregorianCalendar().getTime());
-                            comment.setCreateduser(AppContext.getUsername());
-                            comment.setSaccountid(AppContext.getAccountId());
-                            comment.setType(CommentTypeConstants.PRJ_BUG);
-                            comment.setTypeid(bug.getId());
+								// Save bug status and assignee
+								BugService bugService = AppContext
+										.getSpringBean(BugService.class);
+								bugService.updateWithSession(bug,
+										AppContext.getUsername());
 
-                            CommentService commentService = AppContext.getSpringBean(CommentService.class);
-                            commentService.saveWithSession(comment, AppContext.getUsername());
-                            
-                            WontFixExplainWindow.this.close();
-                            EventBus.getInstance().fireEvent(new BugEvent.GotoRead(WontFixExplainWindow.this, bug.getId()));
-                        } else {
-                        	AppContext
-    						.getApplication()
-    						.getMainWindow()
-    						.showNotification("Error",
-    								"You must enter a comment to explain for won't fix resolution",
-    								Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                        	return;
-                        }
-                        
-                        WontFixExplainWindow.this.close();
-                    }
-                });
-                wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-                controlsBtn.addComponent(wonFixBtn);
-                controlsBtn.setComponentAlignment(wonFixBtn, Alignment.MIDDLE_RIGHT);
+								// Save comment
+								String commentValue = (String) commentArea
+										.getValue();
+								if (commentValue != null
+										&& !commentValue.trim().equals("")) {
+									Comment comment = new Comment();
+									comment.setComment(commentValue);
+									comment.setCreatedtime(new GregorianCalendar()
+											.getTime());
+									comment.setCreateduser(AppContext
+											.getUsername());
+									comment.setSaccountid(AppContext
+											.getAccountId());
+									comment.setType(CommentTypeConstants.PRJ_BUG);
+									comment.setTypeid(bug.getId());
 
-                layout.setComponentAlignment(controlsBtn, Alignment.MIDDLE_RIGHT);
+									CommentService commentService = AppContext
+											.getSpringBean(CommentService.class);
+									commentService.saveWithSession(comment,
+											AppContext.getUsername());
 
-                return layout;
-            }
+									WontFixExplainWindow.this.close();
+									callbackForm.refreshBugItem();
+								} else {
+									AppContext
+											.getApplication()
+											.getMainWindow()
+											.showNotification(
+													"Error",
+													"You must enter a comment to explain for won't fix resolution",
+													Window.Notification.TYPE_HUMANIZED_MESSAGE);
+									return;
+								}
 
-            @Override
-            public void attachField(Object propertyId, Field field) {
-                if (propertyId.equals("resolution")) {
-                    informationLayout.addComponent(field, "Resolution", 0, 0);
-                } else if (propertyId.equals("assignuser")) {
-                    informationLayout.addComponent(field, "Assign User", 0, 1);
-                } else if (propertyId.equals("fixedVersions")) {
-                    informationLayout.addComponent(field, "Fixed Versions", 0, 2);
-                } else if (propertyId.equals("comment")) {
-                    informationLayout.addComponent(field, "Comments", 0, 3, 2, UIConstants.DEFAULT_2XCONTROL_WIDTH);
-                }
-            }
-        }
+								WontFixExplainWindow.this.close();
+							}
+						});
+				wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+				controlsBtn.addComponent(wonFixBtn);
+				controlsBtn.setComponentAlignment(wonFixBtn,
+						Alignment.MIDDLE_RIGHT);
 
-        private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
+				layout.setComponentAlignment(controlsBtn,
+						Alignment.MIDDLE_RIGHT);
 
-            private static final long serialVersionUID = 1L;
+				return layout;
+			}
 
-            @Override
-            protected Field onCreateField(Item item, Object propertyId,
-                    com.vaadin.ui.Component uiContext) {
-                if (propertyId.equals("resolution")) {
-                    return new BugResolutionComboBox();
-                } else if (propertyId.equals("assignuser")) {
-                    return new ProjectMemberComboBox();
-                } else if (propertyId.equals("fixedVersions")) {
-                    fixedVersionSelect = new VersionMultiSelectField("227px");
-                    if (bug.getFixedVersions().size() > 0) {
-                    	fixedVersionSelect.setSelectedItems(bug.getFixedVersions());
-                    }
-                    return fixedVersionSelect;
-                } else if (propertyId.equals("comment")) {
-                    commentArea = new RichTextArea();
-                    commentArea.setNullRepresentation("");
-                    return commentArea;
-                }
+			@Override
+			public void attachField(Object propertyId, Field field) {
+				if (propertyId.equals("resolution")) {
+					informationLayout.addComponent(field, "Resolution", 0, 0);
+				} else if (propertyId.equals("assignuser")) {
+					informationLayout.addComponent(field, "Assign User", 0, 1);
+				} else if (propertyId.equals("fixedVersions")) {
+					informationLayout.addComponent(field, "Fixed Versions", 0,
+							2);
+				} else if (propertyId.equals("comment")) {
+					informationLayout.addComponent(field, "Comments", 0, 3, 2,
+							UIConstants.DEFAULT_2XCONTROL_WIDTH);
+				}
+			}
+		}
 
+		private class EditFormFieldFactory extends DefaultEditFormFieldFactory {
 
-                return null;
-            }
-        }
-    }
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			protected Field onCreateField(Item item, Object propertyId,
+					com.vaadin.ui.Component uiContext) {
+				if (propertyId.equals("resolution")) {
+					return new BugResolutionComboBox();
+				} else if (propertyId.equals("assignuser")) {
+					return new ProjectMemberComboBox();
+				} else if (propertyId.equals("fixedVersions")) {
+					fixedVersionSelect = new VersionMultiSelectField("227px");
+					if (bug.getFixedVersions().size() > 0) {
+						fixedVersionSelect.setSelectedItems(bug
+								.getFixedVersions());
+					}
+					return fixedVersionSelect;
+				} else if (propertyId.equals("comment")) {
+					commentArea = new RichTextArea();
+					commentArea.setNullRepresentation("");
+					return commentArea;
+				}
+
+				return null;
+			}
+		}
+	}
 }

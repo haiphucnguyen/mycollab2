@@ -10,7 +10,6 @@ import java.util.List;
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
-import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.BugResolutionConstants;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
@@ -19,7 +18,6 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.service.BugRelatedItemService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -46,13 +44,15 @@ public class ResolvedInputWindow extends Window {
 	private SimpleBug bug;
 	private EditForm editForm;
 	private VersionMultiSelectField fixedVersionSelect;
-
-	public ResolvedInputWindow(SimpleBug bug) {
+private IBugCallbackStatusComp callbackForm;
+	
+	public ResolvedInputWindow(IBugCallbackStatusComp callbackForm, SimpleBug bug) {
 		this.bug = bug;
 		this.setWidth("830px");
 		editForm = new EditForm();
 		this.addComponent(editForm);
 		editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
+		this.callbackForm = callbackForm;
 		center();
 	}
 
@@ -140,10 +140,7 @@ public class ResolvedInputWindow extends Window {
 								}
 
 								ResolvedInputWindow.this.close();
-								EventBus.getInstance().fireEvent(
-										new BugEvent.GotoRead(
-												ResolvedInputWindow.this, bug
-														.getId()));
+								callbackForm.refreshBugItem();
 							}
 						});
 				wonFixBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

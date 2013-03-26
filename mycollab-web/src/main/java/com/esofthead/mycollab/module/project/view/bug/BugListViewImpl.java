@@ -60,12 +60,12 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 	private void generateDisplayTable() {
 
 		if (ScreenSize.hasSupport1024Pixels()) {
-			tableItem = new BugTableDisplay(new String[] { "selected",
+			tableItem = new BugTableDisplay(new String[] { "id",
 					"bugkey", "summary", "assignuserFullName", "severity",
 					"resolution" }, new String[] { "", "#", "Summary",
 					"Assigned User", "Severity", "Resolution" });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new BugTableDisplay(new String[] { "selected",
+			tableItem = new BugTableDisplay(new String[] { "id",
 					"bugkey", "summary", "assignuserFullName", "severity",
 					"resolution", "duedate" }, new String[] { "", "#",
 					"Summary", "Assigned User", "Severity", "Resolution",
