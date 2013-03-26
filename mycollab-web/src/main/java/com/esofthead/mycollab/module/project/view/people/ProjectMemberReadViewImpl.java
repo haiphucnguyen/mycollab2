@@ -40,7 +40,6 @@ import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
@@ -313,7 +312,7 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			TaskSearchCriteria criteria = new TaskSearchCriteria();
 			criteria.setProjectid(new NumberSearchField(CurrentProjectVariables
 					.getProjectId()));
-			criteria.setAssignUser(new StringSearchField(AppContext
+			criteria.setAssignUser(new StringSearchField(projectMember
 					.getUsername()));
 			return criteria;
 		}
@@ -348,10 +347,10 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 		public UserBugDepot() {
 			super("Bugs", new HorizontalLayout(), new VerticalLayout());
 
-			bugDisplay = new BugTableDisplay(new String[] { "bugkey",
-					"summary", "severity", "resolution", "duedate" },
-					new String[] { "#", "Summary", "Severity", "Resolution",
-							"Due Date" });
+			bugDisplay = new BugTableDisplay(new String[] {
+					"id", "bugkey", "summary", "severity", "resolution",
+					"duedate" }, new String[] { "", "#", "Summary", "Severity",
+					"Resolution", "Due Date" });
 			bugDisplay
 					.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 						private static final long serialVersionUID = 1L;
