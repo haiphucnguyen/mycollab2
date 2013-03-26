@@ -29,10 +29,10 @@ public class MainWindowContainer extends Window implements View {
 	private static final Logger log = LoggerFactory
 			.getLogger(MainWindowContainer.class);
 
-	private Content content;
+	private final Content content;
 
-	private UriFragmentUtility urifu;
-	private FragmentNavigator fragmentNavigator;
+	private final UriFragmentUtility urifu;
+	private final FragmentNavigator fragmentNavigator;
 
 	public MainWindowContainer() {
 		urifu = new UriFragmentUtility();
@@ -58,6 +58,7 @@ public class MainWindowContainer extends Window implements View {
 		this.addListener(new Window.ResizeListener() {
 			private static final long serialVersionUID = 1L;
 
+			@Override
 			public void windowResized(ResizeEvent e) {
 				log.debug("Application size is changed. New value is: "
 						+ MainWindowContainer.this.getBrowserWindowWidth());
@@ -109,7 +110,7 @@ public class MainWindowContainer extends Window implements View {
 	public void rememberPassword(String username, String password) {
 		// Remember password
 		Calendar cal = Calendar.getInstance();
-		cal.set(Calendar.YEAR, cal.get(Calendar.YEAR) + 1);
+		cal.add(Calendar.DAY_OF_MONTH, 7);
 		Date expiryDate = cal.getTime();
 		BrowserCookies cookies = getCookieComponent();
 
@@ -154,7 +155,7 @@ public class MainWindowContainer extends Window implements View {
 			}
 		});
 
-		// this.setStyleName("loginView");
+		this.setStyleName("loginView");
 		this.setMainContent(loginView.getWidget());
 	}
 

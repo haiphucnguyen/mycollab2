@@ -43,7 +43,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 			@Override
 			public void handle(PlainLogin event) {
 				String[] data = (String[]) event.getData();
-				doLogin(data[0], data[1], true);
+				doLogin(data[0], data[1], Boolean.valueOf(data[2]));
 			}
 		});
 	}
