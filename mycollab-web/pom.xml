@@ -422,11 +422,21 @@
                    </execution>
                 </executions>
                 <configuration>
+                    <proguardVersion>4.4</proguardVersion>
+                    <injar>${project.build.finalName}.war</injar>
                     <libs>
                         <lib>${java.home}/lib/rt.jar</lib>
                         <lib>${java.home}/lib/jsse.jar</lib>
                     </libs>
                 </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sf.proguard</groupId>
+                        <artifactId>proguard</artifactId>
+                        <version>4.4</version>
+                        <scope>runtime</scope>
+                    </dependency>
+                </dependencies>
             </plugin>
 		</plugins>
 		<pluginManagement>
