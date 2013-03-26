@@ -21,7 +21,7 @@ public class BackupDatabaseServiceImpl {
 		return formater.format(Calendar.getInstance().getTime());
 	}
 	
-	@Scheduled(fixedDelay = 60000)
+	@Scheduled(fixedDelay = 86400)
 	public void backupDatabase() {
 		System.out.println("\r\nStarting backup database ----------------\r\n");
 		try {
