@@ -47,6 +47,7 @@ public class TaskDisplayComponent extends CssLayout {
 	private Button createTaskBtn;
 	private ProgressPercentageIndicator taskListProgress;
 	private Label taskNumberLbl;
+	private GridFormLayoutHelper layoutHelper;
 
 	private SimpleTaskList taskList;
 	private boolean isDisplayTaskListInfo;
@@ -62,7 +63,7 @@ public class TaskDisplayComponent extends CssLayout {
 
 	private void showTaskGroupInfo() {
 		if (isDisplayTaskListInfo) {
-			GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(2, 3);
+			layoutHelper = new GridFormLayoutHelper(2, 3);
 			layoutHelper.getLayout().setWidth("100%");
 			this.addComponent(layoutHelper.getLayout());
 
@@ -152,13 +153,20 @@ public class TaskDisplayComponent extends CssLayout {
 
 			@Override
 			public void buttonClick(Button.ClickEvent event) {
-				Component comp = TaskDisplayComponent.this.getComponent(0);
-				if (!(comp instanceof TaskAddPopup)) {
-					TaskAddPopup taskAddView = new TaskAddPopup(
-							TaskDisplayComponent.this, taskList);
+				
+				TaskDisplayComponent.this.removeAllComponents();
+				
+				TaskAddPopup taskAddView = new TaskAddPopup(
+						TaskDisplayComponent.this, taskList);
+				if (layoutHelper != null) {
+					TaskDisplayComponent.this.addComponent(layoutHelper.getLayout(), 0);
+					TaskDisplayComponent.this.addComponent(taskDisplay, 1);
+					TaskDisplayComponent.this.addComponent(taskAddView, 2);
+				} else {
+					TaskDisplayComponent.this.addComponent(taskDisplay, 0);
 					TaskDisplayComponent.this.addComponent(taskAddView, 1);
-					TaskDisplayComponent.this.removeComponent(createTaskBtn);
 				}
+				TaskDisplayComponent.this.removeComponent(createTaskBtn);
 			}
 		});
 		createTaskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
@@ -212,7 +220,12 @@ public class TaskDisplayComponent extends CssLayout {
 
 	public void closeTaskAdd() {
 		this.addComponent(createTaskBtn);
-		Component comp = this.getComponent(1);
+		Component comp;
+		if (layoutHelper != null) {
+			comp = this.getComponent(2);
+		} else {
+			comp = this.getComponent(1);
+		}
 		if (comp instanceof TaskAddPopup) {
 			this.removeComponent(comp);
 		}
