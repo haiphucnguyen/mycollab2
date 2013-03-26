@@ -347,9 +347,9 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			super("Bugs", new HorizontalLayout(), new VerticalLayout());
 
 			BugTableDisplay bugDisplay = new BugTableDisplay(new String[] {
-					"bugkey", "summary", "severity", "resolution", "duedate" },
-					new String[] { "#", "Summary", "Severity", "Resolution",
-							"Due Date" });
+					"id", "bugkey", "summary", "severity", "resolution",
+					"duedate" }, new String[] { "", "#", "Summary", "Severity",
+					"Resolution", "Due Date" });
 			bugDisplay
 					.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 						private static final long serialVersionUID = 1L;
