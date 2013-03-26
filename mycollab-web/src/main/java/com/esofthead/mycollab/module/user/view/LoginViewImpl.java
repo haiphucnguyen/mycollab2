@@ -11,6 +11,7 @@ import com.vaadin.data.validator.StringLengthValidator;
 import com.vaadin.terminal.UserError;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.Form;
 import com.vaadin.ui.PasswordField;
@@ -30,12 +31,13 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 		private static final long serialVersionUID = 1L;
 		private final TextField usernameField;
 		private final PasswordField passwordField;
+		private final CheckBox rememberMe;
 
 		public LoginForm() {
 			// this.setCaption("Login Form");
 			CustomLayout custom = new CustomLayout("loginForm");
 			custom.addStyleName("customLoginForm");
-			usernameField = new TextField("Email");
+			usernameField = new TextField("Email address");
 			usernameField.setValue("hainguyen@esofthead.com");
 
 			custom.addComponent(usernameField, "usernameField");
@@ -49,6 +51,9 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 
 			custom.addComponent(passwordField, "passwordField");
 
+			rememberMe = new CheckBox("Remember me for a week", true);
+			custom.addComponent(rememberMe, "rememberMe");
+
 			Button loginBtn = new Button("Sign In", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
@@ -58,7 +63,9 @@ public class LoginViewImpl extends AbstractView implements LoginView {
 						LoginViewImpl.this.fireEvent(new UserEvent.PlainLogin(
 								LoginViewImpl.this, new String[] {
 										(String) usernameField.getValue(),
-										(String) passwordField.getValue() }));
+										(String) passwordField.getValue(),
+										String.valueOf(rememberMe
+												.booleanValue()) }));
 					} catch (MyCollabException e) {
 						LoginForm.this.setComponentError(new UserError(e
 								.getMessage()));

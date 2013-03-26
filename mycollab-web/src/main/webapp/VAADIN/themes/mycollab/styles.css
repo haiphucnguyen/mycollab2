@@ -311,6 +311,14 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	height: 100%;
 }
 
+.v-table-cell-wrapper .v-button-link.v-button-wordWrap .v-button-wrap {
+	display: table;
+}
+
+.v-table-cell-wrapper .v-button-link.v-button-wordWrap .v-button-caption {
+	display: table-cell;	
+}
+
 .v-button .v-button-caption {
 	line-height: 16px;
 }
@@ -647,6 +655,10 @@ input.v-textfield-errorField {
 	background-color: #e5e5e5;
 }
 
+.loginView > .v-csslayout {
+	overflow-y: auto !important;
+}
+
 .formView {
 	background: white;
 	width: 600px;
@@ -757,6 +769,10 @@ input.v-textfield-errorField {
 	width: 243px;
 }
 
+#loginForm .passwordField .v-captionwrapper {
+	margin-bottom: 10px;
+}
+
 #loginForm .v-captionwrapper .v-caption {
 	margin-bottom: 5px;
 	float: left;
@@ -795,7 +811,7 @@ input.v-textfield-errorField {
 #loginForm #submitLogin {
 	width: 100%;
 	float: left;
-	margin-top: 20px;
+	margin-top: 10px;
 }
 
 .forgotPwdForm #loginForm #submitLogin {
@@ -812,6 +828,12 @@ input.v-textfield-errorField {
 
 .forgotPwdForm #loginForm #submitLogin .v-button {
 	margin-left: 20px;
+}
+
+#loginForm .rememberMe .v-checkbox {
+	width: 243px;
+	margin: 0 auto;
+	color: rgb(119, 119, 119);
 }
 
 #loginForm #submitLogin .v-button-wrap {
@@ -1211,6 +1233,7 @@ input.v-textfield-errorField {
 
 .projectDashboardView .addViewLayout .depot-title .h2 {
 	padding: 0px;
+	width: 100% !important;
 }
 
 .projectinfo-header {

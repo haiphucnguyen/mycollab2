@@ -275,6 +275,7 @@ public class BugTableDisplay extends
 								.getTime()))) {
 					b.addStyleName(UIConstants.LINK_OVERDUE);
 				}
+				b.setWidth("100%");
 				return b;
 
 			}
