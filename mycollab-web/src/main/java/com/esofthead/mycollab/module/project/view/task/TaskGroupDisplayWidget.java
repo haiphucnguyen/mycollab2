@@ -178,7 +178,7 @@ public class TaskGroupDisplayWidget
 							.removeComponent(parentComp);
 				}
 			});
-			closeBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
+			closeBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
 			closeBtn.setStyleName("link");
 			actionBtnLayout.addComponent(closeBtn);
 

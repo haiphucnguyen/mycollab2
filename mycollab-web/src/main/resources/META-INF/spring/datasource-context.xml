@@ -23,9 +23,9 @@
     <tx:annotation-driven transaction-manager="txManager" />
 
     <context:property-placeholder location="classpath:resources.properties" />
-
+    
     <bean id="migrationManager"
-        class="com.carbonfive.db.migration.DataSourceMigrationManager"
+        class="com.carbonfive.db.migration.CustomDataSourceMigrationManager"
         init-method="migrate">
         <constructor-arg ref="dataSource" />
     </bean>

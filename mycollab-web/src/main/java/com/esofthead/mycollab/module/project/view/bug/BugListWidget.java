@@ -40,7 +40,7 @@ public class BugListWidget extends Depot {
 		contentLayout.addComponent(backToBugReportsBtn);
 		backToBugReportsBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
-		tableItem = new BugTableDisplay(new String[] { "selected", "summary",
+		tableItem = new BugTableDisplay(new String[] { "id", "summary",
 				"assignuserFullName", "severity", "resolution", "duedate" },
 				new String[] { "", "Summary", "Assigned User", "Severity",
 						"Resolution", "Due Date" });

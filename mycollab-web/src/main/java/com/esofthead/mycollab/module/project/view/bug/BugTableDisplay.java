@@ -297,7 +297,7 @@ public class BugTableDisplay extends
 		this.setColumnExpandRatio("summary", 1);
 		this.setColumnWidth("assignuserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
-		this.setColumnWidth("selected", 30);
+		this.setColumnWidth("id", 30);
 		this.setColumnWidth("bugkey", UIConstants.TABLE_CONTROL_WIDTH);
 		this.setColumnWidth("severity", UIConstants.TABLE_S_LABEL_WIDTH);
 		this.setColumnWidth("resolution", UIConstants.TABLE_M_LABEL_WIDTH);
