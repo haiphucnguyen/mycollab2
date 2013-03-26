@@ -78,7 +78,7 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 			l.setContentMode(contentMode);
 			this.setCompositionRoot(l);
 			if (value != null) {
-				l.setValue(value);	
+				l.setValue(value);
 			}
 		}
 
@@ -110,7 +110,8 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 
 		public FormLinkViewField(String value, Button.ClickListener listener) {
 			ButtonLink l = new ButtonLink(value, listener);
-			l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			// l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			l.setWidth("100%");
 			this.setCompositionRoot(l);
 		}
 
@@ -134,7 +135,7 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 			return Object.class;
 		}
 	}
-	
+
 	public static class LabelViewField extends CustomField {
 		private static final long serialVersionUID = 1L;
 
@@ -222,6 +223,10 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 		@Override
 		public Class<?> getType() {
 			return Object.class;
+		}
+
+		public ComponentContainer getLayout() {
+			return layout;
 		}
 	}
 
