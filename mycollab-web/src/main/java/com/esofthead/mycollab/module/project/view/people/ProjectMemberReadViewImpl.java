@@ -343,12 +343,13 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 	private class UserBugDepot extends Depot {
 		private static final long serialVersionUID = 1L;
 		private PopupButton bugActionControl;
+		private BugTableDisplay bugDisplay;
 
 		public UserBugDepot() {
 			super("Bugs", new HorizontalLayout(), new VerticalLayout());
 
-			BugTableDisplay bugDisplay = new BugTableDisplay(new String[] {
-					"bugkey", "summary", "severity", "resolution", "duedate" },
+			bugDisplay = new BugTableDisplay(new String[] { "bugkey",
+					"summary", "severity", "resolution", "duedate" },
 					new String[] { "#", "Summary", "Severity", "Resolution",
 							"Due Date" });
 			bugDisplay
@@ -372,21 +373,11 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 						}
 					});
 
-			BugSearchCriteria searchCriteria = new BugSearchCriteria();
-			searchCriteria.setProjectId(new NumberSearchField(
-					CurrentProjectVariables.getProjectId()));
-			searchCriteria.setAssignuser(new StringSearchField(projectMember
-					.getUsername()));
-			searchCriteria.setStatuses(new SetSearchField<String>(
-					SearchField.AND, new String[] {
-							BugStatusConstants.INPROGRESS,
-							BugStatusConstants.OPEN,
-							BugStatusConstants.REOPENNED }));
-			bugDisplay.setSearchCriteria(searchCriteria);
-
 			this.bodyContent.addComponent(bugDisplay);
 
 			initHeader();
+
+			displayOpenBugs();
 		}
 
 		private void initHeader() {
@@ -402,6 +393,22 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			actionBtnLayout.setSpacing(true);
 			actionBtnLayout.setWidth("200px");
 			bugActionControl.addComponent(actionBtnLayout);
+			
+			Button openBugBtn = new Button("Open Bugs",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							bugActionControl.setPopupVisible(false);
+							bugActionControl.setCaption("Open Bugs");
+							displayOpenBugs();
+						}
+					});
+			openBugBtn.setEnabled(CurrentProjectVariables
+					.canRead(ProjectRolePermissionCollections.BUGS));
+			openBugBtn.setStyleName("link");
+			actionBtnLayout.addComponent(openBugBtn);
 
 			Button pendingBugBtn = new Button("Pending Bugs",
 					new Button.ClickListener() {
@@ -410,7 +417,8 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 						@Override
 						public void buttonClick(ClickEvent event) {
 							bugActionControl.setPopupVisible(false);
-
+							bugActionControl.setCaption("Pending Bugs");
+							displayPendingBugs();
 						}
 					});
 			pendingBugBtn.setEnabled(CurrentProjectVariables
@@ -425,12 +433,46 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 						@Override
 						public void buttonClick(ClickEvent event) {
 							bugActionControl.setPopupVisible(false);
+							bugActionControl.setCaption("Closed Bug");
+							displayClosedBugs();
 						}
 					});
 			closeBugBtn.setEnabled(CurrentProjectVariables
 					.canWrite(ProjectRolePermissionCollections.BUGS));
 			closeBugBtn.setStyleName("link");
 			actionBtnLayout.addComponent(closeBugBtn);
+		}
+
+		private BugSearchCriteria createBugSearchCriteria() {
+			BugSearchCriteria criteria = new BugSearchCriteria();
+			criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
+					.getProjectId()));
+			criteria.setAssignuser(new StringSearchField(projectMember
+					.getUsername()));
+			return criteria;
+		}
+
+		private void displayOpenBugs() {
+			BugSearchCriteria criteria = createBugSearchCriteria();
+			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
+					new String[] { BugStatusConstants.INPROGRESS,
+							BugStatusConstants.OPEN,
+							BugStatusConstants.REOPENNED }));
+			bugDisplay.setSearchCriteria(criteria);
+		}
+		
+		private void displayPendingBugs() {
+			BugSearchCriteria criteria = createBugSearchCriteria();
+			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
+					new String[] { BugStatusConstants.TESTPENDING }));
+			bugDisplay.setSearchCriteria(criteria);
+		}
+		
+		private void displayClosedBugs() {
+			BugSearchCriteria criteria = createBugSearchCriteria();
+			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
+					new String[] { BugStatusConstants.CLOSE, BugStatusConstants.WONFIX }));
+			bugDisplay.setSearchCriteria(criteria);
 		}
 	}
 
