@@ -51,7 +51,7 @@ public class WontFixExplainWindow extends Window {
 			SimpleBug bug) {
 		this.bug = bug;
 		this.callbackForm = callbackForm;
-		this.setWidth("830px");
+		this.setWidth("750px");
 		editForm = new EditForm();
 		this.addComponent(editForm);
 		editForm.setItemDataSource(new BeanItem<SimpleBug>(bug));
