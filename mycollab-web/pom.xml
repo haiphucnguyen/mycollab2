@@ -375,7 +375,7 @@
 				</dependencies>
 				<executions>
 					<execution>
-						<phase>package</phase>
+						<phase>install</phase>
 						<configuration>
 							<target>
 								<scp localfile="${basedir}/target/root.war" keyfile="${basedir}/esofthead-virginia.pem"
