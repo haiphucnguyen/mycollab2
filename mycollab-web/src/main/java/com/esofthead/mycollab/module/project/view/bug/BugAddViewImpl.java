@@ -111,7 +111,6 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 
 			private static final long serialVersionUID = 1L;
 
-			@SuppressWarnings("serial")
 			@Override
 			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {

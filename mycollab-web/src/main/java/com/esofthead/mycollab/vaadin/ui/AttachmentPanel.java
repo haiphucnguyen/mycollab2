@@ -1,24 +1,27 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import java.awt.image.BufferedImage;
+import java.io.ByteArrayInputStream;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import org.apache.commons.io.FileUtils;
+import javax.imageio.ImageIO;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
-import com.esofthead.mycollab.module.file.FileStorageConfig;
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.file.service.ContentService;
+import com.esofthead.mycollab.module.user.accountsettings.profile.view.ImageUtil;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -110,9 +113,58 @@ public class AttachmentPanel extends VerticalLayout implements
 			for (String fileName : fileStores.keySet()) {
 				String filePath = type + "/" + typeid + "/" + fileName;
 				try {
-					contentService.saveContent(AppContext.getAccountId(),
-							filePath,
-							new FileInputStream(fileStores.get(fileName)));
+					String fileExt = "";
+					int index = fileName.lastIndexOf(".");
+					if (index > 0) {
+						fileExt = fileName.substring(index + 1,
+								fileName.length());
+					}
+
+					if ("jpg".equalsIgnoreCase(fileExt)
+							|| "png".equalsIgnoreCase(fileExt)) {
+						try {
+							BufferedImage bufferedImage = ImageIO
+									.read(fileStores.get(fileName));
+
+							int imgHeight = bufferedImage.getHeight();
+							int imgWidth = bufferedImage.getWidth();
+							
+							BufferedImage scaledImage = null;
+							if (imgWidth >= imgHeight) {
+								scaledImage = ImageUtil.scaleImage(
+										bufferedImage, 974, 718);
+							} else {
+								float scale;
+								float destWidth = 800;
+								float destHeight = 600;
+								if (imgHeight >= destHeight) {
+									scale = destHeight/imgHeight;
+								} else {
+									if (imgWidth >= destWidth) {
+										scale = destWidth/imgWidth;
+									} else {
+										scale = 1;
+									}
+								}
+								scaledImage = ImageUtil.scaleImage(
+										bufferedImage, scale);
+							}
+							
+							ByteArrayOutputStream outStream = new ByteArrayOutputStream();
+							ImageIO.write(scaledImage, fileExt, outStream);
+							contentService.saveContent(
+									AppContext.getAccountId(),
+									filePath,
+									new ByteArrayInputStream(outStream
+											.toByteArray()));
+						} catch (IOException e) {
+							e.printStackTrace();
+						}
+					} else {
+						contentService.saveContent(AppContext.getAccountId(),
+								filePath,
+								new FileInputStream(fileStores.get(fileName)));
+					}
 					Attachment record = new Attachment();
 					record.setType(type);
 					record.setTypeid(typeid);

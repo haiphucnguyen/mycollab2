@@ -411,6 +411,33 @@
 					</webAppConfig>
 				</configuration>
 			</plugin>
+			<plugin>
+                <groupId>com.pyx4me</groupId>
+                <artifactId>proguard-maven-plugin</artifactId>
+                <version>2.0.4</version>
+                <executions>
+                   <execution>
+                       <phase>package</phase>
+                       <goals><goal>proguard</goal></goals>
+                   </execution>
+                </executions>
+                <configuration>
+                    <proguardVersion>4.4</proguardVersion>
+                    <injar>${project.build.finalName}.war</injar>
+                    <libs>
+                        <lib>${java.home}/lib/rt.jar</lib>
+                        <lib>${java.home}/lib/jsse.jar</lib>
+                    </libs>
+                </configuration>
+                <dependencies>
+                    <dependency>
+                        <groupId>net.sf.proguard</groupId>
+                        <artifactId>proguard</artifactId>
+                        <version>4.4</version>
+                        <scope>runtime</scope>
+                    </dependency>
+                </dependencies>
+            </plugin>
 		</plugins>
 		<pluginManagement>
 			<plugins>
