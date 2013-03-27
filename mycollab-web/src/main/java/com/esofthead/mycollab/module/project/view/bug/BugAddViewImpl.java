@@ -140,7 +140,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 					return attachmentUploadField;
 				} else if (propertyId.equals("severity")) {
 					if (bug.getSeverity() == null) {
-						bug.setSeverity("Major");
+						bug.setSeverity(BugSeverityComboBox.MAJOR);
 					}
 					return new BugSeverityComboBox();
 				} else if (propertyId.equals("components")) {

@@ -5,6 +5,7 @@ import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot.CommentDisplay;
+import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -35,6 +36,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -578,6 +580,32 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				} else if (propertyId.equals("description")) {
 					return new DefaultFormViewFieldFactory.FormViewField(
 							bug.getDescription(), Label.CONTENT_XHTML);
+				} else if (propertyId.equals("priority")) {
+					if (StringUtil.isNotNullOrEmpty(bug.getPriority())) {
+						ThemeResource iconPriority = BugPriorityComboBox
+								.getIconResourceByPriority(bug.getPriority());
+						Embedded iconEmbedded = new Embedded(null, iconPriority);
+						Label lbPriority = new Label(bug.getPriority());
+
+						FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
+						containerField.addComponentField(iconEmbedded);
+						lbPriority.setWidth("220px");
+						containerField.addComponentField(lbPriority);
+						return containerField;
+					}
+				} else if (propertyId.equals("severity")) {
+					if (StringUtil.isNotNullOrEmpty(bug.getSeverity())) {
+						ThemeResource iconPriority = BugSeverityComboBox
+								.getIconResourceBySeverity(bug.getSeverity());
+						Embedded iconEmbedded = new Embedded(null, iconPriority);
+						Label lbPriority = new Label(bug.getSeverity());
+
+						FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
+						containerField.addComponentField(iconEmbedded);
+						lbPriority.setWidth("220px");
+						containerField.addComponentField(lbPriority);
+						return containerField;
+					}
 				}
 				return null;
 			}

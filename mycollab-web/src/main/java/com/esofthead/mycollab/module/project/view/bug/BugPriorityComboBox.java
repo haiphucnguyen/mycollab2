@@ -42,4 +42,20 @@ public class BugPriorityComboBox extends ComboBox {
 				new ThemeResource(PRIORITY_TRIVIAL_IMG));
 		this.setNullSelectionAllowed(false);
     }
+    
+    public static ThemeResource getIconResourceByPriority(String priority) {
+		ThemeResource iconPriority = new ThemeResource(PRIORITY_MAJOR_IMG);
+		if (PRIORITY_BLOCKER.equals(priority)) {
+			iconPriority = new ThemeResource(PRIORITY_BLOCKER_IMG);
+		} else if (PRIORITY_CRITICAL.equals(priority)) {
+			iconPriority = new ThemeResource(PRIORITY_CRITICAL_IMG);
+		} else if (PRIORITY_MAJOR.equals(priority)) {
+			iconPriority = new ThemeResource(PRIORITY_MAJOR_IMG);
+		} else if (PRIORITY_MINOR.equals(priority)) {
+			iconPriority = new ThemeResource(PRIORITY_MINOR_IMG);
+		} else if (PRIORITY_TRIVIAL.equals(priority)) {
+			iconPriority = new ThemeResource(PRIORITY_TRIVIAL_IMG);
+		}
+		return iconPriority;
+	}
 }

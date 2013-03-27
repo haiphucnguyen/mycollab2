@@ -225,7 +225,7 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 			return Object.class;
 		}
 
-		public ComponentContainer getLayout() {
+		public HorizontalLayout getLayout() {
 			return layout;
 		}
 	}
