@@ -73,7 +73,7 @@
             <include refid="com.esofthead.mycollab.module.project.dao.MessageMapperExt.querySearchCriteria" />
         </trim>
 
-        ORDER BY m_prj_message.posteddate DESC
+         ORDER BY  m_prj_message.isStick DESC, m_prj_message.posteddate DESC
     </select>
         
     <select id="findMessageById" parameterType="java.lang.Integer"

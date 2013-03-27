@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.project.view.message;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -15,15 +16,18 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
-import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
@@ -83,7 +87,6 @@ public class MessageReadViewImpl extends AbstractView implements
 
 		class FormLayoutFactory implements IFormLayoutFactory {
 			private static final long serialVersionUID = 1L;
-			private GridLayout bodyLayout;
 
 			@Override
 			public Layout getLayout() {
@@ -93,17 +96,76 @@ public class MessageReadViewImpl extends AbstractView implements
 
 				riskAddLayout.addTopControls(createTopPanel());
 
-				VerticalLayout layout = new VerticalLayout();
+				HorizontalLayout messageLayout = new HorizontalLayout();
+				messageLayout.setStyleName("message");
+				messageLayout.setWidth("100%");
+				messageLayout.addComponent(UserAvatarControlFactory
+						.createUserAvatarLink(message.getPosteduser(),
+								message.getFullPostedUserName()));
 
-				bodyLayout = new GridLayout(1, 2);
-				bodyLayout.setWidth("100%");
-				layout.addComponent(bodyLayout);
-				layout.setComponentAlignment(bodyLayout,
-						Alignment.BOTTOM_CENTER);
+				CssLayout rowLayout = new CssLayout();
+				rowLayout.setStyleName("message-container");
+				rowLayout.setWidth("100%");
+
+				Label title = new Label("<strong> Title: </strong>" + message.getTitle(), Label.CONTENT_XHTML);
+
+				HorizontalLayout messageHeader = new HorizontalLayout();
+				messageHeader.setStyleName("message-header");
+				VerticalLayout leftHeader = new VerticalLayout();
+				leftHeader.setSpacing(true);
+
+				Label username = new Label(message.getFullPostedUserName());
+				username.setStyleName("user-name");
+				leftHeader.addComponent(username);
+
+				title.addStyleName("message-title");
+				leftHeader.addComponent(title);
+
+				VerticalLayout rightHeader = new VerticalLayout();
+				Label timePostLbl = new Label(
+						DateTimeUtils.getStringDateFromNow(message.getPosteddate()));
+				timePostLbl.setSizeUndefined();
+				timePostLbl.setStyleName("time-post");
+				rightHeader.addComponent(timePostLbl);
+				rightHeader.setSizeUndefined();
+				
+				messageHeader.addComponent(leftHeader);
+				messageHeader.setExpandRatio(leftHeader, 1.0f);
+				messageHeader.addComponent(rightHeader);
+				messageHeader.setWidth("100%");
+
+				rowLayout.addComponent(messageHeader);
+
+				Label messageContent = new Label("<strong> Description: </strong>" + message.getMessage(),
+						Label.CONTENT_XHTML);
+				messageContent.setStyleName("message-body");
+				rowLayout.addComponent(messageContent);
+
+				HorizontalLayout attachmentField = new HorizontalLayout();
+				Embedded attachmentIcon = new Embedded();
+				attachmentIcon.setSource(new ThemeResource(
+						"icons/16/attachment.png"));
+				attachmentField.addComponent(attachmentIcon);
+
+				Label lbAttachment = new Label("Attachment: ");
+				attachmentField.addComponent(lbAttachment);
+
+				rowLayout.addComponent(attachmentField);
+
+				Component attachmentDisplayComp = AttachmentDisplayComponent
+						.getAttachmentDisplayComponent(
+								AttachmentConstants.PROJECT_MESSAGE,
+								message.getId());
+				rowLayout.addComponent(attachmentDisplayComp);
+				
+				
+
+				messageLayout.addComponent(rowLayout);
+				messageLayout.setExpandRatio(rowLayout, 1.0f);
 
 				riskAddLayout.addBottomControls(createBottomPanel());
 
-				riskAddLayout.addBody(layout);
+				riskAddLayout.addBody(messageLayout);
 
 				return riskAddLayout;
 			}
@@ -114,11 +176,6 @@ public class MessageReadViewImpl extends AbstractView implements
 
 			protected Layout createBottomPanel() {
 				VerticalLayout bottomPanel = new VerticalLayout();
-				Component attachmentDisplayComp = AttachmentDisplayComponent
-						.getAttachmentDisplayComponent(
-								AttachmentConstants.PROJECT_MESSAGE,
-								message.getId());
-				bottomPanel.addComponent(attachmentDisplayComp);
 				bottomPanel.addComponent(new CommentListDepot(
 						CommentTypeConstants.PRJ_MESSAGE, message.getId()));
 				return bottomPanel;
@@ -126,11 +183,6 @@ public class MessageReadViewImpl extends AbstractView implements
 
 			@Override
 			public void attachField(Object propertyId, Field field) {
-				if (propertyId.equals("message")) {
-					bodyLayout.addComponent(field, 0, 0);
-				} else if (propertyId.equals("posteddate")) {
-					bodyLayout.addComponent(field, 0, 1);
-				}
 			}
 		}
 	}

@@ -41,6 +41,7 @@ import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
@@ -99,7 +100,11 @@ public class MessageListViewImpl extends AbstractView implements
 		@Override
 		public Component generateRow(final SimpleMessage message, int rowIndex) {
 			HorizontalLayout messageLayout = new HorizontalLayout();
-			messageLayout.setStyleName("message");
+			if (message.getIsstick() != null && message.getIsstick()) {
+				messageLayout.setStyleName("messageStick");
+			} else {
+				messageLayout.setStyleName("message");
+			}
 			messageLayout.setWidth("100%");
 			messageLayout.addComponent(UserAvatarControlFactory
 					.createUserAvatarLink(message.getPosteduser(),
@@ -363,6 +368,10 @@ public class MessageListViewImpl extends AbstractView implements
 			controls.addComponent(uploadExt);
 			controls.setExpandRatio(uploadExt, 1.0f);
 			controls.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
+			
+			final CheckBox chkIsStick = new CheckBox("Is Stick");
+			controls.addComponent(chkIsStick);
+			controls.setComponentAlignment(chkIsStick, Alignment.MIDDLE_CENTER);
 
 			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -374,6 +383,7 @@ public class MessageListViewImpl extends AbstractView implements
 			});
 			cancelBtn.setStyleName("link");
 			controls.addComponent(cancelBtn);
+			controls.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
 
 			Button saveBtn = new Button("Post", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
@@ -389,6 +399,7 @@ public class MessageListViewImpl extends AbstractView implements
 								.getValue());
 						message.setPosteduser(AppContext.getUsername());
 						message.setSaccountid(AppContext.getAccountId());
+						message.setIsstick((Boolean) chkIsStick.getValue());
 						fireSaveItem(message);
 						attachments.saveContentsToRepo(
 								AttachmentConstants.PROJECT_MESSAGE,
@@ -407,7 +418,8 @@ public class MessageListViewImpl extends AbstractView implements
 			});
 			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			controls.addComponent(saveBtn);
-
+			controls.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
+			
 			this.addComponent(controls);
 		}
 	}
