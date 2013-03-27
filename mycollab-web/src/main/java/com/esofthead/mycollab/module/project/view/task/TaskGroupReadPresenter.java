@@ -4,11 +4,18 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
+import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
+import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
+import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.service.ProblemService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
@@ -19,11 +26,13 @@ import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
+import com.vaadin.ui.Window;
 
 /**
  * 
  * @author haiphucnguyen
  */
+@SuppressWarnings("serial")
 public class TaskGroupReadPresenter extends
 		AbstractPresenter<TaskGroupReadView> {
 
@@ -67,6 +76,53 @@ public class TaskGroupReadPresenter extends
 								.fireEvent(
 										new TaskListEvent.GotoTaskListScreen(
 												this, null));
+					}
+
+					@Override
+					public void gotoNext(SimpleTaskList data) {
+						ProjectTaskListService tasklistService = AppContext
+								.getSpringBean(ProjectTaskListService.class);
+						TaskListSearchCriteria criteria = new TaskListSearchCriteria();
+						SimpleProject project = (SimpleProject) AppContext
+								.getVariable("project");
+						criteria.setProjectId(new NumberSearchField(
+								SearchField.AND, project.getId()));
+						criteria.setId(new NumberSearchField(data.getId(),
+								NumberSearchField.GREATHER));
+						Integer nextId = tasklistService
+								.getNextItemKey(criteria);
+						if (nextId != null) {
+							EventBus.getInstance().fireEvent(
+									new TaskListEvent.GotoRead(this, nextId));
+						} else {
+							view.getWindow().showNotification("Information",
+									"You are already in the last record",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+						}
+
+					}
+
+					@Override
+					public void gotoPrevious(SimpleTaskList data) {
+						ProjectTaskListService tasklistService = AppContext
+								.getSpringBean(ProjectTaskListService.class);
+						TaskListSearchCriteria criteria = new TaskListSearchCriteria();
+						SimpleProject project = (SimpleProject) AppContext
+								.getVariable("project");
+						criteria.setProjectId(new NumberSearchField(
+								SearchField.AND, project.getId()));
+						criteria.setId(new NumberSearchField(data.getId(),
+								NumberSearchField.LESSTHAN));
+						Integer nextId = tasklistService
+								.getPreviousItemKey(criteria);
+						if (nextId != null) {
+							EventBus.getInstance().fireEvent(
+									new TaskListEvent.GotoRead(this, nextId));
+						} else {
+							view.getWindow().showNotification("Information",
+									"You are already in the first record",
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+						}
 					}
 				});
 	}

@@ -20,6 +20,8 @@ public class TaskListSearchCriteria extends SearchCriteria {
     private StringSearchField status;
     
     private SetSearchField<Integer> milestoneIds;
+    
+    private NumberSearchField id;
 
     public NumberSearchField getProjectId() {
         return projectId;
@@ -43,5 +45,13 @@ public class TaskListSearchCriteria extends SearchCriteria {
 
 	public void setMilestoneIds(SetSearchField<Integer> milestoneIds) {
 		this.milestoneIds = milestoneIds;
+	}
+
+	public NumberSearchField getId() {
+		return id;
+	}
+
+	public void setId(NumberSearchField id) {
+		this.id = id;
 	}
 }
