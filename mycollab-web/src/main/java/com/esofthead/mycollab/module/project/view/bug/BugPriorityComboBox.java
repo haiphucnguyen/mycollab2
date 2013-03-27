@@ -6,55 +6,55 @@ import com.vaadin.ui.ComboBox;
 
 public class BugPriorityComboBox extends ComboBox {
 
-    private static final long serialVersionUID = 1L;
-    
-    public static final String PRIORITY_BLOCKER_IMG = "icons/12/priority_urgent.png";
-	public static final String PRIORITY_CRITICAL_IMG = "icons/12/priority_high.png";
-	public static final String PRIORITY_MAJOR_IMG = "icons/12/priority_medium.png";
-	public static final String PRIORITY_MINOR_IMG = "icons/12/priority_low.png";
-	public static final String PRIORITY_TRIVIAL_IMG = "icons/12/priority_none.png";
+	private static final long serialVersionUID = 1L;
 
-	public static final String PRIORITY_BLOCKER= "Blocker";
-	public static final String PRIORITY_CRITICAL = "Critical";
-	public static final String PRIORITY_MAJOR = "Major";
-	public static final String PRIORITY_MINOR = "Minor";
-	public static final String PRIORITY_TRIVIAL = "Trivial";
+	public BugPriorityComboBox() {
 
-    public BugPriorityComboBox() {
-    	
-    	this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
+		this.setItemCaptionMode(ITEM_CAPTION_MODE_EXPLICIT_DEFAULTS_ID);
 
 		IndexedContainer ic = new IndexedContainer();
-		ic.addItem(PRIORITY_BLOCKER);
-		ic.addItem(PRIORITY_CRITICAL);
-		ic.addItem(PRIORITY_MAJOR);
-		ic.addItem(PRIORITY_MINOR);
-		ic.addItem(PRIORITY_TRIVIAL);
+		ic.addItem(BugPriorityStatusConstants.PRIORITY_BLOCKER);
+		ic.addItem(BugPriorityStatusConstants.PRIORITY_CRITICAL);
+		ic.addItem(BugPriorityStatusConstants.PRIORITY_MAJOR);
+		ic.addItem(BugPriorityStatusConstants.PRIORITY_MINOR);
+		ic.addItem(BugPriorityStatusConstants.PRIORITY_TRIVIAL);
 
 		this.setContainerDataSource(ic);
 
-		this.setItemIcon(PRIORITY_BLOCKER, new ThemeResource(PRIORITY_BLOCKER_IMG));
-		this.setItemIcon(PRIORITY_CRITICAL, new ThemeResource(PRIORITY_CRITICAL_IMG));
-		this.setItemIcon(PRIORITY_MAJOR,
-				new ThemeResource(PRIORITY_MAJOR_IMG));
-		this.setItemIcon(PRIORITY_MINOR, new ThemeResource(PRIORITY_MINOR_IMG));
-		this.setItemIcon(PRIORITY_TRIVIAL,
-				new ThemeResource(PRIORITY_TRIVIAL_IMG));
+		this.setItemIcon(BugPriorityStatusConstants.PRIORITY_BLOCKER,
+				new ThemeResource(
+						BugPriorityStatusConstants.PRIORITY_BLOCKER_IMG));
+		this.setItemIcon(BugPriorityStatusConstants.PRIORITY_CRITICAL,
+				new ThemeResource(
+						BugPriorityStatusConstants.PRIORITY_CRITICAL_IMG));
+		this.setItemIcon(BugPriorityStatusConstants.PRIORITY_MAJOR,
+				new ThemeResource(BugPriorityStatusConstants.PRIORITY_MAJOR_IMG));
+		this.setItemIcon(BugPriorityStatusConstants.PRIORITY_MINOR,
+				new ThemeResource(BugPriorityStatusConstants.PRIORITY_MINOR_IMG));
+		this.setItemIcon(BugPriorityStatusConstants.PRIORITY_TRIVIAL,
+				new ThemeResource(
+						BugPriorityStatusConstants.PRIORITY_TRIVIAL_IMG));
 		this.setNullSelectionAllowed(false);
-    }
-    
-    public static ThemeResource getIconResourceByPriority(String priority) {
-		ThemeResource iconPriority = new ThemeResource(PRIORITY_MAJOR_IMG);
-		if (PRIORITY_BLOCKER.equals(priority)) {
-			iconPriority = new ThemeResource(PRIORITY_BLOCKER_IMG);
-		} else if (PRIORITY_CRITICAL.equals(priority)) {
-			iconPriority = new ThemeResource(PRIORITY_CRITICAL_IMG);
-		} else if (PRIORITY_MAJOR.equals(priority)) {
-			iconPriority = new ThemeResource(PRIORITY_MAJOR_IMG);
-		} else if (PRIORITY_MINOR.equals(priority)) {
-			iconPriority = new ThemeResource(PRIORITY_MINOR_IMG);
-		} else if (PRIORITY_TRIVIAL.equals(priority)) {
-			iconPriority = new ThemeResource(PRIORITY_TRIVIAL_IMG);
+	}
+
+	public static ThemeResource getIconResourceByPriority(String priority) {
+		ThemeResource iconPriority = new ThemeResource(
+				BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
+		if (BugPriorityStatusConstants.PRIORITY_BLOCKER.equals(priority)) {
+			iconPriority = new ThemeResource(
+					BugPriorityStatusConstants.PRIORITY_BLOCKER_IMG);
+		} else if (BugPriorityStatusConstants.PRIORITY_CRITICAL.equals(priority)) {
+			iconPriority = new ThemeResource(
+					BugPriorityStatusConstants.PRIORITY_CRITICAL_IMG);
+		} else if (BugPriorityStatusConstants.PRIORITY_MAJOR.equals(priority)) {
+			iconPriority = new ThemeResource(
+					BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
+		} else if (BugPriorityStatusConstants.PRIORITY_MINOR.equals(priority)) {
+			iconPriority = new ThemeResource(
+					BugPriorityStatusConstants.PRIORITY_MINOR_IMG);
+		} else if (BugPriorityStatusConstants.PRIORITY_TRIVIAL.equals(priority)) {
+			iconPriority = new ThemeResource(
+					BugPriorityStatusConstants.PRIORITY_TRIVIAL_IMG);
 		}
 		return iconPriority;
 	}

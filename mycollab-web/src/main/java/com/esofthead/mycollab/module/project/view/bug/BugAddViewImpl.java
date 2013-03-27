@@ -125,7 +125,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 					return field;
 				} else if (propertyId.equals("priority")) {
 					if (bug.getPriority() == null) {
-						bug.setPriority(BugPriorityComboBox.PRIORITY_MAJOR);
+						bug.setPriority(BugPriorityStatusConstants.PRIORITY_MAJOR);
 					}
 					return new BugPriorityComboBox();
 				} else if (propertyId.equals("assignuser")) {
@@ -140,7 +140,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 					return attachmentUploadField;
 				} else if (propertyId.equals("severity")) {
 					if (bug.getSeverity() == null) {
-						bug.setSeverity(BugSeverityComboBox.MAJOR);
+						bug.setSeverity(BugSeverityConstants.MAJOR);
 					}
 					return new BugSeverityComboBox();
 				} else if (propertyId.equals("components")) {

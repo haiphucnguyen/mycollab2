@@ -243,28 +243,28 @@ public class BugTableDisplay extends
 
 				if (StringUtil.isNotNullOrEmpty(bug.getPriority())) {
 					ThemeResource iconPriority = new ThemeResource(
-							BugPriorityComboBox.PRIORITY_MAJOR_IMG);
+							BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
 
-					if (BugPriorityComboBox.PRIORITY_BLOCKER.equals(bug
+					if (BugPriorityStatusConstants.PRIORITY_BLOCKER.equals(bug
 							.getPriority())) {
 						iconPriority = new ThemeResource(
-								BugPriorityComboBox.PRIORITY_BLOCKER_IMG);
-					} else if (BugPriorityComboBox.PRIORITY_CRITICAL.equals(bug
-							.getPriority())) {
+								BugPriorityStatusConstants.PRIORITY_BLOCKER_IMG);
+					} else if (BugPriorityStatusConstants.PRIORITY_CRITICAL
+							.equals(bug.getPriority())) {
 						iconPriority = new ThemeResource(
-								BugPriorityComboBox.PRIORITY_CRITICAL_IMG);
-					} else if (BugPriorityComboBox.PRIORITY_MAJOR.equals(bug
-							.getPriority())) {
+								BugPriorityStatusConstants.PRIORITY_CRITICAL_IMG);
+					} else if (BugPriorityStatusConstants.PRIORITY_MAJOR
+							.equals(bug.getPriority())) {
 						iconPriority = new ThemeResource(
-								BugPriorityComboBox.PRIORITY_MAJOR_IMG);
-					} else if (BugPriorityComboBox.PRIORITY_MINOR.equals(bug
-							.getPriority())) {
+								BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
+					} else if (BugPriorityStatusConstants.PRIORITY_MINOR
+							.equals(bug.getPriority())) {
 						iconPriority = new ThemeResource(
-								BugPriorityComboBox.PRIORITY_MINOR_IMG);
-					} else if (BugPriorityComboBox.PRIORITY_TRIVIAL.equals(bug
-							.getPriority())) {
+								BugPriorityStatusConstants.PRIORITY_MINOR_IMG);
+					} else if (BugPriorityStatusConstants.PRIORITY_TRIVIAL
+							.equals(bug.getPriority())) {
 						iconPriority = new ThemeResource(
-								BugPriorityComboBox.PRIORITY_TRIVIAL_IMG);
+								BugPriorityStatusConstants.PRIORITY_TRIVIAL_IMG);
 					}
 
 					b.setIcon(iconPriority);
@@ -295,24 +295,24 @@ public class BugTableDisplay extends
 						.getBeanByIndex(itemId);
 
 				ThemeResource iconPriority = new ThemeResource(
-						BugSeverityComboBox.MAJOR_IMG);
+						BugSeverityConstants.MAJOR_IMG);
 				if (StringUtil.isNotNullOrEmpty(bug.getSeverity())) {
 
-					if (BugSeverityComboBox.CRITICAL.equals(bug.getSeverity())) {
+					if (BugSeverityConstants.CRITICAL.equals(bug.getSeverity())) {
 						iconPriority = new ThemeResource(
-								BugSeverityComboBox.CRITICAL_IMG);
-					} else if (BugSeverityComboBox.MAJOR.equals(bug
+								BugSeverityConstants.CRITICAL_IMG);
+					} else if (BugSeverityConstants.MAJOR.equals(bug
 							.getSeverity())) {
 						iconPriority = new ThemeResource(
-								BugSeverityComboBox.MAJOR_IMG);
-					} else if (BugSeverityComboBox.MINOR.equals(bug
+								BugSeverityConstants.MAJOR_IMG);
+					} else if (BugSeverityConstants.MINOR.equals(bug
 							.getSeverity())) {
 						iconPriority = new ThemeResource(
-								BugSeverityComboBox.MINOR_IMG);
-					} else if (BugSeverityComboBox.TRIVIAL.equals(bug
+								BugSeverityConstants.MINOR_IMG);
+					} else if (BugSeverityConstants.TRIVIAL.equals(bug
 							.getSeverity())) {
 						iconPriority = new ThemeResource(
-								BugSeverityComboBox.TRIVIAL_IMG);
+								BugSeverityConstants.TRIVIAL_IMG);
 					}
 
 				}
@@ -322,9 +322,11 @@ public class BugTableDisplay extends
 				lbPriority.setWidth("70px");
 				FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
 				containerField.addComponentField(iconEmbedded);
-				containerField.getLayout().setComponentAlignment(iconEmbedded, Alignment.MIDDLE_CENTER);
+				containerField.getLayout().setComponentAlignment(iconEmbedded,
+						Alignment.MIDDLE_CENTER);
 				containerField.addComponentField(lbPriority);
-				containerField.getLayout().setComponentAlignment(lbPriority, Alignment.MIDDLE_CENTER);
+				containerField.getLayout().setComponentAlignment(lbPriority,
+						Alignment.MIDDLE_CENTER);
 				return containerField;
 
 			}
