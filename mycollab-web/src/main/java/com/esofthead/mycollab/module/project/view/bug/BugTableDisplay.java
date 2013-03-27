@@ -19,12 +19,15 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
@@ -240,28 +243,28 @@ public class BugTableDisplay extends
 
 				if (StringUtil.isNotNullOrEmpty(bug.getPriority())) {
 					ThemeResource iconPriority = new ThemeResource(
-							BugPriorityComboBox.PRIORITY_MAJOR_IMG);
+							BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
 
-					if (BugPriorityComboBox.PRIORITY_BLOCKER.equals(bug
+					if (BugPriorityStatusConstants.PRIORITY_BLOCKER.equals(bug
 							.getPriority())) {
 						iconPriority = new ThemeResource(
-								BugPriorityComboBox.PRIORITY_BLOCKER_IMG);
-					} else if (BugPriorityComboBox.PRIORITY_CRITICAL.equals(bug
-							.getPriority())) {
+								BugPriorityStatusConstants.PRIORITY_BLOCKER_IMG);
+					} else if (BugPriorityStatusConstants.PRIORITY_CRITICAL
+							.equals(bug.getPriority())) {
 						iconPriority = new ThemeResource(
-								BugPriorityComboBox.PRIORITY_CRITICAL_IMG);
-					} else if (BugPriorityComboBox.PRIORITY_MAJOR.equals(bug
-							.getPriority())) {
+								BugPriorityStatusConstants.PRIORITY_CRITICAL_IMG);
+					} else if (BugPriorityStatusConstants.PRIORITY_MAJOR
+							.equals(bug.getPriority())) {
 						iconPriority = new ThemeResource(
-								BugPriorityComboBox.PRIORITY_MAJOR_IMG);
-					} else if (BugPriorityComboBox.PRIORITY_MINOR.equals(bug
-							.getPriority())) {
+								BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
+					} else if (BugPriorityStatusConstants.PRIORITY_MINOR
+							.equals(bug.getPriority())) {
 						iconPriority = new ThemeResource(
-								BugPriorityComboBox.PRIORITY_MINOR_IMG);
-					} else if (BugPriorityComboBox.PRIORITY_TRIVIAL.equals(bug
-							.getPriority())) {
+								BugPriorityStatusConstants.PRIORITY_MINOR_IMG);
+					} else if (BugPriorityStatusConstants.PRIORITY_TRIVIAL
+							.equals(bug.getPriority())) {
 						iconPriority = new ThemeResource(
-								BugPriorityComboBox.PRIORITY_TRIVIAL_IMG);
+								BugPriorityStatusConstants.PRIORITY_TRIVIAL_IMG);
 					}
 
 					b.setIcon(iconPriority);
@@ -277,6 +280,54 @@ public class BugTableDisplay extends
 				}
 				b.setWidth("100%");
 				return b;
+
+			}
+		});
+
+		this.addGeneratedColumn("severity", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+
+				final SimpleBug bug = BugTableDisplay.this
+						.getBeanByIndex(itemId);
+
+				ThemeResource iconPriority = new ThemeResource(
+						BugSeverityConstants.MAJOR_IMG);
+				if (StringUtil.isNotNullOrEmpty(bug.getSeverity())) {
+
+					if (BugSeverityConstants.CRITICAL.equals(bug.getSeverity())) {
+						iconPriority = new ThemeResource(
+								BugSeverityConstants.CRITICAL_IMG);
+					} else if (BugSeverityConstants.MAJOR.equals(bug
+							.getSeverity())) {
+						iconPriority = new ThemeResource(
+								BugSeverityConstants.MAJOR_IMG);
+					} else if (BugSeverityConstants.MINOR.equals(bug
+							.getSeverity())) {
+						iconPriority = new ThemeResource(
+								BugSeverityConstants.MINOR_IMG);
+					} else if (BugSeverityConstants.TRIVIAL.equals(bug
+							.getSeverity())) {
+						iconPriority = new ThemeResource(
+								BugSeverityConstants.TRIVIAL_IMG);
+					}
+
+				}
+
+				Embedded iconEmbedded = new Embedded(null, iconPriority);
+				Label lbPriority = new Label(bug.getSeverity());
+				lbPriority.setWidth("70px");
+				FormContainerHorizontalViewField containerField = new FormContainerHorizontalViewField();
+				containerField.addComponentField(iconEmbedded);
+				containerField.getLayout().setComponentAlignment(iconEmbedded,
+						Alignment.MIDDLE_CENTER);
+				containerField.addComponentField(lbPriority);
+				containerField.getLayout().setComponentAlignment(lbPriority,
+						Alignment.MIDDLE_CENTER);
+				return containerField;
 
 			}
 		});

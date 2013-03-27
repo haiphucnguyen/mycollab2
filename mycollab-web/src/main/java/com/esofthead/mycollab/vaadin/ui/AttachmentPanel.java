@@ -130,25 +130,16 @@ public class AttachmentPanel extends VerticalLayout implements
 							int imgWidth = bufferedImage.getWidth();
 							
 							BufferedImage scaledImage = null;
-							if (imgWidth >= imgHeight) {
-								scaledImage = ImageUtil.scaleImage(
-										bufferedImage, 974, 718);
-							} else {
-								float scale;
-								float destWidth = 800;
-								float destHeight = 600;
-								if (imgHeight >= destHeight) {
-									scale = destHeight/imgHeight;
-								} else {
-									if (imgWidth >= destWidth) {
-										scale = destWidth/imgWidth;
-									} else {
-										scale = 1;
-									}
-								}
-								scaledImage = ImageUtil.scaleImage(
-										bufferedImage, scale);
-							}
+							
+							float scale;
+							float destWidth = 974;
+							float destHeight = 718;
+							
+							float scaleX = Math.min(destHeight/imgHeight, 1);
+							float scaleY = Math.min(destWidth/imgWidth, 1);
+							scale = Math.min(scaleX, scaleY);
+							scaledImage = ImageUtil.scaleImage(
+									bufferedImage, scale);
 							
 							ByteArrayOutputStream outStream = new ByteArrayOutputStream();
 							ImageIO.write(scaledImage, fileExt, outStream);
@@ -159,6 +150,9 @@ public class AttachmentPanel extends VerticalLayout implements
 											.toByteArray()));
 						} catch (IOException e) {
 							e.printStackTrace();
+							contentService.saveContent(AppContext.getAccountId(),
+									filePath,
+									new FileInputStream(fileStores.get(fileName)));
 						}
 					} else {
 						contentService.saveContent(AppContext.getAccountId(),
