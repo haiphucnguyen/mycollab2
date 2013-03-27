@@ -268,7 +268,7 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 	}
 	
 	@SuppressWarnings("serial")
-	private class TaskDepot extends Depot {
+	public class TaskDepot extends Depot {
 
 		private TaskDisplayComponent taskDisplayComponent;
 
