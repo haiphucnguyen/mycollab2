@@ -255,7 +255,6 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			headerLayout.setSpacing(true);
 
 			taskListFilterControl = new PopupButton("Active Tasks");
-			taskListFilterControl.setWidth("120px");
 			taskListFilterControl.addStyleName("link");
 
 			VerticalLayout filterBtnLayout = new VerticalLayout();
