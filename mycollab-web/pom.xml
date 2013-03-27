@@ -9,7 +9,7 @@
         <artifactId>parent</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
-    <packaging>war</packaging>
+    <packaging>jar</packaging>
     <properties>
         <vaadinVersion>6.8.8</vaadinVersion>
         <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
@@ -342,6 +342,7 @@
                 <artifactId>maven-war-plugin</artifactId>
                 <version>2.3</version>
                 <configuration>
+                    <archiveClasses>true</archiveClasses>
                     <warName>root</warName>
                 </configuration>
             </plugin>
@@ -417,13 +418,13 @@
                     </webAppConfig>
                 </configuration>
             </plugin>
-            <!-- >
+
             <plugin>
                 <groupId>com.github.wvengen</groupId>
                 <artifactId>proguard-maven-plugin</artifactId>
                 <executions>
                     <execution>
-                        <phase>process-classes</phase>
+                        <phase>package</phase>
                         <goals>
                             <goal>proguard</goal>
                         </goals>
@@ -431,13 +432,16 @@
                 </executions>
                 <configuration>
                     <proguardVersion>4.9</proguardVersion>
+                    <proguardInclude>proguard.conf</proguardInclude>
                     <inFilter>com/esofthead/**</inFilter>
                     <libs>
                         <lib>${java.home}/lib/rt.jar</lib>
                         <lib>${java.home}/lib/jsse.jar</lib>
                     </libs>
-                    <injar>target/classes</injar>
+                    <injar>classes</injar>
+                    <outjar>temp</outjar>
                     <injarNotExistsSkip>true</injarNotExistsSkip>
+                    <maxMemory>1024m</maxMemory>
                 </configuration>
                 <dependencies>
                     <dependency>
@@ -448,7 +452,6 @@
                     </dependency>
                 </dependencies>
             </plugin>
-            -->
         </plugins>
         <pluginManagement>
             <plugins>
