@@ -84,7 +84,6 @@
                    </execution>
                 </executions>
                 <configuration>
-                    <proguardVersion>4.8</proguardVersion>
                     <injar>${project.build.finalName}.jar</injar>
                     <libs>
                         <lib>${java.home}/lib/rt.jar</lib>
@@ -96,13 +95,6 @@
                         <option>-dontoptimize</option>
                     </options>
                 </configuration>
-                <dependencies>
-	                <dependency>
-	                    <groupId>net.sf.proguard</groupId>
-	                    <artifactId>proguard-base</artifactId>
-	                    <version>4.8</version>
-	                </dependency>
-	            </dependencies>
             </plugin>
         </plugins>
     </build>
