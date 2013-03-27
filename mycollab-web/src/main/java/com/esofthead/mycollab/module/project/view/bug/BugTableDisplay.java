@@ -11,7 +11,9 @@ import org.vaadin.peter.contextmenu.ContextMenu;
 import org.vaadin.peter.contextmenu.ContextMenu.ContextMenuItem;
 
 import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -122,6 +124,8 @@ public class BugTableDisplay extends
 
 				});
 				bugSettingBtn.addComponent(menu);
+				bugSettingBtn.setEnabled(CurrentProjectVariables
+						.canWrite(ProjectRolePermissionCollections.BUGS));
 
 				bugSettingBtn.addListener(new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
