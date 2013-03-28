@@ -4,24 +4,27 @@
  */
 package com.esofthead.mycollab.module.project.view.message;
 
+import java.util.List;
+
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
+import com.esofthead.mycollab.module.file.domain.Attachment;
+import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
@@ -90,11 +93,7 @@ public class MessageReadViewImpl extends AbstractView implements
 
 			@Override
 			public Layout getLayout() {
-				AddViewLayout riskAddLayout = new AddViewLayout(
-						message.getTitle(), new ThemeResource(
-								"icons/48/project/message.png"));
-
-				riskAddLayout.addTopControls(createTopPanel());
+				VerticalLayout riskAddLayout = new VerticalLayout();
 
 				HorizontalLayout messageLayout = new HorizontalLayout();
 				messageLayout.setStyleName("message");
@@ -107,7 +106,8 @@ public class MessageReadViewImpl extends AbstractView implements
 				rowLayout.setStyleName("message-container");
 				rowLayout.setWidth("100%");
 
-				Label title = new Label("<strong> Title: </strong>" + message.getTitle(), Label.CONTENT_XHTML);
+				Label title = new Label("<h2 style='color: #006699;'>"
+						+ message.getTitle() + "</h2>", Label.CONTENT_XHTML);
 
 				HorizontalLayout messageHeader = new HorizontalLayout();
 				messageHeader.setStyleName("message-header");
@@ -123,12 +123,13 @@ public class MessageReadViewImpl extends AbstractView implements
 
 				VerticalLayout rightHeader = new VerticalLayout();
 				Label timePostLbl = new Label(
-						DateTimeUtils.getStringDateFromNow(message.getPosteddate()));
+						DateTimeUtils.getStringDateFromNow(message
+								.getPosteddate()));
 				timePostLbl.setSizeUndefined();
 				timePostLbl.setStyleName("time-post");
 				rightHeader.addComponent(timePostLbl);
 				rightHeader.setSizeUndefined();
-				
+
 				messageHeader.addComponent(leftHeader);
 				messageHeader.setExpandRatio(leftHeader, 1.0f);
 				messageHeader.addComponent(rightHeader);
@@ -136,7 +137,7 @@ public class MessageReadViewImpl extends AbstractView implements
 
 				rowLayout.addComponent(messageHeader);
 
-				Label messageContent = new Label("<strong> Description: </strong>" + message.getMessage(),
+				Label messageContent = new Label(message.getMessage(),
 						Label.CONTENT_XHTML);
 				messageContent.setStyleName("message-body");
 				rowLayout.addComponent(messageContent);
@@ -157,21 +158,24 @@ public class MessageReadViewImpl extends AbstractView implements
 								AttachmentConstants.PROJECT_MESSAGE,
 								message.getId());
 				rowLayout.addComponent(attachmentDisplayComp);
-				
-				
+
+				AttachmentService attachmentService = AppContext
+						.getSpringBean(AttachmentService.class);
+				List<Attachment> attachments = attachmentService
+						.findByAttachmentId(
+								AttachmentConstants.PROJECT_MESSAGE,
+								message.getId());
+				if (attachments == null || attachments.isEmpty()) {
+					attachmentField.setVisible(false);
+				}
 
 				messageLayout.addComponent(rowLayout);
 				messageLayout.setExpandRatio(rowLayout, 1.0f);
 
-				riskAddLayout.addBottomControls(createBottomPanel());
-
-				riskAddLayout.addBody(messageLayout);
+				riskAddLayout.addComponent(messageLayout);
+				riskAddLayout.addComponent(createBottomPanel());
 
 				return riskAddLayout;
-			}
-
-			protected Layout createTopPanel() {
-				return new HorizontalLayout();
 			}
 
 			protected Layout createBottomPanel() {
