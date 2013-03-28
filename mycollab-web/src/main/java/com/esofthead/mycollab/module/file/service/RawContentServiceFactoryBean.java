@@ -33,7 +33,7 @@ public class RawContentServiceFactoryBean extends
 	}
 
 	@Override
-	public Class<?> getObjectType() {
+	public Class<RawContentService> getObjectType() {
 		return RawContentService.class;
 	}
 

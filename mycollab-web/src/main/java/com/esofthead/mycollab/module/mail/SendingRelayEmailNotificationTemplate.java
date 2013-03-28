@@ -36,6 +36,7 @@ public class SendingRelayEmailNotificationTemplate {
 					"META-INF/spring/crm-context.xml",
 					"META-INF/spring/file-context.xml",
 					"META-INF/spring/project-context.xml",
+					"META-INF/spring/rest-context.xml",
 					"META-INF/spring/tracker-context.xml",
 					"META-INF/spring/user-context.xml");
 		}

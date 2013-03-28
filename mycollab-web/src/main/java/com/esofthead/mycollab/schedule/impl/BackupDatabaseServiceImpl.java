@@ -23,23 +23,23 @@ public class BackupDatabaseServiceImpl {
 	
 	@Scheduled(fixedDelay = 86400)
 	public void backupDatabase() {
-		System.out.println("\r\nStarting backup database ----------------\r\n");
-		try {
-			DbConfiguration config = new DbConfiguration();
-			config.setPassword(ApplicationProperties.getProperty(ApplicationProperties.DB_PASSWORD));
-			config.setUserName(ApplicationProperties.getProperty(ApplicationProperties.DB_USERNAME));
-			config.setUrl(ApplicationProperties.getProperty(ApplicationProperties.DB_URL));
-			
-			String dbModel = ApplicationProperties.getProperty(ApplicationProperties.DB_DBMODEL);
-			config.setMySqlModel(null != dbModel && dbModel.toUpperCase().equals("MYSQL"));
-			
-			String bkFolder = ApplicationProperties.getProperty(ApplicationProperties.BK_FOLDER);
-			
-			OutputStream outStream = new FileOutputStream(new File(String.format("%s/%s.zip", bkFolder, today())));
-			DbExport.backupDB(config, outStream, true);
-		} catch (Exception ex) {
-			System.out.println(ex.getMessage());
-		}
-		System.out.println("\r\nEnd backup database ----------------\r\n");
+//		System.out.println("\r\nStarting backup database ----------------\r\n");
+//		try {
+//			DbConfiguration config = new DbConfiguration();
+//			config.setPassword(ApplicationProperties.getProperty(ApplicationProperties.DB_PASSWORD));
+//			config.setUserName(ApplicationProperties.getProperty(ApplicationProperties.DB_USERNAME));
+//			config.setUrl(ApplicationProperties.getProperty(ApplicationProperties.DB_URL));
+//			
+//			String dbModel = ApplicationProperties.getProperty(ApplicationProperties.DB_DBMODEL);
+//			config.setMySqlModel(null != dbModel && dbModel.toUpperCase().equals("MYSQL"));
+//			
+//			String bkFolder = ApplicationProperties.getProperty(ApplicationProperties.BK_FOLDER);
+//			
+//			OutputStream outStream = new FileOutputStream(new File(String.format("%s/%s.zip", bkFolder, today())));
+//			DbExport.backupDB(config, outStream, true);
+//		} catch (Exception ex) {
+//			System.out.println(ex.getMessage());
+//		}
+//		System.out.println("\r\nEnd backup database ----------------\r\n");
 	}
 }

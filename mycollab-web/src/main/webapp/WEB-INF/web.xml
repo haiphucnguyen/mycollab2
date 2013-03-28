@@ -42,8 +42,9 @@
     <!-- RESTLET PARAMS -->
     <context-param>
         <param-name>org.restlet.application</param-name>
-        <param-value>com.esofthead.mycollab.rest.RestApp</param-value>
+        <param-value>restApp</param-value>
     </context-param>
+    
     <servlet>
         <servlet-name>MyCollabApplication</servlet-name>
         <servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
@@ -60,7 +61,7 @@
     <!-- REST ADAPTER -->
     <servlet>
         <servlet-name>RestletServlet</servlet-name>
-        <servlet-class>org.restlet.ext.servlet.ServerServlet</servlet-class>
+        <servlet-class>org.restlet.ext.spring.SpringServerServlet</servlet-class>
     </servlet>
     
     <!-- Catch api request -->

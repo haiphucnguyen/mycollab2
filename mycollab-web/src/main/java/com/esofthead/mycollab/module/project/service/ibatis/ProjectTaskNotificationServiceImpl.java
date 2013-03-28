@@ -4,8 +4,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import net.bull.javamelody.MonitoredWithSpring;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -40,7 +38,6 @@ public class ProjectTaskNotificationServiceImpl implements
 	}
 
 	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_NOTIFICATION_INTERVAL)
-	@MonitoredWithSpring
 	@Override
 	public void runNotification() {
 		new SendingRelayEmailNotificationTemplate(this)
