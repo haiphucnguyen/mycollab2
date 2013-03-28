@@ -10,11 +10,14 @@ import org.junit.runner.RunWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 
+import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.test.DataSet;
 import com.esofthead.mycollab.test.EngroupClassRunner;
@@ -38,5 +41,22 @@ public class StandupReportServiceTest extends ServiceTest {
 				.findPagableListByCriteria(new SearchRequest<StandupReportSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
 		Assert.assertEquals(1, reports.size());
+	}
+
+	@Test
+	@DataSet
+	public void testGetListCount() {
+		StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
+		criteria.setProjectId(new NumberSearchField(1));
+		Date from = new GregorianCalendar(2013, 2, 1).getTime();
+		Date to = new GregorianCalendar(2013, 2, 31).getTime();
+		criteria.setReportDateRange(new RangeDateSearchField(from, to));
+		List<GroupItem> reportsCount = reportService.getReportsCount(criteria);
+
+		Assert.assertEquals(2, reportsCount.size());
+		for (GroupItem item:reportsCount) {
+			System.out.println(BeanUtility.printBeanObj(item));
+		}
+		
 	}
 }

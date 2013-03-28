@@ -7,6 +7,7 @@ import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -59,6 +60,11 @@ public class StandupReportServiceImpl extends
 		}
 
 		return null;
+	}
+
+	@Override
+	public List<GroupItem> getReportsCount(StandupReportSearchCriteria criteria) {
+		return standupReportMapperExt.getReportsCount(criteria);
 	}
 
 }

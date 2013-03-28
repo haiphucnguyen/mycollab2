@@ -20,6 +20,11 @@
         <if test="onDate != null">
             <![CDATA[${onDate.operation} CAST(m_prj_standup.forday AS DATE) = #{onDate.value}]]>
         </if>
+        <if test = "reportDateRange != null">
+        <![CDATA[
+            ${reportDateRange.operation} CAST(m_prj_standup.forday AS DATE) >= #{reportDateRange.from} AND CAST(m_prj_standup.forday AS DATE) <= #{reportDateRange.to}
+            ]]>
+        </if>
     </sql>
 
     <sql id="orderStatement">
@@ -66,5 +71,20 @@
         <include refid="selectStandupReport" />
 
         WHERE m_prj_standup.id=#{standupId, javaType=INTEGER}
+    </select>
+
+    <select id="getReportsCount" parameterType="StandupReportSearchCriteria"
+        resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap">
+        <![CDATA[
+                SELECT m_prj_standup.projectId AS groupid, 
+                    COUNT(*)  AS value,
+                     DATE_FORMAT(m_prj_standup.forDay,"%Y-%m-%d") as groupname
+        FROM m_prj_standup]]>
+        <trim prefix="WHERE" prefixOverrides="AND | OR ">
+            <include
+                refid="querySearchCriteria" />
+        </trim>
+        GROUP BY groupname
+        ORDER BY groupname
     </select>
 </mapper>

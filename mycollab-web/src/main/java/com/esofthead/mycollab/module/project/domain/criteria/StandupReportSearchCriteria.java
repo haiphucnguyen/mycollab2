@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.project.domain.criteria;
 
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.core.arguments.RangeDateTimeSearchField;
+import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 
@@ -10,9 +10,9 @@ public class StandupReportSearchCriteria extends SearchCriteria {
 	private NumberSearchField projectId;
 
 	private StringSearchField logBy;
-	
-	private RangeDateTimeSearchField reportDateRange;
-	
+
+	private RangeDateSearchField reportDateRange;
+
 	private DateSearchField onDate;
 
 	public NumberSearchField getProjectId() {
@@ -31,11 +31,11 @@ public class StandupReportSearchCriteria extends SearchCriteria {
 		this.logBy = logBy;
 	}
 
-	public RangeDateTimeSearchField getReportDateRange() {
+	public RangeDateSearchField getReportDateRange() {
 		return reportDateRange;
 	}
 
-	public void setReportDateRange(RangeDateTimeSearchField reportDateRange) {
+	public void setReportDateRange(RangeDateSearchField reportDateRange) {
 		this.reportDateRange = reportDateRange;
 	}
 
