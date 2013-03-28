@@ -2081,6 +2081,7 @@ input.v-textfield-errorField {
 
 .message-header .time-post {
 	color: gray;
+	font-size: 10px;
 }
 
 .message.important-message .message-header .notification {
@@ -2100,8 +2101,8 @@ input.v-textfield-errorField {
 	padding-left: 5px;
 }
 
-.message.important-message .message-body p {
-	color: #aea79e;
+.message.important-message .message-body {
+	color: #e5e5e5;
 }
 
 .message-body p {

@@ -100,10 +100,9 @@ public class MessageListViewImpl extends AbstractView implements
 		@Override
 		public Component generateRow(final SimpleMessage message, int rowIndex) {
 			HorizontalLayout messageLayout = new HorizontalLayout();
+			messageLayout.setStyleName("message");
 			if (message.getIsstick() != null && message.getIsstick()) {
-				messageLayout.setStyleName("messageStick");
-			} else {
-				messageLayout.setStyleName("message");
+				messageLayout.addStyleName("important-message");
 			}
 			messageLayout.setWidth("100%");
 			messageLayout.addComponent(UserAvatarControlFactory
@@ -320,7 +319,8 @@ public class MessageListViewImpl extends AbstractView implements
 							createAddMessageLayout();
 						}
 					});
-			createMessageBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MESSAGES));
+			createMessageBtn.setEnabled(CurrentProjectVariables
+					.canWrite(ProjectRolePermissionCollections.MESSAGES));
 			createMessageBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			createMessageBtn
 					.setIcon(new ThemeResource("icons/16/addRecord.png"));
@@ -368,7 +368,7 @@ public class MessageListViewImpl extends AbstractView implements
 			controls.addComponent(uploadExt);
 			controls.setExpandRatio(uploadExt, 1.0f);
 			controls.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
-			
+
 			final CheckBox chkIsStick = new CheckBox("Is Stick");
 			controls.addComponent(chkIsStick);
 			controls.setComponentAlignment(chkIsStick, Alignment.MIDDLE_CENTER);
@@ -419,7 +419,7 @@ public class MessageListViewImpl extends AbstractView implements
 			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			controls.addComponent(saveBtn);
 			controls.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
-			
+
 			this.addComponent(controls);
 		}
 	}
