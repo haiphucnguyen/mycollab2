@@ -112,7 +112,7 @@ public class PagedBeanTable2<SearchService extends ISearchableService<S>, S exte
 		}
 
 		if (totalPage > 1) {
-			if (this.getComponentCount() == 1) {
+			if (this.getComponentCount() == 0 || this.getComponentCount() == 1) {
 				this.addComponent(createControls());
 			}
 			this.setCurrentPage(currentPage);

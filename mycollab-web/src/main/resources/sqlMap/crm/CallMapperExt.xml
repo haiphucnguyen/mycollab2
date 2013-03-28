@@ -4,7 +4,7 @@
 
     <resultMap
         id="SimpleCallResult"
-        extends="com.esofthead.mycollab.module.crm.dao.CallMapper.BaseResultMap"
+        extends="com.esofthead.mycollab.module.crm.dao.CallMapper.ResultMapWithBLOBs"
         type="com.esofthead.mycollab.module.crm.domain.SimpleCall" >
 
         <result

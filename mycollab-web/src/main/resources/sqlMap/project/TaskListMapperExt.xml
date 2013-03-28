@@ -3,7 +3,7 @@
 <mapper namespace="com.esofthead.mycollab.module.project.dao.TaskListMapperExt" >
     <resultMap
         id="SimpleTaskListResult"
-        extends="com.esofthead.mycollab.module.project.dao.TaskListMapper.BaseResultMap"
+        extends="com.esofthead.mycollab.module.project.dao.TaskListMapper.ResultMapWithBLOBs"
         type="com.esofthead.mycollab.module.project.domain.SimpleTaskList" >
         <result
             column="milestoneName"

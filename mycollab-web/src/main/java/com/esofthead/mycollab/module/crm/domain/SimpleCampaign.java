@@ -17,8 +17,8 @@
  */
 package com.esofthead.mycollab.module.crm.domain;
 
-
-public class SimpleCampaign extends Campaign {
+public class SimpleCampaign extends CampaignWithBLOBs {
+	private static final long serialVersionUID = 1L;
 	private String assignUserFullName;
 
 	public String getAssignUserFullName() {

@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.project.dao.ProjectMapperExt">
     <resultMap
-        extends="com.esofthead.mycollab.module.project.dao.ProjectMapper.BaseResultMap"
+        extends="com.esofthead.mycollab.module.project.dao.ProjectMapper.ResultMapWithBLOBs"
         id="SimpleProjectResult" type="com.esofthead.mycollab.module.project.domain.SimpleProject">
         <result column="ownerName" jdbcType="VARCHAR" property="ownerName" />
         <result column="accountName" jdbcType="VARCHAR" property="accountName" />

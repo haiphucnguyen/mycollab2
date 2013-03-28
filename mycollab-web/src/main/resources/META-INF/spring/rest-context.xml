@@ -8,7 +8,7 @@
             <map>
                 <entry key="/signin">
                     <bean class="org.restlet.ext.spring.SpringFinder">
-                        <lookup-method name="create" bean="restSignin" />
+                        <lookup-method name="create" bean="restUserResource" />
                     </bean>
                 </entry>
             </map>

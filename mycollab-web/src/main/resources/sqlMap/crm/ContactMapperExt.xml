@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.esofthead.mycollab.module.crm.dao.ContactMapperExt">
-    <resultMap extends="com.esofthead.mycollab.module.crm.dao.ContactMapper.BaseResultMap"
+    <resultMap extends="com.esofthead.mycollab.module.crm.dao.ContactMapper.ResultMapWithBLOBs"
                    id="SimpleContactResult" type="com.esofthead.mycollab.module.crm.domain.SimpleContact">
         <result column="assignUserFullName" jdbcType="VARCHAR"
                         property="assignUserFullName" />

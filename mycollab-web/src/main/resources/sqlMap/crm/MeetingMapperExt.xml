@@ -4,7 +4,7 @@
 
     <resultMap
         id="SimpleMeetingResult"
-        extends="com.esofthead.mycollab.module.crm.dao.MeetingMapper.BaseResultMap"
+        extends="com.esofthead.mycollab.module.crm.dao.MeetingMapper.ResultMapWithBLOBs"
         type="com.esofthead.mycollab.module.crm.domain.SimpleMeeting" >
 
         <result

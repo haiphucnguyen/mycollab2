@@ -3,7 +3,7 @@
 <mapper namespace="com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt">
 
     <resultMap type="com.esofthead.mycollab.module.tracker.domain.SimpleComponent"
-                   extends="com.esofthead.mycollab.module.tracker.dao.ComponentMapper.BaseResultMap"
+                   extends="com.esofthead.mycollab.module.tracker.dao.ComponentMapper.ResultMapWithBLOBs"
                    id="SimpleComponentResult">
 
         <result column="userLeadFullName" jdbcType="VARCHAR" property="userLeadFullName" />

@@ -4,7 +4,7 @@
 
     <resultMap
         type="com.esofthead.mycollab.module.tracker.domain.SimpleVersion"
-        extends="com.esofthead.mycollab.module.tracker.dao.VersionMapper.BaseResultMap"
+        extends="com.esofthead.mycollab.module.tracker.dao.VersionMapper.ResultMapWithBLOBs"
         id="SimpleVersionResult">
         <result column="numOpenBugs" jdbcType="INTEGER" property="numOpenBugs" />
         <result column="numBugs" jdbcType="INTEGER" property="numBugs" />

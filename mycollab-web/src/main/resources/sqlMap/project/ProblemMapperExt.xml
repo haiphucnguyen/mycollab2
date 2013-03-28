@@ -4,7 +4,7 @@
 
     <resultMap
         id="ProblemResult"
-        extends="com.esofthead.mycollab.module.project.dao.ProblemMapper.BaseResultMap"
+        extends="com.esofthead.mycollab.module.project.dao.ProblemMapper.ResultMapWithBLOBs"
         type="com.esofthead.mycollab.module.project.domain.SimpleProblem" >
 
         <result

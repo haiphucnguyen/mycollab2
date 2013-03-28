@@ -6,7 +6,7 @@ import java.util.List;
 
 import com.esofthead.mycollab.module.file.domain.Attachment;
 
-public class SimpleBug extends Bug {
+public class SimpleBug extends BugWithBLOBs {
 
 	private static final long serialVersionUID = 1L;
 	private String loguserFullName;
