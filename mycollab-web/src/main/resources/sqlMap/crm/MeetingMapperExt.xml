@@ -29,7 +29,7 @@
             m_crm_meeting.createdUser, m_crm_meeting.sAccountId, m_crm_meeting.location, m_crm_meeting.description, 
             m_crm_meeting.isRecurrence, m_crm_meeting.recurrenceType, m_crm_meeting.recurrenceStartDate, 
             m_crm_meeting.recurrenceEndDate, m_crm_meeting.contactType, m_crm_meeting.contactTypeId, m_crm_meeting.isClosed,
-            concat(s_user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), s_user.lastname) as createdUserFullName
+            concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) as createdUserFullName
         FROM m_crm_meeting
             LEFT OUTER JOIN s_user ON (m_crm_meeting.createdUser = s_user.username) 
     </sql>

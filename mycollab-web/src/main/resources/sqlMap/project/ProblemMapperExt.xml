@@ -58,8 +58,8 @@
                  m_prj_problem.actualstartdate, m_prj_problem.actualenddate, 
                  m_prj_problem.createdTime, m_prj_problem.lastUpdatedTime, m_prj_problem.type, m_prj_problem.typeid,
                  m_prj_problem.level, m_prj_problem.resolution, m_prj_problem.problemsource, m_prj_problem.state,
-                 concat(raisedUser.firstname, ' ', IFNULL(raisedUser.middlename + ' ', ''), raisedUser.lastname) AS raisedByUserFullName,
-                 concat(assignedUser.firstname, ' ', IFNULL(assignedUser.middlename + ' ', ''), assignedUser.lastname) AS assignedUserFullName 
+                 concat(raisedUser.firstname, ' ', LTRIM(IFNULL(raisedUser.middlename || ' ', '')), raisedUser.lastname) AS raisedByUserFullName,
+                 concat(assignedUser.firstname, ' ', LTRIM(IFNULL(assignedUser.middlename || ' ', '')), assignedUser.lastname) AS assignedUserFullName 
                  
           FROM m_prj_problem
               LEFT OUTER JOIN s_user as raisedUser ON (m_prj_problem.raisedbyuser=raisedUser.username)

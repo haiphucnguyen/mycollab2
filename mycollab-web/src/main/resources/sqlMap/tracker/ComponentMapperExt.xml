@@ -31,7 +31,7 @@
           SELECT m_tracker_component.id, m_tracker_component.projectid, m_tracker_component.componentname, 
                 m_tracker_component.userlead, m_tracker_component.description, 
                 m_tracker_component.sAccountId, m_tracker_component.lastUpdatedTime, m_tracker_component.createdTime,
-               concat(s_user.firstname,  ' ', IFNULL(s_user.middlename + ' ', ''), s_user.lastname) AS userLeadFullName,
+               concat(s_user.firstname,  ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) AS userLeadFullName,
                (SELECT COUNT(*) 
                         FROM m_tracker_bug, m_tracker_bug_related_item 
                         WHERE m_tracker_bug.id=m_tracker_bug_related_item.bugid 

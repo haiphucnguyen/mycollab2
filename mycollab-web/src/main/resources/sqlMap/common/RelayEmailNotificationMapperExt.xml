@@ -25,7 +25,7 @@
                     s_relay_email_notification.typeid, s_relay_email_notification.action, 
                     s_relay_email_notification.extraTypeId,
                     s_relay_email_notification.changeBy, s_relay_email_notification.changeComment,
-                    concat(changeUser.firstname, ' ', IFNULL(changeUser.middlename + ' ', ''), changeUser.lastname) as changeByUserFullName,
+                    concat(changeUser.firstname, ' ', LTRIM(IFNULL(changeUser.middlename + ' ', '')), changeUser.lastname) as changeByUserFullName,
                     notifier.firstname AS notifiers_firstname, notifier.lastname AS notifiers_lastname,
                     notifier.email AS notifiers_email
                 FROM s_relay_email_notification

@@ -27,7 +27,7 @@
         <if test="assignUserName != null">
             <![CDATA[
             ${assignUserName.operation}
-            concat(s_user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), s_user.lastname) like '%${assignUserName.value}%'
+            concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) like '%${assignUserName.value}%'
             ]]>
         </if>
         <if test="assignUsers != null">
@@ -155,7 +155,7 @@
                 ${assignUserName.operation}
                 (SELECT COUNT(*) FROM s_user AS user
                 WHERE m_crm_contact.assignUser = user.username 
-                   AND (concat(user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), user.lastname) like '%${assignUserName.value}%') ) > 0
+                   AND (concat(user.firstname, ' ', LTRIM(IFNULL(user.middlename || ' ', '')), user.lastname) like '%${assignUserName.value}%') ) > 0
             ]]>
         </if>
         <if test="assignUsers != null">
@@ -254,7 +254,7 @@
                m_crm_contact.otherAddress, m_crm_contact.otherCity, m_crm_contact.otherState, m_crm_contact.otherPostalCode, m_crm_contact.otherCountry, 
                m_crm_contact.description, m_crm_contact.title, m_crm_contact.assistantPhone, m_crm_contact.email, m_crm_contact.department, 
                m_crm_contact.createdTime, m_crm_contact.createdUser, m_crm_contact.sAccountId, m_crm_contact.assignUser, 
-               concat(s_user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), s_user.lastname) as assignUserFullName,
+               concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) as assignUserFullName,
                concat (m_crm_contact.firstname, ' ', m_crm_contact.lastname) AS contactName,
                m_crm_contact.lastUpdatedTime, m_crm_account.id AS account_id, m_crm_account.accountName as account_accountName
 

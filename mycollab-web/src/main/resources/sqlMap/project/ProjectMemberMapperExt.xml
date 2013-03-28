@@ -25,7 +25,7 @@
         <![CDATA[
           SELECT m_prj_member.id, m_prj_member.username, m_prj_member.projectId, m_prj_member.joinDate, m_prj_member.projectRoleId, 
                  m_prj_member.isAdmin,
-                 concat(s_user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), s_user.lastname) AS memberFullName,
+                 concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) AS memberFullName,
                  m_prj_role.rolename
             FROM m_prj_member
               LEFT OUTER JOIN s_user ON (m_prj_member.username=s_user.username)
@@ -84,7 +84,7 @@
 		SELECT m_prj_member.id, m_prj_member.username, m_prj_member.projectId,
 		m_prj_member.joinDate, m_prj_member.projectRoleId,
 		m_prj_member.isAdmin,
-		concat(s_user.firstname, ' ', IFNULL(s_user.middlename + ' ', ''), s_user.lastname) AS
+		concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) AS
 		memberFullName
 		FROM m_prj_member, s_user
 		WHERE (m_prj_member.username=s_user.username AND
