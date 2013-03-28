@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
-import org.vaadin.hene.splitbutton.PopupButtonControl;
-
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugEvent;
@@ -11,16 +9,13 @@ import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
-import com.esofthead.mycollab.vaadin.events.HasPopupActionHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSearchHandlers;
 import com.esofthead.mycollab.vaadin.events.HasSelectableItemHandlers;
-import com.esofthead.mycollab.vaadin.events.HasSelectionOptionHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
-import com.esofthead.mycollab.vaadin.ui.SelectionOptionButton;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
@@ -32,12 +27,10 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 
 	private static final long serialVersionUID = 1L;
 	private final BugSearchPanel problemSearchPanel;
-	private SelectionOptionButton selectOptionButton;
 	private BugTableDisplay tableItem;
 	private final VerticalLayout problemListLayout;
-	private PopupButtonControl tableActionControls;
-	private final Label selectedItemsNumberLabel = new Label();
 	private Label titleLbl;
+	private Button exportBtn;
 
 	public BugListViewImpl() {
 		this.setSpacing(true);
@@ -60,16 +53,16 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 	private void generateDisplayTable() {
 
 		if (ScreenSize.hasSupport1024Pixels()) {
-			tableItem = new BugTableDisplay(new String[] { "id",
-					"bugkey", "summary", "assignuserFullName", "severity",
-					"resolution" }, new String[] { "", "#", "Summary",
-					"Assigned User", "Severity", "Resolution" });
+			tableItem = new BugTableDisplay(
+					new String[] { "id", "bugkey", "summary",
+							"assignuserFullName", "severity", "resolution" },
+					new String[] { "", "#", "Summary", "Assigned User",
+							"Severity", "Resolution" });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new BugTableDisplay(new String[] { "id",
-					"bugkey", "summary", "assignuserFullName", "severity",
-					"resolution", "duedate" }, new String[] { "", "#",
-					"Summary", "Assigned User", "Severity", "Resolution",
-					"Due Date" });
+			tableItem = new BugTableDisplay(new String[] { "id", "bugkey",
+					"summary", "assignuserFullName", "severity", "resolution",
+					"duedate" }, new String[] { "", "#", "Summary",
+					"Assigned User", "Severity", "Resolution", "Due Date" });
 		}
 
 		tableItem
@@ -104,46 +97,23 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 	private ComponentContainer constructTableActionControls() {
 		HorizontalLayout layout = new HorizontalLayout();
 		layout.setSpacing(true);
+		layout.setWidth("100%");
 
-		selectOptionButton = new SelectionOptionButton(tableItem);
-		layout.addComponent(selectOptionButton);
+		Label lbEmpty = new Label("");
+		layout.addComponent(lbEmpty);
+		layout.setExpandRatio(lbEmpty, 1.0f);
 
-		Button deleteBtn = new Button("Delete");
-        deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.BUGS));
-        
-		tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		tableActionControls.addOptionItem("mail", "Mail");
-		tableActionControls.addOptionItem("export", "Export");
-		tableActionControls.setVisible(false);
-
-		layout.addComponent(tableActionControls);
-		layout.addComponent(selectedItemsNumberLabel);
-		layout.setComponentAlignment(selectedItemsNumberLabel,
-				Alignment.MIDDLE_CENTER);
+		exportBtn = new Button("Export");
+		exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		exportBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.BUGS));
+		layout.addComponent(exportBtn);
 		return layout;
 	}
-
+	
 	@Override
-	public void enableActionControls(int numOfSelectedItems) {
-		tableActionControls.setVisible(true);
-		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
-	}
-
-	@Override
-	public void disableActionControls() {
-		tableActionControls.setVisible(false);
-		selectOptionButton.setSelectedChecbox(false);
-		selectedItemsNumberLabel.setValue("");
-	}
-
-	@Override
-	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-		return selectOptionButton;
-	}
-
-	@Override
-	public HasPopupActionHandlers getPopupActionHandlers() {
-		return tableActionControls;
+	public Button getExportBtn() {
+		return exportBtn;
 	}
 
 	@Override

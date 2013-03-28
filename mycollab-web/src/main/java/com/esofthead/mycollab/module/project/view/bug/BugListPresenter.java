@@ -1,5 +1,9 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
 import com.esofthead.mycollab.module.file.ExportStreamResource;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -9,39 +13,35 @@ import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.PagableHandler;
-import com.esofthead.mycollab.vaadin.events.PopupActionHandler;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.events.SelectableItemHandler;
-import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
-import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.StreamResource;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import org.vaadin.dialogs.ConfirmDialog;
 
 public class BugListPresenter extends AbstractPresenter<BugListView> implements
 		ListPresenter<BugSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
-	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
-			"summary", "assignuserFullName", "severity", "resolution",
+	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {"bugkey",
+			"summary", "assignuserFullName", "severity", "priority", "status", "milestoneid",  "resolution",
 			"duedate" };
-	private static final String[] EXPORT_DISPLAY_NAMES = new String[] {
-			"Summary", "Assigned User", "Severity", "Resolution", "Due Date" };
+	private static final String[] EXPORT_DISPLAY_NAMES = new String[] {"Key",
+			"Summary", "Assigned User", "Severity", "Priority", "Status", "Milestone", "Resolution", "Due Date" };
 	private BugService bugService;
 	private BugSearchCriteria searchCriteria;
 	private boolean isSelectAll = false;
 
+	@SuppressWarnings("serial")
 	public BugListPresenter() {
 		super(BugListView.class);
 
@@ -77,88 +77,6 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 					}
 				});
 
-		view.getOptionSelectionHandlers().addSelectionOptionHandler(
-				new SelectionOptionHandler() {
-					@Override
-					public void onSelectCurrentPage() {
-						isSelectAll = false;
-						selectAllItemsInCurrentPage();
-
-						checkWhetherEnableTableActionControl();
-					}
-
-					@Override
-					public void onDeSelect() {
-						Collection<SimpleBug> currentDataList = view
-								.getPagedBeanTable().getCurrentDataList();
-						isSelectAll = false;
-						for (SimpleBug item : currentDataList) {
-							item.setSelected(false);
-							CheckBox checkBox = (CheckBox) item.getExtraData();
-							checkBox.setValue(false);
-						}
-
-						checkWhetherEnableTableActionControl();
-
-					}
-
-					@Override
-					public void onSelectAll() {
-						isSelectAll = true;
-						selectAllItemsInCurrentPage();
-
-						checkWhetherEnableTableActionControl();
-					}
-				});
-
-		view.getPopupActionHandlers().addPopupActionHandler(
-				new PopupActionHandler() {
-					@Override
-					public void onSelect(String id, String caption) {
-						if ("delete".equals(id)) {
-							ConfirmDialog.show(view.getWindow(),
-									"Please Confirm:",
-									"Are you sure to delete selected items: ",
-									"Yes", "No", new ConfirmDialog.Listener() {
-										private static final long serialVersionUID = 1L;
-
-										@Override
-										public void onClose(ConfirmDialog dialog) {
-											if (dialog.isConfirmed()) {
-												deleteSelectedItems();
-											}
-										}
-									});
-						} else if ("mail".equals(id)) {
-							view.getWidget().getWindow()
-									.addWindow(new MailFormWindow());
-						} else if ("export".equals(id)) {
-							Resource res = null;
-
-							if (isSelectAll) {
-								res = new StreamResource(
-										new ExportStreamResource.AllItems<BugSearchCriteria>(
-												EXPORT_VISIBLE_COLUMNS,
-												EXPORT_DISPLAY_NAMES,
-												AppContext
-														.getSpringBean(BugService.class),
-												searchCriteria), "export.csv",
-										view.getApplication());
-							} else {
-								List tableData = view.getPagedBeanTable()
-										.getCurrentDataList();
-								res = new StreamResource(
-										new ExportStreamResource.ListData(
-												EXPORT_VISIBLE_COLUMNS,
-												EXPORT_DISPLAY_NAMES, tableData),
-										"export.csv", view.getApplication());
-							}
-
-							view.getWidget().getWindow().open(res, "_blank");
-						}
-					}
-				});
-
 		view.getSelectableItemHandlers().addSelectableItemHandler(
 				new SelectableItemHandler<SimpleBug>() {
 					@Override
@@ -169,6 +87,19 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 						checkWhetherEnableTableActionControl();
 					}
 				});
+		view.getExportBtn().addListener(new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				Resource res = new StreamResource(
+						new ExportStreamResource.ExcelOutput<BugSearchCriteria>(
+								EXPORT_VISIBLE_COLUMNS, EXPORT_DISPLAY_NAMES,
+								AppContext.getSpringBean(BugService.class),
+								new BugSearchCriteria()), "bug_list.xls", view
+								.getApplication());
+				view.getWidget().getWindow().open(res, "_blank");
+			}
+		});
 	}
 
 	private void selectAllItemsInCurrentPage() {
@@ -190,11 +121,6 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 				countItems++;
 			}
 		}
-		if (countItems > 0) {
-			view.enableActionControls(countItems);
-		} else {
-			view.disableActionControls();
-		}
 	}
 
 	@Override
@@ -214,8 +140,8 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 					.getView(ProjectBreadcrumb.class);
 			breadcrumb.gotoBugList();
 		} else {
-    		MessageConstants.showMessagePermissionAlert();
-    	}
+			MessageConstants.showMessagePermissionAlert();
+		}
 	}
 
 	@Override
