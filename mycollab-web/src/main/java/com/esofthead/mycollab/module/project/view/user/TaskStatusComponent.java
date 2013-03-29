@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
@@ -49,7 +50,8 @@ public class TaskStatusComponent extends Depot {
 	private static LabelStringGenerator menuLinkGenerator = new TaskStatusLinkLabelStringGenerator();
 
 	public TaskStatusComponent() {
-		super("Openned Tasks", new VerticalLayout());
+		super(AppContext.getMessage(ProjectCommonI18nEnum.TASKS_TITLE),
+				new VerticalLayout());
 
 		taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>(
 				AppContext.getSpringBean(ProjectGenericTaskService.class),

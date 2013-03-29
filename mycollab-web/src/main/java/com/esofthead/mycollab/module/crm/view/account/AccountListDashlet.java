@@ -9,6 +9,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
@@ -33,7 +34,8 @@ public class AccountListDashlet extends Depot {
 					"email" }, new String[] { "Name", "Email" });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
 			tableItem = new AccountTableDisplay(new String[] { "accountname",
-					"phoneoffice", "email" }, new String[] { "Name", "Phone",
+					"phoneoffice", "email" }, new String[] { "Name",
+					AppContext.getMessage(CrmCommonI18nEnum.OFFICE_PHONE),
 					"Email" });
 		}
 

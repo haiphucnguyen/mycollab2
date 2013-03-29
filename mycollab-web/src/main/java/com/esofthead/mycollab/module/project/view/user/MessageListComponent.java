@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.view.parameters.MessageScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
@@ -34,7 +35,8 @@ public class MessageListComponent extends Depot {
 	private DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage> messageList;
 
 	public MessageListComponent() {
-		super("Latest News", new VerticalLayout());
+		super(AppContext.getMessage(ProjectCommonI18nEnum.NEWS_TITLE),
+				new VerticalLayout());
 
 		messageList = new DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage>(
 				AppContext.getSpringBean(MessageService.class),
