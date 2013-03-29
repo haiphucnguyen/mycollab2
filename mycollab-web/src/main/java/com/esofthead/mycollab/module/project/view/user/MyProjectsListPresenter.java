@@ -219,6 +219,11 @@ public class MyProjectsListPresenter extends
 	}
 
 	@Override
+	public void go(ComponentContainer container, ScreenData<?> data) {
+		super.go(container, data, false);
+	}
+
+	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		MyProjectsContainer projectContainer = (MyProjectsContainer) container;
 		projectContainer.removeAllComponents();

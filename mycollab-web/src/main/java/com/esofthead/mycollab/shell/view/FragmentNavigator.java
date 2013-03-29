@@ -21,7 +21,7 @@ public class FragmentNavigator {
 
 	}
 
-	public void navigateByFragement(String fragement) {
+	public static void navigateByFragement(String fragement) {
 		if (fragement != null && fragement.length() > 0) {
 			String[] tokens = fragement.split("/");
 			shellUrlResolver.handle(tokens);
