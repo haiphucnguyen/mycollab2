@@ -3,6 +3,7 @@ package com.esofthead.mycollab.web;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
@@ -43,12 +44,14 @@ public class MyCollabApplication extends Application {
 		Throwable e = event.getThrowable();
 		if (e instanceof UserInvalidInputException) {
 			getMainWindow().showNotification(
-					"Something went wrong: " + e.getMessage(),
-					Notification.TYPE_WARNING_MESSAGE);
+					AppContext.getMessage(
+							GenericI18Enum.ERROR_USER_INPUT_MESSAGE,
+							e.getMessage()), Notification.TYPE_WARNING_MESSAGE);
 		} else {
 			getMainWindow()
 					.showNotification(
-							"An internal error has occurred, it is logged into our database. We will resolved soon. Sorry for inconvenience",
+							AppContext
+									.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE),
 							Notification.TYPE_ERROR_MESSAGE);
 
 			log.error("An uncaught exception occurred: ", event.getThrowable());

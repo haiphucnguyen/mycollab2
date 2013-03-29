@@ -284,13 +284,6 @@ public class AppContext implements TransactionListener, Serializable {
 
 	}
 
-	@Deprecated
-	public static void addFragment(String fragement) {
-		MainWindowContainer mainWindow = (MainWindowContainer) getApplication()
-				.getMainWindow();
-		mainWindow.addFragement(fragement);
-	}
-
 	public static void addFragment(String fragement, String windowTitle) {
 		MainWindowContainer mainWindow = (MainWindowContainer) getApplication()
 				.getMainWindow();
@@ -298,11 +291,15 @@ public class AppContext implements TransactionListener, Serializable {
 		mainWindow.setCaption(StringUtils.subString(windowTitle, 150)
 				+ " [MyCollab]");
 	}
-	
-	
-	//LOCALIZATION
+
+	// LOCALIZATION
 	private static IMessageConveyor mc = new MessageConveyor(Locale.US);
+
 	public static String getMessage(Enum key) {
 		return mc.getMessage(key);
+	}
+
+	public static String getMessage(Enum key, Object... objects) {
+		return mc.getMessage(key, objects);
 	}
 }

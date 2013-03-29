@@ -28,6 +28,6 @@ public class ForgotPasswordPresenter extends AbstractPresenter<ForgotPasswordVie
 
         windowContainer.addComponent(view.getWidget());
         
-        AppContext.addFragment("user/forgotpassword");
+        AppContext.addFragment("user/forgotpassword", "Forgot Password");
     }
 }
