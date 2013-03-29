@@ -1,8 +1,6 @@
 package com.esofthead.db.sqldump;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -19,18 +17,11 @@ public class DbExport {
 	public static void exportDb(DbConfiguration configuration, Writer writer)
 			throws Exception {
 		Schema schema = Schema.loadSchema(configuration);
-		schema.dumpSchema(writer, true);
+		schema.dumpSchema(writer);
 	}
 
-	public static void backupDB(DbConfiguration configuration,
+	public static void backupDB(DbConfiguration config,
 			OutputStream out, boolean isZipped) throws Exception {
-
-		DbConfiguration config = new DbConfiguration();
-		config.setPassword(configuration.getPassword());
-		config.setUrl(configuration.getUrl());
-		config.setUserName(configuration.getUserName());
-		config.setMySqlModel(null != config.getUrl()
-				&& config.getUrl().toLowerCase().startsWith("jdbc:mysql"));
 
 		final OutputStreamWriter writer;
 		if (isZipped) {
@@ -47,9 +38,9 @@ public class DbExport {
 
 	public static void main(String[] args) throws Exception {
 
-		File outFile = File.createTempFile(
-				String.valueOf(System.currentTimeMillis()), ".sql");
-//		File outFile = new File("D:/export.sql");
+//		File outFile = File.createTempFile(
+//				String.valueOf(System.currentTimeMillis()), ".sql");
+		File outFile = new File("D:/export.sql");
 		OutputStreamWriter writer = new OutputStreamWriter(
 				new FileOutputStream(outFile));
 		exportDb(DbConfiguration.loadDefault(), writer);
@@ -58,18 +49,18 @@ public class DbExport {
 		/*
 		 * Code migrate h2 database
 		 */
-		FileInputStream fin = new FileInputStream(outFile);
-		ByteArrayOutputStream sout = new ByteArrayOutputStream();
-		byte[] buffer = new byte[4096];
-		int byteRead;
-		while ((byteRead = fin.read(buffer)) != -1) {
-			sout.write(buffer, 0, byteRead);
-		}
-		fin.close();
-		sout.flush();
-		sout.close();
-
-		executeNonQuery(new String(sout.toByteArray()));
+//		FileInputStream fin = new FileInputStream(outFile);
+//		ByteArrayOutputStream sout = new ByteArrayOutputStream();
+//		byte[] buffer = new byte[4096];
+//		int byteRead;
+//		while ((byteRead = fin.read(buffer)) != -1) {
+//			sout.write(buffer, 0, byteRead);
+//		}
+//		fin.close();
+//		sout.flush();
+//		sout.close();
+//
+//		executeNonQuery(new String(sout.toByteArray()));
 	}
 
 	public static void executeNonQuery(String query) throws Exception {
