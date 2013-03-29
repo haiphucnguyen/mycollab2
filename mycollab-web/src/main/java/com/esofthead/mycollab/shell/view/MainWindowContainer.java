@@ -71,6 +71,8 @@ public class MainWindowContainer extends Window implements View {
 		content.setSizeFull();
 		content.addComponent(urifu);
 
+		log.debug("Initial fragement: " + urifu.getFragment());
+
 		setDefaultView(true);
 	}
 

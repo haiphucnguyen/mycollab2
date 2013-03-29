@@ -1,5 +1,8 @@
 package com.esofthead.mycollab.web;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -8,6 +11,7 @@ import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.Application;
+import com.vaadin.terminal.gwt.server.HttpServletRequestListener;
 import com.vaadin.ui.Window.Notification;
 
 public class MyCollabApplication extends Application {
