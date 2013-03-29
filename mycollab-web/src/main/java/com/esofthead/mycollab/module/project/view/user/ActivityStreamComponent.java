@@ -17,6 +17,7 @@ import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
@@ -57,7 +58,8 @@ public class ActivityStreamComponent extends Depot {
 	private static LabelStringGenerator menuLinkGenerator = new ActivityLinkLabelStringGenerator();
 
 	public ActivityStreamComponent() {
-		super("User Feeds", new VerticalLayout());
+		super(AppContext.getMessage(ProjectCommonI18nEnum.FEEDS_TITLE),
+				new VerticalLayout());
 		activityStreamList = new ProjectActivityStreamPagedList();
 		this.bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
 		this.addStyleName("activity-panel");

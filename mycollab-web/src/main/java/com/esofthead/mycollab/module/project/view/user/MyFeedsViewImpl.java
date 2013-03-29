@@ -2,9 +2,8 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import java.util.List;
 
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.ProjectEvent;
+import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -40,7 +39,8 @@ public class MyFeedsViewImpl extends AbstractView implements MyFeedsView {
 		header.setMargin(false, false, false, true);
 		header.addStyleName("project-feed-header");
 
-		Label searchtitle = new Label("Projects Information");
+		Label searchtitle = new Label(
+				AppContext.getMessage(ProjectCommonI18nEnum.DASHBOARD_TITLE));
 		searchtitle.setStyleName(Reindeer.LABEL_H1);
 		header.addComponent(searchtitle);
 		header.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
@@ -74,8 +74,7 @@ public class MyFeedsViewImpl extends AbstractView implements MyFeedsView {
 
 		VerticalLayout leftPanel = new VerticalLayout();
 		leftPanel.addComponent(new LazyLoadWrapper(messageListComponent));
-		leftPanel.addComponent(new LazyLoadWrapper(
-				activityStreamComponent));
+		leftPanel.addComponent(new LazyLoadWrapper(activityStreamComponent));
 
 		taskStatusComponent = new TaskStatusComponent();
 		layout.addComponent(leftPanel);

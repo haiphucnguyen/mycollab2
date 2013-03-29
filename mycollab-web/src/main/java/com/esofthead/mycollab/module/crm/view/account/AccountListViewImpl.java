@@ -5,6 +5,7 @@ import org.vaadin.hene.splitbutton.PopupButtonControl;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -29,122 +30,137 @@ import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
 public class AccountListViewImpl extends AbstractView implements
-        AccountListView {
+		AccountListView {
 
-    private static final long serialVersionUID = 1L;
-    private final AccountSearchPanel accountSearchPanel;
-    private SelectionOptionButton selectOptionButton;
-    private AccountTableDisplay tableItem;
-    private final VerticalLayout accountListLayout;
-    private PopupButtonControl tableActionControls;
-    private final Label selectedItemsNumberLabel = new Label();
+	private static final long serialVersionUID = 1L;
+	private final AccountSearchPanel accountSearchPanel;
+	private SelectionOptionButton selectOptionButton;
+	private AccountTableDisplay tableItem;
+	private final VerticalLayout accountListLayout;
+	private PopupButtonControl tableActionControls;
+	private final Label selectedItemsNumberLabel = new Label();
 
-    public AccountListViewImpl() {
-        this.setSpacing(true);
+	public AccountListViewImpl() {
+		this.setSpacing(true);
 
-        accountSearchPanel = new AccountSearchPanel();
-        this.addComponent(accountSearchPanel);
+		accountSearchPanel = new AccountSearchPanel();
+		this.addComponent(accountSearchPanel);
 
-        accountListLayout = new VerticalLayout();
-        accountListLayout.setSpacing(true);
-        this.addComponent(accountListLayout);
+		accountListLayout = new VerticalLayout();
+		accountListLayout.setSpacing(true);
+		this.addComponent(accountListLayout);
 
-        generateDisplayTable();
-    }
+		generateDisplayTable();
+	}
 
-    private void generateDisplayTable() {
-        if (ScreenSize.hasSupport1024Pixels()) {
-        	tableItem = new AccountTableDisplay(new String[]{"selected", "accountname", "phoneoffice", "email", "assignUserFullName"},
-                new String[]{"", "Name", "Phone Office",
-                    "Email Address", "Assign User"});
+	private void generateDisplayTable() {
+		if (ScreenSize.hasSupport1024Pixels()) {
+			tableItem = new AccountTableDisplay(
+					new String[] { "selected", "accountname", "phoneoffice",
+							"email", "assignUserFullName" },
+					new String[] {
+							"",
+							"Name",
+							AppContext
+									.getMessage(CrmCommonI18nEnum.OFFICE_PHONE),
+							"Email Address",
+							AppContext
+									.getMessage(CrmCommonI18nEnum.ASSIGNED_USER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new AccountTableDisplay(new String[]{"selected", "accountname",
-                    "city", "phoneoffice", "email", "assignUserFullName"},
-                new String[]{"", "Name", "City", "Phone Office",
-                    "Email Address", "Assign User"});
+			tableItem = new AccountTableDisplay(new String[] { "selected",
+					"accountname", "city", "phoneoffice", "email",
+					"assignUserFullName" }, new String[] { "", "Name", "City",
+					AppContext.getMessage(CrmCommonI18nEnum.OFFICE_PHONE),
+					"Email Address",
+					AppContext.getMessage(CrmCommonI18nEnum.ASSIGNED_USER) });
 		}
 
-        tableItem.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-			private static final long serialVersionUID = 1L;
+		tableItem
+				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-            public Class<? extends ApplicationEvent> getEventType() {
-                return TableClickEvent.class;
-            }
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return TableClickEvent.class;
+					}
 
-            @Override
-            public void handle(TableClickEvent event) {
-                SimpleAccount account = (SimpleAccount) event.getData();
-                if ("accountname".equals(event.getFieldName())) {
-                    EventBus.getInstance().fireEvent(new AccountEvent.GotoRead(AccountListViewImpl.this, account.getId()));
-                }
-            }
-        });
+					@Override
+					public void handle(TableClickEvent event) {
+						SimpleAccount account = (SimpleAccount) event.getData();
+						if ("accountname".equals(event.getFieldName())) {
+							EventBus.getInstance().fireEvent(
+									new AccountEvent.GotoRead(
+											AccountListViewImpl.this, account
+													.getId()));
+						}
+					}
+				});
 
-        accountListLayout.addComponent(constructTableActionControls());
-        accountListLayout.addComponent(tableItem);
-    }
+		accountListLayout.addComponent(constructTableActionControls());
+		accountListLayout.addComponent(tableItem);
+	}
 
-    @Override
-    public HasSearchHandlers<AccountSearchCriteria> getSearchHandlers() {
-        return accountSearchPanel;
-    }
+	@Override
+	public HasSearchHandlers<AccountSearchCriteria> getSearchHandlers() {
+		return accountSearchPanel;
+	}
 
-    private ComponentContainer constructTableActionControls() {
-        HorizontalLayout layout = new HorizontalLayout();
-        layout.setWidth("100%");
-        layout.setSpacing(true);
+	private ComponentContainer constructTableActionControls() {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setWidth("100%");
+		layout.setSpacing(true);
 
-        selectOptionButton = new SelectionOptionButton(tableItem);
-        layout.addComponent(selectOptionButton);
-        
-        Button deleteBtn = new Button("Delete");
-        deleteBtn.setEnabled(AppContext.canAccess(RolePermissionCollections.CRM_ACCOUNT));
+		selectOptionButton = new SelectionOptionButton(tableItem);
+		layout.addComponent(selectOptionButton);
 
-        tableActionControls = new PopupButtonControl("delete", deleteBtn);
-        tableActionControls.addOptionItem("mail", "Mail");
-        tableActionControls.addOptionItem("export", "Export");
-        tableActionControls.setVisible(false);
+		Button deleteBtn = new Button("Delete");
+		deleteBtn.setEnabled(AppContext
+				.canAccess(RolePermissionCollections.CRM_ACCOUNT));
 
-        layout.addComponent(tableActionControls);
-        layout.addComponent(selectedItemsNumberLabel);
-        layout.setComponentAlignment(selectedItemsNumberLabel,
-                Alignment.MIDDLE_CENTER);
-        
-        layout.setExpandRatio(selectedItemsNumberLabel, 1.0f);
-        return layout;
-    }
+		tableActionControls = new PopupButtonControl("delete", deleteBtn);
+		tableActionControls.addOptionItem("mail", "Mail");
+		tableActionControls.addOptionItem("export", "Export");
+		tableActionControls.setVisible(false);
 
-    @Override
-    public void enableActionControls(int numOfSelectedItems) {
-        tableActionControls.setVisible(true);
-        selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
-    }
+		layout.addComponent(tableActionControls);
+		layout.addComponent(selectedItemsNumberLabel);
+		layout.setComponentAlignment(selectedItemsNumberLabel,
+				Alignment.MIDDLE_CENTER);
 
-    @Override
-    public void disableActionControls() {
-        tableActionControls.setVisible(false);
-        selectOptionButton.setSelectedChecbox(false);
-        selectedItemsNumberLabel.setValue("");
-    }
+		layout.setExpandRatio(selectedItemsNumberLabel, 1.0f);
+		return layout;
+	}
 
-    @Override
-    public HasSelectionOptionHandlers getOptionSelectionHandlers() {
-        return selectOptionButton;
-    }
+	@Override
+	public void enableActionControls(int numOfSelectedItems) {
+		tableActionControls.setVisible(true);
+		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+	}
 
-    @Override
-    public HasPopupActionHandlers getPopupActionHandlers() {
-        return tableActionControls;
-    }
+	@Override
+	public void disableActionControls() {
+		tableActionControls.setVisible(false);
+		selectOptionButton.setSelectedChecbox(false);
+		selectedItemsNumberLabel.setValue("");
+	}
 
-    @Override
-    public HasSelectableItemHandlers<SimpleAccount> getSelectableItemHandlers() {
-        return tableItem;
-    }
+	@Override
+	public HasSelectionOptionHandlers getOptionSelectionHandlers() {
+		return selectOptionButton;
+	}
 
-    @Override
-    public IPagedBeanTable<AccountSearchCriteria, SimpleAccount> getPagedBeanTable() {
-        return tableItem;
-    }
+	@Override
+	public HasPopupActionHandlers getPopupActionHandlers() {
+		return tableActionControls;
+	}
+
+	@Override
+	public HasSelectableItemHandlers<SimpleAccount> getSelectableItemHandlers() {
+		return tableItem;
+	}
+
+	@Override
+	public IPagedBeanTable<AccountSearchCriteria, SimpleAccount> getPagedBeanTable() {
+		return tableItem;
+	}
 }
