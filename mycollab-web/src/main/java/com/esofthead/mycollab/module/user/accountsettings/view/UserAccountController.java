@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
@@ -220,8 +221,8 @@ public class UserAccountController implements IController {
 										.getApplication()
 										.getMainWindow()
 										.showNotification(
-												"Information",
-												"The record is not existed",
+												AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+												AppContext.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
 												Window.Notification.TYPE_HUMANIZED_MESSAGE);
 							} else {
 								presenter.go(container,

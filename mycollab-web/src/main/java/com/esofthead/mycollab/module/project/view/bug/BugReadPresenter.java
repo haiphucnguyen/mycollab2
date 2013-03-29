@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
@@ -15,37 +16,46 @@ import com.vaadin.ui.Window;
 
 public class BugReadPresenter extends AbstractPresenter<BugReadView> {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public BugReadPresenter() {
-        super(BugReadView.class);
-    }
+	public BugReadPresenter() {
+		super(BugReadView.class);
+	}
 
-    @Override
-    protected void onGo(ComponentContainer container, ScreenData<?> data) {
+	@Override
+	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 
-    	if (CurrentProjectVariables
+		if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.BUGS)) {
-    		if (data.getParams() instanceof Integer) {
-                BugService bugService = AppContext
-                        .getSpringBean(BugService.class);
-                SimpleBug bug = bugService.findBugById((Integer) data
-                        .getParams());
-                if (bug != null) {
-                    BugContainer bugContainer = (BugContainer) container;
-                    bugContainer.removeAllComponents();
-                    bugContainer.addComponent(view.getWidget());
-                    view.previewItem(bug);
-                    
-                    ProjectBreadcrumb breadcrumb = ViewManager.getView(ProjectBreadcrumb.class);
-                    breadcrumb.gotoBugRead(bug);
-                } else {
-                    AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
-                    return;
-                }
-            }
-    	} else {
-    		MessageConstants.showMessagePermissionAlert();
-    	}
-    }
+			if (data.getParams() instanceof Integer) {
+				BugService bugService = AppContext
+						.getSpringBean(BugService.class);
+				SimpleBug bug = bugService.findBugById((Integer) data
+						.getParams());
+				if (bug != null) {
+					BugContainer bugContainer = (BugContainer) container;
+					bugContainer.removeAllComponents();
+					bugContainer.addComponent(view.getWidget());
+					view.previewItem(bug);
+
+					ProjectBreadcrumb breadcrumb = ViewManager
+							.getView(ProjectBreadcrumb.class);
+					breadcrumb.gotoBugRead(bug);
+				} else {
+					AppContext
+							.getApplication()
+							.getMainWindow()
+							.showNotification(
+									AppContext
+											.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+									AppContext
+											.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+					return;
+				}
+			}
+		} else {
+			MessageConstants.showMessagePermissionAlert();
+		}
+	}
 }

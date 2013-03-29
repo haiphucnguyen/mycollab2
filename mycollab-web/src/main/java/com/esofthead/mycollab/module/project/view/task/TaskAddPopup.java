@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.project.view.task;
 
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
@@ -61,7 +62,8 @@ public class TaskAddPopup extends CustomComponent {
 		task = new SimpleTask();
 		taskContainer = new TabSheet();
 		final TaskInformationLayout taskInformationLayout = new TaskInformationLayout();
-		taskContainer.addTab(taskInformationLayout, "Information");
+		taskContainer.addTab(taskInformationLayout,
+				AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE));
 
 		taskNoteComponent = new TaskNoteLayout();
 		taskContainer.addTab(taskNoteComponent, "Note & Attachments");
@@ -70,7 +72,7 @@ public class TaskAddPopup extends CustomComponent {
 
 		HorizontalLayout controlsLayout = new HorizontalLayout();
 		controlsLayout.setSpacing(true);
-		
+
 		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -82,8 +84,9 @@ public class TaskAddPopup extends CustomComponent {
 
 		cancelBtn.setStyleName("link");
 		controlsLayout.addComponent(cancelBtn);
-		controlsLayout.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
-		
+		controlsLayout
+				.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
+
 		Button saveBtn = new Button("Save", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -107,7 +110,7 @@ public class TaskAddPopup extends CustomComponent {
 		saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsLayout.addComponent(saveBtn);
 		controlsLayout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
-		
+
 		taskLayout.addComponent(controlsLayout);
 
 		this.setCompositionRoot(taskLayout);

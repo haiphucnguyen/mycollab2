@@ -9,6 +9,7 @@ import java.util.List;
 
 import org.vaadin.addon.customfield.CustomField;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
@@ -186,7 +187,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 										.getApplication()
 										.getMainWindow()
 										.showNotification(
-												"Information",
+												AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
 												"You must have at least one role to deselect admin checkbox",
 												Window.Notification.TYPE_HUMANIZED_MESSAGE);
 								isAdminCheck.setValue(Boolean.TRUE);

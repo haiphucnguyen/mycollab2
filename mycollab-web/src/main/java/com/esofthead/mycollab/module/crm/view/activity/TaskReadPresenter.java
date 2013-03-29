@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
@@ -92,8 +93,8 @@ public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskRead(this, nextId));
 						} else {
-							view.getWindow().showNotification("Information",
-									"You are already in the last record",
+							view.getWindow().showNotification(AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+									AppContext.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 						}
 
@@ -114,8 +115,8 @@ public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskRead(this, nextId));
 						} else {
-							view.getWindow().showNotification("Information",
-									"You are already in the first record",
+							view.getWindow().showNotification(AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+									AppContext.getMessage(GenericI18Enum.INFORMATION_GOTO_FIRST_RECORD),
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 						}
 					}
@@ -135,8 +136,8 @@ public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 					AppContext
 					.getApplication()
 					.getMainWindow()
-					.showNotification("Information",
-							"The record is not existed",
+					.showNotification(AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+							AppContext.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
 							Window.Notification.TYPE_HUMANIZED_MESSAGE);
 					return;
 				}

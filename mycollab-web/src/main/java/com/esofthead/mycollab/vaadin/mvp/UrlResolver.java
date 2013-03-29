@@ -8,6 +8,7 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.web.AppContext;
@@ -59,8 +60,11 @@ public class UrlResolver {
 			AppContext
 					.getApplication()
 					.getMainWindow()
-					.showNotification("Information",
-							"The record is not existed",
+					.showNotification(
+							AppContext
+									.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+							AppContext
+									.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
 							Window.Notification.TYPE_HUMANIZED_MESSAGE);
 		}
 	}

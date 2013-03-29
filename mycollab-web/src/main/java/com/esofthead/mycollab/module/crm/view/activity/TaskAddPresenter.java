@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.TaskService;
@@ -68,8 +69,11 @@ public class TaskAddPresenter extends CrmGenericPresenter<TaskAddView> {
 					AppContext
 							.getApplication()
 							.getMainWindow()
-							.showNotification("Information",
-									"The record is not existed",
+							.showNotification(
+									AppContext
+											.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+									AppContext
+											.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 					return;
 				}

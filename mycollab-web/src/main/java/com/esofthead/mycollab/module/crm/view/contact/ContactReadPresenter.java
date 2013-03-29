@@ -1,6 +1,14 @@
 package com.esofthead.mycollab.module.crm.view.contact;
 
+import java.util.ArrayList;
+import java.util.GregorianCalendar;
+import java.util.List;
+import java.util.Set;
+
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Call;
@@ -26,11 +34,6 @@ import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
-import java.util.ArrayList;
-import java.util.GregorianCalendar;
-import java.util.List;
-import java.util.Set;
-import org.vaadin.dialogs.ConfirmDialog;
 
 public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 
@@ -102,8 +105,8 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
                             EventBus.getInstance().fireEvent(
                                     new ContactEvent.GotoRead(this, nextId));
                         } else {
-                            view.getWindow().showNotification("Information",
-                                    "You are already in the last record",
+                            view.getWindow().showNotification(AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+                                    AppContext.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
                                     Window.Notification.TYPE_HUMANIZED_MESSAGE);
                         }
 
@@ -124,8 +127,8 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
                             EventBus.getInstance().fireEvent(
                                     new ContactEvent.GotoRead(this, nextId));
                         } else {
-                            view.getWindow().showNotification("Information",
-                                    "You are already in the first record",
+                            view.getWindow().showNotification(AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+                                    AppContext.getMessage(GenericI18Enum.INFORMATION_GOTO_FIRST_RECORD),
                                     Window.Notification.TYPE_HUMANIZED_MESSAGE);
                         }
                     }
@@ -208,7 +211,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
     	                AppContext.addFragment("crm/contact/preview/" + UrlEncodeDecoder.encode(contact.getId()),
     							"Preview contact: " + contact.getContactName());
     	            } else {
-    	                AppContext.getApplication().getMainWindow().showNotification("Information", "The record is not existed", Window.Notification.TYPE_HUMANIZED_MESSAGE);
+    	                AppContext.getApplication().getMainWindow().showNotification(AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE), AppContext.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE), Window.Notification.TYPE_HUMANIZED_MESSAGE);
     	                return;
     	            }
     	        }

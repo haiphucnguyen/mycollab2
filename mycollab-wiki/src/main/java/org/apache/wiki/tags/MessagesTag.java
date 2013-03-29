@@ -47,7 +47,7 @@ public class MessagesTag extends WikiTagBase
 
     private String              m_topic          = null;
 
-    private String              m_div            = "information";
+    private String              m_div            = "Information";
 
     private static final String CLEAR            = "clear";
 
@@ -56,7 +56,7 @@ public class MessagesTag extends WikiTagBase
         super.initTag();
         m_action = m_topic = null;
         m_prefix = "";
-        m_div = "information";
+        m_div = "Information";
     }
 
 

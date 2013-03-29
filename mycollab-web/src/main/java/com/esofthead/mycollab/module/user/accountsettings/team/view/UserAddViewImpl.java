@@ -4,6 +4,12 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import java.util.Collection;
+import java.util.Date;
+
+import org.vaadin.addon.customfield.CustomField;
+
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.view.component.RoleComboBox;
@@ -28,10 +34,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.Window;
-import java.util.Collection;
-import java.util.Date;
-
-import org.vaadin.addon.customfield.CustomField;
 
 /**
  * 
@@ -186,7 +188,7 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 										.getApplication()
 										.getMainWindow()
 										.showNotification(
-												"Information",
+												AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
 												"You must have at least one role to deselect admin checkbox",
 												Window.Notification.TYPE_HUMANIZED_MESSAGE);
 								isAdminCheck.setValue(Boolean.TRUE);

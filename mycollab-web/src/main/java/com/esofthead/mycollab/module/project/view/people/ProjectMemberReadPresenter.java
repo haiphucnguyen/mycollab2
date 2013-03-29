@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.project.view.people;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -112,9 +113,13 @@ public class ProjectMemberReadPresenter extends
 									new ProjectMemberEvent.GotoRead(this,
 											nextId));
 						} else {
-							view.getWindow().showNotification("Information",
-									"You are already in the last record",
-									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+							view.getWindow()
+									.showNotification(
+											AppContext
+													.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+											AppContext
+													.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
+											Window.Notification.TYPE_HUMANIZED_MESSAGE);
 						}
 
 					}
@@ -137,9 +142,13 @@ public class ProjectMemberReadPresenter extends
 									new ProjectMemberEvent.GotoRead(this,
 											nextId));
 						} else {
-							view.getWindow().showNotification("Information",
-									"You are already in the first record",
-									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+							view.getWindow()
+									.showNotification(
+											AppContext
+													.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+											AppContext
+													.getMessage(GenericI18Enum.INFORMATION_GOTO_FIRST_RECORD),
+											Window.Notification.TYPE_HUMANIZED_MESSAGE);
 						}
 					}
 				});
@@ -174,8 +183,11 @@ public class ProjectMemberReadPresenter extends
 				AppContext
 						.getApplication()
 						.getMainWindow()
-						.showNotification("Information",
-								"The record is not existed",
+						.showNotification(
+								AppContext
+										.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+								AppContext
+										.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
 								Window.Notification.TYPE_HUMANIZED_MESSAGE);
 			}
 		} else {

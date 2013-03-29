@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
@@ -76,13 +77,17 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 			} else if (data.getParams() instanceof Integer) {
 				LeadService leadService = AppContext
 						.getSpringBean(LeadService.class);
-				lead = (Lead) leadService.findByPrimaryKey((Integer) data.getParams());
+				lead = (Lead) leadService.findByPrimaryKey((Integer) data
+						.getParams());
 				if (lead == null) {
 					AppContext
 							.getApplication()
 							.getMainWindow()
-							.showNotification("Information",
-									"The record is not existed",
+							.showNotification(
+									AppContext
+											.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+									AppContext
+											.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 					return;
 				}
@@ -94,8 +99,10 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 			if (lead.getId() == null) {
 				AppContext.addFragment("crm/lead/add", "Add Lead");
 			} else {
-				AppContext.addFragment("crm/lead/edit/"
-						+ UrlEncodeDecoder.encode(lead.getId()), "Edit Lead: " + lead.getLastname());
+				AppContext.addFragment(
+						"crm/lead/edit/"
+								+ UrlEncodeDecoder.encode(lead.getId()),
+						"Edit Lead: " + lead.getLastname());
 			}
 		} else {
 			MessageConstants.showMessagePermissionAlert();

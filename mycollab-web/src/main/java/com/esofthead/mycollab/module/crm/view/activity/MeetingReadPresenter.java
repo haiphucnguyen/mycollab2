@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
@@ -95,9 +96,12 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 											new ActivityEvent.MeetingRead(this,
 													nextId));
 						} else {
-							view.getWindow().showNotification("Information",
-									"You are already in the last record",
-									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+							view.getWindow()
+									.showNotification(
+											AppContext
+													.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+											AppContext.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
+											Window.Notification.TYPE_HUMANIZED_MESSAGE);
 						}
 
 					}
@@ -119,9 +123,12 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 											new ActivityEvent.MeetingRead(this,
 													nextId));
 						} else {
-							view.getWindow().showNotification("Information",
-									"You are already in the first record",
-									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+							view.getWindow()
+									.showNotification(
+											AppContext
+													.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+											AppContext.getMessage(GenericI18Enum.INFORMATION_GOTO_FIRST_RECORD),
+											Window.Notification.TYPE_HUMANIZED_MESSAGE);
 						}
 					}
 				});
@@ -134,13 +141,17 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 			if (data.getParams() instanceof Integer) {
 				MeetingService meetingService = AppContext
 						.getSpringBean(MeetingService.class);
-				meeting = meetingService.findMeetingById((Integer) data.getParams());
+				meeting = meetingService.findMeetingById((Integer) data
+						.getParams());
 				if (meeting == null) {
 					AppContext
 							.getApplication()
 							.getMainWindow()
-							.showNotification("Information",
-									"The record is not existed",
+							.showNotification(
+									AppContext
+											.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+									AppContext
+											.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 					return;
 				}
@@ -151,7 +162,8 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 			view.previewItem(meeting);
 
 			AppContext.addFragment("crm/activity/meeting/preview/"
-					+ UrlEncodeDecoder.encode(meeting.getId()), "Preview Meeting: " + meeting.getSubject());
+					+ UrlEncodeDecoder.encode(meeting.getId()),
+					"Preview Meeting: " + meeting.getSubject());
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}

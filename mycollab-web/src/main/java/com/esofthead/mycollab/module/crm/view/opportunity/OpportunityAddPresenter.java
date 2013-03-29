@@ -4,6 +4,7 @@ import java.util.Arrays;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.crm.domain.ContactOpportunity;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
@@ -79,8 +80,11 @@ public class OpportunityAddPresenter extends
 					AppContext
 							.getApplication()
 							.getMainWindow()
-							.showNotification("Information",
-									"The record is not existed",
+							.showNotification(
+									AppContext
+											.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+									AppContext
+											.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 					return;
 				}

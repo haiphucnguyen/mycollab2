@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.project.view.milestone;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -109,8 +110,8 @@ public class MilestoneReadPresenter extends
 							EventBus.getInstance().fireEvent(
 									new MilestoneEvent.GotoRead(this, nextId));
 						} else {
-							view.getWindow().showNotification("Information",
-									"You are already in the last record",
+							view.getWindow().showNotification(AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+									AppContext.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 						}
 
@@ -133,8 +134,8 @@ public class MilestoneReadPresenter extends
 							EventBus.getInstance().fireEvent(
 									new MilestoneEvent.GotoRead(this, nextId));
 						} else {
-							view.getWindow().showNotification("Information",
-									"You are already in the first record",
+							view.getWindow().showNotification(AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+									AppContext.getMessage(GenericI18Enum.INFORMATION_GOTO_FIRST_RECORD),
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 						}
 					}
@@ -163,8 +164,8 @@ public class MilestoneReadPresenter extends
 					AppContext
 							.getApplication()
 							.getMainWindow()
-							.showNotification("Information",
-									"The record is not existed",
+							.showNotification(AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+									AppContext.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 					return;
 				}
