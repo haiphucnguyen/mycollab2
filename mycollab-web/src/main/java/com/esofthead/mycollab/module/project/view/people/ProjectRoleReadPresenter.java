@@ -82,7 +82,7 @@ public class ProjectRoleReadPresenter extends
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, project.getId()));
 						criteria.setId(new NumberSearchField(data.getId(),
-								NumberSearchField.GREATHER));
+								NumberSearchField.GREATER));
 						Integer nextId = projectRoleService
 								.getNextItemKey(criteria);
 						if (nextId != null) {

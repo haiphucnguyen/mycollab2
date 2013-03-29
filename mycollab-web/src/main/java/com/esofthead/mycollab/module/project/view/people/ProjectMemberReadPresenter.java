@@ -105,7 +105,7 @@ public class ProjectMemberReadPresenter extends
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, project.getId()));
 						criteria.setId(new NumberSearchField(data.getId(),
-								NumberSearchField.GREATHER));
+								NumberSearchField.GREATER));
 						Integer nextId = projectMemberService
 								.getNextItemKey(criteria);
 						if (nextId != null) {

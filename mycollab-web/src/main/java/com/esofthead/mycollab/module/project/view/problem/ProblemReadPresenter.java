@@ -92,7 +92,7 @@ public class ProblemReadPresenter extends AbstractPresenter<ProblemReadView> {
 						criteria.setProjectId(new NumberSearchField(
 								SearchField.AND, project.getId()));
 						criteria.setId(new NumberSearchField(data.getId(),
-								NumberSearchField.GREATHER));
+								NumberSearchField.GREATER));
 						Integer nextId = problemService
 								.getNextItemKey(criteria);
 						if (nextId != null) {

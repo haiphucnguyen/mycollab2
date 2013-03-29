@@ -87,7 +87,7 @@ public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
 						criteria.setId(new NumberSearchField(data.getId(),
-								NumberSearchField.GREATHER));
+								NumberSearchField.GREATER));
 						Integer nextId = taskService.getNextItemKey(criteria);
 						if (nextId != null) {
 							EventBus.getInstance().fireEvent(

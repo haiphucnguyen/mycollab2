@@ -109,7 +109,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
 						criteria.setId(new NumberSearchField(data.getId(),
-								NumberSearchField.GREATHER));
+								NumberSearchField.GREATER));
 						Integer nextId = accountService
 								.getNextItemKey(criteria);
 						if (nextId != null) {

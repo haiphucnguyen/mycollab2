@@ -98,7 +98,7 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
                         criteria.setSaccountid(new NumberSearchField(AppContext
                                 .getAccountId()));
                         criteria.setId(new NumberSearchField(data.getId(),
-                                NumberSearchField.GREATHER));
+                                NumberSearchField.GREATER));
                         Integer nextId = contactService
                                 .getNextItemKey(criteria);
                         if (nextId != null) {

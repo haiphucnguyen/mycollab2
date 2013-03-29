@@ -102,7 +102,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
 						criteria.setId(new NumberSearchField(data.getId(),
-								NumberSearchField.GREATHER));
+								NumberSearchField.GREATER));
 						Integer nextId = caseService.getNextItemKey(criteria);
 						if (nextId != null) {
 							EventBus.getInstance().fireEvent(

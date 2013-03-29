@@ -80,7 +80,7 @@ public class VersionReadPresenter extends AbstractPresenter<VersionReadView> {
 								SearchField.AND, CurrentProjectVariables
 										.getProjectId()));
 						criteria.setId(new NumberSearchField(data.getId(),
-								NumberSearchField.GREATHER));
+								NumberSearchField.GREATER));
 						Integer nextId = componentService
 								.getNextItemKey(criteria);
 						if (nextId != null) {

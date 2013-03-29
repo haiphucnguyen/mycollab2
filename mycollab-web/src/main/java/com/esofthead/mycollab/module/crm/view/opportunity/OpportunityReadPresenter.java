@@ -107,7 +107,7 @@ public class OpportunityReadPresenter extends
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
 						criteria.setId(new NumberSearchField(data.getId(),
-								NumberSearchField.GREATHER));
+								NumberSearchField.GREATER));
 						Integer nextId = opportunityService
 								.getNextItemKey(criteria);
 						if (nextId != null) {

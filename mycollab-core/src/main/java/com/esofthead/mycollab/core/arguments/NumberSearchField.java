@@ -5,7 +5,7 @@ public class NumberSearchField extends SearchField {
     public static final String EQUAL = "=";
     public static final String NOTEQUAL = "<>";
     public static final String LESSTHAN = "<";
-    public static final String GREATHER = ">";
+    public static final String GREATER = ">";
     
     private Number value;
     private String compareOperator;
