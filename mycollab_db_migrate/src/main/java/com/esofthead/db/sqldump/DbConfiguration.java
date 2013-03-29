@@ -7,14 +7,27 @@ public class DbConfiguration {
 	public static final String USER_NAME = "db.username";
 	public static final String PASSWORD = "db.password";
 	public static final String URL = "db.url";
-	public static final String DB_MODEL = "db.model";
-
+	public static final String EXPORT_OPTION = "db.exportoption";
+	
+	private static final String __SCHEMA_ONLY = "schema_only";
+	private static final String __DATA_ONLY = "data_only";
+	private static final String __SCHEMA_DATA = "schema_data";
+	private static final String __SCHEMA_NO_CONSTRAINT = "schema_no_constraint";
+	private static final String __SCHEMA_DATA_NO_CONSTAINT = "schema_data_no_constraint";
+	
+	public static final int SCHEMA_ONLY = 0;
+	public static final int DATA_ONLY = 1;
+	public static final int SCHEMA_DATA = 2;
+	public static final int SCHEMA_NO_CONSTRAINT = 4;
+	public static final int SCHEMA_DATA_NO_CONSTAINT = 8;
+	
 	private static final String RESOURCE_PROPERTIES = "config.properties";
 	
 	private String userName;
 	private String password;
 	private String url;
-	private boolean isMySqlModel;
+	private boolean isMySqlModel = true;
+	private int exportOption = SCHEMA_DATA;
 
 	public static DbConfiguration loadDefault() {
 		Properties properties = new Properties();
@@ -27,13 +40,27 @@ public class DbConfiguration {
 			config.setPassword(properties.getProperty(PASSWORD));
 			config.setUserName(properties.getProperty(USER_NAME));
 			config.setUrl(properties.getProperty(URL));
+			config.setMySqlModel(null != config.getUrl()
+					&& config.getUrl().toLowerCase().startsWith("jdbc:mysql"));
 			
-			String model = properties.getProperty(DB_MODEL);
-			if (null != model && model.toUpperCase().equals("MYSQL")) {
-				config.setMySqlModel(true);
-			} else {
-				config.setMySqlModel(false);
+			String exportOption = properties.getProperty(EXPORT_OPTION);
+			if (null == exportOption)
+				config.setExportOption(SCHEMA_DATA);
+			else {
+				if (exportOption.toLowerCase().equals(__SCHEMA_ONLY))
+					config.setExportOption(SCHEMA_ONLY);
+				else if (exportOption.toLowerCase().equals(__DATA_ONLY))
+					config.setExportOption(DATA_ONLY);
+				else if (exportOption.toLowerCase().equals(__SCHEMA_DATA))
+					config.setExportOption(SCHEMA_DATA);
+				else if (exportOption.toLowerCase().equals(__SCHEMA_NO_CONSTRAINT))
+					config.setExportOption(SCHEMA_NO_CONSTRAINT);
+				else if (exportOption.toLowerCase().equals(__SCHEMA_DATA_NO_CONSTAINT))
+					config.setExportOption(SCHEMA_DATA_NO_CONSTAINT);
+				else
+					config.setExportOption(SCHEMA_DATA);
 			}
+				
 			
 			return config;
 		} catch (Exception e) {
@@ -95,5 +122,19 @@ public class DbConfiguration {
 	 */
 	public void setMySqlModel(boolean isMySqlModel) {
 		this.isMySqlModel = isMySqlModel;
+	}
+
+	/**
+	 * @return the exportOption
+	 */
+	public int getExportOption() {
+		return exportOption;
+	}
+
+	/**
+	 * @param exportOption the exportOption to set
+	 */
+	public void setExportOption(int exportOption) {
+		this.exportOption = exportOption;
 	}
 }

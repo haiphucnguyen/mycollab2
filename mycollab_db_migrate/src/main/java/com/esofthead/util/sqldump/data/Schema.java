@@ -14,12 +14,16 @@ import com.esofthead.util.sqldump.data.parser.TableParser;
 import com.esofthead.util.sqldump.data.parser.UniqueIndexParser;
 
 public class Schema {
+	
+	private static final String SKIP_SCHEMA_VERSION = "schema_version";
+	
 	private Schema(DataAdapter adapter) {
 		this.adapter = adapter;
 	}
 
 	DataAdapter adapter;
 	boolean isMySQL = false;
+	int exportOption = DbConfiguration.SCHEMA_DATA;
 
 	final public List<Table> Tables = new LinkedList<Table>();
 	final public List<UniqueIndex> UniqueIndexs = new LinkedList<UniqueIndex>();
@@ -34,6 +38,9 @@ public class Schema {
 
 		Tables.clear();
 		for (Object obj : lsObjects) {
+			Table table = (Table)obj;
+			if (table.getTableName().toLowerCase().equals(SKIP_SCHEMA_VERSION))
+				continue;
 			Tables.add((Table) obj);
 		}
 		lsObjects.clear();
@@ -63,17 +70,26 @@ public class Schema {
 				new ForeignKeyConstraintParser());
 
 		for (Object obj : lsObjects) {
+			ForeignKeyConstraint fkConstraint = (ForeignKeyConstraint)obj;
+			if (fkConstraint.getPkTableName().toLowerCase().equals(SKIP_SCHEMA_VERSION)
+					|| fkConstraint.getFkTableName().toLowerCase().equals(SKIP_SCHEMA_VERSION))
+				continue;
 			ForeignKeyConstraints.add((ForeignKeyConstraint) obj);
 		}
 	}
 
-	public void dumpSchema(Writer writer, boolean isDumpData) throws Exception {
-		for (Table table : Tables) {
-			writer.append(table.serialTable());
-			writer.append("\r\n\r\n");
+	public void dumpSchema(Writer writer) throws Exception {
+		
+		if (exportOption != DbConfiguration.DATA_ONLY) {
+			for (Table table : Tables) {
+				writer.append(table.serialTable());
+				writer.append("\r\n\r\n");
+			}
 		}
-
-		if (isDumpData) {
+		
+		if (exportOption == DbConfiguration.DATA_ONLY
+				|| exportOption == DbConfiguration.SCHEMA_DATA
+				|| exportOption == DbConfiguration.SCHEMA_DATA_NO_CONSTAINT) {
 			writer.append("\r\n-- dump data -------------------------------------------\r\n\r\n\r\n");
 			List<Table> lsTables = resolveDependencies();
 			for (Table table : lsTables) {
@@ -81,18 +97,24 @@ public class Schema {
 			}
 		}
 
-		writer.append("\r\n-- Add unique constraint -------------------------------------------\r\n\r\n\r\n");
+		if (exportOption != DbConfiguration.DATA_ONLY) {
+			writer.append("\r\n-- Add unique constraint -------------------------------------------\r\n\r\n\r\n");
 
-		for (UniqueIndex index : UniqueIndexs) {
-			writer.append(index.serialUniqueIndex());
-			writer.append("\r\n\r\n");
+			for (UniqueIndex index : UniqueIndexs) {
+				writer.append(index.serialUniqueIndex());
+				writer.append("\r\n\r\n");
+			}
 		}
 
-		writer.append("\r\n-- Add foreign key constraint -------------------------------------------\r\n\r\n\r\n");
+		if (exportOption != DbConfiguration.DATA_ONLY
+				&& exportOption != DbConfiguration.SCHEMA_DATA_NO_CONSTAINT
+				&& exportOption != DbConfiguration.SCHEMA_NO_CONSTRAINT) {
+			writer.append("\r\n-- Add foreign key constraint -------------------------------------------\r\n\r\n\r\n");
 
-		for (ForeignKeyConstraint constraint : ForeignKeyConstraints) {
-			writer.append(constraint.serialForeignConstraint());
-			writer.append("\r\n");
+			for (ForeignKeyConstraint constraint : ForeignKeyConstraints) {
+				writer.append(constraint.serialForeignConstraint());
+				writer.append("\r\n");
+			}
 		}
 	}
 
@@ -101,6 +123,7 @@ public class Schema {
 		Schema schema = new Schema(new DataAdapter(config.getUserName(),
 				config.getPassword(), config.getUrl()));
 		schema.isMySQL = config.isMySqlModel();
+		schema.exportOption = config.getExportOption();
 		
 		schema.loadTable();
 		
