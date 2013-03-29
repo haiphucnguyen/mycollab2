@@ -32,11 +32,9 @@ public class MainWindowContainer extends Window implements View {
 	private final Content content;
 
 	private final UriFragmentUtility urifu;
-	private final FragmentNavigator fragmentNavigator;
 
 	public MainWindowContainer() {
 		urifu = new UriFragmentUtility();
-		fragmentNavigator = new FragmentNavigator();
 
 		urifu.addListener(new UriFragmentUtility.FragmentChangedListener() {
 			private static final long serialVersionUID = 1L;
@@ -45,7 +43,7 @@ public class MainWindowContainer extends Window implements View {
 			public void fragmentChanged(FragmentChangedEvent source) {
 				log.debug("Change fragement: "
 						+ source.getUriFragmentUtility().getFragment());
-				fragmentNavigator.navigateByFragement(source
+				FragmentNavigator.navigateByFragement(source
 						.getUriFragmentUtility().getFragment());
 			}
 		});

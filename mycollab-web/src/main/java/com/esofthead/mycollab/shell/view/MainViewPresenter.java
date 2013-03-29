@@ -14,6 +14,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -31,20 +32,34 @@ public class MainViewPresenter extends AbstractPresenter<MainView> {
 
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
-		UserPreference pref = AppContext.getUserPreference();
-		if (pref.getLastmodulevisit() == null
-				|| ModuleNameConstants.CRM.equals(pref.getLastmodulevisit())) {
-			// go to crm module
-			EventBus.getInstance().fireEvent(
-					new ShellEvent.GotoCrmModule(this, null));
-		} else if (ModuleNameConstants.PRJ.equals(pref.getLastmodulevisit())) {
-			EventBus.getInstance().fireEvent(
-					new ShellEvent.GotoProjectModule(this, null));
+		// if user type remember URL, instead of going to main page, to to his
+		// url
+		String url = ((MyCollabApplication) AppContext.getApplication())
+				.getInitialUrl();
+		if (url != null && !url.equals("UIDL") && !url.equals("/")) {
+			if (url.startsWith("/")) {
+				url = url.substring(1);
+			}
+			FragmentNavigator.navigateByFragement(url);
 		} else {
-			EventBus.getInstance().fireEvent(
-					new ShellEvent.GotoConsolePage(this, null));
-			log.debug("Do not support navigate to module: "
-					+ pref.getLastmodulevisit());
+
+			UserPreference pref = AppContext.getUserPreference();
+			if (pref.getLastmodulevisit() == null
+					|| ModuleNameConstants.CRM
+							.equals(pref.getLastmodulevisit())) {
+				// go to crm module
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.GotoCrmModule(this, null));
+			} else if (ModuleNameConstants.PRJ
+					.equals(pref.getLastmodulevisit())) {
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.GotoProjectModule(this, null));
+			} else {
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.GotoConsolePage(this, null));
+				log.debug("Do not support navigate to module: "
+						+ pref.getLastmodulevisit());
+			}
 		}
 	}
 }
