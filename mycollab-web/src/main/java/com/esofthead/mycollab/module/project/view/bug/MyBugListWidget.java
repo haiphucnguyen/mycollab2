@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.localization.BugI18Enum;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -26,7 +27,8 @@ public class MyBugListWidget extends BugDisplayWidget {
 	private static final long serialVersionUID = 1L;
 
 	public MyBugListWidget() {
-		super("My Bugs", MyBugRowDisplayHandler.class);
+		super(AppContext.getMessage(BugI18Enum.MY_BUGS_WIDGET_TITLE),
+				MyBugRowDisplayHandler.class);
 	}
 
 	public static class MyBugRowDisplayHandler implements

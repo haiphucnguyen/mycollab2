@@ -36,22 +36,22 @@ import com.vaadin.ui.Label;
  * 
  * @author haiphucnguyen
  */
-public class BugTrendReportWidget extends
+public class BugTrendReportChartWidget extends
 		TimeSeriesChartWrapper<BugSearchCriteria> {
 	private static final long serialVersionUID = 1L;
 
 	private static Logger log = LoggerFactory
-			.getLogger(BugTrendReportWidget.class);
+			.getLogger(BugTrendReportChartWidget.class);
 
 	private static String patternDate = "yyyy-MM-dd";
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat(
 			patternDate);
 	
-	public BugTrendReportWidget(int width, int height) {
+	public BugTrendReportChartWidget(int width, int height) {
 		super("Bugs Trend", width, height);
 	}
 
-	public BugTrendReportWidget() {
+	public BugTrendReportChartWidget() {
 		super("Bugs Trend", 400, 300);
 	}
 

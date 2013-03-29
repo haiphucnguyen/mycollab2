@@ -10,9 +10,11 @@ import java.util.GregorianCalendar;
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
+import com.esofthead.mycollab.module.project.localization.BugI18Enum;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.web.AppContext;
 import com.rits.cloning.Cloner;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ThemeResource;
@@ -34,12 +36,15 @@ public class BugChartComponent extends Depot {
 
 	private BugSearchCriteria baseSearchCriteria;
 
-	public BugChartComponent(BugSearchCriteria baseSearchCriteria, int headerWidth, int titleWidth) {
-		super("Bugs Dashboard", new HorizontalLayout(), new VerticalLayout(), headerWidth + "px", titleWidth + "px");
+	public BugChartComponent(BugSearchCriteria baseSearchCriteria,
+			int headerWidth, int titleWidth) {
+		super(AppContext.getMessage(BugI18Enum.CHARTS_WIDGET_TITLE),
+				new HorizontalLayout(), new VerticalLayout(), headerWidth
+						+ "px", titleWidth + "px");
 		this.baseSearchCriteria = baseSearchCriteria;
 		initUI();
 	}
-	
+
 	private void initUI() {
 		HorizontalLayout headerContainer = (HorizontalLayout) this.headerContent;
 		headerContainer.setWidth("100%");
@@ -93,11 +98,11 @@ public class BugChartComponent extends Depot {
 		bodyContent.removeAllComponents();
 
 		if ("BugTrend".equals(reportName)) {
-			BugTrendReportWidget bugTrendWidget = null;
+			BugTrendReportChartWidget bugTrendWidget = null;
 			if (ScreenSize.hasSupport1024Pixels()) {
-				bugTrendWidget = new BugTrendReportWidget(300, 200);
+				bugTrendWidget = new BugTrendReportChartWidget(300, 200);
 			} else if (ScreenSize.hasSupport1280Pixels()) {
-				bugTrendWidget = new BugTrendReportWidget();
+				bugTrendWidget = new BugTrendReportChartWidget();
 			}
 			LazyLoadWrapper lazyComp = new LazyLoadWrapper(bugTrendWidget);
 			bodyContent.addComponent(lazyComp);
@@ -112,40 +117,41 @@ public class BugChartComponent extends Depot {
 					last30Days));
 			bugTrendWidget.setSearchCriteria(trendSearchCriteria);
 		} else if ("BugsByPriority".equals(reportName)) {
-			PrioritySummaryWidget prioritySummaryWidget = null;
+			PrioritySummaryChartWidget prioritySummaryChartWidget = null;
 			if (ScreenSize.hasSupport1024Pixels()) {
-				prioritySummaryWidget = new PrioritySummaryWidget(300, 220);
+				prioritySummaryChartWidget = new PrioritySummaryChartWidget(300, 220);
 			} else if (ScreenSize.hasSupport1280Pixels()) {
-				prioritySummaryWidget = new PrioritySummaryWidget();
+				prioritySummaryChartWidget = new PrioritySummaryChartWidget();
 			}
 			LazyLoadWrapper lazyComp = new LazyLoadWrapper(
-					prioritySummaryWidget);
+					prioritySummaryChartWidget);
 			bodyContent.addComponent(lazyComp);
 			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
 			BugSearchCriteria prioritySearchCriteria = new Cloner()
 					.deepClone(baseSearchCriteria);
-			prioritySummaryWidget.setSearchCriteria(prioritySearchCriteria);
+			prioritySummaryChartWidget.setSearchCriteria(prioritySearchCriteria);
 		} else if ("BugsByStatus".equals(reportName)) {
-			StatusSummaryWidget statusSummaryWidget = null;
+			StatusSummaryChartWidget statusSummaryChartWidget = null;
 			if (ScreenSize.hasSupport1024Pixels()) {
-				statusSummaryWidget = new StatusSummaryWidget(300, 220);
+				statusSummaryChartWidget = new StatusSummaryChartWidget(300, 220);
 			} else if (ScreenSize.hasSupport1280Pixels()) {
-				statusSummaryWidget = new StatusSummaryWidget();
+				statusSummaryChartWidget = new StatusSummaryChartWidget();
 			}
-			LazyLoadWrapper lazyComp = new LazyLoadWrapper(statusSummaryWidget);
+			LazyLoadWrapper lazyComp = new LazyLoadWrapper(statusSummaryChartWidget);
 			bodyContent.addComponent(lazyComp);
 			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
 			BugSearchCriteria statusSearchCriteria = new Cloner()
 					.deepClone(baseSearchCriteria);
-			statusSummaryWidget.setSearchCriteria(statusSearchCriteria);
+			statusSummaryChartWidget.setSearchCriteria(statusSearchCriteria);
 		} else if ("BugByResolution".equals(reportName)) {
-			BugResolutionSummaryWidget resolutionSummaryWdiget = null;
+			BugResolutionSummaryChartWidget resolutionSummaryWdiget = null;
 			if (ScreenSize.hasSupport1024Pixels()) {
-				resolutionSummaryWdiget = new BugResolutionSummaryWidget(300, 220);
+				resolutionSummaryWdiget = new BugResolutionSummaryChartWidget(300,
+						220);
 			} else if (ScreenSize.hasSupport1280Pixels()) {
-				resolutionSummaryWdiget = new BugResolutionSummaryWidget();
+				resolutionSummaryWdiget = new BugResolutionSummaryChartWidget();
 			}
 			LazyLoadWrapper lazyComp = new LazyLoadWrapper(
 					resolutionSummaryWdiget);

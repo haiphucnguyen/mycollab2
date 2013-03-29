@@ -6,6 +6,7 @@ import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.localization.BugI18Enum;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -26,7 +27,9 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 	private BugSearchCriteria bugSearchCriteria;
 
 	public UnresolvedBugsByPriorityWidget2() {
-		super("Unresolved by priority", new VerticalLayout());
+		super(AppContext
+				.getMessage(BugI18Enum.UNRESOLVED_BY_PRIORITY_WIDGET_TITLE),
+				new VerticalLayout());
 	}
 
 	public void setSearchCriteria(BugSearchCriteria searchCriteria) {

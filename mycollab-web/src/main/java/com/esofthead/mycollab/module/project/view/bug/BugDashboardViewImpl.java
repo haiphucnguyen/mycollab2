@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
+import com.esofthead.mycollab.module.project.localization.BugI18Enum;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.shell.view.ScreenSize;
@@ -49,7 +50,8 @@ public class BugDashboardViewImpl extends AbstractView implements
 		HorizontalLayout header = new HorizontalLayout();
 		header.setWidth("100%");
 
-		Label title = new Label("Bug Dashboard");
+		Label title = new Label(
+				AppContext.getMessage(BugI18Enum.BUG_DASHBOARD_TITLE));
 		title.setStyleName("h2");
 		header.addComponent(title);
 		header.setExpandRatio(title, 0.5f);
@@ -247,9 +249,11 @@ public class BugDashboardViewImpl extends AbstractView implements
 				CurrentProjectVariables.getProjectId()));
 		BugChartComponent bugChartComponent = null;
 		if (ScreenSize.hasSupport1024Pixels()) {
-			bugChartComponent = new BugChartComponent(chartSearchCriteria, 300, 200);
+			bugChartComponent = new BugChartComponent(chartSearchCriteria, 300,
+					200);
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400, 200);
+			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
+					200);
 		}
 		rightColumn.addComponent(bugChartComponent);
 	}

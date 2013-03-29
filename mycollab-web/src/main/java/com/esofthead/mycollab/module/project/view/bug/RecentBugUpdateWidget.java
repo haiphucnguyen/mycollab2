@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.localization.BugI18Enum;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
@@ -35,7 +36,8 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 	private static final long serialVersionUID = 1L;
 
 	public RecentBugUpdateWidget() {
-		super("Updated Bug Recently", RecentBugRowDisplayHandler.class);
+		super(AppContext.getMessage(BugI18Enum.UPDATED_RECENTLY_WIDGET_TITLE),
+				RecentBugRowDisplayHandler.class);
 	}
 
 	public static class RecentBugRowDisplayHandler implements

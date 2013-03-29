@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.List;
@@ -25,21 +21,16 @@ import com.esofthead.mycollab.vaadin.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-/**
- * 
- * @author haiphucnguyen
- */
-public class BugResolutionSummaryWidget extends
-		PieChartWrapper<BugSearchCriteria> {
+public class PrioritySummaryChartWidget extends PieChartWrapper<BugSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
-
-	public BugResolutionSummaryWidget(int width, int height) {
-		super("Bugs By Resolution", width, height);
-	}
 	
-	public BugResolutionSummaryWidget() {
-		super("Bugs By Resolution", 400, 280);
+	public PrioritySummaryChartWidget(int width, int height) {
+		super("Bugs By Priority", width, height);
+	}
+
+	public PrioritySummaryChartWidget() {
+		super("Bugs By Priority", 400, 280);
 
 	}
 
@@ -52,9 +43,9 @@ public class BugResolutionSummaryWidget extends
 		BugService bugService = AppContext.getSpringBean(BugService.class);
 
 		List<GroupItem> groupItems = bugService
-				.getResolutionDefectsSummary(searchCriteria);
+				.getPrioritySummary(searchCriteria);
 
-		String[] bugPriorities = ProjectDataTypeFactory.getBugResolutionList();
+		String[] bugPriorities = ProjectDataTypeFactory.getBugPriorityList();
 		for (String priority : bugPriorities) {
 			boolean isFound = false;
 			for (GroupItem item : groupItems) {
@@ -82,7 +73,7 @@ public class BugResolutionSummaryWidget extends
 	@Override
 	protected void onClickedDescription(String key) {
 		BugSearchCriteria searchCriteria = new BugSearchCriteria();
-		searchCriteria.setResolutions(new SetSearchField<String>(
+		searchCriteria.setPriorities(new SetSearchField<String>(
 				SearchField.AND, new String[] { key }));
 		searchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
@@ -91,5 +82,4 @@ public class BugResolutionSummaryWidget extends
 		EventBus.getInstance().fireEvent(
 				new BugEvent.GotoList(this, new BugScreenData.Search(param)));
 	}
-
 }

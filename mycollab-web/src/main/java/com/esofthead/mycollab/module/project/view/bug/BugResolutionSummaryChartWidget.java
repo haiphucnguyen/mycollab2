@@ -1,3 +1,7 @@
+/*
+ * To change this template, choose Tools | Templates
+ * and open the template in the editor.
+ */
 package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.List;
@@ -21,16 +25,21 @@ import com.esofthead.mycollab.vaadin.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class PrioritySummaryWidget extends PieChartWrapper<BugSearchCriteria> {
+/**
+ * 
+ * @author haiphucnguyen
+ */
+public class BugResolutionSummaryChartWidget extends
+		PieChartWrapper<BugSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
-	
-	public PrioritySummaryWidget(int width, int height) {
-		super("Bugs By Priority", width, height);
-	}
 
-	public PrioritySummaryWidget() {
-		super("Bugs By Priority", 400, 280);
+	public BugResolutionSummaryChartWidget(int width, int height) {
+		super("Bugs By Resolution", width, height);
+	}
+	
+	public BugResolutionSummaryChartWidget() {
+		super("Bugs By Resolution", 400, 280);
 
 	}
 
@@ -43,9 +52,9 @@ public class PrioritySummaryWidget extends PieChartWrapper<BugSearchCriteria> {
 		BugService bugService = AppContext.getSpringBean(BugService.class);
 
 		List<GroupItem> groupItems = bugService
-				.getPrioritySummary(searchCriteria);
+				.getResolutionDefectsSummary(searchCriteria);
 
-		String[] bugPriorities = ProjectDataTypeFactory.getBugPriorityList();
+		String[] bugPriorities = ProjectDataTypeFactory.getBugResolutionList();
 		for (String priority : bugPriorities) {
 			boolean isFound = false;
 			for (GroupItem item : groupItems) {
@@ -73,7 +82,7 @@ public class PrioritySummaryWidget extends PieChartWrapper<BugSearchCriteria> {
 	@Override
 	protected void onClickedDescription(String key) {
 		BugSearchCriteria searchCriteria = new BugSearchCriteria();
-		searchCriteria.setPriorities(new SetSearchField<String>(
+		searchCriteria.setResolutions(new SetSearchField<String>(
 				SearchField.AND, new String[] { key }));
 		searchCriteria.setProjectId(new NumberSearchField(
 				CurrentProjectVariables.getProjectId()));
@@ -82,4 +91,5 @@ public class PrioritySummaryWidget extends PieChartWrapper<BugSearchCriteria> {
 		EventBus.getInstance().fireEvent(
 				new BugEvent.GotoList(this, new BugScreenData.Search(param)));
 	}
+
 }

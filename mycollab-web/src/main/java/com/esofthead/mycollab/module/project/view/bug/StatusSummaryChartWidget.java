@@ -21,15 +21,15 @@ import com.esofthead.mycollab.vaadin.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
-public class StatusSummaryWidget extends PieChartWrapper<BugSearchCriteria> {
+public class StatusSummaryChartWidget extends PieChartWrapper<BugSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
 	
-	public StatusSummaryWidget(int width, int height) {
+	public StatusSummaryChartWidget(int width, int height) {
 		super("Bugs By Status", width, height);
 	}
 
-	public StatusSummaryWidget() {
+	public StatusSummaryChartWidget() {
 		super("Bugs By Status", 400, 280);
 	}
 

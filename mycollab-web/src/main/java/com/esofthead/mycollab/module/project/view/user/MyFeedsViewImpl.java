@@ -45,7 +45,8 @@ public class MyFeedsViewImpl extends AbstractView implements MyFeedsView {
 		header.addComponent(searchtitle);
 		header.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
 
-		Button createProjectBtn = new Button("Create",
+		Button createProjectBtn = new Button(
+				AppContext.getMessage(ProjectCommonI18nEnum.NEW_PROJECT_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
