@@ -21,6 +21,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.CustomLayout;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -41,7 +42,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 	private final VerticalLayout futureContainer;
 
 	private final VerticalLayout closeContainer;
-	private Button createBtn;
+	private final Button createBtn;
 
 	public MilestoneListViewImpl() {
 
@@ -68,49 +69,40 @@ public class MilestoneListViewImpl extends AbstractView implements
 		header.setComponentAlignment(createBtn, Alignment.MIDDLE_RIGHT);
 		this.addComponent(header);
 
-		HorizontalLayout bodyContent = new HorizontalLayout();
-		bodyContent.setMargin(true);
-		bodyContent.setSpacing(true);
+		CustomLayout bodyContent = new CustomLayout("milestoneView");
 		bodyContent.setWidth("100%");
+		bodyContent.setStyleName("milestone-view");
 
+		Label closedHeader = new Label("Closed");
+		closedHeader.setSizeUndefined();
+		bodyContent.addComponent(closedHeader, "closed-header");
 		closeContainer = new VerticalLayout();
-		bodyContent.addComponent(closeContainer);
-		bodyContent.setExpandRatio(closeContainer, 1f);
+		bodyContent.addComponent(closeContainer, "closed-milestones");
 
+		Label inProgressHeader = new Label("In Progress");
+		inProgressHeader.setSizeUndefined();
+		bodyContent.addComponent(inProgressHeader, "in-progress-header");
 		inProgressContainer = new VerticalLayout();
-		bodyContent.addComponent(inProgressContainer);
-		bodyContent.setExpandRatio(inProgressContainer, 1f);
+		bodyContent.addComponent(inProgressContainer, "in-progress-milestones");
 
+		Label futureHeader = new Label("Future");
+		futureHeader.setSizeUndefined();
+		bodyContent.addComponent(futureHeader, "future-header");
 		futureContainer = new VerticalLayout();
-		bodyContent.addComponent(futureContainer);
-		bodyContent.setExpandRatio(futureContainer, 1f);
+		bodyContent.addComponent(futureContainer, "future-milestones");
 
 		this.addComponent(bodyContent);
+		this.setExpandRatio(bodyContent, 1.0f);
 	}
 
 	@Override
 	public void displayMilestones(List<SimpleMilestone> milestones) {
-		createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.MILESTONES));
+		createBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.MILESTONES));
+
 		inProgressContainer.removeAllComponents();
-		Label inProgressHeader = new Label("In Progress");
-		inProgressHeader.setSizeUndefined();
-		inProgressContainer.addComponent(inProgressHeader);
-		inProgressContainer.setComponentAlignment(inProgressHeader,
-				Alignment.MIDDLE_CENTER);
-
 		futureContainer.removeAllComponents();
-		Label futureHeader = new Label("Future");
-		futureHeader.setSizeUndefined();
-		futureContainer.addComponent(futureHeader);
-		futureContainer.setComponentAlignment(futureHeader,
-				Alignment.MIDDLE_CENTER);
-
 		closeContainer.removeAllComponents();
-		Label closeHeader = new Label("Closed");
-		closeHeader.setSizeUndefined();
-		closeContainer.addComponent(closeHeader);
-		closeContainer.setComponentAlignment(closeHeader,
-				Alignment.MIDDLE_CENTER);
 
 		for (SimpleMilestone milestone : milestones) {
 			if (SimpleMilestone.STATUS_INPROGRESS.equals(milestone.getStatus())) {
