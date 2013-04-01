@@ -32,7 +32,7 @@ public class UserTableDisplay extends
 			String[] columnHeaders) {
 		super(AppContext.getSpringBean(UserService.class), SimpleUser.class,
 				visibleColumns, columnHeaders);
-		
+
 		if (ScreenSize.hasSupport1024Pixels()) {
 			this.setWidth("750px");
 		}
@@ -134,7 +134,7 @@ public class UserTableDisplay extends
 								.getBeanByIndex(itemId);
 						Label dateLbl = new Label(DateTimeUtils
 								.getStringDateFromNow(user
-										.getLastAccessedTime()));
+										.getLastaccessedtime()));
 						return dateLbl;
 					}
 				});

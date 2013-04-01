@@ -25,6 +25,5 @@ public class RestApp extends Application {
 	}
 
 	private static class GenericStatusService extends StatusService {
-
 	}
 }

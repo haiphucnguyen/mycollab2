@@ -95,11 +95,13 @@ public class DateComboboxSelectionField extends CustomField {
 	}
 
 	public void setDate(Date date) {
-		Calendar calendar = Calendar.getInstance();
-		calendar.setTime(date);
-		cboDate.select(calendar.get(Calendar.DATE) + "");
-		cboMonth.select(formatMonth(calendar.get(Calendar.MONTH) + 1 + ""));
-		cboYear.select(calendar.get(Calendar.YEAR));
+		if (date != null) {
+			Calendar calendar = Calendar.getInstance();
+			calendar.setTime(date);
+			cboDate.select(calendar.get(Calendar.DATE) + "");
+			cboMonth.select(formatMonth(calendar.get(Calendar.MONTH) + 1 + ""));
+			cboYear.select(calendar.get(Calendar.YEAR));
+		}
 	}
 
 	public Date getDate() {

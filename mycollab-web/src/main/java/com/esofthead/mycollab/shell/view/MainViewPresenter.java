@@ -36,7 +36,7 @@ public class MainViewPresenter extends AbstractPresenter<MainView> {
 		// url
 		String url = ((MyCollabApplication) AppContext.getApplication())
 				.getInitialUrl();
-		if (url != null && !url.equals("UIDL") && !url.equals("/")) {
+		if (url != null && !url.equals("")) {
 			if (url.startsWith("/")) {
 				url = url.substring(1);
 			}
