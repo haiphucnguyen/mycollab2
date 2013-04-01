@@ -32,11 +32,19 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 		ListPresenter<BugSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
-	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {"bugkey",
-			"summary", "assignuserFullName", "severity", "priority", "status", "milestoneid",  "resolution",
-			"duedate" };
-	private static final String[] EXPORT_DISPLAY_NAMES = new String[] {"Key",
-			"Summary", "Assigned User", "Severity", "Priority", "Status", "Milestone", "Resolution", "Due Date" };
+	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
+			"bugkey", "summary", "assignuserFullName", "severity", "priority",
+			"status", "milestoneName", "resolution", "duedate" };
+	private static final String[] EXPORT_DISPLAY_NAMES = new String[] { "Key",
+			"Summary", "Assigned User", "Severity", "Priority", "Status",
+			"Milestone", "Resolution", "Due Date" };
+	
+	private static int defaultColumnWidth = ExportStreamResource.ExcelOutput.DEFAULT_COLUMN_WIDTH;
+	private static final int[] EXPORT_COLUMN_WIDTH = new int[] {
+			defaultColumnWidth, 40, defaultColumnWidth, defaultColumnWidth,
+			defaultColumnWidth, defaultColumnWidth, defaultColumnWidth,
+			defaultColumnWidth, defaultColumnWidth };
+
 	private BugService bugService;
 	private BugSearchCriteria searchCriteria;
 	private boolean isSelectAll = false;
@@ -91,9 +99,14 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
+				String title = "Bugs of Project "
+						+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
+								.getProject().getName() != null) ? CurrentProjectVariables
+								.getProject().getName() : "");
 				Resource res = new StreamResource(
 						new ExportStreamResource.ExcelOutput<BugSearchCriteria>(
-								EXPORT_VISIBLE_COLUMNS, EXPORT_DISPLAY_NAMES,
+								title, EXPORT_VISIBLE_COLUMNS,
+								EXPORT_DISPLAY_NAMES, EXPORT_COLUMN_WIDTH,
 								AppContext.getSpringBean(BugService.class),
 								new BugSearchCriteria()), "bug_list.xls", view
 								.getApplication());

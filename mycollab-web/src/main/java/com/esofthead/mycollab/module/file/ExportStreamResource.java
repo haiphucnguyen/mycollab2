@@ -30,10 +30,6 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
-import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.StreamResource;
 
@@ -48,6 +44,7 @@ public abstract class ExportStreamResource implements
 			.getLogger(ExportStreamResource.class);
 	protected String[] visibleColumns;
 	protected String[] headerNames;
+	protected int[] columnWidth;
 
 	public ExportStreamResource(String[] visibleColumns, String[] headerNames) {
 		this.visibleColumns = visibleColumns;
@@ -59,19 +56,23 @@ public abstract class ExportStreamResource implements
 		private static final long serialVersionUID = 1L;
 		private ISearchableService<S> searchService;
 		private S searchCriteria;
+		private String title;
+		public static int DEFAULT_COLUMN_WIDTH = 0;
 
-		public ExcelOutput(String[] visibleColumns, String[] headerNames,
+		public ExcelOutput(String title, String[] visibleColumns, String[] headerNames, int[] columnWidth,
 				ISearchableService searchService, S searchCriteria) {
 			super(visibleColumns, headerNames);
 			this.searchCriteria = searchCriteria;
 			this.searchService = searchService;
+			this.title = title;
+			this.columnWidth = columnWidth;
 		}
 
 		@Override
 		public InputStream getStream() {
 
 			final int totalItems = searchService.getTotalCount(searchCriteria);
-			
+
 			final PipedInputStream inStream = new PipedInputStream();
 			final PipedOutputStream outStream;
 
@@ -90,14 +91,10 @@ public abstract class ExportStreamResource implements
 				public void run() {
 
 					Workbook wb = new HSSFWorkbook();
-					Sheet sheet = wb.createSheet("Bug Sheet");
+					Sheet sheet = wb.createSheet("New Sheet");
 
 					Row rowTitle = sheet.createRow((short) 1);
 					
-					String title = "Bugs of Project "
-							+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
-									.getProject().getName() != null) ? CurrentProjectVariables.getProject()
-											.getName() : "");
 					createCellTitle(wb, rowTitle, (short) 1,
 							CellStyle.ALIGN_CENTER, CellStyle.VERTICAL_BOTTOM,
 							title.toUpperCase());
@@ -110,7 +107,6 @@ public abstract class ExportStreamResource implements
 						createCellHeader(wb, rowHeader, (short) i,
 								CellStyle.ALIGN_CENTER,
 								CellStyle.VERTICAL_BOTTOM, headerName);
-						sheet.autoSizeColumn(i);
 					}
 
 					int numPage = totalItems
@@ -119,7 +115,8 @@ public abstract class ExportStreamResource implements
 					int currentWritingRow = 5;
 
 					for (int i = 0; i < numPage; i++) {
-						
+
+						log.debug("Show page: " + i + " default number: " + SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS);
 						List data = searchService
 								.findPagableListByCriteria(new SearchRequest<S>(
 										searchCriteria,
@@ -131,17 +128,7 @@ public abstract class ExportStreamResource implements
 
 							Row rowValue = sheet.createRow((short) j
 									+ currentWritingRow);
-							
-							try {
-								int line = (int) ((String) PropertyUtils.getProperty(rowObj,
-										"summary")).length() / 35;
-								
-								if (line > 1) {
-									rowValue.setHeightInPoints((line*sheet.getDefaultRowHeightInPoints())); 
-								}
-							} catch (Exception e) {
-								e.printStackTrace();
-							}
+
 							for (int k = 0; k < visibleColumns.length; k++) {
 								String visColumn = visibleColumns[k];
 								Object value = null;
@@ -159,21 +146,14 @@ public abstract class ExportStreamResource implements
 									createCell(wb, rowValue, (short) k,
 											CellStyle.ALIGN_LEFT,
 											CellStyle.VERTICAL_BOTTOM, "");
-								} else { 
-									if (visColumn.equals("milestoneid")) {
-										
-										SimpleBug simple = (SimpleBug) rowObj;
-										createCell(wb, rowValue, (short) k,
-												CellStyle.ALIGN_LEFT,
-												CellStyle.VERTICAL_BOTTOM, simple.getMilestoneName());
-									} else {
-										createCell(wb, rowValue, (short) k,
-												CellStyle.ALIGN_LEFT,
-												CellStyle.VERTICAL_BOTTOM, value);
-									}
+								} else {
+									createCell(wb, rowValue, (short) k,
+											CellStyle.ALIGN_LEFT,
+											CellStyle.VERTICAL_BOTTOM,
+											value);
 								}
 							}
-							
+
 							if (j == data.size() - 1 && i < numPage) {
 								currentWritingRow += data.size();
 							}
@@ -181,8 +161,12 @@ public abstract class ExportStreamResource implements
 					}
 
 					for (int i = 0; i < headerNames.length; i++) {
-						if (i == 1) {
-							sheet.setColumnWidth(i, calculateColWidth(40));
+						if (i < columnWidth.length) {
+							if (DEFAULT_COLUMN_WIDTH == columnWidth[i]) {
+								sheet.autoSizeColumn(i);
+							} else {
+								sheet.setColumnWidth(i, calculateColWidth(columnWidth[i]));
+							}
 						} else {
 							sheet.autoSizeColumn(i);
 						}
@@ -193,10 +177,12 @@ public abstract class ExportStreamResource implements
 						wb.write(outStream);
 					} catch (IOException e) {
 						e.printStackTrace();
+						log.error("Error when write excel stream", e);
 					} finally {
 						try {
 							outStream.close();
 						} catch (IOException e) {
+							log.error("Error when close excel stream", e);
 							e.printStackTrace();
 						}
 					}
@@ -206,19 +192,19 @@ public abstract class ExportStreamResource implements
 
 			return inStream;
 		}
-		
-		 private int calculateColWidth(int width){ 
-             if(width > 254) 
-                     return 65280; // Maximum allowed column width. 
-             if(width > 1){ 
-                     int floor = (int)(Math.floor(((double)width)/5)); 
-                     int factor = (30*floor); 
-                     int value = 450 + factor + ((width-1) * 250); 
-                     return value;	
-             } 
-             else 
-                     return 450; // default to column size 1 if zero, one or negative number is passed. 
-     } 
+
+		private int calculateColWidth(int width) {
+			if (width > 254)
+				return 65280; // Maximum allowed column width.
+			if (width > 1) {
+				int floor = (int) (Math.floor(((double) width) / 5));
+				int factor = (30 * floor);
+				int value = 450 + factor + ((width - 1) * 250);
+				return value;
+			} else
+				return 450; // default to column size 1 if zero, one or negative
+							// number is passed.
+		}
 
 		private CellStyle createBasicCellStyle(Workbook wb, short halign,
 				short valign, boolean useBorder) {
