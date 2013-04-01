@@ -47,7 +47,7 @@
                     FROM m_comment 
                     WHERE m_comment.type='Project-Message' AND m_comment.typeid=m_prj_message.id) AS commentsCount,
               m_prj_message.createdTime, m_prj_message.lastUpdatedTime, m_prj_message.isStick,
-              concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) AS fullPostedUserName,
+              concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS fullPostedUserName,
               m_prj_project.name AS projectName
               FROM m_prj_message
                 LEFT OUTER JOIN s_user ON (m_prj_message.posteduser = s_user.username)

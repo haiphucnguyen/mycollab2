@@ -128,21 +128,21 @@
 
     <sql id="selectSimpleEventFromTask" >
          SELECT id, subject, 'Task' as eventType, startdate, duedate as endDate, typeid, description, createdTime, createdUser, sAccountId,
-            status, assignUser, type, 'Error' as typeName, lastUpdatedTime, concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) as assignUserFullName
+            status, assignUser, type, 'Error' as typeName, lastUpdatedTime, concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName
             FROM m_crm_task
             LEFT OUTER JOIN s_user ON m_crm_task.assignUser = s_user.username
     </sql>
     
     <sql id="selectSimpleEventFromCall" >
          SELECT id, subject, 'Call' as eventType, startdate, startdate as endDate, typeid, description, createdTime, createdUser, sAccountId,
-            status, assignUser, type, 'Error' as typeName, lastUpdatedTime, concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) as assignUserFullName
+            status, assignUser, type, 'Error' as typeName, lastUpdatedTime, concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName
             FROM m_crm_call
             LEFT OUTER JOIN s_user ON m_crm_call.assignUser = s_user.username
     </sql>
     
     <sql id="selectSimpleEventFromMeeting" >
          SELECT id, subject, 'Meeting' as eventType, startdate, endDate, typeid, description, createdTime, createdUser, sAccountId,
-            status, createdUser as assignUser, type, 'Error' as typeName, lastUpdatedTime, concat(s_user.firstname, LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) as assignUserFullName
+            status, createdUser as assignUser, type, 'Error' as typeName, lastUpdatedTime, concat(s_user.firstname, LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName
             FROM m_crm_meeting
             LEFT OUTER JOIN s_user ON m_crm_meeting.createdUser = s_user.username
     </sql>

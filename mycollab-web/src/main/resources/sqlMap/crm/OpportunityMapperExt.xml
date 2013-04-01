@@ -39,7 +39,7 @@
         </if>
         <if test="assignUserName != null">
             <![CDATA[
-            ${assignUserName.operation} concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) like '%${assignUserName.value}%'
+            ${assignUserName.operation} concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) like '%${assignUserName.value}%'
             ]]>
         </if>
         <if test="assignUsers != null">
@@ -122,7 +122,7 @@
             (SELECT COUNT(*)
             FROM s_user 
             WHERE m_crm_opportunity.assignUser = s_user.username 
-                AND (concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) like '%${assignUserName.value}%')) > 0
+                AND (concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) like '%${assignUserName.value}%')) > 0
             ]]>
         </if>
          <if test="assignUsers != null">
@@ -161,7 +161,7 @@
                m_crm_opportunity.campaignid, m_crm_opportunity.nextStep, m_crm_opportunity.probability, m_crm_opportunity.description, 
                m_crm_opportunity.createdTime, m_crm_opportunity.createdUser, m_crm_opportunity.sAccountId, m_crm_opportunity.assignUser, 
                m_crm_opportunity.opportunityType, m_crm_opportunity.salesStage, m_crm_opportunity.lastUpdatedTime,
-               concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) AS assignUserFullName,
+               concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName,
                m_crm_account.accountName, m_crm_campaign.campaignName
                
       

@@ -19,7 +19,7 @@
         </if>
         <if test="assignUserName != null">
             <![CDATA[
-            ${assignUserName.operation} concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) LIKE '%${assignUserName.value}%'
+            ${assignUserName.operation} concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) LIKE '%${assignUserName.value}%'
             ]]>
         </if>
         <if test="assignUser != null">
@@ -57,7 +57,7 @@
             ${assignUserName.operation}
             (SELECT COUNT(*) FROM s_user
                 WHERE s_user.username = m_crm_target.assignUser AND 
-                (concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) LIKE '%${assignUserName.value}%')) > 0
+                (concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) LIKE '%${assignUserName.value}%')) > 0
             ]]>
         </if>
         <if test="assignUser != null">
@@ -88,7 +88,7 @@
                m_crm_target.homePhone, m_crm_target.otherPhone, m_crm_target.fax, m_crm_target.assistant, m_crm_target.assistantPhone,
                m_crm_target.primaryAddress, m_crm_target.primaryCity, m_crm_target.primaryState, m_crm_target.primaryPostal, m_crm_target.primaryCountryId, 
                m_crm_target.description, m_crm_target.email, m_crm_target.createdTime, m_crm_target.lastUpdatedTime, m_crm_target.createdUser, m_crm_target.sAccountId, 
-               m_crm_target.assignUser,  concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) as assignUserFullName,
+               m_crm_target.assignUser,  concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName,
                concat(m_crm_target.firstname,' ', m_crm_target.lastname) as targetName
 
         FROM m_crm_target

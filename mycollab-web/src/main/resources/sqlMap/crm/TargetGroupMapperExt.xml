@@ -14,7 +14,7 @@
         </if>
 		<if test="assignUserName != null">
             <![CDATA[
-            ${assignUserName.operation} concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) LIKE '%${assignUserName.value}%'
+            ${assignUserName.operation} concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) LIKE '%${assignUserName.value}%'
             ]]>
 		</if>
 		<if test="assignUser != null">
@@ -81,7 +81,7 @@
             (SELECT COUNT(*) 
              FROM s_user 
              WHERE m_crm_target_list.assignUser = s_user.username 
-                 AND (concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) LIKE '%${assignUserName.value}%')) > 0
+                 AND (concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) LIKE '%${assignUserName.value}%')) > 0
             ]]>
 		</if>
 		<if test="assignUser != null">
@@ -145,7 +145,7 @@
         <![CDATA[
         SELECT m_crm_target_list.id, m_crm_target_list.name, m_crm_target_list.type, 
             m_crm_target_list.assignUser, m_crm_target_list.description,  m_crm_target_list.createdTime,  m_crm_target_list.lastUpdatedTime,
-            concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) as assignUserFullName
+            concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) as assignUserFullName
         FROM m_crm_target_list
             LEFT OUTER JOIN s_user ON (m_crm_target_list.assignUser = s_user.username)
        ]]>

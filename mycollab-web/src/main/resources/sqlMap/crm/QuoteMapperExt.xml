@@ -22,7 +22,7 @@
         </if>
         <if test="assignUserName != null">
             <![CDATA[${assignUserName.operation}
-                concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) like '%${assignUserName.value}%']]>
+                concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) like '%${assignUserName.value}%']]>
         </if>
         <if test="assignUser != null">
             <![CDATA[
@@ -35,7 +35,7 @@
         </if>
         <if test="billingContactName != null">
             ${billingContactName.operation}
-            concat(LTRIM(IFNULL(billingContact.firstname || ' ', '')),
+            concat(LTRIM(concat(IFNULL(billingContact.firstname, ''), ' ')),
             billingContact.lastname) like '%${billingContactName.value}%'
         </if>
         <if test="shippingAccountName != null">
@@ -43,7 +43,7 @@
         </if>
         <if test="shippingContactName != null">
             ${shippingContactName.operation}
-            concat(LTRIM(IFNULL(shippingContact.firstname || ' ', '')),
+            concat(LTRIM(concat(IFNULL(shippingContact.firstname, ''), ' ')),
             shippingContact.lastname) like '%${shippingContactName.value}%'
         </if>
         <if test="opportunityId != null">
@@ -94,7 +94,7 @@
         <if test="assignUserName != null"><![CDATA[${assignUserName.operation}
                 (SELECT COUNT(*) FROM s_user
                 WHERE m_crm_quote.assignUser = s_user.username 
-                   AND (concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) like '%${assignUserName.value}%') ) > 0
+                   AND (concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) like '%${assignUserName.value}%') ) > 0
             ]]>
         </if>
         <if test="assignUser != null">
@@ -118,7 +118,7 @@
             (SELECT COUNT(*) 
             FROM m_crm_contact 
             WHERE m_crm_contact.id=m_crm_quote.billcontact 
-                AND concat(LTRIM(IFNULL(m_crm_contact.firstname || ' ', '')), m_crm_contact.lastname) LIKE '%${billingContactName.value}%') > 0
+                AND concat(LTRIM(concat(IFNULL(m_crm_contact.firstname, ''), ' ')), m_crm_contact.lastname) LIKE '%${billingContactName.value}%') > 0
             ]]>
         </if>
         <if test="shippingAccountName != null">
@@ -136,7 +136,7 @@
             (SELECT COUNT(*) 
             FROM m_crm_contact 
             WHERE m_crm_contact.id=m_crm_quote.shipcontact 
-                AND concat(LTRIM(IFNULL(m_crm_contact.firstname || ' ', '')), m_crm_contact.lastname) LIKE '%${shippingContactName.value}%') > 0
+                AND concat(LTRIM(concat(IFNULL(m_crm_contact.firstname, ''), ' ')), m_crm_contact.lastname) LIKE '%${shippingContactName.value}%') > 0
             ]]>
         </if>
         <if test="opportunityId != null">
@@ -191,12 +191,12 @@
                m_crm_quote.billingcountry, m_crm_quote.shippingaddress, m_crm_quote.shippingcity, 
                m_crm_quote.shippingstate, m_crm_quote.shippingpostalcode, m_crm_quote.purchaseordernum,
                m_crm_quote.shippingcountry, m_crm_quote.description, m_crm_quote.paymentterm, m_crm_quote.originalpodate,
-               concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename || ' ', '')), s_user.lastname) AS assignUserFullName,
+               concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS assignUserFullName,
                m_crm_opportunity.opportunityName as opportunityName,
                billingAccount.accountName AS billingAccountName,
-               concat(LTRIM(IFNULL(billingContact.firstname || ' ', '')), billingContact.lastname) AS billingContactName,
+               concat(LTRIM(concat(IFNULL(billingContact.firstname, ''), ' ')), billingContact.lastname) AS billingContactName,
                shippingAccount.accountName AS shippingAccountName,
-               concat(LTRIM(IFNULL(shippingContact.firstname || ' ', '')), shippingContact.lastname) AS shippingContactName,
+               concat(LTRIM(concat(IFNULL(shippingContact.firstname , ''), ' ')), shippingContact.lastname) AS shippingContactName,
                m_crm_quote.createdTime, m_crm_quote.createdUser, m_crm_quote.lastUpdatedTime
                
         FROM m_crm_quote
