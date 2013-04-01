@@ -63,6 +63,9 @@ public class CurrentProjectVariables {
 	}
 
 	private static boolean isAdmin() {
+		if (AppContext.isAdmin()) {
+			return true;
+		}
 		ProjectMember member = (ProjectMember) AppContext
 				.getVariable(ProjectContants.PROJECT_MEMBER);
 		if (member != null && member.getIsadmin() != null) {

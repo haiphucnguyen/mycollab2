@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.web;
 
-import java.io.IOException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -10,6 +8,7 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.shell.view.FragmentNavigator;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.vaadin.Application;
 import com.vaadin.terminal.gwt.server.HttpServletRequestListener;
@@ -44,14 +43,16 @@ public class MyCollabApplication extends Application implements
 	@Override
 	public void onRequestStart(HttpServletRequest request,
 			HttpServletResponse response) {
-		if (!"UIDL".equals(request.getPathInfo())) {
-			if (sessionData == null) {
-				initialUrl = request.getPathInfo();
-				try {
-					String contextPath = request.getContextPath();
-					response.sendRedirect(contextPath + "/");
-				} catch (IOException e) {
-					log.error("Error while send redirect to root page");
+		String pathInfo = request.getPathInfo();
+		if (pathInfo.equals("") || pathInfo.equals("/")) {
+			initialUrl = request.getParameter("url");
+			if (sessionData != null) {
+				initialUrl = request.getParameter("url");
+				if (initialUrl != null && !initialUrl.equals("")) {
+					if (initialUrl.startsWith("/")) {
+						initialUrl = initialUrl.substring(1);
+					}
+					FragmentNavigator.navigateByFragement(initialUrl);
 				}
 			}
 		}

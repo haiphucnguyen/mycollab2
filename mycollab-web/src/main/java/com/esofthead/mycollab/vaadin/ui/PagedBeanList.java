@@ -228,7 +228,7 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 		}
 
 		if (totalPage > 1) {
-			if (this.getComponentCount() == 1) {
+			if (this.getComponentCount() == 1 || this.getComponentCount() == 0) {
 				this.addComponent(createPageControls());
 			}
 			this.setCurrentPage(currentPage);
@@ -248,7 +248,6 @@ public class PagedBeanList<SearchService extends ISearchableService<S>, S extend
 				this.removeComponent(comp);
 			}
 		}
-		
 
 		VerticalLayout content = new VerticalLayout();
 		LazyLoadWrapper wrapperComp = new LazyLoadWrapper(content);

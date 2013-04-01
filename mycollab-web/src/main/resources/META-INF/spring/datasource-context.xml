@@ -23,7 +23,7 @@
     <tx:annotation-driven transaction-manager="txManager" />
 
     <context:property-placeholder location="classpath:resources.properties" />
-    
+
     <bean id="migrationManager"
         class="com.carbonfive.db.migration.CustomDataSourceMigrationManager"
         init-method="migrate">
@@ -33,6 +33,7 @@
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
         <property name="typeAliasesPackage" value="com.esofthead.mycollab" />
+        <property name="typeHandlersPackage" value="com.esofthead.mybatis.plugin.ext" />
         <property name="mapperLocations" value="classpath*:sqlMap/**/*.xml" />
     </bean>
 

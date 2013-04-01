@@ -33,9 +33,9 @@ public class MessageReadPresenter extends AbstractPresenter<MessageReadView> {
     protected void onGo(ComponentContainer container, ScreenData<?> data) {
     	if (CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.MESSAGES)) {
-    		MessageContainer riskContainer = (MessageContainer) container;
-            riskContainer.removeAllComponents();
-            riskContainer.addComponent(view.getWidget());
+    		MessageContainer messageContainer = (MessageContainer) container;
+            messageContainer.removeAllComponents();
+            messageContainer.addComponent(view.getWidget());
 
             if (data.getParams() instanceof Integer) {
                 MessageService messageService = AppContext

@@ -27,7 +27,7 @@ public class UserResource extends ServerResource {
 		item.setGroupname("AAA");
 		item.setGroupid("1");
 		item.setValue(4);
-		throw new RuntimeException("E");
+		return new JsonRepresentation(item);
 	}
 
 	@Post("json")

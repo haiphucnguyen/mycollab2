@@ -14,143 +14,189 @@ import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-public class MyCollabModelFilePlugin extends org.mybatis.generator.api.PluginAdapter {
+import com.esofthead.mycollab.core.utils.BeanUtility;
 
-    @Override
-    public boolean validate(List<String> args) {
-        return true;
-    }
+public class MyCollabModelFilePlugin extends
+		org.mybatis.generator.api.PluginAdapter {
 
-    @Override
-    public boolean sqlMapDocumentGenerated(Document document,
-            IntrospectedTable introspectedTable) {
-        if (isTableHasIdPrimaryKey(introspectedTable)) {
-            generateInsertAndReturnKeySqlStatement(document, introspectedTable);
-            generateRemoveMultipleKeysSqlStatement(document, introspectedTable);
-        }
+	@Override
+	public boolean validate(List<String> args) {
+		return true;
+	}
 
-        return true;
-    }
+	@Override
+	public boolean sqlMapResultMapWithoutBLOBsElementGenerated(
+			XmlElement element, IntrospectedTable introspectedTable) {
+		List<IntrospectedColumn> baseColumns = introspectedTable
+				.getBaseColumns();
+		for (IntrospectedColumn column : baseColumns) {
+			FullyQualifiedJavaType javaType = column
+					.getFullyQualifiedJavaType();
+			if ("java.util.Date".equals(javaType.getFullyQualifiedName())) {
+				System.out.println("COLUMN: " + column.getActualColumnName());
+				XmlElement fieldElement = new XmlElement("result");
+				element.addElement(fieldElement);
+				fieldElement.addAttribute(new Attribute("column", column
+						.getActualColumnName()));
+				fieldElement.addAttribute(new Attribute("jdbcType", column
+						.getJdbcTypeName()));
+				fieldElement.addAttribute(new Attribute("property", column
+						.getJavaProperty()));
+				fieldElement.addAttribute(new Attribute("typeHandler",
+						"com.esofthead.mybatis.plugin.ext.DateTypeHandler"));
+			}
 
-    private void generateInsertAndReturnKeySqlStatement(Document document,
-            IntrospectedTable introspectedTable) {
-        XmlElement element = new XmlElement("insert");
-        element.addAttribute(new Attribute("parameterType",
-                introspectedTable.getBaseRecordType()));
-        element.addAttribute(new Attribute("id", "insertAndReturnKey"));
-        element.addAttribute(new Attribute("useGeneratedKeys", "true"));
-        element.addAttribute(new Attribute("keyProperty", "id"));
+		}
 
-        TextElement commentElement = new TextElement(
-                "<!--WARNING - @mbggenerated-->");
-        element.addElement(commentElement);
+		return true;
+	}
 
-        StringBuffer sqlBuilder = new StringBuffer("insert into ").append(
-                introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime())
-                .append(" (");
+	@Override
+	public boolean sqlMapResultMapWithBLOBsElementGenerated(XmlElement element,
+			IntrospectedTable introspectedTable) {
 
-        StringBuilder valueSt = new StringBuilder("values (");
+		return true;
+	}
 
-        List<IntrospectedColumn> allColumns = introspectedTable
-                .getAllColumns();
-        for (int i = 0; i < allColumns.size(); i++) {
+	@Override
+	public boolean sqlMapDocumentGenerated(Document document,
+			IntrospectedTable introspectedTable) {
+		if (isTableHasIdPrimaryKey(introspectedTable)) {
+			generateInsertAndReturnKeySqlStatement(document, introspectedTable);
+			generateRemoveMultipleKeysSqlStatement(document, introspectedTable);
+		}
 
-            IntrospectedColumn column = allColumns.get(i);
-            sqlBuilder.append(column.getActualColumnName());
+		return true;
+	}
 
-            valueSt.append("#{").append(column.getJavaProperty())
-                    .append(",jdbcType=").append(column.getJdbcTypeName())
-                    .append("}");
+	private void generateInsertAndReturnKeySqlStatement(Document document,
+			IntrospectedTable introspectedTable) {
+		XmlElement element = new XmlElement("insert");
+		element.addAttribute(new Attribute("parameterType", introspectedTable
+				.getBaseRecordType()));
+		element.addAttribute(new Attribute("id", "insertAndReturnKey"));
+		element.addAttribute(new Attribute("useGeneratedKeys", "true"));
+		element.addAttribute(new Attribute("keyProperty", "id"));
 
-            if (i < allColumns.size() - 1) {
-                sqlBuilder.append(", ");
-                valueSt.append(", ");
-            }
-        }
-        sqlBuilder.append(") ");
-        sqlBuilder.append(valueSt.toString()).append(")");
+		TextElement commentElement = new TextElement(
+				"<!--WARNING - @mbggenerated-->");
+		element.addElement(commentElement);
 
-        System.out.println("Generate insert statement " + sqlBuilder.toString());
+		StringBuffer sqlBuilder = new StringBuffer("insert into ").append(
+				introspectedTable.getAliasedFullyQualifiedTableNameAtRuntime())
+				.append(" (");
 
-        element.addElement(new TextElement(sqlBuilder.toString()));
+		StringBuilder valueSt = new StringBuilder("values (");
 
-        document.getRootElement().addElement(element);
-    }
+		List<IntrospectedColumn> allColumns = introspectedTable.getAllColumns();
+		for (int i = 0; i < allColumns.size(); i++) {
 
-    private void generateRemoveMultipleKeysSqlStatement(Document document,
-            IntrospectedTable introspectedTable) {
-        XmlElement element = new XmlElement("delete");
-        TextElement commentElement = new TextElement(
-                "<!--WARNING - @mbggenerated-->");
-        element.addElement(commentElement);
-        element.addAttribute(new Attribute("id", "removeKeysWithSession"));
-        element.addAttribute(new Attribute("parameterType",
-                "java.util.List"));
-        
-        StringBuffer sqlBuilder = new StringBuffer("delete from ").append(
-                introspectedTable
-                .getAliasedFullyQualifiedTableNameAtRuntime())
-                .append(" where id IN <foreach item=\"item\" index=\"index\" collection=\"list\" open=\"(\" separator=\",\" close=\")\"> #{item} </foreach>");
-        
-        System.out.println("Generate delete statement " + sqlBuilder.toString());
-        
-        element.addElement(new TextElement(sqlBuilder.toString()));
-        document.getRootElement().addElement(element);
-    }
+			IntrospectedColumn column = allColumns.get(i);
+			sqlBuilder.append(column.getActualColumnName());
 
-    @Override
-    public boolean clientGenerated(Interface interfaze,
-            TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+			valueSt.append("#{").append(column.getJavaProperty())
+					.append(",jdbcType=").append(column.getJdbcTypeName())
+					.append("}");
 
-        if (isTableHasIdPrimaryKey(introspectedTable)) {
-            generateInsertAndReturnKeyMethod(interfaze, introspectedTable);
-            generateRemoveMultipleKeysMethod(interfaze, introspectedTable);
-        }
+			if (i < allColumns.size() - 1) {
+				sqlBuilder.append(", ");
+				valueSt.append(", ");
+			}
+		}
+		sqlBuilder.append(") ");
+		sqlBuilder.append(valueSt.toString()).append(")");
 
-        return true;
-    }
+		System.out
+				.println("Generate insert statement " + sqlBuilder.toString());
 
-    private void generateInsertAndReturnKeyMethod(Interface interfaze, IntrospectedTable introspectedTable) {
-        Method method = new Method();
-        method.setVisibility(JavaVisibility.PUBLIC);
-        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
-        method.setName("insertAndReturnKey");
-        method.setReturnType(new FullyQualifiedJavaType("java.lang.Integer"));
-        method.addParameter(new Parameter(new FullyQualifiedJavaType(
-                introspectedTable.getBaseRecordType()), "value"));
-        interfaze.addMethod(method);
-    }
+		element.addElement(new TextElement(sqlBuilder.toString()));
 
-    private void generateRemoveMultipleKeysMethod(Interface interfaze, IntrospectedTable introspectedTable) {
-        Method method = new Method();
-        method.setVisibility(JavaVisibility.PUBLIC);
-        context.getCommentGenerator().addGeneralMethodComment(method, introspectedTable);
-        method.setName("removeKeysWithSession");
-        method.setReturnType(new FullyQualifiedJavaType("void"));
-        method.addParameter(new Parameter(new FullyQualifiedJavaType("java.util.List"), "primaryKeys"));
-        interfaze.addMethod(method);
-    }
+		document.getRootElement().addElement(element);
+	}
 
-    @Override
-    public boolean modelGetterMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable, ModelClassType modelClassType) {
-        return true;
-    }
+	private void generateRemoveMultipleKeysSqlStatement(Document document,
+			IntrospectedTable introspectedTable) {
+		XmlElement element = new XmlElement("delete");
+		TextElement commentElement = new TextElement(
+				"<!--WARNING - @mbggenerated-->");
+		element.addElement(commentElement);
+		element.addAttribute(new Attribute("id", "removeKeysWithSession"));
+		element.addAttribute(new Attribute("parameterType", "java.util.List"));
 
-    @Override
-    public boolean modelSetterMethodGenerated(Method method, TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn, IntrospectedTable introspectedTable, ModelClassType modelClassType) {
-        return super.modelSetterMethodGenerated(method, topLevelClass, introspectedColumn, introspectedTable, modelClassType);
-    }
+		StringBuffer sqlBuilder = new StringBuffer("delete from ")
+				.append(introspectedTable
+						.getAliasedFullyQualifiedTableNameAtRuntime())
+				.append(" where id IN <foreach item=\"item\" index=\"index\" collection=\"list\" open=\"(\" separator=\",\" close=\")\"> #{item} </foreach>");
 
-    private boolean isTableHasIdPrimaryKey(IntrospectedTable introspectedTable) {
-        List<IntrospectedColumn> primaryKeys = introspectedTable
-                .getPrimaryKeyColumns();
-        if ((primaryKeys != null) && (primaryKeys.size() == 1)) {
-            IntrospectedColumn column = primaryKeys.get(0);
-            return (column.getFullyQualifiedJavaType().getFullyQualifiedName())
-                    .equals("java.lang.Integer");
-        } else {
-            return false;
-        }
-    }
+		System.out
+				.println("Generate delete statement " + sqlBuilder.toString());
+
+		element.addElement(new TextElement(sqlBuilder.toString()));
+		document.getRootElement().addElement(element);
+	}
+
+	@Override
+	public boolean clientGenerated(Interface interfaze,
+			TopLevelClass topLevelClass, IntrospectedTable introspectedTable) {
+
+		if (isTableHasIdPrimaryKey(introspectedTable)) {
+			generateInsertAndReturnKeyMethod(interfaze, introspectedTable);
+			generateRemoveMultipleKeysMethod(interfaze, introspectedTable);
+		}
+
+		return true;
+	}
+
+	private void generateInsertAndReturnKeyMethod(Interface interfaze,
+			IntrospectedTable introspectedTable) {
+		Method method = new Method();
+		method.setVisibility(JavaVisibility.PUBLIC);
+		context.getCommentGenerator().addGeneralMethodComment(method,
+				introspectedTable);
+		method.setName("insertAndReturnKey");
+		method.setReturnType(new FullyQualifiedJavaType("java.lang.Integer"));
+		method.addParameter(new Parameter(new FullyQualifiedJavaType(
+				introspectedTable.getBaseRecordType()), "value"));
+		interfaze.addMethod(method);
+	}
+
+	private void generateRemoveMultipleKeysMethod(Interface interfaze,
+			IntrospectedTable introspectedTable) {
+		Method method = new Method();
+		method.setVisibility(JavaVisibility.PUBLIC);
+		context.getCommentGenerator().addGeneralMethodComment(method,
+				introspectedTable);
+		method.setName("removeKeysWithSession");
+		method.setReturnType(new FullyQualifiedJavaType("void"));
+		method.addParameter(new Parameter(new FullyQualifiedJavaType(
+				"java.util.List"), "primaryKeys"));
+		interfaze.addMethod(method);
+	}
+
+	@Override
+	public boolean modelGetterMethodGenerated(Method method,
+			TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
+			IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+		return true;
+	}
+
+	@Override
+	public boolean modelSetterMethodGenerated(Method method,
+			TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
+			IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+		return super.modelSetterMethodGenerated(method, topLevelClass,
+				introspectedColumn, introspectedTable, modelClassType);
+	}
+
+	private boolean isTableHasIdPrimaryKey(IntrospectedTable introspectedTable) {
+		List<IntrospectedColumn> primaryKeys = introspectedTable
+				.getPrimaryKeyColumns();
+		if ((primaryKeys != null) && (primaryKeys.size() == 1)) {
+			IntrospectedColumn column = primaryKeys.get(0);
+			return (column.getFullyQualifiedJavaType().getFullyQualifiedName())
+					.equals("java.lang.Integer");
+		} else {
+			return false;
+		}
+	}
 }

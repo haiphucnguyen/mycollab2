@@ -61,7 +61,7 @@ public class AppContext implements TransactionListener, Serializable {
 		instance.set(this);
 	}
 
-	public AppContext getInstance() {
+	public static AppContext getInstance() {
 		return instance.get();
 	}
 
