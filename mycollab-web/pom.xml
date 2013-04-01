@@ -394,7 +394,7 @@
                 </configuration>
             </plugin>
             <!--CHECK LOCALIZATION -->
-            
+            <!-- 
             <plugin>
                 <groupId>ch.qos.cal10n.plugins</groupId>
                 <artifactId>maven-cal10n-plugin</artifactId>
@@ -414,6 +414,7 @@
                     </execution>
                 </executions>
             </plugin>
+            -->
            
             <!-- <plugin> <groupId>com.vaadin</groupId> <artifactId>vaadin-maven-plugin</artifactId> 
                 <version>1.0.1</version> <executions> <execution> <phase>prepare-package</phase> 
