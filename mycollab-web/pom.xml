@@ -356,7 +356,7 @@
                         <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
                         <overwrite>true</overwrite> </configuration> </execution>
                         -->
-                    <!-- ><execution> <id>File Artifacts Generator</id> <phase>compile</phase> 
+                    <!-- <execution> <id>File Artifacts Generator</id> <phase>compile</phase> 
                         <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile> 
                         <overwrite>true</overwrite> </configuration> </execution> -->
                     <!-- <execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 

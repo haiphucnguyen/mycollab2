@@ -778,7 +778,6 @@
     id CDATA #REQUIRED
     title CDATA #REQUIRED
     message CDATA #IMPLIED
-    messagehtml CDATA #IMPLIED
     posteddate CDATA #REQUIRED
     posteduser CDATA #IMPLIED
     projectid CDATA #REQUIRED
@@ -787,7 +786,6 @@
     lastUpdatedTime CDATA #IMPLIED
     sAccountId CDATA #REQUIRED
     isStick CDATA #IMPLIED
-    isNews CDATA #IMPLIED
 >
 
 <!ELEMENT m_prj_milestone EMPTY>
@@ -810,7 +808,7 @@
 <!ATTLIST m_prj_problem
     id CDATA #REQUIRED
     issuename CDATA #REQUIRED
-    description CDATA #REQUIRED
+    description CDATA #IMPLIED
     projectid CDATA #REQUIRED
     raisedbyuser CDATA #IMPLIED
     assigntouser CDATA #IMPLIED
@@ -863,7 +861,7 @@
 <!ATTLIST m_prj_risk
     id CDATA #REQUIRED
     riskname CDATA #REQUIRED
-    description CDATA #REQUIRED
+    description CDATA #IMPLIED
     projectid CDATA #REQUIRED
     raisedbyuser CDATA #IMPLIED
     assigntouser CDATA #IMPLIED

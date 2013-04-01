@@ -1,6 +1,7 @@
 package com.esofthead.mybatis.plugin;
 
 import java.util.List;
+
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
@@ -14,8 +15,6 @@ import org.mybatis.generator.api.dom.xml.Document;
 import org.mybatis.generator.api.dom.xml.TextElement;
 import org.mybatis.generator.api.dom.xml.XmlElement;
 
-import com.esofthead.mycollab.core.utils.BeanUtility;
-
 public class MyCollabModelFilePlugin extends
 		org.mybatis.generator.api.PluginAdapter {
 
@@ -24,39 +23,41 @@ public class MyCollabModelFilePlugin extends
 		return true;
 	}
 
-	@Override
-	public boolean sqlMapResultMapWithoutBLOBsElementGenerated(
-			XmlElement element, IntrospectedTable introspectedTable) {
-		List<IntrospectedColumn> baseColumns = introspectedTable
-				.getBaseColumns();
-		for (IntrospectedColumn column : baseColumns) {
-			FullyQualifiedJavaType javaType = column
-					.getFullyQualifiedJavaType();
-			if ("java.util.Date".equals(javaType.getFullyQualifiedName())) {
-				System.out.println("COLUMN: " + column.getActualColumnName());
-				XmlElement fieldElement = new XmlElement("result");
-				element.addElement(fieldElement);
-				fieldElement.addAttribute(new Attribute("column", column
-						.getActualColumnName()));
-				fieldElement.addAttribute(new Attribute("jdbcType", column
-						.getJdbcTypeName()));
-				fieldElement.addAttribute(new Attribute("property", column
-						.getJavaProperty()));
-				fieldElement.addAttribute(new Attribute("typeHandler",
-						"com.esofthead.mybatis.plugin.ext.DateTypeHandler"));
-			}
+	//
+	// @Override
+	// public boolean sqlMapResultMapWithoutBLOBsElementGenerated(
+	// XmlElement element, IntrospectedTable introspectedTable) {
+	// List<IntrospectedColumn> baseColumns = introspectedTable
+	// .getBaseColumns();
+	// for (IntrospectedColumn column : baseColumns) {
+	// FullyQualifiedJavaType javaType = column
+	// .getFullyQualifiedJavaType();
+	// if ("java.util.Date".equals(javaType.getFullyQualifiedName())) {
+	// System.out.println("COLUMN: " + column.getActualColumnName());
+	// XmlElement fieldElement = new XmlElement("result");
+	// element.addElement(fieldElement);
+	// fieldElement.addAttribute(new Attribute("column", column
+	// .getActualColumnName()));
+	// fieldElement.addAttribute(new Attribute("jdbcType", column
+	// .getJdbcTypeName()));
+	// fieldElement.addAttribute(new Attribute("property", column
+	// .getJavaProperty()));
+	// fieldElement.addAttribute(new Attribute("typeHandler",
+	// "com.esofthead.mybatis.plugin.ext.DateTypeHandler"));
+	// }
+	//
+	// }
+	//
+	// return true;
+	// }
 
-		}
-
-		return true;
-	}
-
-	@Override
-	public boolean sqlMapResultMapWithBLOBsElementGenerated(XmlElement element,
-			IntrospectedTable introspectedTable) {
-
-		return true;
-	}
+	// @Override
+	// public boolean sqlMapResultMapWithBLOBsElementGenerated(XmlElement
+	// element,
+	// IntrospectedTable introspectedTable) {
+	//
+	// return true;
+	// }
 
 	@Override
 	public boolean sqlMapDocumentGenerated(Document document,
@@ -72,8 +73,11 @@ public class MyCollabModelFilePlugin extends
 	private void generateInsertAndReturnKeySqlStatement(Document document,
 			IntrospectedTable introspectedTable) {
 		XmlElement element = new XmlElement("insert");
-		element.addAttribute(new Attribute("parameterType", introspectedTable
-				.getBaseRecordType()));
+		String parameterType = (introspectedTable.getBLOBColumns().size() == 0 || introspectedTable
+				.getBLOBColumns().size() == 1) ? introspectedTable
+				.getBaseRecordType() : introspectedTable
+				.getRecordWithBLOBsType();
+		element.addAttribute(new Attribute("parameterType", parameterType));
 		element.addAttribute(new Attribute("id", "insertAndReturnKey"));
 		element.addAttribute(new Attribute("useGeneratedKeys", "true"));
 		element.addAttribute(new Attribute("keyProperty", "id"));
