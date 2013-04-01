@@ -22,6 +22,7 @@ import org.apache.poi.ss.util.CellRangeAddress;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
@@ -113,13 +114,11 @@ public class ExportExcelStreamResource<S extends SearchCriteria> implements
 							try {
 								value = PropertyUtils.getProperty(rowObj,
 										visColumn);
-							} catch (IllegalAccessException e) {
-								e.printStackTrace();
-							} catch (InvocationTargetException e) {
-								e.printStackTrace();
-							} catch (NoSuchMethodException e) {
-								e.printStackTrace();
+							} catch (Exception e) {
+								log.error("Error when geting values for excel stream", e);
+								throw new MyCollabException("Having error when exporting records to excel file.");
 							}
+							
 							if (value == null) {
 								createCell(wb, rowValue, (short) k,
 										CellStyle.ALIGN_LEFT,
@@ -159,7 +158,7 @@ public class ExportExcelStreamResource<S extends SearchCriteria> implements
 						outStream.close();
 					} catch (IOException e) {
 						log.error("Error when close excel stream", e);
-						e.printStackTrace();
+						throw new MyCollabException("Having error when exporting records to excel file.");
 					}
 				}
 
