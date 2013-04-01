@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.crm.view.campaign;
 
 import org.vaadin.addon.customfield.FieldWrapper;
 
-import com.esofthead.mycollab.module.crm.domain.Campaign;
+import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
@@ -17,7 +17,7 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 
 @SuppressWarnings("serial")
-public class CampaignSelectionField extends FieldWrapper<Campaign> implements
+public class CampaignSelectionField extends FieldWrapper<CampaignWithBLOBs> implements
 		FieldSelection {
 
 	private HorizontalLayout layout;
@@ -29,7 +29,7 @@ public class CampaignSelectionField extends FieldWrapper<Campaign> implements
 	private Embedded clearBtn;
 
 	public CampaignSelectionField() {
-		super(new TextField(""), Campaign.class);
+		super(new TextField(""), CampaignWithBLOBs.class);
 
 		layout = new HorizontalLayout();
 		layout.setSpacing(true);

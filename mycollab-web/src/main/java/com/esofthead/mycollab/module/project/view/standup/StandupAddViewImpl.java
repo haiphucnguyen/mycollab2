@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.project.view.standup;
 
 import java.util.GregorianCalendar;
 
-import com.esofthead.mycollab.module.project.domain.StandupReport;
+import com.esofthead.mycollab.module.project.domain.StandupReportWithBLOBs;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -30,11 +30,11 @@ public class StandupAddViewImpl extends AbstractView implements StandupAddView {
 	}
 
 	@Override
-	public void editItem(StandupReport StandupReport) {
-		editForm.setItemDataSource(new BeanItem<StandupReport>(StandupReport));
+	public void editItem(StandupReportWithBLOBs StandupReport) {
+		editForm.setItemDataSource(new BeanItem<StandupReportWithBLOBs>(StandupReport));
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<StandupReport> {
+	private class EditForm extends AdvancedEditBeanForm<StandupReportWithBLOBs> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -56,7 +56,7 @@ public class StandupAddViewImpl extends AbstractView implements StandupAddView {
 			}
 
 			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<StandupReport>(
+				return (new EditFormControlsGenerator<StandupReportWithBLOBs>(
 						EditForm.this)).createButtonControls(true, false, true);
 			}
 
@@ -89,7 +89,7 @@ public class StandupAddViewImpl extends AbstractView implements StandupAddView {
 	}
 
 	@Override
-	public HasEditFormHandlers<StandupReport> getEditFormHandlers() {
+	public HasEditFormHandlers<StandupReportWithBLOBs> getEditFormHandlers() {
 		return editForm;
 	}
 

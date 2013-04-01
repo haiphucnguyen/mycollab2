@@ -16,6 +16,12 @@
  */
 package com.esofthead.mycollab.module.crm.service.ibatis;
 
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -26,26 +32,22 @@ import com.esofthead.mycollab.module.crm.dao.CampaignContactMapper;
 import com.esofthead.mycollab.module.crm.dao.CampaignLeadMapper;
 import com.esofthead.mycollab.module.crm.dao.CampaignMapper;
 import com.esofthead.mycollab.module.crm.dao.CampaignMapperExt;
-import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccountExample;
 import com.esofthead.mycollab.module.crm.domain.CampaignContact;
 import com.esofthead.mycollab.module.crm.domain.CampaignContactExample;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
 import com.esofthead.mycollab.module.crm.domain.CampaignLeadExample;
+import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
-import java.util.List;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @Transactional
 @Traceable(module = "Crm", type = "Campaign", nameField = "campaignname")
 @Auditable(module = "Crm", type = "Campaign")
-public class CampaignServiceImpl extends DefaultService<Integer, Campaign, CampaignSearchCriteria> implements
+public class CampaignServiceImpl extends DefaultService<Integer, CampaignWithBLOBs, CampaignSearchCriteria> implements
         CampaignService {
     
     @Autowired
@@ -60,7 +62,7 @@ public class CampaignServiceImpl extends DefaultService<Integer, Campaign, Campa
     private CampaignLeadMapper campaignLeadMapper;
     
     @Override
-    public ICrudGenericDAO<Integer, Campaign> getCrudMapper() {
+    public ICrudGenericDAO<Integer, CampaignWithBLOBs> getCrudMapper() {
         return campaignMapper;
     }
     

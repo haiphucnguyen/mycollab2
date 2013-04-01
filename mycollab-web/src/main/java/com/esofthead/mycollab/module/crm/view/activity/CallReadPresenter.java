@@ -1,12 +1,11 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
-
 import org.vaadin.dialogs.ConfirmDialog;
 
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
-import com.esofthead.mycollab.module.crm.domain.Call;
+import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.criteria.CallSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
@@ -68,7 +67,8 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 
 					@Override
 					public void onClone(SimpleCall data) {
-						Call cloneData = (Call) data.copy();
+						CallWithBLOBs cloneData = (CallWithBLOBs
+								) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new ActivityEvent.CallEdit(this, cloneData));

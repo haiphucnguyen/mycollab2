@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.campaign;
 
-import com.esofthead.mycollab.module.crm.domain.Campaign;
+import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -20,11 +20,11 @@ import com.vaadin.ui.TextField;
 
 @ViewComponent
 public class CampaignAddViewImpl extends AbstractView implements
-        IFormAddView<Campaign>, CampaignAddView {
+        IFormAddView<CampaignWithBLOBs>, CampaignAddView {
 
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
-    private Campaign campaign;
+    private CampaignWithBLOBs campaign;
 
     public CampaignAddViewImpl() {
         super();
@@ -33,12 +33,12 @@ public class CampaignAddViewImpl extends AbstractView implements
     }
 
     @Override
-    public void editItem(Campaign campaign) {
+    public void editItem(CampaignWithBLOBs campaign) {
         this.campaign = campaign;
-        editForm.setItemDataSource(new BeanItem<Campaign>(campaign));
+        editForm.setItemDataSource(new BeanItem<CampaignWithBLOBs>(campaign));
     }
 
-    private class EditForm extends AdvancedEditBeanForm<Campaign> {
+    private class EditForm extends AdvancedEditBeanForm<CampaignWithBLOBs> {
 
         private static final long serialVersionUID = 1L;
 
@@ -58,7 +58,7 @@ public class CampaignAddViewImpl extends AbstractView implements
             }
 
             private HorizontalLayout createButtonControls() {
-                return (new EditFormControlsGenerator<Campaign>(EditForm.this))
+                return (new EditFormControlsGenerator<CampaignWithBLOBs>(EditForm.this))
                         .createButtonControls();
             }
 
@@ -111,7 +111,7 @@ public class CampaignAddViewImpl extends AbstractView implements
     }
 
     @Override
-    public HasEditFormHandlers<Campaign> getEditFormHandlers() {
+    public HasEditFormHandlers<CampaignWithBLOBs> getEditFormHandlers() {
         return editForm;
     }
 }

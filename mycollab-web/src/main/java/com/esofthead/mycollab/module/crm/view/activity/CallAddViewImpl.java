@@ -1,7 +1,11 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import java.util.Collection;
+
+import org.vaadin.addon.customfield.CustomField;
+
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.Call;
+import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedEditItemField;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
@@ -21,15 +25,13 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
-import java.util.Collection;
-import org.vaadin.addon.customfield.CustomField;
 
 @ViewComponent
 public class CallAddViewImpl extends AbstractView implements CallAddView {
 
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
-    private Call call;
+    private CallWithBLOBs call;
 
     public CallAddViewImpl() {
         super();
@@ -38,12 +40,12 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
     }
 
     @Override
-    public void editItem(Call item) {
+    public void editItem(CallWithBLOBs item) {
         this.call = item;
-        editForm.setItemDataSource(new BeanItem<Call>(call));
+        editForm.setItemDataSource(new BeanItem<CallWithBLOBs>(call));
     }
 
-    private class EditForm extends AdvancedEditBeanForm<Call> {
+    private class EditForm extends AdvancedEditBeanForm<CallWithBLOBs> {
 
         private static final long serialVersionUID = 1L;
 
@@ -64,7 +66,7 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
             }
 
             private Layout createButtonControls() {
-                return (new EditFormControlsGenerator<Call>(EditForm.this))
+                return (new EditFormControlsGenerator<CallWithBLOBs>(EditForm.this))
                         .createButtonControls();
             }
 
@@ -127,7 +129,7 @@ public class CallAddViewImpl extends AbstractView implements CallAddView {
     }
 
     @Override
-    public HasEditFormHandlers<Call> getEditFormHandlers() {
+    public HasEditFormHandlers<CallWithBLOBs> getEditFormHandlers() {
         return editForm;
     }
 

@@ -39,7 +39,7 @@ import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
-import com.esofthead.mycollab.module.tracker.domain.Bug;
+import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.shell.events.ShellEvent;
@@ -522,7 +522,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				"New Bug");
 	}
 
-	public void gotoBugEdit(final Bug bug) {
+	public void gotoBugEdit(final BugWithBLOBs bug) {
 		this.select(1);
 		this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
 		this.setLinkEnabled(true, 2);
@@ -545,7 +545,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 						"Edit Bug: " + bug.getSummary());
 	}
 
-	public void gotoBugRead(Bug bug) {
+	public void gotoBugRead(BugWithBLOBs bug) {
 		this.select(1);
 		this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
 		this.setLinkEnabled(true, 2);

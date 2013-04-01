@@ -4,13 +4,13 @@ import java.util.List;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
-import com.esofthead.mycollab.module.tracker.domain.Bug;
+import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.MetaField;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 
 public interface BugService extends
-		IDefaultService<Integer, Bug, BugSearchCriteria> {
+		IDefaultService<Integer, BugWithBLOBs, BugSearchCriteria> {
 
 	List<MetaField> getProjectTrackerMetaData(int projectid);
 

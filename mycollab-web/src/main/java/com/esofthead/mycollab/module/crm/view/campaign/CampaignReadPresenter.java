@@ -12,11 +12,11 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
-import com.esofthead.mycollab.module.crm.domain.Call;
-import com.esofthead.mycollab.module.crm.domain.Campaign;
+import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
 import com.esofthead.mycollab.module.crm.domain.CampaignContact;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
+import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
@@ -55,15 +55,15 @@ public class CampaignReadPresenter extends
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Campaign>() {
+				new DefaultPreviewFormHandler<CampaignWithBLOBs>() {
 					@Override
-					public void onEdit(Campaign data) {
+					public void onEdit(CampaignWithBLOBs data) {
 						EventBus.getInstance().fireEvent(
 								new CampaignEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Campaign data) {
+					public void onDelete(final CampaignWithBLOBs data) {
 						ConfirmDialog.show(
 								view.getWindow(),
 								"Please Confirm:",
@@ -89,8 +89,8 @@ public class CampaignReadPresenter extends
 					}
 
 					@Override
-					public void onClone(Campaign data) {
-						Campaign cloneData = (Campaign) data.copy();
+					public void onClone(CampaignWithBLOBs data) {
+						CampaignWithBLOBs cloneData = (CampaignWithBLOBs) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new CampaignEvent.GotoEdit(this, cloneData));
@@ -103,7 +103,7 @@ public class CampaignReadPresenter extends
 					}
 
 					@Override
-					public void gotoNext(Campaign data) {
+					public void gotoNext(CampaignWithBLOBs data) {
 						CampaignService contactService = AppContext
 								.getSpringBean(CampaignService.class);
 						CampaignSearchCriteria criteria = new CampaignSearchCriteria();
@@ -129,7 +129,7 @@ public class CampaignReadPresenter extends
 					}
 
 					@Override
-					public void gotoPrevious(Campaign data) {
+					public void gotoPrevious(CampaignWithBLOBs data) {
 						CampaignService contactService = AppContext
 								.getSpringBean(CampaignService.class);
 						CampaignSearchCriteria criteria = new CampaignSearchCriteria();
@@ -175,7 +175,7 @@ public class CampaignReadPresenter extends
 													CampaignReadPresenter.this,
 													meeting));
 						} else if (itemId.equals("call")) {
-							Call call = new Call();
+							CallWithBLOBs call = new CallWithBLOBs();
 							call.setType(CrmTypeConstants.CAMPAIGN);
 							call.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(

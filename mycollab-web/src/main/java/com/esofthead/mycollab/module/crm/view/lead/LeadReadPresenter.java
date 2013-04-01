@@ -11,9 +11,9 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.Call;
-import com.esofthead.mycollab.module.crm.domain.Campaign;
+import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
+import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
@@ -166,7 +166,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 									new ActivityEvent.MeetingEdit(
 											LeadReadPresenter.this, meeting));
 						} else if (itemId.equals("call")) {
-							Call call = new Call();
+							CallWithBLOBs call = new CallWithBLOBs();
 							call.setType(CrmTypeConstants.LEAD);
 							call.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(
@@ -180,7 +180,7 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 				new AbstractRelatedListHandler<SimpleCampaign>() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
-						Campaign campaign = new Campaign();
+						CampaignWithBLOBs campaign = new CampaignWithBLOBs();
 						campaign.setExtraData(view.getItem());
 						EventBus.getInstance().fireEvent(
 								new CampaignEvent.GotoEdit(

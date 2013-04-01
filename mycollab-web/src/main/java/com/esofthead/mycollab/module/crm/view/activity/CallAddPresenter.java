@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.module.crm.domain.Call;
+import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
@@ -25,9 +25,9 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 	public CallAddPresenter() {
 		super(CallAddView.class);
 
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Call>() {
+		view.getEditFormHandlers().addFormHandler(new EditFormHandler<CallWithBLOBs>() {
 			@Override
-			public void onSave(final Call item) {
+			public void onSave(final CallWithBLOBs item) {
 				save(item);
 				ViewState viewState = HistoryViewManager.back();
 				if (viewState instanceof NullViewState) {
@@ -46,7 +46,7 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 			}
 
 			@Override
-			public void onSaveAndNew(final Call item) {
+			public void onSaveAndNew(final CallWithBLOBs item) {
 				save(item);
 				EventBus.getInstance().fireEvent(
 						new ActivityEvent.CallAdd(this, null));
@@ -57,9 +57,9 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (AppContext.canWrite(RolePermissionCollections.CRM_TASK)) {
-			Call call = null;
-			if (data.getParams() instanceof Call) {
-				call = (Call) data.getParams();
+			CallWithBLOBs call = null;
+			if (data.getParams() instanceof CallWithBLOBs) {
+				call = (CallWithBLOBs) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
 				CallService callService = AppContext
 						.getSpringBean(CallService.class);
@@ -92,7 +92,7 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 		}
 	}
 
-	public void save(Call item) {
+	public void save(CallWithBLOBs item) {
 		CallService taskService = AppContext.getSpringBean(CallService.class);
 
 		item.setSaccountid(AppContext.getAccountId());

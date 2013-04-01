@@ -18,13 +18,13 @@ import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.project.dao.StandupReportMapper;
 import com.esofthead.mycollab.module.project.dao.StandupReportMapperExt;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
-import com.esofthead.mycollab.module.project.domain.StandupReport;
+import com.esofthead.mycollab.module.project.domain.StandupReportWithBLOBs;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 
 @Service
 public class StandupReportServiceImpl extends
-		DefaultService<Integer, StandupReport, StandupReportSearchCriteria>
+		DefaultService<Integer, StandupReportWithBLOBs, StandupReportSearchCriteria>
 		implements StandupReportService {
 	@Autowired
 	private StandupReportMapper standupReportMapper;

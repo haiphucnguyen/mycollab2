@@ -5,14 +5,15 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.ibatis.annotations.Case;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.Call;
-import com.esofthead.mycollab.module.crm.domain.Case;
+import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
+import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
@@ -47,15 +48,15 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Case>() {
+				new DefaultPreviewFormHandler<CaseWithBLOBs>() {
 					@Override
-					public void onEdit(Case data) {
+					public void onEdit(CaseWithBLOBs data) {
 						EventBus.getInstance().fireEvent(
 								new CaseEvent.GotoEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Case data) {
+					public void onDelete(final CaseWithBLOBs data) {
 						ConfirmDialog.show(
 								view.getWindow(),
 								"Please Confirm:",
@@ -81,8 +82,8 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 					}
 
 					@Override
-					public void onClone(Case data) {
-						Case cloneData = (Case) data.copy();
+					public void onClone(CaseWithBLOBs data) {
+						CaseWithBLOBs cloneData = (CaseWithBLOBs) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new CaseEvent.GotoEdit(this, cloneData));
@@ -95,7 +96,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 					}
 
 					@Override
-					public void gotoNext(Case data) {
+					public void gotoNext(CaseWithBLOBs data) {
 						CaseService caseService = AppContext
 								.getSpringBean(CaseService.class);
 						CaseSearchCriteria criteria = new CaseSearchCriteria();
@@ -120,7 +121,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 					}
 
 					@Override
-					public void gotoPrevious(Case data) {
+					public void gotoPrevious(CaseWithBLOBs data) {
 						CaseService caseService = AppContext
 								.getSpringBean(CaseService.class);
 						CaseSearchCriteria criteria = new CaseSearchCriteria();
@@ -164,7 +165,7 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 									new ActivityEvent.MeetingEdit(
 											CaseReadPresenter.this, meeting));
 						} else if (itemId.equals("call")) {
-							Call call = new Call();
+							CallWithBLOBs call = new CallWithBLOBs();
 							call.setType(CrmTypeConstants.CASE);
 							call.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(

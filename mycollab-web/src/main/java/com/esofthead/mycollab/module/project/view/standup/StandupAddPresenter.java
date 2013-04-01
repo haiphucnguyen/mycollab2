@@ -2,10 +2,9 @@ package com.esofthead.mycollab.module.project.view.standup;
 
 import java.util.GregorianCalendar;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.domain.StandupReport;
+import com.esofthead.mycollab.module.project.domain.StandupReportWithBLOBs;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
@@ -30,9 +29,10 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 
 	private void bind() {
 		view.getEditFormHandlers().addFormHandler(
-				new EditFormHandler<StandupReport>() {
+				new EditFormHandler<StandupReportWithBLOBs>() {
 					@Override
-					public void onSave(final StandupReport standupReport) {
+					public void onSave(
+							final StandupReportWithBLOBs standupReport) {
 						saveStandupReport(standupReport);
 						ViewState viewState = HistoryViewManager.back();
 						if (viewState instanceof NullViewState) {
@@ -51,14 +51,15 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 					}
 
 					@Override
-					public void onSaveAndNew(final StandupReport standupReport) {
+					public void onSaveAndNew(
+							final StandupReportWithBLOBs standupReport) {
 						throw new MyCollabException(
 								"Do not support this feature");
 					}
 				});
 	}
 
-	public void saveStandupReport(StandupReport standupReport) {
+	public void saveStandupReport(StandupReportWithBLOBs standupReport) {
 		StandupReportService standupReportService = AppContext
 				.getSpringBean(StandupReportService.class);
 		standupReport.setProjectid(CurrentProjectVariables.getProjectId());
@@ -81,7 +82,8 @@ public class StandupAddPresenter extends AbstractPresenter<StandupAddView> {
 		StandupContainer standupContainer = (StandupContainer) container;
 		standupContainer.removeAllComponents();
 		standupContainer.addComponent(view.getWidget());
-		StandupReport standupReport = (StandupReport) data.getParams();
+		StandupReportWithBLOBs standupReport = (StandupReportWithBLOBs) data
+				.getParams();
 		view.editItem(standupReport);
 
 		ProjectBreadcrumb breadCrumb = ViewManager

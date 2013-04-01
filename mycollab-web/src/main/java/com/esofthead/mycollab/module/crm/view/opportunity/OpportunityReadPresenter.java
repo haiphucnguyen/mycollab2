@@ -11,7 +11,7 @@ import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.Call;
+import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Contact;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
@@ -170,7 +170,7 @@ public class OpportunityReadPresenter extends
 											OpportunityReadPresenter.this,
 											meeting));
 						} else if (itemId.equals("call")) {
-							Call call = new Call();
+							CallWithBLOBs call = new CallWithBLOBs();
 							call.setType(CrmTypeConstants.OPPORTUNITY);
 							call.setTypeid(view.getItem().getId());
 							EventBus.getInstance()

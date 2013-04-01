@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
-import com.esofthead.mycollab.module.crm.domain.Case;
+import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.account.AccountSelectionField;
@@ -24,7 +24,7 @@ public class CaseAddViewImpl extends AbstractView implements CaseAddView {
 
     private static final long serialVersionUID = 1L;
     private EditForm editForm;
-    private Case cases;
+    private CaseWithBLOBs cases;
 
     public CaseAddViewImpl() {
         super();
@@ -33,12 +33,12 @@ public class CaseAddViewImpl extends AbstractView implements CaseAddView {
     }
 
     @Override
-    public void editItem(Case cases) {
+    public void editItem(CaseWithBLOBs cases) {
         this.cases = cases;
-        editForm.setItemDataSource(new BeanItem<Case>(cases));
+        editForm.setItemDataSource(new BeanItem<CaseWithBLOBs>(cases));
     }
 
-    private class EditForm extends AdvancedEditBeanForm<Case> {
+    private class EditForm extends AdvancedEditBeanForm<CaseWithBLOBs> {
 
         private static final long serialVersionUID = 1L;
 
@@ -58,7 +58,7 @@ public class CaseAddViewImpl extends AbstractView implements CaseAddView {
             }
 
             private Layout createButtonControls() {
-                return (new EditFormControlsGenerator<Case>(EditForm.this))
+                return (new EditFormControlsGenerator<CaseWithBLOBs>(EditForm.this))
                         .createButtonControls();
             }
 
@@ -130,7 +130,7 @@ public class CaseAddViewImpl extends AbstractView implements CaseAddView {
     }
 
     @Override
-    public HasEditFormHandlers<Case> getEditFormHandlers() {
+    public HasEditFormHandlers<CaseWithBLOBs> getEditFormHandlers() {
         return editForm;
     }
 }

@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.Call;
+import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedReadItemField;
 import com.esofthead.mycollab.module.crm.view.account.AccountFormLayoutFactory;
@@ -35,7 +35,7 @@ public class CallPreviewBuilder extends VerticalLayout {
 
 	public void previewItem(SimpleCall item) {
 		call = item;
-		previewForm.setItemDataSource(new BeanItem<Call>(call));
+		previewForm.setItemDataSource(new BeanItem<CallWithBLOBs>(call));
 	}
 
 	public AdvancedPreviewBeanForm<SimpleCall> getPreviewForm() {

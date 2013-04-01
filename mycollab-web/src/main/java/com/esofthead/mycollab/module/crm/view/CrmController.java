@@ -2,15 +2,15 @@ package com.esofthead.mycollab.module.crm.view;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.module.crm.domain.Account;
-import com.esofthead.mycollab.module.crm.domain.Call;
-import com.esofthead.mycollab.module.crm.domain.Case;
-import com.esofthead.mycollab.module.crm.domain.Lead;
-import com.esofthead.mycollab.module.crm.domain.Meeting;
-import com.esofthead.mycollab.module.crm.domain.Opportunity;
+import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
+import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
+import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
-import com.esofthead.mycollab.module.crm.domain.Task;
+import com.esofthead.mycollab.module.crm.domain.SimpleLead;
+import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
+import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
+import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
@@ -133,8 +133,9 @@ public class CrmController implements IController {
 					public void handle(AccountEvent.GotoAdd event) {
 						AccountAddPresenter presenter = PresenterResolver
 								.getPresenter(AccountAddPresenter.class);
-						presenter.go(container, new ScreenData.Add<Account>(
-								new Account()));
+						presenter.go(container,
+								new ScreenData.Add<SimpleAccount>(
+										new SimpleAccount()));
 					}
 				});
 
@@ -220,8 +221,9 @@ public class CrmController implements IController {
 					public void handle(ActivityEvent.TaskAdd event) {
 						TaskAddViewImpl view = ViewManager
 								.getView(TaskAddViewImpl.class);
-						new TaskAddPresenter(view).go(container,
-								new ScreenData.Add<Task>(new Task()));
+						new TaskAddPresenter(view)
+								.go(container, new ScreenData.Add<SimpleTask>(
+										new SimpleTask()));
 					}
 				});
 
@@ -276,8 +278,9 @@ public class CrmController implements IController {
 					public void handle(ActivityEvent.MeetingAdd event) {
 						MeetingAddPresenter presenter = PresenterResolver
 								.getPresenter(MeetingAddPresenter.class);
-						presenter.go(container, new ScreenData.Add<Meeting>(
-								new Meeting()));
+						presenter.go(container,
+								new ScreenData.Add<SimpleMeeting>(
+										new SimpleMeeting()));
 					}
 				});
 
@@ -312,8 +315,8 @@ public class CrmController implements IController {
 					public void handle(ActivityEvent.MeetingRead event) {
 						MeetingReadPresenter presenter = PresenterResolver
 								.getPresenter(MeetingReadPresenter.class);
-						presenter.go(container,
-								new ScreenData.Add<Object>(event.getData()));
+						presenter.go(container, new ScreenData.Add<Object>(
+								event.getData()));
 
 					}
 				});
@@ -331,8 +334,8 @@ public class CrmController implements IController {
 					public void handle(ActivityEvent.CallAdd event) {
 						CallAddPresenter presenter = PresenterResolver
 								.getPresenter(CallAddPresenter.class);
-						presenter.go(container,
-								new ScreenData<Call>(new Call()));
+						presenter.go(container, new ScreenData<SimpleCall>(
+								new SimpleCall()));
 					}
 				});
 
@@ -367,8 +370,8 @@ public class CrmController implements IController {
 					public void handle(ActivityEvent.CallRead event) {
 						CallReadPresenter presenter = PresenterResolver
 								.getPresenter(CallReadPresenter.class);
-						presenter.go(container,
-								new ScreenData.Add<Object>(event.getData()));
+						presenter.go(container, new ScreenData.Add<Object>(
+								event.getData()));
 
 					}
 				});
@@ -556,8 +559,8 @@ public class CrmController implements IController {
 					public void handle(LeadEvent.GotoAdd event) {
 						LeadAddPresenter presenter = PresenterResolver
 								.getPresenter(LeadAddPresenter.class);
-						presenter.go(container, new ScreenData.Add<Lead>(
-								new Lead()));
+						presenter.go(container, new ScreenData.Add<SimpleLead>(
+								new SimpleLead()));
 					}
 				});
 
@@ -637,8 +640,8 @@ public class CrmController implements IController {
 						OpportunityAddPresenter presenter = PresenterResolver
 								.getPresenter(OpportunityAddPresenter.class);
 						presenter.go(container,
-								new ScreenData.Add<Opportunity>(
-										new Opportunity()));
+								new ScreenData.Add<SimpleOpportunity>(
+										new SimpleOpportunity()));
 					}
 				});
 
@@ -710,8 +713,8 @@ public class CrmController implements IController {
 					public void handle(CaseEvent.GotoAdd event) {
 						CaseAddPresenter presenter = PresenterResolver
 								.getPresenter(CaseAddPresenter.class);
-						presenter.go(container, new ScreenData.Add<Case>(
-								new Case()));
+						presenter.go(container, new ScreenData.Add<SimpleCase>(
+								new SimpleCase()));
 					}
 				});
 

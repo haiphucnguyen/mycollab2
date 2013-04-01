@@ -34,7 +34,7 @@ import com.esofthead.mycollab.module.tracker.dao.BugMapper;
 import com.esofthead.mycollab.module.tracker.dao.BugMapperExt;
 import com.esofthead.mycollab.module.tracker.dao.ComponentMapperExt;
 import com.esofthead.mycollab.module.tracker.dao.MetaDataMapper;
-import com.esofthead.mycollab.module.tracker.domain.Bug;
+import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.MetaData;
 import com.esofthead.mycollab.module.tracker.domain.MetaDataExample;
 import com.esofthead.mycollab.module.tracker.domain.MetaField;
@@ -49,7 +49,7 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 @Auditable(module = ModuleNameConstants.PRJ, type = ProjectContants.BUG)
 @Watchable(type = MonitorTypeConstants.PRJ_BUG, userFieldName = "assignuser")
 public class BugServiceImpl extends
-		DefaultService<Integer, Bug, BugSearchCriteria> implements BugService {
+		DefaultService<Integer, BugWithBLOBs, BugSearchCriteria> implements BugService {
 	@Autowired
 	protected BugMapper bugMapper;
 	@Autowired
@@ -68,7 +68,7 @@ public class BugServiceImpl extends
 	private RelayEmailNotificationService relayEmailNotificationService;
 
 	@Override
-	public ICrudGenericDAO<Integer, Bug> getCrudMapper() {
+	public ICrudGenericDAO<Integer, BugWithBLOBs> getCrudMapper() {
 		return bugMapper;
 	}
 
@@ -78,7 +78,7 @@ public class BugServiceImpl extends
 	}
 
 	@Override
-	public int saveWithSession(Bug record, String username) {
+	public int saveWithSession(BugWithBLOBs record, String username) {
 		Integer maxKey = bugMapperExt.getMaxKey(record.getProjectid());
 		if (maxKey == null) {
 			record.setBugkey(1);

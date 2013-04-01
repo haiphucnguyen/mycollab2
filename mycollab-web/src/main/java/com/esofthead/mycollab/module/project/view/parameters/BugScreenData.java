@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.project.view.parameters;
 
-import com.esofthead.mycollab.module.tracker.domain.Bug;
+import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
 public class BugScreenData {
@@ -25,16 +25,16 @@ public class BugScreenData {
 		}
 	}
 	
-	public static class Add extends ScreenData<Bug> {
+	public static class Add extends ScreenData<BugWithBLOBs> {
 
-		public Add(Bug params) {
+		public Add(BugWithBLOBs params) {
 			super(params);
 		}
 	}
 	
-	public static class Edit extends ScreenData<Bug> {
+	public static class Edit extends ScreenData<BugWithBLOBs> {
 
-		public Edit(Bug params) {
+		public Edit(BugWithBLOBs params) {
 			super(params);
 		}
 	}

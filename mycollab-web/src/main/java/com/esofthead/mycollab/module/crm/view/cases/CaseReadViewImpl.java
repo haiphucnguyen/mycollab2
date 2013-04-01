@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.cases;
 
-import com.esofthead.mycollab.module.crm.domain.Case;
+import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
@@ -26,7 +26,7 @@ public class CaseReadViewImpl extends AbstractView implements CaseReadView {
     }
 
     @Override
-    public HasPreviewFormHandlers<Case> getPreviewFormHandlers() {
+    public HasPreviewFormHandlers<CaseWithBLOBs> getPreviewFormHandlers() {
         return casePreview.getPreviewForm();
     }
 

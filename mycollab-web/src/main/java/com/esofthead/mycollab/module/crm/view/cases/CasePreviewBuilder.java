@@ -5,7 +5,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.Case;
+import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
@@ -38,7 +38,7 @@ import com.vaadin.ui.Window;
 public class CasePreviewBuilder extends VerticalLayout {
 
     protected SimpleCase cases;
-    protected AdvancedPreviewBeanForm<Case> previewForm;
+    protected AdvancedPreviewBeanForm<CaseWithBLOBs> previewForm;
     protected CaseContactListComp associateContactList;
     protected NoteListItems noteListItems;
     protected EventRelatedItemListComp associateActivityList;
@@ -80,7 +80,7 @@ public class CasePreviewBuilder extends VerticalLayout {
         return cases;
     }
 
-    public AdvancedPreviewBeanForm<Case> getPreviewForm() {
+    public AdvancedPreviewBeanForm<CaseWithBLOBs> getPreviewForm() {
         return previewForm;
     }
 
@@ -135,7 +135,7 @@ public class CasePreviewBuilder extends VerticalLayout {
             tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
             initRelatedComponent();
 
-            previewForm = new AdvancedPreviewBeanForm<Case>() {
+            previewForm = new AdvancedPreviewBeanForm<CaseWithBLOBs>() {
                 @Override
                 public void setItemDataSource(Item newDataSource) {
                     this.setFormLayoutFactory(new CaseFormLayoutFactory.CaseInformationLayout());
@@ -178,7 +178,7 @@ public class CasePreviewBuilder extends VerticalLayout {
 
             caseInformationLayout = new VerticalLayout();
             caseInformationLayout.setMargin(true);
-            Layout actionControls = new PreviewFormControlsGenerator<Case>(
+            Layout actionControls = new PreviewFormControlsGenerator<CaseWithBLOBs>(
                     previewForm).createButtonControls(RolePermissionCollections.CRM_CASE);
             caseInformationLayout.addComponent(actionControls);
             caseInformationLayout.addComponent(previewForm);
@@ -202,7 +202,7 @@ public class CasePreviewBuilder extends VerticalLayout {
     public static class PrintView extends CasePreviewBuilder {
 
         public PrintView() {
-            previewForm = new AdvancedPreviewBeanForm<Case>() {
+            previewForm = new AdvancedPreviewBeanForm<CaseWithBLOBs>() {
                 @Override
                 public void setItemDataSource(Item newDataSource) {
                     this.setFormLayoutFactory(new FormLayoutFactory());

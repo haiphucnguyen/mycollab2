@@ -14,8 +14,8 @@ import com.esofthead.mycollab.module.crm.CrmTypeConstants;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.AccountContact;
 import com.esofthead.mycollab.module.crm.domain.AccountLead;
-import com.esofthead.mycollab.module.crm.domain.Call;
-import com.esofthead.mycollab.module.crm.domain.Case;
+import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
+import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.Opportunity;
@@ -231,7 +231,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 				new AbstractRelatedListHandler() {
 					@Override
 					public void createNewRelatedItem(String itemId) {
-						Case cases = new Case();
+						CaseWithBLOBs cases = new CaseWithBLOBs();
 						cases.setAccountid(view.getItem().getId());
 						EventBus.getInstance().fireEvent(
 								new CaseEvent.GotoEdit(this, cases));
@@ -259,7 +259,7 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 													AccountReadPresenter.this,
 													meeting));
 						} else if (itemId.equals("call")) {
-							final Call call = new Call();
+							final CallWithBLOBs call = new CallWithBLOBs();
 							call.setType(CrmTypeConstants.ACCOUNT);
 							call.setTypeid(view.getItem().getId());
 							EventBus.getInstance().fireEvent(

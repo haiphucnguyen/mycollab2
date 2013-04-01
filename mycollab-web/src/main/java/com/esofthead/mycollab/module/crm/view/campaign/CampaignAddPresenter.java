@@ -5,8 +5,8 @@ import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
+import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.events.CampaignEvent;
@@ -35,9 +35,9 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 
 	private void bind() {
 		view.getEditFormHandlers().addFormHandler(
-				new EditFormHandler<Campaign>() {
+				new EditFormHandler<CampaignWithBLOBs>() {
 					@Override
-					public void onSave(final Campaign campaign) {
+					public void onSave(final CampaignWithBLOBs campaign) {
 						saveCampaign(campaign);
 						ViewState viewState = HistoryViewManager.back();
 						if (viewState instanceof NullViewState) {
@@ -56,7 +56,7 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 					}
 
 					@Override
-					public void onSaveAndNew(final Campaign campaign) {
+					public void onSaveAndNew(final CampaignWithBLOBs campaign) {
 						saveCampaign(campaign);
 						EventBus.getInstance().fireEvent(
 								new CampaignEvent.GotoAdd(this, null));
@@ -67,13 +67,13 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (AppContext.canWrite(RolePermissionCollections.CRM_CAMPAIGN)) {
-			Campaign campaign = null;
-			if (data.getParams() instanceof Campaign) {
+			CampaignWithBLOBs campaign = null;
+			if (data.getParams() instanceof SimpleCampaign) {
 				campaign = (SimpleCampaign) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
 				CampaignService campaignService = AppContext
 						.getSpringBean(CampaignService.class);
-				campaign = (Campaign) campaignService
+				campaign = (CampaignWithBLOBs) campaignService
 						.findByPrimaryKey((Integer) data.getParams());
 				if (campaign == null) {
 					AppContext
@@ -105,7 +105,7 @@ public class CampaignAddPresenter extends CrmGenericPresenter<CampaignAddView> {
 		}
 	}
 
-	public void saveCampaign(Campaign campaign) {
+	public void saveCampaign(CampaignWithBLOBs campaign) {
 		CampaignService campaignService = AppContext
 				.getSpringBean(CampaignService.class);
 

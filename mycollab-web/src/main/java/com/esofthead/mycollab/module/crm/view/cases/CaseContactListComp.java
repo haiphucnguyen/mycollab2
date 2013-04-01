@@ -11,7 +11,7 @@ import org.vaadin.hene.splitbutton.SplitButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.module.crm.domain.Case;
+import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
@@ -39,14 +39,14 @@ import com.vaadin.ui.VerticalLayout;
 public class CaseContactListComp extends RelatedListComp<SimpleContact, ContactSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
-    private Case cases;
+    private CaseWithBLOBs cases;
 
     public CaseContactListComp() {
         super("Contacts");
         initUI();
     }
 
-    public void displayContacts(Case cases) {
+    public void displayContacts(CaseWithBLOBs cases) {
         this.cases = cases;
         loadContacts();
     }

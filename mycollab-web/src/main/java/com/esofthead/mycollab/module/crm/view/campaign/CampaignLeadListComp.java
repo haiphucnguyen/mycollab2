@@ -4,10 +4,15 @@
  */
 package com.esofthead.mycollab.module.crm.view.campaign;
 
+import java.util.Set;
+
+import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.hene.splitbutton.SplitButton;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
+import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
@@ -26,9 +31,6 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
-import java.util.Set;
-import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.hene.splitbutton.SplitButton;
 
 /**
  *
@@ -37,14 +39,14 @@ import org.vaadin.hene.splitbutton.SplitButton;
 public class CampaignLeadListComp  extends RelatedListComp<SimpleLead, LeadSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
-    private Campaign campaign;
+    private CampaignWithBLOBs campaign;
 
     public CampaignLeadListComp() {
         super("Leads");
         initUI();
     }
 
-    public void displayLeads(Campaign campaign) {
+    public void displayLeads(CampaignWithBLOBs campaign) {
         this.campaign = campaign;
         loadLeads();
     }

@@ -11,7 +11,7 @@ import com.esofthead.mycollab.common.domain.Comment;
 import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
-import com.esofthead.mycollab.module.tracker.domain.Bug;
+import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
@@ -51,7 +51,7 @@ public class ApproveInputWindow extends Window {
 		center();
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<Bug> {
+	private class EditForm extends AdvancedEditBeanForm<BugWithBLOBs> {
 
 		private static final long serialVersionUID = 1L;
 		private RichTextArea commentArea;

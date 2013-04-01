@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.crm.view.cases;
 
 import org.vaadin.addon.customfield.FieldWrapper;
 
-import com.esofthead.mycollab.module.crm.domain.Case;
+import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
@@ -16,7 +16,7 @@ import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.TextField;
 
-public class CaseSelectionField extends FieldWrapper<Case> implements
+public class CaseSelectionField extends FieldWrapper<CaseWithBLOBs> implements
 		FieldSelection {
 	private static final long serialVersionUID = 1L;
 
@@ -29,7 +29,7 @@ public class CaseSelectionField extends FieldWrapper<Case> implements
 	private Embedded clearBtn;
 
 	public CaseSelectionField() {
-		super(new TextField(""), Case.class);
+		super(new TextField(""), CaseWithBLOBs.class);
 
 		layout = new HorizontalLayout();
 		layout.setSpacing(true);

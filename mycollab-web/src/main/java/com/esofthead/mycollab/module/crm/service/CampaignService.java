@@ -16,17 +16,18 @@
  */
 package com.esofthead.mycollab.module.crm.service;
 
+import java.util.List;
+
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
-import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
 import com.esofthead.mycollab.module.crm.domain.CampaignContact;
 import com.esofthead.mycollab.module.crm.domain.CampaignLead;
+import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
-import java.util.List;
 
 public interface CampaignService extends
-        IDefaultService<Integer, Campaign, CampaignSearchCriteria> {
+        IDefaultService<Integer, CampaignWithBLOBs, CampaignSearchCriteria> {
 
     SimpleCampaign findCampaignById(int campaignId);
 

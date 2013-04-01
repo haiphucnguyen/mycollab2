@@ -1,6 +1,6 @@
 package com.esofthead.mycollab.module.project.view.parameters;
 
-import com.esofthead.mycollab.module.project.domain.StandupReport;
+import com.esofthead.mycollab.module.project.domain.StandupReportWithBLOBs;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 
@@ -12,16 +12,16 @@ public class StandupScreenData {
 		}
 	}
 
-	public static class Add extends ScreenData<StandupReport> {
+	public static class Add extends ScreenData<StandupReportWithBLOBs> {
 
-		public Add(StandupReport params) {
+		public Add(StandupReportWithBLOBs params) {
 			super(params);
 		}
 	}
 
-	public static class Edit extends ScreenData<StandupReport> {
+	public static class Edit extends ScreenData<StandupReportWithBLOBs> {
 
-		public Edit(StandupReport params) {
+		public Edit(StandupReportWithBLOBs params) {
 			super(params);
 		}
 	}

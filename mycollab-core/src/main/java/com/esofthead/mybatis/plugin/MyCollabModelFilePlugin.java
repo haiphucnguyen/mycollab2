@@ -73,8 +73,7 @@ public class MyCollabModelFilePlugin extends
 	private void generateInsertAndReturnKeySqlStatement(Document document,
 			IntrospectedTable introspectedTable) {
 		XmlElement element = new XmlElement("insert");
-		String parameterType = (introspectedTable.getBLOBColumns().size() == 0 || introspectedTable
-				.getBLOBColumns().size() == 1) ? introspectedTable
+		String parameterType = !isBlobDomainGenerated(introspectedTable) ? introspectedTable
 				.getBaseRecordType() : introspectedTable
 				.getRecordWithBLOBsType();
 		element.addAttribute(new Attribute("parameterType", parameterType));
@@ -110,8 +109,8 @@ public class MyCollabModelFilePlugin extends
 		sqlBuilder.append(") ");
 		sqlBuilder.append(valueSt.toString()).append(")");
 
-		System.out
-				.println("Generate insert statement " + sqlBuilder.toString());
+		// System.out
+		// .println("Generate insert statement " + sqlBuilder.toString());
 
 		element.addElement(new TextElement(sqlBuilder.toString()));
 
@@ -132,11 +131,26 @@ public class MyCollabModelFilePlugin extends
 						.getAliasedFullyQualifiedTableNameAtRuntime())
 				.append(" where id IN <foreach item=\"item\" index=\"index\" collection=\"list\" open=\"(\" separator=\",\" close=\")\"> #{item} </foreach>");
 
-		System.out
-				.println("Generate delete statement " + sqlBuilder.toString());
-
 		element.addElement(new TextElement(sqlBuilder.toString()));
 		document.getRootElement().addElement(element);
+	}
+
+	private boolean isBlobDomainGenerated(IntrospectedTable introspectedTable) {
+		return !(introspectedTable.getBLOBColumns().size() == 0 || introspectedTable
+				.getBLOBColumns().size() == 1);
+	}
+
+	@Override
+	public boolean modelBaseRecordClassGenerated(TopLevelClass topLevelClass,
+			IntrospectedTable introspectedTable) {
+		if (!isBlobDomainGenerated(introspectedTable)) {
+			topLevelClass.setVisibility(JavaVisibility.PUBLIC);
+		} else {
+			topLevelClass.setVisibility(JavaVisibility.DEFAULT);
+		}
+
+		return super.modelBaseRecordClassGenerated(topLevelClass,
+				introspectedTable);
 	}
 
 	@Override
@@ -158,9 +172,12 @@ public class MyCollabModelFilePlugin extends
 		context.getCommentGenerator().addGeneralMethodComment(method,
 				introspectedTable);
 		method.setName("insertAndReturnKey");
+		String paramterType = !isBlobDomainGenerated(introspectedTable) ? introspectedTable
+				.getBaseRecordType() : introspectedTable
+				.getRecordWithBLOBsType();
 		method.setReturnType(new FullyQualifiedJavaType("java.lang.Integer"));
 		method.addParameter(new Parameter(new FullyQualifiedJavaType(
-				introspectedTable.getBaseRecordType()), "value"));
+				paramterType), "value"));
 		interfaze.addMethod(method);
 	}
 
@@ -175,6 +192,50 @@ public class MyCollabModelFilePlugin extends
 		method.addParameter(new Parameter(new FullyQualifiedJavaType(
 				"java.util.List"), "primaryKeys"));
 		interfaze.addMethod(method);
+	}
+
+	@Override
+	public boolean clientUpdateByPrimaryKeyWithBLOBsMethodGenerated(
+			Method method, Interface interfaze,
+			IntrospectedTable introspectedTable) {
+		return false;
+	}
+
+	@Override
+	public boolean clientUpdateByPrimaryKeyWithoutBLOBsMethodGenerated(
+			Method method, Interface interfaze,
+			IntrospectedTable introspectedTable) {
+		return false;
+	}
+
+	@Override
+	public boolean clientSelectByExampleWithoutBLOBsMethodGenerated(
+			Method method, Interface interfaze,
+			IntrospectedTable introspectedTable) {
+		boolean result = isBlobDomainGenerated(introspectedTable);
+		System.out.println("Generate select by example without blogs: "
+				+ !result);
+		return !result;
+	}
+
+	@Override
+	public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(
+			Method method, TopLevelClass topLevelClass,
+			IntrospectedTable introspectedTable) {
+		boolean result = isBlobDomainGenerated(introspectedTable);
+		System.out.println("Generate update by example without blogs: "
+				+ !result);
+		return !result;
+	}
+
+	@Override
+	public boolean clientUpdateByExampleWithoutBLOBsMethodGenerated(
+			Method method, Interface interfaze,
+			IntrospectedTable introspectedTable) {
+		boolean result = isBlobDomainGenerated(introspectedTable);
+		System.out.println("Generate update by example without blogs: "
+				+ !result);
+		return !result;
 	}
 
 	@Override

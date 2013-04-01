@@ -5,7 +5,7 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.Campaign;
+import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
@@ -33,7 +33,7 @@ import com.vaadin.ui.Window;
 @SuppressWarnings("serial")
 public class CampaignPreviewBuilder extends VerticalLayout {
     
-    protected AdvancedPreviewBeanForm<Campaign> previewForm;
+    protected AdvancedPreviewBeanForm<CampaignWithBLOBs> previewForm;
     protected SimpleCampaign campaign;
     protected CampaignAccountListComp associateAccountList;
     protected CampaignContactListComp associateContactList;
@@ -54,7 +54,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
     
     public void previewItem(SimpleCampaign campaign) {
         this.campaign = campaign;
-        previewForm.setItemDataSource(new BeanItem<Campaign>(campaign));
+        previewForm.setItemDataSource(new BeanItem<CampaignWithBLOBs>(campaign));
         displayActivities();
         displayAccounts();
         displayContacts();
@@ -85,7 +85,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
         return campaign;
     }
     
-    public AdvancedPreviewBeanForm<Campaign> getPreviewForm() {
+    public AdvancedPreviewBeanForm<CampaignWithBLOBs> getPreviewForm() {
         return previewForm;
     }
 
@@ -149,7 +149,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
             tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
             initRelatedComponent();
             
-            previewForm = new AdvancedPreviewBeanForm<Campaign>() {
+            previewForm = new AdvancedPreviewBeanForm<CampaignWithBLOBs>() {
                 @Override
                 public void setItemDataSource(Item newDataSource) {
                     this.setFormLayoutFactory(new CampaignFormLayoutFactory.CampaignInformationLayout());
@@ -192,7 +192,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
             
             campaignInformationLayout = new VerticalLayout();
             campaignInformationLayout.setMargin(true);
-            Layout actionControls = new PreviewFormControlsGenerator<Campaign>(
+            Layout actionControls = new PreviewFormControlsGenerator<CampaignWithBLOBs>(
                     previewForm).createButtonControls(RolePermissionCollections.CRM_CAMPAIGN);
             campaignInformationLayout.addComponent(actionControls);
             campaignInformationLayout.addComponent(previewForm);
@@ -217,7 +217,7 @@ public class CampaignPreviewBuilder extends VerticalLayout {
     public static class PrintView extends CampaignPreviewBuilder {
         
         public PrintView() {
-            previewForm = new AdvancedPreviewBeanForm<Campaign>() {
+            previewForm = new AdvancedPreviewBeanForm<CampaignWithBLOBs>() {
                 @Override
                 public void setItemDataSource(Item newDataSource) {
                     this.setFormLayoutFactory(new FormLayoutFactory());

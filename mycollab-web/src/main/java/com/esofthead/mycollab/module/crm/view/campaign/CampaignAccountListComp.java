@@ -11,8 +11,8 @@ import org.vaadin.hene.splitbutton.SplitButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
-import com.esofthead.mycollab.module.crm.domain.Campaign;
 import com.esofthead.mycollab.module.crm.domain.CampaignAccount;
+import com.esofthead.mycollab.module.crm.domain.CampaignWithBLOBs;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
@@ -39,14 +39,14 @@ import com.vaadin.ui.VerticalLayout;
 public class CampaignAccountListComp extends RelatedListComp<SimpleAccount, AccountSearchCriteria> {
 
     private static final long serialVersionUID = 1L;
-    private Campaign campaign;
+    private CampaignWithBLOBs campaign;
 
     public CampaignAccountListComp() {
         super("Accounts");
         initUI();
     }
 
-    public void displayAccounts(Campaign campaign) {
+    public void displayAccounts(CampaignWithBLOBs campaign) {
         this.campaign = campaign;
         loadAccounts();
     }

@@ -6,7 +6,7 @@ import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.view.milestone.MilestoneComboBox;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberComboBox;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectMemberMultiSelectField;
-import com.esofthead.mycollab.module.tracker.domain.Bug;
+import com.esofthead.mycollab.module.tracker.domain.BugWithBLOBs;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
@@ -48,7 +48,7 @@ public class BugAddViewImpl extends AbstractView implements BugAddView {
 	@Override
 	public void editItem(SimpleBug item) {
 		this.bug = item;
-		editForm.setItemDataSource(new BeanItem<Bug>(item));
+		editForm.setItemDataSource(new BeanItem<BugWithBLOBs>(item));
 
 	}
 

@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.crm.view.cases;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
-import com.esofthead.mycollab.module.crm.domain.Case;
+import com.esofthead.mycollab.module.crm.domain.CaseWithBLOBs;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
 import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
@@ -28,9 +28,9 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Case>() {
+		view.getEditFormHandlers().addFormHandler(new EditFormHandler<CaseWithBLOBs>() {
 			@Override
-			public void onSave(final Case cases) {
+			public void onSave(final CaseWithBLOBs cases) {
 				saveCase(cases);
 				ViewState viewState = HistoryViewManager.back();
 				if (viewState instanceof NullViewState) {
@@ -49,7 +49,7 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 			}
 
 			@Override
-			public void onSaveAndNew(final Case cases) {
+			public void onSaveAndNew(final CaseWithBLOBs cases) {
 				saveCase(cases);
 				EventBus.getInstance().fireEvent(
 						new CaseEvent.GotoAdd(this, null));
@@ -60,9 +60,9 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (AppContext.canWrite(RolePermissionCollections.CRM_CASE)) {
-			Case cases = null;
-			if (data.getParams() instanceof Case) {
-				cases = (Case) data.getParams();
+			CaseWithBLOBs cases = null;
+			if (data.getParams() instanceof CaseWithBLOBs) {
+				cases = (CaseWithBLOBs) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
 				CaseService caseService = AppContext
 						.getSpringBean(CaseService.class);
@@ -97,7 +97,7 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 		}
 	}
 
-	public void saveCase(Case cases) {
+	public void saveCase(CaseWithBLOBs cases) {
 		CaseService caseService = AppContext.getSpringBean(CaseService.class);
 
 		cases.setSaccountid(AppContext.getAccountId());
