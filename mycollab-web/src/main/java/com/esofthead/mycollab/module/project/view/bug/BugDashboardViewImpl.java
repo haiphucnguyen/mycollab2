@@ -16,7 +16,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugComponentEvent;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
-import com.esofthead.mycollab.module.project.localization.BugI18Enum;
+import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.shell.view.ScreenSize;
@@ -51,7 +51,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 		header.setWidth("100%");
 
 		Label title = new Label(
-				AppContext.getMessage(BugI18Enum.BUG_DASHBOARD_TITLE));
+				AppContext.getMessage(BugI18nEnum.BUG_DASHBOARD_TITLE));
 		title.setStyleName("h2");
 		header.addComponent(title);
 		header.setExpandRatio(title, 0.5f);

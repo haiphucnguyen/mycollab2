@@ -10,7 +10,7 @@ import java.util.GregorianCalendar;
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.module.project.localization.BugI18Enum;
+import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -38,7 +38,7 @@ public class BugChartComponent extends Depot {
 
 	public BugChartComponent(BugSearchCriteria baseSearchCriteria,
 			int headerWidth, int titleWidth) {
-		super(AppContext.getMessage(BugI18Enum.CHARTS_WIDGET_TITLE),
+		super(AppContext.getMessage(BugI18nEnum.CHARTS_WIDGET_TITLE),
 				new HorizontalLayout(), new VerticalLayout(), headerWidth
 						+ "px", titleWidth + "px");
 		this.baseSearchCriteria = baseSearchCriteria;

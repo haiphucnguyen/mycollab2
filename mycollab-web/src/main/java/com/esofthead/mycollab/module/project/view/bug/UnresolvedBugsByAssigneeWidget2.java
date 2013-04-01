@@ -6,7 +6,7 @@ import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.events.BugEvent;
-import com.esofthead.mycollab.module.project.localization.BugI18Enum;
+import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -27,7 +27,7 @@ public class UnresolvedBugsByAssigneeWidget2 extends Depot {
 
 	public UnresolvedBugsByAssigneeWidget2() {
 		super(AppContext
-				.getMessage(BugI18Enum.UNRESOLVED_BY_ASSIGNEE_WIDGET_TITLE),
+				.getMessage(BugI18nEnum.UNRESOLVED_BY_ASSIGNEE_WIDGET_TITLE),
 				new VerticalLayout());
 	}
 

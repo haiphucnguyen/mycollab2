@@ -7,7 +7,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.module.project.events.BugEvent;
-import com.esofthead.mycollab.module.project.localization.BugI18Enum;
+import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
@@ -35,7 +35,7 @@ public class DueBugWidget extends BugDisplayWidget {
 	private static final long serialVersionUID = 1L;
 
 	public DueBugWidget() {
-		super(AppContext.getMessage(BugI18Enum.DUE_BUGS_WIDGET_TITLE),
+		super(AppContext.getMessage(BugI18nEnum.DUE_BUGS_WIDGET_TITLE),
 				DueBugRowDisplayHandler.class);
 	}
 

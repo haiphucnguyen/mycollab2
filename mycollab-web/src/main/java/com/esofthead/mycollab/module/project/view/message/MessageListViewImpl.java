@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MessageEvent;
+import com.esofthead.mycollab.module.project.localization.MessageI18nEnum;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -310,7 +311,8 @@ public class MessageListViewImpl extends AbstractView implements
 			layout.setComponentAlignment(messageSearchPanel,
 					Alignment.MIDDLE_CENTER);
 
-			Button createMessageBtn = new Button("New Message",
+			Button createMessageBtn = new Button(
+					AppContext.getMessage(MessageI18nEnum.NEW_MESSAGE_ACTION),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
