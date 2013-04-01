@@ -4,7 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
-import com.esofthead.mycollab.module.file.ExportStreamResource;
+import com.esofthead.mycollab.module.file.ExportExcelStreamResource;
+import com.esofthead.mycollab.module.file.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
@@ -32,18 +33,17 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 		ListPresenter<BugSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
-	private static final String[] EXPORT_VISIBLE_COLUMNS = new String[] {
-			"bugkey", "summary", "assignuserFullName", "severity", "priority",
-			"status", "milestoneName", "resolution", "duedate" };
-	private static final String[] EXPORT_DISPLAY_NAMES = new String[] { "Key",
-			"Summary", "Assigned User", "Severity", "Priority", "Status",
-			"Milestone", "Resolution", "Due Date" };
-	
-	private static int defaultColumnWidth = ExportStreamResource.ExcelOutput.DEFAULT_COLUMN_WIDTH;
-	private static final int[] EXPORT_COLUMN_WIDTH = new int[] {
-			defaultColumnWidth, 40, defaultColumnWidth, defaultColumnWidth,
-			defaultColumnWidth, defaultColumnWidth, defaultColumnWidth,
-			defaultColumnWidth, defaultColumnWidth };
+
+	private static final FieldExportColumn[] EXPORT_COLUMNS = new FieldExportColumn[] {
+			new FieldExportColumn("bugkey", "Key"),
+			new FieldExportColumn("summary", "Summary", 40),
+			new FieldExportColumn("assignuserFullName", "Assigned User"),
+			new FieldExportColumn("severity", "Severity"),
+			new FieldExportColumn("priority", "Priority"),
+			new FieldExportColumn("status", "Status"),
+			new FieldExportColumn("milestoneName", "Milestone"),
+			new FieldExportColumn("resolution", "Resolution"),
+			new FieldExportColumn("duedate", "Due Date") };
 
 	private BugService bugService;
 	private BugSearchCriteria searchCriteria;
@@ -104,10 +104,9 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 								.getProject().getName() != null) ? CurrentProjectVariables
 								.getProject().getName() : "");
 				Resource res = new StreamResource(
-						new ExportStreamResource.ExcelOutput<BugSearchCriteria>(
-								title, EXPORT_VISIBLE_COLUMNS,
-								EXPORT_DISPLAY_NAMES, EXPORT_COLUMN_WIDTH,
-								AppContext.getSpringBean(BugService.class),
+						new ExportExcelStreamResource<BugSearchCriteria>(title,
+								EXPORT_COLUMNS, AppContext
+										.getSpringBean(BugService.class),
 								new BugSearchCriteria()), "bug_list.xls", view
 								.getApplication());
 				view.getWidget().getWindow().open(res, "_blank");
