@@ -64,11 +64,7 @@
             <version>4.10</version>
             <scope>test</scope>
         </dependency>
-        <dependency>
-            <groupId>org.javalite</groupId>
-            <artifactId>activejdbc</artifactId>
-            <version>1.4.5</version>
-        </dependency>
+        
 
         <!-- JETTY DEPENDENCIES FOR TESTING -->
         <dependency>
@@ -154,19 +150,6 @@
                 <configuration>
                     <downloadSources>true</downloadSources>
                 </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.javalite</groupId>
-                <artifactId>activejdbc-instrumentation</artifactId>
-                <version>1.4.1</version>
-                <executions>
-                    <execution>
-                        <phase>process-classes</phase>
-                        <goals>
-                            <goal>instrument</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>

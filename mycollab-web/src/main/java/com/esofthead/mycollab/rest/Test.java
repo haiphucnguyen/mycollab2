@@ -9,7 +9,7 @@ import com.esofthead.mycollab.core.utils.BeanUtility;
 public class Test {
 	public static void main(String[] args) throws Exception {
 		ClientResource mailRoot = new ClientResource(
-				"http://localhost:8080/mycollab-web/api/signin");
+				"http://localhost:8182/");
 
 		// GroupItem item = new GroupItem();
 		// item.setGroupname("AAA");
