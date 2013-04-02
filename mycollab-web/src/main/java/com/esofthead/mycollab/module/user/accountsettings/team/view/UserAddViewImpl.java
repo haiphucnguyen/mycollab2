@@ -22,6 +22,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
@@ -58,7 +59,7 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 		this.user = item;
 		editForm.setItemDataSource(new BeanItem<User>(user));
 	}
-	
+
 	@Override
 	public Date getBirthday() {
 		return cboDateBirthday.getDate();
@@ -188,7 +189,8 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 										.getApplication()
 										.getMainWindow()
 										.showNotification(
-												AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+												LocalizationHelper
+														.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
 												"You must have at least one role to deselect admin checkbox",
 												Window.Notification.TYPE_HUMANIZED_MESSAGE);
 								isAdminCheck.setValue(Boolean.TRUE);

@@ -13,6 +13,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.LabelHTMLDisplayWidget;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -27,7 +28,7 @@ public class MyBugListWidget extends BugDisplayWidget {
 	private static final long serialVersionUID = 1L;
 
 	public MyBugListWidget() {
-		super(AppContext.getMessage(BugI18nEnum.MY_BUGS_WIDGET_TITLE),
+		super(LocalizationHelper.getMessage(BugI18nEnum.MY_BUGS_WIDGET_TITLE),
 				MyBugRowDisplayHandler.class);
 	}
 

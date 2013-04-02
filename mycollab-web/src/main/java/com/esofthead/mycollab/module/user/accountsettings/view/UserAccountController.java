@@ -25,6 +25,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.IController;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Window;
 
 public class UserAccountController implements IController {
@@ -221,8 +222,10 @@ public class UserAccountController implements IController {
 										.getApplication()
 										.getMainWindow()
 										.showNotification(
-												AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-												AppContext.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
+												LocalizationHelper
+														.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+												LocalizationHelper
+														.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
 												Window.Notification.TYPE_HUMANIZED_MESSAGE);
 							} else {
 								presenter.go(container,

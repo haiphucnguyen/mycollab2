@@ -23,6 +23,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Alignment;
@@ -62,8 +63,8 @@ public class TaskAddPopup extends CustomComponent {
 		task = new SimpleTask();
 		taskContainer = new TabSheet();
 		final TaskInformationLayout taskInformationLayout = new TaskInformationLayout();
-		taskContainer.addTab(taskInformationLayout,
-				AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE));
+		taskContainer.addTab(taskInformationLayout, LocalizationHelper
+				.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE));
 
 		taskNoteComponent = new TaskNoteLayout();
 		taskContainer.addTab(taskNoteComponent, "Note & Attachments");

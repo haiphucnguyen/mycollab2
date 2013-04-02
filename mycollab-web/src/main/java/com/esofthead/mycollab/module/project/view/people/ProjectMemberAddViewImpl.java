@@ -26,6 +26,7 @@ import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
@@ -187,7 +188,8 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 										.getApplication()
 										.getMainWindow()
 										.showNotification(
-												AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+												LocalizationHelper
+														.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
 												"You must have at least one role to deselect admin checkbox",
 												Window.Notification.TYPE_HUMANIZED_MESSAGE);
 								isAdminCheck.setValue(Boolean.TRUE);

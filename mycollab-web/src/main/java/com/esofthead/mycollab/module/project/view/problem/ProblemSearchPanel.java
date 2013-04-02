@@ -8,11 +8,13 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
+import com.esofthead.mycollab.module.project.localization.ProblemI18nEnum;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -55,7 +57,9 @@ public class ProblemSearchPanel extends
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 
-		Button createProblemBtn = new Button("Create",
+		Button createProblemBtn = new Button(
+				LocalizationHelper
+						.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

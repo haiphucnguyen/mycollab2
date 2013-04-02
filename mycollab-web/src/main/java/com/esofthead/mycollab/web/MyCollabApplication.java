@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.web;
 
+import java.io.IOException;
+
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -24,10 +26,13 @@ public class MyCollabApplication extends Application implements
 	private static Logger log = LoggerFactory
 			.getLogger(MyCollabApplication.class);
 
+	private static ThreadLocal<MyCollabApplication> threadLocal = new ThreadLocal<MyCollabApplication>();
+
 	private AppContext sessionData;
 
-	public MyCollabApplication() {
-		super();
+	// @return the current application instance
+	public static MyCollabApplication getInstance() {
+		return threadLocal.get();
 	}
 
 	@Override
@@ -36,23 +41,49 @@ public class MyCollabApplication extends Application implements
 		sessionData = new AppContext(this);
 		this.setMainWindow(new MainWindowContainer());
 
-		// Register it as a listener in the application context
-		this.getContext().addTransactionListener(sessionData);
+		setInstance(this);
+	}
+
+	public AppContext getSessionData() {
+		return sessionData;
+	}
+
+	public void setSessionData(AppContext sessionData) {
+		this.sessionData = sessionData;
+	}
+
+	// Set the current application instance
+	public static void setInstance(MyCollabApplication application) {
+		threadLocal.set(application);
 	}
 
 	@Override
 	public void onRequestStart(HttpServletRequest request,
 			HttpServletResponse response) {
+		MyCollabApplication.setInstance(this);
 		String pathInfo = request.getPathInfo();
 		if (pathInfo.equals("") || pathInfo.equals("/")) {
-			initialUrl = request.getParameter("url");
+
 			if (sessionData != null) {
-				initialUrl = request.getParameter("url");
-				if (initialUrl != null && !initialUrl.equals("")) {
-					if (initialUrl.startsWith("/")) {
-						initialUrl = initialUrl.substring(1);
+				String urlParam = request.getParameter("url");
+				if (urlParam != null && !urlParam.equals("")) {
+					if (urlParam.startsWith("/")) {
+						urlParam = urlParam.substring(1);
 					}
-					FragmentNavigator.navigateByFragement(initialUrl);
+					try {
+						response.sendRedirect(request.getContextPath() + "/");
+						FragmentNavigator.navigateByFragement(urlParam);
+					} catch (IOException e) {
+						log.error("Dispatch url error: " + initialUrl, e);
+					}
+
+				}
+			} else {
+				try {
+					initialUrl = request.getParameter("url");
+					response.sendRedirect(request.getContextPath() + "/");
+				} catch (IOException e) {
+					log.error("Dispatch url error: " + initialUrl, e);
 				}
 			}
 		}
@@ -61,6 +92,7 @@ public class MyCollabApplication extends Application implements
 	@Override
 	public void onRequestEnd(HttpServletRequest request,
 			HttpServletResponse response) {
+		threadLocal.remove();
 	}
 
 	@Override
@@ -75,13 +107,13 @@ public class MyCollabApplication extends Application implements
 		Throwable e = event.getThrowable();
 		if (e instanceof UserInvalidInputException) {
 			getMainWindow().showNotification(
-					AppContext.getMessage(
+					LocalizationHelper.getMessage(
 							GenericI18Enum.ERROR_USER_INPUT_MESSAGE,
 							e.getMessage()), Notification.TYPE_WARNING_MESSAGE);
 		} else {
 			getMainWindow()
 					.showNotification(
-							AppContext
+							LocalizationHelper
 									.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE),
 							Notification.TYPE_ERROR_MESSAGE);
 

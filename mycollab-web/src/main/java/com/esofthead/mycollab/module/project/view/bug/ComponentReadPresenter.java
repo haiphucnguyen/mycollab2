@@ -23,6 +23,7 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 
@@ -95,9 +96,9 @@ public class ComponentReadPresenter extends
 						} else {
 							view.getWindow()
 									.showNotification(
-											AppContext
+											LocalizationHelper
 													.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-											AppContext
+											LocalizationHelper
 													.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
 											Window.Notification.TYPE_HUMANIZED_MESSAGE);
 						}
@@ -124,9 +125,9 @@ public class ComponentReadPresenter extends
 						} else {
 							view.getWindow()
 									.showNotification(
-											AppContext
+											LocalizationHelper
 													.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-											AppContext
+											LocalizationHelper
 													.getMessage(GenericI18Enum.INFORMATION_GOTO_FIRST_RECORD),
 											Window.Notification.TYPE_HUMANIZED_MESSAGE);
 						}
@@ -157,9 +158,9 @@ public class ComponentReadPresenter extends
 							.getApplication()
 							.getMainWindow()
 							.showNotification(
-									AppContext
+									LocalizationHelper
 											.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-									AppContext
+									LocalizationHelper
 											.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 					return;

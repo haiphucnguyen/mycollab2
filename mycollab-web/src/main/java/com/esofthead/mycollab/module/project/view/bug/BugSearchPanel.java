@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -27,6 +28,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -73,7 +75,8 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 
-		Button createAccountBtn = new Button("Create",
+		Button createAccountBtn = new Button(
+				LocalizationHelper.getMessage(BugI18nEnum.NEW_BUG_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -83,7 +86,8 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 								new BugEvent.GotoAdd(this, null));
 					}
 				});
-		createAccountBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS));
+		createAccountBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.BUGS));
 		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 
@@ -190,21 +194,21 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		@Override
 		public ComponentContainer constructBody() {
 			GridFormLayoutHelper gridLayout = new GridFormLayoutHelper(2, 6,
-			"150px");
-			
+					"150px");
+
 			String nameFieldWidth = "400px";
 			String dateFieldWidth = "245px";
 			String componentFieldWidth = "225px";
-			
+
 			if (ScreenSize.hasSupport1024Pixels()) {
-				gridLayout = new GridFormLayoutHelper(2, 6, UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
-				"150px");
+				gridLayout = new GridFormLayoutHelper(2, 6,
+						UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
+						"150px");
 				nameFieldWidth = "380px";
 				dateFieldWidth = "195px";
 				componentFieldWidth = "170px";
 			} else if (ScreenSize.hasSupport1280Pixels()) {
-				gridLayout = new GridFormLayoutHelper(2, 6,
-				"150px");
+				gridLayout = new GridFormLayoutHelper(2, 6, "150px");
 			}
 			gridLayout.getLayout().setWidth("100%");
 
@@ -222,8 +226,9 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			layoutCheckbox.addComponent(summaryField);
 			layoutCheckbox.addComponent(descriptionField);
 
-			updateDateField = (DateSelectionField) gridLayout.addComponent(
-					new DateSelectionField(dateFieldWidth), "Update Date", 0, 1);
+			updateDateField = (DateSelectionField) gridLayout
+					.addComponent(new DateSelectionField(dateFieldWidth),
+							"Update Date", 0, 1);
 			updateDateField.setDateFormat(AppContext.getDateFormat());
 
 			dueDateField = (DateSelectionField) gridLayout.addComponent(
@@ -231,39 +236,40 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 			dueDateField.setDateFormat(AppContext.getDateFormat());
 
 			resolveDateField = (DateSelectionField) gridLayout.addComponent(
-					new DateSelectionField(dateFieldWidth), "Resolve Date", 0, 2);
+					new DateSelectionField(dateFieldWidth), "Resolve Date", 0,
+					2);
 			resolveDateField.setDateFormat(AppContext.getDateFormat());
 
 			componentField = (ComponentMultiSelectField) gridLayout
-					.addComponent(new ComponentMultiSelectField(componentFieldWidth),
-							"Component", 1, 2);
+					.addComponent(new ComponentMultiSelectField(
+							componentFieldWidth), "Component", 1, 2);
 
 			affectedVersionField = (VersionMultiSelectField) gridLayout
-					.addComponent(new VersionMultiSelectField(componentFieldWidth),
-							"Affected Version", 1, 1);
+					.addComponent(new VersionMultiSelectField(
+							componentFieldWidth), "Affected Version", 1, 1);
 
 			fixedVersionField = (VersionMultiSelectField) gridLayout
-					.addComponent(new VersionMultiSelectField(componentFieldWidth),
-							"Fixed Version", 1, 3);
+					.addComponent(new VersionMultiSelectField(
+							componentFieldWidth), "Fixed Version", 1, 3);
 
 			priorityField = (BugStaticItemMultiSelectField) gridLayout
 					.addComponent(new BugStaticItemMultiSelectField(
-							ProjectDataTypeFactory.getBugPriorityList(), componentFieldWidth),
-							"Priority", 0, 4);
+							ProjectDataTypeFactory.getBugPriorityList(),
+							componentFieldWidth), "Priority", 0, 4);
 
 			statusField = (BugStaticItemMultiSelectField) gridLayout
 					.addComponent(new BugStaticItemMultiSelectField(
-							ProjectDataTypeFactory.getBugStatusList(), componentFieldWidth),
-							"Status", 1, 4);
+							ProjectDataTypeFactory.getBugStatusList(),
+							componentFieldWidth), "Status", 1, 4);
 
 			resolutionField = (BugStaticItemMultiSelectField) gridLayout
 					.addComponent(new BugStaticItemMultiSelectField(
-							ProjectDataTypeFactory.getBugResolutionList(), componentFieldWidth),
-							"Resolution", 0, 5);
+							ProjectDataTypeFactory.getBugResolutionList(),
+							componentFieldWidth), "Resolution", 0, 5);
 			severityField = (BugStaticItemMultiSelectField) gridLayout
 					.addComponent(new BugStaticItemMultiSelectField(
-							ProjectDataTypeFactory.getBugSeverityList(), componentFieldWidth),
-							"Severity", 1, 5);
+							ProjectDataTypeFactory.getBugSeverityList(),
+							componentFieldWidth), "Severity", 1, 5);
 
 			return gridLayout.getLayout();
 		}

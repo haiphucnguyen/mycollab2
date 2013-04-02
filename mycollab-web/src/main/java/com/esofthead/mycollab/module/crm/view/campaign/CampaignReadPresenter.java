@@ -40,6 +40,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 
@@ -90,7 +91,8 @@ public class CampaignReadPresenter extends
 
 					@Override
 					public void onClone(CampaignWithBLOBs data) {
-						CampaignWithBLOBs cloneData = (CampaignWithBLOBs) data.copy();
+						CampaignWithBLOBs cloneData = (CampaignWithBLOBs) data
+								.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
 								new CampaignEvent.GotoEdit(this, cloneData));
@@ -119,9 +121,9 @@ public class CampaignReadPresenter extends
 						} else {
 							view.getWindow()
 									.showNotification(
-											AppContext
+											LocalizationHelper
 													.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-											AppContext
+											LocalizationHelper
 													.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
 											Window.Notification.TYPE_HUMANIZED_MESSAGE);
 						}
@@ -145,9 +147,9 @@ public class CampaignReadPresenter extends
 						} else {
 							view.getWindow()
 									.showNotification(
-											AppContext
+											LocalizationHelper
 													.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-											AppContext
+											LocalizationHelper
 													.getMessage(GenericI18Enum.INFORMATION_GOTO_FIRST_RECORD),
 											Window.Notification.TYPE_HUMANIZED_MESSAGE);
 						}
@@ -316,9 +318,9 @@ public class CampaignReadPresenter extends
 							.getApplication()
 							.getMainWindow()
 							.showNotification(
-									AppContext
+									LocalizationHelper
 											.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-									AppContext
+									LocalizationHelper
 											.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 					return;

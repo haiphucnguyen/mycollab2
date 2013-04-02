@@ -8,11 +8,13 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
+import com.esofthead.mycollab.module.project.localization.RiskI18nEnum;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -54,15 +56,17 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 
-		Button createBtn = new Button("Create", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button createBtn = new Button(
+				LocalizationHelper.getMessage(RiskI18nEnum.NEW_RISK_ACTION),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new RiskEvent.GotoAdd(this, null));
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new RiskEvent.GotoAdd(this, null));
+					}
+				});
 		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 		createBtn.setEnabled(CurrentProjectVariables

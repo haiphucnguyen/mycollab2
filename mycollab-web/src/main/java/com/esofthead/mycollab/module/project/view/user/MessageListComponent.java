@@ -20,6 +20,7 @@ import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
@@ -35,7 +36,7 @@ public class MessageListComponent extends Depot {
 	private DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage> messageList;
 
 	public MessageListComponent() {
-		super(AppContext.getMessage(ProjectCommonI18nEnum.NEWS_TITLE),
+		super(LocalizationHelper.getMessage(ProjectCommonI18nEnum.NEWS_TITLE),
 				new VerticalLayout());
 
 		messageList = new DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage>(

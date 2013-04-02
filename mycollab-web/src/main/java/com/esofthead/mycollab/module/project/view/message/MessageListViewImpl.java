@@ -35,6 +35,7 @@ import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.terminal.ThemeResource;
@@ -312,7 +313,8 @@ public class MessageListViewImpl extends AbstractView implements
 					Alignment.MIDDLE_CENTER);
 
 			Button createMessageBtn = new Button(
-					AppContext.getMessage(MessageI18nEnum.NEW_MESSAGE_ACTION),
+					LocalizationHelper
+							.getMessage(MessageI18nEnum.NEW_MESSAGE_ACTION),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 

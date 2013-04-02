@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
@@ -27,7 +28,7 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 	private BugSearchCriteria bugSearchCriteria;
 
 	public UnresolvedBugsByPriorityWidget2() {
-		super(AppContext
+		super(LocalizationHelper
 				.getMessage(BugI18nEnum.UNRESOLVED_BY_PRIORITY_WIDGET_TITLE),
 				new VerticalLayout());
 	}

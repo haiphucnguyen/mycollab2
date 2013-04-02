@@ -17,6 +17,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.VerticalLayout;
 
 /**
@@ -33,10 +34,13 @@ public class AccountListDashlet extends Depot {
 			tableItem = new AccountTableDisplay(new String[] { "accountname",
 					"email" }, new String[] { "Name", "Email" });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new AccountTableDisplay(new String[] { "accountname",
-					"phoneoffice", "email" }, new String[] { "Name",
-					AppContext.getMessage(CrmCommonI18nEnum.OFFICE_PHONE),
-					"Email" });
+			tableItem = new AccountTableDisplay(
+					new String[] { "accountname", "phoneoffice", "email" },
+					new String[] {
+							"Name",
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.OFFICE_PHONE),
+							"Email" });
 		}
 
 		tableItem
