@@ -102,6 +102,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		});
 		memberLink.setWidth("100%");
 		memberLink.setHeight(SIZE_UNDEFINED, 0);
+		
 		memberInfo.addComponent(memberLink);
 
 		Label memberEmailLabel = new Label("<a href='mailto:"
@@ -119,7 +120,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		if (member.getNumOpenTasks() > 2)
 			taskStatus += "s";
 
-		Label memberWorkStatus = new Label(bugStatus + " â " + taskStatus);
+		Label memberWorkStatus = new Label(bugStatus + " ï¿½ " + taskStatus);
 		memberInfo.addComponent(memberWorkStatus);
 		memberInfo.setWidth("100%");
 
