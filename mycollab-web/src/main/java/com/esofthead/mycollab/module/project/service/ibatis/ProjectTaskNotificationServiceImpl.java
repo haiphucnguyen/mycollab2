@@ -8,7 +8,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
@@ -58,9 +57,13 @@ public class ProjectTaskNotificationServiceImpl implements
 				"taskUrl",
 				ProjectLinkGenerator.generateTaskPreviewFullLink(
 						task.getProjectid(), taskId));
-		hyperLinks.put("projectUrl", "#");
+		hyperLinks.put("projectUrl", ProjectLinkGenerator
+				.generateProjectFullLink(task.getProjectid()));
 		hyperLinks.put("assignUserUrl", "#");
-		hyperLinks.put("taskListUrl", "#");
+		hyperLinks.put(
+				"taskListUrl",
+				ProjectLinkGenerator.generateTaskGroupPreviewFullLink(
+						task.getProjectid(), task.getTasklistid()));
 
 		String subject = StringUtils.subString(task.getTaskname(), 150);
 
@@ -83,10 +86,17 @@ public class ProjectTaskNotificationServiceImpl implements
 		}
 
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		hyperLinks.put("taskUrl", "#");
-		hyperLinks.put("projectUrl", "#");
+		hyperLinks.put(
+				"taskUrl",
+				ProjectLinkGenerator.generateTaskPreviewFullLink(
+						task.getProjectid(), taskId));
+		hyperLinks.put("projectUrl", ProjectLinkGenerator
+				.generateProjectFullLink(task.getProjectid()));
 		hyperLinks.put("assignUserUrl", "#");
-		hyperLinks.put("taskListUrl", "#");
+		hyperLinks.put(
+				"taskListUrl",
+				ProjectLinkGenerator.generateTaskGroupPreviewFullLink(
+						task.getProjectid(), task.getTasklistid()));
 
 		String subject = StringUtils.subString(task.getTaskname(), 150);
 
