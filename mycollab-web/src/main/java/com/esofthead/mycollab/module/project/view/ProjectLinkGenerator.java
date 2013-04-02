@@ -23,6 +23,15 @@ public class ProjectLinkGenerator {
 				+ UrlEncodeDecoder.encode(projectId + "/" + bugId);
 	}
 
+	public static String generateBugPreviewFullLink(Integer projectId,
+			Integer bugId) {
+		if (projectId == null || bugId == null) {
+			return "";
+		}
+		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
+				+ "?url=" + generateBugPreviewLink(projectId, bugId);
+	}
+
 	public static String generateTaskPreviewFullLink(Integer projectId,
 			Integer taskId) {
 		if (projectId == null || taskId == null) {
@@ -51,5 +60,21 @@ public class ProjectLinkGenerator {
 		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
 				+ "?url="
 				+ generateTaskGroupPreviewLink(projectId, taskgroupId);
+	}
+
+	public static String generateMilestonePreviewLink(int projectId,
+			int milestoneId) {
+		return "project/milestone/preview/"
+				+ UrlEncodeDecoder.encode(projectId + "/" + milestoneId);
+	}
+
+	public static String generateMilestonePreviewFullLink(Integer projectId,
+			Integer milestoneId) {
+		if (projectId == null || milestoneId == null) {
+			return "";
+		}
+		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
+				+ "?url="
+				+ generateMilestonePreviewLink(projectId, milestoneId);
 	}
 }

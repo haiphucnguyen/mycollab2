@@ -244,9 +244,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(milestone.getName()));
 		AppContext.addFragment(
-				"project/milestone/preview/"
-						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ milestone.getId()), "Preview Phase: "
+				ProjectLinkGenerator.generateMilestonePreviewLink(
+						project.getId(), milestone.getId()), "Preview Phase: "
 						+ milestone.getName());
 	}
 

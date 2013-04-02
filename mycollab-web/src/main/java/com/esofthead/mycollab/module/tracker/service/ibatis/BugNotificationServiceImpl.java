@@ -15,8 +15,10 @@ import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.module.mail.SendingRelayEmailNotificationTemplate;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.SendingRelayEmailNotificationAction;
+import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountLinkGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.INotificationSchedulable;
 import com.esofthead.mycollab.schedule.ScheduleConfig;
@@ -51,11 +53,20 @@ public class BugNotificationServiceImpl implements INotificationSchedulable,
 		SimpleBug bug = bugService.findBugById(taskId);
 
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		hyperLinks.put("bugUrl", "#");
-		hyperLinks.put("projectUrl", "#");
-		hyperLinks.put("loggedUserUrl", "#");
-		hyperLinks.put("assignUserUrl", "#");
-		hyperLinks.put("milestoneUrl", "#");
+		hyperLinks.put(
+				"bugUrl",
+				ProjectLinkGenerator.generateBugPreviewFullLink(
+						bug.getProjectid(), bug.getId()));
+		hyperLinks.put("projectUrl", ProjectLinkGenerator
+				.generateProjectFullLink(bug.getProjectid()));
+		hyperLinks.put("loggedUserUrl", AccountLinkGenerator
+				.generateUserPreviewFullLink(bug.getLogby()));
+		hyperLinks.put("assignUserUrl", AccountLinkGenerator
+				.generateUserPreviewFullLink(bug.getAssignuser()));
+		hyperLinks.put(
+				"milestoneUrl",
+				ProjectLinkGenerator.generateMilestonePreviewFullLink(
+						bug.getProjectid(), bug.getMilestoneid()));
 
 		String subject = StringUtils.subString(bug.getSummary(), 150);
 
@@ -74,11 +85,20 @@ public class BugNotificationServiceImpl implements INotificationSchedulable,
 		int taskId = emailNotification.getTypeid();
 		SimpleBug bug = bugService.findBugById(taskId);
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		hyperLinks.put("bugUrl", "#");
-		hyperLinks.put("projectUrl", "#");
-		hyperLinks.put("loggedUserUrl", "#");
-		hyperLinks.put("assignUserUrl", "#");
-		hyperLinks.put("milestoneUrl", "#");
+		hyperLinks.put(
+				"bugUrl",
+				ProjectLinkGenerator.generateBugPreviewFullLink(
+						bug.getProjectid(), bug.getId()));
+		hyperLinks.put("projectUrl", ProjectLinkGenerator
+				.generateProjectFullLink(bug.getProjectid()));
+		hyperLinks.put("loggedUserUrl", AccountLinkGenerator
+				.generateUserPreviewFullLink(bug.getLogby()));
+		hyperLinks.put("assignUserUrl", AccountLinkGenerator
+				.generateUserPreviewFullLink(bug.getAssignuser()));
+		hyperLinks.put(
+				"milestoneUrl",
+				ProjectLinkGenerator.generateMilestonePreviewFullLink(
+						bug.getProjectid(), bug.getMilestoneid()));
 
 		String subject = StringUtils.subString(bug.getSummary(), 150);
 

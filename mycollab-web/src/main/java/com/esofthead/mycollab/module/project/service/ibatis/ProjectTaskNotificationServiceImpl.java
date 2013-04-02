@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.mail.service.SendingRelayEmailNotificationA
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountLinkGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.INotificationSchedulable;
 import com.esofthead.mycollab.schedule.ScheduleConfig;
@@ -59,7 +60,8 @@ public class ProjectTaskNotificationServiceImpl implements
 						task.getProjectid(), taskId));
 		hyperLinks.put("projectUrl", ProjectLinkGenerator
 				.generateProjectFullLink(task.getProjectid()));
-		hyperLinks.put("assignUserUrl", "#");
+		hyperLinks.put("assignUserUrl", AccountLinkGenerator
+				.generateUserPreviewFullLink(task.getAssignuser()));
 		hyperLinks.put(
 				"taskListUrl",
 				ProjectLinkGenerator.generateTaskGroupPreviewFullLink(
@@ -92,7 +94,8 @@ public class ProjectTaskNotificationServiceImpl implements
 						task.getProjectid(), taskId));
 		hyperLinks.put("projectUrl", ProjectLinkGenerator
 				.generateProjectFullLink(task.getProjectid()));
-		hyperLinks.put("assignUserUrl", "#");
+		hyperLinks.put("assignUserUrl", AccountLinkGenerator
+				.generateUserPreviewFullLink(task.getAssignuser()));
 		hyperLinks.put(
 				"taskListUrl",
 				ProjectLinkGenerator.generateTaskGroupPreviewFullLink(
