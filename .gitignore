@@ -14,6 +14,11 @@ mycollab-core/.settings
 mycollab-parent/.settings
 mycollab-parent/.classpath
 mycollab-parent/.project
+mycollab-frontsite/target
+mycollab-frontsite/.classpath
+mycollab-frontsite/.project
+mycollab-frontsite/.settings
+
 .metadata
 Servers
 RemoteSystemsTempFiles
