@@ -14,6 +14,7 @@ import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -57,7 +58,8 @@ public class ProblemSearchPanel extends
 		layout.addComponent(searchtitle);
 
 		Button createProblemBtn = new Button(
-				AppContext.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
+				LocalizationHelper
+						.getMessage(ProblemI18nEnum.NEW_PROBLEM_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

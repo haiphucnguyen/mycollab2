@@ -11,6 +11,7 @@ import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.FieldSelection;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -60,8 +61,12 @@ public class AccountSelectionWindow extends Window {
 	@SuppressWarnings("serial")
 	private void createAccountList() {
 		tableItem = new AccountTableDisplay(new String[] { "accountname",
-				"city", "assignuser" }, new String[] { "Name", "City",
-				AppContext.getMessage(CrmCommonI18nEnum.ASSIGNED_USER) });
+				"city", "assignuser" },
+				new String[] {
+						"Name",
+						"City",
+						LocalizationHelper
+								.getMessage(CrmCommonI18nEnum.ASSIGNED_USER) });
 		tableItem.setWidth("100%");
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

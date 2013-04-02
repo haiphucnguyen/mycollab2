@@ -14,7 +14,7 @@ import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.rits.cloning.Cloner;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ThemeResource;
@@ -38,7 +38,7 @@ public class BugChartComponent extends Depot {
 
 	public BugChartComponent(BugSearchCriteria baseSearchCriteria,
 			int headerWidth, int titleWidth) {
-		super(AppContext.getMessage(BugI18nEnum.CHARTS_WIDGET_TITLE),
+		super(LocalizationHelper.getMessage(BugI18nEnum.CHARTS_WIDGET_TITLE),
 				new HorizontalLayout(), new VerticalLayout(), headerWidth
 						+ "px", titleWidth + "px");
 		this.baseSearchCriteria = baseSearchCriteria;
@@ -119,7 +119,8 @@ public class BugChartComponent extends Depot {
 		} else if ("BugsByPriority".equals(reportName)) {
 			PrioritySummaryChartWidget prioritySummaryChartWidget = null;
 			if (ScreenSize.hasSupport1024Pixels()) {
-				prioritySummaryChartWidget = new PrioritySummaryChartWidget(300, 220);
+				prioritySummaryChartWidget = new PrioritySummaryChartWidget(
+						300, 220);
 			} else if (ScreenSize.hasSupport1280Pixels()) {
 				prioritySummaryChartWidget = new PrioritySummaryChartWidget();
 			}
@@ -130,15 +131,18 @@ public class BugChartComponent extends Depot {
 
 			BugSearchCriteria prioritySearchCriteria = new Cloner()
 					.deepClone(baseSearchCriteria);
-			prioritySummaryChartWidget.setSearchCriteria(prioritySearchCriteria);
+			prioritySummaryChartWidget
+					.setSearchCriteria(prioritySearchCriteria);
 		} else if ("BugsByStatus".equals(reportName)) {
 			StatusSummaryChartWidget statusSummaryChartWidget = null;
 			if (ScreenSize.hasSupport1024Pixels()) {
-				statusSummaryChartWidget = new StatusSummaryChartWidget(300, 220);
+				statusSummaryChartWidget = new StatusSummaryChartWidget(300,
+						220);
 			} else if (ScreenSize.hasSupport1280Pixels()) {
 				statusSummaryChartWidget = new StatusSummaryChartWidget();
 			}
-			LazyLoadWrapper lazyComp = new LazyLoadWrapper(statusSummaryChartWidget);
+			LazyLoadWrapper lazyComp = new LazyLoadWrapper(
+					statusSummaryChartWidget);
 			bodyContent.addComponent(lazyComp);
 			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
 
@@ -148,8 +152,8 @@ public class BugChartComponent extends Depot {
 		} else if ("BugByResolution".equals(reportName)) {
 			BugResolutionSummaryChartWidget resolutionSummaryWdiget = null;
 			if (ScreenSize.hasSupport1024Pixels()) {
-				resolutionSummaryWdiget = new BugResolutionSummaryChartWidget(300,
-						220);
+				resolutionSummaryWdiget = new BugResolutionSummaryChartWidget(
+						300, 220);
 			} else if (ScreenSize.hasSupport1280Pixels()) {
 				resolutionSummaryWdiget = new BugResolutionSummaryChartWidget();
 			}

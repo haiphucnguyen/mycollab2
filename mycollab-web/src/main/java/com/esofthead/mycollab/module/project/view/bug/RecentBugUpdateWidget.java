@@ -18,6 +18,7 @@ import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.LabelHTMLDisplayWidget;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -36,7 +37,8 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 	private static final long serialVersionUID = 1L;
 
 	public RecentBugUpdateWidget() {
-		super(AppContext.getMessage(BugI18nEnum.UPDATED_RECENTLY_WIDGET_TITLE),
+		super(LocalizationHelper
+				.getMessage(BugI18nEnum.UPDATED_RECENTLY_WIDGET_TITLE),
 				RecentBugRowDisplayHandler.class);
 	}
 

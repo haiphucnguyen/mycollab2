@@ -16,16 +16,12 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
-import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.event.FieldEvents.TextChangeEvent;
-import com.vaadin.event.FieldEvents.TextChangeListener;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
-import com.vaadin.ui.AbstractTextField.TextChangeEventMode;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
@@ -143,7 +139,8 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		// Alignment.MIDDLE_RIGHT);
 
 		Button newTaskListBtn = new Button(
-				AppContext.getMessage(TaskI18nEnum.NEW_TASKGROUP_ACTION),
+				LocalizationHelper
+						.getMessage(TaskI18nEnum.NEW_TASKGROUP_ACTION),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {
@@ -157,7 +154,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 				.canWrite(ProjectRolePermissionCollections.TASKS));
 		newTaskListBtn.setIcon(new ThemeResource(
 				"icons/16/project/new_task_list.png"));
-		newTaskListBtn.setDescription(AppContext
+		newTaskListBtn.setDescription(LocalizationHelper
 				.getMessage(TaskI18nEnum.NEW_TASKGROUP_ACTION));
 		newTaskListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		header.addComponent(newTaskListBtn);
@@ -174,7 +171,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 				.canWrite(ProjectRolePermissionCollections.TASKS));
 		reOrderBtn.setIcon(new ThemeResource("icons/16/project/reorder.png"));
 		reOrderBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		reOrderBtn.setDescription(AppContext
+		reOrderBtn.setDescription(LocalizationHelper
 				.getMessage(TaskI18nEnum.REODER_TASKGROUP_ACTION));
 		header.addComponent(reOrderBtn);
 		header.setComponentAlignment(reOrderBtn, Alignment.MIDDLE_RIGHT);
@@ -196,7 +193,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		});
 		showGanttChartBtn.setEnabled(CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.TASKS));
-		showGanttChartBtn.setDescription(AppContext
+		showGanttChartBtn.setDescription(LocalizationHelper
 				.getMessage(TaskI18nEnum.DISPLAY_GANTT_CHART_ACTION));
 		showGanttChartBtn.setIcon(new ThemeResource(
 				"icons/16/project/gantt_chart.png"));

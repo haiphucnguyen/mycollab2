@@ -17,6 +17,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -56,7 +57,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 		header.setComponentAlignment(titleLbl, Alignment.MIDDLE_LEFT);
 
 		createBtn = new Button(
-				AppContext.getMessage(TaskI18nEnum.NEW_PHASE_ACTION),
+				LocalizationHelper.getMessage(TaskI18nEnum.NEW_PHASE_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

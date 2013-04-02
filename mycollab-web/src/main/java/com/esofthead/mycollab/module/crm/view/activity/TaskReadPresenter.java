@@ -17,6 +17,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 
@@ -93,9 +94,13 @@ public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskRead(this, nextId));
 						} else {
-							view.getWindow().showNotification(AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-									AppContext.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
-									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+							view.getWindow()
+									.showNotification(
+											LocalizationHelper
+													.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+											LocalizationHelper
+													.getMessage(GenericI18Enum.INFORMATION_GOTO_LAST_RECORD),
+											Window.Notification.TYPE_HUMANIZED_MESSAGE);
 						}
 
 					}
@@ -115,9 +120,13 @@ public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskRead(this, nextId));
 						} else {
-							view.getWindow().showNotification(AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-									AppContext.getMessage(GenericI18Enum.INFORMATION_GOTO_FIRST_RECORD),
-									Window.Notification.TYPE_HUMANIZED_MESSAGE);
+							view.getWindow()
+									.showNotification(
+											LocalizationHelper
+													.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+											LocalizationHelper
+													.getMessage(GenericI18Enum.INFORMATION_GOTO_FIRST_RECORD),
+											Window.Notification.TYPE_HUMANIZED_MESSAGE);
 						}
 					}
 				});
@@ -130,25 +139,28 @@ public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 			if (data.getParams() instanceof Integer) {
 				TaskService taskService = AppContext
 						.getSpringBean(TaskService.class);
-				task = taskService.findTaskById((Integer) data
-						.getParams());
+				task = taskService.findTaskById((Integer) data.getParams());
 				if (task == null) {
 					AppContext
-					.getApplication()
-					.getMainWindow()
-					.showNotification(AppContext.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-							AppContext.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
-							Window.Notification.TYPE_HUMANIZED_MESSAGE);
+							.getApplication()
+							.getMainWindow()
+							.showNotification(
+									LocalizationHelper
+											.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
+									LocalizationHelper
+											.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
+									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 					return;
 				}
 			} else if (data.getParams() instanceof SimpleTask) {
 				task = (SimpleTask) data.getParams();
 			}
-			
+
 			super.onGo(container, data);
 			view.previewItem(task);
 			AppContext.addFragment("crm/activity/task/preview/"
-					+ UrlEncodeDecoder.encode(task.getId()), "Preview Task: " + task.getSubject());
+					+ UrlEncodeDecoder.encode(task.getId()), "Preview Task: "
+					+ task.getSubject());
 
 		} else {
 			MessageConstants.showMessagePermissionAlert();

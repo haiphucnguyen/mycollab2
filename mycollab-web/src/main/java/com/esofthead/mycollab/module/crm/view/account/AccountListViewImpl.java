@@ -21,6 +21,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
@@ -61,18 +62,24 @@ public class AccountListViewImpl extends AbstractView implements
 					new String[] {
 							"",
 							"Name",
-							AppContext
+							LocalizationHelper
 									.getMessage(CrmCommonI18nEnum.OFFICE_PHONE),
 							"Email Address",
-							AppContext
+							LocalizationHelper
 									.getMessage(CrmCommonI18nEnum.ASSIGNED_USER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new AccountTableDisplay(new String[] { "selected",
-					"accountname", "city", "phoneoffice", "email",
-					"assignUserFullName" }, new String[] { "", "Name", "City",
-					AppContext.getMessage(CrmCommonI18nEnum.OFFICE_PHONE),
-					"Email Address",
-					AppContext.getMessage(CrmCommonI18nEnum.ASSIGNED_USER) });
+			tableItem = new AccountTableDisplay(
+					new String[] { "selected", "accountname", "city",
+							"phoneoffice", "email", "assignUserFullName" },
+					new String[] {
+							"",
+							"Name",
+							"City",
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.OFFICE_PHONE),
+							"Email Address",
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.ASSIGNED_USER) });
 		}
 
 		tableItem

@@ -14,6 +14,7 @@ import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -56,7 +57,7 @@ public class RiskSearchPanel extends GenericSearchPanel<RiskSearchCriteria> {
 		layout.addComponent(searchtitle);
 
 		Button createBtn = new Button(
-				AppContext.getMessage(RiskI18nEnum.NEW_RISK_ACTION),
+				LocalizationHelper.getMessage(RiskI18nEnum.NEW_RISK_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

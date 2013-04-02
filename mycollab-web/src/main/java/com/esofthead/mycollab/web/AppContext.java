@@ -6,16 +6,12 @@ import java.text.SimpleDateFormat;
 import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
-import java.util.Locale;
 import java.util.Map;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
-
-import ch.qos.cal10n.IMessageConveyor;
-import ch.qos.cal10n.MessageConveyor;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.UserPreference;
@@ -290,16 +286,5 @@ public class AppContext implements TransactionListener, Serializable {
 		mainWindow.addFragement(fragement);
 		mainWindow.setCaption(StringUtils.subString(windowTitle, 150)
 				+ " [MyCollab]");
-	}
-
-	// LOCALIZATION
-	private static IMessageConveyor mc = new MessageConveyor(Locale.US);
-
-	public static String getMessage(Enum key) {
-		return mc.getMessage(key);
-	}
-
-	public static String getMessage(Enum key, Object... objects) {
-		return mc.getMessage(key, objects);
 	}
 }

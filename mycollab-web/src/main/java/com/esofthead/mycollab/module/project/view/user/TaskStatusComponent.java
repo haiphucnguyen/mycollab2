@@ -31,6 +31,7 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
@@ -50,7 +51,7 @@ public class TaskStatusComponent extends Depot {
 	private static LabelStringGenerator menuLinkGenerator = new TaskStatusLinkLabelStringGenerator();
 
 	public TaskStatusComponent() {
-		super(AppContext.getMessage(ProjectCommonI18nEnum.TASKS_TITLE),
+		super(LocalizationHelper.getMessage(ProjectCommonI18nEnum.TASKS_TITLE),
 				new VerticalLayout());
 
 		taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>(

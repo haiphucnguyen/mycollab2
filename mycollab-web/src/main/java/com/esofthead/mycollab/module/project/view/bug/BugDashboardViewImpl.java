@@ -25,6 +25,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -51,7 +52,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 		header.setWidth("100%");
 
 		Label title = new Label(
-				AppContext.getMessage(BugI18nEnum.BUG_DASHBOARD_TITLE));
+				LocalizationHelper.getMessage(BugI18nEnum.BUG_DASHBOARD_TITLE));
 		title.setStyleName("h2");
 		header.addComponent(title);
 		header.setExpandRatio(title, 0.5f);
@@ -93,7 +94,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 		header.setExpandRatio(navButton, 0.5f);
 
 		Button createBugBtn = new Button(
-				AppContext.getMessage(BugI18nEnum.NEW_BUG_ACTION),
+				LocalizationHelper.getMessage(BugI18nEnum.NEW_BUG_ACTION),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {
@@ -111,7 +112,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 		VerticalLayout btnControlsLayout = new VerticalLayout();
 		btnControlsLayout.setWidth("150px");
 		Button createComponentBtn = new Button(
-				AppContext.getMessage(BugI18nEnum.NEW_COMPONENT_ACTION),
+				LocalizationHelper.getMessage(BugI18nEnum.NEW_COMPONENT_ACTION),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {
@@ -126,7 +127,7 @@ public class BugDashboardViewImpl extends AbstractView implements
 		btnControlsLayout.addComponent(createComponentBtn);
 
 		Button createVersionBtn = new Button(
-				AppContext.getMessage(BugI18nEnum.NEW_VERSION_ACTION),
+				LocalizationHelper.getMessage(BugI18nEnum.NEW_VERSION_ACTION),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {

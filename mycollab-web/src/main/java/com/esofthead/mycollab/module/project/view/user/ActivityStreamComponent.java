@@ -39,6 +39,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
@@ -58,7 +59,7 @@ public class ActivityStreamComponent extends Depot {
 	private static LabelStringGenerator menuLinkGenerator = new ActivityLinkLabelStringGenerator();
 
 	public ActivityStreamComponent() {
-		super(AppContext.getMessage(ProjectCommonI18nEnum.FEEDS_TITLE),
+		super(LocalizationHelper.getMessage(ProjectCommonI18nEnum.FEEDS_TITLE),
 				new VerticalLayout());
 		activityStreamList = new ProjectActivityStreamPagedList();
 		this.bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));

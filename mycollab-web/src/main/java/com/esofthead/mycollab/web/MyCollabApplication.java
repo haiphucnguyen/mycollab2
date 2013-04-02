@@ -75,13 +75,13 @@ public class MyCollabApplication extends Application implements
 		Throwable e = event.getThrowable();
 		if (e instanceof UserInvalidInputException) {
 			getMainWindow().showNotification(
-					AppContext.getMessage(
+					LocalizationHelper.getMessage(
 							GenericI18Enum.ERROR_USER_INPUT_MESSAGE,
 							e.getMessage()), Notification.TYPE_WARNING_MESSAGE);
 		} else {
 			getMainWindow()
 					.showNotification(
-							AppContext
+							LocalizationHelper
 									.getMessage(GenericI18Enum.ERROR_USER_NOTICE_INFORMATION_MESSAGE),
 							Notification.TYPE_ERROR_MESSAGE);
 

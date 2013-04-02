@@ -15,6 +15,7 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 
@@ -28,33 +29,34 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 	}
 
 	private void bind() {
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<CaseWithBLOBs>() {
-			@Override
-			public void onSave(final CaseWithBLOBs cases) {
-				saveCase(cases);
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new CaseEvent.GotoList(this, null));
-				}
-			}
+		view.getEditFormHandlers().addFormHandler(
+				new EditFormHandler<CaseWithBLOBs>() {
+					@Override
+					public void onSave(final CaseWithBLOBs cases) {
+						saveCase(cases);
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new CaseEvent.GotoList(this, null));
+						}
+					}
 
-			@Override
-			public void onCancel() {
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new CaseEvent.GotoList(this, null));
-				}
-			}
+					@Override
+					public void onCancel() {
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new CaseEvent.GotoList(this, null));
+						}
+					}
 
-			@Override
-			public void onSaveAndNew(final CaseWithBLOBs cases) {
-				saveCase(cases);
-				EventBus.getInstance().fireEvent(
-						new CaseEvent.GotoAdd(this, null));
-			}
-		});
+					@Override
+					public void onSaveAndNew(final CaseWithBLOBs cases) {
+						saveCase(cases);
+						EventBus.getInstance().fireEvent(
+								new CaseEvent.GotoAdd(this, null));
+					}
+				});
 	}
 
 	@Override
@@ -73,9 +75,9 @@ public class CaseAddPresenter extends CrmGenericPresenter<CaseAddView> {
 							.getApplication()
 							.getMainWindow()
 							.showNotification(
-									AppContext
+									LocalizationHelper
 											.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-									AppContext
+									LocalizationHelper
 											.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 					return;

@@ -12,6 +12,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Window;
 
 public class UrlResolver {
@@ -61,9 +62,9 @@ public class UrlResolver {
 					.getApplication()
 					.getMainWindow()
 					.showNotification(
-							AppContext
+							LocalizationHelper
 									.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-							AppContext
+							LocalizationHelper
 									.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
 							Window.Notification.TYPE_HUMANIZED_MESSAGE);
 		}

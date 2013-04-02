@@ -28,6 +28,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -75,7 +76,7 @@ public class BugSearchPanel extends GenericSearchPanel<BugSearchCriteria> {
 		layout.addComponent(searchtitle);
 
 		Button createAccountBtn = new Button(
-				AppContext.getMessage(BugI18nEnum.NEW_BUG_ACTION),
+				LocalizationHelper.getMessage(BugI18nEnum.NEW_BUG_ACTION),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
