@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
@@ -17,6 +18,7 @@ import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.SendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
+import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.INotificationSchedulable;
 import com.esofthead.mycollab.schedule.ScheduleConfig;
@@ -52,7 +54,10 @@ public class ProjectTaskNotificationServiceImpl implements
 		SimpleTask task = projectTaskService.findTaskById(taskId);
 
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		hyperLinks.put("taskUrl", "#");
+		hyperLinks.put(
+				"taskUrl",
+				ProjectLinkGenerator.generateTaskPreviewFullLink(
+						task.getProjectid(), taskId));
 		hyperLinks.put("projectUrl", "#");
 		hyperLinks.put("assignUserUrl", "#");
 		hyperLinks.put("taskListUrl", "#");

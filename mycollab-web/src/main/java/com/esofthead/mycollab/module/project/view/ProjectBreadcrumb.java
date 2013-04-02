@@ -4,7 +4,6 @@
  */
 package com.esofthead.mycollab.module.project.view;
 
-
 import java.util.Date;
 import java.util.List;
 
@@ -453,10 +452,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				new GotoTaskAssignmentDashboard()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink("Task: " + task.getTaskname()));
-		AppContext.addFragment(
-				"project/task/task/preview/"
-						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ task.getId()), "Task: " + task.getTaskname());
+		AppContext.addFragment(ProjectLinkGenerator.generateTaskPreviewLink(
+				project.getId(), task.getId()), "Task: " + task.getTaskname());
 	}
 
 	public void gotoTaskEdit(final Task task) {
@@ -550,10 +547,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Bugs", new GotoBugDashboardListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(bug.getSummary()));
-		AppContext.addFragment(
-				"project/bug/preview/"
-						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ bug.getId()),
+		AppContext.addFragment(ProjectLinkGenerator.generateBugPreviewLink(
+				bug.getProjectid(), bug.getId()),
 				"Preview Bug: " + bug.getSummary());
 	}
 
@@ -814,7 +809,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 					new ProjectRoleEvent.GotoList(this, null));
 		}
 	}
-	
+
 	private static class GotoStandupListener implements Button.ClickListener {
 		private static final long serialVersionUID = 1L;
 
@@ -858,9 +853,11 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 
 	public void gotoProjectDashboard() {
 		this.select(1);
-		AppContext.addFragment(
-				"project/dashboard/" + UrlEncodeDecoder.encode(project.getId()),
-				"Dashboard");
+		AppContext
+				.addFragment(
+						"project/dashboard/"
+								+ UrlEncodeDecoder.encode(project.getId()),
+						"Dashboard");
 	}
 
 	public void gotoProjectEdit() {
