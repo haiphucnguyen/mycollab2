@@ -15,10 +15,10 @@
 	top:0; left: 680px; 
 	list-style: none; 
 	padding: 0; margin: 0; 
-	width: 170; height: 500px;
+	width: 170px; height: 500px;
 	overflow: auto;
 	overflow-x: hidden;
-	width: 304px
+	width: 304px;
 }
 #featured ul.ui-tabs-nav li{ 
 	padding: 5px 0; padding-left:13px;  

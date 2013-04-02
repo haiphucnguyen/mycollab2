@@ -112,7 +112,7 @@ input, select, textarea {
 }
 .header-mid img {
 	float: left;
-	margin: 10px 70px 0 10px;
+	margin: 7px 70px 0 10px;
 }
 .header-mid ul {
 	list-style: none;
@@ -285,22 +285,23 @@ input, select, textarea {
 }
 .tb-pricing .block0, .tb-pricing .block1, .tb-pricing .block2, .tb-pricing .block3{
 	text-align:center;
-	width:187px;
-	padding:20px 8px 5px 8px;
-	background:url(../images/shape_2.png) left top no-repeat;
+	width:203px;
+	padding:20px 0px 5px;
+	background:url(../images/shape_2_new.png) left top no-repeat;
 	position:absolute;
-	right:600px;
+	right:603px;
 	bottom:0;
 }
 .tb-pricing .block1{
 	background:url(../images/shape_3.png) left top no-repeat;
-	right:400px;
+	right:401px;
 }
 .tb-pricing .block2{
-	right:200px;
+	right:201px;
 }
 .tb-pricing .block3{
-	right:000px;
+	right: -1px;
+	width: 204px;
 }
 .tb-pricing .block0 h3, .tb-pricing .block1 h3, .tb-pricing .block2 h3, .tb-pricing .block3 h3{	
 	font-size:30px;
@@ -314,7 +315,7 @@ input, select, textarea {
 }
 .tb-pricing .block0 p, .tb-pricing .block1 p, .tb-pricing .block2 p, .tb-pricing .block3 p{	
 	font-size:12px;
-	color:#2373737;
+	color:#373737;
 	line-height:20px;
 	padding: 0 0 15px 0;
 }
@@ -371,8 +372,7 @@ input, select, textarea {
 	color: #373737;
 	border-width: 0 0 0 0;	
 	font-size: 14px;
-	text-align: center;	
-	text-height: 100%;
+	text-align: center;
 }
 .tb-pricing table thead th.first, .tb-pricing table thead th.last{
 	background:url(../images/shape_2.png) bottom center no-repeat;
@@ -384,8 +384,7 @@ input, select, textarea {
 	color: #f2f2f2;
 	border-width: 0 0 0 0;	
 	font-size: 18px;
-	text-align: center;	
-	text-height: 100%;
+	text-align: center;
 	height: 50px;
 }
 
@@ -612,8 +611,6 @@ input, select, textarea {
 	position: relative;
 	border: 1px solid #ddd;
 	background: url(../images/plans-sprite.png?1363496680) 0 -550px repeat-x;
-	-moz-border-radius: 8px;
-	-webkit-border-radius: 8px;
 	border-radius: 8px;
 	/*font: normal 12px/18px Arial,Helvetica,sans-serif;*/
 	color: #555;
@@ -647,7 +644,6 @@ h1, h2, h3, h4, h5, h6 {
     font-family: inherit;
     font-weight: bold;
     padding: 0;
-    text-rendering: optimizelegibility;
 }
 
 .cut {
@@ -741,7 +737,7 @@ h1, h2, h3, h4, h5, h6 {
     margin: 1em 0 1.5em;
     font-size: 12px;
     color: #9c9c9c;
-    line-height: 160%%;
+    line-height: 160%;
 }
 
 
