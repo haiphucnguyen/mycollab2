@@ -26,9 +26,9 @@ import com.vaadin.ui.VerticalLayout;
 public class BugListViewImpl extends AbstractView implements BugListView {
 
 	private static final long serialVersionUID = 1L;
-	private final BugSearchPanel problemSearchPanel;
+	private final BugSearchPanel bugSearchPanel;
 	private BugTableDisplay tableItem;
-	private final VerticalLayout problemListLayout;
+	private final VerticalLayout bugListLayout;
 	private Label titleLbl;
 	private Button exportBtn;
 
@@ -40,12 +40,12 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 		titleLbl.setStyleName("h2");
 		this.addComponent(titleLbl);
 
-		problemSearchPanel = new BugSearchPanel();
-		this.addComponent(problemSearchPanel);
+		bugSearchPanel = new BugSearchPanel();
+		this.addComponent(bugSearchPanel);
 
-		problemListLayout = new VerticalLayout();
-		problemListLayout.setSpacing(true);
-		this.addComponent(problemListLayout);
+		bugListLayout = new VerticalLayout();
+		bugListLayout.setSpacing(true);
+		this.addComponent(bugListLayout);
 
 		generateDisplayTable();
 	}
@@ -85,13 +85,13 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 					}
 				});
 
-		problemListLayout.addComponent(constructTableActionControls());
-		problemListLayout.addComponent(tableItem);
+		bugListLayout.addComponent(constructTableActionControls());
+		bugListLayout.addComponent(tableItem);
 	}
 
 	@Override
 	public HasSearchHandlers<BugSearchCriteria> getSearchHandlers() {
-		return problemSearchPanel;
+		return bugSearchPanel;
 	}
 
 	private ComponentContainer constructTableActionControls() {

@@ -10,11 +10,13 @@ import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.event.FieldEvents.TextChangeEvent;
 import com.vaadin.event.FieldEvents.TextChangeListener;
 import com.vaadin.terminal.ThemeResource;
@@ -106,40 +108,42 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		taskGroupSelection.addComponent(filterBtnLayout);
 
 		// Search button
-		HorizontalLayout basicSearchBody = new HorizontalLayout();
-		basicSearchBody.setSpacing(true);
-		basicSearchBody.setMargin(true);
+		// HorizontalLayout basicSearchBody = new HorizontalLayout();
+		// basicSearchBody.setSpacing(true);
+		// basicSearchBody.setMargin(true);
 
-		final TextField nameField = new TextField();
-		nameField.addListener(new TextChangeListener() {
-			@Override
-			public void textChange(TextChangeEvent event) {
+		// final TextField nameField = new TextField();
+		// nameField.addListener(new TextChangeListener() {
+		// @Override
+		// public void textChange(TextChangeEvent event) {
+		//
+		// String textSearch = event.getText().toString().trim();
+		// }
+		// });
+		//
+		// nameField.setTextChangeEventMode(TextChangeEventMode.LAZY);
+		// nameField.setTextChangeTimeout(200);
+		// nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+		// basicSearchBody.addComponent(nameField);
 
-				String textSearch = event.getText().toString().trim();
-			}
-		});
+		// Button searchBtn = new Button();
+		// searchBtn.addListener(new Button.ClickListener() {
+		// private static final long serialVersionUID = 1L;
+		//
+		// @Override
+		// public void buttonClick(Button.ClickEvent event) {
+		//
+		// }
+		// });
+		// searchBtn.setIcon(new ThemeResource("icons/22/search.png"));
+		// searchBtn.setStyleName("link");
+		// basicSearchBody.addComponent(searchBtn);
+		// header.addComponent(basicSearchBody);
+		// header.setComponentAlignment(basicSearchBody,
+		// Alignment.MIDDLE_RIGHT);
 
-		nameField.setTextChangeEventMode(TextChangeEventMode.LAZY);
-		nameField.setTextChangeTimeout(200);
-		nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-		basicSearchBody.addComponent(nameField);
-
-		Button searchBtn = new Button();
-		searchBtn.addListener(new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(Button.ClickEvent event) {
-
-			}
-		});
-		searchBtn.setIcon(new ThemeResource("icons/22/search.png"));
-		searchBtn.setStyleName("link");
-		basicSearchBody.addComponent(searchBtn);
-		header.addComponent(basicSearchBody);
-		header.setComponentAlignment(basicSearchBody, Alignment.MIDDLE_RIGHT);
-
-		Button newTaskListBtn = new Button("New Task Group",
+		Button newTaskListBtn = new Button(
+				AppContext.getMessage(TaskI18nEnum.NEW_TASKGROUP_ACTION),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {
@@ -153,7 +157,8 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 				.canWrite(ProjectRolePermissionCollections.TASKS));
 		newTaskListBtn.setIcon(new ThemeResource(
 				"icons/16/project/new_task_list.png"));
-		newTaskListBtn.setDescription("New Task Group");
+		newTaskListBtn.setDescription(AppContext
+				.getMessage(TaskI18nEnum.NEW_TASKGROUP_ACTION));
 		newTaskListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		header.addComponent(newTaskListBtn);
 		header.setComponentAlignment(newTaskListBtn, Alignment.MIDDLE_RIGHT);
@@ -169,7 +174,8 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 				.canWrite(ProjectRolePermissionCollections.TASKS));
 		reOrderBtn.setIcon(new ThemeResource("icons/16/project/reorder.png"));
 		reOrderBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		reOrderBtn.setDescription("Reorder taskgroup");
+		reOrderBtn.setDescription(AppContext
+				.getMessage(TaskI18nEnum.REODER_TASKGROUP_ACTION));
 		header.addComponent(reOrderBtn);
 		header.setComponentAlignment(reOrderBtn, Alignment.MIDDLE_RIGHT);
 
@@ -190,7 +196,8 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		});
 		showGanttChartBtn.setEnabled(CurrentProjectVariables
 				.canRead(ProjectRolePermissionCollections.TASKS));
-		showGanttChartBtn.setDescription("Display Gantt Chart");
+		showGanttChartBtn.setDescription(AppContext
+				.getMessage(TaskI18nEnum.DISPLAY_GANTT_CHART_ACTION));
 		showGanttChartBtn.setIcon(new ThemeResource(
 				"icons/16/project/gantt_chart.png"));
 		showGanttChartBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

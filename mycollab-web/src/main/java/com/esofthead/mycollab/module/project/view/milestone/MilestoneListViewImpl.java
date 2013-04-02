@@ -10,6 +10,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
+import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -54,16 +55,18 @@ public class MilestoneListViewImpl extends AbstractView implements
 		header.addComponent(titleLbl);
 		header.setComponentAlignment(titleLbl, Alignment.MIDDLE_LEFT);
 
-		createBtn = new Button("Create", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		createBtn = new Button(
+				AppContext.getMessage(TaskI18nEnum.NEW_PHASE_ACTION),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new MilestoneEvent.GotoAdd(MilestoneListViewImpl.this,
-								null));
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new MilestoneEvent.GotoAdd(
+										MilestoneListViewImpl.this, null));
+					}
+				});
 		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		header.addComponent(createBtn);
 		header.setComponentAlignment(createBtn, Alignment.MIDDLE_RIGHT);
