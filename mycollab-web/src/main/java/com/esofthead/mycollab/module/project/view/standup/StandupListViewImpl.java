@@ -1,10 +1,14 @@
 package com.esofthead.mycollab.module.project.view.standup;
 
 import java.util.Date;
+import java.util.List;
 
+import com.esofthead.mycollab.common.domain.GroupItem;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
@@ -15,18 +19,18 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.StandupStyleCalendarExp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
-import com.vaadin.data.Property;
 import com.vaadin.data.Property.ValueChangeEvent;
+import com.vaadin.data.Property.ValueChangeListener;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.InlineDateField;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -37,7 +41,7 @@ public class StandupListViewImpl extends AbstractView implements
 
 	private Label titleLbl;
 	private final VerticalLayout reportContent;
-	private final InlineDateField dateSelection;
+	private StandupStyleCalendarExp standupCalendar = new StandupStyleCalendarExp();
 
 	private final BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport> reportInDay;
 
@@ -55,25 +59,107 @@ public class StandupListViewImpl extends AbstractView implements
 		layout.addComponent(reportContent);
 		layout.setExpandRatio(reportContent, 1.0f);
 
-		dateSelection = new InlineDateField("");
-		dateSelection.setResolution(InlineDateField.RESOLUTION_DAY);
-		dateSelection.setImmediate(true);
-		dateSelection.addListener(new Property.ValueChangeListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void valueChange(ValueChangeEvent event) {
-				Date value = (Date) event.getProperty().getValue();
-				displayReport(value);
-			}
-		});
-		layout.addComponent(dateSelection);
+		layout.addComponent(standupCalendar);
 		this.addComponent(layout);
+		addCalendarEvent();
+		getListReport();
 
 		reportInDay = new BeanList<StandupReportService, StandupReportSearchCriteria, SimpleStandupReport>(
 				AppContext.getSpringBean(StandupReportService.class),
 				StandupReportRowDisplay.class);
 		reportContent.addComponent(reportInDay);
+	}
+
+	private RangeDateSearchField getRangeDateSearchField(Date date1, Date date2) {
+		if (date1.before(date2)) {
+			return new RangeDateSearchField(date1, date2);
+		} else if (date1.after(date2)) {
+			return new RangeDateSearchField(date2, date1);
+		} else {
+			return new RangeDateSearchField(date1, date2);
+		}
+	}
+
+	@SuppressWarnings("serial")
+	private void addCalendarEvent() {
+
+		standupCalendar.getStyleCalendar().addListener(
+				new ValueChangeListener() {
+
+					@Override
+					public void valueChange(ValueChangeEvent event) {
+						Date selectedDate = (Date) event.getProperty()
+								.getValue();
+						displayReport(selectedDate);
+						standupCalendar.setLabelTime(AppContext
+								.formatDate(selectedDate));
+					}
+				});
+
+		standupCalendar.getBtnShowNextYear().addListener(
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						standupCalendar.getStyleCalendar().showNextYear();
+						standupCalendar.setLabelTime(AppContext
+								.formatDate(standupCalendar.getStyleCalendar()
+										.getShowingDate()));
+						getListReport();
+					}
+				});
+
+		standupCalendar.getBtnShowNextMonth().addListener(
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						standupCalendar.getStyleCalendar().showNextMonth();
+						standupCalendar.setLabelTime(AppContext
+								.formatDate(standupCalendar.getStyleCalendar()
+										.getShowingDate()));
+						getListReport();
+					}
+				});
+
+		standupCalendar.getBtnShowPreviousMonth().addListener(
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						standupCalendar.getStyleCalendar().showPreviousMonth();
+						standupCalendar.setLabelTime(AppContext
+								.formatDate(standupCalendar.getStyleCalendar()
+										.getShowingDate()));
+						getListReport();
+					}
+				});
+
+		standupCalendar.getBtnShowPreviousYear().addListener(
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(ClickEvent event) {
+						standupCalendar.getStyleCalendar().showPreviousYear();
+						standupCalendar.setLabelTime(AppContext
+								.formatDate(standupCalendar.getStyleCalendar()
+										.getShowingDate()));
+						getListReport();
+					}
+				});
+	}
+
+	private void getListReport() {
+		StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
+		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
+				.getProjectId()));
+		criteria.setReportDateRange(getRangeDateSearchField(new Date(),
+				standupCalendar.getStyleCalendar().getShowingDate()));
+		StandupReportService reportService = AppContext
+				.getSpringBean(StandupReportService.class);
+		List<GroupItem> reportsCount = reportService.getReportsCount(criteria);
+
+		for (GroupItem groupItem : reportsCount) {
+			Date date = DateTimeUtils.getDateByStringWithFormat(
+					groupItem.getGroupname(), AppContext.getDateFormat());
+			standupCalendar.addSelectedDate(date);
+		}
 	}
 
 	private void displayReport(Date date) {

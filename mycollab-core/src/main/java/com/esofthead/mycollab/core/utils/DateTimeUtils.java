@@ -21,10 +21,9 @@ public class DateTimeUtils {
 		return date;
 	}
 
-	public static Date getDateByStringWithFormatW3C(String strDate) {
-		if (strDate != null && !strDate.equals("")) {
-			SimpleDateFormat formatter = new SimpleDateFormat(
-					"yyyy-MM-dd'T'HH:mm:ss");
+	public static Date getDateByStringWithFormat(String strDate, String format) {
+		if (strDate != null && !strDate.equals("") && format!= null && !format.equals("")) {
+			SimpleDateFormat formatter = new SimpleDateFormat(format);
 			try {
 				return formatter.parse(strDate);
 			} catch (ParseException e) {
