@@ -77,7 +77,7 @@
         resultMap="com.esofthead.mycollab.common.dao.GroupItemMapper.BaseResultMap">
         <![CDATA[
                 SELECT m_prj_standup.projectId AS groupid, 
-                    COUNT(*)  AS value, concat(YEAR(m_prj_standup.forDay), MONTH(m_prj_standup.forDay), DAY(m_prj_standup.forDay))
+                    COUNT(*)  AS value, concat(YEAR(m_prj_standup.forDay), "-", MONTH(m_prj_standup.forDay), "-", DAY(m_prj_standup.forDay))
                      as groupname
         FROM m_prj_standup]]>
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
