@@ -24,15 +24,13 @@ import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.vaadin.Application;
-import com.vaadin.service.ApplicationContext.TransactionListener;
 import com.vaadin.terminal.gwt.server.WebApplicationContext;
 
-public class AppContext implements TransactionListener, Serializable {
+public class AppContext implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static int UPDATE_TIME_DURATION = 300000;
 	private static Logger log = LoggerFactory.getLogger(AppContext.class);
-	private static ThreadLocal<AppContext> instance = new ThreadLocal<AppContext>();
 
 	private final Application app;
 	private final Map<String, Object> variables = new HashMap<String, Object>();
@@ -52,60 +50,49 @@ public class AppContext implements TransactionListener, Serializable {
 					.getRequiredWebApplicationContext(context.getHttpSession()
 							.getServletContext());
 		}
-
-		// It's usable from now on in the current request
-		instance.set(this);
 	}
 
 	public static AppContext getInstance() {
-		return instance.get();
+		return MyCollabApplication.getInstance().getSessionData();
 	}
 
-	@Override
-	public void transactionStart(Application application, Object transactionData) {
-		// Set this data instance of this application
-		// as the one active in the current thread.
-		if (this.app == application) {
-			instance.set(this);
-		}
-	}
-
-	@Override
-	public void transactionEnd(Application application, Object transactionData) {
-		// log.debug("Transaction end: " + transactionData);
-
-		long currentTime = new GregorianCalendar().getTimeInMillis();
-		if (currentTime - lastAccessTime > UPDATE_TIME_DURATION) {
-			try {
-				if (instance.get() != null
-						&& instance.get().userPreference != null) {
-					UserPreference pref = instance.get().userPreference;
-					UserPreferenceService prefService = AppContext
-							.getSpringBean(UserPreferenceService.class);
-					pref.setLastaccessedtime(new GregorianCalendar().getTime());
-					prefService.updateWithSession(pref,
-							AppContext.getUsername());
-
-					lastAccessTime = currentTime;
-					log.debug("Update last access time of user "
-							+ AppContext.getUsername());
-				}
-
-			} catch (Exception e) {
-				log.error("There is error when try to update user preference",
-						e);
-			}
-		}
-
-		// Clear the reference to avoid potential problems
-		if (this.app == application) {
-			instance.set(null);
-		}
-	}
+	// @Override
+	// public void transactionEnd(Application application, Object
+	// transactionData) {
+	// // log.debug("Transaction end: " + transactionData);
+	//
+	// long currentTime = new GregorianCalendar().getTimeInMillis();
+	// if (currentTime - lastAccessTime > UPDATE_TIME_DURATION) {
+	// try {
+	// if (instance.get() != null
+	// && instance.get().userPreference != null) {
+	// UserPreference pref = instance.get().userPreference;
+	// UserPreferenceService prefService = AppContext
+	// .getSpringBean(UserPreferenceService.class);
+	// pref.setLastaccessedtime(new GregorianCalendar().getTime());
+	// prefService.updateWithSession(pref,
+	// AppContext.getUsername());
+	//
+	// lastAccessTime = currentTime;
+	// log.debug("Update last access time of user "
+	// + AppContext.getUsername());
+	// }
+	//
+	// } catch (Exception e) {
+	// log.error("There is error when try to update user preference",
+	// e);
+	// }
+	// }
+	//
+	// // Clear the reference to avoid potential problems
+	// if (this.app == application) {
+	// instance.set(null);
+	// }
+	// }
 
 	public static void updateLastModuleVisit(String moduleName) {
 		try {
-			UserPreference pref = instance.get().userPreference;
+			UserPreference pref = getInstance().userPreference;
 			UserPreferenceService prefService = AppContext
 					.getSpringBean(UserPreferenceService.class);
 			pref.setLastmodulevisit(moduleName);
@@ -119,28 +106,28 @@ public class AppContext implements TransactionListener, Serializable {
 
 	public static void setSession(SimpleUser userSession,
 			UserPreference userPreference) {
-		instance.get().session = userSession;
-		instance.get().userPreference = userPreference;
+		getInstance().session = userSession;
+		getInstance().userPreference = userPreference;
 	}
 
 	public static SimpleUser getSession() {
-		return instance.get().session;
+		return getInstance().session;
 	}
 
 	public static Integer getAccountId() {
-		return instance.get().session.getAccountid();
+		return getInstance().session.getAccountid();
 	}
 
 	public static String getUsername() {
-		return instance.get().session.getUsername();
+		return getInstance().session.getUsername();
 	}
 
 	public static UserPreference getUserPreference() {
-		return instance.get().userPreference;
+		return getInstance().userPreference;
 	}
 
 	public static Application getApplication() {
-		return instance.get().app;
+		return MyCollabApplication.getInstance();
 	}
 
 	public static <T> T getSpringBean(Class<T> requiredType) {
@@ -153,7 +140,7 @@ public class AppContext implements TransactionListener, Serializable {
 	}
 
 	public static boolean isAdmin() {
-		Boolean isAdmin = instance.get().session.getIsadmin();
+		Boolean isAdmin = getInstance().session.getIsadmin();
 		if (isAdmin == null) {
 			return Boolean.FALSE;
 		} else {
@@ -166,8 +153,7 @@ public class AppContext implements TransactionListener, Serializable {
 			return true;
 		}
 
-		PermissionMap permissionMap = instance.get().session
-				.getPermissionMaps();
+		PermissionMap permissionMap = getInstance().session.getPermissionMaps();
 		if (permissionMap == null) {
 			return false;
 		} else {
@@ -179,8 +165,7 @@ public class AppContext implements TransactionListener, Serializable {
 		if (isAdmin()) {
 			return true;
 		}
-		PermissionMap permissionMap = instance.get().session
-				.getPermissionMaps();
+		PermissionMap permissionMap = getInstance().session.getPermissionMaps();
 		if (permissionMap == null) {
 			return false;
 		} else {
@@ -192,8 +177,7 @@ public class AppContext implements TransactionListener, Serializable {
 		if (isAdmin()) {
 			return true;
 		}
-		PermissionMap permissionMap = instance.get().session
-				.getPermissionMaps();
+		PermissionMap permissionMap = getInstance().session.getPermissionMaps();
 		if (permissionMap == null) {
 			return false;
 		} else {
@@ -202,21 +186,21 @@ public class AppContext implements TransactionListener, Serializable {
 	}
 
 	public static void putVariable(String key, Object value) {
-		if (instance.get() != null) {
-			instance.get().variables.put(key, value);
+		if (getInstance() != null) {
+			getInstance().variables.put(key, value);
 		}
 	}
 
 	public static Object getVariable(String key) {
-		if (instance.get() != null) {
-			return instance.get().variables.get(key);
+		if (getInstance() != null) {
+			return getInstance().variables.get(key);
 		}
 		return null;
 	}
 
 	public static void removeVariable(String key) {
-		if (instance.get() != null) {
-			instance.get().variables.remove(key);
+		if (getInstance() != null) {
+			getInstance().variables.remove(key);
 		}
 	}
 
@@ -229,8 +213,8 @@ public class AppContext implements TransactionListener, Serializable {
 	}
 
 	static void clearAllVariables() {
-		if (instance.get() != null) {
-			instance.get().variables.clear();
+		if (getInstance() != null) {
+			getInstance().variables.clear();
 		}
 
 	}
