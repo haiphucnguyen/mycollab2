@@ -403,10 +403,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink("Task Group: " + taskList.getName()));
 		AppContext.addFragment(
-				"project/task/taskgroup/preview/"
-						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ taskList.getId()),
-				"TaskGroup: " + taskList.getName());
+				ProjectLinkGenerator.generateTaskGroupPreviewLink(
+						project.getId(), taskList.getId()), "TaskGroup: "
+						+ taskList.getName());
 	}
 
 	public void gotoTaskGroupEdit(final TaskList taskList) {
@@ -853,11 +852,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 
 	public void gotoProjectDashboard() {
 		this.select(1);
-		AppContext
-				.addFragment(
-						"project/dashboard/"
-								+ UrlEncodeDecoder.encode(project.getId()),
-						"Dashboard");
+		AppContext.addFragment(
+				ProjectLinkGenerator.generateProjectLink(project.getId()),
+				"Dashboard");
 	}
 
 	public void gotoProjectEdit() {

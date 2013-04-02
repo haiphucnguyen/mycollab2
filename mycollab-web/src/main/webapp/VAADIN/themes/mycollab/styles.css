@@ -2770,3 +2770,15 @@ div.v-lazyloadingwrapper-loading {
 	border-left: 1px solid #d7d7d7;
 }
 /* End Milestone View */
+
+/* Style calendar */
+
+.v-stylecalendar .week .today.red{
+	background-color: red;
+}
+
+.v-stylecalendar .red {
+        background-color: red;
+}
+
+/* End Style calendar */

@@ -124,7 +124,8 @@ public class HistoryLogComponent extends VerticalLayout {
 
                     header.addComponent(userLink);
                     header.setComponentAlignment(userLink, Alignment.MIDDLE_LEFT);
-                    Label lbDate = new Label("changed " + DateTimeUtils.getStringDateFromNow(DateTimeUtils.getDateByStringWithFormatW3C(strDate)));
+                    String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
+                    Label lbDate = new Label("changed " + DateTimeUtils.getStringDateFromNow(DateTimeUtils.getDateByStringWithFormat(strDate, formatW3C)));
                     header.addComponent(lbDate);
                     header.setComponentAlignment(lbDate, Alignment.MIDDLE_LEFT);
                     header.setExpandRatio(lbDate, 1.0f);
@@ -207,7 +208,8 @@ public class HistoryLogComponent extends VerticalLayout {
 
         @Override
         public Component formatField(String value) {
-            Date formatDate = DateTimeUtils.getDateByStringWithFormatW3C(value);
+        	String formatW3C = "yyyy-MM-dd'T'HH:mm:ss";
+            Date formatDate = DateTimeUtils.getDateByStringWithFormat(value, formatW3C);
             return new Label(AppContext.formatDate(formatDate));
         }
     }
