@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
+import com.esofthead.mycollab.utils.StringUtils;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -81,18 +82,21 @@ public class MilestoneListViewImpl extends AbstractView implements
 		closedHeader.setSizeUndefined();
 		bodyContent.addComponent(closedHeader, "closed-header");
 		closeContainer = new VerticalLayout();
+		closeContainer.setWidth("100%");
 		bodyContent.addComponent(closeContainer, "closed-milestones");
 
 		Label inProgressHeader = new Label("In Progress");
 		inProgressHeader.setSizeUndefined();
 		bodyContent.addComponent(inProgressHeader, "in-progress-header");
 		inProgressContainer = new VerticalLayout();
+		inProgressContainer.setWidth("100%");
 		bodyContent.addComponent(inProgressContainer, "in-progress-milestones");
 
 		Label futureHeader = new Label("Future");
 		futureHeader.setSizeUndefined();
 		bodyContent.addComponent(futureHeader, "future-header");
 		futureContainer = new VerticalLayout();
+		futureContainer.setWidth("100%");
 		bodyContent.addComponent(futureContainer, "future-milestones");
 
 		this.addComponent(bodyContent);
@@ -128,18 +132,17 @@ public class MilestoneListViewImpl extends AbstractView implements
 		CssLayout layout = new CssLayout();
 		layout.addStyleName(UIConstants.MILESTONE_BOX);
 		layout.setWidth("100%");
-		Button milestoneLink = new Button(milestone.getName(),
-				new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+		Button milestoneLink = new Button(StringUtils.trimString(
+				milestone.getName(), 45, true), new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new MilestoneEvent.GotoRead(
-										MilestoneListViewImpl.this, milestone
-												.getId()));
-					}
-				});
+			@Override
+			public void buttonClick(ClickEvent event) {
+				EventBus.getInstance().fireEvent(
+						new MilestoneEvent.GotoRead(MilestoneListViewImpl.this,
+								milestone.getId()));
+			}
+		});
 		milestoneLink.setStyleName("link");
 		milestoneLink.addStyleName("medium-text");
 		milestoneLink.addStyleName("bold");
