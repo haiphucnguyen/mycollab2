@@ -12,7 +12,6 @@
     <packaging>war</packaging>
     <properties>
         <vaadinVersion>6.8.8</vaadinVersion>
-        <netbeans.hint.deploy.server>Tomcat</netbeans.hint.deploy.server>
         <gwtversion>2.3.0</gwtversion>
     </properties>
 
@@ -351,32 +350,24 @@
                     </dependency>
                 </dependencies>
                 <executions>
-                <!--  
-                <execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
+                    <!-- <execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
                         <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> 
-                        
-                    <execution> <id>User Artifacts Generator</id> <phase>compile</phase> 
-                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution>
-                       
-                     <execution> <id>File Artifacts Generator</id> <phase>compile</phase> 
-                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> 
-                    
-                    <execution> <id>Common Artifacts Generator</id> 
-                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
-                        <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> 
-                     <execution> <id>Project Artifacts Generator</id> 
-                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
-                        <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> 
-                     <execution> <id>Tracker Artifacts Generator</id> 
-                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
-                        <configurationFile>${basedir}/src/main/resources/TrackerGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution>
-                        -->
+                        <overwrite>true</overwrite> </configuration> </execution> <execution> <id>User 
+                        Artifacts Generator</id> <phase>compile</phase> <goals> <goal>generate</goal> 
+                        </goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> <execution> <id>File 
+                        Artifacts Generator</id> <phase>compile</phase> <goals> <goal>generate</goal> 
+                        </goals> <configuration> <configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> <execution> <id>Common 
+                        Artifacts Generator</id> <phase>compile</phase> <goals> <goal>generate</goal> 
+                        </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> <execution> <id>Project 
+                        Artifacts Generator</id> <phase>compile</phase> <goals> <goal>generate</goal> 
+                        </goals> <configuration> <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> <execution> <id>Tracker 
+                        Artifacts Generator</id> <phase>compile</phase> <goals> <goal>generate</goal> 
+                        </goals> <configuration> <configurationFile>${basedir}/src/main/resources/TrackerGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
                 </executions>
             </plugin>
             <plugin>
@@ -397,29 +388,16 @@
                     <warName>root</warName>
                 </configuration>
             </plugin>
+
+
+
             <!--CHECK LOCALIZATION -->
-            <!-- 
-            <plugin>
-                <groupId>ch.qos.cal10n.plugins</groupId>
-                <artifactId>maven-cal10n-plugin</artifactId>
-                <executions>
-                    <execution>
-                        <id>checkLocale</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>verify</goal>
-                        </goals>
-                        <configuration>
-                            <enumTypes>
-                                <enumType>com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum</enumType>
-                                <enumType>com.esofthead.mycollab.common.localization.GenericI18Enum</enumType>
-                            </enumTypes>
-                        </configuration>
-                    </execution>
-                </executions>
-            </plugin>
-            -->
-           
+            <!-- <plugin> <groupId>ch.qos.cal10n.plugins</groupId> <artifactId>maven-cal10n-plugin</artifactId> 
+                <executions> <execution> <id>checkLocale</id> <phase>compile</phase> <goals> 
+                <goal>verify</goal> </goals> <configuration> <enumTypes> <enumType>com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum</enumType> 
+                <enumType>com.esofthead.mycollab.common.localization.GenericI18Enum</enumType> 
+                </enumTypes> </configuration> </execution> </executions> </plugin> -->
+
             <!-- <plugin> <groupId>com.vaadin</groupId> <artifactId>vaadin-maven-plugin</artifactId> 
                 <version>1.0.1</version> <executions> <execution> <phase>prepare-package</phase> 
                 <configuration> </configuration> <goals> <goal>update-widgetset</goal> </goals> 
