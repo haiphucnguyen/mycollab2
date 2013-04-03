@@ -1,11 +1,15 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
+import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.MonitorTypeConstants;
+import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
+import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -27,14 +31,52 @@ public class MessageServiceImpl extends
 
 	@Autowired
 	private AttachmentService attachmentService;
+
 	@Autowired
 	private MessageMapper messageMapper;
+
 	@Autowired
 	private MessageMapperExt messageMapperExt;
+
+	@Autowired
+	private RelayEmailNotificationService relayEmailNotificationService;
 
 	@Override
 	public ICrudGenericDAO<Integer, Message> getCrudMapper() {
 		return messageMapper;
+	}
+
+	@Override
+	public int saveWithSession(Message record, String username) {
+		int recordId = super.saveWithSession(record, username);
+		// Save notification item
+		RelayEmailNotification relayNotification = new RelayEmailNotification();
+		relayNotification.setChangeby(username);
+		relayNotification.setChangecomment("");
+		int sAccountId = record.getSaccountid();
+		relayNotification.setSaccountid(sAccountId);
+		relayNotification.setType(MonitorTypeConstants.PRJ_MESSAGE);
+		relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
+		relayNotification.setTypeid(recordId);
+		relayEmailNotificationService.saveWithSession(relayNotification,
+				username);
+		return recordId;
+	}
+
+	@Override
+	public int updateWithSession(Message record, String username) {
+		// Save notification item
+		RelayEmailNotification relayNotification = new RelayEmailNotification();
+		relayNotification.setChangeby(username);
+		relayNotification.setChangecomment("");
+		int sAccountId = record.getSaccountid();
+		relayNotification.setSaccountid(sAccountId);
+		relayNotification.setType(MonitorTypeConstants.PRJ_MESSAGE);
+		relayNotification.setAction(MonitorTypeConstants.UPDATE_ACTION);
+		relayNotification.setTypeid(record.getId());
+		relayEmailNotificationService.saveWithSession(relayNotification,
+				username);
+		return super.updateWithSession(record, username);
 	}
 
 	@Override

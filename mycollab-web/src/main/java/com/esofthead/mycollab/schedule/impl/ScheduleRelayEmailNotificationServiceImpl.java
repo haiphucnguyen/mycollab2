@@ -13,12 +13,11 @@ import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.domain.criteria.RelayEmailNotificationSearchCriteria;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
-import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.mail.service.SendingRelayEmailNotificationAction;
+import com.esofthead.mycollab.module.project.service.MessageNotificationService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskNotificationService;
 import com.esofthead.mycollab.module.tracker.service.BugNotificationService;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.schedule.ScheduleConfig;
 
 @Service
@@ -31,6 +30,9 @@ public class ScheduleRelayEmailNotificationServiceImpl {
 
 	@Autowired
 	private ProjectTaskNotificationService projectTaskNotificationService;
+
+	@Autowired
+	private MessageNotificationService messageNotificationService;
 
 	@Autowired
 	private BugNotificationService bugNotificationService;
@@ -46,7 +48,6 @@ public class ScheduleRelayEmailNotificationServiceImpl {
 						criteria, 0, Integer.MAX_VALUE));
 		log.debug("Get " + relayEmaiNotifications.size()
 				+ " relay email notifications");
-		log.debug("Remove all relay email notifications");
 		SendingRelayEmailNotificationAction emailNotificationAction = null;
 
 		for (SimpleRelayEmailNotification notification : relayEmaiNotifications) {
@@ -55,40 +56,27 @@ public class ScheduleRelayEmailNotificationServiceImpl {
 			} else if (MonitorTypeConstants.PRJ_TASK.equals(notification
 					.getType())) {
 				emailNotificationAction = projectTaskNotificationService;
+			} else if (MonitorTypeConstants.PRJ_MESSAGE.equals(notification
+					.getType())) {
+				emailNotificationAction = messageNotificationService;
 			} else {
 				log.error("Do not support monitor type "
 						+ notification.getType());
 			}
 
 			try {
-				List<SimpleUser> notifiers = notification.getNotifyUsers();
-				if (notifiers != null && !notifiers.isEmpty()) {
-					TemplateGenerator templateGenerator = null;
-					if (MonitorTypeConstants.CREATE_ACTION.equals(notification
-							.getAction())) {
-						templateGenerator = emailNotificationAction
-								.templateGeneratorForCreateAction(notification,
-										notifiers);
-
-					} else if (MonitorTypeConstants.UPDATE_ACTION
-							.equals(notification.getAction())) {
-						templateGenerator = emailNotificationAction
-								.templateGeneratorForUpdateAction(notification,
-										notifiers);
-					} else if (MonitorTypeConstants.ADD_COMMENT_ACTION
-							.equals(notification.getAction())) {
-						templateGenerator = emailNotificationAction
-								.templateGeneratorForCommentAction(
-										notification, notifiers);
-					}
-
-					if (templateGenerator != null) {
-						extMailService.sendHTMLMail("mail@esofthead.com",
-								notification.getChangeByUserFullName(),
-								notifiers,
-								templateGenerator.generateSubjectContent(),
-								templateGenerator.generateBodyContent(), null);
-					}
+				if (MonitorTypeConstants.CREATE_ACTION.equals(notification
+						.getAction())) {
+					emailNotificationAction
+							.sendNotificationForCreateAction(notification);
+				} else if (MonitorTypeConstants.UPDATE_ACTION
+						.equals(notification.getAction())) {
+					emailNotificationAction
+							.sendNotificationForUpdateAction(notification);
+				} else if (MonitorTypeConstants.ADD_COMMENT_ACTION
+						.equals(notification.getAction())) {
+					emailNotificationAction
+							.sendNotificationForCommentAction(notification);
 				}
 
 				relayEmailNotificationService.removeWithSession(

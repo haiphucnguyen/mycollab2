@@ -11,6 +11,7 @@ import com.esofthead.mycollab.common.domain.SimpleAuditLog;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.mail.service.DefaultSendingRelayEmailNotificationAction;
 import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugNotificationService;
@@ -20,7 +21,9 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.utils.StringUtils;
 
 @Service
-public class BugNotificationServiceImpl implements BugNotificationService {
+public class BugNotificationServiceImpl extends
+		DefaultSendingRelayEmailNotificationAction implements
+		BugNotificationService {
 	@Autowired
 	private BugService bugService;
 	@Autowired
@@ -34,8 +37,7 @@ public class BugNotificationServiceImpl implements BugNotificationService {
 
 	@Override
 	public TemplateGenerator templateGeneratorForCreateAction(
-			SimpleRelayEmailNotification emailNotification,
-			List<SimpleUser> notifiers) {
+			SimpleRelayEmailNotification emailNotification) {
 		int taskId = emailNotification.getTypeid();
 		SimpleBug bug = bugService.findBugById(taskId);
 
@@ -67,8 +69,7 @@ public class BugNotificationServiceImpl implements BugNotificationService {
 
 	@Override
 	public TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification,
-			List<SimpleUser> notifiers) {
+			SimpleRelayEmailNotification emailNotification) {
 		int taskId = emailNotification.getTypeid();
 		SimpleBug bug = bugService.findBugById(taskId);
 		Map<String, String> hyperLinks = new HashMap<String, String>();
@@ -107,8 +108,7 @@ public class BugNotificationServiceImpl implements BugNotificationService {
 
 	@Override
 	public TemplateGenerator templateGeneratorForCommentAction(
-			SimpleRelayEmailNotification emailNotification,
-			List<SimpleUser> notifiers) {
+			SimpleRelayEmailNotification emailNotification) {
 		// TODO Auto-generated method stub
 		return null;
 	}
