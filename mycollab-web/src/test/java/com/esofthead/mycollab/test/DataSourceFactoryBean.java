@@ -51,24 +51,22 @@ public class DataSourceFactoryBean extends AbstractFactoryBean {
 					.getResourceAsStream("default-database.properties");
 		}
 
-		if (stream == null) {
-			throw new RuntimeException(
-					"Can not seek the database property configurations.");
-		} else {
-			Properties props = new Properties();
+		Properties props = new Properties();
+		if (stream != null) {
 			props.load(stream);
-
-			log.debug("Use database settings is: " + props);
-
-			dataSource = new BasicDataSource();
-			dataSource.setDriverClassName(props.getProperty(
-					"db.driverClassName", "com.mysql.jdbc.Driver"));
-			dataSource.setUrl(props.getProperty("db.url",
-					"jdbc:mysql://localhost/mycollab_test?autoReconnect=true"));
-			dataSource.setUsername(props.getProperty("db.username", "root"));
-			dataSource.setPassword(props.getProperty("db.password", "esofthead321"));
-			return dataSource;
 		}
+
+		log.debug("Use database settings is: " + props);
+
+		dataSource = new BasicDataSource();
+		dataSource.setDriverClassName(props.getProperty("db.driverClassName",
+				"com.mysql.jdbc.Driver"));
+		dataSource.setUrl(props.getProperty("db.url",
+				"jdbc:mysql://localhost/mycollab_test?autoReconnect=true"));
+		dataSource.setUsername(props.getProperty("db.username", "root"));
+		dataSource
+				.setPassword(props.getProperty("db.password", "esofthead321"));
+		return dataSource;
 	}
 
 	@Override
