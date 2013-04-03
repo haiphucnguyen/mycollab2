@@ -48,11 +48,11 @@
     
     <delete id="removeByCriteria" parameterType="RelayEmailNotificationSearchCriteria">
         DELETE FROM s_relay_email_notification
-        <if test="_parameter != null">
+        <!--  <if test="_parameter != null">-->
             <trim prefix="WHERE" prefixOverrides="AND | OR ">
                 1=1  
                 <include refid="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapperExt.querySearchCriteria" />
             </trim>
-        </if>
+        <!--  </if>-->
     </delete>
 </mapper>

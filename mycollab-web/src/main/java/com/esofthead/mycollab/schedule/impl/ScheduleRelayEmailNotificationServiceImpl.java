@@ -44,7 +44,9 @@ public class ScheduleRelayEmailNotificationServiceImpl {
 		List<SimpleRelayEmailNotification> relayEmaiNotifications = relayEmailNotificationService
 				.findPagableListByCriteria(new SearchRequest<RelayEmailNotificationSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
-		relayEmailNotificationService.removeByCriteria(criteria);
+		log.debug("Get " + relayEmaiNotifications.size()
+				+ " relay email notifications");
+		log.debug("Remove all relay email notifications");
 		SendingRelayEmailNotificationAction emailNotificationAction = null;
 
 		for (SimpleRelayEmailNotification notification : relayEmaiNotifications) {
@@ -89,9 +91,11 @@ public class ScheduleRelayEmailNotificationServiceImpl {
 					}
 				}
 
+				relayEmailNotificationService.removeWithSession(
+						notification.getId(), "");
+
 			} catch (Exception e) {
 				log.error("Error when sending notification email", e);
-				relayEmailNotificationService.saveWithSession(notification, "");
 			}
 		}
 	}
