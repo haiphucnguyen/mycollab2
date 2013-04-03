@@ -61,11 +61,12 @@ public class DataSourceFactoryBean extends AbstractFactoryBean {
 			log.debug("Use database settings is: " + props);
 
 			dataSource = new BasicDataSource();
-			dataSource.setDriverClassName(props
-					.getProperty("db.driverClassName"));
-			dataSource.setUrl(props.getProperty("db.url"));
-			dataSource.setUsername(props.getProperty("db.username"));
-			dataSource.setPassword(props.getProperty("db.password"));
+			dataSource.setDriverClassName(props.getProperty(
+					"db.driverClassName", "com.mysql.jdbc.Driver"));
+			dataSource.setUrl(props.getProperty("db.url",
+					"jdbc:mysql://localhost/mycollab_test?autoReconnect=true"));
+			dataSource.setUsername(props.getProperty("db.username", "root"));
+			dataSource.setPassword(props.getProperty("db.password", "esofthead321"));
 			return dataSource;
 		}
 	}
