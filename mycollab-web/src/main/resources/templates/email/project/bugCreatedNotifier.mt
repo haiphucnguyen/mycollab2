@@ -3,7 +3,6 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>New bug created</title>
-<script
 </head>
 <body>
 	<table width="650" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
@@ -36,7 +35,7 @@
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
-									<td colspan="3" style="word-wrap: break-word; word-break: break-all; white-space: normal;">$!bug.description</td>
+									<td colspan="3" style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!bug.description</td>
 								</tr>
 								<tr>
 									<td style="text-align: right;">Status:&nbsp;</td>
@@ -51,9 +50,9 @@
 									<td>$bug.resolution</td>		
 								</tr>
 								<tr>
-									<td style="text-align: right;">Due date:&nbsp;</td>
-									<td>$!date.format('short_date', $bug.Duedate)</td>
-									<td style="text-align: right;">Milestone:&nbsp;</td>
+									<td style="text-align: right; vertical-align: top;">Due date:&nbsp;</td>
+									<td style="vertical-align: top;">$!date.format('short_date', $bug.Duedate)</td>
+									<td style="text-align: right; vertical-align: top;">Milestone:&nbsp;</td>
 									<td><a href="$hyperLinks.milestoneUrl" style="color: #4283c4; text-decoration: none;">$!bug.milestoneName</td>		
 								</tr>
 								<tr>

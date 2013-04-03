@@ -50,10 +50,10 @@
                                     <td>$bug.resolution</td>        
                                 </tr>
                                 <tr>
-                                    <td style="text-align: right;">Due date:&nbsp;</td>
-                                    <td>$!date.format('short_date', $bug.Duedate)</td>
-                                    <td style="text-align: right;">Milestone:&nbsp;</td>
-                                    <td><a href="$hyperLinks.milestoneUrl" style="color: #4283c4; text-decoration: none;">$!bug.milestoneName</td>      
+                                    <td style="text-align: right; vertical-align: top;">Due date:&nbsp;</td>
+                                    <td style="vertical-align: top;">$!date.format('short_date', $bug.Duedate)</td>
+                                    <td style="text-align: right; vertical-align: top;">Milestone:&nbsp;</td>
+                                    <td style="vertical-align: top;"><a href="$hyperLinks.milestoneUrl" style="color: #4283c4; text-decoration: none;">$!bug.milestoneName</td>      
                                 </tr>
                                 <tr>
                                     <td style="text-align: right; vertical-align: top;">Logged by:&nbsp;</td>
