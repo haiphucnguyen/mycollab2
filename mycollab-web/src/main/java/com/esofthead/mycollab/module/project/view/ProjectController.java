@@ -220,8 +220,12 @@ public class ProjectController implements IController {
 					public void handle(TaskListEvent.GotoAdd event) {
 						ProjectView projectView = ViewManager
 								.getView(ProjectView.class);
+						TaskList taskList = new TaskList();
+						taskList.setProjectid(CurrentProjectVariables
+								.getProjectId());
+						taskList.setStatus("Open");
 						TaskGroupScreenData.Add data = new TaskGroupScreenData.Add(
-								new TaskList());
+								taskList);
 						projectView.gotoTaskList(data);
 					}
 				});

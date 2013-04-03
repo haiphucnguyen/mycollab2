@@ -110,6 +110,9 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 								taskList.getPercentageComplete());
 						fieldContainer.addComponentField(progressField);
 						return fieldContainer;
+					} else if (propertyId.equals("description")) {
+						return new FormViewField(taskList.getDescription(),
+								Label.CONTENT_XHTML);
 					} else if (propertyId.equals("numOpenTasks")) {
 						FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
 						Label numTaskLbl = new Label("("
@@ -123,7 +126,7 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 				}
 			});
 			super.setItemDataSource(newDataSource);
-			
+
 		}
 
 		@Override
@@ -158,7 +161,7 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 					taskList.getId());
 			getWindow().addWindow(historyLog);
 		}
-		
+
 		class FormLayoutFactory extends TaskGroupFormLayoutFactory {
 
 			private static final long serialVersionUID = 1L;
@@ -183,7 +186,7 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("serial")
 	public static class PrintView extends TaskGroupReadViewImpl {
 
@@ -196,8 +199,8 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 						private static final long serialVersionUID = 1L;
 
 						@Override
-						protected Field onCreateField(Item item, Object propertyId,
-								Component uiContext) {
+						protected Field onCreateField(Item item,
+								Object propertyId, Component uiContext) {
 
 							if (propertyId.equals("milestoneid")) {
 								return new FormLinkViewField(taskList
@@ -206,7 +209,8 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 											private static final long serialVersionUID = 1L;
 
 											@Override
-											public void buttonClick(ClickEvent event) {
+											public void buttonClick(
+													ClickEvent event) {
 												EventBus.getInstance()
 														.fireEvent(
 																new MilestoneEvent.GotoRead(
@@ -215,15 +219,18 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 											}
 										});
 							} else if (propertyId.equals("owner")) {
-								return new ProjectUserFormLinkField(
-										taskList.getOwner(), taskList
-												.getOwnerFullName());
+								return new ProjectUserFormLinkField(taskList
+										.getOwner(), taskList
+										.getOwnerFullName());
 							} else if (propertyId.equals("percentageComplete")) {
 								FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
 								ProgressPercentageIndicator progressField = new ProgressPercentageIndicator(
 										taskList.getPercentageComplete());
 								fieldContainer.addComponentField(progressField);
 								return fieldContainer;
+							} else if (propertyId.equals("description")) {
+								return new FormViewField(taskList
+										.getDescription(), Label.CONTENT_XHTML);
 							} else if (propertyId.equals("numOpenTasks")) {
 								FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
 								Label numTaskLbl = new Label("("
@@ -260,13 +267,14 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 			protected Layout createBottomPanel() {
 				VerticalLayout relatedItemsPanel = new VerticalLayout();
 				relatedItemsPanel.addComponent(new CommentListDepot(
-						CommentTypeConstants.PRJ_TASK_LIST, taskList.getId(), false));
+						CommentTypeConstants.PRJ_TASK_LIST, taskList.getId(),
+						false));
 				relatedItemsPanel.addComponent(new TaskDepot());
 				return relatedItemsPanel;
 			}
 		}
 	}
-	
+
 	@SuppressWarnings("serial")
 	public class TaskDepot extends Depot {
 

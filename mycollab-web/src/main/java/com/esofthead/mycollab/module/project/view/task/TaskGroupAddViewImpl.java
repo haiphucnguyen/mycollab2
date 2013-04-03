@@ -35,7 +35,7 @@ public class TaskGroupAddViewImpl extends AbstractView implements
 		TaskGroupAddView {
 	private static final long serialVersionUID = 1L;
 	private EditForm editForm;
-	private SimpleTaskList taskList;
+	private TaskList taskList;
 
 	public TaskGroupAddViewImpl() {
 		super();
@@ -45,8 +45,8 @@ public class TaskGroupAddViewImpl extends AbstractView implements
 
 	@Override
 	public void editItem(TaskList item) {
-		this.taskList = (SimpleTaskList) item;
-		editForm.setItemDataSource(new BeanItem<SimpleTaskList>(taskList));
+		this.taskList = item;
+		editForm.setItemDataSource(new BeanItem<TaskList>(taskList));
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<TaskList> {
@@ -108,16 +108,21 @@ public class TaskGroupAddViewImpl extends AbstractView implements
 					tf.setRequiredError("Please enter a Name");
 					return tf;
 				} else if (propertyId.equals("percentageComplete")) {
+					double percentage = (taskList instanceof SimpleTaskList) ? ((SimpleTaskList) taskList)
+							.getPercentageComplete() : 0;
 					FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
-					ProgressPercentageIndicator progressField = new ProgressPercentageIndicator(taskList
-							.getPercentageComplete());
+					ProgressPercentageIndicator progressField = new ProgressPercentageIndicator(
+							percentage);
 					fieldContainer.addComponentField(progressField);
 					return fieldContainer;
 				} else if (propertyId.equals("numOpenTasks")) {
+					int openTask = (taskList instanceof SimpleTaskList) ? ((SimpleTaskList) taskList)
+							.getNumOpenTasks() : 0;
+					int allTasks = (taskList instanceof SimpleTaskList) ? ((SimpleTaskList) taskList)
+							.getNumAllTasks() : 0;
 					FormContainerHorizontalViewField fieldContainer = new FormContainerHorizontalViewField();
-					Label numTaskLbl = new Label("("
-							+ taskList.getNumOpenTasks() + "/"
-							+ taskList.getNumAllTasks() + ")");
+					Label numTaskLbl = new Label("(" + openTask + "/"
+							+ allTasks + ")");
 					fieldContainer.addComponentField(numTaskLbl);
 					return fieldContainer;
 				}

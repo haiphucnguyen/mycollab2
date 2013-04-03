@@ -69,6 +69,7 @@ public class TaskDisplayComponent extends CssLayout {
 
 			Label descLbl = (Label) layoutHelper.addComponent(new Label(),
 					"Description", 0, 0, 2, "100%", Alignment.TOP_RIGHT);
+			descLbl.setContentMode(Label.CONTENT_XHTML);
 			descLbl.setValue(taskList.getDescription());
 
 			layoutHelper.addComponent(
@@ -153,13 +154,14 @@ public class TaskDisplayComponent extends CssLayout {
 
 			@Override
 			public void buttonClick(Button.ClickEvent event) {
-				
+
 				TaskDisplayComponent.this.removeAllComponents();
-				
+
 				TaskAddPopup taskAddView = new TaskAddPopup(
 						TaskDisplayComponent.this, taskList);
 				if (layoutHelper != null) {
-					TaskDisplayComponent.this.addComponent(layoutHelper.getLayout(), 0);
+					TaskDisplayComponent.this.addComponent(
+							layoutHelper.getLayout(), 0);
 					TaskDisplayComponent.this.addComponent(taskDisplay, 1);
 					TaskDisplayComponent.this.addComponent(taskAddView, 2);
 				} else {
@@ -169,7 +171,8 @@ public class TaskDisplayComponent extends CssLayout {
 				TaskDisplayComponent.this.removeComponent(createTaskBtn);
 			}
 		});
-		createTaskBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+		createTaskBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.TASKS));
 		createTaskBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 		createTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		this.addComponent(createTaskBtn);

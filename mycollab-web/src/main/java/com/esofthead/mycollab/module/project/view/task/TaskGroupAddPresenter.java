@@ -92,6 +92,7 @@ public class TaskGroupAddPresenter extends AbstractPresenter<TaskGroupAddView> {
 				.getSpringBean(ProjectTaskListService.class);
 
 		item.setSaccountid(AppContext.getAccountId());
+		
 		if (item.getId() == null) {
 			taskService.saveWithSession(item, AppContext.getUsername());
 		} else {

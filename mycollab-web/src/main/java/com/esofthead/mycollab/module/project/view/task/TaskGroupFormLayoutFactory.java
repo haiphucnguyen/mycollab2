@@ -18,7 +18,7 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
-
+	private static final long serialVersionUID = 1L;
 	private final String title;
 	private TaskListInformationLayout informationLayout;
 

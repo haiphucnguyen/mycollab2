@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
@@ -47,7 +48,8 @@ public class TaskPresenter extends AbstractPresenter<TaskContainer> {
 			presenter = PresenterResolver.getPresenter(TaskAddPresenter.class);
 		} else if (data instanceof TaskScreenData.Add) {
 			presenter = PresenterResolver.getPresenter(TaskAddPresenter.class);
-		} else if (data instanceof TaskGroupScreenData.Edit) {
+		} else if (ClassUtils.instanceOf(data, TaskGroupScreenData.Add.class,
+				TaskGroupScreenData.Edit.class)) {
 			presenter = PresenterResolver
 					.getPresenter(TaskGroupAddPresenter.class);
 		} else if (data instanceof TaskGroupScreenData.ReorderTaskListRequest) {
