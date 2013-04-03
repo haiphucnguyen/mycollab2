@@ -92,6 +92,9 @@ public class MyCollabApplication extends Application implements
 	@Override
 	public void onRequestEnd(HttpServletRequest request,
 			HttpServletResponse response) {
+		if (sessionData != null) {
+			sessionData.transactionEnd();
+		}
 		threadLocal.remove();
 	}
 
@@ -100,6 +103,7 @@ public class MyCollabApplication extends Application implements
 		super.close();
 		log.debug("Application is closed. Clean all resources");
 		AppContext.clearSession();
+		sessionData = null;
 	}
 
 	@Override

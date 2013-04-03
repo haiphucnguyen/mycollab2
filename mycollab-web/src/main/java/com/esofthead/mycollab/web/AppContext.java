@@ -32,7 +32,6 @@ public class AppContext implements Serializable {
 	private static int UPDATE_TIME_DURATION = 300000;
 	private static Logger log = LoggerFactory.getLogger(AppContext.class);
 
-	private final Application app;
 	private final Map<String, Object> variables = new HashMap<String, Object>();
 
 	private SimpleUser session;
@@ -42,7 +41,6 @@ public class AppContext implements Serializable {
 	private static org.springframework.web.context.WebApplicationContext springContext;
 
 	public AppContext(Application application) {
-		this.app = application;
 		if (springContext == null) {
 			WebApplicationContext context = (WebApplicationContext) application
 					.getContext();
@@ -56,39 +54,31 @@ public class AppContext implements Serializable {
 		return MyCollabApplication.getInstance().getSessionData();
 	}
 
-	// @Override
-	// public void transactionEnd(Application application, Object
-	// transactionData) {
-	// // log.debug("Transaction end: " + transactionData);
-	//
-	// long currentTime = new GregorianCalendar().getTimeInMillis();
-	// if (currentTime - lastAccessTime > UPDATE_TIME_DURATION) {
-	// try {
-	// if (instance.get() != null
-	// && instance.get().userPreference != null) {
-	// UserPreference pref = instance.get().userPreference;
-	// UserPreferenceService prefService = AppContext
-	// .getSpringBean(UserPreferenceService.class);
-	// pref.setLastaccessedtime(new GregorianCalendar().getTime());
-	// prefService.updateWithSession(pref,
-	// AppContext.getUsername());
-	//
-	// lastAccessTime = currentTime;
-	// log.debug("Update last access time of user "
-	// + AppContext.getUsername());
-	// }
-	//
-	// } catch (Exception e) {
-	// log.error("There is error when try to update user preference",
-	// e);
-	// }
-	// }
-	//
-	// // Clear the reference to avoid potential problems
-	// if (this.app == application) {
-	// instance.set(null);
-	// }
-	// }
+	public void transactionEnd() {
+		// log.debug("Transaction end: " + transactionData);
+
+		long currentTime = new GregorianCalendar().getTimeInMillis();
+		if (currentTime - lastAccessTime > UPDATE_TIME_DURATION) {
+			try {
+				if (userPreference != null) {
+					UserPreference pref = userPreference;
+					UserPreferenceService prefService = AppContext
+							.getSpringBean(UserPreferenceService.class);
+					pref.setLastaccessedtime(new GregorianCalendar().getTime());
+					prefService.updateWithSession(pref,
+							AppContext.getUsername());
+
+					lastAccessTime = currentTime;
+					log.debug("Update last access time of user "
+							+ AppContext.getUsername());
+				}
+
+			} catch (Exception e) {
+				log.error("There is error when try to update user preference",
+						e);
+			}
+		}
+	}
 
 	public static void updateLastModuleVisit(String moduleName) {
 		try {
@@ -210,6 +200,8 @@ public class AppContext implements Serializable {
 		EventBus.getInstance().clear();
 		ControllerRegistry.getInstance().clearRegistries();
 		clearAllVariables();
+		getInstance().session = null;
+		getInstance().userPreference = null;
 	}
 
 	static void clearAllVariables() {
