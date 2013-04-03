@@ -22,6 +22,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
@@ -41,6 +42,9 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 	}
 
 	private void constructHeader() {
+		VerticalLayout mainLayout = new VerticalLayout();
+		mainLayout.setSpacing(true);
+		
 		HorizontalLayout header = new HorizontalLayout();
 		header.setMargin(true, false, false, false);
 		header.setSpacing(true);
@@ -201,7 +205,26 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		header.addComponent(showGanttChartBtn);
 		header.setComponentAlignment(showGanttChartBtn, Alignment.MIDDLE_RIGHT);
 
-		this.addComponent(header);
+		mainLayout.addComponent(header);
+		
+		HorizontalLayout layoutExport = new HorizontalLayout();
+		layoutExport.setSpacing(true);
+		layoutExport.setWidth("100%");
+		
+		Label lbEmpty = new Label("");
+		layoutExport.addComponent(lbEmpty);
+		layoutExport.setExpandRatio(lbEmpty, 1.0f);
+		
+		Button exportBtn = new Button("Export");
+		exportBtn.setIcon(new ThemeResource(
+		"icons/16/export_excel.png"));
+		exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		exportBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.BUGS));
+		layoutExport.addComponent(exportBtn);
+		
+		mainLayout.addComponent(layoutExport);
+		this.addComponent(mainLayout);
 		taskLists = new TaskGroupDisplayWidget();
 		this.addComponent(taskLists);
 	}
