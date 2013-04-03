@@ -53,7 +53,7 @@
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Assign:&nbsp;</td>
-									<td><a href="${hyperLinks.assignUserUrl}" style="color: #4283c4; text-decoration: none;">$!task.assignUserFullName</a>
+									<td style="vertical-align: top;"><a href="${hyperLinks.assignUserUrl}" style="color: #4283c4; text-decoration: none;">$!task.assignUserFullName</a>
 									</td>
 									<td style="text-align: right; vertical-align: top;"> Task list:&nbsp;</td>
 									<td style="vertical-align: top;"><a href="${hyperLinks.taskListUrl}" style="color: #4283c4; text-decoration: none;">$!task.taskListName</a></td>		
