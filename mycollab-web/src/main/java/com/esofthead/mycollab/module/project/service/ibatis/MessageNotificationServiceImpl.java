@@ -7,13 +7,13 @@ import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
+import com.esofthead.mycollab.module.project.service.MessageNotificationService;
 import com.esofthead.mycollab.module.project.service.MessageService;
-import com.esofthead.mycollab.module.project.service.ProjectTaskNotificationService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 
 @Service
 public class MessageNotificationServiceImpl implements
-		ProjectTaskNotificationService {
+		MessageNotificationService {
 
 	@Autowired
 	private MessageService messageService;
