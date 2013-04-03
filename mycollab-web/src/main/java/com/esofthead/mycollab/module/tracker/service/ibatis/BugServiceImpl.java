@@ -23,7 +23,6 @@ import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.common.interceptor.service.Watchable;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.common.service.MonitorItemService;
-import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -64,8 +63,6 @@ public class BugServiceImpl extends
 	protected AttachmentService attachmentService;
 	@Autowired
 	protected MonitorItemService monitorItemService;
-	@Autowired
-	private RelayEmailNotificationService relayEmailNotificationService;
 
 	@Override
 	public ICrudGenericDAO<Integer, BugWithBLOBs> getCrudMapper() {

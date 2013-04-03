@@ -9,7 +9,6 @@ import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.interceptor.service.Auditable;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.common.interceptor.service.Watchable;
-import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
@@ -35,9 +34,6 @@ public class ProjectTaskServiceImpl extends
 	private TaskMapper taskMapper;
 	@Autowired
 	private TaskMapperExt taskMapperExt;
-
-	@Autowired
-	private RelayEmailNotificationService relayEmailNotificationService;
 
 	@Autowired
 	private SystemMailService mailService;

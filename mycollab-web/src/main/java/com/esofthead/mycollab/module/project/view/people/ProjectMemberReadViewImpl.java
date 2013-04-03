@@ -207,6 +207,8 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 		private PopupButton taskListFilterControl;
 		private TaskTableDisplay taskDisplay;
 
+		private TaskSearchCriteria taskSearchCriteria;
+
 		public UserTaskDepot() {
 			super("Tasks", new HorizontalLayout(), new VerticalLayout());
 
@@ -240,7 +242,8 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 									|| "reopenTask".equals(event.getFieldName())
 									|| "deleteTask".equals(event.getFieldName())) {
 
-								// taskDisplay.setSearchCriteria(searchCriteria);
+								taskDisplay
+										.setSearchCriteria(taskSearchCriteria);
 							}
 						}
 					});
@@ -317,24 +320,25 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 		}
 
 		private void displayActiveTasksOnly() {
-			TaskSearchCriteria criteria = createBaseSearchCriteria();
-			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
-					new String[] { "Open", "Pending" }));
-			taskDisplay.setSearchCriteria(criteria);
+			taskSearchCriteria = createBaseSearchCriteria();
+			taskSearchCriteria.setStatuses(new SetSearchField<String>(
+					SearchField.AND, new String[] { "Open", "Pending" }));
+			taskDisplay.setSearchCriteria(taskSearchCriteria);
 		}
 
 		private void displayAllTasks() {
-			TaskSearchCriteria criteria = createBaseSearchCriteria();
-			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
+			taskSearchCriteria = createBaseSearchCriteria();
+			taskSearchCriteria.setStatuses(new SetSearchField<String>(
+					SearchField.AND,
 					new String[] { "Open", "Pending", "Closed" }));
-			taskDisplay.setSearchCriteria(criteria);
+			taskDisplay.setSearchCriteria(taskSearchCriteria);
 		}
 
 		private void displayInActiveTasks() {
-			TaskSearchCriteria criteria = createBaseSearchCriteria();
-			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
-					new String[] { "Closed" }));
-			taskDisplay.setSearchCriteria(criteria);
+			taskSearchCriteria = createBaseSearchCriteria();
+			taskSearchCriteria.setStatuses(new SetSearchField<String>(
+					SearchField.AND, new String[] { "Closed" }));
+			taskDisplay.setSearchCriteria(taskSearchCriteria);
 		}
 	}
 
@@ -346,10 +350,10 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 		public UserBugDepot() {
 			super("Bugs", new HorizontalLayout(), new VerticalLayout());
 
-			bugDisplay = new BugTableDisplay(new String[] {
-					"id", "bugkey", "summary", "severity", "resolution",
-					"duedate" }, new String[] { "", "#", "Summary", "Severity",
-					"Resolution", "Due Date" });
+			bugDisplay = new BugTableDisplay(new String[] { "id", "bugkey",
+					"summary", "severity", "resolution", "duedate" },
+					new String[] { "", "#", "Summary", "Severity",
+							"Resolution", "Due Date" });
 			bugDisplay
 					.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 						private static final long serialVersionUID = 1L;
@@ -391,7 +395,7 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			actionBtnLayout.setSpacing(true);
 			actionBtnLayout.setWidth("200px");
 			bugActionControl.addComponent(actionBtnLayout);
-			
+
 			Button openBugBtn = new Button("Open Bugs",
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
@@ -458,18 +462,19 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 							BugStatusConstants.REOPENNED }));
 			bugDisplay.setSearchCriteria(criteria);
 		}
-		
+
 		private void displayPendingBugs() {
 			BugSearchCriteria criteria = createBugSearchCriteria();
 			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
 					new String[] { BugStatusConstants.TESTPENDING }));
 			bugDisplay.setSearchCriteria(criteria);
 		}
-		
+
 		private void displayClosedBugs() {
 			BugSearchCriteria criteria = createBugSearchCriteria();
 			criteria.setStatuses(new SetSearchField<String>(SearchField.AND,
-					new String[] { BugStatusConstants.CLOSE, BugStatusConstants.WONFIX }));
+					new String[] { BugStatusConstants.CLOSE,
+							BugStatusConstants.WONFIX }));
 			bugDisplay.setSearchCriteria(criteria);
 		}
 	}
