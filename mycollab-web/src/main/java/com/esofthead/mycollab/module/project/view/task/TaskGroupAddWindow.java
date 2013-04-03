@@ -43,10 +43,21 @@ public class TaskGroupAddWindow extends Window {
 	private SimpleTaskList taskList;
 	private TaskGroupAddWindow.TaskListForm taskListForm;
 
-	public TaskGroupAddWindow(TaskGroupDisplayView taskView) {
-		this.setWidth("800px");
+	
+	public TaskGroupAddWindow(TaskGroupDisplayView taskView, SimpleTaskList taskList) {
 		this.taskView = taskView;
+		this.taskList = taskList;
+		initUI();
+	}
+	
+	public TaskGroupAddWindow(TaskGroupDisplayView taskView) {
 		taskList = new SimpleTaskList();
+		this.taskView = taskView;
+		initUI();
+	}
+	
+	private void initUI() {
+		this.setWidth("800px");
 		taskListForm = new TaskGroupAddWindow.TaskListForm();
 		taskListForm.setItemDataSource(new BeanItem(taskList));
 		this.addComponent(taskListForm);

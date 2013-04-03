@@ -56,10 +56,9 @@ public class ToggleButtonGroup extends ButtonGroup {
 	}
 
 	private void setDefaultButtonCss() {
-
 		if (this.defaultSelection == -1)
 			return;
-
+		
 		this.removeButtonsCss("selected");
 		this.buttons.get(defaultSelection).addStyleName("selected");
 

@@ -16,6 +16,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.HorizontalLayout;
@@ -104,6 +105,8 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 		layout.setExpandRatio(lbEmpty, 1.0f);
 
 		exportBtn = new Button("Export");
+		exportBtn.setIcon(new ThemeResource(
+		"icons/16/export_excel.png"));
 		exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		exportBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.BUGS));

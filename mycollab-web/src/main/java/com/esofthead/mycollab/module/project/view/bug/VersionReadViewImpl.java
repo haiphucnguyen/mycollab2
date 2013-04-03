@@ -11,6 +11,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Version;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -19,13 +20,21 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ExternalResource;
+import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -125,6 +134,8 @@ public class VersionReadViewImpl extends AbstractView implements
 
 			private static final long serialVersionUID = 1L;
 			private HorizontalLayout bottomLayout;
+			private VerticalLayout mainBottomLayout;
+			private ToggleButtonGroup viewGroup;
 
 			public FormLayoutFactory() {
 				super(version.getVersionname());
@@ -140,16 +151,87 @@ public class VersionReadViewImpl extends AbstractView implements
 
 			@Override
 			protected Layout createBottomPanel() {
+				mainBottomLayout = new VerticalLayout();
+				mainBottomLayout.setSpacing(true);
+				mainBottomLayout.setWidth("100%");
+				
+				HorizontalLayout header = new HorizontalLayout();
+				header.setMargin(true, false, false, false);
+				header.setSpacing(true);
+				header.setWidth("100%");
+				Label taskGroupSelection = new Label("Related Bugs");
+				taskGroupSelection.addStyleName("h2");
+				taskGroupSelection.addStyleName(UIConstants.THEME_NO_BORDER);
+				header.addComponent(taskGroupSelection);
+				header.setExpandRatio(taskGroupSelection, 1.0f);
+				header.setComponentAlignment(taskGroupSelection, Alignment.MIDDLE_LEFT);
+				
+				viewGroup = new ToggleButtonGroup();
+
+				Button simpleDisplay = new Button(null, new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						displaySimpleView();
+					}
+				});
+				simpleDisplay.setIcon(new ThemeResource(
+						"icons/16/project/list_display.png"));
+
+				viewGroup.addButton(simpleDisplay);
+
+				Button advanceDisplay = new Button(null, new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						displayAdvancedView();
+					}
+				});
+				advanceDisplay.setIcon(new ThemeResource(
+						"icons/16/project/bug_advanced_display.png"));
+				viewGroup.addButton(advanceDisplay);
+				header.addComponent(viewGroup);
+				header.setComponentAlignment(viewGroup, Alignment.MIDDLE_RIGHT);
+				
+				mainBottomLayout.addComponent(header);
+				
 				bottomLayout = new HorizontalLayout();
 				bottomLayout.setSpacing(true);
 				bottomLayout.setWidth("100%");
+				
+				viewGroup.removeButtonsCss("selected");
+				advanceDisplay.addStyleName("selected");
+				
 				displayBugReports();
-				return bottomLayout;
+				return mainBottomLayout;
 			}
 
-			@Override
-			public void displayBugReports() {
+			private void displaySimpleView() {
+				if (mainBottomLayout.getComponentCount() > 1) {
+					mainBottomLayout.removeComponent(mainBottomLayout.getComponent(1));
+				}
+
+				BugSearchCriteria criteria = new BugSearchCriteria();
+				criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
+						.getProjectId()));
+				criteria.setVersionids(new SetSearchField<Integer>(version.getId()));
+
+				BugSimpleDisplayWidget displayWidget = new BugSimpleDisplayWidget();
+				mainBottomLayout.addComponent(new LazyLoadWrapper(displayWidget));
+				displayWidget.setSearchCriteria(criteria);
+			}
+			
+			private void displayAdvancedView() {
+				if (mainBottomLayout.getComponentCount() > 1) {
+					mainBottomLayout.removeComponent(mainBottomLayout.getComponent(1));
+				}
+				
+				mainBottomLayout.addComponent(bottomLayout);
+				
 				bottomLayout.removeAllComponents();
+				SimpleProject project = CurrentProjectVariables.getProject();
 				VerticalLayout leftColumn = new VerticalLayout();
 				bottomLayout.addComponent(leftColumn);
 				UnresolvedBugsByPriorityWidget unresolvedBugWidget = new UnresolvedBugsByPriorityWidget(
@@ -159,8 +241,7 @@ public class VersionReadViewImpl extends AbstractView implements
 
 				BugSearchCriteria unresolvedByPrioritySearchCriteria = new BugSearchCriteria();
 				unresolvedByPrioritySearchCriteria
-						.setProjectId(new NumberSearchField(
-								CurrentProjectVariables.getProjectId()));
+						.setProjectId(new NumberSearchField(project.getId()));
 				unresolvedByPrioritySearchCriteria
 						.setVersionids(new SetSearchField<Integer>(version
 								.getId()));
@@ -183,8 +264,7 @@ public class VersionReadViewImpl extends AbstractView implements
 
 				BugSearchCriteria unresolvedByAssigneeSearchCriteria = new BugSearchCriteria();
 				unresolvedByAssigneeSearchCriteria
-						.setProjectId(new NumberSearchField(
-								CurrentProjectVariables.getProjectId()));
+						.setProjectId(new NumberSearchField(project.getId()));
 				unresolvedByAssigneeSearchCriteria
 						.setVersionids(new SetSearchField<Integer>(version
 								.getId()));
@@ -196,7 +276,12 @@ public class VersionReadViewImpl extends AbstractView implements
 										BugStatusConstants.REOPENNED }));
 				unresolvedByAssigneeWidget
 						.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
+			}
 
+			@Override
+			public void displayBugReports() {
+				viewGroup.setDefaultSelectionByIndex(1);
+				displayAdvancedView();
 			}
 
 			@Override
