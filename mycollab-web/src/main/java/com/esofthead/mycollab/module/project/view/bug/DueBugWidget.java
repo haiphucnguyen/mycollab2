@@ -6,6 +6,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 
 import java.util.GregorianCalendar;
 
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
@@ -51,7 +52,9 @@ public class DueBugWidget extends BugDisplayWidget {
 			layout.addComponent(new Embedded(null, new ThemeResource(
 					"icons/22/project/bug.png")), 0, 0, 0, 3);
 
-			ButtonLink defectLink = new ButtonLink(obj.getSummary(),
+			ButtonLink defectLink = new ButtonLink("["
+					+ CurrentProjectVariables.getProject().getShortname() + "-"
+					+ obj.getBugkey() + "]: " + obj.getSummary(),
 					new Button.ClickListener() {
 						private static final long serialVersionUID = 1L;
 
