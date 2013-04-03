@@ -22,16 +22,23 @@ import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.ExternalResource;
+import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
+import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
+import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * 
@@ -45,8 +52,6 @@ public class ComponentReadViewImpl extends AbstractView implements
 	protected SimpleComponent component;
 	protected AdvancedPreviewBeanForm<SimpleComponent> previewForm;
 	
-	private ToggleButtonGroup viewGroup;
-
 	public ComponentReadViewImpl() {
 		super();
 		this.setMargin(false, true, true, true);
@@ -135,6 +140,8 @@ public class ComponentReadViewImpl extends AbstractView implements
 
 			private static final long serialVersionUID = 1L;
 			private HorizontalLayout bottomLayout;
+			private VerticalLayout mainBottomLayout;
+			private ToggleButtonGroup viewGroup;
 
 			public FormLayoutFactory() {
 				super(component.getComponentname());
@@ -148,15 +155,87 @@ public class ComponentReadViewImpl extends AbstractView implements
 
 			@Override
 			protected Layout createBottomPanel() {
+				
+				mainBottomLayout = new VerticalLayout();
+				mainBottomLayout.setSpacing(true);
+				mainBottomLayout.setWidth("100%");
+				
+				HorizontalLayout header = new HorizontalLayout();
+				header.setMargin(true, false, false, false);
+				header.setSpacing(true);
+				header.setWidth("100%");
+				Label taskGroupSelection = new Label("Related Bugs");
+				taskGroupSelection.addStyleName("h2");
+				taskGroupSelection.addStyleName(UIConstants.THEME_NO_BORDER);
+				header.addComponent(taskGroupSelection);
+				header.setExpandRatio(taskGroupSelection, 1.0f);
+				header.setComponentAlignment(taskGroupSelection, Alignment.MIDDLE_LEFT);
+				
+				viewGroup = new ToggleButtonGroup();
+
+				Button simpleDisplay = new Button(null, new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						displaySimpleView();
+					}
+				});
+				simpleDisplay.setIcon(new ThemeResource(
+						"icons/16/project/list_display.png"));
+
+				viewGroup.addButton(simpleDisplay);
+
+				Button advanceDisplay = new Button(null, new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						displayAdvancedView();
+					}
+				});
+				advanceDisplay.setIcon(new ThemeResource(
+						"icons/16/project/bug_advanced_display.png"));
+				viewGroup.addButton(advanceDisplay);
+				header.addComponent(viewGroup);
+				header.setComponentAlignment(viewGroup, Alignment.MIDDLE_RIGHT);
+				
+				mainBottomLayout.addComponent(header);
+				
 				bottomLayout = new HorizontalLayout();
 				bottomLayout.setSpacing(true);
 				bottomLayout.setWidth("100%");
+				
+				viewGroup.removeButtonsCss("selected");
+				advanceDisplay.addStyleName("selected");
+				
 				displayBugReports();
-				return bottomLayout;
+				return mainBottomLayout;
+				
 			}
+			
+			private void displaySimpleView() {
+				if (mainBottomLayout.getComponentCount() > 1) {
+					mainBottomLayout.removeComponent(mainBottomLayout.getComponent(1));
+				}
 
-			@Override
-			public void displayBugReports() {
+				BugSearchCriteria criteria = new BugSearchCriteria();
+				criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
+						.getProjectId()));
+				criteria.setComponentids(new SetSearchField<Integer>(component.getId()));
+
+				BugSimpleDisplayWidget displayWidget = new BugSimpleDisplayWidget();
+				mainBottomLayout.addComponent(new LazyLoadWrapper(displayWidget));
+				displayWidget.setSearchCriteria(criteria);
+			}
+			
+			private void displayAdvancedView() {
+				if (mainBottomLayout.getComponentCount() > 1) {
+					mainBottomLayout.removeComponent(mainBottomLayout.getComponent(1));
+				}
+				
+				mainBottomLayout.addComponent(bottomLayout);
+				
 				bottomLayout.removeAllComponents();
 				SimpleProject project = CurrentProjectVariables.getProject();
 				VerticalLayout leftColumn = new VerticalLayout();
@@ -203,6 +282,12 @@ public class ComponentReadViewImpl extends AbstractView implements
 										BugStatusConstants.REOPENNED }));
 				unresolvedByAssigneeWidget
 						.setSearchCriteria(unresolvedByAssigneeSearchCriteria);
+			}
+
+			@Override
+			public void displayBugReports() {
+				viewGroup.setDefaultSelectionByIndex(1);
+				displayAdvancedView();
 			}
 
 			@Override
