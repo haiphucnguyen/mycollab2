@@ -31,7 +31,7 @@
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Task Name:&nbsp;</td>
-									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$hyperLinks.taskUrl" style="color: #4283c4; text-decoration: none;">$task.taskname</a></td>
+									<td style="font-weight: bold; font-size: 11px; word-wrap: break-word;" colspan="3"><a href="$hyperLinks.taskUrl" style="color: #4283c4; text-decoration: none;">$task.taskname</a></td>
 								</tr>
 								<tr>
 									<td style="text-align: right;">Start Date:&nbsp;</td>

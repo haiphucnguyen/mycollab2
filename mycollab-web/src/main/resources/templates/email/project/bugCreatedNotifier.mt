@@ -3,6 +3,7 @@
 <head>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
 <title>New bug created</title>
+<script
 </head>
 <body>
 	<table width="650" cellpadding="0" cellspacing="0" border="0" style="margin: 0px auto;">
@@ -35,7 +36,7 @@
 								</tr>
 								<tr>
 									<td style="text-align: right; min-width: 90px; vertical-align: top;">Description:&nbsp;</td>
-									<td colspan="3">$!bug.description</td>
+									<td colspan="3" style="word-wrap: break-word; word-break: break-all; white-space: normal;">$!bug.description</td>
 								</tr>
 								<tr>
 									<td style="text-align: right;">Status:&nbsp;</td>
@@ -57,9 +58,9 @@
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Logged by:&nbsp;</td>
-									<td><a href="${hyperLinks.loggedUserUrl}" style="color: #4283c4; text-decoration: none;">$bug.logby</a></td>
+									<td><a href="${hyperLinks.loggedUserUrl}" style="color: #4283c4; text-decoration: none;">$bug.loguserFullName</a></td>
 									<td style="text-align: right; vertical-align: top;">Assigned to:&nbsp;</td>
-									<td><a href="${hyperLinks.assignUserUrl}" style="color: #4283c4; text-decoration: none;">$bug.assignuser</a></td>		
+									<td><a href="${hyperLinks.assignUserUrl}" style="color: #4283c4; text-decoration: none;">$bug.assignuserFullName</a></td>		
 								</tr>
 								<tr>
 									<td style="text-align: right; vertical-align: top;">Components:&nbsp;</td>

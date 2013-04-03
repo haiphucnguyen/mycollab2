@@ -118,6 +118,10 @@ div.v-button-link {
 	word-wrap: break-word;
 }
 
+.v-label {
+	word-wrap: break-word;
+}
+
 .v-label.h2 {
 	font-size: 14px;
 	padding: 0px;
@@ -2589,8 +2593,6 @@ div.v-lazyloadingwrapper-loading {
 	border-top: 1px solid rgb(215, 215, 215);
 }
 .milestone-box .v-button-link.v-button-wordWrap .v-button-caption {
-	height: 32px;
-	overflow: hidden;
 }
 .milestone-box > .v-csslayout-margin {
 	padding: 15px 20px 10px;
@@ -2782,3 +2784,7 @@ div.v-lazyloadingwrapper-loading {
 }
 
 /* End Style calendar */
+.v-tooltip-text {
+	height: 100%;
+	overflow: hidden;
+}

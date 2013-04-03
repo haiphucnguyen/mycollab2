@@ -14,6 +14,7 @@ import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.utils.StringUtils;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
+import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -132,23 +133,33 @@ public class MilestoneListViewImpl extends AbstractView implements
 		CssLayout layout = new CssLayout();
 		layout.addStyleName(UIConstants.MILESTONE_BOX);
 		layout.setWidth("100%");
-		Button milestoneLink = new Button(StringUtils.trimString(
-				milestone.getName(), 45, true), new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new MilestoneEvent.GotoRead(MilestoneListViewImpl.this,
-								milestone.getId()));
-			}
-		});
+		VerticalLayout linkWrapper = new VerticalLayout();
+		linkWrapper.setWidth("100%");
+		linkWrapper.setHeight("32px");
+		String milestoneLinkCaption = StringUtils.trimString(
+				milestone.getName(), 45, true);
+		Button milestoneLink = CommonUIFactory.createButtonTooltip(
+				milestoneLinkCaption, milestone.getName(),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new MilestoneEvent.GotoRead(
+										MilestoneListViewImpl.this, milestone
+												.getId()));
+					}
+				});
 		milestoneLink.setStyleName("link");
 		milestoneLink.addStyleName("medium-text");
 		milestoneLink.addStyleName("bold");
 		milestoneLink.addStyleName(UIConstants.WORD_WRAP);
 		milestone.setDescription(milestone.getDescription());
-		layout.addComponent(milestoneLink);
+		linkWrapper.addComponent(milestoneLink);
+
+		layout.addComponent(linkWrapper);
 
 		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 4,
 				"100%", "60px");
