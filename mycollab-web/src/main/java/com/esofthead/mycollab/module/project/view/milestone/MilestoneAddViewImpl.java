@@ -33,7 +33,7 @@ public class MilestoneAddViewImpl extends AbstractView implements
 
 	private static final long serialVersionUID = 1L;
 	private EditForm editForm;
-	private SimpleMilestone milestone;
+	private Milestone milestone;
 
 	public MilestoneAddViewImpl() {
 		super();
@@ -43,7 +43,7 @@ public class MilestoneAddViewImpl extends AbstractView implements
 
 	@Override
 	public void editItem(Milestone milestone) {
-		this.milestone = (SimpleMilestone) milestone;
+		this.milestone = milestone;
 		editForm.setItemDataSource(new BeanItem<Milestone>(milestone));
 	}
 
@@ -112,16 +112,24 @@ public class MilestoneAddViewImpl extends AbstractView implements
 					return descArea;
 				} else if (propertyId.equals("numOpenTasks")) {
 					FormContainerHorizontalViewField taskComp = new FormContainerHorizontalViewField();
-
-					Label taskNumber = new Label("(" + milestone.getNumOpenTasks() + "/"
-							+ milestone.getNumTasks() + ")");
+					int numOpenTask = (milestone instanceof SimpleMilestone) ? ((SimpleMilestone) milestone)
+							.getNumOpenTasks() : 0;
+					int numTasks = (milestone instanceof SimpleMilestone) ? ((SimpleMilestone) milestone)
+							.getNumTasks() : 0;
+					Label taskNumber = new Label("(" + numOpenTask + "/"
+							+ numTasks + ")");
 					taskNumber.setWidth("90px");
 					taskComp.addComponentField(taskNumber);
 					return taskComp;
 				} else if (propertyId.equals("numOpenBugs")) {
 					FormContainerHorizontalViewField bugComp = new FormContainerHorizontalViewField();
-					Label bugNumber = new Label("(" + milestone.getNumOpenBugs() + "/"
-							+ milestone.getNumBugs() + ")");
+					int numOpenBugs = (milestone instanceof SimpleMilestone) ? ((SimpleMilestone) milestone)
+							.getNumOpenBugs() : 0;
+					int numBugs = (milestone instanceof SimpleMilestone) ? ((SimpleMilestone) milestone)
+							.getNumBugs() : 0;
+
+					Label bugNumber = new Label("(" + numOpenBugs + "/"
+							+ numBugs + ")");
 					bugNumber.setWidth("90px");
 					bugComp.addComponentField(bugNumber);
 					return bugComp;
