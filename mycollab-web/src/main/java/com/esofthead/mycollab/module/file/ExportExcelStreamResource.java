@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.PipedInputStream;
 import java.io.PipedOutputStream;
-import java.lang.reflect.InvocationTargetException;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +13,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.hssf.util.HSSFColor;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
+import org.apache.poi.ss.usermodel.Font;
 import org.apache.poi.ss.usermodel.IndexedColors;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
@@ -35,12 +35,12 @@ public class ExportExcelStreamResource<S extends SearchCriteria> implements
 	private static Logger log = LoggerFactory
 			.getLogger(ExportExcelStreamResource.class);
 
-	private static final long serialVersionUID = 1L;
-	private ISearchableService<S> searchService;
-	private S searchCriteria;
-	private String title;
-	private static int DEFAULT_COLUMN_WIDTH = 0;
-	private FieldExportColumn[] exportColumns;
+	protected static final long serialVersionUID = 1L;
+	protected ISearchableService<S> searchService;
+	protected S searchCriteria;
+	protected String title;
+	protected static int DEFAULT_COLUMN_WIDTH = 0;
+	protected FieldExportColumn[] exportColumns;
 
 	public ExportExcelStreamResource(String title,
 			FieldExportColumn[] exportColumns,
@@ -122,11 +122,11 @@ public class ExportExcelStreamResource<S extends SearchCriteria> implements
 							if (value == null) {
 								createCell(wb, rowValue, (short) k,
 										CellStyle.ALIGN_LEFT,
-										CellStyle.VERTICAL_BOTTOM, "");
+										CellStyle.VERTICAL_BOTTOM, "", true);
 							} else {
 								createCell(wb, rowValue, (short) k,
 										CellStyle.ALIGN_LEFT,
-										CellStyle.VERTICAL_BOTTOM, value);
+										CellStyle.VERTICAL_BOTTOM, value, true);
 							}
 						}
 
@@ -168,7 +168,7 @@ public class ExportExcelStreamResource<S extends SearchCriteria> implements
 		return inStream;
 	}
 
-	private int calculateColWidth(int width) {
+	protected int calculateColWidth(int width) {
 		if (width > 254)
 			return 65280; // Maximum allowed column width.
 		if (width > 1) {
@@ -181,7 +181,7 @@ public class ExportExcelStreamResource<S extends SearchCriteria> implements
 						// number is passed.
 	}
 
-	private CellStyle createBasicCellStyle(Workbook wb, short halign,
+	protected CellStyle createBasicCellStyle(Workbook wb, short halign,
 			short valign, boolean useBorder) {
 		CellStyle cellStyle = wb.createCellStyle();
 		cellStyle.setAlignment(halign);
@@ -199,15 +199,19 @@ public class ExportExcelStreamResource<S extends SearchCriteria> implements
 		return cellStyle;
 	}
 
-	private void createCellTitle(Workbook wb, Row row, short column,
+	protected void createCellTitle(Workbook wb, Row row, short column,
 			short halign, short valign, Object value) {
 		Cell cell = row.createCell(column);
 		CellStyle cellStyle = createBasicCellStyle(wb, halign, valign, false);
 		cell.setCellValue(value.toString());
+		Font f = wb.createFont();
+		f.setBoldweight(Font.BOLDWEIGHT_BOLD);
+		f.setFontHeight((short) 400);
+		cellStyle.setFont(f);
 		cell.setCellStyle(cellStyle);
 	}
 
-	private void createCellHeader(Workbook wb, Row row, short column,
+	protected void createCellHeader(Workbook wb, Row row, short column,
 			short halign, short valign, Object value) {
 		Cell cell = row.createCell(column);
 		cell.setCellValue(value.toString());
@@ -222,15 +226,15 @@ public class ExportExcelStreamResource<S extends SearchCriteria> implements
 		cell.setCellStyle(cellStyle);
 	}
 
-	private Cell createCell(Workbook wb, Row row, short column, short halign,
-			short valign, Object value) {
+	protected Cell createCell(Workbook wb, Row row, short column, short halign,
+			short valign, Object value, boolean displayBorder) {
 		Cell cell = row.createCell(column);
-		CellStyle cellStyle = createBasicCellStyle(wb, halign, valign, true);
+		CellStyle cellStyle = createBasicCellStyle(wb, halign, valign, displayBorder);
 		if (value instanceof Date) {
 			value = AppContext.formatDate((Date) value);
 		}
 		cellStyle.setWrapText(true);
-		cell.setCellValue(value.toString());
+		cell.setCellValue(value != null ? value.toString() : "");
 		cell.setCellStyle(cellStyle);
 		return cell;
 	}
