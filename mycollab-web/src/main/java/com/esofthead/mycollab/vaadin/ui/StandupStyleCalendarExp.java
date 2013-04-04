@@ -9,6 +9,7 @@ import org.vaadin.risto.stylecalendar.DateOptionsGenerator;
 import org.vaadin.risto.stylecalendar.StyleCalendar;
 
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
@@ -29,21 +30,37 @@ public class StandupStyleCalendarExp extends VerticalLayout {
 	public StandupStyleCalendarExp() {
 		this.setWidth("230px");
 		this.setHeight("200px");
+		this.setSpacing(false);
 
 		styleCalendar.setRenderHeader(false);
 		styleCalendar.setRenderWeekNumbers(false);
 		styleCalendar.setImmediate(true);
 		setDateOptionsGenerator();
 
-		btnShowNextYear = createButtonControl(">>");
-		btnShowNextMonth = createButtonControl(">");
-		btnShowPreviousMonth = createButtonControl("<");
-		btnShowPreviousYear = createButtonControl("<<");
+		btnShowNextYear = new Button();
+		btnShowNextYear.setIcon(new ThemeResource("icons/16/cal_year_next.png"));
+		btnShowNextYear.setStyleName("link");
+		
+		btnShowNextMonth = new Button();
+		btnShowNextMonth.setIcon(new ThemeResource("icons/16/cal_month_next.png"));
+		btnShowNextMonth.setStyleName("link");
+		
+		btnShowPreviousMonth  = new Button();
+		btnShowPreviousMonth.setIcon(new ThemeResource("icons/16/cal_month_pre.png"));
+		btnShowPreviousMonth.setStyleName("link");
+		
+		btnShowPreviousYear  = new Button();
+		btnShowPreviousYear.setIcon(new ThemeResource("icons/16/cal_year_pre.png"));
+		btnShowPreviousYear.setStyleName("link");
+		
 		lbSelectedDate.setValue(AppContext.formatDate(new Date()));
+		lbSelectedDate.addStyleName("calendarDateLabel");
 		lbSelectedDate.setWidth("80");
 
 		HorizontalLayout layoutControl = new HorizontalLayout();
+		layoutControl.setStyleName("calendarHeader");
 		layoutControl.setWidth("100%");
+		layoutControl.setHeight("35px");
 
 		HorizontalLayout layoutButtonPrevious = new HorizontalLayout();
 		layoutButtonPrevious.setSpacing(true);
@@ -83,13 +100,6 @@ public class StandupStyleCalendarExp extends VerticalLayout {
 
 	public void setLabelTime(String date) {
 		lbSelectedDate.setValue(date);
-	}
-
-	private Button createButtonControl(String caption) {
-		Button btn = new Button(caption);
-		btn.setWidth("24px");
-		btn.setHeight("24px");
-		return btn;
 	}
 
 	public void addSelectedDate(Date date) {
