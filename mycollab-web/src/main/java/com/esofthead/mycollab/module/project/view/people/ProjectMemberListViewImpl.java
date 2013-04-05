@@ -22,9 +22,9 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Embedded;
@@ -50,6 +50,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 						searchCriteria, 0, Integer.MAX_VALUE));
 
 		this.removeAllComponents();
+		this.setSpacing(true);
 		Button createBtn = new Button("Invite", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -102,7 +103,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		});
 		memberLink.setWidth("100%");
 		memberLink.setHeight(SIZE_UNDEFINED, 0);
-		
+
 		memberInfo.addComponent(memberLink);
 
 		Label memberEmailLabel = new Label("<a href='mailto:"
@@ -120,7 +121,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		if (member.getNumOpenTasks() > 2)
 			taskStatus += "s";
 
-		Label memberWorkStatus = new Label(bugStatus + " � " + taskStatus);
+		Label memberWorkStatus = new Label(bugStatus + " - " + taskStatus);
 		memberInfo.addComponent(memberWorkStatus);
 		memberInfo.setWidth("100%");
 
