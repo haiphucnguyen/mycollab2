@@ -13,6 +13,9 @@ public class TimezoneMapper {
 
 	static {
 		timeMap = new HashMap<String, TimezoneMapper.TimezoneExt>();
+		
+		timeMap.put("0", new TimezoneExt("0","", "", ""));
+		
 		timeMap.put("1", new TimezoneExt("1", "(GMT-12:00) GMT+12",
 				"GMT Offset", "Etc/GMT+12"));
 		timeMap.put("2", new TimezoneExt("2", "(GMT-11:00) GMT+11",
@@ -1042,6 +1045,9 @@ public class TimezoneMapper {
 	}
 
 	public static TimezoneExt getTimezone(String id) {
+		if (id == null || id.equals("")) {
+			return timeMap.get("0");
+		}
 		return timeMap.get(id);
 	}
 

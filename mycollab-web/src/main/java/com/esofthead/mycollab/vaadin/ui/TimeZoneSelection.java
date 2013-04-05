@@ -68,7 +68,7 @@ public class TimeZoneSelection extends CustomField{
 	}
 	
 	public void setTimeZone(TimezoneExt timeZone) {
-		if (timeZone != null) {
+		if (timeZone != null && !timeZone.getArea().equals("")) {
 			comboArea.select(timeZone.getArea());
 			setCboTimeZone(timeZone.getArea());
 			comboTimezone.select(timeZone.getDisplayName());
