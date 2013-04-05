@@ -18,9 +18,9 @@ import org.apache.ibatis.type.MappedJdbcTypes;
 @MappedJdbcTypes(JdbcType.TIMESTAMP)
 public class DateTypeHandler extends BaseTypeHandler<Date> {
 
-	// static {
-	// TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
-	// }
+	static {
+		TimeZone.setDefault(TimeZone.getTimeZone("UTC"));
+	}
 
 	@Override
 	public void setNonNullParameter(PreparedStatement ps, int i,

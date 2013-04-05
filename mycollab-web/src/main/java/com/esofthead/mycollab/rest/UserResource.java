@@ -26,19 +26,23 @@ public class UserResource extends ServerResource {
 	@Autowired
 	UserService userService;
 	
-	@Get("json")
-	public Representation signin() {
-		String format = this.getQueryValue("format1");
-		System.out.println("FORMAT: " + format);
-		GroupItem item = new GroupItem();
-		item.setGroupname("AAA");
-		item.setGroupid("1");
-		item.setValue(4);
-		return new JsonRepresentation(item);
+	public UserResource() {
+		this.getConverterService().setEnabled(true);
 	}
 	
-	@Get()
-	public GroupItem signin1() {
+//	@Get("json")
+//	public Representation signin() {
+//		String format = this.getQueryValue("format1");
+//		System.out.println("FORMAT: " + format);
+//		GroupItem item = new GroupItem();
+//		item.setGroupname("AAA");
+//		item.setGroupid("1");
+//		item.setValue(4);
+//		return new JsonRepresentation(item);
+//	}
+	
+	@Get("json")
+	public GroupItem signin() {
 		String format = this.getQueryValue("format1");
 		System.out.println("FORMAT: " + format);
 		GroupItem item = new GroupItem();
@@ -48,7 +52,7 @@ public class UserResource extends ServerResource {
 		return item;
 	}
 
-	@Post("json")
+	@Post()
 	public String signup(GroupItem item) throws JSONException {
 		log.debug("Receive input: " + item + " "
 				+ BeanUtility.printBeanObj(item));
@@ -57,6 +61,7 @@ public class UserResource extends ServerResource {
 
 	public static void main(String[] args) throws Exception {
 		// Create the HTTP server and listen on port 8182
-		new Server(Protocol.HTTP, 8182, UserResource.class).start();
+		Server server = new Server(Protocol.HTTP, 8182, UserResource.class);
+		server.start();
 	}
 }
