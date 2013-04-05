@@ -38,6 +38,8 @@ public class ValueComboBox extends ComboBox {
         for (int i = 0; i < values.length; i++) {
             this.addItem(values[i]);
         }
+        
+        this.select(this.getItemIds().iterator().next());
     }
     
     public final void loadData(Number... values) {

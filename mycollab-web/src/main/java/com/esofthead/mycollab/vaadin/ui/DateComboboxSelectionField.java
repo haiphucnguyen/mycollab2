@@ -34,7 +34,7 @@ public class DateComboboxSelectionField extends CustomField {
 		cboMonth.setNullSelectionAllowed(false);
 		addMonthItems();
 		cboMonth.select(cboMonth.getItemIds().iterator().next());
-		cboMonth.setWidth("100px");
+		cboMonth.setWidth("117px");
 		layout.addComponent(cboMonth);
 		layout.setComponentAlignment(cboMonth, Alignment.TOP_CENTER);
 

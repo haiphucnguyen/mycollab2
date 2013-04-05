@@ -14,6 +14,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.esofthead.mycollab.common.TimezoneMapper;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
@@ -31,7 +32,6 @@ public class AppContext implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static int UPDATE_TIME_DURATION = 300000;
-	private static String USER_TIMEZONE = "USER_TIMEZONE";
 
 	private static Logger log = LoggerFactory.getLogger(AppContext.class);
 
@@ -42,6 +42,8 @@ public class AppContext implements Serializable {
 
 	private long lastAccessTime = 0;
 	private static org.springframework.web.context.WebApplicationContext springContext;
+	
+	public static String USER_TIMEZONE = "USER_TIMEZONE";
 
 	public AppContext(Application application) {
 		if (springContext == null) {
@@ -231,7 +233,7 @@ public class AppContext implements Serializable {
 			if (session.getTimezone() == null) {
 				timezone = TimeZone.getDefault();
 			} else {
-				timezone = TimeZone.getTimeZone(session.getTimezone());
+				timezone = TimezoneMapper.getTimezone(session.getTimezone()).getTimezone();
 			}
 		}
 		return timezone;
