@@ -256,7 +256,7 @@
         <dependency>
             <groupId>org.apache.httpcomponents</groupId>
             <artifactId>httpclient</artifactId>
-            <version>4.2.2</version>
+            <version>4.2.3</version>
         </dependency>
         <dependency>
             <groupId>com.h2database</groupId>
@@ -350,84 +350,27 @@
                     </dependency>
                 </dependencies>
                 <executions>
-                <!-- 
-                    <execution>
-                        <id>Crm Artifacts Generator</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile>
-                            <overwrite>true</overwrite>
-                        </configuration>
-                    </execution>
-                    -->
-                    <!-- 
-                    <execution>
-                        <id>User Artifacts Generator</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile>
-                            <overwrite>true</overwrite>
-                        </configuration>
-                    </execution>
-                    -->
-                    <!-- 
-                    <execution>
-                        <id>File Artifacts Generator</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile>
-                            <overwrite>true</overwrite>
-                        </configuration>
-                    </execution>
-                    -->
-                    <!-- 
-                    <execution>
-                        <id>Common Artifacts Generator</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile>
-                            <overwrite>true</overwrite>
-                        </configuration>
-                    </execution>
-                    -->
-                    <!-- 
-                    <execution>
-                        <id>Project Artifacts Generator</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile>
-                            <overwrite>true</overwrite>
-                        </configuration>
-                    </execution>
-                    -->
-                    <!-- 
-                    <execution>
-                        <id>Tracker Artifacts Generator</id>
-                        <phase>compile</phase>
-                        <goals>
-                            <goal>generate</goal>
-                        </goals>
-                        <configuration>
-                            <configurationFile>${basedir}/src/main/resources/TrackerGeneratorConfig.xml</configurationFile>
-                            <overwrite>true</overwrite>
-                        </configuration>
-                    </execution>
-                    -->
+                    <!-- <execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
+                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
+                    <!-- <execution> <id>User Artifacts Generator</id> <phase>compile</phase> 
+                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
+                    <!-- <execution> <id>File Artifacts Generator</id> <phase>compile</phase> 
+                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
+                    <!-- <execution> <id>Common Artifacts Generator</id> 
+                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
+                        <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
+                    <!-- <execution> <id>Project Artifacts Generator</id> 
+                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
+                        <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
+                    <!-- <execution> <id>Tracker Artifacts Generator</id> 
+                        <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
+                        <configurationFile>${basedir}/src/main/resources/TrackerGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
                 </executions>
             </plugin>
             <plugin>

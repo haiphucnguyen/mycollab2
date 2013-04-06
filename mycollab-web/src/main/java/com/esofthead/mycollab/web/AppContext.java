@@ -42,7 +42,7 @@ public class AppContext implements Serializable {
 
 	private long lastAccessTime = 0;
 	private static org.springframework.web.context.WebApplicationContext springContext;
-	
+
 	public static String USER_TIMEZONE = "USER_TIMEZONE";
 
 	public AppContext(Application application) {
@@ -56,7 +56,11 @@ public class AppContext implements Serializable {
 	}
 
 	public static AppContext getInstance() {
-		return MyCollabApplication.getInstance().getSessionData();
+		try {
+			return MyCollabApplication.getInstance().getSessionData();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public void transactionEnd() {
@@ -233,7 +237,8 @@ public class AppContext implements Serializable {
 			if (session.getTimezone() == null) {
 				timezone = TimeZone.getDefault();
 			} else {
-				timezone = TimezoneMapper.getTimezone(session.getTimezone()).getTimezone();
+				timezone = TimezoneMapper.getTimezone(session.getTimezone())
+						.getTimezone();
 			}
 		}
 		return timezone;
@@ -255,7 +260,7 @@ public class AppContext implements Serializable {
 		if (date == null) {
 			return "";
 		}
-		
+
 		TimeZone timezone = (TimeZone) getVariable(USER_TIMEZONE);
 		if (timezone != null) {
 			simpleDateTimeFormat.setTimeZone(timezone);
