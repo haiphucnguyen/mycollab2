@@ -11,11 +11,13 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.events.BugVersionEvent;
+import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.criteria.VersionSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.GenericSearchPanel;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UiUtils;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -61,16 +63,19 @@ public class VersionSearchPanel extends
 		searchtitle.setStyleName(Reindeer.LABEL_H2);
 		layout.addComponent(searchtitle);
 
-		Button createBtn = new Button("Create", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button createBtn = new Button(
+				LocalizationHelper.getMessage(BugI18nEnum.NEW_VERSION_ACTION),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(Button.ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new BugVersionEvent.GotoAdd(this, null));
-			}
-		});
-		createBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.VERSIONS));
+					@Override
+					public void buttonClick(Button.ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new BugVersionEvent.GotoAdd(this, null));
+					}
+				});
+		createBtn.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.VERSIONS));
 		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
 

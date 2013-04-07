@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
+import com.esofthead.mycollab.module.project.localization.PeopleI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -20,6 +21,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -51,15 +53,17 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 
 		this.removeAllComponents();
 		this.setSpacing(true);
-		Button createBtn = new Button("Invite", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button createBtn = new Button(
+				LocalizationHelper.getMessage(PeopleI18nEnum.NEW_USER_ACTION),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(Button.ClickEvent event) {
-				EventBus.getInstance().fireEvent(
-						new ProjectMemberEvent.GotoAdd(this, null));
-			}
-		});
+					@Override
+					public void buttonClick(Button.ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new ProjectMemberEvent.GotoAdd(this, null));
+					}
+				});
 		createBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.USERS));
 		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);

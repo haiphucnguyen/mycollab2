@@ -91,6 +91,7 @@ public class ProjectServiceImpl extends
 		// add default role to project
 		ProjectRole defaultRole = new ProjectRole();
 		defaultRole.setProjectid(projectid);
+		defaultRole.setSaccountid(record.getSaccountid());
 		defaultRole.setRolename("Default Role");
 		defaultRole.setDescription("Default role for project member");
 		int roleId = projectRoleService.saveWithSession(defaultRole, username);
