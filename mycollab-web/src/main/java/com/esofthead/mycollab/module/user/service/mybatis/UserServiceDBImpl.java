@@ -34,6 +34,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
 import com.esofthead.mycollab.module.user.dao.RolePermissionMapper;
@@ -81,6 +82,10 @@ public class UserServiceDBImpl extends
 		if (record.getPassword() != null) {
 			record.setPassword(PasswordEncryptHelper.encryptSaltPassword(record
 					.getPassword()));
+		}
+
+		if (record.getRegisterstatus() == null) {
+			record.setRegisterstatus(RegisterStatusConstants.VERIFICATING);
 		}
 		record.setUsername(record.getEmail());
 		userMapper.insert(record);
