@@ -7,7 +7,6 @@ package com.esofthead.mycollab.module.project.view.people;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectRole;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.service.ProjectRoleService;
