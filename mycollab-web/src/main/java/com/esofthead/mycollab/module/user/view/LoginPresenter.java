@@ -5,9 +5,12 @@ import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
+import com.esofthead.mycollab.core.utils.BeanUtility;
+import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.module.user.events.UserEvent.PlainLogin;
+import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
@@ -58,6 +61,13 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 					.rememberPassword(username, password);
 		}
 
+		BillingAccountService billingAccountService = AppContext
+				.getSpringBean(BillingAccountService.class);
+		SimpleBillingAccount billingAccount = billingAccountService
+				.getBillingAccountById(user.getAccountid());
+		log.debug("Get billing account successfully: "
+				+ BeanUtility.printBeanObj(billingAccount));
+
 		UserPreferenceService preferenceService = AppContext
 				.getSpringBean(UserPreferenceService.class);
 		UserPreference pref = preferenceService.getPreferenceOfUser(username);
@@ -65,7 +75,7 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 		log.debug("Login to system successfully. Save user and preference "
 				+ pref + " to session");
 
-		AppContext.setSession(user, pref);
+		AppContext.setSession(user, pref, billingAccount);
 		EventBus.getInstance().fireEvent(
 				new ShellEvent.GotoMainPage(this, null));
 

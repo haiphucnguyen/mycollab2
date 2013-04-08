@@ -18,6 +18,7 @@ import com.esofthead.mycollab.common.TimezoneMapper;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
+import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.utils.StringUtils;
@@ -39,6 +40,7 @@ public class AppContext implements Serializable {
 
 	private SimpleUser session;
 	private UserPreference userPreference;
+	private SimpleBillingAccount billingAccount;
 
 	private long lastAccessTime = 0;
 	private static org.springframework.web.context.WebApplicationContext springContext;
@@ -102,9 +104,10 @@ public class AppContext implements Serializable {
 	}
 
 	public static void setSession(SimpleUser userSession,
-			UserPreference userPreference) {
+			UserPreference userPreference, SimpleBillingAccount billingAccount) {
 		getInstance().session = userSession;
 		getInstance().userPreference = userPreference;
+		getInstance().billingAccount = billingAccount;
 
 		TimeZone timezone = getTimezoneInContext();
 		getInstance().variables.put(USER_TIMEZONE, timezone);
@@ -210,8 +213,10 @@ public class AppContext implements Serializable {
 		EventBus.getInstance().clear();
 		ControllerRegistry.getInstance().clearRegistries();
 		clearAllVariables();
-		getInstance().session = null;
-		getInstance().userPreference = null;
+		if (getInstance() != null) {
+			getInstance().session = null;
+			getInstance().userPreference = null;
+		}
 	}
 
 	static void clearAllVariables() {
