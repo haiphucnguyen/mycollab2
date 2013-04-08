@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
-import org.apache.commons.beanutils.PropertyUtils;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

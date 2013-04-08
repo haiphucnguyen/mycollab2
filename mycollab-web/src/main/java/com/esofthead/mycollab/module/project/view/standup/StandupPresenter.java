@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.view.standup;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.module.billing.BillingPlanChecker;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
@@ -30,18 +31,24 @@ public class StandupPresenter extends AbstractPresenter<StandupContainer> {
 
 		AbstractPresenter presenter;
 
-		if (data instanceof StandupScreenData.Search) {
-			presenter = PresenterResolver
-					.getPresenter(StandupListPresenter.class);
-		} else if (data instanceof StandupScreenData.Add
-				|| data instanceof StandupScreenData.Edit) {
-			presenter = PresenterResolver
-					.getPresenter(StandupAddPresenter.class);
-		} else if (data instanceof StandupScreenData.Read) {
-			presenter = PresenterResolver
-					.getPresenter(StandupReadPresenter.class);
+		if (BillingPlanChecker.isStandupComponentEnable()) {
+			if (data instanceof StandupScreenData.Search) {
+				presenter = PresenterResolver
+						.getPresenter(StandupListPresenter.class);
+			} else if (data instanceof StandupScreenData.Add
+					|| data instanceof StandupScreenData.Edit) {
+				presenter = PresenterResolver
+						.getPresenter(StandupAddPresenter.class);
+			} else if (data instanceof StandupScreenData.Read) {
+				presenter = PresenterResolver
+						.getPresenter(StandupReadPresenter.class);
+			} else {
+				throw new MyCollabException("Do not support screen data: "
+						+ data);
+			}
 		} else {
-			throw new MyCollabException("Do not support screen data: " + data);
+			presenter = PresenterResolver
+					.getPresenter(StandupAdvertisementPresenter.class);
 		}
 
 		presenter.go(view, data);

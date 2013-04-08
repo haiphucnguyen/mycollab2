@@ -876,6 +876,25 @@ public class ProjectController implements IController {
 				});
 
 		EventBus.getInstance().addListener(
+				new ApplicationEventListener<StandUpEvent.GotoRead>() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public Class<? extends ApplicationEvent> getEventType() {
+						return StandUpEvent.GotoRead.class;
+					}
+
+					@Override
+					public void handle(StandUpEvent.GotoRead event) {
+						ProjectView projectView = ViewManager
+								.getView(ProjectView.class);
+						StandupScreenData.Read data = new StandupScreenData.Read(
+								(Integer) event.getData());
+						projectView.gotoStandupReportView(data);
+					}
+				});
+
+		EventBus.getInstance().addListener(
 				new ApplicationEventListener<StandUpEvent.GotoList>() {
 					private static final long serialVersionUID = 1L;
 

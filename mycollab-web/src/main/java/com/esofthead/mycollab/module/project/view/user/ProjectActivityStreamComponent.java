@@ -22,6 +22,7 @@ import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
+import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
@@ -175,6 +176,9 @@ public class ProjectActivityStreamComponent extends Depot {
 					} else if (ProjectContants.BUG_VERSION.equals(type)) {
 						EventBus.getInstance().fireEvent(
 								new BugVersionEvent.GotoRead(this, typeid));
+					} else if (ProjectContants.STANDUP.equals(type)) {
+						EventBus.getInstance().fireEvent(
+								new StandUpEvent.GotoRead(this, typeid));
 					}
 				}
 			});

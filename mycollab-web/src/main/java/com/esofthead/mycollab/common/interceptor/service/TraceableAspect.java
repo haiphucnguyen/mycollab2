@@ -3,7 +3,10 @@ package com.esofthead.mycollab.common.interceptor.service;
 import com.esofthead.mycollab.common.ActivityStreamConstants;
 import com.esofthead.mycollab.common.domain.ActivityStream;
 import com.esofthead.mycollab.common.service.ActivityStreamService;
+import com.esofthead.mycollab.web.AppContext;
+
 import java.lang.reflect.InvocationTargetException;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.aspectj.lang.JoinPoint;
@@ -18,77 +21,87 @@ import org.springframework.stereotype.Component;
 @Aspect
 @Component
 public class TraceableAspect {
-    
-    private static Logger log = LoggerFactory.getLogger(TraceableAspect.class);
-    @Autowired
-    private ActivityStreamService activityStreamService;
-    
-    @After("execution(public * com.esofthead.mycollab..service..*.saveWithSession(..)) && args(bean, username)")
-    public void traceSaveActivity(JoinPoint joinPoint, Object bean,
-            String username) {
-        
-        Advised advised = (Advised) joinPoint.getThis();
-        Class<?> cls = advised.getTargetSource().getTargetClass();
-        
-        Traceable traceableAnnotation = cls.getAnnotation(Traceable.class);
-        if (traceableAnnotation != null) {
-            try {
-                ActivityStream activity = constructActivity(
-                        traceableAnnotation, bean, username,
-                        ActivityStreamConstants.ACTION_CREATE);
-                activityStreamService.save(activity);
-            } catch (Exception e) {
-                log.error(
-                        "Error when save activity for save action of service "
-                        + cls.getName(), e);
-            }
-        }
-        
-    }
-    
-    @After("execution(public * com.esofthead.mycollab..service..*.updateWithSession(..)) && args(bean, username)")
-    public void traceUpdateActivity(JoinPoint joinPoint, Object bean,
-            String username) {
-        
-        Advised advised = (Advised) joinPoint.getThis();
-        Class<?> cls = advised.getTargetSource().getTargetClass();
-        
-        Traceable traceableAnnotation = cls.getAnnotation(Traceable.class);
-        if (traceableAnnotation != null) {
-            try {
-                ActivityStream activity = constructActivity(
-                        traceableAnnotation, bean, username,
-                        ActivityStreamConstants.ACTION_UPDATE);
-                activityStreamService.save(activity);
-            } catch (Exception e) {
-                log.error(
-                        "Error when save activity for save action of service "
-                        + cls.getName(), e);
-            }
-        }
-    }
-    
-    private ActivityStream constructActivity(Traceable traceableAnnotation,
-            Object bean, String username, String action) throws IllegalAccessException,
-            InvocationTargetException, NoSuchMethodException {
-        
-        ActivityStream activity = new ActivityStream();
-        activity.setModule(traceableAnnotation.module());
-        activity.setType(traceableAnnotation.type());
-        activity.setTypeid((Integer) PropertyUtils.getProperty(bean,
-                traceableAnnotation.idField()));
-        activity.setCreatedtime(new GregorianCalendar().getTime());
-        activity.setAction(action);
-        activity.setSaccountid((Integer) PropertyUtils.getProperty(bean,
-                "saccountid"));
-        activity.setCreateduser(username);
-        activity.setNamefield((String) PropertyUtils.getProperty(bean,
-                traceableAnnotation.nameField()));
-        
-        if (!"".equals(traceableAnnotation.extraFieldName())) {
-            Integer extraTypeId = (Integer) PropertyUtils.getProperty(bean, traceableAnnotation.extraFieldName());
-            activity.setExtratypeid(extraTypeId);
-        }
-        return activity;
-    }
+
+	private static Logger log = LoggerFactory.getLogger(TraceableAspect.class);
+	@Autowired
+	private ActivityStreamService activityStreamService;
+
+	@After("execution(public * com.esofthead.mycollab..service..*.saveWithSession(..)) && args(bean, username)")
+	public void traceSaveActivity(JoinPoint joinPoint, Object bean,
+			String username) {
+
+		Advised advised = (Advised) joinPoint.getThis();
+		Class<?> cls = advised.getTargetSource().getTargetClass();
+
+		Traceable traceableAnnotation = cls.getAnnotation(Traceable.class);
+		if (traceableAnnotation != null) {
+			try {
+				ActivityStream activity = constructActivity(
+						traceableAnnotation, bean, username,
+						ActivityStreamConstants.ACTION_CREATE);
+				activityStreamService.save(activity);
+			} catch (Exception e) {
+				log.error(
+						"Error when save activity for save action of service "
+								+ cls.getName(), e);
+			}
+		}
+
+	}
+
+	@After("execution(public * com.esofthead.mycollab..service..*.updateWithSession(..)) && args(bean, username)")
+	public void traceUpdateActivity(JoinPoint joinPoint, Object bean,
+			String username) {
+
+		Advised advised = (Advised) joinPoint.getThis();
+		Class<?> cls = advised.getTargetSource().getTargetClass();
+
+		Traceable traceableAnnotation = cls.getAnnotation(Traceable.class);
+		if (traceableAnnotation != null) {
+			try {
+				ActivityStream activity = constructActivity(
+						traceableAnnotation, bean, username,
+						ActivityStreamConstants.ACTION_UPDATE);
+				activityStreamService.save(activity);
+			} catch (Exception e) {
+				log.error(
+						"Error when save activity for save action of service "
+								+ cls.getName(), e);
+			}
+		}
+	}
+
+	private ActivityStream constructActivity(Traceable traceableAnnotation,
+			Object bean, String username, String action)
+			throws IllegalAccessException, InvocationTargetException,
+			NoSuchMethodException {
+
+		ActivityStream activity = new ActivityStream();
+		activity.setModule(traceableAnnotation.module());
+		activity.setType(traceableAnnotation.type());
+		activity.setTypeid((Integer) PropertyUtils.getProperty(bean,
+				traceableAnnotation.idField()));
+		activity.setCreatedtime(new GregorianCalendar().getTime());
+		activity.setAction(action);
+		activity.setSaccountid((Integer) PropertyUtils.getProperty(bean,
+				"saccountid"));
+		activity.setCreateduser(username);
+
+		Object nameObj = PropertyUtils.getProperty(bean,
+				traceableAnnotation.nameField());
+		String nameField = "";
+		if (nameObj instanceof Date) {
+			nameField = AppContext.formatDate((Date) nameObj);
+		} else {
+			nameField = nameObj.toString();
+		}
+		activity.setNamefield(nameField);
+
+		if (!"".equals(traceableAnnotation.extraFieldName())) {
+			Integer extraTypeId = (Integer) PropertyUtils.getProperty(bean,
+					traceableAnnotation.extraFieldName());
+			activity.setExtratypeid(extraTypeId);
+		}
+		return activity;
+	}
 }

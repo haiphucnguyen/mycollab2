@@ -1,0 +1,3 @@
+ALTER TABLE `s_billing_plan` ADD COLUMN `hasTimeTracking` TINYINT(1) NULL ;
+UPDATE `s_billing_plan` SET `hasBugEnable`='0', `hasStandupMeetingEnable`='0', `hasTimeTracking`='0' WHERE `billingType`='Compact';
+INSERT INTO `s_billing_plan` VALUES (2,'Micro',3,1000,1,9.99,NULL,1,0,0),(3,'Corporate',30,9000,10,49.99,NULL,1,1,1),(4,'Enterprise',200,20000,50,99.99,NULL,1,1,1),(5,'Free',3,200,1,0,NULL,0,0,0);

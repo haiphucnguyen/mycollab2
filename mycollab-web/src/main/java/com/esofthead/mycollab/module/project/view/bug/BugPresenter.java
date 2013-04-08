@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.module.billing.BillingPlanChecker;
 import com.esofthead.mycollab.module.project.view.ProjectView;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ComponentScreenData;
@@ -33,40 +34,49 @@ public class BugPresenter extends AbstractPresenter<BugContainer> {
 
 		Presenter presenter = null;
 
-		if (data instanceof BugScreenData.Search) {
-			presenter = PresenterResolver.getPresenter(BugListPresenter.class);
-		} else if (data instanceof BugScreenData.Add
-				|| data instanceof BugScreenData.Edit) {
-			presenter = PresenterResolver.getPresenter(BugAddPresenter.class);
-		} else if (data instanceof BugScreenData.Read) {
-			presenter = PresenterResolver.getPresenter(BugReadPresenter.class);
-		} else if (data instanceof ComponentScreenData.Add) {
+		if (BillingPlanChecker.isBugComponentEnable()) {
+			if (data instanceof BugScreenData.Search) {
+				presenter = PresenterResolver
+						.getPresenter(BugListPresenter.class);
+			} else if (data instanceof BugScreenData.Add
+					|| data instanceof BugScreenData.Edit) {
+				presenter = PresenterResolver
+						.getPresenter(BugAddPresenter.class);
+			} else if (data instanceof BugScreenData.Read) {
+				presenter = PresenterResolver
+						.getPresenter(BugReadPresenter.class);
+			} else if (data instanceof ComponentScreenData.Add) {
+				presenter = PresenterResolver
+						.getPresenter(ComponentAddPresenter.class);
+			} else if (data instanceof ComponentScreenData.Edit) {
+				presenter = PresenterResolver
+						.getPresenter(ComponentAddPresenter.class);
+			} else if (data instanceof ComponentScreenData.Search) {
+				presenter = PresenterResolver
+						.getPresenter(ComponentListPresenter.class);
+			} else if (data instanceof ComponentScreenData.Read) {
+				presenter = PresenterResolver
+						.getPresenter(ComponentReadPresenter.class);
+			} else if (data instanceof VersionScreenData.Add) {
+				presenter = PresenterResolver
+						.getPresenter(VersionAddPresenter.class);
+			} else if (data instanceof VersionScreenData.Edit) {
+				presenter = PresenterResolver
+						.getPresenter(VersionAddPresenter.class);
+			} else if (data instanceof VersionScreenData.Search) {
+				presenter = PresenterResolver
+						.getPresenter(VersionListPresenter.class);
+			} else if (data instanceof VersionScreenData.Read) {
+				presenter = PresenterResolver
+						.getPresenter(VersionReadPresenter.class);
+			} else if (data == null
+					|| data instanceof BugScreenData.GotoDashboard) {
+				presenter = PresenterResolver
+						.getPresenter(BugDashboardPresenter.class);
+			}
+		} else {
 			presenter = PresenterResolver
-					.getPresenter(ComponentAddPresenter.class);
-		} else if (data instanceof ComponentScreenData.Edit) {
-			presenter = PresenterResolver
-					.getPresenter(ComponentAddPresenter.class);
-		} else if (data instanceof ComponentScreenData.Search) {
-			presenter = PresenterResolver
-					.getPresenter(ComponentListPresenter.class);
-		} else if (data instanceof ComponentScreenData.Read) {
-			presenter = PresenterResolver
-					.getPresenter(ComponentReadPresenter.class);
-		} else if (data instanceof VersionScreenData.Add) {
-			presenter = PresenterResolver
-					.getPresenter(VersionAddPresenter.class);
-		} else if (data instanceof VersionScreenData.Edit) {
-			presenter = PresenterResolver
-					.getPresenter(VersionAddPresenter.class);
-		} else if (data instanceof VersionScreenData.Search) {
-			presenter = PresenterResolver
-					.getPresenter(VersionListPresenter.class);
-		} else if (data instanceof VersionScreenData.Read) {
-			presenter = PresenterResolver
-					.getPresenter(VersionReadPresenter.class);
-		} else if (data == null || data instanceof BugScreenData.GotoDashboard) {
-			presenter = PresenterResolver
-					.getPresenter(BugDashboardPresenter.class);
+					.getPresenter(BugAdvertisementPresenter.class);
 		}
 
 		presenter.go(view, data);
