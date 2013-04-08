@@ -9,6 +9,8 @@ import java.util.Date;
 
 import org.vaadin.addon.customfield.CustomField;
 
+import com.esofthead.mycollab.common.TimezoneMapper;
+import com.esofthead.mycollab.common.TimezoneMapper.TimezoneExt;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -20,6 +22,7 @@ import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.TimeZoneSelection;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -47,6 +50,7 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 	private UserAddViewImpl.EditForm editForm;
 	private User user;
 	private DateComboboxSelectionField cboDateBirthday;
+	private TimeZoneSelection cboTimezone;
 
 	public UserAddViewImpl() {
 		super();
@@ -63,6 +67,10 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 	@Override
 	public Date getBirthday() {
 		return cboDateBirthday.getDate();
+	}
+	
+	public TimezoneExt getTimezone() {
+		return cboTimezone.getTimeZone();
 	}
 
 	private class EditForm extends AdvancedEditBeanForm<User> {
@@ -126,6 +134,16 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 						cboDateBirthday.setDate(user.getDateofbirth());
 					}
 					return cboDateBirthday;
+				} else if (propertyId.equals("timezone")) {
+					cboTimezone = new TimeZoneSelection();
+					if (user.getTimezone() != null) {
+						cboTimezone.setTimeZone(TimezoneMapper.getTimezone(user.getTimezone()));
+					} else {
+						if (AppContext.getSession().getTimezone() != null) {
+							cboTimezone.setTimeZone(TimezoneMapper.getTimezone(AppContext.getSession().getTimezone()));
+						}
+					}
+					return cboTimezone;
 				} else if (propertyId.equals("country")) {
 					final CountryComboBox cboCountry = new CountryComboBox();
 					cboCountry.addListener(new Property.ValueChangeListener() {

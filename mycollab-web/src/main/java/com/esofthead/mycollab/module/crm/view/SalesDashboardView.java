@@ -30,7 +30,7 @@ public class SalesDashboardView extends Depot {
 	private int currentReportIndex = 0;
 
 	public SalesDashboardView() {
-		super("Sales Dashboard", new HorizontalLayout(), new VerticalLayout(), "390px", "200px");
+		super(null, "Sales Dashboard", new HorizontalLayout(), new VerticalLayout(), "390px", "200px");
 
 		initUI();
 	}

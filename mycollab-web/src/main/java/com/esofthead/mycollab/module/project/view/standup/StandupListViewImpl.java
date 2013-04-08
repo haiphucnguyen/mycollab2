@@ -21,6 +21,7 @@ import com.esofthead.mycollab.vaadin.ui.BeanList.RowDisplayHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.StandupStyleCalendarExp;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Property.ValueChangeEvent;
@@ -30,6 +31,7 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -227,7 +229,9 @@ public class StandupListViewImpl extends AbstractView implements
 		private static final long serialVersionUID = 1L;
 
 		public StandupReportDepot(SimpleStandupReport report) {
-			super(report.getLogByFullName(), new VerticalLayout());
+			super(new Embedded(null, UserAvatarControlFactory.getResource(
+					report.getLogby(), 32)), report.getLogByFullName(), null,
+					new VerticalLayout());
 
 			((VerticalLayout) bodyContent).setSpacing(true);
 			Label whatYesterdayLbl = new Label(
