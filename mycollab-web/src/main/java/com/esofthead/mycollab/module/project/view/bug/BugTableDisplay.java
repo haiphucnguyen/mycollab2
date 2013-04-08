@@ -219,7 +219,7 @@ public class BugTableDisplay extends
 						final SimpleBug bug = BugTableDisplay.this
 								.getBeanByIndex(itemId);
 						return new ProjectUserLink(bug.getAssignuser(), bug
-								.getAssignuserFullName(), false);
+								.getAssignuserFullName(), true);
 
 					}
 				});

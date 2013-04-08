@@ -137,7 +137,7 @@ public class RiskListViewImpl extends AbstractView implements RiskListView {
 						final SimpleRisk risk = tableItem
 								.getBeanByIndex(itemId);
 						return new ProjectUserLink(risk.getAssigntouser(), risk
-								.getAssignedToUserFullName());
+								.getAssignedToUserFullName(), true);
 
 					}
 				});

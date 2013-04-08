@@ -24,7 +24,7 @@ public class ProjectUserLink extends Button {
 			}
 		});
 
-		if (isDisplayAvatar) {
+		if (isDisplayAvatar && username != null && !username.equals("")) {
 			this.setIcon(UserAvatarControlFactory.getResource(username, 16));
 		}
 

@@ -12,7 +12,9 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -47,10 +49,12 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
 			for (GroupItem item : groupItems) {
 				HorizontalLayout assigneeLayout = new HorizontalLayout();
 				assigneeLayout.setSpacing(true);
-				
+
 				String assignUser = item.getGroupid();
-				String assignUserFullName = (item.getGroupid() == null) ? "Undefnined" : item.getGroupname();
-				BugAssigneeButton userLbl = new BugAssigneeButton(assignUser, assignUserFullName);
+				String assignUserFullName = (item.getGroupid() == null) ? "Undefnined"
+						: item.getGroupname();
+				BugAssigneeButton userLbl = new BugAssigneeButton(assignUser,
+						assignUserFullName);
 				assigneeLayout.addComponent(userLbl);
 				ProgressIndicator indicator = new ProgressIndicator(new Float(
 						(float) item.getValue() / totalCount));
@@ -65,24 +69,27 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
 
 		}
 	}
-	
+
 	class BugAssigneeButton extends Button {
 		private static final long serialVersionUID = 1L;
 
-		public BugAssigneeButton(final String assignee, final String assigneeFullName) {
+		public BugAssigneeButton(final String assignee,
+				final String assigneeFullName) {
 			super(assigneeFullName, new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					bugSearchCriteria.setAssignuser(new StringSearchField(SearchField.AND, assignee));
-					componentLayout.displayBugListWidget(assigneeFullName + " Bugs List",
-							bugSearchCriteria);
+					bugSearchCriteria.setAssignuser(new StringSearchField(
+							SearchField.AND, assignee));
+					componentLayout.displayBugListWidget(assigneeFullName
+							+ " Bugs List", bugSearchCriteria);
 				}
 			});
-			
+
 			this.setStyleName("link");
 			this.setWidth("100px");
+			this.setIcon(UserAvatarControlFactory.getResource(assignee, 16));
 		}
 	}
 }
