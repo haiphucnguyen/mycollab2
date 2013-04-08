@@ -1833,7 +1833,9 @@ input.v-textfield-errorField {
 .v-splitbutton .v-button {
 	height: 26px !important;
 }
-
+.v-splitbutton-esofthead {
+	font-weight: bold;
+}
 .v-splitbutton-esofthead .v-button-esofthead,.v-splitbutton-esofthead .v-button-esofthead.v-disabled
 	{
 	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
