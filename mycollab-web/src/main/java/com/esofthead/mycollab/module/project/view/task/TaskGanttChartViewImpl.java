@@ -1,17 +1,20 @@
 package com.esofthead.mycollab.module.project.view.task;
 
+import org.vaadin.hene.popupbutton.PopupButton;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCriteria;
-import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -29,6 +32,10 @@ public class TaskGanttChartViewImpl extends AbstractView implements
 		titleLbl.setStyleName("h2");
 		this.addComponent(titleLbl);
 
+		HorizontalLayout headerPanel = new HorizontalLayout();
+		headerPanel.setWidth("100%");
+		this.addComponent(headerPanel);
+
 		Button backToListBtn = new Button("Back to list view",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
@@ -42,25 +49,50 @@ public class TaskGanttChartViewImpl extends AbstractView implements
 					}
 				});
 		backToListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		this.addComponent(backToListBtn);
+		headerPanel.addComponent(backToListBtn);
+
+		Label filterLbl = new Label("Filter:");
+		headerPanel.addComponent(filterLbl);
+		headerPanel.setComponentAlignment(filterLbl, Alignment.MIDDLE_RIGHT);
+		PopupButton taskGroupSelection = new PopupButton("All Tasks");
+		VerticalLayout filterBtnLayout = new VerticalLayout();
+		filterBtnLayout.setMargin(true);
+		filterBtnLayout.setSpacing(true);
+		filterBtnLayout.setWidth("200px");
+
+		Button allTasksBtn = new Button("All Tasks",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						// TODO Auto-generated method stub
+
+					}
+				});
+		allTasksBtn.setStyleName("link");
+		filterBtnLayout.addComponent(allTasksBtn);
+
+		taskGroupSelection.addStyleName("link");
+		taskGroupSelection.addComponent(filterBtnLayout);
+		headerPanel.addComponent(taskGroupSelection);
 
 		bodyContent = new VerticalLayout();
 		bodyContent.setSizeFull();
 		this.addComponent(bodyContent);
+
+		ganttChartWidget = new GanttChartDisplayWidget();
+		bodyContent.addComponent(ganttChartWidget);
+		bodyContent.setExpandRatio(ganttChartWidget, 1.0f);
 	}
 
 	@Override
-	public void displayGanttChart(TaskSearchCriteria searchCriteria) {
-		bodyContent.removeAllComponents();
-
+	public void displayGanttChart() {
 		TaskListSearchCriteria criteria = new TaskListSearchCriteria();
 		criteria.setStatus(new StringSearchField("Open"));
 		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
 				.getProjectId()));
-
-		ganttChartWidget = new GanttChartDisplayWidget();
 		ganttChartWidget.setSearchCriteria(criteria);
-		bodyContent.addComponent(ganttChartWidget);
-		bodyContent.setExpandRatio(ganttChartWidget, 1.0f);
+
 	}
 }

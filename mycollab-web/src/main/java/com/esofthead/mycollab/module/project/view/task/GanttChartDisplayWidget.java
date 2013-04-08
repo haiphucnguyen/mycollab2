@@ -49,8 +49,8 @@ public class GanttChartDisplayWidget extends VerticalLayout {
 						searchCriteria, 0, Integer.MAX_VALUE));
 
 		GanttDiagramModel gdata = new GanttDiagramModel();
-		gdata.setGanttColumnVisible(GANTTCOLUMN.STARTTIME,
-				"Start         Date", null, null);
+		gdata.setGanttColumnVisible(GANTTCOLUMN.STARTTIME, "Start Date", null,
+				null);
 		gdata.setGanttColumnVisible(GANTTCOLUMN.ENDTIME, "End Date", null, null);
 		gdata.setGanttColumnVisible(GANTTCOLUMN.COMPLETE, "%Complete", null,
 				null);
