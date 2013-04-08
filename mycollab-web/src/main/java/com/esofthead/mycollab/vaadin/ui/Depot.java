@@ -6,7 +6,6 @@ import com.vaadin.ui.Alignment;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomComponent;
-import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -24,17 +23,12 @@ public class Depot extends VerticalLayout {
 		this(title, null, component);
 	}
 	
-	public Depot(Embedded embedded, String title, ComponentContainer headerElement,
-			ComponentContainer component) {
-		this(embedded, title, headerElement, component, "500px", "250px");
-	}
-	
 	public Depot(String title, ComponentContainer headerElement,
 			ComponentContainer component) {
-		this(null, title, headerElement, component, "500px", "250px");
+		this(title, headerElement, component, "500px", "250px");
 	}
 
-	public Depot(Embedded embedded, String title, ComponentContainer headerElement,
+	public Depot(String title, ComponentContainer headerElement,
 			ComponentContainer component, String headerWidth, String headerLeftWidth) {
 		this.setStyleName("depotComp");
 		header = new HorizontalLayout();
@@ -45,13 +39,13 @@ public class Depot extends VerticalLayout {
 		// this.headerContent = header;
 		this.addComponent(header);
 
-		HorizontalLayout titleLayout = new HorizontalLayout();
-		
-		if (embedded != null) {
-			titleLayout.addComponent(embedded);
-		}
-		
-		titleLayout.addListener(new LayoutClickListener() {
+		CssLayout headerLeft = new CssLayout();
+		headerLbl = new Label(title);
+		headerLbl.setStyleName("h2");
+		headerLeft.addComponent(headerLbl);
+		headerLeft.setStyleName("depot-title");
+		headerLeft.setWidth(headerLeftWidth);
+		headerLeft.addListener(new LayoutClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
@@ -66,16 +60,7 @@ public class Depot extends VerticalLayout {
 				}
 			}
 		});
-		
-		CssLayout headerLeft = new CssLayout();
-		headerLbl = new Label(title);
-		headerLbl.setStyleName("h2");
-		headerLeft.addComponent(headerLbl);
-		headerLeft.setStyleName("depot-title");
-		headerLeft.setWidth(headerLeftWidth);
-		titleLayout.addComponent(headerLeft);
-		
-		header.addComponent(titleLayout);
+		header.addComponent(headerLeft);
 
 		HorizontalLayout headerRight = new HorizontalLayout();
 		headerRight.setStyleName("header-elements");

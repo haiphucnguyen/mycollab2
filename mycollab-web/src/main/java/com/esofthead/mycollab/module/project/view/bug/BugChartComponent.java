@@ -38,7 +38,7 @@ public class BugChartComponent extends Depot {
 
 	public BugChartComponent(BugSearchCriteria baseSearchCriteria,
 			int headerWidth, int titleWidth) {
-		super(null, LocalizationHelper.getMessage(BugI18nEnum.CHARTS_WIDGET_TITLE),
+		super(LocalizationHelper.getMessage(BugI18nEnum.CHARTS_WIDGET_TITLE),
 				new HorizontalLayout(), new VerticalLayout(), headerWidth
 						+ "px", titleWidth + "px");
 		this.baseSearchCriteria = baseSearchCriteria;
