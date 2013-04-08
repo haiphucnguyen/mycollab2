@@ -20,6 +20,7 @@ import com.vaadin.data.util.BeanItem;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.ProgressIndicator;
 import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TextField;
 
@@ -63,7 +64,7 @@ public class MilestoneAddViewImpl extends AbstractView implements
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super("Create Milestone");
+				super((milestone.getId() == null) ? "Create Milestone" : milestone.getName());
 			}
 
 			private Layout createButtonControls() {
@@ -116,6 +117,13 @@ public class MilestoneAddViewImpl extends AbstractView implements
 							.getNumOpenTasks() : 0;
 					int numTasks = (milestone instanceof SimpleMilestone) ? ((SimpleMilestone) milestone)
 							.getNumTasks() : 0;
+
+					ProgressIndicator progressTask = new ProgressIndicator(
+							new Float((float) (numTasks - numOpenTask)
+									/ numTasks));
+					progressTask.setPollingInterval(1000000000);
+					progressTask.setWidth("120px");
+					taskComp.addComponentField(progressTask);
 					Label taskNumber = new Label("(" + numOpenTask + "/"
 							+ numTasks + ")");
 					taskNumber.setWidth("90px");
@@ -127,6 +135,12 @@ public class MilestoneAddViewImpl extends AbstractView implements
 							.getNumOpenBugs() : 0;
 					int numBugs = (milestone instanceof SimpleMilestone) ? ((SimpleMilestone) milestone)
 							.getNumBugs() : 0;
+
+					ProgressIndicator progressBug = new ProgressIndicator(
+							new Float((float) (numBugs - numOpenBugs) / numBugs));
+					progressBug.setPollingInterval(1000000000);
+					progressBug.setWidth("120px");
+					bugComp.addComponentField(progressBug);
 
 					Label bugNumber = new Label("(" + numOpenBugs + "/"
 							+ numBugs + ")");
