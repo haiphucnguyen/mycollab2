@@ -54,7 +54,7 @@ public class TaskGanttChartViewImpl extends AbstractView implements
 		Label filterLbl = new Label("Filter:");
 		headerPanel.addComponent(filterLbl);
 		headerPanel.setComponentAlignment(filterLbl, Alignment.MIDDLE_RIGHT);
-		PopupButton taskGroupSelection = new PopupButton("All Tasks");
+		final PopupButton taskGroupSelection = new PopupButton("All Tasks");
 		VerticalLayout filterBtnLayout = new VerticalLayout();
 		filterBtnLayout.setMargin(true);
 		filterBtnLayout.setSpacing(true);
@@ -66,12 +66,44 @@ public class TaskGanttChartViewImpl extends AbstractView implements
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						// TODO Auto-generated method stub
+						taskGroupSelection.setPopupVisible(false);
+						taskGroupSelection.setCaption("All Tasks");
+						displayGanttChart();
 
 					}
 				});
 		allTasksBtn.setStyleName("link");
 		filterBtnLayout.addComponent(allTasksBtn);
+
+		Button activeTaskBtn = new Button("Active Tasks",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						taskGroupSelection.setPopupVisible(false);
+						taskGroupSelection.setCaption("Active Tasks");
+						displayOpenTasks();
+
+					}
+				});
+		activeTaskBtn.setStyleName("link");
+		filterBtnLayout.addComponent(activeTaskBtn);
+
+		Button closeTaskBtn = new Button("Closed Tasks",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						taskGroupSelection.setPopupVisible(false);
+						taskGroupSelection.setCaption("Closed Tasks");
+						displayClosedTasks();
+
+					}
+				});
+		closeTaskBtn.setStyleName("link");
+		filterBtnLayout.addComponent(closeTaskBtn);
 
 		taskGroupSelection.addStyleName("link");
 		taskGroupSelection.addComponent(filterBtnLayout);
@@ -86,13 +118,28 @@ public class TaskGanttChartViewImpl extends AbstractView implements
 		bodyContent.setExpandRatio(ganttChartWidget, 1.0f);
 	}
 
-	@Override
-	public void displayGanttChart() {
+	private TaskListSearchCriteria createBaseSearcgCriteria() {
 		TaskListSearchCriteria criteria = new TaskListSearchCriteria();
-		criteria.setStatus(new StringSearchField("Open"));
 		criteria.setProjectId(new NumberSearchField(CurrentProjectVariables
 				.getProjectId()));
+		return criteria;
+	}
+
+	private void displayOpenTasks() {
+		TaskListSearchCriteria criteria = createBaseSearcgCriteria();
+		criteria.setStatus(new StringSearchField("Open"));
 		ganttChartWidget.setSearchCriteria(criteria);
+	}
+
+	private void displayClosedTasks() {
+		TaskListSearchCriteria criteria = createBaseSearcgCriteria();
+		criteria.setStatus(new StringSearchField("Closed"));
+		ganttChartWidget.setSearchCriteria(criteria);
+	}
+
+	@Override
+	public void displayGanttChart() {
+		displayOpenTasks();
 
 	}
 }
