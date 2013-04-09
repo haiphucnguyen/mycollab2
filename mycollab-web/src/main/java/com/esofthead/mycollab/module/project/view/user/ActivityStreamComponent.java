@@ -26,6 +26,7 @@ import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.VersionScreenData;
@@ -292,6 +293,12 @@ public class ActivityStreamComponent extends Depot {
 						PageActionChain chain = new PageActionChain(
 								new ProjectScreenData.Goto(projectid),
 								new VersionScreenData.Read(typeid));
+						EventBus.getInstance().fireEvent(
+								new ProjectEvent.GotoMyProject(this, chain));
+					} else if (ProjectContants.STANDUP.equals(type)) {
+						PageActionChain chain = new PageActionChain(
+								new ProjectScreenData.Goto(projectid),
+								new StandupScreenData.Read(typeid));
 						EventBus.getInstance().fireEvent(
 								new ProjectEvent.GotoMyProject(this, chain));
 					}

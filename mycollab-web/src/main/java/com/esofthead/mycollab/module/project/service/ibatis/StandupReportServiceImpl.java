@@ -6,8 +6,11 @@ import java.util.List;
 import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.arguments.DateSearchField;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -15,6 +18,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.dao.StandupReportMapper;
 import com.esofthead.mycollab.module.project.dao.StandupReportMapperExt;
 import com.esofthead.mycollab.module.project.domain.SimpleStandupReport;
@@ -23,6 +27,8 @@ import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearch
 import com.esofthead.mycollab.module.project.service.StandupReportService;
 
 @Service
+@Transactional
+@Traceable(module = ModuleNameConstants.PRJ, nameField = "forday", type = ProjectContants.STANDUP, extraFieldName = "projectid")
 public class StandupReportServiceImpl extends
 		DefaultService<Integer, StandupReportWithBLOBs, StandupReportSearchCriteria>
 		implements StandupReportService {

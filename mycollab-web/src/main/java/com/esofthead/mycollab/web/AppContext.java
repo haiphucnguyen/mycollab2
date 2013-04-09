@@ -129,6 +129,10 @@ public class AppContext implements Serializable {
 		return getInstance().userPreference;
 	}
 
+	public static SimpleBillingAccount getBillingAccount() {
+		return getInstance().billingAccount;
+	}
+
 	public static Application getApplication() {
 		return MyCollabApplication.getInstance();
 	}
