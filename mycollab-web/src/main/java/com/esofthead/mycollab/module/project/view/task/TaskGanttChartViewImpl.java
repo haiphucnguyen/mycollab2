@@ -28,6 +28,7 @@ public class TaskGanttChartViewImpl extends AbstractView implements
 
 	public TaskGanttChartViewImpl() {
 		this.setSpacing(true);
+		this.setMargin(true);
 		Label titleLbl = new Label("Gantt View");
 		titleLbl.setStyleName("h2");
 		this.addComponent(titleLbl);
@@ -51,9 +52,12 @@ public class TaskGanttChartViewImpl extends AbstractView implements
 		backToListBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		headerPanel.addComponent(backToListBtn);
 
+		HorizontalLayout layoutFilter = new HorizontalLayout();
+		layoutFilter.setSpacing(false);
+		layoutFilter.setWidth("150px");
+		
 		Label filterLbl = new Label("Filter:");
-		headerPanel.addComponent(filterLbl);
-		headerPanel.setComponentAlignment(filterLbl, Alignment.MIDDLE_RIGHT);
+		layoutFilter.addComponent(filterLbl);
 		final PopupButton taskGroupSelection = new PopupButton("All Tasks");
 		VerticalLayout filterBtnLayout = new VerticalLayout();
 		filterBtnLayout.setMargin(true);
@@ -107,7 +111,10 @@ public class TaskGanttChartViewImpl extends AbstractView implements
 
 		taskGroupSelection.addStyleName("link");
 		taskGroupSelection.addComponent(filterBtnLayout);
-		headerPanel.addComponent(taskGroupSelection);
+		layoutFilter.addComponent(taskGroupSelection);
+		
+		headerPanel.addComponent(layoutFilter);
+		headerPanel.setComponentAlignment(layoutFilter, Alignment.MIDDLE_RIGHT);
 
 		bodyContent = new VerticalLayout();
 		bodyContent.setSizeFull();
