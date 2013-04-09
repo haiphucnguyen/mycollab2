@@ -67,11 +67,7 @@
             <file src="Licence.txt" targetdir="$INSTALL_PATH"/>
             <!-- The file will be parsed -->
         </pack>
-        <pack name="Docs" required="no">
-            <description>The documentation</description>
-            <file src="doc" targetdir="$INSTALL_PATH"/>
-            <!-- Reccursive adding -->
-        </pack>
+        
     </packs>
 
 </installation>
