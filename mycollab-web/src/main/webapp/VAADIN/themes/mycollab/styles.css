@@ -73,6 +73,7 @@ ul {
 	text-shadow: none;
 }
 
+
 .v-button .v-icon,.v-nativebutton .v-icon {
 	vertical-align: top;
 }
@@ -2625,6 +2626,9 @@ div.v-lazyloadingwrapper-loading {
 .milestone-view-body>div>.v-verticallayout>div>div:first-child>div>.milestone-box>.v-csslayout-margin
 	{
 	padding-top: 5px;
+}
+.milestone-view-header > .v-horizontallayout {
+	margin: 0 auto;
 }
 /* End Milestone Box */
 

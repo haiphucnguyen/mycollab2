@@ -20,12 +20,14 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.GridLayout;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -79,23 +81,47 @@ public class MilestoneListViewImpl extends AbstractView implements
 		bodyContent.setWidth("100%");
 		bodyContent.setStyleName("milestone-view");
 
+		HorizontalLayout closedHeaderLayout = new HorizontalLayout();
+		closedHeaderLayout.setSpacing(true);
+		Embedded embeddClosed = new Embedded(null, new ThemeResource("icons/16/project/phase_closed.png"));
+		closedHeaderLayout.addComponent(embeddClosed);
+		closedHeaderLayout.setComponentAlignment(embeddClosed, Alignment.MIDDLE_CENTER);
 		Label closedHeader = new Label("Closed");
 		closedHeader.setSizeUndefined();
-		bodyContent.addComponent(closedHeader, "closed-header");
+		closedHeaderLayout.addComponent(closedHeader);
+		closedHeaderLayout.setComponentAlignment(closedHeader, Alignment.MIDDLE_CENTER);
+		
+		bodyContent.addComponent(closedHeaderLayout, "closed-header");
 		closeContainer = new VerticalLayout();
 		closeContainer.setWidth("100%");
 		bodyContent.addComponent(closeContainer, "closed-milestones");
 
+		HorizontalLayout inProgressHeaderLayout = new HorizontalLayout();
+		inProgressHeaderLayout.setSpacing(true);
+		Embedded embeddInProgress = new Embedded(null, new ThemeResource("icons/16/project/phase_progress.png"));
+		inProgressHeaderLayout.addComponent(embeddInProgress);
+		inProgressHeaderLayout.setComponentAlignment(embeddInProgress, Alignment.MIDDLE_CENTER);
 		Label inProgressHeader = new Label("In Progress");
 		inProgressHeader.setSizeUndefined();
-		bodyContent.addComponent(inProgressHeader, "in-progress-header");
+		inProgressHeaderLayout.addComponent(inProgressHeader);
+		inProgressHeaderLayout.setComponentAlignment(inProgressHeader, Alignment.MIDDLE_CENTER);
+		
+		bodyContent.addComponent(inProgressHeaderLayout, "in-progress-header");
 		inProgressContainer = new VerticalLayout();
 		inProgressContainer.setWidth("100%");
 		bodyContent.addComponent(inProgressContainer, "in-progress-milestones");
 
+		HorizontalLayout futureHeaderLayout = new HorizontalLayout();
+		futureHeaderLayout.setSpacing(true);
+		Embedded embeddFuture = new Embedded(null, new ThemeResource("icons/16/project/phase_future.png"));
+		futureHeaderLayout.addComponent(embeddFuture);
+		futureHeaderLayout.setComponentAlignment(embeddFuture, Alignment.MIDDLE_CENTER);
 		Label futureHeader = new Label("Future");
 		futureHeader.setSizeUndefined();
-		bodyContent.addComponent(futureHeader, "future-header");
+		futureHeaderLayout.addComponent(futureHeader);
+		futureHeaderLayout.setComponentAlignment(futureHeader, Alignment.MIDDLE_CENTER);
+		
+		bodyContent.addComponent(futureHeaderLayout, "future-header");
 		futureContainer = new VerticalLayout();
 		futureContainer.setWidth("100%");
 		bodyContent.addComponent(futureContainer, "future-milestones");
@@ -103,6 +129,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 		this.addComponent(bodyContent);
 		this.setExpandRatio(bodyContent, 1.0f);
 	}
+	
 
 	@Override
 	public void displayMilestones(List<SimpleMilestone> milestones) {
