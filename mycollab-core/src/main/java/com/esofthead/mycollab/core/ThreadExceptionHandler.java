@@ -12,9 +12,6 @@ public class ThreadExceptionHandler implements Thread.UncaughtExceptionHandler {
 	public void uncaughtException(Thread t, Throwable e) {
 		logger.error("Exception when run thread: " + t.getName()
 				+ " with exception: " + e.getMessage());
-		
-		throw new MyCollabException("Exception when run thread: " + t.getName()
-				+ " with exception: " + e.getMessage());
 	}
 
 }
