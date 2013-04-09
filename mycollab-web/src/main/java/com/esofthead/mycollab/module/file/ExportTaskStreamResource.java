@@ -187,10 +187,13 @@ public class ExportTaskStreamResource extends
 				(short) rowWriting, 1, 8));
 
 		Row rowDescription = sheet.createRow((short) ((short) rowWriting + 2));
-		int lineBreak = tasklist.getDescription().length()/60;
-		if (lineBreak > 1) {
-			rowDescription.setHeightInPoints((lineBreak*sheet.getDefaultRowHeightInPoints()));
+		if (tasklist.getDescription() != null) {
+			int lineBreak = tasklist.getDescription().length()/60;
+			if (lineBreak > 1) {
+				rowDescription.setHeightInPoints((lineBreak*sheet.getDefaultRowHeightInPoints()));
+			}
 		}
+		
 		createCellInstruction(wb, rowDescription, (short) 2, CellStyle.ALIGN_LEFT,
 				CellStyle.VERTICAL_BOTTOM, "Description: ", false);
 		sheet.addMergedRegion(new CellRangeAddress((short) (rowWriting + 2),
