@@ -156,6 +156,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 		milestoneLink.addStyleName("medium-text");
 		milestoneLink.addStyleName("bold");
 		milestoneLink.addStyleName(UIConstants.WORD_WRAP);
+		milestoneLink.setWidth("100%");
 		milestone.setDescription(milestone.getDescription());
 		linkWrapper.addComponent(milestoneLink);
 
