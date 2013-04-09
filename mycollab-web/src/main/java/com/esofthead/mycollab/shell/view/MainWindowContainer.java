@@ -15,6 +15,8 @@ import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.View;
+import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.MyCollabApplication;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
@@ -43,8 +45,20 @@ public class MainWindowContainer extends Window implements View {
 			public void fragmentChanged(FragmentChangedEvent source) {
 				log.debug("Change fragement: "
 						+ source.getUriFragmentUtility().getFragment());
-				FragmentNavigator.navigateByFragement(source
-						.getUriFragmentUtility().getFragment());
+				try {
+					String initialUrl = source.getUriFragmentUtility()
+							.getFragment();
+					if (AppContext.getSession() != null) {
+						FragmentNavigator.navigateByFragement(initialUrl);
+					} else {
+						((MyCollabApplication) AppContext.getApplication())
+								.setInitialUrl(initialUrl);
+					}
+
+				} catch (Exception e) {
+					e.printStackTrace();
+				}
+
 			}
 		});
 
