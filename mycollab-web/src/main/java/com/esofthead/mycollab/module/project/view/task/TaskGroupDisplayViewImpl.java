@@ -4,6 +4,8 @@ import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
+import com.esofthead.mycollab.module.file.ExportTaskStreamResource;
+import com.esofthead.mycollab.module.file.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
@@ -11,12 +13,16 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskListSearchCrite
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
+import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.vaadin.terminal.Resource;
+import com.vaadin.terminal.StreamResource;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -34,6 +40,14 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 	private TaskGroupDisplayWidget taskLists;
 	private Button reOrderBtn;
 
+	private static final FieldExportColumn[] EXPORT_COLUMNS = new FieldExportColumn[] {
+			new FieldExportColumn("taskkey", "Key"),
+			new FieldExportColumn("taskname", "Task Name", 40),
+			new FieldExportColumn("startdate", "Start"),
+			new FieldExportColumn("deadline", "Due"),
+			new FieldExportColumn("percentagecomplete", "% Complete"),
+			new FieldExportColumn("assignUserFullName", "Owner")};
+
 	public TaskGroupDisplayViewImpl() {
 		super();
 		this.setMargin(false, true, true, true);
@@ -44,7 +58,7 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 	private void constructHeader() {
 		VerticalLayout mainLayout = new VerticalLayout();
 		mainLayout.setSpacing(true);
-		
+
 		HorizontalLayout header = new HorizontalLayout();
 		header.setMargin(true, false, false, false);
 		header.setSpacing(true);
@@ -106,41 +120,6 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		filterBtnLayout.addComponent(archievedTasksFilterBtn);
 
 		taskGroupSelection.addComponent(filterBtnLayout);
-
-		// Search button
-		// HorizontalLayout basicSearchBody = new HorizontalLayout();
-		// basicSearchBody.setSpacing(true);
-		// basicSearchBody.setMargin(true);
-
-		// final TextField nameField = new TextField();
-		// nameField.addListener(new TextChangeListener() {
-		// @Override
-		// public void textChange(TextChangeEvent event) {
-		//
-		// String textSearch = event.getText().toString().trim();
-		// }
-		// });
-		//
-		// nameField.setTextChangeEventMode(TextChangeEventMode.LAZY);
-		// nameField.setTextChangeTimeout(200);
-		// nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-		// basicSearchBody.addComponent(nameField);
-
-		// Button searchBtn = new Button();
-		// searchBtn.addListener(new Button.ClickListener() {
-		// private static final long serialVersionUID = 1L;
-		//
-		// @Override
-		// public void buttonClick(Button.ClickEvent event) {
-		//
-		// }
-		// });
-		// searchBtn.setIcon(new ThemeResource("icons/22/search.png"));
-		// searchBtn.setStyleName("link");
-		// basicSearchBody.addComponent(searchBtn);
-		// header.addComponent(basicSearchBody);
-		// header.setComponentAlignment(basicSearchBody,
-		// Alignment.MIDDLE_RIGHT);
 
 		Button newTaskListBtn = new Button(
 				LocalizationHelper
@@ -206,23 +185,38 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		header.setComponentAlignment(showGanttChartBtn, Alignment.MIDDLE_RIGHT);
 
 		mainLayout.addComponent(header);
-		
+
 		HorizontalLayout layoutExport = new HorizontalLayout();
 		layoutExport.setSpacing(true);
 		layoutExport.setWidth("100%");
-		
+
 		Label lbEmpty = new Label("");
 		layoutExport.addComponent(lbEmpty);
 		layoutExport.setExpandRatio(lbEmpty, 1.0f);
-		
-		Button exportBtn = new Button("Export");
-		exportBtn.setIcon(new ThemeResource(
-		"icons/16/export_excel.png"));
+
+		Button exportBtn = new Button("Export", new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				String title = "Task report of Project "
+					+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
+							.getProject().getName() != null) ? CurrentProjectVariables
+							.getProject().getName() : "");
+				Resource res = new StreamResource(
+						new ExportTaskStreamResource(title,
+								EXPORT_COLUMNS, AppContext
+										.getSpringBean(ProjectTaskListService.class),
+								new TaskListSearchCriteria()), "task_list.xls",
+						TaskGroupDisplayViewImpl.this.getApplication());
+				TaskGroupDisplayViewImpl.this.getWindow().open(res, "_blank");
+			}
+		});
+		exportBtn.setIcon(new ThemeResource("icons/16/export_excel.png"));
 		exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		exportBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.BUGS));
 		layoutExport.addComponent(exportBtn);
-		
+
 		mainLayout.addComponent(layoutExport);
 		this.addComponent(mainLayout);
 		taskLists = new TaskGroupDisplayWidget();

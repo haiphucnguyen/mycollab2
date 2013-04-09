@@ -143,7 +143,8 @@ public class TaskGroupDisplayWidget
 											.getId()));
 				}
 			});
-			readBtn.setEnabled(CurrentProjectVariables.canRead(ProjectRolePermissionCollections.TASKS));
+			readBtn.setEnabled(CurrentProjectVariables
+					.canRead(ProjectRolePermissionCollections.TASKS));
 			readBtn.setStyleName("link");
 			actionBtnLayout.addComponent(readBtn);
 
@@ -157,7 +158,8 @@ public class TaskGroupDisplayWidget
 							new TaskListEvent.GotoEdit(event, taskList));
 				}
 			});
-			editBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+			editBtn.setEnabled(CurrentProjectVariables
+					.canWrite(ProjectRolePermissionCollections.TASKS));
 			editBtn.setStyleName("link");
 			actionBtnLayout.addComponent(editBtn);
 
@@ -178,7 +180,8 @@ public class TaskGroupDisplayWidget
 							.removeComponent(parentComp);
 				}
 			});
-			closeBtn.setEnabled(CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS));
+			closeBtn.setEnabled(CurrentProjectVariables
+					.canWrite(ProjectRolePermissionCollections.TASKS));
 			closeBtn.setStyleName("link");
 			actionBtnLayout.addComponent(closeBtn);
 
@@ -204,16 +207,18 @@ public class TaskGroupDisplayWidget
 										taskListService.removeWithSession(
 												taskList.getId(),
 												AppContext.getUsername());
-										EventBus.getInstance()
-												.fireEvent(
-														new TaskListEvent.GotoTaskListScreen(
-																this, null));
+										LazyLoadWrapper parentComp = (LazyLoadWrapper) TaskListDepot.this
+												.getParent();
+										((ComponentContainer) parentComp
+												.getParent())
+												.removeComponent(parentComp);
 									}
 								}
 							});
 				}
 			});
-			deleteBtn.setEnabled(CurrentProjectVariables.canAccess(ProjectRolePermissionCollections.TASKS));
+			deleteBtn.setEnabled(CurrentProjectVariables
+					.canAccess(ProjectRolePermissionCollections.TASKS));
 			deleteBtn.setStyleName("link");
 			actionBtnLayout.addComponent(deleteBtn);
 		}

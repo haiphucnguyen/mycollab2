@@ -63,7 +63,6 @@ public class MyCollabApplication extends Application implements
 		MyCollabApplication.setInstance(this);
 		String pathInfo = request.getPathInfo();
 		if (pathInfo.equals("") || pathInfo.equals("/")) {
-
 			if (sessionData != null) {
 				String urlParam = request.getParameter("url");
 				if (urlParam != null && !urlParam.equals("")) {
@@ -128,5 +127,9 @@ public class MyCollabApplication extends Application implements
 
 	public String getInitialUrl() {
 		return initialUrl;
+	}
+
+	public void setInitialUrl(String initialUrl) {
+		this.initialUrl = initialUrl;
 	}
 }

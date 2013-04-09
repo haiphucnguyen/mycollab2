@@ -17,6 +17,7 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
+import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
 import com.esofthead.mycollab.common.interceptor.service.Traceable;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
@@ -25,15 +26,20 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.dao.ProjectMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMapperExt;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
+import com.esofthead.mycollab.module.project.domain.ProjectRole;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriteria;
+import com.esofthead.mycollab.module.project.service.ProjectRoleService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
+import com.esofthead.mycollab.module.user.PermissionFlag;
+
 import java.util.GregorianCalendar;
 import java.util.List;
 import org.apache.ibatis.session.RowBounds;
@@ -50,10 +56,15 @@ public class ProjectServiceImpl extends
 
 	@Autowired
 	private ProjectMapper projectMapper;
+
 	@Autowired
 	private ProjectMapperExt projectMapperExt;
+
 	@Autowired
 	private ProjectMemberMapper projectMemberMapper;
+
+	@Autowired
+	private ProjectRoleService projectRoleService;
 
 	@Override
 	public ICrudGenericDAO<Integer, Project> getCrudMapper() {
@@ -69,6 +80,7 @@ public class ProjectServiceImpl extends
 	public int saveWithSession(Project record, String username) {
 		int projectid = super.saveWithSession(record, username);
 
+		// Add the first user to project
 		ProjectMember projectMember = new ProjectMember();
 		projectMember.setIsadmin(Boolean.TRUE);
 		projectMember.setJoindate(new GregorianCalendar().getTime());
@@ -76,6 +88,24 @@ public class ProjectServiceImpl extends
 		projectMember.setUsername(username);
 		projectMemberMapper.insert(projectMember);
 
+		// add default role to project
+		ProjectRole defaultRole = new ProjectRole();
+		defaultRole.setProjectid(projectid);
+		defaultRole.setSaccountid(record.getSaccountid());
+		defaultRole.setRolename("Default Role");
+		defaultRole.setDescription("Default role for project member");
+		int roleId = projectRoleService.saveWithSession(defaultRole, username);
+
+		// set default permission
+		PermissionMap permissionMap = new PermissionMap();
+
+		for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
+			permissionMap.addPath(
+					ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
+					PermissionFlag.READ_ONLY);
+		}
+
+		projectRoleService.savePermission(projectid, roleId, permissionMap);
 		return projectid;
 	}
 

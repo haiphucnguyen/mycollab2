@@ -103,7 +103,7 @@ public final class MainView extends AbstractView {
 		Button signoutBtn = new Button("Sign out", new Button.ClickListener() {
 			@Override
 			public void buttonClick(ClickEvent event) {
-				AppContext.setSession(null, null);
+				AppContext.setSession(null, null, null);
 				EventBus.getInstance().fireEvent(
 						new ShellEvent.LogOut(this, null));
 			}

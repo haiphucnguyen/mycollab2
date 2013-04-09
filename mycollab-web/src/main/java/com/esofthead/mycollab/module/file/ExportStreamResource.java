@@ -15,6 +15,7 @@ import org.apache.commons.beanutils.PropertyUtils;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import com.esofthead.mycollab.core.MyCollabThread;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
@@ -64,8 +65,8 @@ public abstract class ExportStreamResource implements
 				log.error("Can not create outstream file", ex);
 				return null;
 			}
-
-			new Thread(new Runnable() {
+			
+			Thread threadExport = new MyCollabThread(new Runnable() {
 				/**
 				 * @see java.lang.Runnable#run()
 				 */
@@ -135,8 +136,10 @@ public abstract class ExportStreamResource implements
 						}
 					}
 				}
-			}).start();
-
+			});
+			
+			threadExport.start();
+			
 			return inStream;
 		}
 	}

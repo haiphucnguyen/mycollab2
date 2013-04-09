@@ -5,7 +5,6 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfilePresenter;
 import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPermissionManagementPresenter;
-import com.esofthead.mycollab.module.user.accountsettings.team.view.UserPresenter;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.ProfileScreenData;
 import com.esofthead.mycollab.module.user.accountsettings.view.parameters.RoleScreenData;
@@ -91,8 +90,8 @@ public class UserAccountController implements IController {
 
 					@Override
 					public void handle(UserEvent.GotoAdd event) {
-						UserPresenter presenter = PresenterResolver
-								.getPresenter(UserPresenter.class);
+						UserPermissionManagementPresenter presenter = PresenterResolver
+								.getPresenter(UserPermissionManagementPresenter.class);
 						presenter.go(container, new UserScreenData.Add(
 								new User()));
 					}

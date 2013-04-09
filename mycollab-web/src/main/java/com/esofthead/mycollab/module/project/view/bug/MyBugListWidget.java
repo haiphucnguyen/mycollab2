@@ -6,7 +6,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
-import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
@@ -84,8 +84,8 @@ public class MyBugListWidget extends BugDisplayWidget {
 			hLayoutAssigneeInfo.setComponentAlignment(assignee,
 					Alignment.MIDDLE_CENTER);
 
-			ProjectUserFormLinkField userLink = new ProjectUserFormLinkField(
-					obj.getAssignuser(), obj.getAssignuserFullName());
+			ProjectUserLink userLink = new ProjectUserLink(
+					obj.getAssignuser(), obj.getAssignuserFullName(), true);
 			hLayoutAssigneeInfo.addComponent(userLink);
 			hLayoutAssigneeInfo.setComponentAlignment(userLink,
 					Alignment.MIDDLE_CENTER);

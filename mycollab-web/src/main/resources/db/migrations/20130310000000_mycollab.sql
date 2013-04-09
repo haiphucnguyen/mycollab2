@@ -3,7 +3,7 @@ ADD COLUMN `description` VARCHAR(1000) NULL;
 
 UPDATE `s_billing_plan` SET billingType='Compact', numUsers=5, volume=5, numProjects=10, pricing=19.9 WHERE 1=1;
 
-ALTER TABLE `mycollab`.`s_billing_plan` CHANGE COLUMN `billingType` `billingType` VARCHAR(45) NOT NULL  , 
+ALTER TABLE `s_billing_plan` CHANGE COLUMN `billingType` `billingType` VARCHAR(45) NOT NULL  , 
 CHANGE COLUMN `numUsers` `numUsers` INT(11) NOT NULL  , 
 CHANGE COLUMN `volume` `volume` INT(11) NOT NULL  , 
 CHANGE COLUMN `numProjects` `numProjects` INT(11) NOT NULL  , 

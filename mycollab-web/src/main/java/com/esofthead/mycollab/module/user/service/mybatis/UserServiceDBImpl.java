@@ -16,7 +16,11 @@
  */
 package com.esofthead.mycollab.module.user.service.mybatis;
 
+import java.awt.image.BufferedImage;
+import java.io.InputStream;
 import java.util.List;
+
+import javax.imageio.ImageIO;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -30,6 +34,8 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
+import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
+import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
 import com.esofthead.mycollab.module.user.dao.RolePermissionMapper;
 import com.esofthead.mycollab.module.user.dao.UserMapper;
@@ -51,10 +57,15 @@ public class UserServiceDBImpl extends
 			.getLogger(UserServiceDBImpl.class);
 	@Autowired
 	private UserMapper userMapper;
+
 	@Autowired
 	private UserMapperExt userMapperExt;
+
 	@Autowired
 	private RolePermissionMapper rolePermissionMapper;
+
+	@Autowired
+	private UserAvatarService userAvatarService;
 
 	@Override
 	public ICrudGenericDAO getCrudMapper() {
@@ -72,8 +83,28 @@ public class UserServiceDBImpl extends
 			record.setPassword(PasswordEncryptHelper.encryptSaltPassword(record
 					.getPassword()));
 		}
+
+		if (record.getRegisterstatus() == null) {
+			record.setRegisterstatus(RegisterStatusConstants.VERIFICATING);
+		}
 		record.setUsername(record.getEmail());
 		userMapper.insert(record);
+
+		// set default user avatar
+		try {
+			log.debug("Set default user avatar");
+			InputStream imageResourceStream = this
+					.getClass()
+					.getClassLoader()
+					.getResourceAsStream(
+							"assets/images/default_user_avatar_100.png");
+			BufferedImage imageBuff = ImageIO.read(imageResourceStream);
+			userAvatarService.uploadAvatar(imageBuff, username,
+					record.getAccountid());
+		} catch (Exception e) {
+			log.error("Error while create default user avatar");
+		}
+
 		return 1;
 	}
 

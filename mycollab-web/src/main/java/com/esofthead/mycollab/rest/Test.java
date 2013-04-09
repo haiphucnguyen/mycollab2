@@ -1,32 +1,46 @@
 package com.esofthead.mycollab.rest;
 
-import org.codehaus.jackson.map.ObjectMapper;
-import org.restlet.resource.ClientResource;
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.List;
 
-import com.esofthead.mycollab.common.domain.GroupItem;
-import com.esofthead.mycollab.core.utils.BeanUtility;
+import org.apache.http.Consts;
+import org.apache.http.HttpResponse;
+import org.apache.http.NameValuePair;
+import org.apache.http.client.ClientProtocolException;
+import org.apache.http.client.entity.UrlEncodedFormEntity;
+import org.apache.http.client.methods.HttpPost;
+import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.message.BasicNameValuePair;
 
 public class Test {
-	public static void main(String[] args) throws Exception {
-		ClientResource mailRoot = new ClientResource(
-				"http://localhost:8182/");
+	// public static void main(String[] args) throws Exception {
+	// ClientResource mailRoot = new RestClientResource(
+	// "http://localhost:8080/mycollab-web/api/signup");
+	//
+	//
+	// try {
+	// Representation value = mailRoot.get(MediaType.APPLICATION_JSON);
+	// Status status = mailRoot.getStatus();
+	// System.out.println(status.getCode() + " ---"
+	// + status.getDescription());
+	// } catch (Exception e) {
+	// e.printStackTrace();
+	// }
+	// }
 
-		// GroupItem item = new GroupItem();
-		// item.setGroupname("AAA");
-		// item.setGroupid("1");
-		// item.setValue(4);
-		//
-		// mailRoot.addQueryParameter("format", "json");
-		String value = mailRoot.get().getText();
-		System.out.println(value);
-		ObjectMapper mapper = new ObjectMapper();
-		GroupItem readValue = mapper.readValue(value, GroupItem.class);
-		System.out.println("GROUP: " + BeanUtility.printBeanObj(readValue));
-		// System.out.println("VAL: " + BeanUtility.printBeanObj(readValue) +
-		// " " + mailRoot.get().getMediaType());
-		// System.out.println();
-		// Representation post = (Representation) mailRoot.post(item,
-		// MediaType.APPLICATION_JAVA_OBJECT);
-		// System.out.println(post.getText() + "  " + post);
+	public static void main(String[] args) throws ClientProtocolException,
+			IOException {
+		DefaultHttpClient httpClient = new DefaultHttpClient();
+		HttpPost postRequest = new HttpPost(
+				"http://localhost:8080/mycollab-web/api/signup");
+
+		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+		nvps.add(new BasicNameValuePair("username", "username1"));
+		nvps.add(new BasicNameValuePair("password", "password1"));
+
+		postRequest.setEntity(new UrlEncodedFormEntity(nvps));
+		HttpResponse response = httpClient.execute(postRequest);
+		System.out.println(response.getStatusLine());
 	}
 }

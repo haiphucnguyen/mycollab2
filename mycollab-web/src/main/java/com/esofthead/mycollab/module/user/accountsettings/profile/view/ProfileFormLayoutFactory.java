@@ -70,7 +70,7 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
             organizationHeader.setStyleName("h2");
             layout.addComponent(organizationHeader);
 
-            basicInformationLayout = new GridFormLayoutHelper(2, 6);
+            basicInformationLayout = new GridFormLayoutHelper(2, 7);
             basicInformationLayout.getLayout().setWidth("100%");
 
             layout.addComponent(basicInformationLayout.getLayout());
@@ -107,7 +107,9 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
                 basicInformationLayout.addComponent(field, "Birthday", 1, 1);
             } else if (propertyId.equals("email")) {
                 basicInformationLayout.addComponent(field, "Email", 0, 2);
-            } else if (propertyId.equals("isadmin")) {
+            } else if (propertyId.equals("timezone")) {
+            	basicInformationLayout.addComponent(field, "Timezone", 0, 3);
+			} else if (propertyId.equals("isadmin")) {
                 basicInformationLayout.addComponent(field, "Is Admin", 1, 2);
             } else if (propertyId.equals("company")) {
             	advancedInformationLayout.addComponent(field, "Company", 0, 0);

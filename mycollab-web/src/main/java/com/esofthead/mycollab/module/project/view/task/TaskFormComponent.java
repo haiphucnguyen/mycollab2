@@ -93,6 +93,9 @@ public abstract class TaskFormComponent extends AdvancedPreviewBeanForm<Task> {
 						containerField.addComponentField(lbPriority);
 						return containerField;
 					}
+				} else if (propertyId.equals("notes")) {
+					return new FormViewField(task.getNotes(),
+							Label.CONTENT_XHTML);
 				}
 				return null;
 			}

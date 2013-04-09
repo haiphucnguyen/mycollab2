@@ -6,10 +6,7 @@ package com.esofthead.mycollab.module.project.view;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
-import com.esofthead.mycollab.module.project.events.BugEvent;
-import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.view.user.ProjectFormViewLayoutFactory;
-import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -133,13 +130,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 						informationLayout.addComponent(field, "Description", 0,
 								1, 2, UIConstants.DEFAULT_2XCONTROL_WIDTH,
 								Alignment.TOP_LEFT);
-					} else if (propertyId.equals("numBugs")) {
-						informationLayout.addComponent(field, "Bug", 0, 2,
-								Alignment.TOP_LEFT);
-					} else if (propertyId.equals("numTasks")) {
-						informationLayout.addComponent(field, "Task", 1, 2,
-								Alignment.TOP_LEFT);
-					}
+					} 
 				}
 			});
 
@@ -158,39 +149,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 					} else if (propertyId.equals("description")) {
 						return new FormViewField(project.getDescription(),
 								Label.CONTENT_XHTML);
-					} else if (propertyId.equals("numBugs")) {
-						return new DefaultFormViewFieldFactory.FormLinkViewField(
-								project.getNumOpenBugs() + " open / "
-										+ project.getNumBugs(),
-								new Button.ClickListener() {
-									private static final long serialVersionUID = 1L;
-
-									@Override
-									public void buttonClick(ClickEvent event) {
-										EventBus.getInstance()
-												.fireEvent(
-														new BugEvent.GotoDashboard(
-																ProjectInformationComponent.this,
-																null));
-									}
-								});
-					} else if (propertyId.equals("numTasks")) {
-						return new DefaultFormViewFieldFactory.FormLinkViewField(
-								project.getNumOpenTasks() + " open / "
-										+ project.getNumTasks(),
-								new Button.ClickListener() {
-									private static final long serialVersionUID = 1L;
-
-									@Override
-									public void buttonClick(ClickEvent event) {
-										EventBus.getInstance()
-												.fireEvent(
-														new TaskListEvent.GotoTaskListScreen(
-																ProjectInformationComponent.this,
-																null));
-									}
-								});
-					}
+					} 
 					return null;
 				}
 			});
@@ -261,39 +220,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 					} else if (propertyId.equals("description")) {
 						return new FormViewField(project.getDescription(),
 								Label.CONTENT_XHTML);
-					} else if (propertyId.equals("numBugs")) {
-						return new DefaultFormViewFieldFactory.FormLinkViewField(
-								project.getNumOpenBugs() + " open / "
-										+ project.getNumBugs(),
-								new Button.ClickListener() {
-									private static final long serialVersionUID = 1L;
-
-									@Override
-									public void buttonClick(ClickEvent event) {
-										EventBus.getInstance()
-												.fireEvent(
-														new BugEvent.GotoDashboard(
-																ProjectInformationComponent.this,
-																null));
-									}
-								});
-					} else if (propertyId.equals("numTasks")) {
-						return new DefaultFormViewFieldFactory.FormLinkViewField(
-								project.getNumOpenTasks() + " open / "
-										+ project.getNumTasks(),
-								new Button.ClickListener() {
-									private static final long serialVersionUID = 1L;
-
-									@Override
-									public void buttonClick(ClickEvent event) {
-										EventBus.getInstance()
-												.fireEvent(
-														new TaskListEvent.GotoTaskListScreen(
-																ProjectInformationComponent.this,
-																null));
-									}
-								});
-					}
+					} 
 					return null;
 				}
 			});

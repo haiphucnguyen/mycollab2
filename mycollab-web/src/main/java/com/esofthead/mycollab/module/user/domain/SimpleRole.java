@@ -9,32 +9,35 @@ import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class SimpleRole extends Role {
 	private static final long serialVersionUID = 1L;
+
+	public static final String STANDARD_USER = "Standard User";
+
 	private String permissionVal;
-    private PermissionMap permissionMap;
+	private PermissionMap permissionMap;
 
-    public String getPermissionVal() {
-        return permissionVal;
-    }
+	public String getPermissionVal() {
+		return permissionVal;
+	}
 
-    public void setPermissionVal(String permissionVal) {
-        this.permissionVal = permissionVal;
-    }
+	public void setPermissionVal(String permissionVal) {
+		this.permissionVal = permissionVal;
+	}
 
-    public PermissionMap getPermissionMap() {
-        if (permissionMap == null) {
+	public PermissionMap getPermissionMap() {
+		if (permissionMap == null) {
 
-            if (permissionVal == null || "".equals(permissionVal)) {
-                permissionMap = new PermissionMap();
-            } else {
-                XStream xstream = new XStream(new StaxDriver());
-                permissionMap = (PermissionMap) xstream.fromXML(permissionVal);
-            }
-        }
-        return permissionMap;
-    }
+			if (permissionVal == null || "".equals(permissionVal)) {
+				permissionMap = new PermissionMap();
+			} else {
+				XStream xstream = new XStream(new StaxDriver());
+				permissionMap = (PermissionMap) xstream.fromXML(permissionVal);
+			}
+		}
+		return permissionMap;
+	}
 }

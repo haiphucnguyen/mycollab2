@@ -34,8 +34,8 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.TextArea;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
@@ -74,40 +74,46 @@ public class TaskAddPopup extends CustomComponent {
 		HorizontalLayout controlsLayout = new HorizontalLayout();
 		controlsLayout.setSpacing(true);
 
-		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button cancelBtn = new Button(
+				LocalizationHelper.getMessage(GenericI18Enum.UI_BUTTON_CANCEL),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				taskDisplayComp.closeTaskAdd();
-			}
-		});
+					@Override
+					public void buttonClick(ClickEvent event) {
+						taskDisplayComp.closeTaskAdd();
+					}
+				});
 
 		cancelBtn.setStyleName("link");
 		controlsLayout.addComponent(cancelBtn);
 		controlsLayout
 				.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
 
-		Button saveBtn = new Button("Save", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button saveBtn = new Button(
+				LocalizationHelper.getMessage(GenericI18Enum.UI_BUTTON_SAVE),
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				ProjectTaskService taskService = AppContext
-						.getSpringBean(ProjectTaskService.class);
+					@Override
+					public void buttonClick(ClickEvent event) {
+						ProjectTaskService taskService = AppContext
+								.getSpringBean(ProjectTaskService.class);
 
-				task.setTasklistid(taskList.getId());
-				task.setProjectid(CurrentProjectVariables.getProjectId());
-				task.setSaccountid(AppContext.getAccountId());
-				task.setNotes(taskNoteComponent.getNote());
-				if (taskInformationLayout.validateForm(task)) {
-					taskService.saveWithSession(task, AppContext.getUsername());
-					taskNoteComponent.saveContentsToRepo(task.getId());
-					taskDisplayComp.saveTaskSuccess(task);
-					taskDisplayComp.closeTaskAdd();
-				}
-			}
-		});
+						task.setTasklistid(taskList.getId());
+						task.setProjectid(CurrentProjectVariables
+								.getProjectId());
+						task.setSaccountid(AppContext.getAccountId());
+						task.setNotes(taskNoteComponent.getNote());
+						if (taskInformationLayout.validateForm(task)) {
+							taskService.saveWithSession(task,
+									AppContext.getUsername());
+							taskNoteComponent.saveContentsToRepo(task.getId());
+							taskDisplayComp.saveTaskSuccess(task);
+							taskDisplayComp.closeTaskAdd();
+						}
+					}
+				});
 		saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsLayout.addComponent(saveBtn);
 		controlsLayout.setComponentAlignment(saveBtn, Alignment.MIDDLE_CENTER);
@@ -174,13 +180,13 @@ public class TaskAddPopup extends CustomComponent {
 
 	private class TaskNoteLayout extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
-		private final TextArea noteArea;
+		private final RichTextArea noteArea;
 		private final AttachmentPanel attachmentPanel;
 
 		public TaskNoteLayout() {
 			this.setSpacing(true);
 			this.setMargin(true);
-			noteArea = new TextArea();
+			noteArea = new RichTextArea();
 			noteArea.setWidth("800px");
 			noteArea.setHeight("200px");
 			this.addComponent(noteArea);

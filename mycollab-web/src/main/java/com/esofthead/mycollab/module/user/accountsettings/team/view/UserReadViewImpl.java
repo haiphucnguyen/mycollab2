@@ -4,6 +4,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import com.esofthead.mycollab.common.TimezoneMapper;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory;
 import com.esofthead.mycollab.module.user.accountsettings.view.UserFormLayoutFactory;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -106,6 +107,9 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 					} else if (propertyId.equals("dateofbirth")) {
 						return new DefaultFormViewFieldFactory.FormViewField(
 								AppContext.formatDate(user.getDateofbirth()));
+					} else if (propertyId.equals("timezone")) {
+						return new DefaultFormViewFieldFactory.FormViewField(
+								TimezoneMapper.getTimezone(user.getTimezone()).getDisplayName());
 					}
 					return null;
 				}
@@ -199,6 +203,9 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 								return new DefaultFormViewFieldFactory.FormViewField(
 										AppContext.formatDate(user
 												.getDateofbirth()));
+							} else if (propertyId.equals("timezone")) {
+								return new DefaultFormViewFieldFactory.FormViewField(
+										TimezoneMapper.getTimezone(user.getTimezone()).getDisplayName());
 							}
 							return null;
 						}

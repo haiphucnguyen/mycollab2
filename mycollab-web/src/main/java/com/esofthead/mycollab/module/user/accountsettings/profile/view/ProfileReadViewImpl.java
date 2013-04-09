@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 import org.vaadin.easyuploads.UploadField;
 import org.vaadin.easyuploads.UploadField.FieldType;
 
+import com.esofthead.mycollab.common.TimezoneMapper;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -156,7 +157,7 @@ public class ProfileReadViewImpl extends AbstractView implements
 				advanceInfoHeader.setStyleName("h2");
 
 				if (ScreenSize.hasSupport1024Pixels()) {
-					basicInformation = new GridFormLayoutHelper(1, 5,
+					basicInformation = new GridFormLayoutHelper(1, 6,
 							UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION,
 							"90px");
 					contactInformation = new GridFormLayoutHelper(1, 5,
@@ -170,7 +171,7 @@ public class ProfileReadViewImpl extends AbstractView implements
 					advanceInfoHeader
 							.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH_1024_RESOLUTION);
 				} else if (ScreenSize.hasSupport1280Pixels()) {
-					basicInformation = new GridFormLayoutHelper(1, 5);
+					basicInformation = new GridFormLayoutHelper(1, 6);
 					contactInformation = new GridFormLayoutHelper(1, 5);
 					advanceInformation = new GridFormLayoutHelper(1, 3);
 				}
@@ -228,6 +229,8 @@ public class ProfileReadViewImpl extends AbstractView implements
 					basicInformation.addComponent(field, "Email", 0, 2);
 				} else if (propertyId.equals("dateofbirth")) {
 					basicInformation.addComponent(field, "Birthday", 0, 3);
+				} else if (propertyId.equals("timezone")) {
+					basicInformation.addComponent(field, "Timezone", 0, 4);
 				} else if (propertyId.equals("website")) {
 					advanceInformation.addComponent(field, "Website", 0, 0);
 				} else if (propertyId.equals("company")) {
@@ -263,6 +266,8 @@ public class ProfileReadViewImpl extends AbstractView implements
 	                        user.getEmail());
 				} else if (propertyId.equals("dateofbirth")) {
 					value = AppContext.formatDate(user.getDateofbirth());
+				} else if (propertyId.equals("timezone")) {
+					value = TimezoneMapper.getTimezone(user.getTimezone()).getDisplayName();
 				} else if (propertyId.equals("website")) {
 					value = user.getWebsite();
 					return new DefaultFormViewFieldFactory.FormUrlLinkViewField(value);

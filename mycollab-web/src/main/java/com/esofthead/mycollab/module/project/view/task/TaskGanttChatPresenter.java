@@ -1,6 +1,5 @@
 package com.esofthead.mycollab.module.project.view.task;
 
-import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.vaadin.ui.ComponentContainer;
@@ -19,7 +18,7 @@ public class TaskGanttChatPresenter extends
 		taskContainer.removeAllComponents();
 
 		taskContainer.addComponent(view.getWidget());
-		view.displayGanttChart((TaskSearchCriteria) data.getParams());
+		view.displayGanttChart();
 	}
 
 }

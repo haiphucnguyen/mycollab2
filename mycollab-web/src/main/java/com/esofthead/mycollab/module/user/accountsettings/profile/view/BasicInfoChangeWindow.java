@@ -2,12 +2,14 @@ package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
 import java.util.Date;
 
+import com.esofthead.mycollab.common.TimezoneMapper;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.DateComboboxSelectionField;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
+import com.esofthead.mycollab.vaadin.ui.TimeZoneSelection;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Alignment;
@@ -29,13 +31,14 @@ public class BasicInfoChangeWindow extends Window {
 	private TextField txtLastName;
 	private TextField txtEmail;
 	private DateComboboxSelectionField birthdayField;
+	private TimeZoneSelection timeZoneField;
 
 	private User user;
 
 	public BasicInfoChangeWindow(User user) {
 		this.user = user;
 		this.setWidth("450px");
-		this.setHeight("270px");
+		this.setHeight("350px");
 		initUI();
 		center();
 		this.setCaption("Change your basic information");
@@ -49,7 +52,7 @@ public class BasicInfoChangeWindow extends Window {
 		mainLayout.setMargin(true);
 		mainLayout.setSpacing(true);
 
-		GridFormLayoutHelper passInfo = new GridFormLayoutHelper(1, 4,
+		GridFormLayoutHelper passInfo = new GridFormLayoutHelper(1, 5,
 				UIConstants.DEFAULT_CONTROL_WIDTH, "150px");
 
 		txtFirstName = (TextField) passInfo.addComponent(new TextField(),
@@ -64,6 +67,11 @@ public class BasicInfoChangeWindow extends Window {
 				"Birthday", 0, 3);
 		birthdayField.setDate(user.getDateofbirth());
 
+		
+		timeZoneField = (TimeZoneSelection) passInfo.addComponent(new TimeZoneSelection(),
+				"TimeZone", 0, 4);
+		timeZoneField.setTimeZone(TimezoneMapper.getTimezone(user.getTimezone()));
+		
 		txtFirstName.setValue(user.getFirstname() == null ? "" : user
 				.getFirstname());
 		txtLastName.setValue(user.getLastname() == null ? "" : user
@@ -144,7 +152,12 @@ public class BasicInfoChangeWindow extends Window {
 		user.setLastname((String) txtLastName.getValue());
 		user.setEmail((String) txtEmail.getValue());
 		user.setDateofbirth((Date) birthdayField.getDate());
+		user.setTimezone(timeZoneField.getTimeZone().getId());
 
+		AppContext.removeVariable(AppContext.USER_TIMEZONE);
+		AppContext.putVariable(AppContext.USER_TIMEZONE, timeZoneField.getTimeZone().getTimezone());
+		
+		
 		UserService userService = AppContext.getSpringBean(UserService.class);
 		userService.updateWithSession(user, AppContext.getUsername());
 		

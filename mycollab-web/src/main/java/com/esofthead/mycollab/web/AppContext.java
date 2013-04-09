@@ -7,15 +7,18 @@ import java.util.Date;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.TimeZone;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.esofthead.mycollab.common.TimezoneMapper;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
+import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.utils.StringUtils;
@@ -30,15 +33,19 @@ public class AppContext implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static int UPDATE_TIME_DURATION = 300000;
+
 	private static Logger log = LoggerFactory.getLogger(AppContext.class);
 
 	private final Map<String, Object> variables = new HashMap<String, Object>();
 
 	private SimpleUser session;
 	private UserPreference userPreference;
+	private SimpleBillingAccount billingAccount;
 
 	private long lastAccessTime = 0;
 	private static org.springframework.web.context.WebApplicationContext springContext;
+
+	public static String USER_TIMEZONE = "USER_TIMEZONE";
 
 	public AppContext(Application application) {
 		if (springContext == null) {
@@ -51,12 +58,14 @@ public class AppContext implements Serializable {
 	}
 
 	public static AppContext getInstance() {
-		return MyCollabApplication.getInstance().getSessionData();
+		try {
+			return MyCollabApplication.getInstance().getSessionData();
+		} catch (Exception e) {
+			return null;
+		}
 	}
 
 	public void transactionEnd() {
-		// log.debug("Transaction end: " + transactionData);
-
 		long currentTime = new GregorianCalendar().getTimeInMillis();
 		if (currentTime - lastAccessTime > UPDATE_TIME_DURATION) {
 			try {
@@ -95,9 +104,13 @@ public class AppContext implements Serializable {
 	}
 
 	public static void setSession(SimpleUser userSession,
-			UserPreference userPreference) {
+			UserPreference userPreference, SimpleBillingAccount billingAccount) {
 		getInstance().session = userSession;
 		getInstance().userPreference = userPreference;
+		getInstance().billingAccount = billingAccount;
+
+		TimeZone timezone = getTimezoneInContext();
+		getInstance().variables.put(USER_TIMEZONE, timezone);
 	}
 
 	public static SimpleUser getSession() {
@@ -114,6 +127,10 @@ public class AppContext implements Serializable {
 
 	public static UserPreference getUserPreference() {
 		return getInstance().userPreference;
+	}
+
+	public static SimpleBillingAccount getBillingAccount() {
+		return getInstance().billingAccount;
 	}
 
 	public static Application getApplication() {
@@ -200,8 +217,10 @@ public class AppContext implements Serializable {
 		EventBus.getInstance().clear();
 		ControllerRegistry.getInstance().clearRegistries();
 		clearAllVariables();
-		getInstance().session = null;
-		getInstance().userPreference = null;
+		if (getInstance() != null) {
+			getInstance().session = null;
+			getInstance().userPreference = null;
+		}
 	}
 
 	static void clearAllVariables() {
@@ -218,9 +237,30 @@ public class AppContext implements Serializable {
 	private static SimpleDateFormat df = new SimpleDateFormat(
 			"EEE MMM dd, hh:mm aa");
 
+	private static TimeZone getTimezoneInContext() {
+		SimpleUser session = getInstance().session;
+		TimeZone timezone = null;
+		if (session == null) {
+			timezone = TimeZone.getDefault();
+		} else {
+			if (session.getTimezone() == null) {
+				timezone = TimeZone.getDefault();
+			} else {
+				timezone = TimezoneMapper.getTimezone(session.getTimezone())
+						.getTimezone();
+			}
+		}
+		return timezone;
+	}
+
 	public static String formatDateTime(Date date) {
 		if (date == null) {
 			return "";
+		}
+
+		TimeZone timezone = (TimeZone) getVariable(USER_TIMEZONE);
+		if (timezone != null) {
+			simpleDateTimeFormat.setTimeZone(timezone);
 		}
 		return simpleDateTimeFormat.format(date);
 	}
@@ -229,6 +269,12 @@ public class AppContext implements Serializable {
 		if (date == null) {
 			return "";
 		}
+
+		TimeZone timezone = (TimeZone) getVariable(USER_TIMEZONE);
+		if (timezone != null) {
+			simpleDateTimeFormat.setTimeZone(timezone);
+		}
+
 		return simpleDateFormat.format(date);
 	}
 

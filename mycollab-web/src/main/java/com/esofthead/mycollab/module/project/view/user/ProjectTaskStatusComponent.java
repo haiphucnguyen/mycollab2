@@ -19,6 +19,7 @@ import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.ProblemEvent;
 import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -28,6 +29,7 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
@@ -46,7 +48,8 @@ public class ProjectTaskStatusComponent extends Depot {
 	private static LabelStringGenerator menuLinkGenerator = new TaskStatusLinkLabelStringGenerator();
 
 	public ProjectTaskStatusComponent() {
-		super("My Openned Tasks", new VerticalLayout());
+		super(LocalizationHelper.getMessage(ProjectCommonI18nEnum.TASKS_TITLE),
+				new VerticalLayout());
 
 		taskList = new DefaultBeanPagedList<ProjectGenericTaskService, ProjectGenericTaskSearchCriteria, ProjectGenericTask>(
 				AppContext.getSpringBean(ProjectGenericTaskService.class),
@@ -109,13 +112,13 @@ public class ProjectTaskStatusComponent extends Depot {
 			taskLink.setIcon(ProjectResources.getIconResource16size(genericTask
 					.getType()));
 			taskLink.addStyleName("link");
-			
+
 			if (genericTask.getDueDate() != null
-					&& (genericTask.getDueDate()
-							.before(new GregorianCalendar().getTime()))) {
+					&& (genericTask.getDueDate().before(new GregorianCalendar()
+							.getTime()))) {
 				taskLink.addStyleName(UIConstants.LINK_OVERDUE);
 			}
-			
+
 			header.addComponent(taskLink);
 
 			layout.addComponent(header);
