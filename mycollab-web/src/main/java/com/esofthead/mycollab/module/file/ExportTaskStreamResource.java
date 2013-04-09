@@ -20,6 +20,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.MyCollabThread;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.service.ISearchableService;
@@ -57,8 +58,8 @@ public class ExportTaskStreamResource extends
 			log.error("Can not create outstream file", ex);
 			return null;
 		}
-
-		new Thread(new Runnable() {
+		
+		Thread threadExport = new MyCollabThread(new Runnable() {
 			/**
 			 * @see java.lang.Runnable#run()
 			 */
@@ -173,7 +174,9 @@ public class ExportTaskStreamResource extends
 				}
 
 			}
-		}).start();
+		});
+
+		threadExport.start();
 
 		return inStream;
 	}
