@@ -96,8 +96,6 @@
 				<artifactId>launch4j-plugin</artifactId>
 				<version>1.5.0.0</version>
 				<executions>
-
-					<!-- GUI exe -->
 					<execution>
 						<id>l4j-gui</id>
 						<phase>package</phase>
@@ -106,10 +104,11 @@
 						</goals>
 						<configuration>
 							<headerType>gui</headerType>
-							<outfile>target/app-gui.exe</outfile>
+							<outfile>target/mycollab.exe</outfile>
 							<jar>target/${artifactId}-${version}-standard.jar</jar>
 							<errTitle>App Err</errTitle>
-							<icon>D:\Storage\Dropbox\Repo\SanctityCafe\SanctityCafe\MetroCafe.ico</icon>
+							<!--  Please provide the ico file for windows platform -->
+							<!-- <icon>resources/Icon.icns</icon>  -->
 							<jre>
 								<minVersion>1.6.0</minVersion>
 							</jre>
@@ -118,7 +117,30 @@
 				</executions>
 			</plugin>
 
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>1.7</version>
+				<executions>
+					<execution>
+						<phase>install</phase>
+						<configuration>
+							<target name="package">
+								<taskdef name="jarbundler" classname="net.sourceforge.jarbundler.JarBundler"
+									classpath="resources/jarbundler-2.2.0.jar" />
+								<jarbundler dir="target" name="mycollab"
+									mainclass="com.izforge.izpack.installer.Installer" icon="resources/Icon.icns"
+									jvmversion="1.5+" jar="target/${artifactId}-${version}-standard.jar">
 
+								</jarbundler>
+							</target>
+						</configuration>
+						<goals>
+							<goal>run</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
 		</plugins>
 	</build>
 </project>
