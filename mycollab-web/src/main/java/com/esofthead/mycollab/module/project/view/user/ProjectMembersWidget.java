@@ -15,8 +15,10 @@ import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -64,10 +66,29 @@ public class ProjectMembersWidget extends Depot {
 
 			CssLayout body = new CssLayout();
 			body.setStyleName("activity-date");
+			
+			HorizontalLayout layoutBottom = new HorizontalLayout();
+			layoutBottom.setSpacing(true);
+			layoutBottom.setWidth("100%");
+			
 			Label dateLbl = new Label("Joined from "
 					+ DateTimeUtils.getStringDateFromNow(obj.getJoindate()));
-			body.addComponent(dateLbl);
-
+			dateLbl.setWidth("205px");
+			layoutBottom.addComponent(dateLbl);
+			layoutBottom.setComponentAlignment(dateLbl, Alignment.MIDDLE_LEFT);
+			
+			Label memberRole = new Label();
+			if (obj.getIsadmin() != null && obj.getIsadmin() == Boolean.TRUE) {
+				memberRole.setValue("Project Admin");
+				memberRole.setStyleName("is-admin");
+			} else {
+				memberRole.setValue(obj.getRoleName());
+				memberRole.addStyleName("member-role");
+			}
+			layoutBottom.addComponent(memberRole);
+			layoutBottom.setComponentAlignment(memberRole, Alignment.MIDDLE_RIGHT);
+			
+			body.addComponent(layoutBottom);
 			layout.addComponent(body);
 			return layout;
 		}

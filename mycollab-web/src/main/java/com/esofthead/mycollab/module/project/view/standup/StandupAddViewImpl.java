@@ -81,7 +81,9 @@ public class StandupAddViewImpl extends AbstractView implements StandupAddView {
 				if (propertyId.equals("whatlastday")
 						|| propertyId.equals("whattoday")
 						|| propertyId.equals("whatproblem")) {
-					return new RichTextArea();
+					RichTextArea richText = new RichTextArea();
+					richText.setWidth("500px");
+					return richText;
 				}
 				return null;
 			}
