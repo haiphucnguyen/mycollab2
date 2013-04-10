@@ -65,4 +65,9 @@ public class ProjectMemberServiceImpl extends
 		return projectMemberMapperExt.findMemberByUsername(username, projectId);
 	}
 
+	@Override
+	public List<SimpleUser> getUsersInProject(int projectId) {
+		return projectMemberMapperExt.getUsersInProject(projectId);
+	}
+
 }
