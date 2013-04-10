@@ -67,28 +67,19 @@ public class ProjectMembersWidget extends Depot {
 			CssLayout body = new CssLayout();
 			body.setStyleName("activity-date");
 			
-			HorizontalLayout layoutBottom = new HorizontalLayout();
-			layoutBottom.setSpacing(true);
-			layoutBottom.setWidth("100%");
-			
-			Label dateLbl = new Label("Joined from "
-					+ DateTimeUtils.getStringDateFromNow(obj.getJoindate()));
-			dateLbl.setWidth("205px");
-			layoutBottom.addComponent(dateLbl);
-			layoutBottom.setComponentAlignment(dateLbl, Alignment.MIDDLE_LEFT);
-			
 			Label memberRole = new Label();
+			memberRole.setContentMode(Label.CONTENT_XHTML);
+			String textRole = "";
 			if (obj.getIsadmin() != null && obj.getIsadmin() == Boolean.TRUE) {
-				memberRole.setValue("Project Admin");
-				memberRole.setStyleName("is-admin");
+				textRole = "<a style=\"color: #b00000;\"> Project Admin </a>";
 			} else {
-				memberRole.setValue(obj.getRoleName());
-				memberRole.addStyleName("member-role");
+				textRole = obj.getRoleName();
 			}
-			layoutBottom.addComponent(memberRole);
-			layoutBottom.setComponentAlignment(memberRole, Alignment.MIDDLE_RIGHT);
+			textRole  += " - Joined from "
+					+ DateTimeUtils.getStringDateFromNow(obj.getJoindate());
+			memberRole.setValue(textRole);
 			
-			body.addComponent(layoutBottom);
+			body.addComponent(memberRole);
 			layout.addComponent(body);
 			return layout;
 		}
