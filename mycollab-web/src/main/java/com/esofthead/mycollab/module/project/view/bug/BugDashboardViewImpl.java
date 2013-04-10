@@ -258,6 +258,9 @@ public class BugDashboardViewImpl extends AbstractView implements
 		} else if (ScreenSize.hasSupport1280Pixels()) {
 			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
 					200);
+		} else {
+			bugChartComponent = new BugChartComponent(chartSearchCriteria, 400,
+					200);
 		}
 		rightColumn.addComponent(bugChartComponent);
 	}

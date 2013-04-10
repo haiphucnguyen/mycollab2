@@ -31,14 +31,14 @@ public class CommentListDepot extends Depot {
 		commentListBox.setMargin(true);
 	}
 
-	public CommentListDepot(String type, int typeid) {
-		this(type, typeid, true);
-	}
+//	public CommentListDepot(String type, int typeid) {
+//		this(type, typeid, true);
+//	}
 
 	public CommentListDepot(String type, int typeid,
-			boolean isDisplayCommentInput) {
+			boolean isDisplayCommentInput, boolean isSendingRelayEmail) {
 		super("Comments", new CommentDisplay(type, typeid,
-				isDisplayCommentInput));
+				isDisplayCommentInput, isSendingRelayEmail));
 		this.setWidth("900px");
 		commentListBox = (CommentDisplay) this.bodyContent;
 		this.setTitle("Comments(" + commentListBox.getNumComments() + ")");
@@ -71,18 +71,19 @@ public class CommentListDepot extends Depot {
 			this.addComponent(commentList);
 		}
 
-		public CommentDisplay(String type, int typeid) {
-			this(type, typeid, true);
-		}
+		// public CommentDisplay(String type, int typeid) {
+		// this(type, typeid, true);
+		// }
 
 		public CommentDisplay(String type, int typeid,
-				boolean isDisplayCommentInput) {
+				boolean isDisplayCommentInput, boolean isSendingRelayEmail) {
 			this.setSpacing(true);
 			this.type = type;
 			this.typeid = typeid;
 
 			if (isDisplayCommentInput) {
-				commentBox = new CommentInput(this, type, typeid);
+				commentBox = new CommentInput(this, type, typeid, false,
+						isSendingRelayEmail);
 				this.addComponent(commentBox);
 			}
 
@@ -98,7 +99,7 @@ public class CommentListDepot extends Depot {
 			this.type = type;
 			this.typeid = typeid;
 			displayCommentList();
-			
+
 			if (commentBox != null) {
 				commentBox.setTypeAndId(type, typeid);
 			}
@@ -108,7 +109,7 @@ public class CommentListDepot extends Depot {
 			if (type == null || typeid == 0) {
 				throw new MyCollabException("Parameters are invalid");
 			}
-			
+
 			CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
 			searchCriteria.setType(new StringSearchField(type));
 			searchCriteria.setTypeid(new NumberSearchField(typeid));

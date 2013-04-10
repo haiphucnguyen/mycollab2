@@ -36,24 +36,8 @@ public class BugNotificationServiceImpl extends
 	@Override
 	public TemplateGenerator templateGeneratorForCreateAction(
 			SimpleRelayEmailNotification emailNotification) {
-		int taskId = emailNotification.getTypeid();
-		SimpleBug bug = bugService.findBugById(taskId);
-
-		Map<String, String> hyperLinks = new HashMap<String, String>();
-		hyperLinks.put(
-				"bugUrl",
-				ProjectLinkGenerator.generateBugPreviewFullLink(
-						bug.getProjectid(), bug.getId()));
-		hyperLinks.put("projectUrl", ProjectLinkGenerator
-				.generateProjectFullLink(bug.getProjectid()));
-		hyperLinks.put("loggedUserUrl", AccountLinkGenerator
-				.generateUserPreviewFullLink(bug.getLogby()));
-		hyperLinks.put("assignUserUrl", AccountLinkGenerator
-				.generateUserPreviewFullLink(bug.getAssignuser()));
-		hyperLinks.put(
-				"milestoneUrl",
-				ProjectLinkGenerator.generateMilestonePreviewFullLink(
-						bug.getProjectid(), bug.getMilestoneid()));
+		int bugId = emailNotification.getTypeid();
+		SimpleBug bug = bugService.findBugById(bugId);
 
 		String subject = StringUtils.subString(bug.getSummary(), 150);
 
@@ -61,15 +45,11 @@ public class BugNotificationServiceImpl extends
 				"[$bug.projectname]: Bug \"" + subject + "...\" created",
 				"templates/email/project/bugCreatedNotifier.mt");
 		templateGenerator.putVariable("bug", bug);
-		templateGenerator.putVariable("hyperLinks", hyperLinks);
+		templateGenerator.putVariable("hyperLinks", constructHyperLinks(bug));
 		return templateGenerator;
 	}
 
-	@Override
-	public TemplateGenerator templateGeneratorForUpdateAction(
-			SimpleRelayEmailNotification emailNotification) {
-		int taskId = emailNotification.getTypeid();
-		SimpleBug bug = bugService.findBugById(taskId);
+	private Map<String, String> constructHyperLinks(SimpleBug bug) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
 		hyperLinks.put(
 				"bugUrl",
@@ -85,6 +65,14 @@ public class BugNotificationServiceImpl extends
 				"milestoneUrl",
 				ProjectLinkGenerator.generateMilestonePreviewFullLink(
 						bug.getProjectid(), bug.getMilestoneid()));
+		return hyperLinks;
+	}
+
+	@Override
+	public TemplateGenerator templateGeneratorForUpdateAction(
+			SimpleRelayEmailNotification emailNotification) {
+		int bugId = emailNotification.getTypeid();
+		SimpleBug bug = bugService.findBugById(bugId);
 
 		String subject = StringUtils.subString(bug.getSummary(), 150);
 
@@ -92,7 +80,7 @@ public class BugNotificationServiceImpl extends
 				"[$bug.projectname]: Bug \"" + subject + "...\" updated",
 				"templates/email/project/bugUpdatedNotifier.mt");
 		templateGenerator.putVariable("bug", bug);
-		templateGenerator.putVariable("hyperLinks", hyperLinks);
+		templateGenerator.putVariable("hyperLinks", constructHyperLinks(bug));
 
 		if (emailNotification.getExtratypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService
@@ -107,8 +95,21 @@ public class BugNotificationServiceImpl extends
 	@Override
 	public TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
-		// TODO Auto-generated method stub
-		return null;
+		int bugId = emailNotification.getTypeid();
+		SimpleBug bug = bugService.findBugById(bugId);
+		String comment = StringUtils.subString(
+				emailNotification.getChangecomment(), 150);
+
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				"[$bug.projectname]: "
+						+ emailNotification.getChangeByUserFullName()
+						+ " add new comment \"" + comment + "...\" to bug "
+						+ bug.getBugkey(),
+				"templates/email/project/bugCommentNotifier.mt");
+		templateGenerator.putVariable("bug", bug);
+		templateGenerator.putVariable("hyperLinks", constructHyperLinks(bug));
+
+		return templateGenerator;
 	}
 
 	public class BugFieldNameMapper {

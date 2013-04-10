@@ -21,90 +21,103 @@ import java.util.GregorianCalendar;
 import org.vaadin.easyuploads.MultiFileUploadExt;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class CommentInput extends VerticalLayout {
 	private static final long serialVersionUID = 1L;
 	private RichTextArea commentArea;
-    private String type;
-    private Integer typeid;
+	private String type;
+	private Integer typeid;
 
-    public CommentInput(final ReloadableComponent component, final String type, final Integer typeid) {
-        this(component, type, typeid, false);
-    }
+	public CommentInput(final ReloadableComponent component, final String type,
+			final Integer typeid) {
+		this(component, type, typeid, false, false);
+	}
 
-    public CommentInput(final ReloadableComponent component, final String typeVal, final Integer typeidVal, boolean cancelButtonEnable) {
-        this.setWidth("600px");
-        this.setSpacing(true);
-        this.setMargin(true);
-        
-        this.type = typeVal;
-        this.typeid = typeidVal;
+	public CommentInput(final ReloadableComponent component,
+			final String typeVal, final Integer typeidVal,
+			boolean cancelButtonEnable, final boolean isSendingEmailRelay) {
+		this.setWidth("600px");
+		this.setSpacing(true);
+		this.setMargin(true);
+		
+		this.type = typeVal;
+		this.typeid = typeidVal;
 
-        commentArea = new RichTextArea();
-        commentArea.setWidth("560px");
+		commentArea = new RichTextArea();
+		commentArea.setWidth("560px");
 
-        final AttachmentPanel attachments = new AttachmentPanel();
+		final AttachmentPanel attachments = new AttachmentPanel();
 
-        HorizontalLayout controlsLayout = new HorizontalLayout();
-        controlsLayout.setWidth("100%");
-        controlsLayout.setSpacing(true);
+		HorizontalLayout controlsLayout = new HorizontalLayout();
+		controlsLayout.setWidth("100%");
+		controlsLayout.setSpacing(true);
 
-        MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
-        controlsLayout.addComponent(uploadExt);
-        controlsLayout.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
+		MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
+		controlsLayout.addComponent(uploadExt);
+		controlsLayout.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
 
-        Label emptySpace = new Label();
-        controlsLayout.addComponent(emptySpace);
-        controlsLayout.setExpandRatio(emptySpace, 1.0f);
+		Label emptySpace = new Label();
+		controlsLayout.addComponent(emptySpace);
+		controlsLayout.setExpandRatio(emptySpace, 1.0f);
 
-        if (cancelButtonEnable) {
-            Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
+		if (cancelButtonEnable) {
+			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-                public void buttonClick(ClickEvent event) {
-                    component.cancel();
-                }
-            });
-            cancelBtn.setStyleName("link");
-            controlsLayout.addComponent(cancelBtn);
-        }
+				public void buttonClick(ClickEvent event) {
+					component.cancel();
+				}
+			});
+			cancelBtn.setStyleName("link");
+			controlsLayout.addComponent(cancelBtn);
+		}
 
-        Button newCommentBtn = new Button("Post", new Button.ClickListener() {
+		Button newCommentBtn = new Button("Post", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
 			@Override
-            public void buttonClick(Button.ClickEvent event) {
-                Comment comment = new Comment();
-                comment.setComment((String) commentArea.getValue());
-                comment.setCreatedtime(new GregorianCalendar().getTime());
-                comment.setCreateduser(AppContext.getUsername());
-                comment.setSaccountid(AppContext.getAccountId());
-                comment.setType(type);
-                comment.setTypeid(typeid);
+			public void buttonClick(Button.ClickEvent event) {
+				Comment comment = new Comment();
+				comment.setComment((String) commentArea.getValue());
+				comment.setCreatedtime(new GregorianCalendar().getTime());
+				comment.setCreateduser(AppContext.getUsername());
+				comment.setSaccountid(AppContext.getAccountId());
+				comment.setType(type);
+				comment.setTypeid(typeid);
 
-                CommentService commentService = AppContext.getSpringBean(CommentService.class);
-                int commentId = commentService.saveWithSession(comment, AppContext.getUsername());
-                attachments.saveContentsToRepo(AttachmentConstants.COMMON_COMMENT, commentId);
+				CommentService commentService = AppContext
+						.getSpringBean(CommentService.class);
+				int commentId = 0;
+				if (isSendingEmailRelay) {
+					commentId = commentService.saveWithSession(comment,
+							AppContext.getUsername(), isSendingEmailRelay);
+				} else {
+					commentId = commentService.saveWithSession(comment,
+							AppContext.getUsername());
+				}
 
-                //save success, clear comment area and load list comments again
-                commentArea.setValue("");
-                attachments.removeAllAttachmentsDisplay();
-                component.reload();
-            }
-        });
-        newCommentBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-        controlsLayout.addComponent(newCommentBtn);
+				attachments.saveContentsToRepo(
+						AttachmentConstants.COMMON_COMMENT, commentId);
 
-        this.addComponent(commentArea);
-        this.addComponent(attachments);
-        this.addComponent(controlsLayout);
-    }
-    
-    public void setTypeAndId(String type, int typeid) {
-    	this.type = type;
-    	this.typeid = typeid;
-    }
+				// save success, clear comment area and load list comments again
+				commentArea.setValue("");
+				attachments.removeAllAttachmentsDisplay();
+				component.reload();
+			}
+		});
+		newCommentBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		controlsLayout.addComponent(newCommentBtn);
+
+		this.addComponent(commentArea);
+		this.addComponent(attachments);
+		this.addComponent(controlsLayout);
+	}
+
+	public void setTypeAndId(String type, int typeid) {
+		this.type = type;
+		this.typeid = typeid;
+	}
 }
