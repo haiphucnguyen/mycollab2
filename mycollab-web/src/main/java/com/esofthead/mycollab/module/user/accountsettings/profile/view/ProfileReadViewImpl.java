@@ -280,11 +280,14 @@ public class ProfileReadViewImpl extends AbstractView implements
 				} else if (propertyId.equals("homephone")) {
 					value = user.getHomephone();
 				} else if (propertyId.equals("facebookaccount")) {
-					value = user.getFacebookaccount();
+					return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
+							user.getFacebookaccount(), "https://www.facebook.com/" + user.getFacebookaccount());
 				} else if (propertyId.equals("twitteraccount")) {
-					value = user.getTwitteraccount();
+					return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
+							user.getTwitteraccount(), "https://www.twitter.com/" + user.getTwitteraccount());
 				} else if (propertyId.equals("skypecontact")) {
-					value = user.getSkypecontact();
+					return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
+							user.getSkypecontact(), "skype:" + user.getSkypecontact() + "?chat");
 				}
 				return new DefaultFormViewFieldFactory.LabelViewField(value);
 			}
