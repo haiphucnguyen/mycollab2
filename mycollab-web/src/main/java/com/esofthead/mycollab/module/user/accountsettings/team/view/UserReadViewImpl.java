@@ -110,6 +110,15 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 					} else if (propertyId.equals("timezone")) {
 						return new DefaultFormViewFieldFactory.FormViewField(
 								TimezoneMapper.getTimezone(user.getTimezone()).getDisplayName());
+					} else if (propertyId.equals("facebookaccount")) {
+						return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
+								user.getFacebookaccount(), "https://www.facebook.com/" + user.getFacebookaccount());
+					} else if (propertyId.equals("twitteraccount")) {
+						return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
+								user.getTwitteraccount(), "https://www.twitter.com/" + user.getTwitteraccount());
+					} else if (propertyId.equals("skypecontact")) {
+						return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
+								user.getSkypecontact(), "skype:" + user.getSkypecontact() + "?chat");
 					}
 					return null;
 				}
