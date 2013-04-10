@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.List;
 
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.file.ExportExcelStreamResource;
 import com.esofthead.mycollab.module.file.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -103,11 +105,15 @@ public class BugListPresenter extends AbstractPresenter<BugListView> implements
 						+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
 								.getProject().getName() != null) ? CurrentProjectVariables
 								.getProject().getName() : "");
+				BugSearchCriteria searchBugSearchCriteria = new BugSearchCriteria();
+				searchBugSearchCriteria.setProjectId(new NumberSearchField(
+						SearchField.AND, CurrentProjectVariables.getProject()
+								.getId()));
 				Resource res = new StreamResource(
 						new ExportExcelStreamResource<BugSearchCriteria>(title,
 								EXPORT_COLUMNS, AppContext
 										.getSpringBean(BugService.class),
-								new BugSearchCriteria()), "bug_list.xls", view
+										searchBugSearchCriteria), "bug_list.xls", view
 								.getApplication());
 				view.getWidget().getWindow().open(res, "_blank");
 			}

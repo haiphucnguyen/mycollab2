@@ -75,7 +75,7 @@ public class ExportTaskStreamResource extends
 						CellStyle.ALIGN_CENTER, CellStyle.VERTICAL_BOTTOM,
 						title.toUpperCase());
 
-				sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 4));
+				sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 8));
 
 				int numPage = totalItems
 						/ SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS + 1;

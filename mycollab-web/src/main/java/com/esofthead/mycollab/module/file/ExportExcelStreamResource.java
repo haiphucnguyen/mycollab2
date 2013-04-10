@@ -82,7 +82,7 @@ public class ExportExcelStreamResource<S extends SearchCriteria> implements
 						CellStyle.ALIGN_CENTER, CellStyle.VERTICAL_BOTTOM,
 						title.toUpperCase());
 
-				sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 4));
+				sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 8));
 
 				Row rowHeader = sheet.createRow((short) 4);
 				for (int i = 0; i < exportColumns.length; i++) {
