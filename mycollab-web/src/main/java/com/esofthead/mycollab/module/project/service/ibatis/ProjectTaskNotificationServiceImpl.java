@@ -40,11 +40,22 @@ public class ProjectTaskNotificationServiceImpl extends
 		int taskId = emailNotification.getTypeid();
 		SimpleTask task = projectTaskService.findTaskById(taskId);
 
+		String subject = StringUtils.subString(task.getTaskname(), 150);
+
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				"[$task.projectName]: Task \"" + subject + "...\" created",
+				"templates/email/project/taskCreatedNotifier.mt");
+		templateGenerator.putVariable("task", task);
+		templateGenerator.putVariable("hyperLinks", createHyperLinks(task));
+		return templateGenerator;
+	}
+
+	private Map<String, String> createHyperLinks(SimpleTask task) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
 		hyperLinks.put(
 				"taskUrl",
 				ProjectLinkGenerator.generateTaskPreviewFullLink(
-						task.getProjectid(), taskId));
+						task.getProjectid(), task.getId()));
 		hyperLinks.put("projectUrl", ProjectLinkGenerator
 				.generateProjectFullLink(task.getProjectid()));
 		hyperLinks.put("assignUserUrl", AccountLinkGenerator
@@ -53,15 +64,7 @@ public class ProjectTaskNotificationServiceImpl extends
 				"taskListUrl",
 				ProjectLinkGenerator.generateTaskGroupPreviewFullLink(
 						task.getProjectid(), task.getTasklistid()));
-
-		String subject = StringUtils.subString(task.getTaskname(), 150);
-
-		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$task.projectName]: Task \"" + subject + "...\" created",
-				"templates/email/project/taskCreatedNotifier.mt");
-		templateGenerator.putVariable("task", task);
-		templateGenerator.putVariable("hyperLinks", hyperLinks);
-		return templateGenerator;
+		return hyperLinks;
 	}
 
 	@Override
@@ -73,27 +76,13 @@ public class ProjectTaskNotificationServiceImpl extends
 			return null;
 		}
 
-		Map<String, String> hyperLinks = new HashMap<String, String>();
-		hyperLinks.put(
-				"taskUrl",
-				ProjectLinkGenerator.generateTaskPreviewFullLink(
-						task.getProjectid(), taskId));
-		hyperLinks.put("projectUrl", ProjectLinkGenerator
-				.generateProjectFullLink(task.getProjectid()));
-		hyperLinks.put("assignUserUrl", AccountLinkGenerator
-				.generateUserPreviewFullLink(task.getAssignuser()));
-		hyperLinks.put(
-				"taskListUrl",
-				ProjectLinkGenerator.generateTaskGroupPreviewFullLink(
-						task.getProjectid(), task.getTasklistid()));
-
 		String subject = StringUtils.subString(task.getTaskname(), 150);
 
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$task.projectName]: Task \"" + subject + "...\" edited",
 				"templates/email/project/taskUpdatedNotifier.mt");
 		templateGenerator.putVariable("task", task);
-		templateGenerator.putVariable("hyperLinks", hyperLinks);
+		templateGenerator.putVariable("hyperLinks", createHyperLinks(task));
 
 		if (emailNotification.getExtratypeid() != null) {
 			SimpleAuditLog auditLog = auditLogService
@@ -109,8 +98,24 @@ public class ProjectTaskNotificationServiceImpl extends
 	@Override
 	public TemplateGenerator templateGeneratorForCommentAction(
 			SimpleRelayEmailNotification emailNotification) {
-		// TODO Auto-generated method stub
-		return null;
+		int taskId = emailNotification.getTypeid();
+		SimpleTask task = projectTaskService.findTaskById(taskId);
+		if (task == null) {
+			return null;
+		}
+		String comment = StringUtils.subString(
+				emailNotification.getChangecomment(), 150);
+
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				"[$task.projectName]: "
+						+ emailNotification.getChangeByUserFullName()
+						+ " add new comment \"" + comment + "...\" to task \""
+						+ StringUtils.subString(task.getTaskname(), 100) + "\"",
+				"templates/email/project/taskCommentNotifier.mt");
+		templateGenerator.putVariable("task", task);
+		templateGenerator.putVariable("hyperLinks", createHyperLinks(task));
+
+		return templateGenerator;
 	}
 
 	public class ProjectFieldNameMapper {

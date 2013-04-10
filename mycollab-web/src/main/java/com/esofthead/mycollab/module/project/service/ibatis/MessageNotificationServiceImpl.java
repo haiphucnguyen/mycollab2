@@ -13,6 +13,7 @@ import com.esofthead.mycollab.module.project.service.MessageNotificationService;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
+import com.esofthead.mycollab.utils.StringUtils;
 
 @Service
 public class MessageNotificationServiceImpl implements
@@ -58,7 +59,7 @@ public class MessageNotificationServiceImpl implements
 
 		SimpleMessage message = messageService.findMessageById(messageId);
 		TemplateGenerator templateGenerator = new TemplateGenerator(
-				"[$message.projectName]: $message.fullPostedUserName sent a message \""
+				"[$message.projectName]: $message.fullPostedUserName posted a new message \""
 						+ message.getTitle() + "...\"",
 				"templates/email/project/messageUpdatedNotifier.mt");
 		templateGenerator.putVariable("message", message);
@@ -73,7 +74,24 @@ public class MessageNotificationServiceImpl implements
 	@Override
 	public void sendNotificationForCommentAction(
 			SimpleRelayEmailNotification notification) {
-		// TODO Auto-generated method stub
+		int messageId = notification.getTypeid();
+		SimpleMessage message = messageService.findMessageById(messageId);
+
+		Integer projectid = message.getProjectid();
+		List<SimpleUser> usersInProject = projectMemberService
+				.getUsersInProject(projectid);
+		TemplateGenerator templateGenerator = new TemplateGenerator(
+				"[$message.projectName]: $message.fullPostedUserName add a new comment \""
+						+ StringUtils.subString(
+								notification.getChangecomment(), 150) + "...\""
+						+ "to message \"" + message.getTitle() + "\"",
+				"templates/email/project/messageCommentNotifier.mt");
+		templateGenerator.putVariable("message", message);
+
+		extMailService.sendHTMLMail("mail@esofthead.com",
+				notification.getChangeByUserFullName(), usersInProject,
+				templateGenerator.generateSubjectContent(),
+				templateGenerator.generateBodyContent(), null);
 
 	}
 

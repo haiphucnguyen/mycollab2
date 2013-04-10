@@ -103,8 +103,8 @@ public class BugNotificationServiceImpl extends
 		TemplateGenerator templateGenerator = new TemplateGenerator(
 				"[$bug.projectname]: "
 						+ emailNotification.getChangeByUserFullName()
-						+ " add new comment \"" + comment + "...\" to bug "
-						+ bug.getBugkey(),
+						+ " add a new comment \"" + comment + "...\" to bug \""
+						+ StringUtils.subString(bug.getSummary(), 100) + "\"",
 				"templates/email/project/bugCommentNotifier.mt");
 		templateGenerator.putVariable("bug", bug);
 		templateGenerator.putVariable("hyperLinks", constructHyperLinks(bug));
