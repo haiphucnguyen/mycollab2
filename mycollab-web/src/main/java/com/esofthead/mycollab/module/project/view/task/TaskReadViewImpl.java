@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import java.util.GregorianCalendar;
+
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
@@ -21,6 +23,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
@@ -112,6 +115,24 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 			public FormLayoutFactory() {
 				super(task.getTaskname());
+				
+				if (task.getPercentagecomplete() != null
+						&& 100d == task.getPercentagecomplete()) {
+					addTitleStyle(UIConstants.LINK_COMPLETED);
+				} else {
+					if ("Pending".equals(task.getStatus())) {
+						addTitleStyle(UIConstants.LINK_PENDING);
+					} else if ((task.getEnddate() != null && (task.getEnddate()
+							.before(new GregorianCalendar().getTime())))
+							|| (task.getActualenddate() != null && (task
+									.getActualenddate()
+									.before(new GregorianCalendar().getTime())))
+							|| (task.getDeadline() != null && (task
+									.getDeadline()
+									.before(new GregorianCalendar().getTime())))) {
+						addTitleStyle(UIConstants.LINK_OVERDUE);
+					}
+				}
 			}
 
 			@Override

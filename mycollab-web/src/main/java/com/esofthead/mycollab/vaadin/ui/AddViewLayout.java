@@ -40,6 +40,10 @@ public class AddViewLayout extends CustomLayout {
 	public void setTitle(String title) {
 		this.titleLbl.setValue(title);
 	}
+	
+	public void addTitleStyleName(String styleName) {
+		this.titleLbl.addStyleName(styleName);
+	}
 
 	public void addTopControls(ComponentContainer topControls) {
 		this.addComponent(topControls, "addViewTopControls");
