@@ -49,6 +49,8 @@ public abstract class TimeSeriesChartWrapper<S extends SearchCriteria> extends G
                  false // Configure chart to generate URLs?
                  );
 
+         chart.getTitle().setPaint(new Color(0x5E5E5E));
+         
          XYPlot plot = (XYPlot) chart.getPlot();
          plot.setBackgroundPaint(Color.white);
          plot.setDomainGridlinePaint(Color.lightGray);
