@@ -25,6 +25,11 @@ public class UserAvatarControlFactory {
 	public static Resource getResource(String username, int size) {
 		Resource avatarRes = null;
 
+		if (username == null) {
+			return new ThemeResource("icons/default_user_avatar_" + size
+					+ ".png");
+		}
+
 		if (StorageSetting.isFileStorage()) {
 			File avatarFile = FileStorageConfig.getAvatarFile(username, size);
 			if (avatarFile != null) {

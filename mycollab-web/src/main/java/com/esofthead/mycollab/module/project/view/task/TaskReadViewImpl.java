@@ -117,13 +117,15 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			@Override
 			protected Layout createTopPanel() {
 				return (new PreviewFormControlsGenerator<Task>(PreviewForm.this))
-						.createButtonControls(ProjectRolePermissionCollections.TASKS, ModuleNameConstants.PRJ);
+						.createButtonControls(
+								ProjectRolePermissionCollections.TASKS,
+								ModuleNameConstants.PRJ);
 			}
 
 			@Override
 			protected Layout createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_TASK,
-						task.getId());
+						task.getId(), true, true);
 			}
 		}
 	}
@@ -241,7 +243,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			@Override
 			protected Layout createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_TASK,
-						task.getId(), false);
+						task.getId(), false, false);
 			}
 		}
 	}

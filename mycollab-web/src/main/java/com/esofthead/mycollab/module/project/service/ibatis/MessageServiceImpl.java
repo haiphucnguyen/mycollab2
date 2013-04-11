@@ -48,7 +48,13 @@ public class MessageServiceImpl extends
 	@Override
 	public int saveWithSession(Message record, String username) {
 		int recordId = super.saveWithSession(record, username);
-		// Save notification item
+		relayEmailNotificationService.saveWithSession(
+				createNotification(record, username, recordId), username);
+		return recordId;
+	}
+
+	private RelayEmailNotification createNotification(Message record,
+			String username, int recordId) {
 		RelayEmailNotification relayNotification = new RelayEmailNotification();
 		relayNotification.setChangeby(username);
 		relayNotification.setChangecomment("");
@@ -57,24 +63,14 @@ public class MessageServiceImpl extends
 		relayNotification.setType(MonitorTypeConstants.PRJ_MESSAGE);
 		relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
 		relayNotification.setTypeid(recordId);
-		relayEmailNotificationService.saveWithSession(relayNotification,
-				username);
-		return recordId;
+		relayNotification.setExtratypeid(record.getProjectid());
+		return relayNotification;
 	}
 
 	@Override
 	public int updateWithSession(Message record, String username) {
-		// Save notification item
-		RelayEmailNotification relayNotification = new RelayEmailNotification();
-		relayNotification.setChangeby(username);
-		relayNotification.setChangecomment("");
-		int sAccountId = record.getSaccountid();
-		relayNotification.setSaccountid(sAccountId);
-		relayNotification.setType(MonitorTypeConstants.PRJ_MESSAGE);
-		relayNotification.setAction(MonitorTypeConstants.UPDATE_ACTION);
-		relayNotification.setTypeid(record.getId());
-		relayEmailNotificationService.saveWithSession(relayNotification,
-				username);
+		relayEmailNotificationService.saveWithSession(
+				createNotification(record, username, record.getId()), username);
 		return super.updateWithSession(record, username);
 	}
 

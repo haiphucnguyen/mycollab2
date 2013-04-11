@@ -14,11 +14,13 @@ import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
+import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
@@ -118,6 +120,18 @@ public class BugTableDisplay extends
 							bugService.updateWithSession(bug,
 									AppContext.getUsername());
 							refresh();
+						} else if ("action".equals(category)) {
+							if ("edit".equals(value)) {
+								EventBus.getInstance().fireEvent(
+										new BugEvent.GotoEdit(
+												BugTableDisplay.this, bug));
+							} else if ("delete".equals(value)) {
+								BugService bugService = AppContext
+										.getSpringBean(BugService.class);
+								bugService.removeWithSession(bug.getId(),
+										AppContext.getUsername());
+								refresh();
+							}
 						}
 
 					}
@@ -134,6 +148,9 @@ public class BugTableDisplay extends
 					public void buttonClick(ClickEvent event) {
 						menu.show(event.getClientX() - 25, event.getClientY());
 						menu.removeAllItems();
+
+						ContextMenuItem editMenuItem = menu.addItem("Edit",
+								"action", "edit");
 
 						ContextMenuItem statusMenuItem = menu.addItem("Status");
 						if (BugStatusConstants.OPEN.equals(bug.getStatus())
@@ -192,6 +209,12 @@ public class BugTableDisplay extends
 								severitySubMenuItem.setEnabled(false);
 							}
 						}
+
+						// Add delete button
+						ContextMenuItem deleteMenuItem = menu.addItem("Delete",
+								"action", "delete");
+						deleteMenuItem.setEnabled(CurrentProjectVariables
+								.canAccess(ProjectRolePermissionCollections.BUGS));
 					}
 				});
 				return bugSettingBtn;

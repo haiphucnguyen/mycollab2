@@ -180,7 +180,8 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 			protected Layout createBottomPanel() {
 				VerticalLayout relatedItemsPanel = new VerticalLayout();
 				relatedItemsPanel.addComponent(new CommentListDepot(
-						CommentTypeConstants.PRJ_TASK_LIST, taskList.getId()));
+						CommentTypeConstants.PRJ_TASK_LIST, taskList.getId(),
+						true, true));
 				relatedItemsPanel.addComponent(new TaskDepot());
 				return relatedItemsPanel;
 			}
@@ -268,7 +269,7 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 				VerticalLayout relatedItemsPanel = new VerticalLayout();
 				relatedItemsPanel.addComponent(new CommentListDepot(
 						CommentTypeConstants.PRJ_TASK_LIST, taskList.getId(),
-						false));
+						false, false));
 				relatedItemsPanel.addComponent(new TaskDepot());
 				return relatedItemsPanel;
 			}

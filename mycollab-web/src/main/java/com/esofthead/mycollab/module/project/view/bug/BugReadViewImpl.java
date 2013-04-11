@@ -408,7 +408,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				tabBugDetail.setStyleName(UIConstants.WHITE_TABSHEET);
 
 				CommentDisplay commentList = new CommentDisplay(
-						CommentTypeConstants.PRJ_BUG, bug.getId());
+						CommentTypeConstants.PRJ_BUG, bug.getId(), true, true);
 				commentList.setMargin(true);
 				tabBugDetail.addTab(commentList, "Comments");
 

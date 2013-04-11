@@ -31,8 +31,8 @@
                  m_prj_member.isAdmin,
                  concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS memberFullName,
                  m_prj_role.rolename, 
-                 (SELECT COUNT(*) FROM m_tracker_bug WHERE m_tracker_bug.assignuser=m_prj_member.username AND m_tracker_bug.status IN ('Open', 'In Progress', 'Reopenned')) AS numOpenBugs,
-                 (SELECT COUNT(*) FROM m_prj_task WHERE m_prj_task.assignUser=m_prj_member.username AND m_prj_task.status='Open') AS numOpenTasks
+                 (SELECT COUNT(*) FROM m_tracker_bug WHERE m_tracker_bug.assignuser=m_prj_member.username AND  m_tracker_bug.projectid=m_prj_member.projectId AND m_tracker_bug.status IN ('Open', 'In Progress', 'Reopenned')) AS numOpenBugs,
+                 (SELECT COUNT(*) FROM m_prj_task WHERE m_prj_task.assignUser=m_prj_member.username AND m_prj_task.projectid=m_prj_member.projectId AND m_prj_task.status='Open') AS numOpenTasks
             FROM m_prj_member
               LEFT OUTER JOIN s_user ON (m_prj_member.username=s_user.username)
               LEFT OUTER JOIN m_prj_role ON (m_prj_role.id=m_prj_member.projectRoleId)
@@ -105,6 +105,17 @@
                 s_user.website, s_user.registeredTime, s_user.accountId, s_user.registerStatus
         FROM s_user
         WHERE  ((SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.username = s_user.username AND m_prj_member.projectId=#{projectId,javaType=INTEGER}) = 0)
+        ]]>
+
+    </select>
+    
+    <select id="getUsersInProject" parameterType="java.lang.Integer"
+        resultMap="com.esofthead.mycollab.module.user.dao.UserMapperExt.SimpleUserResult">
+        <![CDATA[
+        SELECT s_user.username, s_user.firstname, s_user.lastname, s_user.email, 
+                s_user.website, s_user.registeredTime, s_user.accountId, s_user.registerStatus
+        FROM s_user
+        WHERE  ((SELECT COUNT(*) FROM m_prj_member WHERE m_prj_member.username = s_user.username AND m_prj_member.projectId=#{projectId,javaType=INTEGER}) > 0)
         ]]>
 
     </select>

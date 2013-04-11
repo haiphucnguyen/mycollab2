@@ -13,10 +13,15 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 	@Autowired
 	protected ExtMailService extMailService;
 
+	protected List<SimpleUser> getNotifyUsers(
+			SimpleRelayEmailNotification notification) {
+		return notification.getNotifyUsers();
+	}
+
 	@Override
 	public void sendNotificationForCreateAction(
 			SimpleRelayEmailNotification notification) {
-		List<SimpleUser> notifiers = notification.getNotifyUsers();
+		List<SimpleUser> notifiers = getNotifyUsers(notification);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
 			TemplateGenerator templateGenerator = templateGeneratorForCreateAction(notification);
 			if (templateGenerator != null) {
@@ -26,13 +31,12 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 						templateGenerator.generateBodyContent(), null);
 			}
 		}
-
 	}
 
 	@Override
 	public void sendNotificationForUpdateAction(
 			SimpleRelayEmailNotification notification) {
-		List<SimpleUser> notifiers = notification.getNotifyUsers();
+		List<SimpleUser> notifiers = getNotifyUsers(notification);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
 			TemplateGenerator templateGenerator = templateGeneratorForUpdateAction(notification);
 			if (templateGenerator != null) {
@@ -48,7 +52,7 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 	@Override
 	public void sendNotificationForCommentAction(
 			SimpleRelayEmailNotification notification) {
-		List<SimpleUser> notifiers = notification.getNotifyUsers();
+		List<SimpleUser> notifiers = getNotifyUsers(notification);
 		if ((notifiers != null) && !notifiers.isEmpty()) {
 			TemplateGenerator templateGenerator = templateGeneratorForCommentAction(notification);
 			if (templateGenerator != null) {

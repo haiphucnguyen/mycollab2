@@ -1,0 +1,1 @@
+Have new comment for bug
