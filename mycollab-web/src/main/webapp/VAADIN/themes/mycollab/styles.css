@@ -112,6 +112,15 @@ div.v-button-link {
 	margin: 0px;
 }
 
+.v-label.overdue{
+	color: red;
+}
+
+.v-label.completed {
+	color: black;
+	text-decoration: line-through;
+}
+
 .v-datefield-button {
 	height: 15px;
 }

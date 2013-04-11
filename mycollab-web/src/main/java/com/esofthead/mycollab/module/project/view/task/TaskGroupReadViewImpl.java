@@ -27,6 +27,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -168,6 +169,9 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 
 			public FormLayoutFactory() {
 				super(taskList.getName());
+				if ("Closed".equals(taskList.getStatus())) {
+					addTitleStyle(UIConstants.LINK_COMPLETED);
+				}
 			}
 
 			@Override
