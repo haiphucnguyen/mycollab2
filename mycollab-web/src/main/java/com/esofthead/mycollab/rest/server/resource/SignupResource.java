@@ -28,7 +28,6 @@ public class SignupResource extends ServerResource {
 		String email = form.getFirstValue("email");
 		String timezoneId = form.getFirstValue("timezone");
 		int planId = Integer.parseInt(form.getFirstValue("planId"));
-		log.debug("Receive: " + username + "---" + password);
 		billingService.registerAccount(planId, username, password, email,
 				timezoneId);
 		return "aaa";
