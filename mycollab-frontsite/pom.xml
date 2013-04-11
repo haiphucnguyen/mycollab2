@@ -15,6 +15,7 @@
     <modelVersion>4.0.0</modelVersion>
     <name>mycollab-frontsite</name>
     <artifactId>mycollab-frontsite</artifactId>
+    <packaging>war</packaging>
     <parent>
         <groupId>com.esofthead.mycollab</groupId>
         <artifactId>parent</artifactId>
@@ -152,6 +153,14 @@
                 <version>2.9</version>
                 <configuration>
                     <downloadSources>true</downloadSources>
+                </configuration>
+            </plugin>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-war-plugin</artifactId>
+                <version>2.3</version>
+                <configuration>
+                    <warName>frontsite</warName>
                 </configuration>
             </plugin>
         </plugins>
