@@ -55,6 +55,8 @@ public class BugNotificationServiceImpl extends
 				"bugUrl",
 				ProjectLinkGenerator.generateBugPreviewFullLink(
 						bug.getProjectid(), bug.getId()));
+		hyperLinks.put("shortBugUrl",
+				StringUtils.subString(bug.getSummary(), 150));
 		hyperLinks.put("projectUrl", ProjectLinkGenerator
 				.generateProjectFullLink(bug.getProjectid()));
 		hyperLinks.put("loggedUserUrl", AccountLinkGenerator
@@ -106,6 +108,7 @@ public class BugNotificationServiceImpl extends
 						+ " add a new comment \"" + comment + "...\" to bug \""
 						+ StringUtils.subString(bug.getSummary(), 100) + "\"",
 				"templates/email/project/bugCommentNotifier.mt");
+		templateGenerator.putVariable("comment", emailNotification);
 		templateGenerator.putVariable("bug", bug);
 		templateGenerator.putVariable("hyperLinks", constructHyperLinks(bug));
 

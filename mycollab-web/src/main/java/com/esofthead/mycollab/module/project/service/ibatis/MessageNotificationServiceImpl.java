@@ -1,6 +1,8 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -12,6 +14,8 @@ import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.service.MessageNotificationService;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountLinkGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.utils.StringUtils;
 
@@ -42,7 +46,8 @@ public class MessageNotificationServiceImpl implements
 						+ message.getTitle() + "...\"",
 				"templates/email/project/messageCreatedNotifier.mt");
 		templateGenerator.putVariable("message", message);
-
+		templateGenerator.putVariable("hyperLinks",
+				constructHyperLinks(message));
 		extMailService.sendHTMLMail("mail@esofthead.com",
 				notification.getChangeByUserFullName(), usersInProject,
 				templateGenerator.generateSubjectContent(),
@@ -63,12 +68,28 @@ public class MessageNotificationServiceImpl implements
 						+ message.getTitle() + "...\"",
 				"templates/email/project/messageUpdatedNotifier.mt");
 		templateGenerator.putVariable("message", message);
-
+		templateGenerator.putVariable("hyperLinks",
+				constructHyperLinks(message));
 		extMailService.sendHTMLMail("mail@esofthead.com",
 				notification.getChangeByUserFullName(), usersInProject,
 				templateGenerator.generateSubjectContent(),
 				templateGenerator.generateBodyContent(), null);
+	}
 
+	private Map<String, String> constructHyperLinks(SimpleMessage message) {
+		Map<String, String> hyperLinks = new HashMap<String, String>();
+		hyperLinks.put(
+				"messageUrl",
+				ProjectLinkGenerator.generateMessagePreviewFullLink(
+						message.getProjectid(), message.getId()));
+		hyperLinks.put("shortMessageUrl",
+				StringUtils.subString(message.getTitle(), 150));
+		hyperLinks.put("projectUrl", ProjectLinkGenerator
+				.generateProjectFullLink(message.getProjectid()));
+		hyperLinks.put("createdUserUrl", AccountLinkGenerator
+				.generateUserPreviewFullLink(message.getPosteduser()));
+
+		return hyperLinks;
 	}
 
 	@Override
@@ -87,7 +108,9 @@ public class MessageNotificationServiceImpl implements
 						+ "to message \"" + message.getTitle() + "\"",
 				"templates/email/project/messageCommentNotifier.mt");
 		templateGenerator.putVariable("message", message);
-
+		templateGenerator.putVariable("comment", notification);
+		templateGenerator.putVariable("hyperLinks",
+				constructHyperLinks(message));
 		extMailService.sendHTMLMail("mail@esofthead.com",
 				notification.getChangeByUserFullName(), usersInProject,
 				templateGenerator.generateSubjectContent(),
