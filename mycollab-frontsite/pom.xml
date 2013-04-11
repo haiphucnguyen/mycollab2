@@ -127,6 +127,7 @@
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>${jetty.version}</version>
                 <configuration>
+                <!-- 
                     <connectors>
                         <connector
                             implementation="org.eclipse.jetty.server.nio.SelectChannelConnector">
@@ -142,6 +143,7 @@
                             <keyPassword>wicket</keyPassword>
                         </connector>
                     </connectors>
+                    -->
                 </configuration>
             </plugin>
             <plugin>

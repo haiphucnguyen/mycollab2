@@ -6,6 +6,7 @@ import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
+import org.apache.http.StatusLine;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -71,6 +72,13 @@ public class SignUpPage extends BasePage {
 					postRequest.setEntity(new UrlEncodedFormEntity(nvps));
 
 					HttpResponse response = httpClient.execute(postRequest);
+					StatusLine status = response.getStatusLine();
+					if (status.getStatusCode() == 200) {
+						// redirect to signup success page and ask user verify
+						// his signup by email
+					} else {
+						// inform error with user
+					}
 				} catch (Exception e) {
 					log.error("Send post request fail");
 				}
