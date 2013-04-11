@@ -1,14 +1,11 @@
 package com.esofthead.mycollab.pages;
 
-import java.io.IOException;
-import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
-import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
@@ -21,6 +18,8 @@ import org.apache.wicket.markup.html.form.TextField;
 import org.apache.wicket.model.Model;
 import org.apache.wicket.model.PropertyModel;
 import org.apache.wicket.request.mapper.parameter.PageParameters;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.base.BasePage;
 
@@ -28,13 +27,14 @@ public class SignUpPage extends BasePage {
 
 	private static final long serialVersionUID = 1L;
 
+	private static Logger log = LoggerFactory.getLogger(SignUpPage.class);
+
 	private final List<String> timezones = Arrays.asList(new String[] { "UTC",
 			"Asia/Ho_Chi_Minh", " 	America/Los_Angeles" });
 	public String selected = "UTC";
 
 	public SignUpPage(final PageParameters parameters) {
 		super(parameters);
-
 		final TextField<String> username = new TextField<String>(
 				"usernamefield", new Model<String>());
 		final PasswordTextField password = new PasswordTextField(
@@ -69,18 +69,10 @@ public class SignUpPage extends BasePage {
 
 				try {
 					postRequest.setEntity(new UrlEncodedFormEntity(nvps));
-				} catch (UnsupportedEncodingException e) {
-					e.printStackTrace();
-				}
-				HttpResponse response;
-				try {
-					System.out.println(nvps);
-					response = httpClient.execute(postRequest);
-					System.out.println(response.getStatusLine());
-				} catch (ClientProtocolException e) {
-					e.printStackTrace();
-				} catch (IOException e) {
-					e.printStackTrace();
+
+					HttpResponse response = httpClient.execute(postRequest);
+				} catch (Exception e) {
+					log.error("Send post request fail");
 				}
 			}
 		};

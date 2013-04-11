@@ -13,12 +13,13 @@
     xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 
     <modelVersion>4.0.0</modelVersion>
-    <groupId>com.esofthead.mycollab</groupId>
+    <name>mycollab-frontsite</name>
     <artifactId>mycollab-frontsite</artifactId>
-    <packaging>war</packaging>
-    <version>1.0-SNAPSHOT</version>
-    <!-- TODO project name -->
-    <name>quickstart</name>
+    <parent>
+        <groupId>com.esofthead.mycollab</groupId>
+        <artifactId>parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+    </parent>
     <description></description>
     <!-- <organization> <name>company name</name> <url>company url</url> 
         </organization> -->
@@ -64,7 +65,7 @@
             <version>4.10</version>
             <scope>test</scope>
         </dependency>
-        
+
 
         <!-- JETTY DEPENDENCIES FOR TESTING -->
         <dependency>
@@ -153,17 +154,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <repositories>
-        <repository>
-            <id>Apache Nexus</id>
-            <url>https://repository.apache.org/content/repositories/snapshots/</url>
-            <releases>
-                <enabled>false</enabled>
-            </releases>
-            <snapshots>
-                <enabled>true</enabled>
-            </snapshots>
-        </repository>
-    </repositories>
 </project>
