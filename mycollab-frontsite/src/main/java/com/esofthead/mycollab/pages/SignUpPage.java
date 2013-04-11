@@ -32,7 +32,7 @@ public class SignUpPage extends BasePage {
 
 	private final List<String> timezones = Arrays.asList(new String[] { "UTC",
 			"Asia/Ho_Chi_Minh", " 	America/Los_Angeles" });
-	public String selected = "UTC";
+	public String selected = "10";
 
 	public SignUpPage(final PageParameters parameters) {
 		super(parameters);
@@ -76,6 +76,8 @@ public class SignUpPage extends BasePage {
 					if (status.getStatusCode() == 200) {
 						// redirect to signup success page and ask user verify
 						// his signup by email
+						log.debug("Signup successfully. Status is "
+								+ status.getReasonPhrase());
 					} else {
 						// inform error with user
 					}

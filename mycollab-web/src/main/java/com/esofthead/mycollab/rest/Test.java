@@ -32,11 +32,13 @@ public class Test {
 			IOException {
 		DefaultHttpClient httpClient = new DefaultHttpClient();
 		HttpPost postRequest = new HttpPost(
-				"http://app.mycollab.com/api/signup");
+				"http://localhost:8080/mycollab-web/api/signup");
 
 		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 		nvps.add(new BasicNameValuePair("username", "username1"));
 		nvps.add(new BasicNameValuePair("password", "password1"));
+		nvps.add(new BasicNameValuePair("planId", "1"));
+		nvps.add(new BasicNameValuePair("email", "hainguyen@esofthead.com"));
 
 		postRequest.setEntity(new UrlEncodedFormEntity(nvps));
 		HttpResponse response = httpClient.execute(postRequest);
