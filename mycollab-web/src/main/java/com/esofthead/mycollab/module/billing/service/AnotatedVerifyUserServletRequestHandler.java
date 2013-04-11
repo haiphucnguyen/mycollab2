@@ -49,7 +49,7 @@ public class AnotatedVerifyUserServletRequestHandler implements
 	}
 
 	public static void main(String[] args) {
-		System.out.println(UrlEncodeDecoder.encode("username1"));
+		System.out.println(UrlEncodeDecoder.encode("hainguyen@esofthead.com"));
 	}
 
 }
