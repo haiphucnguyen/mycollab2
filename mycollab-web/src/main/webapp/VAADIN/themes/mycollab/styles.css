@@ -1,8 +1,11 @@
 @import "my-chameleon-styles.css";
 
 @font-face {
-	font-family: "Lucida Sans Unicode";
-	src: url('fonts/lsansuni.ttf'), url('fonts/lsansuni.eot'); /* IE9+ */
+	font-family: 'Lucida Sans Unicode';
+	src: url('fonts/lsansuni.eot');
+	src: local('☺'), url('fonts/lsansuni.eot') format('embedded-opentype'), url('fonts/lsansuni.woff') format('woff'), url('fonts/lsansuni.ttf') format('truetype'), url('fonts/lsansuni.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
 }
 
 @media only screen and (max-width : 1024px) , only screen and

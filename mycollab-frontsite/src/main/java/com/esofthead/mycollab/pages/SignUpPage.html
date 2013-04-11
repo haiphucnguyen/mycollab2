@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html xmlns:wicket="http://wicket.apache.org">
+	<head>
+	<wicket:head>
+		<link rel="stylesheet" type="text/css" href="css/signup.css?version=new"/>
+	</wicket:head>
+	</head>
+	<body>
+		<wicket:extend>
+			<div id="top-menu">
+				<div class="sub-header signup">
+					<h3 style="display: block">
+						Take a Free 30-day Test Flight
+					</h3>
+					<p class="intro-text">Thousands of people have MyCollab accounts. Get yours under a minute!</p>
+				</div>
+			</div>
+			<div class="signup" id="content" style="padding-top: 45px">
+				<div id="content-left">
+							<form method="post" wicket:id="signupform">
+								<div class="tab-container">
+									<div class="tab selected">Create a New Account</div>
+									<div class="tab">Use an Existing Account</div>
+									<div class="clear"></div>
+								</div>
+								<table class="signup-table" cellspacing="15" cellpadding="5">
+									<tr>
+										<td colspan="2">
+											<p>User Name<sup>*</sup></p>
+											<p><input type="text" wicket:id="usernamefield" placeholder="Username"/></p>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<p>Password<sup>*</sup></p>
+											<p><input type="password" wicket:id="passwordfield" placeholder="Password"/></p>
+										</td>
+										<td>
+											<p>Confirm Password<sup>*</sup></p>
+											<p><input type="password" wicket:id="cpasswordfield" placeholder="Confirm Password"/></p>
+										</td>
+									</tr>
+									<tr>
+										<td>
+											<p>Email<sup>*</sup></p>
+											<p><input type="text" wicket:id="emailfield" placeholder="Email"/></p>
+										</td>
+										<td>
+											<p style="line-height: 26px;">Timezone</p>
+											<p><select wicket:id="timezoneselect"></select></p>
+										</td>
+									</tr>
+								</table>
+								<p><input type="submit" value="Start my Trial"/></p>
+							</form>
+				</div>
+				<div id="content-right">
+					<div class="top-block">
+						<div class="block-content">
+							Thanks <br> for choosing MyCollab!
+						</div>
+						<div class="clear"></div>
+					</div>
+					<div class="bottom-block">
+						<div class="block-content">
+							<p><img src="/images/free_pin.png"/><span>30-day FREE trial</span></p>
+							<p>You won't be billed unless you keep your account open past your 30-day free trial</p>
+						</div>
+						<div class="clear"></div>
+					</div>
+				</div>
+				<div class="clear"></div>
+			</div>
+		</wicket:extend>
+	</body>
+</html>

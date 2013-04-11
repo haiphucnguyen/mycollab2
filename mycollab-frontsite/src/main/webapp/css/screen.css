@@ -34,6 +34,9 @@ ins {
 del {
 	text-decoration: line-through;
 }
+.clear {
+	clear: both;
+}
 /*caption, th, td {text-align: left; font-weight: normal;}
 table, caption, tbody, tfoot, thead, tr, th, td {font-size:100%; vertical-align:baseline; outline:0; margin:0; padding:0;}
 table { border-collapse:collapse; border-spacing: 0;}*/
@@ -43,7 +46,6 @@ body {
 	
 	color: #454545;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
-	line-height: 15px;	
 	min-width: 1024px;
 }
 h1 {
