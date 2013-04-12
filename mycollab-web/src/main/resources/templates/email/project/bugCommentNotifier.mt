@@ -21,7 +21,7 @@
 		<tr>
 			<td style="background: url('${defaultUrls.cdn_url}border_large_center_white.png') repeat-y 0 0 transparent; color: #4e4e4e; font: 14px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 32px 32px 0px;">
 				<p style="font-weight: bold;">Hi there,</p>
-				<p style="line-height: 28px;">Just wanna let you know that a new new comment has been created by <a href="$comment.changeby" style="color: #4283c4; text-decoration: underline;">$comment.changeByUserFullName</a> to the bug <a href="$hyperLinks.bugUrl" style="color: #4283c4; text-decoration: underline;">$hyperLinks.shortBugUrl</a> in project <a href="$hyperLinks.projectUrl" style="color: #4283c4; text-decoration: underline;">$bug.projectname</a>. Here're details about it:</p>
+				<p style="line-height: 28px;">Just wanna let you know that a new new comment has been created by <a href="$userComment" style="color: #4283c4; text-decoration: underline;">$comment.changeByUserFullName</a> to the bug <a href="$hyperLinks.bugUrl" style="color: #4283c4; text-decoration: underline;">$hyperLinks.shortBugUrl</a> in project <a href="$hyperLinks.projectUrl" style="color: #4283c4; text-decoration: underline;">$bug.projectname</a>. Here're details about it:</p>
 				<table width="588" cellpadding="0" cellspacing="0" border="0" style="margin: 0 auto 25px;">
 					<tr>
 						<td style="background: url('${defaultUrls.cdn_url}border_small_top.png') no-repeat 0 0 transparent; line-height: 7px;" height="7">&nbsp;</td>
@@ -30,8 +30,7 @@
 						<td style="background: url('${defaultUrls.cdn_url}border_small_center.png') repeat-y 0 0 transparent; color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
-									<td style="text-align: left; min-width: 90px; vertical-align: top;">Comment:&nbsp;</td>
-									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!comment.changecomment</td>
+									<td style="text-align: left; word-wrap: break-word; white-space: normal; word-break: break-all;">$!comment.changecomment</td>
 								</tr>
 							</table>
 						</td>

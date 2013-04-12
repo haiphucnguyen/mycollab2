@@ -109,6 +109,8 @@ public class MessageNotificationServiceImpl implements
 				"templates/email/project/messageCommentNotifier.mt");
 		templateGenerator.putVariable("message", message);
 		templateGenerator.putVariable("comment", notification);
+		templateGenerator.putVariable("userComment", AccountLinkGenerator
+				.generateUserPreviewFullLink(notification.getChangeby()));
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(message));
 		extMailService.sendHTMLMail("mail@esofthead.com",
