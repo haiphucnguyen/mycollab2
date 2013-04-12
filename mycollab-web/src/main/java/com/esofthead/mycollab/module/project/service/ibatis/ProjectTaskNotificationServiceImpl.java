@@ -56,6 +56,8 @@ public class ProjectTaskNotificationServiceImpl extends
 				"taskUrl",
 				ProjectLinkGenerator.generateTaskPreviewFullLink(
 						task.getProjectid(), task.getId()));
+		hyperLinks.put("shortTaskUrl",
+				StringUtils.subString(task.getTaskname(), 150));
 		hyperLinks.put("projectUrl", ProjectLinkGenerator
 				.generateProjectFullLink(task.getProjectid()));
 		hyperLinks.put("assignUserUrl", AccountLinkGenerator
@@ -113,6 +115,9 @@ public class ProjectTaskNotificationServiceImpl extends
 						+ StringUtils.subString(task.getTaskname(), 100) + "\"",
 				"templates/email/project/taskCommentNotifier.mt");
 		templateGenerator.putVariable("task", task);
+		templateGenerator.putVariable("comment", emailNotification);
+		templateGenerator.putVariable("userComment", AccountLinkGenerator
+				.generateUserPreviewFullLink(emailNotification.getChangeby()));
 		templateGenerator.putVariable("hyperLinks", createHyperLinks(task));
 
 		return templateGenerator;

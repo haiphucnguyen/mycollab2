@@ -109,6 +109,8 @@ public class BugNotificationServiceImpl extends
 						+ StringUtils.subString(bug.getSummary(), 100) + "\"",
 				"templates/email/project/bugCommentNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
+		templateGenerator.putVariable("userComment", AccountLinkGenerator
+				.generateUserPreviewFullLink(emailNotification.getChangeby()));
 		templateGenerator.putVariable("bug", bug);
 		templateGenerator.putVariable("hyperLinks", constructHyperLinks(bug));
 
