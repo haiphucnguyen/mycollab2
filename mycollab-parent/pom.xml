@@ -22,6 +22,7 @@
     <modules>
         <module>../mycollab-core</module>
         <module>../mycollab-web</module>
+        <module>../mycollab-frontsite</module>
         <module>../mycollab-deployer</module>
     </modules>
     <dependencies>
