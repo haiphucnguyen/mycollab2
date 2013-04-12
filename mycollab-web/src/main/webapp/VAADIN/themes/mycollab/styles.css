@@ -158,6 +158,7 @@ input.v-textfield[type="text"],.v-filterselect {
 	{
 	font: 12px/18px "Lucida Sans Unicode", Helvetica, Arial, Verdana,
 		sans-serif !important;
+	-webkit-font-smoothing: antialiased;
 }
 
 body div>input.v-filterselect-input[type="text"] {
