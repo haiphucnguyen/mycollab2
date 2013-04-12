@@ -4,6 +4,9 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import com.esofthead.mycollab.module.project.ui.components.ProjectUiUtils;
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
@@ -21,6 +24,7 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
 	private final String title;
 	private TaskListInformationLayout informationLayout;
+	private List<String> lstStyleTitle = new ArrayList<String>();
 
 	public TaskGroupFormLayoutFactory(String title) {
 		this.title = title;
@@ -30,7 +34,11 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 	public Layout getLayout() {
 		AddViewLayout accountAddLayout = new AddViewLayout(title,
 				new ThemeResource("icons/48/project/tasklist.png"));
-
+		
+		for (int i = 0; i < lstStyleTitle.size(); i++) {
+			accountAddLayout.addTitleStyleName(lstStyleTitle.get(i));
+		}
+		
 		Layout topPanel = createTopPanel();
 		if (topPanel != null) {
 			accountAddLayout.addTopControls(topPanel);
@@ -45,6 +53,10 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 		}
 
 		return accountAddLayout;
+	}
+	
+	protected void addTitleStyle(String styleName) {
+		lstStyleTitle.add(styleName);
 	}
 
 	@Override

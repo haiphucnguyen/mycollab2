@@ -6,6 +6,7 @@ import org.apache.wicket.protocol.http.WebApplication;
 import com.esofthead.mycollab.pages.HomePage;
 import com.esofthead.mycollab.pages.PricingPage;
 import com.esofthead.mycollab.pages.PrivacyPage;
+import com.esofthead.mycollab.pages.SignUpPage;
 import com.esofthead.mycollab.pages.TourPage;
 
 /**
@@ -37,5 +38,6 @@ public class WicketApplication extends WebApplication {
 		mountPage("/tour", TourPage.class);
 		mountPage("/pricing", PricingPage.class);
 		mountPage("/privacy", PrivacyPage.class);
+		mountPage("/signup", SignUpPage.class);
 	}
 }

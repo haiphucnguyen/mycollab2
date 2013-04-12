@@ -151,7 +151,7 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 			@Override
 			protected Layout createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_RISK,
-						risk.getId());
+						risk.getId(), true, false);
 			}
 		}
 	}
@@ -223,7 +223,7 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 			@Override
 			protected Layout createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_RISK,
-						risk.getId(), false);
+						risk.getId(), false, false);
 			}
 		}
 	}

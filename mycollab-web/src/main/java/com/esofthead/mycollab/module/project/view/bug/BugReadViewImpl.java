@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.GregorianCalendar;
+
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
@@ -256,6 +258,14 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						+ bug.getBugkey() + "#]: " + bug.getSummary(),
 						new ThemeResource("icons/48/project/bug.png"));
 
+				if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
+					taskListAddLayout.addTitleStyleName(UIConstants.LINK_COMPLETED);
+				} else if (bug.getDuedate() != null
+						&& (bug.getDuedate().before(new GregorianCalendar()
+								.getTime()))) {
+					taskListAddLayout.addTitleStyleName(UIConstants.LINK_OVERDUE);
+				}
+				
 				Button createAccountBtn = new Button("Create",
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
@@ -408,7 +418,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				tabBugDetail.setStyleName(UIConstants.WHITE_TABSHEET);
 
 				CommentDisplay commentList = new CommentDisplay(
-						CommentTypeConstants.PRJ_BUG, bug.getId());
+						CommentTypeConstants.PRJ_BUG, bug.getId(), true, true);
 				commentList.setMargin(true);
 				tabBugDetail.addTab(commentList, "Comments");
 

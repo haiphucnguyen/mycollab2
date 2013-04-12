@@ -176,7 +176,10 @@ public class TaskGroupReorderViewImpl extends AbstractView implements
 			this.setStyleName("task-component");
 			this.setWidth("100%");
 			Label taskName = new Label(taskList.getName());
-			taskName.setStyleName("task-name");
+			taskName.addStyleName("task-name");
+			if ("Closed".equals(taskList.getStatus())) {
+				taskName.addStyleName(UIConstants.LINK_COMPLETED);
+			}
 			this.addComponent(taskName);
 			Label taskCreatedTime = new Label("Last updated on "
 					+ DateTimeUtils.getStringDateFromNow(taskList

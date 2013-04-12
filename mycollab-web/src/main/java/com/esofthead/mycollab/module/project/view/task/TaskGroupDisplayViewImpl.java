@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.view.task;
 import org.vaadin.hene.popupbutton.PopupButton;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.file.ExportTaskStreamResource;
 import com.esofthead.mycollab.module.file.FieldExportColumn;
@@ -202,11 +203,14 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 					+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
 							.getProject().getName() != null) ? CurrentProjectVariables
 							.getProject().getName() : "");
+				TaskListSearchCriteria tasklistSearchCriteria = new TaskListSearchCriteria();
+				tasklistSearchCriteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables
+						.getProject().getId()));
 				Resource res = new StreamResource(
 						new ExportTaskStreamResource(title,
 								EXPORT_COLUMNS, AppContext
 										.getSpringBean(ProjectTaskListService.class),
-								new TaskListSearchCriteria()), "task_list.xls",
+										tasklistSearchCriteria), "task_list.xls",
 						TaskGroupDisplayViewImpl.this.getApplication());
 				TaskGroupDisplayViewImpl.this.getWindow().open(res, "_blank");
 			}

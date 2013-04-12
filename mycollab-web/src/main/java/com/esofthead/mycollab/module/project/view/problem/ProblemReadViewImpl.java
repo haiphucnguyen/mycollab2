@@ -151,7 +151,7 @@ public class ProblemReadViewImpl extends AbstractView implements
 			@Override
 			protected Layout createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_PROBLEM,
-						problem.getId());
+						problem.getId(), true, false);
 			}
 		}
 	}
@@ -221,7 +221,7 @@ public class ProblemReadViewImpl extends AbstractView implements
 			@Override
 			protected Layout createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_PROBLEM,
-						problem.getId(), false);
+						problem.getId(), false, false);
 			}
 		}
 	}

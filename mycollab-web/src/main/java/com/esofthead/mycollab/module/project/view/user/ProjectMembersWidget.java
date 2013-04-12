@@ -15,8 +15,10 @@ import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -64,10 +66,20 @@ public class ProjectMembersWidget extends Depot {
 
 			CssLayout body = new CssLayout();
 			body.setStyleName("activity-date");
-			Label dateLbl = new Label("Joined from "
-					+ DateTimeUtils.getStringDateFromNow(obj.getJoindate()));
-			body.addComponent(dateLbl);
-
+			
+			Label memberRole = new Label();
+			memberRole.setContentMode(Label.CONTENT_XHTML);
+			String textRole = "";
+			if (obj.getIsadmin() != null && obj.getIsadmin() == Boolean.TRUE) {
+				textRole = "<a style=\"color: #b00000;\"> Project Admin </a>";
+			} else {
+				textRole = obj.getRoleName();
+			}
+			textRole  += " - Joined from "
+					+ DateTimeUtils.getStringDateFromNow(obj.getJoindate());
+			memberRole.setValue(textRole);
+			
+			body.addComponent(memberRole);
 			layout.addComponent(body);
 			return layout;
 		}

@@ -31,6 +31,20 @@ public class ProjectLinkGenerator {
 		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
 				+ "?url=" + generateBugPreviewLink(projectId, bugId);
 	}
+	
+	public static String generateMessagePreviewLink(int projectId, int messageId) {
+		return "project/message/preview/"
+				+ UrlEncodeDecoder.encode(projectId + "/" + messageId);
+	}
+	
+	public static String generateMessagePreviewFullLink(Integer projectId,
+			Integer messageId) {
+		if (projectId == null || messageId == null) {
+			return "";
+		}
+		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
+				+ "?url=" + generateMessagePreviewLink(projectId, messageId);
+	}
 
 	public static String generateTaskPreviewFullLink(Integer projectId,
 			Integer taskId) {

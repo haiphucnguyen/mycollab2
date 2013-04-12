@@ -4,7 +4,7 @@
     namespace="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapperExt">
     <resultMap id="SimpleEmailRelayNotificationResult"
         type="com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification"
-        extends="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapper.BaseResultMap">
+        extends="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapper.ResultMapWithBLOBs">
         <result column="changeByUserFullName" jdbcType="VARCHAR"
             property="changeByUserFullName" />
 

@@ -14,11 +14,13 @@ import com.esofthead.mycollab.web.AppContext;
 public class BugUrlResolver extends UrlResolver {
 	public BugUrlResolver() {
 		this.addSubResolver("dashboard", new DashboardUrlResolver());
+		this.addSubResolver("list", new DashboardUrlResolver());
 		this.addSubResolver("add", new AddUrlResolver());
 		this.addSubResolver("edit", new EditUrlResolver());
 		this.addSubResolver("preview", new PreviewUrlResolver());
 		this.addSubResolver("component", new ComponentUrlResolver());
 		this.addSubResolver("version", new VersionUrlResolver());
+		
 	}
 
 	private static class DashboardUrlResolver extends UrlResolver {

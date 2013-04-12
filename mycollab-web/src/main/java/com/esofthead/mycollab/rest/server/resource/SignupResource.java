@@ -11,20 +11,25 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
-import com.esofthead.mycollab.core.utils.BeanUtility;
-import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.module.billing.service.BillingService;
 
 @Component("restUserResource")
 public class SignupResource extends ServerResource {
 	private static Logger log = LoggerFactory.getLogger(SignupResource.class);
 
 	@Autowired
-	UserService userService;
+	BillingService billingService;
 
 	@Post("form")
 	public String doPost(Form form) throws JSONException {
-		log.debug("Receive input: " + form + " "
-				+ BeanUtility.printBeanObj(form));
+		log.debug("Start handling form request");
+		String username = form.getFirstValue("username");
+		String password = form.getFirstValue("password");
+		String email = form.getFirstValue("email");
+		String timezoneId = form.getFirstValue("timezone");
+		int planId = Integer.parseInt(form.getFirstValue("planId"));
+		billingService.registerAccount(planId, username, password, email,
+				timezoneId);
 		return "aaa";
 	}
 

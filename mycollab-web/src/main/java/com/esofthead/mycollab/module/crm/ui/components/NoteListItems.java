@@ -125,6 +125,8 @@ public class NoteListItems extends Depot {
 			footer.setWidth("100%");
 
 			replyBtn = new Button("Reply", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void buttonClick(ClickEvent event) {
 					int compIndex = noteContentLayout
@@ -133,7 +135,7 @@ public class NoteListItems extends Depot {
 						commentInput = new CommentInput(
 								NoteRowDisplayHandler.this,
 								CommentTypeConstants.CRM_NOTE, note.getId(),
-								true);
+								true, false);
 						noteContentLayout.addComponent(commentInput, compIndex);
 						replyBtn.setVisible(false);
 					}

@@ -24,10 +24,14 @@ import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 /**
  * @author hai
  */
-public interface UserService extends IDefaultService<String, User, UserSearchCriteria> {
-    public static int FREE_BILLING = 0;
-    
-    SimpleUser authentication(String username, String password, boolean isPasswordEncrypt);
-    
-    SimpleUser findUserByUserName(String username);
+public interface UserService extends
+		IDefaultService<String, User, UserSearchCriteria> {
+	public static int FREE_BILLING = 0;
+
+	SimpleUser authentication(String username, String password,
+			boolean isPasswordEncrypt);
+
+	SimpleUser findUserByUserName(String username);
+
+	void verifyUser(String username);
 }

@@ -19,8 +19,10 @@ import com.esofthead.mycollab.module.user.domain.SimpleUser;
 public interface ProjectMemberService extends
 		IDefaultService<Integer, ProjectMember, ProjectMemberSearchCriteria> {
 	SimpleProjectMember findMemberById(int memberId);
-	
+
 	SimpleProjectMember findMemberByUsername(String username, int projectId);
 
 	List<SimpleUser> getUsersNotInProject(int projectId);
+
+	List<SimpleUser> getUsersInProject(int projectId);
 }

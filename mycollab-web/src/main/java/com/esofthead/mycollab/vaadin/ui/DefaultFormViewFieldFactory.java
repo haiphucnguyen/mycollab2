@@ -167,6 +167,24 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 			return String.class;
 		}
 	}
+	
+	public static class FormUrlSocialNetworkLinkViewField extends CustomField {
+
+		private static final long serialVersionUID = 1L;
+
+		public FormUrlSocialNetworkLinkViewField(String caption, String linkAccount) {
+			caption = (caption == null) ? "" : caption;
+			linkAccount = (linkAccount == null) ? "" : linkAccount;
+			Link link = new SocialNetworkLink(caption, linkAccount);
+			link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			this.setCompositionRoot(link);
+		}
+
+		@Override
+		public Class<?> getType() {
+			return String.class;
+		}
+	}
 
 	public static class FormEmailLinkViewField extends CustomField {
 

@@ -75,7 +75,7 @@ public class ExportTaskStreamResource extends
 						CellStyle.ALIGN_CENTER, CellStyle.VERTICAL_BOTTOM,
 						title.toUpperCase());
 
-				sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 4));
+				sheet.addMergedRegion(new CellRangeAddress(1, 1, 1, 8));
 
 				int numPage = totalItems
 						/ SearchRequest.DEFAULT_NUMBER_SEARCH_ITEMS + 1;
@@ -197,35 +197,50 @@ public class ExportTaskStreamResource extends
 			}
 		}
 		
-		createCellInstruction(wb, rowDescription, (short) 2, CellStyle.ALIGN_LEFT,
+		createCellInstruction(wb, rowDescription, (short) 1, CellStyle.ALIGN_LEFT,
 				CellStyle.VERTICAL_BOTTOM, "Description: ", false);
+		sheet.addMergedRegion(new CellRangeAddress((short) (rowWriting + 2),
+				(short) (rowWriting + 2), 1, 2));
 		sheet.addMergedRegion(new CellRangeAddress((short) (rowWriting + 2),
 				(short) (rowWriting + 2), 3, 5));
 		createCell(wb, rowDescription, (short) 3, CellStyle.ALIGN_LEFT,
 				CellStyle.VERTICAL_BOTTOM, tasklist.getDescription(), false);
 
 		Row rowReponsible = sheet.createRow((short) ((short) rowWriting + 3));
-		createCellInstruction(wb, rowReponsible, (short) 2, CellStyle.ALIGN_LEFT,
+		createCellInstruction(wb, rowReponsible, (short) 1, CellStyle.ALIGN_LEFT,
 				CellStyle.VERTICAL_BOTTOM, "Reponsible User: ", false);
+		sheet.addMergedRegion(new CellRangeAddress((short) (rowWriting + 3),
+				(short) (rowWriting + 3), 1, 2));
 		createCell(wb, rowReponsible, (short) 3, CellStyle.ALIGN_LEFT,
 				CellStyle.VERTICAL_BOTTOM, tasklist.getOwnerFullName(), false);
-
+		
 		createCellInstruction(wb, rowReponsible, (short) 4, CellStyle.ALIGN_LEFT,
 				CellStyle.VERTICAL_BOTTOM, "Phase: ", false);
-		createCell(wb, rowReponsible, (short) 5, CellStyle.ALIGN_LEFT,
+		sheet.addMergedRegion(new CellRangeAddress((short) (rowWriting + 3),
+				(short) (rowWriting + 3), 4, 5));
+		createCell(wb, rowReponsible, (short) 6, CellStyle.ALIGN_LEFT,
 				CellStyle.VERTICAL_BOTTOM, tasklist.getMilestoneName(), false);
+		sheet.addMergedRegion(new CellRangeAddress((short) (rowWriting + 3),
+				(short) (rowWriting + 3), 6, 9));
 
 		Row rowProgress = sheet.createRow((short) ((short) rowWriting + 4));
-		createCellInstruction(wb, rowProgress, (short) 2, CellStyle.ALIGN_LEFT,
+		createCellInstruction(wb, rowProgress, (short) 1, CellStyle.ALIGN_LEFT,
 				CellStyle.VERTICAL_BOTTOM, "Progress: ", false);
+		sheet.addMergedRegion(new CellRangeAddress((short) (rowWriting + 4),
+				(short) (rowWriting + 4), 1, 2));
 		createCell(wb, rowProgress, (short) 3, CellStyle.ALIGN_LEFT,
 				CellStyle.VERTICAL_BOTTOM, Math.ceil(tasklist.getPercentageComplete()) + "%",
 				false);
 
 		createCellInstruction(wb, rowProgress, (short) 4, CellStyle.ALIGN_LEFT,
 				CellStyle.VERTICAL_BOTTOM, "Number of Open Tasks: ", false);
-		createCell(wb, rowProgress, (short) 5, CellStyle.ALIGN_LEFT,
+		sheet.addMergedRegion(new CellRangeAddress((short) (rowWriting + 4),
+				(short) (rowWriting + 4), 4, 5));
+		createCell(wb, rowProgress, (short) 6, CellStyle.ALIGN_LEFT,
 				CellStyle.VERTICAL_BOTTOM, tasklist.getNumOpenTasks() + "/" + tasklist.getNumAllTasks(), false);
+		sheet.addMergedRegion(new CellRangeAddress((short) (rowWriting + 4),
+				(short) (rowWriting + 4), 6, 9));
+
 	}
 	
 	private Cell createCellInstruction(Workbook wb, Row row, short column, short halign,

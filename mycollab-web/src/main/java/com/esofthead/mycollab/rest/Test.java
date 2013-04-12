@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
-import org.apache.http.Consts;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.ClientProtocolException;
@@ -38,6 +37,8 @@ public class Test {
 		List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 		nvps.add(new BasicNameValuePair("username", "username1"));
 		nvps.add(new BasicNameValuePair("password", "password1"));
+		nvps.add(new BasicNameValuePair("planId", "1"));
+		nvps.add(new BasicNameValuePair("email", "hainguyen@esofthead.com"));
 
 		postRequest.setEntity(new UrlEncodedFormEntity(nvps));
 		HttpResponse response = httpClient.execute(postRequest);

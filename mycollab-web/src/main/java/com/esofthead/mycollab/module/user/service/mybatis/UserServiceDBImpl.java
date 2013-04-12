@@ -37,6 +37,7 @@ import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
+import com.esofthead.mycollab.module.user.UserIsNotExistedException;
 import com.esofthead.mycollab.module.user.dao.RolePermissionMapper;
 import com.esofthead.mycollab.module.user.dao.UserMapper;
 import com.esofthead.mycollab.module.user.dao.UserMapperExt;
@@ -87,7 +88,11 @@ public class UserServiceDBImpl extends
 		if (record.getRegisterstatus() == null) {
 			record.setRegisterstatus(RegisterStatusConstants.VERIFICATING);
 		}
-		record.setUsername(record.getEmail());
+
+		if (record.getUsername() == null) {
+			record.setUsername(record.getEmail());
+		}
+
 		userMapper.insert(record);
 
 		// set default user avatar
@@ -174,5 +179,28 @@ public class UserServiceDBImpl extends
 	@Override
 	public SimpleUser findUserByUserName(String username) {
 		return userMapperExt.findUserByUserName(username);
+	}
+
+	@Override
+	public void verifyUser(String username) {
+		SimpleUser user = findUserByUserName(username);
+		if (user != null) {
+			if (RegisterStatusConstants.VERIFICATING.equals(user
+					.getRegisterstatus())) {
+				user.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+				updateWithSession(user, username);
+
+			} else if (RegisterStatusConstants.ACTIVE.equals(user
+					.getRegisterstatus())) {
+				// do nothing
+			} else if (RegisterStatusConstants.PENDING.equals(user
+					.getRegisterstatus())) {
+				throw new UserInvalidInputException("User " + username
+						+ " is pending");
+			}
+		} else {
+			throw new UserIsNotExistedException("There is no user name "
+					+ username + " in database");
+		}
 	}
 }

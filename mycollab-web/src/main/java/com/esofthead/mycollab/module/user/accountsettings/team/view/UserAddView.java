@@ -6,7 +6,7 @@ package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import java.util.Date;
 
-import com.esofthead.mycollab.common.TimezoneMapper.TimezoneExt;
+import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.IFormAddView;

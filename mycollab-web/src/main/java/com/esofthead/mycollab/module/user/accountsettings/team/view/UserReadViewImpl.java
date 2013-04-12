@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.common.TimezoneMapper;
+import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory;
 import com.esofthead.mycollab.module.user.accountsettings.view.UserFormLayoutFactory;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
@@ -110,6 +110,15 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 					} else if (propertyId.equals("timezone")) {
 						return new DefaultFormViewFieldFactory.FormViewField(
 								TimezoneMapper.getTimezone(user.getTimezone()).getDisplayName());
+					} else if (propertyId.equals("facebookaccount")) {
+						return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
+								user.getFacebookaccount(), "https://www.facebook.com/" + user.getFacebookaccount());
+					} else if (propertyId.equals("twitteraccount")) {
+						return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
+								user.getTwitteraccount(), "https://www.twitter.com/" + user.getTwitteraccount());
+					} else if (propertyId.equals("skypecontact")) {
+						return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
+								user.getSkypecontact(), "skype:" + user.getSkypecontact() + "?chat");
 					}
 					return null;
 				}

@@ -1,8 +1,11 @@
 @import "my-chameleon-styles.css";
 
 @font-face {
-	font-family: "Lucida Sans Unicode";
-	src: url('fonts/lsansuni.ttf'), url('fonts/lsansuni.eot'); /* IE9+ */
+	font-family: 'Lucida Sans Unicode';
+	src: url('fonts/lsansuni.eot');
+	src: local('☺'), url('fonts/lsansuni.eot') format('embedded-opentype'), url('fonts/lsansuni.woff') format('woff'), url('fonts/lsansuni.ttf') format('truetype'), url('fonts/lsansuni.svg') format('svg');
+	font-weight: normal;
+	font-style: normal;
 }
 
 @media only screen and (max-width : 1024px) , only screen and
@@ -73,7 +76,6 @@ ul {
 	text-shadow: none;
 }
 
-
 .v-button .v-icon,.v-nativebutton .v-icon {
 	vertical-align: top;
 }
@@ -108,6 +110,15 @@ div.v-button-link {
 	background-color: transparent;
 	border-radius: 0px;
 	margin: 0px;
+}
+
+.v-label.overdue{
+	color: red;
+}
+
+.v-label.completed {
+	color: black;
+	text-decoration: line-through;
 }
 
 .v-datefield-button {
@@ -147,6 +158,7 @@ input.v-textfield[type="text"],.v-filterselect {
 	{
 	font: 12px/18px "Lucida Sans Unicode", Helvetica, Arial, Verdana,
 		sans-serif !important;
+	-webkit-font-smoothing: antialiased;
 }
 
 body div>input.v-filterselect-input[type="text"] {
@@ -447,9 +459,10 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	background: -o-linear-gradient(top, #444 0, #222 100%);
 	background: -ms-linear-gradient(top, #444 0, #222 100%);
 	background: linear-gradient(to bottom, #444 0, #222 100%);
-	filter: progid :       DXImageTransform.Microsoft.gradient (     
-		 startColorstr =   
-		   '#444444', endColorstr =       '#222222', GradientType =       0 );
+	filter: progid :         DXImageTransform.Microsoft.gradient (      
+		  startColorstr =    
+		    '#444444', endColorstr =         '#222222', GradientType =        
+		0 );
 	/*     box-shadow: 0px 0px 2px 2px #444; */
 }
 
@@ -1462,9 +1475,10 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: -ms-linear-gradient(top, #E6E6E6 0, #DDD 100%);
 	background: linear-gradient(to bottom, #E6E6E6 0, #DDD 100%);
-	filter: progid :       DXImageTransform.Microsoft.gradient (     
-		 startColorstr =   
-		   '#E6E6E6', endColorstr =       '#DDD', GradientType =       0 );
+	filter: progid :         DXImageTransform.Microsoft.gradient (      
+		  startColorstr =    
+		    '#E6E6E6', endColorstr =         '#DDD', GradientType =         0
+		);
 }
 
 .actionPanel .v-button {
@@ -1509,9 +1523,10 @@ input.v-textfield-errorField {
 	background: -o-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: -ms-linear-gradient(top, #F8F8F8 0, #EEEEEE 100%);
 	background: linear-gradient(to bottom, #F8F8F8 0, #EEEEEE 100%);
-	filter: progid :       DXImageTransform.Microsoft.gradient (     
-		 startColorstr =   
-		   '#F8F8F8', endColorstr =       '#EEEEEE', GradientType =       0 );
+	filter: progid :         DXImageTransform.Microsoft.gradient (      
+		  startColorstr =    
+		    '#F8F8F8', endColorstr =         '#EEEEEE', GradientType =        
+		0 );
 	border-right: 1px solid #CCC;
 	border-top: 1px solid #CCC;
 }
@@ -1834,9 +1849,11 @@ input.v-textfield-errorField {
 .v-splitbutton .v-button {
 	height: 26px !important;
 }
+
 .v-splitbutton-esofthead {
 	font-weight: bold;
 }
+
 .v-splitbutton-esofthead .v-button-esofthead,.v-splitbutton-esofthead .v-button-esofthead.v-disabled
 	{
 	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
@@ -2492,6 +2509,13 @@ div.v-lazyloadingwrapper-loading {
 		transparent;
 }
 
+.instructionStandupBox {
+	background-color: #E9E9E9;
+	padding: 10px;
+	-moz-border-radius: 15px;
+	border-radius: 15px;
+}
+
 .report-row-content>div>div>div { /*height: 100% !important;*/
 	
 }
@@ -2627,7 +2651,8 @@ div.v-lazyloadingwrapper-loading {
 	{
 	padding-top: 5px;
 }
-.milestone-view-header > .v-horizontallayout {
+
+.milestone-view-header>.v-horizontallayout {
 	margin: 0 auto;
 }
 /* End Milestone Box */
@@ -2775,13 +2800,13 @@ div.v-lazyloadingwrapper-loading {
 	font-size: 12px;
 }
 
-.member-block .member-role {
+.member-role {
 	color: gray;
 	font-style: italic;
 	font-size: 12px;
 }
 
-.member-block .member-role.is-admin {
+.is-admin {
 	color: #b00000;
 }
 
@@ -2878,7 +2903,8 @@ div.v-stylecalendar {
 	cursor: default;
 }
 
-div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .day {
+div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .day
+	{
 	width: 8.2em;
 }
 

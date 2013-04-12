@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.common;
+package com.esofthead.mycollab.core.utils;
 
 import java.util.HashMap;
 import java.util.Map;

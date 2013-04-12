@@ -181,7 +181,8 @@ public class MessageReadViewImpl extends AbstractView implements
 			protected Layout createBottomPanel() {
 				VerticalLayout bottomPanel = new VerticalLayout();
 				bottomPanel.addComponent(new CommentListDepot(
-						CommentTypeConstants.PRJ_MESSAGE, message.getId()));
+						CommentTypeConstants.PRJ_MESSAGE, message.getId(),
+						true, true));
 				return bottomPanel;
 			}
 

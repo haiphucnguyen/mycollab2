@@ -97,6 +97,14 @@ public class BillingServiceImpl implements BillingService {
 		user.setTimezone(timezoneId);
 		user.setUsername(username);
 		user.setLastaccessedtime(new GregorianCalendar().getTime());
+		if (user.getFirstname() == null && user.getLastname() == null) {
+			user.setFirstname(username);
+			user.setLastname("");
+		} else if (user.getFirstname() == null) {
+			user.setFirstname("");
+		} else if (user.getLastname() == null) {
+			user.setLastname("");
+		}
 		userMapper.insert(user);
 
 		// Register default role for account

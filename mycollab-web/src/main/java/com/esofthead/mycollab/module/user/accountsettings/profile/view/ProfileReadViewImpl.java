@@ -3,8 +3,8 @@ package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 import org.vaadin.easyuploads.UploadField;
 import org.vaadin.easyuploads.UploadField.FieldType;
 
-import com.esofthead.mycollab.common.TimezoneMapper;
 import com.esofthead.mycollab.core.MyCollabException;
+import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.shell.view.ScreenSize;
@@ -280,11 +280,14 @@ public class ProfileReadViewImpl extends AbstractView implements
 				} else if (propertyId.equals("homephone")) {
 					value = user.getHomephone();
 				} else if (propertyId.equals("facebookaccount")) {
-					value = user.getFacebookaccount();
+					return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
+							user.getFacebookaccount(), "https://www.facebook.com/" + user.getFacebookaccount());
 				} else if (propertyId.equals("twitteraccount")) {
-					value = user.getTwitteraccount();
+					return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
+							user.getTwitteraccount(), "https://www.twitter.com/" + user.getTwitteraccount());
 				} else if (propertyId.equals("skypecontact")) {
-					value = user.getSkypecontact();
+					return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
+							user.getSkypecontact(), "skype:" + user.getSkypecontact() + "?chat");
 				}
 				return new DefaultFormViewFieldFactory.LabelViewField(value);
 			}

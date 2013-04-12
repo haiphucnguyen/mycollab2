@@ -9,9 +9,9 @@ import java.util.Date;
 
 import org.vaadin.addon.customfield.CustomField;
 
-import com.esofthead.mycollab.common.TimezoneMapper;
-import com.esofthead.mycollab.common.TimezoneMapper.TimezoneExt;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.utils.TimezoneMapper;
+import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.view.component.RoleComboBox;

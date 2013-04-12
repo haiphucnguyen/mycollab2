@@ -41,7 +41,8 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends
 				);
 
 		// NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
-
+		 chart.getTitle().setPaint(new Color(0x5E5E5E));
+		 
 		// set the background color for the chart...
 		final PiePlot3D plot = (PiePlot3D) chart.getPlot();
 		plot.setStartAngle(290);

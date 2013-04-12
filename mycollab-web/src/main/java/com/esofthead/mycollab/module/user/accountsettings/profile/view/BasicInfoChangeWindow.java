@@ -2,7 +2,7 @@ package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
 import java.util.Date;
 
-import com.esofthead.mycollab.common.TimezoneMapper;
+import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.module.user.accountsettings.view.events.ProfileEvent;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.service.UserService;

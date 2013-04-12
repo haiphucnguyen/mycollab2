@@ -91,6 +91,7 @@
 					</dependency>
 				</dependencies>
 			</plugin>
+            <!-- 
 			<plugin>
 				<groupId>org.bluestemsoftware.open.maven.plugin</groupId>
 				<artifactId>launch4j-plugin</artifactId>
@@ -98,7 +99,7 @@
 				<executions>
 					<execution>
 						<id>l4j-gui</id>
-						<phase>package</phase>
+						<phase>install</phase>
 						<goals>
 							<goal>launch4j</goal>
 						</goals>
@@ -107,8 +108,8 @@
 							<outfile>target/mycollab.exe</outfile>
 							<jar>target/${artifactId}-${version}-standard.jar</jar>
 							<errTitle>App Err</errTitle>
-							<!--  Please provide the ico file for windows platform -->
-							<!-- <icon>resources/Icon.icns</icon>  -->
+							  Please provide the ico file for windows platform 
+							 <icon>resources/Icon.icns</icon>  
 							<jre>
 								<minVersion>1.6.0</minVersion>
 							</jre>
@@ -116,7 +117,7 @@
 					</execution>
 				</executions>
 			</plugin>
-
+-->
 			<plugin>
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-antrun-plugin</artifactId>
