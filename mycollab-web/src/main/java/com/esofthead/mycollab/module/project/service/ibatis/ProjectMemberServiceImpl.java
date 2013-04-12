@@ -15,6 +15,7 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMemberMapperExt;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
@@ -63,6 +64,14 @@ public class ProjectMemberServiceImpl extends
 	public SimpleProjectMember findMemberByUsername(String username,
 			int projectId) {
 		return projectMemberMapperExt.findMemberByUsername(username, projectId);
+	}
+
+	@Override
+	public int saveWithSession(ProjectMember record, String username) {
+		if (record.getStatus() == null) {
+			record.setStatus(ProjectMemberStatusContants.VERIFICATING);
+		}
+		return super.saveWithSession(record, username);
 	}
 
 	@Override
