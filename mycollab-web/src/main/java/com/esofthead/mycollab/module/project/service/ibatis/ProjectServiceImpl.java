@@ -26,6 +26,7 @@ import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.dao.ProjectMapper;
 import com.esofthead.mycollab.module.project.dao.ProjectMapperExt;
@@ -83,6 +84,7 @@ public class ProjectServiceImpl extends
 		// Add the first user to project
 		ProjectMember projectMember = new ProjectMember();
 		projectMember.setIsadmin(Boolean.TRUE);
+		projectMember.setStatus(ProjectMemberStatusContants.ACTIVE);
 		projectMember.setJoindate(new GregorianCalendar().getTime());
 		projectMember.setProjectid(projectid);
 		projectMember.setUsername(username);

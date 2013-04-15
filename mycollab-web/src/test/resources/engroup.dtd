@@ -771,6 +771,7 @@
     joinDate CDATA #REQUIRED
     projectRoleId CDATA #IMPLIED
     isAdmin CDATA #IMPLIED
+    status CDATA #REQUIRED
 >
 
 <!ELEMENT m_prj_message EMPTY>
@@ -1156,11 +1157,14 @@
 <!ELEMENT s_account EMPTY>
 <!ATTLIST s_account
     id CDATA #REQUIRED
-    createdTime CDATA #IMPLIED
+    createdTime CDATA #REQUIRED
     billingPlanId CDATA #IMPLIED
     accountName CDATA #IMPLIED
-    status CDATA #IMPLIED
-    paymentMethod CDATA #IMPLIED
+    status CDATA #REQUIRED
+    paymentMethod CDATA #REQUIRED
+    pricing CDATA #IMPLIED
+    pricingEffectFrom CDATA #IMPLIED
+    pricingEffectTo CDATA #IMPLIED
 >
 
 <!ELEMENT s_account_settings EMPTY>
@@ -1168,6 +1172,7 @@
     id CDATA #REQUIRED
     sAccountId CDATA #REQUIRED
     logoPath CDATA #IMPLIED
+    defaultTimezone CDATA #IMPLIED
 >
 
 <!ELEMENT s_activitystream EMPTY>
@@ -1187,10 +1192,15 @@
 <!ELEMENT s_billing_plan EMPTY>
 <!ATTLIST s_billing_plan
     id CDATA #REQUIRED
-    billingType CDATA #IMPLIED
-    numUsers CDATA #IMPLIED
-    volume CDATA #IMPLIED
-    numProjects CDATA #IMPLIED
+    billingType CDATA #REQUIRED
+    numUsers CDATA #REQUIRED
+    volume CDATA #REQUIRED
+    numProjects CDATA #REQUIRED
+    pricing CDATA #REQUIRED
+    description CDATA #IMPLIED
+    hasBugEnable CDATA #IMPLIED
+    hasStandupMeetingEnable CDATA #IMPLIED
+    hasTimeTracking CDATA #IMPLIED
 >
 
 <!ELEMENT s_country EMPTY>
@@ -1218,6 +1228,7 @@
     changeBy CDATA #REQUIRED
     changeComment CDATA #IMPLIED
     extraTypeId CDATA #IMPLIED
+    emailHandlerBean CDATA #IMPLIED
 >
 
 <!ELEMENT s_relay_mail EMPTY>
@@ -1266,7 +1277,7 @@
     nickname CDATA #IMPLIED
     dateofbirth CDATA #IMPLIED
     password CDATA #IMPLIED
-    email CDATA #IMPLIED
+    email CDATA #REQUIRED
     website CDATA #IMPLIED
     registeredTime CDATA #IMPLIED
     lastAccessedTime CDATA #IMPLIED

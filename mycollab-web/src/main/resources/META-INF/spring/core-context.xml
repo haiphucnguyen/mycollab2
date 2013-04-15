@@ -5,10 +5,13 @@
     xsi:schemaLocation="http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.1.xsd
 		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
 		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd">
- 
+
     <context:annotation-config />
     <context:spring-configured />
-    <context:component-scan base-package="com.esofthead.mycollab" />
+    <context:component-scan base-package="com.esofthead.mycollab">
+        <context:exclude-filter type="regex"
+            expression="com\.esofthead\.mycollab\.mock\.service.*" />
+    </context:component-scan>
 
     <bean id="validator"
         class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean">
@@ -16,11 +19,13 @@
             <list>
                 <value>classpath:validator/crm-constraints.xml</value>
                 <value>classpath:validator/user-constraints.xml</value>
-                <value>classpath:validator/project-constraints.xml</value>
-                <value>classpath:validator/tracker-constraints.xml</value>
+                <value>classpath:validator/project-constraints.xml
+                </value>
+                <value>classpath:validator/tracker-constraints.xml
+                </value>
             </list>
         </property>
     </bean>
-    
+
     <aop:aspectj-autoproxy />
 </beans>

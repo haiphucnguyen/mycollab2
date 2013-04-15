@@ -15,7 +15,7 @@
         <context:include-filter type="aspectj" expression="com.esofthead.mycollab..dao.*"/>
         <context:exclude-filter type="aspectj" expression="com.esofthead.mycollab..service.*Test "/>
         <context:exclude-filter type="aspectj" expression="com.esofthead.mycollab.schedule.*"/>
-        <context:exclude-filter type="regex" expression="com.esofthead.mycollab.mock.service.*"/>
+        <context:exclude-filter type="regex" expression="test.com.esofthead.mycollab.service.*"/>
     </context:component-scan>    
 
     <aop:aspectj-autoproxy/>

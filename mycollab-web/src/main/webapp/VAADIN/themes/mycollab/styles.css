@@ -8,6 +8,14 @@
 	font-style: normal;
 }
 
+@font-face {
+	font-family: 'Lucida Sans Unicode';
+	src: url('fonts/LSANSD.eot');
+	src: local('☺'), url('fonts/LSANSD.eot') format('embedded-opentype'), url('fonts/LSANSD.woff') format('woff'), url('fonts/LSANSD.ttf') format('truetype'), url('fonts/LSANSD.svg') format('svg');
+	font-weight: bold;
+	font-style: normal;
+}
+
 @media only screen and (max-width : 1024px) , only screen and
 	(max-device-width : 1024px) {
 	.crmContainer {
@@ -158,7 +166,7 @@ input.v-textfield[type="text"],.v-filterselect {
 	{
 	font: 12px/18px "Lucida Sans Unicode", Helvetica, Arial, Verdana,
 		sans-serif !important;
-	-webkit-font-smoothing: antialiased;
+ 	-webkit-font-smoothing: antialiased;
 }
 
 body div>input.v-filterselect-input[type="text"] {
@@ -1852,6 +1860,8 @@ input.v-textfield-errorField {
 
 .v-splitbutton-esofthead {
 	font-weight: bold;
+	font-size: 13px !important;
+	font-family: Arial, Helvetica, sans-serif;
 }
 
 .v-splitbutton-esofthead .v-button-esofthead,.v-splitbutton-esofthead .v-button-esofthead.v-disabled

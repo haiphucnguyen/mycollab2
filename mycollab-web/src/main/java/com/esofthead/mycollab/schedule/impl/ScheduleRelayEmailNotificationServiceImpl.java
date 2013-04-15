@@ -5,6 +5,8 @@ import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
@@ -18,6 +20,7 @@ import com.esofthead.mycollab.module.mail.service.SendingRelayEmailNotificationA
 import com.esofthead.mycollab.module.project.service.MessageNotificationService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskNotificationService;
 import com.esofthead.mycollab.module.tracker.service.BugNotificationService;
+import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.schedule.ScheduleConfig;
 
 @Service
@@ -86,5 +89,20 @@ public class ScheduleRelayEmailNotificationServiceImpl {
 				log.error("Error when sending notification email", e);
 			}
 		}
+	}
+
+	public static void main(String[] args) {
+		ApplicationContext context = new ClassPathXmlApplicationContext(
+				"META-INF/spring/common-context.xml",
+				"META-INF/spring/core-context.xml",
+				"META-INF/spring/crm-context.xml",
+				"META-INF/spring/datasource-context.xml",
+				"META-INF/spring/file-context.xml",
+				"META-INF/spring/project-context.xml",
+				"META-INF/spring/rest-context.xml",
+				"META-INF/spring/schedule-context.xml",
+				"META-INF/spring/tracker-context.xml",
+				"META-INF/spring/user-context.xml");
+		System.out.println(context.getBean(UserService.class));
 	}
 }

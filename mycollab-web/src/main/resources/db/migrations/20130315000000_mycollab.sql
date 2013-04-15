@@ -1,0 +1,1 @@
+ALTER TABLE `s_relay_email_notification` ADD COLUMN `emailHandlerBean` VARCHAR(45) NULL ;
