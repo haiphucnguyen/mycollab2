@@ -47,7 +47,7 @@ public class MonitorItemAspect {
 				monitorItem.setTypeid((Integer) PropertyUtils.getProperty(bean,
 						"id"));
 				monitorItem.setUser(username);
-				
+
 				monitorItemService.saveWithSession(monitorItem, username);
 				log.debug("Save monitor item: "
 						+ BeanUtility.printBeanObj(monitorItem));
@@ -63,7 +63,6 @@ public class MonitorItemAspect {
 					}
 				}
 
-				// Save notification item
 				RelayEmailNotification relayNotification = new RelayEmailNotification();
 				relayNotification.setChangeby(username);
 				relayNotification.setChangecomment("");
@@ -74,8 +73,11 @@ public class MonitorItemAspect {
 				relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
 				int typeid = (Integer) PropertyUtils.getProperty(bean, "id");
 				relayNotification.setTypeid(typeid);
+				relayNotification.setEmailhandlerbean(watchableAnnotation
+						.emailHandlerBean().getName());
 				relayEmailNotificationService.saveWithSession(
 						relayNotification, username);
+				// Save notification item
 
 			} catch (Exception e) {
 				log.error(

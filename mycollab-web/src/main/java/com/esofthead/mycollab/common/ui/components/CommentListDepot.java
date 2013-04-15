@@ -30,6 +30,13 @@ public class CommentListDepot extends Depot {
 		commentListBox = (CommentDisplay) this.bodyContent;
 		commentListBox.setMargin(true);
 	}
+	
+	public CommentListDepot(boolean isDisplayCommentInput, Class emailHandler) {
+		super("Comments", new CommentDisplay(isDisplayCommentInput, emailHandler));
+		this.setWidth("900px");
+		commentListBox = (CommentDisplay) this.bodyContent;
+		commentListBox.setMargin(true);
+	}
 
 //	public CommentListDepot(String type, int typeid) {
 //		this(type, typeid, true);
@@ -38,7 +45,17 @@ public class CommentListDepot extends Depot {
 	public CommentListDepot(String type, int typeid,
 			boolean isDisplayCommentInput, boolean isSendingRelayEmail) {
 		super("Comments", new CommentDisplay(type, typeid,
-				isDisplayCommentInput, isSendingRelayEmail));
+				isDisplayCommentInput, isSendingRelayEmail, null));
+		this.setWidth("900px");
+		commentListBox = (CommentDisplay) this.bodyContent;
+		this.setTitle("Comments(" + commentListBox.getNumComments() + ")");
+		commentListBox.setMargin(true);
+	}
+	
+	public CommentListDepot(String type, int typeid,
+			boolean isDisplayCommentInput, boolean isSendingRelayEmail, Class emailHandler) {
+		super("Comments", new CommentDisplay(type, typeid,
+				isDisplayCommentInput, isSendingRelayEmail, emailHandler));
 		this.setWidth("900px");
 		commentListBox = (CommentDisplay) this.bodyContent;
 		this.setTitle("Comments(" + commentListBox.getNumComments() + ")");
@@ -59,9 +76,13 @@ public class CommentListDepot extends Depot {
 		private CommentInput commentBox;
 
 		public CommentDisplay(boolean isDisplayCommentInput) {
+			this(isDisplayCommentInput, null);
+		}
+		
+		public CommentDisplay(boolean isDisplayCommentInput, Class emailHandler) {
 			this.setSpacing(true);
 			if (isDisplayCommentInput) {
-				commentBox = new CommentInput(this, type, typeid);
+				commentBox = new CommentInput(this, type, typeid, emailHandler);
 				this.addComponent(commentBox);
 			}
 
@@ -74,16 +95,21 @@ public class CommentListDepot extends Depot {
 		// public CommentDisplay(String type, int typeid) {
 		// this(type, typeid, true);
 		// }
-
+		
 		public CommentDisplay(String type, int typeid,
 				boolean isDisplayCommentInput, boolean isSendingRelayEmail) {
+			this (type, typeid, isDisplayCommentInput, isSendingRelayEmail, null);
+		}
+
+		public CommentDisplay(String type, int typeid,
+				boolean isDisplayCommentInput, boolean isSendingRelayEmail, Class emailHandler) {
 			this.setSpacing(true);
 			this.type = type;
 			this.typeid = typeid;
 
 			if (isDisplayCommentInput) {
 				commentBox = new CommentInput(this, type, typeid, false,
-						isSendingRelayEmail);
+						isSendingRelayEmail, emailHandler);
 				this.addComponent(commentBox);
 			}
 

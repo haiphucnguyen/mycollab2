@@ -16,6 +16,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.service.ProjectTaskNotificationService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
@@ -146,7 +147,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			@Override
 			protected Layout createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_TASK,
-						task.getId(), true, true);
+						task.getId(), true, true, ProjectTaskNotificationService.class);
 			}
 		}
 	}

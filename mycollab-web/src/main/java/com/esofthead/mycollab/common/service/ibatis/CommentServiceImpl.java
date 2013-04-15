@@ -48,20 +48,38 @@ public class CommentServiceImpl extends
 	public int saveWithSession(Comment record, String username,
 			boolean isSendingEmail) {
 		int saveId = super.saveWithSession(record, username);
-		;
 		if (!isSendingEmail) {
 			return saveId;
 		} else {
-			RelayEmailNotification relayEmailNotification = new RelayEmailNotification();
-			relayEmailNotification.setSaccountid(record.getSaccountid());
-			relayEmailNotification
-					.setAction(MonitorTypeConstants.ADD_COMMENT_ACTION);
-			relayEmailNotification.setChangeby(record.getCreateduser());
-			relayEmailNotification.setChangecomment(record.getComment());
-			relayEmailNotification.setType(record.getType());
-			relayEmailNotification.setTypeid(record.getTypeid());
 			relayEmailNotificationService.saveWithSession(
-					relayEmailNotification, username);
+					getRelayEmailNotification(record, username, isSendingEmail, null), username);
+			return saveId;
+		}
+	}
+	
+	private RelayEmailNotification getRelayEmailNotification(Comment record, String username, boolean isSendingEmail, Class emailHandler) {
+		RelayEmailNotification relayEmailNotification = new RelayEmailNotification();
+		relayEmailNotification.setSaccountid(record.getSaccountid());
+		relayEmailNotification
+				.setAction(MonitorTypeConstants.ADD_COMMENT_ACTION);
+		relayEmailNotification.setChangeby(record.getCreateduser());
+		relayEmailNotification.setChangecomment(record.getComment());
+		relayEmailNotification.setType(record.getType());
+		relayEmailNotification.setTypeid(record.getTypeid());
+		if (emailHandler != null) {
+			relayEmailNotification.setEmailhandlerbean(emailHandler.getName());
+		}
+		return relayEmailNotification;
+	}
+	
+	@Override
+	public int saveWithSession(Comment record, String username, boolean isSendingEmail, Class emailHandler) {
+		int saveId = super.saveWithSession(record, username);
+		if (!isSendingEmail) {
+			return saveId;
+		} else {
+			relayEmailNotificationService.saveWithSession(
+					getRelayEmailNotification(record, username, isSendingEmail, emailHandler), username);
 			return saveId;
 		}
 	}

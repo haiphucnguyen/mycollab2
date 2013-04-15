@@ -11,4 +11,6 @@ public @interface Watchable {
 	String type();
 	
 	String userFieldName() default "";
+	
+	Class emailHandlerBean() default String.class;
 }

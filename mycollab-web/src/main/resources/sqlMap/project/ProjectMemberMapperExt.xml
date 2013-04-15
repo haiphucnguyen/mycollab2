@@ -12,6 +12,8 @@
         <result column="numOpenTasks" jdbcType="INTEGER"
             property="numOpenTasks" />
         <result column="numOpenBugs" jdbcType="INTEGER" property="numOpenBugs" />
+        <result column="projectName" jdbcType="VARCHAR"
+            property="projectName" />
     </resultMap>
 
     <sql id="querySearchCriteria">
@@ -28,12 +30,13 @@
     <sql id="selectMember">
         <![CDATA[
           SELECT m_prj_member.id, m_prj_member.username, m_prj_member.projectId, m_prj_member.joinDate, m_prj_member.projectRoleId, 
-                 m_prj_member.isAdmin,
+                 m_prj_member.isAdmin, m_prj_project.name AS projectName,
                  concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS memberFullName,
                  m_prj_role.rolename, 
                  (SELECT COUNT(*) FROM m_tracker_bug WHERE m_tracker_bug.assignuser=m_prj_member.username AND  m_tracker_bug.projectid=m_prj_member.projectId AND m_tracker_bug.status IN ('Open', 'In Progress', 'Reopenned')) AS numOpenBugs,
                  (SELECT COUNT(*) FROM m_prj_task WHERE m_prj_task.assignUser=m_prj_member.username AND m_prj_task.projectid=m_prj_member.projectId AND m_prj_task.status='Open') AS numOpenTasks
             FROM m_prj_member
+              LEFT OUTER JOIN m_prj_project ON (m_prj_member.projectId = m_prj_project.id)
               LEFT OUTER JOIN s_user ON (m_prj_member.username=s_user.username)
               LEFT OUTER JOIN m_prj_role ON (m_prj_role.id=m_prj_member.projectRoleId)
         ]]>

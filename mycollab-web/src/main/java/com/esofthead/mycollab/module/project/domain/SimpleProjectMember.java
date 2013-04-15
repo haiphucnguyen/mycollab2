@@ -22,6 +22,8 @@ public class SimpleProjectMember extends ProjectMember {
 	private int numOpenTasks;
 
 	private int numOpenBugs;
+	
+	private String projectName;
 
 	public String getMemberFullName() {
 		return memberFullName;
@@ -61,5 +63,13 @@ public class SimpleProjectMember extends ProjectMember {
 
 	public void setNumOpenBugs(int numOpenBugs) {
 		this.numOpenBugs = numOpenBugs;
+	}
+
+	public void setProjectName(String projectName) {
+		this.projectName = projectName;
+	}
+
+	public String getProjectName() {
+		return projectName;
 	}
 }

@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.Component;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.Version;
+import com.esofthead.mycollab.module.tracker.service.BugNotificationService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -418,7 +419,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				tabBugDetail.setStyleName(UIConstants.WHITE_TABSHEET);
 
 				CommentDisplay commentList = new CommentDisplay(
-						CommentTypeConstants.PRJ_BUG, bug.getId(), true, true);
+						CommentTypeConstants.PRJ_BUG, bug.getId(), true, true, BugNotificationService.class);
 				commentList.setMargin(true);
 				tabBugDetail.addTab(commentList, "Comments");
 

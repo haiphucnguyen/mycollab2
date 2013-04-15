@@ -31,13 +31,24 @@ public class CommentInput extends VerticalLayout {
 	private Integer typeid;
 
 	public CommentInput(final ReloadableComponent component, final String type,
+			final Integer typeid, final Class emailHandler) {
+		this(component, type, typeid, false, false, emailHandler);
+	}
+	
+	public CommentInput(final ReloadableComponent component, final String type,
 			final Integer typeid) {
-		this(component, type, typeid, false, false);
+		this(component, type, typeid, false, false, null);
+	}
+	
+	public CommentInput(final ReloadableComponent component,
+			final String typeVal, final Integer typeidVal,
+			boolean cancelButtonEnable, final boolean isSendingEmailRelay) {
+		this(component, typeVal, typeidVal, cancelButtonEnable, isSendingEmailRelay, null);
 	}
 
 	public CommentInput(final ReloadableComponent component,
 			final String typeVal, final Integer typeidVal,
-			boolean cancelButtonEnable, final boolean isSendingEmailRelay) {
+			boolean cancelButtonEnable, final boolean isSendingEmailRelay, final Class emailHandler) {
 		this.setWidth("600px");
 		this.setSpacing(true);
 		this.setMargin(true);
@@ -93,10 +104,10 @@ public class CommentInput extends VerticalLayout {
 				int commentId = 0;
 				if (isSendingEmailRelay) {
 					commentId = commentService.saveWithSession(comment,
-							AppContext.getUsername(), isSendingEmailRelay);
+							AppContext.getUsername(), isSendingEmailRelay, emailHandler);
 				} else {
 					commentId = commentService.saveWithSession(comment,
-							AppContext.getUsername());
+							AppContext.getUsername(), false, emailHandler);
 				}
 
 				attachments.saveContentsToRepo(

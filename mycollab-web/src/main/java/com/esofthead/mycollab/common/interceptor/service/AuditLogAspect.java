@@ -129,6 +129,7 @@ public class AuditLogAspect {
 						relayNotification.setSaccountid(sAccountId);
 						relayNotification.setType(monitorType);
 						relayNotification.setTypeid(monitorTypeId);
+						relayNotification.setEmailhandlerbean(watchableAnnotation.emailHandlerBean().getName());
 						relayNotification.setExtratypeid(auditLogId);
 						relayNotification
 								.setAction(MonitorTypeConstants.UPDATE_ACTION);

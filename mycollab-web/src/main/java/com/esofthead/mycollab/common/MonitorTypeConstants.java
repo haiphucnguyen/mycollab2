@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.common;
 
+
 public class MonitorTypeConstants {
 	
 	public static final String CREATE_ACTION = "Create";

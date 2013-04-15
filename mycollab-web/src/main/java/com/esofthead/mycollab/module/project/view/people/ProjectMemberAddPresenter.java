@@ -7,6 +7,7 @@ package com.esofthead.mycollab.module.project.view.people;
 import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
@@ -101,6 +102,7 @@ public class ProjectMemberAddPresenter extends
 				.getSpringBean(ProjectMemberService.class);
 		projectMember.setProjectid(CurrentProjectVariables.getProjectId());
 		projectMember.setJoindate(new GregorianCalendar().getTime());
+		projectMember.setStatus(ProjectMemberStatusContants.VERIFICATING);
 		if (projectMember.getId() == null) {
 			projectMemberService.saveWithSession(projectMember,
 					AppContext.getUsername());
