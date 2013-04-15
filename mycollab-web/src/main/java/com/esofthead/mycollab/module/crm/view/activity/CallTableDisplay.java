@@ -20,81 +20,87 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public class CallTableDisplay extends PagedBeanTable2<CallService, CallSearchCriteria, SimpleCall> {
-    
-    public CallTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
-        super(AppContext.getSpringBean(CallService.class),
-                SimpleCall.class, visibleColumns, columnHeaders);
-        
-        this.addGeneratedColumn("subject", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-            
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleCall call = CallTableDisplay.this.getBeanByIndex(itemId);
-                ButtonLink b = new ButtonLink(call.getSubject(),
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-                            
-                            @Override
-                            public void buttonClick(Button.ClickEvent event) {
-                                EventBus.getInstance().fireEvent(
-                                        new ActivityEvent.CallRead(this, call
-                                        .getId()));
-                            }
-                        });
-                
-                if ("Held".equals(call.getStatus())) {
-                    b.addStyleName(UIConstants.LINK_COMPLETED);
-                }
-                return b;
-                
-            }
-        });
-        
-        this.addGeneratedColumn("isClosed", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-            
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleCall call = CallTableDisplay.this.getBeanByIndex(itemId);
-                Button b = new Button(null,
-                        new Button.ClickListener() {
-                            private static final long serialVersionUID = 1L;
-                            
-                            @Override
-                            public void buttonClick(Button.ClickEvent event) {
-                               fireTableEvent(new TableClickEvent(CallTableDisplay.this, call, "isClosed"));
-                            }
-                        });
-                b.setIcon(new ThemeResource("icons/16/close.png"));
-                b.setStyleName("link");
-                b.setDescription("Close this call");
-                return b;
-                
-            }
-        });
-        
-        this.addGeneratedColumn("startdate", new Table.ColumnGenerator() {
-            private static final long serialVersionUID = 1L;
-            
-            @Override
-            public com.vaadin.ui.Component generateCell(Table source,
-                    final Object itemId, Object columnId) {
-                final SimpleCall call = CallTableDisplay.this.getBeanByIndex(itemId);
-                return new Label(AppContext.formatDateTime(call.getStartdate()));
-                
-            }
-        });
-        
-        this.setColumnExpandRatio("subject", 1);
-        this.setColumnWidth("relatedTo", UIConstants.TABLE_X_LABEL_WIDTH);
-        this.setColumnWidth("status", UIConstants.TABLE_S_LABEL_WIDTH);
-        this.setColumnWidth("startdate", UIConstants.TABLE_DATE_TIME_WIDTH);
-    }
+public class CallTableDisplay extends
+		PagedBeanTable2<CallService, CallSearchCriteria, SimpleCall> {
+	private static final long serialVersionUID = 1L;
+
+	public CallTableDisplay(final String[] visibleColumns,
+			String[] columnHeaders) {
+		super(AppContext.getSpringBean(CallService.class), SimpleCall.class,
+				visibleColumns, columnHeaders);
+
+		this.addGeneratedColumn("subject", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleCall call = CallTableDisplay.this
+						.getBeanByIndex(itemId);
+				ButtonLink b = new ButtonLink(call.getSubject(),
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(Button.ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new ActivityEvent.CallRead(this, call
+												.getId()));
+							}
+						});
+
+				if ("Held".equals(call.getStatus())) {
+					b.addStyleName(UIConstants.LINK_COMPLETED);
+				}
+				return b;
+
+			}
+		});
+
+		this.addGeneratedColumn("isClosed", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleCall call = CallTableDisplay.this
+						.getBeanByIndex(itemId);
+				Button b = new Button(null, new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(Button.ClickEvent event) {
+						fireTableEvent(new TableClickEvent(
+								CallTableDisplay.this, call, "isClosed"));
+					}
+				});
+				b.setIcon(new ThemeResource("icons/16/close.png"));
+				b.setStyleName("link");
+				b.setDescription("Close this call");
+				return b;
+
+			}
+		});
+
+		this.addGeneratedColumn("startdate", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleCall call = CallTableDisplay.this
+						.getBeanByIndex(itemId);
+				return new Label(AppContext.formatDateTime(call.getStartdate()));
+
+			}
+		});
+
+		this.setColumnExpandRatio("subject", 1);
+		this.setColumnWidth("relatedTo", UIConstants.TABLE_X_LABEL_WIDTH);
+		this.setColumnWidth("status", UIConstants.TABLE_S_LABEL_WIDTH);
+		this.setColumnWidth("startdate", UIConstants.TABLE_DATE_TIME_WIDTH);
+	}
 }

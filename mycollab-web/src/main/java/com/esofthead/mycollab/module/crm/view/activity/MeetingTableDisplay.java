@@ -24,7 +24,9 @@ import com.vaadin.ui.Table;
  */
 public class MeetingTableDisplay extends PagedBeanTable2<MeetingService, MeetingSearchCriteria, SimpleMeeting> {
 
-    public MeetingTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
+	private static final long serialVersionUID = 1L;
+
+	public MeetingTableDisplay(final String[] visibleColumns, String[] columnHeaders) {
         super(AppContext.getSpringBean(MeetingService.class),
                 SimpleMeeting.class, visibleColumns, columnHeaders);
 

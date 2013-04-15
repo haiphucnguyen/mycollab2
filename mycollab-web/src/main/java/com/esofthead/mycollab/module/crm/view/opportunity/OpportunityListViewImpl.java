@@ -60,11 +60,22 @@ public class OpportunityListViewImpl extends AbstractView implements
 	private void generateDisplayTable() {
 
 		if (ScreenSize.hasSupport1024Pixels()) {
-			tableItem = new OpportunityTableDisplay(new String[] { "selected",
-					"opportunityname", "accountName", "salesstage",
-					"expectedcloseddate", "assignUserFullName" },
-					new String[] { "", "Name", "Account Name", "Sales Stage",
-							"Close", "User" });
+			tableItem = new OpportunityTableDisplay(
+					new String[] { "selected", "opportunityname",
+							"accountName", "salesstage", "expectedcloseddate",
+							"assignUserFullName" },
+					new String[] {
+							"",
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_ACCOUNT_NAME_HEADER),
+							LocalizationHelper
+									.getMessage(OpportunityI18nEnum.TABLE_SALE_STAGE_HEADER),
+							LocalizationHelper
+									.getMessage(OpportunityI18nEnum.TABLE_CLOSE_DATE_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
 			tableItem = new OpportunityTableDisplay(
 					new String[] { "selected", "opportunityname",
