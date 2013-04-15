@@ -93,16 +93,7 @@ public class ScheduleRelayEmailNotificationServiceImpl {
 
 	public static void main(String[] args) {
 		ApplicationContext context = new ClassPathXmlApplicationContext(
-				"META-INF/spring/common-context.xml",
-				"META-INF/spring/core-context.xml",
-				"META-INF/spring/crm-context.xml",
-				"META-INF/spring/datasource-context.xml",
-				"META-INF/spring/file-context.xml",
-				"META-INF/spring/project-context.xml",
-				"META-INF/spring/rest-context.xml",
-				"META-INF/spring/schedule-context.xml",
-				"META-INF/spring/tracker-context.xml",
-				"META-INF/spring/user-context.xml");
+				"META-INF/spring/*-context.xml");
 		System.out.println(context.getBean(UserService.class));
 	}
 }
