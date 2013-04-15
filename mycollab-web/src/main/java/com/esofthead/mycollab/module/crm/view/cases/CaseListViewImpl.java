@@ -6,6 +6,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleCase;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
 import com.esofthead.mycollab.module.crm.events.CaseEvent;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -21,6 +22,7 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
@@ -56,17 +58,40 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 	private void generateDisplayTable() {
 
 		if (ScreenSize.hasSupport1024Pixels()) {
-			tableItem = new CaseTableDisplay(new String[] { "selected",
-					"subject", "accountName", "priority", "status",
-					"assignUserFullName" }, new String[] { "",
-					"Subject", "Account Name", "Priority", "Status",
-					"Assigned To"});
+			tableItem = new CaseTableDisplay(
+					new String[] { "selected", "subject", "accountName",
+							"priority", "status", "assignUserFullName" },
+					new String[] {
+							"",
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_SUBJECT_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_ACCOUNT_NAME_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_PRIORITY_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new CaseTableDisplay(new String[] { "selected",
-					"subject", "accountName", "priority", "status",
-					"assignUserFullName", "createdtime" }, new String[] { "",
-					"Subject", "Account Name", "Priority", "Status",
-					"Assigned To", "Date Created" });	
+			tableItem = new CaseTableDisplay(
+					new String[] { "selected", "subject", "accountName",
+							"priority", "status", "assignUserFullName",
+							"createdtime" },
+					new String[] {
+							"",
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_SUBJECT_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_ACCOUNT_NAME_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_PRIORITY_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_CREATED_DATE_HEADER) });
 		}
 
 		tableItem
@@ -108,13 +133,16 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 		selectOptionButton = new SelectionOptionButton(tableItem);
 		layout.addComponent(selectOptionButton);
 
-		Button deleteBtn = new Button("Delete");
+		Button deleteBtn = new Button(
+				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.CRM_ACCOUNT));
 
 		tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		tableActionControls.addOptionItem("mail", "Mail");
-		tableActionControls.addOptionItem("export", "Export");
+		tableActionControls.addOptionItem("mail",
+				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
+		tableActionControls.addOptionItem("export",
+				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
 		tableActionControls.setVisible(false);
 
 		layout.addComponent(tableActionControls);
@@ -127,7 +155,9 @@ public class CaseListViewImpl extends AbstractView implements CaseListView {
 	@Override
 	public void enableActionControls(int numOfSelectedItems) {
 		tableActionControls.setVisible(true);
-		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+		selectedItemsNumberLabel.setValue(LocalizationHelper
+				.getMessage(CrmCommonI18nEnum.TABLE_SELECTED_ITEM_TITLE,
+						numOfSelectedItems));
 	}
 
 	@Override

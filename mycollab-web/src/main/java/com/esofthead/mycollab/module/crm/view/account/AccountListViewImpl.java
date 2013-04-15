@@ -61,25 +61,30 @@ public class AccountListViewImpl extends AbstractView implements
 							"email", "assignUserFullName" },
 					new String[] {
 							"",
-							"Name",
 							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.OFFICE_PHONE),
-							"Email Address",
+									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
 							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.ASSIGNED_USER) });
+									.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
 			tableItem = new AccountTableDisplay(
 					new String[] { "selected", "accountname", "city",
 							"phoneoffice", "email", "assignUserFullName" },
 					new String[] {
 							"",
-							"Name",
-							"City",
 							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.OFFICE_PHONE),
-							"Email Address",
+									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
 							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.ASSIGNED_USER) });
+									.getMessage(CrmCommonI18nEnum.TABLE_CITY_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
 		}
 
 		tableItem

@@ -60,13 +60,15 @@ public class AccountSelectionWindow extends Window {
 
 	@SuppressWarnings("serial")
 	private void createAccountList() {
-		tableItem = new AccountTableDisplay(new String[] { "accountname",
-				"city", "assignuser" },
+		tableItem = new AccountTableDisplay(
+				new String[] { "accountname", "city", "assignuser" },
 				new String[] {
-						"Name",
-						"City",
 						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.ASSIGNED_USER) });
+								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
+						LocalizationHelper
+								.getMessage(CrmCommonI18nEnum.TABLE_CITY_HEADER),
+						LocalizationHelper
+								.getMessage(CrmCommonI18nEnum.TABLE_ASSIGNED_USER_HEADER) });
 		tableItem.setWidth("100%");
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {

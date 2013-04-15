@@ -31,16 +31,23 @@ public class AccountListDashlet extends Depot {
 	public AccountListDashlet() {
 		super("My Accounts", new VerticalLayout());
 		if (ScreenSize.hasSupport1024Pixels()) {
-			tableItem = new AccountTableDisplay(new String[] { "accountname",
-					"email" }, new String[] { "Name", "Email" });
+			tableItem = new AccountTableDisplay(
+					new String[] { "accountname", "email" },
+					new String[] {
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
 			tableItem = new AccountTableDisplay(
 					new String[] { "accountname", "phoneoffice", "email" },
 					new String[] {
-							"Name",
 							LocalizationHelper
-									.getMessage(CrmCommonI18nEnum.OFFICE_PHONE),
-							"Email" });
+									.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER),
+							LocalizationHelper
+									.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER) });
 		}
 
 		tableItem
