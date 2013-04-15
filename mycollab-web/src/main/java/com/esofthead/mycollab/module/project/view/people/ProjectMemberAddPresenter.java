@@ -6,12 +6,18 @@ package com.esofthead.mycollab.module.project.view.people;
 
 import java.util.GregorianCalendar;
 
+import org.apache.commons.beanutils.PropertyUtils;
+
+import com.esofthead.mycollab.common.MonitorTypeConstants;
+import com.esofthead.mycollab.common.domain.RelayEmailNotification;
+import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
+import com.esofthead.mycollab.module.project.service.ProjectMemberInvitiationNotificationService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
@@ -104,8 +110,25 @@ public class ProjectMemberAddPresenter extends
 		projectMember.setJoindate(new GregorianCalendar().getTime());
 		projectMember.setStatus(ProjectMemberStatusContants.VERIFICATING);
 		if (projectMember.getId() == null) {
-			projectMemberService.saveWithSession(projectMember,
+			int saveId = projectMemberService.saveWithSession(projectMember,
 					AppContext.getUsername());
+			if (saveId > 0) {
+				RelayEmailNotification relayNotification = new RelayEmailNotification();
+				relayNotification.setChangeby(AppContext.getUsername());
+				relayNotification.setChangecomment("");
+				int sAccountId = AppContext.getAccountId();
+				relayNotification.setSaccountid(sAccountId);
+				relayNotification.setType("invitationMember");
+				relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
+				relayNotification.setTypeid(saveId);
+				relayNotification
+						.setEmailhandlerbean(ProjectMemberInvitiationNotificationService.class
+								.getName());
+				RelayEmailNotificationService relayEmailNotificationService = AppContext
+						.getSpringBean(RelayEmailNotificationService.class);
+				relayEmailNotificationService.saveWithSession(
+						relayNotification, AppContext.getUsername());
+			}
 
 		} else {
 			projectMemberService.updateWithSession(projectMember,
