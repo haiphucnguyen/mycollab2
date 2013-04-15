@@ -6,54 +6,69 @@ package com.esofthead.mycollab.module.crm.view.contact;
 
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
+import com.esofthead.mycollab.module.crm.localization.OpportunityI18nEnum;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedItemSelectionWindow;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunitySimpleSearchPanel;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityTableDisplay;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Button;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 @SuppressWarnings("serial")
-public class ContactOpportunitySelectionWindow extends RelatedItemSelectionWindow<SimpleOpportunity, OpportunitySearchCriteria> {
+public class ContactOpportunitySelectionWindow
+		extends
+		RelatedItemSelectionWindow<SimpleOpportunity, OpportunitySearchCriteria> {
 
-    public ContactOpportunitySelectionWindow(ContactOpportunityListComp associateOpportunityList) {
-        super("Select Opportunities", associateOpportunityList);
-        
-        this.setWidth("900px");
-    }
+	public ContactOpportunitySelectionWindow(
+			ContactOpportunityListComp associateOpportunityList) {
+		super("Select Opportunities", associateOpportunityList);
 
-    @Override
-    protected void initUI() {
-        tableItem = new OpportunityTableDisplay(new String[]{"selected",
-                    "opportunityname", "salesstage", "expectedcloseddate"}, new String[]{"", "Name", "Stage",
-                    "Expected Closed Date"});
-        
-        Button selectBtn = new Button("Select", new Button.ClickListener() {
+		this.setWidth("900px");
+	}
 
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                close();
-            }
-        });
-        selectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-        
-        OpportunitySimpleSearchPanel opportunitySimpleSearchPanel = new OpportunitySimpleSearchPanel();
-        opportunitySimpleSearchPanel.addSearchHandler(new SearchHandler<OpportunitySearchCriteria>(){
+	@Override
+	protected void initUI() {
+		tableItem = new OpportunityTableDisplay(
+				new String[] { "selected", "opportunityname", "salesstage",
+						"expectedcloseddate" },
+				new String[] {
+						"",
+						LocalizationHelper
+								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
+						LocalizationHelper
+								.getMessage(OpportunityI18nEnum.TABLE_SALE_STAGE_HEADER),
+						LocalizationHelper
+								.getMessage(OpportunityI18nEnum.TABLE_CLOSE_DATE_HEADER) });
+
+		Button selectBtn = new Button("Select", new Button.ClickListener() {
 
 			@Override
-			public void onSearch(OpportunitySearchCriteria criteria) {
-				tableItem.setSearchCriteria(criteria);
+			public void buttonClick(Button.ClickEvent event) {
+				close();
 			}
-        	
-        });
-        
-        this.bodyContent.addComponent(opportunitySimpleSearchPanel);
-        this.bodyContent.addComponent(selectBtn);
-        this.bodyContent.addComponent(tableItem);
-    }
-    
+		});
+		selectBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+
+		OpportunitySimpleSearchPanel opportunitySimpleSearchPanel = new OpportunitySimpleSearchPanel();
+		opportunitySimpleSearchPanel
+				.addSearchHandler(new SearchHandler<OpportunitySearchCriteria>() {
+
+					@Override
+					public void onSearch(OpportunitySearchCriteria criteria) {
+						tableItem.setSearchCriteria(criteria);
+					}
+
+				});
+
+		this.bodyContent.addComponent(opportunitySimpleSearchPanel);
+		this.bodyContent.addComponent(selectBtn);
+		this.bodyContent.addComponent(tableItem);
+	}
+
 }

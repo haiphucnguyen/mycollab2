@@ -149,7 +149,9 @@ public class AccountListViewImpl extends AbstractView implements
 	@Override
 	public void enableActionControls(int numOfSelectedItems) {
 		tableActionControls.setVisible(true);
-		selectedItemsNumberLabel.setValue("Selected: " + numOfSelectedItems);
+		selectedItemsNumberLabel.setValue(LocalizationHelper
+				.getMessage(CrmCommonI18nEnum.TABLE_SELECTED_ITEM_TITLE,
+						numOfSelectedItems));
 	}
 
 	@Override
