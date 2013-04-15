@@ -42,12 +42,25 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 	private Button reOrderBtn;
 
 	private static final FieldExportColumn[] EXPORT_COLUMNS = new FieldExportColumn[] {
-			new FieldExportColumn("taskkey", "Key"),
-			new FieldExportColumn("taskname", "Task Name", 40),
-			new FieldExportColumn("startdate", "Start"),
-			new FieldExportColumn("deadline", "Due"),
-			new FieldExportColumn("percentagecomplete", "% Complete"),
-			new FieldExportColumn("assignUserFullName", "Owner")};
+			new FieldExportColumn("taskkey",
+					LocalizationHelper
+							.getMessage(TaskI18nEnum.TABLE_KEY_HEADER)),
+			new FieldExportColumn("taskname",
+					LocalizationHelper
+							.getMessage(TaskI18nEnum.TABLE_TASK_NAME_HEADER),
+					40),
+			new FieldExportColumn("startdate",
+					LocalizationHelper
+							.getMessage(TaskI18nEnum.TABLE_START_DATE_HEADER)),
+			new FieldExportColumn("deadline",
+					LocalizationHelper
+							.getMessage(TaskI18nEnum.TABLE_DUE_DATE_HEADER)),
+			new FieldExportColumn("percentagecomplete",
+					LocalizationHelper
+							.getMessage(TaskI18nEnum.TABLE_PER_COMPLETE_HEADER)),
+			new FieldExportColumn("assignUserFullName",
+					LocalizationHelper
+							.getMessage(TaskI18nEnum.TABLE_ASSIGNEE_HEADER)) };
 
 	public TaskGroupDisplayViewImpl() {
 		super();
@@ -78,28 +91,34 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		filterBtnLayout.setSpacing(true);
 		filterBtnLayout.setWidth("200px");
 
-		Button allTasksFilterBtn = new Button("All Task Groups",
+		Button allTasksFilterBtn = new Button(
+				LocalizationHelper
+						.getMessage(TaskI18nEnum.FILTER_ALL_TASK_GROUPS_TITLE),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(ClickEvent event) {
 						taskGroupSelection.setPopupVisible(false);
-						taskGroupSelection.setCaption("All Task Groups");
+						taskGroupSelection.setCaption(LocalizationHelper
+								.getMessage(TaskI18nEnum.FILTER_ALL_TASK_GROUPS_TITLE));
 						displayAllTaskGroups();
 					}
 				});
 		allTasksFilterBtn.setStyleName("link");
 		filterBtnLayout.addComponent(allTasksFilterBtn);
 
-		Button activeTasksFilterBtn = new Button("Active Task Groups Only",
+		Button activeTasksFilterBtn = new Button(
+				LocalizationHelper
+						.getMessage(TaskI18nEnum.FILTER_ACTIVE_TASK_GROUPS_TITLE),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(ClickEvent event) {
 						taskGroupSelection.setPopupVisible(false);
-						taskGroupSelection.setCaption("Active Task Groups");
+						taskGroupSelection.setCaption(LocalizationHelper
+								.getMessage(TaskI18nEnum.FILTER_ACTIVE_TASK_GROUPS_TITLE));
 						displayActiveTakLists();
 					}
 				});
@@ -107,12 +126,15 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 		filterBtnLayout.addComponent(activeTasksFilterBtn);
 
 		Button archievedTasksFilterBtn = new Button(
-				"Archieved Task Groups Only", new Button.ClickListener() {
+				LocalizationHelper
+						.getMessage(TaskI18nEnum.FILTER_ARCHIEVED_TASK_GROUPS_TITLE),
+				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						taskGroupSelection.setCaption("Archieved Task Groups");
+						taskGroupSelection.setCaption(LocalizationHelper
+								.getMessage(TaskI18nEnum.FILTER_ARCHIEVED_TASK_GROUPS_TITLE));
 						taskGroupSelection.setPopupVisible(false);
 						displayInActiveTaskGroups();
 					}
@@ -200,17 +222,17 @@ public class TaskGroupDisplayViewImpl extends AbstractView implements
 			@Override
 			public void buttonClick(ClickEvent event) {
 				String title = "Task report of Project "
-					+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
-							.getProject().getName() != null) ? CurrentProjectVariables
-							.getProject().getName() : "");
+						+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
+								.getProject().getName() != null) ? CurrentProjectVariables
+								.getProject().getName() : "");
 				TaskListSearchCriteria tasklistSearchCriteria = new TaskListSearchCriteria();
-				tasklistSearchCriteria.setProjectId(new NumberSearchField(SearchField.AND, CurrentProjectVariables
-						.getProject().getId()));
-				Resource res = new StreamResource(
-						new ExportTaskStreamResource(title,
-								EXPORT_COLUMNS, AppContext
-										.getSpringBean(ProjectTaskListService.class),
-										tasklistSearchCriteria), "task_list.xls",
+				tasklistSearchCriteria.setProjectId(new NumberSearchField(
+						SearchField.AND, CurrentProjectVariables.getProject()
+								.getId()));
+				Resource res = new StreamResource(new ExportTaskStreamResource(
+						title, EXPORT_COLUMNS, AppContext
+								.getSpringBean(ProjectTaskListService.class),
+						tasklistSearchCriteria), "task_list.xls",
 						TaskGroupDisplayViewImpl.this.getApplication());
 				TaskGroupDisplayViewImpl.this.getWindow().open(res, "_blank");
 			}

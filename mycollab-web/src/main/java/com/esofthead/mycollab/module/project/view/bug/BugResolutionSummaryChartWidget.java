@@ -15,6 +15,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -23,6 +24,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartDescriptionBox;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.ComponentContainer;
 
 /**
@@ -35,11 +37,17 @@ public class BugResolutionSummaryChartWidget extends
 	private static final long serialVersionUID = 1L;
 
 	public BugResolutionSummaryChartWidget(int width, int height) {
-		super("Bugs By Resolution", width, height);
+		super(
+				LocalizationHelper
+						.getMessage(BugI18nEnum.CHART_RESOLUTION_TITLE), width,
+				height);
 	}
-	
+
 	public BugResolutionSummaryChartWidget() {
-		super("Bugs By Resolution", 400, 280);
+		super(
+				LocalizationHelper
+						.getMessage(BugI18nEnum.CHART_RESOLUTION_TITLE), 400,
+				280);
 
 	}
 

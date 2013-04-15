@@ -11,6 +11,7 @@ import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectDataTypeFactory;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.view.parameters.BugScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.BugSearchParameter;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
@@ -19,18 +20,22 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartDescriptionBox;
 import com.esofthead.mycollab.vaadin.ui.chart.PieChartWrapper;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.ComponentContainer;
 
-public class StatusSummaryChartWidget extends PieChartWrapper<BugSearchCriteria> {
+public class StatusSummaryChartWidget extends
+		PieChartWrapper<BugSearchCriteria> {
 
 	private static final long serialVersionUID = 1L;
-	
+
 	public StatusSummaryChartWidget(int width, int height) {
-		super("Bugs By Status", width, height);
+		super(LocalizationHelper.getMessage(BugI18nEnum.CHART_STATUS_TITLE),
+				width, height);
 	}
 
 	public StatusSummaryChartWidget() {
-		super("Bugs By Status", 400, 280);
+		super(LocalizationHelper.getMessage(BugI18nEnum.CHART_STATUS_TITLE),
+				400, 280);
 	}
 
 	@Override
