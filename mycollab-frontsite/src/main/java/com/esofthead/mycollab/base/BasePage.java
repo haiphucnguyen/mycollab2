@@ -9,11 +9,19 @@ public abstract class BasePage extends WebPage {
 
 	public BasePage(final PageParameters parameters) {
 		super(parameters);
+		createBaseComponents();
+	}
 
+	public BasePage() {
+		createBaseComponents();
+	}
+
+	private void createBaseComponents() {
 		MainNavigationMenu mainMenu = new MainNavigationMenu("mainMenu");
 		add(mainMenu);
 
 		Footer footer = new Footer("footer");
 		add(footer);
 	}
+
 }

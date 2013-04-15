@@ -1,8 +1,15 @@
 package com.esofthead.mycollab;
 
+import org.apache.wicket.core.request.handler.PageProvider;
+import org.apache.wicket.core.request.handler.RenderPageRequestHandler;
 import org.apache.wicket.markup.html.WebPage;
 import org.apache.wicket.protocol.http.WebApplication;
+import org.apache.wicket.request.IRequestHandler;
+import org.apache.wicket.request.cycle.AbstractRequestCycleListener;
+import org.apache.wicket.request.cycle.RequestCycle;
 
+import com.esofthead.mycollab.pages.Error404Page;
+import com.esofthead.mycollab.pages.Error500Page;
 import com.esofthead.mycollab.pages.HomePage;
 import com.esofthead.mycollab.pages.PricingPage;
 import com.esofthead.mycollab.pages.PrivacyPage;
@@ -39,5 +46,16 @@ public class WicketApplication extends WebApplication {
 		mountPage("/pricing", PricingPage.class);
 		mountPage("/privacy", PrivacyPage.class);
 		mountPage("/signup", SignUpPage.class);
+		mountPage("/error404", Error404Page.class);
+		mountPage("/error500", Error500Page.class);
+
+		getApplicationSettings().setInternalErrorPage(Error500Page.class);
+		getRequestCycleListeners().add(new AbstractRequestCycleListener() {
+			@Override
+			public IRequestHandler onException(RequestCycle cycle, Exception e) {
+				return new RenderPageRequestHandler(new PageProvider(
+						new Error500Page(e)));
+			}
+		});
 	}
 }
