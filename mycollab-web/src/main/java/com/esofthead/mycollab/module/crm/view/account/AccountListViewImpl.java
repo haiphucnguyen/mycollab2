@@ -125,13 +125,16 @@ public class AccountListViewImpl extends AbstractView implements
 		selectOptionButton = new SelectionOptionButton(tableItem);
 		layout.addComponent(selectOptionButton);
 
-		Button deleteBtn = new Button("Delete");
+		Button deleteBtn = new Button(
+				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_DELETE));
 		deleteBtn.setEnabled(AppContext
 				.canAccess(RolePermissionCollections.CRM_ACCOUNT));
 
 		tableActionControls = new PopupButtonControl("delete", deleteBtn);
-		tableActionControls.addOptionItem("mail", "Mail");
-		tableActionControls.addOptionItem("export", "Export");
+		tableActionControls.addOptionItem("mail",
+				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_MAIL));
+		tableActionControls.addOptionItem("export",
+				LocalizationHelper.getMessage(CrmCommonI18nEnum.BUTTON_EXPORT));
 		tableActionControls.setVisible(false);
 
 		layout.addComponent(tableActionControls);

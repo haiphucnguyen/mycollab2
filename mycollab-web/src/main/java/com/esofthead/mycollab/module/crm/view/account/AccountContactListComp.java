@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.crm.domain.AccountContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedListComp;
 import com.esofthead.mycollab.module.crm.view.contact.ContactTableDisplay;
@@ -23,6 +24,7 @@ import com.esofthead.mycollab.vaadin.ui.ConfirmDialogFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -95,9 +97,20 @@ public class AccountContactListComp extends
 
 		contentContainer.addComponent(controlsBtn);
 
-		tableItem = new ContactTableDisplay(new String[] { "contactName",
-				"title", "email", "officephone", "id" }, new String[] { "Name",
-				"Title", "Email", "Office Phone", "Action" });
+		tableItem = new ContactTableDisplay(
+				new String[] { "contactName", "title", "email", "officephone",
+						"id" },
+				new String[] {
+						LocalizationHelper
+								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
+						LocalizationHelper
+								.getMessage(CrmCommonI18nEnum.TABLE_TITLE_HEADER),
+						LocalizationHelper
+								.getMessage(CrmCommonI18nEnum.TABLE_EMAIL_ADDRESS_HEADER),
+						LocalizationHelper
+								.getMessage(CrmCommonI18nEnum.TABLE_OFFICE_PHONE_HEADER),
+						LocalizationHelper
+								.getMessage(CrmCommonI18nEnum.TABLE_ACTION_HEADER) });
 
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
