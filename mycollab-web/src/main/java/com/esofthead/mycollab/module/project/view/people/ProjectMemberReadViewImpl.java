@@ -22,6 +22,8 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.ProjectRoleEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
+import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.view.bug.BugTableDisplay;
 import com.esofthead.mycollab.module.project.view.standup.StandupReportListDisplay;
 import com.esofthead.mycollab.module.project.view.task.TaskTableDisplay;
@@ -40,6 +42,7 @@ import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
@@ -215,8 +218,17 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			taskDisplay = new TaskTableDisplay(
 					new String[] { "id", "taskkey", "taskname", "startdate",
 							"deadline", "percentagecomplete" },
-					new String[] { "", "#", "Task Name", "Start", "Due",
-							"% Complete" });
+					new String[] {
+							"",
+							"#",
+							LocalizationHelper
+									.getMessage(TaskI18nEnum.TABLE_TASK_NAME_HEADER),
+							LocalizationHelper
+									.getMessage(TaskI18nEnum.TABLE_START_DATE_HEADER),
+							LocalizationHelper
+									.getMessage(TaskI18nEnum.TABLE_DUE_DATE_HEADER),
+							LocalizationHelper
+									.getMessage(TaskI18nEnum.TABLE_PER_COMPLETE_HEADER) });
 
 			taskDisplay
 					.addTableListener(new ApplicationEventListener<TableClickEvent>() {
@@ -350,10 +362,20 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 		public UserBugDepot() {
 			super("Bugs", new HorizontalLayout(), new VerticalLayout());
 
-			bugDisplay = new BugTableDisplay(new String[] { "id", "bugkey",
-					"summary", "severity", "resolution", "duedate" },
-					new String[] { "", "#", "Summary", "Severity",
-							"Resolution", "Due Date" });
+			bugDisplay = new BugTableDisplay(
+					new String[] { "id", "bugkey", "summary", "severity",
+							"resolution", "duedate" },
+					new String[] {
+							"",
+							"#",
+							LocalizationHelper
+									.getMessage(BugI18nEnum.TABLE_SUMMARY_HEADER),
+							LocalizationHelper
+									.getMessage(BugI18nEnum.TABLE_SEVERITY_HEADER),
+							LocalizationHelper
+									.getMessage(BugI18nEnum.TABLE_RESOLUTION_HEADER),
+							LocalizationHelper
+									.getMessage(BugI18nEnum.TABLE_DUE_DATE_HEADER) });
 			bugDisplay
 					.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 						private static final long serialVersionUID = 1L;

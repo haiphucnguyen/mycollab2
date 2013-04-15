@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.view.bug;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.shell.view.ScreenSize;
@@ -16,6 +17,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.ComponentContainer;
@@ -57,13 +59,35 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 			tableItem = new BugTableDisplay(
 					new String[] { "id", "bugkey", "summary",
 							"assignuserFullName", "severity", "resolution" },
-					new String[] { "", "#", "Summary", "Assigned User",
-							"Severity", "Resolution" });
+					new String[] {
+							"",
+							"#",
+							LocalizationHelper
+									.getMessage(BugI18nEnum.TABLE_SUMMARY_HEADER),
+							LocalizationHelper
+									.getMessage(BugI18nEnum.TABLE_ASSIGN_USER_HEADER),
+							LocalizationHelper
+									.getMessage(BugI18nEnum.TABLE_SEVERITY_HEADER),
+							LocalizationHelper
+									.getMessage(BugI18nEnum.TABLE_RESOLUTION_HEADER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
-			tableItem = new BugTableDisplay(new String[] { "id", "bugkey",
-					"summary", "assignuserFullName", "severity", "resolution",
-					"duedate" }, new String[] { "", "#", "Summary",
-					"Assigned User", "Severity", "Resolution", "Due Date" });
+			tableItem = new BugTableDisplay(
+					new String[] { "id", "bugkey", "summary",
+							"assignuserFullName", "severity", "resolution",
+							"duedate" },
+					new String[] {
+							"",
+							"#",
+							LocalizationHelper
+									.getMessage(BugI18nEnum.TABLE_SUMMARY_HEADER),
+							LocalizationHelper
+									.getMessage(BugI18nEnum.TABLE_ASSIGN_USER_HEADER),
+							LocalizationHelper
+									.getMessage(BugI18nEnum.TABLE_SEVERITY_HEADER),
+							LocalizationHelper
+									.getMessage(BugI18nEnum.TABLE_RESOLUTION_HEADER),
+							LocalizationHelper
+									.getMessage(BugI18nEnum.TABLE_DUE_DATE_HEADER) });
 		}
 
 		tableItem
@@ -104,16 +128,16 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 		layout.addComponent(lbEmpty);
 		layout.setExpandRatio(lbEmpty, 1.0f);
 
-		exportBtn = new Button("Export");
-		exportBtn.setIcon(new ThemeResource(
-		"icons/16/export_excel.png"));
+		exportBtn = new Button(
+				LocalizationHelper.getMessage(BugI18nEnum.TABLE_EXPORT_BUTTON));
+		exportBtn.setIcon(new ThemeResource("icons/16/export_excel.png"));
 		exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		exportBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.BUGS));
 		layout.addComponent(exportBtn);
 		return layout;
 	}
-	
+
 	@Override
 	public Button getExportBtn() {
 		return exportBtn;

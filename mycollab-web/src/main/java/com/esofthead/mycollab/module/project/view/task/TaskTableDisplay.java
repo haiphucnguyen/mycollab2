@@ -336,7 +336,7 @@ public class TaskTableDisplay extends
 
 		this.setColumnExpandRatio("taskname", 1);
 		this.setColumnWidth("id", 30);
-		this.setColumnWidth("taskkey", UIConstants.TABLE_CONTROL_WIDTH);
+		this.setColumnWidth("taskkey", 45);
 		this.setColumnWidth("assignUserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
 		this.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);

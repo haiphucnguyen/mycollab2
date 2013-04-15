@@ -67,7 +67,9 @@ public class MessageListComponent extends Depot {
 			header.addComponent(new ProjectUserLink(obj.getPosteduser(), obj
 					.getFullPostedUserName(), true));
 
-			Label actionLbl = new Label(" added news ");
+			Label actionLbl = new Label(
+					LocalizationHelper
+							.getMessage(ProjectCommonI18nEnum.FEED_ADD_NEWS_ACTION));
 			actionLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 			header.addComponent(actionLbl);
 
@@ -93,7 +95,9 @@ public class MessageListComponent extends Depot {
 					.getIconResource16size(ProjectContants.MESSAGE));
 			header.addComponent(messageLink);
 
-			Label projectLbl = new Label(" in project ");
+			Label projectLbl = new Label(
+					LocalizationHelper
+							.getMessage(ProjectCommonI18nEnum.FEED_IN_PROJECT_LABEL));
 			projectLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 			header.addComponent(projectLbl);
 

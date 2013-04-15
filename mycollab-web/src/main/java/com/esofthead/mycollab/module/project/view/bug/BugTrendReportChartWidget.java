@@ -18,11 +18,13 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.esofthead.mycollab.common.domain.GroupItem;
+import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.chart.GenericChartWrapper;
 import com.esofthead.mycollab.vaadin.ui.chart.TimeSeriesChartWrapper;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -46,13 +48,15 @@ public class BugTrendReportChartWidget extends
 	private static String patternDate = "yyyy-MM-dd";
 	private static SimpleDateFormat dateFormat = new SimpleDateFormat(
 			patternDate);
-	
+
 	public BugTrendReportChartWidget(int width, int height) {
-		super("Bugs Trend", width, height);
+		super(LocalizationHelper.getMessage(BugI18nEnum.CHART_TREND_TITLE),
+				width, height);
 	}
 
 	public BugTrendReportChartWidget() {
-		super("Bugs Trend", 400, 300);
+		super(LocalizationHelper.getMessage(BugI18nEnum.CHART_TREND_TITLE),
+				400, 300);
 	}
 
 	@Override

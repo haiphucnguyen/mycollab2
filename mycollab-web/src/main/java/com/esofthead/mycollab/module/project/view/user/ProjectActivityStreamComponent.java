@@ -25,6 +25,8 @@ import com.esofthead.mycollab.module.project.events.RiskEvent;
 import com.esofthead.mycollab.module.project.events.StandUpEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
+import com.esofthead.mycollab.module.project.localization.ProjectLocalizationTypeMap;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -32,6 +34,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Button;
@@ -88,13 +91,18 @@ public class ProjectActivityStreamComponent extends Depot {
 
 			if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream
 					.getAction())) {
-				action.append("create a new ");
+				action.append(LocalizationHelper
+						.getMessage(ProjectCommonI18nEnum.FEED_CREATE_ITEM_LBL));
 			} else if (ActivityStreamConstants.ACTION_UPDATE
 					.equals(activityStream.getAction())) {
-				action.append("update ");
+				action.append(LocalizationHelper
+						.getMessage(ProjectCommonI18nEnum.FEED_UPDATE_ITEM_LBL));
 			}
 
-			action.append(activityStream.getType());
+			action.append(LocalizationHelper
+					.getMessage(ProjectLocalizationTypeMap
+							.getType(activityStream.getType())));
+
 			Label actionLbl = new Label(action.toString());
 			actionLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 			header.addComponent(actionLbl);

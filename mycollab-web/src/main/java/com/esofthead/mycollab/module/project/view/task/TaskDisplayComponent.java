@@ -15,6 +15,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.events.TaskListEvent;
+import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
@@ -26,6 +27,7 @@ import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -111,10 +113,22 @@ public class TaskDisplayComponent extends CssLayout {
 			taskInfo.setMargin(false, false, true, false);
 		}
 
-		taskDisplay = new TaskTableDisplay(new String[] { "id", "taskkey",
-				"taskname", "startdate", "deadline", "percentagecomplete",
-				"assignUserFullName" }, new String[] { "", "#", "Task Name",
-				"Start", "Due", "% Complete", "Owner" });
+		taskDisplay = new TaskTableDisplay(
+				new String[] { "id", "taskkey", "taskname", "startdate",
+						"deadline", "percentagecomplete", "assignUserFullName" },
+				new String[] {
+						"",
+						"#",
+						LocalizationHelper
+								.getMessage(TaskI18nEnum.TABLE_TASK_NAME_HEADER),
+						LocalizationHelper
+								.getMessage(TaskI18nEnum.TABLE_START_DATE_HEADER),
+						LocalizationHelper
+								.getMessage(TaskI18nEnum.TABLE_DUE_DATE_HEADER),
+						LocalizationHelper
+								.getMessage(TaskI18nEnum.TABLE_PER_COMPLETE_HEADER),
+						LocalizationHelper
+								.getMessage(TaskI18nEnum.TABLE_ASSIGNEE_HEADER) });
 		this.addComponent(taskDisplay);
 
 		taskDisplay
