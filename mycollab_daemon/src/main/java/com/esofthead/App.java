@@ -11,6 +11,9 @@ public class App {
 	private static final String CONFIG_FILE = "config.properties";
 	private static final String YAJSW_CONFIG_FILE = "yajsw.properties";
 	private static Properties prop;
+	private static final String FILE_SEPERATOR;
+	
+	private static final int TRY_TIMES = 10;
 
 	static class ENVIROMENT_VARS {
 		public static final String WORKING_FOLDER = "${WORKING_FOLDER}";
@@ -45,6 +48,8 @@ public class App {
 			__OsType = OsType.WINDOWS;
 		else
 			__OsType = OsType.UNIX;
+
+		FILE_SEPERATOR = File.separator;
 	}
 
 	public static void main(String[] args) throws Exception {
@@ -59,54 +64,44 @@ public class App {
 		prop.load(Thread.currentThread().getContextClassLoader()
 				.getResourceAsStream(CONFIG_FILE));
 
-		final String yajswHome = prop.getProperty(CONFIG_KEYS.YAJSW_HOME);
-
-		String errorCode = null;
+		final String yajswPattern = prop.getProperty(CONFIG_KEYS.YAJSW_HOME);
+		final String yajswHome = getYajswHome(yajswPattern);
 
 		if (action.equals("install")) {
 			prepareConfiguration();
 
-			errorCode = getOutPut(getScriptHome(yajswHome),
-					getInstallCmd(yajswHome));
-			if (errorCode.toLowerCase().indexOf("not install") != -1) {
-				/* there have error occur */
+			if (!installService(yajswHome)) {
 				System.out
 						.println("Install service faile. Please review your configuration and try again...");
 				return;
 			}
 
-			errorCode = getOutPut(getScriptHome(yajswHome),
-					getStartCmd(yajswHome));
-			if (errorCode.toLowerCase().indexOf("not start") != -1) {
+			if (!startService(yajswHome)) {
 				System.out
 						.println("Start service faile. Please review your configuration and try again...");
-				return;
 			}
 		} else if (action.equals("start")) {
-			errorCode = getOutPut(getScriptHome(yajswHome),
-					getStartCmd(yajswHome));
-			if (errorCode.toLowerCase().indexOf("not start") != -1) {
+			if (!startService(yajswHome)) {
 				System.out
 						.println("Start service faile. Please review your configuration and try again...");
-				return;
 			}
 		} else if (action.equals("stop")) {
-			errorCode = getOutPut(getScriptHome(yajswHome),
-					getStopCmd(yajswHome));
-			if (errorCode.toLowerCase().indexOf("not stop") != -1) {
+			if (!stopService(yajswHome)) {
 				System.out
 						.println("Stop service faile. Please review your configuration and try again...");
-				return;
 			}
 		} else if (action.equals("uninstall")) {
 			/* first stop service */
-			getOutPut(getScriptHome(yajswHome), getStopCmd(yajswHome));
-
-			errorCode = getOutPut(getScriptHome(yajswHome),
-					getUninstallCmd(yajswHome));
-			if (errorCode.toLowerCase().indexOf("not removed") != -1) {
+			if (!stopService(yajswHome)) {
 				System.out
 						.println("Stop service faile. Please review your configuration and try again...");
+
+				return;
+			}
+
+			if (!uninstallService(yajswHome)) {
+				System.out
+						.println("Uninstall service faile. Please review your configuration and try again...");
 				return;
 			}
 		} else {
@@ -116,15 +111,15 @@ public class App {
 	}
 
 	private static final void prepareConfiguration() throws Exception {
-		final String yajswHome = prop.getProperty(CONFIG_KEYS.YAJSW_HOME);
+		final String yajswHome = getYajswHome(prop
+				.getProperty(CONFIG_KEYS.YAJSW_HOME));
 		final String yajswConfig = getYajswConf(yajswHome);
 
 		Properties yajswProp = new Properties();
 		yajswProp.load(Thread.currentThread().getContextClassLoader()
 				.getResourceAsStream(YAJSW_CONFIG_FILE));
 
-		yajswProp.setProperty(CONFIG_KEYS.WORKING_DIR,
-				getWorkingDir(prop.getProperty(CONFIG_KEYS.WORKING_DIR)));
+		yajswProp.setProperty(CONFIG_KEYS.WORKING_DIR, getWorkingDir());
 
 		yajswProp.setProperty(CONFIG_KEYS.CONSOLE_TITLE,
 				prop.getProperty(CONFIG_KEYS.CONSOLE_TITLE));
@@ -136,11 +131,16 @@ public class App {
 				prop.getProperty(CONFIG_KEYS.NT_SERVICE_DESCRIPTION));
 
 		yajswProp.setProperty(CONFIG_KEYS.JAVA_CMD, getJavaCmd());
-		yajswProp.setProperty(
-				CONFIG_KEYS.APP_JAR,
-				prop.getProperty(CONFIG_KEYS.APP_JAR)
-						.replace(ENVIROMENT_VARS.WORKING_FOLDER, getUserDir())
-						.replace(ENVIROMENT_VARS.TEMP_FOLDER, getTmpFolder()));
+		yajswProp
+				.setProperty(
+						CONFIG_KEYS.APP_JAR,
+						prop.getProperty(CONFIG_KEYS.APP_JAR)
+								.replace(ENVIROMENT_VARS.WORKING_FOLDER,
+										getWorkingDir())
+								.replace(ENVIROMENT_VARS.TEMP_FOLDER,
+										getTmpFolder())
+								.replace(ENVIROMENT_VARS.FILE_SEPERATOR,
+										FILE_SEPERATOR));
 
 		for (int i = 1; i <= 50; i++) {
 			final String key = String.format("%s.%d", CONFIG_KEYS.ARG, i);
@@ -151,11 +151,11 @@ public class App {
 				yajswProp.put(
 						key,
 						arg.replace(ENVIROMENT_VARS.WORKING_FOLDER,
-								getUserDir())
+								getWorkingDir())
 								.replace(ENVIROMENT_VARS.TEMP_FOLDER,
 										getTmpFolder())
 								.replace(ENVIROMENT_VARS.FILE_SEPERATOR,
-										File.separator));
+										FILE_SEPERATOR));
 			} else {
 				break;
 			}
@@ -170,11 +170,11 @@ public class App {
 				yajswProp.put(
 						key,
 						arg.replace(ENVIROMENT_VARS.WORKING_FOLDER,
-								getUserDir())
+								getWorkingDir())
 								.replace(ENVIROMENT_VARS.TEMP_FOLDER,
 										getTmpFolder())
 								.replace(ENVIROMENT_VARS.FILE_SEPERATOR,
-										File.separator));
+										FILE_SEPERATOR));
 			} else {
 				break;
 			}
@@ -188,170 +188,133 @@ public class App {
 		return System.getProperty("user.dir");
 	}
 
-	private static final String getWorkingDir(String folder) {
-		final String currentDir = getUserDir();
-		if (null == folder || folder.trim().length() == 0) {
-			return currentDir;
-		}
-		if (__OsType == OsType.WINDOWS) {
-			if (currentDir.endsWith("\\")) {
-				return currentDir + folder;
-			}
-
-			return String.format("%s\\%s", currentDir, folder);
-		} else {
-			if (currentDir.endsWith("/")) {
-				return currentDir + folder;
-			}
-
-			return String.format("%s/%s", currentDir, folder);
-		}
-	}
-
-	private static final String getJavaCmd() {
-		String javaHome = System.getProperty("java.home");
-		if (__OsType == OsType.WINDOWS) {
-			if (javaHome.endsWith("\\")) {
-				return javaHome + "bin\\java";
-			}
-
-			return String.format("%s\\bin\\java", javaHome);
-		} else {
-			if (javaHome.endsWith("/")) {
-				return javaHome + "bin/java";
-			}
-
-			return String.format("%s/bin/java", javaHome);
-		}
-	}
-
-	private static final String getYajswConf(String yajswHome) {
-		final String currentDir = getUserDir();
-		if (__OsType == OsType.WINDOWS) {
-			if (currentDir.endsWith("\\")) {
-				return String.format("%s%s\\conf\\wrapper.conf", currentDir,
-						yajswHome);
-			}
-
-			return String.format("%s\\%s\\conf\\wrapper.conf", currentDir,
-					yajswHome);
-		} else {
-			if (currentDir.endsWith("/")) {
-				return String.format("%s%s/conf/wrapper.conf", currentDir,
-						yajswHome);
-			}
-
-			return String.format("%s/%s/conf/wrapper.conf", currentDir,
-					yajswHome);
-		}
-	}
-
 	private static final String getTmpFolder() {
 		return System.getProperty("java.io.tmpdir");
 	}
 
-	private static final String getInstallCmd(String yajswHome) {
+	private static final String getWorkingDir() {
 		final String currentDir = getUserDir();
+
+		File file = new File(currentDir);
+		return file.getParent();
+	}
+
+	private static final String getYajswHome(String yajswPattern) {
+		final String workingDir = getWorkingDir();
+		if (workingDir.endsWith(FILE_SEPERATOR))
+			return String.format("%s%s", workingDir, yajswPattern);
+		return String
+				.format("%s%s%s", workingDir, FILE_SEPERATOR, yajswPattern);
+	}
+
+	private static final String getJavaCmd() {
+		String javaHome = System.getProperty("java.home");
+
+		if (javaHome.endsWith(FILE_SEPERATOR))
+			return String.format("%sbin%sjava", javaHome, FILE_SEPERATOR);
+		return String.format("%s%sbin%sjava", javaHome, FILE_SEPERATOR,
+				FILE_SEPERATOR);
+	}
+
+	private static final String getYajswConf(String yajswHome) {
+		File file = new File(yajswHome);
+		if (file.exists()) {
+			if (yajswHome.endsWith(FILE_SEPERATOR))
+				return String.format("%sconf%swrapper.conf", yajswHome,
+						FILE_SEPERATOR);
+			return String.format("%s%sconf%swrapper.conf", yajswHome,
+					FILE_SEPERATOR, FILE_SEPERATOR);
+		}
+
+		final String yajswPattern = getYajswHome(yajswHome);
+		file = new File(yajswPattern);
+		if (file.exists())
+			return getYajswConf(yajswPattern);
+
+		return "";
+	}
+
+	private static final String getInstallCmd(String yajswHome) {
 		if (__OsType == OsType.WINDOWS) {
-			if (currentDir.endsWith("\\")) {
-				return String.format("%s%s\\bat\\installService.bat",
-						currentDir, yajswHome);
+			if (yajswHome.endsWith(FILE_SEPERATOR)) {
+				return String.format("%sbat%sinstallService.bat", yajswHome,
+						FILE_SEPERATOR);
 			}
 
-			return String.format("%s\\%s\\bat\\installService.bat", currentDir,
-					yajswHome);
+			return String.format("%s%sbat%sinstallService.bat", yajswHome,
+					FILE_SEPERATOR, FILE_SEPERATOR);
 		} else {
-			if (currentDir.endsWith("/")) {
-				return String.format("%s%s/bin/installDaemon.sh", currentDir,
-						yajswHome);
+			if (yajswHome.endsWith(FILE_SEPERATOR)) {
+				return String.format("%sbin%sinstallDaemon.sh", yajswHome,
+						FILE_SEPERATOR);
 			}
 
-			return String.format("%s/%s/bin/installDaemon.sh", currentDir,
-					yajswHome);
+			return String.format("%s%sbin%sinstallDaemon.sh", yajswHome,
+					FILE_SEPERATOR, FILE_SEPERATOR);
 		}
 	}
 
 	private static final String getStartCmd(String yajswHome) {
-		final String currentDir = getUserDir();
 		if (__OsType == OsType.WINDOWS) {
-			if (currentDir.endsWith("\\")) {
-				return String.format("%s%s\\bat\\startService.bat", currentDir,
-						yajswHome);
+			if (yajswHome.endsWith(FILE_SEPERATOR)) {
+				return String.format("%sbat%sstartService.bat", yajswHome,
+						FILE_SEPERATOR);
 			}
 
-			return String.format("%s\\%s\\bat\\startService.bat", currentDir,
-					yajswHome);
+			return String.format("%s%sbat%sstartService.bat", yajswHome,
+					FILE_SEPERATOR, FILE_SEPERATOR);
 		} else {
-			if (currentDir.endsWith("/")) {
-				return String.format("%s%s/bin/startDaemon.sh", currentDir,
-						yajswHome);
+			if (yajswHome.endsWith(FILE_SEPERATOR)) {
+				return String.format("%sbin%sstartDaemon.sh", yajswHome,
+						FILE_SEPERATOR);
 			}
 
-			return String.format("%s/%s/bin/startDaemon.sh", currentDir,
-					yajswHome);
+			return String.format("%s%sbin%sstartDaemon.sh", yajswHome,
+					FILE_SEPERATOR, FILE_SEPERATOR);
 		}
 	}
 
 	private static final String getStopCmd(String yajswHome) {
-		final String currentDir = getUserDir();
 		if (__OsType == OsType.WINDOWS) {
-			if (currentDir.endsWith("\\")) {
-				return String.format("%s%s\\bat\\stopService.bat", currentDir,
-						yajswHome);
+			if (yajswHome.endsWith(FILE_SEPERATOR)) {
+				return String.format("%sbat%sstopService.bat", yajswHome,
+						FILE_SEPERATOR);
 			}
 
-			return String.format("%s\\%s\\bat\\stopService.bat", currentDir,
-					yajswHome);
+			return String.format("%s%sbat%sstopService.bat", yajswHome,
+					FILE_SEPERATOR, FILE_SEPERATOR);
 		} else {
-			if (currentDir.endsWith("/")) {
-				return String.format("%s%s/bin/stopDaemon.sh", currentDir,
-						yajswHome);
+			if (yajswHome.endsWith(FILE_SEPERATOR)) {
+				return String.format("%sbin%sstopDaemon.sh", yajswHome,
+						FILE_SEPERATOR);
 			}
 
-			return String.format("%s/%s/bin/stopDaemon.sh", currentDir,
-					yajswHome);
+			return String.format("%s%sbin%sstopDaemon.sh", yajswHome,
+					FILE_SEPERATOR, FILE_SEPERATOR);
 		}
 	}
 
 	private static final String getUninstallCmd(String yajswHome) {
-		final String currentDir = getUserDir();
 		if (__OsType == OsType.WINDOWS) {
-			if (currentDir.endsWith("\\")) {
-				return String.format("%s%s\\bat\\uninstallService.bat",
-						currentDir, yajswHome);
+			if (yajswHome.endsWith(FILE_SEPERATOR)) {
+				return String.format("%sbat%suninstallService.bat", yajswHome,
+						FILE_SEPERATOR);
 			}
 
-			return String.format("%s\\%s\\bat\\uninstallService.bat",
-					currentDir, yajswHome);
+			return String.format("%s%sbat%suninstallService.bat", yajswHome,
+					FILE_SEPERATOR, FILE_SEPERATOR);
 		} else {
-			if (currentDir.endsWith("/")) {
-				return String.format("%s%s/bin/uninstallDaemon.sh", currentDir,
-						yajswHome);
+			if (yajswHome.endsWith(FILE_SEPERATOR)) {
+				return String.format("%sbin%suninstallDaemon.sh", yajswHome,
+						FILE_SEPERATOR);
 			}
 
-			return String.format("%s/%s/bin/uninstallDaemon.sh", currentDir,
-					yajswHome);
+			return String.format("%s%sbin%suninstallDaemon.sh", yajswHome,
+					FILE_SEPERATOR, FILE_SEPERATOR);
 		}
 	}
 
-	private static final String getScriptHome(String yajswHome) {
-		final String currentDir = getUserDir();
-		if (__OsType == OsType.WINDOWS) {
-			if (currentDir.endsWith("\\")) {
-				return String.format("%s%s\\bat", currentDir, yajswHome);
-			}
-
-			return String.format("%s\\%s\\bat", currentDir, yajswHome);
-		} else {
-			if (currentDir.endsWith("/")) {
-				return String.format("%s%s/bin", currentDir, yajswHome);
-			}
-
-			return String.format("%s/%s/bin", currentDir, yajswHome);
-		}
-	}
-
-	private static String getOutPut(String scriptHome, String command)
+	private static final String getOutPut(String scriptHome, String command)
 			throws Exception {
 		final ProcessBuilder pb; // = new ProcessBuilder("cmd.exe", "/c",
 									// command);
@@ -385,6 +348,110 @@ public class App {
 		}
 
 		return result.toString();
+	}
+
+	private static final boolean startService(String yajswHome)
+			throws Exception {
+		int __try = 0;
+		String errorCode = "";
+		while (__try < TRY_TIMES) {
+			System.out.println("\r\nTry times: " + (__try + 1));
+			errorCode = getOutPut(yajswHome, getStartCmd(yajswHome));
+			if (errorCode.toLowerCase().indexOf("not start") != -1) {
+				__try++;
+				try {
+					Thread.sleep(1000);
+				} catch (Exception ex) {
+					/*
+					 * Let this error pass
+					 */
+				}
+				continue;
+			}
+			break;
+		}
+		if (errorCode.toLowerCase().indexOf("not start") != -1) {
+			return false;
+		}
+
+		return true;
+	}
+
+	private static final boolean stopService(String yajswHome) throws Exception {
+		int __try = 0;
+		String errorCode = "";
+		while (__try < TRY_TIMES) {
+			System.out.println("\r\nTry times: " + (__try + 1));
+			errorCode = getOutPut(yajswHome, getStopCmd(yajswHome));
+			if (errorCode.toLowerCase().indexOf("not stop") != -1) {
+				__try++;
+				try {
+					Thread.sleep(1000);
+				} catch (Exception ex) {
+					/*
+					 * Let this error pass
+					 */
+				}				
+				continue;
+			}
+			break;
+		}
+		if (errorCode.toLowerCase().indexOf("not stop") != -1) {
+			return false;
+		}
+		return true;
+	}
+
+	private static final boolean uninstallService(String yajswHome)
+			throws Exception {
+		int __try = 0;
+		String errorCode = "";
+		while (__try < TRY_TIMES) {
+			System.out.println("\r\nTry times: " + (__try + 1));
+			errorCode = getOutPut(yajswHome, getUninstallCmd(yajswHome));
+			if (errorCode.toLowerCase().indexOf("not removed") != -1) {
+				__try++;
+				try {
+					Thread.sleep(1000);
+				} catch (Exception ex) {
+					/*
+					 * Let this error pass
+					 */
+				}
+				continue;
+			}
+			break;
+		}
+		if (errorCode.toLowerCase().indexOf("not removed") != -1) {
+			return false;
+		}
+		return true;
+	}
+
+	private static final boolean installService(String yajswHome)
+			throws Exception {
+		int __try = 0;
+		String errorCode = "";
+		while (__try < TRY_TIMES) {
+			System.out.println("\r\nTry times: " + (__try + 1));
+			errorCode = getOutPut(yajswHome, getInstallCmd(yajswHome));
+			if (errorCode.toLowerCase().indexOf("not install") != -1) {
+				__try++;
+				try {
+					Thread.sleep(1000);
+				} catch (Exception ex) {
+					/*
+					 * Let this error pass
+					 */
+				}
+				continue;
+			}
+			break;
+		}
+		if (errorCode.toLowerCase().indexOf("not install") != -1) {
+			return false;
+		}
+		return true;
 	}
 
 }
