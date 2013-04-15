@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.mock.service;
+package test.com.esofthead.mycollab.service;
 
 import java.util.List;
 
