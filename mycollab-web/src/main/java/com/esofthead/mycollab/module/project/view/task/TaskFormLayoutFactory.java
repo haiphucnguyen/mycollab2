@@ -13,6 +13,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
@@ -25,7 +26,7 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 	private static final long serialVersionUID = 1L;
 	private final String title;
 	private TaskInformationLayout informationLayout;
-	
+
 	private List<String> lstStyleTitle = new ArrayList<String>();
 
 	public TaskFormLayoutFactory(String title) {
@@ -40,8 +41,8 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 		for (int i = 0; i < lstStyleTitle.size(); i++) {
 			taskAddLayout.addTitleStyleName(lstStyleTitle.get(i));
 		}
-		
-		Layout topPanel = createTopPanel();
+
+		ComponentContainer topPanel = createTopPanel();
 		if (topPanel != null) {
 			taskAddLayout.addTopControls(topPanel);
 		}
@@ -49,14 +50,14 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 		informationLayout = new TaskInformationLayout();
 		taskAddLayout.addBody(informationLayout.getLayout());
 
-		Layout bottomPanel = createBottomPanel();
+		ComponentContainer bottomPanel = createBottomPanel();
 		if (bottomPanel != null) {
 			taskAddLayout.addBottomControls(bottomPanel);
 		}
 
 		return taskAddLayout;
 	}
-	
+
 	protected void addTitleStyle(String styleName) {
 		lstStyleTitle.add(styleName);
 	}
@@ -66,9 +67,9 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 		informationLayout.attachField(propertyId, field);
 	}
 
-	protected abstract Layout createTopPanel();
+	protected abstract ComponentContainer createTopPanel();
 
-	protected abstract Layout createBottomPanel();
+	protected abstract ComponentContainer createBottomPanel();
 
 	@SuppressWarnings("serial")
 	public static class TaskInformationLayout implements IFormLayoutFactory {

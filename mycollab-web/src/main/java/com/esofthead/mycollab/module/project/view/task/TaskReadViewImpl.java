@@ -9,6 +9,7 @@ import java.util.GregorianCalendar;
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot;
+import com.esofthead.mycollab.common.ui.components.CommentListDepot.CommentDisplay;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
 import com.esofthead.mycollab.module.project.ProjectContants;
@@ -33,11 +34,13 @@ import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
-import com.vaadin.ui.Layout;
+import com.vaadin.ui.TabSheet;
+import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 /**
@@ -53,7 +56,6 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 	public TaskReadViewImpl() {
 		super();
-		this.setMargin(false, true, true, true);
 
 		previewForm = new PreviewForm();
 		this.addComponent(previewForm);
@@ -116,7 +118,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 			public FormLayoutFactory() {
 				super(task.getTaskname());
-				
+
 				if (task.getPercentagecomplete() != null
 						&& 100d == task.getPercentagecomplete()) {
 					addTitleStyle(UIConstants.LINK_COMPLETED);
@@ -137,7 +139,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			}
 
 			@Override
-			protected Layout createTopPanel() {
+			protected ComponentContainer createTopPanel() {
 				return (new PreviewFormControlsGenerator<Task>(PreviewForm.this))
 						.createButtonControls(
 								ProjectRolePermissionCollections.TASKS,
@@ -145,10 +147,36 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			}
 
 			@Override
-			protected Layout createBottomPanel() {
-				return new CommentListDepot(CommentTypeConstants.PRJ_TASK,
-						task.getId(), true, true, ProjectTaskNotificationService.class);
+			protected ComponentContainer createBottomPanel() {
+				TabSheet tabTaskDetail = new TabSheet();
+				tabTaskDetail.setWidth("100%");
+				tabTaskDetail.setStyleName(UIConstants.WHITE_TABSHEET);
+
+				CommentDisplay commentList = new CommentDisplay(
+						CommentTypeConstants.PRJ_TASK, task.getId(), true,
+						true, ProjectTaskNotificationService.class);
+				tabTaskDetail.addTab(commentList, "Comments");
+
+				TaskHistoryList historyList = new TaskHistoryList(task.getId());
+				historyList.setMargin(true);
+				tabTaskDetail.addTab(historyList, "History");
+
+				TaskFollowerSheet followerSheet = new TaskFollowerSheet();
+				tabTaskDetail.addTab(followerSheet, "Follower");
+
+				TaskTimeSheet timesheet = new TaskTimeSheet();
+				tabTaskDetail.addTab(timesheet, "Time");
+
+				return tabTaskDetail;
 			}
+		}
+
+		class TaskFollowerSheet extends VerticalLayout {
+
+		}
+
+		class TaskTimeSheet extends VerticalLayout {
+
 		}
 	}
 
@@ -258,12 +286,12 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 			}
 
 			@Override
-			protected Layout createTopPanel() {
+			protected ComponentContainer createTopPanel() {
 				return new HorizontalLayout();
 			}
 
 			@Override
-			protected Layout createBottomPanel() {
+			protected ComponentContainer createBottomPanel() {
 				return new CommentListDepot(CommentTypeConstants.PRJ_TASK,
 						task.getId(), false, false);
 			}
