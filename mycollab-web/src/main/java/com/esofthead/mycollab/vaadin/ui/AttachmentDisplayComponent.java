@@ -9,6 +9,7 @@ import java.util.List;
 import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
+import com.esofthead.mycollab.utils.StringUtils;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.ThemeResource;
@@ -49,15 +50,19 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 		Embedded fileTypeIcon = new Embedded(null,
 				UiUtils.getFileIconResource(docName));
 		attachmentLayout.addComponent(fileTypeIcon);
-		Label attachmentLink = new Label(docName);
-		attachmentLayout.addComponent(attachmentLink);
-		attachmentLayout.setComponentAlignment(attachmentLink,
-				Alignment.MIDDLE_CENTER);
+
 		String fileExt = "";
 		int index = docName.lastIndexOf(".");
 		if (index > 0) {
 			fileExt = docName.substring(index + 1, docName.length());
+			docName = docName.substring(0, index);
 		}
+		docName = StringUtils.trimString(docName, 60, true);
+
+		Label attachmentLink = new Label(docName);
+		attachmentLayout.addComponent(attachmentLink);
+		attachmentLayout.setComponentAlignment(attachmentLink,
+				Alignment.MIDDLE_CENTER);
 
 		if ("jpg".equalsIgnoreCase(fileExt) || "png".equalsIgnoreCase(fileExt)) {
 
