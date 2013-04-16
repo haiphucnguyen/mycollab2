@@ -166,7 +166,6 @@ input.v-textfield[type="text"],.v-filterselect {
 	{
 	font: 12px/18px "Lucida Sans Unicode", Helvetica, Arial, Verdana,
 		sans-serif !important;
- 	-webkit-font-smoothing: antialiased;
 }
 
 body div>input.v-filterselect-input[type="text"] {
@@ -662,7 +661,7 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 }
 
 .basicSearch .basicSearchBody .v-label {
-	line-height: 1.8em;
+	line-height: 24px;
 }
 
 /* End Basic Search Template */
