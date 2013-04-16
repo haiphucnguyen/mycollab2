@@ -72,7 +72,7 @@ public abstract class ProjectMemberFormLayoutFactory implements
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
-			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 2);
+			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 2, "400px", "120px");
 
 			layout.addComponent(informationLayout.getLayout());
 			return layout;
