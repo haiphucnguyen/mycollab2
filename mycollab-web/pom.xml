@@ -252,7 +252,7 @@
             <artifactId>batik-svggen</artifactId>
             <version>1.7</version>
         </dependency>
-        
+
         <dependency>
             <groupId>com.h2database</groupId>
             <artifactId>h2</artifactId>
@@ -404,7 +404,7 @@
                 <executions> <execution> <phase>prepare-package</phase> <configuration> <extraJvmArgs>-Xmx512M 
                 -Xss1024k</extraJvmArgs> </configuration> <goals> <goal>compile</goal> </goals> 
                 </execution> </executions> </plugin> -->
-            
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>
@@ -425,6 +425,26 @@
                         <contextPath>/${project.name}</contextPath>
                     </webAppConfig>
                 </configuration>
+            </plugin>
+
+            <plugin>
+                <artifactId>maven-antrun-plugin</artifactId>
+                <version>1.7</version>
+                <executions>
+                    <execution>
+                        <phase>prepare-package</phase>
+                        <configuration>
+                            <target>
+                                <copy
+                                    file="${basedir}/src/main/resources/resources.properties-live"
+                                    tofile="${basedir}/src/main/resources/resources.properties-live" />
+                            </target>
+                        </configuration>
+                        <goals>
+                            <goal>run</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
             <!-- <plugin> <groupId>com.github.wvengen</groupId> <artifactId>proguard-maven-plugin</artifactId> 
                 <executions> <execution> <phase>package</phase> <goals> <goal>proguard</goal> 
