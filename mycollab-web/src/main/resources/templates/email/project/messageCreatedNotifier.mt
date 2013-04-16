@@ -28,14 +28,14 @@
 					</tr>
 					<tr>
 						<td style="background: url('${defaultUrls.cdn_url}border_small_center.png') repeat-y 0 0 transparent; color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
-							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
+							<table cellpadding="0" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
-									<td style="text-align: right; min-width: 90px; vertical-align: top;">Title:&nbsp;</td>
-									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$hyperLinks.messageUrl" style="color: #4283c4; text-decoration: none;">$message.title</a></td>
+									<td style="width: 70px; max-width: 70px">Title:</td>
+									<td style="font-weight: bold; font-size: 11px; word-wrap: break-word; white-space: normal; word-break: break-all;"><a href="$hyperLinks.messageUrl" style="color: #4283c4; text-decoration: none;">$message.title</a></td>
 								</tr>
 								<tr>
-									<td style="text-align: right; min-width: 90px; vertical-align: top;">Message:&nbsp;</td>
-									<td colspan="3" style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!message.message</td>
+									<td style="width: 70px; max-width: 70px">Message:</td>
+									<td style="word-wrap: break-word; white-space: normal; word-break: break-all;">$!message.message</td>
 								</tr>
 							</table>
 						</td>

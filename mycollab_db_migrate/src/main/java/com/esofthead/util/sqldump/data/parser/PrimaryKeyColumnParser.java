@@ -6,15 +6,16 @@ import com.esofthead.util.sqldump.INFORMATION_SCHEMA;
 import com.esofthead.util.sqldump.ISqlParser;
 import com.esofthead.util.sqldump.data.PrimaryKeyColumn;
 
-public class PrimaryKeyColumnParser implements ISqlParser {
+public class PrimaryKeyColumnParser implements ISqlParser<PrimaryKeyColumn> {
 
 	@Override
-	public Object parse(ResultSet rs) throws Exception {
-		String columnName = rs.getString(INFORMATION_SCHEMA.PRIMARY_KEY.COLUMN_NAME);
-		
+	public PrimaryKeyColumn parse(ResultSet rs) throws Exception {
+		String columnName = rs
+				.getString(INFORMATION_SCHEMA.PRIMARY_KEY.COLUMN_NAME);
+
 		PrimaryKeyColumn column = new PrimaryKeyColumn();
 		column.setColumnName(columnName);
-		
+
 		return column;
 	}
 

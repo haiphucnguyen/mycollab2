@@ -3,36 +3,41 @@ package com.esofthead.util.sqldump;
 import java.lang.reflect.Method;
 import java.sql.Connection;
 import java.sql.DatabaseMetaData;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
 import java.sql.Statement;
 import java.util.LinkedList;
 import java.util.List;
-import java.util.Properties;
+
+import org.apache.commons.dbcp.BasicDataSource;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.esofthead.db.sqldump.DbConfiguration;
+import com.esofthead.util.sqldump.data.ISqlEntity;
 
 public class DataAdapter {
 
-	private String userName;
-	private String password;
-	private String url;
+	private static final Logger log = LoggerFactory
+			.getLogger(DataAdapter.class);
 
-	public DataAdapter(String userName, String password, String url) {
-		this.userName = userName;
-		this.password = password;
-		this.url = url;
+	private BasicDataSource datasource;
+
+	public DataAdapter(DbConfiguration configuration) {
+		log.debug("CREATE DATA ADAPTER");
+		datasource = new BasicDataSource();
+		datasource.setUsername(configuration.getUserName());
+		datasource.setPassword(configuration.getPassword());
+		datasource.setUrl(configuration.getUrl());
+		datasource.setLogAbandoned(true);
 	}
 
 	public final List<Object> getData(String methodName,
 			Class<?>[] parameterTypes, Object[] arguments, ISqlParser parser)
 			throws Exception {
-
-		if (null == userName || null == password || null == url)
-			throw new Exception("Context is not initialized");
-
-		Properties prop = new Properties();
-		prop.put("user", userName);
-		prop.put("password", password);
-		Connection con = (Connection) DriverManager.getConnection(url, prop);
+		log.debug("Datasource connections: " + datasource.getNumActive()
+				+ "===" + datasource.getMaxActive() + "==="
+				+ datasource.getNumIdle());
+		Connection con = datasource.getConnection();
 
 		DatabaseMetaData metaData = con.getMetaData();
 		List<Object> lsResult = new LinkedList<Object>();
@@ -49,44 +54,42 @@ public class DataAdapter {
 				}
 			}
 		}
+
 		con.close();
 		return lsResult;
 	}
 
-	public final List<Object> getData(String query, ISqlParser parser)
+	public final List<ISqlEntity> getData(String query, ISqlParser parser)
 			throws Exception {
-		if (null == userName || null == password || null == url)
-			throw new Exception("Context is not initialized");
+		log.debug("Get data from query: " + query);
+		log.debug("Datasource connections: " + datasource.getNumActive()
+				+ "===" + datasource.getMaxActive() + "==="
+				+ datasource.getNumIdle());
+		Connection con = datasource.getConnection();
+		List<ISqlEntity> lsResult = new LinkedList<ISqlEntity>();
 
-		Properties prop = new Properties();
-		prop.put("user", userName);
-		prop.put("password", password);
-		Connection con = (Connection) DriverManager.getConnection(url, prop);
-		
-		List<Object> lsResult = new LinkedList<Object>();
-		
 		Statement stmt = (Statement) con.createStatement();
 		ResultSet rs = stmt.executeQuery(query);
-		
+		log.debug("Result set: " + rs);
 		while (rs.next()) {
-			Object obj = parser.parse(rs);
+			ISqlEntity obj = parser.parse(rs);
+			log.debug("Add row data " + obj);
 			if (null != obj)
 				lsResult.add(obj);
 		}
-		
+
+		stmt.close();
 		con.close();
+		log.debug("Connection is closed: " + con.isClosed());
 		return lsResult;
 	}
 
 	public final Object getSingleResult(String query, ISqlParser parser)
 			throws Exception {
-		if (null == userName || null == password || null == url)
-			throw new Exception("Context is not initialized");
-
-		Properties prop = new Properties();
-		prop.put("user", userName);
-		prop.put("password", password);
-		Connection con = (Connection) DriverManager.getConnection(url, prop);
+		log.debug("Datasource connections: " + datasource.getNumActive()
+				+ "===" + datasource.getMaxActive() + "==="
+				+ datasource.getNumIdle());
+		Connection con = datasource.getConnection();
 
 		Statement stmt = (Statement) con.createStatement();
 		ResultSet rs = stmt.executeQuery(query);
@@ -94,10 +97,21 @@ public class DataAdapter {
 		Object result = null;
 
 		if (rs.next()) {
-			result = parser.parse(rs);
+			if (parser != null) {
+				result = parser.parse(rs);
+			} else {
+				result = rs.getObject(1);
+			}
 		}
 
+		stmt.close();
 		con.close();
+		log.debug("Connection is closed when get number: " + con.isClosed());
 		return result;
+	}
+
+	public final Object getSingleResult(String query) throws Exception {
+
+		return getSingleResult(query, null);
 	}
 }

@@ -24,6 +24,8 @@ public class SimpleProjectMember extends ProjectMember {
 	private int numOpenBugs;
 	
 	private String projectName;
+	
+	private String email;
 
 	public String getMemberFullName() {
 		return memberFullName;
@@ -71,5 +73,13 @@ public class SimpleProjectMember extends ProjectMember {
 
 	public String getProjectName() {
 		return projectName;
+	}
+
+	public void setEmail(String email) {
+		this.email = email;
+	}
+
+	public String getEmail() {
+		return email;
 	}
 }

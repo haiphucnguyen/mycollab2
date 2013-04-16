@@ -1,6 +1,6 @@
 package com.esofthead.util.sqldump.data;
 
-public class PrimaryKeyColumn {
+public class PrimaryKeyColumn implements ISqlEntity {
 	private String columnName;
 
 	/**
@@ -11,7 +11,8 @@ public class PrimaryKeyColumn {
 	}
 
 	/**
-	 * @param columnName the columnName to set
+	 * @param columnName
+	 *            the columnName to set
 	 */
 	public void setColumnName(String columnName) {
 		this.columnName = columnName;

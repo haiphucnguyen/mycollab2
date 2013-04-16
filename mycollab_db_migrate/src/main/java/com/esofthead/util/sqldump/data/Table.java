@@ -4,22 +4,28 @@ import java.io.Writer;
 import java.util.LinkedList;
 import java.util.List;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.util.sqldump.INFORMATION_SCHEMA;
 import com.esofthead.util.sqldump.data.parser.ColumnParser;
-import com.esofthead.util.sqldump.data.parser.IntegerParser;
 import com.esofthead.util.sqldump.data.parser.PrimaryKeyColumnParser;
-import com.esofthead.util.sqldump.data.parser.SqlStringDataParser;
+import com.esofthead.util.sqldump.data.parser.RowDataParser;
 
-public class Table {
+public class Table implements ISqlEntity {
 
 	private static final int MAX_ITEM_PER_QUERY = 1000;
+
+	private static Logger log = LoggerFactory.getLogger(Table.class);
+
+	Schema owner;
+	private String tableName;
+	private final List<Column> columns = new LinkedList<Column>();
+	private final List<PrimaryKeyColumn> primaryKeys = new LinkedList<PrimaryKeyColumn>();
 
 	public Table(Schema owner) {
 		this.owner = owner;
 	}
-
-	Schema owner;
-	private String tableName;
 
 	public String getTableName() {
 		return tableName;
@@ -29,10 +35,7 @@ public class Table {
 		this.tableName = tableName;
 	}
 
-	public final List<Column> Columns = new LinkedList<Column>();
-	public final List<PrimaryKeyColumn> PrimaryKeys = new LinkedList<PrimaryKeyColumn>();
-
-	public void loadColumn() throws Exception {
+	public void loadColumns() throws Exception {
 		List<Object> lsObjects = owner.adapter.getData(
 				INFORMATION_SCHEMA.COLUMNS.getMethodName(),
 				INFORMATION_SCHEMA.COLUMNS.getParameterTypes(),
@@ -42,7 +45,7 @@ public class Table {
 		for (Object obj : lsObjects) {
 			Column column = (Column) obj;
 
-			Columns.add(column);
+			columns.add(column);
 		}
 
 		lsObjects = owner.adapter.getData(
@@ -53,7 +56,7 @@ public class Table {
 		for (Object obj : lsObjects) {
 			PrimaryKeyColumn column = (PrimaryKeyColumn) obj;
 
-			PrimaryKeys.add(column);
+			primaryKeys.add(column);
 		}
 	}
 
@@ -66,25 +69,25 @@ public class Table {
 		StringBuilder script = new StringBuilder();
 		script.append(String.format(createTableTemplate, tableName));
 
-		Column col = Columns.get(0);
+		Column col = columns.get(0);
 		script.append(String.format(appendColNotStartWithCommaTemplate,
 				col.serialColumn()));
-		for (int i = 1; i < Columns.size(); i++) {
-			col = Columns.get(i);
+		for (int i = 1; i < columns.size(); i++) {
+			col = columns.get(i);
 			script.append(String.format(appendColStartWithCommaTemplate,
 					col.serialColumn()));
 		}
 
-		if (PrimaryKeys.size() > 0) {
+		if (primaryKeys.size() > 0) {
 			StringBuilder primaryKeyScript = new StringBuilder();
 			final String appendKeyStartWithComma = ", `%s`";
 			final String appendKeyNotStartWithComma = "`%s`";
 
-			PrimaryKeyColumn key = PrimaryKeys.get(0);
+			PrimaryKeyColumn key = primaryKeys.get(0);
 			primaryKeyScript.append(String.format(appendKeyNotStartWithComma,
 					key.getColumnName()));
-			for (int j = 1; j < PrimaryKeys.size(); j++) {
-				key = PrimaryKeys.get(j);
+			for (int j = 1; j < primaryKeys.size(); j++) {
+				key = primaryKeys.get(j);
 				primaryKeyScript.append(String.format(appendKeyStartWithComma,
 						key.getColumnName()));
 			}
@@ -99,6 +102,7 @@ public class Table {
 	}
 
 	public void dumpTableData(Writer writer, boolean isMySQL) throws Exception {
+		log.debug("Dump table data: " + tableName);
 		int count = getCountOfRecords();
 		if (count == 0) {
 			/* Do nothing if no record found */
@@ -117,18 +121,23 @@ public class Table {
 				+ " -----------------------------------\r\n");
 		writer.append(disableAutoIncrementColumn(isMySQL));
 
-		SqlStringDataParser parser = new SqlStringDataParser(Columns.size());
+		RowDataParser parser = new RowDataParser(columns.size());
 
 		for (int i = 0; i < queryTimes; i++) {
 			int recordIndex = i * MAX_ITEM_PER_QUERY;
 			final String query = String.format(selectCommand, recordIndex,
 					MAX_ITEM_PER_QUERY);
-			List<Object> lsObject = owner.adapter.getData(query, parser);
+
+			log.debug("Start retrieve dump data for table: " + tableName);
+			List<ISqlEntity> lsObject = (List<ISqlEntity>) owner.adapter
+					.getData(query, parser);
+
+			log.debug("Retrieve row data : " + tableName + ". Size: "
+					+ lsObject.size());
 
 			for (int j = 0; j < lsObject.size(); j++) {
 				@SuppressWarnings("unchecked")
-				List<SqlStringData> values = (List<SqlStringData>) lsObject
-						.get(j);
+				RowData values = (RowData) lsObject.get(j);
 				writer.append(dumpRow(insertCommand, values));
 			}
 		}
@@ -142,10 +151,10 @@ public class Table {
 		final String selectTemplate = "SELECT %s FROM %s";
 
 		StringBuilder script = new StringBuilder();
-		Column col = Columns.get(0);
+		Column col = columns.get(0);
 		script.append(col.getSelectColumn());
-		for (int i = 1; i < Columns.size(); i++) {
-			script.append(", " + Columns.get(i).getSelectColumn());
+		for (int i = 1; i < columns.size(); i++) {
+			script.append(", " + columns.get(i).getSelectColumn());
 		}
 
 		return String.format(selectTemplate, script.toString(), tableName)
@@ -158,31 +167,32 @@ public class Table {
 		StringBuilder scriptColumns = new StringBuilder();
 		StringBuilder scriptValues = new StringBuilder();
 
-		Column col = Columns.get(0);
+		Column col = columns.get(0);
 		scriptColumns.append(col.getColumnName());
 		scriptValues.append(" (%s");
 
-		for (int i = 1; i < Columns.size(); i++) {
-			scriptColumns.append(", " + Columns.get(i).getColumnName());
+		for (int i = 1; i < columns.size(); i++) {
+			scriptColumns.append(", " + columns.get(i).getColumnName());
 			scriptValues.append(", %s");
 		}
 		scriptValues.append(");\r\n");
 
-		return String.format(insertTemplate, tableName, scriptColumns.toString()) + scriptValues.toString();
+		return String.format(insertTemplate, tableName,
+				scriptColumns.toString())
+				+ scriptValues.toString();
 	}
 
 	private final int getCountOfRecords() throws Exception {
 		final String selectCount = "SELECT COUNT(*) FROM %s";
-		return (Integer) owner.adapter.getSingleResult(
-				String.format(selectCount, tableName), new IntegerParser());
+		return ((Long) owner.adapter.getSingleResult(String.format(selectCount,
+				tableName))).intValue();
 	}
 
-	private final String dumpRow(String insertTemplate,
-			List<SqlStringData> values) {
-		Object[] arrs = new String[Columns.size()];
+	private final String dumpRow(String insertTemplate, RowData values) {
+		Object[] arrs = new String[columns.size()];
 		for (int i = 0; i < arrs.length; i++) {
 			SqlStringData data = values.get(i);
-			Column col = Columns.get(i);
+			Column col = columns.get(i);
 			if (data instanceof NullSqlStringData) {
 				arrs[i] = col.representData(null);
 			} else {
@@ -194,7 +204,7 @@ public class Table {
 
 	private final String disableAutoIncrementColumn(boolean isMySQL) {
 		StringBuilder script = new StringBuilder();
-		for (Column col : Columns) {
+		for (Column col : columns) {
 			String query = col.disableAutoIncrement(tableName, isMySQL);
 			if (null != query) {
 				script.append(query);
@@ -205,7 +215,7 @@ public class Table {
 
 	private final String enableAutoIncrementColumn(boolean isMySQL) {
 		StringBuilder script = new StringBuilder();
-		for (Column col : Columns) {
+		for (Column col : columns) {
 			String query = col.enableAutoIncrement(tableName, isMySQL);
 			if (null != query) {
 				script.append(query);
