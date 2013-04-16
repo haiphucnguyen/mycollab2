@@ -22,8 +22,8 @@ public class DbExport {
 		schema.dumpSchema(writer);
 	}
 
-	public static void backupDB(DbConfiguration config,
-			OutputStream out, boolean isZipped) throws Exception {
+	public static void backupDB(DbConfiguration config, OutputStream out,
+			boolean isZipped) throws Exception {
 
 		final OutputStreamWriter writer;
 		if (isZipped) {
@@ -42,7 +42,7 @@ public class DbExport {
 
 		File outFile = File.createTempFile(
 				String.valueOf(System.currentTimeMillis()), ".sql");
-//		File outFile = new File("D:/export.sql");
+		// File outFile = new File("D:/export.sql");
 		OutputStreamWriter writer = new OutputStreamWriter(
 				new FileOutputStream(outFile));
 		exportDb(DbConfiguration.loadDefault(), writer);
@@ -62,7 +62,8 @@ public class DbExport {
 		sout.flush();
 		sout.close();
 
-		executeNonQuery(new String(sout.toByteArray()));
+		System.out.println(new String(sout.toByteArray()));
+		// executeNonQuery(new String(sout.toByteArray()));
 	}
 
 	public static void executeNonQuery(String query) throws Exception {

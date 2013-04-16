@@ -6,28 +6,29 @@ import java.util.List;
 
 import com.esofthead.util.sqldump.ISqlParser;
 import com.esofthead.util.sqldump.data.NullSqlStringData;
+import com.esofthead.util.sqldump.data.RowData;
 import com.esofthead.util.sqldump.data.SqlStringData;
 
-public class SqlStringDataParser implements ISqlParser {
+public class RowDataParser implements ISqlParser<RowData> {
 	private int fieldCount;
-	
-	public SqlStringDataParser(int fieldCount) {
+
+	public RowDataParser(int fieldCount) {
 		this.fieldCount = fieldCount;
 	}
-	
+
 	@Override
-	public Object parse(ResultSet rs) throws Exception {
-		
-		List<SqlStringData> lsResult = new LinkedList<SqlStringData>();
+	public RowData parse(ResultSet rs) throws Exception {
+
+		RowData result = new RowData();
 		for (int i = 0; i < fieldCount; i++) {
 			String data = rs.getString(i + 1);
 			if (null != data)
-				lsResult.add(new SqlStringData(data));
+				result.addData(new SqlStringData(data));
 			else
-				lsResult.add(new NullSqlStringData());
+				result.addData(new NullSqlStringData());
 		}
-		
-		return lsResult;
+
+		return result;
 	}
-	
+
 }

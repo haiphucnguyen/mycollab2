@@ -4,16 +4,20 @@ import java.util.Properties;
 
 
 public class DbConfiguration {
+	private static final String SCHEMA_ONLY_OPTION = "schema_only";
+	private static final String DATA_ONLY_OPTION = "data_only";
+	
+	private static final String SCHEMA_DATA_OPTION = "schema_data";
+	private static final String __SCHEMA_NO_CONSTRAINT = "schema_no_constraint";
+	private static final String __SCHEMA_DATA_NO_CONSTAINT = "schema_data_no_constraint";
+	
+	
 	public static final String USER_NAME = "db.username";
 	public static final String PASSWORD = "db.password";
 	public static final String URL = "db.url";
 	public static final String EXPORT_OPTION = "db.exportoption";
 	
-	private static final String __SCHEMA_ONLY = "schema_only";
-	private static final String __DATA_ONLY = "data_only";
-	private static final String __SCHEMA_DATA = "schema_data";
-	private static final String __SCHEMA_NO_CONSTRAINT = "schema_no_constraint";
-	private static final String __SCHEMA_DATA_NO_CONSTAINT = "schema_data_no_constraint";
+	
 	
 	public static final int SCHEMA_ONLY = 0;
 	public static final int DATA_ONLY = 1;
@@ -47,11 +51,11 @@ public class DbConfiguration {
 			if (null == exportOption)
 				config.setExportOption(SCHEMA_DATA);
 			else {
-				if (exportOption.toLowerCase().equals(__SCHEMA_ONLY))
+				if (exportOption.toLowerCase().equals(SCHEMA_ONLY_OPTION))
 					config.setExportOption(SCHEMA_ONLY);
-				else if (exportOption.toLowerCase().equals(__DATA_ONLY))
+				else if (exportOption.toLowerCase().equals(DATA_ONLY_OPTION))
 					config.setExportOption(DATA_ONLY);
-				else if (exportOption.toLowerCase().equals(__SCHEMA_DATA))
+				else if (exportOption.toLowerCase().equals(SCHEMA_DATA_OPTION))
 					config.setExportOption(SCHEMA_DATA);
 				else if (exportOption.toLowerCase().equals(__SCHEMA_NO_CONSTRAINT))
 					config.setExportOption(SCHEMA_NO_CONSTRAINT);

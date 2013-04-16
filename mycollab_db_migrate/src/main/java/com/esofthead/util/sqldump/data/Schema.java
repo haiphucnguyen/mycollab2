@@ -6,6 +6,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Queue;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.db.sqldump.DbConfiguration;
 import com.esofthead.util.sqldump.DataAdapter;
 import com.esofthead.util.sqldump.INFORMATION_SCHEMA;
@@ -14,12 +17,9 @@ import com.esofthead.util.sqldump.data.parser.TableParser;
 import com.esofthead.util.sqldump.data.parser.UniqueIndexParser;
 
 public class Schema {
-	
 	private static final String SKIP_SCHEMA_VERSION = "schema_version";
-	
-	private Schema(DataAdapter adapter) {
-		this.adapter = adapter;
-	}
+
+	private static Logger log = LoggerFactory.getLogger(Schema.class);
 
 	DataAdapter adapter;
 	boolean isMySQL = false;
@@ -28,6 +28,10 @@ public class Schema {
 	final public List<Table> Tables = new LinkedList<Table>();
 	final public List<UniqueIndex> UniqueIndexs = new LinkedList<UniqueIndex>();
 	final public List<ForeignKeyConstraint> ForeignKeyConstraints = new LinkedList<ForeignKeyConstraint>();
+
+	private Schema(DataAdapter adapter) {
+		this.adapter = adapter;
+	}
 
 	private void loadTable() throws Exception {
 		List<Object> lsObjects = adapter.getData(
@@ -38,10 +42,12 @@ public class Schema {
 
 		Tables.clear();
 		for (Object obj : lsObjects) {
-			Table table = (Table)obj;
+			Table table = (Table) obj;
 			if (table.getTableName().toLowerCase().equals(SKIP_SCHEMA_VERSION))
 				continue;
 			Tables.add((Table) obj);
+
+			log.debug("Add table definition: " + table.getTableName());
 		}
 		lsObjects.clear();
 	}
@@ -56,8 +62,10 @@ public class Schema {
 						new UniqueIndexParser());
 		for (Object obj : lsObjects) {
 			UniqueIndex index = (UniqueIndex) obj;
-			if (!index.getIndexName().equals("PRIMARY"))
+			if (!index.getIndexName().equals("PRIMARY")) {
 				UniqueIndexs.add((UniqueIndex) obj);
+				log.debug("Add unique index: " + index.getIndexName());
+			}
 		}
 	}
 
@@ -70,23 +78,29 @@ public class Schema {
 				new ForeignKeyConstraintParser());
 
 		for (Object obj : lsObjects) {
-			ForeignKeyConstraint fkConstraint = (ForeignKeyConstraint)obj;
-			if (fkConstraint.getPkTableName().toLowerCase().equals(SKIP_SCHEMA_VERSION)
-					|| fkConstraint.getFkTableName().toLowerCase().equals(SKIP_SCHEMA_VERSION))
+			ForeignKeyConstraint fkConstraint = (ForeignKeyConstraint) obj;
+			if (fkConstraint.getPkTableName().toLowerCase()
+					.equals(SKIP_SCHEMA_VERSION)
+					|| fkConstraint.getFkTableName().toLowerCase()
+							.equals(SKIP_SCHEMA_VERSION))
 				continue;
 			ForeignKeyConstraints.add((ForeignKeyConstraint) obj);
+			log.debug("Add foreign key: " + fkConstraint.getFkName() + "--"
+					+ fkConstraint.getFkTableName() + "--"
+					+ fkConstraint.getPkTableName());
 		}
 	}
 
 	public void dumpSchema(Writer writer) throws Exception {
-		
+		log.debug("Dump Schema");
+
 		if (exportOption != DbConfiguration.DATA_ONLY) {
 			for (Table table : Tables) {
 				writer.append(table.serialTable());
 				writer.append("\r\n\r\n");
 			}
 		}
-		
+
 		if (exportOption == DbConfiguration.DATA_ONLY
 				|| exportOption == DbConfiguration.SCHEMA_DATA
 				|| exportOption == DbConfiguration.SCHEMA_DATA_NO_CONSTAINT) {
@@ -120,18 +134,17 @@ public class Schema {
 
 	public static final Schema loadSchema(DbConfiguration config)
 			throws Exception {
-		Schema schema = new Schema(new DataAdapter(config.getUserName(),
-				config.getPassword(), config.getUrl()));
+		Schema schema = new Schema(new DataAdapter(config));
 		schema.isMySQL = config.isMySqlModel();
 		schema.exportOption = config.getExportOption();
-		
+
 		schema.loadTable();
-		
+
 		schema.UniqueIndexs.clear();
 		schema.ForeignKeyConstraints.clear();
 
 		for (Table table : schema.Tables) {
-			table.loadColumn();
+			table.loadColumns();
 			schema.loadUniqueIndex(table.getTableName());
 			schema.loadForeignKeyConstraint(table.getTableName());
 		}
