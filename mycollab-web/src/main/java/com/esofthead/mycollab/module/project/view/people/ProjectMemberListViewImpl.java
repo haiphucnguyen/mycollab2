@@ -6,6 +6,8 @@ package com.esofthead.mycollab.module.project.view.people;
 
 import java.util.List;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -91,6 +93,50 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		blockTop.addComponent(memberAvatar);
 
 		VerticalLayout memberInfo = new VerticalLayout();
+
+		HorizontalLayout layoutButtonDelete = new HorizontalLayout();
+		layoutButtonDelete.setVisible(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.USERS));
+		layoutButtonDelete.setWidth("100%");
+
+		Label emptylb = new Label("");
+		layoutButtonDelete.addComponent(emptylb);
+		layoutButtonDelete.setExpandRatio(emptylb, 1.0f);
+
+		Button btnDelete = new Button();
+		btnDelete.addListener(new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				ConfirmDialog.show(AppContext.getApplication().getMainWindow(),
+						"Please Confirm:",
+						"Are you sure to remove this user from the project?",
+						"Yes", "No", new ConfirmDialog.Listener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void onClose(ConfirmDialog dialog) {
+								if (dialog.isConfirmed()) {
+									ProjectMemberService prjMemberService = AppContext
+											.getSpringBean(ProjectMemberService.class);
+									prjMemberService.removeWithSession(
+											member.getId(),
+											AppContext.getUsername());
+
+									EventBus.getInstance().fireEvent(
+											new ProjectMemberEvent.GotoList(
+													ProjectMemberListViewImpl.this, null));
+								}
+							}
+						});
+			}
+		});
+		btnDelete.setIcon(new ThemeResource("icons/12/project/icon_x.png"));
+		btnDelete.setStyleName("link");
+		layoutButtonDelete.addComponent(btnDelete);
+
+		memberInfo.addComponent(layoutButtonDelete);
+
 		ButtonLink memberLink = new ButtonLink(member.getMemberFullName());
 		memberLink.addListener(new ClickListener() {
 
