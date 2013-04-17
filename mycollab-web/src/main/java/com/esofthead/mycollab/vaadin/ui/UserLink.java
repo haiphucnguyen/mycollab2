@@ -23,5 +23,6 @@ public class UserLink extends Button {
 		});
 
 		this.setStyleName("link");
+		this.addStyleName(UIConstants.WORD_WRAP);
 	}
 }

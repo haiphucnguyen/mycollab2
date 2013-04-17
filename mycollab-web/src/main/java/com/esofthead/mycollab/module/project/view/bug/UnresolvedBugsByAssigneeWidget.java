@@ -12,6 +12,7 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ThemeResource;
@@ -89,6 +90,7 @@ public class UnresolvedBugsByAssigneeWidget extends Depot {
 
 			this.setStyleName("link");
 			this.setWidth("100px");
+			this.addStyleName(UIConstants.WORD_WRAP);
 			this.setIcon(UserAvatarControlFactory.getResource(assignee, 16));
 		}
 	}

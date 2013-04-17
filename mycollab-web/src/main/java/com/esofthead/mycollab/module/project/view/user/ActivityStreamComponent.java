@@ -134,7 +134,6 @@ public class ActivityStreamComponent extends Depot {
 
 			CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
-			// header.setSpacing(true);
 			header.addComponent(new ProjectUserLink(activityStream
 					.getCreateduser(), activityStream.getCreatedUserFullName(),
 					true));

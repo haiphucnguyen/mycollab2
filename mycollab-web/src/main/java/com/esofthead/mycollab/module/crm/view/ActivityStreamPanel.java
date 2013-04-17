@@ -25,6 +25,7 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserLink;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
+import com.vaadin.terminal.Sizeable;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -68,8 +69,10 @@ public class ActivityStreamPanel extends Depot {
             CssLayout layout = new CssLayout();
             layout.setWidth("100%");
             layout.setStyleName("activity-stream");
-            HorizontalLayout header = new HorizontalLayout();
-            header.setSpacing(true);
+            
+            CssLayout header = new CssLayout();
+			header.setStyleName("stream-content");
+            
             UserLink userLink = new UserLink(activityStream.getCreateduser(),
                     activityStream.getCreatedUserFullName());
             header.addComponent(userLink);
@@ -86,8 +89,9 @@ public class ActivityStreamPanel extends Depot {
 
             action.append(activityStream.getType());
             Label actionLbl = new Label(action.toString());
+            actionLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
             header.addComponent(actionLbl);
-            header.setComponentAlignment(actionLbl, Alignment.MIDDLE_CENTER);
+            
             header.addComponent(new ActivitylLink(activityStream.getType(),
                     activityStream.getNamefield(), activityStream.getTypeid()));
             layout.addComponent(header);
