@@ -4,7 +4,7 @@
                      xmlns="http://jboss.org/xml/ns/javax/validation/mapping">
     <default-package>com.esofthead.mycollab.module.project.domain</default-package>
 
-    <bean class="Project" ignore-annotations="true">
+    <bean class="Project" ignore-annotations="false">
         <class>
             <constraint
                 annotation="com.esofthead.mycollab.validator.constraints.DateComparision">
@@ -33,7 +33,7 @@
         </field>
     </bean>
 
-    <bean class="Message" ignore-annotations="true">
+    <bean class="Message" ignore-annotations="false">
         <field name="title">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Title must not be null</message>
@@ -41,7 +41,7 @@
         </field>
     </bean>
 
-    <bean class="Milestone" ignore-annotations="true">
+    <bean class="Milestone" ignore-annotations="false">
         <class>
             <constraint
                 annotation="com.esofthead.mycollab.validator.constraints.DateComparision">
@@ -62,7 +62,7 @@
         </field>
     </bean>
 
-    <bean class="Task" ignore-annotations="true">
+    <bean class="Task" ignore-annotations="false">
         <class>
             <constraint
                 annotation="com.esofthead.mycollab.validator.constraints.DateComparision">
@@ -96,7 +96,7 @@
         </field>
     </bean>
 
-    <bean class="TaskList" ignore-annotations="true">
+    <bean class="TaskList" ignore-annotations="false">
         <field name="name">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Name must not be null</message>
@@ -104,7 +104,7 @@
         </field>
     </bean>
 	
-    <bean class="Risk" ignore-annotations="true">
+    <bean class="Risk" ignore-annotations="false">
         <field name="riskname">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Name must not be null</message>
@@ -117,7 +117,7 @@
         </field>
     </bean>
 
-    <bean class="Problem" ignore-annotations="true">
+    <bean class="Problem" ignore-annotations="false">
         <field name="issuename">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Name must not be null</message>

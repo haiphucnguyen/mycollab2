@@ -2,7 +2,7 @@
 	http://jboss.org/xml/ns/javax/validation/mapping/validation-mapping-1.0.xsd"
 	xmlns="http://jboss.org/xml/ns/javax/validation/mapping">
 	<default-package>com.esofthead.mycollab.module.user.domain</default-package>
-	<bean class="User" ignore-annotations="true" >
+	<bean class="User" ignore-annotations="false" >
 		<field name="email">
 			<constraint annotation="org.hibernate.validator.constraints.Email">
 				<message>Please enter a valid email</message>
@@ -35,7 +35,7 @@
 		</field>
 	</bean>
 	
-	<bean class="Role" ignore-annotations="true" >
+	<bean class="Role" ignore-annotations="false" >
 		<field name="rolename">
 			<constraint annotation="javax.validation.constraints.NotNull">
 				<message>The role name must be not null</message>

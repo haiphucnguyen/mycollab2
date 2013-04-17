@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.mybatis.generator.api.IntrospectedColumn;
 import org.mybatis.generator.api.IntrospectedTable;
+import org.mybatis.generator.api.dom.java.Field;
 import org.mybatis.generator.api.dom.java.FullyQualifiedJavaType;
 import org.mybatis.generator.api.dom.java.Interface;
 import org.mybatis.generator.api.dom.java.JavaVisibility;
@@ -23,42 +24,6 @@ public class MyCollabModelFilePlugin extends
 		return true;
 	}
 
-	//
-	// @Override
-	// public boolean sqlMapResultMapWithoutBLOBsElementGenerated(
-	// XmlElement element, IntrospectedTable introspectedTable) {
-	// List<IntrospectedColumn> baseColumns = introspectedTable
-	// .getBaseColumns();
-	// for (IntrospectedColumn column : baseColumns) {
-	// FullyQualifiedJavaType javaType = column
-	// .getFullyQualifiedJavaType();
-	// if ("java.util.Date".equals(javaType.getFullyQualifiedName())) {
-	// System.out.println("COLUMN: " + column.getActualColumnName());
-	// XmlElement fieldElement = new XmlElement("result");
-	// element.addElement(fieldElement);
-	// fieldElement.addAttribute(new Attribute("column", column
-	// .getActualColumnName()));
-	// fieldElement.addAttribute(new Attribute("jdbcType", column
-	// .getJdbcTypeName()));
-	// fieldElement.addAttribute(new Attribute("property", column
-	// .getJavaProperty()));
-	// fieldElement.addAttribute(new Attribute("typeHandler",
-	// "com.esofthead.mybatis.plugin.ext.DateTypeHandler"));
-	// }
-	//
-	// }
-	//
-	// return true;
-	// }
-
-	// @Override
-	// public boolean sqlMapResultMapWithBLOBsElementGenerated(XmlElement
-	// element,
-	// IntrospectedTable introspectedTable) {
-	//
-	// return true;
-	// }
-
 	@Override
 	public boolean sqlMapDocumentGenerated(Document document,
 			IntrospectedTable introspectedTable) {
@@ -67,6 +32,29 @@ public class MyCollabModelFilePlugin extends
 			generateRemoveMultipleKeysSqlStatement(document, introspectedTable);
 		}
 
+		return true;
+	}
+
+	@Override
+	public boolean modelFieldGenerated(Field field,
+			TopLevelClass topLevelClass, IntrospectedColumn introspectedColumn,
+			IntrospectedTable introspectedTable, ModelClassType modelClassType) {
+
+		if ("VARCHAR".equals(introspectedColumn.getJdbcTypeName())
+				|| "LONGVARCHAR".equals(introspectedColumn.getJdbcTypeName())) {
+			String annotation = "@org.hibernate.validator.constraints.Length(max=%s, message=\"%s\")";
+			annotation = String.format(annotation,
+					introspectedColumn.getLength(), "Field value is too long");
+			field.addAnnotation(annotation);
+		}
+
+//		if (!introspectedColumn.isNullable()
+//				&& !introspectedColumn.isStringColumn()) {
+//			String notNullAnnotation = "@javax.validation.constraints.NotNull(message=\"%s\")";
+//			notNullAnnotation = String.format(notNullAnnotation,
+//					"Field value must be not null");
+//			field.addAnnotation(notNullAnnotation);
+//		}
 		return true;
 	}
 

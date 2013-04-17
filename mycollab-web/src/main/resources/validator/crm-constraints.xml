@@ -3,7 +3,7 @@
 	http://jboss.org/xml/ns/javax/validation/mapping/validation-mapping-1.0.xsd"
                      xmlns="http://jboss.org/xml/ns/javax/validation/mapping">
     <default-package>com.esofthead.mycollab.module.crm.domain</default-package>
-    <bean class="Account" ignore-annotations="true">
+    <bean class="Account" ignore-annotations="false">
         <field name="accountname">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Account name must not be null</message>
@@ -34,7 +34,7 @@
         </field>
     </bean>
 
-    <bean class="Contact" ignore-annotations="true">
+    <bean class="Contact" ignore-annotations="false">
         <field name="lastname">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Last name must not be null</message>
@@ -98,7 +98,7 @@
         </field>
     </bean>
 
-    <bean class="Lead" ignore-annotations="true">
+    <bean class="Lead" ignore-annotations="false">
         <field name="lastname">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Last name must not be null</message>
@@ -135,7 +135,7 @@
         </field>
     </bean>
 
-    <bean class="Opportunity" ignore-annotations="true">
+    <bean class="Opportunity" ignore-annotations="false">
         <field name="opportunityname">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Name must not be null</message>
@@ -148,7 +148,7 @@
         </field>
     </bean>
 
-    <bean class="Case" ignore-annotations="true">
+    <bean class="Case" ignore-annotations="false">
         <field name="subject">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Subject must not be null</message>
@@ -173,7 +173,7 @@
         </field>
     </bean>
 
-    <bean class="Task" ignore-annotations="true">
+    <bean class="Task" ignore-annotations="false">
      	<class>
             <constraint annotation="com.esofthead.mycollab.validator.constraints.DateComparision">
                 <message>Start date must be less than due date</message>
@@ -187,14 +187,14 @@
             </constraint>
         </field>
     </bean>
-    <bean class="Meeting" ignore-annotations="true">
+    <bean class="Meeting" ignore-annotations="false">
         <field name="subject">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Subject must not be null</message>
             </constraint>
         </field>
     </bean>
-    <bean class="Call" ignore-annotations="true">
+    <bean class="Call" ignore-annotations="false">
         <field name="subject">
             <constraint annotation="javax.validation.constraints.NotNull">
                 <message>Subject must not be null</message>
