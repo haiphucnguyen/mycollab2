@@ -11,7 +11,7 @@ public class URLValidator implements ConstraintValidator<URL, String> {
 
     @Override
     public boolean isValid(String value, ConstraintValidatorContext context) {
-        if (value != null) {
+        if (value != null && !value.trim().equals("")) {
             return value
                     .matches("[-a-zA-Z0-9@:%_\\+.~#?&//=]{2,256}\\.[a-z]{2,4}\\b(\\/[-a-zA-Z0-9@:%_\\+.~#?&//=]*)?");
         } else {
