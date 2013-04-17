@@ -75,7 +75,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 	@Override
 	public void refreshBugItem() {
-		displayWorkflowControl();
+		EventBus.getInstance().fireEvent(
+				new BugEvent.GotoRead(BugReadViewImpl.this, bug.getId()));
 	}
 
 	private void displayWorkflowControl() {
@@ -260,13 +261,15 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 						new ThemeResource("icons/48/project/bug.png"));
 
 				if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
-					taskListAddLayout.addTitleStyleName(UIConstants.LINK_COMPLETED);
+					taskListAddLayout
+							.addTitleStyleName(UIConstants.LINK_COMPLETED);
 				} else if (bug.getDuedate() != null
 						&& (bug.getDuedate().before(new GregorianCalendar()
 								.getTime()))) {
-					taskListAddLayout.addTitleStyleName(UIConstants.LINK_OVERDUE);
+					taskListAddLayout
+							.addTitleStyleName(UIConstants.LINK_OVERDUE);
 				}
-				
+
 				Button createAccountBtn = new Button("Create",
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
@@ -419,7 +422,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				tabBugDetail.setStyleName(UIConstants.WHITE_TABSHEET);
 
 				CommentDisplay commentList = new CommentDisplay(
-						CommentTypeConstants.PRJ_BUG, bug.getId(), true, true, BugNotificationService.class);
+						CommentTypeConstants.PRJ_BUG, bug.getId(), true, true,
+						BugNotificationService.class);
 				commentList.setMargin(true);
 				tabBugDetail.addTab(commentList, "Comments");
 

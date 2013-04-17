@@ -80,6 +80,7 @@ public abstract class TaskFormLayoutFactory implements IFormLayoutFactory {
 		public Layout getLayout() {
 			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 8);
 			VerticalLayout layout = new VerticalLayout();
+			layout.setMargin(true);
 			layout.addComponent(informationLayout.getLayout());
 			return layout;
 		}

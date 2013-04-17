@@ -56,7 +56,6 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 	public TaskReadViewImpl() {
 		super();
-
 		previewForm = new PreviewForm();
 		this.addComponent(previewForm);
 	}
@@ -140,10 +139,12 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 			@Override
 			protected ComponentContainer createTopPanel() {
-				return (new PreviewFormControlsGenerator<Task>(PreviewForm.this))
+				HorizontalLayout topPanel = (new PreviewFormControlsGenerator<Task>(PreviewForm.this))
 						.createButtonControls(
 								ProjectRolePermissionCollections.TASKS,
 								ModuleNameConstants.PRJ);
+				topPanel.setMargin(true);
+				return topPanel;
 			}
 
 			@Override
@@ -155,6 +156,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 				CommentDisplay commentList = new CommentDisplay(
 						CommentTypeConstants.PRJ_TASK, task.getId(), true,
 						true, ProjectTaskNotificationService.class);
+				commentList.setMargin(true);
 				tabTaskDetail.addTab(commentList, "Comments");
 
 				TaskHistoryList historyList = new TaskHistoryList(task.getId());
