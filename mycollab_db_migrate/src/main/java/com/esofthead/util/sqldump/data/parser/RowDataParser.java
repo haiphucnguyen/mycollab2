@@ -1,8 +1,6 @@
 package com.esofthead.util.sqldump.data.parser;
 
 import java.sql.ResultSet;
-import java.util.LinkedList;
-import java.util.List;
 
 import com.esofthead.util.sqldump.ISqlParser;
 import com.esofthead.util.sqldump.data.NullSqlStringData;

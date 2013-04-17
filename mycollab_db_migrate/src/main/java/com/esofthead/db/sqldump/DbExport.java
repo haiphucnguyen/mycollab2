@@ -1,8 +1,6 @@
 package com.esofthead.db.sqldump;
 
-import java.io.ByteArrayOutputStream;
 import java.io.File;
-import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
@@ -44,25 +42,26 @@ public class DbExport {
 				String.valueOf(System.currentTimeMillis()), ".sql");
 		// File outFile = new File("D:/export.sql");
 		OutputStreamWriter writer = new OutputStreamWriter(
-				new FileOutputStream(outFile));
+				new FileOutputStream("backup.sql"), "UTF-8");
+//CREATE SCHEMA `mycollab_live` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci ;
 		exportDb(DbConfiguration.loadDefault(), writer);
 		writer.flush();
 		writer.close();
 		/*
 		 * Code migrate h2 database
 		 */
-		FileInputStream fin = new FileInputStream(outFile);
-		ByteArrayOutputStream sout = new ByteArrayOutputStream();
-		byte[] buffer = new byte[4096];
-		int byteRead;
-		while ((byteRead = fin.read(buffer)) != -1) {
-			sout.write(buffer, 0, byteRead);
-		}
-		fin.close();
-		sout.flush();
-		sout.close();
+		// FileInputStream fin = new FileInputStream(outFile);
+		// ByteArrayOutputStream sout = new ByteArrayOutputStream();
+		// byte[] buffer = new byte[4096];
+		// int byteRead;
+		// while ((byteRead = fin.read(buffer)) != -1) {
+		// sout.write(buffer, 0, byteRead);
+		// }
+		// fin.close();
+		// sout.flush();
+		// sout.close();
 
-		System.out.println(new String(sout.toByteArray()));
+		System.out.println(writer.toString());
 		// executeNonQuery(new String(sout.toByteArray()));
 	}
 
