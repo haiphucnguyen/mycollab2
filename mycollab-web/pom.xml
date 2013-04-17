@@ -345,6 +345,7 @@
                     </dependency>
                 </dependencies>
                 <executions>
+                <!-- 
                      <execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
                         <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
                         <overwrite>true</overwrite> </configuration> </execution> 
@@ -366,6 +367,7 @@
                         <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
                         <configurationFile>${basedir}/src/main/resources/TrackerGeneratorConfig.xml</configurationFile> 
                         <overwrite>true</overwrite> </configuration> </execution> 
+                        -->
                 </executions>
             </plugin>
             <plugin>
