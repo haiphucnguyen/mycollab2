@@ -29,6 +29,7 @@
 
 #error_code {
 	font-size: 130px;
+	line-height: 130px;
 	font-family: "Lucida Bright", Arial, sans-serif;
 	font-weight: bold;
 	color: rgb(52, 116, 176);

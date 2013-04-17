@@ -15,6 +15,8 @@ public class PricingPage extends BasePage {
 
 		add(new Label("pagetitle", "Pricing & Sign Up"));
 
+		add(new BookmarkablePageLink<Void>("free-link", SignUpPage.class,
+				new PageParameters().add("planId", "5")));
 		add(new BookmarkablePageLink<Void>("micro-link", SignUpPage.class,
 				new PageParameters().add("planId", "2")));
 		add(new BookmarkablePageLink<Void>("compact-link", SignUpPage.class,

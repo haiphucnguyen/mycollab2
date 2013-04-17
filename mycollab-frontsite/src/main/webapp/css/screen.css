@@ -47,6 +47,7 @@ body {
 	color: #454545;
 	font-family: "Lucida Sans Unicode", "Lucida Grande", sans-serif;
 	min-width: 1024px;
+	line-height: 1.5em;
 }
 h1 {
 	font-size: 28px;
@@ -285,67 +286,72 @@ input, select, textarea {
 	height:350px;
 	position:relative;
 }
-.tb-pricing .block0, .tb-pricing .block1, .tb-pricing .block2, .tb-pricing .block3{
+.tb-pricing .block {
 	text-align:center;
-	width:203px;
+	width:180px;
 	padding:20px 0px 5px;
 	background:url(../images/shape_2_new.png) left top no-repeat;
 	position:absolute;
-	right:603px;
+	right:711px;
 	bottom:0;
 }
 .tb-pricing .block1{
-	background:url(../images/shape_3.png) left top no-repeat;
-	right:401px;
+	right:533px;
 }
 .tb-pricing .block2{
-	right:201px;
+	background:url(../images/shape_3.png) left top no-repeat;
+	right:355px;
 }
 .tb-pricing .block3{
-	right: -1px;
-	width: 204px;
+	right:178px;
 }
-.tb-pricing .block0 h3, .tb-pricing .block1 h3, .tb-pricing .block2 h3, .tb-pricing .block3 h3{	
-	font-size:30px;
+.tb-pricing .block4{
+	right: 0px;
+}
+.tb-pricing .block h3 {	
+	font-size:24px;
 	font-weight:normal;
 	color:#3d3d3d;
 	line-height: 36px;
 	padding: 0 0 25px 0;
 }
-.tb-pricing .block1 h3{
+.tb-pricing .block2 h3{
 	color:#fff;
 }
-.tb-pricing .block0 p, .tb-pricing .block1 p, .tb-pricing .block2 p, .tb-pricing .block3 p{	
+.tb-pricing .block p {	
 	font-size:12px;
 	color:#373737;
 	line-height:20px;
 	padding: 0 0 15px 0;
 }
-.tb-pricing .block0 p.button a, .tb-pricing .block1 p.button a, .tb-pricing .block2 p.button a, .tb-pricing .block3 p.button a{	
-	font-size:18px;
+.tb-pricing .block p.button a {	
+	font-size:14px;
 	color:#f2f2f2;
-	width:155px;
+	width:135px;
 	height:47px;
 	display:inline-block;
 	background:url(../images/btn_star_gray.png) 0 0 no-repeat;
 	text-align:center;
-	line-height:24px;
+	line-height:28px;
 	padding: 12px 0 0 0;
 	margin: 0 auto;
 }
-.tb-pricing .block1 p.button a{
+.tb-pricing .block p.button a:hover {
 	background:url(../images/btn_star_orange.png) 0 0 no-repeat;
 }
-.tb-pricing .block0 span.price, .tb-pricing .block1 span.price, .tb-pricing .block2 span.price, .tb-pricing .block3 span.price{	
-	font-size:46px;
+.tb-pricing .block2 p.button a{
+	background:url(../images/btn_star_orange.png) 0 0 no-repeat;
+}
+.tb-pricing .block span.price {	
+	font-size:36px;
 	color:#272626;
 	font-weight:bold;
 	line-height:48px;
 }
-.tb-pricing .block1 span.price{
+.tb-pricing .block2 span.price{
 	color:#ff0c17;
 }
-.tb-pricing .block1 span.small, .tb-pricing .block2 span.small, .tb-pricing .block3 span.small{	
+.tb-pricing .block span.small {	
 	font-size:12px;
 	color:#6c6c6c;
 }
@@ -556,24 +562,25 @@ input, select, textarea {
 	float: left;
 	/*padding: 10px;*/
 }
-.home-mid .privacy-left .list-privacy{
+.home-mid .list-privacy{
 	padding: 0 0 0 15px;
 }
 
-.home-mid .privacy-left .list-privacy li{
+.home-mid .list-privacy li{
 	list-style: disc;
 	padding: 0 5px;
 }
 
 .home-mid .privacy-left li {
 	color: #797979;
-	font-size: 16px;
-	line-height: 22px;
+	font-size: 14px;
 	text-align: left;
 }
 .home-mid .privacy-left .li-header {
 	font-size: 24px;
+	line-height: 30px;
 	padding: 15px 0;
+	color: rgb(17, 17, 17);
 }
 
 .home-mid .privacy-right {
@@ -582,11 +589,9 @@ input, select, textarea {
 	float: right;
 }
 .home-mid .privacy-right li {
-	display: block;
 	/*width: 100%;*/
 	color: #797979;
-	font-size: 16px;
-	line-height: 22px;
+	font-size: 14px;
 	text-align: left;
 	/*padding: 0 10px 0 10px;*/
 	
@@ -594,11 +599,14 @@ input, select, textarea {
 .home-mid .privacy-right .li-header {
 	font-size: 24px;
 	padding: 15px 0;
+	color: rgb(17, 17, 17);
 }
 
 .home-mid .privacy-right .li-title {
 	font-size: 20px;
+	line-height: 26px;
 	padding: 10px 0;
+	color: rgb(17, 17, 17);
 }
 
 
@@ -619,10 +627,11 @@ input, select, textarea {
 .box {
     background: none repeat scroll 0 0 #F6F6F6;
     padding: 1em 1.25em;
+    line-height: 1.3em;
 }
 
 .box h2, .box h3 {
-    margin: 0 0 3px;
+    margin: 3px 0;
     padding: 0;
 }
 .box h2 {
