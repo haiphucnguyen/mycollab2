@@ -276,37 +276,42 @@ input, select, textarea {
 }
 
 /* pricing page*/
+.sectiontableentry > .attrs_name {
+	width: 150px;
+}
 .tb-pricing {
 	width: 974px;
-	padding: 45px 25px 10px 25px;
+	padding: 20px 25px 10px 25px;
 	margin: 0 auto;
 }
 .tb-pricing .head-tb{
 	width:974px;
-	height:350px;
+	height:280px;
 	position:relative;
 }
 .tb-pricing .block {
 	text-align:center;
-	width:180px;
+	width:166px;
 	padding:20px 0px 5px;
 	background:url(../images/shape_2_new.png) left top no-repeat;
 	position:absolute;
-	right:711px;
+	right:659px;
 	bottom:0;
 }
 .tb-pricing .block1{
-	right:533px;
+	right:494px;
 }
 .tb-pricing .block2{
-	background:url(../images/shape_3.png) left top no-repeat;
-	right:355px;
+	right:330px;
 }
 .tb-pricing .block3{
-	right:178px;
+	right:165px;
 }
 .tb-pricing .block4{
 	right: 0px;
+}
+.tb-pricing .block.prefered {
+	background:url(../images/shape_3.png) left top no-repeat;
 }
 .tb-pricing .block h3 {	
 	font-size:24px;
@@ -315,7 +320,7 @@ input, select, textarea {
 	line-height: 36px;
 	padding: 0 0 25px 0;
 }
-.tb-pricing .block2 h3{
+.tb-pricing .block.prefered h3{
 	color:#fff;
 }
 .tb-pricing .block p {	
@@ -339,17 +344,19 @@ input, select, textarea {
 .tb-pricing .block p.button a:hover {
 	background:url(../images/btn_star_orange.png) 0 0 no-repeat;
 }
-.tb-pricing .block2 p.button a{
+.tb-pricing .block.prefered p.button a{
 	background:url(../images/btn_star_orange.png) 0 0 no-repeat;
 }
 .tb-pricing .block span.price {	
-	font-size:36px;
+	font-size:30px;
 	color:#272626;
 	font-weight:bold;
 	line-height:48px;
 }
-.tb-pricing .block2 span.price{
+.tb-pricing .block.prefered span.price{
 	color:#ff0c17;
+	padding: 25px 0px 18px;
+	display: block;
 }
 .tb-pricing .block span.small {	
 	font-size:12px;
