@@ -22,6 +22,22 @@ public class UserAvatarControlFactory {
 
 	}
 
+	public static String getLink(String username, int size) {
+		if (username == null) {
+			return "";
+		}
+
+		String link = "";
+
+		if (StorageSetting.isFileStorage()) {
+
+		} else if (StorageSetting.isS3Storage()) {
+			S3StorageConfig.getAvatarLink(username, size);
+		}
+
+		return link;
+	}
+
 	public static Resource getResource(String username, int size) {
 		Resource avatarRes = null;
 
@@ -44,6 +60,7 @@ public class UserAvatarControlFactory {
 			avatarRes = new ExternalResource(S3StorageConfig.getAvatarLink(
 					username, size));
 		}
+
 		return avatarRes;
 	}
 

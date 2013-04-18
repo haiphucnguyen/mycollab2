@@ -84,6 +84,27 @@ public class TaskStatusComponent extends Depot {
 
 			CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
+			
+			Button projectLink = generateProjectLink(
+					genericTask.getProjectName(), new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							EventBus.getInstance()
+									.fireEvent(
+											new ProjectEvent.GotoMyProject(
+													this,
+													new PageActionChain(
+															new ProjectScreenData.Goto(
+																	genericTask
+																			.getProjectId()))));
+						}
+					});
+			projectLink.setIcon(ProjectResources
+					.getIconResource16size(ProjectContants.PROJECT));
+			projectLink.setStyleName("link");
+			header.addComponent(projectLink);
 
 			Button taskLink = generateProjectLink(genericTask.getName(),
 					new Button.ClickListener() {
@@ -139,28 +160,7 @@ public class TaskStatusComponent extends Depot {
 			Label projectLbl = new Label(" in project ");
 			projectLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
 			header.addComponent(projectLbl);
-
-			Button projectLink = generateProjectLink(
-					genericTask.getProjectName(), new Button.ClickListener() {
-						private static final long serialVersionUID = 1L;
-
-						@Override
-						public void buttonClick(ClickEvent event) {
-							EventBus.getInstance()
-									.fireEvent(
-											new ProjectEvent.GotoMyProject(
-													this,
-													new PageActionChain(
-															new ProjectScreenData.Goto(
-																	genericTask
-																			.getProjectId()))));
-						}
-					});
-			projectLink.setIcon(ProjectResources
-					.getIconResource16size(ProjectContants.PROJECT));
-			projectLink.setStyleName("link");
-			header.addComponent(projectLink);
-
+			
 			layout.addComponent(header);
 
 			CssLayout body = new CssLayout();
