@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
 import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
@@ -47,6 +48,7 @@ public class MessageListComponent extends Depot {
 
 		@Override
 		public Component generateRow(final SimpleMessage message, int rowIndex) {
+
 			CssLayout layout = new CssLayout();
 			layout.setWidth("100%");
 			layout.setStyleName("activity-stream");
@@ -57,16 +59,19 @@ public class MessageListComponent extends Depot {
 					.getMessage(ProjectCommonI18nEnum.FEED_ADD_NEWS_ACTION);
 			String destination = LocalizationHelper
 					.getMessage(ProjectCommonI18nEnum.FEED_IN_PROJECT_LABEL);
-			String content = "<a href=\"#\">%s</a>&nbsp;" + action
-					+ "<a title=\"%s\" href=\"%s\">%s</a>&nbsp;" + destination
-					+ "<a title=\"%s\" href=\"%s\">%s</a>";
-			content = String.format(content, message.getFullPostedUserName(),
-					message.getTitle(), ProjectLinkGenerator
-							.generateMessagePreviewFullLink(
-									message.getProjectid(), message.getId()),
-					message.getTitle(), message.getProjectName(),
+			String content = "<img src=\"%s\" alt=\"\"> <a href=\"#\">%s</a>&nbsp;"
+					+ action
+					+ "<a title=\"%s\" href=\"%s\">%s</a>&nbsp;"
+					+ destination + "<a title=\"%s\" href=\"%s\">%s</a>";
+			content = String.format(content, UserAvatarControlFactory.getLink(
+					AppContext.getAccountId(), message.getPosteduser(), 16),
+					message.getFullPostedUserName(), message.getTitle(),
+					ProjectLinkGenerator.generateMessagePreviewFullLink(
+							message.getProjectid(), message.getId()), message
+							.getTitle(), message.getProjectName(),
 					ProjectLinkGenerator.generateProjectFullLink(message
 							.getProjectid()), message.getProjectName());
+
 			Label messageLink = new Label(content, Label.CONTENT_XHTML);
 
 			header.addComponent(messageLink);
@@ -83,7 +88,6 @@ public class MessageListComponent extends Depot {
 
 			return layout;
 		}
-
 	}
 
 	private static String handleText(String value) {

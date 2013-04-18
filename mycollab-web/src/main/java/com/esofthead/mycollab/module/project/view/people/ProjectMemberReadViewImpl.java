@@ -42,6 +42,7 @@ import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -182,6 +183,7 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			public FormLayoutFactory() {
 				super(projectMember.getMemberFullName(),
 						UserAvatarControlFactory.getResource(
+								AppContext.getAccountId(),
 								projectMember.getUsername(), 48));
 			}
 
@@ -564,6 +566,7 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			public FormLayoutFactory() {
 				super(projectMember.getMemberFullName(),
 						UserAvatarControlFactory.getResource(
+								AppContext.getAccountId(),
 								projectMember.getUsername(), 48));
 			}
 

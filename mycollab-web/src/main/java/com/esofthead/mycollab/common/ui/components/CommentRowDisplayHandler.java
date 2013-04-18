@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.vaadin.ui.AttachmentDisplayComponent;
 import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.HorizontalLayout;
@@ -31,7 +32,8 @@ public class CommentRowDisplayHandler implements
 		layout.setStyleName("message");
 		layout.setWidth("100%");
 		layout.addComponent(UserAvatarControlFactory.createUserAvatarLink(
-				comment.getCreateduser(), comment.getOwnerFullName()));
+				AppContext.getAccountId(), comment.getCreateduser(),
+				comment.getOwnerFullName()));
 
 		CssLayout rowLayout = new CssLayout();
 		rowLayout.setStyleName("message-container");

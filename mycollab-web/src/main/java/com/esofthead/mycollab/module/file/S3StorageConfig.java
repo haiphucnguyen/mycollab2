@@ -49,14 +49,14 @@ public class S3StorageConfig {
 		return s3client;
 	}
 
-	public static String getAvatarLink(String username, int size) {
+	public static String getAvatarLink(int accountId, String username, int size) {
 		String s3UrlPath = ApplicationProperties.getProperty(S3_DOWNLOAD_URL,
 				"");
 		if ("".equals(s3UrlPath)) {
 			return "";
 		} else {
-			return s3UrlPath + "/" + AppContext.getAccountId() + "/avatar/"
-					+ username + "_" + size + ".png";
+			return s3UrlPath + "/" + accountId + "/avatar/" + username + "_"
+					+ size + ".png";
 		}
 	}
 
