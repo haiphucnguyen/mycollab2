@@ -96,8 +96,7 @@ public class RecentBugUpdateWidget extends BugDisplayWidget {
 					Alignment.MIDDLE_CENTER);
 
 			ProjectUserLink userLink = new ProjectUserLink(
-					obj.getAssignuser(), obj.getAssignuserFullName(), true);
-			userLink.removeStyleName(UIConstants.WORD_WRAP);
+					obj.getAssignuser(), obj.getAssignuserFullName(), false, true);
 			hLayoutAssigneeInfo.addComponent(userLink);
 			hLayoutAssigneeInfo.setComponentAlignment(userLink,
 					Alignment.MIDDLE_CENTER);

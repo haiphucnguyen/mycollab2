@@ -13,7 +13,7 @@ import com.vaadin.ui.Button;
 public class UserLink extends Button {
 	private static final long serialVersionUID = 1L;
 
-	public UserLink(final String username, final String displayName) {
+	public UserLink(final String username, final String displayName, boolean useWordWrap) {
 		super(displayName, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -22,7 +22,14 @@ public class UserLink extends Button {
 			}
 		});
 
-		this.setStyleName("link");
-		this.addStyleName(UIConstants.WORD_WRAP);
+		this.addStyleName("link");
+		
+		if (useWordWrap) {
+			this.addStyleName(UIConstants.WORD_WRAP);
+		}
+	}
+	
+	public UserLink(final String username, final String displayName) {
+		this(username, displayName, true);
 	}
 }

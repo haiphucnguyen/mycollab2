@@ -120,7 +120,7 @@ public class HistoryLogComponent extends VerticalLayout {
                     HorizontalLayout header = new HorizontalLayout();
                     header.setWidth("100%");
                     header.setSpacing(true);
-                    UserLink userLink = new UserLink(log.getPosteduser(), log.getPostedUserFullName());
+                    UserLink userLink = new UserLink(log.getPosteduser(), log.getPostedUserFullName(), false);
 
                     header.addComponent(userLink);
                     header.setComponentAlignment(userLink, Alignment.MIDDLE_LEFT);
@@ -131,9 +131,9 @@ public class HistoryLogComponent extends VerticalLayout {
                     header.setExpandRatio(lbDate, 1.0f);
                     gridLayout.addComponent(header, 0, 0, 2, 0);
 
-                    gridLayout.addComponent(new Label("Field"), 0, 1);
-                    gridLayout.addComponent(new Label("Old Value"), 1, 1);
-                    gridLayout.addComponent(new Label("New Value"), 2, 1);
+                    gridLayout.addComponent(new Label("<div style=\"font-weight: bold;\">Field</div>", Label.CONTENT_XHTML), 0, 1);
+                    gridLayout.addComponent(new Label("<div style=\"font-weight: bold;\">Old Value</div>", Label.CONTENT_XHTML), 1, 1);
+                    gridLayout.addComponent(new Label("<div style=\"font-weight: bold;\">New Value</div>", Label.CONTENT_XHTML), 2, 1);
 
                     gridLayout.setRows(visibleRows + 2);
                     layout.addComponent(gridLayout);
