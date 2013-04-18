@@ -1771,6 +1771,11 @@ input.v-textfield-errorField {
 	margin: 0px 3px;
 }
 
+.stream-content img {
+	display: inline-block;
+	vertical-align: top;
+}
+
 .activity-date {
 	color: gray;
 	font-size: 11px;
