@@ -108,7 +108,8 @@ public class MessageListViewImpl extends AbstractView implements
 			}
 			messageLayout.setWidth("100%");
 			messageLayout.addComponent(UserAvatarControlFactory
-					.createUserAvatarLink(message.getPosteduser(),
+					.createUserAvatarLink(AppContext.getAccountId(),
+							message.getPosteduser(),
 							message.getFullPostedUserName()));
 
 			CssLayout rowLayout = new CssLayout();

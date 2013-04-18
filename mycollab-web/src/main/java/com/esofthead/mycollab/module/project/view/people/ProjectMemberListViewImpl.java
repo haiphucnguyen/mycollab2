@@ -89,7 +89,8 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 		HorizontalLayout blockTop = new HorizontalLayout();
 		blockTop.setSpacing(true);
 		Embedded memberAvatar = UserAvatarControlFactory
-				.createUserAvatarEmbeddedControl(member.getUsername(), 100);
+				.createUserAvatarEmbeddedControl(AppContext.getAccountId(),
+						member.getUsername(), 100);
 		blockTop.addComponent(memberAvatar);
 
 		VerticalLayout memberInfo = new VerticalLayout();
@@ -123,9 +124,11 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 											member.getId(),
 											AppContext.getUsername());
 
-									EventBus.getInstance().fireEvent(
-											new ProjectMemberEvent.GotoList(
-													ProjectMemberListViewImpl.this, null));
+									EventBus.getInstance()
+											.fireEvent(
+													new ProjectMemberEvent.GotoList(
+															ProjectMemberListViewImpl.this,
+															null));
 								}
 							}
 						});

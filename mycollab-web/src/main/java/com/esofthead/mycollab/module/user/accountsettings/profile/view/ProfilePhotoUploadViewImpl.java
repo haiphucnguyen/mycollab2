@@ -70,7 +70,7 @@ public class ProfilePhotoUploadViewImpl extends AbstractView implements
 		previewBox.setHeight(SIZE_UNDEFINED, 0);
 
 		Resource defaultPhoto = UserAvatarControlFactory.getResource(
-				AppContext.getUsername(), 100);
+				AppContext.getAccountId(), AppContext.getUsername(), 100);
 		previewImage = new Embedded(null, defaultPhoto);
 		previewImage.setWidth("100px");
 		previewBox.addComponent(previewImage);
@@ -86,7 +86,7 @@ public class ProfilePhotoUploadViewImpl extends AbstractView implements
 		HorizontalLayout controlBtns = new HorizontalLayout();
 		controlBtns.setSpacing(true);
 		controlBtns.setSizeUndefined();
-		
+
 		Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
 
 			@Override
@@ -99,7 +99,7 @@ public class ProfilePhotoUploadViewImpl extends AbstractView implements
 		cancelBtn.setStyleName("link");
 		controlBtns.addComponent(cancelBtn);
 		controlBtns.setComponentAlignment(cancelBtn, Alignment.MIDDLE_LEFT);
-		
+
 		Button acceptBtn = new Button("Accept", new Button.ClickListener() {
 
 			@Override
