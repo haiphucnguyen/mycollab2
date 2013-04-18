@@ -70,7 +70,13 @@ public class MyCollabApplication extends Application implements
 						urlParam = urlParam.substring(1);
 					}
 					try {
-						response.sendRedirect(request.getContextPath() + "/");
+
+						String encodeRedirectURL = response
+								.encodeRedirectURL(request.getContextPath()
+										+ "/;jessionid="
+										+ request.getSession().getId());
+						log.debug("Forward to URL: " + encodeRedirectURL);
+						response.sendRedirect(encodeRedirectURL);
 						FragmentNavigator.navigateByFragement(urlParam);
 					} catch (IOException e) {
 						log.error("Dispatch url error: " + initialUrl, e);

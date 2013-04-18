@@ -41,6 +41,7 @@ public class AppContext implements Serializable {
 	private SimpleUser session;
 	private UserPreference userPreference;
 	private SimpleBillingAccount billingAccount;
+	private String currentFragement = "";
 
 	private long lastAccessTime = 0;
 	private static org.springframework.web.context.WebApplicationContext springContext;

@@ -8,9 +8,9 @@ import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriter
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
-import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.ResourceResolver;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -55,23 +55,20 @@ public class MessageListComponent extends Depot {
 
 			CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
-			String action = LocalizationHelper
-					.getMessage(ProjectCommonI18nEnum.FEED_ADD_NEWS_ACTION);
-			String destination = LocalizationHelper
-					.getMessage(ProjectCommonI18nEnum.FEED_IN_PROJECT_LABEL);
-			String content = "<img src=\"%s\" alt=\"\"> <a href=\"#\">%s</a>&nbsp;"
-					+ action
-					+ "<a title=\"%s\" href=\"%s\">%s</a>&nbsp;"
-					+ destination + "<a title=\"%s\" href=\"%s\">%s</a>";
-			content = String.format(content, UserAvatarControlFactory.getLink(
-					AppContext.getAccountId(), message.getPosteduser(), 16),
-					message.getFullPostedUserName(), message.getTitle(),
+
+			String content = LocalizationHelper.getMessage(
+					ProjectCommonI18nEnum.FEED_MESSAGE_TITLE,
+					UserAvatarControlFactory.getLink(AppContext.getAccountId(),
+							message.getPosteduser(), 16), message
+							.getFullPostedUserName(), ResourceResolver
+							.getResourceLink("icons/16/project/message.png"),
 					ProjectLinkGenerator.generateMessagePreviewFullLink(
 							message.getProjectid(), message.getId()), message
-							.getTitle(), message.getProjectName(),
+							.getTitle(), ResourceResolver
+							.getResourceLink("icons/16/project/project.png"),
 					ProjectLinkGenerator.generateProjectFullLink(message
 							.getProjectid()), message.getProjectName());
-
+			System.out.println("Content: " + content);
 			Label messageLink = new Label(content, Label.CONTENT_XHTML);
 
 			header.addComponent(messageLink);
@@ -88,17 +85,6 @@ public class MessageListComponent extends Depot {
 
 			return layout;
 		}
-	}
-
-	private static String handleText(String value) {
-		int limitValue = 45;
-		if (ScreenSize.hasSupport1024Pixels()) {
-			limitValue = 35;
-		}
-		if (value.length() > limitValue) {
-			return value.substring(0, limitValue) + "...";
-		}
-		return value;
 	}
 
 }
