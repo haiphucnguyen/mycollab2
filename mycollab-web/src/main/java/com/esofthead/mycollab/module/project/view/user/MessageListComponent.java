@@ -11,6 +11,7 @@ import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
@@ -47,13 +48,16 @@ public class MessageListComponent extends Depot {
 
 		@Override
 		public Component generateRow(final SimpleMessage message, int rowIndex) {
-			String content = "<a href=\"#\">%s</a> added news <a href=\"%s\">%s</a> to project <a href=\"%s\">%s</a>";
-			content = String.format(content, message.getFullPostedUserName(),
-					ProjectLinkGenerator.generateMessagePreviewFullLink(
-							message.getProjectid(), message.getId()), message
-							.getTitle(), ProjectLinkGenerator
+			String content = "<img src=\"%s\" alt=\"\"> <a href=\"#\">%s</a> added news <a href=\"%s\">%s</a> to project <a href=\"%s\">%s</a>";
+			content = String.format(content, UserAvatarControlFactory.getLink(
+					AppContext.getAccountId(), message.getPosteduser(), 16),
+					message.getFullPostedUserName(), ProjectLinkGenerator
+							.generateMessagePreviewFullLink(
+									message.getProjectid(), message.getId()),
+					message.getTitle(), ProjectLinkGenerator
 							.generateProjectFullLink(message.getProjectid()),
 					message.getProjectName());
+			System.out.println("Message content: " + content);
 			Label messageLink = new Label(content, Label.CONTENT_XHTML);
 
 			return messageLink;

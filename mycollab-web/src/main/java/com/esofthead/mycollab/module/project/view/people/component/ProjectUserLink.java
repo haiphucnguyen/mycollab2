@@ -4,6 +4,7 @@ import com.esofthead.mycollab.module.project.events.ProjectMemberEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.Button;
 
 public class ProjectUserLink extends Button {
@@ -26,7 +27,8 @@ public class ProjectUserLink extends Button {
 		});
 
 		if (isDisplayAvatar && username != null && !username.equals("")) {
-			this.setIcon(UserAvatarControlFactory.getResource(username, 16));
+			this.setIcon(UserAvatarControlFactory.getResource(
+					AppContext.getAccountId(), username, 16));
 		}
 
 		this.setStyleName("link");

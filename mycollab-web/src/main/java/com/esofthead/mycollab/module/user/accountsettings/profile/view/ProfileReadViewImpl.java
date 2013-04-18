@@ -62,7 +62,8 @@ public class ProfileReadViewImpl extends AbstractView implements
 	private void displayUserAvatar() {
 		userAvatar.removeAllComponents();
 		Embedded cropField = UserAvatarControlFactory
-				.createUserAvatarEmbeddedControl(AppContext.getUsername(), 100);
+				.createUserAvatarEmbeddedControl(AppContext.getAccountId(),
+						AppContext.getUsername(), 100);
 		userAvatar.addComponent(cropField);
 
 		final UploadField avatarUploadField = new UploadField() {
@@ -99,9 +100,9 @@ public class ProfileReadViewImpl extends AbstractView implements
 	private class PreviewForm extends AdvancedPreviewBeanForm<User> {
 
 		private static final long serialVersionUID = 1L;
-		
+
 		private User user;
-		
+
 		public void setUser(User user) {
 			this.user = user;
 		}
@@ -116,7 +117,7 @@ public class ProfileReadViewImpl extends AbstractView implements
 		private class FormLayoutFactory implements IFormLayoutFactory {
 
 			protected GridFormLayoutHelper basicInformation;
-			
+
 			protected GridFormLayoutHelper contactInformation;
 
 			protected GridFormLayoutHelper advanceInformation;
@@ -129,28 +130,33 @@ public class ProfileReadViewImpl extends AbstractView implements
 				accountAddLayout.setWidth("550px");
 				VerticalLayout layout = new VerticalLayout();
 				layout.setSpacing(true);
-				
+
 				HorizontalLayout passLayout = new HorizontalLayout();
 				passLayout.setSpacing(true);
 				Label lbPassword = new Label("Password");
 				passLayout.addComponent(lbPassword);
-				passLayout.setComponentAlignment(lbPassword, Alignment.MIDDLE_CENTER);
-				Button btnChangePassword = new Button("Change", new Button.ClickListener() {
-					
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getWidget().getWindow().addWindow(new PasswordChangeWindow(user));
-					}
-				});
+				passLayout.setComponentAlignment(lbPassword,
+						Alignment.MIDDLE_CENTER);
+				Button btnChangePassword = new Button("Change",
+						new Button.ClickListener() {
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								getWidget().getWindow().addWindow(
+										new PasswordChangeWindow(user));
+							}
+						});
 				passLayout.addComponent(btnChangePassword);
 				btnChangePassword.setStyleName("link");
-				passLayout.setComponentAlignment(btnChangePassword, Alignment.MIDDLE_CENTER);
+				passLayout.setComponentAlignment(btnChangePassword,
+						Alignment.MIDDLE_CENTER);
 				layout.addComponent(passLayout);
 
 				Label basicInformationHeader = new Label("Basic Information");
 				basicInformationHeader.setStyleName("h2");
-				
-				Label contactInformationHeader = new Label("Contact Information");
+
+				Label contactInformationHeader = new Label(
+						"Contact Information");
 				contactInformationHeader.setStyleName("h2");
 
 				Label advanceInfoHeader = new Label("Advanced Information");
@@ -178,42 +184,53 @@ public class ProfileReadViewImpl extends AbstractView implements
 
 				layout.addComponent(basicInformationHeader);
 				layout.addComponent(basicInformation.getLayout());
-				Button btnChangeBasicInfo = new Button("Change Basic Information", new Button.ClickListener() {
-					
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getWidget().getWindow().addWindow(new BasicInfoChangeWindow(user));
-					}
-				});
+				Button btnChangeBasicInfo = new Button(
+						"Change Basic Information", new Button.ClickListener() {
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								getWidget().getWindow().addWindow(
+										new BasicInfoChangeWindow(user));
+							}
+						});
 				btnChangeBasicInfo.addStyleName("link");
 				layout.addComponent(btnChangeBasicInfo);
-				layout.setComponentAlignment(btnChangeBasicInfo, Alignment.MIDDLE_RIGHT);
-				
+				layout.setComponentAlignment(btnChangeBasicInfo,
+						Alignment.MIDDLE_RIGHT);
+
 				layout.addComponent(contactInformationHeader);
 				layout.addComponent(contactInformation.getLayout());
-				Button btnChangeContactInfo = new Button("Change Contact Information", new Button.ClickListener() {
-					
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getWidget().getWindow().addWindow(new ContactInfoChangeWindow(user));
-					}
-				});
+				Button btnChangeContactInfo = new Button(
+						"Change Contact Information",
+						new Button.ClickListener() {
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								getWidget().getWindow().addWindow(
+										new ContactInfoChangeWindow(user));
+							}
+						});
 				btnChangeContactInfo.addStyleName("link");
 				layout.addComponent(btnChangeContactInfo);
-				layout.setComponentAlignment(btnChangeContactInfo, Alignment.MIDDLE_RIGHT);
-				
+				layout.setComponentAlignment(btnChangeContactInfo,
+						Alignment.MIDDLE_RIGHT);
+
 				layout.addComponent(advanceInfoHeader);
 				layout.addComponent(advanceInformation.getLayout());
-				Button btnChangeAdvanceInfo = new Button("Change Advanced Information", new Button.ClickListener() {
-					
-					@Override
-					public void buttonClick(ClickEvent event) {
-						getWidget().getWindow().addWindow(new AdvancedInfoChangeWindow(user));
-					}
-				});
+				Button btnChangeAdvanceInfo = new Button(
+						"Change Advanced Information",
+						new Button.ClickListener() {
+
+							@Override
+							public void buttonClick(ClickEvent event) {
+								getWidget().getWindow().addWindow(
+										new AdvancedInfoChangeWindow(user));
+							}
+						});
 				btnChangeAdvanceInfo.addStyleName("link");
 				layout.addComponent(btnChangeAdvanceInfo);
-				layout.setComponentAlignment(btnChangeAdvanceInfo, Alignment.MIDDLE_RIGHT);
+				layout.setComponentAlignment(btnChangeAdvanceInfo,
+						Alignment.MIDDLE_RIGHT);
 
 				accountAddLayout.addBody(layout);
 				return accountAddLayout;
@@ -251,7 +268,8 @@ public class ProfileReadViewImpl extends AbstractView implements
 			}
 		}
 
-		private class PreviewFormFieldFactory extends DefaultEditFormFieldFactory {
+		private class PreviewFormFieldFactory extends
+				DefaultEditFormFieldFactory {
 
 			@Override
 			protected Field onCreateField(Item item, Object propertyId,
@@ -263,31 +281,38 @@ public class ProfileReadViewImpl extends AbstractView implements
 					value = user.getLastname();
 				} else if (propertyId.equals("email")) {
 					return new DefaultFormViewFieldFactory.FormEmailLinkViewField(
-	                        user.getEmail());
+							user.getEmail());
 				} else if (propertyId.equals("dateofbirth")) {
 					value = AppContext.formatDate(user.getDateofbirth());
 				} else if (propertyId.equals("timezone")) {
-					value = TimezoneMapper.getTimezone(user.getTimezone()).getDisplayName();
+					value = TimezoneMapper.getTimezone(user.getTimezone())
+							.getDisplayName();
 				} else if (propertyId.equals("website")) {
 					value = user.getWebsite();
-					return new DefaultFormViewFieldFactory.FormUrlLinkViewField(value);
+					return new DefaultFormViewFieldFactory.FormUrlLinkViewField(
+							value);
 				} else if (propertyId.equals("company")) {
 					value = user.getCompany();
-				}  else if (propertyId.equals("country")) {
+				} else if (propertyId.equals("country")) {
 					value = user.getCountry();
-				}  else if (propertyId.equals("workphone")) {
+				} else if (propertyId.equals("workphone")) {
 					value = user.getWorkphone();
 				} else if (propertyId.equals("homephone")) {
 					value = user.getHomephone();
 				} else if (propertyId.equals("facebookaccount")) {
 					return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
-							user.getFacebookaccount(), "https://www.facebook.com/" + user.getFacebookaccount());
+							user.getFacebookaccount(),
+							"https://www.facebook.com/"
+									+ user.getFacebookaccount());
 				} else if (propertyId.equals("twitteraccount")) {
 					return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
-							user.getTwitteraccount(), "https://www.twitter.com/" + user.getTwitteraccount());
+							user.getTwitteraccount(),
+							"https://www.twitter.com/"
+									+ user.getTwitteraccount());
 				} else if (propertyId.equals("skypecontact")) {
 					return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
-							user.getSkypecontact(), "skype:" + user.getSkypecontact() + "?chat");
+							user.getSkypecontact(), "skype:"
+									+ user.getSkypecontact() + "?chat");
 				}
 				return new DefaultFormViewFieldFactory.LabelViewField(value);
 			}
