@@ -80,6 +80,10 @@ ul {
 	padding-left: 20px;
 }
 
+a {
+	text-decoration: none;
+}
+
 .v-button,.v-button-caption {
 	text-shadow: none;
 }

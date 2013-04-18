@@ -2,27 +2,27 @@ package com.esofthead.mycollab.module.project.view.user;
 
 import java.util.List;
 
+import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriteria;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
 import com.esofthead.mycollab.shell.view.ScreenSize;
-import com.esofthead.mycollab.vaadin.ui.CommonUIFactory;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
+import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 public class MessageListComponent extends Depot {
 	private static final long serialVersionUID = 1L;
 
-	private DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage> messageList;
+	private final DefaultBeanPagedList<MessageService, MessageSearchCriteria, SimpleMessage> messageList;
 
 	public MessageListComponent() {
 		super(LocalizationHelper.getMessage(ProjectCommonI18nEnum.NEWS_TITLE),
@@ -47,97 +47,43 @@ public class MessageListComponent extends Depot {
 
 		@Override
 		public Component generateRow(final SimpleMessage message, int rowIndex) {
-			String content = "<a href=\"#\">%s</a> added news <a href=\"%s\">%s</a> to project <a href=\"%s\">%s</a>";
+			CssLayout layout = new CssLayout();
+			layout.setWidth("100%");
+			layout.setStyleName("activity-stream");
+
+			CssLayout header = new CssLayout();
+			header.setStyleName("stream-content");
+			String action = LocalizationHelper
+					.getMessage(ProjectCommonI18nEnum.FEED_ADD_NEWS_ACTION);
+			String destination = LocalizationHelper
+					.getMessage(ProjectCommonI18nEnum.FEED_IN_PROJECT_LABEL);
+			String content = "<a href=\"#\">%s</a>&nbsp;" + action
+					+ "<a title=\"%s\" href=\"%s\">%s</a>&nbsp;" + destination
+					+ "<a title=\"%s\" href=\"%s\">%s</a>";
 			content = String.format(content, message.getFullPostedUserName(),
-					ProjectLinkGenerator.generateMessagePreviewFullLink(
-							message.getProjectid(), message.getId()), message
-							.getTitle(), ProjectLinkGenerator
-							.generateProjectFullLink(message.getProjectid()),
-					message.getProjectName());
+					message.getTitle(), ProjectLinkGenerator
+							.generateMessagePreviewFullLink(
+									message.getProjectid(), message.getId()),
+					message.getTitle(), message.getProjectName(),
+					ProjectLinkGenerator.generateProjectFullLink(message
+							.getProjectid()), message.getProjectName());
 			Label messageLink = new Label(content, Label.CONTENT_XHTML);
 
-			return messageLink;
-			// CssLayout layout = new CssLayout();
-			// layout.setWidth("100%");
-			// layout.setStyleName("activity-stream");
-			//
-			// CssLayout header = new CssLayout();
-			// header.setStyleName("stream-content");
-			// header.addComponent(new ProjectUserLink(obj.getPosteduser(), obj
-			// .getFullPostedUserName(), true));
-			//
-			// Label actionLbl = new Label(
-			// LocalizationHelper
-			// .getMessage(ProjectCommonI18nEnum.FEED_ADD_NEWS_ACTION));
-			// actionLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
-			// header.addComponent(actionLbl);
-			//
-			// Button messageLink = new Button(handleText(obj.getTitle()),
-			// new Button.ClickListener() {
-			// private static final long serialVersionUID = 1L;
-			//
-			// @Override
-			// public void buttonClick(ClickEvent event) {
-			// EventBus.getInstance()
-			// .fireEvent(
-			// new ProjectEvent.GotoMyProject(
-			// this,
-			// new PageActionChain(
-			// new ProjectScreenData.Goto(
-			// obj.getProjectid()),
-			// new MessageScreenData.Read(
-			// obj.getId()))));
-			// }
-			// });
-			// messageLink.setStyleName("link");
-			// messageLink.setIcon(ProjectResources
-			// .getIconResource16size(ProjectContants.MESSAGE));
-			// header.addComponent(messageLink);
-			//
-			// Label projectLbl = new Label(
-			// LocalizationHelper
-			// .getMessage(ProjectCommonI18nEnum.FEED_IN_PROJECT_LABEL));
-			// projectLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
-			// header.addComponent(projectLbl);
-			//
-			// Button projectLink = generateProjectLink(obj.getProjectName(),
-			// new Button.ClickListener() {
-			// private static final long serialVersionUID = 1L;
-			//
-			// @Override
-			// public void buttonClick(ClickEvent event) {
-			// EventBus.getInstance()
-			// .fireEvent(
-			// new ProjectEvent.GotoMyProject(
-			// this,
-			// new PageActionChain(
-			// new ProjectScreenData.Goto(
-			// obj.getProjectid()))));
-			// }
-			// });
-			// projectLink.setIcon(ProjectResources
-			// .getIconResource16size(ProjectContants.PROJECT));
-			// projectLink.setStyleName("link");
-			// header.addComponent(projectLink);
-			//
-			// layout.addComponent(header);
-			//
-			// CssLayout body = new CssLayout();
-			// body.setStyleName("activity-date");
-			// Label dateLbl = new Label("From "
-			// + DateTimeUtils.getStringDateFromNow(obj.getPosteddate()));
-			// body.addComponent(dateLbl);
-			//
-			// layout.addComponent(body);
-			// return layout;
+			header.addComponent(messageLink);
+			layout.addComponent(header);
+
+			CssLayout body = new CssLayout();
+			body.setStyleName("activity-date");
+			Label dateLbl = new Label("From "
+					+ DateTimeUtils.getStringDateFromNow(message
+							.getPosteddate()));
+			body.addComponent(dateLbl);
+
+			layout.addComponent(body);
+
+			return layout;
 		}
 
-	}
-
-	private static Button generateProjectLink(String linkname,
-			Button.ClickListener listener) {
-		return CommonUIFactory.createButtonTooltip(handleText(linkname),
-				linkname, listener);
 	}
 
 	private static String handleText(String value) {
