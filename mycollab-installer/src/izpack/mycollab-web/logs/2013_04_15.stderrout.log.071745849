@@ -1,0 +1,23 @@
+2013-04-15 14:11:49.286:INFO:oejs.Server:jetty-7.6.10.v20130312
+2013-04-15 14:11:49.308:INFO:oejdp.ScanningAppProvider:Deployment monitor C:\Users\nobugz\Desktop\Test\jetty-7\webapps at interval 1
+2013-04-15 14:11:49.312:INFO:oejd.DeploymentManager:Deployable added: C:\Users\nobugz\Desktop\Test\jetty-7\webapps\spdy.war
+2013-04-15 14:11:49.339:INFO:oejw.WebInfConfiguration:Extract jar:file:/C:/Users/nobugz/Desktop/Test/jetty-7/webapps/spdy.war!/ to C:\Users\nobugz\AppData\Local\Temp\jetty-0.0.0.0-7890-spdy.war-_spdy-any-\webapp
+2013-04-15 14:11:49.665:INFO:oejsh.ContextHandler:started o.e.j.w.WebAppContext{/spdy,file:/C:/Users/nobugz/AppData/Local/Temp/jetty-0.0.0.0-7890-spdy.war-_spdy-any-/webapp/},C:\Users\nobugz\Desktop\Test\jetty-7\webapps\spdy.war
+2013-04-15 14:11:49.707:INFO:oejdp.ScanningAppProvider:Deployment monitor C:\Users\nobugz\Desktop\Test\jetty-7\contexts at interval 1
+2013-04-15 14:11:49.708:INFO:oejd.DeploymentManager:Deployable added: C:\Users\nobugz\Desktop\Test\jetty-7\contexts\javadoc.xml
+2013-04-15 14:11:49.714:INFO:oejsh.ContextHandler:started o.e.j.s.h.ContextHandler{/javadoc,file:/C:/Users/nobugz/Desktop/Test/jetty-7/javadoc/}
+2013-04-15 14:11:49.714:INFO:oejd.DeploymentManager:Deployable added: C:\Users\nobugz\Desktop\Test\jetty-7\contexts\test.xml
+2013-04-15 14:11:49.726:INFO:oejw.WebInfConfiguration:Extract jar:file:/C:/Users/nobugz/Desktop/Test/jetty-7/webapps/test.war!/ to C:\Users\nobugz\AppData\Local\Temp\jetty-0.0.0.0-7890-test.war-_-any-\webapp
+2013-04-15 14:11:50.072:INFO:oejsh.ContextHandler:started o.e.j.w.WebAppContext{/,file:/C:/Users/nobugz/AppData/Local/Temp/jetty-0.0.0.0-7890-test.war-_-any-/webapp/},C:\Users\nobugz\Desktop\Test\jetty-7/webapps/test.war
+2013-04-15 14:11:50.189:INFO:oejs.TransparentProxy:TransparentProxy @ /javadoc-proxy to http://download.eclipse.org/jetty/stable-7/apidocs
+2013-04-15 14:11:50.197:INFO:oejs.AbstractConnector:Started SelectChannelConnector@0.0.0.0:7890
+wrapper manager received stop command
+2013-04-15 14:11:55.875:INFO:oejs.Server:Graceful shutdown SelectChannelConnector@0.0.0.0:7890
+2013-04-15 14:11:55.876:INFO:oejs.Server:Graceful shutdown o.e.j.w.WebAppContext{/spdy,file:/C:/Users/nobugz/AppData/Local/Temp/jetty-0.0.0.0-7890-spdy.war-_spdy-any-/webapp/},C:\Users\nobugz\Desktop\Test\jetty-7\webapps\spdy.war
+2013-04-15 14:11:55.876:INFO:oejs.Server:Graceful shutdown o.e.j.s.h.ContextHandler{/javadoc,file:/C:/Users/nobugz/Desktop/Test/jetty-7/javadoc/}
+2013-04-15 14:11:55.876:INFO:oejs.Server:Graceful shutdown o.e.j.w.WebAppContext{/,file:/C:/Users/nobugz/AppData/Local/Temp/jetty-0.0.0.0-7890-test.war-_-any-/webapp/},C:\Users\nobugz\Desktop\Test\jetty-7/webapps/test.war
+2013-04-15 14:11:56.969:INFO:oejsl.ELContextCleaner:javax.el.BeanELResolver purged
+2013-04-15 14:11:56.970:INFO:oejsh.ContextHandler:stopped o.e.j.w.WebAppContext{/,file:/C:/Users/nobugz/AppData/Local/Temp/jetty-0.0.0.0-7890-test.war-_-any-/webapp/},C:\Users\nobugz\Desktop\Test\jetty-7/webapps/test.war
+2013-04-15 14:11:56.991:INFO:oejsh.ContextHandler:stopped o.e.j.s.h.ContextHandler{/javadoc,file:/C:/Users/nobugz/Desktop/Test/jetty-7/javadoc/}
+2013-04-15 14:11:56.991:INFO:oejsl.ELContextCleaner:javax.el.BeanELResolver purged
+2013-04-15 14:11:56.991:INFO:oejsh.ContextHandler:stopped o.e.j.w.WebAppContext{/spdy,file:/C:/Users/nobugz/AppData/Local/Temp/jetty-0.0.0.0-7890-spdy.war-_spdy-any-/webapp/},C:\Users\nobugz\Desktop\Test\jetty-7\webapps\spdy.war
