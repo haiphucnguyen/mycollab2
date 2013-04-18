@@ -38,11 +38,13 @@
         <res id="LicencePanel.licence" src="Licence.txt"/>
         <res id="InfoPanel.info" src="Readme.txt"/>
     </resources>
-    <jar src="jar/MyCollabInstallerListener.jar" stage="both"/>
-    <jar src="jar/MyCollabUninstallerListener.jar" stage="both"/>
+    <!--
+    <jar src="jar/MyCollabInstallerListener.jar" stage="install"/>
+    <jar src="jar/MyCollabUninstallerListener.jar" stage="uninstall"/> 
+     -->
     <listeners>
-        <listener installer="MyCollabInstallerListener" stage="install" />
-        <listener uninstaller="MyCollabUninstallerListener" stage="uninstall" /> 
+        <listener installer="MyCollabInstallerListener" />
+        <listener uninstaller="MyCollabUninstallerListener" /> 
     </listeners>   
 
     <!-- 
@@ -58,6 +60,7 @@
         <panel classname="InstallPanel"/>
         <panel classname="FinishPanel"/>
     </panels>
+    <!--
     <executable targetfile="$INSTALL_PATH/mycollab-web/bin/mycollab-daemon.jar" type="jar" stage="uninstall">
         <args>
             <arg>uninstall</arg>
@@ -67,7 +70,8 @@
         <args>
             <arg>install</arg>
         </args>
-    </executable>
+    </executable> 
+     -->
 <!-- 
     <jar src="dependency/plexus-utils.jar"/>
     <jar src="../izpack-maven-plugin-example.jar"/>
@@ -79,7 +83,7 @@
     <packs>
         <pack name="Base" required="yes">
             <description>The base files</description>
-            <fileset dir="mycollab-web" targetdir="$INSTALL_PATH/mycollab-web" />
+            <fileset dir="mycollab-web" targetdir="$INSTALL_PATH" />
             <!-- The file will be parsed -->
         </pack>
         
