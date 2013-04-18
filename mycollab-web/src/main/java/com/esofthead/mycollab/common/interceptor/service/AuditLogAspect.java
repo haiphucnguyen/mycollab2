@@ -108,18 +108,27 @@ public class AuditLogAspect {
 						int monitorTypeId = (Integer) PropertyUtils
 								.getProperty(bean, "id");
 						String monitorType = watchableAnnotation.type();
+						
+						String moreUser = (String) PropertyUtils.getProperty(bean,
+								watchableAnnotation.userFieldName());
+						
+						if (moreUser != null && !moreUser.equals(username)) {
+							if (!monitorItemService.isUserWatchingItem(moreUser,
+									monitorType, monitorTypeId)) {
+								MonitorItem monitorItem = new MonitorItem();
+								monitorItem.setMonitorDate(new GregorianCalendar()
+										.getTime());
+								monitorItem.setType(monitorType);
+								monitorItem.setTypeid(monitorTypeId);
+								monitorItem.setUser(moreUser);
+								monitorItemService.saveWithSession(monitorItem,
+										moreUser);
+							}
+						}
 
 						// check whether the current user is in monitor list, if
 						// not add him in
-						if (!monitorItemService.isUserWatchingItem(username,
-								monitorType, monitorTypeId)) {
-							MonitorItem monitorItem = new MonitorItem();
-							monitorItem.setMonitorDate(new GregorianCalendar()
-									.getTime());
-							monitorItem.setType(monitorType);
-							monitorItem.setTypeid(monitorTypeId);
-							monitorItem.setUser(username);
-						}
+						
 
 						// Save notification email
 						log.debug("AUDIT LOG ID: " + auditLogId);

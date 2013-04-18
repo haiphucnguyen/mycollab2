@@ -51,7 +51,7 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 						HorizontalLayout priorityLayout = new HorizontalLayout();
 						priorityLayout.setSpacing(true);
 						Button userLbl = new Button(status, listener);
-						userLbl.setWidth("100px");
+						userLbl.setWidth("110px");
 						userLbl.setStyleName("link");
 
 						priorityLayout.addComponent(userLbl);
@@ -72,7 +72,7 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 					HorizontalLayout priorityLayout = new HorizontalLayout();
 					priorityLayout.setSpacing(true);
 					Button userLbl = new Button(status, listener);
-					userLbl.setWidth("100px");
+					userLbl.setWidth("110px");
 					userLbl.setStyleName("link");
 					priorityLayout.addComponent(userLbl);
 					ProgressIndicator indicator = new ProgressIndicator(0f);

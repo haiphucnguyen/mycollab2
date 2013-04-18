@@ -86,6 +86,7 @@ public class MyBugListWidget extends BugDisplayWidget {
 
 			ProjectUserLink userLink = new ProjectUserLink(
 					obj.getAssignuser(), obj.getAssignuserFullName(), true);
+			userLink.removeStyleName(UIConstants.WORD_WRAP);
 			hLayoutAssigneeInfo.addComponent(userLink);
 			hLayoutAssigneeInfo.setComponentAlignment(userLink,
 					Alignment.MIDDLE_CENTER);

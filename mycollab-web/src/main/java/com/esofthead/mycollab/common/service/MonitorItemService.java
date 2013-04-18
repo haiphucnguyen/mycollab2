@@ -3,9 +3,11 @@ package com.esofthead.mycollab.common.service;
 import java.util.List;
 
 import com.esofthead.mycollab.common.domain.MonitorItem;
+import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
+import com.esofthead.mycollab.core.persistence.service.ISearchableService;
 
-public interface MonitorItemService extends ICrudService<Integer, MonitorItem> {
+public interface MonitorItemService extends ICrudService<Integer, MonitorItem>, ISearchableService<MonitorSearchCriteria>{
 	/**
 	 * 
 	 * @param itemid

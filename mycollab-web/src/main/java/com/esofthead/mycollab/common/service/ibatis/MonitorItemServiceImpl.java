@@ -8,7 +8,9 @@ import org.springframework.stereotype.Service;
 import com.esofthead.mycollab.common.dao.MonitorItemMapper;
 import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.MonitorItemExample;
+import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.service.MonitorItemService;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
 
@@ -67,5 +69,34 @@ public class MonitorItemServiceImpl extends
 		ex.createCriteria().andUserEqualTo(username).andTypeEqualTo(type)
 				.andTypeidEqualTo(typeid);
 		return monitorItemMapper.countByExample(ex) > 0;
+	}
+
+	@Override
+	public List findPagableListByCriteria(
+			SearchRequest<MonitorSearchCriteria> searchRequest) {
+		return getMonitorItems(searchRequest.getSearchCriteria().getType(), searchRequest.getSearchCriteria().getTypeId());
+	}
+
+	@Override
+	public Integer getNextItemKey(MonitorSearchCriteria arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Integer getPreviousItemKey(MonitorSearchCriteria arg0) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int getTotalCount(MonitorSearchCriteria searchCriterial) {
+		return countMonitorsOfItem(searchCriterial.getType(), searchCriterial.getTypeId());
+	}
+
+	@Override
+	public void removeByCriteria(MonitorSearchCriteria arg0) {
+		// TODO Auto-generated method stub
+		
 	}
 }
