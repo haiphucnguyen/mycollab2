@@ -59,7 +59,8 @@ public class AnnotatedUserAvatarServlet implements HttpRequestHandler {
 				throw new MyCollabException("Invalid request for avatar "
 						+ path);
 			} else {
-				String realpath = request.getServletContext().getRealPath("");
+				String realpath = request.getSession().getServletContext()
+						.getRealPath("");
 				String userAvatarPath = realpath
 						+ "/assets/images/default_user_avatar_" + size + ".png";
 				avatarFile = new File(userAvatarPath);
