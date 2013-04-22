@@ -135,27 +135,27 @@ public class ProjectLinkGenerator {
 
 		if (ProjectContants.PROJECT.equals(type)) {
 		} else if (ProjectContants.MESSAGE.equals(type)) {
-			return generateMessagePreviewLink(projectId, typeid);
+			result = generateMessagePreviewLink(projectId, typeid);
 		} else if (ProjectContants.MILESTONE.equals(type)) {
-			return generateMilestonePreviewLink(projectId, typeid);
+			result = generateMilestonePreviewLink(projectId, typeid);
 		} else if (ProjectContants.PROBLEM.equals(type)) {
-			return generateProblemPreviewLink(projectId, typeid);
+			result = generateProblemPreviewLink(projectId, typeid);
 		} else if (ProjectContants.RISK.equals(type)) {
-			return generateRiskPreview(projectId, typeid);
+			result = generateRiskPreview(projectId, typeid);
 		} else if (ProjectContants.TASK.equals(type)) {
-			return generateTaskPreviewLink(projectId, typeid);
+			result = generateTaskPreviewLink(projectId, typeid);
 		} else if (ProjectContants.TASK_LIST.equals(type)) {
-			return generateTaskGroupPreviewLink(projectId, typeid);
+			result = generateTaskGroupPreviewLink(projectId, typeid);
 		} else if (ProjectContants.BUG.equals(type)) {
-			return generateBugPreviewLink(projectId, typeid);
+			result = generateBugPreviewLink(projectId, typeid);
 		} else if (ProjectContants.BUG_COMPONENT.equals(type)) {
-			return generateBugComponentPreviewLink(projectId, typeid);
+			result = generateBugComponentPreviewLink(projectId, typeid);
 		} else if (ProjectContants.BUG_VERSION.equals(type)) {
-			return generateBugVersionPreviewLink(projectId, typeid);
+			result = generateBugVersionPreviewLink(projectId, typeid);
 		} else if (ProjectContants.STANDUP.equals(type)) {
 
 		}
 
-		return result;
+		return "?url=" + result;
 	}
 }
