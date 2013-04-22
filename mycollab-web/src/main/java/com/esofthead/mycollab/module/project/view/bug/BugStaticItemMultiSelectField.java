@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.project.view.bug;
 
+import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
+
 
 /**
  * 

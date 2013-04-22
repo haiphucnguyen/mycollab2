@@ -163,7 +163,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 				historyList.setMargin(true);
 				tabTaskDetail.addTab(historyList, "History");
 
-				TaskFollowerSheet followerSheet = new TaskFollowerSheet();
+				TaskFollowersSheet followerSheet = new TaskFollowersSheet(task);
 				tabTaskDetail.addTab(followerSheet, "Follower");
 
 				TaskTimeSheet timesheet = new TaskTimeSheet();
@@ -171,10 +171,6 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 				return tabTaskDetail;
 			}
-		}
-
-		class TaskFollowerSheet extends VerticalLayout {
-
 		}
 
 		class TaskTimeSheet extends VerticalLayout {
