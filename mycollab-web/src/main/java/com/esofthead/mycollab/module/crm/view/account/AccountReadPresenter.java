@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
@@ -33,6 +32,7 @@ import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.AccountService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -291,8 +291,8 @@ public class AccountReadPresenter extends CrmGenericPresenter<AccountReadView> {
 				if (account != null) {
 					super.onGo(container, data);
 					view.previewItem((SimpleAccount) account);
-					AppContext.addFragment("crm/account/preview/"
-							+ UrlEncodeDecoder.encode(account.getId()),
+					AppContext.addFragment(CrmLinkGenerator
+							.generateAccountPreviewLink(account.getId()),
 							"Preview account: " + account.getAccountname());
 				} else {
 					AppContext

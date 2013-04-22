@@ -27,6 +27,7 @@ import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.service.LeadService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -225,8 +226,8 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 					super.onGo(container, data);
 					view.previewItem(lead);
 
-					AppContext.addFragment("crm/lead/preview/"
-							+ UrlEncodeDecoder.encode(lead.getId()),
+					AppContext.addFragment(CrmLinkGenerator
+							.generateLeadPreviewLink(lead.getId()),
 							"Preview Lead: " + lead.getLeadName());
 				} else {
 					AppContext

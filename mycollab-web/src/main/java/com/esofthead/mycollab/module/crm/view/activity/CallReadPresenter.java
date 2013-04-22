@@ -2,7 +2,6 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
@@ -11,6 +10,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.CallSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.CallService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -157,9 +157,9 @@ public class CallReadPresenter extends CrmGenericPresenter<CallReadView> {
 			}
 			super.onGo(container, data);
 			view.previewItem(call);
-			AppContext.addFragment("crm/activity/call/preview/"
-					+ UrlEncodeDecoder.encode(call.getId()), "Preiview Call: "
-					+ call.getSubject());
+			AppContext.addFragment(
+					CrmLinkGenerator.generateCallPreviewLink(call.getId()),
+					"Preiview Call: " + call.getSubject());
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}

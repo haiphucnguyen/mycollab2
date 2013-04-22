@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
@@ -26,6 +25,7 @@ import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -231,8 +231,8 @@ public class ContactReadPresenter extends CrmGenericPresenter<ContactReadView> {
 					super.onGo(container, data);
 					view.previewItem(contact);
 
-					AppContext.addFragment("crm/contact/preview/"
-							+ UrlEncodeDecoder.encode(contact.getId()),
+					AppContext.addFragment(CrmLinkGenerator
+							.generateContactPreviewLink(contact.getId()),
 							"Preview contact: " + contact.getContactName());
 				} else {
 					AppContext
