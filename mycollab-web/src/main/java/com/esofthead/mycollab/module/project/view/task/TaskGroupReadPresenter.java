@@ -43,6 +43,12 @@ public class TaskGroupReadPresenter extends
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<SimpleTaskList>() {
+					
+					@Override
+					public void onAssign(SimpleTaskList data) {
+						AppContext.getApplication().getMainWindow().addWindow(new AssignTaskGroupWindow(data));
+					}
+					
 					@Override
 					public void onEdit(SimpleTaskList data) {
 						EventBus.getInstance().fireEvent(

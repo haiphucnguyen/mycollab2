@@ -20,6 +20,14 @@ public class AdvancedPreviewBeanForm<T> extends GenericForm implements
 
         handlers.add(handler);
     }
+    
+    protected void fireAssignForm(T bean) {
+        if (handlers != null) {
+            for (PreviewFormHandlers<T> handler : handlers) {
+                handler.onAssign(bean);
+            }
+        }
+    }
 
     protected void fireEditForm(T bean) {
         if (handlers != null) {

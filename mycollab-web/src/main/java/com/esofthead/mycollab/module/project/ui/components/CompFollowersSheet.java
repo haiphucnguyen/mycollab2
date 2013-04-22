@@ -141,7 +141,7 @@ public abstract class CompFollowersSheet extends VerticalLayout {
 						.getUser());
 
 				return new ProjectUserLink(user.getUsername(), user
-						.getDisplayName(), true);
+						.getDisplayName(), true, true);
 
 			}
 		});
@@ -174,7 +174,7 @@ public abstract class CompFollowersSheet extends VerticalLayout {
 								.show(AppContext.getApplication()
 										.getMainWindow(),
 										"Please Confirm:",
-										"Are you sure to remove this user from the notification of bug activity?",
+										"Are you sure to remove this user from the notification of item activity?",
 										"Yes", "No",
 										new ConfirmDialog.Listener() {
 											private static final long serialVersionUID = 1L;

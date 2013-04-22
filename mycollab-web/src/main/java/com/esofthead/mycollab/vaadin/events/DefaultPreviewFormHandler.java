@@ -33,4 +33,8 @@ public class DefaultPreviewFormHandler<T> implements PreviewFormHandlers<T> {
     @Override
     public void onCancel() {
     }
+
+	@Override
+	public void onAssign(T data) {
+	}
 }

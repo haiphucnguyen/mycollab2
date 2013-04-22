@@ -8,6 +8,7 @@ public class GenericForm extends Form {
     private static final long serialVersionUID = 1L;
     public static String SAVE_ACTION = "Save";
     public static String SAVE_AND_NEW_ACTION = "Save & New";
+    public static String ASSIGN_ACTION = "Assign";
     public static String EDIT_ACTION = "Edit";
     public static String CANCEL_ACTION = "Cancel";
     public static String DELETE_ACTION = "Delete";

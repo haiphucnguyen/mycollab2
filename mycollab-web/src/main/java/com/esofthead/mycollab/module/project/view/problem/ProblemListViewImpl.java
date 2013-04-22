@@ -138,7 +138,7 @@ public class ProblemListViewImpl extends AbstractView implements
 						final SimpleProblem problem = tableItem
 								.getBeanByIndex(itemId);
 						return new ProjectUserLink(problem.getAssigntouser(),
-								problem.getAssignedUserFullName(), true);
+								problem.getAssignedUserFullName(), true, true);
 
 					}
 				});
