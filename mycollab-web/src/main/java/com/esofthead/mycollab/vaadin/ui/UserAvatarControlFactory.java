@@ -33,7 +33,7 @@ public class UserAvatarControlFactory {
 		if (StorageSetting.isFileStorage()) {
 			link = ApplicationProperties
 					.getProperty(ApplicationProperties.APP_URL)
-					+ "/avatar/"
+					+ "avatar/"
 					+ accountId + "/" + username + "/" + size;
 		} else if (StorageSetting.isS3Storage()) {
 			link = S3StorageConfig.getAvatarLink(accountId, username, size);
@@ -51,7 +51,8 @@ public class UserAvatarControlFactory {
 		}
 
 		if (StorageSetting.isFileStorage()) {
-			File avatarFile = FileStorageConfig.getAvatarFile(accountId, username, size);
+			File avatarFile = FileStorageConfig.getAvatarFile(accountId,
+					username, size);
 			if (avatarFile != null) {
 				avatarRes = new FileResource(avatarFile,
 						AppContext.getApplication());
