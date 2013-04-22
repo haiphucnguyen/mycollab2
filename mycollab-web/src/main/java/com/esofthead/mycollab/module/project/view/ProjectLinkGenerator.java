@@ -35,6 +35,18 @@ public class ProjectLinkGenerator {
 				+ PARAM_PREFIX + generateBugPreviewLink(projectId, bugId);
 	}
 
+	public static String generateBugVersionPreviewLink(Integer projectId,
+			Integer versionId) {
+		return "project/bug/version/preview/"
+				+ UrlEncodeDecoder.encode(projectId + "/" + versionId);
+	}
+
+	public static String generateBugComponentPreviewLink(Integer projectId,
+			Integer componentId) {
+		return "project/bug/component/preview/"
+				+ UrlEncodeDecoder.encode(projectId + "/" + componentId);
+	}
+
 	public static String generateMessagePreviewLink(int projectId, int messageId) {
 		return "project/message/preview/"
 				+ UrlEncodeDecoder.encode(projectId + "/" + messageId);
@@ -52,6 +64,22 @@ public class ProjectLinkGenerator {
 
 	public static String generateRiskPreview(Integer projectId, Integer riskId) {
 		return "project/risk/preview/"
+				+ UrlEncodeDecoder.encode(projectId + "/" + riskId);
+	}
+
+	public static String generateProblemPreviewLink(Integer projectId,
+			Integer problemId) {
+		return "project/problem/preview/"
+				+ UrlEncodeDecoder.encode(projectId + "/" + problemId);
+	}
+
+	public static String generateRiskPreviewFullLink(Integer projectId,
+			Integer riskId) {
+		if (projectId == null || riskId == null) {
+			return "";
+		}
+		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
+				+ PARAM_PREFIX + "project/risk/preview/"
 				+ UrlEncodeDecoder.encode(projectId + "/" + riskId);
 	}
 
@@ -104,25 +132,26 @@ public class ProjectLinkGenerator {
 	public static String generateProjectItemLink(int projectId, String type,
 			int typeid) {
 		String result = "";
+
 		if (ProjectContants.PROJECT.equals(type)) {
 		} else if (ProjectContants.MESSAGE.equals(type)) {
 			return generateMessagePreviewLink(projectId, typeid);
 		} else if (ProjectContants.MILESTONE.equals(type)) {
-
+			return generateMilestonePreviewLink(projectId, typeid);
 		} else if (ProjectContants.PROBLEM.equals(type)) {
-
+			return generateProblemPreviewLink(projectId, typeid);
 		} else if (ProjectContants.RISK.equals(type)) {
-
+			return generateRiskPreview(projectId, typeid);
 		} else if (ProjectContants.TASK.equals(type)) {
-
+			return generateTaskPreviewLink(projectId, typeid);
 		} else if (ProjectContants.TASK_LIST.equals(type)) {
-
+			return generateTaskGroupPreviewLink(projectId, typeid);
 		} else if (ProjectContants.BUG.equals(type)) {
-
+			return generateBugPreviewLink(projectId, typeid);
 		} else if (ProjectContants.BUG_COMPONENT.equals(type)) {
-
+			return generateBugComponentPreviewLink(projectId, typeid);
 		} else if (ProjectContants.BUG_VERSION.equals(type)) {
-
+			return generateBugVersionPreviewLink(projectId, typeid);
 		} else if (ProjectContants.STANDUP.equals(type)) {
 
 		}
