@@ -11,10 +11,14 @@ public class ProjectUserLink extends Button {
 	private static final long serialVersionUID = 1L;
 
 	public ProjectUserLink(final String username, final String displayName) {
-		this(username, displayName, false);
+		this(username, displayName, true, false);
 	}
-
-	public ProjectUserLink(final String username, final String displayName,
+	
+	public ProjectUserLink(final String username, final String displayName, boolean useWordWrap) {
+		this(username, displayName, useWordWrap, false);
+	}
+	
+	public ProjectUserLink(final String username, final String displayName,  boolean useWordWrap, 
 			boolean isDisplayAvatar) {
 		super(displayName, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -32,6 +36,9 @@ public class ProjectUserLink extends Button {
 		}
 
 		this.setStyleName("link");
-		this.addStyleName(UIConstants.WORD_WRAP);
+		
+		if (useWordWrap) {
+			this.addStyleName(UIConstants.WORD_WRAP);
+		}
 	}
 }

@@ -1,7 +1,5 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.esofthead.mycollab.common.ModuleNameConstants;
-import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
@@ -20,7 +18,7 @@ public class PreviewFormControlsGenerator<T> {
     private Button previousItem;
     private Button nextItemBtn;
     private Button historyBtn;
-    private Button printBtn;
+    private Button printBtn; 
     
     public PreviewFormControlsGenerator(AdvancedPreviewBeanForm<T> editForm) {
         this.previewForm = editForm;
@@ -28,27 +26,6 @@ public class PreviewFormControlsGenerator<T> {
     
     public HorizontalLayout createButtonControls() {
         return createButtonControls(null);
-    }
-    
-    public HorizontalLayout createButtonControls(String permissionItem, String moduleChecking) {
-    	HorizontalLayout layout = createButtonControls(permissionItem);
-    	if (moduleChecking != null) {
-    		if (moduleChecking.equals(ModuleNameConstants.PRJ)) {
-    			if (permissionItem != null) {
-    	            boolean canRead = CurrentProjectVariables.canRead(permissionItem);
-    	            boolean canWrite = CurrentProjectVariables.canWrite(permissionItem);
-    	            boolean canAccess = CurrentProjectVariables.canAccess(permissionItem);
-    	            
-    	            backBtn.setEnabled(canRead);
-    	            editBtn.setEnabled(canWrite);
-    	            cloneBtn.setEnabled(canWrite);
-    	            deleteBtn.setEnabled(canAccess);
-    	            printBtn.setEnabled(canRead);
-    	            historyBtn.setEnabled(canRead);
-    	        }
-    		}
-    	}
-    	return layout;
     }
 
     public HorizontalLayout createButtonControls(String permissionItem) {

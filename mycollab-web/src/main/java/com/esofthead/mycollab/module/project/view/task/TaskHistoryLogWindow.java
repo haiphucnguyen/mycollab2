@@ -21,7 +21,7 @@ public class TaskHistoryLogWindow extends HistoryLogWindow {
         this.generateFieldDisplayHandler("enddate", "End Date", HistoryLogComponent.DATE_FIELD);
         this.generateFieldDisplayHandler("actualstartdate", "Actual Start Date", HistoryLogComponent.DATE_FIELD);
         this.generateFieldDisplayHandler("actualenddate", "Actual End Date", HistoryLogComponent.DATE_FIELD);
-        this.generateFieldDisplayHandler("deadline", "Deadline");
+        this.generateFieldDisplayHandler("deadline", "Deadline", HistoryLogComponent.DATE_FIELD);
         this.generateFieldDisplayHandler("isestimated", "Is Estimated");
         this.generateFieldDisplayHandler("assignuser", "Assign");
         this.generateFieldDisplayHandler("tasklistid", "Task List");

@@ -28,6 +28,7 @@ public class DataAdapter {
 		datasource.setUsername(configuration.getUserName());
 		datasource.setPassword(configuration.getPassword());
 		datasource.setUrl(configuration.getUrl());
+		datasource.setDriverClassName("com.mysql.jdbc.Driver");
 		datasource.setLogAbandoned(true);
 	}
 

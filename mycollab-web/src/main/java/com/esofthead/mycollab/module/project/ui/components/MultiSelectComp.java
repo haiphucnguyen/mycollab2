@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.module.project.view.bug;
+package com.esofthead.mycollab.module.project.ui.components;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,6 +7,7 @@ import java.util.List;
 import org.apache.commons.beanutils.PropertyUtils;
 import org.vaadin.addon.customfield.CustomField;
 
+import com.esofthead.mycollab.module.project.view.bug.MultipleItemsPopupSelection;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;

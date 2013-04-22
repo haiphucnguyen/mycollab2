@@ -13,31 +13,16 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectContants;
 import com.esofthead.mycollab.module.project.ProjectResources;
-import com.esofthead.mycollab.module.project.events.BugComponentEvent;
-import com.esofthead.mycollab.module.project.events.BugEvent;
-import com.esofthead.mycollab.module.project.events.BugVersionEvent;
-import com.esofthead.mycollab.module.project.events.MessageEvent;
-import com.esofthead.mycollab.module.project.events.MilestoneEvent;
-import com.esofthead.mycollab.module.project.events.ProblemEvent;
-import com.esofthead.mycollab.module.project.events.RiskEvent;
-import com.esofthead.mycollab.module.project.events.StandUpEvent;
-import com.esofthead.mycollab.module.project.events.TaskEvent;
-import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.localization.ProjectLocalizationTypeMap;
-import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
-import com.esofthead.mycollab.shell.view.ScreenSize;
-import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.utils.LabelStringGenerator;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.terminal.Sizeable;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Label;
@@ -50,7 +35,6 @@ import com.vaadin.ui.VerticalLayout;
 public class ProjectActivityStreamComponent extends Depot {
 	private static final long serialVersionUID = 1L;
 	private final DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
-	private static LabelStringGenerator menuLinkGenerator = new ActivityLinkLabelStringGenerator();
 
 	public ProjectActivityStreamComponent() {
 		super("Project Feeds", new VerticalLayout());
@@ -84,31 +68,53 @@ public class ProjectActivityStreamComponent extends Depot {
 
 			CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
-			header.addComponent(new ProjectUserLink(activityStream
-					.getCreateduser(), activityStream.getCreatedUserFullName(),
-					true));
-			StringBuilder action = new StringBuilder();
+			String content = "";
 
 			if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream
 					.getAction())) {
-				action.append(LocalizationHelper
-						.getMessage(ProjectCommonI18nEnum.FEED_CREATE_ITEM_LBL));
+				content = LocalizationHelper
+						.getMessage(
+								ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
+								UserAvatarControlFactory.getLink(
+										AppContext.getAccountId(),
+										activityStream.getCreateduser(), 16),
+								activityStream.getCreatedUserFullName(),
+								LocalizationHelper
+										.getMessage(ProjectLocalizationTypeMap
+												.getType(activityStream
+														.getType())),
+								ProjectResources.getResourceLink(activityStream
+										.getType()),
+								ProjectLinkGenerator.generateProjectItemLink(
+										activityStream.getExtratypeid(),
+										activityStream.getType(),
+										activityStream.getTypeid()),
+								activityStream.getNamefield());
 			} else if (ActivityStreamConstants.ACTION_UPDATE
 					.equals(activityStream.getAction())) {
-				action.append(LocalizationHelper
-						.getMessage(ProjectCommonI18nEnum.FEED_UPDATE_ITEM_LBL));
+				content = LocalizationHelper
+						.getMessage(
+								ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
+								UserAvatarControlFactory.getLink(
+										AppContext.getAccountId(),
+										activityStream.getCreateduser(), 16),
+								activityStream.getCreatedUserFullName(),
+								LocalizationHelper
+										.getMessage(ProjectLocalizationTypeMap
+												.getType(activityStream
+														.getType())),
+								ProjectResources
+										.getResourceLink(activityStream
+												.getType()),
+								ProjectLinkGenerator.generateProjectItemLink(
+										activityStream.getExtratypeid(),
+										activityStream.getType(),
+										activityStream.getTypeid()),
+								activityStream.getNamefield());
 			}
 
-			action.append(LocalizationHelper
-					.getMessage(ProjectLocalizationTypeMap
-							.getType(activityStream.getType())));
-
-			Label actionLbl = new Label(action.toString());
-			actionLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
+			Label actionLbl = new Label(content, Label.CONTENT_XHTML);
 			header.addComponent(actionLbl);
-			// header.setComponentAlignment(actionLbl, Alignment.TOP_CENTER);
-			header.addComponent(new ActivitylLink(activityStream.getType(),
-					activityStream.getNamefield(), activityStream.getTypeid()));
 			layout.addComponent(header);
 
 			CssLayout body = new CssLayout();
@@ -120,76 +126,6 @@ public class ProjectActivityStreamComponent extends Depot {
 
 			layout.addComponent(body);
 			return layout;
-		}
-	}
-
-	private static class ActivityLinkLabelStringGenerator implements
-			LabelStringGenerator {
-
-		@Override
-		public String handleText(String value) {
-			int limitValue = 45;
-			if (ScreenSize.hasSupport1024Pixels()) {
-				limitValue = 35;
-			}
-			if (value.length() > limitValue) {
-				return value.substring(0, limitValue) + "...";
-			}
-			return value;
-		}
-
-	}
-
-	private static class ActivitylLink extends Button {
-		private static final long serialVersionUID = 1L;
-
-		public ActivitylLink(final String type, final String fieldName,
-				final int typeid) {
-			super(menuLinkGenerator.handleText(fieldName));
-
-			this.setDescription(fieldName);
-			this.setIcon(ProjectResources.getIconResource16size(type));
-			this.setStyleName("link");
-
-			this.addListener(new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(Button.ClickEvent event) {
-					if (ProjectContants.PROJECT.equals(type)) {
-					} else if (ProjectContants.MESSAGE.equals(type)) {
-						EventBus.getInstance().fireEvent(
-								new MessageEvent.GotoRead(this, typeid));
-					} else if (ProjectContants.MILESTONE.equals(type)) {
-						EventBus.getInstance().fireEvent(
-								new MilestoneEvent.GotoRead(this, typeid));
-					} else if (ProjectContants.PROBLEM.equals(type)) {
-						EventBus.getInstance().fireEvent(
-								new ProblemEvent.GotoRead(this, typeid));
-					} else if (ProjectContants.RISK.equals(type)) {
-						EventBus.getInstance().fireEvent(
-								new RiskEvent.GotoRead(this, typeid));
-					} else if (ProjectContants.TASK.equals(type)) {
-						EventBus.getInstance().fireEvent(
-								new TaskEvent.GotoRead(this, typeid));
-					} else if (ProjectContants.TASK_LIST.equals(type)) {
-						EventBus.getInstance().fireEvent(
-								new TaskListEvent.GotoRead(this, typeid));
-					} else if (ProjectContants.BUG.equals(type)) {
-						EventBus.getInstance().fireEvent(
-								new BugEvent.GotoRead(this, typeid));
-					} else if (ProjectContants.BUG_COMPONENT.equals(type)) {
-						EventBus.getInstance().fireEvent(
-								new BugComponentEvent.GotoRead(this, typeid));
-					} else if (ProjectContants.BUG_VERSION.equals(type)) {
-						EventBus.getInstance().fireEvent(
-								new BugVersionEvent.GotoRead(this, typeid));
-					} else if (ProjectContants.STANDUP.equals(type)) {
-						EventBus.getInstance().fireEvent(
-								new StandUpEvent.GotoRead(this, typeid));
-					}
-				}
-			});
 		}
 	}
 }

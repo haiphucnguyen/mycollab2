@@ -22,8 +22,8 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory.FormContainerHorizontalViewField;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
 import com.esofthead.mycollab.web.AppContext;
@@ -242,7 +242,7 @@ public class BugTableDisplay extends
 						final SimpleBug bug = BugTableDisplay.this
 								.getBeanByIndex(itemId);
 						return new ProjectUserLink(bug.getAssignuser(), bug
-								.getAssignuserFullName(), true);
+								.getAssignuserFullName(), true, true);
 
 					}
 				});

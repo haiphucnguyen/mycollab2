@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
@@ -34,6 +33,7 @@ import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -310,8 +310,8 @@ public class CampaignReadPresenter extends
 				if (campaign != null) {
 					super.onGo(container, data);
 					view.previewItem(campaign);
-					AppContext.addFragment("crm/campaign/preview/"
-							+ UrlEncodeDecoder.encode(campaign.getId()),
+					AppContext.addFragment(CrmLinkGenerator
+							.generateCampaignPreviewLink(campaign.getId()),
 							"Preview Campaign: " + campaign.getCampaignname());
 				} else {
 					AppContext

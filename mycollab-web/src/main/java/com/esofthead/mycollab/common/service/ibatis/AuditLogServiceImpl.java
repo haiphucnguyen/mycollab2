@@ -131,6 +131,7 @@ public class AuditLogServiceImpl extends
 		}
 
 		static private String formatDateW3C(Date date) {
+			
 			DateFormat df = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
 			String text = df.format(date);
 			String result = text.substring(0, 22) + ":" + text.substring(22);

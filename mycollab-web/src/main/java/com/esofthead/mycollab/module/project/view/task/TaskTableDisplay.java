@@ -329,7 +329,7 @@ public class TaskTableDisplay extends
 						final SimpleTask account = TaskTableDisplay.this
 								.getBeanByIndex(itemId);
 						return new ProjectUserLink(account.getAssignuser(),
-								account.getAssignUserFullName(), true);
+								account.getAssignUserFullName(), true, true);
 
 					}
 				});

@@ -5,7 +5,7 @@ import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
-import com.esofthead.mycollab.module.project.view.bug.MultiSelectComp;
+import com.esofthead.mycollab.module.project.ui.components.MultiSelectComp;
 import com.esofthead.mycollab.web.AppContext;
 
 @SuppressWarnings("serial")

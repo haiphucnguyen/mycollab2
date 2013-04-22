@@ -306,6 +306,7 @@ public class AppContext implements Serializable {
 		MainWindowContainer mainWindow = (MainWindowContainer) getApplication()
 				.getMainWindow();
 		mainWindow.addFragement(fragement);
+		log.debug("Add fragement: " + fragement + " to " + mainWindow);
 		mainWindow.setCaption(StringUtils.subString(windowTitle, 150)
 				+ " [MyCollab]");
 	}

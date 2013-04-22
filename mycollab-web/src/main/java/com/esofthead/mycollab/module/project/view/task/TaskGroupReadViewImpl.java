@@ -14,6 +14,7 @@ import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTaskList;
 import com.esofthead.mycollab.module.project.domain.TaskList;
 import com.esofthead.mycollab.module.project.domain.criteria.TaskSearchCriteria;
@@ -27,6 +28,7 @@ import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ProgressPercentageIndicator;
+import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
@@ -176,8 +178,9 @@ public class TaskGroupReadViewImpl extends AbstractView implements
 
 			@Override
 			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<SimpleTaskList>(
-						PreviewForm.this)).createButtonControls();
+				return (new ProjectPreviewFormControlsGenerator<SimpleTaskList>(
+						PreviewForm.this)).createButtonControls(
+								ProjectRolePermissionCollections.TASKS, true);
 			}
 
 			@Override

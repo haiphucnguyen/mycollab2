@@ -2,7 +2,6 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
@@ -11,6 +10,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.MeetingSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.MeetingService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -164,8 +164,8 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 			super.onGo(container, data);
 			view.previewItem(meeting);
 
-			AppContext.addFragment("crm/activity/meeting/preview/"
-					+ UrlEncodeDecoder.encode(meeting.getId()),
+			AppContext.addFragment(CrmLinkGenerator
+					.generateMeetingPreviewLink(meeting.getId()),
 					"Preview Meeting: " + meeting.getSubject());
 		} else {
 			MessageConstants.showMessagePermissionAlert();

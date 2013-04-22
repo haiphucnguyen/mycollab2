@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
@@ -27,6 +26,7 @@ import com.esofthead.mycollab.module.crm.service.CaseService;
 import com.esofthead.mycollab.module.crm.service.ContactService;
 import com.esofthead.mycollab.module.crm.view.AbstractRelatedListHandler;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -223,8 +223,8 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 					super.onGo(container, data);
 					view.previewItem(cases);
 
-					AppContext.addFragment("crm/cases/preview/"
-							+ UrlEncodeDecoder.encode(cases.getId()),
+					AppContext.addFragment(CrmLinkGenerator
+							.generateCasePreviewLink(cases.getId()),
 							"Preview: " + cases.getSubject());
 				} else {
 					AppContext

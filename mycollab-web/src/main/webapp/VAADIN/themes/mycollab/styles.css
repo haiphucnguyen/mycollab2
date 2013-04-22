@@ -80,6 +80,10 @@ ul {
 	padding-left: 20px;
 }
 
+a {
+	text-decoration: none;
+}
+
 .v-button,.v-button-caption {
 	text-shadow: none;
 }
@@ -1765,6 +1769,11 @@ input.v-textfield-errorField {
 	display: inline-block;
 	vertical-align: top;
 	margin: 0px 3px;
+}
+
+.stream-content img {
+	display: inline-block;
+	vertical-align: top;
 }
 
 .activity-date {

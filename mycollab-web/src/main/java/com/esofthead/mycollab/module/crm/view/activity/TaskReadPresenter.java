@@ -2,7 +2,6 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
@@ -11,6 +10,7 @@ import com.esofthead.mycollab.module.crm.domain.criteria.TaskSearchCriteria;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
+import com.esofthead.mycollab.module.crm.view.CrmLinkGenerator;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -158,9 +158,9 @@ public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
 
 			super.onGo(container, data);
 			view.previewItem(task);
-			AppContext.addFragment("crm/activity/task/preview/"
-					+ UrlEncodeDecoder.encode(task.getId()), "Preview Task: "
-					+ task.getSubject());
+			AppContext.addFragment(
+					CrmLinkGenerator.generateTaskPreviewLink(task.getId()),
+					"Preview Task: " + task.getSubject());
 
 		} else {
 			MessageConstants.showMessagePermissionAlert();

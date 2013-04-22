@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleMilestone;
 import com.esofthead.mycollab.module.project.events.MilestoneEvent;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
+import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
 import com.esofthead.mycollab.utils.StringUtils;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -83,14 +84,17 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 		HorizontalLayout closedHeaderLayout = new HorizontalLayout();
 		closedHeaderLayout.setSpacing(true);
-		Embedded embeddClosed = new Embedded(null, new ThemeResource("icons/16/project/phase_closed.png"));
+		Embedded embeddClosed = new Embedded(null, new ThemeResource(
+				"icons/16/project/phase_closed.png"));
 		closedHeaderLayout.addComponent(embeddClosed);
-		closedHeaderLayout.setComponentAlignment(embeddClosed, Alignment.MIDDLE_CENTER);
+		closedHeaderLayout.setComponentAlignment(embeddClosed,
+				Alignment.MIDDLE_CENTER);
 		Label closedHeader = new Label("Closed");
 		closedHeader.setSizeUndefined();
 		closedHeaderLayout.addComponent(closedHeader);
-		closedHeaderLayout.setComponentAlignment(closedHeader, Alignment.MIDDLE_CENTER);
-		
+		closedHeaderLayout.setComponentAlignment(closedHeader,
+				Alignment.MIDDLE_CENTER);
+
 		bodyContent.addComponent(closedHeaderLayout, "closed-header");
 		closeContainer = new VerticalLayout();
 		closeContainer.setWidth("100%");
@@ -98,14 +102,17 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 		HorizontalLayout inProgressHeaderLayout = new HorizontalLayout();
 		inProgressHeaderLayout.setSpacing(true);
-		Embedded embeddInProgress = new Embedded(null, new ThemeResource("icons/16/project/phase_progress.png"));
+		Embedded embeddInProgress = new Embedded(null, new ThemeResource(
+				"icons/16/project/phase_progress.png"));
 		inProgressHeaderLayout.addComponent(embeddInProgress);
-		inProgressHeaderLayout.setComponentAlignment(embeddInProgress, Alignment.MIDDLE_CENTER);
+		inProgressHeaderLayout.setComponentAlignment(embeddInProgress,
+				Alignment.MIDDLE_CENTER);
 		Label inProgressHeader = new Label("In Progress");
 		inProgressHeader.setSizeUndefined();
 		inProgressHeaderLayout.addComponent(inProgressHeader);
-		inProgressHeaderLayout.setComponentAlignment(inProgressHeader, Alignment.MIDDLE_CENTER);
-		
+		inProgressHeaderLayout.setComponentAlignment(inProgressHeader,
+				Alignment.MIDDLE_CENTER);
+
 		bodyContent.addComponent(inProgressHeaderLayout, "in-progress-header");
 		inProgressContainer = new VerticalLayout();
 		inProgressContainer.setWidth("100%");
@@ -113,14 +120,17 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 		HorizontalLayout futureHeaderLayout = new HorizontalLayout();
 		futureHeaderLayout.setSpacing(true);
-		Embedded embeddFuture = new Embedded(null, new ThemeResource("icons/16/project/phase_future.png"));
+		Embedded embeddFuture = new Embedded(null, new ThemeResource(
+				"icons/16/project/phase_future.png"));
 		futureHeaderLayout.addComponent(embeddFuture);
-		futureHeaderLayout.setComponentAlignment(embeddFuture, Alignment.MIDDLE_CENTER);
+		futureHeaderLayout.setComponentAlignment(embeddFuture,
+				Alignment.MIDDLE_CENTER);
 		Label futureHeader = new Label("Future");
 		futureHeader.setSizeUndefined();
 		futureHeaderLayout.addComponent(futureHeader);
-		futureHeaderLayout.setComponentAlignment(futureHeader, Alignment.MIDDLE_CENTER);
-		
+		futureHeaderLayout.setComponentAlignment(futureHeader,
+				Alignment.MIDDLE_CENTER);
+
 		bodyContent.addComponent(futureHeaderLayout, "future-header");
 		futureContainer = new VerticalLayout();
 		futureContainer.setWidth("100%");
@@ -129,7 +139,6 @@ public class MilestoneListViewImpl extends AbstractView implements
 		this.addComponent(bodyContent);
 		this.setExpandRatio(bodyContent, 1.0f);
 	}
-	
 
 	@Override
 	public void displayMilestones(List<SimpleMilestone> milestones) {
@@ -189,7 +198,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 
 		layout.addComponent(linkWrapper);
 
-		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 4,
+		GridFormLayoutHelper layoutHelper = new GridFormLayoutHelper(1, 5,
 				"100%", "60px");
 		layoutHelper.addComponent(
 				new Label(AppContext.formatDate(milestone.getStartdate())),
@@ -197,6 +206,9 @@ public class MilestoneListViewImpl extends AbstractView implements
 		layoutHelper.addComponent(
 				new Label(AppContext.formatDate(milestone.getEnddate())),
 				"End Date", 0, 1, Alignment.MIDDLE_LEFT);
+
+		layoutHelper.addComponent(new ProjectUserLink(milestone.getOwner(), "",
+				false, true), "Assignee", 0, 2, Alignment.MIDDLE_LEFT);
 
 		HorizontalLayout taskComp = new HorizontalLayout();
 		taskComp.setWidth("100%");
@@ -214,7 +226,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 		taskComp.setExpandRatio(progressTask, 1.0f);
 		// taskComp.setComponentAlignment(taskNumber, Alignment.MIDDLE_CENTER);
 
-		layoutHelper.addComponent(taskComp, "Tasks", 0, 2,
+		layoutHelper.addComponent(taskComp, "Tasks", 0, 3,
 				Alignment.MIDDLE_LEFT);
 
 		HorizontalLayout bugComp = new HorizontalLayout();
@@ -232,7 +244,7 @@ public class MilestoneListViewImpl extends AbstractView implements
 		bugComp.addComponent(bugNumber);
 		bugComp.setExpandRatio(progressBug, 1.0f);
 
-		layoutHelper.addComponent(bugComp, "Bugs", 0, 3, Alignment.MIDDLE_LEFT);
+		layoutHelper.addComponent(bugComp, "Bugs", 0, 4, Alignment.MIDDLE_LEFT);
 		GridLayout milestoneInfoLayout = layoutHelper.getLayout();
 		milestoneInfoLayout.setWidth("100%");
 		milestoneInfoLayout.setMargin(false);

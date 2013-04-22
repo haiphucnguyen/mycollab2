@@ -16,7 +16,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -120,10 +120,9 @@ public class ProjectRoleReadViewImpl extends AbstractView implements
 
 			@Override
 			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<ProjectRole>(
+				return (new ProjectPreviewFormControlsGenerator<ProjectRole>(
 						PreviewForm.this)).createButtonControls(
-						ProjectRolePermissionCollections.ROLES,
-						ModuleNameConstants.PRJ);
+						ProjectRolePermissionCollections.ROLES);
 			}
 
 			@Override

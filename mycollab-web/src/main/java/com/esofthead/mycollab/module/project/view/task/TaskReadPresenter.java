@@ -46,6 +46,12 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<Task>() {
+					
+					@Override
+					public void onAssign(Task data) {
+						AppContext.getApplication().getMainWindow().addWindow(new AssignTaskWindow(data));
+					}
+					
 					@Override
 					public void onEdit(Task data) {
 						EventBus.getInstance().fireEvent(

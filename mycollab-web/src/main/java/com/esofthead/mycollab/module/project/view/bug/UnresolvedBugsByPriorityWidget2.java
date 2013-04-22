@@ -15,6 +15,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
@@ -51,7 +52,10 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 						HorizontalLayout priorityLayout = new HorizontalLayout();
 						priorityLayout.setSpacing(true);
 						Button userLbl = new Button(status, listener);
-						userLbl.setWidth("100px");
+						ThemeResource iconPriority = BugPriorityComboBox
+								.getIconResourceByPriority(status);
+						userLbl.setIcon(iconPriority);
+						userLbl.setWidth("110px");
 						userLbl.setStyleName("link");
 
 						priorityLayout.addComponent(userLbl);
@@ -72,7 +76,10 @@ public class UnresolvedBugsByPriorityWidget2 extends Depot {
 					HorizontalLayout priorityLayout = new HorizontalLayout();
 					priorityLayout.setSpacing(true);
 					Button userLbl = new Button(status, listener);
-					userLbl.setWidth("100px");
+					ThemeResource iconPriority = BugPriorityComboBox
+							.getIconResourceByPriority(status);
+					userLbl.setIcon(iconPriority);
+					userLbl.setWidth("110px");
 					userLbl.setStyleName("link");
 					priorityLayout.addComponent(userLbl);
 					ProgressIndicator indicator = new ProgressIndicator(0f);

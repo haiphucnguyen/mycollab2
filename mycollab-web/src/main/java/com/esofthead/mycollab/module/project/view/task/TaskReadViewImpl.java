@@ -24,7 +24,7 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -139,10 +139,9 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 			@Override
 			protected ComponentContainer createTopPanel() {
-				HorizontalLayout topPanel = (new PreviewFormControlsGenerator<Task>(PreviewForm.this))
+				HorizontalLayout topPanel = (new ProjectPreviewFormControlsGenerator<Task>(PreviewForm.this))
 						.createButtonControls(
-								ProjectRolePermissionCollections.TASKS,
-								ModuleNameConstants.PRJ);
+								ProjectRolePermissionCollections.TASKS, true);
 				topPanel.setMargin(true);
 				return topPanel;
 			}
@@ -163,7 +162,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 				historyList.setMargin(true);
 				tabTaskDetail.addTab(historyList, "History");
 
-				TaskFollowerSheet followerSheet = new TaskFollowerSheet();
+				TaskFollowersSheet followerSheet = new TaskFollowersSheet(task);
 				tabTaskDetail.addTab(followerSheet, "Follower");
 
 				TaskTimeSheet timesheet = new TaskTimeSheet();
@@ -171,10 +170,6 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 
 				return tabTaskDetail;
 			}
-		}
-
-		class TaskFollowerSheet extends VerticalLayout {
-
 		}
 
 		class TaskTimeSheet extends VerticalLayout {

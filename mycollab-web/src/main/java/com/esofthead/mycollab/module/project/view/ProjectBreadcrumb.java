@@ -158,11 +158,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		}));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(message.getTitle()));
-		AppContext.addFragment(
-				"project/message/preview/"
-						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ message.getId()), "Preview Message: "
-						+ message.getTitle());
+		AppContext.addFragment(ProjectLinkGenerator.generateMessagePreviewLink(
+				project.getId(), message.getId()), "Preview Message: "
+				+ message.getTitle());
 	}
 
 	public void gotoRiskList() {
@@ -181,10 +179,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(risk.getRiskname()));
 		AppContext.addFragment(
-				"project/risk/preview/"
-						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ risk.getId()),
-				"Preview Risk: " + risk.getRiskname());
+				ProjectLinkGenerator.generateRiskPreview(project.getId(),
+						risk.getId()), "Preview Risk: " + risk.getRiskname());
 	}
 
 	public void gotoRiskEdit(final Risk risk) {
@@ -309,11 +305,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Problems", new GotoProblemListListener()));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(problem.getIssuename()));
-		AppContext.addFragment(
-				"project/problem/preview/"
-						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ problem.getId()), "Preview Problem: "
-						+ problem.getIssuename());
+		AppContext.addFragment(ProjectLinkGenerator.generateProblemPreviewLink(
+				project.getId(), problem.getId()), "Preview Problem: "
+				+ problem.getIssuename());
 	}
 
 	public void gotoProblemEdit(final Problem problem) {
@@ -607,9 +601,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.setLinkEnabled(true, 3);
 		this.addLink(generateBreadcrumbLink(version.getVersionname()));
 		AppContext.addFragment(
-				"project/bug/version/preview/"
-						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ version.getId()), "Preview Version: "
+				ProjectLinkGenerator.generateBugVersionPreviewLink(
+						project.getId(), version.getId()), "Preview Version: "
 						+ version.getVersionname());
 	}
 
@@ -680,10 +673,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		this.addLink(new Button("Components", new GotoComponentListener()));
 		this.addLink(generateBreadcrumbLink(component.getComponentname()));
 		AppContext.addFragment(
-				"project/bug/component/preview/"
-						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ component.getId()), "Preview Component: "
-						+ component.getComponentname());
+				ProjectLinkGenerator.generateBugComponentPreviewLink(
+						project.getId(), component.getId()),
+				"Preview Component: " + component.getComponentname());
 	}
 
 	public void gotoStandupList() {

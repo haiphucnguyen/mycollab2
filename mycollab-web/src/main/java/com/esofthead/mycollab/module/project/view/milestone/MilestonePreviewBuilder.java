@@ -8,7 +8,7 @@ import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFo
 import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
@@ -183,7 +183,7 @@ public class MilestonePreviewBuilder extends VerticalLayout {
 
 			milestoneInformation = new VerticalLayout();
 			milestoneInformation.setMargin(false);
-			HorizontalLayout actionControls = new PreviewFormControlsGenerator<Milestone>(
+			HorizontalLayout actionControls = new ProjectPreviewFormControlsGenerator<Milestone>(
 					previewForm).createButtonControls();
 
 			Button reportBtn = new Button(null, new Button.ClickListener() {

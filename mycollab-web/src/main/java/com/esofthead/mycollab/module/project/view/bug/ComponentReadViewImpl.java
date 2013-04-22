@@ -20,7 +20,7 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ToggleButtonGroup;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
@@ -31,6 +31,7 @@ import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
@@ -38,7 +39,6 @@ import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
-import com.vaadin.ui.Button.ClickEvent;
 
 /**
  * 
@@ -149,8 +149,8 @@ public class ComponentReadViewImpl extends AbstractView implements
 
 			@Override
 			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<SimpleComponent>(
-						PreviewForm.this)).createButtonControls(ProjectRolePermissionCollections.COMPONENTS, ModuleNameConstants.PRJ);
+				return (new ProjectPreviewFormControlsGenerator<SimpleComponent>(
+						PreviewForm.this)).createButtonControls(ProjectRolePermissionCollections.COMPONENTS);
 			}
 
 			@Override

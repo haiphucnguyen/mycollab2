@@ -14,7 +14,7 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
@@ -144,8 +144,8 @@ public class RiskReadViewImpl extends AbstractView implements RiskReadView {
 
 			@Override
 			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<Risk>(PreviewForm.this))
-						.createButtonControls(ProjectRolePermissionCollections.RISKS, ModuleNameConstants.PRJ);
+				return (new ProjectPreviewFormControlsGenerator<Risk>(PreviewForm.this))
+						.createButtonControls(ProjectRolePermissionCollections.RISKS);
 			}
 
 			@Override

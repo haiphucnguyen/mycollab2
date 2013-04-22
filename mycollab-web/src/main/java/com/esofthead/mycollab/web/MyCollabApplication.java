@@ -48,10 +48,6 @@ public class MyCollabApplication extends Application implements
 		return sessionData;
 	}
 
-	public void setSessionData(AppContext sessionData) {
-		this.sessionData = sessionData;
-	}
-
 	// Set the current application instance
 	public static void setInstance(MyCollabApplication application) {
 		threadLocal.set(application);
@@ -70,12 +66,20 @@ public class MyCollabApplication extends Application implements
 						urlParam = urlParam.substring(1);
 					}
 					try {
-						response.sendRedirect(request.getContextPath() + "/");
-						FragmentNavigator.navigateByFragement(urlParam);
+
+						String encodeRedirectURL = response
+								.encodeRedirectURL(request.getContextPath());
+						log.debug("Forward to URL: " + encodeRedirectURL);
+						initialUrl = urlParam;
+						response.sendRedirect(encodeRedirectURL);
 					} catch (IOException e) {
 						log.error("Dispatch url error: " + initialUrl, e);
 					}
 
+				} else {
+					if (initialUrl != null && !"".equals(initialUrl)) {
+						FragmentNavigator.navigateByFragement(initialUrl);
+					}
 				}
 			} else {
 				try {

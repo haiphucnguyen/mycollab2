@@ -12,156 +12,94 @@ import com.esofthead.mycollab.common.service.ActivityStreamService;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
-import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.events.AccountEvent;
-import com.esofthead.mycollab.module.crm.events.CampaignEvent;
-import com.esofthead.mycollab.module.crm.events.CaseEvent;
-import com.esofthead.mycollab.module.crm.events.ContactEvent;
-import com.esofthead.mycollab.module.crm.events.LeadEvent;
-import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
-import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.module.crm.CrmResources;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
+import com.esofthead.mycollab.module.crm.localization.CrmLocalizationTypeMap;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.UserLink;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.terminal.Sizeable;
-import com.vaadin.terminal.ThemeResource;
-import com.vaadin.ui.Alignment;
-import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class ActivityStreamPanel extends Depot {
+	private static final long serialVersionUID = 1L;
+	private final DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
 
-    private final DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
+	public ActivityStreamPanel() {
+		super("Activity Channels", new VerticalLayout());
+		activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
+				AppContext.getSpringBean(ActivityStreamService.class),
+				ActivityStreamRowDisplayHandler.class, 10);
+		this.bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
+		this.addStyleName("activity-panel");
+		((VerticalLayout) this.bodyContent).setMargin(false);
+	}
 
-    public ActivityStreamPanel() {
-        super("Activity Channels", new VerticalLayout());
-        activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
-                AppContext.getSpringBean(ActivityStreamService.class),
-                ActivityStreamRowDisplayHandler.class, 10);
-        this.bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
-        this.addStyleName("activity-panel");
-        ((VerticalLayout) this.bodyContent).setMargin(false);
-    }
+	public void display() {
+		ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
+		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
+				new String[] { ModuleNameConstants.CRM }));
+		activityStreamList.setSearchCriteria(searchCriteria);
+	}
 
-    public void display() {
-        ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-        searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
-                new String[]{ModuleNameConstants.CRM}));
-        activityStreamList.setSearchCriteria(searchCriteria);
-    }
+	public static class ActivityStreamRowDisplayHandler implements
+			DefaultBeanPagedList.RowDisplayHandler<SimpleActivityStream> {
 
-    public static class ActivityStreamRowDisplayHandler implements
-            DefaultBeanPagedList.RowDisplayHandler<SimpleActivityStream> {
+		@Override
+		public Component generateRow(SimpleActivityStream activityStream,
+				int rowIndex) {
+			CssLayout layout = new CssLayout();
+			layout.setWidth("100%");
+			layout.setStyleName("activity-stream");
 
-        @Override
-        public Component generateRow(SimpleActivityStream activityStream,
-                int rowIndex) {
-            CssLayout layout = new CssLayout();
-            layout.setWidth("100%");
-            layout.setStyleName("activity-stream");
-            
-            CssLayout header = new CssLayout();
+			CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
-            
-            UserLink userLink = new UserLink(activityStream.getCreateduser(),
-                    activityStream.getCreatedUserFullName());
-            header.addComponent(userLink);
 
-            StringBuilder action = new StringBuilder();
+			CrmCommonI18nEnum action = null;
 
-            if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream
-                    .getAction())) {
-                action.append("create a new ");
-            } else if (ActivityStreamConstants.ACTION_UPDATE
-                    .equals(activityStream.getAction())) {
-                action.append("update ");
-            }
+			if (ActivityStreamConstants.ACTION_CREATE.equals(activityStream
+					.getAction())) {
+				action = CrmCommonI18nEnum.WIDGET_ACTIVITY_CREATE_ACTION;
+			} else if (ActivityStreamConstants.ACTION_UPDATE
+					.equals(activityStream.getAction())) {
+				action = CrmCommonI18nEnum.WIDGET_ACTIVITY_UPDATE_ACTION;
+			}
 
-            action.append(activityStream.getType());
-            Label actionLbl = new Label(action.toString());
-            actionLbl.setWidth(Sizeable.SIZE_UNDEFINED, 0);
-            header.addComponent(actionLbl);
-            
-            header.addComponent(new ActivitylLink(activityStream.getType(),
-                    activityStream.getNamefield(), activityStream.getTypeid()));
-            layout.addComponent(header);
+			String content = LocalizationHelper.getMessage(action,
+					UserAvatarControlFactory.getLink(AppContext.getAccountId(),
+							activityStream.getCreateduser(), 16),
+					activityStream.getCreatedUserFullName(), LocalizationHelper
+							.getMessage(CrmLocalizationTypeMap
+									.getType(activityStream.getType())),
+					CrmResources.getResourceLink(activityStream.getType()),
+					CrmLinkGenerator.generateCrmItemLink(
+							activityStream.getType(),
+							activityStream.getTypeid()), activityStream
+							.getNamefield());
+			Label activityLink = new Label(content, Label.CONTENT_XHTML);
 
-            CssLayout body = new CssLayout();
-            body.setStyleName("activity-date");
-            Label dateLbl = new Label(
-                    DateTimeUtils.getStringDateFromNow(activityStream
-                    .getCreatedtime()));
-            body.addComponent(dateLbl);
+			header.addComponent(activityLink);
 
-            layout.addComponent(body);
-            return layout;
-        }
-    }
+			layout.addComponent(header);
 
-    private static class ActivitylLink extends Button {
+			CssLayout body = new CssLayout();
+			body.setStyleName("activity-date");
+			Label dateLbl = new Label(
+					DateTimeUtils.getStringDateFromNow(activityStream
+							.getCreatedtime()));
+			body.addComponent(dateLbl);
 
-        public ActivitylLink(final String type, final String fieldName,
-                final int typeid) {
-            super(fieldName);
-
-            if (CrmTypeConstants.ACCOUNT.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/crm/account.png"));
-            } else if (CrmTypeConstants.CAMPAIGN.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/crm/campaign.png"));
-            } else if (CrmTypeConstants.CASE.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/crm/case.png"));
-            } else if (CrmTypeConstants.CONTACT.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/crm/contact.png"));
-            } else if (CrmTypeConstants.LEAD.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/crm/lead.png"));
-            } else if (CrmTypeConstants.OPPORTUNITY.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/crm/opportunity.png"));
-            } else if (CrmTypeConstants.TASK.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/crm/task.png"));
-            } else if (CrmTypeConstants.MEETING.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/crm/meeting.png"));
-            } else if (CrmTypeConstants.CALL.equals(type)) {
-                this.setIcon(new ThemeResource("icons/16/crm/call.png"));
-            }
-
-            this.setStyleName("link");
-            this.addListener(new Button.ClickListener() {
-                @Override
-                public void buttonClick(ClickEvent event) {
-                    if (CrmTypeConstants.ACCOUNT.equals(type)) {
-                        EventBus.getInstance().fireEvent(
-                                new AccountEvent.GotoRead(this, typeid));
-                    } else if (CrmTypeConstants.CAMPAIGN.equals(type)) {
-                        EventBus.getInstance().fireEvent(
-                                new CampaignEvent.GotoRead(this, typeid));
-                    } else if (CrmTypeConstants.CASE.equals(type)) {
-                        EventBus.getInstance().fireEvent(
-                                new CaseEvent.GotoRead(this, typeid));
-                    } else if (CrmTypeConstants.CONTACT.equals(type)) {
-                        EventBus.getInstance().fireEvent(
-                                new ContactEvent.GotoRead(this, typeid));
-                    } else if (CrmTypeConstants.LEAD.equals(type)) {
-                        EventBus.getInstance().fireEvent(
-                                new LeadEvent.GotoRead(this, typeid));
-                    } else if (CrmTypeConstants.OPPORTUNITY.equals(type)) {
-                        EventBus.getInstance().fireEvent(
-                                new OpportunityEvent.GotoRead(this, typeid));
-                    } else if (CrmTypeConstants.TASK.equals(type)) {
-                    } else if (CrmTypeConstants.MEETING.equals(type)) {
-                    } else if (CrmTypeConstants.CALL.equals(type)) {
-                    }
-                }
-            });
-        }
-    }
+			layout.addComponent(body);
+			return layout;
+		}
+	}
 }

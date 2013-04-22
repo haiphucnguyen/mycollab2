@@ -15,10 +15,8 @@ import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
-import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
 
@@ -61,7 +59,7 @@ public class ProjectMembersWidget extends Depot {
 			CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
 			header.addComponent(new ProjectUserLink(obj.getUsername(), obj
-					.getMemberFullName(), true));
+					.getMemberFullName(), false, true));
 			layout.addComponent(header);
 
 			CssLayout body = new CssLayout();

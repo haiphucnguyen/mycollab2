@@ -14,7 +14,7 @@ import com.esofthead.mycollab.vaadin.events.HasPreviewFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.Item;
@@ -142,10 +142,9 @@ public class ProblemReadViewImpl extends AbstractView implements
 
 			@Override
 			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<Problem>(
+				return (new ProjectPreviewFormControlsGenerator<Problem>(
 						PreviewForm.this)).createButtonControls(
-						ProjectRolePermissionCollections.PROBLEMS,
-						ModuleNameConstants.PRJ);
+						ProjectRolePermissionCollections.PROBLEMS);
 			}
 
 			@Override

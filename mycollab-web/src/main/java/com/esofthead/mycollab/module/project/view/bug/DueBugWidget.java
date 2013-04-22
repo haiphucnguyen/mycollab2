@@ -95,7 +95,7 @@ public class DueBugWidget extends BugDisplayWidget {
 					Alignment.MIDDLE_CENTER);
 
 			ProjectUserLink userLink = new ProjectUserLink(
-					obj.getAssignuser(), obj.getAssignuserFullName(), true);
+					obj.getAssignuser(), obj.getAssignuserFullName(), false, true);
 			hLayoutDateInfo.addComponent(userLink);
 			hLayoutDateInfo.setComponentAlignment(userLink,
 					Alignment.MIDDLE_CENTER);

@@ -3,6 +3,8 @@ package com.esofthead.mycollab.module.project.localization;
 import java.util.HashMap;
 import java.util.Map;
 
+import com.esofthead.mycollab.core.MyCollabException;
+
 public class ProjectLocalizationTypeMap {
 	private static Map<String, ProjectTypeI18nEnum> typeMap;
 
@@ -23,7 +25,7 @@ public class ProjectLocalizationTypeMap {
 	public static ProjectTypeI18nEnum getType(String key) {
 		ProjectTypeI18nEnum result = typeMap.get(key);
 		if (result == null) {
-			System.out.println("CAN NOT GET VALUE FOR KEY: " + key);
+			throw new MyCollabException("Can not get key: " + key);
 		}
 
 		return result;

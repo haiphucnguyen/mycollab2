@@ -20,6 +20,7 @@ import com.esofthead.mycollab.module.project.domain.criteria.MessageSearchCriter
 import com.esofthead.mycollab.module.project.events.MessageEvent;
 import com.esofthead.mycollab.module.project.localization.MessageI18nEnum;
 import com.esofthead.mycollab.module.project.service.MessageService;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
@@ -127,7 +128,13 @@ public class MessageListViewImpl extends AbstractView implements
 													.getId()));
 						}
 					});
+			if (ScreenSize.hasSupport1024Pixels()) {
+				title.setWidth("550px");
+			} else if (ScreenSize.hasSupport1280Pixels()) {
+				title.setWidth("650px");
+			}
 			title.setStyleName("link");
+			title.addStyleName(UIConstants.WORD_WRAP);
 
 			HorizontalLayout messageHeader = new HorizontalLayout();
 			messageHeader.setStyleName("message-header");

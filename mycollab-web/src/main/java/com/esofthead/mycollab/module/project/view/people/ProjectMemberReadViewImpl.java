@@ -38,7 +38,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.Depot;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
+import com.esofthead.mycollab.vaadin.ui.ProjectPreviewFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
@@ -189,10 +189,9 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 
 			@Override
 			protected Layout createTopPanel() {
-				return (new PreviewFormControlsGenerator<ProjectMember>(
+				return (new ProjectPreviewFormControlsGenerator<ProjectMember>(
 						PreviewForm.this)).createButtonControls(
-						ProjectRolePermissionCollections.USERS,
-						ModuleNameConstants.PRJ);
+						ProjectRolePermissionCollections.USERS);
 			}
 
 			@Override
