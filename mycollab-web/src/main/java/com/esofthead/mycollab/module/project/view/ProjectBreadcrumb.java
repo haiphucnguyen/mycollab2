@@ -158,11 +158,9 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		}));
 		this.setLinkEnabled(true, 2);
 		this.addLink(generateBreadcrumbLink(message.getTitle()));
-		AppContext.addFragment(
-				"project/message/preview/"
-						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ message.getId()), "Preview Message: "
-						+ message.getTitle());
+		AppContext.addFragment(ProjectLinkGenerator.generateMessagePreviewLink(
+				project.getId(), message.getId()), "Preview Message: "
+				+ message.getTitle());
 	}
 
 	public void gotoRiskList() {

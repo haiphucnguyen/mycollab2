@@ -50,6 +50,11 @@ public class ProjectLinkGenerator {
 				+ generateMessagePreviewLink(projectId, messageId);
 	}
 
+	public static String generateRiskPreview(Integer projectId, Integer riskId) {
+		return "project/risk/preview/"
+				+ UrlEncodeDecoder.encode(projectId + "/" + riskId);
+	}
+
 	public static String generateTaskPreviewFullLink(Integer projectId,
 			Integer taskId) {
 		if (projectId == null || taskId == null) {

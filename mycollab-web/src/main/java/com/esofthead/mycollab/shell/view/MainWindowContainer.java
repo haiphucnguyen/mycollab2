@@ -7,7 +7,6 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.browsercookies.BrowserCookies;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
 import com.esofthead.mycollab.module.user.view.LoginPresenter;
 import com.esofthead.mycollab.module.user.view.LoginView;
@@ -49,12 +48,22 @@ public class MainWindowContainer extends Window implements View {
 				try {
 					String initialUrl = source.getUriFragmentUtility()
 							.getFragment();
-
-					if (AppContext.getSession() != null) {
-						FragmentNavigator.navigateByFragement(initialUrl);
+					if (initialUrl != null && !"".equals(initialUrl)) {
+						if (AppContext.getSession() != null) {
+							FragmentNavigator.navigateByFragement(initialUrl);
+						} else {
+							((MyCollabApplication) AppContext.getApplication())
+									.setInitialUrl(initialUrl);
+						}
 					} else {
-						((MyCollabApplication) AppContext.getApplication())
-								.setInitialUrl(initialUrl);
+						String url = ((MyCollabApplication) AppContext
+								.getApplication()).getInitialUrl();
+						if (url != null && !url.equals("")) {
+							if (url.startsWith("/")) {
+								url = url.substring(1);
+							}
+							FragmentNavigator.navigateByFragement(url);
+						}
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
