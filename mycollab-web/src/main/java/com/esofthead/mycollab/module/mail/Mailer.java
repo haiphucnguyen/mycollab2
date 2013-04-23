@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.mail;
 import java.util.Arrays;
 import java.util.List;
 
+import org.apache.commons.mail.EmailConstants;
 import org.apache.commons.mail.EmailException;
 import org.apache.commons.mail.HtmlEmail;
 import org.slf4j.Logger;
@@ -42,6 +43,7 @@ public class Mailer {
 		HtmlEmail email = new HtmlEmail();
 		email.setHostName(host);
 		email.setFrom(fromEmail, fromName);
+		email.setCharset(EmailConstants.UTF_8);
 		for (int i = 0; i < toEmail.size(); i++) {
 			if (isValidate(toEmail.get(i).getEmail())
 					&& isValidate(toEmail.get(i).getName())) {

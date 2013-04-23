@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
+import java.io.UnsupportedEncodingException;
 import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
@@ -12,17 +13,16 @@ import java.util.Map;
 import org.apache.velocity.VelocityContext;
 import org.apache.velocity.app.Velocity;
 import org.apache.velocity.app.VelocityEngine;
-import org.apache.velocity.runtime.RuntimeServices;
-import org.apache.velocity.runtime.log.LogChute;
 import org.apache.velocity.tools.Scope;
 import org.apache.velocity.tools.ToolManager;
 import org.apache.velocity.tools.config.EasyFactoryConfiguration;
 import org.apache.velocity.tools.generic.DateTool;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.module.project.domain.SimpleMessage;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 
-public class TemplateGenerator implements LogChute {
+public class TemplateGenerator {
 	private final String subjectTemplate;
 	private final String contentTemplatePathFile;
 	private final VelocityContext velocityContext;
@@ -80,21 +80,27 @@ public class TemplateGenerator implements LogChute {
 
 	public String generateBodyContent() {
 		StringWriter writer = new StringWriter();
-		Reader reader = new BufferedReader(new InputStreamReader(
-				TemplateGenerator.class.getClassLoader().getResourceAsStream(
-						contentTemplatePathFile)));
+		Reader reader;
+		try {
+			reader = new InputStreamReader(TemplateGenerator.class
+					.getClassLoader().getResourceAsStream(
+							contentTemplatePathFile), "UTF-8");
+		} catch (UnsupportedEncodingException e) {
+			reader = new InputStreamReader(TemplateGenerator.class
+					.getClassLoader().getResourceAsStream(
+							contentTemplatePathFile));
+		}
+
 		voEngine.evaluate(velocityContext, writer, "log task", reader);
 		return writer.toString();
 	}
 
 	public static void main(String[] args) {
 		TemplateGenerator a = new TemplateGenerator("AAA",
-				"templates/email/project/taskCreatedNotifier.mt");
-		SimpleTask task = new SimpleTask();
-		task.setTaskname("aaa");
-		task.setProjectName("bbb");
-		task.setStartdate(new GregorianCalendar().getTime());
-		a.putVariable("task", task);
+				"templates/email/project/test.mt");
+		SimpleMessage msg = new SimpleMessage();
+		msg.setTitle("Hải Nguyễn");
+		a.putVariable("msg", msg);
 		Map<String, String> hyperLinks = new HashMap<String, String>();
 		hyperLinks.put("taskUrl", "#");
 		hyperLinks.put("projectUrl", "#");
@@ -102,27 +108,5 @@ public class TemplateGenerator implements LogChute {
 		hyperLinks.put("taskListUrl", "#");
 		a.putVariable("hyperLinks", hyperLinks);
 		System.out.println(a.generateBodyContent());
-	}
-
-	@Override
-	public void init(RuntimeServices rs) throws Exception {
-		System.out.println("init");
-	}
-
-	@Override
-	public void log(int level, String message) {
-		System.out.println("log: " + message);
-	}
-
-	@Override
-	public void log(int level, String message, Throwable t) {
-		System.out.println("log error");
-
-	}
-
-	@Override
-	public boolean isLevelEnabled(int level) {
-		System.out.println("level: " + level);
-		return true;
 	}
 }
