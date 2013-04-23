@@ -23,8 +23,11 @@ public class UrlEncodeDecoder {
 
 	public static String encode(String str) {
 		try {
+//			System.out.println(Base64.class.getProtectionDomain()
+//					.getCodeSource().getLocation());
 			return URLEncoder.encode(
-					new String(Base64.encodeBase64(str.getBytes("UTF-8")),
+					new String(
+							Base64.encodeBase64URLSafe(str.getBytes("UTF-8")),
 							"UTF-8"), "UTF-8");
 		} catch (UnsupportedEncodingException ex) {
 			throw new MyCollabException(ex);
@@ -47,8 +50,11 @@ public class UrlEncodeDecoder {
 		return encode(str.toString());
 	}
 
-	public static void main(String[] args) {
-		String txt = encode("2");
+	public static void main(String[] args) throws UnsupportedEncodingException {
+		String str = "2/31";
+		String txt = encode(str);
+		System.out.println(URLEncoder.encode(str, "UTF-8"));
+		System.out.println(Base64.encodeBase64(str.getBytes("UTF-8")));
 		System.out.println(txt);
 		System.out.println(decode(txt));
 	}
