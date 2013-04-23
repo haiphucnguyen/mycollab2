@@ -10,6 +10,12 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapper" />
     </bean>
+    
+    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="itemTimeLoggingMapperExt">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapperExt" />
+    </bean>
 
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="messageMapper">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
@@ -147,18 +153,6 @@
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.project.dao.TaskListMapperExt" />
-    </bean>
-    
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="timeTrackingItemMapper">
-        <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.project.dao.TimeTrackingItemMapper" />
-    </bean>
-    
-    <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="timeTrackingItemMapperExt">
-        <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface"
-            value="com.esofthead.mycollab.module.project.dao.TimeTrackingItemMapperExt" />
     </bean>
 
 </beans>

@@ -22,12 +22,12 @@ public abstract class MultiSelectComp extends CustomField {
 
 	private final TextField componentsDisplay;
 	private final MultipleItemsPopupSelection componentPopupSelection;
-	private boolean isClicked = false;
 	private String displayName;
-	private final HashMap<String, CheckBox> componentPoupMap = new HashMap<String, CheckBox>();
+	protected boolean isClicked = false;
+	protected final HashMap<String, CheckBox> componentPoupMap = new HashMap<String, CheckBox>();
 
 	@SuppressWarnings("rawtypes")
-	private List selectedItemsList = new ArrayList();
+	protected List selectedItemsList = new ArrayList();
 
 	@SuppressWarnings("rawtypes")
 	protected List dataList = new ArrayList();
@@ -95,7 +95,7 @@ public abstract class MultiSelectComp extends CustomField {
 		}
 	}
 
-	private void createItemPopup() {
+	protected void createItemPopup() {
 		for (int i = 0; i < dataList.size(); i++) {
 
 			Object itemComp = dataList.get(i);
@@ -160,7 +160,7 @@ public abstract class MultiSelectComp extends CustomField {
 		}
 	}
 
-	private void removeElementSelectedListByName(String name) {
+	protected void removeElementSelectedListByName(String name) {
 
 		for (int i = 0; i < selectedItemsList.size(); i++) {
 			Object item = selectedItemsList.get(i);

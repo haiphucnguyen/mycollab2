@@ -1,21 +1,30 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!-- Engroup - Enterprise Groupware Platform Copyright (C) 2007-2009 eSoftHead 
-	Company <engroup@esofthead.com> http://www.esofthead.com Licensed under the 
-	GPL, Version 3.0 (the "License"); you may not use this file except in compliance 
-	with the License. You may obtain a copy of the License at http://www.gnu.org/licenses/gpl.html 
-	Unless required by applicable law or agreed to in writing, software distributed 
-	under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
-	OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
-	the specific language governing permissions and limitations under the License. -->
+    Company <engroup@esofthead.com> http://www.esofthead.com Licensed under the 
+    GPL, Version 3.0 (the "License"); you may not use this file except in compliance 
+    with the License. You may obtain a copy of the License at http://www.gnu.org/licenses/gpl.html 
+    Unless required by applicable law or agreed to in writing, software distributed 
+    under the License is distributed on an "AS IS" BASIS, WITHOUT WARRANTIES 
+    OR CONDITIONS OF ANY KIND, either express or implied. See the License for 
+    the specific language governing permissions and limitations under the License. -->
 <!DOCTYPE dataset PUBLIC "-//eSoftHead/Engroup Database Schema//EN" "http://www.esofthead.com/engroup.dtd">
 <dataset>
-    <s_account id="1"/>
-    <s_user accountId="1" username="hainguyen" firstname="Nguyen" lastname="Hai"/>
-    
-    <s_activitystream id="1" module="aa" type="task" typeId="1" action="save" sAccountId="1"/>
-    <s_activitystream id="2" module="aa" type="task" typeId="1" action="save" sAccountId="1"/>
-    <s_activitystream id="3" module="bb" type="task" typeId="1" action="update" sAccountId="1"/>
-    
-    <m_comment id="1" comment="comment1" createdUser="hainguyen" sAccountId="1" type="Common_ActivityStream" typeId="3" createdTime="2011-11-5 00:00:00"/>
-    <m_comment id="2" comment="comment2" createdUser="hainguyen" sAccountId="1" type="Common_ActivityStream" typeId="3" createdTime="2011-11-5 00:00:00"/>
+    <s_account id="1" createdTime="2013-04-10 13:29:23"
+        paymentMethod="Credit Card" status="Active" />
+    <s_user accountId="1" username="hainguyen" firstname="Nguyen"
+        lastname="Hai" email="hainguyen@esofthead.com" />
+
+    <s_activitystream id="1" module="aa" type="task"
+        typeId="1" action="save" sAccountId="1" />
+    <s_activitystream id="2" module="aa" type="task"
+        typeId="1" action="save" sAccountId="1" />
+    <s_activitystream id="3" module="bb" type="task"
+        typeId="1" action="update" sAccountId="1" />
+
+    <m_comment id="1" comment="comment1" createdUser="hainguyen"
+        sAccountId="1" type="Common_ActivityStream" typeId="3"
+        createdTime="2011-11-5 00:00:00" />
+    <m_comment id="2" comment="comment2" createdUser="hainguyen"
+        sAccountId="1" type="Common_ActivityStream" typeId="3"
+        createdTime="2011-11-5 00:00:00" />
 </dataset>
