@@ -63,12 +63,14 @@ public class MessageListComponent extends Depot {
 							.getFullPostedUserName(), ResourceResolver
 							.getResourceLink("icons/16/project/message.png"),
 					ProjectLinkGenerator.generateMessagePreviewFullLink(
-							message.getProjectid(), message.getId()), message
+							message.getProjectid(), message.getId(),
+							ProjectLinkGenerator.DEFAULT_PREFIX_PARAM), message
 							.getTitle(), ResourceResolver
 							.getResourceLink("icons/16/project/project.png"),
-					ProjectLinkGenerator.generateProjectFullLink(message
-							.getProjectid()), message.getProjectName());
-			System.out.println("Content: " + content);
+					ProjectLinkGenerator.generateProjectFullLink(
+							message.getProjectid(),
+							ProjectLinkGenerator.DEFAULT_PREFIX_PARAM), message
+							.getProjectName());
 			Label messageLink = new Label(content, Label.CONTENT_XHTML);
 
 			header.addComponent(messageLink);

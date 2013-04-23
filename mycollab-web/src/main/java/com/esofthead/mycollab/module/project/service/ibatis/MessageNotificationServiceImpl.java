@@ -78,14 +78,16 @@ public class MessageNotificationServiceImpl implements
 
 	private Map<String, String> constructHyperLinks(SimpleMessage message) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		hyperLinks.put(
-				"messageUrl",
-				ProjectLinkGenerator.generateMessagePreviewFullLink(
-						message.getProjectid(), message.getId()));
+		hyperLinks
+				.put("messageUrl", ProjectLinkGenerator
+						.generateMessagePreviewFullLink(message.getProjectid(),
+								message.getId(),
+								ProjectLinkGenerator.URL_PREFIX_PARAM));
 		hyperLinks.put("shortMessageUrl",
 				StringUtils.subString(message.getTitle(), 150));
 		hyperLinks.put("projectUrl", ProjectLinkGenerator
-				.generateProjectFullLink(message.getProjectid()));
+				.generateProjectFullLink(message.getProjectid(),
+						ProjectLinkGenerator.URL_PREFIX_PARAM));
 		hyperLinks.put("createdUserUrl", AccountLinkGenerator
 				.generateUserPreviewFullLink(message.getPosteduser()));
 
