@@ -1,0 +1,1 @@
+ALTER TABLE `m_prj_time_logging` ADD COLUMN `createdTime` DATETIME NOT NULL, ADD COLUMN `lastUpdatedTime` DATETIME NOT NULL;
