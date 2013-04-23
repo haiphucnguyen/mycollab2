@@ -13,23 +13,16 @@ import com.esofthead.mycollab.module.project.ui.components.CompFollowersSheet;
 import com.esofthead.mycollab.web.AppContext;
 
 @SuppressWarnings("serial")
-public class TaskFollowersSheet extends CompFollowersSheet {
-
-	private SimpleTask task;
+public class TaskFollowersSheet extends CompFollowersSheet<SimpleTask> {
 
 	protected TaskFollowersSheet(SimpleTask task) {
 		super(task);
-		this.task = task;
 	}
 
 	@Override
 	protected void loadMonitorItems() {
-		if (this.task == null) {
-			this.task = (SimpleTask) bean;
-		}
-
 		MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
-		searchCriteria.setTypeId(task.getId());
+		searchCriteria.setTypeId(bean.getId());
 		searchCriteria.setType(MonitorTypeConstants.PRJ_TASK);
 		tableItem.setSearchCriteria(searchCriteria);
 	}
@@ -37,12 +30,12 @@ public class TaskFollowersSheet extends CompFollowersSheet {
 	@Override
 	protected boolean saveMonitorItem(String username) {
 		if (!monitorItemService.isUserWatchingItem(username,
-				MonitorTypeConstants.PRJ_TASK, task.getId())) {
+				MonitorTypeConstants.PRJ_TASK, bean.getId())) {
 
 			MonitorItem monitorItem = new MonitorItem();
 			monitorItem.setMonitorDate(new GregorianCalendar().getTime());
 			monitorItem.setType(MonitorTypeConstants.PRJ_TASK);
-			monitorItem.setTypeid(task.getId());
+			monitorItem.setTypeid(bean.getId());
 			monitorItem.setUser(username);
 			monitorItemService.saveWithSession(monitorItem,
 					AppContext.getUsername());
@@ -59,7 +52,7 @@ public class TaskFollowersSheet extends CompFollowersSheet {
 		relayNotification.setChangecomment("");
 		relayNotification.setSaccountid(AppContext.getAccountId());
 		relayNotification.setType(MonitorTypeConstants.PRJ_TASK);
-		relayNotification.setTypeid(task.getId());
+		relayNotification.setTypeid(bean.getId());
 		relayNotification
 				.setEmailhandlerbean(ProjectTaskNotificationService.class
 						.getName());

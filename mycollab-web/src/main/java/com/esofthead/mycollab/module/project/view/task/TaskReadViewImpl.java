@@ -173,6 +173,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 		}
 
 		class TaskTimeSheet extends VerticalLayout {
+			private static final long serialVersionUID = 1L;
 
 		}
 	}

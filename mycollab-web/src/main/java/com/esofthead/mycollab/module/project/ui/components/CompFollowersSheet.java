@@ -9,6 +9,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.service.MonitorItemService;
+import com.esofthead.mycollab.core.utils.ValuedBean;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
@@ -32,16 +33,17 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-public abstract class CompFollowersSheet extends VerticalLayout {
+public abstract class CompFollowersSheet<T extends ValuedBean> extends
+		VerticalLayout {
 
 	protected PagedBeanTable2<MonitorItemService, MonitorSearchCriteria, MonitorItem> tableItem;
 	protected MonitorItemService monitorItemService;
-	protected Object bean;
+	protected T bean;
 
 	private static Logger log = LoggerFactory
 			.getLogger(CompFollowersSheet.class);
 
-	protected CompFollowersSheet(Object bean) {
+	protected CompFollowersSheet(T bean) {
 		this.bean = bean;
 		this.setMargin(true);
 		this.setSpacing(true);
@@ -54,7 +56,7 @@ public abstract class CompFollowersSheet extends VerticalLayout {
 	protected abstract void loadMonitorItems();
 
 	protected abstract boolean saveMonitorItem(String username);
-	
+
 	protected abstract void saveRelayNotification();
 
 	private void initUI() {
@@ -78,7 +80,7 @@ public abstract class CompFollowersSheet extends VerticalLayout {
 						.getSelectedItems();
 
 				boolean canSendEmail = false;
-				
+
 				for (ProjectMember member : members) {
 
 					ProjectMemberService memberService = AppContext
@@ -100,7 +102,7 @@ public abstract class CompFollowersSheet extends VerticalLayout {
 						}
 					}
 				}
-				
+
 				if (canSendEmail) {
 					saveRelayNotification();
 				}
