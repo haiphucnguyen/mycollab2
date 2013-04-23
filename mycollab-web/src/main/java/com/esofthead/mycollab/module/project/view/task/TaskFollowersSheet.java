@@ -7,6 +7,8 @@ import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.service.ProjectTaskNotificationService;
 import com.esofthead.mycollab.module.project.ui.components.CompFollowersSheet;
@@ -17,6 +19,8 @@ public class TaskFollowersSheet extends CompFollowersSheet<SimpleTask> {
 
 	protected TaskFollowersSheet(SimpleTask task) {
 		super(task);
+		btnSave.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.TASKS));
 	}
 
 	@Override

@@ -7,6 +7,8 @@ import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ui.components.CompFollowersSheet;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugNotificationService;
@@ -17,11 +19,12 @@ class BugFollowersSheet extends CompFollowersSheet<SimpleBug> {
 
 	public BugFollowersSheet(SimpleBug bug) {
 		super(bug);
+		btnSave.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.BUGS));
 	}
 
 	@Override
 	protected void loadMonitorItems() {
-
 		MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
 		searchCriteria.setTypeId(bean.getId());
 		searchCriteria.setType(MonitorTypeConstants.PRJ_BUG);
@@ -30,19 +33,20 @@ class BugFollowersSheet extends CompFollowersSheet<SimpleBug> {
 
 	@Override
 	protected boolean saveMonitorItem(String username) {
-
+		
 		if (!monitorItemService.isUserWatchingItem(username,
 				MonitorTypeConstants.PRJ_BUG, bean.getId())) {
 
 			MonitorItem monitorItem = new MonitorItem();
-			monitorItem.setMonitorDate(new GregorianCalendar().getTime());
+			monitorItem.setMonitorDate(new GregorianCalendar()
+					.getTime());
 			monitorItem.setType(MonitorTypeConstants.PRJ_BUG);
 			monitorItem.setTypeid(bean.getId());
 			monitorItem.setUser(username);
 			monitorItemService.saveWithSession(monitorItem,
 					AppContext.getUsername());
 			return true;
-
+			
 		}
 		return false;
 	}
@@ -52,17 +56,19 @@ class BugFollowersSheet extends CompFollowersSheet<SimpleBug> {
 		RelayEmailNotification relayNotification = new RelayEmailNotification();
 		relayNotification.setChangeby(AppContext.getUsername());
 		relayNotification.setChangecomment("");
-		relayNotification.setSaccountid(AppContext.getAccountId());
+		relayNotification.setSaccountid(AppContext
+				.getAccountId());
 		relayNotification.setType(MonitorTypeConstants.PRJ_BUG);
 		relayNotification.setTypeid(bean.getId());
-		relayNotification.setEmailhandlerbean(BugNotificationService.class
-				.getName());
-		relayNotification.setAction(MonitorTypeConstants.CREATE_ACTION);
+		relayNotification
+				.setEmailhandlerbean(BugNotificationService.class
+						.getName());
+		relayNotification
+				.setAction(MonitorTypeConstants.CREATE_ACTION);
 
 		RelayEmailNotificationService relayEmailNotificationService = AppContext
 				.getSpringBean(RelayEmailNotificationService.class);
-		relayEmailNotificationService.saveWithSession(relayNotification,
-				AppContext.getUsername());
+		relayEmailNotificationService.saveWithSession(
+				relayNotification, AppContext.getUsername());
 	}
-
 }

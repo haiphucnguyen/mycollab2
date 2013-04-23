@@ -11,7 +11,6 @@ import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.core.utils.ValuedBean;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
-import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.ProjectMember;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
@@ -33,17 +32,17 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-public abstract class CompFollowersSheet<T extends ValuedBean> extends
-		VerticalLayout {
+public abstract class CompFollowersSheet<V extends ValuedBean> extends VerticalLayout {
 
 	protected PagedBeanTable2<MonitorItemService, MonitorSearchCriteria, MonitorItem> tableItem;
 	protected MonitorItemService monitorItemService;
-	protected T bean;
+	protected V bean;
+	protected Button btnSave;
 
 	private static Logger log = LoggerFactory
 			.getLogger(CompFollowersSheet.class);
 
-	protected CompFollowersSheet(T bean) {
+	protected CompFollowersSheet(V bean) {
 		this.bean = bean;
 		this.setMargin(true);
 		this.setSpacing(true);
@@ -56,7 +55,7 @@ public abstract class CompFollowersSheet<T extends ValuedBean> extends
 	protected abstract void loadMonitorItems();
 
 	protected abstract boolean saveMonitorItem(String username);
-
+	
 	protected abstract void saveRelayNotification();
 
 	private void initUI() {
@@ -71,7 +70,7 @@ public abstract class CompFollowersSheet<T extends ValuedBean> extends
 		layoutAdd.addComponent(memberSelection);
 		layoutAdd.setComponentAlignment(memberSelection, Alignment.MIDDLE_LEFT);
 
-		Button btnSave = new Button("Add", new Button.ClickListener() {
+		btnSave = new Button("Add", new Button.ClickListener() {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
@@ -80,7 +79,7 @@ public abstract class CompFollowersSheet<T extends ValuedBean> extends
 						.getSelectedItems();
 
 				boolean canSendEmail = false;
-
+				
 				for (ProjectMember member : members) {
 
 					ProjectMemberService memberService = AppContext
@@ -102,7 +101,7 @@ public abstract class CompFollowersSheet<T extends ValuedBean> extends
 						}
 					}
 				}
-
+				
 				if (canSendEmail) {
 					saveRelayNotification();
 				}
@@ -112,8 +111,6 @@ public abstract class CompFollowersSheet<T extends ValuedBean> extends
 			}
 		});
 
-		btnSave.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.BUGS));
 		btnSave.setStyleName(UIConstants.THEME_BLUE_LINK);
 		btnSave.setIcon(new ThemeResource("icons/16/addRecord.png"));
 
