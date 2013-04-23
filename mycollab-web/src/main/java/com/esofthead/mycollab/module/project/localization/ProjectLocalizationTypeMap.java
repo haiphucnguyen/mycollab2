@@ -10,6 +10,7 @@ public class ProjectLocalizationTypeMap {
 
 	static {
 		typeMap = new HashMap<String, ProjectTypeI18nEnum>();
+		typeMap.put("Project", ProjectTypeI18nEnum.PROJECT_ITEM);
 		typeMap.put("Message", ProjectTypeI18nEnum.MESSAGE_ITEM);
 		typeMap.put("Milestone", ProjectTypeI18nEnum.PHASE_ITEM);
 		typeMap.put("Task", ProjectTypeI18nEnum.TASK_ITEM);

@@ -76,11 +76,7 @@ public class MyCollabApplication extends Application implements
 						log.error("Dispatch url error: " + initialUrl, e);
 					}
 
-				} else {
-					if (initialUrl != null && !"".equals(initialUrl)) {
-						FragmentNavigator.navigateByFragement(initialUrl);
-					}
-				}
+				} 
 			} else {
 				try {
 					initialUrl = request.getParameter("url");
