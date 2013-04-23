@@ -65,6 +65,6 @@ public class CrmLinkGenerator {
 		} else if (CrmTypeConstants.CALL.equals(type)) {
 			result = generateCallPreviewLink(typeid);
 		}
-		return "?url=" + result;
+		return "#" + result;
 	}
 }

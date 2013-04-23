@@ -14,7 +14,6 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.common.service.UserPreferenceService;
@@ -46,8 +45,6 @@ public class AppContext implements Serializable {
 	private SimpleBillingAccount billingAccount;
 
 	private long lastAccessTime = 0;
-
-	private String currentFragement = "";
 
 	public static String USER_TIMEZONE = "USER_TIMEZONE";
 
@@ -309,27 +306,9 @@ public class AppContext implements Serializable {
 	public static void addFragment(String fragement, String windowTitle) {
 		MainWindowContainer mainWindow = (MainWindowContainer) getApplication()
 				.getMainWindow();
-
-		String lastFragementElement = getLastElement(fragement);
-		String lastCurrentFragementElement = getLastElement(getInstance().currentFragement);
-
-		if (!"".equals(fragement)
-				&& !getInstance().currentFragement.equals(fragement)
-				&& !lastCurrentFragementElement.equals(lastFragementElement)
-				&& !lastCurrentFragementElement.equals(UrlEncodeDecoder
-						.encode(lastFragementElement))) {
-			getInstance().currentFragement = fragement;
-			mainWindow.addFragement(fragement);
-			log.debug("Add fragement: " + fragement + " to " + mainWindow);
-			mainWindow.setCaption(StringUtils.subString(windowTitle, 150)
-					+ " [MyCollab]");
-		}
-	}
-
-	private static String getLastElement(String value) {
-		int fragementIndex = value.lastIndexOf("/");
-		String lastElement = (fragementIndex >= 0) ? value
-				.substring(fragementIndex) : value;
-		return lastElement;
+		mainWindow.addFragement(fragement);
+		log.debug("Add fragement: " + fragement + " to " + mainWindow);
+		mainWindow.setCaption(StringUtils.subString(windowTitle, 150)
+				+ " [MyCollab]");
 	}
 }

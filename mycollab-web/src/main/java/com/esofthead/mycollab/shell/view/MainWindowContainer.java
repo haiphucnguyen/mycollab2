@@ -48,22 +48,11 @@ public class MainWindowContainer extends Window implements View {
 				try {
 					String initialUrl = source.getUriFragmentUtility()
 							.getFragment();
-					if (initialUrl != null && !"".equals(initialUrl)) {
-						if (AppContext.getSession() != null) {
-							FragmentNavigator.navigateByFragement(initialUrl);
-						} else {
-							((MyCollabApplication) AppContext.getApplication())
-									.setInitialUrl(initialUrl);
-						}
+					if (AppContext.getSession() != null) {
+						FragmentNavigator.navigateByFragement(initialUrl);
 					} else {
-						String url = ((MyCollabApplication) AppContext
-								.getApplication()).getInitialUrl();
-						if (url != null && !url.equals("")) {
-							if (url.startsWith("/")) {
-								url = url.substring(1);
-							}
-							FragmentNavigator.navigateByFragement(url);
-						}
+						((MyCollabApplication) AppContext.getApplication())
+								.setInitialUrl(initialUrl);
 					}
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -144,7 +133,6 @@ public class MainWindowContainer extends Window implements View {
 	}
 
 	public void addFragement(String fragement) {
-		log.debug("Add fragement: " + fragement);
 		urifu.setFragment(fragement, false);
 	}
 

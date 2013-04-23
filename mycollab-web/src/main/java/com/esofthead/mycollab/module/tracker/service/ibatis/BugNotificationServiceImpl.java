@@ -58,7 +58,8 @@ public class BugNotificationServiceImpl extends
 		hyperLinks.put("shortBugUrl",
 				StringUtils.subString(bug.getSummary(), 150));
 		hyperLinks.put("projectUrl", ProjectLinkGenerator
-				.generateProjectFullLink(bug.getProjectid()));
+				.generateProjectFullLink(bug.getProjectid(),
+						ProjectLinkGenerator.URL_PREFIX_PARAM));
 		hyperLinks.put("loggedUserUrl", AccountLinkGenerator
 				.generateUserPreviewFullLink(bug.getLogby()));
 		hyperLinks.put("assignUserUrl", AccountLinkGenerator

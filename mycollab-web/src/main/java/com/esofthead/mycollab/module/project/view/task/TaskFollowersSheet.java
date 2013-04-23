@@ -1,4 +1,3 @@
-
 package com.esofthead.mycollab.module.project.view.task;
 
 import java.util.GregorianCalendar;
@@ -26,7 +25,6 @@ public class TaskFollowersSheet extends CompFollowersSheet<SimpleTask> {
 
 	@Override
 	protected void loadMonitorItems() {
-
 		MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
 		searchCriteria.setTypeId(bean.getId());
 		searchCriteria.setType(MonitorTypeConstants.PRJ_TASK);

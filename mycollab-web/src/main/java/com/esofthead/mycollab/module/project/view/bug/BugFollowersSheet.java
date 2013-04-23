@@ -71,7 +71,4 @@ class BugFollowersSheet extends CompFollowersSheet<SimpleBug> {
 		relayEmailNotificationService.saveWithSession(
 				relayNotification, AppContext.getUsername());
 	}
-	
-	
-
 }

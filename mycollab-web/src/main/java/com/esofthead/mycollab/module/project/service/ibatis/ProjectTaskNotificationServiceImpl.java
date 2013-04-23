@@ -59,7 +59,8 @@ public class ProjectTaskNotificationServiceImpl extends
 		hyperLinks.put("shortTaskUrl",
 				StringUtils.subString(task.getTaskname(), 150));
 		hyperLinks.put("projectUrl", ProjectLinkGenerator
-				.generateProjectFullLink(task.getProjectid()));
+				.generateProjectFullLink(task.getProjectid(),
+						ProjectLinkGenerator.URL_PREFIX_PARAM));
 		hyperLinks.put("assignUserUrl", AccountLinkGenerator
 				.generateUserPreviewFullLink(task.getAssignuser()));
 		hyperLinks.put(
