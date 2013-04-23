@@ -46,6 +46,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends VerticalL
 		this.bean = bean;
 		this.setMargin(true);
 		this.setSpacing(true);
+		this.setWidth("100%");
 
 		monitorItemService = AppContext.getSpringBean(MonitorItemService.class);
 
