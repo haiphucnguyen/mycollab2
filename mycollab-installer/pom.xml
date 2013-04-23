@@ -131,7 +131,7 @@
 								<taskdef name="jarbundler" classname="net.sourceforge.jarbundler.JarBundler"
 									classpath="resources/jarbundler-2.2.0.jar" />
 								<jarbundler dir="target" name="mycollab"
-									mainclass="com.izforge.izpack.installer.Installer" icon="resources/Icon.icns"
+									mainclass="com.izforge.izpack.installer.Installer" icon="resources/mycollab.icns"
 									jvmversion="1.5+" jar="target/${artifactId}-${version}-standard.jar">
 
 								</jarbundler>

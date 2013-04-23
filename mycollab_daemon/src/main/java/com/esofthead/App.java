@@ -428,7 +428,7 @@ public class App {
 		return true;
 	}
 
-	private static final boolean installService(String yajswHome)
+	private static final boolean installService(final String yajswHome)
 			throws Exception {
 		int __try = 0;
 		String errorCode = "";
