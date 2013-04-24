@@ -15,8 +15,6 @@ import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSear
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
@@ -77,7 +75,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 	protected abstract ItemTimeLoggingSearchCriteria getItemSearchCriteria();
 
 	protected abstract double getEstimateRemainTime();
-	
+
 	protected abstract boolean isEnableAdd();
 
 	protected double getUpdateRemainTime() {
@@ -101,7 +99,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 			totalLayout.addStyleName("boxTotal");
 			totalLayout.setWidth("95%");
 			this.addComponent(totalLayout);
-			
+
 			Label lbTimeInstructTotal = new Label("Total Time Invested");
 			totalLayout.addComponent(lbTimeInstructTotal);
 			lbTimeTotal = new Label("_");
@@ -123,7 +121,8 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 				@Override
 				public void buttonClick(ClickEvent event) {
 					try {
-						double d = Double.parseDouble(numberField.getValue().toString());
+						double d = Double.parseDouble(numberField.getValue()
+								.toString());
 						if (d > 0) {
 							saveTimeInvest();
 							loadTimeInvestItem();
@@ -165,14 +164,9 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 							final SimpleItemTimeLogging monitorItem = tableItem
 									.getBeanByIndex(itemId);
 
-							UserService userService = AppContext
-									.getSpringBean(UserService.class);
-							SimpleUser user = userService
-									.findUserByUserName(monitorItem
-											.getLoguser());
-
-							return new ProjectUserLink(user.getUsername(), user
-									.getDisplayName(), true, true);
+							return new ProjectUserLink(
+									monitorItem.getLoguser(), monitorItem
+											.getLogUserFullName(), true, true);
 
 						}
 					});
@@ -309,14 +303,14 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 		public UpdateTimeRemain() {
 
 			this.setSpacing(true);
-			this.setMargin(false,false, false, true);
+			this.setMargin(false, false, false, true);
 
 			VerticalLayout updateLayout = new VerticalLayout();
 			updateLayout.setMargin(false, false, true, false);
 			updateLayout.addStyleName("boxTotal");
 			updateLayout.setWidth("300px");
 			this.addComponent(updateLayout);
-			
+
 			Label lbTimeInstructTotal = new Label("Work Hours Remaining");
 			updateLayout.addComponent(lbTimeInstructTotal);
 			lbUpdateTime = new Label("_");
@@ -337,9 +331,10 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 
 				@Override
 				public void buttonClick(ClickEvent event) {
-					
+
 					try {
-						double d = Double.parseDouble(numberField.getValue().toString());
+						double d = Double.parseDouble(numberField.getValue()
+								.toString());
 						if (d > 0) {
 							updateTimeRemain();
 							lbUpdateTime.setValue(numberField.getValue());
@@ -351,7 +346,7 @@ public abstract class CompTimeLogSheet<V extends ValuedBean> extends
 				}
 
 			});
-			
+
 			btnAdd.setEnabled(isEnableAdd());
 			btnAdd.setStyleName(UIConstants.THEME_BLUE_LINK);
 			addLayout.addComponent(btnAdd);
