@@ -118,8 +118,9 @@ public class MeetingAddViewImpl extends AbstractView implements MeetingAddView {
     }
 
     private class RecurringSettingPanel extends CustomField {
+		private static final long serialVersionUID = 1L;
 
-        public RecurringSettingPanel() {
+		public RecurringSettingPanel() {
             CheckBox isRecurringBox = new CheckBox();
         }
 

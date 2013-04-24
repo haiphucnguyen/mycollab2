@@ -12,7 +12,9 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class MeetingContactListComp extends Depot {
-    public MeetingContactListComp() {
+	private static final long serialVersionUID = 1L;
+
+	public MeetingContactListComp() {
         super("Contacts", new VerticalLayout());
     }
 }
