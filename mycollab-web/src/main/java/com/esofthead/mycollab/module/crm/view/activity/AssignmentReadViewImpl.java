@@ -20,13 +20,13 @@ import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
 
 @ViewComponent
-public class TaskReadViewImpl extends AbstractView implements TaskReadView {
+public class AssignmentReadViewImpl extends AbstractView implements AssignmentReadView {
 
     private static final long serialVersionUID = 1L;
     private PreviewForm previewForm;
     private SimpleTask task;
 
-    public TaskReadViewImpl() {
+    public AssignmentReadViewImpl() {
         super();
         previewForm = new PreviewForm();
         this.addComponent(previewForm);
@@ -85,7 +85,7 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
             super.setItemDataSource(newDataSource);
         }
 
-        class FormLayoutFactory extends TaskFormLayoutFactory {
+        class FormLayoutFactory extends AssignmentFormLayoutFactory {
 
             private static final long serialVersionUID = 1L;
 

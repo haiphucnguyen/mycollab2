@@ -21,12 +21,12 @@ import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 
-public class TaskReadPresenter extends CrmGenericPresenter<TaskReadView> {
+public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadView> {
 
 	private static final long serialVersionUID = 1L;
 
-	public TaskReadPresenter() {
-		super(TaskReadView.class);
+	public AssignmentReadPresenter() {
+		super(AssignmentReadView.class);
 		bind();
 	}
 

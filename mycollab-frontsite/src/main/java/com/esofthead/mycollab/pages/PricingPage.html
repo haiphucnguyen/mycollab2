@@ -1,191 +1,193 @@
 <!DOCTYPE html>
 <html xmlns:wicket="http://wicket.apache.org">
-    <head></head>
-    <body>
-        <wicket:extend>
-            <div id="top-menu">			
-                <div class="sub-header pricing">
-                    <h3>Try MyCollab free for 30 days</h3>
-                    <h4>No credit card required in order to get started</h4>
-                </div>
-            </div>
-            <div id="banner" class="hidden"></div>
-            <div id="content">
-                <div id="content-mid">
-                    <div class="home-mid">
-                        <div class="home-mid-top"></div>
-                        <div class="home-mid-content">
-                            <div class="tb-pricing">
-                                <div class="head-tb">
-                                	<div class="block block0">
-                                        <h3>Free</h3>
-                                        <p>
-                                            <span class="price">$0.00</span>
-                                        </p>
-                                        <p class="button">
-                                            <a wicket:id="free-link" href="#">Select</a>
-                                        </p>
-                                    </div>
-                                    <div class="block block1">
-                                        <h3>Micro</h3>
-                                        <p>
-                                            <span class="price">$9.99</span>
-                                        </p>
-                                        <p class="button">
-                                            <a wicket:id="micro-link" href="#">Star Free Trial</a>
-                                        </p>
-                                    </div>
-                                    <div class="block block2">
-                                        <h3>Compact</h3>
-                                        <p>
-                                            <span class="price">$19.99</span>
-                                        </p>
-                                        <p class="button">
-                                            <a wicket:id="compact-link" href="#">Star Free Trial</a>
-                                        </p>
-                                    </div>
-                                    <div class="block block3 prefered">
-                                        <h3>Corporate</h3>
-                                        <p>
-                                            <span class="price">$49.00</span>
-                                        </p>
-                                        <p class="button">
-                                            <a wicket:id="corporate-link" href="#">Star Free Trial</a>
-                                        </p>
-                                    </div>
-                                    <div class="block block4">
-                                        <h3>Enterprise</h3>
-                                        <p>
-                                            <span class="price">$99.00</span>
-                                        </p>
-                                        <p class="button">
-                                            <a wicket:id="enterprise-link" href="#">Start Free Trial</a>
-                                        </p>
-                                    </div>
-                                </div>
-                                <table cellpadding="0" cellspacing="0">
-                                    <tbody>
-                                        <tr class="sectiontableentry">
-                                            <td class="attrs_name">Users</td>
-                                            <td class="first"><span class="plan_attrs">3</span></td>
-                                            <td class="center"><span class="plan_attrs">3</span></td>
-                                            <td class="center"><span class="plan_attrs">5</span></td>
-                                            <td class="center"><span class="plan_attrs">30</span></td>
-                                            <td class="last"><span class="plan_attrs">200</span></td>
-                                        </tr>
-                                        <tr class="sectiontableentry">
-                                            <td class="attrs_name">Storage</td>
-                                            <td class="first"><span class="plan_attrs">200 MB</span></td>
-                                            <td class="center"><span class="plan_attrs">1 GB</span></td>
-                                            <td class="center"><span class="plan_attrs">3 GB</span></td>
-                                            <td class="center"><span class="plan_attrs">9 GB</span></td>
-                                            <td class="last"><span class="plan_attrs">20 GB</span></td>
-                                        </tr>
-                                        <tr class="sectiontableentry">
-                                            <td class="attrs_name">Projects</td>
-                                            <td class="first"><span class="plan_attrs">1</span></td>
-                                            <td class="center"><span class="plan_attrs">1</span></td>
-                                            <td class="center"><span class="plan_attrs">10</span></td>
-                                            <td class="center"><span class="plan_attrs">10</span></td>
-                                            <td class="last"><span class="plan_attrs">50</span></td>
-                                        </tr>
-                                        <tr class="sectiontableentry">
-                                            <td class="attrs_name">Bugs Tracking</td>
-                                            <td class="first"><img src="images/uncheck1.png"
-                                            alt="UnCheck" title="UnCheck"></td>
-                                            <td class="center"><img src="images/check1.png"
-                                            alt="Check" title="Check"></td>
-                                            <td class="center"><img src="images/check1.png"
-                                            alt="Check" title="Check"></td>
-                                            <td class="center"><img src="images/check1.png"
-                                            alt="Check" title="Check"></td>
-                                            <td class="last"><img src="images/check1.png" alt="Check"
-                                            title="Check"></td>
-                                        </tr>
-                                        <tr class="sectiontableentry">
-                                            <td class="attrs_name">Standup Meeting</td>
-                                            <td class="first"><img src="images/uncheck1.png"
-                                            alt="UnCheck" title="UnCheck"></td>
-                                            <td class="center"><img src="images/uncheck1.png"
-                                            alt="UnCheck" title="UnCheck"></td>
-                                            <td class="center"><img src="images/uncheck1.png"
-                                            alt="UnCheck" title="UnCheck"></td>
-                                            <td class="center"><img src="images/check1.png"
-                                            alt="Check" title="Check"></td>
-                                            <td class="last"><img src="images/check1.png" alt="Check"
-                                            title="Check"></td>
-                                        </tr>
-                                        <tr class="sectiontableentry">
-                                            <td class="attrs_name">Time Tracking</td>
-                                            <td class="first"><img src="images/uncheck1.png"
-                                            alt="UnCheck" title="UnCheck"></td>
-                                            <td class="center"><img src="images/uncheck1.png"
-                                            alt="UnCheck" title="UnCheck"></td>
-                                            <td class="center"><img src="images/uncheck1.png"
-                                            alt="UnCheck" title="UnCheck"></td>
-                                            <td class="center"><img src="images/check1.png"
-                                            alt="Check" title="Check"></td>
-                                            <td class="last"><img src="images/check1.png" alt="Check"
-                                            title="Check"></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
-                            </div>
-                        </div>
-                        <div class="home-mid-bot"></div>
-                    </div>
-                    <br/>
-                    <div class="plan-section">
-                        <div style="margin: 0;" class="plans-faq box">
-                            <div class="col-left" style="float: left; width: 47%;padding-right: 15px">
-                                <h2>How does the 30-day trial work?</h2>
-                                <p>When you sign up, you are automatically enrolled in a free
-                                30-day trial that gives you unrestricted access to all the great
-                                features Assembla has to offer. During your trial you have the
-                                option to cancel at any time. When your trial ends you can
-                                choose to remain on your current package, upgrade to one with
-                                more users and spaces, downgrade, or cancel.</p>
+<head></head>
+<body>
+	<wicket:extend>
+		<div id="top-menu">
+			<div class="sub-header pricing">
+				<h3>Try MyCollab free for 30 days</h3>
+				<h4>No credit card required in order to get started</h4>
+			</div>
+		</div>
+		<div id="banner" class="hidden"></div>
+		<div id="content">
+			<div id="content-mid">
+				<div class="home-mid">
+					<div class="home-mid-top"></div>
+					<div class="home-mid-content">
+						<div class="tb-pricing">
+							<div class="head-tb">
+								<div class="block block0">
+									<h3>Free</h3>
+									<p>
+										<span class="price">$0.00</span>
+									</p>
+									<p class="button">
+										<a wicket:id="free-link" href="#">Select</a>
+									</p>
+								</div>
+								<div class="block block1">
+									<h3>Micro</h3>
+									<p>
+										<span class="price">$9.99</span>
+									</p>
+									<p class="button">
+										<a wicket:id="micro-link" href="#">Star Free Trial</a>
+									</p>
+								</div>
+								<div class="block block2">
+									<h3>Compact</h3>
+									<p>
+										<span class="price">$19.99</span>
+									</p>
+									<p class="button">
+										<a wicket:id="compact-link" href="#">Star Free Trial</a>
+									</p>
+								</div>
+								<div class="block block3 prefered">
+									<h3>Corporate</h3>
+									<p>
+										<span class="price">$49.00</span>
+									</p>
+									<p class="button">
+										<a wicket:id="corporate-link" href="#">Star Free Trial</a>
+									</p>
+								</div>
+								<div class="block block4">
+									<h3>Enterprise</h3>
+									<p>
+										<span class="price">$99.00</span>
+									</p>
+									<p class="button">
+										<a wicket:id="enterprise-link" href="#">Start Free Trial</a>
+									</p>
+								</div>
+							</div>
+							<table cellpadding="0" cellspacing="0">
+								<tbody>
+									<tr class="sectiontableentry">
+										<td class="attrs_name">Users</td>
+										<td class="first"><span class="plan_attrs">3</span></td>
+										<td class="center"><span class="plan_attrs">3</span></td>
+										<td class="center"><span class="plan_attrs">5</span></td>
+										<td class="center"><span class="plan_attrs">30</span></td>
+										<td class="last"><span class="plan_attrs">200</span></td>
+									</tr>
+									<tr class="sectiontableentry">
+										<td class="attrs_name">Storage</td>
+										<td class="first"><span class="plan_attrs">200 MB</span></td>
+										<td class="center"><span class="plan_attrs">1 GB</span></td>
+										<td class="center"><span class="plan_attrs">3 GB</span></td>
+										<td class="center"><span class="plan_attrs">9 GB</span></td>
+										<td class="last"><span class="plan_attrs">20 GB</span></td>
+									</tr>
+									<tr class="sectiontableentry">
+										<td class="attrs_name">Projects</td>
+										<td class="first"><span class="plan_attrs">1</span></td>
+										<td class="center"><span class="plan_attrs">1</span></td>
+										<td class="center"><span class="plan_attrs">10</span></td>
+										<td class="center"><span class="plan_attrs">10</span></td>
+										<td class="last"><span class="plan_attrs">50</span></td>
+									</tr>
+									<tr class="sectiontableentry">
+										<td class="attrs_name">Bugs Tracking</td>
+										<td class="first"><img src="images/uncheck1.png"
+											alt="UnCheck" title="UnCheck"></td>
+										<td class="center"><img src="images/check1.png"
+											alt="Check" title="Check"></td>
+										<td class="center"><img src="images/check1.png"
+											alt="Check" title="Check"></td>
+										<td class="center"><img src="images/check1.png"
+											alt="Check" title="Check"></td>
+										<td class="last"><img src="images/check1.png" alt="Check"
+											title="Check"></td>
+									</tr>
+									<tr class="sectiontableentry">
+										<td class="attrs_name">Standup Meeting</td>
+										<td class="first"><img src="images/uncheck1.png"
+											alt="UnCheck" title="UnCheck"></td>
+										<td class="center"><img src="images/uncheck1.png"
+											alt="UnCheck" title="UnCheck"></td>
+										<td class="center"><img src="images/uncheck1.png"
+											alt="UnCheck" title="UnCheck"></td>
+										<td class="center"><img src="images/check1.png"
+											alt="Check" title="Check"></td>
+										<td class="last"><img src="images/check1.png" alt="Check"
+											title="Check"></td>
+									</tr>
+									<tr class="sectiontableentry">
+										<td class="attrs_name">Time Tracking</td>
+										<td class="first"><img src="images/uncheck1.png"
+											alt="UnCheck" title="UnCheck"></td>
+										<td class="center"><img src="images/uncheck1.png"
+											alt="UnCheck" title="UnCheck"></td>
+										<td class="center"><img src="images/uncheck1.png"
+											alt="UnCheck" title="UnCheck"></td>
+										<td class="center"><img src="images/check1.png"
+											alt="Check" title="Check"></td>
+										<td class="last"><img src="images/check1.png" alt="Check"
+											title="Check"></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+					<div class="home-mid-bot"></div>
+				</div>
+				<br />
+				<div class="plan-section">
+					<div style="margin: 0;" class="plans-faq box">
+						<div class="col-left"
+							style="float: left; width: 47%; padding-right: 15px">
+							<h2>How does the 30-day trial work?</h2>
+							<p>When you sign up, you are automatically enrolled in a free
+								30-day trial that gives you unrestricted access to all the great
+								features MyCollab has to offer. During your free trial, you have
+								the option to cancel at any time. When your trial ends, you can
+								choose to remain on your current package, upgrade to another one
+								with more users and storages, downgrade, or cancel.</p>
 
-                                <h2>Can I upgrade my plan at any time?</h2>
-                                <p>Yes, you may upgrade your plan at any time. Choose a plan
-                                that suits your needs today, and upgrade as the numbers of users
-                                and spaces grow. After you upgrade the changes will be updated
-                                on your next billing cycle.</p>
+							<h2>Can I upgrade my plan at any time?</h2>
+							<p>Yes, you may upgrade your plan at any time. Choose a plan
+								that suits your needs today, and upgrade as the numbers of users
+								and spaces grow. After you upgrade the changes will be updated
+								on your next billing cycle.</p>
 
-                                <h2>What if I want to downgrade my plan?</h2>
-                                <p>You can downgrade your plan at any time as long as the
-                                plan you select is consistent with your current usage. For
-                                example, if you currently have 15 spaces, you must delete 5 of
-                                your spaces before you can downgrade to a Group plan that allows
-                                for up to 10 spaces.</p>
-                            </div>
-                            <!-- /col -->
+							<h2>What if I want to downgrade my plan?</h2>
+							<p>You can downgrade your package at any time as long as the
+								one you select is consistent with your current usage. For
+								example, if you currently have 30 users, you must delete 10 of
+								them before you can downgrade to a Compact package that allows
+								for up to 20 users.</p>
+						</div>
+						<!-- /col -->
 
-	                        <div class="col-right" style="float: left; width: 49%;padding-left: 10px">
-	                            <h2>Do I have to provide payment information up front?</h2>
-	                            <p>No, you can choose the "manual payment" option in the
-	                            billing information panel. At the end of the trial, we will send
-	                            you an email to remind you to submit payment information. You
-	                            can then choose if and how you want to pay.</p>
-	
-	                            <h2>What payment options are available?</h2>
-	                            <p>We accept Visa, Mastercard, and American Express for
-	                            automatic payments. We also accept PayPal, checks, and bank
-	                            wires for manual payments.</p>
-	
-	                            <h2>Do I have to sign a long-term contract?</h2>
-	                            <p>No, there are no contracts. You can choose to pay monthly,
-	                            or you can pay in advance for a year and get 2 months free (12
-	                            months for the price of 10). By paying in advance, you can
-	                            submit one expense report or purchase order for the year.</p>
-	                        </div>
-	                        <!-- /col -->
+						<div class="col-right"
+							style="float: left; width: 49%; padding-left: 10px">
+							<h2>Do I have to provide payment information up front?</h2>
+							<p>No, you can choose the "manual payment" option in the
+								billing information panel. At the end of the trial, we will send
+								you an email to remind you to submit payment information. You
+								can then choose if and how you want to pay.</p>
 
-                        	<div class="cut"></div>
-                    	</div>
-                	</div>
-            	</div>
-            </div>
-        </wicket:extend>
-    </body>
+							<h2>What payment options are available?</h2>
+							<p>We accept Visa, Mastercard, and American Express for
+								automatic payments. We also accept PayPal, checks, and bank
+								wires for manual payments.</p>
+
+							<h2>Do I have to sign a long-term contract?</h2>
+							<p>No, there are no contracts. You can choose to pay monthly,
+								or you can pay in advance for a year and get 2 months free (12
+								months for the price of 10). By paying in advance, you can
+								submit one expense report or purchase order for the year.</p>
+						</div>
+						<!-- /col -->
+
+						<div class="cut"></div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</wicket:extend>
+</body>
 </html>

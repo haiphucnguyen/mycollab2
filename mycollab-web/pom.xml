@@ -32,18 +32,7 @@
             <artifactId>vaadin</artifactId>
             <version>${vaadinVersion}</version>
         </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-user</artifactId>
-            <version>${gwtversion}</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.google.gwt</groupId>
-            <artifactId>gwt-dev</artifactId>
-            <version>${gwtversion}</version>
-            <scope>provided</scope>
-        </dependency>
+
 
         <dependency>
             <groupId>javax.validation</groupId>
@@ -262,6 +251,12 @@
             <groupId>info.bliki.wiki</groupId>
             <artifactId>bliki-core</artifactId>
             <version>3.0.19</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>commons-httpclient</groupId>
+                    <artifactId>commons-httpclient</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
 
         <dependency>
@@ -407,16 +402,21 @@
                 <goal>verify</goal> </goals> <configuration> <enumTypes> <enumType>com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum</enumType> 
                 <enumType>com.esofthead.mycollab.common.localization.GenericI18Enum</enumType> 
                 </enumTypes> </configuration> </execution> </executions> </plugin> -->
-
             <!-- <plugin> <groupId>com.vaadin</groupId> <artifactId>vaadin-maven-plugin</artifactId> 
                 <version>1.0.1</version> <executions> <execution> <phase>prepare-package</phase> 
                 <configuration> </configuration> <goals> <goal>update-widgetset</goal> </goals> 
-                </execution> </executions> </plugin> <plugin> <groupId>org.codehaus.mojo</groupId> 
-                <artifactId>gwt-maven-plugin</artifactId> <version>${gwtversion}</version> 
-                <executions> <execution> <phase>prepare-package</phase> <configuration> <extraJvmArgs>-Xmx512M 
-                -Xss1024k</extraJvmArgs> </configuration> <goals> <goal>compile</goal> </goals> 
-                </execution> </executions> </plugin> -->
-
+                </execution> </executions> <dependencies> <dependency> <groupId>com.google.gwt</groupId> 
+                <artifactId>gwt-user</artifactId> <version>${gwtversion}</version> <scope>provided</scope> 
+                </dependency> <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> 
+                <version>${gwtversion}</version> <scope>provided</scope> </dependency> </dependencies> 
+                </plugin> <plugin> <groupId>org.codehaus.mojo</groupId> <artifactId>gwt-maven-plugin</artifactId> 
+                <version>${gwtversion}</version> <executions> <execution> <phase>prepare-package</phase> 
+                <configuration> <extraJvmArgs>-Xmx512M -Xss1024k</extraJvmArgs> </configuration> 
+                <goals> <goal>compile</goal> </goals> </execution> </executions> <dependencies> 
+                <dependency> <groupId>com.google.gwt</groupId> <artifactId>gwt-user</artifactId> 
+                <version>${gwtversion}</version> <scope>provided</scope> </dependency> <dependency> 
+                <groupId>com.google.gwt</groupId> <artifactId>gwt-dev</artifactId> <version>${gwtversion}</version> 
+                <scope>provided</scope> </dependency> </dependencies> </plugin> -->
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-eclipse-plugin</artifactId>

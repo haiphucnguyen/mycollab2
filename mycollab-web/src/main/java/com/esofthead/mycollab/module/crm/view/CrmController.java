@@ -37,8 +37,8 @@ import com.esofthead.mycollab.module.crm.view.activity.CallAddPresenter;
 import com.esofthead.mycollab.module.crm.view.activity.CallReadPresenter;
 import com.esofthead.mycollab.module.crm.view.activity.MeetingAddPresenter;
 import com.esofthead.mycollab.module.crm.view.activity.MeetingReadPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.TaskAddPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.TaskReadPresenter;
+import com.esofthead.mycollab.module.crm.view.activity.AssignmentAddPresenter;
+import com.esofthead.mycollab.module.crm.view.activity.AssignmentReadPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignListPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignReadPresenter;
@@ -217,8 +217,8 @@ public class CrmController implements IController {
 
 					@Override
 					public void handle(ActivityEvent.TaskAdd event) {
-						TaskAddPresenter presenter = PresenterResolver
-								.getPresenter(TaskAddPresenter.class);
+						AssignmentAddPresenter presenter = PresenterResolver
+								.getPresenter(AssignmentAddPresenter.class);
 						presenter.go(container, new ScreenData.Add<SimpleTask>(
 								new SimpleTask()));
 					}
@@ -235,8 +235,8 @@ public class CrmController implements IController {
 
 					@Override
 					public void handle(ActivityEvent.TaskEdit event) {
-						TaskAddPresenter presenter = PresenterResolver
-								.getPresenter(TaskAddPresenter.class);
+						AssignmentAddPresenter presenter = PresenterResolver
+								.getPresenter(AssignmentAddPresenter.class);
 						presenter.go(container, new ScreenData.Edit<Object>(
 								event.getData()));
 					}
@@ -254,8 +254,8 @@ public class CrmController implements IController {
 					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(ActivityEvent.TaskRead event) {
-						TaskReadPresenter presenter = PresenterResolver
-								.getPresenter(TaskReadPresenter.class);
+						AssignmentReadPresenter presenter = PresenterResolver
+								.getPresenter(AssignmentReadPresenter.class);
 						presenter.go(container,
 								new ScreenData.Preview(event.getData()));
 

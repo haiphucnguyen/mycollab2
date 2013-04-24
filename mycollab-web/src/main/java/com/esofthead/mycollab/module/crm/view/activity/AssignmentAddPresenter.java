@@ -19,12 +19,12 @@ import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 
-public class TaskAddPresenter extends CrmGenericPresenter<TaskAddView> {
+public class AssignmentAddPresenter extends CrmGenericPresenter<AssignmentAddView> {
 
 	private static final long serialVersionUID = 1L;
 
-	public TaskAddPresenter() {
-		super(TaskAddView.class);
+	public AssignmentAddPresenter() {
+		super(AssignmentAddView.class);
 		
 		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Task>() {
 			@Override
