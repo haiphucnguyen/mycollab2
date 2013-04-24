@@ -437,7 +437,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				bugFollowersList = new BugFollowersSheet(bug);
 				tabBugDetail.addTab(bugFollowersList, "Followers");
 
-				bugTimeLogList = new BugTimeLogSheet();
+				bugTimeLogList = new BugTimeLogSheet(bug);
 				tabBugDetail.addTab(bugTimeLogList, "Time");
 				return tabBugDetail;
 			}

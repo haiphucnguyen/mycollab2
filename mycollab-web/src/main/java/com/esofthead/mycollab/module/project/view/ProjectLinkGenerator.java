@@ -6,18 +6,21 @@ import com.esofthead.mycollab.module.project.ProjectContants;
 
 public class ProjectLinkGenerator {
 
-	private static String PARAM_PREFIX = "?url=";
+	public static String URL_PREFIX_PARAM = "?url=";
+
+	public static String DEFAULT_PREFIX_PARAM = "#";
 
 	public static String generateProjectLink(int projectId) {
 		return "project/dashboard/" + UrlEncodeDecoder.encode(projectId);
 	}
 
-	public static String generateProjectFullLink(Integer projectId) {
+	public static String generateProjectFullLink(Integer projectId,
+			String prefixParam) {
 		if (projectId == null) {
 			return "";
 		}
 		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
-				+ PARAM_PREFIX + "project/dashboard/"
+				+ prefixParam + "project/dashboard/"
 				+ UrlEncodeDecoder.encode(projectId);
 	}
 
@@ -32,7 +35,7 @@ public class ProjectLinkGenerator {
 			return "";
 		}
 		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
-				+ PARAM_PREFIX + generateBugPreviewLink(projectId, bugId);
+				+ URL_PREFIX_PARAM + generateBugPreviewLink(projectId, bugId);
 	}
 
 	public static String generateBugVersionPreviewLink(Integer projectId,
@@ -53,12 +56,12 @@ public class ProjectLinkGenerator {
 	}
 
 	public static String generateMessagePreviewFullLink(Integer projectId,
-			Integer messageId) {
+			Integer messageId, String prefixParam) {
 		if (projectId == null || messageId == null) {
 			return "";
 		}
 		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
-				+ PARAM_PREFIX
+				+ prefixParam
 				+ generateMessagePreviewLink(projectId, messageId);
 	}
 
@@ -79,7 +82,7 @@ public class ProjectLinkGenerator {
 			return "";
 		}
 		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
-				+ PARAM_PREFIX + "project/risk/preview/"
+				+ URL_PREFIX_PARAM + "project/risk/preview/"
 				+ UrlEncodeDecoder.encode(projectId + "/" + riskId);
 	}
 
@@ -89,7 +92,7 @@ public class ProjectLinkGenerator {
 			return "";
 		}
 		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
-				+ PARAM_PREFIX + generateTaskPreviewLink(projectId, taskId);
+				+ URL_PREFIX_PARAM + generateTaskPreviewLink(projectId, taskId);
 	}
 
 	public static String generateTaskPreviewLink(int projectId, int taskId) {
@@ -109,7 +112,7 @@ public class ProjectLinkGenerator {
 			return "";
 		}
 		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
-				+ PARAM_PREFIX
+				+ URL_PREFIX_PARAM
 				+ generateTaskGroupPreviewLink(projectId, taskgroupId);
 	}
 
@@ -125,7 +128,7 @@ public class ProjectLinkGenerator {
 			return "";
 		}
 		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
-				+ PARAM_PREFIX
+				+ URL_PREFIX_PARAM
 				+ generateMilestonePreviewLink(projectId, milestoneId);
 	}
 
@@ -156,6 +159,6 @@ public class ProjectLinkGenerator {
 
 		}
 
-		return "?url=" + result;
+		return "#" + result;
 	}
 }

@@ -7,28 +7,26 @@ import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ui.components.CompFollowersSheet;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugNotificationService;
 import com.esofthead.mycollab.web.AppContext;
 
-class BugFollowersSheet extends CompFollowersSheet {
+class BugFollowersSheet extends CompFollowersSheet<SimpleBug> {
 	private static final long serialVersionUID = 1L;
-
-	private SimpleBug bug;
 
 	public BugFollowersSheet(SimpleBug bug) {
 		super(bug);
-		this.bug = bug;
+		btnSave.setEnabled(CurrentProjectVariables
+				.canWrite(ProjectRolePermissionCollections.BUGS));
 	}
 
 	@Override
 	protected void loadMonitorItems() {
-		if (this.bug == null) {
-			this.bug = (SimpleBug) bean;
-		}
 		MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
-		searchCriteria.setTypeId(bug.getId());
+		searchCriteria.setTypeId(bean.getId());
 		searchCriteria.setType(MonitorTypeConstants.PRJ_BUG);
 		tableItem.setSearchCriteria(searchCriteria);
 	}
@@ -37,13 +35,13 @@ class BugFollowersSheet extends CompFollowersSheet {
 	protected boolean saveMonitorItem(String username) {
 		
 		if (!monitorItemService.isUserWatchingItem(username,
-				MonitorTypeConstants.PRJ_BUG, bug.getId())) {
+				MonitorTypeConstants.PRJ_BUG, bean.getId())) {
 
 			MonitorItem monitorItem = new MonitorItem();
 			monitorItem.setMonitorDate(new GregorianCalendar()
 					.getTime());
 			monitorItem.setType(MonitorTypeConstants.PRJ_BUG);
-			monitorItem.setTypeid(bug.getId());
+			monitorItem.setTypeid(bean.getId());
 			monitorItem.setUser(username);
 			monitorItemService.saveWithSession(monitorItem,
 					AppContext.getUsername());
@@ -61,7 +59,7 @@ class BugFollowersSheet extends CompFollowersSheet {
 		relayNotification.setSaccountid(AppContext
 				.getAccountId());
 		relayNotification.setType(MonitorTypeConstants.PRJ_BUG);
-		relayNotification.setTypeid(bug.getId());
+		relayNotification.setTypeid(bean.getId());
 		relayNotification
 				.setEmailhandlerbean(BugNotificationService.class
 						.getName());
@@ -73,7 +71,4 @@ class BugFollowersSheet extends CompFollowersSheet {
 		relayEmailNotificationService.saveWithSession(
 				relayNotification, AppContext.getUsername());
 	}
-	
-	
-
 }

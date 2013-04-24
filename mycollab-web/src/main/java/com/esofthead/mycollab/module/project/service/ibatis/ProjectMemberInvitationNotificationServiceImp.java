@@ -26,13 +26,13 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 
 	@Autowired
 	private ProjectMemberService projectMemberService;
-	
+
 	@Autowired
 	private ProjectService projectService;
 
 	@Autowired
 	protected ExtMailService extMailService;
-	
+
 	@Autowired
 	private UserService userService;
 
@@ -43,7 +43,7 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 
 		SimpleProjectMember member = projectMemberService
 				.findMemberById(projectMemberId);
-		
+
 		if (member != null) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					"MyCollab has invited you to join the team for project \" $member.projectName\"",
@@ -54,19 +54,29 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 					ApplicationProperties
 							.getProperty(ApplicationProperties.APP_URL)
 							+ "project/member/invitation/confirm_invite/"
-							+ UrlEncodeDecoder.encode(notification.getSaccountid() + "/" + notification.getChangeby() + "/" + projectMemberId ));
+							+ UrlEncodeDecoder.encode(notification
+									.getSaccountid()
+									+ "/"
+									+ notification.getChangeby()
+									+ "/"
+									+ projectMemberId));
 			templateGenerator.putVariable(
 					"urlDeny",
 					ApplicationProperties
 							.getProperty(ApplicationProperties.APP_URL)
 							+ "project/member/invitation/deny_invite/"
-							+ UrlEncodeDecoder.encode(notification.getSaccountid() + "/" + notification.getChangeby() + "/" + projectMemberId ));
-			
-			extMailService.sendHTMLMail("mail@esofthead.com", "No-reply", Arrays
-					.asList(new MailRecipientField(member.getEmail(), member
-							.getMemberFullName())), null, null, templateGenerator
-					.generateSubjectContent(), templateGenerator
-					.generateBodyContent(), null);
+							+ UrlEncodeDecoder.encode(notification
+									.getSaccountid()
+									+ "/"
+									+ notification.getChangeby()
+									+ "/"
+									+ projectMemberId));
+
+			extMailService.sendHTMLMail("mail@esofthead.com", "No-reply",
+					Arrays.asList(new MailRecipientField(member.getEmail(),
+							member.getMemberFullName())), null, null,
+					templateGenerator.generateSubjectContent(),
+					templateGenerator.generateBodyContent(), null);
 		}
 	}
 
@@ -75,24 +85,26 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 			SimpleRelayEmailNotification notification) {
 		int projectId = notification.getTypeid();
 
-		SimpleProject project = projectService
-				.findProjectById(projectId);
-		
-		SimpleUser user = userService.findUserByUserName(notification.getChangeby());
+		SimpleProject project = projectService.findProjectById(projectId);
+
+		SimpleUser user = userService.findUserByUserName(notification
+				.getChangeby());
 		if (project != null && user != null) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					"User \"$notification.changecomment\" has accepted for the invitation of project \"$project.name\"",
 					"templates/email/project/memberInvitation/memberAcceptInvitationNotifier.mt");
-			
+
 			templateGenerator.putVariable("project", project);
 			templateGenerator.putVariable("notification", notification);
 			templateGenerator.putVariable("projectUrl", ProjectLinkGenerator
-					.generateProjectFullLink(project.getId()));
-			
-			extMailService.sendHTMLMail("mail@esofthead.com", "No-reply", Arrays
-					.asList(new MailRecipientField(user.getEmail(), user.getDisplayName())), null, null, templateGenerator
-					.generateSubjectContent(), templateGenerator
-					.generateBodyContent(), null);
+					.generateProjectFullLink(project.getId(),
+							ProjectLinkGenerator.URL_PREFIX_PARAM));
+
+			extMailService.sendHTMLMail("mail@esofthead.com", "No-reply",
+					Arrays.asList(new MailRecipientField(user.getEmail(), user
+							.getDisplayName())), null, null, templateGenerator
+							.generateSubjectContent(), templateGenerator
+							.generateBodyContent(), null);
 		}
 
 	}
@@ -102,25 +114,27 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 			SimpleRelayEmailNotification notification) {
 		int projectId = notification.getTypeid();
 
-		SimpleProject project = projectService
-				.findProjectById(projectId);
-		
-		SimpleUser user = userService.findUserByUserName(notification.getChangeby());
-		
+		SimpleProject project = projectService.findProjectById(projectId);
+
+		SimpleUser user = userService.findUserByUserName(notification
+				.getChangeby());
+
 		if (project != null && user != null) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					"User \"$notification.changecomment\" has denied for the invitation of project \"$project.name\"",
 					"templates/email/project/memberInvitation/memberDenyInvitationNotifier.mt");
-			
+
 			templateGenerator.putVariable("project", project);
 			templateGenerator.putVariable("notification", notification);
 			templateGenerator.putVariable("projectUrl", ProjectLinkGenerator
-					.generateProjectFullLink(project.getId()));
-			
-			extMailService.sendHTMLMail("mail@esofthead.com", "No-reply", Arrays
-					.asList(new MailRecipientField(user.getEmail(), user.getDisplayName())), null, null, templateGenerator
-					.generateSubjectContent(), templateGenerator
-					.generateBodyContent(), null);
+					.generateProjectFullLink(project.getId(),
+							ProjectLinkGenerator.URL_PREFIX_PARAM));
+
+			extMailService.sendHTMLMail("mail@esofthead.com", "No-reply",
+					Arrays.asList(new MailRecipientField(user.getEmail(), user
+							.getDisplayName())), null, null, templateGenerator
+							.generateSubjectContent(), templateGenerator
+							.generateBodyContent(), null);
 		}
 
 	}

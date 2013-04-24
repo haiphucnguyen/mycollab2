@@ -12,7 +12,9 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class CallLeadListComp extends Depot {
-    public CallLeadListComp() {
+	private static final long serialVersionUID = 1L;
+
+	public CallLeadListComp() {
         super("Leads", new VerticalLayout());
     }
 }

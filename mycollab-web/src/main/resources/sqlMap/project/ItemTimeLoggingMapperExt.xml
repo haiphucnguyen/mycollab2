@@ -4,9 +4,70 @@
     namespace="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapperExt">
     <resultMap
         extends="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapper.ResultMapWithBLOBs"
-        id="MessageResult"
+        id="TimeLoggingResult"
         type="com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging">
         <result column="logUserFullName" jdbcType="VARCHAR"
             property="logUserFullName" />
     </resultMap>
+    
+    <sql id="querySearchCriteria">
+
+		<if test="id != null">
+            <![CDATA[${id.operation} m_prj_time_logging.id ${id.compareOperator} #{id.value,javaType=INTEGER}]]>
+		</if>
+
+		<if test="projectId != null">
+            <![CDATA[${projectId.operation} m_prj_time_logging.projectId ${projectId.compareOperator} #{projectId.value,javaType=INTEGER}]]>
+		</if>
+	</sql>
+
+	<sql id="selectItem">
+        <![CDATA[
+          SELECT m_prj_time_logging.id, m_prj_time_logging.username, m_prj_time_logging.projectId, m_prj_time_logging.joinDate, m_prj_time_logging.projectRoleId, 
+                 m_prj_time_logging.isAdmin, m_prj_time_logging.status, m_prj_project.name AS projectName,
+                 concat(s_user.firstname, ' ', LTRIM(concat(IFNULL(s_user.middlename, ''), ' ')), s_user.lastname) AS memberFullName,
+                 m_prj_role.rolename, s_user.email as email,
+                 (SELECT COUNT(*) FROM m_tracker_bug WHERE m_tracker_bug.assignuser=m_prj_time_logging.username AND  m_tracker_bug.projectid=m_prj_time_logging.projectId AND m_tracker_bug.status IN ('Open', 'In Progress', 'Reopenned')) AS numOpenBugs,
+                 (SELECT COUNT(*) FROM m_prj_task WHERE m_prj_task.assignUser=m_prj_time_logging.username AND m_prj_task.projectid=m_prj_time_logging.projectId AND m_prj_task.status='Open') AS numOpenTasks
+            FROM m_prj_time_logging
+              LEFT OUTER JOIN m_prj_project ON (m_prj_time_logging.projectId = m_prj_project.id)
+              LEFT OUTER JOIN s_user ON (m_prj_time_logging.loguser=s_user.username)
+        ]]>
+	</sql>
+
+	<select id="getTotalCount" parameterType="ItemTimeLoggingSearchCriteria"
+		resultType="int">
+		SELECT count(*) as totalCount FROM m_prj_time_logging
+
+
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1
+
+			<include
+				refid="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
+
+	<sql id="orderStatement">
+		ORDER BY
+		<if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            m_prj_time_logging.createdTime DESC
+        ]]>
+	</sql>
+
+	<select id="findPagableListByCriteria" parameterType="ItemTimeLoggingSearchCriteria"
+		resultMap="TimeLoggingResult">
+
+		<include
+			refid="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapperExt.selectItem" />
+
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1
+
+			<include
+				refid="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapperExt.querySearchCriteria" />
+		</trim>
+		<include refid="orderStatement" />
+	</select>
 </mapper>

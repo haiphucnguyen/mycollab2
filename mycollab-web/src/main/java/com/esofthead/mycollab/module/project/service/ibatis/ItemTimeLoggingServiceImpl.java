@@ -1,6 +1,7 @@
 package com.esofthead.mycollab.module.project.service.ibatis;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.ISearchableDAO;
@@ -11,24 +12,25 @@ import com.esofthead.mycollab.module.project.domain.ItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 
+@Service
 public class ItemTimeLoggingServiceImpl extends
 		DefaultService<Integer, ItemTimeLogging, ItemTimeLoggingSearchCriteria>
 		implements ItemTimeLoggingService {
 
 	@Autowired
-	private ItemTimeLoggingMapper itemTimeMapper;
+	private ItemTimeLoggingMapper itemTimeLoggingMapper;
 
 	@Autowired
-	private ItemTimeLoggingMapperExt itemTimeMapperExt;
+	private ItemTimeLoggingMapperExt itemTimeLoggingMapperExt;
 
 	@Override
 	public ICrudGenericDAO getCrudMapper() {
-		return itemTimeMapper;
+		return itemTimeLoggingMapper;
 	}
 
 	@Override
 	public ISearchableDAO<ItemTimeLoggingSearchCriteria> getSearchMapper() {
-		return itemTimeMapperExt;
+		return itemTimeLoggingMapperExt;
 	}
 
 }

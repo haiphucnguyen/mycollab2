@@ -79,14 +79,5 @@ public class AmazonService implements RawContentService {
 			throw new RuntimeException(e);
 		}
 	}
-	
-	public static void main(String[] args) throws IOException {
-		AmazonS3 s3client = S3StorageConfig.getS3Client();
-		System.out.println("bucket: " + S3StorageConfig.getBucket());
-		S3Object obj = s3client.getObject(new GetObjectRequest(S3StorageConfig
-				.getBucket(), "1/project-bug/104/Screen Shot 2013-03-25 at 5.38.29 PM.png"));
-		
-		System.out.println(obj.getObjectMetadata().getContentLength());
-	}
 
 }

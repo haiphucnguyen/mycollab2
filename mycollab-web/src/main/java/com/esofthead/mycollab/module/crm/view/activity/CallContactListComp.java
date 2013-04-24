@@ -8,11 +8,13 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
 public class CallContactListComp extends Depot {
-    public CallContactListComp() {
-        super("Contacts", new VerticalLayout());
-    }
+	private static final long serialVersionUID = 1L;
+
+	public CallContactListComp() {
+		super("Contacts", new VerticalLayout());
+	}
 }

@@ -139,9 +139,9 @@ public class ActivityStreamComponent extends Depot {
 								activityStream.getNamefield(),
 								ResourceResolver
 										.getResourceLink("icons/16/project/project.png"),
-								ProjectLinkGenerator
-										.generateProjectFullLink(activityStream
-												.getProjectId()),
+								ProjectLinkGenerator.generateProjectFullLink(
+										activityStream.getProjectId(),
+										ProjectLinkGenerator.DEFAULT_PREFIX_PARAM),
 								activityStream.getProjectName());
 			} else if (ActivityStreamConstants.ACTION_UPDATE
 					.equals(activityStream.getAction())) {
@@ -156,9 +156,8 @@ public class ActivityStreamComponent extends Depot {
 										.getMessage(ProjectLocalizationTypeMap
 												.getType(activityStream
 														.getType())),
-								ProjectResources
-										.getResourceLink(activityStream
-												.getType()),
+								ProjectResources.getResourceLink(activityStream
+										.getType()),
 								ProjectLinkGenerator.generateProjectItemLink(
 										activityStream.getExtratypeid(),
 										activityStream.getType(),
@@ -166,9 +165,9 @@ public class ActivityStreamComponent extends Depot {
 								activityStream.getNamefield(),
 								ResourceResolver
 										.getResourceLink("icons/16/project/project.png"),
-								ProjectLinkGenerator
-										.generateProjectFullLink(activityStream
-												.getProjectId()),
+								ProjectLinkGenerator.generateProjectFullLink(
+										activityStream.getProjectId(),
+										ProjectLinkGenerator.DEFAULT_PREFIX_PARAM),
 								activityStream.getProjectName());
 			}
 

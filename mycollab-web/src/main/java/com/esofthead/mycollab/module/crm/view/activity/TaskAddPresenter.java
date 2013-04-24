@@ -23,8 +23,9 @@ public class TaskAddPresenter extends CrmGenericPresenter<TaskAddView> {
 
 	private static final long serialVersionUID = 1L;
 
-	public TaskAddPresenter(TaskAddView view) {
+	public TaskAddPresenter() {
 		super(TaskAddView.class);
+		
 		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Task>() {
 			@Override
 			public void onSave(final Task item) {
@@ -38,7 +39,6 @@ public class TaskAddPresenter extends CrmGenericPresenter<TaskAddView> {
 
 			@Override
 			public void onCancel() {
-				System.out.println("Task add presenter oncancel");
 				ViewState viewState = HistoryViewManager.back();
 				if (viewState instanceof NullViewState) {
 					EventBus.getInstance().fireEvent(
@@ -79,6 +79,7 @@ public class TaskAddPresenter extends CrmGenericPresenter<TaskAddView> {
 					return;
 				}
 			}
+			
 			super.onGo(container, data);
 			view.editItem(task);
 

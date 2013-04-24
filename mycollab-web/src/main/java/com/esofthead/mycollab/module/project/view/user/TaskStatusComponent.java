@@ -80,9 +80,11 @@ public class TaskStatusComponent extends Depot {
 			String content = LocalizationHelper.getMessage(
 					ProjectCommonI18nEnum.TASK_TITLE, ResourceResolver
 							.getResourceLink("icons/16/project/project.png"),
-					ProjectLinkGenerator.generateProjectFullLink(genericTask
-							.getProjectId()), genericTask.getProjectName(),
-					ProjectResources.getResourceLink(genericTask.getType()),
+					ProjectLinkGenerator.generateProjectFullLink(
+							genericTask.getProjectId(),
+							ProjectLinkGenerator.DEFAULT_PREFIX_PARAM),
+					genericTask.getProjectName(), ProjectResources
+							.getResourceLink(genericTask.getType()),
 					ProjectLinkGenerator.generateProjectItemLink(
 							genericTask.getProjectId(), genericTask.getType(),
 							genericTask.getTypeId()), taskType, genericTask
