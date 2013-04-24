@@ -2956,3 +2956,21 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	height: 100%;
 	overflow: hidden;
 }
+
+/* Start Time Addon */
+
+.v-label.numberTotal {
+	font-size: 15px;
+	color: #000000;
+	font-weight: bold;
+}
+
+.boxTotal {
+	background-color: #E9E9E9;
+	padding: 10px;
+	-moz-border-radius: 15px;
+	border-radius: 5px;
+	border-bottom: 2px solid #CCCCCC;
+}
+
+/* End Time Addon */

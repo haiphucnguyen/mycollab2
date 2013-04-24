@@ -19,8 +19,6 @@ class BugFollowersSheet extends CompFollowersSheet<SimpleBug> {
 
 	public BugFollowersSheet(SimpleBug bug) {
 		super(bug);
-		btnSave.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.BUGS));
 	}
 
 	@Override
@@ -70,5 +68,10 @@ class BugFollowersSheet extends CompFollowersSheet<SimpleBug> {
 				.getSpringBean(RelayEmailNotificationService.class);
 		relayEmailNotificationService.saveWithSession(
 				relayNotification, AppContext.getUsername());
+	}
+
+	@Override
+	protected boolean isEnableAdd() {
+		return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.BUGS);
 	}
 }

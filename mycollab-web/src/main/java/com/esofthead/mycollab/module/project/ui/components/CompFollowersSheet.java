@@ -58,6 +58,8 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends VerticalL
 	protected abstract boolean saveMonitorItem(String username);
 	
 	protected abstract void saveRelayNotification();
+	
+	protected abstract boolean isEnableAdd();
 
 	private void initUI() {
 		Label lbInstruct = new Label(
@@ -112,6 +114,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends VerticalL
 			}
 		});
 
+		btnSave.setEnabled(isEnableAdd());
 		btnSave.setStyleName(UIConstants.THEME_BLUE_LINK);
 		btnSave.setIcon(new ThemeResource("icons/16/addRecord.png"));
 

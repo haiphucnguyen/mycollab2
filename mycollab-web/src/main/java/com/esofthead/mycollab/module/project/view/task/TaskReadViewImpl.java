@@ -40,7 +40,6 @@ import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.TabSheet;
-import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
 /**
@@ -165,16 +164,11 @@ public class TaskReadViewImpl extends AbstractView implements TaskReadView {
 				TaskFollowersSheet followerSheet = new TaskFollowersSheet(task);
 				tabTaskDetail.addTab(followerSheet, "Follower");
 
-				TaskTimeSheet timesheet = new TaskTimeSheet();
+				TaskTimeLogSheet timesheet = new TaskTimeLogSheet(task);
 				tabTaskDetail.addTab(timesheet, "Time");
 
 				return tabTaskDetail;
 			}
-		}
-
-		class TaskTimeSheet extends VerticalLayout {
-			private static final long serialVersionUID = 1L;
-
 		}
 	}
 

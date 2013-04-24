@@ -19,8 +19,6 @@ public class TaskFollowersSheet extends CompFollowersSheet<SimpleTask> {
 
 	protected TaskFollowersSheet(SimpleTask task) {
 		super(task);
-		btnSave.setEnabled(CurrentProjectVariables
-				.canWrite(ProjectRolePermissionCollections.TASKS));
 	}
 
 	@Override
@@ -66,6 +64,11 @@ public class TaskFollowersSheet extends CompFollowersSheet<SimpleTask> {
 				.getSpringBean(RelayEmailNotificationService.class);
 		relayEmailNotificationService.saveWithSession(relayNotification,
 				AppContext.getUsername());
+	}
+
+	@Override
+	protected boolean isEnableAdd() {
+		return CurrentProjectVariables.canWrite(ProjectRolePermissionCollections.TASKS);
 	}
 
 }
