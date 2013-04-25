@@ -94,19 +94,4 @@ public class TemplateGenerator {
 		voEngine.evaluate(velocityContext, writer, "log task", reader);
 		return writer.toString();
 	}
-
-	public static void main(String[] args) {
-		TemplateGenerator a = new TemplateGenerator("AAA",
-				"templates/email/project/test.mt");
-		SimpleMessage msg = new SimpleMessage();
-		msg.setTitle("Hải Nguyễn");
-		a.putVariable("msg", msg);
-		Map<String, String> hyperLinks = new HashMap<String, String>();
-		hyperLinks.put("taskUrl", "#");
-		hyperLinks.put("projectUrl", "#");
-		hyperLinks.put("assignUserUrl", "#");
-		hyperLinks.put("taskListUrl", "#");
-		a.putVariable("hyperLinks", hyperLinks);
-		System.out.println(a.generateBodyContent());
-	}
 }
