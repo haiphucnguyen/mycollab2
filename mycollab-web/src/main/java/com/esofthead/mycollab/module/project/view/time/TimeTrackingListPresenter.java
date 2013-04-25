@@ -20,14 +20,10 @@ public class TimeTrackingListPresenter extends
 		TimeTrackingContainer timeContainer = (TimeTrackingContainer) container;
 		timeContainer.removeAllComponents();
 		timeContainer.addComponent(view.getWidget());
-		doSearch((ItemTimeLoggingSearchCriteria) data.getParams());
+		view.setSearchCriteria((ItemTimeLoggingSearchCriteria) data.getParams());
 
 		ProjectBreadcrumb breadCrumb = ViewManager
 				.getView(ProjectBreadcrumb.class);
 		breadCrumb.gotoTimeTrackingList();
-	}
-
-	private void doSearch(ItemTimeLoggingSearchCriteria criteria) {
-
 	}
 }
