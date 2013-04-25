@@ -31,6 +31,7 @@ import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
 import com.esofthead.mycollab.module.project.view.standup.StandupPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
+import com.esofthead.mycollab.module.project.view.time.TimeTrackingPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
@@ -67,6 +68,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	private BugPresenter bugPresenter;
 	private ProblemPresenter problemPresenter;
 	private RiskPresenter riskPresenter;
+	private TimeTrackingPresenter timePresenter;
 	private UserGroupPresenter userPresenter;
 	private StandupPresenter standupPresenter;
 	private final ProjectBreadcrumb breadCrumb;
@@ -134,6 +136,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 				"Risks", "menu_risk.png"));
 		myProjectTab.addTab(constructProjectProblemComponent(), new MenuButton(
 				"Problems", "menu_problem.png"));
+		myProjectTab.addTab(constructTimeTrackingComponent(), new MenuButton(
+				"Problems", "menu_time.png"));
 		myProjectTab.addTab(constructProjectStandupMeeting(), new MenuButton(
 				"StandUp", "menu_standup.png"));
 		myProjectTab.addTab(constructProjectUsers(), new MenuButton(
@@ -263,6 +267,12 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		problemPresenter = PresenterResolver
 				.getPresenter(ProblemPresenter.class);
 		return problemPresenter.getView();
+	}
+
+	private Component constructTimeTrackingComponent() {
+		timePresenter = PresenterResolver
+				.getPresenter(TimeTrackingPresenter.class);
+		return timePresenter.getView();
 	}
 
 	private Component constructProjectStandupMeeting() {
