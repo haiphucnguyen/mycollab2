@@ -13,6 +13,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
+import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
@@ -26,6 +27,7 @@ import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.TimeTrackingScreenData;
 import com.esofthead.mycollab.module.project.view.people.UserGroupPresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
@@ -137,7 +139,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		myProjectTab.addTab(constructProjectProblemComponent(), new MenuButton(
 				"Problems", "menu_problem.png"));
 		myProjectTab.addTab(constructTimeTrackingComponent(), new MenuButton(
-				"Problems", "menu_time.png"));
+				"Time", "menu_time.png"));
 		myProjectTab.addTab(constructProjectStandupMeeting(), new MenuButton(
 				"StandUp", "menu_standup.png"));
 		myProjectTab.addTab(constructProjectUsers(), new MenuButton(
@@ -188,6 +190,12 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 									CurrentProjectVariables.getProjectId()));
 							gotoUsersAndGroup(new ProjectMemberScreenData.Search(
 									criteria));
+						} else if ("Time".equals(caption)) {
+							ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
+							searchCriteria.setProjectId(new NumberSearchField(
+									CurrentProjectVariables.getProjectId()));
+							gotoTimeTrackingView(new TimeTrackingScreenData.Search(
+									searchCriteria));
 						} else if ("StandUp".equals(caption)) {
 							StandupReportSearchCriteria criteria = new StandupReportSearchCriteria();
 							criteria.setProjectId(new NumberSearchField(
@@ -216,6 +224,10 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 	@Override
 	public void gotoRiskView(ScreenData data) {
 		riskPresenter.go(ProjectViewImpl.this, data);
+	}
+
+	public void gotoTimeTrackingView(ScreenData data) {
+		timePresenter.go(ProjectViewImpl.this, data);
 	}
 
 	@SuppressWarnings("rawtypes")

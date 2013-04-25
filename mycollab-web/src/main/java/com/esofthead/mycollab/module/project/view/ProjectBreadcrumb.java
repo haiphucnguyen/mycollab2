@@ -678,6 +678,16 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				"Preview Component: " + component.getComponentname());
 	}
 
+	public void gotoTimeTrackingList() {
+		this.select(1);
+		this.addLink(new Button("Time"));
+		AppContext
+				.addFragment(
+						"project/time/list/"
+								+ UrlEncodeDecoder.encode(project.getId()),
+						"Time Tracking");
+	}
+
 	public void gotoStandupList() {
 		this.select(1);
 		this.addLink(new Button("Standups"));
