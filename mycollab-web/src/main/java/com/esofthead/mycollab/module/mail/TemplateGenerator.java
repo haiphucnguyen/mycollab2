@@ -1,12 +1,10 @@
 package com.esofthead.mycollab.module.mail;
 
-import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.io.Reader;
 import java.io.StringReader;
 import java.io.StringWriter;
 import java.io.UnsupportedEncodingException;
-import java.util.GregorianCalendar;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -19,8 +17,6 @@ import org.apache.velocity.tools.config.EasyFactoryConfiguration;
 import org.apache.velocity.tools.generic.DateTool;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
-import com.esofthead.mycollab.module.project.domain.SimpleMessage;
-import com.esofthead.mycollab.module.project.domain.SimpleTask;
 
 public class TemplateGenerator {
 	private final String subjectTemplate;

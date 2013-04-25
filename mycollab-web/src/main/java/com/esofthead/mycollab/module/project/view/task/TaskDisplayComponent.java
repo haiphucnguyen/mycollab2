@@ -18,6 +18,7 @@ import com.esofthead.mycollab.module.project.events.TaskListEvent;
 import com.esofthead.mycollab.module.project.localization.TaskI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectTaskListService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserFormLinkField;
+import com.esofthead.mycollab.shell.view.ScreenSize;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -113,22 +114,39 @@ public class TaskDisplayComponent extends CssLayout {
 			taskInfo.setMargin(false, false, true, false);
 		}
 
-		taskDisplay = new TaskTableDisplay(
-				new String[] { "id", "taskkey", "taskname", "startdate",
-						"deadline", "percentagecomplete", "assignUserFullName" },
-				new String[] {
-						"",
-						"#",
-						LocalizationHelper
-								.getMessage(TaskI18nEnum.TABLE_TASK_NAME_HEADER),
-						LocalizationHelper
-								.getMessage(TaskI18nEnum.TABLE_START_DATE_HEADER),
-						LocalizationHelper
-								.getMessage(TaskI18nEnum.TABLE_DUE_DATE_HEADER),
-						LocalizationHelper
-								.getMessage(TaskI18nEnum.TABLE_PER_COMPLETE_HEADER),
-						LocalizationHelper
-								.getMessage(TaskI18nEnum.TABLE_ASSIGNEE_HEADER) });
+		if (ScreenSize.hasSupport1024Pixels()) {
+			taskDisplay = new TaskTableDisplay(
+					new String[] { "id", "taskkey", "taskname",
+							"deadline", "percentagecomplete", "assignUserFullName" },
+					new String[] {
+							"",
+							"#",
+							LocalizationHelper
+									.getMessage(TaskI18nEnum.TABLE_TASK_NAME_HEADER),
+							LocalizationHelper
+									.getMessage(TaskI18nEnum.TABLE_DUE_DATE_HEADER),
+							LocalizationHelper
+									.getMessage(TaskI18nEnum.TABLE_PER_COMPLETE_HEADER),
+							LocalizationHelper
+									.getMessage(TaskI18nEnum.TABLE_ASSIGNEE_HEADER) });
+		} else if (ScreenSize.hasSupport1280Pixels()) {
+			taskDisplay = new TaskTableDisplay(
+					new String[] { "id", "taskkey", "taskname", "startdate",
+							"deadline", "percentagecomplete", "assignUserFullName" },
+					new String[] {
+							"",
+							"#",
+							LocalizationHelper
+									.getMessage(TaskI18nEnum.TABLE_TASK_NAME_HEADER),
+							LocalizationHelper
+									.getMessage(TaskI18nEnum.TABLE_START_DATE_HEADER),
+							LocalizationHelper
+									.getMessage(TaskI18nEnum.TABLE_DUE_DATE_HEADER),
+							LocalizationHelper
+									.getMessage(TaskI18nEnum.TABLE_PER_COMPLETE_HEADER),
+							LocalizationHelper
+									.getMessage(TaskI18nEnum.TABLE_ASSIGNEE_HEADER) });
+		}
 		this.addComponent(taskDisplay);
 
 		taskDisplay
