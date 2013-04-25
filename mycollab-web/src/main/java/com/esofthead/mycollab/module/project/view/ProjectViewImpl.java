@@ -194,6 +194,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 							ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
 							searchCriteria.setProjectId(new NumberSearchField(
 									CurrentProjectVariables.getProjectId()));
+							searchCriteria.setRangeDate(ItemTimeLoggingSearchCriteria.getCurrentRangeDateOfWeekSearchField());
 							gotoTimeTrackingView(new TimeTrackingScreenData.Search(
 									searchCriteria));
 						} else if ("StandUp".equals(caption)) {
