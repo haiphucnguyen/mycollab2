@@ -4,7 +4,7 @@
     xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd"
     id="WebApp_ID" version="3.0">
     <display-name>mycollab-web</display-name>
-    
+
     <listener>
         <listener-class>net.bull.javamelody.SessionListener</listener-class>
     </listener>
@@ -22,6 +22,19 @@
     <filter-mapping>
         <filter-name>monitoring</filter-name>
         <url-pattern>/*</url-pattern>
+    </filter-mapping>
+
+    <filter>
+        <filter-name>GzipFilter</filter-name>
+        <filter-class>org.eclipse.jetty.servlets.GzipFilter</filter-class>
+        <init-param>
+            <param-name>mimeTypes</param-name>
+            <param-value>application/javascript,application/x-javascript,text/html,txt/css</param-value>
+        </init-param>
+    </filter>
+    <filter-mapping>
+        <filter-name>GzipFilter</filter-name>
+        <url-pattern>/resources/*</url-pattern>
     </filter-mapping>
 
     <!-- VAADIN PARAMS -->
@@ -44,7 +57,7 @@
         <param-name>org.restlet.application</param-name>
         <param-value>restApp</param-value>
     </context-param>
-    
+
     <servlet>
         <servlet-name>MyCollabApplication</servlet-name>
         <servlet-class>com.vaadin.terminal.gwt.server.ApplicationServlet</servlet-class>
@@ -63,13 +76,13 @@
         <servlet-name>RestletServlet</servlet-name>
         <servlet-class>org.restlet.ext.spring.SpringServerServlet</servlet-class>
     </servlet>
-    
+
     <!-- Catch api request -->
     <servlet-mapping>
         <servlet-name>RestletServlet</servlet-name>
         <url-pattern>/api/*</url-pattern>
     </servlet-mapping>
- 
+
     <servlet-mapping>
         <servlet-name>MyCollabApplication</servlet-name>
         <url-pattern>/*</url-pattern>

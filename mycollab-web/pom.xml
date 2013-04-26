@@ -292,6 +292,14 @@
             <version>1.7</version>
         </dependency>
 
+        <!-- JETTY dependency -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <version>8.1.5.v20120716</version>
+            <artifactId>jetty-servlets</artifactId>
+            <scope>provided</scope>
+        </dependency>
+
 
         <!-- RESTLET dependency -->
         <dependency>
@@ -430,6 +438,13 @@
                 <groupId>org.mortbay.jetty</groupId>
                 <artifactId>jetty-maven-plugin</artifactId>
                 <version>8.1.5.v20120716</version>
+                <dependencies>
+                    <dependency>
+                        <groupId>org.eclipse.jetty</groupId>
+                        <version>8.1.5.v20120716</version>
+                        <artifactId>jetty-servlets</artifactId>
+                    </dependency>
+                </dependencies>
                 <configuration>
                     <tmpDir>target/temp</tmpDir>
                     <!-- <scanIntervalSeconds>10</scanIntervalSeconds> -->
