@@ -128,7 +128,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 													itemLogging.getTypeid()));
 								}
 							});
-					b.setIcon(new ThemeResource("icons/22/project/menu_bug.png"));
+					b.setIcon(new ThemeResource("icons/16/project/bug.png"));
 
 					if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
 						b.addStyleName(UIConstants.LINK_COMPLETED);
@@ -156,7 +156,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 								}
 							});
 					b.setIcon(new ThemeResource(
-							"icons/22/project/menu_task.png"));
+							"icons/16/project/task.png"));
 
 					if (task.getPercentagecomplete() != null
 							&& 100d == task.getPercentagecomplete()) {
@@ -220,8 +220,8 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 
 		tableItem.setWidth("100%");
 
-		tableItem.setColumnExpandRatio("logUserFullName", 1.0f);
-		tableItem.setColumnWidth("type", UIConstants.TABLE_EX_LABEL_WIDTH);
+		tableItem.setColumnExpandRatio("type", 1.0f);
+		tableItem.setColumnWidth("logUserFullName", UIConstants.TABLE_EX_LABEL_WIDTH);
 		tableItem
 				.setColumnWidth("createdtime", UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem.setColumnWidth("logvalue", UIConstants.TABLE_S_LABEL_WIDTH);
