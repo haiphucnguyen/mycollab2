@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.TaskService;
@@ -19,13 +20,14 @@ import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.Window;
 
-public class AssignmentAddPresenter extends CrmGenericPresenter<AssignmentAddView> {
+public class AssignmentAddPresenter extends
+		CrmGenericPresenter<AssignmentAddView> {
 
 	private static final long serialVersionUID = 1L;
 
 	public AssignmentAddPresenter() {
 		super(AssignmentAddView.class);
-		
+
 		view.getEditFormHandlers().addFormHandler(new EditFormHandler<Task>() {
 			@Override
 			public void onSave(final Task item) {
@@ -61,26 +63,14 @@ public class AssignmentAddPresenter extends CrmGenericPresenter<AssignmentAddVie
 			Task task = null;
 			if (data.getParams() instanceof Task) {
 				task = (Task) data.getParams();
-			} else if (data.getParams() instanceof Integer) {
-				TaskService meetingService = AppContext
-						.getSpringBean(TaskService.class);
-				task = meetingService.findByPrimaryKey((Integer) data
-						.getParams());
-				if (task == null) {
-					AppContext
-							.getApplication()
-							.getMainWindow()
-							.showNotification(
-									LocalizationHelper
-											.getMessage(GenericI18Enum.INFORMATION_WINDOW_TITLE),
-									LocalizationHelper
-											.getMessage(GenericI18Enum.INFORMATION_RECORD_IS_NOT_EXISTED_MESSAGE),
-									Window.Notification.TYPE_HUMANIZED_MESSAGE);
-					return;
-				}
+			} else {
+				throw new MyCollabException("Do not support param data: "
+						+ data);
 			}
-			
-			super.onGo(container, data);
+
+			ActivityRootView activityContainer = (ActivityRootView) container;
+			activityContainer.removeAllComponents();
+			activityContainer.addComponent(view.getWidget());
 			view.editItem(task);
 
 			if (task.getId() == null) {

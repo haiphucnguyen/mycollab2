@@ -4,6 +4,14 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.List;
+
+import org.vaadin.dialogs.ConfirmDialog;
+
+import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.user.domain.Role;
@@ -20,12 +28,9 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.CheckBox;
 import com.vaadin.ui.ComponentContainer;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.List;
-import org.vaadin.dialogs.ConfirmDialog;
 
 /**
  * 
@@ -109,10 +114,20 @@ public class RoleListPresenter extends AbstractPresenter<RoleListView>
 					@Override
 					public void onSelect(String id, String caption) {
 						if ("delete".equals(id)) {
-							ConfirmDialog.show(view.getWindow(),
-									"Please Confirm:",
-									"Are you sure to delete selected items: ",
-									"Yes", "No", new ConfirmDialog.Listener() {
+							ConfirmDialog.show(
+									view.getWindow(),
+									LocalizationHelper
+											.getMessage(
+													GenericI18Enum.DELETE_DIALOG_TITLE,
+													ApplicationProperties
+															.getProperty(ApplicationProperties.SITE_NAME)),
+									LocalizationHelper
+											.getMessage(GenericI18Enum.DELETE_DIALOG_MESSAGE),
+									LocalizationHelper
+											.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+									LocalizationHelper
+											.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+									new ConfirmDialog.Listener() {
 										private static final long serialVersionUID = 1L;
 
 										@Override

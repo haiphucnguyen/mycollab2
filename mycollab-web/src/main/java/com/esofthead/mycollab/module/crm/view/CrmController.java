@@ -11,6 +11,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
+import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
@@ -33,12 +34,6 @@ import com.esofthead.mycollab.module.crm.view.account.AccountAddPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountListPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountReadPresenter;
 import com.esofthead.mycollab.module.crm.view.activity.ActivityRootPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.CallAddPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.CallReadPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.MeetingAddPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.MeetingReadPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.AssignmentAddPresenter;
-import com.esofthead.mycollab.module.crm.view.activity.AssignmentReadPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignAddPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignListPresenter;
 import com.esofthead.mycollab.module.crm.view.campaign.CampaignReadPresenter;
@@ -54,6 +49,10 @@ import com.esofthead.mycollab.module.crm.view.lead.LeadReadPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityAddPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityListPresenter;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityReadPresenter;
+import com.esofthead.mycollab.module.crm.view.parameters.ActivityScreenData;
+import com.esofthead.mycollab.module.crm.view.parameters.AssignmentScreenData;
+import com.esofthead.mycollab.module.crm.view.parameters.CallScreenData;
+import com.esofthead.mycollab.module.crm.view.parameters.MeetingScreenData;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.EventBus;
@@ -185,7 +184,8 @@ public class CrmController implements IController {
 					public void handle(GotoCalendar event) {
 						ActivityRootPresenter presenter = PresenterResolver
 								.getPresenter(ActivityRootPresenter.class);
-						presenter.go(container, null);
+						presenter.go(container,
+								new ActivityScreenData.GotoCalendar());
 					}
 				});
 
@@ -202,7 +202,8 @@ public class CrmController implements IController {
 					public void handle(GotoTodoList event) {
 						ActivityRootPresenter presenter = PresenterResolver
 								.getPresenter(ActivityRootPresenter.class);
-						presenter.go(container, new ScreenData<String>("todo"));
+						presenter.go(container,
+								new ActivityScreenData.GotoActivityList());
 					}
 				});
 
@@ -217,9 +218,9 @@ public class CrmController implements IController {
 
 					@Override
 					public void handle(ActivityEvent.TaskAdd event) {
-						AssignmentAddPresenter presenter = PresenterResolver
-								.getPresenter(AssignmentAddPresenter.class);
-						presenter.go(container, new ScreenData.Add<SimpleTask>(
+						ActivityRootPresenter presenter = PresenterResolver
+								.getPresenter(ActivityRootPresenter.class);
+						presenter.go(container, new AssignmentScreenData.Add(
 								new SimpleTask()));
 					}
 				});
@@ -235,10 +236,10 @@ public class CrmController implements IController {
 
 					@Override
 					public void handle(ActivityEvent.TaskEdit event) {
-						AssignmentAddPresenter presenter = PresenterResolver
-								.getPresenter(AssignmentAddPresenter.class);
-						presenter.go(container, new ScreenData.Edit<Object>(
-								event.getData()));
+						ActivityRootPresenter presenter = PresenterResolver
+								.getPresenter(ActivityRootPresenter.class);
+						presenter.go(container, new AssignmentScreenData.Edit(
+								(Task) event.getData()));
 					}
 				});
 
@@ -251,13 +252,12 @@ public class CrmController implements IController {
 						return ActivityEvent.TaskRead.class;
 					}
 
-					@SuppressWarnings({ "unchecked", "rawtypes" })
 					@Override
 					public void handle(ActivityEvent.TaskRead event) {
-						AssignmentReadPresenter presenter = PresenterResolver
-								.getPresenter(AssignmentReadPresenter.class);
-						presenter.go(container,
-								new ScreenData.Preview(event.getData()));
+						ActivityRootPresenter presenter = PresenterResolver
+								.getPresenter(ActivityRootPresenter.class);
+						presenter.go(container, new AssignmentScreenData.Read(
+								(Integer) event.getData()));
 
 					}
 				});
@@ -273,11 +273,10 @@ public class CrmController implements IController {
 
 					@Override
 					public void handle(ActivityEvent.MeetingAdd event) {
-						MeetingAddPresenter presenter = PresenterResolver
-								.getPresenter(MeetingAddPresenter.class);
-						presenter.go(container,
-								new ScreenData.Add<SimpleMeeting>(
-										new SimpleMeeting()));
+						ActivityRootPresenter presenter = PresenterResolver
+								.getPresenter(ActivityRootPresenter.class);
+						presenter.go(container, new MeetingScreenData.Add(
+								new SimpleMeeting()));
 					}
 				});
 
@@ -292,10 +291,10 @@ public class CrmController implements IController {
 
 					@Override
 					public void handle(ActivityEvent.MeetingEdit event) {
-						MeetingAddPresenter presenter = PresenterResolver
-								.getPresenter(MeetingAddPresenter.class);
-						presenter.go(container, new ScreenData.Edit<Object>(
-								event.getData()));
+						ActivityRootPresenter presenter = PresenterResolver
+								.getPresenter(ActivityRootPresenter.class);
+						presenter.go(container, new MeetingScreenData.Edit(
+								(SimpleMeeting) event.getData()));
 					}
 				});
 
@@ -310,10 +309,10 @@ public class CrmController implements IController {
 
 					@Override
 					public void handle(ActivityEvent.MeetingRead event) {
-						MeetingReadPresenter presenter = PresenterResolver
-								.getPresenter(MeetingReadPresenter.class);
-						presenter.go(container, new ScreenData.Add<Object>(
-								event.getData()));
+						ActivityRootPresenter presenter = PresenterResolver
+								.getPresenter(ActivityRootPresenter.class);
+						presenter.go(container, new MeetingScreenData.Read(
+								(Integer) event.getData()));
 
 					}
 				});
@@ -329,9 +328,9 @@ public class CrmController implements IController {
 
 					@Override
 					public void handle(ActivityEvent.CallAdd event) {
-						CallAddPresenter presenter = PresenterResolver
-								.getPresenter(CallAddPresenter.class);
-						presenter.go(container, new ScreenData<SimpleCall>(
+						ActivityRootPresenter presenter = PresenterResolver
+								.getPresenter(ActivityRootPresenter.class);
+						presenter.go(container, new CallScreenData.Add(
 								new SimpleCall()));
 					}
 				});
@@ -347,10 +346,10 @@ public class CrmController implements IController {
 
 					@Override
 					public void handle(ActivityEvent.CallEdit event) {
-						CallAddPresenter presenter = PresenterResolver
-								.getPresenter(CallAddPresenter.class);
-						presenter.go(container, new ScreenData.Edit<Object>(
-								event.getData()));
+						ActivityRootPresenter presenter = PresenterResolver
+								.getPresenter(ActivityRootPresenter.class);
+						presenter.go(container, new CallScreenData.Edit(
+								(SimpleCall) event.getData()));
 					}
 				});
 
@@ -365,10 +364,10 @@ public class CrmController implements IController {
 
 					@Override
 					public void handle(ActivityEvent.CallRead event) {
-						CallReadPresenter presenter = PresenterResolver
-								.getPresenter(CallReadPresenter.class);
-						presenter.go(container, new ScreenData.Add<Object>(
-								event.getData()));
+						ActivityRootPresenter presenter = PresenterResolver
+								.getPresenter(ActivityRootPresenter.class);
+						presenter.go(container, new CallScreenData.Read(
+								(Integer) event.getData()));
 
 					}
 				});

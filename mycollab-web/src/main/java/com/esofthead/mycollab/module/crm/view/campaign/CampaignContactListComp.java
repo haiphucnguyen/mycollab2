@@ -9,6 +9,7 @@ import java.util.Set;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.splitbutton.SplitButton;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.CampaignContact;
@@ -159,35 +160,38 @@ public class CampaignContactListComp extends
 				Button deleteBtn = new Button(null, new Button.ClickListener() {
 					@Override
 					public void buttonClick(Button.ClickEvent event) {
-						ConfirmDialog
-								.show(AppContext.getApplication()
-										.getMainWindow(),
-										"Please Confirm:",
-										"Are you sure to delete this relationship? Only the relationship is removed. The record will not be deleted.",
-										"Yes", "No",
-										new ConfirmDialog.Listener() {
-											private static final long serialVersionUID = 1L;
+						ConfirmDialog.show(
+								AppContext.getApplication().getMainWindow(),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.DELETE_DIALOG_TITLE),
+								LocalizationHelper
+										.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+								new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
 
-											@Override
-											public void onClose(
-													ConfirmDialog dialog) {
-												if (dialog.isConfirmed()) {
-													CampaignService campaignService = AppContext
-															.getSpringBean(CampaignService.class);
-													CampaignContact associateContact = new CampaignContact();
-													associateContact
-															.setContactid(contact
-																	.getId());
-													associateContact
-															.setCampaignid(campaign
-																	.getId());
-													campaignService
-															.removeCampaignContactRelationship(associateContact);
-													CampaignContactListComp.this
-															.refresh();
-												}
-											}
-										});
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											CampaignService campaignService = AppContext
+													.getSpringBean(CampaignService.class);
+											CampaignContact associateContact = new CampaignContact();
+											associateContact
+													.setContactid(contact
+															.getId());
+											associateContact
+													.setCampaignid(campaign
+															.getId());
+											campaignService
+													.removeCampaignContactRelationship(associateContact);
+											CampaignContactListComp.this
+													.refresh();
+										}
+									}
+								});
 					}
 				});
 				deleteBtn.setStyleName("link");

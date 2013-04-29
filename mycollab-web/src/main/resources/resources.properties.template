@@ -1,3 +1,5 @@
+site.name=localhost
+
 db.driverClassName=com.mysql.jdbc.Driver
 db.url=jdbc:mysql://localhost/mycollab_live?autoReconnect=true
 #db.url=jdbc:mysql://23.23.166.114/mycollab_live?autoReconnect=true

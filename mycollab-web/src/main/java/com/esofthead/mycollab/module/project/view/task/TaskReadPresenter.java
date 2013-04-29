@@ -46,12 +46,13 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
 				new DefaultPreviewFormHandler<Task>() {
-					
+
 					@Override
 					public void onAssign(Task data) {
-						AppContext.getApplication().getMainWindow().addWindow(new AssignTaskWindow(data));
+						AppContext.getApplication().getMainWindow()
+								.addWindow(new AssignTaskWindow(data));
 					}
-					
+
 					@Override
 					public void onEdit(Task data) {
 						EventBus.getInstance().fireEvent(
@@ -62,10 +63,15 @@ public class TaskReadPresenter extends AbstractPresenter<TaskReadView> {
 					public void onDelete(final Task data) {
 						ConfirmDialog.show(
 								AppContext.getApplication().getMainWindow(),
-								"Please Confirm:",
-								"Are you sure to delete this item: "
-										+ data.getTaskname() + " ?", "Yes",
-								"No", new ConfirmDialog.Listener() {
+								LocalizationHelper
+										.getMessage(GenericI18Enum.DELETE_DIALOG_TITLE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+								new ConfirmDialog.Listener() {
 									private static final long serialVersionUID = 1L;
 
 									@Override

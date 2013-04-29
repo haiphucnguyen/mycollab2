@@ -75,7 +75,7 @@ public class TaskAddPopup extends CustomComponent {
 		controlsLayout.setSpacing(true);
 
 		Button cancelBtn = new Button(
-				LocalizationHelper.getMessage(GenericI18Enum.UI_BUTTON_CANCEL),
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_CANCEL_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
@@ -91,7 +91,7 @@ public class TaskAddPopup extends CustomComponent {
 				.setComponentAlignment(cancelBtn, Alignment.MIDDLE_CENTER);
 
 		Button saveBtn = new Button(
-				LocalizationHelper.getMessage(GenericI18Enum.UI_BUTTON_SAVE),
+				LocalizationHelper.getMessage(GenericI18Enum.BUTTON_SAVE_LABEL),
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 

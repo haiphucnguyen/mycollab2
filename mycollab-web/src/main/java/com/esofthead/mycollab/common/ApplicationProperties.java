@@ -10,7 +10,7 @@ public class ApplicationProperties {
 	private static final String DECRYPT_PASS = "esofthead321";
 
 	private static Properties properties;
-	
+
 	public static final String DB_USERNAME = "db.username";
 	public static final String DB_PASSWORD = "db.password";
 	public static final String DB_URL = "db.url";
@@ -42,6 +42,8 @@ public class ApplicationProperties {
 	public static final String ERROR_SENDTO = "error.sendTo";
 	public static final String STORAGE_SYSTEM = "storageSystem";
 
+	public static final String SITE_NAME = "site.name";
+
 	static {
 		StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
 		encryptor.setPassword(DECRYPT_PASS);
@@ -68,6 +70,7 @@ public class ApplicationProperties {
 	}
 
 	public static String getSendErrorEmail() {
-		return properties.getProperty("error.sendTo", "hainguyen@esofthead.com");
+		return properties
+				.getProperty("error.sendTo", "hainguyen@esofthead.com");
 	}
 }

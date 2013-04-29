@@ -3,6 +3,7 @@ package com.esofthead.mycollab.module.project.view.task;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.popupbutton.PopupButton;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.arguments.SetSearchField;
@@ -18,6 +19,7 @@ import com.esofthead.mycollab.vaadin.ui.BeanList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -193,9 +195,14 @@ public class TaskGroupDisplayWidget
 					taskListActionControl.setPopupVisible(false);
 					ConfirmDialog.show(
 							TaskListDepot.this.getWindow(),
-							"Please Confirm:",
-							"Are you sure to delete task group '"
-									+ taskList.getName() + "' ?", "Yes", "No",
+							LocalizationHelper
+									.getMessage(GenericI18Enum.DELETE_DIALOG_TITLE),
+							LocalizationHelper
+									.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
+							LocalizationHelper
+									.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+							LocalizationHelper
+									.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
 							new ConfirmDialog.Listener() {
 								private static final long serialVersionUID = 1L;
 

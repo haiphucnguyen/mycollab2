@@ -1,5 +1,11 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import java.util.Set;
+
+import org.vaadin.dialogs.ConfirmDialog;
+import org.vaadin.hene.splitbutton.SplitButton;
+
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.Account;
@@ -26,9 +32,6 @@ import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
-import java.util.Set;
-import org.vaadin.dialogs.ConfirmDialog;
-import org.vaadin.hene.splitbutton.SplitButton;
 
 public class AccountLeadListComp extends
 		RelatedListComp<SimpleLead, LeadSearchCriteria> {
@@ -162,35 +165,35 @@ public class AccountLeadListComp extends
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						ConfirmDialog
-								.show(AppContext.getApplication()
-										.getMainWindow(),
-										"Please Confirm:",
-										"Are you sure to delete this relationship? Only the relationship is removed. The record will not be deleted.",
-										"Yes", "No",
-										new ConfirmDialog.Listener() {
-											private static final long serialVersionUID = 1L;
+						ConfirmDialog.show(
+								AppContext.getApplication().getMainWindow(),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.DELETE_DIALOG_TITLE),
+								LocalizationHelper
+										.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+								new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
 
-											@Override
-											public void onClose(
-													ConfirmDialog dialog) {
-												if (dialog.isConfirmed()) {
-													AccountService accountService = AppContext
-															.getSpringBean(AccountService.class);
-													AccountLead associateLead = new AccountLead();
-													associateLead
-															.setAccountid(account
-																	.getId());
-													associateLead
-															.setLeadid(lead
-																	.getId());
-													accountService
-															.removeAccountLeadRelationship(associateLead);
-													AccountLeadListComp.this
-															.refresh();
-												}
-											}
-										});
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											AccountService accountService = AppContext
+													.getSpringBean(AccountService.class);
+											AccountLead associateLead = new AccountLead();
+											associateLead.setAccountid(account
+													.getId());
+											associateLead.setLeadid(lead
+													.getId());
+											accountService
+													.removeAccountLeadRelationship(associateLead);
+											AccountLeadListComp.this.refresh();
+										}
+									}
+								});
 					}
 				});
 				deleteBtn.setStyleName("link");

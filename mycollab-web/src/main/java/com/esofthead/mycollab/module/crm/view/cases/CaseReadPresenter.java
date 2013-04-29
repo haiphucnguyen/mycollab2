@@ -59,10 +59,15 @@ public class CaseReadPresenter extends CrmGenericPresenter<CaseReadView> {
 					public void onDelete(final CaseWithBLOBs data) {
 						ConfirmDialog.show(
 								view.getWindow(),
-								"Please Confirm:",
-								"Are you sure to delete case '"
-										+ data.getSubject() + "' ?", "Yes",
-								"No", new ConfirmDialog.Listener() {
+								LocalizationHelper
+										.getMessage(GenericI18Enum.DELETE_DIALOG_TITLE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+								new ConfirmDialog.Listener() {
 									private static final long serialVersionUID = 1L;
 
 									@Override

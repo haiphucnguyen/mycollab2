@@ -8,6 +8,7 @@ import java.util.List;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
@@ -109,29 +110,36 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				ConfirmDialog.show(AppContext.getApplication().getMainWindow(),
-						"Please Confirm:",
-						"Are you sure to remove this user from the project?",
-						"Yes", "No", new ConfirmDialog.Listener() {
-							private static final long serialVersionUID = 1L;
+				ConfirmDialog
+						.show(AppContext.getApplication().getMainWindow(),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.DELETE_DIALOG_TITLE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+								new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
 
-							@Override
-							public void onClose(ConfirmDialog dialog) {
-								if (dialog.isConfirmed()) {
-									ProjectMemberService prjMemberService = AppContext
-											.getSpringBean(ProjectMemberService.class);
-									prjMemberService.removeWithSession(
-											member.getId(),
-											AppContext.getUsername());
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											ProjectMemberService prjMemberService = AppContext
+													.getSpringBean(ProjectMemberService.class);
+											prjMemberService.removeWithSession(
+													member.getId(),
+													AppContext.getUsername());
 
-									EventBus.getInstance()
-											.fireEvent(
-													new ProjectMemberEvent.GotoList(
-															ProjectMemberListViewImpl.this,
-															null));
-								}
-							}
-						});
+											EventBus.getInstance()
+													.fireEvent(
+															new ProjectMemberEvent.GotoList(
+																	ProjectMemberListViewImpl.this,
+																	null));
+										}
+									}
+								});
 			}
 		});
 		btnDelete.setIcon(new ThemeResource("icons/12/project/icon_x.png"));

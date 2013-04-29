@@ -7,7 +7,6 @@ import java.util.Set;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
@@ -60,11 +59,15 @@ public class LeadReadPresenter extends CrmGenericPresenter<LeadReadView> {
 					public void onDelete(final Lead data) {
 						ConfirmDialog.show(
 								view.getWindow(),
-								"Please Confirm:",
-								"Are you sure to delete lead '"
-										+ data.getFirstname() + " "
-										+ data.getLastname() + "' ?", "Yes",
-								"No", new ConfirmDialog.Listener() {
+								LocalizationHelper
+										.getMessage(GenericI18Enum.DELETE_DIALOG_TITLE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+								new ConfirmDialog.Listener() {
 									private static final long serialVersionUID = 1L;
 
 									@Override

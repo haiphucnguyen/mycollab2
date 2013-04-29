@@ -6,6 +6,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
 import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot.CommentDisplay;
 import com.esofthead.mycollab.core.utils.StringUtil;
 import com.esofthead.mycollab.module.file.AttachmentConstants;
@@ -32,6 +33,7 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
@@ -361,11 +363,17 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 
 							@Override
 							public void buttonClick(ClickEvent event) {
-								ConfirmDialog.show(AppContext.getApplication()
-										.getMainWindow(), "Please Confirm:",
-										"Are you sure to delete this item: "
-												+ bug.getSummary() + " ?",
-										"Yes", "No",
+								ConfirmDialog.show(
+										AppContext.getApplication()
+												.getMainWindow(),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.DELETE_DIALOG_TITLE),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
 										new ConfirmDialog.Listener() {
 											private static final long serialVersionUID = 1L;
 
