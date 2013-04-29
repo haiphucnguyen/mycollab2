@@ -28,7 +28,7 @@ import com.vaadin.addon.calendar.event.CalendarEventProvider;
  */
 public class ActivityEventProvider implements CalendarEventProvider {
 	private static final long serialVersionUID = 1L;
-	
+
 	private static Logger log = LoggerFactory
 			.getLogger(ActivityEventProvider.class);
 	private EventService eventService;
@@ -54,19 +54,33 @@ public class ActivityEventProvider implements CalendarEventProvider {
 						searchCriteria, 0, Integer.MAX_VALUE));
 		log.debug("There are " + crmEvents.size() + " events from " + startDate
 				+ " to " + endDate);
-		
+
 		if (crmEvents != null && crmEvents.size() > 0) {
 			for (SimpleEvent crmEvent : crmEvents) {
-				BasicEvent event = new BasicEvent();
-		        event.setCaption(crmEvent.getSubject());
-		        event.setDescription(crmEvent.getDescription());
-		        event.setStart(crmEvent.getStartDate());
-		        event.setEnd(crmEvent.getEndDate());
-		        events.add(event);
+				CrmEvent event = new CrmEvent();
+				event.setCaption(crmEvent.getSubject());
+				event.setDescription(crmEvent.getDescription());
+				event.setStart(crmEvent.getStartDate());
+				event.setEnd(crmEvent.getEndDate());
+				event.setSource(crmEvent);
+
+				events.add(event);
 			}
 		}
-		
 
 		return events;
+	}
+
+	public static class CrmEvent extends BasicEvent {
+		private static final long serialVersionUID = 1L;
+		private SimpleEvent source;
+
+		public SimpleEvent getSource() {
+			return source;
+		}
+
+		public void setSource(SimpleEvent source) {
+			this.source = source;
+		}
 	}
 }
