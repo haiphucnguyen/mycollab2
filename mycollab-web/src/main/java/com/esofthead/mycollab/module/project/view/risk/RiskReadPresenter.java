@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.project.view.risk;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
@@ -50,7 +51,10 @@ public class RiskReadPresenter extends AbstractPresenter<RiskReadView> {
 						ConfirmDialog.show(
 								view.getWindow(),
 								LocalizationHelper
-										.getMessage(GenericI18Enum.DELETE_DIALOG_TITLE),
+										.getMessage(
+												GenericI18Enum.DELETE_DIALOG_TITLE,
+												ApplicationProperties
+														.getProperty(ApplicationProperties.SITE_NAME)),
 								LocalizationHelper
 										.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
 								LocalizationHelper

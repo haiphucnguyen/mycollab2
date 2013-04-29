@@ -9,6 +9,7 @@ import java.util.Set;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.hene.splitbutton.SplitButton;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
@@ -163,7 +164,10 @@ public class OpportunityLeadListComp extends
 						ConfirmDialog.show(
 								AppContext.getApplication().getMainWindow(),
 								LocalizationHelper
-										.getMessage(GenericI18Enum.DELETE_DIALOG_TITLE),
+										.getMessage(
+												GenericI18Enum.DELETE_DIALOG_TITLE,
+												ApplicationProperties
+														.getProperty(ApplicationProperties.SITE_NAME)),
 								LocalizationHelper
 										.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
 								LocalizationHelper

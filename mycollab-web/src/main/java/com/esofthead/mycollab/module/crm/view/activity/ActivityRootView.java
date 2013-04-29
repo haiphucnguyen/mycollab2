@@ -3,11 +3,13 @@ package com.esofthead.mycollab.module.crm.view.activity;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
+import com.esofthead.mycollab.module.crm.localization.ActivityI18nEnum;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.ui.Button;
@@ -36,8 +38,10 @@ public class ActivityRootView extends AbstractView {
 		activityTabs.setHeight(null);
 		activityTabs.setStyleName("activityTabs");
 
-		activityTabs.addTab(constructCalendarView(), "Calendar");
-		activityTabs.addTab(constructActivityListView(), "All Todo and Events");
+		activityTabs.addTab(constructCalendarView(), LocalizationHelper
+				.getMessage(ActivityI18nEnum.CALENDAR_TAB_TITLE));
+		activityTabs.addTab(constructActivityListView(), LocalizationHelper
+				.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE));
 
 		activityTabs
 				.addTabChangedListener(new DetachedTabs.TabChangedListener() {
@@ -74,7 +78,8 @@ public class ActivityRootView extends AbstractView {
 
 	public void gotoCalendar() {
 		com.vaadin.ui.Component calendarComp = activityTabs
-				.selectTab("Calendar");
+				.selectTab(LocalizationHelper
+						.getMessage(ActivityI18nEnum.CALENDAR_TAB_TITLE));
 		this.mySpaceArea.setStyleName("calendarTab");
 
 		if (calendarComp != null) {
@@ -82,9 +87,14 @@ public class ActivityRootView extends AbstractView {
 		}
 	}
 
+	public void gotoView(String viewName) {
+		activityTabs.selectTab(viewName);
+	}
+
 	public void gotoActivityList() {
 		com.vaadin.ui.Component activityList = activityTabs
-				.selectTab("All Todo and Events");
+				.selectTab(LocalizationHelper
+						.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE));
 		this.mySpaceArea.setStyleName("activityTab");
 
 		if (activityList != null) {

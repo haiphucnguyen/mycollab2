@@ -5,6 +5,7 @@ import java.util.GregorianCalendar;
 import org.vaadin.dialogs.ConfirmDialog;
 import org.vaadin.peter.buttongroup.ButtonGroup;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.CommentTypeConstants;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.common.ui.components.CommentListDepot.CommentDisplay;
@@ -367,7 +368,10 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 										AppContext.getApplication()
 												.getMainWindow(),
 										LocalizationHelper
-												.getMessage(GenericI18Enum.DELETE_DIALOG_TITLE),
+												.getMessage(
+														GenericI18Enum.DELETE_DIALOG_TITLE,
+														ApplicationProperties
+																.getProperty(ApplicationProperties.SITE_NAME)),
 										LocalizationHelper
 												.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
 										LocalizationHelper

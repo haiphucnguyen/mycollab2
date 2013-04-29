@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import com.esofthead.mycollab.module.crm.localization.ActivityI18nEnum;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.parameters.ActivityScreenData;
 import com.esofthead.mycollab.module.crm.view.parameters.AssignmentScreenData;
@@ -7,6 +8,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.ComponentContainer;
 
 public class ActivityRootPresenter extends
@@ -29,14 +31,21 @@ public class ActivityRootPresenter extends
 		AbstractPresenter presenter = null;
 
 		if (data instanceof AssignmentScreenData.Add) {
+			view.gotoView(LocalizationHelper
+					.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE));
 			presenter = PresenterResolver
 					.getPresenter(AssignmentAddPresenter.class);
 		} else if (data instanceof AssignmentScreenData.Edit) {
-
+			view.gotoView(LocalizationHelper
+					.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE));
+			presenter = PresenterResolver
+					.getPresenter(AssignmentAddPresenter.class);
 		} else if (data instanceof AssignmentScreenData.Read) {
-			
-		}
-		else if (data instanceof ActivityScreenData.GotoActivityList) {
+			view.gotoView(LocalizationHelper
+					.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE));
+			presenter = PresenterResolver
+					.getPresenter(AssignmentReadPresenter.class);
+		} else if (data instanceof ActivityScreenData.GotoActivityList) {
 			view.gotoActivityList();
 			AppContext.addFragment("crm/activity/todo", "Activity To Do");
 		} else {

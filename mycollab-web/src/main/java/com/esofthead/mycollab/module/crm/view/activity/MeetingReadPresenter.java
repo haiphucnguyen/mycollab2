@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import org.vaadin.dialogs.ConfirmDialog;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
@@ -44,7 +45,10 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 						ConfirmDialog.show(
 								view.getWindow(),
 								LocalizationHelper
-										.getMessage(GenericI18Enum.DELETE_DIALOG_TITLE),
+										.getMessage(
+												GenericI18Enum.DELETE_DIALOG_TITLE,
+												ApplicationProperties
+														.getProperty(ApplicationProperties.SITE_NAME)),
 								LocalizationHelper
 										.getMessage(GenericI18Enum.CONFIRM_DELETE_RECORD_DIALOG_MESSAGE),
 								LocalizationHelper
