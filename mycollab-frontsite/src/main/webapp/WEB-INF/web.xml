@@ -29,7 +29,7 @@
 
     <servlet>
         <servlet-name>OAuthCodeCallbackHandlerServlet</servlet-name>
-        <servlet-class>com.google.oauthsample.OAuthCodeCallbackHandlerServlet</servlet-class>
+        <servlet-class>com.esofthead.mycollab.oauth.MyCollabGoogleCallbackServlet</servlet-class>
     </servlet>
 
     <servlet-mapping>
