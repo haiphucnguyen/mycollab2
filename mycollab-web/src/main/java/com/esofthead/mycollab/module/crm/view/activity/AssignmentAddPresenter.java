@@ -1,7 +1,6 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
-import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
@@ -16,9 +15,7 @@ import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.mvp.ViewState;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
-import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.ui.ComponentContainer;
-import com.vaadin.ui.Window;
 
 public class AssignmentAddPresenter extends
 		CrmGenericPresenter<AssignmentAddView> {
@@ -67,10 +64,9 @@ public class AssignmentAddPresenter extends
 				throw new MyCollabException("Do not support param data: "
 						+ data);
 			}
-
-			ActivityRootView activityContainer = (ActivityRootView) container;
-			activityContainer.removeAllComponents();
-			activityContainer.addComponent(view.getWidget());
+			
+			container.removeAllComponents();
+			container.addComponent(view.getWidget());
 			view.editItem(task);
 
 			if (task.getId() == null) {

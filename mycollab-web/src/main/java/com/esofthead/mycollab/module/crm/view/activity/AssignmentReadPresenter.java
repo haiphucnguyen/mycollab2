@@ -4,6 +4,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.domain.Task;
@@ -163,11 +164,12 @@ public class AssignmentReadPresenter extends
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 					return;
 				}
-			} else if (data.getParams() instanceof SimpleTask) {
-				task = (SimpleTask) data.getParams();
+			} else {
+				throw new MyCollabException("Invalid data " + data);
 			}
 
-			super.onGo(container, data);
+			container.removeAllComponents();
+			container.addComponent(view.getWidget());
 			view.previewItem(task);
 			AppContext.addFragment(CrmLinkGenerator
 					.generateTaskPreviewLink(task.getId()), LocalizationHelper

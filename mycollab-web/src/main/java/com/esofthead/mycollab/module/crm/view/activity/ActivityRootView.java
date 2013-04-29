@@ -4,15 +4,16 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.localization.ActivityI18nEnum;
+import com.esofthead.mycollab.module.crm.view.parameters.ActivityScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
-import com.esofthead.mycollab.vaadin.mvp.ScreenData;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Component;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.CssLayout;
 
@@ -25,7 +26,7 @@ public class ActivityRootView extends AbstractView {
 
 	private ActivityCalendarPresenter calendarPresenter;
 
-	private EventListPresenter eventListPresenter;
+	private EventPresenter eventPresenter;
 
 	public ActivityRootView() {
 		super();
@@ -51,9 +52,11 @@ public class ActivityRootView extends AbstractView {
 						Button btn = event.getSource();
 						String caption = btn.getCaption();
 
-						if (caption.equals("Calendar")) {
+						if (caption.equals(LocalizationHelper
+								.getMessage(ActivityI18nEnum.CALENDAR_TAB_TITLE))) {
 							gotoCalendar();
-						} else if (caption.equals("All Todo and Events")) {
+						} else if (caption.equals(LocalizationHelper
+								.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE))) {
 							gotoActivityList();
 						}
 					}
@@ -71,9 +74,8 @@ public class ActivityRootView extends AbstractView {
 	}
 
 	private ComponentContainer constructActivityListView() {
-		eventListPresenter = PresenterResolver
-				.getPresenter(EventListPresenter.class);
-		return eventListPresenter.getView();
+		eventPresenter = PresenterResolver.getPresenter(EventPresenter.class);
+		return eventPresenter.getView();
 	}
 
 	public void gotoCalendar() {
@@ -87,8 +89,8 @@ public class ActivityRootView extends AbstractView {
 		}
 	}
 
-	public void gotoView(String viewName) {
-		activityTabs.selectTab(viewName);
+	public Component gotoView(String viewName) {
+		return activityTabs.selectTab(viewName);
 	}
 
 	public void gotoActivityList() {
@@ -101,7 +103,7 @@ public class ActivityRootView extends AbstractView {
 			EventSearchCriteria searchCriteria = new EventSearchCriteria();
 			searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
 					AppContext.getAccountId()));
-			eventListPresenter.go(this, new ScreenData<EventSearchCriteria>(
+			eventPresenter.go(this, new ActivityScreenData.GotoActivityList(
 					searchCriteria));
 		}
 	}

@@ -80,7 +80,10 @@ public class MeetingAddPresenter extends CrmGenericPresenter<MeetingAddView> {
 					return;
 				}
 			}
-			super.onGo(container, data);
+			
+			container.removeAllComponents();
+			container.addComponent(view.getWidget());
+			
 			view.editItem(meeting);
 
 			if (meeting.getId() == null) {

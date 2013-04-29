@@ -1,9 +1,12 @@
 package com.esofthead.mycollab.module.crm.view.activity;
 
+import com.esofthead.mycollab.core.utils.ClassUtils;
 import com.esofthead.mycollab.module.crm.localization.ActivityI18nEnum;
 import com.esofthead.mycollab.module.crm.view.CrmGenericPresenter;
 import com.esofthead.mycollab.module.crm.view.parameters.ActivityScreenData;
 import com.esofthead.mycollab.module.crm.view.parameters.AssignmentScreenData;
+import com.esofthead.mycollab.module.crm.view.parameters.CallScreenData;
+import com.esofthead.mycollab.module.crm.view.parameters.MeetingScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -30,33 +33,20 @@ public class ActivityRootPresenter extends
 
 		AbstractPresenter presenter = null;
 
-		if (data instanceof AssignmentScreenData.Add) {
-			view.gotoView(LocalizationHelper
-					.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE));
-			presenter = PresenterResolver
-					.getPresenter(AssignmentAddPresenter.class);
-		} else if (data instanceof AssignmentScreenData.Edit) {
-			view.gotoView(LocalizationHelper
-					.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE));
-			presenter = PresenterResolver
-					.getPresenter(AssignmentAddPresenter.class);
-		} else if (data instanceof AssignmentScreenData.Read) {
-			view.gotoView(LocalizationHelper
-					.getMessage(ActivityI18nEnum.ACTIVITY_LIST_TAB_TITLE));
-			presenter = PresenterResolver
-					.getPresenter(AssignmentReadPresenter.class);
-		} else if (data instanceof ActivityScreenData.GotoActivityList) {
-			view.gotoActivityList();
-			AppContext.addFragment("crm/activity/todo", "Activity To Do");
+		if (ClassUtils.instanceOf(data, AssignmentScreenData.Read.class,
+				AssignmentScreenData.Add.class,
+				AssignmentScreenData.Edit.class, MeetingScreenData.Add.class,
+				MeetingScreenData.Edit.class, MeetingScreenData.Read.class,
+				CallScreenData.Read.class, CallScreenData.Add.class,
+				CallScreenData.Edit.class,
+				ActivityScreenData.GotoActivityList.class)) {
+			presenter = PresenterResolver.getPresenter(EventPresenter.class);
 		} else {
-			view.gotoCalendar();
-			AppContext
-					.addFragment("crm/activity/calendar", "Activity Calendar");
+			presenter = PresenterResolver
+					.getPresenter(ActivityCalendarPresenter.class);
 		}
 
-		if (presenter != null) {
-			presenter.go(view.getWidget(), data);
-		}
+		presenter.go(view.getWidget(), data);
 	}
 
 }

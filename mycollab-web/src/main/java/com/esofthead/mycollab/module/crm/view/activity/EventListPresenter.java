@@ -42,15 +42,12 @@ public class EventListPresenter extends AbstractPresenter<EventListView>
 	private static final String[] EXPORT_DISPLAY_NAMES = new String[] {
 			"Status", "Type", "Subject", "Start Date", "End Date" };
 
-	private EventService eventService;
-
 	private EventSearchCriteria searchCriteria;
 
 	private boolean isSelectAll = false;
 
 	public EventListPresenter() {
 		super(EventListView.class);
-		eventService = AppContext.getSpringBean(EventService.class);
 
 		view.getPagedBeanTable().addPagableHandler(new PagableHandler() {
 			private static final long serialVersionUID = 1L;
@@ -222,6 +219,10 @@ public class EventListPresenter extends AbstractPresenter<EventListView>
 		if (AppContext.canRead(RolePermissionCollections.CRM_MEETING)
 				|| AppContext.canRead(RolePermissionCollections.CRM_TASK)
 				|| AppContext.canRead(RolePermissionCollections.CRM_CALL)) {
+
+			container.removeAllComponents();
+			container.addComponent(view.getWidget());
+
 			doSearch((EventSearchCriteria) data.getParams());
 			AppContext.addFragment("crm/activity/todo", "Activity To Do");
 		} else {

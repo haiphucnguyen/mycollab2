@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.crm.view;
 
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
@@ -11,11 +12,11 @@ import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
-import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.ContactSearchCriteria;
+import com.esofthead.mycollab.module.crm.domain.criteria.EventSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.LeadSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.events.AccountEvent;
@@ -30,6 +31,9 @@ import com.esofthead.mycollab.module.crm.events.CrmEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent.GotoHome;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.crm.service.CallService;
+import com.esofthead.mycollab.module.crm.service.MeetingService;
+import com.esofthead.mycollab.module.crm.service.TaskService;
 import com.esofthead.mycollab.module.crm.view.account.AccountAddPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountListPresenter;
 import com.esofthead.mycollab.module.crm.view.account.AccountReadPresenter;
@@ -202,8 +206,12 @@ public class CrmController implements IController {
 					public void handle(GotoTodoList event) {
 						ActivityRootPresenter presenter = PresenterResolver
 								.getPresenter(ActivityRootPresenter.class);
+						EventSearchCriteria searchCriteria = new EventSearchCriteria();
+						searchCriteria.setSaccountid(new NumberSearchField(
+								SearchField.AND, AppContext.getAccountId()));
 						presenter.go(container,
-								new ActivityScreenData.GotoActivityList());
+								new ActivityScreenData.GotoActivityList(
+										searchCriteria));
 					}
 				});
 
@@ -238,8 +246,21 @@ public class CrmController implements IController {
 					public void handle(ActivityEvent.TaskEdit event) {
 						ActivityRootPresenter presenter = PresenterResolver
 								.getPresenter(ActivityRootPresenter.class);
+						SimpleTask task = null;
+						if (event.getData() instanceof Integer) {
+							TaskService taskService = AppContext
+									.getSpringBean(TaskService.class);
+							task = taskService.findTaskById((Integer) event
+									.getData());
+						} else if (event.getData() instanceof SimpleTask) {
+							task = (SimpleTask) event.getData();
+						} else {
+							throw new MyCollabException(
+									"Do not support event data "
+											+ event.getData());
+						}
 						presenter.go(container, new AssignmentScreenData.Edit(
-								(Task) event.getData()));
+								task));
 					}
 				});
 
@@ -293,8 +314,23 @@ public class CrmController implements IController {
 					public void handle(ActivityEvent.MeetingEdit event) {
 						ActivityRootPresenter presenter = PresenterResolver
 								.getPresenter(ActivityRootPresenter.class);
+
+						SimpleMeeting meeting = null;
+						if (event.getData() instanceof Integer) {
+							MeetingService meetingService = AppContext
+									.getSpringBean(MeetingService.class);
+							meeting = meetingService
+									.findMeetingById((Integer) event.getData());
+						} else if (event.getData() instanceof SimpleMeeting) {
+							meeting = (SimpleMeeting) event.getData();
+						} else {
+							throw new MyCollabException(
+									"Do not support event param: "
+											+ event.getData());
+						}
+
 						presenter.go(container, new MeetingScreenData.Edit(
-								(SimpleMeeting) event.getData()));
+								meeting));
 					}
 				});
 
@@ -348,8 +384,21 @@ public class CrmController implements IController {
 					public void handle(ActivityEvent.CallEdit event) {
 						ActivityRootPresenter presenter = PresenterResolver
 								.getPresenter(ActivityRootPresenter.class);
-						presenter.go(container, new CallScreenData.Edit(
-								(SimpleCall) event.getData()));
+
+						SimpleCall call = null;
+						if (event.getData() instanceof Integer) {
+							CallService callService = AppContext
+									.getSpringBean(CallService.class);
+							call = callService.findCallById((Integer) event
+									.getData());
+						} else if (event.getData() instanceof SimpleCall) {
+							call = (SimpleCall) event.getData();
+						} else {
+							throw new MyCollabException(
+									"Do not support event param: "
+											+ event.getData());
+						}
+						presenter.go(container, new CallScreenData.Edit(call));
 					}
 				});
 

@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
 import com.esofthead.mycollab.module.crm.events.ActivityEvent;
 import com.esofthead.mycollab.module.crm.service.CallService;
@@ -60,9 +61,8 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (AppContext.canWrite(RolePermissionCollections.CRM_TASK)) {
 			CallWithBLOBs call = null;
-			if (data.getParams() instanceof CallWithBLOBs) {
-				call = (CallWithBLOBs) data.getParams();
-			} else if (data.getParams() instanceof Integer) {
+
+			if (data.getParams() instanceof Integer) {
 				CallService callService = AppContext
 						.getSpringBean(CallService.class);
 				call = callService.findByPrimaryKey((Integer) data.getParams());
@@ -78,8 +78,13 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 					return;
 				}
+			} else {
+				throw new MyCollabException("Invalid data: " + data);
 			}
-			super.onGo(container, data);
+
+			container.removeAllComponents();
+			container.addComponent(view.getWidget());
+
 			view.editItem(call);
 
 			if (call.getId() == null) {

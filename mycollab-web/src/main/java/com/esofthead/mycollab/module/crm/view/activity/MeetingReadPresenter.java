@@ -4,6 +4,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
@@ -167,10 +168,13 @@ public class MeetingReadPresenter extends CrmGenericPresenter<MeetingReadView> {
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 					return;
 				}
-			} else if (data.getParams() instanceof SimpleMeeting) {
-				meeting = (SimpleMeeting) data.getParams();
+			} else {
+				throw new MyCollabException("Invalid data: " + data);
 			}
-			super.onGo(container, data);
+
+			container.removeAllComponents();
+			container.addComponent(view.getWidget());
+
 			view.previewItem(meeting);
 
 			AppContext.addFragment(CrmLinkGenerator

@@ -28,6 +28,7 @@ import com.vaadin.addon.calendar.event.CalendarEventProvider;
  */
 public class ActivityEventProvider implements CalendarEventProvider {
 	private static final long serialVersionUID = 1L;
+	
 	private static Logger log = LoggerFactory
 			.getLogger(ActivityEventProvider.class);
 	private EventService eventService;
