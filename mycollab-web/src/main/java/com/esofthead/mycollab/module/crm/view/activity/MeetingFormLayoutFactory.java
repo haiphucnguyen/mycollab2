@@ -62,7 +62,7 @@ public abstract class MeetingFormLayoutFactory implements IFormLayoutFactory {
 			Label organizationHeader = new Label("Meeting Information");
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
-			informationLayout = new GridFormLayoutHelper(2, 6);
+			informationLayout = new GridFormLayoutHelper(2, 4);
 			informationLayout.getLayout().setWidth("900px");
 			layout.addComponent(informationLayout.getLayout());
 			return layout;
@@ -84,11 +84,8 @@ public abstract class MeetingFormLayoutFactory implements IFormLayoutFactory {
 						UIConstants.DEFAULT_CONTROL_EXT_WIDTH);
 			} else if (propertyId.equals("location")) {
 				informationLayout.addComponent(field, "Location", 1, 2);
-			} else if (propertyId.equals("isrecurrence")) {
-				informationLayout.addComponent(field, "Recurring Activity", 0,
-						3, 2, UIConstants.DEFAULT_2XCONTROL_WIDTH, "30px");
 			} else if (propertyId.equals("description")) {
-				informationLayout.addComponent(field, "Description", 0, 4, 2,
+				informationLayout.addComponent(field, "Description", 0, 3, 2,
 						UIConstants.DEFAULT_2XCONTROL_WIDTH,
 						UIConstants.DEFAULT_2XCONTROL_HEIGHT);
 			}

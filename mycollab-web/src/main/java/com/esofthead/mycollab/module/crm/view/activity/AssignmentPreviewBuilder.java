@@ -2,8 +2,7 @@ package com.esofthead.mycollab.module.crm.view.activity;
 
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.module.crm.CrmTypeConstants;
-import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
-import com.esofthead.mycollab.module.crm.domain.SimpleCall;
+import com.esofthead.mycollab.module.crm.domain.SimpleTask;
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.ui.components.RelatedReadItemField;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
@@ -26,38 +25,29 @@ import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
-@SuppressWarnings("serial")
-public class CallPreviewBuilder extends VerticalLayout {
+public class AssignmentPreviewBuilder extends VerticalLayout {
+	private static final long serialVersionUID = 1L;
 
-	protected AdvancedPreviewBeanForm<SimpleCall> previewForm;
+	protected SimpleTask task;
 	protected NoteListItems noteListItems;
-
-	protected SimpleCall call;
+	protected AdvancedPreviewBeanForm<SimpleTask> previewForm;
 
 	protected void initRelatedComponent() {
 		noteListItems = new NoteListItems("Notes");
 	}
 
-	public void previewItem(SimpleCall item) {
-		call = item;
-		previewForm.setItemDataSource(new BeanItem<CallWithBLOBs>(call));
+	public void previewItem(SimpleTask item) {
+		task = item;
+		previewForm.setItemDataSource(new BeanItem<SimpleTask>(task));
 
 		displayNotes();
 	}
 
 	private void displayNotes() {
-		noteListItems.showNotes(CrmTypeConstants.CALL, call.getId());
+		noteListItems.showNotes(CrmTypeConstants.TASK, task.getId());
 	}
 
-	public AdvancedPreviewBeanForm<SimpleCall> getPreviewForm() {
-		return previewForm;
-	}
-
-	public SimpleCall getCall() {
-		return call;
-	}
-
-	protected class CallFormFieldFactory extends DefaultFormViewFieldFactory {
+	protected class TaskFormFieldFactory extends DefaultFormViewFieldFactory {
 
 		private static final long serialVersionUID = 1L;
 
@@ -65,7 +55,7 @@ public class CallPreviewBuilder extends VerticalLayout {
 		protected Field onCreateField(Item item, Object propertyId,
 				Component uiContext) {
 			if (propertyId.equals("assignuser")) {
-				return new FormLinkViewField(call.getAssignUserFullName(),
+				return new FormLinkViewField(task.getAssignUserFullName(),
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
@@ -73,64 +63,48 @@ public class CallPreviewBuilder extends VerticalLayout {
 							public void buttonClick(ClickEvent event) {
 							}
 						});
-			} else if (propertyId.equals("type")) {
-				return new RelatedReadItemField(call);
-			} else if (propertyId.equals("status")) {
-				String value = call.getStatus() + " " + call.getCalltype();
-				FormViewField field = new FormViewField(value);
-				return field;
-			} else if (propertyId.equals("durationinseconds")) {
-				Integer duration = call.getDurationinseconds();
-				if (duration != null && duration != 0) {
-					int hours = duration / 3600;
-					int minutes = (duration % 3600) / 60;
-					StringBuffer value = new StringBuffer();
-					if (hours == 1) {
-						value.append("1 hour ");
-					} else if (hours >= 2) {
-						value.append(hours + " hours ");
-					}
-
-					if (minutes > 0) {
-						value.append(minutes + " minutes");
-					}
-
-					return new FormViewField(value.toString());
-				} else {
-					return new FormViewField("");
-				}
 			} else if (propertyId.equals("startdate")) {
-				return new FormViewField(AppContext.formatDateTime(call
+				return new FormViewField(AppContext.formatDateTime(task
 						.getStartdate()));
+			} else if (propertyId.equals("duedate")) {
+				return new FormViewField(AppContext.formatDateTime(task
+						.getDuedate()));
+			} else if (propertyId.equals("contactid")) {
+				return new FormViewField(task.getContactName());
+			} else if (propertyId.equals("type")) {
+				return new RelatedReadItemField(task);
+
 			}
 
 			return null;
 		}
 	}
 
-	public static class ReadView extends CallPreviewBuilder {
-
+	public static class ReadView extends AssignmentPreviewBuilder {
+		private static final long serialVersionUID = 1L;
 		private TabSheet tabContainer;
-		private VerticalLayout callInformation;
-		private AddViewLayout callAddLayout;
+		private VerticalLayout assignmentInformation;
+		private AddViewLayout assignmentAddLayout;
 
 		public ReadView() {
-			callAddLayout = new AddViewLayout("", new ThemeResource(
-					"icons/48/crm/call.png"));
-			callAddLayout.addStyleName("preview");
-			this.addComponent(callAddLayout);
+			assignmentAddLayout = new AddViewLayout("", new ThemeResource(
+					"icons/48/crm/task.png"));
+			assignmentAddLayout.addStyleName("preview");
+			this.addComponent(assignmentAddLayout);
 			initRelatedComponent();
 
 			tabContainer = new TabSheet();
 			tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
 
-			previewForm = new AdvancedPreviewBeanForm<SimpleCall>() {
+			previewForm = new AdvancedPreviewBeanForm<SimpleTask>() {
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void setItemDataSource(Item newDataSource) {
-					this.setFormLayoutFactory(new CallFormLayoutFactory.CallInformationLayout());
-					this.setFormFieldFactory(new CallFormFieldFactory());
+					this.setFormLayoutFactory(new AssignmentFormLayoutFactory.AssignmentInformationLayout());
+					this.setFormFieldFactory(new TaskFormFieldFactory());
 					super.setItemDataSource(newDataSource);
-					callAddLayout.setTitle(call.getSubject());
+					assignmentAddLayout.setTitle(task.getSubject());
 				}
 
 				@Override
@@ -138,8 +112,8 @@ public class CallPreviewBuilder extends VerticalLayout {
 					// Create a window that contains what you want to print
 					Window window = new Window("Window to Print");
 
-					CallPreviewBuilder printView = new CallPreviewBuilder.PrintView();
-					printView.previewItem(call);
+					AssignmentPreviewBuilder printView = new AssignmentPreviewBuilder.PrintView();
+					printView.previewItem(task);
 					window.addComponent(printView);
 
 					// Add the printing window as a new application-level window
@@ -160,25 +134,26 @@ public class CallPreviewBuilder extends VerticalLayout {
 
 				@Override
 				protected void showHistory() {
-					CallHistoryLogWindow historyLog = new CallHistoryLogWindow(
-							ModuleNameConstants.CRM, CrmTypeConstants.CALL,
-							call.getId());
+					AssignmentHistoryLogWindow historyLog = new AssignmentHistoryLogWindow(
+							ModuleNameConstants.CRM, CrmTypeConstants.TASK,
+							task.getId());
 					getWindow().addWindow(historyLog);
 				}
 			};
 
-			callInformation = new VerticalLayout();
-			callInformation.setMargin(true);
-			Layout actionControls = new PreviewFormControlsGenerator<SimpleCall>(
+			assignmentInformation = new VerticalLayout();
+			assignmentInformation.setMargin(true);
+			Layout actionControls = new PreviewFormControlsGenerator<SimpleTask>(
 					previewForm)
-					.createButtonControls(RolePermissionCollections.CRM_CALL);
-			callInformation.addComponent(actionControls);
-			callInformation.addComponent(previewForm);
-			callInformation.addComponent(noteListItems);
+					.createButtonControls(RolePermissionCollections.CRM_TASK);
+			assignmentInformation.addComponent(actionControls);
+			assignmentInformation.addComponent(previewForm);
+			assignmentInformation.addComponent(noteListItems);
 
-			tabContainer.addTab(callInformation, "Call Information");
+			tabContainer
+					.addTab(assignmentInformation, "Assignment Information");
 
-			callAddLayout.addBody(tabContainer);
+			assignmentAddLayout.addBody(tabContainer);
 		}
 	}
 
@@ -187,15 +162,18 @@ public class CallPreviewBuilder extends VerticalLayout {
 	 * @author haiphucnguyen
 	 * 
 	 */
-	public static class PrintView extends CallPreviewBuilder {
+	public static class PrintView extends AssignmentPreviewBuilder {
+		private static final long serialVersionUID = 1L;
 
 		public PrintView() {
 			initRelatedComponent();
-			previewForm = new AdvancedPreviewBeanForm<SimpleCall>() {
+			previewForm = new AdvancedPreviewBeanForm<SimpleTask>() {
+				private static final long serialVersionUID = 1L;
+
 				@Override
 				public void setItemDataSource(Item newDataSource) {
 					this.setFormLayoutFactory(new FormLayoutFactory());
-					this.setFormFieldFactory(new CallFormFieldFactory());
+					this.setFormFieldFactory(new TaskFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 				}
 			};
@@ -203,12 +181,12 @@ public class CallPreviewBuilder extends VerticalLayout {
 			this.addComponent(previewForm);
 		}
 
-		class FormLayoutFactory extends CallFormLayoutFactory {
+		class FormLayoutFactory extends AssignmentFormLayoutFactory {
 
 			private static final long serialVersionUID = 1L;
 
 			public FormLayoutFactory() {
-				super(call.getSubject());
+				super(task.getSubject());
 			}
 
 			@Override
@@ -227,4 +205,11 @@ public class CallPreviewBuilder extends VerticalLayout {
 		}
 	}
 
+	public SimpleTask getAssignment() {
+		return task;
+	}
+
+	public AdvancedPreviewBeanForm<SimpleTask> getPreviewForm() {
+		return previewForm;
+	}
 }

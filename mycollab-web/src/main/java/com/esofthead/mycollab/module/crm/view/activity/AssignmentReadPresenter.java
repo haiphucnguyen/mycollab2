@@ -32,15 +32,15 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
 
 	private void bind() {
 		view.getPreviewFormHandlers().addFormHandler(
-				new DefaultPreviewFormHandler<Task>() {
+				new DefaultPreviewFormHandler<SimpleTask>() {
 					@Override
-					public void onEdit(Task data) {
+					public void onEdit(SimpleTask data) {
 						EventBus.getInstance().fireEvent(
 								new ActivityEvent.TaskEdit(this, data));
 					}
 
 					@Override
-					public void onDelete(final Task data) {
+					public void onDelete(final SimpleTask data) {
 						ConfirmDialog.show(
 								view.getWindow(),
 								"Please Confirm:",
@@ -67,7 +67,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
 					}
 
 					@Override
-					public void onClone(Task data) {
+					public void onClone(SimpleTask data) {
 						Task cloneData = (Task) data.copy();
 						cloneData.setId(null);
 						EventBus.getInstance().fireEvent(
@@ -81,7 +81,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
 					}
 
 					@Override
-					public void gotoNext(Task data) {
+					public void gotoNext(SimpleTask data) {
 						TaskService taskService = AppContext
 								.getSpringBean(TaskService.class);
 						TaskSearchCriteria criteria = new TaskSearchCriteria();
@@ -106,7 +106,7 @@ public class AssignmentReadPresenter extends CrmGenericPresenter<AssignmentReadV
 					}
 
 					@Override
-					public void gotoPrevious(Task data) {
+					public void gotoPrevious(SimpleTask data) {
 						TaskService taskService = AppContext
 								.getSpringBean(TaskService.class);
 						TaskSearchCriteria criteria = new TaskSearchCriteria();
