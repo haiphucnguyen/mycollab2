@@ -78,6 +78,8 @@ public class CallAddPresenter extends CrmGenericPresenter<CallAddView> {
 									Window.Notification.TYPE_HUMANIZED_MESSAGE);
 					return;
 				}
+			} else if (data.getParams() instanceof CallWithBLOBs) {
+				call = (CallWithBLOBs) data.getParams();
 			} else {
 				throw new MyCollabException("Invalid data: " + data);
 			}

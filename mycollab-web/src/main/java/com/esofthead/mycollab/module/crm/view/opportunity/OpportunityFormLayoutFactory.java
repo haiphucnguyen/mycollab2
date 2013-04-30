@@ -52,8 +52,9 @@ public abstract class OpportunityFormLayoutFactory implements
     }
 
     public static class OpportunityInformationLayout implements IFormLayoutFactory {
-
-        protected VerticalLayout layout;
+		private static final long serialVersionUID = 1L;
+		
+		protected VerticalLayout layout;
         protected GridFormLayoutHelper informationLayout;
         protected GridFormLayoutHelper descriptionLayout;
 

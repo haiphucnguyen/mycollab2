@@ -15,16 +15,17 @@ public class CurrencyComboBox extends ComboBox {
 		super();
 		this.setItemCaptionMode(ITEM_CAPTION_MODE_PROPERTY);
 	}
-	
+
 	@Override
 	public void attach() {
 		super.attach();
 		this.removeAllItems();
-		CurrencyService currencyService = AppContext.getSpringBean(CurrencyService.class);
+		CurrencyService currencyService = AppContext
+				.getSpringBean(CurrencyService.class);
 		List<Currency> currencyList = currencyService.getCurrencies();
 		BeanContainer<String, Currency> beanItem = new BeanContainer<String, Currency>(
 				Currency.class);
-		beanItem.setBeanIdProperty("name");
+		beanItem.setBeanIdProperty("id");
 
 		for (Currency currency : currencyList) {
 			beanItem.addBean(currency);
@@ -32,11 +33,5 @@ public class CurrencyComboBox extends ComboBox {
 
 		this.setContainerDataSource(beanItem);
 		this.setItemCaptionPropertyId("name");
-	}
-
-	@Override
-	public void select(Object itemId) {
-		System.out.println("Select: " + itemId);
-		super.select(itemId);
 	}
 }

@@ -51,8 +51,9 @@ public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
     }
 
     public static class CampaignInformationLayout implements IFormLayoutFactory {
-
-        private VerticalLayout layout;
+		private static final long serialVersionUID = 1L;
+		
+		private VerticalLayout layout;
         private GridFormLayoutHelper informationLayout;
         private GridFormLayoutHelper campaignGoal;
         private GridFormLayoutHelper descriptionLayout;
