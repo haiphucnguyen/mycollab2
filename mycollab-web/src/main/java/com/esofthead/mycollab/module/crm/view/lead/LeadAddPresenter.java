@@ -9,7 +9,6 @@ import com.esofthead.mycollab.module.crm.domain.CampaignLead;
 import com.esofthead.mycollab.module.crm.domain.Lead;
 import com.esofthead.mycollab.module.crm.domain.OpportunityLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
-import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
@@ -74,7 +73,7 @@ public class LeadAddPresenter extends CrmGenericPresenter<LeadAddView> {
 			Lead lead = null;
 
 			if (data.getParams() instanceof Lead) {
-				lead = (SimpleLead) data.getParams();
+				lead = (Lead) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
 				LeadService leadService = AppContext
 						.getSpringBean(LeadService.class);

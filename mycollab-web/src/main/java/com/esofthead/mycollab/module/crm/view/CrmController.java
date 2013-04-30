@@ -3,6 +3,8 @@ package com.esofthead.mycollab.module.crm.view;
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.crm.domain.CallWithBLOBs;
+import com.esofthead.mycollab.module.crm.domain.Meeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.SimpleCall;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
@@ -12,6 +14,7 @@ import com.esofthead.mycollab.module.crm.domain.SimpleLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleMeeting;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.domain.SimpleTask;
+import com.esofthead.mycollab.module.crm.domain.Task;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CampaignSearchCriteria;
 import com.esofthead.mycollab.module.crm.domain.criteria.CaseSearchCriteria;
@@ -246,14 +249,14 @@ public class CrmController implements IController {
 					public void handle(ActivityEvent.TaskEdit event) {
 						ActivityRootPresenter presenter = PresenterResolver
 								.getPresenter(ActivityRootPresenter.class);
-						SimpleTask task = null;
+						Task task = null;
 						if (event.getData() instanceof Integer) {
 							TaskService taskService = AppContext
 									.getSpringBean(TaskService.class);
 							task = taskService.findTaskById((Integer) event
 									.getData());
-						} else if (event.getData() instanceof SimpleTask) {
-							task = (SimpleTask) event.getData();
+						} else if (event.getData() instanceof Task) {
+							task = (Task) event.getData();
 						} else {
 							throw new MyCollabException(
 									"Do not support event data "
@@ -315,14 +318,14 @@ public class CrmController implements IController {
 						ActivityRootPresenter presenter = PresenterResolver
 								.getPresenter(ActivityRootPresenter.class);
 
-						SimpleMeeting meeting = null;
+						Meeting meeting = null;
 						if (event.getData() instanceof Integer) {
 							MeetingService meetingService = AppContext
 									.getSpringBean(MeetingService.class);
 							meeting = meetingService
 									.findMeetingById((Integer) event.getData());
-						} else if (event.getData() instanceof SimpleMeeting) {
-							meeting = (SimpleMeeting) event.getData();
+						} else if (event.getData() instanceof Meeting) {
+							meeting = (Meeting) event.getData();
 						} else {
 							throw new MyCollabException(
 									"Do not support event param: "
@@ -385,14 +388,14 @@ public class CrmController implements IController {
 						ActivityRootPresenter presenter = PresenterResolver
 								.getPresenter(ActivityRootPresenter.class);
 
-						SimpleCall call = null;
+						CallWithBLOBs call = null;
 						if (event.getData() instanceof Integer) {
 							CallService callService = AppContext
 									.getSpringBean(CallService.class);
 							call = callService.findCallById((Integer) event
 									.getData());
-						} else if (event.getData() instanceof SimpleCall) {
-							call = (SimpleCall) event.getData();
+						} else if (event.getData() instanceof CallWithBLOBs) {
+							call = (CallWithBLOBs) event.getData();
 						} else {
 							throw new MyCollabException(
 									"Do not support event param: "

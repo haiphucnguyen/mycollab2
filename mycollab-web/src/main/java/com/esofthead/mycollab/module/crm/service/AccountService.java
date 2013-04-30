@@ -16,24 +16,25 @@
  */
 package com.esofthead.mycollab.module.crm.service;
 
+import java.util.List;
+
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.domain.AccountContact;
 import com.esofthead.mycollab.module.crm.domain.AccountLead;
 import com.esofthead.mycollab.module.crm.domain.SimpleAccount;
 import com.esofthead.mycollab.module.crm.domain.criteria.AccountSearchCriteria;
-import java.util.List;
 
 public interface AccountService extends
-        IDefaultService<Integer, Account, AccountSearchCriteria> {
+		IDefaultService<Integer, Account, AccountSearchCriteria> {
 
-    SimpleAccount findAccountById(int accountId);
-    
-    void saveAccountContactRelationship(List<AccountContact> associateContacts);
-    
-    void saveAccountLeadRelationship(List<AccountLead> associateLeads);
-    
-    void removeAccountContactRelationship(AccountContact associateContact);
-    
-    void removeAccountLeadRelationship(AccountLead associateLead);
+	SimpleAccount findAccountById(int accountId);
+
+	void saveAccountContactRelationship(List<AccountContact> associateContacts);
+
+	void saveAccountLeadRelationship(List<AccountLead> associateLeads);
+
+	void removeAccountContactRelationship(AccountContact associateContact);
+
+	void removeAccountLeadRelationship(AccountLead associateLead);
 }

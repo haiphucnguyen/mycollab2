@@ -53,7 +53,7 @@ public class AccountOpportunityListComp extends
 
 		tableItem = new OpportunityTableDisplay(
 				new String[] { "opportunityname", "salesstage", "amount",
-						"expectedcloseddate", "id" },
+						"expectedcloseddate" },
 				new String[] {
 						LocalizationHelper
 								.getMessage(CrmCommonI18nEnum.TABLE_NAME_HEADER),
@@ -62,9 +62,7 @@ public class AccountOpportunityListComp extends
 						LocalizationHelper
 								.getMessage(OpportunityI18nEnum.TABLE_AMOUNT_HEADER),
 						LocalizationHelper
-								.getMessage(OpportunityI18nEnum.TABLE_CLOSE_DATE_HEADER),
-						LocalizationHelper
-								.getMessage(CrmCommonI18nEnum.TABLE_ACTION_HEADER) });
+								.getMessage(OpportunityI18nEnum.TABLE_CLOSE_DATE_HEADER) });
 
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
