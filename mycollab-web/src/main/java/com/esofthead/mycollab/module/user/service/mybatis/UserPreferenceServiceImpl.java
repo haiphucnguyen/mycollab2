@@ -2,14 +2,15 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.common.service.ibatis;
+package com.esofthead.mycollab.module.user.service.mybatis;
 
-import com.esofthead.mycollab.common.dao.UserPreferenceMapper;
-import com.esofthead.mycollab.common.domain.UserPreference;
-import com.esofthead.mycollab.common.domain.UserPreferenceExample;
-import com.esofthead.mycollab.common.service.UserPreferenceService;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
 import com.esofthead.mycollab.core.persistence.service.DefaultCrudService;
+import com.esofthead.mycollab.module.user.dao.UserPreferenceMapper;
+import com.esofthead.mycollab.module.user.domain.UserPreference;
+import com.esofthead.mycollab.module.user.domain.UserPreferenceExample;
+import com.esofthead.mycollab.module.user.service.UserPreferenceService;
+
 import java.util.GregorianCalendar;
 import java.util.List;
 import org.slf4j.Logger;

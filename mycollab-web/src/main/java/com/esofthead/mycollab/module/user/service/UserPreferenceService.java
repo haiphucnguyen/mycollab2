@@ -2,10 +2,10 @@
  * To change this template, choose Tools | Templates
  * and open the template in the editor.
  */
-package com.esofthead.mycollab.common.service;
+package com.esofthead.mycollab.module.user.service;
 
-import com.esofthead.mycollab.common.domain.UserPreference;
 import com.esofthead.mycollab.core.persistence.service.ICrudService;
+import com.esofthead.mycollab.module.user.domain.UserPreference;
 
 /**
  *

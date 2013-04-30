@@ -77,4 +77,16 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.user.dao.RolePermissionMapper" />
     </bean>
+    
+    <bean id="userPreferenceMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.user.dao.UserPreferenceMapper" />
+    </bean>
+
+    <bean id="userTrackingMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.user.dao.UserTrackingMapper" />
+    </bean>
 </beans>

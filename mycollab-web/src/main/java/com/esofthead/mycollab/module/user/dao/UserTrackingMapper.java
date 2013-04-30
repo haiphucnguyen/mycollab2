@@ -1,8 +1,9 @@
-package com.esofthead.mycollab.common.dao;
+package com.esofthead.mycollab.module.user.dao;
 
-import com.esofthead.mycollab.common.domain.UserTracking;
-import com.esofthead.mycollab.common.domain.UserTrackingExample;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
+import com.esofthead.mycollab.module.user.domain.UserTracking;
+import com.esofthead.mycollab.module.user.domain.UserTrackingExample;
+
 import java.util.List;
 import org.apache.ibatis.annotations.Param;
 

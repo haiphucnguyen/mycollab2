@@ -1,4 +1,4 @@
-package com.esofthead.mycollab.common.domain;
+package com.esofthead.mycollab.module.user.domain;
 
 import com.esofthead.mycollab.core.utils.ValuedBean;
 import java.util.Date;

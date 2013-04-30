@@ -6,6 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.esofthead.mycollab.common.dao.AccountCurrencyMapper;
+import com.esofthead.mycollab.common.domain.AccountCurrency;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.billing.AccountPaymentTypeConstants;
@@ -47,6 +49,9 @@ public class BillingServiceImpl implements BillingService {
 
 	@Autowired
 	private RoleService roleService;
+
+	@Autowired
+	private AccountCurrencyMapper accountCurrencyMapper;
 
 	@Override
 	@Transactional
@@ -128,6 +133,12 @@ public class BillingServiceImpl implements BillingService {
 					PermissionFlag.READ_ONLY);
 		}
 		roleService.savePermission(roleId, permissionMap);
+
+		// save default account currency
+		AccountCurrency currency = new AccountCurrency();
+		currency.setAccountid(accountid);
+		currency.setCurrencyid(1);
+		accountCurrencyMapper.insert(currency);
 	}
 
 }

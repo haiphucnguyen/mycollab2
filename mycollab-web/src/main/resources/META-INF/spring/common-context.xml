@@ -82,17 +82,5 @@
             value="com.esofthead.mycollab.common.dao.RelayEmailNotificationMapperExt" />
     </bean>
 
-    <bean id="userPreferenceMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface"
-            value="com.esofthead.mycollab.common.dao.UserPreferenceMapper" />
-    </bean>
-
-    <bean id="userTrackingMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
-        <property name="sqlSessionTemplate" ref="sqlMapClient" />
-        <property name="mapperInterface"
-            value="com.esofthead.mycollab.common.dao.UserTrackingMapper" />
-    </bean>
-
     <bean id="messageDispatcher" class="com.esofthead.mycollab.core.MessageDispatcherImpl" />
 </beans>
