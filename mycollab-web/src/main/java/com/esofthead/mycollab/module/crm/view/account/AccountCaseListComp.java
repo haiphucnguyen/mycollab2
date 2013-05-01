@@ -39,7 +39,9 @@ public class AccountCaseListComp extends RelatedListComp<SimpleCase, CaseSearchC
         contentContainer.setSpacing(true);
 
         Button newBtn = new Button("New Case", new Button.ClickListener() {
-            @Override
+			private static final long serialVersionUID = 1L;
+
+			@Override
             public void buttonClick(Button.ClickEvent event) {
                 fireNewRelatedItem("");
             }

@@ -21,8 +21,9 @@ import org.apache.commons.beanutils.PropertyUtils;
  * @author haiphucnguyen
  */
 public abstract class RelatedItemSelectionWindow<T, S extends SearchCriteria> extends Window {
-    
-    private static final String selectedFieldName = "selected";
+	private static final long serialVersionUID = 1L;
+
+	private static final String selectedFieldName = "selected";
     
     protected RelatedListComp<T, S> relatedListComp;
     protected IPagedBeanTable<S, T> tableItem;

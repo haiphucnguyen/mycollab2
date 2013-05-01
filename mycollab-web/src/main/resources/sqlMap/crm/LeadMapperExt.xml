@@ -95,8 +95,13 @@
         </if>
         <if test="accountId != null">
             <![CDATA[
-                ${accountId.operation} m_crm_account.id = #{accountId.value,javaType=INTEGER}
-            ]]>
+                ${accountId.operation}
+                (SELECT COUNT(*) 
+                FROM m_crm_account, m_crm_accounts_leads 
+                WHERE m_crm_account.id = #{accountId.value,javaType=INTEGER} 
+                    AND m_crm_lead.id = m_crm_accounts_leads.leadId
+                    AND m_crm_account.id = m_crm_accounts_leads.accountId) > 0
+                ]]>
         </if>
         <if test="campaignId != null">
             <![CDATA[
@@ -218,7 +223,7 @@
                 (SELECT COUNT(*) 
                 FROM m_crm_account, m_crm_accounts_leads 
                 WHERE m_crm_account.id = #{accountId.value,javaType=INTEGER} 
-                    AND m_crm_lead.id = m_crm_accounts_leads.contactId
+                    AND m_crm_lead.id = m_crm_accounts_leads.leadId
                     AND m_crm_account.id = m_crm_accounts_leads.accountId) > 0
                 ]]>
         </if>
