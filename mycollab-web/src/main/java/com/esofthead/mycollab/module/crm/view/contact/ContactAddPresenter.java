@@ -11,7 +11,6 @@ import com.esofthead.mycollab.module.crm.domain.ContactCase;
 import com.esofthead.mycollab.module.crm.domain.OpportunityContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleCampaign;
 import com.esofthead.mycollab.module.crm.domain.SimpleCase;
-import com.esofthead.mycollab.module.crm.domain.SimpleContact;
 import com.esofthead.mycollab.module.crm.domain.SimpleOpportunity;
 import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.service.CampaignService;
@@ -76,13 +75,13 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 	@Override
 	protected void onGo(ComponentContainer container, ScreenData<?> data) {
 		if (AppContext.canWrite(RolePermissionCollections.CRM_CONTACT)) {
-			SimpleContact contact = null;
+			Contact contact = null;
 			if (data.getParams() instanceof Contact) {
-				contact = (SimpleContact) data.getParams();
+				contact = (Contact) data.getParams();
 			} else if (data.getParams() instanceof Integer) {
 				ContactService contactService = AppContext
 						.getSpringBean(ContactService.class);
-				contact = (SimpleContact) contactService
+				contact = (Contact) contactService
 						.findByPrimaryKey((Integer) data.getParams());
 				if (contact == null) {
 					AppContext
@@ -106,7 +105,7 @@ public class ContactAddPresenter extends CrmGenericPresenter<ContactAddView> {
 				AppContext.addFragment(
 						"crm/contact/edit/"
 								+ UrlEncodeDecoder.encode(contact.getId()),
-						"Edit Contact: " + contact.getContactName());
+						"Edit Contact: " + contact.getLastname());
 			}
 		} else {
 			MessageConstants.showMessagePermissionAlert();

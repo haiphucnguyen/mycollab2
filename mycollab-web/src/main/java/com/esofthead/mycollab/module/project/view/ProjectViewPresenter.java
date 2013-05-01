@@ -19,12 +19,14 @@ import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.TimeTrackingScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.VersionScreenData;
 import com.esofthead.mycollab.module.project.view.people.UserGroupPresenter;
 import com.esofthead.mycollab.module.project.view.problem.ProblemPresenter;
 import com.esofthead.mycollab.module.project.view.risk.RiskPresenter;
 import com.esofthead.mycollab.module.project.view.standup.StandupPresenter;
 import com.esofthead.mycollab.module.project.view.task.TaskPresenter;
+import com.esofthead.mycollab.module.project.view.time.TimeTrackingPresenter;
 import com.esofthead.mycollab.module.project.view.user.ProjectDashboardPresenter;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PageActionChain;
@@ -138,6 +140,10 @@ public class ProjectViewPresenter extends AbstractPresenter<ProjectView> {
 				ProjectRoleScreenData.Read.class)) {
 			presenter = PresenterResolver
 					.getPresenter(UserGroupPresenter.class);
+		} else if (ClassUtils.instanceOf(pageAction,
+				TimeTrackingScreenData.Search.class)) {
+			presenter = PresenterResolver
+					.getPresenter(TimeTrackingPresenter.class);
 		} else {
 			throw new UnsupportedOperationException(
 					"Not support page action chain " + pageAction);

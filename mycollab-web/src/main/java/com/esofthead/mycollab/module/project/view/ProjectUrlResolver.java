@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.project.view.problem.ProblemUrlResolver;
 import com.esofthead.mycollab.module.project.view.risk.RiskUrlResolver;
 import com.esofthead.mycollab.module.project.view.standup.StandupUrlResolver;
 import com.esofthead.mycollab.module.project.view.task.ScheduleUrlResolver;
+import com.esofthead.mycollab.module.project.view.time.TimeUrlResolver;
 import com.esofthead.mycollab.shell.events.ShellEvent;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
@@ -30,6 +31,7 @@ public class ProjectUrlResolver extends UrlResolver {
 		this.addSubResolver("standup", new StandupUrlResolver());
 		this.addSubResolver("user", new UserUrlResolver());
 		this.addSubResolver("role", new RoleUrlResolver());
+		this.addSubResolver("time", new TimeUrlResolver());
 	}
 
 	@Override

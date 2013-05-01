@@ -34,215 +34,225 @@ import com.vaadin.ui.Window;
 @SuppressWarnings("serial")
 public abstract class ContactPreviewBuilder extends VerticalLayout {
 
-    protected AdvancedPreviewBeanForm<Contact> previewForm;
-    protected SimpleContact contact;
-    protected ContactOpportunityListComp associateOpportunityList;
-    protected EventRelatedItemListComp associateActivityList;
-    protected NoteListItems noteListItems;
+	protected AdvancedPreviewBeanForm<Contact> previewForm;
+	protected SimpleContact contact;
+	protected ContactOpportunityListComp associateOpportunityList;
+	protected EventRelatedItemListComp associateActivityList;
+	protected NoteListItems noteListItems;
 
-    protected void initRelatedComponent() {
-        associateOpportunityList = new ContactOpportunityListComp();
-        associateActivityList = new EventRelatedItemListComp(true);
-        noteListItems = new NoteListItems("Notes");
-    }
+	protected void initRelatedComponent() {
+		associateOpportunityList = new ContactOpportunityListComp();
+		associateActivityList = new EventRelatedItemListComp(true);
+		noteListItems = new NoteListItems("Notes");
+	}
 
-    public void previewItem(SimpleContact item) {
-        contact = item;
-        previewForm.setItemDataSource(new BeanItem<SimpleContact>(contact));
-        displayNotes();
-        displayActivities();
-        displayAssociateOpportunityList();
-    }
+	public void previewItem(SimpleContact item) {
+		contact = item;
+		previewForm.setItemDataSource(new BeanItem<SimpleContact>(contact));
+		displayNotes();
+		displayActivities();
+		displayAssociateOpportunityList();
+	}
 
-    public ContactOpportunityListComp getAssociateOpportunityList() {
-        return associateOpportunityList;
-    }
+	public ContactOpportunityListComp getAssociateOpportunityList() {
+		return associateOpportunityList;
+	}
 
-    public EventRelatedItemListComp getAssociateActivityList() {
-        return associateActivityList;
-    }
-    
+	public EventRelatedItemListComp getAssociateActivityList() {
+		return associateActivityList;
+	}
 
-    public SimpleContact getContact() {
-        return contact;
-    }
+	public SimpleContact getContact() {
+		return contact;
+	}
 
-    public AdvancedPreviewBeanForm<Contact> getPreviewForm() {
-        return previewForm;
-    }
+	public AdvancedPreviewBeanForm<Contact> getPreviewForm() {
+		return previewForm;
+	}
 
-    private void displayNotes() {
-        noteListItems.showNotes(CrmTypeConstants.CONTACT, contact.getId());
-    }
-    
-    public void displayActivities() {
-        EventSearchCriteria criteria = new EventSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-        criteria.setType(new StringSearchField(SearchField.AND, CrmTypeConstants.CONTACT));
-        criteria.setTypeid(new NumberSearchField(contact.getId()));
-        associateActivityList.setSearchCriteria(criteria);
-    }
+	private void displayNotes() {
+		noteListItems.showNotes(CrmTypeConstants.CONTACT, contact.getId());
+	}
 
-    private void displayAssociateOpportunityList() {
-        OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-                AppContext.getAccountId()));
-        criteria.setContactId(new NumberSearchField(SearchField.AND, contact
-                .getId()));
-        associateOpportunityList.displayOpportunities(contact);
-    }
+	public void displayActivities() {
+		EventSearchCriteria criteria = new EventSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+		criteria.setType(new StringSearchField(SearchField.AND,
+				CrmTypeConstants.CONTACT));
+		criteria.setTypeid(new NumberSearchField(contact.getId()));
+		associateActivityList.setSearchCriteria(criteria);
+	}
 
-    protected class ContactFormFieldFactory extends DefaultFormViewFieldFactory {
+	private void displayAssociateOpportunityList() {
+		OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		criteria.setContactId(new NumberSearchField(SearchField.AND, contact
+				.getId()));
+		associateOpportunityList.displayOpportunities(contact);
+	}
 
-        @Override
-        protected Field onCreateField(Item item, Object propertyId,
-                Component uiContext) {
-//            if (propertyId.equals("accountId")) {
-//                return new FormLinkViewField(contact.getAccountName(),
-//                        new Button.ClickListener() {
-//                            @Override
-//                            public void buttonClick(ClickEvent event) {
-//                                EventBus.getInstance()
-//                                        .fireEvent(
-//                                        new AccountEvent.GotoRead(
-//                                        this,
-//                                        contact.getAccountId()));
-//
-//                            }
-//                        });
-            if (propertyId.equals("email")) {
-                return new FormEmailLinkViewField(contact.getEmail());
-            } else if (propertyId.equals("assignuser")) {
-                return new FormLinkViewField(contact
-                        .getAssignUserFullName(),
-                        new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                                // TODO Auto-generated method stub
-                            }
-                        });
-            }
+	protected class ContactFormFieldFactory extends DefaultFormViewFieldFactory {
 
-            return null;
-        }
-    }
+		@Override
+		protected Field onCreateField(Item item, Object propertyId,
+				Component uiContext) {
+			// if (propertyId.equals("accountId")) {
+			// return new FormLinkViewField(contact.getAccountName(),
+			// new Button.ClickListener() {
+			// @Override
+			// public void buttonClick(ClickEvent event) {
+			// EventBus.getInstance()
+			// .fireEvent(
+			// new AccountEvent.GotoRead(
+			// this,
+			// contact.getAccountId()));
+			//
+			// }
+			// });
+			if (propertyId.equals("email")) {
+				return new FormEmailLinkViewField(contact.getEmail());
+			} else if (propertyId.equals("assignuser")) {
+				return new FormLinkViewField(contact.getAssignUserFullName(),
+						new Button.ClickListener() {
+							@Override
+							public void buttonClick(ClickEvent event) {
+								// TODO Auto-generated method stub
+							}
+						});
+			} else if (propertyId.equals("iscallable")) {
+				if (contact.getIscallable() == null
+						|| Boolean.FALSE == contact.getIscallable()) {
+					return new FormViewField("No");
+				} else {
+					return new FormViewField("Yes");
+				}
+			}
 
-    public static class ReadView extends ContactPreviewBuilder {
-        private TabSheet tabContainer;
-        private VerticalLayout contactInformation;
-        private VerticalLayout relatedItemsContainer;
-        private AddViewLayout contactAddLayout;
-        
-        public ReadView() {
-            contactAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/account.png"));
-            contactAddLayout.addStyleName("preview");
-            this.addComponent(contactAddLayout);
+			return null;
+		}
+	}
 
-            tabContainer = new TabSheet();
-            tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
-            initRelatedComponent();
+	public static class ReadView extends ContactPreviewBuilder {
+		private TabSheet tabContainer;
+		private VerticalLayout contactInformation;
+		private VerticalLayout relatedItemsContainer;
+		private AddViewLayout contactAddLayout;
 
-            previewForm = new AdvancedPreviewBeanForm<Contact>() {
-                @Override
-                public void setItemDataSource(Item newDataSource) {
-                    this.setFormLayoutFactory(new ContactFormLayoutFactory.ContactInformationLayout());
-                    this.setFormFieldFactory(new ContactFormFieldFactory());
-                    super.setItemDataSource(newDataSource);
-                    contactAddLayout.setTitle(contact.getContactName());
-                }
+		public ReadView() {
+			contactAddLayout = new AddViewLayout("", new ThemeResource(
+					"icons/48/crm/account.png"));
+			contactAddLayout.addStyleName("preview");
+			this.addComponent(contactAddLayout);
 
-                @Override
-                protected void doPrint() {
-                    // Create a window that contains what you want to print
-                    Window window = new Window("Window to Print");
+			tabContainer = new TabSheet();
+			tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
+			initRelatedComponent();
 
-                    ContactPreviewBuilder printView = new ContactPreviewBuilder.PrintView();
-                    printView.previewItem(contact);
-                    window.addComponent(printView);
+			previewForm = new AdvancedPreviewBeanForm<Contact>() {
+				@Override
+				public void setItemDataSource(Item newDataSource) {
+					this.setFormLayoutFactory(new ContactFormLayoutFactory.ContactInformationLayout());
+					this.setFormFieldFactory(new ContactFormFieldFactory());
+					super.setItemDataSource(newDataSource);
+					contactAddLayout.setTitle(contact.getContactName());
+				}
 
-                    // Add the printing window as a new application-level window
-                    getApplication().addWindow(window);
+				@Override
+				protected void doPrint() {
+					// Create a window that contains what you want to print
+					Window window = new Window("Window to Print");
 
-                    // Open it as a popup window with no decorations
-                    getWindow().open(new ExternalResource(window.getURL()),
-                            "_blank", 1100, 200, // Width and height 
-                            Window.BORDER_NONE); // No decorations
+					ContactPreviewBuilder printView = new ContactPreviewBuilder.PrintView();
+					printView.previewItem(contact);
+					window.addComponent(printView);
 
-                    // Print automatically when the window opens.
-                    // This call will block until the print dialog exits!
-                    window.executeJavaScript("print();");
+					// Add the printing window as a new application-level window
+					getApplication().addWindow(window);
 
-                    // Close the window automatically after printing
-                    window.executeJavaScript("self.close();");
-                }
+					// Open it as a popup window with no decorations
+					getWindow().open(new ExternalResource(window.getURL()),
+							"_blank", 1100, 200, // Width and height
+							Window.BORDER_NONE); // No decorations
 
-                @Override
-                protected void showHistory() {
-                    ContactHistoryLogWindow historyLog = new ContactHistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.CONTACT, contact.getId());
-                    getWindow().addWindow(historyLog);
-                }
-            };
+					// Print automatically when the window opens.
+					// This call will block until the print dialog exits!
+					window.executeJavaScript("print();");
 
-            contactInformation = new VerticalLayout();
-            contactInformation.setMargin(true);
-            Layout actionControls = new PreviewFormControlsGenerator<Contact>(
-                    previewForm).createButtonControls(RolePermissionCollections.CRM_CONTACT);
-            contactInformation.addComponent(actionControls);
-            contactInformation.addComponent(previewForm);
-            contactInformation.addComponent(noteListItems);
+					// Close the window automatically after printing
+					window.executeJavaScript("self.close();");
+				}
 
-            tabContainer.addTab(contactInformation, "Contact Information");
+				@Override
+				protected void showHistory() {
+					ContactHistoryLogWindow historyLog = new ContactHistoryLogWindow(
+							ModuleNameConstants.CRM, CrmTypeConstants.CONTACT,
+							contact.getId());
+					getWindow().addWindow(historyLog);
+				}
+			};
 
-            relatedItemsContainer = new VerticalLayout();
-            relatedItemsContainer.setMargin(true);
-            relatedItemsContainer.addComponent(associateActivityList);
-            relatedItemsContainer.addComponent(associateOpportunityList);
-            tabContainer.addTab(relatedItemsContainer, "More Information");
+			contactInformation = new VerticalLayout();
+			contactInformation.setMargin(true);
+			Layout actionControls = new PreviewFormControlsGenerator<Contact>(
+					previewForm)
+					.createButtonControls(RolePermissionCollections.CRM_CONTACT);
+			contactInformation.addComponent(actionControls);
+			contactInformation.addComponent(previewForm);
+			contactInformation.addComponent(noteListItems);
 
-            contactAddLayout.addBody(tabContainer);
-        }
-    }
-    
-    public static class PrintView extends ContactPreviewBuilder {
+			tabContainer.addTab(contactInformation, "Contact Information");
 
-        public PrintView() {
-            previewForm = new AdvancedPreviewBeanForm<Contact>() {
-                @Override
-                public void setItemDataSource(Item newDataSource) {
-                    this.setFormLayoutFactory(new FormLayoutFactory());
-                    this.setFormFieldFactory(new ContactFormFieldFactory());
-                    super.setItemDataSource(newDataSource);
-                }
-            };
-            initRelatedComponent();
+			relatedItemsContainer = new VerticalLayout();
+			relatedItemsContainer.setMargin(true);
+			relatedItemsContainer.addComponent(associateActivityList);
+			relatedItemsContainer.addComponent(associateOpportunityList);
+			tabContainer.addTab(relatedItemsContainer, "More Information");
 
-            this.addComponent(previewForm);
-        }
+			contactAddLayout.addBody(tabContainer);
+		}
+	}
 
-        class FormLayoutFactory extends ContactFormLayoutFactory {
+	public static class PrintView extends ContactPreviewBuilder {
 
-            private static final long serialVersionUID = 1L;
+		public PrintView() {
+			previewForm = new AdvancedPreviewBeanForm<Contact>() {
+				@Override
+				public void setItemDataSource(Item newDataSource) {
+					this.setFormLayoutFactory(new FormLayoutFactory());
+					this.setFormFieldFactory(new ContactFormFieldFactory());
+					super.setItemDataSource(newDataSource);
+				}
+			};
+			initRelatedComponent();
 
-            public FormLayoutFactory() {
-                super(contact.getContactName());
-            }
+			this.addComponent(previewForm);
+		}
 
-            @Override
-            protected Layout createTopPanel() {
-                return null;
-            }
+		class FormLayoutFactory extends ContactFormLayoutFactory {
 
-            @Override
-            protected Layout createBottomPanel() {
-                VerticalLayout relatedItemsPanel = new VerticalLayout();
-                relatedItemsPanel.setWidth("100%");
+			private static final long serialVersionUID = 1L;
 
-                relatedItemsPanel.addComponent(noteListItems);
-                relatedItemsPanel.addComponent(associateActivityList);
-                relatedItemsPanel.addComponent(associateOpportunityList);
+			public FormLayoutFactory() {
+				super(contact.getContactName());
+			}
 
-                return relatedItemsPanel;
-            }
-        }
-    }
+			@Override
+			protected Layout createTopPanel() {
+				return null;
+			}
+
+			@Override
+			protected Layout createBottomPanel() {
+				VerticalLayout relatedItemsPanel = new VerticalLayout();
+				relatedItemsPanel.setWidth("100%");
+
+				relatedItemsPanel.addComponent(noteListItems);
+				relatedItemsPanel.addComponent(associateActivityList);
+				relatedItemsPanel.addComponent(associateOpportunityList);
+
+				return relatedItemsPanel;
+			}
+		}
+	}
 }
