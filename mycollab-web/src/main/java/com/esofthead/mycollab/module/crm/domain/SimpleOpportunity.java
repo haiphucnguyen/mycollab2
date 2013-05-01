@@ -17,6 +17,8 @@
  */
 package com.esofthead.mycollab.module.crm.domain;
 
+import com.esofthead.mycollab.common.domain.Currency;
+
 public class SimpleOpportunity extends Opportunity {
 	private static final long serialVersionUID = 1L;
 
@@ -25,6 +27,8 @@ public class SimpleOpportunity extends Opportunity {
 	private String campaignName;
 
 	private String assignUserFullName;
+	
+	private Currency currency;
 
 	public String getAccountName() {
 		return accountName;
@@ -49,5 +53,13 @@ public class SimpleOpportunity extends Opportunity {
 
 	public void setAssignUserFullName(String assignUserFullName) {
 		this.assignUserFullName = assignUserFullName;
+	}
+
+	public Currency getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(Currency currency) {
+		this.currency = currency;
 	}
 }

@@ -17,9 +17,14 @@
  */
 package com.esofthead.mycollab.module.crm.domain;
 
+import com.esofthead.mycollab.common.domain.Currency;
+
 public class SimpleCampaign extends CampaignWithBLOBs {
 	private static final long serialVersionUID = 1L;
+	
 	private String assignUserFullName;
+	
+	private Currency currency;
 
 	public String getAssignUserFullName() {
 		return assignUserFullName;
@@ -27,5 +32,13 @@ public class SimpleCampaign extends CampaignWithBLOBs {
 
 	public void setAssignUserFullName(String assignUserFullName) {
 		this.assignUserFullName = assignUserFullName;
+	}
+
+	public Currency getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(Currency currency) {
+		this.currency = currency;
 	}
 }

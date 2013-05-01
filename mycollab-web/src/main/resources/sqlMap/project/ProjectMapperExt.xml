@@ -17,6 +17,9 @@
         <result column="numOpenRisks" jdbcType="INTEGER"
             property="numOpenRisks" />
         <result column="numRisks" jdbcType="INTEGER" property="numRisks" />
+        <association property="currency"
+            resultMap="com.esofthead.mycollab.common.dao.CurrencyMapper.BaseResultMap"
+            columnPrefix="curr_"></association>
     </resultMap>
 
     <resultMap
@@ -58,11 +61,13 @@
             ]]>
         </if>
         <if test="projectStatus != null">
-            ${projectStatus.operation} m_prj_project.projectStatus
+            ${projectStatus.operation}
+            m_prj_project.projectStatus
             like '%${projectStatus.value}%'
         </if>
         <if test="projectType != null">
-            ${projectType.operation} m_prj_project.projectType like
+            ${projectType.operation} m_prj_project.projectType
+            like
             '%${projectType.value}%'
         </if>
         <if test="saccountid != null">
@@ -113,7 +118,8 @@
             '%${projectStatus.value}%'
         </if>
         <if test="projectType != null">
-            ${projectType.operation} m_prj_project.projectType like
+            ${projectType.operation} m_prj_project.projectType
+            like
             '%${projectType.value}%'
         </if>
         <if test="saccountid != null">
@@ -143,10 +149,13 @@
         (SELECT COUNT(*) FROM m_tracker_bug WHERE m_tracker_bug.projectid=m_prj_project.id) AS numBugs,
         (SELECT COUNT(*) FROM m_tracker_bug WHERE m_tracker_bug.projectid=m_prj_project.id AND m_tracker_bug.status IN ('Open', 'In Progress', 'Reopenned')) AS numOpenBugs, 
         (SELECT COUNT(*) FROM m_prj_task WHERE m_prj_task.projectid=m_prj_project.id) AS numTasks,
-        (SELECT COUNT(*) FROM m_prj_task WHERE m_prj_task.projectid=m_prj_project.id AND m_prj_task.status='Open') AS numOpenTasks
+        (SELECT COUNT(*) FROM m_prj_task WHERE m_prj_task.projectid=m_prj_project.id AND m_prj_task.status='Open') AS numOpenTasks,
+        s_currency.id, s_currency.name AS curr_name, s_currency.isocode AS curr_isocode, 
+        s_currency.symbol AS curr_symbol, s_currency.conversionrate AS curr_conversionrate
         FROM m_prj_project 
             LEFT OUTER JOIN m_crm_account ON (m_crm_account.id=m_prj_project.account) 
             LEFT OUTER JOIN s_user ON (m_prj_project.owner = s_user.username) 
+            LEFT OUTER JOIN s_currency ON (m_prj_project.currencyid=s_currency.id)
         ]]>
     </sql>
 

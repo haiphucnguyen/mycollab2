@@ -1,5 +1,7 @@
 package com.esofthead.mycollab.module.project.domain;
 
+import com.esofthead.mycollab.common.domain.Currency;
+
 public class SimpleProject extends Project {
 	private static final long serialVersionUID = 1L;
 
@@ -22,6 +24,8 @@ public class SimpleProject extends Project {
 	private int numOpenRisks;
 
 	private int numRisks;
+	
+	private Currency currency;
 
 	public String getOwnerName() {
 		return ownerName;
@@ -101,5 +105,13 @@ public class SimpleProject extends Project {
 
 	public void setNumRisks(int numRisks) {
 		this.numRisks = numRisks;
+	}
+
+	public Currency getCurrency() {
+		return currency;
+	}
+
+	public void setCurrency(Currency currency) {
+		this.currency = currency;
 	}
 }

@@ -130,7 +130,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 						informationLayout.addComponent(field, "Description", 0,
 								1, 2, UIConstants.DEFAULT_2XCONTROL_WIDTH,
 								Alignment.TOP_LEFT);
-					} 
+					}
 				}
 			});
 
@@ -149,7 +149,7 @@ public class ProjectInformationComponent extends VerticalLayout {
 					} else if (propertyId.equals("description")) {
 						return new FormViewField(project.getDescription(),
 								Label.CONTENT_XHTML);
-					} 
+					}
 					return null;
 				}
 			});
@@ -220,7 +220,14 @@ public class ProjectInformationComponent extends VerticalLayout {
 					} else if (propertyId.equals("description")) {
 						return new FormViewField(project.getDescription(),
 								Label.CONTENT_XHTML);
-					} 
+					} else if (propertyId.equals("currencyid")) {
+						if (project.getCurrency() != null) {
+							return new FormViewField(project.getCurrency()
+									.getName());
+						} else {
+							return new FormViewField("");
+						}
+					}
 					return null;
 				}
 			});

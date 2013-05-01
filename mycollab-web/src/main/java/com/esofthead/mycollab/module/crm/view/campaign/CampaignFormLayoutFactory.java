@@ -102,11 +102,11 @@ public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
             campaignGoal.addComponent(propertyId.equals("currencyid"), field,
                     "Currency", 0, 0);
             campaignGoal.addComponent(propertyId.equals("budget"), field, "Budget",
-                    1, 0);
+                    1, 1);
             campaignGoal.addComponent(propertyId.equals("expectedcost"), field,
                     "Expected Cost", 0, 1);
             campaignGoal.addComponent(propertyId.equals("actualcost"), field,
-                    "Actual Cost", 1, 1);
+                    "Actual Cost", 1, 2);
             campaignGoal.addComponent(propertyId.equals("expectedrevenue"), field,
                     "Expected Revenue", 0, 2);
 

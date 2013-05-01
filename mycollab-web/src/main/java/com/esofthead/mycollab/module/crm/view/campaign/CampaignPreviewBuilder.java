@@ -32,230 +32,241 @@ import com.vaadin.ui.Window;
 
 @SuppressWarnings("serial")
 public class CampaignPreviewBuilder extends VerticalLayout {
-    
-    protected AdvancedPreviewBeanForm<CampaignWithBLOBs> previewForm;
-    protected SimpleCampaign campaign;
-    protected CampaignAccountListComp associateAccountList;
-    protected CampaignContactListComp associateContactList;
-    protected CampaignLeadListComp associateLeadList;
-    protected EventRelatedItemListComp associateActivityList;
-    protected NoteListItems noteListItems;
-    
-    public CampaignPreviewBuilder() {
-    }
-    
-    protected void initRelatedComponent() {
-        associateAccountList = new CampaignAccountListComp();
-        associateContactList = new CampaignContactListComp();
-        associateLeadList = new CampaignLeadListComp();
-        associateActivityList = new EventRelatedItemListComp(true);
-        noteListItems = new NoteListItems("Notes");
-    }
-    
-    public void previewItem(SimpleCampaign campaign) {
-        this.campaign = campaign;
-        previewForm.setItemDataSource(new BeanItem<CampaignWithBLOBs>(campaign));
-        displayActivities();
-        displayAccounts();
-        displayContacts();
-        displayLeads();
-    }
-    
-    private void displayActivities() {
-        EventSearchCriteria criteria = new EventSearchCriteria();
-        criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-        criteria.setType(new StringSearchField(SearchField.AND, CrmTypeConstants.CAMPAIGN));
-        criteria.setTypeid(new NumberSearchField(campaign.getId()));
-        associateActivityList.setSearchCriteria(criteria);
-    }
-    
-    private void displayAccounts() {
-       associateAccountList.displayAccounts(campaign);
-    }
-    
-    private void displayContacts() {
-        associateContactList.displayContacts(campaign);
-    }
-    
-    private void displayLeads() {
-        associateLeadList.displayLeads(campaign);
-    }
-    
-    public SimpleCampaign getCampaign() {
-        return campaign;
-    }
-    
-    public AdvancedPreviewBeanForm<CampaignWithBLOBs> getPreviewForm() {
-        return previewForm;
-    }
 
-    public EventRelatedItemListComp getAssociateActivityList() {
-        return associateActivityList;
-    }
+	protected AdvancedPreviewBeanForm<CampaignWithBLOBs> previewForm;
+	protected SimpleCampaign campaign;
+	protected CampaignAccountListComp associateAccountList;
+	protected CampaignContactListComp associateContactList;
+	protected CampaignLeadListComp associateLeadList;
+	protected EventRelatedItemListComp associateActivityList;
+	protected NoteListItems noteListItems;
 
-    public CampaignAccountListComp getAssociateAccountList() {
-        return associateAccountList;
-    }
+	public CampaignPreviewBuilder() {
+	}
 
-    public CampaignContactListComp getAssociateContactList() {
-        return associateContactList;
-    }
+	protected void initRelatedComponent() {
+		associateAccountList = new CampaignAccountListComp();
+		associateContactList = new CampaignContactListComp();
+		associateLeadList = new CampaignLeadListComp();
+		associateActivityList = new EventRelatedItemListComp(true);
+		noteListItems = new NoteListItems("Notes");
+	}
 
-    public CampaignLeadListComp getAssociateLeadList() {
-        return associateLeadList;
-    }
-    
-    protected class CampaignFormFieldFactory extends DefaultFormViewFieldFactory {
-        
-        private static final long serialVersionUID = 1L;
-        
-        @Override
-        protected Field onCreateField(Item item, Object propertyId,
-                Component uiContext) {
-            if (propertyId.equals("assignuser")) {
-                return new FormLinkViewField(campaign
-                        .getAssignUserFullName(),
-                        new Button.ClickListener() {
-                            @Override
-                            public void buttonClick(ClickEvent event) {
-                            }
-                        });
-            } else if (propertyId.equals("startdate")) {
-                return new FormViewField(AppContext.formatDate(campaign
-                        .getStartdate()));
-            } else if (propertyId.equals("enddate")) {
-                return new FormViewField(AppContext.formatDate(campaign
-                        .getEnddate()));
-            }
-            
-            return null;
-        }
-    }
-    
-    public static class ReadView extends CampaignPreviewBuilder {
-        
-        private static final long serialVersionUID = 1L;
-        private TabSheet tabContainer;
-        private VerticalLayout campaignInformationLayout;
-        private VerticalLayout relatedItemsContainer;
-        private AddViewLayout campaignAddLayout;
-        
-        public ReadView() {
-            campaignAddLayout = new AddViewLayout("", new ThemeResource("icons/48/crm/campaign.png"));
-            campaignAddLayout.addStyleName("preview");
-            this.addComponent(campaignAddLayout);
-            
-            tabContainer = new TabSheet();
-            tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
-            initRelatedComponent();
-            
-            previewForm = new AdvancedPreviewBeanForm<CampaignWithBLOBs>() {
-                @Override
-                public void setItemDataSource(Item newDataSource) {
-                    this.setFormLayoutFactory(new CampaignFormLayoutFactory.CampaignInformationLayout());
-                    this.setFormFieldFactory(new CampaignFormFieldFactory());
-                    super.setItemDataSource(newDataSource);
-                    campaignAddLayout.setTitle(campaign.getCampaignname());
-                }
-                
-                @Override
-                protected void doPrint() {
-                    // Create a window that contains what you want to print
-                    Window window = new Window("Window to Print");
-                    
-                    CampaignPreviewBuilder printView = new CampaignPreviewBuilder.PrintView();
-                    printView.previewItem(campaign);
-                    window.addComponent(printView);
+	public void previewItem(SimpleCampaign campaign) {
+		this.campaign = campaign;
+		previewForm
+				.setItemDataSource(new BeanItem<CampaignWithBLOBs>(campaign));
+		displayActivities();
+		displayAccounts();
+		displayContacts();
+		displayLeads();
+	}
 
-                    // Add the printing window as a new application-level window
-                    getApplication().addWindow(window);
+	private void displayActivities() {
+		EventSearchCriteria criteria = new EventSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+		criteria.setType(new StringSearchField(SearchField.AND,
+				CrmTypeConstants.CAMPAIGN));
+		criteria.setTypeid(new NumberSearchField(campaign.getId()));
+		associateActivityList.setSearchCriteria(criteria);
+	}
 
-                    // Open it as a popup window with no decorations
-                    getWindow().open(new ExternalResource(window.getURL()),
-                            "_blank", 1100, 200, // Width and height 
-                            Window.BORDER_NONE); // No decorations
+	private void displayAccounts() {
+		associateAccountList.displayAccounts(campaign);
+	}
 
-                    // Print automatically when the window opens.
-                    // This call will block until the print dialog exits!
-                    window.executeJavaScript("print();");
+	private void displayContacts() {
+		associateContactList.displayContacts(campaign);
+	}
 
-                    // Close the window automatically after printing
-                    window.executeJavaScript("self.close();");
-                }
-                
-                @Override
-                protected void showHistory() {
-                    CampaignHistoryLogWindow historyLog = new CampaignHistoryLogWindow(ModuleNameConstants.CRM, CrmTypeConstants.CAMPAIGN, campaign.getId());
-                    getWindow().addWindow(historyLog);
-                }
-            };
-            
-            campaignInformationLayout = new VerticalLayout();
-            campaignInformationLayout.setMargin(true);
-            Layout actionControls = new PreviewFormControlsGenerator<CampaignWithBLOBs>(
-                    previewForm).createButtonControls(RolePermissionCollections.CRM_CAMPAIGN);
-            campaignInformationLayout.addComponent(actionControls);
-            campaignInformationLayout.addComponent(previewForm);
-            campaignInformationLayout.addComponent(noteListItems);
-            
-            tabContainer.addTab(campaignInformationLayout, "Campaign Information");
-            
-            
-            
-            relatedItemsContainer = new VerticalLayout();
-            relatedItemsContainer.setMargin(true);
-            relatedItemsContainer.addComponent(associateActivityList);
-            relatedItemsContainer.addComponent(associateAccountList);
-            relatedItemsContainer.addComponent(associateContactList);
-            relatedItemsContainer.addComponent(associateLeadList);
-            tabContainer.addTab(relatedItemsContainer, "More Information");
-            
-            campaignAddLayout.addBody(tabContainer);
-        }
-    }
-    
-    public static class PrintView extends CampaignPreviewBuilder {
-        
-        public PrintView() {
-            previewForm = new AdvancedPreviewBeanForm<CampaignWithBLOBs>() {
-                @Override
-                public void setItemDataSource(Item newDataSource) {
-                    this.setFormLayoutFactory(new FormLayoutFactory());
-                    this.setFormFieldFactory(new CampaignFormFieldFactory());
-                    super.setItemDataSource(newDataSource);
-                }
-            };
-            initRelatedComponent();
-            
-            this.addComponent(previewForm);
-        }
-        
-        class FormLayoutFactory extends CampaignFormLayoutFactory {
-            
-            private static final long serialVersionUID = 1L;
-            
-            public FormLayoutFactory() {
-                super(campaign.getCampaignname());
-            }
-            
-            @Override
-            protected Layout createTopPanel() {
-                return null;
-            }
-            
-            @Override
-            protected Layout createBottomPanel() {
-                VerticalLayout relatedItemsPanel = new VerticalLayout();
-                relatedItemsPanel.setWidth("100%");
-                
-                relatedItemsPanel.addComponent(noteListItems);
-                relatedItemsPanel.addComponent(associateActivityList);
-                relatedItemsPanel.addComponent(associateAccountList);
-                relatedItemsPanel.addComponent(associateContactList);
-                relatedItemsPanel.addComponent(associateLeadList);
-                
-                return relatedItemsPanel;
-            }
-        }
-    }
+	private void displayLeads() {
+		associateLeadList.displayLeads(campaign);
+	}
+
+	public SimpleCampaign getCampaign() {
+		return campaign;
+	}
+
+	public AdvancedPreviewBeanForm<CampaignWithBLOBs> getPreviewForm() {
+		return previewForm;
+	}
+
+	public EventRelatedItemListComp getAssociateActivityList() {
+		return associateActivityList;
+	}
+
+	public CampaignAccountListComp getAssociateAccountList() {
+		return associateAccountList;
+	}
+
+	public CampaignContactListComp getAssociateContactList() {
+		return associateContactList;
+	}
+
+	public CampaignLeadListComp getAssociateLeadList() {
+		return associateLeadList;
+	}
+
+	protected class CampaignFormFieldFactory extends
+			DefaultFormViewFieldFactory {
+
+		private static final long serialVersionUID = 1L;
+
+		@Override
+		protected Field onCreateField(Item item, Object propertyId,
+				Component uiContext) {
+			if (propertyId.equals("assignuser")) {
+				return new FormLinkViewField(campaign.getAssignUserFullName(),
+						new Button.ClickListener() {
+							@Override
+							public void buttonClick(ClickEvent event) {
+							}
+						});
+			} else if (propertyId.equals("startdate")) {
+				return new FormViewField(AppContext.formatDate(campaign
+						.getStartdate()));
+			} else if (propertyId.equals("enddate")) {
+				return new FormViewField(AppContext.formatDate(campaign
+						.getEnddate()));
+			} else if (propertyId.equals("currencyid")) {
+				if (campaign.getCurrency() != null) {
+					return new FormViewField(campaign.getCurrency().getName());
+				} else {
+					return new FormViewField("");
+				}
+			}
+
+			return null;
+		}
+	}
+
+	public static class ReadView extends CampaignPreviewBuilder {
+
+		private static final long serialVersionUID = 1L;
+		private TabSheet tabContainer;
+		private VerticalLayout campaignInformationLayout;
+		private VerticalLayout relatedItemsContainer;
+		private AddViewLayout campaignAddLayout;
+
+		public ReadView() {
+			campaignAddLayout = new AddViewLayout("", new ThemeResource(
+					"icons/48/crm/campaign.png"));
+			campaignAddLayout.addStyleName("preview");
+			this.addComponent(campaignAddLayout);
+
+			tabContainer = new TabSheet();
+			tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
+			initRelatedComponent();
+
+			previewForm = new AdvancedPreviewBeanForm<CampaignWithBLOBs>() {
+				@Override
+				public void setItemDataSource(Item newDataSource) {
+					this.setFormLayoutFactory(new CampaignFormLayoutFactory.CampaignInformationLayout());
+					this.setFormFieldFactory(new CampaignFormFieldFactory());
+					super.setItemDataSource(newDataSource);
+					campaignAddLayout.setTitle(campaign.getCampaignname());
+				}
+
+				@Override
+				protected void doPrint() {
+					// Create a window that contains what you want to print
+					Window window = new Window("Window to Print");
+
+					CampaignPreviewBuilder printView = new CampaignPreviewBuilder.PrintView();
+					printView.previewItem(campaign);
+					window.addComponent(printView);
+
+					// Add the printing window as a new application-level window
+					getApplication().addWindow(window);
+
+					// Open it as a popup window with no decorations
+					getWindow().open(new ExternalResource(window.getURL()),
+							"_blank", 1100, 200, // Width and height
+							Window.BORDER_NONE); // No decorations
+
+					// Print automatically when the window opens.
+					// This call will block until the print dialog exits!
+					window.executeJavaScript("print();");
+
+					// Close the window automatically after printing
+					window.executeJavaScript("self.close();");
+				}
+
+				@Override
+				protected void showHistory() {
+					CampaignHistoryLogWindow historyLog = new CampaignHistoryLogWindow(
+							ModuleNameConstants.CRM, CrmTypeConstants.CAMPAIGN,
+							campaign.getId());
+					getWindow().addWindow(historyLog);
+				}
+			};
+
+			campaignInformationLayout = new VerticalLayout();
+			campaignInformationLayout.setMargin(true);
+			Layout actionControls = new PreviewFormControlsGenerator<CampaignWithBLOBs>(
+					previewForm)
+					.createButtonControls(RolePermissionCollections.CRM_CAMPAIGN);
+			campaignInformationLayout.addComponent(actionControls);
+			campaignInformationLayout.addComponent(previewForm);
+			campaignInformationLayout.addComponent(noteListItems);
+
+			tabContainer.addTab(campaignInformationLayout,
+					"Campaign Information");
+
+			relatedItemsContainer = new VerticalLayout();
+			relatedItemsContainer.setMargin(true);
+			relatedItemsContainer.addComponent(associateActivityList);
+			relatedItemsContainer.addComponent(associateAccountList);
+			relatedItemsContainer.addComponent(associateContactList);
+			relatedItemsContainer.addComponent(associateLeadList);
+			tabContainer.addTab(relatedItemsContainer, "More Information");
+
+			campaignAddLayout.addBody(tabContainer);
+		}
+	}
+
+	public static class PrintView extends CampaignPreviewBuilder {
+
+		public PrintView() {
+			previewForm = new AdvancedPreviewBeanForm<CampaignWithBLOBs>() {
+				@Override
+				public void setItemDataSource(Item newDataSource) {
+					this.setFormLayoutFactory(new FormLayoutFactory());
+					this.setFormFieldFactory(new CampaignFormFieldFactory());
+					super.setItemDataSource(newDataSource);
+				}
+			};
+			initRelatedComponent();
+
+			this.addComponent(previewForm);
+		}
+
+		class FormLayoutFactory extends CampaignFormLayoutFactory {
+
+			private static final long serialVersionUID = 1L;
+
+			public FormLayoutFactory() {
+				super(campaign.getCampaignname());
+			}
+
+			@Override
+			protected Layout createTopPanel() {
+				return null;
+			}
+
+			@Override
+			protected Layout createBottomPanel() {
+				VerticalLayout relatedItemsPanel = new VerticalLayout();
+				relatedItemsPanel.setWidth("100%");
+
+				relatedItemsPanel.addComponent(noteListItems);
+				relatedItemsPanel.addComponent(associateActivityList);
+				relatedItemsPanel.addComponent(associateAccountList);
+				relatedItemsPanel.addComponent(associateContactList);
+				relatedItemsPanel.addComponent(associateLeadList);
+
+				return relatedItemsPanel;
+			}
+		}
+	}
 }
