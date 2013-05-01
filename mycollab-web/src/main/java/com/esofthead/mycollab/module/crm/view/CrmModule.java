@@ -12,6 +12,7 @@ import com.esofthead.mycollab.module.crm.events.ContactEvent;
 import com.esofthead.mycollab.module.crm.events.CrmEvent;
 import com.esofthead.mycollab.module.crm.events.LeadEvent;
 import com.esofthead.mycollab.module.crm.events.OpportunityEvent;
+import com.esofthead.mycollab.module.crm.localization.CrmCommonI18nEnum;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -21,6 +22,7 @@ import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
@@ -34,22 +36,7 @@ import com.vaadin.ui.VerticalLayout;
 public class CrmModule extends AbstractView implements IModule {
 
 	private static final long serialVersionUID = 1L;
-	private static final String ACCOUNT_LIST = "Accounts";
-	private static final String NEW_ACCOUNT_ITEM = "New Account";
-	private static final String NEW_CASE_ITEM = "New Case";
-	private static final String CASE_LIST = "Cases";
-	private static final String CONTACT_LIST = "Contacts";
-	private static final String NEW_CONTACT_ITEM = "New Contact";
-	private static final String CAMPAIGN_LIST = "Campaigns";
-	private static final String NEW_CAMPAIGN_ITEM = "New Campaign";
-	private static final String LEAD_LIST = "Leads";
-	private static final String NEW_LEAD_ITEM = "New Lead";
-	private static final String OPPORTUNITY_LIST = "Opportunities";
-	private static final String NEW_OPPORTUNITY_ITEM = "New Opportunity";
-	private static final String NEW_TASK_ITEM = "New Task";
-	private static final String NEW_CALL_ITEM = "New Call";
-	private static final String NEW_MEETING_ITEM = "New Meeting";
-	private static final String ACTIVITIES_LIST = "Activities";
+
 	private final VerticalLayout currentView;
 	private final PopupButton addBtn;
 	private final CssLayout toolbar;
@@ -69,43 +56,64 @@ public class CrmModule extends AbstractView implements IModule {
 		homeBtn.setIcon(new ThemeResource("icons/16/home.png"));
 		toolbar.addComponent(homeBtn);
 
-		Button accountList = new Button(ACCOUNT_LIST, listener);
+		Button accountList = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER),
+				listener);
 		accountList.setEnabled(AppContext
 				.canRead(RolePermissionCollections.CRM_ACCOUNT));
 		accountList.setStyleName("link");
 		toolbar.addComponent(accountList);
 
-		Button contactList = new Button(CONTACT_LIST, listener);
+		Button contactList = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER),
+				listener);
 		contactList.setEnabled(AppContext
 				.canRead(RolePermissionCollections.CRM_CONTACT));
 		contactList.setStyleName("link");
 		toolbar.addComponent(contactList);
 
-		Button campaignList = new Button(CAMPAIGN_LIST, listener);
+		Button campaignList = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER),
+				listener);
 		campaignList.setEnabled(AppContext
 				.canRead(RolePermissionCollections.CRM_CAMPAIGN));
 		campaignList.setStyleName("link");
 		toolbar.addComponent(campaignList);
 
-		Button leadList = new Button(LEAD_LIST, listener);
+		Button leadList = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER),
+				listener);
 		leadList.setEnabled(AppContext
 				.canRead(RolePermissionCollections.CRM_LEAD));
 		leadList.setStyleName("link");
 		toolbar.addComponent(leadList);
 
-		Button opportunityList = new Button(OPPORTUNITY_LIST, listener);
+		Button opportunityList = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNTIES_HEADER),
+				listener);
 		opportunityList.setEnabled(AppContext
 				.canRead(RolePermissionCollections.CRM_OPPORTUNITY));
 		opportunityList.setStyleName("link");
 		toolbar.addComponent(opportunityList);
 
-		Button caseList = new Button(CASE_LIST, listener);
+		Button caseList = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CASES_HEADER),
+				listener);
 		caseList.setEnabled(AppContext
 				.canRead(RolePermissionCollections.CRM_CASE));
 		caseList.setStyleName("link");
 		toolbar.addComponent(caseList);
 
-		Button activitiesList = new Button(ACTIVITIES_LIST, listener);
+		Button activitiesList = new Button(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_ACTIVITIES_HEADER),
+				listener);
 		boolean isActivityEnable = AppContext
 				.canRead(RolePermissionCollections.CRM_MEETING)
 				|| AppContext.canRead(RolePermissionCollections.CRM_TASK)
@@ -122,48 +130,74 @@ public class CrmModule extends AbstractView implements IModule {
 		addBtnLayout.setWidth("300px");
 		addBtnLayout.setSpacing(true);
 
-		ButtonLink newAccountBtn = new ButtonLink(NEW_ACCOUNT_ITEM, listener);
+		ButtonLink newAccountBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNT_NEW_ACTION),
+				listener);
 		newAccountBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
 		addBtnLayout.addComponent(newAccountBtn);
 
-		ButtonLink newContactBtn = new ButtonLink(NEW_CONTACT_ITEM, listener);
+		ButtonLink newContactBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACT_NEW_ACTION),
+				listener);
 		newContactBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
 		addBtnLayout.addComponent(newContactBtn);
 
-		ButtonLink newCampaignBtn = new ButtonLink(NEW_CAMPAIGN_ITEM, listener);
+		ButtonLink newCampaignBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGN_NEW_ACTION),
+				listener);
 		newCampaignBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
 		addBtnLayout.addComponent(newCampaignBtn);
 
-		ButtonLink newOpportunityBtn = new ButtonLink(NEW_OPPORTUNITY_ITEM,
+		ButtonLink newOpportunityBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNITY_NEW_ACTION),
 				listener);
 		newOpportunityBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
 		addBtnLayout.addComponent(newOpportunityBtn);
 
-		ButtonLink newLeadBtn = new ButtonLink(NEW_LEAD_ITEM, listener);
+		ButtonLink newLeadBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_LEAD_NEW_ACTION),
+				listener);
 		newLeadBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_LEAD));
 		addBtnLayout.addComponent(newLeadBtn);
 
-		ButtonLink newCaseBtn = new ButtonLink(NEW_CASE_ITEM, listener);
+		ButtonLink newCaseBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CASE_NEW_ACTION),
+				listener);
 		newCaseBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CASE));
 		addBtnLayout.addComponent(newCaseBtn);
 
-		ButtonLink newTaskBtn = new ButtonLink(NEW_TASK_ITEM, listener);
+		ButtonLink newTaskBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_TASK_NEW_ACTION),
+				listener);
 		newTaskBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_TASK));
 		addBtnLayout.addComponent(newTaskBtn);
 
-		ButtonLink newCallBtn = new ButtonLink(NEW_CALL_ITEM, listener);
+		ButtonLink newCallBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_CALL_NEW_ACTION),
+				listener);
 		newCallBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CALL));
 		addBtnLayout.addComponent(newCallBtn);
 
-		ButtonLink newMeetingBtn = new ButtonLink(NEW_MEETING_ITEM, listener);
+		ButtonLink newMeetingBtn = new ButtonLink(
+				LocalizationHelper
+						.getMessage(CrmCommonI18nEnum.TOOLBAR_MEETING_NEW_ACTION),
+				listener);
 		newMeetingBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_MEETING));
 		addBtnLayout.addComponent(newMeetingBtn);
@@ -179,7 +213,7 @@ public class CrmModule extends AbstractView implements IModule {
 		this.addComponent(container);
 		this.setComponentAlignment(container, Alignment.MIDDLE_CENTER);
 	}
-	
+
 	public void gotoCrmDashboard() {
 		EventBus.getInstance().fireEvent(new CrmEvent.GotoHome(this, null));
 	}
@@ -200,52 +234,75 @@ public class CrmModule extends AbstractView implements IModule {
 			if (caption == null) {
 				EventBus.getInstance().fireEvent(
 						new CrmEvent.GotoHome(this, null));
-			} else if (NEW_ACCOUNT_ITEM.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_ACCOUNT_NEW_ACTION).equals(
+					caption)) {
 				EventBus.getInstance().fireEvent(
 						new AccountEvent.GotoAdd(this, null));
-			} else if (ACCOUNT_LIST.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_ACCOUNTS_HEADER).equals(caption)) {
 				EventBus.getInstance().fireEvent(
 						new AccountEvent.GotoList(this, null));
-			} else if (NEW_CAMPAIGN_ITEM.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CAMPAIGN_NEW_ACTION).equals(
+					caption)) {
 				EventBus.getInstance().fireEvent(
 						new CampaignEvent.GotoAdd(this, null));
-			} else if (CAMPAIGN_LIST.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CAMPAIGNS_HEADER).equals(caption)) {
 				EventBus.getInstance().fireEvent(
 						new CampaignEvent.GotoList(this, null));
-			} else if (NEW_CASE_ITEM.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CASE_NEW_ACTION).equals(caption)) {
 				EventBus.getInstance().fireEvent(
 						new CaseEvent.GotoAdd(this, null));
-			} else if (CASE_LIST.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CASES_HEADER).equals(caption)) {
 				EventBus.getInstance().fireEvent(
 						new CaseEvent.GotoList(this, null));
-			} else if (CONTACT_LIST.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CONTACTS_HEADER).equals(caption)) {
 				EventBus.getInstance().fireEvent(
 						new ContactEvent.GotoList(this, null));
-			} else if (NEW_CONTACT_ITEM.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CONTACT_NEW_ACTION).equals(
+					caption)) {
 				EventBus.getInstance().fireEvent(
 						new ContactEvent.GotoAdd(this, null));
-			} else if (NEW_LEAD_ITEM.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_LEAD_NEW_ACTION).equals(caption)) {
 				EventBus.getInstance().fireEvent(
 						new LeadEvent.GotoAdd(this, null));
-			} else if (LEAD_LIST.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_LEADS_HEADER).equals(caption)) {
 				EventBus.getInstance().fireEvent(
 						new LeadEvent.GotoList(this, null));
-			} else if (NEW_OPPORTUNITY_ITEM.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_OPPORTUNITY_NEW_ACTION).equals(
+					caption)) {
 				EventBus.getInstance().fireEvent(
 						new OpportunityEvent.GotoAdd(this, null));
-			} else if (OPPORTUNITY_LIST.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_OPPORTUNTIES_HEADER).equals(
+					caption)) {
 				EventBus.getInstance().fireEvent(
 						new OpportunityEvent.GotoList(this, null));
-			} else if (ACTIVITIES_LIST.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_ACTIVITIES_HEADER)
+					.equals(caption)) {
 				EventBus.getInstance().fireEvent(
 						new ActivityEvent.GotoCalendar(this, null));
-			} else if (NEW_TASK_ITEM.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_TASK_NEW_ACTION).equals(caption)) {
 				EventBus.getInstance().fireEvent(
 						new ActivityEvent.TaskAdd(this, null));
-			} else if (NEW_CALL_ITEM.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_CALL_NEW_ACTION).equals(caption)) {
 				EventBus.getInstance().fireEvent(
 						new ActivityEvent.CallAdd(this, null));
-			} else if (NEW_MEETING_ITEM.equals(caption)) {
+			} else if (LocalizationHelper.getMessage(
+					CrmCommonI18nEnum.TOOLBAR_MEETING_NEW_ACTION).equals(
+					caption)) {
 				EventBus.getInstance().fireEvent(
 						new ActivityEvent.MeetingAdd(this, null));
 			}
