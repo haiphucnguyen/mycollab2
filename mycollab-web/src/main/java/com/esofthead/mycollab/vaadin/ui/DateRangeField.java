@@ -11,7 +11,6 @@ import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.ComponentContainer;
 import com.vaadin.ui.DateField;
 import com.vaadin.ui.HorizontalLayout;
-import com.vaadin.ui.Label;
 import com.vaadin.ui.PopupDateField;
 import com.vaadin.ui.VerticalLayout;
 
@@ -34,8 +33,8 @@ public class DateRangeField extends CustomField {
 			((VerticalLayout) container).setSpacing(true);
 		}
 		
-		dateStart.setCaption("From Time: ");
-		dateEnd.setCaption("To Time: ");
+		dateStart.setCaption("From: ");
+		dateEnd.setCaption("To: ");
 		
 		container.addComponent(dateStart);
 		container.addComponent(dateEnd);
