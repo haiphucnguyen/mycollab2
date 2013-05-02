@@ -161,12 +161,12 @@ div.slider-nav span {
     cursor: pointer; }
 
 div.slider-nav span.right {
-    background: url('ads/bug/orbit/right-arrow.png');
+    background: url(../orbit/right-arrow.png);
     right: 0; 
 }
 
 div.slider-nav span.left {
-    background: url('ads/bug/orbit/left-arrow.png');
+    background: url(../orbit/left-arrow.png);
     left: 0; 
 }
 
@@ -199,7 +199,7 @@ div.slider-nav span.left {
     cursor: pointer;
     color: #999;
     text-indent: -9999px;
-    background: url('ads/bug/orbit/bullets.jpg') no-repeat 4px 0;
+    background: url(../orbit/bullets.jpg) no-repeat 4px 0;
     width: 13px;
     height: 12px;
     overflow: hidden; }

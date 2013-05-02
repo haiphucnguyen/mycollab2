@@ -1,15 +1,5 @@
 @import "my-chameleon-styles.css";
 
-@import "layouts/ads/bug/css/globals.css";
-
-@import "layouts/ads/bug/css/grid.css";
-
-@import "layouts/ads/bug/css/mobile.css";
-
-@import "layouts/ads/bug/css/orbit-1.3.0.css";
-
-@import "layouts/ads/bug/css/typography.css";
-
 @font-face {
 	font-family: 'Lucida Sans Unicode';
 	src: url('fonts/lsansuni.eot');
@@ -2991,53 +2981,3 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 /* End Time Addon */
 
-/* Start Bug Ads */
-.boxImage {
-	width: 800px;
-	height: 300px;
-	background-color: #F7F7F7;
-	-moz-border-radius: 15px;
-	border-radius: 5px;
-	border: 1px solid #efefef;
-	margin: auto;
-}
-
-#boxDescription {
-	float: right;
-	width: 300px;
-	margin: 10px;
-}
-
-#boxDescription h5 {
-	color: #8c8c8c;
-	text-align: center;
-}
-
-#boxDescription p {
-	color: #8c8c8c;
-}
-
-#mainContainer {
-	width: 800px;
-	margin: auto;
-}
-
-#header {
-	border-bottom: 2px dotted #CCCCCC;
-	width: 800px;
-	margin: auto;
-	text-align: center;
-	margin-top: 50px;
-	margin-bottom: 50px;
-}
-
-#header h3 {
-	color: #8c8c8c;
-}
-
-.upgradeBox {
-	margin: auto;
-	float: left;
-	width: 100%;
-}
-/* End Bug Ads */

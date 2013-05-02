@@ -30,7 +30,7 @@
 						<td style="background: url('${defaultUrls.cdn_url}border_small_center.png') repeat-y 0 0 transparent; color: #5a5a5a; font: 10px 'Lucida Sans Unicode', 'Lucida Grande', sans-serif; padding: 3px 10px;">
 							<table cellpadding="0" cellspacing="5" border="0" style="font-size: 10px; width: 100%;">
 								<tr>
-									<td style="text-align: right; min-width: 90px; vertical-align: top;">Bug Summary:&nbsp;</td>
+									<td style="width: 60px; max-width: 90px; vertical-align: top;">Bug Summary:&nbsp;</td>
 									<td style="font-weight: bold; font-size: 11px;" colspan="3"><a href="$hyperLinks.bugUrl" style="color: #4283c4; text-decoration: none;">$bug.summary</a></td>
 								</tr>
 								<tr>
