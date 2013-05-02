@@ -297,9 +297,14 @@
             <groupId>org.eclipse.jetty</groupId>
             <version>8.1.5.v20120716</version>
             <artifactId>jetty-servlets</artifactId>
-            <scope>provided</scope>
         </dependency>
 
+        <dependency>
+            <groupId>fr.xebia.web</groupId>
+            <artifactId>xebia-servlet-extras</artifactId>
+            <version>1.0.7</version>
+            <scope>runtime</scope>
+        </dependency>
 
         <!-- RESTLET dependency -->
         <dependency>
