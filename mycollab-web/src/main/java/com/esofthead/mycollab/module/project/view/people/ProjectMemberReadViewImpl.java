@@ -190,8 +190,8 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			@Override
 			protected Layout createTopPanel() {
 				return (new ProjectPreviewFormControlsGenerator<ProjectMember>(
-						PreviewForm.this)).createButtonControls(
-						ProjectRolePermissionCollections.USERS);
+						PreviewForm.this))
+						.createButtonControls(ProjectRolePermissionCollections.USERS);
 			}
 
 			@Override
@@ -217,11 +217,10 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			super("Tasks", new HorizontalLayout(), new VerticalLayout());
 
 			taskDisplay = new TaskTableDisplay(
-					new String[] { "id", "taskkey", "taskname", "startdate",
-							"deadline", "percentagecomplete" },
+					new String[] { "id", "taskname", "startdate", "deadline",
+							"percentagecomplete" },
 					new String[] {
 							"",
-							"#",
 							LocalizationHelper
 									.getMessage(TaskI18nEnum.TABLE_TASK_NAME_HEADER),
 							LocalizationHelper
@@ -364,11 +363,10 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			super("Bugs", new HorizontalLayout(), new VerticalLayout());
 
 			bugDisplay = new BugTableDisplay(
-					new String[] { "id", "bugkey", "summary", "severity",
-							"resolution", "duedate" },
+					new String[] { "id", "summary", "severity", "resolution",
+							"duedate" },
 					new String[] {
 							"",
-							"#",
 							LocalizationHelper
 									.getMessage(BugI18nEnum.TABLE_SUMMARY_HEADER),
 							LocalizationHelper

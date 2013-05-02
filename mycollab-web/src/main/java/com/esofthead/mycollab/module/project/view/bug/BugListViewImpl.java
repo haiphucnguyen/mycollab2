@@ -57,11 +57,10 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 
 		if (ScreenSize.hasSupport1024Pixels()) {
 			tableItem = new BugTableDisplay(
-					new String[] { "id", "bugkey", "summary",
-							"assignuserFullName", "severity", "resolution" },
+					new String[] { "id", "summary", "assignuserFullName",
+							"severity", "resolution" },
 					new String[] {
 							"",
-							"#",
 							LocalizationHelper
 									.getMessage(BugI18nEnum.TABLE_SUMMARY_HEADER),
 							LocalizationHelper
@@ -72,12 +71,10 @@ public class BugListViewImpl extends AbstractView implements BugListView {
 									.getMessage(BugI18nEnum.TABLE_RESOLUTION_HEADER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
 			tableItem = new BugTableDisplay(
-					new String[] { "id", "bugkey", "summary",
-							"assignuserFullName", "severity", "resolution",
-							"duedate" },
+					new String[] { "id", "summary", "assignuserFullName",
+							"severity", "resolution", "duedate" },
 					new String[] {
 							"",
-							"#",
 							LocalizationHelper
 									.getMessage(BugI18nEnum.TABLE_SUMMARY_HEADER),
 							LocalizationHelper

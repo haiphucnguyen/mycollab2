@@ -56,7 +56,11 @@ public class TaskTableDisplay extends
 
 				HorizontalLayout taskName = new HorizontalLayout();
 
-				ButtonLink b = new ButtonLink(task.getTaskname(),
+				String taskname = "[%s-%s] %s";
+				taskname = String.format(taskname, CurrentProjectVariables
+						.getProject().getShortname(), task.getTaskkey(), task
+						.getTaskname());
+				ButtonLink b = new ButtonLink(taskname,
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
@@ -100,18 +104,6 @@ public class TaskTableDisplay extends
 				taskName.setWidth("100%");
 				return taskName;
 
-			}
-		});
-
-		this.addGeneratedColumn("taskkey", new Table.ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					final Object itemId, Object columnId) {
-				final SimpleTask task = TaskTableDisplay.this
-						.getBeanByIndex(itemId);
-				return new Label("" + task.getTaskkey());
 			}
 		});
 
@@ -336,7 +328,6 @@ public class TaskTableDisplay extends
 
 		this.setColumnExpandRatio("taskname", 1);
 		this.setColumnWidth("id", 30);
-		this.setColumnWidth("taskkey", 45);
 		this.setColumnWidth("assignUserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
 		this.setColumnWidth("startdate", UIConstants.TABLE_DATE_WIDTH);

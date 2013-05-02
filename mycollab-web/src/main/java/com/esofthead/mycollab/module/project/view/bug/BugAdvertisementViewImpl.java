@@ -16,7 +16,7 @@ public class BugAdvertisementViewImpl extends AbstractView implements
 
 	public BugAdvertisementViewImpl() {
 		this.setWidth("100%");
-		this.setHeight("1024px");
+		this.setHeight("512px");
 		URL url = null;
 		try {
 			url = new URL(

@@ -5,6 +5,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.module.billing.RegisterSourceConstants;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -64,7 +65,9 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 		User user = userService.findByPrimaryKey(item.getUsername());
 		item.setDateofbirth(view.getBirthday());
 		item.setTimezone(view.getTimezone().getId());
+
 		if (user == null) {
+			item.setRegistrationsource(RegisterSourceConstants.WEB);
 			userService.saveWithSession(item, AppContext.getUsername());
 		} else {
 			userService.updateWithSession(item, AppContext.getUsername());

@@ -221,17 +221,6 @@ public class BugTableDisplay extends
 			}
 		});
 
-		this.addGeneratedColumn("bugkey", new Table.ColumnGenerator() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public com.vaadin.ui.Component generateCell(Table source,
-					final Object itemId, Object columnId) {
-				SimpleBug bug = BugTableDisplay.this.getBeanByIndex(itemId);
-				return new Label("" + bug.getBugkey());
-			}
-		});
-
 		this.addGeneratedColumn("assignuserFullName",
 				new Table.ColumnGenerator() {
 					private static final long serialVersionUID = 1L;
@@ -257,7 +246,12 @@ public class BugTableDisplay extends
 				final SimpleBug bug = BugTableDisplay.this
 						.getBeanByIndex(itemId);
 
-				ButtonLink b = new ButtonLink(bug.getSummary(),
+				String bugname = "[%s-%s] %s";
+				bugname = String.format(bugname, CurrentProjectVariables
+						.getProject().getShortname(), bug.getBugkey(), bug
+						.getSummary());
+
+				ButtonLink b = new ButtonLink(bugname,
 						new Button.ClickListener() {
 							private static final long serialVersionUID = 1L;
 
@@ -376,7 +370,6 @@ public class BugTableDisplay extends
 		this.setColumnWidth("assignuserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
 		this.setColumnWidth("id", 30);
-		this.setColumnWidth("bugkey", 45);
 		this.setColumnWidth("severity", UIConstants.TABLE_S_LABEL_WIDTH);
 		this.setColumnWidth("resolution", UIConstants.TABLE_M_LABEL_WIDTH);
 		this.setColumnWidth("duedate", UIConstants.TABLE_DATE_WIDTH);
