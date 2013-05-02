@@ -29,7 +29,7 @@
         <filter-class>org.eclipse.jetty.servlets.GzipFilter</filter-class>
         <init-param>
             <param-name>mimeTypes</param-name>
-            <param-value>application/javascript,application/x-javascript,text/html,txt/css</param-value>
+            <param-value>application/javascript,application/x-javascript,text/html,text/css,text/plain</param-value>
         </init-param>
     </filter>
     <filter-mapping>
@@ -41,20 +41,16 @@
         <filter-name>ExpiresFilter</filter-name>
         <filter-class>fr.xebia.servlet.filter.ExpiresFilter</filter-class>
         <init-param>
-            <param-name>ExpiresDefault</param-name>
-            <param-value>access plus 1 week</param-value>
-        </init-param>
-        <init-param>
             <param-name>ExpiresByType image</param-name>
             <param-value>access plus 1 week</param-value>
         </init-param>
         <init-param>
-            <param-name>ExpiresByType text/css</param-name>
+            <param-name>ExpiresByType application/x-javascript</param-name>
             <param-value>access plus 1 week</param-value>
         </init-param>
         <init-param>
-            <param-name>ExpiresByType text/javascript</param-name>
-           <param-value>access plus 1 week</param-value>
+            <param-name>ExpiresByType text</param-name>
+            <param-value>access plus 1 week</param-value>
         </init-param>
     </filter>
 
@@ -77,7 +73,7 @@
         <description>
 		Vaadin production mode</description>
         <param-name>productionMode</param-name>
-        <param-value>false</param-value>
+        <param-value>true</param-value>
     </context-param>
 
     <!-- RESTLET PARAMS -->
