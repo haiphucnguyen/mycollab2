@@ -9,6 +9,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.people.component.ProjectUserLink;
@@ -23,6 +24,7 @@ import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Label;
@@ -45,7 +47,9 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		this.setSpacing(true);
 		this.setMargin(false, true, true, true);
 
-		Label titleLbl = new Label("Time tracking");
+		Label titleLbl = new Label(
+				LocalizationHelper
+						.getMessage(TimeTrackingI18nEnum.TIME_RECORD_HEADER));
 		titleLbl.setStyleName("h2");
 		this.addComponent(titleLbl);
 
@@ -72,8 +76,8 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		String fromDate = AppContext.formatDate(rangeField.getFrom());
 		String toDate = AppContext.formatDate(rangeField.getTo());
 
-		lbTimeRange.setValue("From: <strong>" + fromDate
-				+ "</strong> To: <strong>" + toDate + "</strong>");
+		lbTimeRange.setValue(LocalizationHelper.getMessage(
+				TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
 	}
 
 	private void initUI() {
@@ -81,7 +85,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				AppContext.getSpringBean(ItemTimeLoggingService.class),
 				SimpleItemTimeLogging.class, new String[] { "logUserFullName",
 						"type", "createdtime", "logvalue" }, new String[] {
-						"User", "Type", "Created Time", "Time" });
+						"User", "Summary", "Created Time", "Hours" });
 
 		tableItem.addGeneratedColumn("logUserFullName",
 				new Table.ColumnGenerator() {
@@ -155,8 +159,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 													itemLogging.getTypeid()));
 								}
 							});
-					b.setIcon(new ThemeResource(
-							"icons/16/project/task.png"));
+					b.setIcon(new ThemeResource("icons/16/project/task.png"));
 
 					if (task.getPercentagecomplete() != null
 							&& 100d == task.getPercentagecomplete()) {
@@ -221,7 +224,8 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		tableItem.setWidth("100%");
 
 		tableItem.setColumnExpandRatio("type", 1.0f);
-		tableItem.setColumnWidth("logUserFullName", UIConstants.TABLE_EX_LABEL_WIDTH);
+		tableItem.setColumnWidth("logUserFullName",
+				UIConstants.TABLE_EX_LABEL_WIDTH);
 		tableItem
 				.setColumnWidth("createdtime", UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem.setColumnWidth("logvalue", UIConstants.TABLE_S_LABEL_WIDTH);

@@ -130,12 +130,10 @@ public class TaskDisplayComponent extends CssLayout {
 									.getMessage(TaskI18nEnum.TABLE_ASSIGNEE_HEADER) });
 		} else if (ScreenSize.hasSupport1280Pixels()) {
 			taskDisplay = new TaskTableDisplay(
-					new String[] { "id", "taskkey", "taskname", "startdate",
-							"deadline", "percentagecomplete",
-							"assignUserFullName" },
+					new String[] { "id", "taskname", "startdate", "deadline",
+							"percentagecomplete", "assignUserFullName" },
 					new String[] {
 							"",
-							"#",
 							LocalizationHelper
 									.getMessage(TaskI18nEnum.TABLE_TASK_NAME_HEADER),
 							LocalizationHelper
