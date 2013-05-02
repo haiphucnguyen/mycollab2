@@ -19,7 +19,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.IModule;
 import com.esofthead.mycollab.vaadin.mvp.View;
-import com.esofthead.mycollab.vaadin.ui.ButtonAddLink;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -130,76 +130,85 @@ public class CrmModule extends AbstractView implements IModule {
 		addBtnLayout.setWidth("370px");
 		addBtnLayout.setSpacing(true);
 
-		ButtonAddLink newAccountBtn = new ButtonAddLink(
+		ButtonLink newAccountBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNT_NEW_ACTION),
 				listener);
 		newAccountBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
+		newAccountBtn.setIcon(new ThemeResource("icons/16/crm/account.png"));
 		addBtnLayout.addComponent(newAccountBtn);
 
-		ButtonAddLink newContactBtn = new ButtonAddLink(
+		ButtonLink newContactBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACT_NEW_ACTION),
 				listener);
 		newContactBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
+		newContactBtn.setIcon(new ThemeResource("icons/16/crm/contact.png"));
 		addBtnLayout.addComponent(newContactBtn);
 
-		ButtonAddLink newCampaignBtn = new ButtonAddLink(
+		ButtonLink newCampaignBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGN_NEW_ACTION),
 				listener);
 		newCampaignBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
+		newCampaignBtn.setIcon(new ThemeResource("icons/16/crm/campaign.png"));
 		addBtnLayout.addComponent(newCampaignBtn);
 
-		ButtonAddLink newOpportunityBtn = new ButtonAddLink(
+		ButtonLink newOpportunityBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNITY_NEW_ACTION),
 				listener);
 		newOpportunityBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
+		newOpportunityBtn.setIcon(new ThemeResource("icons/16/crm/opportunity.png"));
 		addBtnLayout.addComponent(newOpportunityBtn);
 
-		ButtonAddLink newLeadBtn = new ButtonAddLink(
+		ButtonLink newLeadBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_LEAD_NEW_ACTION),
 				listener);
 		newLeadBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_LEAD));
+		newLeadBtn.setIcon(new ThemeResource("icons/16/crm/lead.png"));
 		addBtnLayout.addComponent(newLeadBtn);
 
-		ButtonAddLink newCaseBtn = new ButtonAddLink(
+		ButtonLink newCaseBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_CASE_NEW_ACTION),
 				listener);
 		newCaseBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CASE));
+		newCaseBtn.setIcon(new ThemeResource("icons/16/crm/case.png"));
 		addBtnLayout.addComponent(newCaseBtn);
 
-		ButtonAddLink newTaskBtn = new ButtonAddLink(
+		ButtonLink newTaskBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_TASK_NEW_ACTION),
 				listener);
 		newTaskBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_TASK));
+		newTaskBtn.setIcon(new ThemeResource("icons/16/crm/task.png"));
 		addBtnLayout.addComponent(newTaskBtn);
 
-		ButtonAddLink newCallBtn = new ButtonAddLink(
+		ButtonLink newCallBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_CALL_NEW_ACTION),
 				listener);
 		newCallBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CALL));
+		newCallBtn.setIcon(new ThemeResource("icons/16/crm/call.png"));
 		addBtnLayout.addComponent(newCallBtn);
 
-		ButtonAddLink newMeetingBtn = new ButtonAddLink(
+		ButtonLink newMeetingBtn = new ButtonLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_MEETING_NEW_ACTION),
 				listener);
 		newMeetingBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_MEETING));
+		newMeetingBtn.setIcon(new ThemeResource("icons/16/crm/meeting.png"));
 		addBtnLayout.addComponent(newMeetingBtn);
 
 		addBtn.addComponent(addBtnLayout);
