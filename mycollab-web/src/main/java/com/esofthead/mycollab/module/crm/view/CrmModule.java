@@ -19,7 +19,7 @@ import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.IModule;
 import com.esofthead.mycollab.vaadin.mvp.View;
-import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.ButtonAddLink;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -127,10 +127,10 @@ public class CrmModule extends AbstractView implements IModule {
 		addBtn = new PopupButton("Add");
 		GridLayout addBtnLayout = new GridLayout(3, 2);
 		addBtnLayout.setMargin(true);
-		addBtnLayout.setWidth("300px");
+		addBtnLayout.setWidth("370px");
 		addBtnLayout.setSpacing(true);
 
-		ButtonLink newAccountBtn = new ButtonLink(
+		ButtonAddLink newAccountBtn = new ButtonAddLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_ACCOUNT_NEW_ACTION),
 				listener);
@@ -138,7 +138,7 @@ public class CrmModule extends AbstractView implements IModule {
 				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
 		addBtnLayout.addComponent(newAccountBtn);
 
-		ButtonLink newContactBtn = new ButtonLink(
+		ButtonAddLink newContactBtn = new ButtonAddLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_CONTACT_NEW_ACTION),
 				listener);
@@ -146,7 +146,7 @@ public class CrmModule extends AbstractView implements IModule {
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
 		addBtnLayout.addComponent(newContactBtn);
 
-		ButtonLink newCampaignBtn = new ButtonLink(
+		ButtonAddLink newCampaignBtn = new ButtonAddLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_CAMPAIGN_NEW_ACTION),
 				listener);
@@ -154,7 +154,7 @@ public class CrmModule extends AbstractView implements IModule {
 				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
 		addBtnLayout.addComponent(newCampaignBtn);
 
-		ButtonLink newOpportunityBtn = new ButtonLink(
+		ButtonAddLink newOpportunityBtn = new ButtonAddLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_OPPORTUNITY_NEW_ACTION),
 				listener);
@@ -162,7 +162,7 @@ public class CrmModule extends AbstractView implements IModule {
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
 		addBtnLayout.addComponent(newOpportunityBtn);
 
-		ButtonLink newLeadBtn = new ButtonLink(
+		ButtonAddLink newLeadBtn = new ButtonAddLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_LEAD_NEW_ACTION),
 				listener);
@@ -170,7 +170,7 @@ public class CrmModule extends AbstractView implements IModule {
 				.canWrite(RolePermissionCollections.CRM_LEAD));
 		addBtnLayout.addComponent(newLeadBtn);
 
-		ButtonLink newCaseBtn = new ButtonLink(
+		ButtonAddLink newCaseBtn = new ButtonAddLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_CASE_NEW_ACTION),
 				listener);
@@ -178,7 +178,7 @@ public class CrmModule extends AbstractView implements IModule {
 				.canWrite(RolePermissionCollections.CRM_CASE));
 		addBtnLayout.addComponent(newCaseBtn);
 
-		ButtonLink newTaskBtn = new ButtonLink(
+		ButtonAddLink newTaskBtn = new ButtonAddLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_TASK_NEW_ACTION),
 				listener);
@@ -186,7 +186,7 @@ public class CrmModule extends AbstractView implements IModule {
 				.canWrite(RolePermissionCollections.CRM_TASK));
 		addBtnLayout.addComponent(newTaskBtn);
 
-		ButtonLink newCallBtn = new ButtonLink(
+		ButtonAddLink newCallBtn = new ButtonAddLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_CALL_NEW_ACTION),
 				listener);
@@ -194,7 +194,7 @@ public class CrmModule extends AbstractView implements IModule {
 				.canWrite(RolePermissionCollections.CRM_CALL));
 		addBtnLayout.addComponent(newCallBtn);
 
-		ButtonLink newMeetingBtn = new ButtonLink(
+		ButtonAddLink newMeetingBtn = new ButtonAddLink(
 				LocalizationHelper
 						.getMessage(CrmCommonI18nEnum.TOOLBAR_MEETING_NEW_ACTION),
 				listener);
