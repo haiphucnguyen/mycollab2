@@ -149,8 +149,7 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 			} else if (propertyId.equals("othercountry")) {
 				addressLayout.addComponent(field, "Other Country", 1, 4);
 			} else if (propertyId.equals("id") && !isReadMode) {
-				addressLayout.addComponent(field, LocalizationHelper
-						.getMessage(AccountI18nEnum.FORM_COPY_ADDRESS), 0, 5);
+				addressLayout.addComponent(field, "Copy Other Address", 0, 5);
 			} else if (propertyId.equals("description")) {
 				descriptionLayout.addComponent(field, "Description", 0, 0, 2,
 						UIConstants.DEFAULT_2XCONTROL_WIDTH,
