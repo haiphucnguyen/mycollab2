@@ -34,7 +34,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 			accountAddLayout.addTopControls(topPanel);
 		}
 
-		informationLayout = new AccountInformationLayout();
+		informationLayout = new AccountInformationLayout(false);
 		accountAddLayout.addBody(informationLayout.getLayout());
 
 		Layout bottomPanel = createBottomPanel();
@@ -61,6 +61,11 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 		private GridFormLayoutHelper informationLayout;
 		private GridFormLayoutHelper addressLayout;
 		private GridFormLayoutHelper descriptionLayout;
+		private boolean isReadMode;
+		
+		public AccountInformationLayout(boolean isReadMode) {
+			this.isReadMode = isReadMode;
+		}
 
 		@Override
 		public Layout getLayout() {
@@ -75,7 +80,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 			layout.setComponentAlignment(informationLayout.getLayout(),
 					Alignment.BOTTOM_CENTER);
 
-			addressLayout = new GridFormLayoutHelper(2, 5);
+			addressLayout = new GridFormLayoutHelper(2, 6);
 			Label addressHeader = new Label("Address Information");
 			addressHeader.setStyleName("h2");
 			layout.addComponent(addressHeader);
@@ -191,6 +196,10 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 					field, LocalizationHelper
 							.getMessage(AccountI18nEnum.FORM_SHIPPING_COUNTRY),
 					1, 4);
+			addressLayout.addComponent(propertyId.equals("id") && !isReadMode,
+					field, LocalizationHelper
+							.getMessage(AccountI18nEnum.FORM_COPY_ADDRESS),
+					0, 5);
 
 			if (propertyId.equals("description")) {
 				field.setSizeUndefined();

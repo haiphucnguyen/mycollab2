@@ -7,12 +7,15 @@ import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.CheckboxField;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
@@ -35,6 +38,7 @@ public class ContactAddViewImpl extends AbstractView implements
     @Override
     public void editItem(Contact item) {
         this.contact = item;
+        if (editForm.isCheckToCopy) editForm.isCheckToCopy = false;
         editForm.setItemDataSource(new BeanItem<Contact>(contact));
 
     }
@@ -47,6 +51,7 @@ public class ContactAddViewImpl extends AbstractView implements
     private class EditForm extends AdvancedEditBeanForm<Contact> {
 
         private static final long serialVersionUID = 1L;
+        private boolean isCheckToCopy;
 
         @Override
         public void setItemDataSource(Item newDataSource) {
@@ -90,18 +95,18 @@ public class ContactAddViewImpl extends AbstractView implements
                 if (propertyId.equals("leadsource")) {
                     LeadSourceComboBox leadSource = new LeadSourceComboBox();
                     return leadSource;
-                } else if (propertyId.equals("accountId")) {
-                    AccountSelectionField accountField = new AccountSelectionField();
+                } else if (propertyId.equals("contactId")) {
+                    AccountSelectionField contactField = new AccountSelectionField();
 //                    if (contact.getAccountId() != null) {
-//                        AccountService accountService = AppContext
+//                        AccountService contactService = AppContext
 //                                .getSpringBean(AccountService.class);
-//                        SimpleAccount account = accountService
+//                        SimpleAccount contact = contactService
 //                                .findAccountById(contact.getAccountId());
-//                        if (account != null) {
-//                            accountField.setAccount(account);
+//                        if (contact != null) {
+//                            contactField.setAccount(contact);
 //                        }
 //                    }
-                    return accountField;
+                    return contactField;
                 } else if (propertyId.equals("lastname")) {
                     TextField tf = new TextField();
                     tf.setNullRepresentation("");
@@ -120,6 +125,35 @@ public class ContactAddViewImpl extends AbstractView implements
                         || propertyId.equals("othercountry")) {
                 	CountryComboBox otherCountryComboBox = new CountryComboBox();
                     return otherCountryComboBox;
+                } else if ("id".equals(propertyId)) {
+                	final CheckboxField chkField = new CheckboxField();
+                	chkField.getCheckBox().addListener(new Button.ClickListener() {
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							if ((Boolean) chkField.getCheckBox().getValue()) {
+								contact.setOtheraddress(contact.getPrimaddress());
+								contact.setOthercity(contact.getPrimcity());
+								contact.setOtherstate(contact.getPrimstate());
+								contact.setOtherpostalcode(contact.getPrimpostalcode());
+								contact.setOthercountry(contact.getPrimcountry());
+							} else {
+								contact.setOtheraddress("");
+								contact.setOthercity("");
+								contact.setOtherstate("");
+								contact.setOtherpostalcode("");
+								contact.setOthercountry("");
+							}
+							
+							isCheckToCopy = (Boolean) chkField.getCheckBox().getValue();
+							editForm.setItemDataSource(new BeanItem<Contact>(contact));
+						}
+                		
+                	});
+                	
+                	chkField.getCheckBox().setValue(isCheckToCopy);
+                	
+                	return chkField;
                 }
 
 

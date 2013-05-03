@@ -1,17 +1,22 @@
 package com.esofthead.mycollab.module.crm.view.account;
 
+import com.esofthead.mycollab.core.utils.BeanUtility;
 import com.esofthead.mycollab.module.crm.domain.Account;
 import com.esofthead.mycollab.module.crm.ui.components.IndustryComboBox;
 import com.esofthead.mycollab.module.user.ui.components.UserComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.AdvancedEditBeanForm;
+import com.esofthead.mycollab.vaadin.ui.CheckboxField;
 import com.esofthead.mycollab.vaadin.ui.CountryComboBox;
 import com.esofthead.mycollab.vaadin.ui.DefaultEditFormFieldFactory;
 import com.esofthead.mycollab.vaadin.ui.EditFormControlsGenerator;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.vaadin.data.Item;
+import com.vaadin.data.Property;
 import com.vaadin.data.util.BeanItem;
+import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.TextArea;
@@ -33,13 +38,15 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
     @Override
     public void editItem(Account account) {
         this.account = account;
+        if (editForm.isCheckToCopy) editForm.isCheckToCopy = false;
         editForm.setItemDataSource(new BeanItem<Account>(account));
     }
 
     private class EditForm extends AdvancedEditBeanForm<Account> {
 
         private static final long serialVersionUID = 1L;
-
+        private boolean isCheckToCopy;
+        
         @Override
         public void setItemDataSource(Item newDataSource) {
             this.setFormLayoutFactory(new FormLayoutFactory());
@@ -96,6 +103,45 @@ public class AccountAddViewImpl extends AbstractView implements AccountAddView {
                 } else if ("billingcountry".equals(propertyId) || "shippingcountry".equals(propertyId)) {
                 	CountryComboBox billingCountryComboBox = new CountryComboBox();
                 	return billingCountryComboBox;
+                } else if ("id".equals(propertyId)) {
+                	final CheckboxField chkField = new CheckboxField();
+                	chkField.getCheckBox().addListener(new Button.ClickListener() {
+
+						@Override
+						public void buttonClick(ClickEvent event) {
+							if ((Boolean) chkField.getCheckBox().getValue()) {
+								account.setShippingaddress(account.getBillingaddress());
+								account.setShippingcity(account.getCity());
+								account.setShippingstate(account.getState());
+								account.setShippingpostalcode(account.getPostalcode());
+								account.setShippingcountry(account.getBillingcountry());
+							} else {
+								account.setShippingaddress("");
+								account.setShippingcity("");
+								account.setShippingstate("");
+								account.setShippingpostalcode("");
+								account.setShippingcountry("");
+							}
+							
+							isCheckToCopy = (Boolean) chkField.getCheckBox().getValue();
+							editForm.setItemDataSource(new BeanItem<Account>(account));
+						}
+                		
+                	});
+                	
+//                	if (account.getId() != null && account.getBillingaddress().equals(account.getShippingaddress()) 
+//                			&& account.getCity().equals(account.getShippingcity())
+//                			&& account.getState().equals(account.getShippingstate())
+//                			&& account.getPostalcode().equals(account.getShippingpostalcode())
+//                			&& account.getBillingcountry().equals(account.getShippingcountry())) {
+//                		isCheckToCopy = true;
+//                	} else {
+//                		isCheckToCopy = false;
+//                	}
+                	
+                	chkField.getCheckBox().setValue(isCheckToCopy);
+                	
+                	return chkField;
                 }
                 
                 if (propertyId.equals("accountname")) {

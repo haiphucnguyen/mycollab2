@@ -152,7 +152,7 @@ public abstract class ContactPreviewBuilder extends VerticalLayout {
 			previewForm = new AdvancedPreviewBeanForm<Contact>() {
 				@Override
 				public void setItemDataSource(Item newDataSource) {
-					this.setFormLayoutFactory(new ContactFormLayoutFactory.ContactInformationLayout());
+					this.setFormLayoutFactory(new ContactFormLayoutFactory.ContactInformationLayout(true));
 					this.setFormFieldFactory(new ContactFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					contactAddLayout.setTitle(contact.getContactName());
