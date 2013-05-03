@@ -6,11 +6,16 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.util.List;
 
+import org.vaadin.dialogs.ConfirmDialog;
+
+import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.file.StreamDownloadResourceFactory;
 import com.esofthead.mycollab.module.file.domain.Attachment;
 import com.esofthead.mycollab.module.file.service.AttachmentService;
 import com.esofthead.mycollab.utils.StringUtils;
 import com.esofthead.mycollab.web.AppContext;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.Resource;
 import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
@@ -92,12 +97,38 @@ public class AttachmentDisplayComponent extends VerticalLayout {
 
 			@Override
 			public void buttonClick(ClickEvent event) {
-				AttachmentService attachmentService = AppContext
-						.getSpringBean(AttachmentService.class);
-				attachmentService.removeAttachment(AppContext.getAccountId(),
-						attachment);
-				((ComponentContainer) attachmentLayout.getParent())
-						.removeComponent(attachmentLayout);
+
+				ConfirmDialog
+						.show(AppContext.getApplication().getMainWindow(),
+								LocalizationHelper
+										.getMessage(
+												GenericI18Enum.DELETE_DIALOG_TITLE,
+												ApplicationProperties
+														.getProperty(ApplicationProperties.SITE_NAME)),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.CONFIRM_DELETE_ATTACHMENT),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+								LocalizationHelper
+										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+								new ConfirmDialog.Listener() {
+									private static final long serialVersionUID = 1L;
+
+									@Override
+									public void onClose(ConfirmDialog dialog) {
+										if (dialog.isConfirmed()) {
+											AttachmentService attachmentService = AppContext
+													.getSpringBean(AttachmentService.class);
+											attachmentService.removeAttachment(
+													AppContext.getAccountId(),
+													attachment);
+											((ComponentContainer) attachmentLayout
+													.getParent())
+													.removeComponent(attachmentLayout);
+										}
+									}
+								});
+
 			}
 		});
 		trashBtn.setIcon(new ThemeResource("icons/16/trash.png"));
