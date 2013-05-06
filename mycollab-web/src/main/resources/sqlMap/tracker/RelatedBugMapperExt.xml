@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper
+    namespace="com.esofthead.mycollab.module.tracker.dao.RelatedBugMapperExt">
+    <resultMap
+        extends="com.esofthead.mycollab.module.tracker.dao.RelatedBugMapper.BaseResultMap"
+        id="RelatedBugResult"
+        type="com.esofthead.mycollab.module.tracker.domain.SimpleRelatedBug">
+        <result column="bugName" jdbcType="VARCHAR"
+            property="bugName" />
+    </resultMap>
+    
+    <sql id="querySearchCriteria">
+		
+		<if test="bugId != null">
+            <![CDATA[${bugId.operation} m_tracker_related_bug.bugid ${bugId.compareOperator} #{bugId.value,javaType=INTEGER}]]>
+		</if>
+	</sql>
+
+	<sql id="selectItem">
+        <![CDATA[
+          SELECT m_tracker_related_bug.id, m_tracker_related_bug.bugid, m_tracker_related_bug.relatedid, m_tracker_related_bug.relatetype, m_tracker_related_bug.comment, 
+                 m_tracker_bug.summary AS bugName
+            FROM m_tracker_related_bug
+              LEFT OUTER JOIN m_tracker_bug ON (m_tracker_related_bug.bugid=m_tracker_bug.id)
+        ]]>
+	</sql>
+
+	<select id="getTotalCount" parameterType="BugRelatedSearchCriteria"
+		resultType="int">
+		SELECT count(*) as totalCount FROM m_tracker_related_bug
+
+
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1
+
+			<include
+				refid="com.esofthead.mycollab.module.tracker.dao.RelatedBugMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
+
+	<sql id="orderStatement">
+		ORDER BY
+		<if test="orderByField != null">${orderByField} ${sortDirection}, </if>
+        <![CDATA[
+            m_tracker_related_bug.bugid DESC
+        ]]>
+	</sql>
+
+	<select id="findPagableListByCriteria" parameterType="BugRelatedSearchCriteria"
+		resultMap="RelatedBugResult">
+
+		<include
+			refid="com.esofthead.mycollab.module.tracker.dao.RelatedBugMapperExt.selectItem" />
+
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1
+
+			<include
+				refid="com.esofthead.mycollab.module.tracker.dao.RelatedBugMapperExt.querySearchCriteria" />
+		</trim>
+		<include refid="orderStatement" />
+	</select>
+</mapper>

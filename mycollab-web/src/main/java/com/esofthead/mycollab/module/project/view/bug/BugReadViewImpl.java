@@ -243,7 +243,7 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 		private BugHistoryList historyList;
 		private BugFollowersSheet bugFollowersList;
 		private BugTimeLogSheet bugTimeLogList;
-		private BugRelatedItemSheet bugRelatedItemsList;
+		private BugRelatedField bugRelatedField;
 
 		@Override
 		public void setItemDataSource(Item newDataSource) {
@@ -443,8 +443,8 @@ public class BugReadViewImpl extends AbstractView implements BugReadView,
 				historyList.setMargin(true);
 				tabBugDetail.addTab(historyList, "History");
 
-				bugRelatedItemsList = new BugRelatedItemSheet();
-				tabBugDetail.addTab(bugRelatedItemsList, "Related Bugs");
+				bugRelatedField = new BugRelatedField(bug);
+				tabBugDetail.addTab(bugRelatedField, "Related Bugs");
 
 				bugFollowersList = new BugFollowersSheet(bug);
 				tabBugDetail.addTab(bugFollowersList, "Followers");

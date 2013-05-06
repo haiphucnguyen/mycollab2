@@ -62,5 +62,17 @@
 		<property name="mapperInterface"
 			value="com.esofthead.mycollab.module.tracker.dao.VersionMapperExt" />
 	</bean>
+	
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="relatedBugMapper">
+		<property name="sqlSessionTemplate" ref="sqlMapClient" />
+		<property name="mapperInterface"
+			value="com.esofthead.mycollab.module.tracker.dao.RelatedBugMapper" />
+	</bean>
+
+	<bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="relatedTimeLoggingMapperExt">
+		<property name="sqlSessionTemplate" ref="sqlMapClient" />
+		<property name="mapperInterface"
+			value="com.esofthead.mycollab.module.tracker.dao.RelatedBugMapperExt" />
+	</bean>
 
 </beans>
