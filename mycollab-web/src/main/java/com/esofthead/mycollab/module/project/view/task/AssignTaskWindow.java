@@ -4,6 +4,11 @@
  */
 package com.esofthead.mycollab.module.project.view.task;
 
+import java.util.GregorianCalendar;
+
+import com.esofthead.mycollab.common.CommentTypeConstants;
+import com.esofthead.mycollab.common.domain.Comment;
+import com.esofthead.mycollab.common.service.CommentService;
 import com.esofthead.mycollab.module.project.domain.Task;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -23,6 +28,7 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Layout;
+import com.vaadin.ui.RichTextArea;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -37,7 +43,7 @@ public class AssignTaskWindow extends Window {
 
 	public AssignTaskWindow(Task task) {
 		this.task = task;
-		this.setWidth("450px");
+		this.setWidth("750px");
 		editForm = new EditForm();
 		this.addComponent(editForm);
 		editForm.setItemDataSource(new BeanItem<Task>(task));
@@ -47,6 +53,7 @@ public class AssignTaskWindow extends Window {
 	private class EditForm extends AdvancedEditBeanForm<BugWithBLOBs> {
 
 		private static final long serialVersionUID = 1L;
+		private RichTextArea commentArea;
 
 		@Override
 		public void setItemDataSource(Item newDataSource) {
@@ -96,11 +103,36 @@ public class AssignTaskWindow extends Window {
 								// Save task status and assignee
 								ProjectTaskService bugService = AppContext
 										.getSpringBean(ProjectTaskService.class);
-								bugService.updateWithSession(task, AppContext.getUsername());
+								bugService.updateWithSession(task,
+										AppContext.getUsername());
+
+								// Save comment
+								String commentValue = (String) commentArea
+										.getValue();
+								if (commentValue != null
+										&& !commentValue.trim().equals("")) {
+									Comment comment = new Comment();
+									comment.setComment((String) commentArea
+											.getValue());
+									comment.setCreatedtime(new GregorianCalendar()
+											.getTime());
+									comment.setCreateduser(AppContext
+											.getUsername());
+									comment.setSaccountid(AppContext
+											.getAccountId());
+									comment.setType(CommentTypeConstants.PRJ_TASK);
+									comment.setTypeid(task.getId());
+
+									CommentService commentService = AppContext
+											.getSpringBean(CommentService.class);
+									commentService.saveWithSession(comment,
+											AppContext.getUsername());
+								}
 
 								AssignTaskWindow.this.close();
-								 EventBus.getInstance().fireEvent(
-				                            new TaskEvent.GotoRead(this, task.getId()));
+								EventBus.getInstance().fireEvent(
+										new TaskEvent.GotoRead(this, task
+												.getId()));
 							}
 						});
 				approveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
@@ -118,6 +150,9 @@ public class AssignTaskWindow extends Window {
 			public void attachField(Object propertyId, Field field) {
 				if (propertyId.equals("assignuser")) {
 					informationLayout.addComponent(field, "Assign User", 0, 0);
+				} else if (propertyId.equals("comment")) {
+					informationLayout.addComponent(field, "Comment", 0, 1, 2,
+							UIConstants.DEFAULT_2XCONTROL_WIDTH);
 				}
 			}
 		}
@@ -131,7 +166,11 @@ public class AssignTaskWindow extends Window {
 					com.vaadin.ui.Component uiContext) {
 				if (propertyId.equals("assignuser")) {
 					return new ProjectMemberComboBox();
-				} 
+				} else if (propertyId.equals("comment")) {
+					commentArea = new RichTextArea();
+					commentArea.setNullRepresentation("");
+					return commentArea;
+				}
 				return null;
 			}
 		}

@@ -11,6 +11,7 @@ public class SimpleTask extends Task {
 	private String assignUserFullName;
 	private String logByFullName;
 	private int numComments;
+	private String comment;
 
 	public int getNumComments() {
 		return numComments;
@@ -63,5 +64,13 @@ public class SimpleTask extends Task {
 			return false;
 		}
 
+	}
+
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+
+	public String getComment() {
+		return comment;
 	}
 }

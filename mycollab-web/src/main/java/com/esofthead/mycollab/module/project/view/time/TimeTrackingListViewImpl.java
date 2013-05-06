@@ -4,11 +4,15 @@ import java.util.GregorianCalendar;
 
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
+import com.esofthead.mycollab.module.file.ExportTimeLoggingStreamResource;
+import com.esofthead.mycollab.module.file.FieldExportColumn;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.domain.SimpleItemTimeLogging;
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.events.BugEvent;
 import com.esofthead.mycollab.module.project.events.TaskEvent;
+import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
 import com.esofthead.mycollab.module.project.localization.TimeTrackingI18nEnum;
 import com.esofthead.mycollab.module.project.service.ItemTimeLoggingService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
@@ -25,8 +29,13 @@ import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.vaadin.terminal.Resource;
+import com.vaadin.terminal.StreamResource;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.Table.ColumnGenerator;
@@ -39,6 +48,13 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 	private PagedBeanTable2<ItemTimeLoggingService, ItemTimeLoggingSearchCriteria, SimpleItemTimeLogging> tableItem;
 	private ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
 	private ItemTimeLoggingSearchCriteria itemTimeLogginSearchCriteria;
+	private Button exportBtn;
+	private static final FieldExportColumn[] EXPORT_COLUMNS = new FieldExportColumn[] {
+		new FieldExportColumn("logUserFullName", "User"),
+		new FieldExportColumn("type", "Type"),
+		new FieldExportColumn("type", "Summary", 70),
+		new FieldExportColumn("createdtime", "Created Time"),
+		new FieldExportColumn("logvalue", "Hours") };
 
 	private Label lbTimeRange;
 
@@ -63,8 +79,36 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 				});
 		this.addComponent(itemTimeLoggingPanel);
 
+		HorizontalLayout headerLayout = new HorizontalLayout();
+		headerLayout.setWidth("100%");
 		lbTimeRange = new Label("", Label.CONTENT_XHTML);
-		this.addComponent(lbTimeRange);
+		headerLayout.addComponent(lbTimeRange);
+		headerLayout.setComponentAlignment(lbTimeRange, Alignment.MIDDLE_LEFT);
+		headerLayout.setExpandRatio(lbTimeRange, 1.0f);
+		
+		exportBtn = new Button(
+				LocalizationHelper.getMessage(BugI18nEnum.TABLE_EXPORT_BUTTON));
+		exportBtn.setIcon(new ThemeResource("icons/16/export_excel.png"));
+		exportBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		headerLayout.addComponent(exportBtn);
+		exportBtn.addListener(new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				String title = "Time of Project "
+						+ ((CurrentProjectVariables.getProject() != null && CurrentProjectVariables
+								.getProject().getName() != null) ? CurrentProjectVariables
+								.getProject().getName() : "");
+				Resource res = new StreamResource(
+						new ExportTimeLoggingStreamResource(title,
+								EXPORT_COLUMNS, AppContext
+										.getSpringBean(ItemTimeLoggingService.class),
+										itemTimeLogginSearchCriteria), "timeLogging_list.xls", AppContext.getApplication());
+				 AppContext.getApplication().getMainWindow().open(res, "_blank");
+			}
+		});
+		headerLayout.setComponentAlignment(exportBtn, Alignment.MIDDLE_RIGHT);
+		this.addComponent(headerLayout);
 
 		initUI();
 	}
