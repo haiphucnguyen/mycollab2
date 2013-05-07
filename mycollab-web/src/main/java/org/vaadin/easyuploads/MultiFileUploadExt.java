@@ -229,7 +229,7 @@ public class MultiFileUploadExt extends CssLayout implements DropHandler {
     }
 
     public AcceptCriterion getAcceptCriterion() {
-        // TODO accept only files
+        // accept only files
         // return new And(new TargetDetailIs("verticalLocation","MIDDLE"), new
         // TargetDetailIs("horizontalLoction", "MIDDLE"));
         return AcceptAll.get();

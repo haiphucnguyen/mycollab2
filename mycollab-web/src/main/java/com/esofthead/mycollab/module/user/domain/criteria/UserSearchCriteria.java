@@ -22,31 +22,49 @@ import com.esofthead.mycollab.core.arguments.StringSearchField;
 
 public class UserSearchCriteria extends SearchCriteria {
 
-    private StringSearchField displayName;
-    private StringSearchField username;
-    private NumberSearchField saccountid;
+	private StringSearchField displayName;
+	private StringSearchField username;
+	private NumberSearchField saccountid;
+	private StringSearchField registerStatus;
+	private StringSearchField subdomain;
 
-    public StringSearchField getDisplayName() {
-        return displayName;
-    }
+	public StringSearchField getDisplayName() {
+		return displayName;
+	}
 
-    public void setDisplayName(StringSearchField displayName) {
-        this.displayName = displayName;
-    }
+	public void setDisplayName(StringSearchField displayName) {
+		this.displayName = displayName;
+	}
 
-    public NumberSearchField getSaccountid() {
-        return saccountid;
-    }
+	public NumberSearchField getSaccountid() {
+		return saccountid;
+	}
 
-    public void setSaccountid(NumberSearchField saccountid) {
-        this.saccountid = saccountid;
-    }
+	public void setSaccountid(NumberSearchField saccountid) {
+		this.saccountid = saccountid;
+	}
 
-    public StringSearchField getUsername() {
-        return username;
-    }
+	public StringSearchField getUsername() {
+		return username;
+	}
 
-    public void setUsername(StringSearchField username) {
-        this.username = username;
-    }
+	public void setUsername(StringSearchField username) {
+		this.username = username;
+	}
+
+	public StringSearchField getRegisterStatus() {
+		return registerStatus;
+	}
+
+	public void setRegisterStatus(StringSearchField registerStatus) {
+		this.registerStatus = registerStatus;
+	}
+
+	public StringSearchField getSubdomain() {
+		return subdomain;
+	}
+
+	public void setSubdomain(StringSearchField subdomain) {
+		this.subdomain = subdomain;
+	}
 }

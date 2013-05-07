@@ -109,7 +109,7 @@ public abstract class ProfileFormLayoutFactory implements IFormLayoutFactory {
                 basicInformationLayout.addComponent(field, "Email", 0, 2);
             } else if (propertyId.equals("timezone")) {
             	basicInformationLayout.addComponent(field, "Timezone", 0, 3);
-			} else if (propertyId.equals("isadmin")) {
+			} else if (propertyId.equals("isAdmin")) {
                 basicInformationLayout.addComponent(field, "Is Admin", 1, 2);
             } else if (propertyId.equals("company")) {
             	advancedInformationLayout.addComponent(field, "Company", 0, 0);

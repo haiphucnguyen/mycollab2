@@ -57,7 +57,8 @@ public class EventBus implements Serializable {
 
 	public void fireEvent(ApplicationEvent event) {
 
-		log.debug("Fire event: {}{}", event, AppContext.getInstance());
+		log.debug("Fire event: {}-{}. Map size: {}", new Object[] { event,
+				AppContext.getInstance(), map.size() });
 		Class<? extends ApplicationEvent> eventType = event.getClass();
 
 		Set<ApplicationEventListener<?>> eventSet = map.get(eventType);

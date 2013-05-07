@@ -13,8 +13,6 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.module.billing.AccountPaymentTypeConstants;
 import com.esofthead.mycollab.module.billing.AccountStatusConstants;
 import com.esofthead.mycollab.module.billing.ExistingUserRegisterException;
-import com.esofthead.mycollab.module.billing.RegisterSourceConstants;
-import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.billing.service.BillingService;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
 import com.esofthead.mycollab.module.user.PermissionFlag;
@@ -28,6 +26,7 @@ import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.service.RoleService;
@@ -55,8 +54,8 @@ public class BillingServiceImpl implements BillingService {
 
 	@Override
 	@Transactional
-	public void registerAccount(int billingPlanId, String username,
-			String password, String email, String timezoneId) {
+	public void registerAccount(String subdmoain, int billingPlanId,
+			String username, String password, String email, String timezoneId) {
 
 		// check whether username is already existed
 		UserExample userEx = new UserExample();
@@ -88,17 +87,13 @@ public class BillingServiceImpl implements BillingService {
 		AccountSettings accountSettings = new AccountSettings();
 		accountSettings.setSaccountid(accountid);
 		accountSettings.setDefaulttimezone(timezoneId);
-
 		accountSettingMapper.insert(accountSettings);
 
 		// Register the new user to this account
+		// Fix issue account
 		User user = new User();
-		user.setAccountid(accountid);
 		user.setEmail(email);
-		user.setIsadmin(Boolean.TRUE);
 		user.setPassword(PasswordEncryptHelper.encryptSaltPassword(password));
-		user.setRegisterstatus(RegisterStatusConstants.VERIFICATING);
-		user.setRegistrationsource(RegisterSourceConstants.WEB);
 		user.setTimezone(timezoneId);
 		user.setUsername(username);
 		user.setLastaccessedtime(new GregorianCalendar().getTime());
@@ -111,6 +106,11 @@ public class BillingServiceImpl implements BillingService {
 			user.setLastname("");
 		}
 		userMapper.insert(user);
+
+		// TODO: adjust register service
+		// user.setRegisterstatus(RegisterStatusConstants.VERIFICATING);
+		// user.setRegistrationsource(RegisterSourceConstants.WEB);
+		
 
 		// Register default role for account
 		Role role = new Role();

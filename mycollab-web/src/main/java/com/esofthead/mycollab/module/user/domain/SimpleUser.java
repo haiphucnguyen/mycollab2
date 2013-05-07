@@ -25,8 +25,14 @@ public class SimpleUser extends User {
 	public static final String INACTION_STATUS = "inactive";
 	public static final String PENDING_STATUS = "pending";
 	public static final int ADMIN_VAL = 1;
+	
+	private Boolean isAdmin;
+	private Integer roleid;
 	private String roleName;
 	private PermissionMap permissionMaps;
+	private Boolean isAccountOwner;
+	private String subdomain;
+	private Integer accountId;
 
 	public String getDisplayName() {
 		return getFirstname() + " " + getLastname();
@@ -46,5 +52,45 @@ public class SimpleUser extends User {
 
 	public void setRoleName(String roleName) {
 		this.roleName = roleName;
+	}
+
+	public Boolean getIsAdmin() {
+		return isAdmin;
+	}
+
+	public void setIsAdmin(Boolean isAdmin) {
+		this.isAdmin = isAdmin;
+	}
+
+	public Integer getRoleid() {
+		return roleid;
+	}
+
+	public void setRoleid(Integer roleid) {
+		this.roleid = roleid;
+	}
+
+	public Boolean getIsAccountOwner() {
+		return isAccountOwner;
+	}
+
+	public void setIsAccountOwner(Boolean isAccountOwner) {
+		this.isAccountOwner = isAccountOwner;
+	}
+
+	public String getSubdomain() {
+		return subdomain;
+	}
+
+	public void setSubdomain(String subdomain) {
+		this.subdomain = subdomain;
+	}
+
+	public Integer getAccountId() {
+		return accountId;
+	}
+
+	public void setAccountId(Integer accountId) {
+		this.accountId = accountId;
 	}
 }

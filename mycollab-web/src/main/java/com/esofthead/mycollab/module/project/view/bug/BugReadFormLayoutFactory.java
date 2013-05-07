@@ -10,13 +10,11 @@ public abstract class BugReadFormLayoutFactory implements IFormLayoutFactory {
 
     @Override
     public Layout getLayout() {
-        // TODO Auto-generated method stub
         return null;
     }
 
     @Override
     public void attachField(Object propertyId, Field field) {
-        // TODO Auto-generated method stub
     }
 
     protected abstract Layout createTopPanel();

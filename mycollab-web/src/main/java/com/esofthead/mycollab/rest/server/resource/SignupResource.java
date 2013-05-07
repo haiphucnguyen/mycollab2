@@ -23,13 +23,14 @@ public class SignupResource extends ServerResource {
 	@Post("form")
 	public String doPost(Form form) throws JSONException {
 		log.debug("Start handling form request");
+		String subdomain = form.getFirstValue("subdomain");
 		String username = form.getFirstValue("username");
 		String password = form.getFirstValue("password");
 		String email = form.getFirstValue("email");
 		String timezoneId = form.getFirstValue("timezone");
 		int planId = Integer.parseInt(form.getFirstValue("planId"));
-		billingService.registerAccount(planId, username, password, email,
-				timezoneId);
+		billingService.registerAccount(subdomain, planId, username, password,
+				email, timezoneId);
 		return "aaa";
 	}
 

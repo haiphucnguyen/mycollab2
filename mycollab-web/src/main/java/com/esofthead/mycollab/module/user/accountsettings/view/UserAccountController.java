@@ -93,7 +93,7 @@ public class UserAccountController implements IController {
 						UserPermissionManagementPresenter presenter = PresenterResolver
 								.getPresenter(UserPermissionManagementPresenter.class);
 						presenter.go(container, new UserScreenData.Add(
-								new User()));
+								new SimpleUser()));
 					}
 				});
 

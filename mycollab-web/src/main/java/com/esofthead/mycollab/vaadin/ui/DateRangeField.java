@@ -88,7 +88,6 @@ public class DateRangeField extends CustomField {
 
 	@Override
 	public Class<?> getType() {
-		// TODO Auto-generated method stub
 		return null;
 	}
 	

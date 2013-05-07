@@ -42,6 +42,12 @@
         <table domainObjectName="User" schema="mycollab"
             tableName="s_user" />
 
+        <table domainObjectName="UserAccount" schema="mycollab"
+            tableName="s_user_account" />
+
+        <table domainObjectName="UserAccountInvitation" schema="mycollab"
+            tableName="s_user_account_invitation" />
+
         <table domainObjectName="RolePermission" schema="mycollab"
             tableName="s_role_permission" />
 

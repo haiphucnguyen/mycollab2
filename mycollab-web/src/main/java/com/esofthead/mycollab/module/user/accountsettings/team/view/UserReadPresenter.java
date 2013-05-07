@@ -40,10 +40,10 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 
 					@Override
 					public void onDelete(User data) {
-						UserService taskService = AppContext
+						UserService userService = AppContext
 								.getSpringBean(UserService.class);
-						taskService.removeWithSession(data.getUsername(),
-								AppContext.getUsername());
+						userService.removeUserAccount(data.getUsername(),
+								AppContext.getAccountId());
 						EventBus.getInstance().fireEvent(
 								new UserEvent.GotoList(this, null));
 					}

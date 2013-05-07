@@ -29,15 +29,14 @@ public class UserAvatarServiceImpl implements UserAvatarService {
 			PIXELS_32, PIXELS_16 };
 
 	@Override
-	public void uploadAvatar(BufferedImage image, String username,
-			int sAccountId) {
+	public void uploadAvatar(BufferedImage image, String username) {
 		for (int i = 0; i < SUPPORT_SIZES.length; i++) {
-			uploadAvatarToStorage(image, username, SUPPORT_SIZES[i], sAccountId);
+			uploadAvatarToStorage(image, username, SUPPORT_SIZES[i]);
 		}
 	}
 
 	private void uploadAvatarToStorage(BufferedImage image, String username,
-			int width, int sAccountId) {
+			int width) {
 		BufferedImage scaleImage = ImageUtil.scaleImage(image, (float) width
 				/ image.getWidth());
 		ByteArrayOutputStream outStream = new ByteArrayOutputStream();
@@ -46,7 +45,7 @@ public class UserAvatarServiceImpl implements UserAvatarService {
 		} catch (IOException e) {
 			throw new MyCollabException("Error while write image to stream", e);
 		}
-		contentService.saveContent(sAccountId, "avatar/" + username + "_"
+		contentService.saveContent(null, "avatar/" + username + "_"
 				+ width + ".png",
 				new ByteArrayInputStream(outStream.toByteArray()));
 	}

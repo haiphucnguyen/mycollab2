@@ -39,6 +39,7 @@ import com.vaadin.ui.ComponentContainer;
 public class RoleListPresenter extends AbstractPresenter<RoleListView>
 		implements ListPresenter<RoleSearchCriteria> {
 	private static final long serialVersionUID = 1L;
+
 	private RoleService userService;
 	private RoleSearchCriteria searchCriteria;
 	private boolean isSelectAll = false;
@@ -196,7 +197,9 @@ public class RoleListPresenter extends AbstractPresenter<RoleListView>
 					.getCurrentDataList();
 			List<Integer> keyList = new ArrayList<Integer>();
 			for (Role item : currentDataList) {
-				keyList.add(item.getId());
+				if (item.isSelected()) {
+					keyList.add(item.getId());
+				}
 			}
 
 			if (keyList.size() > 0) {

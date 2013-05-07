@@ -19,6 +19,7 @@ import com.esofthead.mycollab.module.project.service.ProjectService;
 import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
+import com.esofthead.mycollab.web.AppContext;
 
 @Service
 public class ProjectMemberInvitationNotificationServiceImp implements
@@ -46,9 +47,11 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 
 		if (member != null) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(
-					"MyCollab has invited you to join the team for project \" $member.projectName\"",
+					"$inviteUser has invited you to join the team for project \" $member.projectName\"",
 					"templates/email/project/memberInvitation/memberInvitationNotifier.mt");
 			templateGenerator.putVariable("member", member);
+			templateGenerator.putVariable("inviteUser",
+					notification.getChangeByUserFullName());
 			templateGenerator.putVariable(
 					"urlAccept",
 					ApplicationProperties
@@ -87,8 +90,8 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 
 		SimpleProject project = projectService.findProjectById(projectId);
 
-		SimpleUser user = userService.findUserByUserName(notification
-				.getChangeby());
+		SimpleUser user = userService.findUserByUserName(
+				notification.getChangeby(), AppContext.getAccountId());
 		if (project != null && user != null) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					"User \"$notification.changecomment\" has accepted for the invitation of project \"$project.name\"",
@@ -116,8 +119,8 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 
 		SimpleProject project = projectService.findProjectById(projectId);
 
-		SimpleUser user = userService.findUserByUserName(notification
-				.getChangeby());
+		SimpleUser user = userService.findUserByUserName(
+				notification.getChangeby(), AppContext.getAccountId());
 
 		if (project != null && user != null) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(

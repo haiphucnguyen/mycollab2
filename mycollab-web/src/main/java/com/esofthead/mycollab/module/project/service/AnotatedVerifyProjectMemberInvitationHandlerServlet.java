@@ -19,7 +19,6 @@ import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
 import com.esofthead.mycollab.module.project.ProjectMemberStatusContants;
 import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
-import com.esofthead.mycollab.web.AppContext;
 
 @Component("confirmInvitationMemberServletHandler")
 public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements

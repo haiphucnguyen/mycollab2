@@ -1,15 +1,13 @@
 package com.esofthead.mycollab.module.user.dao;
 
-import com.esofthead.mycollab.core.persistence.ISearchableDAO;
-import com.esofthead.mycollab.module.user.domain.Role;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.module.user.domain.UserInfo;
-import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import java.util.List;
 
-public interface UserMapperExt extends ISearchableDAO<UserSearchCriteria> {
+import com.esofthead.mycollab.core.persistence.ISearchableDAO;
+import com.esofthead.mycollab.module.user.domain.Role;
+import com.esofthead.mycollab.module.user.domain.UserInfo;
+import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 
-	SimpleUser findUserByUserName(String username);
+public interface UserMapperExt extends ISearchableDAO<UserSearchCriteria> {
 
 	List<Role> findRolesByUser(String username);
 

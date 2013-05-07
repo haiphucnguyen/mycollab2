@@ -81,7 +81,4 @@ public class ScheduleRelayEmailNotificationServiceImpl {
 				.getApplicationContext();
 		return context.getBean(clazz);
 	}
-
-	public static void main(String[] args) {
-	}
 }

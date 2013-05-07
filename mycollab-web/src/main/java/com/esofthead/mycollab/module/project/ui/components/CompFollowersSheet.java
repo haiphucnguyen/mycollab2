@@ -32,7 +32,8 @@ import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
-public abstract class CompFollowersSheet<V extends ValuedBean> extends VerticalLayout {
+public abstract class CompFollowersSheet<V extends ValuedBean> extends
+		VerticalLayout {
 
 	protected PagedBeanTable2<MonitorItemService, MonitorSearchCriteria, MonitorItem> tableItem;
 	protected MonitorItemService monitorItemService;
@@ -56,9 +57,9 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends VerticalL
 	protected abstract void loadMonitorItems();
 
 	protected abstract boolean saveMonitorItem(String username);
-	
+
 	protected abstract void saveRelayNotification();
-	
+
 	protected abstract boolean isEnableAdd();
 
 	private void initUI() {
@@ -82,7 +83,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends VerticalL
 						.getSelectedItems();
 
 				boolean canSendEmail = false;
-				
+
 				for (ProjectMember member : members) {
 
 					ProjectMemberService memberService = AppContext
@@ -104,7 +105,7 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends VerticalL
 						}
 					}
 				}
-				
+
 				if (canSendEmail) {
 					saveRelayNotification();
 				}
@@ -140,8 +141,8 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends VerticalL
 
 				UserService userService = AppContext
 						.getSpringBean(UserService.class);
-				SimpleUser user = userService.findUserByUserName(monitorItem
-						.getUser());
+				SimpleUser user = userService.findUserByUserName(
+						monitorItem.getUser(), AppContext.getAccountId());
 
 				return new ProjectUserLink(user.getUsername(), user
 						.getDisplayName(), true, true);

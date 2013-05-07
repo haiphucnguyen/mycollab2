@@ -13,7 +13,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
-import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.module.user.service.UserService;
 
 @Component("verifyUserServletHandler")
@@ -33,19 +33,26 @@ public class AnotatedVerifyUserServletRequestHandler implements
 		if (pathInfo != null) {
 			if (pathInfo.startsWith("/")) {
 				pathInfo = pathInfo.substring(1);
-				String username = UrlEncodeDecoder.decode(pathInfo);
-				try {
-					userService.verifyUser(username);
-
-					log.debug("Verify user successfully. Redirect to application page");
-					response.sendRedirect(request.getContextPath() + "/");
-				} catch (UserInvalidInputException e) {
-					log.debug("Redirect user to user invalid page");
+				pathInfo = UrlEncodeDecoder.decode(pathInfo);
+				String[] params = pathInfo.split("/");
+				if (params.length != 2) {
+					throw new MyCollabException("Invalid params");
+				} else {
+					//TODO: Adjust register service
+//					int accountId = Integer.parseInt(params[0]);
+//					String username = params[1];
+//					SimpleUser user = userService.findUserByUserName(username);
+//					user.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+//					user.setPassword("123456");
+//					userService.updateWithSession(user, user.getUsername());
+//					request.getRequestDispatcher(request.getContextPath() + "/")
+//							.forward(request, response);
+//					request.setAttribute("username", user.getUsername());
+//					request.setAttribute("password", user.getPassword());
 				}
 			}
 		} else {
 			// TODO: response to user invalid page
 		}
 	}
-
 }

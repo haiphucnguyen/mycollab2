@@ -85,7 +85,7 @@ public class ShellController implements IController {
 						}
 
 						AppContext.clearSession();
-						ControllerRegistry.getInstance().addController(
+						ControllerRegistry.addController(
 								new ShellController(container));
 					}
 				});

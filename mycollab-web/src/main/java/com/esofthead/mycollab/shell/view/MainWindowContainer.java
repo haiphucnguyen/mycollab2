@@ -62,7 +62,7 @@ public class MainWindowContainer extends Window implements View {
 		});
 
 		this.setCaption("MyCollab");
-		ControllerRegistry.getInstance().addController(
+		ControllerRegistry.addController(
 				new ShellController(this));
 
 		this.setImmediate(true);

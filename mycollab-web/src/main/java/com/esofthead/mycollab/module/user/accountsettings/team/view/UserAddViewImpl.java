@@ -13,7 +13,7 @@ import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.core.utils.TimezoneMapper.TimezoneExt;
 import com.esofthead.mycollab.module.user.accountsettings.profile.view.ProfileFormLayoutFactory;
-import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.view.component.RoleComboBox;
 import com.esofthead.mycollab.vaadin.events.HasEditFormHandlers;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
@@ -48,7 +48,7 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 
 	private static final long serialVersionUID = 1L;
 	private UserAddViewImpl.EditForm editForm;
-	private User user;
+	private SimpleUser user;
 	private DateComboboxSelectionField cboDateBirthday;
 	private TimeZoneSelection cboTimezone;
 
@@ -59,21 +59,21 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 	}
 
 	@Override
-	public void editItem(User item) {
+	public void editItem(SimpleUser item) {
 		this.user = item;
-		editForm.setItemDataSource(new BeanItem<User>(user));
+		editForm.setItemDataSource(new BeanItem<SimpleUser>(user));
 	}
 
 	@Override
 	public Date getBirthday() {
 		return cboDateBirthday.getDate();
 	}
-	
+
 	public TimezoneExt getTimezone() {
 		return cboTimezone.getTimeZone();
 	}
 
-	private class EditForm extends AdvancedEditBeanForm<User> {
+	private class EditForm extends AdvancedEditBeanForm<SimpleUser> {
 
 		private static final long serialVersionUID = 1L;
 
@@ -95,7 +95,7 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 			}
 
 			private Layout createButtonControls() {
-				return (new EditFormControlsGenerator<User>(
+				return (new EditFormControlsGenerator<SimpleUser>(
 						UserAddViewImpl.EditForm.this)).createButtonControls();
 			}
 
@@ -118,7 +118,7 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 			protected Field onCreateField(Item item, Object propertyId,
 					com.vaadin.ui.Component uiContext) {
 
-				if (propertyId.equals("isadmin")) {
+				if (propertyId.equals("isAdmin")) {
 					return new UserAddViewImpl.EditForm.AdminRoleSelectionField();
 				} else if (propertyId.equals("firstname")
 						|| propertyId.equals("lastname")
@@ -137,10 +137,13 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 				} else if (propertyId.equals("timezone")) {
 					cboTimezone = new TimeZoneSelection();
 					if (user.getTimezone() != null) {
-						cboTimezone.setTimeZone(TimezoneMapper.getTimezone(user.getTimezone()));
+						cboTimezone.setTimeZone(TimezoneMapper.getTimezone(user
+								.getTimezone()));
 					} else {
 						if (AppContext.getSession().getTimezone() != null) {
-							cboTimezone.setTimeZone(TimezoneMapper.getTimezone(AppContext.getSession().getTimezone()));
+							cboTimezone.setTimeZone(TimezoneMapper
+									.getTimezone(AppContext.getSession()
+											.getTimezone()));
 						}
 					}
 					return cboTimezone;
@@ -194,9 +197,9 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 
 					@Override
 					public void buttonClick(ClickEvent event) {
-						user.setIsadmin((Boolean) isAdminCheck.getValue());
+						user.setIsAdmin((Boolean) isAdminCheck.getValue());
 
-						if (user.getIsadmin()) {
+						if (user.getIsAdmin()) {
 							user.setRoleid(null);
 							layout.removeComponent(roleLayout);
 						} else {
@@ -217,9 +220,9 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 					}
 				});
 
-				isAdminCheck.setValue(user.getIsadmin());
+				isAdminCheck.setValue(user.getIsAdmin());
 				layout.addComponent(isAdminCheck);
-				if (user.getIsadmin() == null || !user.getIsadmin()) {
+				if (user.getIsAdmin() == null || !user.getIsAdmin()) {
 					layout.addComponent(roleLayout);
 				}
 
@@ -234,7 +237,7 @@ public class UserAddViewImpl extends AbstractView implements UserAddView {
 	}
 
 	@Override
-	public HasEditFormHandlers<User> getEditFormHandlers() {
+	public HasEditFormHandlers<SimpleUser> getEditFormHandlers() {
 		return editForm;
 	}
 }

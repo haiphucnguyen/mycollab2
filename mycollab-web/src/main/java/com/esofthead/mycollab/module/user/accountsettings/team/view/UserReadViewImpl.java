@@ -75,9 +75,9 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 
 					if (propertyId.equals("email")) {
 						return new FormEmailLinkViewField(user.getEmail());
-					} else if (propertyId.equals("isadmin")) {
-						if (user.getIsadmin() != null
-								&& user.getIsadmin() == Boolean.TRUE) {
+					} else if (propertyId.equals("isAdmin")) {
+						if (user.getIsAdmin() != null
+								&& user.getIsAdmin() == Boolean.TRUE) {
 							return new FormViewField("True");
 						} else {
 							FormContainerViewField formContainer = new FormContainerViewField();
@@ -109,16 +109,22 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 								AppContext.formatDate(user.getDateofbirth()));
 					} else if (propertyId.equals("timezone")) {
 						return new DefaultFormViewFieldFactory.FormViewField(
-								TimezoneMapper.getTimezone(user.getTimezone()).getDisplayName());
+								TimezoneMapper.getTimezone(user.getTimezone())
+										.getDisplayName());
 					} else if (propertyId.equals("facebookaccount")) {
 						return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
-								user.getFacebookaccount(), "https://www.facebook.com/" + user.getFacebookaccount());
+								user.getFacebookaccount(),
+								"https://www.facebook.com/"
+										+ user.getFacebookaccount());
 					} else if (propertyId.equals("twitteraccount")) {
 						return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
-								user.getTwitteraccount(), "https://www.twitter.com/" + user.getTwitteraccount());
+								user.getTwitteraccount(),
+								"https://www.twitter.com/"
+										+ user.getTwitteraccount());
 					} else if (propertyId.equals("skypecontact")) {
 						return new DefaultFormViewFieldFactory.FormUrlSocialNetworkLinkViewField(
-								user.getSkypecontact(), "skype:" + user.getSkypecontact() + "?chat");
+								user.getSkypecontact(), "skype:"
+										+ user.getSkypecontact() + "?chat");
 					}
 					return null;
 				}
@@ -162,7 +168,7 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 			public FormLayoutFactory() {
 				super(user.getDisplayName());
 			}
-			
+
 			@Override
 			protected Layout createTopPanel() {
 				return (new PreviewFormControlsGenerator<User>(PreviewForm.this))
@@ -195,9 +201,10 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 							if (propertyId.equals("email")) {
 								return new FormEmailLinkViewField(user
 										.getEmail());
-							} else if (propertyId.equals("isadmin")) {
-								if (user.getIsadmin() != null
-										&& user.getIsadmin() == Boolean.TRUE) {
+							} else if (propertyId.equals("isAdmin")) {
+
+								if (user.getIsAdmin() != null
+										&& user.getIsAdmin() == Boolean.TRUE) {
 									return new FormViewField("True");
 								} else {
 									FormContainerViewField formContainer = new FormContainerViewField();
@@ -214,7 +221,9 @@ public class UserReadViewImpl extends AbstractView implements UserReadView {
 												.getDateofbirth()));
 							} else if (propertyId.equals("timezone")) {
 								return new DefaultFormViewFieldFactory.FormViewField(
-										TimezoneMapper.getTimezone(user.getTimezone()).getDisplayName());
+										TimezoneMapper.getTimezone(
+												user.getTimezone())
+												.getDisplayName());
 							}
 							return null;
 						}

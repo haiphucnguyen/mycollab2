@@ -11,7 +11,7 @@ public class ProjectModule extends AbstractView implements IModule {
 	private static final long serialVersionUID = 1L;
 
 	public ProjectModule() {
-		ControllerRegistry.getInstance().addController(
+		ControllerRegistry.addController(
 				new ProjectController(this));
 	}
 

@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.module.user.accountsettings.view.parameters;
 
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -12,9 +13,9 @@ public class UserScreenData {
 		}
 	}
 
-	public static class Add extends ScreenData<User> {
+	public static class Add extends ScreenData<SimpleUser> {
 
-		public Add(User params) {
+		public Add(SimpleUser params) {
 			super(params);
 		}
 	}

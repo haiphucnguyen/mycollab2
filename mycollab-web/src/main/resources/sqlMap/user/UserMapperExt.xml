@@ -7,6 +7,10 @@
         id="SimpleUserResult" type="com.esofthead.mycollab.module.user.domain.SimpleUser">
         <result column="displayName" jdbcType="VARCHAR" property="displayName" />
         <result column="roleName" jdbcType="VARCHAR" property="roleName" />
+        <result column="isAdmin" jdbcType="BIT" property="isAdmin" />
+        <result column="roleid" jdbcType="INTEGER" property="roleid" />
+        <result column="isAccountOwner" jdbcType="BIT" property="isAccountOwner" />
+        <result column="accountId" jdbcType="INTEGER" property="accountId" />
     </resultMap>
 
     <sql id="querySearchCriteria">
@@ -21,23 +25,55 @@
             ]]>
         </if>
         <if test="saccountid != null">
-            <![CDATA[${saccountid.operation} accountId = #{saccountid.value,javaType=INTEGER}]]>
+            <![CDATA[${saccountid.operation} s_user_account.accountId = #{saccountid.value,javaType=INTEGER}]]>
+        </if>
+        <if test="subdomain != null">
+            <![CDATA[${subdomain.operation} (SELECT COUNT(*) 
+                FROM s_account, s_user_account AS user_account 
+                WHERE s_account.subdomain=#{subdomain.value} AND  user_account.accountId=s_account.id AND user_account.username=s_user.username
+            ) > 0                                
+            ]]>
+        </if>
+    </sql>
+
+    <sql id="queryTotalCountSearchCriteria">
+        <if test="displayName != null">
+          <![CDATA[
+            ${displayName.operation} (concat(s_user.firstname, ' ', LTRIM(IFNULL(s_user.middlename + ' ', '')), s_user.lastname) like '%${displayName.value}%')
+            ]]>
+        </if>
+        <if test="username != null">
+          <![CDATA[
+            ${username.operation} s_user.username = #{username.value}
+            ]]>
+        </if>
+        <if test="saccountid != null">
+            <![CDATA[${saccountid.operation} (SELECT COUNT(*) 
+                FROM s_user_account 
+                WHERE s_user_account.accountId = #{saccountid.value,javaType=INTEGER} AND s_user_account.username=s_user.username) > 0]]>
+        </if>
+        <if test="subdomain != null">
+            <![CDATA[${subdomain.operation} (SELECT COUNT(*) 
+                FROM s_account, s_user_account AS user_account 
+                WHERE s_account.subdomain=#{subdomain.value} AND  user_account.accountId=s_account.id AND user_account.username=s_user.username
+            ) > 0                                
+            ]]>
         </if>
     </sql>
 
     <sql id="selectUser">
         <![CDATA[
-        SELECT s_user.username, s_user.firstname, s_user.middlename, s_user.lastname, s_user.nickname, s_user.dateofbirth, 
-      s_user.email, s_user.website, s_user.registeredTime, 
-      s_user.lastAccessedTime, s_user.accountId, s_user.company, 
-      s_user.timezone, s_user.registrationSource, s_user.isAdmin, 
-      s_user.registerStatus, s_user.roleid, s_user.language, 
-      s_user.country, s_user.workPhone, s_user.homePhone, 
-      s_user.facebookAccount, s_user.twitterAccount, s_user.skypeContact, 
-      s_user.password, s_roles.rolename AS roleName 
+        SELECT DISTINCT s_user.username, s_user.firstname, s_user.middlename, s_user.lastname, s_user.nickname, s_user.dateofbirth, 
+            s_user.email, s_user.website, s_user.registeredTime, 
+            s_user.lastAccessedTime, s_user.company, 
+            s_user.timezone, s_user.language, 
+            s_user.country, s_user.workPhone, s_user.homePhone, 
+            s_user.facebookAccount, s_user.twitterAccount, s_user.skypeContact, 
+            s_user.password, s_roles.rolename AS roleName, s_user_account.isAdmin,  s_user_account.isAccountOwner, s_user_account.roleid
         FROM s_user 
                 LEFT OUTER JOIN s_user_preference ON (s_user.username = s_user_preference.username)
-                LEFT OUTER JOIN s_roles ON (s_roles.id = s_user.roleid)
+                LEFT OUTER JOIN s_user_account ON (s_user.username=s_user_account.username)
+                LEFT OUTER JOIN s_roles ON (s_roles.id = s_user_account.roleid)
         ]]>
     </sql>
 
@@ -45,7 +81,7 @@
         SELECT count(*) as totalCount FROM s_user
         <trim prefix="WHERE" prefixOverrides="AND | OR ">
             1=1
-            <include refid="querySearchCriteria" />
+            <include refid="queryTotalCountSearchCriteria" />
         </trim>
     </select>
 

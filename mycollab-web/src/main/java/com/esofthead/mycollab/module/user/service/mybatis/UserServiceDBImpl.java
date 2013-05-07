@@ -17,15 +17,19 @@
 package com.esofthead.mycollab.module.user.service.mybatis;
 
 import java.awt.image.BufferedImage;
+import java.io.IOException;
 import java.io.InputStream;
+import java.util.GregorianCalendar;
 import java.util.List;
 
 import javax.imageio.ImageIO;
 
+import org.apache.ibatis.session.RowBounds;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.core.UserInvalidInputException;
@@ -37,25 +41,32 @@ import com.esofthead.mycollab.core.persistence.service.DefaultService;
 import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.file.service.UserAvatarService;
 import com.esofthead.mycollab.module.user.PasswordEncryptHelper;
-import com.esofthead.mycollab.module.user.UserIsNotExistedException;
 import com.esofthead.mycollab.module.user.dao.RolePermissionMapper;
+import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
+import com.esofthead.mycollab.module.user.dao.UserAccountMapper;
 import com.esofthead.mycollab.module.user.dao.UserMapper;
 import com.esofthead.mycollab.module.user.dao.UserMapperExt;
 import com.esofthead.mycollab.module.user.domain.RolePermission;
 import com.esofthead.mycollab.module.user.domain.RolePermissionExample;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.domain.UserAccount;
+import com.esofthead.mycollab.module.user.domain.UserAccountExample;
+import com.esofthead.mycollab.module.user.domain.UserAccountInvitation;
+import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.thoughtworks.xstream.XStream;
 import com.thoughtworks.xstream.io.xml.StaxDriver;
 
 @Service
+@Transactional
 public class UserServiceDBImpl extends
 		DefaultService<String, User, UserSearchCriteria> implements UserService {
 
 	private static Logger log = LoggerFactory
 			.getLogger(UserServiceDBImpl.class);
+
 	@Autowired
 	private UserMapper userMapper;
 
@@ -63,10 +74,16 @@ public class UserServiceDBImpl extends
 	private UserMapperExt userMapperExt;
 
 	@Autowired
+	private UserAccountMapper userAccountMapper;
+
+	@Autowired
 	private RolePermissionMapper rolePermissionMapper;
 
 	@Autowired
 	private UserAvatarService userAvatarService;
+
+	@Autowired
+	private UserAccountInvitationMapper userAccountInvitationMapper;
 
 	@Override
 	public ICrudGenericDAO getCrudMapper() {
@@ -79,47 +96,97 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
-	public int saveWithSession(User record, String username) {
+	public void saveUserAccount(SimpleUser record) {
+		// check if user email has already in this account yet
+		UserAccountExample userAccountEx = new UserAccountExample();
+		userAccountEx.createCriteria().andUsernameEqualTo(record.getEmail());
+		if (userAccountMapper.countByExample(userAccountEx) > 0) {
+			throw new UserInvalidInputException(
+					"There is already user has email " + record.getEmail()
+							+ " in your account");
+		}
+
 		if (record.getPassword() != null) {
 			record.setPassword(PasswordEncryptHelper.encryptSaltPassword(record
 					.getPassword()));
-		}
-
-		if (record.getRegisterstatus() == null) {
-			record.setRegisterstatus(RegisterStatusConstants.VERIFICATING);
 		}
 
 		if (record.getUsername() == null) {
 			record.setUsername(record.getEmail());
 		}
 
-		userMapper.insert(record);
+		// Check if user has already account in system, if not we will create
+		// new user
 
-		// set default user avatar
-		try {
-			log.debug("Set default user avatar");
+		UserExample userEx = new UserExample();
+		userEx.createCriteria().andUsernameEqualTo(record.getUsername());
+		if (userMapper.countByExample(userEx) == 0) {
+			record.setRegisterstatus(RegisterStatusConstants.VERIFICATING);
+			userMapper.insert(record);
+
+			// Save default user avatar
 			InputStream imageResourceStream = this
 					.getClass()
 					.getClassLoader()
 					.getResourceAsStream(
 							"assets/images/default_user_avatar_100.png");
-			BufferedImage imageBuff = ImageIO.read(imageResourceStream);
-			userAvatarService.uploadAvatar(imageBuff, username,
-					record.getAccountid());
-		} catch (Exception e) {
-			log.error("Error while create default user avatar");
+			BufferedImage imageBuff;
+			try {
+				imageBuff = ImageIO.read(imageResourceStream);
+				userAvatarService.uploadAvatar(imageBuff, record.getUsername());
+			} catch (IOException e) {
+				log.error("Error while set default avatar to user", e);
+			}
 		}
 
-		return 1;
+		// save record in s_user_account table
+		UserAccount userAccount = new UserAccount();
+		userAccount.setAccountid(record.getAccountId());
+		userAccount
+				.setIsaccountowner((record.getIsAccountOwner() == null) ? Boolean.FALSE
+						: record.getIsAccountOwner());
+		userAccount.setIsadmin((record.getIsAdmin() == null) ? Boolean.FALSE
+				: record.getIsAdmin());
+		userAccount.setRoleid(record.getRoleid());
+		userAccount.setUsername(record.getUsername());
+		userAccount.setRegisteredtime(new GregorianCalendar().getTime());
+		userAccount.setLastaccessedtime(new GregorianCalendar().getTime());
+		userAccount
+				.setRegisterstatus((record.getRegisterstatus() == null) ? RegisterStatusConstants.VERIFICATING
+						: record.getRegisterstatus());
+		userAccountMapper.insert(userAccount);
+
+		if (!RegisterStatusConstants.ACTIVE.equals(record.getRegisterstatus())) {
+			// save to invitation user
+			UserAccountInvitation invitation = new UserAccountInvitation();
+			invitation.setAccountid(record.getAccountId());
+			invitation.setCreatedtime(new GregorianCalendar().getTime());
+			invitation.setUsername(record.getUsername());
+			invitation
+					.setInvitationstatus((record.getRegisterstatus() == null) ? RegisterStatusConstants.VERIFICATING
+							: record.getRegisterstatus());
+			userAccountInvitationMapper.insert(invitation);
+		}
 	}
 
 	@Override
-	public int updateWithSession(User record, String username) {
+	public void updateUserAccount(SimpleUser record) {
 		if (record.getPassword() != null) {
 			record.setPassword(PasswordEncryptHelper.encryptSaltPassword(record
 					.getPassword()));
 		}
-		return super.updateWithSession(record, username);
+
+		userMapper.updateByPrimaryKeySelective(record);
+
+		UserAccountExample userAccountEx = new UserAccountExample();
+		userAccountEx.createCriteria().andUsernameEqualTo(record.getUsername());
+
+		UserAccount userAccount = new UserAccount();
+		userAccount.setIsadmin(record.getIsAdmin());
+		userAccount.setRoleid(record.getRoleid());
+		userAccount.setRegisterstatus(record.getRegisterstatus());
+		userAccount.setLastaccessedtime(new GregorianCalendar().getTime());
+		userAccountMapper.updateByExampleSelective(userAccount, userAccountEx);
 	}
 
 	@Override
@@ -129,9 +196,11 @@ public class UserServiceDBImpl extends
 
 	@Override
 	public SimpleUser authentication(String username, String password,
-			boolean isPasswordEncrypt) {
+			String subdomain, boolean isPasswordEncrypt) {
 		UserSearchCriteria criteria = new UserSearchCriteria();
 		criteria.setUsername(new StringSearchField(username));
+		criteria.setSubdomain(new StringSearchField(subdomain));
+
 		List<SimpleUser> users = findPagableListByCriteria(new SearchRequest<UserSearchCriteria>(
 				criteria, 0, Integer.MAX_VALUE));
 		if (users == null || users.isEmpty()) {
@@ -147,8 +216,9 @@ public class UserServiceDBImpl extends
 			}
 
 			log.debug("User " + username + " login to system successfully!");
-			if (user.getIsadmin() == null
-					|| (user.getIsadmin() != null && !user.getIsadmin())) {
+
+			if (user.getIsAdmin() == null
+					|| (user.getIsAdmin() != null && !user.getIsAdmin())) {
 				if (user.getRoleid() != null) {
 					log.debug("User " + username
 							+ " is not admin. Getting his role");
@@ -177,30 +247,55 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
-	public SimpleUser findUserByUserName(String username) {
-		return userMapperExt.findUserByUserName(username);
+	public SimpleUser findUserByUserName(String username, int accountId) {
+		UserSearchCriteria criteria = new UserSearchCriteria();
+		List<SimpleUser> users = userMapperExt.findPagableListByCriteria(
+				criteria, new RowBounds(0, Integer.MAX_VALUE));
+		if (users == null || users.size() == 0) {
+			return null;
+		} else {
+			return users.get(0);
+		}
 	}
 
 	@Override
 	public void verifyUser(String username) {
-		SimpleUser user = findUserByUserName(username);
-		if (user != null) {
-			if (RegisterStatusConstants.VERIFICATING.equals(user
-					.getRegisterstatus())) {
-				user.setRegisterstatus(RegisterStatusConstants.ACTIVE);
-				updateWithSession(user, username);
-
-			} else if (RegisterStatusConstants.ACTIVE.equals(user
-					.getRegisterstatus())) {
-				// do nothing
-			} else if (RegisterStatusConstants.PENDING.equals(user
-					.getRegisterstatus())) {
-				throw new UserInvalidInputException("User " + username
-						+ " is pending");
-			}
-		} else {
-			throw new UserIsNotExistedException("There is no user name "
-					+ username + " in database");
-		}
+		// TODO: fix issue of account
+		// SimpleUser user = findUserByUserName(username);
+		// if (user != null) {
+		// if (RegisterStatusConstants.VERIFICATING.equals(user
+		// .getRegisterstatus())) {
+		// user.setRegisterstatus(RegisterStatusConstants.ACTIVE);
+		// updateWithSession(user, username);
+		//
+		// } else if (RegisterStatusConstants.ACTIVE.equals(user
+		// .getRegisterstatus())) {
+		// // do nothing
+		// } else if (RegisterStatusConstants.PENDING.equals(user
+		// .getRegisterstatus())) {
+		// throw new UserInvalidInputException("User " + username
+		// + " is pending");
+		// }
+		// } else {
+		// throw new UserIsNotExistedException("There is no user name "
+		// + username + " in database");
+		// }
 	}
+
+	@Override
+	public void removeUserAccount(String username, int accountId) {
+		UserAccountExample userAccountEx = new UserAccountExample();
+		userAccountEx.createCriteria().andUsernameEqualTo(username)
+				.andAccountidEqualTo(accountId);
+		userAccountMapper.deleteByExample(userAccountEx);
+	}
+
+	@Override
+	public void removeUserAccounts(List<String> usernames, int accountId) {
+		UserAccountExample userAccountEx = new UserAccountExample();
+		userAccountEx.createCriteria().andUsernameIn(usernames)
+				.andAccountidEqualTo(accountId);
+		userAccountMapper.deleteByExample(userAccountEx);
+	}
+
 }

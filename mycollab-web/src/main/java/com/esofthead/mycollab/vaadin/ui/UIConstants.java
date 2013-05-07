@@ -34,7 +34,6 @@ public class UIConstants {
 	public static final String PANEL_WITHOUT_BORDER = "noneBorder-panel";
 	public static final String PHOTO_CROPBOX = "photo-cropbox";
 	public static final String PREVIEW = "preview";
-	// TODO: remove widget title?
 	public static final String REPORT_ROW_BLOCK = "report-row-block";
 	public static final String REPORT_ROW_HEADER = "report-row-header";
 	public static final String WIDGET_TITLE = "widget-title";

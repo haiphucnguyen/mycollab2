@@ -17,7 +17,7 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.user.dao.BillingAccountMapper" />
     </bean>
-    
+
     <bean class="org.mybatis.spring.mapper.MapperFactoryBean" id="billingAccountMapperExt">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"
@@ -77,7 +77,19 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.user.dao.RolePermissionMapper" />
     </bean>
-    
+
+    <bean id="userAccountMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.user.dao.UserAccountMapper" />
+    </bean>
+
+    <bean id="userAccountInvitationMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper" />
+    </bean>
+
     <bean id="userPreferenceMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
         <property name="mapperInterface"

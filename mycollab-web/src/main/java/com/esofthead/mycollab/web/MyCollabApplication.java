@@ -21,6 +21,7 @@ public class MyCollabApplication extends Application implements
 	private static final long serialVersionUID = 1L;
 
 	private String initialUrl = "";
+	private String initialSubDomain = "1";
 
 	private static Logger log = LoggerFactory
 			.getLogger(MyCollabApplication.class);
@@ -39,7 +40,7 @@ public class MyCollabApplication extends Application implements
 		setTheme("mycollab");
 		sessionData = new AppContext(this);
 		this.setMainWindow(new MainWindowContainer());
-
+		sessionData.initDomain(initialSubDomain);
 		setInstance(this);
 	}
 
@@ -56,6 +57,7 @@ public class MyCollabApplication extends Application implements
 	public void onRequestStart(HttpServletRequest request,
 			HttpServletResponse response) {
 		MyCollabApplication.setInstance(this);
+
 		String pathInfo = request.getPathInfo();
 		if (pathInfo.equals("") || pathInfo.equals("/")) {
 			if (sessionData != null) {
@@ -65,7 +67,6 @@ public class MyCollabApplication extends Application implements
 						urlParam = urlParam.substring(1);
 					}
 					try {
-
 						String encodeRedirectURL = response
 								.encodeRedirectURL(request.getContextPath());
 						log.debug("Forward to URL: " + encodeRedirectURL);
@@ -74,8 +75,7 @@ public class MyCollabApplication extends Application implements
 					} catch (IOException e) {
 						log.error("Dispatch url error: " + initialUrl, e);
 					}
-
-				} 
+				}
 			} else {
 				try {
 					initialUrl = request.getParameter("url");

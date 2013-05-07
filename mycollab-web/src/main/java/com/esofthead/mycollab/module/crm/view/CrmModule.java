@@ -42,7 +42,7 @@ public class CrmModule extends AbstractView implements IModule {
 	private final CssLayout toolbar;
 
 	public CrmModule() {
-		ControllerRegistry.getInstance().addController(new CrmController(this));
+		ControllerRegistry.addController(new CrmController(this));
 		CustomLayout container = new CustomLayout("crmContainer");
 		container.setStyleName("crmContainer");
 

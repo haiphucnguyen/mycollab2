@@ -16,6 +16,8 @@
  */
 package com.esofthead.mycollab.module.user.service;
 
+import java.util.List;
+
 import com.esofthead.mycollab.core.persistence.service.IDefaultService;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
@@ -29,9 +31,17 @@ public interface UserService extends
 	public static int FREE_BILLING = 0;
 
 	SimpleUser authentication(String username, String password,
-			boolean isPasswordEncrypt);
+			String subdomain, boolean isPasswordEncrypt);
 
-	SimpleUser findUserByUserName(String username);
+	void saveUserAccount(SimpleUser user);
+
+	void updateUserAccount(SimpleUser user);
+
+	void removeUserAccount(String username, int accountId);
+
+	void removeUserAccounts(List<String> usernames, int accountId);
+
+	SimpleUser findUserByUserName(String username, int accountId);
 
 	void verifyUser(String username);
 }

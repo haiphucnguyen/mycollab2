@@ -199,8 +199,8 @@ public class UserListPresenter extends AbstractPresenter<UserListView>
 			}
 
 			if (keyList.size() > 0) {
-				userService
-						.removeWithSession(keyList, AppContext.getUsername());
+				userService.removeUserAccounts(keyList,
+						AppContext.getAccountId());
 				doSearch(searchCriteria);
 			}
 		} else {

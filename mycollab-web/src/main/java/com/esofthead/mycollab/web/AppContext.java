@@ -16,9 +16,11 @@ import org.springframework.web.context.support.WebApplicationContextUtils;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
+import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.UserPreference;
+import com.esofthead.mycollab.module.user.service.BillingAccountService;
 import com.esofthead.mycollab.module.user.service.UserPreferenceService;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.utils.StringUtils;
@@ -33,8 +35,9 @@ public class AppContext implements Serializable {
 
 	private static final long serialVersionUID = 1L;
 	private static int UPDATE_TIME_DURATION = 300000;
-
 	private static Logger log = LoggerFactory.getLogger(AppContext.class);
+
+	public static String USER_TIMEZONE = "USER_TIMEZONE";
 
 	private static org.springframework.web.context.WebApplicationContext springContext;
 
@@ -46,7 +49,8 @@ public class AppContext implements Serializable {
 
 	private long lastAccessTime = 0;
 
-	public static String USER_TIMEZONE = "USER_TIMEZONE";
+	private String subdomain;
+	private int accountId;
 
 	public AppContext(Application application) {
 		if (springContext == null) {
@@ -118,8 +122,24 @@ public class AppContext implements Serializable {
 		return getInstance().session;
 	}
 
+	public void initDomain(String domain) {
+		this.subdomain = domain;
+		BillingAccountService billingService = getSpringBean(BillingAccountService.class);
+		BillingAccount account = billingService.getAccountByDomain(domain);
+
+		if (account != null) {
+			accountId = account.getId();
+		} else {
+			// TODO: handle can not find account here
+		}
+	}
+
 	public static Integer getAccountId() {
-		return getInstance().session.getAccountid();
+		return getInstance().accountId;
+	}
+
+	public static String getSubDomain() {
+		return getInstance().subdomain;
 	}
 
 	public static String getUsername() {
@@ -148,7 +168,7 @@ public class AppContext implements Serializable {
 	}
 
 	public static boolean isAdmin() {
-		Boolean isAdmin = getInstance().session.getIsadmin();
+		Boolean isAdmin = getInstance().session.getIsAdmin();
 		if (isAdmin == null) {
 			return Boolean.FALSE;
 		} else {
@@ -216,7 +236,7 @@ public class AppContext implements Serializable {
 		ViewManager.clearResources();
 		PresenterResolver.clearResources();
 		EventBus.getInstance().clear();
-		ControllerRegistry.getInstance().clearRegistries();
+		ControllerRegistry.clearRegistries();
 		clearAllVariables();
 		if (getInstance() != null) {
 			getInstance().session = null;

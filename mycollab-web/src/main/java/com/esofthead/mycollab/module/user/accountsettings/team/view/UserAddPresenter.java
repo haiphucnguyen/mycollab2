@@ -5,8 +5,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
-import com.esofthead.mycollab.module.billing.RegisterSourceConstants;
-import com.esofthead.mycollab.module.user.domain.User;
+import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.events.UserEvent;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.vaadin.events.EditFormHandler;
@@ -29,48 +28,48 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 	public UserAddPresenter() {
 		super(UserAddView.class);
 
-		view.getEditFormHandlers().addFormHandler(new EditFormHandler<User>() {
-			@Override
-			public void onSave(final User item) {
-				save(item);
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new UserEvent.GotoList(this, null));
-				}
-			}
+		view.getEditFormHandlers().addFormHandler(
+				new EditFormHandler<SimpleUser>() {
+					@Override
+					public void onSave(final SimpleUser item) {
+						save(item);
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new UserEvent.GotoList(this, null));
+						}
+					}
 
-			@Override
-			public void onCancel() {
-				ViewState viewState = HistoryViewManager.back();
-				if (viewState instanceof NullViewState) {
-					EventBus.getInstance().fireEvent(
-							new UserEvent.GotoList(this, null));
-				}
-			}
+					@Override
+					public void onCancel() {
+						ViewState viewState = HistoryViewManager.back();
+						if (viewState instanceof NullViewState) {
+							EventBus.getInstance().fireEvent(
+									new UserEvent.GotoList(this, null));
+						}
+					}
 
-			@Override
-			public void onSaveAndNew(final User item) {
-				save(item);
-				EventBus.getInstance().fireEvent(
-						new UserEvent.GotoAdd(this, null));
-			}
-		});
+					@Override
+					public void onSaveAndNew(final SimpleUser item) {
+						save(item);
+						EventBus.getInstance().fireEvent(
+								new UserEvent.GotoAdd(this, null));
+					}
+				});
 	}
 
-	public void save(User item) {
+	public void save(SimpleUser item) {
 		UserService userService = AppContext.getSpringBean(UserService.class);
 
-		item.setAccountid(AppContext.getAccountId());
-		User user = userService.findByPrimaryKey(item.getUsername());
+		item.setAccountId(AppContext.getAccountId());
+
 		item.setDateofbirth(view.getBirthday());
 		item.setTimezone(view.getTimezone().getId());
 
-		if (user == null) {
-			item.setRegistrationsource(RegisterSourceConstants.WEB);
-			userService.saveWithSession(item, AppContext.getUsername());
+		if (item.getUsername() == null) {
+			userService.saveUserAccount(item);
 		} else {
-			userService.updateWithSession(item, AppContext.getUsername());
+			userService.updateUserAccount(item);
 		}
 
 	}
@@ -81,7 +80,7 @@ public class UserAddPresenter extends AbstractPresenter<UserAddView> {
 		userContainer.removeAllComponents();
 		userContainer.addComponent(view.getWidget());
 
-		User user = (User) data.getParams();
+		SimpleUser user = (SimpleUser) data.getParams();
 		view.editItem(user);
 
 		if (user.getUsername() == null) {

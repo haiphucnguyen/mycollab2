@@ -54,7 +54,8 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 	public void doLogin(String username, String password,
 			boolean isRemmeberPassword) {
 		UserService userService = AppContext.getSpringBean(UserService.class);
-		SimpleUser user = userService.authentication(username, password, false);
+		SimpleUser user = userService.authentication(username, password,
+				AppContext.getSubDomain(), false);
 
 		if (isRemmeberPassword) {
 			((MainWindowContainer) AppContext.getApplication().getMainWindow())
@@ -63,8 +64,10 @@ public class LoginPresenter extends AbstractPresenter<LoginView> {
 
 		BillingAccountService billingAccountService = AppContext
 				.getSpringBean(BillingAccountService.class);
+
 		SimpleBillingAccount billingAccount = billingAccountService
-				.getBillingAccountById(user.getAccountid());
+				.getBillingAccountById(AppContext.getAccountId());
+
 		log.debug("Get billing account successfully: "
 				+ BeanUtility.printBeanObj(billingAccount));
 

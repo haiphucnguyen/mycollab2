@@ -9,15 +9,17 @@ import java.util.Calendar;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.db.sqldump.DbConfiguration;
-import com.esofthead.db.sqldump.DbExport;
+//import com.esofthead.db.sqldump.DbConfiguration;
+//import com.esofthead.db.sqldump.DbExport;
 import com.esofthead.mycollab.common.ApplicationProperties;
+import com.googlecode.flyway.core.command.DbMigrate;
 
 @Service
 public class BackupDatabaseServiceImpl {
 	
 	private static String today() {
 		SimpleDateFormat formater = new SimpleDateFormat("yyyy-MM-dd-HH-mm-ss");
+		DbMigrate a;
 		return formater.format(Calendar.getInstance().getTime());
 	}
 	

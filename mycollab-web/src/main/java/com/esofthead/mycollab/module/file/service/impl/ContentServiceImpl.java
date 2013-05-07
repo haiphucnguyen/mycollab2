@@ -9,25 +9,28 @@ import org.springframework.stereotype.Service;
 @Service
 public class ContentServiceImpl implements ContentService {
 
-    @Autowired
-    protected RawContentService rawContentService;
+	@Autowired
+	protected RawContentService rawContentService;
 
-    @Override
-    public void saveContent(Integer accountId, String objectPath,
-            InputStream stream) {
-        String newPath = accountId + "/" + objectPath;
-        rawContentService.saveContent(newPath, stream);
-    }
+	@Override
+	public void saveContent(Integer accountId, String objectPath,
+			InputStream stream) {
+		String newPath = ((accountId == null) ? "" : accountId + "/")
+				+ objectPath;
+		rawContentService.saveContent(newPath, stream);
+	}
 
-    @Override
-    public InputStream getContent(Integer accountId, String objectPath) {
-        String newPath = accountId + "/" + objectPath;
-        return rawContentService.getContent(newPath);
-    }
+	@Override
+	public InputStream getContent(Integer accountId, String objectPath) {
+		String newPath = ((accountId == null) ? "" : accountId + "/")
+				+ objectPath;
+		return rawContentService.getContent(newPath);
+	}
 
-    @Override
-    public void removeContent(Integer accountId, String objectPath) {
-        String newPath = accountId + "/" + objectPath;
-        rawContentService.removeContent(newPath);
-    }
+	@Override
+	public void removeContent(Integer accountId, String objectPath) {
+		String newPath = ((accountId == null) ? "" : accountId + "/")
+				+ objectPath;
+		rawContentService.removeContent(newPath);
+	}
 }

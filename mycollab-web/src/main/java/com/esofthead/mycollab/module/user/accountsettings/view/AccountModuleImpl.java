@@ -32,7 +32,7 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 	private AccountSettingsPresenter accountSettingPresenter;
 
 	public AccountModuleImpl() {
-		ControllerRegistry.getInstance().addController(
+		ControllerRegistry.addController(
 				new UserAccountController(this));
 		this.setStyleName("accountViewContainer");
 		this.setMargin(false);

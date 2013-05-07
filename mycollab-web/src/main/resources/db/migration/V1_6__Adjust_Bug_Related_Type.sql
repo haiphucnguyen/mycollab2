@@ -1,0 +1,1 @@
+ALTER TABLE `m_tracker_related_bug` CHANGE COLUMN `relatetype` `relatetype` VARCHAR(45) NOT NULL  ;

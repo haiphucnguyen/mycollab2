@@ -112,8 +112,7 @@ public class ProfilePhotoUploadViewImpl extends AbstractView implements
 						UserAvatarService userAvatarService = AppContext
 								.getSpringBean(UserAvatarService.class);
 						userAvatarService.uploadAvatar(image,
-								AppContext.getUsername(),
-								AppContext.getAccountId());
+								AppContext.getUsername());
 						EventBus.getInstance().fireEvent(
 								new ProfileEvent.GotoProfileView(
 										ProfilePhotoUploadViewImpl.this, null));
