@@ -6,8 +6,13 @@ import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
 import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
 import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -24,17 +29,12 @@ public class BugSelectionWindow extends Window {
 		this.setHeight("500px");
 		this.fieldSelection = fieldSelection;
 		this.setModal(true);
-	}
 
-	public void show() {
 		searchCriteria = new BugSearchCriteria();
 
 		VerticalLayout layout = new VerticalLayout();
 		layout.setSpacing(true);
 		layout.setMargin(true);
-
-		createAccountList();
-
 		BugSimpleSearchPanel contactSimpleSearchPanel = new BugSimpleSearchPanel();
 		contactSimpleSearchPanel
 				.addSearchHandler(new SearchHandler<BugSearchCriteria>() {
@@ -46,18 +46,18 @@ public class BugSelectionWindow extends Window {
 
 				});
 		layout.addComponent(contactSimpleSearchPanel);
+		createAccountList();
 		layout.addComponent(tableItem);
-		this.setContent(layout);
-
 		tableItem.setSearchCriteria(searchCriteria);
+		this.setContent(layout);
 		center();
 	}
 
 	@SuppressWarnings("serial")
 	private void createAccountList() {
 		tableItem = new BugTableDisplay(
-				new String[] { "summary", "assignuserFullName", "severity",
-						"resolution" },
+				new String[] {"summary", "assignuserFullName",
+						"severity", "resolution", "duedate" },
 				new String[] {
 						LocalizationHelper
 								.getMessage(BugI18nEnum.TABLE_SUMMARY_HEADER),
@@ -66,7 +66,33 @@ public class BugSelectionWindow extends Window {
 						LocalizationHelper
 								.getMessage(BugI18nEnum.TABLE_SEVERITY_HEADER),
 						LocalizationHelper
-								.getMessage(BugI18nEnum.TABLE_RESOLUTION_HEADER) });
+								.getMessage(BugI18nEnum.TABLE_RESOLUTION_HEADER),
+						LocalizationHelper
+								.getMessage(BugI18nEnum.TABLE_DUE_DATE_HEADER) });
+
+		tableItem.setWidth("100%");
+
+		tableItem.setColumnExpandRatio("summary", 1.0f);
+
+		tableItem.setColumnWidth("assignuserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("severity", UIConstants.TABLE_S_LABEL_WIDTH);
+		tableItem.setColumnWidth("resolution", UIConstants.TABLE_M_LABEL_WIDTH);
+
+		tableItem.addGeneratedColumn("assignuserFullName",
+				new Table.ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public com.vaadin.ui.Component generateCell(Table source,
+							final Object itemId, Object columnId) {
+						final SimpleBug bug = tableItem.getBeanByIndex(itemId);
+						ButtonLink btnUser = new ButtonLink(bug.getAssignuserFullName());
+						btnUser.setIcon(UserAvatarControlFactory.getResource(
+								AppContext.getAccountId(), bug.getAssignuser(), 16));
+						return btnUser;
+
+					}
+				});
 
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
@@ -85,7 +111,6 @@ public class BugSelectionWindow extends Window {
 						}
 					}
 				});
-		tableItem.setHeight("500px");
 
 	}
 }
