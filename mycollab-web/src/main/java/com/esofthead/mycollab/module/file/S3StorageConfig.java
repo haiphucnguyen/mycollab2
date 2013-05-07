@@ -55,8 +55,7 @@ public class S3StorageConfig {
 		if ("".equals(s3UrlPath)) {
 			return "";
 		} else {
-			return s3UrlPath + "/" + accountId + "/avatar/" + username + "_"
-					+ size + ".png";
+			return s3UrlPath + "/avatar/" + username + "_" + size + ".png";
 		}
 	}
 
