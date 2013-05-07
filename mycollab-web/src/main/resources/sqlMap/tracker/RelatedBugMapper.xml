@@ -10,7 +10,7 @@
     <id column="id" jdbcType="INTEGER" property="id" />
     <result column="bugid" jdbcType="INTEGER" property="bugid" />
     <result column="relatedid" jdbcType="INTEGER" property="relatedid" />
-    <result column="relatetype" jdbcType="DECIMAL" property="relatetype" />
+    <result column="relatetype" jdbcType="VARCHAR" property="relatetype" />
     <result column="comment" jdbcType="VARCHAR" property="comment" />
   </resultMap>
   <sql id="Example_Where_Clause">

@@ -299,7 +299,6 @@ public class BugTableDisplay extends
 								.getTime()))) {
 					b.addStyleName(UIConstants.LINK_OVERDUE);
 				}
-				b.setWidth("100%");
 				return b;
 
 			}
@@ -366,7 +365,7 @@ public class BugTableDisplay extends
 			}
 		});
 
-		this.setColumnExpandRatio("summary", 1);
+		this.setColumnExpandRatio("summary", 1.0f);
 		this.setColumnWidth("assignuserFullName",
 				UIConstants.TABLE_X_LABEL_WIDTH);
 		this.setColumnWidth("id", 30);

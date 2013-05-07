@@ -1,14 +1,28 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.GregorianCalendar;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.vaadin.addon.customfield.CustomField;
+import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.utils.StringUtil;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
+import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
+import com.esofthead.mycollab.module.project.events.BugEvent;
+import com.esofthead.mycollab.module.project.service.ProjectMemberService;
+import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.SimpleRelatedBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugRelatedSearchCriteria;
+import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.module.tracker.service.RelatedBugService;
+import com.esofthead.mycollab.vaadin.events.EventBus;
+import com.esofthead.mycollab.vaadin.ui.ButtonLink;
+import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.event.MouseEvents;
@@ -19,139 +33,353 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
+import com.vaadin.ui.RichTextArea;
+import com.vaadin.ui.Table;
+import com.vaadin.ui.Table.ColumnGenerator;
 import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 public class BugRelatedField extends CustomField {
-    
-    private static final long serialVersionUID = 1L;
-    private static Logger log = LoggerFactory.getLogger(BugRelatedField.class);
-    private TextField itemField;
-    private Embedded browseBtn;
-    private Embedded clearBtn;
-    private Button btnRelate;
-    private BugRelationComboBox comboRelation;
-    private PagedBeanTable2<RelatedBugService, BugRelatedSearchCriteria, SimpleRelatedBug> tableItem;
-    private RelatedBugService relatedBugService;
-    
-    protected SimpleBug bean;
-    protected SimpleBug relatedBean;
-    
-    public BugRelatedField(SimpleBug bean) {
-    	this.bean = bean;
-    	
-    	relatedBugService = AppContext.getSpringBean(RelatedBugService.class);
-    	
-    	VerticalLayout mainLayout = new VerticalLayout();
-    	mainLayout.setWidth("100%");
-    	mainLayout.setMargin(true);
-    	mainLayout.setSpacing(true);
-    	
-        HorizontalLayout layoutAdd = new HorizontalLayout();
-        layoutAdd.setSpacing(true);
-        
-        Label lbBug = new Label("Bug:");
-        layoutAdd.addComponent(lbBug);
-        layoutAdd.setComponentAlignment(lbBug, Alignment.MIDDLE_LEFT);
-        
-        itemField = new TextField();
-        itemField.setWidth("300px");
-        itemField.setNullRepresentation("");
-        itemField.setReadOnly(true);
-        itemField.setEnabled(true);
-        layoutAdd.addComponent(itemField);
-        layoutAdd.setComponentAlignment(itemField, Alignment.MIDDLE_LEFT);
-        
-        browseBtn = new Embedded(null, new ThemeResource(
-                "icons/16/browseItem.png"));
-        browseBtn.addListener(new MouseEvents.ClickListener() {
-            private static final long serialVersionUID = 1L;
-            
-            @Override
-            public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
-            	callItemSelectionWindow();
-            }
-        });
-        
-        layoutAdd.addComponent(browseBtn);
-        layoutAdd.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
-        
-        clearBtn = new Embedded(null, new ThemeResource(
-                "icons/16/clearItem.png"));
-        clearBtn.addListener(new MouseEvents.ClickListener() {
-            private static final long serialVersionUID = 1L;
-            
-            @Override
-            public void click(ClickEvent event) {
-            	itemField.setReadOnly(false);
-            	itemField.setValue("");
-            	itemField.setReadOnly(true);
-            }
-        });
-        
-        layoutAdd.addComponent(clearBtn);
-        layoutAdd.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
-        
-        Label lbIs = new Label("is");
-        layoutAdd.addComponent(lbIs);
-        layoutAdd.setComponentAlignment(lbIs, Alignment.MIDDLE_LEFT);
-        
-        comboRelation = new BugRelationComboBox();
-        comboRelation.setWidth("200px");
-        layoutAdd.addComponent(comboRelation);
-        layoutAdd.setComponentAlignment(comboRelation, Alignment.MIDDLE_LEFT);
-        
-        btnRelate = new Button("Relate");
-        layoutAdd.addComponent(btnRelate);
-        layoutAdd.setComponentAlignment(btnRelate, Alignment.MIDDLE_LEFT);
-        
-        
-        Label lbInstruction = new Label("<strong>Relate to an existing ticket</strong>", Label.CONTENT_XHTML);
-        mainLayout.addComponent(lbInstruction);
-        
-        mainLayout.addComponent(layoutAdd);
-        
-        tableItem = new PagedBeanTable2<RelatedBugService, BugRelatedSearchCriteria, SimpleRelatedBug>(
+
+	private static final long serialVersionUID = 1L;
+	private static Logger log = LoggerFactory.getLogger(BugRelatedField.class);
+	private TextField itemField;
+	private Embedded browseBtn;
+	private Embedded clearBtn;
+	private Button btnRelate;
+	private BugRelationComboBox comboRelation;
+	private PagedBeanTable2<RelatedBugService, BugRelatedSearchCriteria, SimpleRelatedBug> tableItem;
+	private RelatedBugService relatedBugService;
+	private RichTextArea txtComment;
+
+	private SimpleBug bean;
+	private SimpleBug relatedBean;
+
+	public BugRelatedField(final SimpleBug bean) {
+		this.bean = bean;
+
+		relatedBugService = AppContext.getSpringBean(RelatedBugService.class);
+
+		VerticalLayout mainLayout = new VerticalLayout();
+		mainLayout.setWidth("100%");
+		mainLayout.setMargin(true);
+		mainLayout.setSpacing(true);
+
+		HorizontalLayout layoutAdd = new HorizontalLayout();
+		layoutAdd.setSpacing(true);
+
+		Label lbBug = new Label("Bug:");
+		lbBug.setWidth("70px");
+		layoutAdd.addComponent(lbBug);
+		layoutAdd.setComponentAlignment(lbBug, Alignment.MIDDLE_LEFT);
+
+		itemField = new TextField();
+		itemField.setWidth("300px");
+		itemField.setNullRepresentation("");
+		itemField.setReadOnly(true);
+		itemField.setEnabled(true);
+		layoutAdd.addComponent(itemField);
+		layoutAdd.setComponentAlignment(itemField, Alignment.MIDDLE_LEFT);
+
+		browseBtn = new Embedded(null, new ThemeResource(
+				"icons/16/browseItem.png"));
+		browseBtn.addListener(new MouseEvents.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void click(com.vaadin.event.MouseEvents.ClickEvent event) {
+				callItemSelectionWindow();
+			}
+		});
+
+		layoutAdd.addComponent(browseBtn);
+		layoutAdd.setComponentAlignment(browseBtn, Alignment.MIDDLE_LEFT);
+
+		clearBtn = new Embedded(null, new ThemeResource(
+				"icons/16/clearItem.png"));
+		clearBtn.addListener(new MouseEvents.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void click(ClickEvent event) {
+				setItemFieldValue("");
+			}
+		});
+
+		layoutAdd.addComponent(clearBtn);
+		layoutAdd.setComponentAlignment(clearBtn, Alignment.MIDDLE_LEFT);
+
+		Label lbIs = new Label("is");
+		layoutAdd.addComponent(lbIs);
+		layoutAdd.setComponentAlignment(lbIs, Alignment.MIDDLE_LEFT);
+
+		comboRelation = new BugRelationComboBox();
+		comboRelation.setWidth("200px");
+		layoutAdd.addComponent(comboRelation);
+		layoutAdd.setComponentAlignment(comboRelation, Alignment.MIDDLE_LEFT);
+
+		btnRelate = new Button("Relate");
+		btnRelate.setStyleName(UIConstants.THEME_BLUE_LINK);
+		btnRelate.setIcon(new ThemeResource("icons/16/addRecord.png"));
+
+		ProjectMemberService memberService = AppContext
+				.getSpringBean(ProjectMemberService.class);
+		SimpleProjectMember member = memberService.findMemberByUsername(
+				AppContext.getUsername(),
+				CurrentProjectVariables.getProjectId());
+
+		if (member != null) {
+			btnRelate.setEnabled((member.getIsadmin()
+					|| (AppContext.getUsername().equals(bean.getAssignuser()))
+					|| (AppContext.getUsername().equals(bean.getLogby()))) && CurrentProjectVariables
+					.canWrite(ProjectRolePermissionCollections.BUGS));
+		}
+
+		btnRelate.addListener(new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(com.vaadin.ui.Button.ClickEvent event) {
+				if (!itemField.getValue().toString().trim().equals("")
+						&& relatedBean != null && !relatedBean.getSummary().equals(bean.getSummary())) {
+					SimpleRelatedBug relatedBug = new SimpleRelatedBug();
+					relatedBug.setBugid(bean.getId());
+					relatedBug.setRelatedid(relatedBean.getId());
+					relatedBug.setRelatetype((String) comboRelation.getValue());
+					relatedBug.setComment(txtComment.getValue().toString());
+					relatedBugService.saveWithSession(relatedBug,
+							AppContext.getUsername());
+					
+					SimpleRelatedBug oppositeRelation = new SimpleRelatedBug();
+					oppositeRelation.setBugid(relatedBean.getId());
+					oppositeRelation.setRelatedid(bean.getId());
+					oppositeRelation.setComment(txtComment.getValue().toString());
+					
+					if (comboRelation.getValue().toString().equals(BugRelationConstants.PARENT)) {
+						oppositeRelation.setRelatetype(BugRelationConstants.CHILD);
+					} else if (comboRelation.getValue().toString().equals(BugRelationConstants.CHILD)) {
+						oppositeRelation.setRelatetype(BugRelationConstants.PARENT);
+					} else if (comboRelation.getValue().toString().equals(BugRelationConstants.RELATED)) {
+						oppositeRelation.setRelatetype(BugRelationConstants.RELATED);
+					} else if (comboRelation.getValue().toString().equals(BugRelationConstants.BEFORE)) {
+						oppositeRelation.setRelatetype(BugRelationConstants.AFTER);
+					} else if (comboRelation.getValue().toString().equals(BugRelationConstants.AFTER)) {
+						oppositeRelation.setRelatetype(BugRelationConstants.BEFORE);
+					} else if (comboRelation.getValue().toString().equals(BugRelationConstants.DUPLICATED)) {
+						oppositeRelation.setRelatetype(BugRelationConstants.DUPLICATED);
+						BugService bugService = AppContext.getSpringBean(BugService.class);
+						bean.setStatus(BugStatusConstants.CLOSE);
+						bugService.updateWithSession(bean, AppContext.getUsername());
+					}
+					relatedBugService.saveWithSession(oppositeRelation,
+							AppContext.getUsername());
+
+					setCriteria();
+
+					setItemFieldValue("");
+					txtComment.setValue("");
+					relatedBean = null;
+				}
+			}
+		});
+		layoutAdd.addComponent(btnRelate);
+		layoutAdd.setComponentAlignment(btnRelate, Alignment.MIDDLE_LEFT);
+
+		Label lbInstruction = new Label(
+				"<strong>Relate to an existing ticket</strong>",
+				Label.CONTENT_XHTML);
+		mainLayout.addComponent(lbInstruction);
+
+		mainLayout.addComponent(layoutAdd);
+
+		HorizontalLayout layoutComment = new HorizontalLayout();
+		layoutComment.setSpacing(true);
+		Label lbComment = new Label("Comment:");
+		lbComment.setWidth("70px");
+		layoutComment.addComponent(lbComment);
+		layoutComment.setComponentAlignment(lbComment, Alignment.TOP_LEFT);
+		txtComment = new RichTextArea();
+		txtComment.setHeight("130px");
+		txtComment.setWidth("565px");
+		layoutComment.addComponent(txtComment);
+		layoutComment.setComponentAlignment(txtComment, Alignment.MIDDLE_LEFT);
+		mainLayout.addComponent(layoutComment);
+
+		tableItem = new PagedBeanTable2<RelatedBugService, BugRelatedSearchCriteria, SimpleRelatedBug>(
 				AppContext.getSpringBean(RelatedBugService.class),
-				SimpleRelatedBug.class,
-				new String[] { "bugName", "relatedid", "relatetype", "comment" }, new String[] {
-						"Bug Name", "Related", "Related Type", "Comment" });
-        
-        mainLayout.addComponent(tableItem);
-        
-        setCriteria(); 
-        
-        
-        
-        this.setCompositionRoot(mainLayout);
-    }
-    
-    private void setCriteria() {
-    	BugRelatedSearchCriteria searchCriteria = new BugRelatedSearchCriteria();
-    	searchCriteria.setBugId(new NumberSearchField(bean.getId()));
-    	tableItem.setSearchCriteria(searchCriteria);
-    }
-    
+				SimpleRelatedBug.class, new String[] { "bugName", "relatetype",
+						"comment", "id" }, new String[] { "Bug Name",
+						"Related Type", "Comment", "" });
+
+		tableItem.addGeneratedColumn("bugName", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleRelatedBug relatedItem = tableItem
+						.getBeanByIndex(itemId);
+				String bugname = "[%s-%s] %s";
+				bugname = String.format(bugname, CurrentProjectVariables
+						.getProject().getShortname(), relatedItem
+						.getRelatedid(), relatedItem.getBugName());
+
+				BugService bugService = AppContext
+						.getSpringBean(BugService.class);
+				final SimpleBug bug = bugService.findBugById(relatedItem
+						.getRelatedid());
+
+				ButtonLink b = new ButtonLink(bugname,
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(Button.ClickEvent event) {
+								EventBus.getInstance()
+										.fireEvent(
+												new BugEvent.GotoRead(this, bug
+														.getId()));
+							}
+						});
+
+				if (StringUtil.isNotNullOrEmpty(bug.getPriority())) {
+					ThemeResource iconPriority = new ThemeResource(
+							BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
+
+					if (BugPriorityStatusConstants.PRIORITY_BLOCKER.equals(bug
+							.getPriority())) {
+						iconPriority = new ThemeResource(
+								BugPriorityStatusConstants.PRIORITY_BLOCKER_IMG);
+					} else if (BugPriorityStatusConstants.PRIORITY_CRITICAL
+							.equals(bug.getPriority())) {
+						iconPriority = new ThemeResource(
+								BugPriorityStatusConstants.PRIORITY_CRITICAL_IMG);
+					} else if (BugPriorityStatusConstants.PRIORITY_MAJOR
+							.equals(bug.getPriority())) {
+						iconPriority = new ThemeResource(
+								BugPriorityStatusConstants.PRIORITY_MAJOR_IMG);
+					} else if (BugPriorityStatusConstants.PRIORITY_MINOR
+							.equals(bug.getPriority())) {
+						iconPriority = new ThemeResource(
+								BugPriorityStatusConstants.PRIORITY_MINOR_IMG);
+					} else if (BugPriorityStatusConstants.PRIORITY_TRIVIAL
+							.equals(bug.getPriority())) {
+						iconPriority = new ThemeResource(
+								BugPriorityStatusConstants.PRIORITY_TRIVIAL_IMG);
+					}
+
+					b.setIcon(iconPriority);
+				}
+
+				b.addStyleName("medium-text");
+				if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
+					b.addStyleName(UIConstants.LINK_COMPLETED);
+				} else if (bug.getDuedate() != null
+						&& (bug.getDuedate().before(new GregorianCalendar()
+								.getTime()))) {
+					b.addStyleName(UIConstants.LINK_OVERDUE);
+				}
+				b.setWidth("100%");
+				return b;
+
+			}
+		});
+
+		tableItem.addGeneratedColumn("id", new ColumnGenerator() {
+			@Override
+			public Object generateCell(Table source, Object itemId,
+					Object columnId) {
+				final SimpleRelatedBug relatedItem = tableItem
+						.getBeanByIndex(itemId);
+
+				Button deleteBtn = new Button(null, new Button.ClickListener() {
+
+					@Override
+					public void buttonClick(
+							com.vaadin.ui.Button.ClickEvent event) {
+						ConfirmDialog
+								.show(AppContext.getApplication()
+										.getMainWindow(),
+										"Please Confirm:",
+										"Are you sure to remove this user from the notification of item activity?",
+										"Yes", "No",
+										new ConfirmDialog.Listener() {
+											private static final long serialVersionUID = 1L;
+
+											@Override
+											public void onClose(
+													ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													relatedBugService.removeWithSession(
+															relatedItem.getId(),
+															AppContext
+																	.getUsername());
+													BugRelatedField.this
+															.setCriteria();
+												}
+											}
+										});
+					}
+				});
+				deleteBtn.setStyleName("link");
+				deleteBtn.setIcon(new ThemeResource("icons/16/delete.png"));
+				relatedItem.setExtraData(deleteBtn);
+
+				ProjectMemberService memberService = AppContext
+						.getSpringBean(ProjectMemberService.class);
+				SimpleProjectMember member = memberService
+						.findMemberByUsername(AppContext.getUsername(),
+								CurrentProjectVariables.getProjectId());
+
+				if (member != null) {
+					deleteBtn.setEnabled(member.getIsadmin()
+							|| (AppContext.getUsername().equals(bean
+									.getAssignuser()))
+							|| (AppContext.getUsername().equals(bean.getLogby())));
+				}
+				return deleteBtn;
+			}
+		});
+
+		tableItem.setColumnWidth("relatetype", UIConstants.TABLE_S_LABEL_WIDTH);
+		tableItem.setColumnWidth("comment", UIConstants.TABLE_EX_LABEL_WIDTH);
+		tableItem.setColumnWidth("id", UIConstants.TABLE_CONTROL_WIDTH);
+
+		mainLayout.addComponent(tableItem);
+
+		setCriteria();
+
+		this.setCompositionRoot(mainLayout);
+	}
+
+	private void setCriteria() {
+		BugRelatedSearchCriteria searchCriteria = new BugRelatedSearchCriteria();
+		searchCriteria.setBugId(new NumberSearchField(bean.getId()));
+		tableItem.setSearchCriteria(searchCriteria);
+	}
+
 	private void callItemSelectionWindow() {
 		BugSelectionWindow bugSeletionWindow = new BugSelectionWindow(this);
-		 getWindow().addWindow(bugSeletionWindow);
-		 bugSeletionWindow.show();
+		getWindow().addWindow(bugSeletionWindow);
 	}
 
 	public void fireValueChange(SimpleBug data) {
 		relatedBean = data;
-		setItemFieldValue(data.getSummary());
+
+		String bugname = "[%s-%s] %s";
+		bugname = String.format(bugname, CurrentProjectVariables.getProject()
+				.getShortname(), data.getBugkey(), data.getSummary());
+		setItemFieldValue(bugname);
 	}
-    
-    @Override
-    public Class<?> getType() {
-        return (new String[2]).getClass();
-    }
-    
-    protected void setItemFieldValue(String value) {
-    	itemField.setReadOnly(false);
-    	itemField.setValue(value);
-    	itemField.setReadOnly(true);
-    }
-    
+
+	@Override
+	public Class<?> getType() {
+		return (new String[2]).getClass();
+	}
+
+	private void setItemFieldValue(String value) {
+		itemField.setReadOnly(false);
+		itemField.setValue(value);
+		itemField.setReadOnly(true);
+	}
+
 }

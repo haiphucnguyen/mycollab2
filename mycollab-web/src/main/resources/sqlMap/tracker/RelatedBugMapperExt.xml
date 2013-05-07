@@ -22,7 +22,7 @@
           SELECT m_tracker_related_bug.id, m_tracker_related_bug.bugid, m_tracker_related_bug.relatedid, m_tracker_related_bug.relatetype, m_tracker_related_bug.comment, 
                  m_tracker_bug.summary AS bugName
             FROM m_tracker_related_bug
-              LEFT OUTER JOIN m_tracker_bug ON (m_tracker_related_bug.bugid=m_tracker_bug.id)
+              LEFT OUTER JOIN m_tracker_bug ON (m_tracker_related_bug.relatedid=m_tracker_bug.id)
         ]]>
 	</sql>
 
