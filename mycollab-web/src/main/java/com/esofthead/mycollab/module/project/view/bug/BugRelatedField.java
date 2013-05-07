@@ -140,13 +140,37 @@ public class BugRelatedField extends CustomField {
 			@Override
 			public void buttonClick(com.vaadin.ui.Button.ClickEvent event) {
 				if (!itemField.getValue().toString().trim().equals("")
-						&& relatedBean != null) {
+						&& relatedBean != null && !relatedBean.getSummary().equals(bean.getSummary())) {
 					SimpleRelatedBug relatedBug = new SimpleRelatedBug();
 					relatedBug.setBugid(bean.getId());
 					relatedBug.setRelatedid(relatedBean.getId());
 					relatedBug.setRelatetype((String) comboRelation.getValue());
 					relatedBug.setComment(txtComment.getValue().toString());
 					relatedBugService.saveWithSession(relatedBug,
+							AppContext.getUsername());
+					
+					SimpleRelatedBug oppositeRelation = new SimpleRelatedBug();
+					oppositeRelation.setBugid(relatedBean.getId());
+					oppositeRelation.setRelatedid(bean.getId());
+					oppositeRelation.setComment(txtComment.getValue().toString());
+					
+					if (comboRelation.getValue().toString().equals(BugRelationConstants.PARENT)) {
+						oppositeRelation.setRelatetype(BugRelationConstants.CHILD);
+					} else if (comboRelation.getValue().toString().equals(BugRelationConstants.CHILD)) {
+						oppositeRelation.setRelatetype(BugRelationConstants.PARENT);
+					} else if (comboRelation.getValue().toString().equals(BugRelationConstants.RELATED)) {
+						oppositeRelation.setRelatetype(BugRelationConstants.RELATED);
+					} else if (comboRelation.getValue().toString().equals(BugRelationConstants.BEFORE)) {
+						oppositeRelation.setRelatetype(BugRelationConstants.AFTER);
+					} else if (comboRelation.getValue().toString().equals(BugRelationConstants.AFTER)) {
+						oppositeRelation.setRelatetype(BugRelationConstants.BEFORE);
+					} else if (comboRelation.getValue().toString().equals(BugRelationConstants.DUPLICATED)) {
+						oppositeRelation.setRelatetype(BugRelationConstants.DUPLICATED);
+						BugService bugService = AppContext.getSpringBean(BugService.class);
+						bean.setStatus(BugStatusConstants.CLOSE);
+						bugService.updateWithSession(bean, AppContext.getUsername());
+					}
+					relatedBugService.saveWithSession(oppositeRelation,
 							AppContext.getUsername());
 
 					setCriteria();

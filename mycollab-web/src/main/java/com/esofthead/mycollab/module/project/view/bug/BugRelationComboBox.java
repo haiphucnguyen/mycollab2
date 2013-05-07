@@ -20,7 +20,6 @@ public class BugRelationComboBox extends ComboBox {
 		this.addItem(BugRelationConstants.CHILD);
 		this.addItem(BugRelationConstants.RELATED);
 		this.addItem(BugRelationConstants.DUPLICATED);
-		this.addItem(BugRelationConstants.SUBTASK);
 		this.addItem(BugRelationConstants.BEFORE);
 		this.addItem(BugRelationConstants.AFTER);
 		
