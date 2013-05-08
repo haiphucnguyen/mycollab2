@@ -60,9 +60,9 @@ public class MyCollabApplication extends Application implements
 			HttpServletResponse response) {
 		MyCollabApplication.setInstance(this);
 
-//		if (!isInitializeApp) {
-//			initialSubDomain = request.getServerName().split("\\.")[0];
-//		}
+		if (!isInitializeApp) {
+			initialSubDomain = request.getServerName().split("\\.")[0];
+		}
 
 		String pathInfo = request.getPathInfo();
 		if (pathInfo.equals("") || pathInfo.equals("/")) {

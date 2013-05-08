@@ -1,8 +1,8 @@
 package com.esofthead.mycollab.module.project.view;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.project.ProjectContants;
+import com.esofthead.mycollab.web.AppContext;
 
 public class ProjectLinkGenerator {
 
@@ -19,14 +19,13 @@ public class ProjectLinkGenerator {
 		if (projectId == null) {
 			return "";
 		}
-		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
-				+ prefixParam + "project/dashboard/"
+		return AppContext.getSiteUrl() + prefixParam + "project/dashboard/"
 				+ UrlEncodeDecoder.encode(projectId);
 	}
 
 	public static String generateProjectMemberLinkLink(int projectId,
 			String memberName) {
-		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
+		return AppContext.getSiteUrl()
 				+ DEFAULT_PREFIX_PARAM + "project/user/preview/"
 				+ UrlEncodeDecoder.encode(projectId + "/" + memberName);
 	}
@@ -41,7 +40,7 @@ public class ProjectLinkGenerator {
 		if (projectId == null || bugId == null) {
 			return "";
 		}
-		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
+		return AppContext.getSiteUrl()
 				+ URL_PREFIX_PARAM + generateBugPreviewLink(projectId, bugId);
 	}
 
@@ -67,7 +66,7 @@ public class ProjectLinkGenerator {
 		if (projectId == null || messageId == null) {
 			return "";
 		}
-		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
+		return AppContext.getSiteUrl()
 				+ prefixParam
 				+ generateMessagePreviewLink(projectId, messageId);
 	}
@@ -88,7 +87,7 @@ public class ProjectLinkGenerator {
 		if (projectId == null || riskId == null) {
 			return "";
 		}
-		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
+		return AppContext.getSiteUrl()
 				+ URL_PREFIX_PARAM + "project/risk/preview/"
 				+ UrlEncodeDecoder.encode(projectId + "/" + riskId);
 	}
@@ -98,7 +97,7 @@ public class ProjectLinkGenerator {
 		if (projectId == null || taskId == null) {
 			return "";
 		}
-		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
+		return AppContext.getSiteUrl()
 				+ URL_PREFIX_PARAM + generateTaskPreviewLink(projectId, taskId);
 	}
 
@@ -118,7 +117,7 @@ public class ProjectLinkGenerator {
 		if (projectId == null || taskgroupId == null) {
 			return "";
 		}
-		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
+		return AppContext.getSiteUrl()
 				+ URL_PREFIX_PARAM
 				+ generateTaskGroupPreviewLink(projectId, taskgroupId);
 	}
@@ -134,7 +133,7 @@ public class ProjectLinkGenerator {
 		if (projectId == null || milestoneId == null) {
 			return "";
 		}
-		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
+		return AppContext.getSiteUrl()
 				+ URL_PREFIX_PARAM
 				+ generateMilestonePreviewLink(projectId, milestoneId);
 	}

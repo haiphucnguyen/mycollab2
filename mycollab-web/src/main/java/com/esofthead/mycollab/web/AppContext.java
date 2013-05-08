@@ -14,7 +14,10 @@ import org.slf4j.LoggerFactory;
 import org.springframework.context.ApplicationContext;
 import org.springframework.web.context.support.WebApplicationContextUtils;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.domain.PermissionMap;
+import com.esofthead.mycollab.common.localization.ExceptionI18nEnum;
+import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.core.utils.TimezoneMapper;
 import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.SimpleBillingAccount;
@@ -130,7 +133,8 @@ public class AppContext implements Serializable {
 		if (account != null) {
 			accountId = account.getId();
 		} else {
-			// TODO: handle can not find account here
+			throw new UserInvalidInputException(LocalizationHelper.getMessage(
+					ExceptionI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, domain));
 		}
 	}
 
@@ -140,6 +144,23 @@ public class AppContext implements Serializable {
 
 	public static String getSubDomain() {
 		return getInstance().subdomain;
+	}
+
+	private String siteUrl = null;
+
+	public static String getSiteUrl() {
+		if (getInstance().siteUrl == null) {
+			if (ApplicationProperties.productionMode) {
+				getInstance().siteUrl = String.format(ApplicationProperties
+						.getProperty(ApplicationProperties.APP_URL),
+						getInstance().subdomain);
+			} else {
+				getInstance().siteUrl = ApplicationProperties
+						.getProperty(ApplicationProperties.APP_URL);
+			}
+		}
+
+		return getInstance().siteUrl;
 	}
 
 	public static String getUsername() {

@@ -1,4 +1,5 @@
 site.name=localhost
+running.mode=development
 
 db.driverClassName=com.mysql.jdbc.Driver
 db.url=jdbc:mysql://localhost/mycollab_live?autoReconnect=true
