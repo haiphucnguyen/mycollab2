@@ -15,6 +15,10 @@
 		<if test="bugId != null">
             <![CDATA[${bugId.operation} m_tracker_related_bug.bugid ${bugId.compareOperator} #{bugId.value,javaType=INTEGER}]]>
 		</if>
+		
+		<if test="relatedId != null">
+            <![CDATA[${relatedId.operation} m_tracker_related_bug.relatedid ${relatedId.compareOperator} #{relatedId.value,javaType=INTEGER}]]>
+		</if>
 	</sql>
 
 	<sql id="selectItem">
@@ -46,6 +50,16 @@
             m_tracker_related_bug.bugid DESC
         ]]>
 	</sql>
+	
+	<delete id="removeByCriteria" parameterType="BugRelatedSearchCriteria">
+        DELETE FROM m_tracker_related_bug
+        <if test="_parameter != null">
+            <trim prefix="WHERE" prefixOverrides="AND | OR ">
+                1=1  
+                <include refid="com.esofthead.mycollab.module.tracker.dao.RelatedBugMapperExt.querySearchCriteria" />
+            </trim>
+        </if>
+    </delete>
 
 	<select id="findPagableListByCriteria" parameterType="BugRelatedSearchCriteria"
 		resultMap="RelatedBugResult">
