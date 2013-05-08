@@ -300,7 +300,7 @@ public class BugRelatedField extends CustomField {
 								.show(AppContext.getApplication()
 										.getMainWindow(),
 										"Please Confirm:",
-										"Are you sure to remove this user from the notification of item activity?",
+										"Are you sure to remove this relationship?",
 										"Yes", "No",
 										new ConfirmDialog.Listener() {
 											private static final long serialVersionUID = 1L;
@@ -309,10 +309,19 @@ public class BugRelatedField extends CustomField {
 											public void onClose(
 													ConfirmDialog dialog) {
 												if (dialog.isConfirmed()) {
-													relatedBugService.removeWithSession(
-															relatedItem.getId(),
-															AppContext
-																	.getUsername());
+													
+													BugRelatedSearchCriteria relateBugIdCriteria = new BugRelatedSearchCriteria();
+													relateBugIdCriteria.setBugId(new NumberSearchField(relatedItem.getBugid()));
+													relateBugIdCriteria.setRelatedId(new NumberSearchField(relatedItem.getRelatedid()));
+													
+													relatedBugService.removeByCriteria(relateBugIdCriteria);
+													
+													BugRelatedSearchCriteria relateIdCriteria = new BugRelatedSearchCriteria();
+													relateIdCriteria.setBugId(new NumberSearchField(relatedItem.getRelatedid()));
+													relateIdCriteria.setRelatedId(new NumberSearchField(relatedItem.getBugid()));
+													
+													relatedBugService.removeByCriteria(relateIdCriteria);
+													
 													BugRelatedField.this
 															.setCriteria();
 												}
