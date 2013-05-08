@@ -5,6 +5,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
@@ -70,6 +71,8 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
             informationLayout = new GridFormLayoutHelper(2, 8);
             informationLayout.getLayout().setWidth("900px");
             layout.addComponent(informationLayout.getLayout());
+            layout.setComponentAlignment(informationLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
 
             prefixFirstNameBox = new HorizontalLayout();
             prefixFirstNameBox.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
@@ -81,6 +84,8 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
             addressLayout = new GridFormLayoutHelper(2, 5);
             addressLayout.getLayout().setWidth("900px");
             layout.addComponent(addressLayout.getLayout());
+            layout.setComponentAlignment(addressLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
 
             Label descriptionHeader = new Label("Description");
             descriptionHeader.setStyleName("h2");
@@ -88,6 +93,8 @@ public abstract class LeadFormLayoutFactory implements IFormLayoutFactory {
             descLayout = new GridFormLayoutHelper(2, 1);
             descLayout.getLayout().setWidth("900px");
             layout.addComponent(descLayout.getLayout());
+            layout.setComponentAlignment(descLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
             return layout;
         }
 

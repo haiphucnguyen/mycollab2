@@ -5,6 +5,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -70,6 +71,8 @@ public abstract class OpportunityFormLayoutFactory implements
             informationLayout = new GridFormLayoutHelper(2, 6);
             informationLayout.getLayout().setWidth("900px");
             layout.addComponent(informationLayout.getLayout());
+            layout.setComponentAlignment(informationLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
 
             descriptionLayout = new GridFormLayoutHelper(2, 1);
             descriptionLayout.getLayout().setWidth("900px");
@@ -77,6 +80,8 @@ public abstract class OpportunityFormLayoutFactory implements
             descHeader.setStyleName("h2");
             layout.addComponent(descHeader);
             layout.addComponent(descriptionLayout.getLayout());
+            layout.setComponentAlignment(descriptionLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
             return layout;
         }
 

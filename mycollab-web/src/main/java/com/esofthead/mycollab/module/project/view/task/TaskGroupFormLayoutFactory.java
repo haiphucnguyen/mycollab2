@@ -12,6 +12,7 @@ import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
 import com.vaadin.ui.VerticalLayout;
@@ -46,6 +47,7 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 
 		informationLayout = new TaskListInformationLayout();
 		accountAddLayout.addBody(informationLayout.getLayout());
+		
 
 		Layout bottomPanel = createBottomPanel();
 		if (bottomPanel != null) {
@@ -78,6 +80,8 @@ public abstract class TaskGroupFormLayoutFactory implements IFormLayoutFactory {
 			informationLayout = ProjectUiUtils.getGridFormLayoutHelper(2, 4);
 			VerticalLayout layout = new VerticalLayout();
 			layout.addComponent(informationLayout.getLayout());
+			layout.setComponentAlignment(informationLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
 			return layout;
 		}
 

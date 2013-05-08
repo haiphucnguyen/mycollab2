@@ -94,6 +94,7 @@ public class BugSelectionWindow extends Window {
 					}
 				});
 
+
 		tableItem
 				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
 					@Override
@@ -111,6 +112,22 @@ public class BugSelectionWindow extends Window {
 						}
 					}
 				});
+		
+		tableItem.addGeneratedColumn("assignuserFullName",
+				new Table.ColumnGenerator() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public com.vaadin.ui.Component generateCell(Table source,
+							final Object itemId, Object columnId) {
+						final SimpleBug bug = tableItem.getBeanByIndex(itemId);
+						ButtonLink btnUser = new ButtonLink(bug.getAssignuserFullName());
+						btnUser.setIcon(UserAvatarControlFactory.getResource(
+								AppContext.getAccountId(), bug.getAssignuser(), 16));
+						return btnUser;
+
+					}
+				});;
 
 	}
 }

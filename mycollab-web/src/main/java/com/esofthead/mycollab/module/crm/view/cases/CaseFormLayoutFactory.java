@@ -75,6 +75,8 @@ public abstract class CaseFormLayoutFactory implements IFormLayoutFactory {
             layout.addComponent(descHeader);
             descriptionLayout.getLayout().setWidth("900px");
             layout.addComponent(descriptionLayout.getLayout());
+            layout.setComponentAlignment(descriptionLayout.getLayout(),
+                    Alignment.BOTTOM_CENTER);
             return layout;
         }
 

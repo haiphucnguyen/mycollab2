@@ -8,7 +8,7 @@ public class ProjectUserFormLinkField extends CustomField {
 	private static final long serialVersionUID = 1L;
 
 	public ProjectUserFormLinkField(String username, String displayName) {
-		ProjectUserLink l = new ProjectUserLink(username, displayName, false);
+		ProjectUserLink l = new ProjectUserLink(username, displayName, true, false);
 		l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
 		this.setCompositionRoot(l);
 	}

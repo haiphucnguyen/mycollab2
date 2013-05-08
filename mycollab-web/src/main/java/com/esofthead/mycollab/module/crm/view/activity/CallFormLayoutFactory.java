@@ -71,6 +71,8 @@ public abstract class CallFormLayoutFactory implements IFormLayoutFactory {
 			layout.addComponent(informationLayout.getLayout());
 			layout.setComponentAlignment(informationLayout.getLayout(),
 					Alignment.BOTTOM_CENTER);
+			layout.setComponentAlignment(informationLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
 
 			return layout;
 		}

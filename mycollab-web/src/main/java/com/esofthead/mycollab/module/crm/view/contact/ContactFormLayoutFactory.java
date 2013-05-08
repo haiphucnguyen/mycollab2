@@ -7,6 +7,7 @@ import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -75,6 +76,8 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 			informationLayout = new GridFormLayoutHelper(2, 9);
 			informationLayout.getLayout().setWidth("900px");
 			layout.addComponent(informationLayout.getLayout());
+			layout.setComponentAlignment(informationLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
 
 			Label addressHeader = new Label("Address Information");
 			addressHeader.setStyleName("h2");
@@ -82,6 +85,8 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 			addressLayout = new GridFormLayoutHelper(2, 6);
 			addressLayout.getLayout().setWidth("900px");
 			layout.addComponent(addressLayout.getLayout());
+			layout.setComponentAlignment(addressLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
 
 			descriptionLayout = new GridFormLayoutHelper(2, 1);
 			Label descHeader = new Label("Description");
@@ -89,6 +94,8 @@ public abstract class ContactFormLayoutFactory implements IFormLayoutFactory {
 			layout.addComponent(descHeader);
 			descriptionLayout.getLayout().setWidth("900px");
 			layout.addComponent(descriptionLayout.getLayout());
+			layout.setComponentAlignment(descriptionLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
 			return layout;
 		}
 

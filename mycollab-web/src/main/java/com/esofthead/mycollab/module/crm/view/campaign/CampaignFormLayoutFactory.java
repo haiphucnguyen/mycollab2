@@ -5,6 +5,7 @@ import com.esofthead.mycollab.vaadin.ui.GridFormLayoutHelper;
 import com.esofthead.mycollab.vaadin.ui.IFormLayoutFactory;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.Layout;
@@ -68,6 +69,8 @@ public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
             informationLayout = new GridFormLayoutHelper(2, 6);
             informationLayout.getLayout().setWidth("900px");
             layout.addComponent(informationLayout.getLayout());
+            layout.setComponentAlignment(informationLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
 
             campaignGoal = new GridFormLayoutHelper(2, 4);
             Label addressHeader = new Label("Campaign Goal");
@@ -75,6 +78,8 @@ public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
             layout.addComponent(addressHeader);
             campaignGoal.getLayout().setWidth("900px");
             layout.addComponent(campaignGoal.getLayout());
+            layout.setComponentAlignment(campaignGoal.getLayout(),
+					Alignment.BOTTOM_CENTER);
 
             descriptionLayout = new GridFormLayoutHelper(2, 1);
             Label descHeader = new Label("Description");
@@ -83,6 +88,8 @@ public abstract class CampaignFormLayoutFactory implements IFormLayoutFactory {
             layout.addComponent(descHeader);
             layout.addComponent(descriptionLayout.getLayout());
             descriptionLayout.getLayout().setWidth("900px");
+            layout.setComponentAlignment(descriptionLayout.getLayout(),
+					Alignment.BOTTOM_CENTER);
             return layout;
         }
 
