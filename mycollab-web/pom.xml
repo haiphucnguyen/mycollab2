@@ -476,7 +476,7 @@
                             <target>
                                 <copy
                                     file="${basedir}/src/main/resources/resources.properties-live"
-                                    tofile="${basedir}/src/main/resources/resources.properties" />
+                                    tofile="${basedir}/target/${project.name}-${project.version}/WEB-INF/classes/resources.properties" />
                             </target>
                         </configuration>
                         <goals>
