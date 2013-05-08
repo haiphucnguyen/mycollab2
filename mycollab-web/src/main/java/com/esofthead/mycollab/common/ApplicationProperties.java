@@ -43,6 +43,9 @@ public class ApplicationProperties {
 	public static final String STORAGE_SYSTEM = "storageSystem";
 
 	public static final String SITE_NAME = "site.name";
+	public static final String RUNNING_MODE = "running.mode";
+
+	public static boolean productionMode = false;
 
 	static {
 		StandardPBEStringEncryptor encryptor = new StandardPBEStringEncryptor();
@@ -52,6 +55,9 @@ public class ApplicationProperties {
 		try {
 			properties.load(Thread.currentThread().getContextClassLoader()
 					.getResourceAsStream(RESOURCE_PROPERTIES));
+
+			productionMode = "production".equals(properties
+					.getProperty(RUNNING_MODE));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
