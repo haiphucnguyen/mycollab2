@@ -6,6 +6,7 @@ import java.net.URL;
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.ui.Embedded;
 
@@ -19,10 +20,8 @@ public class BugAdvertisementViewImpl extends AbstractView implements
 		this.setHeight("512px");
 		URL url = null;
 		try {
-			url = new URL(
-					ApplicationProperties
-							.getProperty(ApplicationProperties.APP_URL)
-							+ "assets/ads/bug/bugAds.html");
+			url = new URL(AppContext.getSiteUrl()
+					+ "assets/ads/bug/bugAds.html");
 		} catch (MalformedURLException e) {
 			e.printStackTrace();
 		}

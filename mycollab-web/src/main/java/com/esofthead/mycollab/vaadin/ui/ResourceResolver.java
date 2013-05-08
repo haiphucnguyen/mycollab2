@@ -1,10 +1,9 @@
 package com.esofthead.mycollab.vaadin.ui;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
+import com.esofthead.mycollab.web.AppContext;
 
 public class ResourceResolver {
 	public static String getResourceLink(String relativePath) {
-		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
-				+ "assets/" + relativePath;
+		return AppContext.getSiteUrl() + "assets/" + relativePath;
 	}
 }

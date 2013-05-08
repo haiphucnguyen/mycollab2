@@ -31,9 +31,7 @@ public class UserAvatarControlFactory {
 		String link = "";
 
 		if (StorageSetting.isFileStorage()) {
-			link = ApplicationProperties
-					.getProperty(ApplicationProperties.APP_URL)
-					+ "avatar/" + username + "/" + size;
+			link = AppContext.getSiteUrl() + "avatar/" + username + "/" + size;
 		} else if (StorageSetting.isS3Storage()) {
 			link = S3StorageConfig.getAvatarLink(accountId, username, size);
 		}

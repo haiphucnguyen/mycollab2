@@ -1,7 +1,7 @@
 package com.esofthead.mycollab.module.user.accountsettings.view;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.web.AppContext;
 
 public class AccountLinkGenerator {
 	public static String generateUserPreviewLink(String username) {
@@ -13,7 +13,7 @@ public class AccountLinkGenerator {
 			return "";
 		}
 
-		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
-				+ "?url=" + generateUserPreviewLink(username);
+		return AppContext.getSiteUrl() + "?url="
+				+ generateUserPreviewLink(username);
 	}
 }
