@@ -22,6 +22,7 @@ public class MyCollabApplication extends Application implements
 
 	private String initialUrl = "";
 	private String initialSubDomain = "1";
+	private boolean isInitializeApp = false;
 
 	private static Logger log = LoggerFactory
 			.getLogger(MyCollabApplication.class);
@@ -37,6 +38,7 @@ public class MyCollabApplication extends Application implements
 
 	@Override
 	public void init() {
+		isInitializeApp = true;
 		setTheme("mycollab");
 		sessionData = new AppContext(this);
 		this.setMainWindow(new MainWindowContainer());
@@ -57,6 +59,10 @@ public class MyCollabApplication extends Application implements
 	public void onRequestStart(HttpServletRequest request,
 			HttpServletResponse response) {
 		MyCollabApplication.setInstance(this);
+
+		if (!isInitializeApp) {
+			initialSubDomain = request.getServerName().split("\\.")[0];
+		}
 
 		String pathInfo = request.getPathInfo();
 		if (pathInfo.equals("") || pathInfo.equals("/")) {
