@@ -78,6 +78,10 @@ public class ProjectActivityStreamComponent extends Depot {
 								UserAvatarControlFactory.getLink(
 										AppContext.getAccountId(),
 										activityStream.getCreateduser(), 16),
+								ProjectLinkGenerator
+										.generateProjectMemberLinkLink(
+												activityStream.getExtratypeid(),
+												activityStream.getCreateduser()),
 								activityStream.getCreatedUserFullName(),
 								LocalizationHelper
 										.getMessage(ProjectLocalizationTypeMap
@@ -103,9 +107,8 @@ public class ProjectActivityStreamComponent extends Depot {
 										.getMessage(ProjectLocalizationTypeMap
 												.getType(activityStream
 														.getType())),
-								ProjectResources
-										.getResourceLink(activityStream
-												.getType()),
+								ProjectResources.getResourceLink(activityStream
+										.getType()),
 								ProjectLinkGenerator.generateProjectItemLink(
 										activityStream.getExtratypeid(),
 										activityStream.getType(),

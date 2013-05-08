@@ -42,10 +42,10 @@ public class UserUrlResolver extends UrlResolver {
 			String[] tokens = decodeUrl.split("/");
 
 			int projectId = Integer.parseInt(tokens[0]);
-			int memberId = Integer.parseInt(tokens[1]);
+			String memberName = tokens[1];
 			PageActionChain chain = new PageActionChain(
 					new ProjectScreenData.Goto(projectId),
-					new ProjectMemberScreenData.Read(memberId));
+					new ProjectMemberScreenData.Read(memberName));
 			EventBus.getInstance().fireEvent(
 					new ProjectEvent.GotoMyProject(this, chain));
 		}

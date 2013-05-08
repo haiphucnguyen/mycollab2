@@ -24,6 +24,13 @@ public class ProjectLinkGenerator {
 				+ UrlEncodeDecoder.encode(projectId);
 	}
 
+	public static String generateProjectMemberLinkLink(int projectId,
+			String memberName) {
+		return ApplicationProperties.getProperty(ApplicationProperties.APP_URL)
+				+ DEFAULT_PREFIX_PARAM + "project/user/preview/"
+				+ UrlEncodeDecoder.encode(projectId + "/" + memberName);
+	}
+
 	public static String generateBugPreviewLink(int projectId, int bugId) {
 		return "project/bug/preview/"
 				+ UrlEncodeDecoder.encode(projectId + "/" + bugId);

@@ -740,7 +740,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 		AppContext.addFragment(
 				"project/user/preview/"
 						+ UrlEncodeDecoder.encode(project.getId() + "/"
-								+ member.getId()), "View Project Member: "
+								+ member.getUsername()), "View Project Member: "
 						+ member.getMemberFullName());
 	}
 
