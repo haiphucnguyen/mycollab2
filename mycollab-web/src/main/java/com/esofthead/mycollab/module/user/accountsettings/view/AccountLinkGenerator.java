@@ -13,7 +13,10 @@ public class AccountLinkGenerator {
 			return "";
 		}
 
-		return AppContext.getSiteUrl() + "?url="
+		return "?url="
 				+ generateUserPreviewLink(username);
+		//TODO: fix for provide the correct account
+		// return AppContext.getSiteUrl() + "?url="
+		// + generateUserPreviewLink(username);
 	}
 }
