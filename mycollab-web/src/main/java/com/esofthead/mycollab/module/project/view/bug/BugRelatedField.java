@@ -369,6 +369,7 @@ public class BugRelatedField extends CustomField {
 	private void callItemSelectionWindow() {
 		BugSelectionWindow bugSeletionWindow = new BugSelectionWindow(this);
 		getWindow().addWindow(bugSeletionWindow);
+		bugSeletionWindow.show();
 	}
 
 	public void fireValueChange(SimpleBug data) {

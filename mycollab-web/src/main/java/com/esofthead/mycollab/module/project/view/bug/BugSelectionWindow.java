@@ -1,17 +1,22 @@
 package com.esofthead.mycollab.module.project.view.bug;
 
+import java.util.GregorianCalendar;
+
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.SearchField;
+import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.localization.BugI18nEnum;
+import com.esofthead.mycollab.module.tracker.BugStatusConstants;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.domain.criteria.BugSearchCriteria;
-import com.esofthead.mycollab.vaadin.events.ApplicationEvent;
-import com.esofthead.mycollab.vaadin.events.ApplicationEventListener;
+import com.esofthead.mycollab.module.tracker.service.BugService;
 import com.esofthead.mycollab.vaadin.events.SearchHandler;
 import com.esofthead.mycollab.vaadin.ui.ButtonLink;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
-import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
-import com.esofthead.mycollab.vaadin.ui.table.TableClickEvent;
+import com.esofthead.mycollab.vaadin.ui.table.PagedBeanTable2;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Table;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
@@ -20,7 +25,7 @@ public class BugSelectionWindow extends Window {
 
 	private static final long serialVersionUID = 1L;
 	private BugSearchCriteria searchCriteria;
-	private BugTableDisplay tableItem;
+	private PagedBeanTable2<BugService, BugSearchCriteria, SimpleBug> tableItem;
 	private BugRelatedField fieldSelection;
 
 	public BugSelectionWindow(BugRelatedField fieldSelection) {
@@ -29,8 +34,6 @@ public class BugSelectionWindow extends Window {
 		this.setHeight("500px");
 		this.fieldSelection = fieldSelection;
 		this.setModal(true);
-
-		searchCriteria = new BugSearchCriteria();
 
 		VerticalLayout layout = new VerticalLayout();
 		layout.setSpacing(true);
@@ -48,86 +51,82 @@ public class BugSelectionWindow extends Window {
 		layout.addComponent(contactSimpleSearchPanel);
 		createAccountList();
 		layout.addComponent(tableItem);
-		tableItem.setSearchCriteria(searchCriteria);
 		this.setContent(layout);
+	}
+	
+	public void show() {
+		searchCriteria = new BugSearchCriteria();
+		searchCriteria.setProjectId(new NumberSearchField(
+				SearchField.AND, CurrentProjectVariables.getProject().getId()));
+		tableItem.setSearchCriteria(searchCriteria);
 		center();
 	}
 
 	@SuppressWarnings("serial")
 	private void createAccountList() {
-		tableItem = new BugTableDisplay(
-				new String[] {"summary", "assignuserFullName",
-						"severity", "resolution", "duedate" },
+
+		tableItem = new PagedBeanTable2<BugService, BugSearchCriteria, SimpleBug>(
+				AppContext.getSpringBean(BugService.class),
+				SimpleBug.class,
+				new String[] { "summary", "severity", "resolution",
+						"assignuserFullName" },
 				new String[] {
 						LocalizationHelper
 								.getMessage(BugI18nEnum.TABLE_SUMMARY_HEADER),
-						LocalizationHelper
-								.getMessage(BugI18nEnum.TABLE_ASSIGN_USER_HEADER),
 						LocalizationHelper
 								.getMessage(BugI18nEnum.TABLE_SEVERITY_HEADER),
 						LocalizationHelper
 								.getMessage(BugI18nEnum.TABLE_RESOLUTION_HEADER),
 						LocalizationHelper
-								.getMessage(BugI18nEnum.TABLE_DUE_DATE_HEADER) });
+								.getMessage(BugI18nEnum.TABLE_ASSIGN_USER_HEADER) });
 
 		tableItem.setWidth("100%");
-
 		tableItem.setColumnExpandRatio("summary", 1.0f);
-
-		tableItem.setColumnWidth("assignuserFullName", UIConstants.TABLE_X_LABEL_WIDTH);
+		tableItem.setColumnWidth("assignuserFullName",
+				UIConstants.TABLE_X_LABEL_WIDTH);
 		tableItem.setColumnWidth("severity", UIConstants.TABLE_S_LABEL_WIDTH);
 		tableItem.setColumnWidth("resolution", UIConstants.TABLE_M_LABEL_WIDTH);
 
-		tableItem.addGeneratedColumn("assignuserFullName",
-				new Table.ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
+		tableItem.addGeneratedColumn("summary", new Table.ColumnGenerator() {
+			private static final long serialVersionUID = 1L;
 
-					@Override
-					public com.vaadin.ui.Component generateCell(Table source,
-							final Object itemId, Object columnId) {
-						final SimpleBug bug = tableItem.getBeanByIndex(itemId);
-						ButtonLink btnUser = new ButtonLink(bug.getAssignuserFullName());
-						btnUser.setIcon(UserAvatarControlFactory.getResource(
-								AppContext.getAccountId(), bug.getAssignuser(), 16));
-						return btnUser;
+			@Override
+			public com.vaadin.ui.Component generateCell(Table source,
+					final Object itemId, Object columnId) {
+				final SimpleBug bug = tableItem.getBeanByIndex(itemId);
 
-					}
-				});
+				String bugname = "[%s-%s] %s";
+				bugname = String.format(bugname, CurrentProjectVariables
+						.getProject().getShortname(), bug.getBugkey(), bug
+						.getSummary());
+				
+
+				ButtonLink b = new ButtonLink(bugname,
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
+
+							@Override
+							public void buttonClick(Button.ClickEvent event) {
+								fieldSelection.fireValueChange(bug);
+								BugSelectionWindow.this.getParent()
+										.removeWindow(BugSelectionWindow.this);
+							}
+						});
 
 
-		tableItem
-				.addTableListener(new ApplicationEventListener<TableClickEvent>() {
-					@Override
-					public Class<? extends ApplicationEvent> getEventType() {
-						return TableClickEvent.class;
-					}
+				b.addStyleName("medium-text");
+				if (BugStatusConstants.CLOSE.equals(bug.getStatus())) {
+					b.addStyleName(UIConstants.LINK_COMPLETED);
+				} else if (bug.getDuedate() != null
+						&& (bug.getDuedate().before(new GregorianCalendar()
+								.getTime()))) {
+					b.addStyleName(UIConstants.LINK_OVERDUE);
+				}
+				
+				return b;
 
-					@Override
-					public void handle(TableClickEvent event) {
-						SimpleBug bug = (SimpleBug) event.getData();
-						if ("summary".equals(event.getFieldName())) {
-							fieldSelection.fireValueChange(bug);
-							BugSelectionWindow.this.getParent().removeWindow(
-									BugSelectionWindow.this);
-						}
-					}
-				});
-		
-		tableItem.addGeneratedColumn("assignuserFullName",
-				new Table.ColumnGenerator() {
-					private static final long serialVersionUID = 1L;
-
-					@Override
-					public com.vaadin.ui.Component generateCell(Table source,
-							final Object itemId, Object columnId) {
-						final SimpleBug bug = tableItem.getBeanByIndex(itemId);
-						ButtonLink btnUser = new ButtonLink(bug.getAssignuserFullName());
-						btnUser.setIcon(UserAvatarControlFactory.getResource(
-								AppContext.getAccountId(), bug.getAssignuser(), 16));
-						return btnUser;
-
-					}
-				});;
+			}
+		});
 
 	}
 }
