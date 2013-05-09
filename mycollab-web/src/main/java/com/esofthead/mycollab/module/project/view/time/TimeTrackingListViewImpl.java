@@ -1,9 +1,11 @@
 package com.esofthead.mycollab.module.project.view.time;
 
 import java.util.GregorianCalendar;
+import java.util.List;
 
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.core.arguments.RangeDateSearchField;
+import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.module.file.ExportTimeLoggingStreamResource;
 import com.esofthead.mycollab.module.file.FieldExportColumn;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
@@ -49,6 +51,7 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 	private ItemTimeLoggingSearchPanel itemTimeLoggingPanel;
 	private ItemTimeLoggingSearchCriteria itemTimeLogginSearchCriteria;
 	private Button exportBtn;
+	private ItemTimeLoggingService itemTimeLoggingService;
 	private static final FieldExportColumn[] EXPORT_COLUMNS = new FieldExportColumn[] {
 		new FieldExportColumn("logUserFullName", "User"),
 		new FieldExportColumn("type", "Type"),
@@ -62,6 +65,8 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 
 		this.setSpacing(true);
 		this.setMargin(false, true, true, true);
+		
+		itemTimeLoggingService = AppContext.getSpringBean(ItemTimeLoggingService.class);
 
 		Label titleLbl = new Label(
 				LocalizationHelper
@@ -113,15 +118,27 @@ public class TimeTrackingListViewImpl extends AbstractView implements
 		initUI();
 	}
 
+	@SuppressWarnings("unchecked")
 	private void setTimeRange() {
 		RangeDateSearchField rangeField = itemTimeLogginSearchCriteria
 				.getRangeDate();
 
 		String fromDate = AppContext.formatDate(rangeField.getFrom());
 		String toDate = AppContext.formatDate(rangeField.getTo());
-
-		lbTimeRange.setValue(LocalizationHelper.getMessage(
-				TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
+		
+		List<SimpleItemTimeLogging> lstItemLogging = itemTimeLoggingService.findPagableListByCriteria(new SearchRequest<ItemTimeLoggingSearchCriteria>(itemTimeLogginSearchCriteria, 0, Integer.MAX_VALUE));
+		double totalHour = 0;
+		for (SimpleItemTimeLogging simpleItemTimeLogging : lstItemLogging) {
+			totalHour += simpleItemTimeLogging.getLogvalue();
+		}
+		
+		if (totalHour > 0) {
+			lbTimeRange.setValue(LocalizationHelper.getMessage(
+					TimeTrackingI18nEnum.TASK_LIST_RANGE_WITH_TOTAL_HOUR, fromDate, toDate, totalHour));
+		} else {
+			lbTimeRange.setValue(LocalizationHelper.getMessage(
+					TimeTrackingI18nEnum.TASK_LIST_RANGE, fromDate, toDate));
+		}
 	}
 
 	private void initUI() {
