@@ -16,6 +16,7 @@
  */
 package com.esofthead.mycollab.module.project.service.ibatis;
 
+import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.ModuleNameConstants;
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.common.domain.criteria.ActivityStreamSearchCriteria;
@@ -137,5 +138,14 @@ public class ProjectServiceImpl extends
 		ProjectSearchCriteria searchCriteria = new ProjectSearchCriteria();
 		searchCriteria.setInvolvedMember(new StringSearchField(username));
 		return projectMapperExt.getUserProjectKeys(searchCriteria);
+	}
+
+	@Override
+	public String getSubdomainOfProject(int projectId) {
+		if (ApplicationProperties.productionMode) {
+			return projectMapperExt.getSubdomainOfProject(projectId);
+		}
+
+		return null;
 	}
 }

@@ -29,22 +29,14 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProjectSearchCriter
 public interface ProjectService extends
 		IDefaultService<Integer, Project, ProjectSearchCriteria> {
 
-	/**
-	 * 
-	 * @param criteria
-	 * @return
-	 */
 	int getTotalActivityStream(ActivityStreamSearchCriteria criteria);
 
 	List<Integer> getUserProjectKeys(String username);
 
-	/**
-	 * 
-	 * @param criteria
-	 * @return
-	 */
 	List<ProjectActivityStream> getProjectActivityStreams(
 			SearchRequest<ActivityStreamSearchCriteria> searchRequest);
 
 	SimpleProject findProjectById(int projectId);
+
+	String getSubdomainOfProject(int projectId);
 }

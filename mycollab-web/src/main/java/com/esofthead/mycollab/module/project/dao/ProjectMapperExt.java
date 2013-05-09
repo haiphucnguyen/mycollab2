@@ -18,4 +18,6 @@ public interface ProjectMapperExt extends ISearchableDAO<ProjectSearchCriteria> 
 	List<Integer> getUserProjectKeys(ProjectSearchCriteria criteria);
 
 	SimpleProject findProjectById(int projectId);
+	
+	String getSubdomainOfProject(int projectId);
 }

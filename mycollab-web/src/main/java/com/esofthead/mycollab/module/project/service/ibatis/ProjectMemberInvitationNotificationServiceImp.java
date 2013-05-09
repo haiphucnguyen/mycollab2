@@ -5,7 +5,6 @@ import java.util.Arrays;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.MailRecipientField;
 import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
@@ -46,6 +45,9 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 				.findMemberById(projectMemberId);
 
 		if (member != null) {
+			String subdomain = projectService.getSubdomainOfProject(member
+					.getProjectid());
+
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					"$inviteUser has invited you to join the team for project \" $member.projectName\"",
 					"templates/email/project/memberInvitation/memberInvitationNotifier.mt");
@@ -54,8 +56,7 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 					notification.getChangeByUserFullName());
 			templateGenerator.putVariable(
 					"urlAccept",
-					ApplicationProperties
-							.getProperty(ApplicationProperties.APP_URL)
+					TemplateGenerator.getSiteUrl(subdomain)
 							+ "project/member/invitation/confirm_invite/"
 							+ UrlEncodeDecoder.encode(notification
 									.getSaccountid()
@@ -65,8 +66,7 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 									+ projectMemberId));
 			templateGenerator.putVariable(
 					"urlDeny",
-					ApplicationProperties
-							.getProperty(ApplicationProperties.APP_URL)
+					TemplateGenerator.getSiteUrl(subdomain)
 							+ "project/member/invitation/deny_invite/"
 							+ UrlEncodeDecoder.encode(notification
 									.getSaccountid()

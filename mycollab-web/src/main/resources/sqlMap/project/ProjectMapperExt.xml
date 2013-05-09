@@ -243,4 +243,12 @@
                 refid="com.esofthead.mycollab.common.dao.ActivityStreamMapperExt.querySearchCriteria" />
         </trim>
     </select>
+    
+    <select id="getSubdomainOfProject" resultType="java.lang.String"
+        parameterType="java.lang.Integer">
+        SELECT s_account.subdomain
+            FROM s_account, m_prj_project
+            WHERE m_prj_project.sAccountId=s_account.id AND
+                  s_account.id=#{projectId}
+    </select>    
 </mapper>

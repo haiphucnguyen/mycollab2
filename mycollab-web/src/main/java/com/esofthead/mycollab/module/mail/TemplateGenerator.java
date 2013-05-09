@@ -46,9 +46,7 @@ public class TemplateGenerator {
 		this.contentTemplatePathFile = contentTemplatePathFile;
 
 		Map<String, String> defaultUrls = new HashMap<String, String>();
-
-		defaultUrls.put("app_url", ApplicationProperties
-				.getProperty(ApplicationProperties.APP_URL));
+		
 		defaultUrls.put("cdn_url", ApplicationProperties
 				.getProperty(ApplicationProperties.CDN_URL));
 		defaultUrls.put("facebook_url", ApplicationProperties
@@ -89,5 +87,15 @@ public class TemplateGenerator {
 
 		voEngine.evaluate(velocityContext, writer, "log task", reader);
 		return writer.toString();
+	}
+
+	public static String getSiteUrl(String domain) {
+		if (domain == null) {
+			return ApplicationProperties
+					.getProperty(ApplicationProperties.APP_URL);
+		}
+
+		return String.format(ApplicationProperties
+				.getProperty(ApplicationProperties.APP_URL), domain);
 	}
 }

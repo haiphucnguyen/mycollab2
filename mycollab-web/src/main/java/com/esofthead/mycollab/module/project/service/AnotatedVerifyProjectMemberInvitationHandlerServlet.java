@@ -6,13 +6,10 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 import org.springframework.web.HttpRequestHandler;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.MonitorTypeConstants;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.common.domain.RelayEmailNotification;
@@ -23,9 +20,6 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 @Component("confirmInvitationMemberServletHandler")
 public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 		HttpRequestHandler {
-
-	private static Logger log = LoggerFactory
-			.getLogger(AnotatedVerifyProjectMemberInvitationHandlerServlet.class);
 
 	@Autowired
 	private ProjectMemberService projectMemberService;
@@ -57,7 +51,9 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 						&& !projectAdmin.equals("")) {
 					SimpleProjectMember member = projectMemberService
 							.findMemberById(memberId);
-					if (member != null && member.getStatus().equals(ProjectMemberStatusContants.VERIFICATING)) {
+					if (member != null
+							&& member.getStatus().equals(
+									ProjectMemberStatusContants.VERIFICATING)) {
 						member.setStatus(ProjectMemberStatusContants.ACTIVE);
 						projectMemberService.updateWithSession(member,
 								projectAdmin);
@@ -79,8 +75,8 @@ public class AnotatedVerifyProjectMemberInvitationHandlerServlet implements
 									relayNotification, projectAdmin);
 						}
 
-						response.sendRedirect(ApplicationProperties
-								.getProperty(ApplicationProperties.APP_URL));
+						response.sendRedirect(request.getServletContext()
+								.getRealPath("/"));
 					}
 				}
 			}
