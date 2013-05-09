@@ -60,6 +60,19 @@
 				refid="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapperExt.querySearchCriteria" />
 		</trim>
 	</select>
+	
+	<select id="getTotalHoursByCriteria" parameterType="ItemTimeLoggingSearchCriteria"
+		resultType="double">
+		SELECT sum(logValue) as totalHour FROM m_prj_time_logging
+
+
+		<trim prefix="WHERE" prefixOverrides="AND | OR ">
+			1=1
+
+			<include
+				refid="com.esofthead.mycollab.module.project.dao.ItemTimeLoggingMapperExt.querySearchCriteria" />
+		</trim>
+	</select>
 
 	<sql id="orderStatement">
 		ORDER BY

@@ -7,5 +7,6 @@ import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSear
 public interface ItemTimeLoggingService
 		extends
 		IDefaultService<Integer, ItemTimeLogging, ItemTimeLoggingSearchCriteria> {
-
+	
+	Double getTotalHoursByCriteria(ItemTimeLoggingSearchCriteria criteria);
 }

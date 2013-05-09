@@ -5,5 +5,6 @@ import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSear
 
 public interface ItemTimeLoggingMapperExt extends
 		ISearchableDAO<ItemTimeLoggingSearchCriteria> {
-
+	
+	Double getTotalHoursByCriteria(ItemTimeLoggingSearchCriteria criteria);
 }
