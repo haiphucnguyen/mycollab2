@@ -28,7 +28,7 @@ public class ProjectLinkGenerator {
 
 	private static String generateSiteUrl(int projectId) {
 		if (AppContext.getInstance() != null) {
-			return generateSiteUrl(projectId);
+			return AppContext.getSiteUrl();
 		} else {
 			if (!ApplicationProperties.productionMode) {
 				return ApplicationProperties
