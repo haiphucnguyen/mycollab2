@@ -1,5 +1,9 @@
 package com.esofthead.mycollab.module.project.view;
 
+import org.jfree.util.Log;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.project.ProjectContants;
@@ -8,6 +12,9 @@ import com.esofthead.mycollab.spring.ApplicationContextUtil;
 import com.esofthead.mycollab.web.AppContext;
 
 public class ProjectLinkGenerator {
+
+	private static Logger log = LoggerFactory
+			.getLogger(ProjectLinkGenerator.class);
 
 	public static String URL_PREFIX_PARAM = "?url=";
 
@@ -38,8 +45,15 @@ public class ProjectLinkGenerator {
 						.getApplicationContext().getBean(ProjectService.class);
 				String subdomain = projectService
 						.getSubdomainOfProject(projectId);
-				return String.format(ApplicationProperties
-						.getProperty(ApplicationProperties.APP_URL), subdomain);
+				if (subdomain != null) {
+					return String.format(ApplicationProperties
+							.getProperty(ApplicationProperties.APP_URL),
+							subdomain);
+				} else {
+					log.error("Can not find subdomain for projectid {}",
+							projectId);
+					return "";
+				}
 			}
 		}
 	}
