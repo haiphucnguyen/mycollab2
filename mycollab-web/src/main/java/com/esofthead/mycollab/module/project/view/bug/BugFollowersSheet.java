@@ -7,6 +7,8 @@ import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.RelayEmailNotification;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.service.RelayEmailNotificationService;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
+import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.ui.components.CompFollowersSheet;
@@ -24,8 +26,8 @@ class BugFollowersSheet extends CompFollowersSheet<SimpleBug> {
 	@Override
 	protected void loadMonitorItems() {
 		MonitorSearchCriteria searchCriteria = new MonitorSearchCriteria();
-		searchCriteria.setTypeId(bean.getId());
-		searchCriteria.setType(MonitorTypeConstants.PRJ_BUG);
+		searchCriteria.setTypeId(new NumberSearchField(bean.getId()));
+		searchCriteria.setType(new StringSearchField(MonitorTypeConstants.PRJ_BUG));
 		tableItem.setSearchCriteria(searchCriteria);
 	}
 
