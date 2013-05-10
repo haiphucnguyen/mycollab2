@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.domain.MonitorItem;
+import com.esofthead.mycollab.common.domain.SimpleMonitorItem;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
 import com.esofthead.mycollab.common.service.MonitorItemService;
 import com.esofthead.mycollab.core.utils.ValuedBean;
@@ -35,7 +36,7 @@ import com.vaadin.ui.VerticalLayout;
 public abstract class CompFollowersSheet<V extends ValuedBean> extends
 		VerticalLayout {
 
-	protected PagedBeanTable2<MonitorItemService, MonitorSearchCriteria, MonitorItem> tableItem;
+	protected PagedBeanTable2<MonitorItemService, MonitorSearchCriteria, SimpleMonitorItem> tableItem;
 	protected MonitorItemService monitorItemService;
 	protected V bean;
 	protected Button btnSave;
@@ -124,11 +125,10 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 
 		this.addComponent(layoutAdd);
 
-		tableItem = new PagedBeanTable2<MonitorItemService, MonitorSearchCriteria, MonitorItem>(
+		tableItem = new PagedBeanTable2<MonitorItemService, MonitorSearchCriteria, SimpleMonitorItem>(
 				AppContext.getSpringBean(MonitorItemService.class),
-				MonitorItem.class,
-				new String[] { "user", "monitorDate", "id" }, new String[] {
-						"Name", "Monitor Date", "" });
+				SimpleMonitorItem.class, new String[] { "user", "monitorDate",
+						"id" }, new String[] { "Name", "Monitor Date", "" });
 
 		tableItem.addGeneratedColumn("user", new Table.ColumnGenerator() {
 			private static final long serialVersionUID = 1L;
@@ -136,16 +136,11 @@ public abstract class CompFollowersSheet<V extends ValuedBean> extends
 			@Override
 			public com.vaadin.ui.Component generateCell(Table source,
 					final Object itemId, Object columnId) {
-				final MonitorItem monitorItem = tableItem
+				final SimpleMonitorItem monitorItem = tableItem
 						.getBeanByIndex(itemId);
 
-				UserService userService = AppContext
-						.getSpringBean(UserService.class);
-				SimpleUser user = userService.findUserByUserName(
-						monitorItem.getUser(), AppContext.getAccountId());
-
-				return new ProjectUserLink(user.getUsername(), user
-						.getDisplayName(), true, true);
+				return new ProjectUserLink(monitorItem.getUser(), monitorItem
+						.getUserFullname(), true, true);
 
 			}
 		});

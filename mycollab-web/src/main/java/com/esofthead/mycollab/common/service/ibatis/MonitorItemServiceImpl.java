@@ -2,10 +2,12 @@ package com.esofthead.mycollab.common.service.ibatis;
 
 import java.util.List;
 
+import org.apache.ibatis.session.RowBounds;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import com.esofthead.mycollab.common.dao.MonitorItemMapper;
+import com.esofthead.mycollab.common.dao.MonitorItemMapperExt;
 import com.esofthead.mycollab.common.domain.MonitorItem;
 import com.esofthead.mycollab.common.domain.MonitorItemExample;
 import com.esofthead.mycollab.common.domain.criteria.MonitorSearchCriteria;
@@ -20,6 +22,9 @@ public class MonitorItemServiceImpl extends
 
 	@Autowired
 	private MonitorItemMapper monitorItemMapper;
+	
+	@Autowired
+	private MonitorItemMapperExt monitorItemMapperExt;
 
 	@Override
 	public ICrudGenericDAO<Integer, MonitorItem> getCrudMapper() {
@@ -74,7 +79,11 @@ public class MonitorItemServiceImpl extends
 	@Override
 	public List findPagableListByCriteria(
 			SearchRequest<MonitorSearchCriteria> searchRequest) {
-		return getMonitorItems(searchRequest.getSearchCriteria().getType(), searchRequest.getSearchCriteria().getTypeId());
+		return monitorItemMapperExt.findPagableListByCriteria(
+                searchRequest.getSearchCriteria(),
+                new RowBounds((searchRequest.getCurrentPage() - 1)
+                * searchRequest.getNumberOfItems(), searchRequest
+                .getNumberOfItems()));
 	}
 
 	@Override
@@ -89,7 +98,7 @@ public class MonitorItemServiceImpl extends
 
 	@Override
 	public int getTotalCount(MonitorSearchCriteria searchCriterial) {
-		return countMonitorsOfItem(searchCriterial.getType(), searchCriterial.getTypeId());
+		return monitorItemMapperExt.getTotalCount(searchCriterial);
 	}
 
 	@Override
