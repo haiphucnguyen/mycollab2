@@ -91,25 +91,89 @@ public class ProjectServiceImpl extends
 		projectMember.setUsername(username);
 		projectMemberMapper.insert(projectMember);
 
-		// add default role to project
-		ProjectRole defaultRole = new ProjectRole();
-		defaultRole.setProjectid(projectid);
-		defaultRole.setSaccountid(record.getSaccountid());
-		defaultRole.setRolename("Default Role");
-		defaultRole.setDescription("Default role for project member");
-		int roleId = projectRoleService.saveWithSession(defaultRole, username);
+		// add client role to project
+		ProjectRole clientRole = createProjectRole(projectid,
+				record.getSaccountid(), "Client Role",
+				"Default role for client");
+		int clientRoleId = projectRoleService.saveWithSession(clientRole,
+				username);
+
+		PermissionMap permissionMapClient = new PermissionMap();
+		for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
+
+			String permissionName = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
+
+			if (permissionName.equals(ProjectRolePermissionCollections.USERS)
+					|| permissionName.equals(ProjectRolePermissionCollections.ROLES)
+					|| permissionName.equals(ProjectRolePermissionCollections.MESSAGES)) {
+				permissionMapClient.addPath(
+						ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
+						PermissionFlag.NO_ACCESS);
+			} else {
+				permissionMapClient.addPath(
+						ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
+						PermissionFlag.READ_ONLY);
+			}
+		}
+		projectRoleService.savePermission(projectid, clientRoleId,
+				permissionMapClient);
+
+		// add consultant role to project
+		ProjectRole consultantRole = createProjectRole(projectid,
+				record.getSaccountid(), "Consultant Role",
+				"Default role for consultant");
+		int consultantRoleId = projectRoleService.saveWithSession(
+				consultantRole, username);
+		
+		PermissionMap permissionMapConsultant = new PermissionMap();
+		for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
+
+			String permissionName = ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i];
+
+			if (permissionName.equals(ProjectRolePermissionCollections.USERS)
+					|| permissionName.equals(ProjectRolePermissionCollections.ROLES)) {
+				permissionMapConsultant.addPath(
+						ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
+						PermissionFlag.READ_ONLY);
+			} else {
+				permissionMapConsultant.addPath(
+						ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
+						PermissionFlag.ACCESS);
+			}
+		}
+		projectRoleService.savePermission(projectid, consultantRoleId,
+				permissionMapConsultant);
+
+		
+		// add admin role to project
+		ProjectRole adminRole = createProjectRole(projectid,
+				record.getSaccountid(), "Admin Role", "Default role for admin");
+		int adminRoleId = projectRoleService.saveWithSession(adminRole,
+				username);
+		
+		PermissionMap permissionMapAdmin = new PermissionMap();
+		for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
+
+			permissionMapAdmin.addPath(
+						ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
+						PermissionFlag.ACCESS);
+		}
+		projectRoleService.savePermission(projectid, adminRoleId,
+				permissionMapAdmin);
 
 		// set default permission
-		PermissionMap permissionMap = new PermissionMap();
 
-		for (int i = 0; i < ProjectRolePermissionCollections.PROJECT_PERMISSIONS.length; i++) {
-			permissionMap.addPath(
-					ProjectRolePermissionCollections.PROJECT_PERMISSIONS[i],
-					PermissionFlag.READ_ONLY);
-		}
-
-		projectRoleService.savePermission(projectid, roleId, permissionMap);
 		return projectid;
+	}
+
+	private ProjectRole createProjectRole(int projectId, int sAccountId,
+			String roleName, String description) {
+		ProjectRole projectRole = new ProjectRole();
+		projectRole.setProjectid(projectId);
+		projectRole.setSaccountid(sAccountId);
+		projectRole.setRolename(roleName);
+		projectRole.setDescription(description);
+		return projectRole;
 	}
 
 	@Override
