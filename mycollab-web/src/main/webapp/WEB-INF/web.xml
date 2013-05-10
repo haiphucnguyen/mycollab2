@@ -29,7 +29,7 @@
         <filter-class>org.eclipse.jetty.servlets.GzipFilter</filter-class>
         <init-param>
             <param-name>mimeTypes</param-name>
-            <param-value>application/javascript,application/x-javascript,text/html,text/css,text/plain</param-value>
+            <param-value>text/javascript,application/javascript,application/x-javascript,text/html,text/css,text/plain</param-value>
         </init-param>
     </filter>
     <filter-mapping>
@@ -42,10 +42,6 @@
         <filter-class>fr.xebia.servlet.filter.ExpiresFilter</filter-class>
         <init-param>
             <param-name>ExpiresByType image</param-name>
-            <param-value>access plus 1 week</param-value>
-        </init-param>
-        <init-param>
-            <param-name>ExpiresByType application/x-javascript</param-name>
             <param-value>access plus 1 week</param-value>
         </init-param>
         <init-param>

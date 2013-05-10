@@ -82,6 +82,19 @@
             <version>2.2.3</version>
         </dependency>
 
+        <!-- JETTY dependency -->
+        <dependency>
+            <groupId>org.eclipse.jetty</groupId>
+            <version>8.1.5.v20120716</version>
+            <artifactId>jetty-servlets</artifactId>
+        </dependency>
+
+        <dependency>
+            <groupId>fr.xebia.web</groupId>
+            <artifactId>xebia-servlet-extras</artifactId>
+            <version>1.0.7</version>
+            <scope>runtime</scope>
+        </dependency>
 
         <!-- JUNIT DEPENDENCY FOR TESTING -->
         <dependency>
