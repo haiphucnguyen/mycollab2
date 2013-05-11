@@ -16,7 +16,7 @@ import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
-import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
+import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
@@ -83,10 +83,12 @@ public class ProjectTaskStatusComponent extends Depot {
 			String content = LocalizationHelper.getMessage(
 					ProjectCommonI18nEnum.PROJECT_TASK_TITLE, ProjectResources
 							.getResourceLink(genericTask.getType()),
-					ProjectLinkGenerator.generateProjectItemLink(
-							genericTask.getProjectId(), genericTask.getType(),
-							genericTask.getTypeId()), taskType, genericTask
-							.getName());
+					ProjectLinkBuilder.WebLinkGenerator
+							.generateProjectItemLink(
+									genericTask.getProjectId(),
+									genericTask.getType(),
+									genericTask.getTypeId()), taskType,
+					genericTask.getName());
 
 			Label taskLink = new Label(content, Label.CONTENT_XHTML);
 

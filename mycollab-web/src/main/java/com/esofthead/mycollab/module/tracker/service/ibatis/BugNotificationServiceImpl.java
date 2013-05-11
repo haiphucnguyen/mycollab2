@@ -11,7 +11,7 @@ import com.esofthead.mycollab.common.domain.SimpleRelayEmailNotification;
 import com.esofthead.mycollab.common.service.AuditLogService;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.DefaultSendingRelayEmailNotificationAction;
-import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
+import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugNotificationService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
@@ -51,23 +51,20 @@ public class BugNotificationServiceImpl extends
 
 	private Map<String, String> constructHyperLinks(SimpleBug bug) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		hyperLinks.put(
-				"bugUrl",
-				ProjectLinkGenerator.generateBugPreviewFullLink(
-						bug.getProjectid(), bug.getId()));
+		ProjectLinkBuilder.MailLinkGenerator linkGenerator = new ProjectLinkBuilder.MailLinkGenerator(
+				bug.getProjectid());
+
+		hyperLinks.put("bugUrl",
+				linkGenerator.generateBugPreviewFullLink(bug.getId()));
 		hyperLinks.put("shortBugUrl",
 				StringUtils.subString(bug.getSummary(), 150));
-		hyperLinks.put("projectUrl", ProjectLinkGenerator
-				.generateProjectFullLink(bug.getProjectid(),
-						ProjectLinkGenerator.URL_PREFIX_PARAM));
+		hyperLinks.put("projectUrl", linkGenerator.generateProjectFullLink());
 		hyperLinks.put("loggedUserUrl", AccountLinkGenerator
 				.generateUserPreviewFullLink(bug.getLogby()));
 		hyperLinks.put("assignUserUrl", AccountLinkGenerator
 				.generateUserPreviewFullLink(bug.getAssignuser()));
-		hyperLinks.put(
-				"milestoneUrl",
-				ProjectLinkGenerator.generateMilestonePreviewFullLink(
-						bug.getProjectid(), bug.getMilestoneid()));
+		hyperLinks.put("milestoneUrl", linkGenerator
+				.generateMilestonePreviewFullLink(bug.getMilestoneid()));
 		return hyperLinks;
 	}
 

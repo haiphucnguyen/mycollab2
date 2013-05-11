@@ -15,7 +15,7 @@ import com.esofthead.mycollab.module.project.domain.SimpleProjectMember;
 import com.esofthead.mycollab.module.project.service.ProjectMemberInvitiationNotificationService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
+import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.service.UserService;
 import com.esofthead.mycollab.web.AppContext;
@@ -97,11 +97,12 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 					"User \"$notification.changecomment\" has accepted for the invitation of project \"$project.name\"",
 					"templates/email/project/memberInvitation/memberAcceptInvitationNotifier.mt");
 
+			ProjectLinkBuilder.MailLinkGenerator linkGenerator = new ProjectLinkBuilder.MailLinkGenerator(
+					project.getId());
 			templateGenerator.putVariable("project", project);
 			templateGenerator.putVariable("notification", notification);
-			templateGenerator.putVariable("projectUrl", ProjectLinkGenerator
-					.generateProjectFullLink(project.getId(),
-							ProjectLinkGenerator.URL_PREFIX_PARAM));
+			templateGenerator.putVariable("projectUrl",
+					linkGenerator.generateProjectFullLink());
 
 			extMailService.sendHTMLMail("mail@esofthead.com", "No-reply",
 					Arrays.asList(new MailRecipientField(user.getEmail(), user
@@ -127,11 +128,13 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 					"User \"$notification.changecomment\" has denied for the invitation of project \"$project.name\"",
 					"templates/email/project/memberInvitation/memberDenyInvitationNotifier.mt");
 
+			ProjectLinkBuilder.MailLinkGenerator linkGenerator = new ProjectLinkBuilder.MailLinkGenerator(
+					project.getId());
+
 			templateGenerator.putVariable("project", project);
 			templateGenerator.putVariable("notification", notification);
-			templateGenerator.putVariable("projectUrl", ProjectLinkGenerator
-					.generateProjectFullLink(project.getId(),
-							ProjectLinkGenerator.URL_PREFIX_PARAM));
+			templateGenerator.putVariable("projectUrl",
+					linkGenerator.generateProjectFullLink());
 
 			extMailService.sendHTMLMail("mail@esofthead.com", "No-reply",
 					Arrays.asList(new MailRecipientField(user.getEmail(), user

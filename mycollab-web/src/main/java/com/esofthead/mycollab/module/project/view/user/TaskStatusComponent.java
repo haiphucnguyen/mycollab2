@@ -11,7 +11,7 @@ import com.esofthead.mycollab.module.project.domain.ProjectGenericTask;
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectGenericTaskSearchCriteria;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.service.ProjectGenericTaskService;
-import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
+import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.ResourceResolver;
@@ -76,15 +76,18 @@ public class TaskStatusComponent extends Depot {
 			String content = LocalizationHelper.getMessage(
 					ProjectCommonI18nEnum.TASK_TITLE, ResourceResolver
 							.getResourceLink("icons/16/project/project.png"),
-					ProjectLinkGenerator.generateProjectFullLink(
-							genericTask.getProjectId(),
-							ProjectLinkGenerator.DEFAULT_PREFIX_PARAM),
+					ProjectLinkBuilder.WebLinkGenerator
+							.generateProjectFullLink(
+									genericTask.getProjectId(),
+									ProjectLinkBuilder.DEFAULT_PREFIX_PARAM),
 					genericTask.getProjectName(), ProjectResources
 							.getResourceLink(genericTask.getType()),
-					ProjectLinkGenerator.generateProjectItemLink(
-							genericTask.getProjectId(), genericTask.getType(),
-							genericTask.getTypeId()), taskType, genericTask
-							.getName());
+					ProjectLinkBuilder.WebLinkGenerator
+							.generateProjectItemLink(
+									genericTask.getProjectId(),
+									genericTask.getType(),
+									genericTask.getTypeId()), taskType,
+					genericTask.getName());
 
 			Label taskLink = new Label(content, Label.CONTENT_XHTML);
 			header.addComponent(taskLink);

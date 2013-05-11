@@ -18,7 +18,7 @@ import com.esofthead.mycollab.module.project.domain.ProjectActivityStream;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.localization.ProjectLocalizationTypeMap;
 import com.esofthead.mycollab.module.project.service.ProjectService;
-import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
+import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.vaadin.ui.AbstractBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
@@ -125,10 +125,9 @@ public class ActivityStreamComponent extends Depot {
 								UserAvatarControlFactory.getLink(
 										AppContext.getAccountId(),
 										activityStream.getCreateduser(), 16),
-								ProjectLinkGenerator
-										.generateProjectMemberLinkLink(
-												activityStream.getExtratypeid(),
-												activityStream.getCreateduser()),
+								ProjectLinkBuilder.WebLinkGenerator.generateProjectMemberFullLink(
+										activityStream.getExtratypeid(),
+										activityStream.getCreateduser()),
 								activityStream.getCreatedUserFullName(),
 								LocalizationHelper
 										.getMessage(ProjectLocalizationTypeMap
@@ -136,16 +135,16 @@ public class ActivityStreamComponent extends Depot {
 														.getType())),
 								ProjectResources.getResourceLink(activityStream
 										.getType()),
-								ProjectLinkGenerator.generateProjectItemLink(
+								ProjectLinkBuilder.WebLinkGenerator.generateProjectItemLink(
 										activityStream.getExtratypeid(),
 										activityStream.getType(),
 										activityStream.getTypeid()),
 								activityStream.getNamefield(),
 								ResourceResolver
 										.getResourceLink("icons/16/project/project.png"),
-								ProjectLinkGenerator.generateProjectFullLink(
+								ProjectLinkBuilder.WebLinkGenerator.generateProjectFullLink(
 										activityStream.getProjectId(),
-										ProjectLinkGenerator.DEFAULT_PREFIX_PARAM),
+										ProjectLinkBuilder.DEFAULT_PREFIX_PARAM),
 								activityStream.getProjectName());
 			} else if (ActivityStreamConstants.ACTION_UPDATE
 					.equals(activityStream.getAction())) {
@@ -155,10 +154,9 @@ public class ActivityStreamComponent extends Depot {
 								UserAvatarControlFactory.getLink(
 										AppContext.getAccountId(),
 										activityStream.getCreateduser(), 16),
-								ProjectLinkGenerator
-										.generateProjectMemberLinkLink(
-												activityStream.getExtratypeid(),
-												activityStream.getCreateduser()),
+								ProjectLinkBuilder.WebLinkGenerator.generateProjectMemberFullLink(
+										activityStream.getExtratypeid(),
+										activityStream.getCreateduser()),
 								activityStream.getCreatedUserFullName(),
 								LocalizationHelper
 										.getMessage(ProjectLocalizationTypeMap
@@ -166,16 +164,16 @@ public class ActivityStreamComponent extends Depot {
 														.getType())),
 								ProjectResources.getResourceLink(activityStream
 										.getType()),
-								ProjectLinkGenerator.generateProjectItemLink(
+								ProjectLinkBuilder.WebLinkGenerator.generateProjectItemLink(
 										activityStream.getExtratypeid(),
 										activityStream.getType(),
 										activityStream.getTypeid()),
 								activityStream.getNamefield(),
 								ResourceResolver
 										.getResourceLink("icons/16/project/project.png"),
-								ProjectLinkGenerator.generateProjectFullLink(
+								ProjectLinkBuilder.WebLinkGenerator.generateProjectFullLink(
 										activityStream.getProjectId(),
-										ProjectLinkGenerator.DEFAULT_PREFIX_PARAM),
+										ProjectLinkBuilder.DEFAULT_PREFIX_PARAM),
 								activityStream.getProjectName());
 			}
 

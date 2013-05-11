@@ -14,7 +14,7 @@ import com.esofthead.mycollab.module.mail.service.DefaultSendingRelayEmailNotifi
 import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.service.ProjectTaskNotificationService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
-import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
+import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.user.accountsettings.view.AccountLinkGenerator;
 import com.esofthead.mycollab.utils.StringUtils;
 
@@ -52,21 +52,17 @@ public class ProjectTaskNotificationServiceImpl extends
 
 	private Map<String, String> createHyperLinks(SimpleTask task) {
 		Map<String, String> hyperLinks = new HashMap<String, String>();
-		hyperLinks.put(
-				"taskUrl",
-				ProjectLinkGenerator.generateTaskPreviewFullLink(
-						task.getProjectid(), task.getId()));
+		ProjectLinkBuilder.MailLinkGenerator linkGenerator = new ProjectLinkBuilder.MailLinkGenerator(
+				task.getProjectid());
+		hyperLinks.put("taskUrl",
+				linkGenerator.generateTaskPreviewFullLink(task.getId()));
 		hyperLinks.put("shortTaskUrl",
 				StringUtils.subString(task.getTaskname(), 150));
-		hyperLinks.put("projectUrl", ProjectLinkGenerator
-				.generateProjectFullLink(task.getProjectid(),
-						ProjectLinkGenerator.URL_PREFIX_PARAM));
+		hyperLinks.put("projectUrl", linkGenerator.generateProjectFullLink());
 		hyperLinks.put("assignUserUrl", AccountLinkGenerator
 				.generateUserPreviewFullLink(task.getAssignuser()));
-		hyperLinks.put(
-				"taskListUrl",
-				ProjectLinkGenerator.generateTaskGroupPreviewFullLink(
-						task.getProjectid(), task.getTasklistid()));
+		hyperLinks.put("taskListUrl", linkGenerator
+				.generateTaskGroupPreviewFullLink(task.getTasklistid()));
 		return hyperLinks;
 	}
 

@@ -16,7 +16,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectResources;
 import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.localization.ProjectLocalizationTypeMap;
-import com.esofthead.mycollab.module.project.view.ProjectLinkGenerator;
+import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.vaadin.ui.DefaultBeanPagedList;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
@@ -78,10 +78,9 @@ public class ProjectActivityStreamComponent extends Depot {
 								UserAvatarControlFactory.getLink(
 										AppContext.getAccountId(),
 										activityStream.getCreateduser(), 16),
-								ProjectLinkGenerator
-										.generateProjectMemberLinkLink(
-												activityStream.getExtratypeid(),
-												activityStream.getCreateduser()),
+								ProjectLinkBuilder.WebLinkGenerator.generateProjectMemberFullLink(
+										activityStream.getExtratypeid(),
+										activityStream.getCreateduser()),
 								activityStream.getCreatedUserFullName(),
 								LocalizationHelper
 										.getMessage(ProjectLocalizationTypeMap
@@ -89,7 +88,7 @@ public class ProjectActivityStreamComponent extends Depot {
 														.getType())),
 								ProjectResources.getResourceLink(activityStream
 										.getType()),
-								ProjectLinkGenerator.generateProjectItemLink(
+								ProjectLinkBuilder.WebLinkGenerator.generateProjectItemLink(
 										activityStream.getExtratypeid(),
 										activityStream.getType(),
 										activityStream.getTypeid()),
@@ -109,7 +108,7 @@ public class ProjectActivityStreamComponent extends Depot {
 														.getType())),
 								ProjectResources.getResourceLink(activityStream
 										.getType()),
-								ProjectLinkGenerator.generateProjectItemLink(
+								ProjectLinkBuilder.WebLinkGenerator.generateProjectItemLink(
 										activityStream.getExtratypeid(),
 										activityStream.getType(),
 										activityStream.getTypeid()),
