@@ -15,7 +15,6 @@ import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
 import com.esofthead.mycollab.module.tracker.domain.SimpleBug;
 import com.esofthead.mycollab.module.tracker.service.BugNotificationService;
 import com.esofthead.mycollab.module.tracker.service.BugService;
-import com.esofthead.mycollab.module.user.accountsettings.view.AccountLinkGenerator;
 import com.esofthead.mycollab.utils.StringUtils;
 
 @Service
@@ -59,10 +58,10 @@ public class BugNotificationServiceImpl extends
 		hyperLinks.put("shortBugUrl",
 				StringUtils.subString(bug.getSummary(), 150));
 		hyperLinks.put("projectUrl", linkGenerator.generateProjectFullLink());
-		hyperLinks.put("loggedUserUrl", AccountLinkGenerator
-				.generateUserPreviewFullLink(bug.getLogby()));
-		hyperLinks.put("assignUserUrl", AccountLinkGenerator
-				.generateUserPreviewFullLink(bug.getAssignuser()));
+		hyperLinks.put("loggedUserUrl",
+				linkGenerator.generateUserPreviewFullLink(bug.getLogby()));
+		hyperLinks.put("assignUserUrl",
+				linkGenerator.generateUserPreviewFullLink(bug.getAssignuser()));
 		hyperLinks.put("milestoneUrl", linkGenerator
 				.generateMilestonePreviewFullLink(bug.getMilestoneid()));
 		return hyperLinks;
@@ -97,6 +96,8 @@ public class BugNotificationServiceImpl extends
 			SimpleRelayEmailNotification emailNotification) {
 		int bugId = emailNotification.getTypeid();
 		SimpleBug bug = bugService.findBugById(bugId);
+		ProjectLinkBuilder.MailLinkGenerator linkGenerator = new ProjectLinkBuilder.MailLinkGenerator(
+				bug.getProjectid());
 		String comment = StringUtils.subString(
 				emailNotification.getChangecomment(), 150);
 
@@ -107,7 +108,7 @@ public class BugNotificationServiceImpl extends
 						+ StringUtils.subString(bug.getSummary(), 100) + "\"",
 				"templates/email/project/bugCommentNotifier.mt");
 		templateGenerator.putVariable("comment", emailNotification);
-		templateGenerator.putVariable("userComment", AccountLinkGenerator
+		templateGenerator.putVariable("userComment", linkGenerator
 				.generateUserPreviewFullLink(emailNotification.getChangeby()));
 		templateGenerator.putVariable("bug", bug);
 		templateGenerator.putVariable("hyperLinks", constructHyperLinks(bug));

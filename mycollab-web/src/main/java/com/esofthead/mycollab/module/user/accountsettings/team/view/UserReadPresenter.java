@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.module.user.accountsettings.view.AccountLinkGenerator;
+import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.events.UserEvent;
@@ -72,8 +72,9 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 		userContainer.removeAllComponents();
 		userContainer.addComponent(view.getWidget());
 		view.previewItem(user);
-		AppContext.addFragment(AccountLinkGenerator
-				.generateUserPreviewLink(user.getUsername()), "Preview User "
-				+ user.getDisplayName());
+		AppContext.addFragment(
+				"account/user/preview/"
+						+ UrlEncodeDecoder.encode(user.getUsername()),
+				"Preview User " + user.getDisplayName());
 	}
 }

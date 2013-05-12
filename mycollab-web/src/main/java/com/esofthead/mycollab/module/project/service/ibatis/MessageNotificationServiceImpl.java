@@ -15,7 +15,6 @@ import com.esofthead.mycollab.module.project.service.MessageNotificationService;
 import com.esofthead.mycollab.module.project.service.MessageService;
 import com.esofthead.mycollab.module.project.service.ProjectMemberService;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
-import com.esofthead.mycollab.module.user.accountsettings.view.AccountLinkGenerator;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.utils.StringUtils;
 
@@ -85,7 +84,7 @@ public class MessageNotificationServiceImpl implements
 		hyperLinks.put("shortMessageUrl",
 				StringUtils.subString(message.getTitle(), 150));
 		hyperLinks.put("projectUrl", linkGenerator.generateProjectFullLink());
-		hyperLinks.put("createdUserUrl", AccountLinkGenerator
+		hyperLinks.put("createdUserUrl", linkGenerator
 				.generateUserPreviewFullLink(message.getPosteduser()));
 
 		return hyperLinks;
@@ -96,6 +95,8 @@ public class MessageNotificationServiceImpl implements
 			SimpleRelayEmailNotification notification) {
 		int messageId = notification.getTypeid();
 		SimpleMessage message = messageService.findMessageById(messageId);
+		ProjectLinkBuilder.MailLinkGenerator linkGenerator = new ProjectLinkBuilder.MailLinkGenerator(
+				message.getProjectid());
 
 		Integer projectid = message.getProjectid();
 		List<SimpleUser> usersInProject = projectMemberService
@@ -108,7 +109,7 @@ public class MessageNotificationServiceImpl implements
 				"templates/email/project/messageCommentNotifier.mt");
 		templateGenerator.putVariable("message", message);
 		templateGenerator.putVariable("comment", notification);
-		templateGenerator.putVariable("userComment", AccountLinkGenerator
+		templateGenerator.putVariable("userComment", linkGenerator
 				.generateUserPreviewFullLink(notification.getChangeby()));
 		templateGenerator.putVariable("hyperLinks",
 				constructHyperLinks(message));

@@ -15,11 +15,10 @@
 
     <tx:annotation-driven transaction-manager="txManager" />
 
-    <bean id="migrationManager"
-        class="com.carbonfive.db.migration.CustomDataSourceMigrationManager"
+    <bean id="dbMigration"
+        class="com.esofthead.mycollab.db.migration.DbMigrationRunner"
         init-method="migrate">
-
-        <constructor-arg ref="dataSource" />
+        <property name="dataSource" ref="dataSource" />
     </bean>
 
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">

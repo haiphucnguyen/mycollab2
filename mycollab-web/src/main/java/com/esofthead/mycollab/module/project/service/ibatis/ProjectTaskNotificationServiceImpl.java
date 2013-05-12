@@ -15,7 +15,6 @@ import com.esofthead.mycollab.module.project.domain.SimpleTask;
 import com.esofthead.mycollab.module.project.service.ProjectTaskNotificationService;
 import com.esofthead.mycollab.module.project.service.ProjectTaskService;
 import com.esofthead.mycollab.module.project.view.ProjectLinkBuilder;
-import com.esofthead.mycollab.module.user.accountsettings.view.AccountLinkGenerator;
 import com.esofthead.mycollab.utils.StringUtils;
 
 @Service
@@ -59,8 +58,9 @@ public class ProjectTaskNotificationServiceImpl extends
 		hyperLinks.put("shortTaskUrl",
 				StringUtils.subString(task.getTaskname(), 150));
 		hyperLinks.put("projectUrl", linkGenerator.generateProjectFullLink());
-		hyperLinks.put("assignUserUrl", AccountLinkGenerator
-				.generateUserPreviewFullLink(task.getAssignuser()));
+		hyperLinks
+				.put("assignUserUrl", linkGenerator
+						.generateUserPreviewFullLink(task.getAssignuser()));
 		hyperLinks.put("taskListUrl", linkGenerator
 				.generateTaskGroupPreviewFullLink(task.getTasklistid()));
 		return hyperLinks;
@@ -102,6 +102,8 @@ public class ProjectTaskNotificationServiceImpl extends
 		if (task == null) {
 			return null;
 		}
+		ProjectLinkBuilder.MailLinkGenerator linkGenerator = new ProjectLinkBuilder.MailLinkGenerator(
+				task.getProjectid());
 		String comment = StringUtils.subString(
 				emailNotification.getChangecomment(), 150);
 
@@ -113,7 +115,7 @@ public class ProjectTaskNotificationServiceImpl extends
 				"templates/email/project/taskCommentNotifier.mt");
 		templateGenerator.putVariable("task", task);
 		templateGenerator.putVariable("comment", emailNotification);
-		templateGenerator.putVariable("userComment", AccountLinkGenerator
+		templateGenerator.putVariable("userComment", linkGenerator
 				.generateUserPreviewFullLink(emailNotification.getChangeby()));
 		templateGenerator.putVariable("hyperLinks", createHyperLinks(task));
 

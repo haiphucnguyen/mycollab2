@@ -69,6 +69,7 @@
     m_tracker_related_bug*,
     m_tracker_version*,
     s_account*,
+    s_account_currency*,
     s_account_settings*,
     s_activitystream*,
     s_billing_plan*,
@@ -770,7 +771,7 @@
     projectId CDATA #REQUIRED
     joinDate CDATA #REQUIRED
     projectRoleId CDATA #IMPLIED
-    isAdmin CDATA #IMPLIED
+    isAdmin CDATA #REQUIRED
     status CDATA #REQUIRED
 >
 
@@ -965,6 +966,8 @@
     note CDATA #IMPLIED
     logValue CDATA #REQUIRED
     loguser CDATA #IMPLIED
+    createdTime CDATA #REQUIRED
+    lastUpdatedTime CDATA #REQUIRED
 >
 
 <!ELEMENT m_rss_agreegator EMPTY>
@@ -1165,6 +1168,13 @@
     pricing CDATA #IMPLIED
     pricingEffectFrom CDATA #IMPLIED
     pricingEffectTo CDATA #IMPLIED
+>
+
+<!ELEMENT s_account_currency EMPTY>
+<!ATTLIST s_account_currency
+    id CDATA #REQUIRED
+    currencyid CDATA #REQUIRED
+    accountid CDATA #REQUIRED
 >
 
 <!ELEMENT s_account_settings EMPTY>

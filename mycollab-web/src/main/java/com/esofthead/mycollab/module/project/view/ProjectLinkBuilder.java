@@ -243,6 +243,15 @@ public class ProjectLinkBuilder {
 							taskgroupId);
 		}
 
+		public String generateUserPreviewFullLink(String username) {
+			if (username == null || username.trim().equals("")) {
+				return "";
+			}
+
+			return siteUrl + URL_PREFIX_PARAM + "account/user/preview/"
+					+ UrlEncodeDecoder.encode(username);
+		}
+
 		public String getSiteUrl() {
 			return siteUrl;
 		}
