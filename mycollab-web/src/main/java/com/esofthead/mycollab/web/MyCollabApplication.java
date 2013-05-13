@@ -46,6 +46,7 @@ public class MyCollabApplication extends Application implements
 		try {
 			sessionData.initDomain(initialSubDomain);
 		} catch (Exception e) {
+			log.error("System can not find subdomain {}", initialSubDomain);
 			this.setMainWindow(new NoSubDomainExistedWindow(initialSubDomain));
 			return;
 		}
