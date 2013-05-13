@@ -7,6 +7,8 @@ package com.esofthead.mycollab.module.project.view.bug;
 import java.util.Date;
 import java.util.GregorianCalendar;
 
+import org.vaadin.hene.popupbutton.PopupButton;
+
 import com.esofthead.mycollab.core.arguments.DateTimeSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.core.utils.DateTimeUtils;
@@ -17,9 +19,9 @@ import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.LocalizationHelper;
 import com.rits.cloning.Cloner;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
+import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 import com.vaadin.ui.VerticalLayout;
@@ -52,43 +54,80 @@ public class BugChartComponent extends Depot {
 		Label emptySpace = new Label();
 		headerContainer.addComponent(emptySpace);
 		headerContainer.setExpandRatio(emptySpace, 1.0f);
+		
+		final PopupButton bugChartPopup = new PopupButton("Bug Trend");
+		bugChartPopup.addStyleName("link");
+		
+		VerticalLayout filterBtnLayout = new VerticalLayout();
+		filterBtnLayout.setMargin(true);
+		filterBtnLayout.setSpacing(true);
+		filterBtnLayout.setWidth("200px");
+		
+		Button btnBugTrend = new Button("Bugs Trend",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-		Button prevButton = new Button(null, new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+					@Override
+					public void buttonClick(ClickEvent event) {
+						bugChartPopup.setPopupVisible(false);
+						bugChartPopup.setCaption("Bugs Trend");
+						currentReportIndex = 0;
+						displayReport();
+					}
+				});
+		btnBugTrend.setStyleName("link");
+		filterBtnLayout.addComponent(btnBugTrend);
+		
+		Button btnBugByPriority = new Button("Bugs By Priority",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(Button.ClickEvent event) {
-				if (currentReportIndex == 0) {
-					currentReportIndex = reportDashboard.length - 1;
-				} else {
-					currentReportIndex--;
-				}
+					@Override
+					public void buttonClick(ClickEvent event) {
+						bugChartPopup.setPopupVisible(false);
+						bugChartPopup.setCaption("Bugs By Priority");
+						currentReportIndex = 1;
+						displayReport();
+					}
+				});
+		btnBugByPriority.setStyleName("link");
+		filterBtnLayout.addComponent(btnBugByPriority);
+		
+		Button btnBugByStatus = new Button("Bugs By Status",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-				displayReport();
-			}
-		});
-		prevButton.setIcon(new ThemeResource("icons/16/previous_gray.png"));
-		prevButton.setStyleName("link");
-		headerContainer.addComponent(prevButton);
+					@Override
+					public void buttonClick(ClickEvent event) {
+						bugChartPopup.setPopupVisible(false);
+						bugChartPopup.setCaption("Bugs By Status");
+						currentReportIndex = 2;
+						displayReport();
+					}
+				});
+		btnBugByStatus.setStyleName("link");
+		filterBtnLayout.addComponent(btnBugByStatus);
+		
+		Button btnBugByResolution = new Button("Bugs By Resolution",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-		Button nextBtn = new Button(null, new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
-
-			@Override
-			public void buttonClick(Button.ClickEvent event) {
-				if (currentReportIndex >= (reportDashboard.length - 1)) {
-					currentReportIndex = 0;
-				} else {
-					currentReportIndex++;
-				}
-				displayReport();
-			}
-		});
-		nextBtn.setIcon(new ThemeResource("icons/16/next_gray.png"));
-		nextBtn.setStyleName("link");
-		headerContainer.addComponent(nextBtn);
-
+					@Override
+					public void buttonClick(ClickEvent event) {
+						bugChartPopup.setPopupVisible(false);
+						bugChartPopup.setCaption("Bugs By Resolution");
+						currentReportIndex = 3;
+						displayReport();
+					}
+				});
+		btnBugByResolution.setStyleName("link");
+		filterBtnLayout.addComponent(btnBugByResolution);
+		
 		displayReport();
+		
+		bugChartPopup.addComponent(filterBtnLayout);
+		headerContainer.addComponent(bugChartPopup);
+		
 	}
 
 	public void displayReport() {

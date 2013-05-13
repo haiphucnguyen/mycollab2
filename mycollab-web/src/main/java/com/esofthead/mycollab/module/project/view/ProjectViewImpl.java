@@ -94,7 +94,7 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		myProjectTab.setHeight(null);
 
 		CssLayout menu = new CssLayout();
-		menu.setWidth("200px");
+		menu.setWidth("150px");
 		menu.setStyleName("sidebar-menu");
 		menu.addComponent(myProjectTab);
 
