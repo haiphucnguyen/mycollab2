@@ -132,6 +132,8 @@ public class AppContext implements Serializable {
 
 		if (account != null) {
 			accountId = account.getId();
+			throw new UserInvalidInputException(LocalizationHelper.getMessage(
+					ExceptionI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, domain));
 		} else {
 			throw new UserInvalidInputException(LocalizationHelper.getMessage(
 					ExceptionI18nEnum.SUB_DOMAIN_IS_NOT_EXISTED, domain));

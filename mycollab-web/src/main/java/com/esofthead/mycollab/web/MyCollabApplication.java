@@ -11,8 +11,10 @@ import org.slf4j.LoggerFactory;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
 import com.esofthead.mycollab.core.UserInvalidInputException;
 import com.esofthead.mycollab.shell.view.MainWindowContainer;
+import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.vaadin.Application;
 import com.vaadin.terminal.gwt.server.HttpServletRequestListener;
+import com.vaadin.terminal.gwt.server.WebApplicationContext;
 import com.vaadin.ui.Window.Notification;
 
 public class MyCollabApplication extends Application implements
@@ -41,8 +43,13 @@ public class MyCollabApplication extends Application implements
 		isInitializeApp = true;
 		setTheme("mycollab");
 		sessionData = new AppContext(this);
+		try {
+			sessionData.initDomain(initialSubDomain);
+		} catch (Exception e) {
+			this.setMainWindow(new NoSubDomainExistedWindow(initialSubDomain));
+			return;
+		}
 		this.setMainWindow(new MainWindowContainer());
-		sessionData.initDomain(initialSubDomain);
 		setInstance(this);
 	}
 
