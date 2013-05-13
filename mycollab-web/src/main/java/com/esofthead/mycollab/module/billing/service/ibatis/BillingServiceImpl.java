@@ -26,7 +26,6 @@ import com.esofthead.mycollab.module.user.domain.BillingAccount;
 import com.esofthead.mycollab.module.user.domain.BillingPlan;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
-import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.UserExample;
 import com.esofthead.mycollab.module.user.service.RoleService;
@@ -79,6 +78,7 @@ public class BillingServiceImpl implements BillingService {
 		billingAccount.setPricingeffectto(new GregorianCalendar(2099, 12, 31)
 				.getTime());
 		billingAccount.setStatus(AccountStatusConstants.ACTIVE);
+		billingAccount.setSubdomain(subdmoain);
 
 		Integer accountid = billingAccountMapper
 				.insertAndReturnKey(billingAccount);
