@@ -1,2 +1,0 @@
-drop table `m_prj_monitor`;
-ALTER TABLE `m_monitor_item` DROP COLUMN `itemid` , CHANGE COLUMN `monitor_date` `monitor_date` DATETIME NOT NULL  , ADD COLUMN `type` VARCHAR(45) NOT NULL, ADD COLUMN `typeid` INT UNSIGNED NOT NULL;

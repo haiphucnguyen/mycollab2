@@ -1,1 +1,0 @@
-ALTER TABLE `m_audit_log` CHANGE COLUMN `changeset` `changeset` TEXT NOT NULL  ;

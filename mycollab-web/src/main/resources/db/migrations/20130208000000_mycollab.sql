@@ -1,1 +1,0 @@
-ALTER TABLE `m_prj_role` DROP COLUMN `permissionVal` ;

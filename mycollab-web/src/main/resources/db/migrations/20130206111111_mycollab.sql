@@ -1,1 +1,0 @@
-ALTER TABLE `m_prj_task` CHANGE COLUMN `priority` `priority` VARCHAR(45) NULL DEFAULT NULL  ;

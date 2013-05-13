@@ -1,4 +1,0 @@
-ALTER TABLE `m_crm_contacts_opportunities` CHANGE COLUMN `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT  ;
-ALTER TABLE `m_crm_campaigns_accounts` CHANGE COLUMN `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT  ;
-ALTER TABLE `m_crm_campaigns_contacts` CHANGE COLUMN `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT  ;
-ALTER TABLE `m_crm_campaigns_leads` CHANGE COLUMN `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT  ;

@@ -1,1 +1,0 @@
-ALTER TABLE `m_prj_task` ADD COLUMN `taskkey` INT NULL  AFTER `logBy` ;

@@ -1,1 +1,0 @@
-ALTER TABLE `s_relay_email_notification` CHANGE COLUMN `changeComment` `changeComment` TEXT NULL  ;

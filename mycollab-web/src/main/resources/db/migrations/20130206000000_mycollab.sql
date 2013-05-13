@@ -1,1 +1,0 @@
-ALTER TABLE `m_crm_accounts_leads` CHANGE COLUMN `id` `id` INT(10) UNSIGNED NOT NULL AUTO_INCREMENT  ;

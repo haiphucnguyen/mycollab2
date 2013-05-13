@@ -1,1 +1,0 @@
-ALTER TABLE `m_prj_time_logging` ADD COLUMN `loguser` VARCHAR(45) NULL;
