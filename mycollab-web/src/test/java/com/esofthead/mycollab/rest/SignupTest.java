@@ -38,7 +38,6 @@ public class SignupTest extends ServiceTest {
 	@DataSet
 	public void testSignupFailDuetoExistingDomainRegister()
 			throws JSONException {
-		System.out.println(restUserResource.getClass());
 		Form form = new Form();
 		form.set("subdomain", "esofthead");
 		form.set("username", "hainguyen");
@@ -49,12 +48,10 @@ public class SignupTest extends ServiceTest {
 
 		restUserResource.doPost(form);
 	}
-	
+
 	@org.junit.Test
 	@DataSet
-	public void testSignupSuccessfully()
-			throws JSONException {
-		System.out.println(restUserResource.getClass());
+	public void testSignupSuccessfully() throws JSONException {
 		Form form = new Form();
 		form.set("subdomain", "esofthead1");
 		form.set("username", "hainguyen1");
