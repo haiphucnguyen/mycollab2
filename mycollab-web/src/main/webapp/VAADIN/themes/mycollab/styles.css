@@ -2374,6 +2374,7 @@ div.v-window-header {
 	color: white;
 	text-shadow: 0px 1px 0px #444;
 	padding: 3px 0px 0px;
+	text-align: left;
 }
 
 .v-window .v-table-header-wrap {

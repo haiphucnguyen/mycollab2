@@ -4,6 +4,8 @@
  */
 package com.esofthead.mycollab.module.crm.view;
 
+import org.vaadin.hene.popupbutton.PopupButton;
+
 import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriteria;
 import com.esofthead.mycollab.module.crm.view.opportunity.OpportunityLeadSourceDashboard;
@@ -11,7 +13,6 @@ import com.esofthead.mycollab.module.crm.view.opportunity.OpportunitySalesStageD
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
-import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Button.ClickEvent;
@@ -30,7 +31,8 @@ public class SalesDashboardView extends Depot {
 	private int currentReportIndex = 0;
 
 	public SalesDashboardView() {
-		super("Sales Dashboard", new HorizontalLayout(), new VerticalLayout(), "390px", "200px");
+		super("Sales Dashboard", new HorizontalLayout(), new VerticalLayout(),
+				"390px", "200px");
 
 		initUI();
 	}
@@ -43,45 +45,48 @@ public class SalesDashboardView extends Depot {
 		headerContainer.addComponent(emptySpace);
 		headerContainer.setExpandRatio(emptySpace, 1.0f);
 
+		final PopupButton saleChartPopup = new PopupButton("Opportunity Sales Stage");
+		saleChartPopup.addStyleName("link");
 
-		Button prevButton = new Button("", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		VerticalLayout filterBtnLayout = new VerticalLayout();
+		filterBtnLayout.setMargin(true);
+		filterBtnLayout.setSpacing(true);
+		filterBtnLayout.setWidth("200px");
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (currentReportIndex == 0) {
-					currentReportIndex = reportDashboard.length - 1;
-				} else {
-					currentReportIndex--;
-				}
+		Button btnOpportunitySales = new Button("Opportunity Sales Stage",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-				displayReport();
-			}
-		});
-		prevButton.setIcon(new ThemeResource("icons/16/previous_gray.png"));
-		prevButton.setStyleName("link");
-		prevButton.addStyleName("no-margin");
-		headerContainer.addComponent(prevButton);
+					@Override
+					public void buttonClick(ClickEvent event) {
+						saleChartPopup.setPopupVisible(false);
+						saleChartPopup.setCaption("Opportunity Sales Stage");
+						currentReportIndex = 0;
+						displayReport();
+					}
+				});
+		btnOpportunitySales.setStyleName("link");
+		filterBtnLayout.addComponent(btnOpportunitySales);
 
-		Button nextBtn = new Button("", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+		Button btnOpportunityLead = new Button("Opportunity Lead Source",
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				if (currentReportIndex >= (reportDashboard.length - 1)) {
-					currentReportIndex = 0;
-				} else {
-					currentReportIndex++;
-				}
-				displayReport();
-			}
-		});
-		nextBtn.setIcon(new ThemeResource("icons/16/next_gray.png"));
-		nextBtn.setStyleName("link");
-		nextBtn.addStyleName("no-margin");
-		headerContainer.addComponent(nextBtn);
+					@Override
+					public void buttonClick(ClickEvent event) {
+						saleChartPopup.setPopupVisible(false);
+						saleChartPopup.setCaption("Opportunity Lead Source");
+						currentReportIndex = 1;
+						displayReport();
+					}
+				});
+		btnOpportunityLead.setStyleName("link");
+		filterBtnLayout.addComponent(btnOpportunityLead);
 
 		displayReport();
+
+		saleChartPopup.addComponent(filterBtnLayout);
+		headerContainer.addComponent(saleChartPopup);
 	}
 
 	public void displayReport() {

@@ -52,7 +52,7 @@ public class UserDashboardViewImpl extends AbstractView implements
 		calendarToolTabs.setHeight(null);
 
 		CssLayout menu = new CssLayout();
-		menu.setWidth("200px");
+		menu.setWidth("150px");
 		menu.setStyleName("sidebar-menu");
 
 		Label myHome = new Label("My Home");
