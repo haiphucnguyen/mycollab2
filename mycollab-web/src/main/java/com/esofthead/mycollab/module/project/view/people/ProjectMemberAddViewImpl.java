@@ -201,7 +201,11 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 				isAdminCheck.setValue(user.getIsadmin());
 				layout.addComponent(isAdminCheck);
 				if (user.getIsadmin() == null || !user.getIsadmin()) {
-					layout.addComponent(roleLayout);
+					if (roleComboBox.isComboRoleNotEmpty()) {
+						layout.addComponent(roleLayout);
+					} else {
+						isAdminCheck.setValue(true);
+					}
 				}
 
 				this.setCompositionRoot(layout);

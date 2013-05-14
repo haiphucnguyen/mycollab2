@@ -16,6 +16,8 @@ import com.vaadin.ui.ComboBox;
 public class ProjectRoleComboBox extends ComboBox {
 
 	private static final long serialVersionUID = 1L;
+	
+	private List<SimpleProjectRole> roleList;
 
 	@SuppressWarnings("unchecked")
 	public ProjectRoleComboBox() {
@@ -30,7 +32,7 @@ public class ProjectRoleComboBox extends ComboBox {
 
 		ProjectRoleService roleService = AppContext
 				.getSpringBean(ProjectRoleService.class);
-		List<SimpleProjectRole> roleList = roleService
+		roleList = roleService
 				.findPagableListByCriteria(new SearchRequest<ProjectRoleSearchCriteria>(
 						criteria, 0, Integer.MAX_VALUE));
 
@@ -46,8 +48,13 @@ public class ProjectRoleComboBox extends ComboBox {
 		this.setContainerDataSource(beanItem);
 		this.setItemCaptionPropertyId("rolename");
 		if (roleList.size() > 0) {
-			this.setValue(this.getContainerPropertyIds().iterator().next());
+			SimpleProjectRole role = roleList.get(0);
+			this.setValue(role.getId());
 		}
+	}
+	
+	public boolean isComboRoleNotEmpty() {
+		return (roleList.size() > 0);
 	}
 
 }
