@@ -2,6 +2,7 @@ package com.esofthead.mycollab.module.billing.service;
 
 import java.io.IOException;
 
+import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -70,8 +71,10 @@ public class AnotatedVerifyUserServletRequestHandler implements
 
 					// remove account invitation
 
-					if (isCreatePassword) {
+					if (true) {
 						// forward to page create password for new user
+						response.sendRedirect(request.getContextPath()
+								+ "/templates/FillUserInformation.mt");
 					} else {
 						// redirect to account site
 						request.getRequestDispatcher(
