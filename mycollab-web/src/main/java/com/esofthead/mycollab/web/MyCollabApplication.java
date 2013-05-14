@@ -14,7 +14,6 @@ import com.esofthead.mycollab.shell.view.MainWindowContainer;
 import com.esofthead.mycollab.shell.view.NoSubDomainExistedWindow;
 import com.vaadin.Application;
 import com.vaadin.terminal.gwt.server.HttpServletRequestListener;
-import com.vaadin.terminal.gwt.server.WebApplicationContext;
 import com.vaadin.ui.Window.Notification;
 
 public class MyCollabApplication extends Application implements

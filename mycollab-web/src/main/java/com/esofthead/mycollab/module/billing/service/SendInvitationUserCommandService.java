@@ -3,8 +3,6 @@ package com.esofthead.mycollab.module.billing.service;
 import java.util.Arrays;
 import java.util.List;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.scheduling.annotation.Scheduled;
 import org.springframework.stereotype.Service;
@@ -16,8 +14,8 @@ import com.esofthead.mycollab.module.billing.RegisterStatusConstants;
 import com.esofthead.mycollab.module.mail.TemplateGenerator;
 import com.esofthead.mycollab.module.mail.service.ExtMailService;
 import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper;
-import com.esofthead.mycollab.module.user.domain.UserAccountInvitation;
-import com.esofthead.mycollab.module.user.domain.UserAccountInvitationExample;
+import com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapperExt;
+import com.esofthead.mycollab.module.user.domain.SimpleUserAccountInvitation;
 import com.esofthead.mycollab.schedule.ScheduleConfig;
 
 @Service
@@ -26,18 +24,18 @@ public class SendInvitationUserCommandService {
 	private UserAccountInvitationMapper userAccountInvitationMapper;
 
 	@Autowired
+	private UserAccountInvitationMapperExt userAccountInvitationMapperExt;
+
+	@Autowired
 	private ExtMailService extMailService;
 
 	@Scheduled(fixedDelay = ScheduleConfig.RUN_EMAIL_NOTIFICATION_INTERVAL)
 	public void runNotification() {
-		UserAccountInvitationExample invitationEx = new UserAccountInvitationExample();
-		invitationEx.createCriteria().andInvitationstatusEqualTo(
-				RegisterStatusConstants.VERIFICATING);
 
-		List<UserAccountInvitation> invitations = userAccountInvitationMapper
-				.selectByExample(invitationEx);
+		List<SimpleUserAccountInvitation> invitations = userAccountInvitationMapperExt
+				.findAccountInvitations(RegisterStatusConstants.VERIFICATING);
 
-		for (UserAccountInvitation invitation : invitations) {
+		for (SimpleUserAccountInvitation invitation : invitations) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(
 					"You are invited to join the mycollab site ",
 					"templates/email/user/userInvitationNotifier.mt");
@@ -45,15 +43,13 @@ public class SendInvitationUserCommandService {
 
 			templateGenerator.putVariable(
 					"urlAccept",
-					ApplicationProperties
-							.getProperty(ApplicationProperties.APP_URL)
+					getSiteUrl(invitation.getSubdomain())
 							+ "user/confirm_invite/"
 							+ UrlEncodeDecoder.encode(invitation.getAccountid()
 									+ "/" + invitation.getUsername()));
 			templateGenerator.putVariable(
 					"urlDeny",
-					ApplicationProperties
-							.getProperty(ApplicationProperties.APP_URL)
+					getSiteUrl(invitation.getSubdomain())
 							+ "user/deny_invite/"
 							+ UrlEncodeDecoder.encode(invitation.getAccountid()
 									+ "/" + invitation.getUsername()));
@@ -69,6 +65,16 @@ public class SendInvitationUserCommandService {
 			invitation
 					.setInvitationstatus(RegisterStatusConstants.SENT_VERIFICATION_EMAIL);
 			userAccountInvitationMapper.updateByPrimaryKeySelective(invitation);
+		}
+	}
+
+	private String getSiteUrl(String subdomain) {
+		if (ApplicationProperties.productionMode) {
+			return String.format(ApplicationProperties
+					.getProperty(ApplicationProperties.APP_URL), subdomain);
+		} else {
+			return ApplicationProperties
+					.getProperty(ApplicationProperties.APP_URL);
 		}
 	}
 }
