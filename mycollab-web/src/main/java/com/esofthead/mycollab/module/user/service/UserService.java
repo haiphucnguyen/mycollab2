@@ -41,7 +41,9 @@ public interface UserService extends
 
 	void removeUserAccounts(List<String> usernames, int accountId);
 
-	SimpleUser findUserByUserName(String username, int accountId);
+	SimpleUser findUserByUserNameInAccount(String username, int accountId);
+	
+	User findUserByUserName(String username);
 
 	void verifyUser(String username);
 }

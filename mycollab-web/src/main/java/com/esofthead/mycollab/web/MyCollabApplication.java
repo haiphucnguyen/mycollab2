@@ -120,11 +120,13 @@ public class MyCollabApplication extends Application implements
 	@Override
 	public void terminalError(com.vaadin.terminal.Terminal.ErrorEvent event) {
 		Throwable e = event.getThrowable();
-		if (e instanceof UserInvalidInputException) {
+		UserInvalidInputException invalidException = (UserInvalidInputException) getUserInvalidException(e);
+		if (invalidException != null) {
 			getMainWindow().showNotification(
 					LocalizationHelper.getMessage(
 							GenericI18Enum.ERROR_USER_INPUT_MESSAGE,
-							e.getMessage()), Notification.TYPE_WARNING_MESSAGE);
+							invalidException.getMessage()),
+					Notification.TYPE_WARNING_MESSAGE);
 		} else {
 			getMainWindow()
 					.showNotification(
@@ -135,6 +137,16 @@ public class MyCollabApplication extends Application implements
 			log.error("An uncaught exception occurred: ", event.getThrowable());
 		}
 
+	}
+
+	private static Throwable getUserInvalidException(Throwable e) {
+		if (e instanceof UserInvalidInputException) {
+			return e;
+		} else if (e.getCause() != null) {
+			return getUserInvalidException(e.getCause());
+		} else {
+			return null;
+		}
 	}
 
 	public String getInitialUrl() {

@@ -35,7 +35,7 @@ public class UserUrlResolver extends UrlResolver {
 			String username = UrlEncodeDecoder.decode(params[0]);
 			UserService userService = AppContext
 					.getSpringBean(UserService.class);
-			SimpleUser user = userService.findUserByUserName(username,
+			SimpleUser user = userService.findUserByUserNameInAccount(username,
 					AppContext.getAccountId());
 			EventBus.getInstance().fireEvent(
 					new UserEvent.GotoEdit(EditUrlResolver.this, user));
@@ -47,7 +47,7 @@ public class UserUrlResolver extends UrlResolver {
 			String username = UrlEncodeDecoder.decode(params[0]);
 			UserService userService = AppContext
 					.getSpringBean(UserService.class);
-			SimpleUser user = userService.findUserByUserName(username,
+			SimpleUser user = userService.findUserByUserNameInAccount(username,
 					AppContext.getAccountId());
 			EventBus.getInstance().fireEvent(
 					new UserEvent.GotoRead(PreviewUrlResolver.this, user));

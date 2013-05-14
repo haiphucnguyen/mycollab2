@@ -33,6 +33,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.common.domain.PermissionMap;
 import com.esofthead.mycollab.core.UserInvalidInputException;
+import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchRequest;
 import com.esofthead.mycollab.core.arguments.StringSearchField;
 import com.esofthead.mycollab.core.persistence.ICrudGenericDAO;
@@ -247,8 +248,10 @@ public class UserServiceDBImpl extends
 	}
 
 	@Override
-	public SimpleUser findUserByUserName(String username, int accountId) {
+	public SimpleUser findUserByUserNameInAccount(String username, int accountId) {
 		UserSearchCriteria criteria = new UserSearchCriteria();
+		criteria.setUsername(new StringSearchField(username));
+		criteria.setSaccountid(new NumberSearchField(accountId));
 		List<SimpleUser> users = userMapperExt.findPagableListByCriteria(
 				criteria, new RowBounds(0, Integer.MAX_VALUE));
 		if (users == null || users.size() == 0) {
@@ -296,6 +299,18 @@ public class UserServiceDBImpl extends
 		userAccountEx.createCriteria().andUsernameIn(usernames)
 				.andAccountidEqualTo(accountId);
 		userAccountMapper.deleteByExample(userAccountEx);
+	}
+
+	@Override
+	public User findUserByUserName(String username) {
+		UserExample ex = new UserExample();
+		ex.createCriteria().andUsernameEqualTo(username);
+		List<User> users = userMapper.selectByExample(ex);
+		if (users == null || users.size() == 0) {
+			return null;
+		} else {
+			return users.get(0);
+		}
 	}
 
 }

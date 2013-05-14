@@ -90,7 +90,7 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 
 		SimpleProject project = projectService.findProjectById(projectId);
 
-		SimpleUser user = userService.findUserByUserName(
+		SimpleUser user = userService.findUserByUserNameInAccount(
 				notification.getChangeby(), AppContext.getAccountId());
 		if (project != null && user != null) {
 			TemplateGenerator templateGenerator = new TemplateGenerator(
@@ -120,7 +120,7 @@ public class ProjectMemberInvitationNotificationServiceImp implements
 
 		SimpleProject project = projectService.findProjectById(projectId);
 
-		SimpleUser user = userService.findUserByUserName(
+		SimpleUser user = userService.findUserByUserNameInAccount(
 				notification.getChangeby(), AppContext.getAccountId());
 
 		if (project != null && user != null) {

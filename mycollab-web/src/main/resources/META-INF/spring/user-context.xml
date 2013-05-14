@@ -89,6 +89,12 @@
         <property name="mapperInterface"
             value="com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapper" />
     </bean>
+    
+    <bean id="userAccountInvitationMapperExt" class="org.mybatis.spring.mapper.MapperFactoryBean">
+        <property name="sqlSessionTemplate" ref="sqlMapClient" />
+        <property name="mapperInterface"
+            value="com.esofthead.mycollab.module.user.dao.UserAccountInvitationMapperExt" />
+    </bean>
 
     <bean id="userPreferenceMapper" class="org.mybatis.spring.mapper.MapperFactoryBean">
         <property name="sqlSessionTemplate" ref="sqlMapClient" />
