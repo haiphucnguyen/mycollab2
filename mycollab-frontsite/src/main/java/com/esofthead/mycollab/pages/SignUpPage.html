@@ -3,6 +3,7 @@
 	<head>
 	<wicket:head>
 		<link rel="stylesheet" type="text/css" href="css/signup.css?version=new"/>
+		<script type="text/javascript" src="js/signup.js"></script>
 	</wicket:head>
 	</head>
 	<body>
@@ -46,8 +47,35 @@
 											<p><input type="text" wicket:id="emailfield" placeholder="Email"/></p>
 										</td>
 										<td>
-											<p style="line-height: 26px;">Timezone</p>
-											<p><select wicket:id="timezoneselect"></select></p>
+											<p>Timezone</p>
+											<div class="timezone_dropdown">
+												<div class="timezone_input">
+													<span class="timezone_value"></span>
+													<input type="hidden" id="timezonefield" wicket:id="timezonefield"/>
+												</div>
+												<div id="timezone_dropdown_hidden">
+													<div class="single_timezone" wicket:id="repeating">
+														<span wicket:id="one_timezone">US/Alaska: (UTC-0800)</span>
+													</div>
+													 <!--
+													 <a data-tag="US/Arizona">US/Arizona: (UTC-0700)</a>
+													 <a data-tag="US/Central">US/Central: (UTC-0500)</a>
+													 <a data-tag="US/Eastern">US/Eastern: (UTC-0400)</a>
+													 <a data-tag="US/Hawaii">US/Hawaii: (UTC-1000)</a>
+													 <a data-tag="US/Mountain">US/Mountain: (UTC-0600)</a>
+													 <a data-tag="US/Pacific">US/Pacific: (UTC-0700)</a>
+													 <a data-tag="Europe/London">Europe/London: (UTC+0100)</a>
+													 <a data-tag="Europe/Paris">Europe/Paris: (UTC+0200)</a>
+													 <a data-tag="Europe/Berlin">Europe/Berlin: (UTC+0200)</a>
+													 <a data-tag="Asia/Tokyo">Asia/Tokyo: (UTC+0900)</a>
+													 <a data-tag="Asia/Seoul">Asia/Seoul: (UTC+0900)</a>
+													 <a data-tag="Australia/Melbourne">Australia/Melbourne: (UTC+1000)</a>
+													 <a data-tag="America/Sao_Paulo">America/Sao_Paulo: (UTC-0300)</a>
+													 <a data-tag="America/Argentina/Buenos_Aires">America/Argentina/Buenos_Aires: (UTC-0300)</a>
+													 <a data-tag="getmore">More ...</a>
+													  -->
+												</div>
+											</div>
 										</td>
 									</tr>
 								</table>
