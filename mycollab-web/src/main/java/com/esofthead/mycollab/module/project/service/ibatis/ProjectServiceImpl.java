@@ -93,7 +93,7 @@ public class ProjectServiceImpl extends
 
 		// add client role to project
 		ProjectRole clientRole = createProjectRole(projectid,
-				record.getSaccountid(), "Client Role",
+				record.getSaccountid(), "Client",
 				"Default role for client");
 		int clientRoleId = projectRoleService.saveWithSession(clientRole,
 				username);
@@ -120,7 +120,7 @@ public class ProjectServiceImpl extends
 
 		// add consultant role to project
 		ProjectRole consultantRole = createProjectRole(projectid,
-				record.getSaccountid(), "Consultant Role",
+				record.getSaccountid(), "Consultant",
 				"Default role for consultant");
 		int consultantRoleId = projectRoleService.saveWithSession(
 				consultantRole, username);
@@ -147,7 +147,7 @@ public class ProjectServiceImpl extends
 		
 		// add admin role to project
 		ProjectRole adminRole = createProjectRole(projectid,
-				record.getSaccountid(), "Admin Role", "Default role for admin");
+				record.getSaccountid(), "Admin", "Default role for admin");
 		int adminRoleId = projectRoleService.saveWithSession(adminRole,
 				username);
 		

@@ -8,6 +8,7 @@ import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
 import com.esofthead.mycollab.module.project.view.ProjectBreadcrumb;
 import com.esofthead.mycollab.module.project.view.ProjectView;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
@@ -42,7 +43,7 @@ public class ProjectDashboardPresenter extends
 		ProjectBreadcrumb breadcrumb = ViewManager
 				.getView(ProjectBreadcrumb.class);
 
-		if (data instanceof ScreenData.Add || data instanceof ScreenData.Edit) {
+		if (data instanceof ProjectScreenData.Edit) {
 			if (CurrentProjectVariables
 					.canWrite(ProjectRolePermissionCollections.PROJECT)) {
 				ProjectAddPresenter presenter = PresenterResolver
@@ -50,8 +51,8 @@ public class ProjectDashboardPresenter extends
 				presenter.go(view, data);
 				breadcrumb.gotoProjectEdit();
 			} else {
-	    		MessageConstants.showMessagePermissionAlert();
-	    	}
+				MessageConstants.showMessagePermissionAlert();
+			}
 		} else {
 			if (CurrentProjectVariables
 					.canRead(ProjectRolePermissionCollections.PROJECT)) {
@@ -60,8 +61,8 @@ public class ProjectDashboardPresenter extends
 				presenter.go(view, data);
 				breadcrumb.gotoProjectDashboard();
 			} else {
-	    		MessageConstants.showMessagePermissionAlert();
-	    	}
+				MessageConstants.showMessagePermissionAlert();
+			}
 		}
 	}
 }

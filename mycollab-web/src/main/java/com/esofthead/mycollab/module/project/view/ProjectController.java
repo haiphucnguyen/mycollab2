@@ -48,6 +48,7 @@ import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectRoleScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TaskGroupScreenData;
@@ -125,7 +126,7 @@ public class ProjectController implements IController {
 						CurrentProjectVariables.setProject(project);
 						ProjectDashboardPresenter presenter = PresenterResolver
 								.getPresenter(ProjectDashboardPresenter.class);
-						presenter.go(projectView, new ScreenData.Edit<Project>(
+						presenter.go(projectView, new ProjectScreenData.Edit(
 								project));
 					}
 				});
