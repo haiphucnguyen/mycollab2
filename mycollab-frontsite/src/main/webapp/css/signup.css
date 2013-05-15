@@ -167,12 +167,15 @@ input[type="submit"]:hover {
 	overflow-y: scroll;
 	overflow-x: hidden;
 }
+.single_area {
+	padding: 5px;
+}
 #timezone_dropdown_hidden div.single_timezone {
 	display: block;
 	font-size: 13px;
 	width: 100%;
 	color: rgb(87, 87, 87);
-	padding: 5px;
+	padding: 0 15px;
 	cursor: pointer;
 }
 #timezone_dropdown_hidden div.single_timezone:hover {

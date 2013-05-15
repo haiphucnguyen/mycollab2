@@ -1,10 +1,7 @@
 package com.esofthead.mycollab.pages;
 
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
@@ -43,6 +40,8 @@ public class SignUpPage extends BasePage {
 		super(parameters);
 		final TextField<String> username = new TextField<String>(
 				"usernamefield", new Model<String>());
+		final TextField<String> subdomain = new TextField<String>(
+				"subdomainfield", new Model<String>());
 		final PasswordTextField password = new PasswordTextField(
 				"passwordfield", new Model<String>());
 		final PasswordTextField cpassword = new PasswordTextField(
@@ -64,6 +63,8 @@ public class SignUpPage extends BasePage {
 
 				List<NameValuePair> nvps = new ArrayList<NameValuePair>();
 				nvps.add(new BasicNameValuePair("username", username
+						.getModelObject()));
+				nvps.add(new BasicNameValuePair("subdomain", subdomain
 						.getModelObject()));
 				nvps.add(new BasicNameValuePair("password", password
 						.getModelObject()));
@@ -94,34 +95,44 @@ public class SignUpPage extends BasePage {
 
 		add(form);
 		form.add(username);
+		form.add(subdomain);
 		form.add(password);
 		form.add(cpassword);
 		form.add(email);
 		form.add(timezone);
 
-		RepeatingView repeating = new RepeatingView("repeating");
-		form.add(repeating);
+		RepeatingView timezoneAreaRepeat = new RepeatingView("arearepeat");
+		form.add(timezoneAreaRepeat);
 
-		Iterator<Entry<String, TimezoneExt>> it = TimezoneMapper.timeMap
-				.entrySet().iterator();
-		while (it.hasNext()) {
-			Map.Entry<String, TimezoneExt> pairs = it.next();
-			final TimezoneExt eachTimezone = pairs.getValue();
-			AbstractItem item = new AbstractItem(repeating.newChildId());
+		for (String timezoneArea : TimezoneMapper.AREAS) {
+			AbstractItem areaItem = new AbstractItem(
+					timezoneAreaRepeat.newChildId());
+			timezoneAreaRepeat.add(areaItem);
 
-			repeating.add(item);
-			item.add(new Label("one_timezone", eachTimezone.getTimezone()
-					.getID()));
+			areaItem.add(new Label("one_area", timezoneArea));
 
-			item.add(AttributeModifier.replace("data-tag",
-					new AbstractReadOnlyModel<String>() {
-						private static final long serialVersionUID = 1L;
+			RepeatingView timezoneRepeat = new RepeatingView("timezonerepeat");
+			areaItem.add(timezoneRepeat);
 
-						@Override
-						public String getObject() {
-							return eachTimezone.getId();
-						}
-					}));
+			for (final TimezoneExt oneTimezone : TimezoneMapper.timeMap
+					.values()) {
+				if (oneTimezone.getArea().equals(timezoneArea)) {
+					AbstractItem timezoneItem = new AbstractItem(
+							timezoneRepeat.newChildId());
+					timezoneRepeat.add(timezoneItem);
+					timezoneItem.add(new Label("one_timezone", oneTimezone
+							.getDisplayName()));
+					timezoneItem.add(AttributeModifier.replace("data-tag",
+							new AbstractReadOnlyModel<String>() {
+								private static final long serialVersionUID = 1L;
+
+								@Override
+								public String getObject() {
+									return oneTimezone.getId();
+								}
+							}));
+				}
+			}
 		}
 
 		add(new Label("pagetitle", "Sign Up"));

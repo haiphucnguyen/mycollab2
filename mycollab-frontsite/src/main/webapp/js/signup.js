@@ -1,5 +1,5 @@
 $(document).ready(function(){
-	$('.timezone_value').text($('#timezone_dropdown_hidden > .single_timezone:first-child > span').text());
+	$('.timezone_value').text($('#timezone_dropdown_hidden > .single_timezone:eq(0) > span').text());
 	
 	$('.timezone_input').click(function() {
 		$('#timezone_dropdown_hidden').slideToggle("fast");
