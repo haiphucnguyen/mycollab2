@@ -52,6 +52,10 @@ public class MainViewPresenter extends AbstractPresenter<MainView> {
 					.equals(pref.getLastmodulevisit())) {
 				EventBus.getInstance().fireEvent(
 						new ShellEvent.GotoCrmModule(this, null));
+			} else if (ModuleNameConstants.ACCOUNT.equals(pref
+					.getLastmodulevisit())) {
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.GotoUserAccountModule(this, null));
 			} else {
 				EventBus.getInstance().fireEvent(
 						new ShellEvent.GotoConsolePage(this, null));
