@@ -9,7 +9,6 @@ import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.IModule;
 import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
 import com.esofthead.mycollab.vaadin.ui.FeedbackWindow;
-import com.esofthead.mycollab.vaadin.ui.Hr;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
@@ -38,8 +37,7 @@ public final class MainView extends AbstractView {
 		this.setExpandRatio(bodyLayout, 1.0f);
 		this.addComponent(createFooter());
 		this.setSizeFull();
-		ControllerRegistry.addController(
-				new MainViewController(this));
+		ControllerRegistry.addController(new MainViewController(this));
 	}
 
 	private CustomLayout createTopMenu() {
@@ -86,19 +84,30 @@ public final class MainView extends AbstractView {
 		VerticalLayout accLayout = new VerticalLayout();
 		accLayout.setWidth("120px");
 
-		Button myAccountBtn = new Button("My Account",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						accountMenu.setPopupVisible(false);
-						EventBus.getInstance().fireEvent(
-								new ShellEvent.GotoUserAccountModule(this, null));
-					}
-				});
+		Button myProfileBtn = new Button("Profile", new Button.ClickListener() {
+			@Override
+			public void buttonClick(ClickEvent event) {
+				accountMenu.setPopupVisible(false);
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.GotoUserAccountModule(this,
+								new String[] { "preview" }));
+			}
+		});
+		myProfileBtn.setStyleName("link");
+		accLayout.addComponent(myProfileBtn);
+
+		Button myAccountBtn = new Button("Account", new Button.ClickListener() {
+
+			@Override
+			public void buttonClick(ClickEvent event) {
+				accountMenu.setPopupVisible(false);
+				EventBus.getInstance().fireEvent(
+						new ShellEvent.GotoUserAccountModule(this,
+								new String[] { "billing" }));
+			}
+		});
 		myAccountBtn.setStyleName("link");
 		accLayout.addComponent(myAccountBtn);
-
-		accLayout.addComponent(new Hr());
 
 		Button signoutBtn = new Button("Sign out", new Button.ClickListener() {
 			@Override

@@ -17,20 +17,21 @@ import com.esofthead.mycollab.module.crm.domain.criteria.OpportunitySearchCriter
 import com.esofthead.mycollab.module.crm.ui.components.NoteListItems;
 import com.esofthead.mycollab.module.crm.view.activity.EventRelatedItemListComp;
 import com.esofthead.mycollab.module.user.RolePermissionCollections;
-import com.esofthead.mycollab.vaadin.ui.AddViewLayout;
 import com.esofthead.mycollab.vaadin.ui.AdvancedPreviewBeanForm;
 import com.esofthead.mycollab.vaadin.ui.DefaultFormViewFieldFactory;
-import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator;
-import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.PreviewFormControlsGenerator2;
+import com.esofthead.mycollab.vaadin.ui.ReadViewLayout;
 import com.esofthead.mycollab.web.AppContext;
+import com.github.wolfie.detachedtabs.DetachedTabs;
+import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.data.Item;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ExternalResource;
 import com.vaadin.terminal.ThemeResource;
+import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.Layout;
-import com.vaadin.ui.TabSheet;
 import com.vaadin.ui.VerticalLayout;
 import com.vaadin.ui.Window;
 
@@ -156,19 +157,14 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 	public static class ReadView extends AccountPreviewBuilder {
 
 		private static final long serialVersionUID = 1L;
-		private final TabSheet tabContainer;
 		private final VerticalLayout accountInformation;
 		private final VerticalLayout relatedItemsContainer;
-		private final AddViewLayout accountAddLayout;
+		private final ReadViewLayout accountAddLayout;
 
 		public ReadView() {
-			accountAddLayout = new AddViewLayout("", new ThemeResource(
+			accountAddLayout = new ReadViewLayout(new ThemeResource(
 					"icons/48/crm/account.png"));
-			accountAddLayout.addStyleName("preview");
 			this.addComponent(accountAddLayout);
-
-			tabContainer = new TabSheet();
-			tabContainer.setStyleName(UIConstants.WHITE_TABSHEET);
 
 			initRelatedComponent();
 
@@ -177,7 +173,8 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
 				@Override
 				public void setItemDataSource(Item newDataSource) {
-					this.setFormLayoutFactory(new AccountFormLayoutFactory.AccountInformationLayout(true));
+					this.setFormLayoutFactory(new AccountFormLayoutFactory.AccountInformationLayout(
+							true));
 					this.setFormFieldFactory(new AccountFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					accountAddLayout.setTitle(account.getAccountname());
@@ -219,14 +216,14 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
 			accountInformation = new VerticalLayout();
 			accountInformation.setMargin(true);
-			Layout actionControls = new PreviewFormControlsGenerator<Account>(
+			Layout actionControls = new PreviewFormControlsGenerator2<Account>(
 					previewForm)
 					.createButtonControls(RolePermissionCollections.CRM_ACCOUNT);
-			accountInformation.addComponent(actionControls);
+			accountAddLayout.addControlButtons(actionControls);
 			accountInformation.addComponent(previewForm);
 			accountInformation.addComponent(noteListItems);
 
-			tabContainer.addTab(accountInformation, "Account Information");
+			accountAddLayout.addTab(accountInformation, "Account Information");
 
 			relatedItemsContainer = new VerticalLayout();
 			relatedItemsContainer.setMargin(true);
@@ -235,9 +232,26 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 			relatedItemsContainer.addComponent(associateOpportunityList);
 			relatedItemsContainer.addComponent(associateCaseList);
 			relatedItemsContainer.addComponent(associateLeadList);
-			tabContainer.addTab(relatedItemsContainer, "More Information");
 
-			accountAddLayout.addBody(tabContainer);
+			accountAddLayout.addTab(relatedItemsContainer, "More Information");
+
+			this.addComponent(accountAddLayout);
+
+			accountAddLayout
+					.addTabChangedListener(new DetachedTabs.TabChangedListener() {
+
+						@Override
+						public void tabChanged(TabChangedEvent event) {
+							Button btn = event.getSource();
+							String caption = btn.getCaption();
+							if ("Account Information".equals(caption)) {
+
+							} else if ("More Information".equals(caption)) {
+
+							}
+							accountAddLayout.selectTab(caption);
+						}
+					});
 		}
 	}
 

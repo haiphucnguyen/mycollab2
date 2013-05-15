@@ -862,12 +862,6 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 				.generateProjectLink(project.getId()), "Dashboard");
 	}
 
-	public void gotoProjectAdd() {
-		this.select(1);
-		this.addLink(new Button("Add"));
-		AppContext.addFragment("project/add", "New Project");
-	}
-
 	public void gotoProjectEdit() {
 		this.select(1);
 		this.addLink(new Button("Edit"));

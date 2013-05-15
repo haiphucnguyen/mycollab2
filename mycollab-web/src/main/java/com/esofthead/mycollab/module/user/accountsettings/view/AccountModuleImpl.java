@@ -32,8 +32,7 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 	private AccountSettingsPresenter accountSettingPresenter;
 
 	public AccountModuleImpl() {
-		ControllerRegistry.addController(
-				new UserAccountController(this));
+		ControllerRegistry.addController(new UserAccountController(this));
 		this.setStyleName("accountViewContainer");
 		this.setMargin(false);
 		root = new HorizontalLayout();
@@ -58,9 +57,6 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 		buildComponents();
 
 		this.addComponent(root);
-
-		EventBus.getInstance().fireEvent(
-				new ProfileEvent.GotoProfileView(this, null));
 	}
 
 	private void buildComponents() {
@@ -120,5 +116,11 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 			this.setIcon(new ThemeResource("icons/22/user/" + iconResource));
 			this.setStyleName("link");
 		}
+	}
+
+	@Override
+	public void gotoUserProfilePage() {
+		EventBus.getInstance().fireEvent(
+				new ProfileEvent.GotoProfileView(this, null));
 	}
 }

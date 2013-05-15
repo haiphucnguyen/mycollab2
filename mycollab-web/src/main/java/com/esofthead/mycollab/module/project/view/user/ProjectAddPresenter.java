@@ -35,7 +35,12 @@ public class ProjectAddPresenter extends AbstractPresenter<ProjectAddView> {
 		ComponentContainer projectContainer = (ComponentContainer) container;
 		projectContainer.removeAllComponents();
 		projectContainer.addComponent(view.getWidget());
-		view.editItem((Project) data.getParams());
+		Project project = (Project) data.getParams();
+		view.editItem(project);
+		
+		if (project.getId() == null) {
+			AppContext.addFragment("project/add", "New Project");
+		}
 	}
 
 	private void bind() {

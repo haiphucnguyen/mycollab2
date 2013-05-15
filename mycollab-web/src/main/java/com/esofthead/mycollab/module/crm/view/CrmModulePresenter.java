@@ -30,7 +30,7 @@ public class CrmModulePresenter extends AbstractPresenter<CrmModule> {
 		mainView.addModule((IModule) view);
 
 		String[] params = (String[]) data.getParams();
-		if (params == null) {
+		if (params == null || params.length == 0) {
 			view.gotoCrmDashboard();
 		} else {
 			FragmentNavigator.shellUrlResolver.getSubResolver("crm").handle(
