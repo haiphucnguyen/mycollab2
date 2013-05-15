@@ -11,7 +11,6 @@ import com.esofthead.mycollab.core.arguments.NumberSearchField;
 import com.esofthead.mycollab.core.arguments.SearchField;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
-import com.esofthead.mycollab.module.project.domain.Project;
 import com.esofthead.mycollab.module.project.domain.SimpleProject;
 import com.esofthead.mycollab.module.project.domain.criteria.ItemTimeLoggingSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.MilestoneSearchCriteria;
@@ -19,12 +18,14 @@ import com.esofthead.mycollab.module.project.domain.criteria.ProblemSearchCriter
 import com.esofthead.mycollab.module.project.domain.criteria.ProjectMemberSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.RiskSearchCriteria;
 import com.esofthead.mycollab.module.project.domain.criteria.StandupReportSearchCriteria;
+import com.esofthead.mycollab.module.project.localization.ProjectCommonI18nEnum;
 import com.esofthead.mycollab.module.project.view.bug.BugPresenter;
 import com.esofthead.mycollab.module.project.view.message.MessagePresenter;
 import com.esofthead.mycollab.module.project.view.milestone.MilestonePresenter;
 import com.esofthead.mycollab.module.project.view.parameters.MilestoneScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProblemScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.ProjectMemberScreenData;
+import com.esofthead.mycollab.module.project.view.parameters.ProjectScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.RiskScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.StandupScreenData;
 import com.esofthead.mycollab.module.project.view.parameters.TimeTrackingScreenData;
@@ -43,6 +44,7 @@ import com.esofthead.mycollab.vaadin.mvp.View;
 import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
+import com.esofthead.mycollab.web.LocalizationHelper;
 import com.github.wolfie.detachedtabs.DetachedTabs;
 import com.github.wolfie.detachedtabs.DetachedTabs.TabChangedEvent;
 import com.vaadin.terminal.ThemeResource;
@@ -194,7 +196,8 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 							ItemTimeLoggingSearchCriteria searchCriteria = new ItemTimeLoggingSearchCriteria();
 							searchCriteria.setProjectId(new NumberSearchField(
 									CurrentProjectVariables.getProjectId()));
-							searchCriteria.setRangeDate(ItemTimeLoggingSearchCriteria.getCurrentRangeDateOfWeekSearchField());
+							searchCriteria.setRangeDate(ItemTimeLoggingSearchCriteria
+									.getCurrentRangeDateOfWeekSearchField());
 							gotoTimeTrackingView(new TimeTrackingScreenData.Search(
 									searchCriteria));
 						} else if ("StandUp".equals(caption)) {
@@ -316,22 +319,25 @@ public class ProjectViewImpl extends AbstractView implements ProjectView {
 		breadCrumb.setProject(project);
 		breadCrumb.initBreadcrumb();
 
-		Button editProjectBtn = new Button("EditProject",
+		Button editProjectBtn = new Button(
+				LocalizationHelper
+						.getMessage(ProjectCommonI18nEnum.EDIT_PROJECT_ACTION),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {
 						dashboardPresenter.go(ProjectViewImpl.this,
-								new ScreenData.Edit<Project>(project));
+								new ProjectScreenData.Edit(project));
 					}
 				});
 		editProjectBtn.setEnabled(CurrentProjectVariables
 				.canWrite(ProjectRolePermissionCollections.PROJECT));
 		SplitButtonExt controlsBtn = new SplitButtonExt(editProjectBtn);
 		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
-		controlsBtn.setCaption("Edit Project");
 		controlsBtn.setIcon(new ThemeResource("icons/16/edit.png"));
 
-		Button selectBtn = new Button("View Project Detail",
+		Button selectBtn = new Button(
+				LocalizationHelper
+						.getMessage(ProjectCommonI18nEnum.VIEW_PROJECT_DETAIL_ACTION),
 				new Button.ClickListener() {
 					@Override
 					public void buttonClick(ClickEvent event) {

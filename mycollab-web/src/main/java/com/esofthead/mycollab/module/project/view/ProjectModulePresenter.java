@@ -30,7 +30,7 @@ public class ProjectModulePresenter extends AbstractPresenter<ProjectModule> {
 		mainView.addModule((IModule) view);
 
 		String[] params = (String[]) data.getParams();
-		if (params == null) {
+		if (params == null || params.length == 0) {
 			view.gotoProjectPage();
 			AppContext.addFragment("project", "Project");
 		} else {
