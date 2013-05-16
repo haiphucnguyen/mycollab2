@@ -12,7 +12,6 @@ import com.esofthead.mycollab.module.user.accountsettings.view.parameters.UserSc
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
-import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.domain.criteria.RoleSearchCriteria;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
