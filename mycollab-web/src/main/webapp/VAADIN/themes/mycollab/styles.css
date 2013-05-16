@@ -2982,3 +2982,22 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 
 /* End Time Addon */
 
+/* New ReadViewLayout */
+.v-csslayout-readview-layout {
+	margin-top: 20px;
+}
+.v-csslayout-readview-layout > .v-csslayout-margin {
+	border: 1px solid #cdcdcd;
+	background-color: #f5f5f5;
+	border-radius: 3px;
+}
+.readview-layout-header {
+	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e5e5e5;
+	border-radius: 3px 3px 0px 0px;
+}
+.readview-layout-header .v-label-h1 {
+	padding: 0px;
+}
+.readview-layout-body > .v-csslayout-margin {
+	border-top: 1px solid #cdcdcd;
+}
