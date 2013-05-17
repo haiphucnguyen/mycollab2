@@ -14,14 +14,17 @@ public class GridFormLayoutHelper implements Serializable {
 	private final GridLayout layout;
 
 	private final String fieldControlWidth;
+	private final Alignment captionAlignment;
 
 	public GridFormLayoutHelper(int columns, int rows) {
 		this(columns, rows, UIConstants.DEFAULT_CAPTION_FORM_WIDTH);
 	}
 
 	public GridFormLayoutHelper(int columns, int rows,
-			String fieldControlWidth, String defaultCaptionWidth) {
+			String fieldControlWidth, String defaultCaptionWidth,
+			Alignment captionAlignment) {
 		this.fieldControlWidth = fieldControlWidth;
+		this.captionAlignment = captionAlignment;
 
 		layout = new GridLayout(2 * columns, rows + 1);
 		layout.setMargin(true, false, false, false);
@@ -47,13 +50,13 @@ public class GridFormLayoutHelper implements Serializable {
 	public GridFormLayoutHelper(int columns, int rows,
 			String defaultCaptionWidth) {
 		this(columns, rows, UIConstants.DEFAULT_CONTROL_WIDTH,
-				defaultCaptionWidth);
+				defaultCaptionWidth, Alignment.TOP_RIGHT);
 	}
 
 	public Component addComponent(Component field, String caption, int columns,
 			int rows, String width) {
 		return addComponent(field, caption, columns, rows, width,
-				Alignment.TOP_RIGHT);
+				captionAlignment);
 	}
 
 	public Component addComponent(Component field, String caption, int columns,
@@ -78,7 +81,7 @@ public class GridFormLayoutHelper implements Serializable {
 	public Component addComponent(Component field, String caption, int columns,
 			int rows, int colspan, String width, String height) {
 		return addComponent(field, caption, columns, rows, colspan, width,
-				height, Alignment.TOP_RIGHT);
+				height, captionAlignment);
 	}
 
 	public Component addComponent(Component field, String caption, int columns,
@@ -100,7 +103,7 @@ public class GridFormLayoutHelper implements Serializable {
 	public Component addComponent(Component field, String caption, int columns,
 			int rows, int colspan, String width) {
 		return addComponent(field, caption, columns, rows, colspan, width,
-				Alignment.TOP_RIGHT);
+				captionAlignment);
 	}
 
 	public Component addComponent(Component field, String caption, int columns,
@@ -121,7 +124,7 @@ public class GridFormLayoutHelper implements Serializable {
 	public Component addComponent(Component field, String caption, int columns,
 			int rows, int colspan, int rowspan) {
 		return addComponent(field, caption, columns, rows, colspan, rowspan,
-				Alignment.TOP_RIGHT);
+				captionAlignment);
 	}
 
 	public Component addComponent(Component field, String caption, int columns,
@@ -130,7 +133,7 @@ public class GridFormLayoutHelper implements Serializable {
 			Label l = new Label(caption + ":");
 			l.setSizeUndefined();
 			layout.addComponent(l, 2 * columns, rows + 1);
-			layout.setComponentAlignment(l, alignment);
+			// layout.setComponentAlignment(l, alignment);
 
 			layout.addComponent(field, 2 * columns + 1, rows + 1, 2 * (columns
 					+ colspan - 1) + 1, rows + rowspan);

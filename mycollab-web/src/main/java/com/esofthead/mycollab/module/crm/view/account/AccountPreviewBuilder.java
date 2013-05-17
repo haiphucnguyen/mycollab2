@@ -216,7 +216,6 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 			};
 
 			accountInformation = new VerticalLayout();
-			accountInformation.setMargin(true);
 			Layout actionControls = new PreviewFormControlsGenerator2<Account>(
 					previewForm)
 					.createButtonControls(RolePermissionCollections.CRM_ACCOUNT);
@@ -227,7 +226,6 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 			accountAddLayout.addTab(accountInformation, "Account Information");
 
 			relatedItemsContainer = new VerticalLayout();
-			relatedItemsContainer.setMargin(true);
 			relatedItemsContainer.addComponent(associateActivityList);
 			relatedItemsContainer.addComponent(associateContactList);
 			relatedItemsContainer.addComponent(associateOpportunityList);
