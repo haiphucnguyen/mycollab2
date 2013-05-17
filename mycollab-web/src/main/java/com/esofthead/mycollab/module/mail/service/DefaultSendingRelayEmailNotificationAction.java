@@ -62,7 +62,6 @@ public abstract class DefaultSendingRelayEmailNotificationAction implements
 						templateGenerator.generateBodyContent(), null);
 			}
 		}
-
 	}
 
 	protected abstract TemplateGenerator templateGeneratorForCreateAction(
