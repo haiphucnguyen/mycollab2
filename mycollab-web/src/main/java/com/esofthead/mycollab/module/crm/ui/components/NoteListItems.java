@@ -55,8 +55,8 @@ public class NoteListItems extends Depot {
 	}
 
 	public NoteListItems(String title, String type, Integer typeid) {
-		super(title, new VerticalLayout());
-		this.setWidth("900px");
+		super(title, new VerticalLayout(), "100%");
+		this.setWidth("100%");
 		this.setMargin(false);
 
 		noteService = AppContext.getSpringBean(NoteService.class);
@@ -74,6 +74,7 @@ public class NoteListItems extends Depot {
 
 	private void initUI() {
 		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
+		contentContainer.setMargin(true);
 		contentContainer.setSpacing(true);
 		createBtn = new Button("New Note", new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;

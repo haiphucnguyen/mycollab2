@@ -3040,11 +3040,31 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	border-bottom: 1px solid #cdcdcd;
 }
 .readview-layout-body .v-gridlayout-margin > div > div > div > div {
-	padding: 3px 0px;
+	padding: 3px 0px 3px 18px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
-.readview-layout-body .v-gridlayout-margin > div > div:nth-child(odd) {
+.readview-layout-body .v-gridlayout-margin .gridform-caption {
 	background-color: #cce4ee;
+	border-left: 1px solid #cdcdcd;
 }
-.readview-layout-body .v-gridlayout-margin > div > div:nth-child(even) {
+.readview-layout-body .v-gridlayout-margin .gridform-caption.first-col {
+	border-left: none;
+}
+.readview-layout-body .v-gridlayout-margin .gridform-field {
 	background-color: #e5eff0;
+}
+.readview-layout-body .depotComp {
+	margin-top: 0px;
+}
+.readview-layout-body .depotComp .depotHeader {
+	border-bottom: none;
+	padding-bottom: 0px;
+}
+.readview-layout-body .depotComp .depot-title {
+	background-position: left center;
+}
+.readview-layout-body .depotComp .depot-title .v-csslayout-margin {
+	margin-left: 0px;
 }

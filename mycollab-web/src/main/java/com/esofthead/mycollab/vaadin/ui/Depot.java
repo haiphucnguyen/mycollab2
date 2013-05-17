@@ -18,18 +18,23 @@ public class Depot extends VerticalLayout {
 	protected final Label headerLbl;
 	protected ComponentContainer headerContent;
 	protected ComponentContainer bodyContent;
-	
+
 	public Depot(String title, ComponentContainer component) {
 		this(title, null, component);
 	}
-	
+
+	public Depot(String title, ComponentContainer component, String headerWidth) {
+		this(title, null, component, headerWidth, "250px");
+	}
+
 	public Depot(String title, ComponentContainer headerElement,
 			ComponentContainer component) {
 		this(title, headerElement, component, "500px", "250px");
 	}
 
 	public Depot(String title, ComponentContainer headerElement,
-			ComponentContainer component, String headerWidth, String headerLeftWidth) {
+			ComponentContainer component, String headerWidth,
+			String headerLeftWidth) {
 		this.setStyleName("depotComp");
 		header = new HorizontalLayout();
 		header.setStyleName("depotHeader");
@@ -60,7 +65,6 @@ public class Depot extends VerticalLayout {
 				}
 			}
 		});
-		header.addComponent(headerLeft);
 
 		HorizontalLayout headerRight = new HorizontalLayout();
 		headerRight.setStyleName("header-elements");
@@ -70,10 +74,31 @@ public class Depot extends VerticalLayout {
 			headerRight.addComponent(headerElement);
 			headerRight.setComponentAlignment(headerElement,
 					Alignment.TOP_RIGHT);
-		}
+			header.addComponent(headerLeft);
+			header.addComponent(headerRight);
+			header.setExpandRatio(headerRight, 1.0f);
+		} else {
+			VerticalLayout newHeaderLeft = new VerticalLayout();
+			newHeaderLeft.addComponent(headerLbl);
+			newHeaderLeft.setStyleName("depot-title");
+			newHeaderLeft.setWidth("100%");
+			newHeaderLeft.addListener(new LayoutClickListener() {
+				private static final long serialVersionUID = 1L;
 
-		header.addComponent(headerRight);
-		header.setExpandRatio(headerRight, 1.0f);
+				@Override
+				public void layoutClick(LayoutClickEvent event) {
+					isOpenned = !isOpenned;
+					if (isOpenned) {
+						bodyContent.setHeight("100%");
+						Depot.this.removeStyleName("collapsed");
+					} else {
+						bodyContent.setHeight("0px");
+						Depot.this.addStyleName("collapsed");
+					}
+				}
+			});
+			header.addComponent(newHeaderLeft);
+		}
 
 		CustomComponent customComp = new CustomComponent(component);
 		customComp.setWidth("100%");
