@@ -17,7 +17,7 @@ import com.vaadin.ui.VerticalLayout;
 public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 
 	private static final long serialVersionUID = 1L;
-	private String title;
+	private final String title;
 	private AccountInformationLayout informationLayout;
 
 	public AccountFormLayoutFactory(String title) {
@@ -61,8 +61,8 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 		private GridFormLayoutHelper informationLayout;
 		private GridFormLayoutHelper addressLayout;
 		private GridFormLayoutHelper descriptionLayout;
-		private boolean isReadMode;
-		
+		private final boolean isReadMode;
+
 		public AccountInformationLayout(boolean isReadMode) {
 			this.isReadMode = isReadMode;
 		}
@@ -74,26 +74,35 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
-			informationLayout = new GridFormLayoutHelper(2, 6);
-			informationLayout.getLayout().setWidth("900px");
+			informationLayout = new GridFormLayoutHelper(2, 6, "100%", "167px",
+					Alignment.MIDDLE_LEFT);
+			informationLayout.getLayout().setWidth("100%");
+			informationLayout.getLayout().setMargin(false);
+			informationLayout.getLayout().setSpacing(false);
 			layout.addComponent(informationLayout.getLayout());
 			layout.setComponentAlignment(informationLayout.getLayout(),
 					Alignment.BOTTOM_CENTER);
 
-			addressLayout = new GridFormLayoutHelper(2, 6);
+			addressLayout = new GridFormLayoutHelper(2, 6, "100%", "167px",
+					Alignment.MIDDLE_LEFT);
 			Label addressHeader = new Label("Address Information");
 			addressHeader.setStyleName("h2");
 			layout.addComponent(addressHeader);
-			addressLayout.getLayout().setWidth("900px");
+			addressLayout.getLayout().setWidth("100%");
+			addressLayout.getLayout().setMargin(false);
+			addressLayout.getLayout().setSpacing(false);
 			layout.addComponent(addressLayout.getLayout());
 			layout.setComponentAlignment(addressLayout.getLayout(),
 					Alignment.BOTTOM_CENTER);
 
-			descriptionLayout = new GridFormLayoutHelper(2, 1);
+			descriptionLayout = new GridFormLayoutHelper(2, 1, "100%", "167px",
+					Alignment.MIDDLE_LEFT);
 			Label descHeader = new Label("Description");
 			descHeader.setStyleName("h2");
 			layout.addComponent(descHeader);
-			descriptionLayout.getLayout().setWidth("900px");
+			descriptionLayout.getLayout().setWidth("100%");
+			descriptionLayout.getLayout().setMargin(false);
+			descriptionLayout.getLayout().setSpacing(false);
 			layout.addComponent(descriptionLayout.getLayout());
 			layout.setComponentAlignment(descriptionLayout.getLayout(),
 					Alignment.BOTTOM_CENTER);
@@ -200,8 +209,8 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 					1, 4);
 			addressLayout.addComponent(propertyId.equals("id") && !isReadMode,
 					field, LocalizationHelper
-							.getMessage(AccountI18nEnum.FORM_COPY_ADDRESS),
-					0, 5);
+							.getMessage(AccountI18nEnum.FORM_COPY_ADDRESS), 0,
+					5);
 
 			if (propertyId.equals("description")) {
 				field.setSizeUndefined();

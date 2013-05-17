@@ -538,6 +538,13 @@ td.v-datefield-calendarpanel-month,
 .v-menubar {
 	
 	}
+	
+.v-button:active .v-button-wrap,
+.v-ie7 .v-pressed.v-button .v-button-wrap,
+.v-ie8 .v-pressed.v-button .v-button-wrap,
+.v-button-down .v-button-wrap {
+	padding: 4px 13px;
+}
 
 .v-datefield-calendarpanel-weekdays strong,
 .v-splitpanel-hsplitter-small,
