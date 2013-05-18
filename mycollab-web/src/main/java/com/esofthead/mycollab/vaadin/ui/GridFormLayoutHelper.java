@@ -22,6 +22,12 @@ public class GridFormLayoutHelper implements Serializable {
 	}
 
 	public GridFormLayoutHelper(int columns, int rows,
+			String fieldControlWidth, String defaultCaptionWidth) {
+		this(columns, rows, fieldControlWidth, defaultCaptionWidth,
+				Alignment.TOP_RIGHT);
+	}
+
+	public GridFormLayoutHelper(int columns, int rows,
 			String fieldControlWidth, String defaultCaptionWidth,
 			Alignment captionAlignment) {
 		this.fieldControlWidth = fieldControlWidth;

@@ -74,7 +74,7 @@ public abstract class AccountFormLayoutFactory implements IFormLayoutFactory {
 			organizationHeader.setStyleName("h2");
 			layout.addComponent(organizationHeader);
 
-			informationLayout = new GridFormLayoutHelper(2, 6, "100%", "167px",
+			informationLayout = new GridFormLayoutHelper(2, 6, "90%", "167px",
 					Alignment.MIDDLE_LEFT);
 			informationLayout.getLayout().setWidth("100%");
 			informationLayout.getLayout().setMargin(false);

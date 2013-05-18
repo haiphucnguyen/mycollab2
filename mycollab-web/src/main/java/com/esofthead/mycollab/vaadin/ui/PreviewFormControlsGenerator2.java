@@ -1,5 +1,6 @@
 package com.esofthead.mycollab.vaadin.ui;
 
+import com.esofthead.mycollab.core.utils.ValuedBean;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.data.util.BeanItem;
 import com.vaadin.terminal.ThemeResource;
@@ -8,25 +9,19 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Button.ClickEvent;
 
-public class PreviewFormControlsGenerator2<T> {
+public class PreviewFormControlsGenerator2 {
 
-	private AdvancedPreviewBeanForm<T> previewForm;
-
-	private Button previousItem;
-	private Button nextItemBtn;
-	private Button historyBtn;
-	private Button printBtn;
-
-	public PreviewFormControlsGenerator2(AdvancedPreviewBeanForm<T> editForm) {
-		this.previewForm = editForm;
+	public static <T> HorizontalLayout createButtonControls(
+			AdvancedPreviewBeanForm<? extends ValuedBean> previewForm) {
+		return createFormOptionalControls(previewForm, null);
 	}
 
-	public HorizontalLayout createButtonControls() {
-		return createButtonControls(null);
-	}
-
-	public HorizontalLayout createButtonControls(String permissionItem) {
+	public static <T> HorizontalLayout createFormOptionalControls(
+			final AdvancedPreviewBeanForm<T> previewForm, String permissionItem) {
 		HorizontalLayout layout = new HorizontalLayout();
+
+		Button previousItem, nextItemBtn, historyBtn, printBtn;
+
 		layout.setSpacing(true);
 
 		previousItem = new Button(null, new Button.ClickListener() {
@@ -98,6 +93,81 @@ public class PreviewFormControlsGenerator2<T> {
 			printBtn.setEnabled(canRead);
 			historyBtn.setEnabled(canRead);
 		}
+		return layout;
+	}
+
+	public static <T> HorizontalLayout createFormControls(
+			final AdvancedPreviewBeanForm<T> previewForm, String permissionItem) {
+		HorizontalLayout layout = new HorizontalLayout();
+		layout.setSpacing(true);
+		layout.setMargin(true);
+		layout.setWidth("100%");
+
+		HorizontalLayout editButtons = new HorizontalLayout();
+		editButtons.setSpacing(true);
+
+		Button editBtn, deleteBtn, cloneBtn;
+		editBtn = new Button(GenericForm.EDIT_ACTION,
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						@SuppressWarnings("unchecked")
+						T item = ((BeanItem<T>) previewForm.getItemDataSource())
+								.getBean();
+						previewForm.fireEditForm(item);
+					}
+				});
+		editBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		editButtons.addComponent(editBtn);
+		editButtons.setComponentAlignment(editBtn, Alignment.MIDDLE_CENTER);
+
+		deleteBtn = new Button(GenericForm.DELETE_ACTION,
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						@SuppressWarnings("unchecked")
+						T item = ((BeanItem<T>) previewForm.getItemDataSource())
+								.getBean();
+						previewForm.fireDeleteForm(item);
+					}
+				});
+		deleteBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		editButtons.addComponent(deleteBtn);
+		editButtons.setComponentAlignment(deleteBtn, Alignment.MIDDLE_CENTER);
+
+		cloneBtn = new Button(GenericForm.CLONE_ACTION,
+				new Button.ClickListener() {
+					private static final long serialVersionUID = 1L;
+
+					@Override
+					public void buttonClick(ClickEvent event) {
+						@SuppressWarnings("unchecked")
+						T item = ((BeanItem<T>) previewForm.getItemDataSource())
+								.getBean();
+						previewForm.fireCloneForm(item);
+					}
+				});
+		cloneBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		editButtons.addComponent(cloneBtn);
+		editButtons.setComponentAlignment(cloneBtn, Alignment.MIDDLE_CENTER);
+
+		layout.addComponent(editButtons);
+		layout.setComponentAlignment(editButtons, Alignment.MIDDLE_CENTER);
+		layout.setExpandRatio(editButtons, 1.0f);
+
+		if (permissionItem != null) {
+			boolean canWrite = AppContext.canWrite(permissionItem);
+			boolean canAccess = AppContext.canAccess(permissionItem);
+
+			editBtn.setEnabled(canWrite);
+			cloneBtn.setEnabled(canWrite);
+			deleteBtn.setEnabled(canAccess);
+		}
+
 		return layout;
 	}
 }

@@ -62,7 +62,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 	public void previewItem(SimpleAccount item) {
 		this.account = item;
 		previewForm.setItemDataSource(new BeanItem<Account>(account));
-		
+
 		displayNotes();
 		displayActivities();
 		associateContactList.displayContacts(account);
@@ -215,11 +215,17 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 				}
 			};
 
+			Layout optionalActionControls = PreviewFormControlsGenerator2
+					.createFormOptionalControls(previewForm,
+							RolePermissionCollections.CRM_ACCOUNT);
+
+			accountAddLayout.addControlButtons(optionalActionControls);
+
 			accountInformation = new VerticalLayout();
-			Layout actionControls = new PreviewFormControlsGenerator2<Account>(
-					previewForm)
-					.createButtonControls(RolePermissionCollections.CRM_ACCOUNT);
-			accountAddLayout.addControlButtons(actionControls);
+			Layout actionControls = PreviewFormControlsGenerator2
+					.createFormControls(previewForm,
+							RolePermissionCollections.CRM_ACCOUNT);
+			accountInformation.addComponent(actionControls);
 			accountInformation.addComponent(previewForm);
 			accountInformation.addComponent(noteListItems);
 
