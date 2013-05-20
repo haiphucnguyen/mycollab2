@@ -82,8 +82,7 @@ public final class MainView extends AbstractView {
 
 		HorizontalLayout accountLayout = new HorizontalLayout();
 		accountLayout.addComponent(UserAvatarControlFactory
-				.createUserAvatarEmbeddedControl(AppContext.getAccountId(),
-						AppContext.getUsername(), 24));
+				.createUserAvatarEmbeddedControl(AppContext.getUsername(), 24));
 
 		final PopupButton accountMenu = new PopupButton(AppContext.getSession()
 				.getDisplayName());

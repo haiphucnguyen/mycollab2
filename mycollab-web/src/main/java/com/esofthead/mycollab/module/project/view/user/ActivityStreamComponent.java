@@ -123,7 +123,6 @@ public class ActivityStreamComponent extends Depot {
 						.getMessage(
 								ProjectCommonI18nEnum.FEED_PROJECT_USER_ACTIVITY_CREATE_ACTION_TITLE,
 								UserAvatarControlFactory.getLink(
-										AppContext.getAccountId(),
 										activityStream.getCreateduser(), 16),
 								ProjectLinkBuilder.WebLinkGenerator.generateProjectMemberFullLink(
 										activityStream.getExtratypeid(),
@@ -152,7 +151,6 @@ public class ActivityStreamComponent extends Depot {
 						.getMessage(
 								ProjectCommonI18nEnum.FEED_PROJECT_USER_ACTIVITY_UPDATE_ACTION_TITLE,
 								UserAvatarControlFactory.getLink(
-										AppContext.getAccountId(),
 										activityStream.getCreateduser(), 16),
 								ProjectLinkBuilder.WebLinkGenerator.generateProjectMemberFullLink(
 										activityStream.getExtratypeid(),

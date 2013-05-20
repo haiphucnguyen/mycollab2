@@ -14,12 +14,9 @@ public class FileStorageConfig {
 		avatarFolder.mkdirs();
 	}
 
-	public static File getAvatarFile(Integer accountId, String username,
-			int size) {
-		File userAvatarFile = (accountId == null) ? new File(baseContentFolder,
-				"/avatar/" + username + "_" + size + ".png") : new File(
-				baseContentFolder, accountId + "/avatar/" + username + "_"
-						+ size + ".png");
+	public static File getAvatarFile(String username, int size) {
+		File userAvatarFile = new File(baseContentFolder, "/avatar/" + username
+				+ "_" + size + ".png");
 		if (userAvatarFile.exists()) {
 			return userAvatarFile;
 		} else {

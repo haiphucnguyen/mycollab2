@@ -14,15 +14,15 @@ import com.vaadin.ui.Button;
 import com.vaadin.ui.Embedded;
 
 public class UserAvatarControlFactory {
-	public static Embedded createUserAvatarEmbeddedControl(int accountId,
-			String username, int size) {
+	public static Embedded createUserAvatarEmbeddedControl(String username,
+			int size) {
 		Embedded embedded = new Embedded(null);
 		embedded.setSource(getResource(username, size));
 		return embedded;
 
 	}
 
-	public static String getLink(int accountId, String username, int size) {
+	public static String getLink(String username, int size) {
 		if (username == null) {
 			return "";
 		}
@@ -47,8 +47,7 @@ public class UserAvatarControlFactory {
 		}
 
 		if (StorageSetting.isFileStorage()) {
-			File avatarFile = FileStorageConfig.getAvatarFile(null, username,
-					size);
+			File avatarFile = FileStorageConfig.getAvatarFile(username, size);
 			if (avatarFile != null) {
 				avatarRes = new FileResource(avatarFile,
 						AppContext.getApplication());
@@ -65,8 +64,7 @@ public class UserAvatarControlFactory {
 		return avatarRes;
 	}
 
-	public static Button createUserAvatarLink(int accountId, String username,
-			String fullName) {
+	public static Button createUserAvatarLink(String username, String fullName) {
 		Button button = new Button();
 		button.setIcon(getResource(username, 48));
 		button.setStyleName("link");

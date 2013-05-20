@@ -165,8 +165,7 @@ public class NoteListItems extends Depot {
 			layout.setStyleName("message");
 			layout.setWidth("100%");
 			layout.addComponent(UserAvatarControlFactory.createUserAvatarLink(
-					AppContext.getAccountId(), note.getCreateduser(),
-					note.getCreateUserFullName()));
+					note.getCreateduser(), note.getCreateUserFullName()));
 
 			CssLayout rowLayout = new CssLayout();
 			rowLayout.setStyleName("message-container");

@@ -76,7 +76,6 @@ public class ProjectActivityStreamComponent extends Depot {
 						.getMessage(
 								ProjectCommonI18nEnum.FEED_USER_ACTIVITY_CREATE_ACTION_TITLE,
 								UserAvatarControlFactory.getLink(
-										AppContext.getAccountId(),
 										activityStream.getCreateduser(), 16),
 								ProjectLinkBuilder.WebLinkGenerator.generateProjectMemberFullLink(
 										activityStream.getExtratypeid(),
@@ -99,7 +98,6 @@ public class ProjectActivityStreamComponent extends Depot {
 						.getMessage(
 								ProjectCommonI18nEnum.FEED_USER_ACTIVITY_UPDATE_ACTION_TITLE,
 								UserAvatarControlFactory.getLink(
-										AppContext.getAccountId(),
 										activityStream.getCreateduser(), 16),
 								activityStream.getCreatedUserFullName(),
 								LocalizationHelper

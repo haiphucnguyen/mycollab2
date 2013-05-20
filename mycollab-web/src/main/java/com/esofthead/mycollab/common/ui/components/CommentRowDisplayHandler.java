@@ -32,8 +32,7 @@ public class CommentRowDisplayHandler implements
 		layout.setStyleName("message");
 		layout.setWidth("100%");
 		layout.addComponent(UserAvatarControlFactory.createUserAvatarLink(
-				AppContext.getAccountId(), comment.getCreateduser(),
-				comment.getOwnerFullName()));
+				comment.getCreateduser(), comment.getOwnerFullName()));
 
 		CssLayout rowLayout = new CssLayout();
 		rowLayout.setStyleName("message-container");

@@ -75,7 +75,7 @@ public class ActivityStreamPanel extends Depot {
 			}
 
 			String content = LocalizationHelper.getMessage(action,
-					UserAvatarControlFactory.getLink(AppContext.getAccountId(),
+					UserAvatarControlFactory.getLink(
 							activityStream.getCreateduser(), 16),
 					activityStream.getCreatedUserFullName(), LocalizationHelper
 							.getMessage(CrmLocalizationTypeMap

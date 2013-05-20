@@ -41,18 +41,16 @@ public class AnnotatedUserAvatarServlet implements HttpRequestHandler {
 		File avatarFile = null;
 		String username = "";
 		int size = 0;
-		int accountId = 0;
 
 		if (path != null) {
 			String[] params = path.split("/");
-			if (params.length >= 4) {
-				accountId = Integer.parseInt(params[1]);
-				username = params[2];
-				size = Integer.parseInt(params[3]);
+			if (params.length >= 3) {
+				username = params[1];
+				size = Integer.parseInt(params[2]);
 			}
 		}
 
-		avatarFile = FileStorageConfig.getAvatarFile(accountId, username, size);
+		avatarFile = FileStorageConfig.getAvatarFile(username, size);
 
 		if (avatarFile == null) {
 			if (size == 0) {
