@@ -2,8 +2,8 @@ site.name=MyCollab
 running.mode=production
 
 db.driverClassName=com.mysql.jdbc.Driver
-db.url=jdbc:mysql://localhost/mycollab_live?autoReconnect=true
-#db.url=jdbc:mysql://23.23.166.114/mycollab_live?autoReconnect=true
+#db.url=jdbc:mysql://localhost/mycollab_live?autoReconnect=true
+db.url=jdbc:mysql://aa19v3ip06z4b26.cfdarg45mhub.us-east-1.rds.amazonaws.com/mycollab_live?autoReconnect=true
 db.username=root
 db.password=esofthead321
 
