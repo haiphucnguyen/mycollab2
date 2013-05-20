@@ -13,13 +13,14 @@ public class ProjectUserLink extends Button {
 	public ProjectUserLink(final String username, final String displayName) {
 		this(username, displayName, true, false);
 	}
-	
-	public ProjectUserLink(final String username, final String displayName, boolean useWordWrap) {
+
+	public ProjectUserLink(final String username, final String displayName,
+			boolean useWordWrap) {
 		this(username, displayName, useWordWrap, false);
 	}
-	
-	public ProjectUserLink(final String username, final String displayName,  boolean useWordWrap, 
-			boolean isDisplayAvatar) {
+
+	public ProjectUserLink(final String username, final String displayName,
+			boolean useWordWrap, boolean isDisplayAvatar) {
 		super(displayName, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
 
@@ -31,12 +32,11 @@ public class ProjectUserLink extends Button {
 		});
 
 		if (isDisplayAvatar && username != null && !username.equals("")) {
-			this.setIcon(UserAvatarControlFactory.getResource(
-					AppContext.getAccountId(), username, 16));
+			this.setIcon(UserAvatarControlFactory.getResource(username, 16));
 		}
 
 		this.setStyleName("link");
-		
+
 		if (useWordWrap) {
 			this.addStyleName(UIConstants.WORD_WRAP);
 		}

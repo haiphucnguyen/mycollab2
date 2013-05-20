@@ -56,18 +56,27 @@ public class ProjectLinkBuilder {
 
 		public static String generateBugVersionPreviewLink(Integer projectId,
 				Integer versionId) {
+			if (versionId == null) {
+				return "";
+			}
 			return "project/bug/version/preview/"
 					+ UrlEncodeDecoder.encode(projectId + "/" + versionId);
 		}
 
 		public static String generateBugComponentPreviewLink(Integer projectId,
 				Integer componentId) {
+			if (componentId == null) {
+				return "";
+			}
 			return "project/bug/component/preview/"
 					+ UrlEncodeDecoder.encode(projectId + "/" + componentId);
 		}
 
-		public static String generateMessagePreviewLink(int projectId,
-				int messageId) {
+		public static String generateMessagePreviewLink(Integer projectId,
+				Integer messageId) {
+			if (messageId == null) {
+				return "";
+			}
 			return "project/message/preview/"
 					+ UrlEncodeDecoder.encode(projectId + "/" + messageId);
 		}
@@ -112,7 +121,7 @@ public class ProjectLinkBuilder {
 					+ generateTaskPreviewLink(projectId, taskId);
 		}
 
-		public static String generateTaskPreviewLink(int projectId, int taskId) {
+		public static String generateTaskPreviewLink(Integer projectId, Integer taskId) {
 			return "project/task/task/preview/"
 					+ UrlEncodeDecoder.encode(projectId + "/" + taskId);
 		}
@@ -223,6 +232,9 @@ public class ProjectLinkBuilder {
 		}
 
 		public String generateMilestonePreviewFullLink(Integer milestoneId) {
+			if (milestoneId == null) {
+				return "";
+			}
 			return siteUrl
 					+ URL_PREFIX_PARAM
 					+ WebLinkGenerator.generateMilestonePreviewLink(projectId,

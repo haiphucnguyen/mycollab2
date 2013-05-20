@@ -2,7 +2,6 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.io.File;
 
-import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.module.file.FileStorageConfig;
 import com.esofthead.mycollab.module.file.S3StorageConfig;
 import com.esofthead.mycollab.module.file.StorageSetting;
@@ -18,7 +17,7 @@ public class UserAvatarControlFactory {
 	public static Embedded createUserAvatarEmbeddedControl(int accountId,
 			String username, int size) {
 		Embedded embedded = new Embedded(null);
-		embedded.setSource(getResource(accountId, username, size));
+		embedded.setSource(getResource(username, size));
 		return embedded;
 
 	}
@@ -33,13 +32,13 @@ public class UserAvatarControlFactory {
 		if (StorageSetting.isFileStorage()) {
 			link = AppContext.getSiteUrl() + "avatar/" + username + "/" + size;
 		} else if (StorageSetting.isS3Storage()) {
-			link = S3StorageConfig.getAvatarLink(accountId, username, size);
+			link = S3StorageConfig.getAvatarLink(username, size);
 		}
 
 		return link;
 	}
 
-	public static Resource getResource(int accountId, String username, int size) {
+	public static Resource getResource(String username, int size) {
 		Resource avatarRes = null;
 
 		if (username == null) {
@@ -48,8 +47,8 @@ public class UserAvatarControlFactory {
 		}
 
 		if (StorageSetting.isFileStorage()) {
-			File avatarFile = FileStorageConfig.getAvatarFile(accountId,
-					username, size);
+			File avatarFile = FileStorageConfig.getAvatarFile(null, username,
+					size);
 			if (avatarFile != null) {
 				avatarRes = new FileResource(avatarFile,
 						AppContext.getApplication());
@@ -60,7 +59,7 @@ public class UserAvatarControlFactory {
 
 		} else if (StorageSetting.isS3Storage()) {
 			avatarRes = new ExternalResource(S3StorageConfig.getAvatarLink(
-					accountId, username, size));
+					username, size));
 		}
 
 		return avatarRes;
@@ -69,7 +68,7 @@ public class UserAvatarControlFactory {
 	public static Button createUserAvatarLink(int accountId, String username,
 			String fullName) {
 		Button button = new Button();
-		button.setIcon(getResource(accountId, username, 48));
+		button.setIcon(getResource(username, 48));
 		button.setStyleName("link");
 		return button;
 	}

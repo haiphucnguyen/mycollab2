@@ -183,7 +183,6 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			public FormLayoutFactory() {
 				super(projectMember.getMemberFullName(),
 						UserAvatarControlFactory.getResource(
-								AppContext.getAccountId(),
 								projectMember.getUsername(), 48));
 			}
 
@@ -563,7 +562,6 @@ public class ProjectMemberReadViewImpl extends AbstractView implements
 			public FormLayoutFactory() {
 				super(projectMember.getMemberFullName(),
 						UserAvatarControlFactory.getResource(
-								AppContext.getAccountId(),
 								projectMember.getUsername(), 48));
 			}
 

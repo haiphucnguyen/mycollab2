@@ -10,6 +10,7 @@ import com.esofthead.mycollab.vaadin.mvp.IModule;
 import com.esofthead.mycollab.vaadin.mvp.ModuleHelper;
 import com.esofthead.mycollab.vaadin.ui.FeedbackWindow;
 import com.esofthead.mycollab.vaadin.ui.UIConstants;
+import com.esofthead.mycollab.vaadin.ui.UserAvatarControlFactory;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.lazyloadwrapper.LazyLoadWrapper;
@@ -18,6 +19,7 @@ import com.vaadin.ui.Button.ClickEvent;
 import com.vaadin.ui.Button.ClickListener;
 import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.CustomLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.VerticalLayout;
 
 @SuppressWarnings("serial")
@@ -78,9 +80,13 @@ public final class MainView extends AbstractView {
 		serviceMenu.addComponent(vLayout);
 		layout.addComponent(serviceMenu, "serviceMenu");
 
+		HorizontalLayout accountLayout = new HorizontalLayout();
+		accountLayout.addComponent(UserAvatarControlFactory
+				.createUserAvatarEmbeddedControl(AppContext.getAccountId(),
+						AppContext.getUsername(), 24));
+
 		final PopupButton accountMenu = new PopupButton(AppContext.getSession()
 				.getDisplayName());
-		accountMenu.setStyleName("link");
 		VerticalLayout accLayout = new VerticalLayout();
 		accLayout.setWidth("120px");
 
@@ -123,7 +129,10 @@ public final class MainView extends AbstractView {
 		accountMenu.addComponent(accLayout);
 		accountMenu.setStyleName("accountMenu");
 		accountMenu.addStyleName("topNavPopup");
-		layout.addComponent(accountMenu, "accountMenu");
+		accountLayout.addComponent(accountMenu);
+
+		layout.addComponent(accountLayout, "accountMenu");
+
 		return layout;
 	}
 

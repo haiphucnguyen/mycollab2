@@ -70,7 +70,7 @@ public class ProfilePhotoUploadViewImpl extends AbstractView implements
 		previewBox.setHeight(SIZE_UNDEFINED, 0);
 
 		Resource defaultPhoto = UserAvatarControlFactory.getResource(
-				AppContext.getAccountId(), AppContext.getUsername(), 100);
+				AppContext.getUsername(), 100);
 		previewImage = new Embedded(null, defaultPhoto);
 		previewImage.setWidth("100px");
 		previewBox.addComponent(previewImage);

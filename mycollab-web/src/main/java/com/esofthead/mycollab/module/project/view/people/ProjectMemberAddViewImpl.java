@@ -82,7 +82,7 @@ public class ProjectMemberAddViewImpl extends AbstractView implements
 
 			public FormLayoutFactory() {
 				super("Create Project Member", UserAvatarControlFactory
-						.getResource(AppContext.getAccountId(), null, 48));
+						.getResource(null, 48));
 			}
 
 			private Layout createButtonControls() {

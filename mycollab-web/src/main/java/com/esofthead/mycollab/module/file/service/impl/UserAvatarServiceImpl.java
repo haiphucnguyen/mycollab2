@@ -23,10 +23,11 @@ public class UserAvatarServiceImpl implements UserAvatarService {
 	private static final int PIXELS_100 = 100;
 	private static final int PIXELS_48 = 48;
 	private static final int PIXELS_32 = 32;
+	private static final int PIXELS_24 = 24;
 	private static final int PIXELS_16 = 16;
 
 	private static final int[] SUPPORT_SIZES = { PIXELS_100, PIXELS_48,
-			PIXELS_32, PIXELS_16 };
+			PIXELS_32, PIXELS_24, PIXELS_16 };
 
 	@Override
 	public void uploadAvatar(BufferedImage image, String username) {
@@ -45,8 +46,7 @@ public class UserAvatarServiceImpl implements UserAvatarService {
 		} catch (IOException e) {
 			throw new MyCollabException("Error while write image to stream", e);
 		}
-		contentService.saveContent(null, "avatar/" + username + "_"
-				+ width + ".png",
-				new ByteArrayInputStream(outStream.toByteArray()));
+		contentService.saveContent(null, "avatar/" + username + "_" + width
+				+ ".png", new ByteArrayInputStream(outStream.toByteArray()));
 	}
 }

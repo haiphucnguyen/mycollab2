@@ -59,8 +59,7 @@ public class ProjectMemberMultiSelectField extends MultiSelectComp {
 			}
 			final CheckBox chkItem = new CheckBox(itemName);
 			chkItem.setImmediate(true);
-			chkItem.setIcon(UserAvatarControlFactory.getResource(
-					AppContext.getAccountId(), username, 16));
+			chkItem.setIcon(UserAvatarControlFactory.getResource(username, 16));
 			chkItem.addListener(new ValueChangeListener() {
 				@Override
 				public void valueChange(

@@ -49,7 +49,7 @@ public class S3StorageConfig {
 		return s3client;
 	}
 
-	public static String getAvatarLink(int accountId, String username, int size) {
+	public static String getAvatarLink(String username, int size) {
 		String s3UrlPath = ApplicationProperties.getProperty(S3_DOWNLOAD_URL,
 				"");
 		if ("".equals(s3UrlPath)) {

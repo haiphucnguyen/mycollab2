@@ -55,15 +55,14 @@ public class MainWindowContainer extends Window implements View {
 								.setInitialUrl(initialUrl);
 					}
 				} catch (Exception e) {
-					e.printStackTrace();
+					log.error("Error while change segment", e);
 				}
 
 			}
 		});
 
 		this.setCaption("MyCollab");
-		ControllerRegistry.addController(
-				new ShellController(this));
+		ControllerRegistry.addController(new ShellController(this));
 
 		this.setImmediate(true);
 		this.addListener(new Window.ResizeListener() {
