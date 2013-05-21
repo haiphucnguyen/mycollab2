@@ -5,6 +5,7 @@ import com.vaadin.terminal.ThemeResource;
 import com.vaadin.ui.Button;
 import com.vaadin.ui.Component;
 import com.vaadin.ui.CssLayout;
+import com.vaadin.ui.Embedded;
 import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
@@ -12,14 +13,14 @@ public class ReadViewLayout extends CssLayout {
 	private static final long serialVersionUID = 1L;
 
 	private final HorizontalLayout header;
-	// private final Embedded iconEmbed;
+	private final Embedded iconEmbed;
 	private final Label titleLbl;
 	private final DetachedTabs viewTab;
 	private final CssLayout body;
 
 	public ReadViewLayout(ThemeResource icon) {
-		this.setSizeFull();
-		this.setStyleName("readview-layout");
+		setSizeFull();
+		setStyleName("readview-layout");
 
 		header = new HorizontalLayout();
 		header.setWidth("100%");
@@ -27,9 +28,9 @@ public class ReadViewLayout extends CssLayout {
 		header.setStyleName("readview-layout-header");
 		this.addComponent(header);
 
-		// iconEmbed = new Embedded();
-		// iconEmbed.setSource(icon);
-		// header.addComponent(iconEmbed);
+		iconEmbed = new Embedded();
+		iconEmbed.setSource(icon);
+		header.addComponent(iconEmbed);
 
 		titleLbl = new Label();
 		titleLbl.setStyleName("h1");
@@ -51,19 +52,19 @@ public class ReadViewLayout extends CssLayout {
 		header.addComponent(controlsBtn);
 	}
 
-	public void setTitle(String title) {
-		titleLbl.setValue(title);
-	}
-
 	public void addTab(Component content, String button) {
 		viewTab.addTab(content, new Button(button));
+	}
+
+	public void addTabChangedListener(DetachedTabs.TabChangedListener listener) {
+		viewTab.addTabChangedListener(listener);
 	}
 
 	public void selectTab(String viewName) {
 		viewTab.selectTab(viewName);
 	}
 
-	public void addTabChangedListener(DetachedTabs.TabChangedListener listener) {
-		viewTab.addTabChangedListener(listener);
+	public void setTitle(String title) {
+		titleLbl.setValue(title);
 	}
 }

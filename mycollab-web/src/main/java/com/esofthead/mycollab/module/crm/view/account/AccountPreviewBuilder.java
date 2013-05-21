@@ -40,99 +40,6 @@ import com.vaadin.ui.Window;
  * @author haiphucnguyen
  */
 public abstract class AccountPreviewBuilder extends VerticalLayout {
-	private static final long serialVersionUID = 1L;
-	protected SimpleAccount account;
-	protected AdvancedPreviewBeanForm<Account> previewForm;
-	protected AccountContactListComp associateContactList;
-	protected AccountOpportunityListComp associateOpportunityList;
-	protected AccountLeadListComp associateLeadList;
-	protected AccountCaseListComp associateCaseList;
-	protected EventRelatedItemListComp associateActivityList;
-	protected NoteListItems noteListItems;
-
-	protected void initRelatedComponent() {
-		associateContactList = new AccountContactListComp();
-		associateActivityList = new EventRelatedItemListComp(true);
-		associateOpportunityList = new AccountOpportunityListComp();
-		associateLeadList = new AccountLeadListComp();
-		associateCaseList = new AccountCaseListComp();
-		noteListItems = new NoteListItems("Notes");
-	}
-
-	public void previewItem(SimpleAccount item) {
-		this.account = item;
-		previewForm.setItemDataSource(new BeanItem<Account>(account));
-
-		displayNotes();
-		displayActivities();
-		associateContactList.displayContacts(account);
-		displayAssociateCaseList();
-		displayAssociateOpportunityList();
-		displayAssociateLeadList();
-	}
-
-	public SimpleAccount getAccount() {
-		return account;
-	}
-
-	public AdvancedPreviewBeanForm<Account> getPreviewForm() {
-		return previewForm;
-	}
-
-	public AccountContactListComp getAssociateContactList() {
-		return associateContactList;
-	}
-
-	public AccountOpportunityListComp getAssociateOpportunityList() {
-		return associateOpportunityList;
-	}
-
-	public AccountLeadListComp getAssociateLeadList() {
-		return associateLeadList;
-	}
-
-	public AccountCaseListComp getAssociateCaseList() {
-		return associateCaseList;
-	}
-
-	public EventRelatedItemListComp getAssociateActivityList() {
-		return associateActivityList;
-	}
-
-	public void displayActivities() {
-		EventSearchCriteria criteria = new EventSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
-		criteria.setType(new StringSearchField(SearchField.AND,
-				CrmTypeConstants.ACCOUNT));
-		criteria.setTypeid(new NumberSearchField(account.getId()));
-		associateActivityList.setSearchCriteria(criteria);
-	}
-
-	private void displayNotes() {
-		noteListItems.showNotes(CrmTypeConstants.ACCOUNT, account.getId());
-	}
-
-	private void displayAssociateOpportunityList() {
-		OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		criteria.setAccountId(new NumberSearchField(SearchField.AND, account
-				.getId()));
-		associateOpportunityList.setSearchCriteria(criteria);
-	}
-
-	private void displayAssociateLeadList() {
-		associateLeadList.displayLeads(account);
-	}
-
-	private void displayAssociateCaseList() {
-		CaseSearchCriteria criteria = new CaseSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		criteria.setAccountId(new NumberSearchField(account.getId()));
-		associateCaseList.setSearchCriteria(criteria);
-	}
-
 	protected class AccountFormFieldFactory extends DefaultFormViewFieldFactory {
 
 		private static final long serialVersionUID = 1L;
@@ -154,7 +61,57 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 			return null;
 		}
 	}
+	/**
+     *
+     */
+	public static class PrintView extends AccountPreviewBuilder {
+		class FormLayoutFactory extends AccountFormLayoutFactory {
 
+			private static final long serialVersionUID = 1L;
+
+			public FormLayoutFactory() {
+				super(account.getAccountname());
+			}
+
+			@Override
+			protected Layout createBottomPanel() {
+				VerticalLayout relatedItemsPanel = new VerticalLayout();
+				relatedItemsPanel.setWidth("100%");
+
+				relatedItemsPanel.addComponent(noteListItems);
+				relatedItemsPanel.addComponent(associateActivityList);
+				relatedItemsPanel.addComponent(associateContactList);
+				relatedItemsPanel.addComponent(associateOpportunityList);
+				relatedItemsPanel.addComponent(associateCaseList);
+				relatedItemsPanel.addComponent(associateLeadList);
+
+				return relatedItemsPanel;
+			}
+
+			@Override
+			protected Layout createTopPanel() {
+				return null;
+			}
+		}
+
+		private static final long serialVersionUID = 1L;
+
+		public PrintView() {
+			previewForm = new AdvancedPreviewBeanForm<Account>() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void setItemDataSource(Item newDataSource) {
+					setFormLayoutFactory(new FormLayoutFactory());
+					setFormFieldFactory(new AccountFormFieldFactory());
+					super.setItemDataSource(newDataSource);
+				}
+			};
+			initRelatedComponent();
+
+			this.addComponent(previewForm);
+		}
+	}
 	public static class ReadView extends AccountPreviewBuilder {
 
 		private static final long serialVersionUID = 1L;
@@ -164,22 +121,13 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
 		public ReadView() {
 			accountAddLayout = new ReadViewLayout(new ThemeResource(
-					"icons/48/crm/account.png"));
+					"icons/18/account.png"));
 			this.addComponent(accountAddLayout);
 
 			initRelatedComponent();
 
 			previewForm = new AdvancedPreviewBeanForm<Account>() {
 				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void setItemDataSource(Item newDataSource) {
-					this.setFormLayoutFactory(new AccountFormLayoutFactory.AccountInformationLayout(
-							true));
-					this.setFormFieldFactory(new AccountFormFieldFactory());
-					super.setItemDataSource(newDataSource);
-					accountAddLayout.setTitle(account.getAccountname());
-				}
 
 				@Override
 				protected void doPrint() {
@@ -207,6 +155,15 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 				}
 
 				@Override
+				public void setItemDataSource(Item newDataSource) {
+					setFormLayoutFactory(new AccountFormLayoutFactory.AccountInformationLayout(
+							true));
+					setFormFieldFactory(new AccountFormFieldFactory());
+					super.setItemDataSource(newDataSource);
+					accountAddLayout.setTitle(account.getAccountname());
+				}
+
+				@Override
 				protected void showHistory() {
 					AccountHistoryLogWindow historyLog = new AccountHistoryLogWindow(
 							ModuleNameConstants.CRM, CrmTypeConstants.ACCOUNT,
@@ -225,6 +182,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 			Layout actionControls = PreviewFormControlsGenerator2
 					.createFormControls(previewForm,
 							RolePermissionCollections.CRM_ACCOUNT);
+			actionControls.addStyleName("control-buttons");
 			accountInformation.addComponent(actionControls);
 			accountInformation.addComponent(previewForm);
 			accountInformation.addComponent(noteListItems);
@@ -259,56 +217,99 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 					});
 		}
 	}
+	private static final long serialVersionUID = 1L;
+	protected SimpleAccount account;
+	protected AdvancedPreviewBeanForm<Account> previewForm;
+	protected AccountContactListComp associateContactList;
+	protected AccountOpportunityListComp associateOpportunityList;
+	protected AccountLeadListComp associateLeadList;
 
-	/**
-     *
-     */
-	public static class PrintView extends AccountPreviewBuilder {
-		private static final long serialVersionUID = 1L;
+	protected AccountCaseListComp associateCaseList;
 
-		public PrintView() {
-			previewForm = new AdvancedPreviewBeanForm<Account>() {
-				private static final long serialVersionUID = 1L;
+	protected EventRelatedItemListComp associateActivityList;
 
-				@Override
-				public void setItemDataSource(Item newDataSource) {
-					this.setFormLayoutFactory(new FormLayoutFactory());
-					this.setFormFieldFactory(new AccountFormFieldFactory());
-					super.setItemDataSource(newDataSource);
-				}
-			};
-			initRelatedComponent();
+	protected NoteListItems noteListItems;
 
-			this.addComponent(previewForm);
-		}
+	public void displayActivities() {
+		EventSearchCriteria criteria = new EventSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
+		criteria.setType(new StringSearchField(SearchField.AND,
+				CrmTypeConstants.ACCOUNT));
+		criteria.setTypeid(new NumberSearchField(account.getId()));
+		associateActivityList.setSearchCriteria(criteria);
+	}
 
-		class FormLayoutFactory extends AccountFormLayoutFactory {
+	private void displayAssociateCaseList() {
+		CaseSearchCriteria criteria = new CaseSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		criteria.setAccountId(new NumberSearchField(account.getId()));
+		associateCaseList.setSearchCriteria(criteria);
+	}
 
-			private static final long serialVersionUID = 1L;
+	private void displayAssociateLeadList() {
+		associateLeadList.displayLeads(account);
+	}
 
-			public FormLayoutFactory() {
-				super(account.getAccountname());
-			}
+	private void displayAssociateOpportunityList() {
+		OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		criteria.setAccountId(new NumberSearchField(SearchField.AND, account
+				.getId()));
+		associateOpportunityList.setSearchCriteria(criteria);
+	}
 
-			@Override
-			protected Layout createTopPanel() {
-				return null;
-			}
+	private void displayNotes() {
+		noteListItems.showNotes(CrmTypeConstants.ACCOUNT, account.getId());
+	}
 
-			@Override
-			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
-				relatedItemsPanel.setWidth("100%");
+	public SimpleAccount getAccount() {
+		return account;
+	}
 
-				relatedItemsPanel.addComponent(noteListItems);
-				relatedItemsPanel.addComponent(associateActivityList);
-				relatedItemsPanel.addComponent(associateContactList);
-				relatedItemsPanel.addComponent(associateOpportunityList);
-				relatedItemsPanel.addComponent(associateCaseList);
-				relatedItemsPanel.addComponent(associateLeadList);
+	public EventRelatedItemListComp getAssociateActivityList() {
+		return associateActivityList;
+	}
 
-				return relatedItemsPanel;
-			}
-		}
+	public AccountCaseListComp getAssociateCaseList() {
+		return associateCaseList;
+	}
+
+	public AccountContactListComp getAssociateContactList() {
+		return associateContactList;
+	}
+
+	public AccountLeadListComp getAssociateLeadList() {
+		return associateLeadList;
+	}
+
+	public AccountOpportunityListComp getAssociateOpportunityList() {
+		return associateOpportunityList;
+	}
+
+	public AdvancedPreviewBeanForm<Account> getPreviewForm() {
+		return previewForm;
+	}
+
+	protected void initRelatedComponent() {
+		associateContactList = new AccountContactListComp();
+		associateActivityList = new EventRelatedItemListComp(true);
+		associateOpportunityList = new AccountOpportunityListComp();
+		associateLeadList = new AccountLeadListComp();
+		associateCaseList = new AccountCaseListComp();
+		noteListItems = new NoteListItems("Notes");
+	}
+
+	public void previewItem(SimpleAccount item) {
+		account = item;
+		previewForm.setItemDataSource(new BeanItem<Account>(account));
+
+		displayNotes();
+		displayActivities();
+		associateContactList.displayContacts(account);
+		displayAssociateCaseList();
+		displayAssociateOpportunityList();
+		displayAssociateLeadList();
 	}
 }
