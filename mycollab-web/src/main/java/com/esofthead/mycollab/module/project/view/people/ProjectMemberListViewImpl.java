@@ -107,6 +107,7 @@ public class ProjectMemberListViewImpl extends AbstractView implements
 
 		Button btnDelete = new Button();
 		btnDelete.addListener(new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
 
 			@Override
 			public void buttonClick(ClickEvent event) {

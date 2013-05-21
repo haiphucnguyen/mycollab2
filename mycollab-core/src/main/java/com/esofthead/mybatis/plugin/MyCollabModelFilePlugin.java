@@ -48,14 +48,38 @@ public class MyCollabModelFilePlugin extends
 			field.addAnnotation(annotation);
 		}
 
-//		if (!introspectedColumn.isNullable()
-//				&& !introspectedColumn.isStringColumn()) {
-//			String notNullAnnotation = "@javax.validation.constraints.NotNull(message=\"%s\")";
-//			notNullAnnotation = String.format(notNullAnnotation,
-//					"Field value must be not null");
-//			field.addAnnotation(notNullAnnotation);
-//		}
+		if (!introspectedColumn.isNullable()
+				&& !isPrimaryKeyOfTable(introspectedColumn, introspectedTable)
+				&& introspectedColumn.isStringColumn()) {
+			String notNullAnnotation = "@javax.validation.constraints.NotNull(message=\"%s\")";
+			notNullAnnotation = String.format(notNullAnnotation,
+					"Field value must be not null");
+			field.addAnnotation(notNullAnnotation);
+
+			System.out.println("INTRO COLUMN: "
+					+ introspectedColumn.getActualColumnName()
+					+ " "
+					+ introspectedColumn.getIntrospectedTable()
+							.getFullyQualifiedTableNameAtRuntime() + " "
+					+ introspectedColumn.isNullable() + " "
+					+ introspectedColumn.isStringColumn());
+		}
 		return true;
+	}
+
+	private static boolean isPrimaryKeyOfTable(
+			IntrospectedColumn introspectedColumn,
+			IntrospectedTable introspectedTable) {
+		List<IntrospectedColumn> primaryKeyColumns = introspectedTable
+				.getPrimaryKeyColumns();
+		for (IntrospectedColumn priKey : primaryKeyColumns) {
+			if (introspectedColumn.getActualColumnName().equals(
+					priKey.getActualColumnName())) {
+				return true;
+			}
+		}
+
+		return false;
 	}
 
 	private void generateInsertAndReturnKeySqlStatement(Document document,
