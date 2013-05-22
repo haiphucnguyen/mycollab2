@@ -3047,8 +3047,17 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .readview-layout-body .v-gridlayout-margin {
 	border-bottom: 1px solid #cdcdcd;
 }
-.readview-layout-body .v-gridlayout-margin > div > div > div > div {
-	padding: 8px 0px 8px 18px;
+/* .readview-layout-body .v-gridlayout-margin > div > div > div > div { */
+/* 	padding: 8px 0px 8px 18px; */
+/* 	-moz-box-sizing: border-box; */
+/* 	-webkit-box-sizing: border-box; */
+/* 	box-sizing: border-box; */
+/* } */
+/* .readview-layout-body .v-gridlayout-margin > div > div > div { */
+/* 	height: 100% !important; */
+/* } */
+.readview-layout-body .v-gridlayout-margin .v-csslayout > .v-csslayout-margin {
+	padding: 8px 5px 8px 18px;
 	-moz-box-sizing: border-box;
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
@@ -3056,6 +3065,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .readview-layout-body .v-gridlayout-margin .gridform-caption {
 	background-color: #cce4ee;
 	border-left: 1px solid #cdcdcd;
+	height: 100% !important;
 }
 .readview-layout-body .v-gridlayout-margin .gridform-caption.first-col {
 	border-left: none;
