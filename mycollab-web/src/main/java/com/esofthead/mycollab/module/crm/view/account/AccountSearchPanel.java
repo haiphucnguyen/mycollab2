@@ -35,134 +35,6 @@ import com.vaadin.ui.themes.Reindeer;
 public class AccountSearchPanel extends
 		GenericSearchPanel<AccountSearchCriteria> {
 
-	protected AccountSearchCriteria searchCriteria;
-
-	@Override
-	public void attach() {
-		super.attach();
-		createBasicSearchLayout();
-	}
-
-	private void createBasicSearchLayout() {
-		AccountBasicSearchLayout layout = new AccountBasicSearchLayout();
-		this.setCompositionRoot(layout);
-	}
-
-	private void createAdvancedSearchLayout() {
-		AccountAdvancedSearchLayout layout = new AccountAdvancedSearchLayout();
-		this.setCompositionRoot(layout);
-	}
-
-	private HorizontalLayout createSearchTopPanel() {
-		HorizontalLayout layout = new HorizontalLayout();
-		layout.setWidth("100%");
-		layout.setSpacing(true);
-
-		Label searchtitle = new Label("Search Accounts");
-		searchtitle.setStyleName(Reindeer.LABEL_H2);
-		layout.addComponent(searchtitle);
-
-		Button createAccountBtn = new Button("Create",
-				new Button.ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new AccountEvent.GotoAdd(this, null));
-					}
-				});
-		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
-		createAccountBtn.setEnabled(AppContext
-				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
-
-		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
-
-		return layout;
-	}
-
-	private class AccountBasicSearchLayout extends BasicSearchLayout {
-
-		private TextField nameField;
-		private CheckBox myItemCheckbox;
-
-		public AccountBasicSearchLayout() {
-			super();
-		}
-
-		@Override
-		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
-		}
-
-		@Override
-		public ComponentContainer constructBody() {
-			HorizontalLayout basicSearchBody = new HorizontalLayout();
-			basicSearchBody.setSpacing(true);
-			basicSearchBody.addComponent(new Label("Name"));
-			nameField = new TextField();
-			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			UiUtils.addComponent(basicSearchBody, nameField,
-					Alignment.MIDDLE_CENTER);
-			myItemCheckbox = new CheckBox(
-					LocalizationHelper
-							.getMessage(CrmCommonI18nEnum.SEARCH_MYITEMS_CHECKBOX));
-			myItemCheckbox.setWidth("75px");
-			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
-					Alignment.MIDDLE_CENTER);
-			Button searchBtn = new Button(
-					LocalizationHelper
-							.getMessage(CrmCommonI18nEnum.BUTTON_SEARCH));
-			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-			searchBtn.addListener(new Button.ClickListener() {
-				@Override
-				public void buttonClick(ClickEvent event) {
-					searchCriteria = new AccountSearchCriteria();
-					searchCriteria.setSaccountid(new NumberSearchField(
-							SearchField.AND, AppContext.getAccountId()));
-					searchCriteria.setAccountname(new StringSearchField(
-							SearchField.AND, ((String) nameField.getValue())
-									.trim()));
-					if (myItemCheckbox.booleanValue()) {
-						searchCriteria.setAssignUser(new StringSearchField(
-								SearchField.AND, AppContext.getUsername()));
-					} else {
-						searchCriteria.setAssignUsers(null);
-					}
-					AccountSearchPanel.this.notifySearchHandler(searchCriteria);
-				}
-			});
-
-			basicSearchBody.addComponent(searchBtn);
-
-			Button cancelBtn = new Button(
-					LocalizationHelper
-							.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
-			cancelBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-			cancelBtn.addListener(new Button.ClickListener() {
-				@Override
-				public void buttonClick(ClickEvent event) {
-					nameField.setValue("");
-				}
-			});
-			basicSearchBody.addComponent(cancelBtn);
-
-			Button advancedSearchBtn = new Button(
-					LocalizationHelper
-							.getMessage(CrmCommonI18nEnum.BUTTON_ADVANCED_SEARCH),
-					new Button.ClickListener() {
-						@Override
-						public void buttonClick(ClickEvent event) {
-							AccountSearchPanel.this
-									.createAdvancedSearchLayout();
-						}
-					});
-			advancedSearchBtn.setStyleName("link");
-			UiUtils.addComponent(basicSearchBody, advancedSearchBtn,
-					Alignment.MIDDLE_CENTER);
-			return basicSearchBody;
-		}
-	}
-
 	private class AccountAdvancedSearchLayout extends AdvancedSearchLayout {
 
 		private TextField nameField;
@@ -177,11 +49,6 @@ public class AccountSearchPanel extends
 
 		public AccountAdvancedSearchLayout() {
 			super();
-		}
-
-		@Override
-		public ComponentContainer constructHeader() {
-			return createSearchTopPanel();
 		}
 
 		@Override
@@ -230,16 +97,16 @@ public class AccountSearchPanel extends
 
 		@Override
 		public ComponentContainer constructFooter() {
-			HorizontalLayout buttonControls = new HorizontalLayout();
+			final HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
 
-			Button searchBtn = new Button(
+			final Button searchBtn = new Button(
 					LocalizationHelper
 							.getMessage(CrmCommonI18nEnum.BUTTON_SEARCH),
 					new Button.ClickListener() {
 						@SuppressWarnings({ "unchecked", "rawtypes" })
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 							searchCriteria = new AccountSearchCriteria();
 							searchCriteria.setSaccountid(new NumberSearchField(
 									SearchField.AND, AppContext.getAccountId()));
@@ -296,7 +163,7 @@ public class AccountSearchPanel extends
 														.getValue()));
 							}
 
-							Collection<String> industries = (Collection<String>) industryField
+							final Collection<String> industries = (Collection<String>) industryField
 									.getValue();
 							if (industries != null && industries.size() > 0) {
 								searchCriteria
@@ -304,14 +171,14 @@ public class AccountSearchPanel extends
 												SearchField.AND, industries));
 							}
 
-							Collection<String> types = (Collection<String>) typeField
+							final Collection<String> types = (Collection<String>) typeField
 									.getValue();
 							if (types != null && types.size() > 0) {
 								searchCriteria.setTypes(new SetSearchField(
 										SearchField.AND, types));
 							}
 
-							Collection<String> users = (Collection<String>) userField
+							final Collection<String> users = (Collection<String>) userField
 									.getValue();
 							if (users != null && users.size() > 0) {
 								searchCriteria
@@ -319,8 +186,7 @@ public class AccountSearchPanel extends
 												SearchField.AND, users));
 							}
 
-							AccountSearchPanel.this
-									.notifySearchHandler(searchCriteria);
+							notifySearchHandler(searchCriteria);
 
 						}
 					});
@@ -328,12 +194,12 @@ public class AccountSearchPanel extends
 			buttonControls.addComponent(searchBtn);
 			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 
-			Button clearBtn = new Button(
+			final Button clearBtn = new Button(
 					LocalizationHelper
 							.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR),
 					new Button.ClickListener() {
 						@Override
-						public void buttonClick(ClickEvent event) {
+						public void buttonClick(final ClickEvent event) {
 							nameField.setValue("");
 							websiteField.setValue("");
 							anyPhoneField.setValue("");
@@ -348,13 +214,13 @@ public class AccountSearchPanel extends
 			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			buttonControls.addComponent(clearBtn);
 
-			Button basicSearchBtn = new Button(
+			final Button basicSearchBtn = new Button(
 					LocalizationHelper
 							.getMessage(CrmCommonI18nEnum.BUTTON_BASIC_SEARCH),
 					new Button.ClickListener() {
 						@Override
-						public void buttonClick(ClickEvent event) {
-							AccountSearchPanel.this.createBasicSearchLayout();
+						public void buttonClick(final ClickEvent event) {
+							createBasicSearchLayout();
 
 						}
 					});
@@ -363,5 +229,145 @@ public class AccountSearchPanel extends
 					Alignment.MIDDLE_CENTER);
 			return buttonControls;
 		}
+
+		@Override
+		public ComponentContainer constructHeader() {
+			return createSearchTopPanel();
+		}
+	}
+
+	private class AccountBasicSearchLayout extends BasicSearchLayout {
+
+		private TextField nameField;
+		private CheckBox myItemCheckbox;
+
+		public AccountBasicSearchLayout() {
+			super();
+		}
+
+		@Override
+		public ComponentContainer constructBody() {
+			final HorizontalLayout basicSearchBody = new HorizontalLayout();
+			basicSearchBody.setSpacing(false);
+			// basicSearchBody.addComponent(new Label("Name"));
+			nameField = new TextField();
+			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			nameField.setHeight("100%");
+			UiUtils.addComponent(basicSearchBody, nameField,
+					Alignment.MIDDLE_CENTER);
+			// final Button searchBtn = new Button(
+			// LocalizationHelper
+			// .getMessage(CrmCommonI18nEnum.BUTTON_SEARCH));
+			final Button searchBtn = new Button();
+			searchBtn.setStyleName("search-icon-button");
+			searchBtn.setIcon(new ThemeResource("icons/22/search.png"));
+			searchBtn.addListener(new Button.ClickListener() {
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					searchCriteria = new AccountSearchCriteria();
+					searchCriteria.setSaccountid(new NumberSearchField(
+							SearchField.AND, AppContext.getAccountId()));
+					searchCriteria.setAccountname(new StringSearchField(
+							SearchField.AND, ((String) nameField.getValue())
+									.trim()));
+					if (myItemCheckbox.booleanValue()) {
+						searchCriteria.setAssignUser(new StringSearchField(
+								SearchField.AND, AppContext.getUsername()));
+					} else {
+						searchCriteria.setAssignUsers(null);
+					}
+					notifySearchHandler(searchCriteria);
+				}
+			});
+
+			UiUtils.addComponent(basicSearchBody, searchBtn,
+					Alignment.MIDDLE_LEFT);
+
+			myItemCheckbox = new CheckBox(
+					LocalizationHelper
+							.getMessage(CrmCommonI18nEnum.SEARCH_MYITEMS_CHECKBOX));
+			myItemCheckbox.setWidth("75px");
+			UiUtils.addComponent(basicSearchBody, myItemCheckbox,
+					Alignment.MIDDLE_CENTER);
+
+			final Button cancelBtn = new Button(
+					LocalizationHelper
+							.getMessage(CrmCommonI18nEnum.BUTTON_CLEAR));
+			cancelBtn.setStyleName(UIConstants.THEME_LINK);
+			cancelBtn.addStyleName("cancel-button");
+			cancelBtn.addListener(new Button.ClickListener() {
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					nameField.setValue("");
+				}
+			});
+			UiUtils.addComponent(basicSearchBody, cancelBtn,
+					Alignment.MIDDLE_CENTER);
+
+			final Button advancedSearchBtn = new Button(
+					LocalizationHelper
+							.getMessage(CrmCommonI18nEnum.BUTTON_ADVANCED_SEARCH),
+					new Button.ClickListener() {
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							createAdvancedSearchLayout();
+						}
+					});
+			advancedSearchBtn.setStyleName("link");
+			UiUtils.addComponent(basicSearchBody, advancedSearchBtn,
+					Alignment.MIDDLE_CENTER);
+			return basicSearchBody;
+		}
+
+		@Override
+		public ComponentContainer constructHeader() {
+			return createSearchTopPanel();
+		}
+	}
+
+	protected AccountSearchCriteria searchCriteria;
+
+	@Override
+	public void attach() {
+		super.attach();
+		createBasicSearchLayout();
+	}
+
+	private void createAdvancedSearchLayout() {
+		final AccountAdvancedSearchLayout layout = new AccountAdvancedSearchLayout();
+		setCompositionRoot(layout);
+	}
+
+	private void createBasicSearchLayout() {
+		final AccountBasicSearchLayout layout = new AccountBasicSearchLayout();
+		setCompositionRoot(layout);
+	}
+
+	private HorizontalLayout createSearchTopPanel() {
+		final HorizontalLayout layout = new HorizontalLayout();
+		layout.setWidth("100%");
+		layout.setSpacing(true);
+
+		final Label searchtitle = new Label("Search Accounts");
+		searchtitle.setStyleName(Reindeer.LABEL_H2);
+		layout.addComponent(searchtitle);
+		layout.setComponentAlignment(searchtitle, Alignment.MIDDLE_LEFT);
+
+		final Button createAccountBtn = new Button("Create",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						EventBus.getInstance().fireEvent(
+								new AccountEvent.GotoAdd(this, null));
+					}
+				});
+		createAccountBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		createAccountBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		createAccountBtn.setEnabled(AppContext
+				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
+
+		UiUtils.addComponent(layout, createAccountBtn, Alignment.MIDDLE_RIGHT);
+
+		return layout;
 	}
 }

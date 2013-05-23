@@ -647,27 +647,58 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	background-image: linear-gradient(top, #F3F3F3, #DDDDDD);
 	/* 	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#f3f3f3',EndColorStr='#dddddd'); */
 	background-color: #F3F3F3;
-	padding: 10px 20px;
-	margin: 10px 2px;
+/* 	padding: 10px 20px; */
+	margin: 10px 0px;
 	/*box-shadow: #BFBFBF 0px 1px 2px 1px;*/
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px;
-	border-bottom-left-radius: 5px;
-	border: 1px solid #8F8F8F;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
+	border: 1px solid #a9a9a9;
 }
 
 .basicSearch .basicSearchHeader {
-	margin-bottom: 10px;
+	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e7e7e7;
+	border-radius: 3px 3px 0px 0px;
+	border-bottom: 1px solid #a9a9a9;
+}
+
+.basicSearchHeader .v-horizontallayout .v-horizontallayout-margin {
+	padding: 7px 20px;
 }
 
 .basicSearch .basicSearchHeader .h2 {
-	border-bottom: 1px solid #B7B7B7;
 	padding-top: 0px;
+}
+
+.basicSearch .basicSearchBody {
+	background-color: #f5f5f5;
+}
+
+.basicSearch .basicSearchBody > .v-horizontallayout .v-horizontallayout-margin {
+	padding: 20px;
 }
 
 .basicSearch .basicSearchBody .v-label {
 	line-height: 24px;
+}
+.basicSearch .basicSearchBody textarea {
+	border-radius: 3px 0px 0px 3px;
+}
+.v-button.search-icon-button {
+    background: url("icons/grad-dark-bottom2.png") repeat-x scroll left bottom rgb(229, 229, 229);
+    border-radius: 0px 3px 3px 0px;
+    border-left: medium none;
+}
+
+.basicSearch .basicSearchBody .v-button-link.cancel-button {
+	color: rgb(69, 69, 69);
+	padding: 0px 5px;
+	border-style: solid;
+	border-color: #a9a9a9;
+	border-width: 0px 1px;
+	border-radius: 0px;
+	margin: 0px 5px;
 }
 
 /* End Basic Search Template */
