@@ -32,33 +32,65 @@ public class SalesDashboardView extends Depot {
 
 	public SalesDashboardView() {
 		super("Sales Dashboard", new HorizontalLayout(), new VerticalLayout(),
-				"390px", "200px");
+				"100%", "200px");
 
 		initUI();
 	}
 
+	public void displayReport() {
+		final String reportName = reportDashboard[currentReportIndex];
+
+		final VerticalLayout bodyContent = (VerticalLayout) this.bodyContent;
+		bodyContent.removeAllComponents();
+
+		if ("OpportunitySalesStage".equals(reportName)) {
+			final OpportunitySalesStageDashboard salesStageDashboard = new OpportunitySalesStageDashboard();
+			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
+					salesStageDashboard);
+			bodyContent.addComponent(lazyComp);
+			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
+
+			final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+			criteria.setSaccountid(new NumberSearchField(AppContext
+					.getAccountId()));
+			salesStageDashboard.setSearchCriteria(criteria);
+		} else if ("OpportunityLeadSource".equals(reportName)) {
+			final OpportunityLeadSourceDashboard leadSourceDashboard = new OpportunityLeadSourceDashboard();
+			final LazyLoadWrapper lazyComp = new LazyLoadWrapper(
+					leadSourceDashboard);
+			bodyContent.addComponent(lazyComp);
+			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
+
+			final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+			criteria.setSaccountid(new NumberSearchField(AppContext
+					.getAccountId()));
+			leadSourceDashboard.setSearchCriteria(criteria);
+		}
+	}
+
 	private void initUI() {
-		HorizontalLayout headerContainer = (HorizontalLayout) this.headerContent;
+		final HorizontalLayout headerContainer = (HorizontalLayout) headerContent;
 		headerContainer.setWidth("100%");
 		headerContainer.setSpacing(true);
-		Label emptySpace = new Label();
+		final Label emptySpace = new Label();
 		headerContainer.addComponent(emptySpace);
 		headerContainer.setExpandRatio(emptySpace, 1.0f);
 
-		final PopupButton saleChartPopup = new PopupButton("Opportunity Sales Stage");
+		final PopupButton saleChartPopup = new PopupButton(
+				"Opportunity Sales Stage");
 		saleChartPopup.addStyleName("link");
 
-		VerticalLayout filterBtnLayout = new VerticalLayout();
+		final VerticalLayout filterBtnLayout = new VerticalLayout();
 		filterBtnLayout.setMargin(true);
 		filterBtnLayout.setSpacing(true);
 		filterBtnLayout.setWidth("200px");
 
-		Button btnOpportunitySales = new Button("Opportunity Sales Stage",
-				new Button.ClickListener() {
+		final Button btnOpportunitySales = new Button(
+				"Opportunity Sales Stage", new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						saleChartPopup.setPopupVisible(false);
 						saleChartPopup.setCaption("Opportunity Sales Stage");
 						currentReportIndex = 0;
@@ -68,12 +100,12 @@ public class SalesDashboardView extends Depot {
 		btnOpportunitySales.setStyleName("link");
 		filterBtnLayout.addComponent(btnOpportunitySales);
 
-		Button btnOpportunityLead = new Button("Opportunity Lead Source",
+		final Button btnOpportunityLead = new Button("Opportunity Lead Source",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						saleChartPopup.setPopupVisible(false);
 						saleChartPopup.setCaption("Opportunity Lead Source");
 						currentReportIndex = 1;
@@ -87,34 +119,5 @@ public class SalesDashboardView extends Depot {
 
 		saleChartPopup.addComponent(filterBtnLayout);
 		headerContainer.addComponent(saleChartPopup);
-	}
-
-	public void displayReport() {
-		String reportName = reportDashboard[currentReportIndex];
-
-		VerticalLayout bodyContent = (VerticalLayout) this.bodyContent;
-		bodyContent.removeAllComponents();
-
-		if ("OpportunitySalesStage".equals(reportName)) {
-			OpportunitySalesStageDashboard salesStageDashboard = new OpportunitySalesStageDashboard();
-			LazyLoadWrapper lazyComp = new LazyLoadWrapper(salesStageDashboard);
-			bodyContent.addComponent(lazyComp);
-			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
-
-			OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-			criteria.setSaccountid(new NumberSearchField(AppContext
-					.getAccountId()));
-			salesStageDashboard.setSearchCriteria(criteria);
-		} else if ("OpportunityLeadSource".equals(reportName)) {
-			OpportunityLeadSourceDashboard leadSourceDashboard = new OpportunityLeadSourceDashboard();
-			LazyLoadWrapper lazyComp = new LazyLoadWrapper(leadSourceDashboard);
-			bodyContent.addComponent(lazyComp);
-			bodyContent.setComponentAlignment(lazyComp, Alignment.MIDDLE_RIGHT);
-
-			OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
-			criteria.setSaccountid(new NumberSearchField(AppContext
-					.getAccountId()));
-			leadSourceDashboard.setSearchCriteria(criteria);
-		}
 	}
 }

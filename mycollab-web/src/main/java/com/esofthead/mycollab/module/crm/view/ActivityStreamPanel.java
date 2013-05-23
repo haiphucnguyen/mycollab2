@@ -31,37 +31,17 @@ import com.vaadin.ui.VerticalLayout;
  * @author haiphucnguyen
  */
 public class ActivityStreamPanel extends Depot {
-	private static final long serialVersionUID = 1L;
-	private final DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
-
-	public ActivityStreamPanel() {
-		super("Activity Channels", new VerticalLayout());
-		activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
-				AppContext.getSpringBean(ActivityStreamService.class),
-				ActivityStreamRowDisplayHandler.class, 10);
-		this.bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
-		this.addStyleName("activity-panel");
-		((VerticalLayout) this.bodyContent).setMargin(false);
-	}
-
-	public void display() {
-		ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
-		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
-				new String[] { ModuleNameConstants.CRM }));
-		activityStreamList.setSearchCriteria(searchCriteria);
-	}
-
 	public static class ActivityStreamRowDisplayHandler implements
 			DefaultBeanPagedList.RowDisplayHandler<SimpleActivityStream> {
 
 		@Override
-		public Component generateRow(SimpleActivityStream activityStream,
-				int rowIndex) {
-			CssLayout layout = new CssLayout();
+		public Component generateRow(final SimpleActivityStream activityStream,
+				final int rowIndex) {
+			final CssLayout layout = new CssLayout();
 			layout.setWidth("100%");
 			layout.setStyleName("activity-stream");
 
-			CssLayout header = new CssLayout();
+			final CssLayout header = new CssLayout();
 			header.setStyleName("stream-content");
 
 			CrmCommonI18nEnum action = null;
@@ -74,7 +54,7 @@ public class ActivityStreamPanel extends Depot {
 				action = CrmCommonI18nEnum.WIDGET_ACTIVITY_UPDATE_ACTION;
 			}
 
-			String content = LocalizationHelper.getMessage(action,
+			final String content = LocalizationHelper.getMessage(action,
 					UserAvatarControlFactory.getLink(
 							activityStream.getCreateduser(), 16),
 					activityStream.getCreatedUserFullName(), LocalizationHelper
@@ -85,15 +65,15 @@ public class ActivityStreamPanel extends Depot {
 							activityStream.getType(),
 							activityStream.getTypeid()), activityStream
 							.getNamefield());
-			Label activityLink = new Label(content, Label.CONTENT_XHTML);
+			final Label activityLink = new Label(content, Label.CONTENT_XHTML);
 
 			header.addComponent(activityLink);
 
 			layout.addComponent(header);
 
-			CssLayout body = new CssLayout();
+			final CssLayout body = new CssLayout();
 			body.setStyleName("activity-date");
-			Label dateLbl = new Label(
+			final Label dateLbl = new Label(
 					DateTimeUtils.getStringDateFromNow(activityStream
 							.getCreatedtime()));
 			body.addComponent(dateLbl);
@@ -101,5 +81,28 @@ public class ActivityStreamPanel extends Depot {
 			layout.addComponent(body);
 			return layout;
 		}
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	private final DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream> activityStreamList;
+
+	public ActivityStreamPanel() {
+		super("Activity Channels", new VerticalLayout(), "100%");
+		header.setMargin(true);
+		activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
+				AppContext.getSpringBean(ActivityStreamService.class),
+				ActivityStreamRowDisplayHandler.class, 10);
+		activityStreamList.addStyleName("stream-list");
+		bodyContent.addComponent(new LazyLoadWrapper(activityStreamList));
+		addStyleName("activity-panel");
+		((VerticalLayout) bodyContent).setMargin(false);
+	}
+
+	public void display() {
+		final ActivityStreamSearchCriteria searchCriteria = new ActivityStreamSearchCriteria();
+		searchCriteria.setModuleSet(new SetSearchField<String>(SearchField.AND,
+				new String[] { ModuleNameConstants.CRM }));
+		activityStreamList.setSearchCriteria(searchCriteria);
 	}
 }

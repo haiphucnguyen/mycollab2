@@ -46,11 +46,11 @@ public class MeetingListDashlet extends Depot {
 							LocalizationHelper
 									.getMessage(CrmCommonI18nEnum.TABLE_STATUS_HEADER) });
 		}
-		this.bodyContent.addComponent(tableItem);
+		bodyContent.addComponent(tableItem);
 	}
 
 	public void display() {
-		MeetingSearchCriteria criteria = new MeetingSearchCriteria();
+		final MeetingSearchCriteria criteria = new MeetingSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setAssignUsers(new SetSearchField<String>(
 				new String[] { AppContext.getUsername() }));

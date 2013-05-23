@@ -16,152 +16,154 @@ import com.vaadin.ui.TextField;
 import com.vaadin.ui.VerticalLayout;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public abstract class AbstractBeanPagedList <S extends SearchCriteria, T>
-        extends VerticalLayout {
+public abstract class AbstractBeanPagedList<S extends SearchCriteria, T>
+		extends VerticalLayout {
 
-    private static final long serialVersionUID = 1L;
-    
-    private final Button first, previous, next, last;
-    private final Label totalPagesLabel;
-    private final TextField currentPageTextField;
-    private int defaultNumberSearchItems = 10;
-    
-    protected final VerticalLayout listContainer;
-    protected final Class<? extends DefaultBeanPagedList.RowDisplayHandler<T>> rowDisplayHandler;
-    protected int currentPage = 1;
-    protected int totalPage = 1;
-    protected int totalCount;
-    protected SearchRequest<S> searchRequest;
+	public static interface RowDisplayHandler<T> {
 
-    public AbstractBeanPagedList(
-            Class<? extends DefaultBeanPagedList.RowDisplayHandler<T>> rowDisplayHandler, int defaultNumberSearchItems) {
-        this.defaultNumberSearchItems = defaultNumberSearchItems;
-        this.rowDisplayHandler = rowDisplayHandler;
-        listContainer = new VerticalLayout();
-        this.addComponent(listContainer);
+		Component generateRow(T obj, int rowIndex);
+	}
 
-        HorizontalLayout bottomLayout = new HorizontalLayout();
-        bottomLayout.setWidth("100%");
+	private static final long serialVersionUID = 1L;
+	private final Button first, previous, next, last;
+	private final Label totalPagesLabel;
+	private final TextField currentPageTextField;
 
-        HorizontalLayout controlsLayout = new HorizontalLayout();
-        controlsLayout.setSizeUndefined();
-        bottomLayout.addComponent(controlsLayout);
-        bottomLayout.setComponentAlignment(controlsLayout,
-                Alignment.MIDDLE_RIGHT);
+	private int defaultNumberSearchItems = 10;
+	protected final VerticalLayout listContainer;
+	protected final Class<? extends DefaultBeanPagedList.RowDisplayHandler<T>> rowDisplayHandler;
+	protected int currentPage = 1;
+	protected int totalPage = 1;
+	protected int totalCount;
 
-        first = new ButtonLink("<<", new Button.ClickListener() {
-            private static final long serialVersionUID = -355520120491283992L;
+	protected SearchRequest<S> searchRequest;
 
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                pageChange(1);
-            }
-        });
-        controlsLayout.addComponent(first);
+	public AbstractBeanPagedList(
+			final Class<? extends DefaultBeanPagedList.RowDisplayHandler<T>> rowDisplayHandler,
+			final int defaultNumberSearchItems) {
+		this.defaultNumberSearchItems = defaultNumberSearchItems;
+		this.rowDisplayHandler = rowDisplayHandler;
+		listContainer = new VerticalLayout();
+		this.addComponent(listContainer);
 
-        previous = new ButtonLink("<", new Button.ClickListener() {
-            private static final long serialVersionUID = -355520120491283992L;
+		final HorizontalLayout bottomLayout = new HorizontalLayout();
+		bottomLayout.setWidth("100%");
+		bottomLayout.addStyleName("listControl");
 
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                pageChange(AbstractBeanPagedList.this.currentPage - 1);
-            }
-        });
-        controlsLayout.addComponent(previous);
+		final HorizontalLayout controlsLayout = new HorizontalLayout();
+		controlsLayout.setSizeUndefined();
+		bottomLayout.addComponent(controlsLayout);
+		bottomLayout.setComponentAlignment(controlsLayout,
+				Alignment.MIDDLE_RIGHT);
 
-        currentPageTextField = new TextField();
-        currentPageTextField.setWidth("20px");
-        currentPageTextField.setStyleName("small");
-        currentPageTextField.setValue(String.valueOf(currentPage));
-        currentPageTextField.addValidator(new IntegerValidator(null));
-        currentPageTextField.setImmediate(true);
-        controlsLayout.addComponent(currentPageTextField);
+		first = new ButtonLink("<<", new Button.ClickListener() {
+			private static final long serialVersionUID = -355520120491283992L;
 
-        Label separatorLabel = new Label("&nbsp;/&nbsp;", Label.CONTENT_XHTML);
-        controlsLayout.addComponent(separatorLabel);
+			@Override
+			public void buttonClick(final Button.ClickEvent event) {
+				pageChange(1);
+			}
+		});
+		controlsLayout.addComponent(first);
 
-        totalPagesLabel = new Label(String.valueOf(totalPage),
-                Label.CONTENT_XHTML);
-        controlsLayout.addComponent(totalPagesLabel);
+		previous = new ButtonLink("<", new Button.ClickListener() {
+			private static final long serialVersionUID = -355520120491283992L;
 
-        next = new ButtonLink(">", new Button.ClickListener() {
-            private static final long serialVersionUID = -1927138212640638452L;
+			@Override
+			public void buttonClick(final Button.ClickEvent event) {
+				pageChange(AbstractBeanPagedList.this.currentPage - 1);
+			}
+		});
+		controlsLayout.addComponent(previous);
 
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                pageChange(AbstractBeanPagedList.this.currentPage + 1);
-            }
-        });
-        controlsLayout.addComponent(next);
+		currentPageTextField = new TextField();
+		currentPageTextField.setWidth("20px");
+		currentPageTextField.setStyleName("small");
+		currentPageTextField.setValue(String.valueOf(currentPage));
+		currentPageTextField.addValidator(new IntegerValidator(null));
+		currentPageTextField.setImmediate(true);
+		controlsLayout.addComponent(currentPageTextField);
 
-        last = new ButtonLink(">>", new Button.ClickListener() {
-            private static final long serialVersionUID = -355520120491283992L;
+		final Label separatorLabel = new Label("&nbsp;/&nbsp;",
+				Label.CONTENT_XHTML);
+		controlsLayout.addComponent(separatorLabel);
 
-            @Override
-            public void buttonClick(Button.ClickEvent event) {
-                pageChange(AbstractBeanPagedList.this.totalPage);
-            }
-        });
-        controlsLayout.addComponent(last);
+		totalPagesLabel = new Label(String.valueOf(totalPage),
+				Label.CONTENT_XHTML);
+		controlsLayout.addComponent(totalPagesLabel);
 
-        this.addComponent(bottomLayout);
-    }
+		next = new ButtonLink(">", new Button.ClickListener() {
+			private static final long serialVersionUID = -1927138212640638452L;
 
-    protected void setCurrentPage(int currentPage) {
-        this.currentPage = currentPage;
-        currentPageTextField.setValue(currentPage);
-        checkButtonStatus();
-    }
+			@Override
+			public void buttonClick(final Button.ClickEvent event) {
+				pageChange(AbstractBeanPagedList.this.currentPage + 1);
+			}
+		});
+		controlsLayout.addComponent(next);
 
-    protected void setTotalPage(int totalPage) {
-        this.totalPage = totalPage;
-        totalPagesLabel.setValue(String.valueOf(totalPage));
-        checkButtonStatus();
-    }
+		last = new ButtonLink(">>", new Button.ClickListener() {
+			private static final long serialVersionUID = -355520120491283992L;
 
-    private void checkButtonStatus() {
-        if (this.currentPage == 1) {
-            this.previous.setEnabled(false);
-            this.first.setEnabled(false);
-        } else {
-            this.previous.setEnabled(true);
-            this.first.setEnabled(true);
-        }
+			@Override
+			public void buttonClick(final Button.ClickEvent event) {
+				pageChange(AbstractBeanPagedList.this.totalPage);
+			}
+		});
+		controlsLayout.addComponent(last);
 
-        if (this.currentPage == totalPage) {
-            this.last.setEnabled(false);
-            this.next.setEnabled(false);
-        } else {
-            this.last.setEnabled(true);
-            this.next.setEnabled(true);
-        }
-    }
+		this.addComponent(bottomLayout);
+	}
 
-    private void pageChange(int currentPage) {
-        if (searchRequest != null) {
-            this.currentPage = currentPage;
-            searchRequest.setCurrentPage(currentPage);
-            doSearch();
-        }
-    }
+	private void checkButtonStatus() {
+		if (this.currentPage == 1) {
+			this.previous.setEnabled(false);
+			this.first.setEnabled(false);
+		} else {
+			this.previous.setEnabled(true);
+			this.first.setEnabled(true);
+		}
 
-    
-    public void setSearchCriteria(S searchCriteria) {
-        listContainer.removeAllComponents();
+		if (this.currentPage == totalPage) {
+			this.last.setEnabled(false);
+			this.next.setEnabled(false);
+		} else {
+			this.last.setEnabled(true);
+			this.next.setEnabled(true);
+		}
+	}
 
-        searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
-                defaultNumberSearchItems);
-        doSearch();
-    }
+	abstract public void doSearch();
 
-    abstract public void doSearch();
+	private void pageChange(final int currentPage) {
+		if (searchRequest != null) {
+			this.currentPage = currentPage;
+			searchRequest.setCurrentPage(currentPage);
+			doSearch();
+		}
+	}
 
-    public static interface RowDisplayHandler<T> {
+	protected void setCurrentPage(final int currentPage) {
+		this.currentPage = currentPage;
+		currentPageTextField.setValue(currentPage);
+		checkButtonStatus();
+	}
 
-        Component generateRow(T obj, int rowIndex);
-    }
-    
+	public void setSearchCriteria(final S searchCriteria) {
+		listContainer.removeAllComponents();
+
+		searchRequest = new SearchRequest<S>(searchCriteria, currentPage,
+				defaultNumberSearchItems);
+		doSearch();
+	}
+
+	protected void setTotalPage(final int totalPage) {
+		this.totalPage = totalPage;
+		totalPagesLabel.setValue(String.valueOf(totalPage));
+		checkButtonStatus();
+	}
+
 }

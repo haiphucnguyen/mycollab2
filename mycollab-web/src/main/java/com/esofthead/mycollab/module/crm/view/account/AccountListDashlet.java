@@ -60,8 +60,9 @@ public class AccountListDashlet extends Depot {
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						SimpleAccount account = (SimpleAccount) event.getData();
+					public void handle(final TableClickEvent event) {
+						final SimpleAccount account = (SimpleAccount) event
+								.getData();
 						if ("accountname".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(
 									new AccountEvent.GotoRead(
@@ -70,11 +71,11 @@ public class AccountListDashlet extends Depot {
 						}
 					}
 				});
-		this.bodyContent.addComponent(tableItem);
+		bodyContent.addComponent(tableItem);
 	}
 
 	public void display() {
-		AccountSearchCriteria criteria = new AccountSearchCriteria();
+		final AccountSearchCriteria criteria = new AccountSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setAssignUser(new StringSearchField(AppContext.getUsername()));
 		tableItem.setSearchCriteria(criteria);

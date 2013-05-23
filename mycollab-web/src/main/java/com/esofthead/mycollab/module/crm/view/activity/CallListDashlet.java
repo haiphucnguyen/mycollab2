@@ -62,11 +62,11 @@ public class CallListDashlet extends Depot {
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						SimpleCall call = (SimpleCall) event.getData();
+					public void handle(final TableClickEvent event) {
+						final SimpleCall call = (SimpleCall) event.getData();
 						if ("isClosed".equals(event.getFieldName())) {
 							call.setIsclosed(true);
-							CallService callService = AppContext
+							final CallService callService = AppContext
 									.getSpringBean(CallService.class);
 							callService.updateWithSession(call,
 									AppContext.getUsername());
@@ -74,11 +74,11 @@ public class CallListDashlet extends Depot {
 						}
 					}
 				});
-		this.bodyContent.addComponent(tableItem);
+		bodyContent.addComponent(tableItem);
 	}
 
 	public void display() {
-		CallSearchCriteria criteria = new CallSearchCriteria();
+		final CallSearchCriteria criteria = new CallSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setAssignUsers(new SetSearchField<String>(
 				new String[] { AppContext.getUsername() }));

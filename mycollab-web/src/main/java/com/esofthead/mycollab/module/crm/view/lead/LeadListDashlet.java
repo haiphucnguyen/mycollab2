@@ -59,8 +59,8 @@ public class LeadListDashlet extends Depot {
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						SimpleLead lead = (SimpleLead) event.getData();
+					public void handle(final TableClickEvent event) {
+						final SimpleLead lead = (SimpleLead) event.getData();
 						if ("leadName".equals(event.getFieldName())) {
 							EventBus.getInstance()
 									.fireEvent(
@@ -70,11 +70,11 @@ public class LeadListDashlet extends Depot {
 						}
 					}
 				});
-		this.bodyContent.addComponent(tableItem);
+		bodyContent.addComponent(tableItem);
 	}
 
 	public void display() {
-		LeadSearchCriteria criteria = new LeadSearchCriteria();
+		final LeadSearchCriteria criteria = new LeadSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setAssignUsers(new SetSearchField<String>(
 				new String[] { AppContext.getUsername() }));
