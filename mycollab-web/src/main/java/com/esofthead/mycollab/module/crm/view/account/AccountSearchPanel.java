@@ -192,7 +192,7 @@ public class AccountSearchPanel extends
 					});
 
 			buttonControls.addComponent(searchBtn);
-			searchBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			searchBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 
 			final Button clearBtn = new Button(
 					LocalizationHelper
@@ -211,7 +211,7 @@ public class AccountSearchPanel extends
 							userField.setValue(null);
 						}
 					});
-			clearBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			clearBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			buttonControls.addComponent(clearBtn);
 
 			final Button basicSearchBtn = new Button(
@@ -252,7 +252,6 @@ public class AccountSearchPanel extends
 			// basicSearchBody.addComponent(new Label("Name"));
 			nameField = new TextField();
 			nameField.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			nameField.setHeight("100%");
 			UiUtils.addComponent(basicSearchBody, nameField,
 					Alignment.MIDDLE_CENTER);
 			// final Button searchBtn = new Button(
@@ -260,7 +259,7 @@ public class AccountSearchPanel extends
 			// .getMessage(CrmCommonI18nEnum.BUTTON_SEARCH));
 			final Button searchBtn = new Button();
 			searchBtn.setStyleName("search-icon-button");
-			searchBtn.setIcon(new ThemeResource("icons/22/search.png"));
+			searchBtn.setIcon(new ThemeResource("icons/16/search_white.png"));
 			searchBtn.addListener(new Button.ClickListener() {
 				@Override
 				public void buttonClick(final ClickEvent event) {

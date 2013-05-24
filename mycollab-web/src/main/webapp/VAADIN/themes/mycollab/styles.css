@@ -102,6 +102,10 @@ div.v-button-link {
 
 .v-button-link .v-button-caption {
 	text-decoration: none;
+	padding-left: 1px;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
 }
 
 .v-button-link.pending .v-button-caption {
@@ -224,8 +228,8 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 }
 
 .v-button-bluebtn,.v-button.v-button-bluebtn.v-disabled:active {
-	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
-		#357ed0;
+	background: url("icons/grad-dark-bottom2.png") repeat-x left bottom
+		#2599c8;
 	/* 	background-color: #357ed0; */
 	/* 	background-image: -webkit-gradient(linear,left top,left bottom,from(#357ed0),to(#1c5bc3)); */
 	/* 	background-image: -webkit-linear-gradient(top,#357ed0,#1c5bc3); */
@@ -234,16 +238,21 @@ div.v-button-link.v-button-no-margin .v-button-wrap,div.v-button-link:focus
 	/* 	background-image: -o-linear-gradient(top,#357ed0,#1c5bc3); */
 	/* 	background-image: linear-gradient(top,#357ed0,#1c5bc3); */
 	/* 	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#357ed0',EndColorStr='#1c5bc3'); */
-	border: 1px solid #3079ED;
+	border: 1px solid #093768;
 	color: #FFFFFF !important;
-	box-shadow: inset 0px 1px 0px 0px #4095ff;
+/* 	box-shadow: inset 0px 1px 0px 0px #4095ff; */
 	text-shadow: 1px 1px 0px #1570cd;
-	border-radius: 20px;
+	border-radius: 3px;
 	margin-right: 4px;
 }
 
-.v-button.bluebtn:focus {
-	background-color: #146cfd;
+.v-button.bluebtn:active .v-button-wrap {
+	border: none;
+	padding: 3px 13px;
+}
+
+.v-button.bluebtn:focus, .v-button.bluebtn:active {
+	background-color: #1377b3;
 }
 
 div.v-button-nonPopupIndicator div.v-popup-indicator {
@@ -253,11 +262,12 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 .v-button-bluebtn .v-button-wrap,.v-button-bluebtn.v-disabled .v-button-wrap
 	{
 	background-image: none;
+	padding: 3px 13px;
 }
 
 .v-button-bluebtn:hover {
-	background: url("icons/grad-dark-bottom.png") repeat-x left bottom
-		#146cfd;
+	background: url("icons/grad-dark-bottom2.png") repeat-x left bottom
+		#1377b3;
 	/* 	background-color: #146cfd; */
 	/* 	background-image: -webkit-gradient(linear,left top,left bottom,from(#146cfd),to(#216be7)); */
 	/* 	background-image: -webkit-linear-gradient(top,#146cfd,#216be7); */
@@ -266,7 +276,7 @@ div.v-button-nonPopupIndicator div.v-popup-indicator {
 	/* 	background-image: -o-linear-gradient(top,#146cfd,#216be7); */
 	/* 	background-image: linear-gradient(top,#146cfd,#216be7); */
 	/* 	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#146cfd',EndColorStr='#216be7'); */
-	border: 1px solid #2F5BB7;
+	border: 1px solid #093768;
 	/*     box-shadow: 0px 1px 1px rgba(0, 0, 0, 0.1); */
 }
 
@@ -467,17 +477,17 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 
 #topNavigation {
 	height: 40px;
-	background: #444;
-	background: -moz-linear-gradient(top, #444 0, #222 100%);
-	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #444),
-		color-stop(100%, #222) );
-	background: -webkit-linear-gradient(top, #444 0, #222 100%);
-	background: -o-linear-gradient(top, #444 0, #222 100%);
-	background: -ms-linear-gradient(top, #444 0, #222 100%);
-	background: linear-gradient(to bottom, #444 0, #222 100%);
+	background: #2d95ca;
+	background: -moz-linear-gradient(top, #2d95ca 0, #3daad6 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #2d95ca),
+		color-stop(100%, #3daad6) );
+	background: -webkit-linear-gradient(top, #2d95ca 0, #3daad6 100%);
+	background: -o-linear-gradient(top, #2d95ca 0, #3daad6 100%);
+	background: -ms-linear-gradient(top, #2d95ca 0, #3daad6 100%);
+	background: linear-gradient(to bottom, #2d95ca 0, #3daad6 100%);
 	filter: progid :           DXImageTransform.Microsoft.gradient (       
 		   startColorstr =     
-		     '#444444', endColorstr =           '#222222', GradientType =
+		     '#2D95CA', endColorstr =           '#3DAAD6', GradientType =
 		        
 		 0 );
 	/*     box-shadow: 0px 0px 2px 2px #444; */
@@ -510,6 +520,9 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	font-weight: bold;
 	font-size: 14px;
 	padding: 0 6px 0 3px;
+	text-shadow: 1px 1px 0px #6b6b6b;
+	filter: progid:DXImageTransform.Microsoft.Shadow(color=#6B6B6B,direction=45);
+	text-transform: uppercase;
 }
 
 #topNavigation .v-button-wrap,#topNavigation .v-button:active .v-button-wrap
@@ -532,8 +545,8 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 #topNavigation .navSeparator {
 	display: block;
 	float: left;
-	border-left: solid 1px #D2D2D2;
-	border-right: solid 1px #444;
+	border-left: solid 1px #FFF;
+	border-right: solid 1px #FFF;
 	height: 20px;
 	width: 0;
 	margin: 10px 0px 0px;
@@ -542,8 +555,8 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 #mainLogo {
 	float: left;
 	height: 38px;
-	width: 120px;
-	margin: 1px 5px 1px 5px;
+	width: 150px;
+	margin: 6px 15px 1px 0px;
 	display: block;
 }
 
@@ -557,9 +570,15 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	height: 40px;
 	display: block;
 	padding: 12px 12px 11px;
-	text-shadow: none;
 	background: none;
 	border: none;
+}
+
+#topNavigation .accountMenu .v-button-caption {
+	text-shadow: 1px 1px 0px #6b6b6b;
+	filter: progid:DXImageTransform.Microsoft.Shadow(color=#6B6B6B,direction=45);
+	text-transform: uppercase;
+	font-weight: bold;
 }
 
 .v-popupbutton-popup.v-popupbutton-popup-topNavPopup {
@@ -596,28 +615,35 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 
 /* Advanced Search Template */
 .advSearch {
-	background-color: #F3F3F3;
-	background-image: -webkit-gradient(linear, left top, left bottom, from(#F3F3F3),
-		to(#DDDDDD) );
-	background-image: -webkit-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -moz-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -ms-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: -o-linear-gradient(top, #F3F3F3, #DDDDDD);
-	background-image: linear-gradient(top, #F3F3F3, #DDDDDD);
+	background-color: #F5F5F5;
+/* 	background-image: -webkit-gradient(linear, left top, left bottom, from(#F5F5F5), */
+/* 		to(#DDDDDD) ); */
+/* 	background-image: -webkit-linear-gradient(top, #F3F3F3, #DDDDDD); */
+/* 	background-image: -moz-linear-gradient(top, #F3F3F3, #DDDDDD); */
+/* 	background-image: -ms-linear-gradient(top, #F3F3F3, #DDDDDD); */
+/* 	background-image: -o-linear-gradient(top, #F3F3F3, #DDDDDD); */
+/* 	background-image: linear-gradient(top, #F3F3F3, #DDDDDD); */
 	/* 	filter: progid:DXImageTransform.Microsoft.gradient(startColorStr='#f3f3f3',EndColorStr='#dddddd'); */
-	padding: 10px 20px;
-	margin: 10px 2px;
+	margin: 10px 0px;
 	/*     box-shadow: #BFBFBF 0px 1px 2px 1px; */
-	border-top-left-radius: 5px;
-	border-top-right-radius: 5px;
-	border-bottom-right-radius: 5px;
-	border-bottom-left-radius: 5px;
+	border-top-left-radius: 3px;
+	border-top-right-radius: 3px;
+	border-bottom-right-radius: 0px;
+	border-bottom-left-radius: 0px;
 	border: 1px solid #8F8F8F;
 }
 
+.advSearch .advSearchHeader {
+	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e7e7e7;
+	border-radius: 3px 3px 0px 0px;
+	border-bottom: 1px solid #a9a9a9;
+}
+.advSearchHeader .v-horizontallayout .v-horizontallayout-margin {
+	padding: 3px 5px 3px 15px;
+}
 .advSearch .advSearchHeader .h2 {
-	border-bottom: 1px solid #B7B7B7;
 	padding-top: 0px;
+	font-size: 12px;
 }
 
 .advSearch .advSearchBody .v-label { /* 	width: 90px !important; */
@@ -633,7 +659,9 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	margin: 0px auto;
 	display: block;
 }
-
+.advSearchFooter > .v-horizontallayout .v-horizontallayout-margin {
+	padding: 0px 0px 5px;
+}
 /* End Advanced Search Template */
 
 /* Basic Search Template */
@@ -664,11 +692,12 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 }
 
 .basicSearchHeader .v-horizontallayout .v-horizontallayout-margin {
-	padding: 7px 20px;
+	padding: 3px 5px 3px 15px;
 }
 
 .basicSearch .basicSearchHeader .h2 {
 	padding-top: 0px;
+	font-size: 12px;
 }
 
 .basicSearch .basicSearchBody {
@@ -676,19 +705,23 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 }
 
 .basicSearch .basicSearchBody > .v-horizontallayout .v-horizontallayout-margin {
-	padding: 20px;
+	padding: 10px 15px;
 }
 
 .basicSearch .basicSearchBody .v-label {
 	line-height: 24px;
 }
-.basicSearch .basicSearchBody textarea {
+.basicSearch .basicSearchBody input {
 	border-radius: 3px 0px 0px 3px;
 }
 .v-button.search-icon-button {
-    background: url("icons/grad-dark-bottom2.png") repeat-x scroll left bottom rgb(229, 229, 229);
+    background: url("icons/grad-dark-bottom.png") repeat-x scroll left bottom rgb(229, 229, 229);
     border-radius: 0px 3px 3px 0px;
     border-left: medium none;
+}
+
+.v-button.search-icon-button .v-button-wrap {
+	padding: 3px 3px 3px 13px;
 }
 
 .basicSearch .basicSearchBody .v-button-link.cancel-button {
@@ -1427,6 +1460,10 @@ input.v-textfield-errorField {
 	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e4e4e4;
 }
 
+.depotComp.collapsed .depotHeader {
+	border-width: 1px;
+}
+
 .depotComp .depot-title {
 	background: url('icons/16/depot_arrow_down.png') no-repeat top left
 		transparent;
@@ -2117,11 +2154,11 @@ input.v-textfield-errorField {
 }
 
 .message .message-container>.v-csslayout-margin {
-	background-color: #ebedee;
+	background-color: #fff;
 	padding: 10px 15px 10px 10px;
 	border: 1px solid #8f8f8f;
 	/* 	box-shadow: 0px 0px 3px rgb(143,143,143); */
-	border-radius: 5px;
+	border-radius: 3px;
 	margin-left: 10px;
 	position: relative;
 }
@@ -2141,6 +2178,7 @@ input.v-textfield-errorField {
 	left: -10px; /* value = - border-left-width - border-right-width */
 	border-width: 10px 9px 10px 0;
 	border-color: transparent #8f8f8f;
+	border-radius: 0px;
 }
 
 .message .message-container>.v-csslayout-margin:after {
@@ -2154,7 +2192,8 @@ input.v-textfield-errorField {
 	/* value = (:before top) + (:before border-top) - (:after border-top) */
 	left: -9px; /* value = - border-left-width - border-right-width */
 	border-width: 10px 9px 10px 0;
-	border-color: transparent #ebedee;
+	border-color: transparent #fff;
+	border-radius: 0px;
 }
 
 .message.important-message .message-container>.v-csslayout-margin {
@@ -3057,7 +3096,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .v-csslayout-readview-layout > .v-csslayout-margin {
 	border: 1px solid #a9a9a9;
 	background-color: #f5f5f5;
-	border-radius: 3px;
+	border-radius: 3px 3px 0px 0px;
 }
 .readview-layout-header {
 	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e5e5e5;
@@ -3076,6 +3115,9 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	padding: 0px;
 	padding-left: 5px;
 	font-size: 15px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 .readview-layout-body > .v-csslayout-margin {
 	
@@ -3130,7 +3172,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	-webkit-box-sizing: border-box;
 	box-sizing: border-box;
 }
-.readview-layout-body .v-horizontallayout-gridform-caption .v-horizontallayout-margin {
+.readview-layout-body .v-horizontallayout-gridform-caption .v-horizontallayout-margin, .readview-layout-body .v-horizontallayout-gridform-field .v-horizontallayout-margin {
 	padding: 8px 5px 8px 18px;
 }
 .readview-layout-body .v-gridlayout-margin .gridform-caption {
@@ -3146,12 +3188,20 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .readview-layout-body .depotComp {
 	margin-top: 0px;
 }
+.readview-layout-body .depotComp .v-horizontallayout-depotHeader .v-horizontallayout-margin {
+	padding: 0px;
+}
 .readview-layout-body .depotComp .depotHeader {
-	border-bottom: none;
+	border: none;
 	padding-bottom: 0px;
+	background: none;
 }
 .readview-layout-body .depotComp .depotHeader .h2 {
 	color: rgb(69, 69, 69);
+	font-weight: bold;
+}
+.readview-layout-body .depotComp.collapsed .depotHeader .h2 {
+	border-bottom: none;
 }
 .readview-layout-body .depotComp .depot-title {
 	background-position: left center;
@@ -3167,7 +3217,7 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .v-csslayout-addview-layout > .v-csslayout-margin {
 	border: 1px solid #a9a9a9;
 	background-color: #f5f5f5;
-	border-radius: 3px;
+	border-radius: 3px 3px 0px 0px;
 }
 .addview-layout-header {
 	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e5e5e5;
@@ -3185,6 +3235,9 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .addview-layout-header .v-label-h1 {
 	padding: 0px 0px 15px 5px;
 	font-size: 15px;
+	text-overflow: ellipsis;
+	overflow: hidden;
+	white-space: nowrap;
 }
 .addview-layout-body > .v-csslayout-margin {
 	
@@ -3232,12 +3285,18 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .addview-layout-body .depotComp {
 	margin-top: 0px;
 }
-.addview-layout-body .depotComp .depotHeader {
-	border-bottom: none;
+
+.addview-layout-body .depotComp .depotHeader, .addview-layout-body .depotComp.collapsed .depotHeader {
+	border: none;
 	padding-bottom: 0px;
+	background: none;
 }
 .addview-layout-body .depotComp .depotHeader .h2 {
 	color: rgb(69, 69, 69);
+	font-weight: bold;
+}
+.addview-layout-body .depotComp.collapsed .depotHeader .h2 {
+	border-bottom: none;
 }
 .addview-layout-body .depotComp .depot-title {
 	background-position: left center;
@@ -3245,3 +3304,8 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .addview-layout-body .depotComp .depot-title .v-csslayout-margin {
 	margin-left: 0px;
 }
+/* Note List Items */
+.note-list .depotContent {
+	background-color: rgb(229, 239, 240);
+}
+/* End Note List Items */

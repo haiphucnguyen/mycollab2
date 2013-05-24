@@ -43,64 +43,81 @@ import com.vaadin.ui.VerticalLayout;
 
 public class NoteListItems extends Depot {
 
-	private static final long serialVersionUID = 1L;
-	private String type;
-	private Integer typeid;
-	private BeanList<NoteService, NoteSearchCriteria, SimpleNote> noteList;
-	private final NoteService noteService;
-	private Button createBtn;
+	private class NoteEditor extends VerticalLayout {
 
-	public NoteListItems(String title) {
-		this(title, "", 0);
-	}
+		private static final long serialVersionUID = 1L;
+		private final RichTextArea noteArea;
 
-	public NoteListItems(String title, String type, Integer typeid) {
-		super(title, new VerticalLayout(), "100%");
-		this.setWidth("100%");
-		this.setMargin(false);
+		public NoteEditor() {
+			super();
+			setSpacing(true);
+			this.setMargin(true);
+			this.setWidth("600px");
 
-		noteService = AppContext.getSpringBean(NoteService.class);
-		this.type = type;
-		this.typeid = typeid;
+			final AttachmentPanel attachments = new AttachmentPanel();
 
-		initUI();
-	}
+			noteArea = new RichTextArea();
+			noteArea.setWidth("560px");
+			this.addComponent(noteArea);
+			this.addComponent(attachments);
 
-	public void showNotes(String type, int typeid) {
-		this.type = type;
-		this.typeid = typeid;
-		displayNotes();
-	}
+			final HorizontalLayout controls = new HorizontalLayout();
+			controls.setSpacing(true);
+			controls.setWidth("100%");
 
-	private void initUI() {
-		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setMargin(true);
-		contentContainer.setSpacing(true);
-		createBtn = new Button("New Note", new Button.ClickListener() {
-			private static final long serialVersionUID = 1L;
+			final MultiFileUploadExt uploadExt = new MultiFileUploadExt(
+					attachments);
+			controls.addComponent(uploadExt);
+			controls.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				contentContainer.replaceComponent(createBtn, new NoteEditor());
-			}
-		});
+			final Label emptySpace = new Label();
+			controls.addComponent(emptySpace);
+			controls.setExpandRatio(emptySpace, 1.0f);
 
-		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-		createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
-		contentContainer.addComponent(createBtn);
+			final Button cancelBtn = new Button("Cancel",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
 
-		noteList = new BeanList<NoteService, NoteSearchCriteria, SimpleNote>(
-				noteService, NoteRowDisplayHandler.class);
-		noteList.setStyleName("noteList");
-		contentContainer.addComponent(noteList);
-		displayNotes();
-	}
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							addCreateBtn();
+						}
+					});
+			cancelBtn.setStyleName("link");
+			controls.addComponent(cancelBtn);
+			controls.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);
 
-	private void displayNotes() {
-		NoteSearchCriteria searchCriteria = new NoteSearchCriteria();
-		searchCriteria.setType(new StringSearchField(SearchField.AND, type));
-		searchCriteria.setTypeid(new NumberSearchField(typeid));
-		noteList.setSearchCriteria(searchCriteria);
+			final Button saveBtn = new Button("Post",
+					new Button.ClickListener() {
+						private static final long serialVersionUID = 1L;
+
+						@Override
+						public void buttonClick(final ClickEvent event) {
+							final Note note = new Note();
+							note.setCreateduser(AppContext.getUsername());
+							note.setNote((String) noteArea.getValue());
+							note.setSaccountid(AppContext.getAccountId());
+							note.setSubject("");
+							note.setType(type);
+							note.setTypeid(typeid);
+							note.setCreatedtime(new GregorianCalendar()
+									.getTime());
+							note.setLastupdatedtime(new GregorianCalendar()
+									.getTime());
+							final int noteid = noteService.saveWithSession(
+									note, AppContext.getUsername());
+							attachments.saveContentsToRepo(
+									AttachmentConstants.CRM_NOTE_TYPE, noteid);
+							displayNotes();
+							addCreateBtn();
+						}
+					});
+			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+			controls.addComponent(saveBtn);
+			controls.setComponentAlignment(saveBtn, Alignment.MIDDLE_RIGHT);
+
+			this.addComponent(controls);
+		}
 	}
 
 	public static class NoteRowDisplayHandler implements
@@ -113,14 +130,83 @@ public class NoteListItems extends Depot {
 		private Button replyBtn;
 
 		@Override
-		public Component generateRow(final SimpleNote note, int rowIndex) {
+		public void cancel() {
+			if (commentInput != null) {
+				final int compIndex = noteContentLayout
+						.getComponentIndex(commentInput);
+				if (compIndex >= 0) {
+					noteContentLayout.removeComponent(commentInput);
+					commentInput = null;
+					replyBtn.setVisible(true);
+				}
+			}
+		}
+
+		private Component constructNoteHeader(final SimpleNote note) {
+			final HorizontalLayout layout = new HorizontalLayout();
+			layout.setStyleName("message");
+			layout.setWidth("100%");
+			layout.addComponent(UserAvatarControlFactory.createUserAvatarLink(
+					note.getCreateduser(), note.getCreateUserFullName()));
+
+			final CssLayout rowLayout = new CssLayout();
+			rowLayout.setStyleName("message-container");
+			rowLayout.setWidth("100%");
+
+			final HorizontalLayout messageHeader = new HorizontalLayout();
+			messageHeader.setStyleName("message-header");
+			final VerticalLayout leftHeader = new VerticalLayout();
+			final Label username = new Label(note.getCreateUserFullName());
+			username.setStyleName("user-name");
+			leftHeader.addComponent(username);
+
+			final VerticalLayout rightHeader = new VerticalLayout();
+			final Label timePostLbl = new Label(
+					DateTimeUtils.getStringDateFromNow(note.getCreatedtime()));
+			timePostLbl.setSizeUndefined();
+			timePostLbl.setStyleName("time-post");
+			rightHeader.addComponent(timePostLbl);
+
+			messageHeader.addComponent(leftHeader);
+			messageHeader.setExpandRatio(leftHeader, 1.0f);
+			messageHeader.addComponent(timePostLbl);
+			messageHeader.setWidth("100%");
+
+			rowLayout.addComponent(messageHeader);
+
+			final Label messageContent = new Label(note.getNote(),
+					Label.CONTENT_XHTML);
+			messageContent.setStyleName("message-body");
+			rowLayout.addComponent(messageContent);
+
+			final List<Attachment> attachments = note.getAttachments();
+			if (attachments != null && !attachments.isEmpty()) {
+				rowLayout.addComponent(new AttachmentDisplayComponent(
+						attachments));
+			}
+
+			layout.addComponent(rowLayout);
+			layout.setExpandRatio(rowLayout, 1.0f);
+			return layout;
+		}
+
+		private void displayComments() {
+			final CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
+			searchCriteria.setType(new StringSearchField(
+					CommentTypeConstants.CRM_NOTE));
+			searchCriteria.setTypeid(new NumberSearchField(note.getId()));
+			commentList.setSearchCriteria(searchCriteria);
+		}
+
+		@Override
+		public Component generateRow(final SimpleNote note, final int rowIndex) {
 			this.note = note;
 
 			noteContentLayout = new VerticalLayout();
 
 			noteContentLayout.addComponent(constructNoteHeader(note));
 
-			HorizontalLayout footer = new HorizontalLayout();
+			final HorizontalLayout footer = new HorizontalLayout();
 			footer.setSpacing(true);
 			footer.setMargin(true);
 			footer.setWidth("100%");
@@ -129,8 +215,8 @@ public class NoteListItems extends Depot {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void buttonClick(ClickEvent event) {
-					int compIndex = noteContentLayout
+				public void buttonClick(final ClickEvent event) {
+					final int compIndex = noteContentLayout
 							.getComponentIndex(commentList);
 					if (compIndex >= 0) {
 						commentInput = new CommentInput(
@@ -160,159 +246,82 @@ public class NoteListItems extends Depot {
 			return noteContentLayout;
 		}
 
-		private Component constructNoteHeader(SimpleNote note) {
-			HorizontalLayout layout = new HorizontalLayout();
-			layout.setStyleName("message");
-			layout.setWidth("100%");
-			layout.addComponent(UserAvatarControlFactory.createUserAvatarLink(
-					note.getCreateduser(), note.getCreateUserFullName()));
-
-			CssLayout rowLayout = new CssLayout();
-			rowLayout.setStyleName("message-container");
-			rowLayout.setWidth("100%");
-
-			HorizontalLayout messageHeader = new HorizontalLayout();
-			messageHeader.setStyleName("message-header");
-			VerticalLayout leftHeader = new VerticalLayout();
-			Label username = new Label(note.getCreateUserFullName());
-			username.setStyleName("user-name");
-			leftHeader.addComponent(username);
-
-			VerticalLayout rightHeader = new VerticalLayout();
-			Label timePostLbl = new Label(
-					DateTimeUtils.getStringDateFromNow(note.getCreatedtime()));
-			timePostLbl.setSizeUndefined();
-			timePostLbl.setStyleName("time-post");
-			rightHeader.addComponent(timePostLbl);
-
-			messageHeader.addComponent(leftHeader);
-			messageHeader.setExpandRatio(leftHeader, 1.0f);
-			messageHeader.addComponent(timePostLbl);
-			messageHeader.setWidth("100%");
-
-			rowLayout.addComponent(messageHeader);
-
-			Label messageContent = new Label(note.getNote(),
-					Label.CONTENT_XHTML);
-			messageContent.setStyleName("message-body");
-			rowLayout.addComponent(messageContent);
-
-			List<Attachment> attachments = note.getAttachments();
-			if (attachments != null && !attachments.isEmpty()) {
-				rowLayout.addComponent(new AttachmentDisplayComponent(
-						attachments));
-			}
-
-			layout.addComponent(rowLayout);
-			layout.setExpandRatio(rowLayout, 1.0f);
-			return layout;
-		}
-
-		private void displayComments() {
-			CommentSearchCriteria searchCriteria = new CommentSearchCriteria();
-			searchCriteria.setType(new StringSearchField(
-					CommentTypeConstants.CRM_NOTE));
-			searchCriteria.setTypeid(new NumberSearchField(note.getId()));
-			commentList.setSearchCriteria(searchCriteria);
-		}
-
 		@Override
 		public void reload() {
 			displayComments();
 			cancel();
 		}
-
-		@Override
-		public void cancel() {
-			if (commentInput != null) {
-				int compIndex = noteContentLayout
-						.getComponentIndex(commentInput);
-				if (compIndex >= 0) {
-					noteContentLayout.removeComponent(commentInput);
-					commentInput = null;
-					replyBtn.setVisible(true);
-				}
-			}
-		}
 	}
 
-	private class NoteEditor extends VerticalLayout {
+	private static final long serialVersionUID = 1L;
+	private String type;
+	private Integer typeid;
+	private BeanList<NoteService, NoteSearchCriteria, SimpleNote> noteList;
 
-		private static final long serialVersionUID = 1L;
-		private final RichTextArea noteArea;
+	private final NoteService noteService;
 
-		public NoteEditor() {
-			super();
-			this.setSpacing(true);
-			this.setMargin(true);
-			this.setWidth("600px");
+	private Button createBtn;
 
-			final AttachmentPanel attachments = new AttachmentPanel();
+	public NoteListItems(final String title) {
+		this(title, "", 0);
+	}
 
-			noteArea = new RichTextArea();
-			noteArea.setWidth("560px");
-			this.addComponent(noteArea);
-			this.addComponent(attachments);
+	public NoteListItems(final String title, final String type,
+			final Integer typeid) {
+		super(title, new VerticalLayout(), "100%");
+		this.setWidth("100%");
+		this.setMargin(false);
+		addStyleName("note-list");
 
-			HorizontalLayout controls = new HorizontalLayout();
-			controls.setSpacing(true);
-			controls.setWidth("100%");
+		noteService = AppContext.getSpringBean(NoteService.class);
+		this.type = type;
+		this.typeid = typeid;
 
-			MultiFileUploadExt uploadExt = new MultiFileUploadExt(attachments);
-			controls.addComponent(uploadExt);
-			controls.setComponentAlignment(uploadExt, Alignment.MIDDLE_LEFT);
-
-			Label emptySpace = new Label();
-			controls.addComponent(emptySpace);
-			controls.setExpandRatio(emptySpace, 1.0f);
-
-			Button cancelBtn = new Button("Cancel", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					addCreateBtn();
-				}
-			});
-			cancelBtn.setStyleName("link");
-			controls.addComponent(cancelBtn);
-			controls.setComponentAlignment(cancelBtn, Alignment.MIDDLE_RIGHT);
-
-			Button saveBtn = new Button("Post", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(ClickEvent event) {
-					Note note = new Note();
-					note.setCreateduser(AppContext.getUsername());
-					note.setNote((String) noteArea.getValue());
-					note.setSaccountid(AppContext.getAccountId());
-					note.setSubject("");
-					note.setType(type);
-					note.setTypeid(typeid);
-					note.setCreatedtime(new GregorianCalendar().getTime());
-					note.setLastupdatedtime(new GregorianCalendar().getTime());
-					int noteid = noteService.saveWithSession(note,
-							AppContext.getUsername());
-					attachments.saveContentsToRepo(
-							AttachmentConstants.CRM_NOTE_TYPE, noteid);
-					displayNotes();
-					addCreateBtn();
-				}
-			});
-			saveBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
-			controls.addComponent(saveBtn);
-			controls.setComponentAlignment(saveBtn, Alignment.MIDDLE_RIGHT);
-
-			this.addComponent(controls);
-		}
+		initUI();
 	}
 
 	private void addCreateBtn() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		Component component = contentContainer.getComponent(0);
+		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
+		final Component component = contentContainer.getComponent(0);
 		if (component instanceof NoteEditor) {
 			contentContainer.replaceComponent(component, createBtn);
 		}
+	}
+
+	private void displayNotes() {
+		final NoteSearchCriteria searchCriteria = new NoteSearchCriteria();
+		searchCriteria.setType(new StringSearchField(SearchField.AND, type));
+		searchCriteria.setTypeid(new NumberSearchField(typeid));
+		noteList.setSearchCriteria(searchCriteria);
+	}
+
+	private void initUI() {
+		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
+		contentContainer.setMargin(true);
+		contentContainer.setSpacing(true);
+		createBtn = new Button("New Note", new Button.ClickListener() {
+			private static final long serialVersionUID = 1L;
+
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				contentContainer.replaceComponent(createBtn, new NoteEditor());
+			}
+		});
+
+		createBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
+		createBtn.setIcon(new ThemeResource("icons/16/addRecord.png"));
+		contentContainer.addComponent(createBtn);
+
+		noteList = new BeanList<NoteService, NoteSearchCriteria, SimpleNote>(
+				noteService, NoteRowDisplayHandler.class);
+		noteList.setStyleName("noteList");
+		contentContainer.addComponent(noteList);
+		displayNotes();
+	}
+
+	public void showNotes(final String type, final int typeid) {
+		this.type = type;
+		this.typeid = typeid;
+		displayNotes();
 	}
 }

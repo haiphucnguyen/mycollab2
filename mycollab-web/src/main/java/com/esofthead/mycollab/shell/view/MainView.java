@@ -29,34 +29,56 @@ public final class MainView extends AbstractView {
 	private final CssLayout bodyLayout;
 
 	public MainView() {
-		this.setSizeFull();
+		setSizeFull();
 		this.addComponent(createTopMenu());
 		bodyLayout = new CssLayout();
 		bodyLayout.addStyleName("main-body");
 		bodyLayout.setWidth("100%");
 		bodyLayout.setHeight("100%");
 		this.addComponent(bodyLayout);
-		this.setExpandRatio(bodyLayout, 1.0f);
+		setExpandRatio(bodyLayout, 1.0f);
 		this.addComponent(createFooter());
-		this.setSizeFull();
+		setSizeFull();
 		ControllerRegistry.addController(new MainViewController(this));
 	}
 
+	public void addModule(final IModule module) {
+		ModuleHelper.setCurrentModule(module);
+		bodyLayout.removeAllComponents();
+		final LazyLoadWrapper comp = new LazyLoadWrapper(module.getWidget());
+		bodyLayout.addComponent(comp);
+	}
+
+	private CustomLayout createFooter() {
+		final CustomLayout footer = new CustomLayout("footer");
+		final Button sendFeedback = new Button("Feedback");
+		sendFeedback.setStyleName(UIConstants.THEME_BLUE_LINK);
+		sendFeedback.addListener(new ClickListener() {
+
+			@Override
+			public void buttonClick(final ClickEvent event) {
+				MainView.this.getWindow().addWindow(new FeedbackWindow());
+			}
+		});
+		footer.addComponent(sendFeedback, "footer-right");
+		return footer;
+	}
+
 	private CustomLayout createTopMenu() {
-		CustomLayout layout = new CustomLayout("topNavigation");
+		final CustomLayout layout = new CustomLayout("topNavigation");
 		layout.setStyleName("topNavigation");
 		layout.setHeight("40px");
 		layout.setWidth("100%");
 		final PopupButton serviceMenu = new PopupButton("Services");
 		serviceMenu.setStyleName("serviceMenu");
 		serviceMenu.addStyleName("topNavPopup");
-		VerticalLayout vLayout = new VerticalLayout();
+		final VerticalLayout vLayout = new VerticalLayout();
 		vLayout.setWidth("200px");
 
-		Button crmLink = new Button("Customer Management",
+		final Button crmLink = new Button("Customer Management",
 				new Button.ClickListener() {
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
 						EventBus.getInstance().fireEvent(
 								new ShellEvent.GotoCrmModule(this, null));
@@ -65,10 +87,10 @@ public final class MainView extends AbstractView {
 		crmLink.setStyleName("link");
 		vLayout.addComponent(crmLink);
 
-		Button prjLink = new Button("Project Management",
+		final Button prjLink = new Button("Project Management",
 				new Button.ClickListener() {
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						serviceMenu.setPopupVisible(false);
 						EventBus.getInstance().fireEvent(
 								new ShellEvent.GotoProjectModule(this, null));
@@ -80,48 +102,51 @@ public final class MainView extends AbstractView {
 		serviceMenu.addComponent(vLayout);
 		layout.addComponent(serviceMenu, "serviceMenu");
 
-		HorizontalLayout accountLayout = new HorizontalLayout();
+		final HorizontalLayout accountLayout = new HorizontalLayout();
 		accountLayout.addComponent(UserAvatarControlFactory
 				.createUserAvatarEmbeddedControl(AppContext.getUsername(), 24));
 
 		final PopupButton accountMenu = new PopupButton(AppContext.getSession()
 				.getDisplayName());
-		VerticalLayout accLayout = new VerticalLayout();
+		final VerticalLayout accLayout = new VerticalLayout();
 		accLayout.setWidth("120px");
 
-		Button myProfileBtn = new Button("Profile", new Button.ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				accountMenu.setPopupVisible(false);
-				EventBus.getInstance().fireEvent(
-						new ShellEvent.GotoUserAccountModule(this,
-								new String[] { "preview" }));
-			}
-		});
+		final Button myProfileBtn = new Button("Profile",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						accountMenu.setPopupVisible(false);
+						EventBus.getInstance().fireEvent(
+								new ShellEvent.GotoUserAccountModule(this,
+										new String[] { "preview" }));
+					}
+				});
 		myProfileBtn.setStyleName("link");
 		accLayout.addComponent(myProfileBtn);
 
-		Button myAccountBtn = new Button("Account", new Button.ClickListener() {
+		final Button myAccountBtn = new Button("Account",
+				new Button.ClickListener() {
 
-			@Override
-			public void buttonClick(ClickEvent event) {
-				accountMenu.setPopupVisible(false);
-				EventBus.getInstance().fireEvent(
-						new ShellEvent.GotoUserAccountModule(this,
-								new String[] { "billing" }));
-			}
-		});
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						accountMenu.setPopupVisible(false);
+						EventBus.getInstance().fireEvent(
+								new ShellEvent.GotoUserAccountModule(this,
+										new String[] { "billing" }));
+					}
+				});
 		myAccountBtn.setStyleName("link");
 		accLayout.addComponent(myAccountBtn);
 
-		Button signoutBtn = new Button("Sign out", new Button.ClickListener() {
-			@Override
-			public void buttonClick(ClickEvent event) {
-				AppContext.setSession(null, null, null);
-				EventBus.getInstance().fireEvent(
-						new ShellEvent.LogOut(this, null));
-			}
-		});
+		final Button signoutBtn = new Button("Sign out",
+				new Button.ClickListener() {
+					@Override
+					public void buttonClick(final ClickEvent event) {
+						AppContext.setSession(null, null, null);
+						EventBus.getInstance().fireEvent(
+								new ShellEvent.LogOut(this, null));
+					}
+				});
 		signoutBtn.setStyleName("link");
 		accLayout.addComponent(signoutBtn);
 
@@ -133,27 +158,5 @@ public final class MainView extends AbstractView {
 		layout.addComponent(accountLayout, "accountMenu");
 
 		return layout;
-	}
-
-	private CustomLayout createFooter() {
-		CustomLayout footer = new CustomLayout("footer");
-		Button sendFeedback = new Button("Feedback");
-		sendFeedback.setStyleName(UIConstants.THEME_ROUND_BUTTON);
-		sendFeedback.addListener(new ClickListener() {
-
-			@Override
-			public void buttonClick(ClickEvent event) {
-				MainView.this.getWindow().addWindow(new FeedbackWindow());
-			}
-		});
-		footer.addComponent(sendFeedback, "footer-right");
-		return footer;
-	}
-
-	public void addModule(IModule module) {
-		ModuleHelper.setCurrentModule(module);
-		bodyLayout.removeAllComponents();
-		LazyLoadWrapper comp = new LazyLoadWrapper(module.getWidget());
-		bodyLayout.addComponent(comp);
 	}
 }
