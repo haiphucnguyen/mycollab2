@@ -70,8 +70,8 @@ public class SalesDashboardView extends Depot {
 
 	private void initUI() {
 		final HorizontalLayout headerContainer = (HorizontalLayout) headerContent;
-		headerContainer.setWidth("100%");
-		headerContainer.setSpacing(true);
+		// headerContainer.setWidth("100%");
+		// ///headerContainer.setSpacing(true);
 		final Label emptySpace = new Label();
 		headerContainer.addComponent(emptySpace);
 		headerContainer.setExpandRatio(emptySpace, 1.0f);

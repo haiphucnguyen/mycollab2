@@ -30,31 +30,33 @@ public abstract class GenericChartWrapper<S extends SearchCriteria> extends
 	protected int width;
 	protected S searchCriteria;
 
-	public GenericChartWrapper(String title, int width, int height) {
+	public GenericChartWrapper(final String title, final int width,
+			final int height) {
 		this.width = width;
 		this.height = height;
 		this.title = title;
 	}
 
-	public void setSearchCriteria(S criteria) {
+	abstract protected JFreeChart createChart();
+
+	protected abstract ComponentContainer createLegendBox();
+
+	public void setSearchCriteria(final S criteria) {
 		this.searchCriteria = criteria;
 
-		JFreeChart chart = createChart();
-		JFreeChartWrapper chartWrapper = new JFreeChartWrapper(chart);
+		final JFreeChart chart = createChart();
+		final JFreeChartWrapper chartWrapper = new JFreeChartWrapper(chart);
 		chartWrapper.setHeight(height + "px");
 		chartWrapper.setWidth(width + "px");
 		chartWrapper.setGraphHeight(height);
 		chartWrapper.setGraphWidth(width);
 
-		this.removeAllComponents();
+		removeAllComponents();
+		chartWrapper.setStyleName("chart-wrapper");
 		this.addComponent(chartWrapper);
 		this.setComponentAlignment(chartWrapper, Alignment.MIDDLE_CENTER);
-		Component legendBox = createLegendBox();
+		final Component legendBox = createLegendBox();
 		this.addComponent(legendBox);
 		this.setComponentAlignment(legendBox, Alignment.MIDDLE_CENTER);
 	}
-
-	abstract protected JFreeChart createChart();
-
-	protected abstract ComponentContainer createLegendBox();
 }

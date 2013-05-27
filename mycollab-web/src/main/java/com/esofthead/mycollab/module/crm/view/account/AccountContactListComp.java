@@ -46,46 +46,36 @@ public class AccountContactListComp extends
 		initUI();
 	}
 
-	public void displayContacts(Account account) {
+	public void displayContacts(final Account account) {
 		this.account = account;
 		loadContacts();
 	}
 
-	private void loadContacts() {
-		ContactSearchCriteria criteria = new ContactSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		criteria.setAccountId(new NumberSearchField(SearchField.AND, account
-				.getId()));
-		this.setSearchCriteria(criteria);
-	}
-
 	@SuppressWarnings("serial")
 	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setSpacing(true);
+		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
 
 		final SplitButton controlsBtn = new SplitButton();
 		controlsBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
-		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
+		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsBtn.setCaption("New Contact");
 		controlsBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
 		controlsBtn
 				.addClickListener(new SplitButton.SplitButtonClickListener() {
 					@Override
 					public void splitButtonClick(
-							SplitButton.SplitButtonClickEvent event) {
+							final SplitButton.SplitButtonClickEvent event) {
 						fireNewRelatedItem("");
 					}
 				});
-		Button selectBtn = new Button("Select from existing contacts",
+		final Button selectBtn = new Button("Select from existing contacts",
 				new Button.ClickListener() {
 					@Override
-					public void buttonClick(ClickEvent event) {
-						AccountContactSelectionWindow contactsWindow = new AccountContactSelectionWindow(
+					public void buttonClick(final ClickEvent event) {
+						final AccountContactSelectionWindow contactsWindow = new AccountContactSelectionWindow(
 								AccountContactListComp.this);
-						ContactSearchCriteria criteria = new ContactSearchCriteria();
+						final ContactSearchCriteria criteria = new ContactSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
 						getWindow().addWindow(contactsWindow);
@@ -97,7 +87,7 @@ public class AccountContactListComp extends
 		selectBtn.setStyleName("link");
 		controlsBtn.addComponent(selectBtn);
 
-		contentContainer.addComponent(controlsBtn);
+		addHeaderElement(controlsBtn);
 
 		tableItem = new ContactTableDisplay(
 				new String[] { "contactName", "title", "email", "officephone",
@@ -122,8 +112,9 @@ public class AccountContactListComp extends
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						SimpleContact contact = (SimpleContact) event.getData();
+					public void handle(final TableClickEvent event) {
+						final SimpleContact contact = (SimpleContact) event
+								.getData();
 						if ("contactName".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(
 									new ContactEvent.GotoRead(
@@ -135,64 +126,68 @@ public class AccountContactListComp extends
 
 		tableItem.addGeneratedColumn("id", new ColumnGenerator() {
 			@Override
-			public Object generateCell(Table source, Object itemId,
-					Object columnId) {
+			public Object generateCell(final Table source, final Object itemId,
+					final Object columnId) {
 				final SimpleContact contact = tableItem.getBeanByIndex(itemId);
-				HorizontalLayout controlLayout = new HorizontalLayout();
-				Button editBtn = new Button(null, new Button.ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						EventBus.getInstance().fireEvent(
-								new ContactEvent.GotoRead(
-										AccountContactListComp.this, contact
-												.getId()));
-					}
-				});
+				final HorizontalLayout controlLayout = new HorizontalLayout();
+				final Button editBtn = new Button(null,
+						new Button.ClickListener() {
+							@Override
+							public void buttonClick(final ClickEvent event) {
+								EventBus.getInstance().fireEvent(
+										new ContactEvent.GotoRead(
+												AccountContactListComp.this,
+												contact.getId()));
+							}
+						});
 				editBtn.setStyleName("link");
 				editBtn.setIcon(new ThemeResource("icons/16/edit.png"));
 				controlLayout.addComponent(editBtn);
 
 				ConfirmDialog.setFactory(new ConfirmDialogFactory());
-				Button deleteBtn = new Button(null, new Button.ClickListener() {
-					@Override
-					public void buttonClick(ClickEvent event) {
-						ConfirmDialog.show(
-								AppContext.getApplication().getMainWindow(),
-								LocalizationHelper
-										.getMessage(
-												GenericI18Enum.DELETE_DIALOG_TITLE,
-												ApplicationProperties
-														.getProperty(ApplicationProperties.SITE_NAME)),
-								LocalizationHelper
-										.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-								new ConfirmDialog.Listener() {
-									private static final long serialVersionUID = 1L;
+				final Button deleteBtn = new Button(null,
+						new Button.ClickListener() {
+							@Override
+							public void buttonClick(final ClickEvent event) {
+								ConfirmDialog.show(
+										AppContext.getApplication()
+												.getMainWindow(),
+										LocalizationHelper
+												.getMessage(
+														GenericI18Enum.DELETE_DIALOG_TITLE,
+														ApplicationProperties
+																.getProperty(ApplicationProperties.SITE_NAME)),
+										LocalizationHelper
+												.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+										new ConfirmDialog.Listener() {
+											private static final long serialVersionUID = 1L;
 
-									@Override
-									public void onClose(ConfirmDialog dialog) {
-										if (dialog.isConfirmed()) {
-											AccountService accountService = AppContext
-													.getSpringBean(AccountService.class);
-											AccountContact associateContact = new AccountContact();
-											associateContact
-													.setAccountid(account
-															.getId());
-											associateContact
-													.setContactid(contact
-															.getId());
-											accountService
-													.removeAccountContactRelationship(associateContact);
-											AccountContactListComp.this
-													.refresh();
-										}
-									}
-								});
-					}
-				});
+											@Override
+											public void onClose(
+													final ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													final AccountService accountService = AppContext
+															.getSpringBean(AccountService.class);
+													final AccountContact associateContact = new AccountContact();
+													associateContact
+															.setAccountid(account
+																	.getId());
+													associateContact
+															.setContactid(contact
+																	.getId());
+													accountService
+															.removeAccountContactRelationship(associateContact);
+													AccountContactListComp.this
+															.refresh();
+												}
+											}
+										});
+							}
+						});
 				deleteBtn.setStyleName("link");
 				deleteBtn.setIcon(new ThemeResource("icons/16/delete.png"));
 				controlLayout.addComponent(deleteBtn);
@@ -203,13 +198,22 @@ public class AccountContactListComp extends
 
 	}
 
-	@Override
-	public void setSelectedItems(Set selectedItems) {
-		fireSelectedRelatedItems(selectedItems);
+	private void loadContacts() {
+		final ContactSearchCriteria criteria = new ContactSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		criteria.setAccountId(new NumberSearchField(SearchField.AND, account
+				.getId()));
+		setSearchCriteria(criteria);
 	}
 
 	@Override
 	public void refresh() {
 		loadContacts();
+	}
+
+	@Override
+	public void setSelectedItems(final Set selectedItems) {
+		fireSelectedRelatedItems(selectedItems);
 	}
 }

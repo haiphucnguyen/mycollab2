@@ -89,7 +89,6 @@ public class ActivityStreamPanel extends Depot {
 
 	public ActivityStreamPanel() {
 		super("Activity Channels", new VerticalLayout(), "100%");
-		header.setMargin(true);
 		activityStreamList = new DefaultBeanPagedList<ActivityStreamService, ActivityStreamSearchCriteria, SimpleActivityStream>(
 				AppContext.getSpringBean(ActivityStreamService.class),
 				ActivityStreamRowDisplayHandler.class, 10);

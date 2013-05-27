@@ -56,7 +56,7 @@ public class EventRelatedItemListComp extends
 					.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
 			newTaskBtn.setEnabled(AppContext
 					.canWrite(RolePermissionCollections.CRM_TASK));
-			newTaskBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+			newTaskBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 			buttonControls.addComponent(newTaskBtn);
 
 			final Button newCallBtn = new Button("New Call",
@@ -70,7 +70,7 @@ public class EventRelatedItemListComp extends
 					.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
 			newCallBtn.setEnabled(AppContext
 					.canWrite(RolePermissionCollections.CRM_CALL));
-			newCallBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
+			newCallBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 			buttonControls.addComponent(newCallBtn);
 
 			final Button newMeetingBtn = new Button("New Meeting",
@@ -84,10 +84,10 @@ public class EventRelatedItemListComp extends
 					"icons/16/addRecordGreen.png"));
 			newMeetingBtn.setEnabled(AppContext
 					.canWrite(RolePermissionCollections.CRM_MEETING));
-			newMeetingBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
+			newMeetingBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 			buttonControls.addComponent(newMeetingBtn);
 
-			contentContainer.addComponent(buttonControls);
+			addHeaderElement(buttonControls);
 		}
 
 		tableItem = new EventTableDisplay(new String[] { "status", "eventType",
@@ -122,6 +122,7 @@ public class EventRelatedItemListComp extends
 				});
 
 		contentContainer.addComponent(tableItem);
+		contentContainer.setSpacing(false);
 	}
 
 	@Override

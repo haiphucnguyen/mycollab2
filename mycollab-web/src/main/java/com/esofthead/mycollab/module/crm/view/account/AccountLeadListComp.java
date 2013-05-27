@@ -46,26 +46,16 @@ public class AccountLeadListComp extends
 		initUI();
 	}
 
-	public void displayLeads(Account account) {
+	public void displayLeads(final Account account) {
 		this.account = account;
 		loadLeads();
 	}
 
-	private void loadLeads() {
-		LeadSearchCriteria criteria = new LeadSearchCriteria();
-		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
-				AppContext.getAccountId()));
-		criteria.setAccountId(new NumberSearchField(SearchField.AND, account
-				.getId()));
-		this.setSearchCriteria(criteria);
-	}
-
 	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setSpacing(true);
+		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
 
 		final SplitButton controlsBtn = new SplitButton();
-		controlsBtn.addStyleName(UIConstants.SPLIT_BUTTON);
+		controlsBtn.addStyleName(UIConstants.THEME_BLUE_LINK);
 		controlsBtn.setCaption("New Lead");
 		controlsBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
 		controlsBtn.setEnabled(AppContext
@@ -76,19 +66,19 @@ public class AccountLeadListComp extends
 
 					@Override
 					public void splitButtonClick(
-							SplitButton.SplitButtonClickEvent event) {
+							final SplitButton.SplitButtonClickEvent event) {
 						fireNewRelatedItem("");
 					}
 				});
-		Button selectBtn = new Button("Select from existing leads",
+		final Button selectBtn = new Button("Select from existing leads",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
-						AccountLeadSelectionWindow leadsWindow = new AccountLeadSelectionWindow(
+					public void buttonClick(final ClickEvent event) {
+						final AccountLeadSelectionWindow leadsWindow = new AccountLeadSelectionWindow(
 								AccountLeadListComp.this);
-						LeadSearchCriteria criteria = new LeadSearchCriteria();
+						final LeadSearchCriteria criteria = new LeadSearchCriteria();
 						criteria.setSaccountid(new NumberSearchField(AppContext
 								.getAccountId()));
 						getWindow().addWindow(leadsWindow);
@@ -100,7 +90,7 @@ public class AccountLeadListComp extends
 		selectBtn.setStyleName("link");
 		controlsBtn.addComponent(selectBtn);
 
-		contentContainer.addComponent(controlsBtn);
+		addHeaderElement(controlsBtn);
 
 		tableItem = new LeadTableDisplay(
 				new String[] { "leadName", "status", "officephone", "email",
@@ -127,8 +117,8 @@ public class AccountLeadListComp extends
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						SimpleLead lead = (SimpleLead) event.getData();
+					public void handle(final TableClickEvent event) {
+						final SimpleLead lead = (SimpleLead) event.getData();
 						if ("leadName".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(
 									new LeadEvent.GotoRead(this, lead.getId()));
@@ -140,65 +130,71 @@ public class AccountLeadListComp extends
 			private static final long serialVersionUID = 1L;
 
 			@Override
-			public Object generateCell(Table source, Object itemId,
-					Object columnId) {
-				final SimpleLead lead = (SimpleLead) tableItem
-						.getBeanByIndex(itemId);
-				HorizontalLayout controlLayout = new HorizontalLayout();
-				Button editBtn = new Button(null, new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+			public Object generateCell(final Table source, final Object itemId,
+					final Object columnId) {
+				final SimpleLead lead = tableItem.getBeanByIndex(itemId);
+				final HorizontalLayout controlLayout = new HorizontalLayout();
+				final Button editBtn = new Button(null,
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						EventBus.getInstance()
-								.fireEvent(
+							@Override
+							public void buttonClick(final ClickEvent event) {
+								EventBus.getInstance().fireEvent(
 										new LeadEvent.GotoRead(
 												AccountLeadListComp.this, lead
 														.getId()));
-					}
-				});
+							}
+						});
 				editBtn.setStyleName("link");
 				editBtn.setIcon(new ThemeResource("icons/16/edit.png"));
 				controlLayout.addComponent(editBtn);
 
-				Button deleteBtn = new Button(null, new Button.ClickListener() {
-					private static final long serialVersionUID = 1L;
+				final Button deleteBtn = new Button(null,
+						new Button.ClickListener() {
+							private static final long serialVersionUID = 1L;
 
-					@Override
-					public void buttonClick(ClickEvent event) {
-						ConfirmDialog.show(
-								AppContext.getApplication().getMainWindow(),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.DELETE_DIALOG_TITLE,
-												ApplicationProperties
-												.getProperty(ApplicationProperties.SITE_NAME)),
-								LocalizationHelper
-										.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
-								LocalizationHelper
-										.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
-								new ConfirmDialog.Listener() {
-									private static final long serialVersionUID = 1L;
+							@Override
+							public void buttonClick(final ClickEvent event) {
+								ConfirmDialog.show(
+										AppContext.getApplication()
+												.getMainWindow(),
+										LocalizationHelper
+												.getMessage(
+														GenericI18Enum.DELETE_DIALOG_TITLE,
+														ApplicationProperties
+																.getProperty(ApplicationProperties.SITE_NAME)),
+										LocalizationHelper
+												.getMessage(CrmCommonI18nEnum.DIALOG_DELETE_RELATIONSHIP_TITLE),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_YES_LABEL),
+										LocalizationHelper
+												.getMessage(GenericI18Enum.BUTTON_NO_LABEL),
+										new ConfirmDialog.Listener() {
+											private static final long serialVersionUID = 1L;
 
-									@Override
-									public void onClose(ConfirmDialog dialog) {
-										if (dialog.isConfirmed()) {
-											AccountService accountService = AppContext
-													.getSpringBean(AccountService.class);
-											AccountLead associateLead = new AccountLead();
-											associateLead.setAccountid(account
-													.getId());
-											associateLead.setLeadid(lead
-													.getId());
-											accountService
-													.removeAccountLeadRelationship(associateLead);
-											AccountLeadListComp.this.refresh();
-										}
-									}
-								});
-					}
-				});
+											@Override
+											public void onClose(
+													final ConfirmDialog dialog) {
+												if (dialog.isConfirmed()) {
+													final AccountService accountService = AppContext
+															.getSpringBean(AccountService.class);
+													final AccountLead associateLead = new AccountLead();
+													associateLead
+															.setAccountid(account
+																	.getId());
+													associateLead
+															.setLeadid(lead
+																	.getId());
+													accountService
+															.removeAccountLeadRelationship(associateLead);
+													AccountLeadListComp.this
+															.refresh();
+												}
+											}
+										});
+							}
+						});
 				deleteBtn.setStyleName("link");
 				deleteBtn.setIcon(new ThemeResource("icons/16/delete.png"));
 				controlLayout.addComponent(deleteBtn);
@@ -209,13 +205,22 @@ public class AccountLeadListComp extends
 		contentContainer.addComponent(tableItem);
 	}
 
-	@Override
-	public void setSelectedItems(Set<SimpleLead> selectedItems) {
-		fireSelectedRelatedItems(selectedItems);
+	private void loadLeads() {
+		final LeadSearchCriteria criteria = new LeadSearchCriteria();
+		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
+				AppContext.getAccountId()));
+		criteria.setAccountId(new NumberSearchField(SearchField.AND, account
+				.getId()));
+		setSearchCriteria(criteria);
 	}
 
 	@Override
 	public void refresh() {
 		loadLeads();
+	}
+
+	@Override
+	public void setSelectedItems(final Set<SimpleLead> selectedItems) {
+		fireSelectedRelatedItems(selectedItems);
 	}
 }

@@ -32,24 +32,23 @@ public class AccountOpportunityListComp extends
 	}
 
 	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
-		contentContainer.setSpacing(true);
+		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
 
-		Button newBtn = new Button("New Opportunity",
+		final Button newBtn = new Button("New Opportunity",
 				new Button.ClickListener() {
 					private static final long serialVersionUID = 1L;
 
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						fireNewRelatedItem("");
 					}
 				});
 		newBtn.setIcon(new ThemeResource("icons/16/addRecordGreen.png"));
-		newBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
+		newBtn.setStyleName(UIConstants.THEME_BLUE_LINK);
 		newBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
 
-		contentContainer.addComponent(newBtn);
+		addHeaderElement(newBtn);
 
 		tableItem = new OpportunityTableDisplay(
 				new String[] { "opportunityname", "salesstage", "amount",
@@ -74,8 +73,8 @@ public class AccountOpportunityListComp extends
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						SimpleOpportunity opportunity = (SimpleOpportunity) event
+					public void handle(final TableClickEvent event) {
+						final SimpleOpportunity opportunity = (SimpleOpportunity) event
 								.getData();
 						if ("opportunityname".equals(event.getFieldName())) {
 							EventBus.getInstance().fireEvent(

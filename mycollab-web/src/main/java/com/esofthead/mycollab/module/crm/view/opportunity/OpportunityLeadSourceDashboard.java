@@ -31,27 +31,27 @@ public class OpportunityLeadSourceDashboard extends
 		PieChartWrapper<OpportunitySearchCriteria> {
 
 	public OpportunityLeadSourceDashboard() {
-		this(390, 278);
+		this(400, 265);
 	}
-	
-	public OpportunityLeadSourceDashboard(int width, int height) {
-		super("Deals By Sources", width, height); //530, 350
+
+	public OpportunityLeadSourceDashboard(final int width, final int height) {
+		super("Deals By Sources", width, height); // 530, 350
 	}
 
 	@Override
 	protected DefaultPieDataset createDataset() {
 		final DefaultPieDataset dataset = new DefaultPieDataset();
 
-		OpportunityService opportunityService = AppContext
+		final OpportunityService opportunityService = AppContext
 				.getSpringBean(OpportunityService.class);
 
-		List<GroupItem> groupItems = opportunityService
+		final List<GroupItem> groupItems = opportunityService
 				.getLeadSourcesSummary(searchCriteria);
 
-		String[] leadSources = CrmDataTypeFactory.getLeadSourceList();
-		for (String source : leadSources) {
+		final String[] leadSources = CrmDataTypeFactory.getLeadSourceList();
+		for (final String source : leadSources) {
 			boolean isFound = false;
-			for (GroupItem item : groupItems) {
+			for (final GroupItem item : groupItems) {
 				if (source.equals(item.getGroupid())) {
 					dataset.setValue(source, item.getValue());
 					isFound = true;
@@ -71,10 +71,10 @@ public class OpportunityLeadSourceDashboard extends
 	protected ComponentContainer createLegendBox() {
 		return PieChartDescriptionBox.createLegendBox(this, pieDataSet);
 	}
-	
+
 	@Override
-	protected void onClickedDescription(String key) {
-		OpportunitySearchCriteria searchCriteria = new OpportunitySearchCriteria();
+	protected void onClickedDescription(final String key) {
+		final OpportunitySearchCriteria searchCriteria = new OpportunitySearchCriteria();
 		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
 		searchCriteria.setLeadSources(new SetSearchField<String>(

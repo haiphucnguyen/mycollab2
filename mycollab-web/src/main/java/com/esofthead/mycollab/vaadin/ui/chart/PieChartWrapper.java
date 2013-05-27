@@ -11,6 +11,7 @@ import org.jfree.chart.ChartFactory;
 import org.jfree.chart.JFreeChart;
 import org.jfree.chart.plot.PiePlot3D;
 import org.jfree.data.general.DefaultPieDataset;
+import org.jfree.ui.RectangleInsets;
 import org.jfree.util.Rotation;
 
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
@@ -25,15 +26,16 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends
 
 	protected DefaultPieDataset pieDataSet;
 
-	public PieChartWrapper(String title, int width, int height) {
+	public PieChartWrapper(final String title, final int width, final int height) {
 		super(title, width, height);
 	}
 
+	@Override
 	protected JFreeChart createChart() {
 		// create the chart...
 		pieDataSet = createDataset();
-		final JFreeChart chart = ChartFactory.createPieChart3D(title, // chart
-																		// title
+		final JFreeChart chart = ChartFactory.createPieChart3D("", // chart
+																	// title
 				pieDataSet, // data
 				false, // include legend
 				true, // tooltips?
@@ -41,10 +43,12 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends
 				);
 
 		// NOW DO SOME OPTIONAL CUSTOMISATION OF THE CHART...
-		 chart.getTitle().setPaint(new Color(0x5E5E5E));
-		 
+		chart.getTitle().setPaint(new Color(0x5E5E5E));
+		chart.setBorderVisible(false);
 		// set the background color for the chart...
 		final PiePlot3D plot = (PiePlot3D) chart.getPlot();
+		plot.setOutlineVisible(false);
+		plot.setInsets(RectangleInsets.ZERO_INSETS);
 		plot.setStartAngle(290);
 		plot.setBackgroundPaint(Color.white);
 		plot.setDirection(Rotation.CLOCKWISE);
@@ -52,16 +56,18 @@ public abstract class PieChartWrapper<S extends SearchCriteria> extends
 		plot.setNoDataMessage("No data to display");
 		plot.setLabelGenerator(new JFreeChartLabelCustom());
 
-		List keys = pieDataSet.getKeys();
+		final List keys = pieDataSet.getKeys();
 		for (int i = 0; i < keys.size(); i++) {
-			Comparable key = (Comparable) keys.get(i);
-			plot.setSectionPaint(key, Color.decode("0x" + CHART_COLOR_STR[i % CHART_COLOR_STR.length]));
+			final Comparable key = (Comparable) keys.get(i);
+			plot.setSectionPaint(key, Color.decode("0x"
+					+ GenericChartWrapper.CHART_COLOR_STR[i
+							% GenericChartWrapper.CHART_COLOR_STR.length]));
 		}
 		// OPTIONAL CUSTOMISATION COMPLETED.
 		return chart;
 	}
 
 	protected abstract DefaultPieDataset createDataset();
-	
+
 	protected abstract void onClickedDescription(String key);
 }

@@ -31,10 +31,10 @@ public class OpportunitySalesStageDashboard extends
 	private static final long serialVersionUID = 1L;
 
 	public OpportunitySalesStageDashboard() {
-		this(390, 278);
+		this(400, 265);
 	}
 
-	public OpportunitySalesStageDashboard(int width, int height) {
+	public OpportunitySalesStageDashboard(final int width, final int height) {
 		super("Deals By Stages", width, height);
 	}
 
@@ -43,17 +43,17 @@ public class OpportunitySalesStageDashboard extends
 		// create the dataset...
 		final DefaultPieDataset dataset = new DefaultPieDataset();
 
-		OpportunityService opportunityService = AppContext
+		final OpportunityService opportunityService = AppContext
 				.getSpringBean(OpportunityService.class);
 
-		List<GroupItem> groupItems = opportunityService
+		final List<GroupItem> groupItems = opportunityService
 				.getSalesStageSummary(searchCriteria);
 
-		String[] salesStages = CrmDataTypeFactory
+		final String[] salesStages = CrmDataTypeFactory
 				.getOpportunitySalesStageList();
-		for (String status : salesStages) {
+		for (final String status : salesStages) {
 			boolean isFound = false;
-			for (GroupItem item : groupItems) {
+			for (final GroupItem item : groupItems) {
 				if (status.equals(item.getGroupid())) {
 					dataset.setValue(status, item.getValue());
 					isFound = true;
@@ -75,8 +75,8 @@ public class OpportunitySalesStageDashboard extends
 	}
 
 	@Override
-	protected void onClickedDescription(String key) {
-		OpportunitySearchCriteria searchCriteria = new OpportunitySearchCriteria();
+	protected void onClickedDescription(final String key) {
+		final OpportunitySearchCriteria searchCriteria = new OpportunitySearchCriteria();
 		searchCriteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
 		searchCriteria.setSalesStages(new SetSearchField<String>(

@@ -57,7 +57,7 @@ public class NoteListItems extends Depot {
 			final AttachmentPanel attachments = new AttachmentPanel();
 
 			noteArea = new RichTextArea();
-			noteArea.setWidth("560px");
+			noteArea.setWidth("100%");
 			this.addComponent(noteArea);
 			this.addComponent(attachments);
 

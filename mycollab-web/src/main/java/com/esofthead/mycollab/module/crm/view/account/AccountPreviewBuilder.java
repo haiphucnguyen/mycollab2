@@ -181,6 +181,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 			accountAddLayout.addControlButtons(optionalActionControls);
 
 			accountInformation = new VerticalLayout();
+			accountInformation.addStyleName("main-info");
 			final Layout actionControls = PreviewFormControlsGenerator2
 					.createFormControls(previewForm,
 							RolePermissionCollections.CRM_ACCOUNT);

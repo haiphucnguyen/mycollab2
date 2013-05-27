@@ -485,11 +485,7 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	background: -o-linear-gradient(top, #2d95ca 0, #3daad6 100%);
 	background: -ms-linear-gradient(top, #2d95ca 0, #3daad6 100%);
 	background: linear-gradient(to bottom, #2d95ca 0, #3daad6 100%);
-	filter: progid :           DXImageTransform.Microsoft.gradient (       
-		   startColorstr =     
-		     '#2D95CA', endColorstr =           '#3DAAD6', GradientType =
-		        
-		 0 );
+	filter: progid : DXImageTransform.Microsoft.gradient (startColorstr = '#2D95CA', endColorstr = '#3DAAD6', GradientType = 0 );
 	/*     box-shadow: 0px 0px 2px 2px #444; */
 }
 
@@ -1446,10 +1442,10 @@ input.v-textfield-errorField {
 .depotComp {
 	margin-top: 30px;
 }
-.v-horizontallayout-depotHeader .v-horizontallayout-margin {
-	padding: 7px;
+.depotComp .v-verticallayout-header-wrapper .v-verticallayout-margin {
+	padding: 5px 10px 5px 5px;
 }
-.depotComp .depotHeader {
+.depotComp .header-wrapper {
 	border-width: 1px 1px 0px;
 	border-style: solid;
 	border-color: #a9a9a9;
@@ -1460,7 +1456,7 @@ input.v-textfield-errorField {
 	background: url('icons/grad-light-top2.png') repeat-x 0 0 #e4e4e4;
 }
 
-.depotComp.collapsed .depotHeader {
+.depotComp.collapsed .header-wrapper {
 	border-width: 1px;
 }
 
@@ -1470,8 +1466,8 @@ input.v-textfield-errorField {
 	cursor: pointer;
 }
 
-.depotComp .depot-title .v-csslayout-margin {
-	margin-left: 18px;
+.depotComp .depot-title .v-verticallayout-margin {
+	padding: 0px;
 }
 
 .depotComp.collapsed .depot-title {
@@ -1479,7 +1475,7 @@ input.v-textfield-errorField {
 		transparent;
 }
 
-.depotHeader .h2 {
+.depotHeader .h2, .readview-layout-body .depotHeader .h2 {
 	border: 0px;
 	color: #444;
 	text-shadow: #F0F0F0 0 1px 0;
@@ -1830,7 +1826,7 @@ input.v-textfield-errorField {
 /* End Tabsheet Styles */
 
 /* Activity Stream Channel */
-.depotComp.activity-panel .depotHeader {
+.depotComp.activity-panel .header-wrapper {
 	border-bottom: 1px solid #a9a9a9;
 }
 .activity-stream {
@@ -2035,6 +2031,15 @@ input.v-textfield-errorField {
 .v-splitbutton-esofthead .v-button.v-button-esofthead.v-popupbutton .v-button-wrap,.v-splitbutton-esofthead .v-button.v-button-esofthead.v-popupbutton:active .v-button-wrap
 	{
 	padding: 4px 8px 4px 2px;
+}
+.v-splitbutton .bluebtn {
+	margin: 0px;
+	border-radius: 3px 0px 0px 3px;
+}
+.v-splitbutton .v-popupbutton.bluebtn {
+	border-width: 1px 1px 1px 0px;
+	border-right: 1px solid #093768;
+	border-radius: 0px 3px 3px 0px;
 }
 /* End Split button*/
 
@@ -2685,7 +2690,7 @@ div.v-lazyloadingwrapper-loading {
 }
 
 .v-csslayout.border-box>.v-csslayout-margin {
-	border: 1px solid #444;
+	border: 1px solid #a9a9a9;
 	padding-right: 5px;
 }
 
@@ -2912,7 +2917,32 @@ div.v-lazyloadingwrapper-loading {
 .legendBoxContent .v-button .v-button-caption {
 	line-height: 20px;
 }
+table.legendBox {
+	border-spacing: 0px;
+	border-collapse: collapse;	
+}
+table.legendBox .legendBoxContent {
+	padding: 0px;
+	background: #f5f5f5;
+	background: -moz-linear-gradient(top, #f5f5f5 0, #e2e2e2 100%);
+	background: -webkit-gradient(linear, left top, left bottom, color-stop(0%, #f5f5f5),
+		color-stop(100%, #e2e2e2) );
+	background: -webkit-linear-gradient(top, #f5f5f5 0, #e2e2e2 100%);
+	background: -o-linear-gradient(top, #f5f5f5 0, #e2e2e2 100%);
+	background: -ms-linear-gradient(top, #f5f5f5 0, #e2e2e2 100%);
+	background: linear-gradient(to bottom, #f5f5f5 0, #e2e2e2 100%);
+	filter: progid : DXImageTransform.Microsoft.gradient (startColorstr = '#F5F5F5', endColorstr = '#E2E2E2', GradientType = 0 );
+}
+.chart-wrapper {
+	border-width: 1px 1px 0px;
+	border-style: solid;
+	border-color: #a9a9a9;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
 /* End Pie Chart Legend Box */
+
 /* Project Member Block */
 .member-block {
 	display: inline-block;
@@ -3185,28 +3215,32 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .readview-layout-body .v-gridlayout-margin .gridform-field {
 	background-color: #e5eff0;
 }
-.readview-layout-body .depotComp {
+.readview-layout-body .main-info .depotComp {
 	margin-top: 0px;
 }
-.readview-layout-body .depotComp .v-horizontallayout-depotHeader .v-horizontallayout-margin {
+.readview-layout-body .main-info .depotComp .v-verticallayout-header-wrapper .v-verticallayout-margin {
 	padding: 0px;
 }
-.readview-layout-body .depotComp .depotHeader {
+.readview-layout-body .main-info .depotComp .header-wrapper {
 	border: none;
 	padding-bottom: 0px;
 	background: none;
 }
-.readview-layout-body .depotComp .depotHeader .h2 {
+.readview-layout-body .main-info .depotComp .depotHeader .h2 {
 	color: rgb(69, 69, 69);
 	font-weight: bold;
+	padding: 8px 0px 8px 18px;
+	font-size: 12px;
+	border-bottom: 1px solid #a9a9a9;
+	color: rgb(69, 69, 69);
 }
-.readview-layout-body .depotComp.collapsed .depotHeader .h2 {
+.readview-layout-body .main-info .depotComp.collapsed .depotHeader .h2 {
 	border-bottom: none;
 }
-.readview-layout-body .depotComp .depot-title {
+.readview-layout-body .main-info .depotComp .depot-title {
 	background-position: left center;
 }
-.readview-layout-body .depotComp .depot-title .v-csslayout-margin {
+.readview-layout-body .main-info .depotComp .depot-title .v-csslayout-margin {
 	margin-left: 0px;
 }
 
