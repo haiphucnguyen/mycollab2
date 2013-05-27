@@ -158,8 +158,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
 				@Override
 				public void setItemDataSource(final Item newDataSource) {
-					setFormLayoutFactory(new AccountFormLayoutFactory.AccountInformationLayout(
-							true));
+					setFormLayoutFactory(new AccountFormLayoutFactory.AccountInformationLayout());
 					setFormFieldFactory(new AccountFormFieldFactory());
 					super.setItemDataSource(newDataSource);
 					accountAddLayout.setTitle(account.getAccountname());

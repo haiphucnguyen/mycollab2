@@ -11,7 +11,7 @@
     </parent>
     <packaging>war</packaging>
     <properties>
-        <vaadinVersion>6.8.10</vaadinVersion>
+        <vaadinVersion>6.8.11</vaadinVersion>
         <gwtversion>2.3.0</gwtversion>
     </properties>
 
@@ -19,6 +19,12 @@
         <dependency>
             <groupId>com.esofthead.mycollab</groupId>
             <artifactId>mycollab-core</artifactId>
+            <version>1.0-SNAPSHOT</version>
+        </dependency>
+        
+        <dependency>
+            <groupId>com.esofthead.mycollab</groupId>
+            <artifactId>mycollab-jackrabbit</artifactId>
             <version>1.0-SNAPSHOT</version>
         </dependency>
 
@@ -210,13 +216,8 @@
             <version>3.1-b01</version>
             <scope>provided</scope>
         </dependency>
-<!-- 
-        <dependency>
-            <groupId>com.carbonfive</groupId>
-            <artifactId>db-migration</artifactId>
-            <version>0.9.7</version>
-        </dependency>
--->
+        <!-- <dependency> <groupId>com.carbonfive</groupId> <artifactId>db-migration</artifactId> 
+            <version>0.9.7</version> </dependency> -->
         <dependency>
             <groupId>com.googlecode.flyway</groupId>
             <artifactId>flyway-core</artifactId>
@@ -348,6 +349,7 @@
             <artifactId>org.restlet.ext.xml</artifactId>
             <version>2.1.2</version>
         </dependency>
+
     </dependencies>
     <build>
         <plugins>
@@ -370,21 +372,16 @@
                 <executions>
                     <!-- <execution> <id>Crm Artifacts Generator</id> <phase>compile</phase> 
                         <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CrmGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution>--> 
-                        <!-- 
-                        <execution> <id>User 
-                        Artifacts Generator</id> <phase>compile</phase> <goals> <goal>generate</goal> 
-                        </goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution>
-                        -->
-                        <!--   <execution> <id>File 
-                        Artifacts Generator</id> <phase>compile</phase> <goals> <goal>generate</goal> 
-                        </goals> <configuration> <configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
+                    <!-- <execution> <id>User Artifacts Generator</id> <phase>compile</phase> 
+                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/UserGeneratorConfig.xml</configurationFile> 
+                        <overwrite>true</overwrite> </configuration> </execution> -->
+                    <!-- <execution> <id>File Artifacts Generator</id> <phase>compile</phase> 
+                        <goals> <goal>generate</goal> </goals> <configuration> <configurationFile>${basedir}/src/main/resources/FileGeneratorConfig.xml</configurationFile> 
                         <overwrite>true</overwrite> </configuration> </execution> <execution> <id>Common 
                         Artifacts Generator</id> <phase>compile</phase> <goals> <goal>generate</goal> 
                         </goals> <configuration> <configurationFile>${basedir}/src/main/resources/CommonGeneratorConfig.xml</configurationFile> 
-                        <overwrite>true</overwrite> </configuration> </execution> 
-                        -->
+                        <overwrite>true</overwrite> </configuration> </execution> -->
                     <!-- <execution> <id>Project Artifacts Generator</id> 
                         <phase>compile</phase> <goals> <goal>generate</goal> </goals> <configuration> 
                         <configurationFile>${basedir}/src/main/resources/ProjectGeneratorConfig.xml</configurationFile> 
