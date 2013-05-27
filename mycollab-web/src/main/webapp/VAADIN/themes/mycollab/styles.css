@@ -3119,8 +3119,8 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	overflow: hidden;
 	white-space: nowrap;
 }
-.readview-layout-body > .v-csslayout-margin {
-	
+.readview-layout-body .v-gridlayout {
+	background-color: #e5eff0;
 }
 .readview-layout-header .detachedtabs .v-button-tab {
 	padding: 0px 2px;

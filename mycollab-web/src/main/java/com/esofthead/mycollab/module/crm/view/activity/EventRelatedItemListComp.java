@@ -30,7 +30,7 @@ public class EventRelatedItemListComp extends
 
 	private final boolean allowCreateNew;
 
-	public EventRelatedItemListComp(boolean allowCreateNew) {
+	public EventRelatedItemListComp(final boolean allowCreateNew) {
 		super("Activities");
 
 		this.allowCreateNew = allowCreateNew;
@@ -39,16 +39,16 @@ public class EventRelatedItemListComp extends
 	}
 
 	private void initUI() {
-		VerticalLayout contentContainer = (VerticalLayout) bodyContent;
+		final VerticalLayout contentContainer = (VerticalLayout) bodyContent;
 		contentContainer.setSpacing(true);
 
 		if (allowCreateNew) {
-			HorizontalLayout buttonControls = new HorizontalLayout();
+			final HorizontalLayout buttonControls = new HorizontalLayout();
 			buttonControls.setSpacing(true);
-			Button newTaskBtn = new Button("New Task",
+			final Button newTaskBtn = new Button("New Task",
 					new Button.ClickListener() {
 						@Override
-						public void buttonClick(Button.ClickEvent event) {
+						public void buttonClick(final Button.ClickEvent event) {
 							fireNewRelatedItem("task");
 						}
 					});
@@ -59,10 +59,10 @@ public class EventRelatedItemListComp extends
 			newTaskBtn.setStyleName(UIConstants.THEME_ROUND_BUTTON);
 			buttonControls.addComponent(newTaskBtn);
 
-			Button newCallBtn = new Button("New Call",
+			final Button newCallBtn = new Button("New Call",
 					new Button.ClickListener() {
 						@Override
-						public void buttonClick(Button.ClickEvent event) {
+						public void buttonClick(final Button.ClickEvent event) {
 							fireNewRelatedItem("call");
 						}
 					});
@@ -73,10 +73,10 @@ public class EventRelatedItemListComp extends
 			newCallBtn.addStyleName(UIConstants.THEME_ROUND_BUTTON);
 			buttonControls.addComponent(newCallBtn);
 
-			Button newMeetingBtn = new Button("New Meeting",
+			final Button newMeetingBtn = new Button("New Meeting",
 					new Button.ClickListener() {
 						@Override
-						public void buttonClick(Button.ClickEvent event) {
+						public void buttonClick(final Button.ClickEvent event) {
 							fireNewRelatedItem("call");
 						}
 					});
@@ -102,8 +102,9 @@ public class EventRelatedItemListComp extends
 					}
 
 					@Override
-					public void handle(TableClickEvent event) {
-						SimpleEvent simpleEvent = (SimpleEvent) event.getData();
+					public void handle(final TableClickEvent event) {
+						final SimpleEvent simpleEvent = (SimpleEvent) event
+								.getData();
 						if ("Task".equals(simpleEvent.getEventType())) {
 							EventBus.getInstance().fireEvent(
 									new ActivityEvent.TaskRead(this,

@@ -4,6 +4,9 @@
  */
 package com.esofthead.mycollab.module.crm.ui.components;
 
+import java.util.HashSet;
+import java.util.Set;
+
 import com.esofthead.mycollab.core.MyCollabException;
 import com.esofthead.mycollab.core.arguments.SearchCriteria;
 import com.esofthead.mycollab.module.crm.view.IRelatedListHandlers;
@@ -11,53 +14,52 @@ import com.esofthead.mycollab.module.crm.view.RelatedListHandler;
 import com.esofthead.mycollab.vaadin.ui.Depot;
 import com.esofthead.mycollab.vaadin.ui.table.IPagedBeanTable;
 import com.vaadin.ui.VerticalLayout;
-import java.util.HashSet;
-import java.util.Set;
 
 /**
- *
+ * 
  * @author haiphucnguyen
  */
-public abstract class RelatedListComp<T, S extends SearchCriteria> extends Depot implements IRelatedListHandlers<T> {
+public abstract class RelatedListComp<T, S extends SearchCriteria> extends
+		Depot implements IRelatedListHandlers<T> {
 
-    protected Set<RelatedListHandler<T>> handlers;
-    protected IPagedBeanTable<S, T> tableItem;
+	protected Set<RelatedListHandler<T>> handlers;
+	protected IPagedBeanTable<S, T> tableItem;
 
-    public RelatedListComp(String title) {
-        super(title, new VerticalLayout());
-        this.setWidth("900px");
-    }
+	public RelatedListComp(final String title) {
+		super(title, new VerticalLayout());
+		this.setWidth("100%");
+	}
 
-    protected void fireNewRelatedItem(String itemId) {
-        if (handlers != null) {
-            for (RelatedListHandler handler : handlers) {
-                handler.createNewRelatedItem(itemId);
-            }
-        }
-    }
+	@Override
+	public void addRelatedListHandler(final RelatedListHandler<T> handler) {
+		if (handlers == null) {
+			handlers = new HashSet<RelatedListHandler<T>>();
+		}
 
-    protected void fireSelectedRelatedItems(Set selectedItems) {
-        if (handlers != null) {
-            for (RelatedListHandler handler : handlers) {
-                handler.selectAssociateItems(selectedItems);
-            }
-        }
-    }
+		handlers.add(handler);
+	}
 
-    public void setSearchCriteria(S criteria) {
-        tableItem.setSearchCriteria(criteria);
-    }
+	protected void fireNewRelatedItem(final String itemId) {
+		if (handlers != null) {
+			for (final RelatedListHandler handler : handlers) {
+				handler.createNewRelatedItem(itemId);
+			}
+		}
+	}
 
-    @Override
-    public void addRelatedListHandler(RelatedListHandler<T> handler) {
-        if (handlers == null) {
-            handlers = new HashSet<RelatedListHandler<T>>();
-        }
+	protected void fireSelectedRelatedItems(final Set selectedItems) {
+		if (handlers != null) {
+			for (final RelatedListHandler handler : handlers) {
+				handler.selectAssociateItems(selectedItems);
+			}
+		}
+	}
 
-        handlers.add(handler);
-    }
+	public void setSearchCriteria(final S criteria) {
+		tableItem.setSearchCriteria(criteria);
+	}
 
-    public void setSelectedItems(Set<T> selectedItems) {
-        throw new MyCollabException("Must be override by support class");
-    }
+	public void setSelectedItems(final Set<T> selectedItems) {
+		throw new MyCollabException("Must be override by support class");
+	}
 }

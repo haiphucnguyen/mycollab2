@@ -185,6 +185,31 @@ public class NoteListItems extends Depot {
 						attachments));
 			}
 
+			final VerticalLayout messageFooter = new VerticalLayout();
+			replyBtn = new Button("Reply", new Button.ClickListener() {
+				private static final long serialVersionUID = 1L;
+
+				@Override
+				public void buttonClick(final ClickEvent event) {
+					final int compIndex = noteContentLayout
+							.getComponentIndex(commentList);
+					if (compIndex >= 0) {
+						commentInput = new CommentInput(
+								NoteRowDisplayHandler.this,
+								CommentTypeConstants.CRM_NOTE, note.getId(),
+								true, false);
+						noteContentLayout.addComponent(commentInput, compIndex);
+						replyBtn.setVisible(false);
+					}
+				}
+			});
+
+			replyBtn.setStyleName("link");
+			messageFooter.addComponent(replyBtn);
+			messageFooter.setWidth("100%");
+			messageFooter.setComponentAlignment(replyBtn, Alignment.TOP_RIGHT);
+			rowLayout.addComponent(messageFooter);
+
 			layout.addComponent(rowLayout);
 			layout.setExpandRatio(rowLayout, 1.0f);
 			return layout;
@@ -206,38 +231,10 @@ public class NoteListItems extends Depot {
 
 			noteContentLayout.addComponent(constructNoteHeader(note));
 
-			final HorizontalLayout footer = new HorizontalLayout();
-			footer.setSpacing(true);
-			footer.setMargin(true);
-			footer.setWidth("100%");
-
-			replyBtn = new Button("Reply", new Button.ClickListener() {
-				private static final long serialVersionUID = 1L;
-
-				@Override
-				public void buttonClick(final ClickEvent event) {
-					final int compIndex = noteContentLayout
-							.getComponentIndex(commentList);
-					if (compIndex >= 0) {
-						commentInput = new CommentInput(
-								NoteRowDisplayHandler.this,
-								CommentTypeConstants.CRM_NOTE, note.getId(),
-								true, false);
-						noteContentLayout.addComponent(commentInput, compIndex);
-						replyBtn.setVisible(false);
-					}
-				}
-			});
-
-			replyBtn.setStyleName("link");
-			footer.addComponent(replyBtn);
-			footer.setComponentAlignment(replyBtn, Alignment.MIDDLE_LEFT);
-			noteContentLayout.addComponent(footer);
-
 			commentList = new BeanList<CommentService, CommentSearchCriteria, SimpleComment>(
 					AppContext.getSpringBean(CommentService.class),
 					CommentRowDisplayHandler.class);
-			commentList.setWidth("850px");
+			commentList.setWidth("1050px");
 			noteContentLayout.addComponent(commentList);
 			noteContentLayout.setComponentAlignment(commentList,
 					Alignment.TOP_RIGHT);

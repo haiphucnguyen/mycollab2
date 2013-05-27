@@ -22,199 +22,66 @@ import com.vaadin.ui.VerticalLayout;
 
 public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 
-	private static final long serialVersionUID = 1L;
+	public static interface AttachmentUploadField extends Field {
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Field createField(Item item, Object propertyId,
-			com.vaadin.ui.Component uiContext) {
+		void saveContentsToRepo(String type, int typeId);
+	}
 
-		Field field = onCreateField(item, propertyId, uiContext);
-		if (field == null) {
-			Object bean = ((BeanItem<Object>) item).getBean();
+	public static class FormAttachmentDisplayField extends CustomField {
+		private static final long serialVersionUID = 1L;
 
-			try {
-				String propertyValue = BeanUtils.getProperty(bean,
-						(String) propertyId);
-				field = new FormViewField(propertyValue);
-			} catch (Exception e) {
-				field = new FormViewField("Error");
+		public FormAttachmentDisplayField(final String type, final int typeid) {
+			final Component comp = AttachmentDisplayComponent
+					.getAttachmentDisplayComponent(type, typeid);
+			if (comp == null) {
+				setCompositionRoot(new Label());
+			} else {
+				setCompositionRoot(comp);
 			}
 		}
 
-		return field;
+		@Override
+		public Class<?> getType() {
+			return Object.class;
+		}
 	}
 
-	protected Field onCreateField(Item item, Object propertyId,
-			com.vaadin.ui.Component uiContext) {
-		return null;
+	public static class FormAttachmentUploadField extends CustomField implements
+			AttachmentUploadField {
+		private static final long serialVersionUID = 1L;
+		private final MultiFileUploadExt uploadExt;
+		private final AttachmentPanel attachmentPanel;
+
+		public FormAttachmentUploadField() {
+			final VerticalLayout layout = new VerticalLayout();
+			attachmentPanel = new AttachmentPanel();
+			uploadExt = new MultiFileUploadExt(attachmentPanel);
+			layout.addComponent(attachmentPanel);
+			layout.addComponent(uploadExt);
+			setCompositionRoot(layout);
+		}
+
+		public void getAttachments(final String type, final int typeid) {
+			attachmentPanel.getAttachments(type, typeid);
+		}
+
+		@Override
+		public Class<?> getType() {
+			return Object.class;
+		}
+
+		@Override
+		public void saveContentsToRepo(final String type, final int typeId) {
+			attachmentPanel.saveContentsToRepo(type, typeId);
+		}
 	}
 
 	public static class FormContainerField extends CustomField {
 
 		private static final long serialVersionUID = 1L;
 
-		public FormContainerField(ComponentContainer container) {
-			this.setCompositionRoot(container);
-		}
-
-		@Override
-		public Class<?> getType() {
-			return Object.class;
-		}
-	}
-
-	public static class FormViewField extends CustomField {
-
-		private static final long serialVersionUID = 1L;
-
-		public FormViewField(String value) {
-			this(value, Label.CONTENT_DEFAULT);
-		}
-
-		public FormViewField(String value, int contentMode) {
-			Label l = new Label();
-			l.setWidth("100%");
-			l.setContentMode(contentMode);
-			this.setCompositionRoot(l);
-			if (value != null) {
-				l.setValue(value);
-			}
-		}
-
-		@Override
-		public Class<?> getType() {
-			return String.class;
-		}
-	}
-
-	public static class FormDateViewField extends CustomField {
-		private static final long serialVersionUID = 1L;
-
-		public FormDateViewField(Date date) {
-			Label l = new Label();
-			l.setWidth("100%");
-			l.setValue(AppContext.formatDate(date));
-			this.setCompositionRoot(l);
-		}
-
-		@Override
-		public Class<?> getType() {
-			return Object.class;
-		}
-	}
-
-	public static class FormLinkViewField extends CustomField {
-
-		private static final long serialVersionUID = 1L;
-
-		public FormLinkViewField(String value, Button.ClickListener listener) {
-			ButtonLink l = new ButtonLink(value, listener);
-			// l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			l.setWidth("100%");
-			this.setCompositionRoot(l);
-		}
-
-		@Override
-		public Class<?> getType() {
-			return String.class;
-		}
-	}
-
-	public static class UserLinkViewField extends CustomField {
-		private static final long serialVersionUID = 1L;
-
-		public UserLinkViewField(String username, String fullName) {
-			UserLink l = new UserLink(username, fullName);
-			l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			this.setCompositionRoot(l);
-		}
-
-		@Override
-		public Class<?> getType() {
-			return Object.class;
-		}
-	}
-
-	public static class LabelViewField extends CustomField {
-		private static final long serialVersionUID = 1L;
-
-		public LabelViewField(String value) {
-			Label lbName = new Label(value);
-			lbName.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			this.setCompositionRoot(lbName);
-		}
-
-		@Override
-		public Class<?> getType() {
-			return Object.class;
-		}
-	}
-
-	public static class FormUrlLinkViewField extends CustomField {
-
-		private static final long serialVersionUID = 1L;
-
-		public FormUrlLinkViewField(String url) {
-			url = (url == null) ? "" : url;
-			Link link = new UrlLink(url);
-			link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			this.setCompositionRoot(link);
-		}
-
-		@Override
-		public Class<?> getType() {
-			return String.class;
-		}
-	}
-	
-	public static class FormUrlSocialNetworkLinkViewField extends CustomField {
-
-		private static final long serialVersionUID = 1L;
-
-		public FormUrlSocialNetworkLinkViewField(String caption, String linkAccount) {
-			caption = (caption == null) ? "" : caption;
-			linkAccount = (linkAccount == null) ? "" : linkAccount;
-			Link link = new SocialNetworkLink(caption, linkAccount);
-			link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			this.setCompositionRoot(link);
-		}
-
-		@Override
-		public Class<?> getType() {
-			return String.class;
-		}
-	}
-
-	public static class FormEmailLinkViewField extends CustomField {
-
-		private static final long serialVersionUID = 1L;
-
-		public FormEmailLinkViewField(String email) {
-			EmailLink l = new EmailLink(email);
-			l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
-			this.setCompositionRoot(l);
-		}
-
-		@Override
-		public Class<?> getType() {
-			return String.class;
-		}
-	}
-
-	public static class FormContainerViewField extends CustomField {
-		private static final long serialVersionUID = 1L;
-		private final CssLayout layout;
-
-		public FormContainerViewField() {
-			layout = new CssLayout();
-			layout.setWidth("100%");
-			this.setCompositionRoot(layout);
-			this.setStyleName(UIConstants.FORM_CONTAINER_VIEW);
-		}
-
-		public void addComponentField(Component component) {
-			layout.addComponent(component);
+		public FormContainerField(final ComponentContainer container) {
+			setCompositionRoot(container);
 		}
 
 		@Override
@@ -231,10 +98,35 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 			layout = new HorizontalLayout();
 			layout.setWidth("100%");
 			layout.setSpacing(true);
-			this.setCompositionRoot(layout);
+			setCompositionRoot(layout);
 		}
 
-		public void addComponentField(Component component) {
+		public void addComponentField(final Component component) {
+			layout.addComponent(component);
+		}
+
+		public HorizontalLayout getLayout() {
+			return layout;
+		}
+
+		@Override
+		public Class<?> getType() {
+			return Object.class;
+		}
+	}
+
+	public static class FormContainerViewField extends CustomField {
+		private static final long serialVersionUID = 1L;
+		private final CssLayout layout;
+
+		public FormContainerViewField() {
+			layout = new CssLayout();
+			layout.setWidth("100%");
+			setCompositionRoot(layout);
+			setStyleName(UIConstants.FORM_CONTAINER_VIEW);
+		}
+
+		public void addComponentField(final Component component) {
 			layout.addComponent(component);
 		}
 
@@ -242,63 +134,176 @@ public class DefaultFormViewFieldFactory extends DefaultFieldFactory {
 		public Class<?> getType() {
 			return Object.class;
 		}
-
-		public HorizontalLayout getLayout() {
-			return layout;
-		}
 	}
 
-	public static interface AttachmentUploadField extends Field {
-
-		void saveContentsToRepo(String type, int typeId);
-	}
-
-	public static class FormAttachmentDisplayField extends CustomField {
+	public static class FormDateViewField extends CustomField {
 		private static final long serialVersionUID = 1L;
+
+		public FormDateViewField(final Date date) {
+			final Label l = new Label();
+			l.setWidth("100%");
+			l.setValue(AppContext.formatDate(date));
+			setCompositionRoot(l);
+		}
 
 		@Override
 		public Class<?> getType() {
 			return Object.class;
 		}
+	}
 
-		public FormAttachmentDisplayField(String type, int typeid) {
-			Component comp = AttachmentDisplayComponent
-					.getAttachmentDisplayComponent(type, typeid);
-			if (comp == null) {
-				this.setCompositionRoot(new Label());
+	public static class FormEmailLinkViewField extends CustomField {
+
+		private static final long serialVersionUID = 1L;
+
+		public FormEmailLinkViewField(final String email) {
+			final EmailLink l = new EmailLink(email);
+			l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			setCompositionRoot(l);
+		}
+
+		@Override
+		public Class<?> getType() {
+			return String.class;
+		}
+	}
+
+	public static class FormLinkViewField extends CustomField {
+
+		private static final long serialVersionUID = 1L;
+
+		public FormLinkViewField(final String value,
+				final Button.ClickListener listener) {
+			final ButtonLink l = new ButtonLink(value, listener);
+			// l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			l.setWidth("100%");
+			setCompositionRoot(l);
+		}
+
+		@Override
+		public Class<?> getType() {
+			return String.class;
+		}
+	}
+
+	public static class FormUrlLinkViewField extends CustomField {
+
+		private static final long serialVersionUID = 1L;
+
+		public FormUrlLinkViewField(String url) {
+			url = (url == null) ? "" : url;
+			final Link link = new UrlLink(url);
+			link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			setCompositionRoot(link);
+		}
+
+		@Override
+		public Class<?> getType() {
+			return String.class;
+		}
+	}
+
+	public static class FormUrlSocialNetworkLinkViewField extends CustomField {
+
+		private static final long serialVersionUID = 1L;
+
+		public FormUrlSocialNetworkLinkViewField(String caption,
+				String linkAccount) {
+			caption = (caption == null) ? "" : caption;
+			linkAccount = (linkAccount == null) ? "" : linkAccount;
+			final Link link = new SocialNetworkLink(caption, linkAccount);
+			link.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			setCompositionRoot(link);
+		}
+
+		@Override
+		public Class<?> getType() {
+			return String.class;
+		}
+	}
+
+	public static class FormViewField extends CustomField {
+
+		private static final long serialVersionUID = 1L;
+
+		public FormViewField(final String value) {
+			this(value, Label.CONTENT_DEFAULT);
+		}
+
+		public FormViewField(final String value, final int contentMode) {
+			final Label l = new Label();
+			l.setWidth("100%");
+			l.setContentMode(contentMode);
+			setCompositionRoot(l);
+			if (value != null && (!value.equals(""))) {
+				l.setValue(value);
 			} else {
-				this.setCompositionRoot(comp);
+				l.setValue("&nbsp;");
+				l.setContentMode(Label.CONTENT_XHTML);
 			}
 		}
+
+		@Override
+		public Class<?> getType() {
+			return String.class;
+		}
 	}
 
-	public static class FormAttachmentUploadField extends CustomField implements
-			AttachmentUploadField {
+	public static class LabelViewField extends CustomField {
 		private static final long serialVersionUID = 1L;
-		private final MultiFileUploadExt uploadExt;
-		private final AttachmentPanel attachmentPanel;
+
+		public LabelViewField(final String value) {
+			final Label lbName = new Label(value);
+			lbName.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			setCompositionRoot(lbName);
+		}
 
 		@Override
 		public Class<?> getType() {
 			return Object.class;
 		}
+	}
 
-		public FormAttachmentUploadField() {
-			VerticalLayout layout = new VerticalLayout();
-			attachmentPanel = new AttachmentPanel();
-			uploadExt = new MultiFileUploadExt(attachmentPanel);
-			layout.addComponent(attachmentPanel);
-			layout.addComponent(uploadExt);
-			this.setCompositionRoot(layout);
-		}
+	public static class UserLinkViewField extends CustomField {
+		private static final long serialVersionUID = 1L;
 
-		public void getAttachments(String type, int typeid) {
-			attachmentPanel.getAttachments(type, typeid);
+		public UserLinkViewField(final String username, final String fullName) {
+			final UserLink l = new UserLink(username, fullName);
+			l.setWidth(UIConstants.DEFAULT_CONTROL_WIDTH);
+			setCompositionRoot(l);
 		}
 
 		@Override
-		public void saveContentsToRepo(String type, int typeId) {
-			attachmentPanel.saveContentsToRepo(type, typeId);
+		public Class<?> getType() {
+			return Object.class;
 		}
+	}
+
+	private static final long serialVersionUID = 1L;
+
+	@SuppressWarnings("unchecked")
+	@Override
+	public Field createField(final Item item, final Object propertyId,
+			final com.vaadin.ui.Component uiContext) {
+
+		Field field = onCreateField(item, propertyId, uiContext);
+		if (field == null) {
+			final Object bean = ((BeanItem<Object>) item).getBean();
+
+			try {
+				final String propertyValue = BeanUtils.getProperty(bean,
+						(String) propertyId);
+				field = new FormViewField(propertyValue);
+			} catch (final Exception e) {
+				field = new FormViewField("Error");
+			}
+		}
+
+		return field;
+	}
+
+	protected Field onCreateField(final Item item, final Object propertyId,
+			final com.vaadin.ui.Component uiContext) {
+		return null;
 	}
 }

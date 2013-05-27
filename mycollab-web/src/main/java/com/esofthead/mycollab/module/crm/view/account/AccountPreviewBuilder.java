@@ -45,8 +45,8 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 		private static final long serialVersionUID = 1L;
 
 		@Override
-		protected Field onCreateField(Item item, Object propertyId,
-				Component uiContext) {
+		protected Field onCreateField(final Item item, final Object propertyId,
+				final Component uiContext) {
 			if (propertyId.equals("email")) {
 				return new DefaultFormViewFieldFactory.FormEmailLinkViewField(
 						account.getEmail());
@@ -61,6 +61,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 			return null;
 		}
 	}
+
 	/**
      *
      */
@@ -75,7 +76,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
 			@Override
 			protected Layout createBottomPanel() {
-				VerticalLayout relatedItemsPanel = new VerticalLayout();
+				final VerticalLayout relatedItemsPanel = new VerticalLayout();
 				relatedItemsPanel.setWidth("100%");
 
 				relatedItemsPanel.addComponent(noteListItems);
@@ -101,7 +102,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 				private static final long serialVersionUID = 1L;
 
 				@Override
-				public void setItemDataSource(Item newDataSource) {
+				public void setItemDataSource(final Item newDataSource) {
 					setFormLayoutFactory(new FormLayoutFactory());
 					setFormFieldFactory(new AccountFormFieldFactory());
 					super.setItemDataSource(newDataSource);
@@ -112,6 +113,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 			this.addComponent(previewForm);
 		}
 	}
+
 	public static class ReadView extends AccountPreviewBuilder {
 
 		private static final long serialVersionUID = 1L;
@@ -132,9 +134,9 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 				@Override
 				protected void doPrint() {
 					// Create a window that contains what you want to print
-					Window window = new Window("Window to Print");
+					final Window window = new Window("Window to Print");
 
-					AccountPreviewBuilder printView = new AccountPreviewBuilder.PrintView();
+					final AccountPreviewBuilder printView = new AccountPreviewBuilder.PrintView();
 					printView.previewItem(account);
 					window.addComponent(printView);
 
@@ -155,7 +157,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 				}
 
 				@Override
-				public void setItemDataSource(Item newDataSource) {
+				public void setItemDataSource(final Item newDataSource) {
 					setFormLayoutFactory(new AccountFormLayoutFactory.AccountInformationLayout(
 							true));
 					setFormFieldFactory(new AccountFormFieldFactory());
@@ -165,21 +167,21 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 
 				@Override
 				protected void showHistory() {
-					AccountHistoryLogWindow historyLog = new AccountHistoryLogWindow(
+					final AccountHistoryLogWindow historyLog = new AccountHistoryLogWindow(
 							ModuleNameConstants.CRM, CrmTypeConstants.ACCOUNT,
 							account.getId());
 					getWindow().addWindow(historyLog);
 				}
 			};
 
-			Layout optionalActionControls = PreviewFormControlsGenerator2
+			final Layout optionalActionControls = PreviewFormControlsGenerator2
 					.createFormOptionalControls(previewForm,
 							RolePermissionCollections.CRM_ACCOUNT);
 
 			accountAddLayout.addControlButtons(optionalActionControls);
 
 			accountInformation = new VerticalLayout();
-			Layout actionControls = PreviewFormControlsGenerator2
+			final Layout actionControls = PreviewFormControlsGenerator2
 					.createFormControls(previewForm,
 							RolePermissionCollections.CRM_ACCOUNT);
 			actionControls.addStyleName("control-buttons");
@@ -190,6 +192,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 			accountAddLayout.addTab(accountInformation, "Account Information");
 
 			relatedItemsContainer = new VerticalLayout();
+			relatedItemsContainer.setMargin(true);
 			relatedItemsContainer.addComponent(associateActivityList);
 			relatedItemsContainer.addComponent(associateContactList);
 			relatedItemsContainer.addComponent(associateOpportunityList);
@@ -204,9 +207,9 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 					.addTabChangedListener(new DetachedTabs.TabChangedListener() {
 
 						@Override
-						public void tabChanged(TabChangedEvent event) {
-							Button btn = event.getSource();
-							String caption = btn.getCaption();
+						public void tabChanged(final TabChangedEvent event) {
+							final Button btn = event.getSource();
+							final String caption = btn.getCaption();
 							if ("Account Information".equals(caption)) {
 
 							} else if ("More Information".equals(caption)) {
@@ -217,6 +220,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 					});
 		}
 	}
+
 	private static final long serialVersionUID = 1L;
 	protected SimpleAccount account;
 	protected AdvancedPreviewBeanForm<Account> previewForm;
@@ -231,7 +235,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 	protected NoteListItems noteListItems;
 
 	public void displayActivities() {
-		EventSearchCriteria criteria = new EventSearchCriteria();
+		final EventSearchCriteria criteria = new EventSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(AppContext.getAccountId()));
 		criteria.setType(new StringSearchField(SearchField.AND,
 				CrmTypeConstants.ACCOUNT));
@@ -240,7 +244,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 	}
 
 	private void displayAssociateCaseList() {
-		CaseSearchCriteria criteria = new CaseSearchCriteria();
+		final CaseSearchCriteria criteria = new CaseSearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
 		criteria.setAccountId(new NumberSearchField(account.getId()));
@@ -252,7 +256,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 	}
 
 	private void displayAssociateOpportunityList() {
-		OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
+		final OpportunitySearchCriteria criteria = new OpportunitySearchCriteria();
 		criteria.setSaccountid(new NumberSearchField(SearchField.AND,
 				AppContext.getAccountId()));
 		criteria.setAccountId(new NumberSearchField(SearchField.AND, account
@@ -301,7 +305,7 @@ public abstract class AccountPreviewBuilder extends VerticalLayout {
 		noteListItems = new NoteListItems("Notes");
 	}
 
-	public void previewItem(SimpleAccount item) {
+	public void previewItem(final SimpleAccount item) {
 		account = item;
 		previewForm.setItemDataSource(new BeanItem<Account>(account));
 

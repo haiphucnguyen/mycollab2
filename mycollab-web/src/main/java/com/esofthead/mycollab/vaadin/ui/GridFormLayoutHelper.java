@@ -2,12 +2,11 @@ package com.esofthead.mycollab.vaadin.ui;
 
 import java.io.Serializable;
 
-import com.vaadin.terminal.Sizeable;
 import com.vaadin.ui.Alignment;
 import com.vaadin.ui.Component;
-import com.vaadin.ui.CssLayout;
 import com.vaadin.ui.Field;
 import com.vaadin.ui.GridLayout;
+import com.vaadin.ui.HorizontalLayout;
 import com.vaadin.ui.Label;
 
 public class GridFormLayoutHelper implements Serializable {
@@ -46,7 +45,7 @@ public class GridFormLayoutHelper implements Serializable {
 		layout.setMargin(true, false, false, false);
 		layout.setSpacing(true);
 
-		layout.setRowExpandRatio(0, 0);
+		// layout.setRowExpandRatio(0, 0);
 
 		// for (int i = 0; i < columns; i++) {
 		// Label captionL = new Label("");
@@ -132,15 +131,13 @@ public class GridFormLayoutHelper implements Serializable {
 			layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
 			field.setCaption(null);
 			return field;
-		} else {
-			layout.addComponent(field, 2 * columns, rows, 2 * (columns
-					+ colspan - 1) + 1, rows + rowspan);
-			layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
-			field.setCaption(null);
-			field.setWidth("100%");
-			return field;
 		}
-
+		layout.addComponent(field, 2 * columns, rows,
+				2 * (columns + colspan - 1) + 1, rows + rowspan);
+		layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
+		field.setCaption(null);
+		field.setWidth("100%");
+		return field;
 	}
 
 	public Component addComponent(final Component field, final String caption,
@@ -155,26 +152,26 @@ public class GridFormLayoutHelper implements Serializable {
 			final String width, final Alignment alignment) {
 		if (caption != null) {
 			final Label l = new Label(caption + ":");
-			// l.setWidth(defaultCaptionWidth);
-			final CssLayout captionWrapper = new CssLayout();
+			l.setHeight("100%");
+			final HorizontalLayout captionWrapper = new HorizontalLayout();
 			captionWrapper.addComponent(l);
-			captionWrapper.addStyleName("gridform-caption");
-			// captionWrapper.setComponentAlignment(l, alignment);
+			captionWrapper.setStyleName("gridform-caption");
 			captionWrapper.setWidth(defaultCaptionWidth);
-			captionWrapper.setHeight("100%");
 			if (columns == 0) {
 				captionWrapper.addStyleName("first-col");
 			}
 			layout.addComponent(captionWrapper, 2 * columns, rows);
+			captionWrapper.setHeight("100%");
 		}
-		final CssLayout fieldWrapper = new CssLayout();
-		fieldWrapper.addStyleName("gridform-field");
+		final HorizontalLayout fieldWrapper = new HorizontalLayout();
+		fieldWrapper.setStyleName("gridform-field");
 		fieldWrapper.addComponent(field);
 		field.setCaption(null);
 		field.setWidth(width);
-		// field.setHeight("100%");
+		field.setHeight("100%");
 		fieldWrapper.setWidth("100%");
-		fieldWrapper.setHeight(Sizeable.SIZE_UNDEFINED, 0);
+		// fieldWrapper.setSizeFull();
+		// fieldWrapper.setHeight("100%");
 		layout.addComponent(fieldWrapper, 2 * columns + 1, rows, 2 * (columns
 				+ colspan - 1) + 1, rows);
 		layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
@@ -215,28 +212,26 @@ public class GridFormLayoutHelper implements Serializable {
 			final Alignment alignment) {
 		if (caption != null) {
 			final Label l = new Label(caption + ":");
-			// l.setWidth(defaultCaptionWidth);
-			final CssLayout captionWrapper = new CssLayout();
+			l.setHeight("100%");
+			final HorizontalLayout captionWrapper = new HorizontalLayout();
 			captionWrapper.addComponent(l);
-			// captionWrapper.setComponentAlignment(l, alignment);
+			captionWrapper.setComponentAlignment(l, alignment);
 			captionWrapper.setWidth(defaultCaptionWidth);
 			captionWrapper.setHeight("100%");
-			captionWrapper.addStyleName("gridform-caption");
+			captionWrapper.setStyleName("gridform-caption");
 			if (columns == 0) {
 				captionWrapper.addStyleName("first-col");
 			}
 			layout.addComponent(captionWrapper, 2 * columns, rows);
 		}
-		final CssLayout fieldWrapper = new CssLayout();
-		fieldWrapper.addStyleName("gridform-field");
-		fieldWrapper.addComponent(field);
+		final HorizontalLayout fieldWrapper = new HorizontalLayout();
+		fieldWrapper.setStyleName("gridform-field");
 		field.setCaption(null);
-		// field.setHeight("100%");
+		fieldWrapper.addComponent(field);
 		field.setWidth(width);
-		fieldWrapper.setSizeFull();
+		fieldWrapper.setWidth("100%");
 		layout.addComponent(fieldWrapper, 2 * columns + 1, rows);
 		layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
-
 		return field;
 	}
 
