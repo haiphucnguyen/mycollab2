@@ -2040,6 +2040,13 @@ input.v-textfield-errorField {
 	border-width: 1px 1px 1px 0px;
 	border-right: 1px solid #093768;
 	border-radius: 0px 3px 3px 0px;
+	
+}
+.v-splitbutton .v-popupbutton.bluebtn .v-button-wrap, .v-splitbutton .v-popupbutton.bluebtn:active .v-button-wrap {
+	padding: 3px 10px 3px 2px;
+}
+.v-splitbutton .v-popupbutton.bluebtn .v-popupindicator {
+	background: url("icons/sprites.png") no-repeat scroll -5px -10px transparent;
 }
 /* End Split button*/
 

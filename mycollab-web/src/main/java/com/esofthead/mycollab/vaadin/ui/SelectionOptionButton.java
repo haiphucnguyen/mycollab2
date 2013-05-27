@@ -33,23 +33,23 @@ public class SelectionOptionButton extends SplitButton implements
 
 	@SuppressWarnings("serial")
 	public SelectionOptionButton(
-			@SuppressWarnings("rawtypes") HasSelectableItemHandlers selectableItemHandlers) {
+			@SuppressWarnings("rawtypes") final HasSelectableItemHandlers selectableItemHandlers) {
 		super();
 		this.selectableItemHandlers = selectableItemHandlers;
-		this.addStyleName("esofthead");
-		this.setIcon(unSelectIcon);
+		addStyleName(UIConstants.THEME_BLUE_LINK);
+		setIcon(SelectionOptionButton.unSelectIcon);
 
-		this.addClickListener(new SplitButtonClickListener() {
+		addClickListener(new SplitButtonClickListener() {
 			@Override
-			public void splitButtonClick(SplitButtonClickEvent event) {
+			public void splitButtonClick(final SplitButtonClickEvent event) {
 				toogleChangeOption();
 			}
 		});
 
-		this.addPopupVisibilityListener(new SplitButtonPopupVisibilityListener() {
+		addPopupVisibilityListener(new SplitButtonPopupVisibilityListener() {
 			@Override
 			public void splitButtonPopupVisibilityChange(
-					SplitButtonPopupVisibilityEvent event) {
+					final SplitButtonPopupVisibilityEvent event) {
 				if (event.isPopupVisible()) {
 					selectAllBtn.setCaption("Select All ("
 							+ SelectionOptionButton.this.selectableItemHandlers
@@ -62,14 +62,15 @@ public class SelectionOptionButton extends SplitButton implements
 			}
 		});
 
-		VerticalLayout selectContent = new VerticalLayout();
+		final VerticalLayout selectContent = new VerticalLayout();
 		selectContent.setWidth("150px");
 
 		selectAllBtn = new Button("", new Button.ClickListener() {
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void buttonClick(final ClickEvent event) {
 				isSelectAll = true;
-				SelectionOptionButton.this.setIcon(selectIcon);
+				SelectionOptionButton.this
+						.setIcon(SelectionOptionButton.selectIcon);
 				fireSelectAll();
 			}
 		});
@@ -78,9 +79,10 @@ public class SelectionOptionButton extends SplitButton implements
 
 		selectThisPageBtn = new Button("", new Button.ClickListener() {
 			@Override
-			public void buttonClick(ClickEvent event) {
+			public void buttonClick(final ClickEvent event) {
 				isSelectAll = false;
-				SelectionOptionButton.this.setIcon(selectIcon);
+				SelectionOptionButton.this
+						.setIcon(SelectionOptionButton.selectIcon);
 				fireSelectCurrentPage();
 			}
 		});
@@ -90,20 +92,55 @@ public class SelectionOptionButton extends SplitButton implements
 		deSelectBtn = new ButtonLink("Deselect All",
 				new Button.ClickListener() {
 					@Override
-					public void buttonClick(ClickEvent event) {
+					public void buttonClick(final ClickEvent event) {
 						isSelectAll = false;
-						SelectionOptionButton.this.setIcon(unSelectIcon);
+						SelectionOptionButton.this
+								.setIcon(SelectionOptionButton.unSelectIcon);
 						fireDeselect();
 					}
 				});
 		deSelectBtn.setStyleName("link");
 		selectContent.addComponent(deSelectBtn);
-		this.setComponent(selectContent);
+		setComponent(selectContent);
 	}
 
-	public void setSelectedChecbox(boolean selected) {
+	@Override
+	public void addSelectionOptionHandler(final SelectionOptionHandler handler) {
+		if (handlers == null) {
+			handlers = new HashSet<SelectionOptionHandler>();
+		}
+		handlers.add(handler);
+	}
+
+	private void fireDeselect() {
+		if (handlers != null) {
+			for (final SelectionOptionHandler handler : handlers) {
+				handler.onDeSelect();
+			}
+		}
+	}
+
+	private void fireSelectAll() {
+		if (handlers != null) {
+			for (final SelectionOptionHandler handler : handlers) {
+				handler.onSelectAll();
+			}
+		}
+
+	}
+
+	private void fireSelectCurrentPage() {
+		if (handlers != null) {
+			for (final SelectionOptionHandler handler : handlers) {
+				handler.onSelectCurrentPage();
+			}
+		}
+	}
+
+	public void setSelectedChecbox(final boolean selected) {
 		isSelected = selected;
-		Resource icon = (selected) ? selectIcon : unSelectIcon;
+		final Resource icon = (selected) ? SelectionOptionButton.selectIcon
+				: SelectionOptionButton.unSelectIcon;
 		SelectionOptionButton.this.setIcon(icon);
 	}
 
@@ -113,7 +150,8 @@ public class SelectionOptionButton extends SplitButton implements
 		}
 
 		isSelected = !isSelected;
-		Resource icon = (isSelected) ? selectIcon : unSelectIcon;
+		final Resource icon = (isSelected) ? SelectionOptionButton.selectIcon
+				: SelectionOptionButton.unSelectIcon;
 		SelectionOptionButton.this.setIcon(icon);
 
 		if (isSelected) {
@@ -121,38 +159,5 @@ public class SelectionOptionButton extends SplitButton implements
 		} else {
 			fireDeselect();
 		}
-	}
-
-	private void fireSelectCurrentPage() {
-		if (handlers != null) {
-			for (SelectionOptionHandler handler : handlers) {
-				handler.onSelectCurrentPage();
-			}
-		}
-	}
-
-	private void fireSelectAll() {
-		if (handlers != null) {
-			for (SelectionOptionHandler handler : handlers) {
-				handler.onSelectAll();
-			}
-		}
-
-	}
-
-	private void fireDeselect() {
-		if (handlers != null) {
-			for (SelectionOptionHandler handler : handlers) {
-				handler.onDeSelect();
-			}
-		}
-	}
-
-	@Override
-	public void addSelectionOptionHandler(SelectionOptionHandler handler) {
-		if (handlers == null) {
-			handlers = new HashSet<SelectionOptionHandler>();
-		}
-		handlers.add(handler);
 	}
 }
