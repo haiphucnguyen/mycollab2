@@ -3360,3 +3360,17 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 	background-color: rgb(229, 239, 240);
 }
 /* End Note List Items */
+
+/* Richtext Editor */
+.v-richtextarea .gwt-RichTextToolbar {
+	background: url("icons/grad-light-top.png") repeat-x left top #ebebeb;
+	border-bottom: 1px solid #a9a9a9;
+	padding: 3px;
+}
+.v-richtextarea .gwt-RichTextToolbar .gwt-ToggleButton, .v-richtextarea .gwt-RichTextToolbar .gwt-PushButton {
+	background: none;
+}
+.v-richtextarea .gwt-RichTextToolbar .gwt-ListBox {
+	margin-right: 3px;
+}
+/* End Richtext Editor */
