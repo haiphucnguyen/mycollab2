@@ -75,28 +75,6 @@ public class Depot extends VerticalLayout {
 		header.setComponentAlignment(headerLeft, Alignment.MIDDLE_LEFT);
 		header.addComponent(headerContent);
 		header.setExpandRatio(headerLeft, 1.0f);
-		// else {
-		// final VerticalLayout newHeaderLeft = new VerticalLayout();
-		// newHeaderLeft.addComponent(headerLbl);
-		// newHeaderLeft.setStyleName("depot-title");
-		// newHeaderLeft.setWidth("100%");
-		// newHeaderLeft.addListener(new LayoutClickListener() {
-		// private static final long serialVersionUID = 1L;
-		//
-		// @Override
-		// public void layoutClick(final LayoutClickEvent event) {
-		// isOpenned = !isOpenned;
-		// if (isOpenned) {
-		// bodyContent.setHeight("100%");
-		// Depot.this.removeStyleName("collapsed");
-		// } else {
-		// bodyContent.setHeight("0px");
-		// Depot.this.addStyleName("collapsed");
-		// }
-		// }
-		// });
-		// header.addComponent(newHeaderLeft);
-		// }
 
 		final CustomComponent customComp = new CustomComponent(component);
 		customComp.setWidth("100%");

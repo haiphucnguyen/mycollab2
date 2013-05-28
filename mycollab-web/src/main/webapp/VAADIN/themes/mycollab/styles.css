@@ -3222,6 +3222,15 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .readview-layout-body .v-gridlayout-margin .gridform-field {
 	background-color: #e5eff0;
 }
+.readview-layout-body .v-gridlayout-margin > div > div > div > div {
+	border-top: 1px solid #c8c8c8;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.readview-layout-body .v-gridlayout-margin > div > div > div > div.first-row {
+	border-top: none;
+}
 .readview-layout-body .main-info .depotComp {
 	margin-top: 0px;
 }
@@ -3298,12 +3307,6 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 .addview-layout-body .v-gridlayout-margin {
 	border-bottom: 1px solid #a9a9a9;
 }
-/* .addview-layout-body .v-gridlayout-margin > div > div > div > div { */
-/* 	padding: 8px 0px 8px 18px; */
-/* 	-moz-box-sizing: border-box; */
-/* 	-webkit-box-sizing: border-box; */
-/* 	box-sizing: border-box; */
-/* } */
 .addview-layout-body .v-horizontallayout-gridform-caption .v-horizontallayout-margin {
 	padding: 8px 5px 8px 18px;
 }
@@ -3319,6 +3322,15 @@ div.v-stylecalendar .weekdays TD,.v-stylecalendar .weeknumber,.v-stylecalendar .
 }
 .addview-layout-body .v-gridlayout-margin .v-csslayout.gridform-field {
 	padding: 0px;
+}
+.addview-layout-body .v-gridlayout-margin > div > div > div > div {
+	border-top: 1px solid #c8c8c8;
+	-moz-box-sizing: border-box;
+	-webkit-box-sizing: border-box;
+	box-sizing: border-box;
+}
+.addview-layout-body .v-gridlayout-margin > div > div > div > div.first-row {
+	border-top: none;
 }
 .addview-layout-body .v-horizontallayout-gridform-field .v-horizontallayout-margin {
 	padding: 5px 8px 5px 10px;

@@ -160,6 +160,9 @@ public class GridFormLayoutHelper implements Serializable {
 			if (columns == 0) {
 				captionWrapper.addStyleName("first-col");
 			}
+			if (rows == 0) {
+				captionWrapper.addStyleName("first-row");
+			}
 			layout.addComponent(captionWrapper, 2 * columns, rows);
 			captionWrapper.setHeight("100%");
 		}
@@ -170,8 +173,9 @@ public class GridFormLayoutHelper implements Serializable {
 		field.setWidth(width);
 		field.setHeight("100%");
 		fieldWrapper.setWidth("100%");
-		// fieldWrapper.setSizeFull();
-		// fieldWrapper.setHeight("100%");
+		if (rows == 0) {
+			fieldWrapper.addStyleName("first-row");
+		}
 		layout.addComponent(fieldWrapper, 2 * columns + 1, rows, 2 * (columns
 				+ colspan - 1) + 1, rows);
 		layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
@@ -222,6 +226,9 @@ public class GridFormLayoutHelper implements Serializable {
 			if (columns == 0) {
 				captionWrapper.addStyleName("first-col");
 			}
+			if (rows == 0) {
+				captionWrapper.addStyleName("first-row");
+			}
 			layout.addComponent(captionWrapper, 2 * columns, rows);
 		}
 		final HorizontalLayout fieldWrapper = new HorizontalLayout();
@@ -230,6 +237,9 @@ public class GridFormLayoutHelper implements Serializable {
 		fieldWrapper.addComponent(field);
 		field.setWidth(width);
 		fieldWrapper.setWidth("100%");
+		if (rows == 0) {
+			fieldWrapper.addStyleName("first-row");
+		}
 		layout.addComponent(fieldWrapper, 2 * columns + 1, rows);
 		layout.setColumnExpandRatio(2 * columns + 1, 1.0f);
 		return field;
