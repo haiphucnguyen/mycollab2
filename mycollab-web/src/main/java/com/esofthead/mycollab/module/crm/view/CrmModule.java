@@ -136,7 +136,7 @@ public class CrmModule extends AbstractView implements IModule {
 				listener);
 		newAccountBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_ACCOUNT));
-		newAccountBtn.setIcon(new ThemeResource("icons/16/crm/account.png"));
+		newAccountBtn.setIcon(new ThemeResource("icons/18/crm/account.png"));
 		addBtnLayout.addComponent(newAccountBtn);
 
 		ButtonLink newContactBtn = new ButtonLink(
@@ -145,7 +145,7 @@ public class CrmModule extends AbstractView implements IModule {
 				listener);
 		newContactBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CONTACT));
-		newContactBtn.setIcon(new ThemeResource("icons/16/crm/contact.png"));
+		newContactBtn.setIcon(new ThemeResource("icons/18/crm/contact.png"));
 		addBtnLayout.addComponent(newContactBtn);
 
 		ButtonLink newCampaignBtn = new ButtonLink(
@@ -154,7 +154,7 @@ public class CrmModule extends AbstractView implements IModule {
 				listener);
 		newCampaignBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CAMPAIGN));
-		newCampaignBtn.setIcon(new ThemeResource("icons/16/crm/campaign.png"));
+		newCampaignBtn.setIcon(new ThemeResource("icons/18/crm/campaign.png"));
 		addBtnLayout.addComponent(newCampaignBtn);
 
 		ButtonLink newOpportunityBtn = new ButtonLink(
@@ -163,7 +163,7 @@ public class CrmModule extends AbstractView implements IModule {
 				listener);
 		newOpportunityBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_OPPORTUNITY));
-		newOpportunityBtn.setIcon(new ThemeResource("icons/16/crm/opportunity.png"));
+		newOpportunityBtn.setIcon(new ThemeResource("icons/18/crm/opportunity.png"));
 		addBtnLayout.addComponent(newOpportunityBtn);
 
 		ButtonLink newLeadBtn = new ButtonLink(
@@ -172,7 +172,7 @@ public class CrmModule extends AbstractView implements IModule {
 				listener);
 		newLeadBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_LEAD));
-		newLeadBtn.setIcon(new ThemeResource("icons/16/crm/lead.png"));
+		newLeadBtn.setIcon(new ThemeResource("icons/18/crm/lead.png"));
 		addBtnLayout.addComponent(newLeadBtn);
 
 		ButtonLink newCaseBtn = new ButtonLink(
@@ -181,7 +181,7 @@ public class CrmModule extends AbstractView implements IModule {
 				listener);
 		newCaseBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CASE));
-		newCaseBtn.setIcon(new ThemeResource("icons/16/crm/case.png"));
+		newCaseBtn.setIcon(new ThemeResource("icons/18/crm/case.png"));
 		addBtnLayout.addComponent(newCaseBtn);
 
 		ButtonLink newTaskBtn = new ButtonLink(
@@ -190,7 +190,7 @@ public class CrmModule extends AbstractView implements IModule {
 				listener);
 		newTaskBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_TASK));
-		newTaskBtn.setIcon(new ThemeResource("icons/16/crm/task.png"));
+		newTaskBtn.setIcon(new ThemeResource("icons/18/crm/task.png"));
 		addBtnLayout.addComponent(newTaskBtn);
 
 		ButtonLink newCallBtn = new ButtonLink(
@@ -199,7 +199,7 @@ public class CrmModule extends AbstractView implements IModule {
 				listener);
 		newCallBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_CALL));
-		newCallBtn.setIcon(new ThemeResource("icons/16/crm/call.png"));
+		newCallBtn.setIcon(new ThemeResource("icons/18/crm/call.png"));
 		addBtnLayout.addComponent(newCallBtn);
 
 		ButtonLink newMeetingBtn = new ButtonLink(
@@ -208,7 +208,7 @@ public class CrmModule extends AbstractView implements IModule {
 				listener);
 		newMeetingBtn.setEnabled(AppContext
 				.canWrite(RolePermissionCollections.CRM_MEETING));
-		newMeetingBtn.setIcon(new ThemeResource("icons/16/crm/meeting.png"));
+		newMeetingBtn.setIcon(new ThemeResource("icons/18/crm/meeting.png"));
 		addBtnLayout.addComponent(newMeetingBtn);
 
 		addBtn.addComponent(addBtnLayout);

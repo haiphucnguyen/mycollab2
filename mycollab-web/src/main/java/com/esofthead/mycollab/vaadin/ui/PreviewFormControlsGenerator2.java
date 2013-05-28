@@ -22,7 +22,7 @@ public class PreviewFormControlsGenerator2 {
 
 		Button previousItem, nextItemBtn, historyBtn, printBtn;
 
-		layout.setSpacing(true);
+		layout.setSpacing(false);
 
 		previousItem = new Button(null, new Button.ClickListener() {
 			private static final long serialVersionUID = 1L;
@@ -66,7 +66,7 @@ public class PreviewFormControlsGenerator2 {
 				previewForm.showHistory();
 			}
 		});
-		historyBtn.setIcon(new ThemeResource("icons/18/history.png"));
+		historyBtn.setIcon(new ThemeResource("icons/16/history.png"));
 		historyBtn.setStyleName("link");
 		historyBtn.setDescription("Show history log");
 		layout.addComponent(historyBtn);
@@ -81,7 +81,7 @@ public class PreviewFormControlsGenerator2 {
 			}
 		});
 
-		printBtn.setIcon(new ThemeResource("icons/18/print.png"));
+		printBtn.setIcon(new ThemeResource("icons/16/print.png"));
 		printBtn.setStyleName("link");
 		printBtn.setDescription("Print this page");
 		layout.addComponent(printBtn);

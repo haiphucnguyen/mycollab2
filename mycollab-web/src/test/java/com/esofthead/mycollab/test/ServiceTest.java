@@ -14,6 +14,7 @@ import org.springframework.test.context.ContextConfiguration;
     "classpath:META-INF/spring/common-context.xml",
     "classpath:META-INF/spring/file-context.xml",
     "classpath:META-INF/spring/crm-context.xml",
+    "classpath:META-INF/spring/ecm-context.xml",
     "classpath:META-INF/spring/project-context.xml",
     "classpath:META-INF/spring/tracker-context.xml",
     "classpath:META-INF/spring/user-context.xml",

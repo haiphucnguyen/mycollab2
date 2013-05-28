@@ -18,7 +18,7 @@ package org.springframework.extensions.jcr.jackrabbit.config;
 import org.springframework.beans.factory.xml.AbstractSimpleBeanDefinitionParser;
 import org.springframework.beans.factory.xml.NamespaceHandlerSupport;
 import org.springframework.extensions.jcr.jackrabbit.LocalTransactionManager;
-import org.springframework.extensions.jcr.jackrabbit.RepositoryFactoryBean;
+import org.springframework.extensions.jcr.jackrabbit.JackrabbitRepositoryFactoryBean;
 import org.w3c.dom.Element;
 
 /**
@@ -41,8 +41,8 @@ public class JackrabbitNamespaceHandler extends NamespaceHandlerSupport {
     private static class JackrabbitRepositoryBeanDefinitionParser extends AbstractSimpleBeanDefinitionParser {
 
         @Override
-        protected Class<RepositoryFactoryBean> getBeanClass(Element element) {
-            return RepositoryFactoryBean.class;
+        protected Class<JackrabbitRepositoryFactoryBean> getBeanClass(Element element) {
+            return JackrabbitRepositoryFactoryBean.class;
         }
     }
 

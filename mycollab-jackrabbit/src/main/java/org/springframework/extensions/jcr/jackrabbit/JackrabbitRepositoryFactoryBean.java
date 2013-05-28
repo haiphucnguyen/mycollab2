@@ -36,9 +36,9 @@ import org.xml.sax.InputSource;
  * @author Sergio Bossa
  * @author Salvatore Incandela
  */
-public class RepositoryFactoryBean extends org.springframework.extensions.jcr.RepositoryFactoryBean {
+public class JackrabbitRepositoryFactoryBean extends org.springframework.extensions.jcr.RepositoryFactoryBean {
 
-    private static final Logger LOG = LoggerFactory.getLogger(RepositoryFactoryBean.class);
+    private static final Logger LOG = LoggerFactory.getLogger(JackrabbitRepositoryFactoryBean.class);
 
     /**
      * Default repository configuration file.
