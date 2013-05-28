@@ -518,11 +518,10 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 	padding: 0 6px 0 3px;
 	text-shadow: 1px 1px 0px #6b6b6b;
 	filter: progid:DXImageTransform.Microsoft.Shadow(color=#6B6B6B,direction=45);
-	text-transform: uppercase;
 }
 
 #topNavigation .v-button-wrap,#topNavigation .v-button:active .v-button-wrap
-	{
+{
 	border: none;
 	background: none;
 	padding: 0px;
@@ -573,7 +572,6 @@ input.v-textfield[type="text"],textarea.v-textarea,.v-filterselect {
 #topNavigation .accountMenu .v-button-caption {
 	text-shadow: 1px 1px 0px #6b6b6b;
 	filter: progid:DXImageTransform.Microsoft.Shadow(color=#6B6B6B,direction=45);
-	text-transform: uppercase;
 	font-weight: bold;
 }
 
@@ -1879,10 +1877,10 @@ input.v-textfield-errorField {
 	border: none;
 }
 .depotContent > .v-verticallayout > div > div > div > .v-lazyloadingwrapper > .v-verticallayout > div > div > div > .v-verticallayout > div > div:nth-child(odd) > div > .activity-stream {
-	background-color: #cce4ee;
+	background-color: #e5eff0;
 }
 .depotContent > .v-verticallayout > div > div > div > .v-lazyloadingwrapper > .v-verticallayout > div > div > div > .v-verticallayout > div > div:nth-child(even) > div > .activity-stream {
-	background-color: #e5eff0;
+	background-color: rgb(247, 247, 247);
 }
 /* End Activity Stream Channel */
 
@@ -2491,7 +2489,7 @@ input.v-textfield-errorField {
 div.v-window-header {
 	font-weight: bold;
 	color: #444;
-	text-shadow: 0px 1px 0px #cdcdcd;
+	text-shadow: none;
 	padding: 3px 0px 0px;
 	text-align: left;
 }
