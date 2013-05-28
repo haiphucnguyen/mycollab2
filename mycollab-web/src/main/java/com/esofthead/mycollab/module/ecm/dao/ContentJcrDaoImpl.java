@@ -9,7 +9,6 @@ import javax.jcr.Session;
 import javax.jcr.nodetype.NodeType;
 
 import org.apache.jackrabbit.commons.JcrUtils;
-import org.apache.velocity.runtime.resource.ContentResource;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -122,7 +121,8 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 					content.setDescription(node.getProperty("jcr:description")
 							.getString());
 					content.setPath(node.getProperty("path").getString());
-					content.setLastModified(node.getProperty("jcr:lastModified").getDate());
+					content.setLastModified(node
+							.getProperty("jcr:lastModified").getDate());
 					return content;
 				}
 				return null;
@@ -160,7 +160,13 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				Node rootNode = session.getRootNode();
 				Node node = getNode(rootNode, path);
 				if (node != null) {
+					if (node.isNodeType("nt:folder")) {
 
+					} else {
+						throw new ContentException(
+								"Do not support any node type except nt:folder. The current node has type "
+										+ node.getPrimaryNodeType().getName());
+					}
 				}
 
 				return null;
