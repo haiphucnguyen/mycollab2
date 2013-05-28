@@ -358,7 +358,8 @@ td.v-datefield-calendarpanel-month,
 .v-Notification,
 .v-menubar-submenu {
 /* 	background-color: rgb(209,209,209); */
-	background-color: rgba(249,249,249,.85);
+	background-color: rgba(255,255,255,.85);
+	border-radius: 3px;
 /* 	background-color: white; */
 	}
 
@@ -602,7 +603,7 @@ td.v-datefield-calendarpanel-month,
 .v-accordion-item-caption,
 .v-accordion-item-open,
 .v-menubar-separator span {
-	border-color: #8F8F8F;
+	border-color: rgb(169, 169, 169);
 	}
 
 /* Alternate colors */
