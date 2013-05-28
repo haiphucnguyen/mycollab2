@@ -4,7 +4,7 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.module.user.events.UserEvent;
@@ -13,6 +13,7 @@ import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -72,9 +73,9 @@ public class UserReadPresenter extends AbstractPresenter<UserReadView> {
 		userContainer.removeAllComponents();
 		userContainer.addComponent(view.getWidget());
 		view.previewItem(user);
-		AppContext.addFragment(
-				"account/user/preview/"
-						+ UrlEncodeDecoder.encode(user.getUsername()),
-				"Preview User " + user.getDisplayName());
+
+		AccountSettingBreadcrumb breadcrumb = ViewManager
+				.getView(AccountSettingBreadcrumb.class);
+		breadcrumb.gotoUserRead(user);
 	}
 }

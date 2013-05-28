@@ -4,9 +4,9 @@
  */
 package com.esofthead.mycollab.module.user.accountsettings.team.view;
 
-import com.esofthead.mycollab.common.UrlEncodeDecoder;
 import com.esofthead.mycollab.module.project.CurrentProjectVariables;
 import com.esofthead.mycollab.module.project.ProjectRolePermissionCollections;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.Role;
 import com.esofthead.mycollab.module.user.domain.SimpleRole;
 import com.esofthead.mycollab.module.user.events.RoleEvent;
@@ -15,6 +15,7 @@ import com.esofthead.mycollab.vaadin.events.DefaultPreviewFormHandler;
 import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MessageConstants;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
@@ -77,11 +78,9 @@ public class RoleReadPresenter extends AbstractPresenter<RoleReadView> {
 			roleContainer.addComponent(view.getWidget());
 			view.previewItem(role);
 
-			AppContext
-					.addFragment(
-							"account/role/preview/"
-									+ UrlEncodeDecoder.encode(role.getId()),
-							"Preview Role " + role.getRolename());
+			AccountSettingBreadcrumb breadcrumb = ViewManager
+					.getView(AccountSettingBreadcrumb.class);
+			breadcrumb.gotoRoleRead(role);
 		} else {
 			MessageConstants.showMessagePermissionAlert();
 		}

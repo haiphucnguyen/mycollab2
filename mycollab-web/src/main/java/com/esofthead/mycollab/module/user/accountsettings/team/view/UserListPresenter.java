@@ -12,6 +12,7 @@ import org.vaadin.dialogs.ConfirmDialog;
 
 import com.esofthead.mycollab.common.ApplicationProperties;
 import com.esofthead.mycollab.common.localization.GenericI18Enum;
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.SimpleUser;
 import com.esofthead.mycollab.module.user.domain.criteria.UserSearchCriteria;
 import com.esofthead.mycollab.module.user.service.UserService;
@@ -23,6 +24,7 @@ import com.esofthead.mycollab.vaadin.events.SelectionOptionHandler;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ListPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.MailFormWindow;
 import com.esofthead.mycollab.web.AppContext;
 import com.esofthead.mycollab.web.LocalizationHelper;
@@ -217,7 +219,9 @@ public class UserListPresenter extends AbstractPresenter<UserListView>
 		userContainer.addComponent(view.getWidget());
 		doSearch((UserSearchCriteria) data.getParams());
 
-		AppContext.addFragment("account/user/list", "Account Users");
+		AccountSettingBreadcrumb breadcrumb = ViewManager
+				.getView(AccountSettingBreadcrumb.class);
+		breadcrumb.gotoUserList();
 	}
 
 }

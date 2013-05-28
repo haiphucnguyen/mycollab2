@@ -975,7 +975,7 @@ public class TimezoneMapper {
 
 	public static TimezoneExt getTimezone(String id) {
 		if (id == null || id.equals("")) {
-			return timeMap.get("0");
+			return timeMap.get("3");
 		}
 		return timeMap.get(id);
 	}

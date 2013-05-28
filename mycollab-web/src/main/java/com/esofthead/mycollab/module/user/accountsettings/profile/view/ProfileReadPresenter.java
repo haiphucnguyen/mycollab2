@@ -1,8 +1,10 @@
 package com.esofthead.mycollab.module.user.accountsettings.profile.view;
 
+import com.esofthead.mycollab.module.user.accountsettings.view.AccountSettingBreadcrumb;
 import com.esofthead.mycollab.module.user.domain.User;
 import com.esofthead.mycollab.vaadin.mvp.AbstractPresenter;
 import com.esofthead.mycollab.vaadin.mvp.ScreenData;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.web.AppContext;
 import com.vaadin.ui.ComponentContainer;
 
@@ -22,6 +24,8 @@ public class ProfileReadPresenter extends AbstractPresenter<ProfileReadView> {
 		User currentUser = AppContext.getSession();
 		view.previewItem(currentUser);
 
-		AppContext.addFragment("account/preview", "User Profile");
+		AccountSettingBreadcrumb breadcrumb = ViewManager
+				.getView(AccountSettingBreadcrumb.class);
+		breadcrumb.gotoProfile();
 	}
 }

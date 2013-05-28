@@ -9,6 +9,7 @@ import com.esofthead.mycollab.vaadin.events.EventBus;
 import com.esofthead.mycollab.vaadin.mvp.AbstractView;
 import com.esofthead.mycollab.vaadin.mvp.ControllerRegistry;
 import com.esofthead.mycollab.vaadin.mvp.PresenterResolver;
+import com.esofthead.mycollab.vaadin.mvp.ViewManager;
 import com.esofthead.mycollab.vaadin.ui.ViewComponent;
 import com.esofthead.mycollab.web.AppContext;
 import com.github.wolfie.detachedtabs.DetachedTabs;
@@ -31,10 +32,16 @@ public class AccountModuleImpl extends AbstractView implements AccountModule {
 	private UserPermissionManagementPresenter userPermissionPresenter;
 	private AccountSettingsPresenter accountSettingPresenter;
 
+	private AccountSettingBreadcrumb breadcrumb;
+
 	public AccountModuleImpl() {
 		ControllerRegistry.addController(new UserAccountController(this));
 		this.setStyleName("accountViewContainer");
 		this.setMargin(false);
+
+		breadcrumb = ViewManager.getView(AccountSettingBreadcrumb.class);
+		this.addComponent(breadcrumb);
+
 		root = new HorizontalLayout();
 		root.setStyleName("menuContent");
 		root.setWidth("100%");

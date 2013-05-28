@@ -93,7 +93,7 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 
 	public void initBreadcrumb() {
 		this.select(0);
-		PopupButton taskSettingPopupBtn = CommonUIFactory
+		PopupButton projectSelectionPopupBtn = CommonUIFactory
 				.createPopupButtonTooltip(
 						menuLinkGenerator.handleText(project.getName()),
 						project.getName());
@@ -131,8 +131,8 @@ public class ProjectBreadcrumb extends Breadcrumb implements View {
 			filterBtnLayout.addComponent(btnProject);
 		}
 
-		taskSettingPopupBtn.addComponent(filterBtnLayout);
-		this.addLink(taskSettingPopupBtn);
+		projectSelectionPopupBtn.addComponent(filterBtnLayout);
+		this.addLink(projectSelectionPopupBtn);
 		this.setLinkEnabled(true, 1);
 	}
 
