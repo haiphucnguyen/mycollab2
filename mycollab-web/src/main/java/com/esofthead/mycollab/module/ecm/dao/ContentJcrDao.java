@@ -6,11 +6,11 @@ import com.esofthead.mycollab.module.ecm.domain.Content;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 
 public interface ContentJcrDao {
-	void saveContent(Content content, String path);
+	void saveContent(Content content); // allow save an object
 
-	Content getContent(String path);
+	Content getResource(String path); 
 
-	void removeContent(String path);
+	void removeResource(String path);
 	
 	List<Resource> getResources(String path);
 }
