@@ -25,34 +25,34 @@ public class ContentJcrDaoTest extends ServiceTest {
 		pageContent.setCreatedBy("hainguyen");
 		pageContent.setTitle("page example");
 		pageContent.setDescription("aaa");
-		pageContent.setPath("a/b/xyz.mycollabtext");
-		contentJcrDao.saveContent(pageContent, "example/a/b");
+		pageContent.setPath("example/a");
+		contentJcrDao.saveContent(pageContent);
 	}
 
 	@After
 	public void teardown() {
-		contentJcrDao.removeContent("/");
+		contentJcrDao.removeResource("/");
 	}
 
 	@Test
 	public void testGetContent() {
-		Content content = contentJcrDao.getContent("example/a/b");
+		Content content = contentJcrDao.getResource("example/a");
 		Assert.assertNotNull(content);
 	}
 
 	@Test
 	public void testRemoveContent() {
-		contentJcrDao.removeContent("example/a/b");
-		Content content = contentJcrDao.getContent("example/a/b");
+		contentJcrDao.removeResource("example/a/b");
+		Content content = contentJcrDao.getResource("example/a/b");
 		Assert.assertNull(content);
 	}
 
-	public void testSaveOverride() {
-		Content pageContent = new Content();
-		pageContent.setCreatedBy("hainguyen");
-		pageContent.setTitle("page example");
-		pageContent.setDescription("aaa");
-		pageContent.setPath("a/b/xyz.mycollabtext");
-		contentJcrDao.saveContent(pageContent, "example/a/b");
-	}
+//	public void testSaveOverride() {
+//		Content pageContent = new Content();
+//		pageContent.setCreatedBy("hainguyen");
+//		pageContent.setTitle("page example");
+//		pageContent.setDescription("aaa");
+//		pageContent.setPath("a/b/xyz.mycollabtext");
+//		contentJcrDao.saveContent(pageContent, "example/a/b");
+//	}
 }
