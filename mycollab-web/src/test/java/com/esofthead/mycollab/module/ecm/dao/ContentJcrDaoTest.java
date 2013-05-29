@@ -28,7 +28,7 @@ public class ContentJcrDaoTest extends ServiceTest {
 		pageContent.setPath("a/b/xyz.mycollabtext");
 		contentJcrDao.saveContent(pageContent, "example/a/b");
 	}
-	
+
 	@After
 	public void teardown() {
 		contentJcrDao.removeContent("/");
@@ -46,7 +46,7 @@ public class ContentJcrDaoTest extends ServiceTest {
 		Content content = contentJcrDao.getContent("example/a/b");
 		Assert.assertNull(content);
 	}
-	
+
 	public void testSaveOverride() {
 		Content pageContent = new Content();
 		pageContent.setCreatedBy("hainguyen");

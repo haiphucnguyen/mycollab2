@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.util.List;
 
 import javax.jcr.Node;
+import javax.jcr.NodeIterator;
 import javax.jcr.RepositoryException;
 import javax.jcr.Session;
 import javax.jcr.nodetype.NodeType;
@@ -19,6 +20,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.esofthead.mycollab.module.ecm.ContentException;
 import com.esofthead.mycollab.module.ecm.domain.Content;
+import com.esofthead.mycollab.module.ecm.domain.Folder;
 import com.esofthead.mycollab.module.ecm.domain.Resource;
 
 @Repository
@@ -43,13 +45,13 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				Node rootNode = session.getRootNode();
 				Node node = getNode(rootNode, path);
 				if (node != null) {
-					if (node.isNodeType("nt:folder")) {
+					if (isNodeFolder(node)) {
 						String errorStr = String
 								.format("Resource is existed. Search node is not a folder. It has path %s and type is %s",
 										node.getPath(), node
 												.getPrimaryNodeType().getName());
 						throw new ContentException(errorStr);
-					} else if (node.isNodeType("mycollab:content")) {
+					} else if (isNodeMyCollabContent(node)) {
 						log.debug("Found existing resource. Override");
 
 					} else {
@@ -68,7 +70,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				for (int i = 0; i < pathStr.length - 1; i++) {
 					Node childNode = getNode(parentNode, pathStr[i]);
 					if (childNode != null) {
-						if (!childNode.isNodeType("nt:folder")) {
+						if (!isNodeFolder(childNode)) {
 							throw new ContentException("Invalid path");
 						}
 					} else {
@@ -91,6 +93,22 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				return null;
 			}
 		});
+	}
+
+	private static boolean isNodeFolder(Node node) {
+		try {
+			return node.isNodeType("nt:folder");
+		} catch (RepositoryException e) {
+			return false;
+		}
+	}
+
+	private static boolean isNodeMyCollabContent(Node node) {
+		try {
+			return node.isNodeType("mycollab:content");
+		} catch (RepositoryException e) {
+			return false;
+		}
 	}
 
 	private static Node getNode(Node node, String path) {
@@ -143,7 +161,7 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				if (node != null) {
 					node.remove();
 					session.save();
-				}
+				} 
 				return null;
 			}
 		});
@@ -161,6 +179,12 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				Node node = getNode(rootNode, path);
 				if (node != null) {
 					if (node.isNodeType("nt:folder")) {
+						Folder folder = new Folder();
+						folder.setCreated(node.getProperty("jcr:created")
+								.getDate());
+						folder.setCreatedBy(node.getProperty("jcr:createdBy")
+								.getString());
+						NodeIterator childNodes = node.getNodes();
 
 					} else {
 						throw new ContentException(
@@ -172,6 +196,44 @@ public class ContentJcrDaoImpl implements ContentJcrDao {
 				return null;
 			}
 		});
+	}
+
+	static interface NodeMapper<T extends Resource> {
+		T convertFromNode(Node node);
+
+		void convertToNode(T item);
+	}
+
+	static class FolderNodeMapper implements NodeMapper<Folder> {
+
+		@Override
+		public Folder convertFromNode(Node node) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void convertToNode(Folder folder) {
+			// TODO Auto-generated method stub
+
+		}
+
+	}
+
+	static class ContentNodeMapper implements NodeMapper<Content> {
+
+		@Override
+		public Content convertFromNode(Node node) {
+			// TODO Auto-generated method stub
+			return null;
+		}
+
+		@Override
+		public void convertToNode(Content content) {
+			// TODO Auto-generated method stub
+
+		}
+
 	}
 
 }

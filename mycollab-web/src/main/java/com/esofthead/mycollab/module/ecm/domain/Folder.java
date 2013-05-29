@@ -13,4 +13,8 @@ public class Folder extends Resource {
 	public void setChilds(List<Resource> childs) {
 		this.childs = childs;
 	}
+	
+	public void addChild(Resource child) {
+		childs.add(child);
+	}
 }
